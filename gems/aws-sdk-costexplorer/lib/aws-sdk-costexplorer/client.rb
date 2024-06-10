@@ -1030,6 +1030,8 @@ module Aws::CostExplorer
     #   * {Types::GetAnomaliesResponse#anomalies #anomalies} => Array&lt;Types::Anomaly&gt;
     #   * {Types::GetAnomaliesResponse#next_page_token #next_page_token} => String
     #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_anomalies({
@@ -1101,6 +1103,8 @@ module Aws::CostExplorer
     #
     #   * {Types::GetAnomalyMonitorsResponse#anomaly_monitors #anomaly_monitors} => Array&lt;Types::AnomalyMonitor&gt;
     #   * {Types::GetAnomalyMonitorsResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -1174,6 +1178,8 @@ module Aws::CostExplorer
     #
     #   * {Types::GetAnomalySubscriptionsResponse#anomaly_subscriptions #anomaly_subscriptions} => Array&lt;Types::AnomalySubscription&gt;
     #   * {Types::GetAnomalySubscriptionsResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -1465,6 +1471,8 @@ module Aws::CostExplorer
     #   * {Types::GetCostAndUsageResponse#results_by_time #results_by_time} => Array&lt;Types::ResultByTime&gt;
     #   * {Types::GetCostAndUsageResponse#dimension_value_attributes #dimension_value_attributes} => Array&lt;Types::DimensionValuesWithAttributes&gt;
     #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_cost_and_usage({
@@ -1657,6 +1665,8 @@ module Aws::CostExplorer
     #   * {Types::GetCostAndUsageWithResourcesResponse#results_by_time #results_by_time} => Array&lt;Types::ResultByTime&gt;
     #   * {Types::GetCostAndUsageWithResourcesResponse#dimension_value_attributes #dimension_value_attributes} => Array&lt;Types::DimensionValuesWithAttributes&gt;
     #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_cost_and_usage_with_resources({
@@ -1781,6 +1791,7 @@ module Aws::CostExplorer
     #
     #       * Specify the `Dimensions` field to define a filter that acts on
     #         the [ `DimensionValues` ][1].
+    #
     #     * For each filter type, you can set the dimension name and values
     #       for the filters that you plan to use.
     #
@@ -1795,6 +1806,7 @@ module Aws::CostExplorer
     #
     #       * As shown in the previous example, lists of dimension values are
     #         combined with `OR` when applying the filter.
+    #
     #     * You can also set different match options to further control how
     #       the filter behaves. Not all APIs support match options. Refer to
     #       the documentation for each specific API to see what is supported.
@@ -1805,6 +1817,7 @@ module Aws::CostExplorer
     #       * The corresponding `Expression` for this example is as follows:
     #         `{ "Dimensions": { "Key": "LINKED_ACCOUNT_NAME", "MatchOptions":
     #         [ "STARTS_WITH" ], "Values": [ "a" ] } }`
+    #
     #   * Compound `Expression` types with logical operations.
     #
     #     * You can use multiple `Expression` types and the logical operators
@@ -1820,6 +1833,7 @@ module Aws::CostExplorer
     #       "us-east-1", "us-west-1" ] }}, {"Tags": { "Key": "TagName",
     #       "Values": ["Value1"] } } ]}, {"Not": {"Dimensions": { "Key":
     #       "USAGE_TYPE", "Values": ["DataTransfer"] }}} ] } `
+    #
     #     <note markdown="1"> Because each `Expression` can have only one operator, the service
     #     returns an error if more than one is specified. The following
     #     example shows an `Expression` object that creates an error: ` {
@@ -1906,6 +1920,8 @@ module Aws::CostExplorer
     #   * {Types::GetCostCategoriesResponse#cost_category_values #cost_category_values} => Array&lt;String&gt;
     #   * {Types::GetCostCategoriesResponse#return_size #return_size} => Integer
     #   * {Types::GetCostCategoriesResponse#total_size #total_size} => Integer
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -2341,6 +2357,7 @@ module Aws::CostExplorer
     #
     #       * Specify the `Dimensions` field to define a filter that acts on
     #         the [ `DimensionValues` ][1].
+    #
     #     * For each filter type, you can set the dimension name and values
     #       for the filters that you plan to use.
     #
@@ -2355,6 +2372,7 @@ module Aws::CostExplorer
     #
     #       * As shown in the previous example, lists of dimension values are
     #         combined with `OR` when applying the filter.
+    #
     #     * You can also set different match options to further control how
     #       the filter behaves. Not all APIs support match options. Refer to
     #       the documentation for each specific API to see what is supported.
@@ -2365,6 +2383,7 @@ module Aws::CostExplorer
     #       * The corresponding `Expression` for this example is as follows:
     #         `{ "Dimensions": { "Key": "LINKED_ACCOUNT_NAME", "MatchOptions":
     #         [ "STARTS_WITH" ], "Values": [ "a" ] } }`
+    #
     #   * Compound `Expression` types with logical operations.
     #
     #     * You can use multiple `Expression` types and the logical operators
@@ -2380,6 +2399,7 @@ module Aws::CostExplorer
     #       "us-east-1", "us-west-1" ] }}, {"Tags": { "Key": "TagName",
     #       "Values": ["Value1"] } } ]}, {"Not": {"Dimensions": { "Key":
     #       "USAGE_TYPE", "Values": ["DataTransfer"] }}} ] } `
+    #
     #     <note markdown="1"> Because each `Expression` can have only one operator, the service
     #     returns an error if more than one is specified. The following
     #     example shows an `Expression` object that creates an error: ` {
@@ -2463,6 +2483,8 @@ module Aws::CostExplorer
     #   * {Types::GetDimensionValuesResponse#return_size #return_size} => Integer
     #   * {Types::GetDimensionValuesResponse#total_size #total_size} => Integer
     #   * {Types::GetDimensionValuesResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -2707,6 +2729,8 @@ module Aws::CostExplorer
     #   * {Types::GetReservationCoverageResponse#total #total} => Types::Coverage
     #   * {Types::GetReservationCoverageResponse#next_page_token #next_page_token} => String
     #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_reservation_coverage({
@@ -2856,6 +2880,7 @@ module Aws::CostExplorer
     #
     #       * Specify the `Dimensions` field to define a filter that acts on
     #         the [ `DimensionValues` ][1].
+    #
     #     * For each filter type, you can set the dimension name and values
     #       for the filters that you plan to use.
     #
@@ -2870,6 +2895,7 @@ module Aws::CostExplorer
     #
     #       * As shown in the previous example, lists of dimension values are
     #         combined with `OR` when applying the filter.
+    #
     #     * You can also set different match options to further control how
     #       the filter behaves. Not all APIs support match options. Refer to
     #       the documentation for each specific API to see what is supported.
@@ -2880,6 +2906,7 @@ module Aws::CostExplorer
     #       * The corresponding `Expression` for this example is as follows:
     #         `{ "Dimensions": { "Key": "LINKED_ACCOUNT_NAME", "MatchOptions":
     #         [ "STARTS_WITH" ], "Values": [ "a" ] } }`
+    #
     #   * Compound `Expression` types with logical operations.
     #
     #     * You can use multiple `Expression` types and the logical operators
@@ -2895,6 +2922,7 @@ module Aws::CostExplorer
     #       "us-east-1", "us-west-1" ] }}, {"Tags": { "Key": "TagName",
     #       "Values": ["Value1"] } } ]}, {"Not": {"Dimensions": { "Key":
     #       "USAGE_TYPE", "Values": ["DataTransfer"] }}} ] } `
+    #
     #     <note markdown="1"> Because each `Expression` can have only one operator, the service
     #     returns an error if more than one is specified. The following
     #     example shows an `Expression` object that creates an error: ` {
@@ -2959,6 +2987,8 @@ module Aws::CostExplorer
     #   * {Types::GetReservationPurchaseRecommendationResponse#metadata #metadata} => Types::ReservationPurchaseRecommendationMetadata
     #   * {Types::GetReservationPurchaseRecommendationResponse#recommendations #recommendations} => Array&lt;Types::ReservationPurchaseRecommendation&gt;
     #   * {Types::GetReservationPurchaseRecommendationResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -3223,6 +3253,8 @@ module Aws::CostExplorer
     #   * {Types::GetReservationUtilizationResponse#total #total} => Types::ReservationAggregates
     #   * {Types::GetReservationUtilizationResponse#next_page_token #next_page_token} => String
     #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_reservation_utilization({
@@ -3381,6 +3413,7 @@ module Aws::CostExplorer
     #
     #       * Specify the `Dimensions` field to define a filter that acts on
     #         the [ `DimensionValues` ][1].
+    #
     #     * For each filter type, you can set the dimension name and values
     #       for the filters that you plan to use.
     #
@@ -3395,6 +3428,7 @@ module Aws::CostExplorer
     #
     #       * As shown in the previous example, lists of dimension values are
     #         combined with `OR` when applying the filter.
+    #
     #     * You can also set different match options to further control how
     #       the filter behaves. Not all APIs support match options. Refer to
     #       the documentation for each specific API to see what is supported.
@@ -3405,6 +3439,7 @@ module Aws::CostExplorer
     #       * The corresponding `Expression` for this example is as follows:
     #         `{ "Dimensions": { "Key": "LINKED_ACCOUNT_NAME", "MatchOptions":
     #         [ "STARTS_WITH" ], "Values": [ "a" ] } }`
+    #
     #   * Compound `Expression` types with logical operations.
     #
     #     * You can use multiple `Expression` types and the logical operators
@@ -3420,6 +3455,7 @@ module Aws::CostExplorer
     #       "us-east-1", "us-west-1" ] }}, {"Tags": { "Key": "TagName",
     #       "Values": ["Value1"] } } ]}, {"Not": {"Dimensions": { "Key":
     #       "USAGE_TYPE", "Values": ["DataTransfer"] }}} ] } `
+    #
     #     <note markdown="1"> Because each `Expression` can have only one operator, the service
     #     returns an error if more than one is specified. The following
     #     example shows an `Expression` object that creates an error: ` {
@@ -3476,6 +3512,8 @@ module Aws::CostExplorer
     #   * {Types::GetRightsizingRecommendationResponse#rightsizing_recommendations #rightsizing_recommendations} => Array&lt;Types::RightsizingRecommendation&gt;
     #   * {Types::GetRightsizingRecommendationResponse#next_page_token #next_page_token} => String
     #   * {Types::GetRightsizingRecommendationResponse#configuration #configuration} => Types::RightsizingRecommendationConfiguration
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -3909,6 +3947,8 @@ module Aws::CostExplorer
     #   * {Types::GetSavingsPlansPurchaseRecommendationResponse#metadata #metadata} => Types::SavingsPlansPurchaseRecommendationMetadata
     #   * {Types::GetSavingsPlansPurchaseRecommendationResponse#savings_plans_purchase_recommendation #savings_plans_purchase_recommendation} => Types::SavingsPlansPurchaseRecommendation
     #   * {Types::GetSavingsPlansPurchaseRecommendationResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -4355,6 +4395,7 @@ module Aws::CostExplorer
     #
     #       * Specify the `Dimensions` field to define a filter that acts on
     #         the [ `DimensionValues` ][1].
+    #
     #     * For each filter type, you can set the dimension name and values
     #       for the filters that you plan to use.
     #
@@ -4369,6 +4410,7 @@ module Aws::CostExplorer
     #
     #       * As shown in the previous example, lists of dimension values are
     #         combined with `OR` when applying the filter.
+    #
     #     * You can also set different match options to further control how
     #       the filter behaves. Not all APIs support match options. Refer to
     #       the documentation for each specific API to see what is supported.
@@ -4379,6 +4421,7 @@ module Aws::CostExplorer
     #       * The corresponding `Expression` for this example is as follows:
     #         `{ "Dimensions": { "Key": "LINKED_ACCOUNT_NAME", "MatchOptions":
     #         [ "STARTS_WITH" ], "Values": [ "a" ] } }`
+    #
     #   * Compound `Expression` types with logical operations.
     #
     #     * You can use multiple `Expression` types and the logical operators
@@ -4394,6 +4437,7 @@ module Aws::CostExplorer
     #       "us-east-1", "us-west-1" ] }}, {"Tags": { "Key": "TagName",
     #       "Values": ["Value1"] } } ]}, {"Not": {"Dimensions": { "Key":
     #       "USAGE_TYPE", "Values": ["DataTransfer"] }}} ] } `
+    #
     #     <note markdown="1"> Because each `Expression` can have only one operator, the service
     #     returns an error if more than one is specified. The following
     #     example shows an `Expression` object that creates an error: ` {
@@ -4475,6 +4519,8 @@ module Aws::CostExplorer
     #   * {Types::GetTagsResponse#tags #tags} => Array&lt;String&gt;
     #   * {Types::GetTagsResponse#return_size #return_size} => Integer
     #   * {Types::GetTagsResponse#total_size #total_size} => Integer
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #
@@ -4959,6 +5005,8 @@ module Aws::CostExplorer
     #
     #   * {Types::ListSavingsPlansPurchaseRecommendationGenerationResponse#generation_summary_list #generation_summary_list} => Array&lt;Types::GenerationSummary&gt;
     #   * {Types::ListSavingsPlansPurchaseRecommendationGenerationResponse#next_page_token #next_page_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     # @example Request syntax with placeholder values
     #

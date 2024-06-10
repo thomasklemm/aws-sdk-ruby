@@ -1777,6 +1777,12 @@ module Aws::CostExplorer
         o.output = Shapes::ShapeRef.new(shape: GetAnomaliesResponse)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_anomaly_monitors, Seahorse::Model::Operation.new.tap do |o|
@@ -1788,6 +1794,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: UnknownMonitorException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_anomaly_subscriptions, Seahorse::Model::Operation.new.tap do |o|
@@ -1799,6 +1811,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: UnknownSubscriptionException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_approximate_usage_records, Seahorse::Model::Operation.new.tap do |o|
@@ -1834,6 +1852,11 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_cost_and_usage_with_resources, Seahorse::Model::Operation.new.tap do |o|
@@ -1848,6 +1871,11 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_cost_categories, Seahorse::Model::Operation.new.tap do |o|
@@ -1862,6 +1890,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_cost_forecast, Seahorse::Model::Operation.new.tap do |o|
@@ -1887,6 +1921,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_reservation_coverage, Seahorse::Model::Operation.new.tap do |o|
@@ -1898,6 +1938,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_reservation_purchase_recommendation, Seahorse::Model::Operation.new.tap do |o|
@@ -1909,6 +1955,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "page_size",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_reservation_utilization, Seahorse::Model::Operation.new.tap do |o|
@@ -1920,6 +1972,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_rightsizing_recommendation, Seahorse::Model::Operation.new.tap do |o|
@@ -1930,6 +1988,12 @@ module Aws::CostExplorer
         o.output = Shapes::ShapeRef.new(shape: GetRightsizingRecommendationResponse)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "page_size",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_savings_plan_purchase_recommendation_details, Seahorse::Model::Operation.new.tap do |o|
@@ -1967,6 +2031,12 @@ module Aws::CostExplorer
         o.output = Shapes::ShapeRef.new(shape: GetSavingsPlansPurchaseRecommendationResponse)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "page_size",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
       end)
 
       api.add_operation(:get_savings_plans_utilization, Seahorse::Model::Operation.new.tap do |o|
@@ -2008,6 +2078,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: RequestChangedException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_page_token" => "next_page_token"
+          }
+        )
       end)
 
       api.add_operation(:get_usage_forecast, Seahorse::Model::Operation.new.tap do |o|
@@ -2089,6 +2165,12 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "page_size",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
       end)
 
       api.add_operation(:list_tags_for_resource, Seahorse::Model::Operation.new.tap do |o|
