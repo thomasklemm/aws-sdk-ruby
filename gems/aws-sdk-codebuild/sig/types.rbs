@@ -11,6 +11,14 @@ module Aws::CodeBuild
     class AccountLimitExceededException < Aws::EmptyStructure
     end
 
+    class AutoRetryConfig
+      attr_accessor auto_retry_limit: ::Integer
+      attr_accessor auto_retry_number: ::Integer
+      attr_accessor next_auto_retry: ::String
+      attr_accessor previous_auto_retry: ::String
+      SENSITIVE: []
+    end
+
     class BatchDeleteBuildsInput
       attr_accessor ids: ::Array[::String]
       SENSITIVE: []
@@ -127,6 +135,7 @@ module Aws::CodeBuild
       attr_accessor file_system_locations: ::Array[Types::ProjectFileSystemLocation]
       attr_accessor debug_session: Types::DebugSession
       attr_accessor build_batch_arn: ::String
+      attr_accessor auto_retry_config: Types::AutoRetryConfig
       SENSITIVE: []
     end
 
@@ -303,6 +312,7 @@ module Aws::CodeBuild
       attr_accessor file_system_locations: ::Array[Types::ProjectFileSystemLocation]
       attr_accessor build_batch_config: Types::ProjectBuildBatchConfig
       attr_accessor concurrent_build_limit: ::Integer
+      attr_accessor auto_retry_limit: ::Integer
       SENSITIVE: []
     end
 
@@ -796,6 +806,7 @@ module Aws::CodeBuild
       attr_accessor project_visibility: ("PUBLIC_READ" | "PRIVATE")
       attr_accessor public_project_alias: ::String
       attr_accessor resource_access_role: ::String
+      attr_accessor auto_retry_limit: ::Integer
       SENSITIVE: []
     end
 
@@ -1120,6 +1131,7 @@ module Aws::CodeBuild
       attr_accessor image_pull_credentials_type_override: ("CODEBUILD" | "SERVICE_ROLE")
       attr_accessor debug_session_enabled: bool
       attr_accessor fleet_override: Types::ProjectFleet
+      attr_accessor auto_retry_limit_override: ::Integer
       SENSITIVE: []
     end
 
@@ -1227,6 +1239,7 @@ module Aws::CodeBuild
       attr_accessor file_system_locations: ::Array[Types::ProjectFileSystemLocation]
       attr_accessor build_batch_config: Types::ProjectBuildBatchConfig
       attr_accessor concurrent_build_limit: ::Integer
+      attr_accessor auto_retry_limit: ::Integer
       SENSITIVE: []
     end
 

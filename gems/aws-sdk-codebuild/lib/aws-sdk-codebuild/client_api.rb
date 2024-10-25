@@ -19,6 +19,7 @@ module Aws::CodeBuild
     ArtifactPackaging = Shapes::StringShape.new(name: 'ArtifactPackaging')
     ArtifactsType = Shapes::StringShape.new(name: 'ArtifactsType')
     AuthType = Shapes::StringShape.new(name: 'AuthType')
+    AutoRetryConfig = Shapes::StructureShape.new(name: 'AutoRetryConfig')
     BatchDeleteBuildsInput = Shapes::StructureShape.new(name: 'BatchDeleteBuildsInput')
     BatchDeleteBuildsOutput = Shapes::StructureShape.new(name: 'BatchDeleteBuildsOutput')
     BatchGetBuildBatchesInput = Shapes::StructureShape.new(name: 'BatchGetBuildBatchesInput')
@@ -304,6 +305,12 @@ module Aws::CodeBuild
 
     AccountLimitExceededException.struct_class = Types::AccountLimitExceededException
 
+    AutoRetryConfig.add_member(:auto_retry_limit, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryLimit"))
+    AutoRetryConfig.add_member(:auto_retry_number, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryNumber"))
+    AutoRetryConfig.add_member(:next_auto_retry, Shapes::ShapeRef.new(shape: String, location_name: "nextAutoRetry"))
+    AutoRetryConfig.add_member(:previous_auto_retry, Shapes::ShapeRef.new(shape: String, location_name: "previousAutoRetry"))
+    AutoRetryConfig.struct_class = Types::AutoRetryConfig
+
     BatchDeleteBuildsInput.add_member(:ids, Shapes::ShapeRef.new(shape: BuildIds, required: true, location_name: "ids"))
     BatchDeleteBuildsInput.struct_class = Types::BatchDeleteBuildsInput
 
@@ -389,6 +396,7 @@ module Aws::CodeBuild
     Build.add_member(:file_system_locations, Shapes::ShapeRef.new(shape: ProjectFileSystemLocations, location_name: "fileSystemLocations"))
     Build.add_member(:debug_session, Shapes::ShapeRef.new(shape: DebugSession, location_name: "debugSession"))
     Build.add_member(:build_batch_arn, Shapes::ShapeRef.new(shape: String, location_name: "buildBatchArn"))
+    Build.add_member(:auto_retry_config, Shapes::ShapeRef.new(shape: AutoRetryConfig, location_name: "autoRetryConfig"))
     Build.struct_class = Types::Build
 
     BuildArtifacts.add_member(:location, Shapes::ShapeRef.new(shape: String, location_name: "location"))
@@ -561,6 +569,7 @@ module Aws::CodeBuild
     CreateProjectInput.add_member(:file_system_locations, Shapes::ShapeRef.new(shape: ProjectFileSystemLocations, location_name: "fileSystemLocations"))
     CreateProjectInput.add_member(:build_batch_config, Shapes::ShapeRef.new(shape: ProjectBuildBatchConfig, location_name: "buildBatchConfig"))
     CreateProjectInput.add_member(:concurrent_build_limit, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "concurrentBuildLimit"))
+    CreateProjectInput.add_member(:auto_retry_limit, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryLimit"))
     CreateProjectInput.struct_class = Types::CreateProjectInput
 
     CreateProjectOutput.add_member(:project, Shapes::ShapeRef.new(shape: Project, location_name: "project"))
@@ -943,6 +952,7 @@ module Aws::CodeBuild
     Project.add_member(:project_visibility, Shapes::ShapeRef.new(shape: ProjectVisibilityType, location_name: "projectVisibility"))
     Project.add_member(:public_project_alias, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "publicProjectAlias"))
     Project.add_member(:resource_access_role, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "resourceAccessRole"))
+    Project.add_member(:auto_retry_limit, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryLimit"))
     Project.struct_class = Types::Project
 
     ProjectArns.member = Shapes::ShapeRef.new(shape: NonEmptyString)
@@ -1232,6 +1242,7 @@ module Aws::CodeBuild
     StartBuildInput.add_member(:image_pull_credentials_type_override, Shapes::ShapeRef.new(shape: ImagePullCredentialsType, location_name: "imagePullCredentialsTypeOverride"))
     StartBuildInput.add_member(:debug_session_enabled, Shapes::ShapeRef.new(shape: WrapperBoolean, location_name: "debugSessionEnabled"))
     StartBuildInput.add_member(:fleet_override, Shapes::ShapeRef.new(shape: ProjectFleet, location_name: "fleetOverride"))
+    StartBuildInput.add_member(:auto_retry_limit_override, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryLimitOverride"))
     StartBuildInput.struct_class = Types::StartBuildInput
 
     StartBuildOutput.add_member(:build, Shapes::ShapeRef.new(shape: Build, location_name: "build"))
@@ -1321,6 +1332,7 @@ module Aws::CodeBuild
     UpdateProjectInput.add_member(:file_system_locations, Shapes::ShapeRef.new(shape: ProjectFileSystemLocations, location_name: "fileSystemLocations"))
     UpdateProjectInput.add_member(:build_batch_config, Shapes::ShapeRef.new(shape: ProjectBuildBatchConfig, location_name: "buildBatchConfig"))
     UpdateProjectInput.add_member(:concurrent_build_limit, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "concurrentBuildLimit"))
+    UpdateProjectInput.add_member(:auto_retry_limit, Shapes::ShapeRef.new(shape: WrapperInt, location_name: "autoRetryLimit"))
     UpdateProjectInput.struct_class = Types::UpdateProjectInput
 
     UpdateProjectOutput.add_member(:project, Shapes::ShapeRef.new(shape: Project, location_name: "project"))

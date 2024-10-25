@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.138.0 (2024-10-25)
+------------------
+
+* Feature - Add TagsError field in Lambda GetFunctionResponse. The TagsError field contains details related to errors retrieving tags.
+
 1.137.0 (2024-10-18)
 ------------------
 

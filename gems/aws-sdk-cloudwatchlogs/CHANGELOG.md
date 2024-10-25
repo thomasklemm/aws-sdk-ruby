@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.98.0 (2024-10-25)
+------------------
+
+* Feature - Adding inferred token name for dynamic tokens in Anomalies.
+
 1.97.0 (2024-10-18)
 ------------------
 

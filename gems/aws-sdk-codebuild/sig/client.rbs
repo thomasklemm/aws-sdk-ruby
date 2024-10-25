@@ -358,7 +358,8 @@ module Aws
                               timeout_in_mins: ::Integer?,
                               batch_report_mode: ("REPORT_INDIVIDUAL_BUILDS" | "REPORT_AGGREGATED_BATCH")?
                             },
-                            ?concurrent_build_limit: ::Integer
+                            ?concurrent_build_limit: ::Integer,
+                            ?auto_retry_limit: ::Integer
                           ) -> _CreateProjectResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateProjectResponseSuccess
 
@@ -908,7 +909,8 @@ module Aws
                          ?debug_session_enabled: bool,
                          ?fleet_override: {
                            fleet_arn: ::String?
-                         }
+                         },
+                         ?auto_retry_limit_override: ::Integer
                        ) -> _StartBuildResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartBuildResponseSuccess
 
@@ -1266,7 +1268,8 @@ module Aws
                               timeout_in_mins: ::Integer?,
                               batch_report_mode: ("REPORT_INDIVIDUAL_BUILDS" | "REPORT_AGGREGATED_BATCH")?
                             },
-                            ?concurrent_build_limit: ::Integer
+                            ?concurrent_build_limit: ::Integer,
+                            ?auto_retry_limit: ::Integer
                           ) -> _UpdateProjectResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateProjectResponseSuccess
 

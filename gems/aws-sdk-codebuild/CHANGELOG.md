@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.135.0 (2024-10-25)
+------------------
+
+* Feature - AWS CodeBuild now supports automatically retrying failed builds
+
 1.134.0 (2024-10-18)
 ------------------
 

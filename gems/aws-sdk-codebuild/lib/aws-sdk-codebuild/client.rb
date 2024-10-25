@@ -793,6 +793,10 @@ module Aws::CodeBuild
     #   resp.builds[0].debug_session.session_enabled #=> Boolean
     #   resp.builds[0].debug_session.session_target #=> String
     #   resp.builds[0].build_batch_arn #=> String
+    #   resp.builds[0].auto_retry_config.auto_retry_limit #=> Integer
+    #   resp.builds[0].auto_retry_config.auto_retry_number #=> Integer
+    #   resp.builds[0].auto_retry_config.next_auto_retry #=> String
+    #   resp.builds[0].auto_retry_config.previous_auto_retry #=> String
     #   resp.builds_not_found #=> Array
     #   resp.builds_not_found[0] #=> String
     #
@@ -1016,6 +1020,7 @@ module Aws::CodeBuild
     #   resp.projects[0].project_visibility #=> String, one of "PUBLIC_READ", "PRIVATE"
     #   resp.projects[0].public_project_alias #=> String
     #   resp.projects[0].resource_access_role #=> String
+    #   resp.projects[0].auto_retry_limit #=> Integer
     #   resp.projects_not_found #=> Array
     #   resp.projects_not_found[0] #=> String
     #
@@ -1513,6 +1518,12 @@ module Aws::CodeBuild
     #   than or equal to this limit. If the current build count meets this
     #   limit, new builds are throttled and are not run.
     #
+    # @option params [Integer] :auto_retry_limit
+    #   The maximum number of additional automatic retries after a failed
+    #   build. For example, if the auto-retry limit is set to 2, CodeBuild
+    #   will call the `RetryBuild` API to automatically retry your build for
+    #   up to 2 additional times.
+    #
     # @return [Types::CreateProjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateProjectOutput#project #project} => Types::Project
@@ -1673,6 +1684,7 @@ module Aws::CodeBuild
     #       batch_report_mode: "REPORT_INDIVIDUAL_BUILDS", # accepts REPORT_INDIVIDUAL_BUILDS, REPORT_AGGREGATED_BATCH
     #     },
     #     concurrent_build_limit: 1,
+    #     auto_retry_limit: 1,
     #   })
     #
     # @example Response structure
@@ -1802,6 +1814,7 @@ module Aws::CodeBuild
     #   resp.project.project_visibility #=> String, one of "PUBLIC_READ", "PRIVATE"
     #   resp.project.public_project_alias #=> String
     #   resp.project.resource_access_role #=> String
+    #   resp.project.auto_retry_limit #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/CreateProject AWS API Documentation
     #
@@ -3472,6 +3485,10 @@ module Aws::CodeBuild
     #   resp.build.debug_session.session_enabled #=> Boolean
     #   resp.build.debug_session.session_target #=> String
     #   resp.build.build_batch_arn #=> String
+    #   resp.build.auto_retry_config.auto_retry_limit #=> Integer
+    #   resp.build.auto_retry_config.auto_retry_number #=> Integer
+    #   resp.build.auto_retry_config.next_auto_retry #=> String
+    #   resp.build.auto_retry_config.previous_auto_retry #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/RetryBuild AWS API Documentation
     #
@@ -3911,6 +3928,12 @@ module Aws::CodeBuild
     #   A ProjectFleet object specified for this build that overrides the one
     #   defined in the build project.
     #
+    # @option params [Integer] :auto_retry_limit_override
+    #   The maximum number of additional automatic retries after a failed
+    #   build. For example, if the auto-retry limit is set to 2, CodeBuild
+    #   will call the `RetryBuild` API to automatically retry your build for
+    #   up to 2 additional times.
+    #
     # @return [Types::StartBuildOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::StartBuildOutput#build #build} => Types::Build
@@ -4035,6 +4058,7 @@ module Aws::CodeBuild
     #     fleet_override: {
     #       fleet_arn: "String",
     #     },
+    #     auto_retry_limit_override: 1,
     #   })
     #
     # @example Response structure
@@ -4158,6 +4182,10 @@ module Aws::CodeBuild
     #   resp.build.debug_session.session_enabled #=> Boolean
     #   resp.build.debug_session.session_target #=> String
     #   resp.build.build_batch_arn #=> String
+    #   resp.build.auto_retry_config.auto_retry_limit #=> Integer
+    #   resp.build.auto_retry_config.auto_retry_number #=> Integer
+    #   resp.build.auto_retry_config.next_auto_retry #=> String
+    #   resp.build.auto_retry_config.previous_auto_retry #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StartBuild AWS API Documentation
     #
@@ -4799,6 +4827,10 @@ module Aws::CodeBuild
     #   resp.build.debug_session.session_enabled #=> Boolean
     #   resp.build.debug_session.session_target #=> String
     #   resp.build.build_batch_arn #=> String
+    #   resp.build.auto_retry_config.auto_retry_limit #=> Integer
+    #   resp.build.auto_retry_config.auto_retry_number #=> Integer
+    #   resp.build.auto_retry_config.next_auto_retry #=> String
+    #   resp.build.auto_retry_config.previous_auto_retry #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/StopBuild AWS API Documentation
     #
@@ -5356,6 +5388,12 @@ module Aws::CodeBuild
     #
     #   To remove this limit, set this value to -1.
     #
+    # @option params [Integer] :auto_retry_limit
+    #   The maximum number of additional automatic retries after a failed
+    #   build. For example, if the auto-retry limit is set to 2, CodeBuild
+    #   will call the `RetryBuild` API to automatically retry your build for
+    #   up to 2 additional times.
+    #
     # @return [Types::UpdateProjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateProjectOutput#project #project} => Types::Project
@@ -5516,6 +5554,7 @@ module Aws::CodeBuild
     #       batch_report_mode: "REPORT_INDIVIDUAL_BUILDS", # accepts REPORT_INDIVIDUAL_BUILDS, REPORT_AGGREGATED_BATCH
     #     },
     #     concurrent_build_limit: 1,
+    #     auto_retry_limit: 1,
     #   })
     #
     # @example Response structure
@@ -5645,6 +5684,7 @@ module Aws::CodeBuild
     #   resp.project.project_visibility #=> String, one of "PUBLIC_READ", "PRIVATE"
     #   resp.project.public_project_alias #=> String
     #   resp.project.resource_access_role #=> String
+    #   resp.project.auto_retry_limit #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/UpdateProject AWS API Documentation
     #
@@ -5914,7 +5954,7 @@ module Aws::CodeBuild
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codebuild'
-      context[:gem_version] = '1.134.0'
+      context[:gem_version] = '1.135.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
