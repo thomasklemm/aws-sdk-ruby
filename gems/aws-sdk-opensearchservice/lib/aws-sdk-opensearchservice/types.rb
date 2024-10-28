@@ -1136,6 +1136,10 @@ module Aws::OpenSearchService
     #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-multiaz.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] node_options
+    #   List of node options for the domain.
+    #   @return [Array<Types::NodeOption>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ClusterConfig AWS API Documentation
     #
     class ClusterConfig < Struct.new(
@@ -1150,7 +1154,8 @@ module Aws::OpenSearchService
       :warm_type,
       :warm_count,
       :cold_storage_options,
-      :multi_az_with_standby_enabled)
+      :multi_az_with_standby_enabled,
+      :node_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4798,6 +4803,50 @@ module Aws::OpenSearchService
     class NaturalLanguageQueryGenerationOptionsOutput < Struct.new(
       :desired_state,
       :current_state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Container for specifying configuration of any node type.
+    #
+    # @!attribute [rw] enabled
+    #   A boolean that indicates whether a particular node type is enabled
+    #   or not.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] type
+    #   The instance type of a particular node type in the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] count
+    #   The number of nodes of a particular node type in the cluster.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/NodeConfig AWS API Documentation
+    #
+    class NodeConfig < Struct.new(
+      :enabled,
+      :type,
+      :count)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Container for specifying node type.
+    #
+    # @!attribute [rw] node_type
+    #   Container for node type like coordinating.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_config
+    #   Container for specifying configuration of any node type.
+    #   @return [Types::NodeConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/NodeOption AWS API Documentation
+    #
+    class NodeOption < Struct.new(
+      :node_type,
+      :node_config)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -303,7 +303,11 @@ module Aws::OpenSearchService
     NaturalLanguageQueryGenerationOptionsInput = Shapes::StructureShape.new(name: 'NaturalLanguageQueryGenerationOptionsInput')
     NaturalLanguageQueryGenerationOptionsOutput = Shapes::StructureShape.new(name: 'NaturalLanguageQueryGenerationOptionsOutput')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
+    NodeConfig = Shapes::StructureShape.new(name: 'NodeConfig')
     NodeId = Shapes::StringShape.new(name: 'NodeId')
+    NodeOption = Shapes::StructureShape.new(name: 'NodeOption')
+    NodeOptionsList = Shapes::ListShape.new(name: 'NodeOptionsList')
+    NodeOptionsNodeType = Shapes::StringShape.new(name: 'NodeOptionsNodeType')
     NodeStatus = Shapes::StringShape.new(name: 'NodeStatus')
     NodeToNodeEncryptionOptions = Shapes::StructureShape.new(name: 'NodeToNodeEncryptionOptions')
     NodeToNodeEncryptionOptionsStatus = Shapes::StructureShape.new(name: 'NodeToNodeEncryptionOptionsStatus')
@@ -681,6 +685,7 @@ module Aws::OpenSearchService
     ClusterConfig.add_member(:warm_count, Shapes::ShapeRef.new(shape: IntegerClass, location_name: "WarmCount"))
     ClusterConfig.add_member(:cold_storage_options, Shapes::ShapeRef.new(shape: ColdStorageOptions, location_name: "ColdStorageOptions"))
     ClusterConfig.add_member(:multi_az_with_standby_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "MultiAZWithStandbyEnabled"))
+    ClusterConfig.add_member(:node_options, Shapes::ShapeRef.new(shape: NodeOptionsList, location_name: "NodeOptions"))
     ClusterConfig.struct_class = Types::ClusterConfig
 
     ClusterConfigStatus.add_member(:options, Shapes::ShapeRef.new(shape: ClusterConfig, required: true, location_name: "Options"))
@@ -1397,6 +1402,17 @@ module Aws::OpenSearchService
     NaturalLanguageQueryGenerationOptionsOutput.add_member(:desired_state, Shapes::ShapeRef.new(shape: NaturalLanguageQueryGenerationDesiredState, location_name: "DesiredState"))
     NaturalLanguageQueryGenerationOptionsOutput.add_member(:current_state, Shapes::ShapeRef.new(shape: NaturalLanguageQueryGenerationCurrentState, location_name: "CurrentState"))
     NaturalLanguageQueryGenerationOptionsOutput.struct_class = Types::NaturalLanguageQueryGenerationOptionsOutput
+
+    NodeConfig.add_member(:enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "Enabled"))
+    NodeConfig.add_member(:type, Shapes::ShapeRef.new(shape: OpenSearchPartitionInstanceType, location_name: "Type"))
+    NodeConfig.add_member(:count, Shapes::ShapeRef.new(shape: IntegerClass, location_name: "Count"))
+    NodeConfig.struct_class = Types::NodeConfig
+
+    NodeOption.add_member(:node_type, Shapes::ShapeRef.new(shape: NodeOptionsNodeType, location_name: "NodeType"))
+    NodeOption.add_member(:node_config, Shapes::ShapeRef.new(shape: NodeConfig, location_name: "NodeConfig"))
+    NodeOption.struct_class = Types::NodeOption
+
+    NodeOptionsList.member = Shapes::ShapeRef.new(shape: NodeOption)
 
     NodeToNodeEncryptionOptions.add_member(:enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "Enabled"))
     NodeToNodeEncryptionOptions.struct_class = Types::NodeToNodeEncryptionOptions
