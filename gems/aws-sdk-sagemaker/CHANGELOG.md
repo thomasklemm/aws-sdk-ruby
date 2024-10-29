@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.270.0 (2024-10-29)
+------------------
+
+* Feature - Adding `notebook-al2-v3` as allowed value to SageMaker NotebookInstance PlatformIdentifier attribute
+
 1.269.0 (2024-10-18)
 ------------------
 
