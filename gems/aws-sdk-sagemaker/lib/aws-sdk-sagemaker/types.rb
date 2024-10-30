@@ -8484,6 +8484,11 @@ module Aws::SageMaker
     #   [2]: https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html
     #   @return [Types::ModelPackageModelCard]
     #
+    # @!attribute [rw] model_life_cycle
+    #   A structure describing the current state of the model in its life
+    #   cycle.
+    #   @return [Types::ModelLifeCycle]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateModelPackageInput AWS API Documentation
     #
     class CreateModelPackageInput < Struct.new(
@@ -8508,7 +8513,8 @@ module Aws::SageMaker
       :skip_model_validation,
       :source_uri,
       :security_config,
-      :model_card)
+      :model_card,
+      :model_life_cycle)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16287,6 +16293,11 @@ module Aws::SageMaker
     #   [2]: https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html
     #   @return [Types::ModelPackageModelCard]
     #
+    # @!attribute [rw] model_life_cycle
+    #   A structure describing the current state of the model in its life
+    #   cycle.
+    #   @return [Types::ModelLifeCycle]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeModelPackageOutput AWS API Documentation
     #
     class DescribeModelPackageOutput < Struct.new(
@@ -16318,7 +16329,8 @@ module Aws::SageMaker
       :skip_model_validation,
       :source_uri,
       :security_config,
-      :model_card)
+      :model_card,
+      :model_life_cycle)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -32845,6 +32857,31 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # A structure describing the current state of the model in its life
+    # cycle.
+    #
+    # @!attribute [rw] stage
+    #   The current stage in the model life cycle.
+    #   @return [String]
+    #
+    # @!attribute [rw] stage_status
+    #   The current status of a stage in model life cycle.
+    #   @return [String]
+    #
+    # @!attribute [rw] stage_description
+    #   Describes the stage related details.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelLifeCycle AWS API Documentation
+    #
+    class ModelLifeCycle < Struct.new(
+      :stage,
+      :stage_status,
+      :stage_description)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Part of the search expression. You can specify the name and value
     # (domain, task, framework, framework version, task, and model).
     #
@@ -33105,6 +33142,11 @@ module Aws::SageMaker
     #   [2]: https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html
     #   @return [Types::ModelPackageModelCard]
     #
+    # @!attribute [rw] model_life_cycle
+    #   A structure describing the current state of the model in its life
+    #   cycle.
+    #   @return [Types::ModelLifeCycle]
+    #
     # @!attribute [rw] tags
     #   A list of the tags associated with the model package. For more
     #   information, see [Tagging Amazon Web Services resources][1] in the
@@ -33157,6 +33199,7 @@ module Aws::SageMaker
       :source_uri,
       :security_config,
       :model_card,
+      :model_life_cycle,
       :tags,
       :customer_metadata_properties,
       :drift_check_baselines,
@@ -46063,6 +46106,16 @@ module Aws::SageMaker
     #   [2]: https://docs.aws.amazon.com/sagemaker/latest/dg/model-registry-details.html
     #   @return [Types::ModelPackageModelCard]
     #
+    # @!attribute [rw] model_life_cycle
+    #   A structure describing the current state of the model in its life
+    #   cycle.
+    #   @return [Types::ModelLifeCycle]
+    #
+    # @!attribute [rw] client_token
+    #   A unique token that guarantees that the call to this API is
+    #   idempotent.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateModelPackageInput AWS API Documentation
     #
     class UpdateModelPackageInput < Struct.new(
@@ -46074,7 +46127,9 @@ module Aws::SageMaker
       :additional_inference_specifications_to_add,
       :inference_specification,
       :source_uri,
-      :model_card)
+      :model_card,
+      :model_life_cycle,
+      :client_token)
       SENSITIVE = []
       include Aws::Structure
     end

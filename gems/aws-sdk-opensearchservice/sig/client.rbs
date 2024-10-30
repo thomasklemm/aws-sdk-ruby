@@ -132,7 +132,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/OpenSearchService/Client.html#authorize_vpc_endpoint_access-instance_method
       def authorize_vpc_endpoint_access: (
                                            domain_name: ::String,
-                                           account: ::String
+                                           ?account: ::String,
+                                           ?service: ("application.opensearchservice.amazonaws.com")
                                          ) -> _AuthorizeVpcEndpointAccessResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AuthorizeVpcEndpointAccessResponseSuccess
 
@@ -158,6 +159,47 @@ module Aws
                                             domain_name: ::String
                                           ) -> _CancelServiceSoftwareUpdateResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelServiceSoftwareUpdateResponseSuccess
+
+      interface _CreateApplicationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateApplicationResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def arn: () -> ::String
+        def data_sources: () -> ::Array[Types::DataSource]
+        def iam_identity_center_options: () -> Types::IamIdentityCenterOptions
+        def app_configs: () -> ::Array[Types::AppConfig]
+        def tag_list: () -> ::Array[Types::Tag]
+        def created_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/OpenSearchService/Client.html#create_application-instance_method
+      def create_application: (
+                                ?client_token: ::String,
+                                name: ::String,
+                                ?data_sources: Array[
+                                  {
+                                    data_source_arn: ::String?,
+                                    data_source_description: ::String?
+                                  },
+                                ],
+                                ?iam_identity_center_options: {
+                                  enabled: bool?,
+                                  iam_identity_center_instance_arn: ::String?,
+                                  iam_role_for_identity_center_application_arn: ::String?
+                                },
+                                ?app_configs: Array[
+                                  {
+                                    key: ("opensearchDashboards.dashboardAdmin.users" | "opensearchDashboards.dashboardAdmin.groups")?,
+                                    value: ::String?
+                                  },
+                                ],
+                                ?tag_list: Array[
+                                  {
+                                    key: ::String,
+                                    value: ::String
+                                  },
+                                ]
+                              ) -> _CreateApplicationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateApplicationResponseSuccess
 
       interface _CreateDomainResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateDomainResponse]
@@ -263,6 +305,12 @@ module Aws
                                public_key: ::String?
                              }?,
                              anonymous_auth_enabled: bool?
+                           },
+                           ?identity_center_options: {
+                             enabled_api_access: bool?,
+                             identity_center_instance_arn: ::String?,
+                             subject_key: ("UserName" | "UserId" | "Email")?,
+                             roles_key: ("GroupName" | "GroupId")?
                            },
                            ?tag_list: Array[
                              {
@@ -371,6 +419,15 @@ module Aws
                                  ?client_token: ::String
                                ) -> _CreateVpcEndpointResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateVpcEndpointResponseSuccess
+
+      interface _DeleteApplicationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteApplicationResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/OpenSearchService/Client.html#delete_application-instance_method
+      def delete_application: (
+                                id: ::String
+                              ) -> _DeleteApplicationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteApplicationResponseSuccess
 
       interface _DeleteDataSourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDataSourceResponse]
@@ -647,6 +704,25 @@ module Aws
                               ) -> _DissociatePackageResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DissociatePackageResponseSuccess
 
+      interface _GetApplicationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetApplicationResponse]
+        def id: () -> ::String
+        def arn: () -> ::String
+        def name: () -> ::String
+        def endpoint: () -> ::String
+        def status: () -> ("CREATING" | "UPDATING" | "DELETING" | "ACTIVE" | "FAILED")
+        def iam_identity_center_options: () -> Types::IamIdentityCenterOptions
+        def data_sources: () -> ::Array[Types::DataSource]
+        def app_configs: () -> ::Array[Types::AppConfig]
+        def created_at: () -> ::Time
+        def last_updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/OpenSearchService/Client.html#get_application-instance_method
+      def get_application: (
+                             id: ::String
+                           ) -> _GetApplicationResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetApplicationResponseSuccess
+
       interface _GetCompatibleVersionsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetCompatibleVersionsResponse]
         def compatible_versions: () -> ::Array[Types::CompatibleVersionsMap]
@@ -725,6 +801,19 @@ module Aws
                                 domain_name: ::String
                               ) -> _GetUpgradeStatusResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetUpgradeStatusResponseSuccess
+
+      interface _ListApplicationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListApplicationsResponse]
+        def application_summaries: () -> ::Array[Types::ApplicationSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/OpenSearchService/Client.html#list_applications-instance_method
+      def list_applications: (
+                               ?next_token: ::String,
+                               ?statuses: Array[("CREATING" | "UPDATING" | "DELETING" | "ACTIVE" | "FAILED")],
+                               ?max_results: ::Integer
+                             ) -> _ListApplicationsResponseSuccess
+                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListApplicationsResponseSuccess
 
       interface _ListDataSourcesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDataSourcesResponse]
@@ -909,7 +998,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/OpenSearchService/Client.html#revoke_vpc_endpoint_access-instance_method
       def revoke_vpc_endpoint_access: (
                                         domain_name: ::String,
-                                        account: ::String
+                                        ?account: ::String,
+                                        ?service: ("application.opensearchservice.amazonaws.com")
                                       ) -> _RevokeVpcEndpointAccessResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RevokeVpcEndpointAccessResponseSuccess
 
@@ -936,6 +1026,35 @@ module Aws
                                            ?desired_start_time: ::Integer
                                          ) -> _StartServiceSoftwareUpdateResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartServiceSoftwareUpdateResponseSuccess
+
+      interface _UpdateApplicationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateApplicationResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def arn: () -> ::String
+        def data_sources: () -> ::Array[Types::DataSource]
+        def iam_identity_center_options: () -> Types::IamIdentityCenterOptions
+        def app_configs: () -> ::Array[Types::AppConfig]
+        def created_at: () -> ::Time
+        def last_updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/OpenSearchService/Client.html#update_application-instance_method
+      def update_application: (
+                                id: ::String,
+                                ?data_sources: Array[
+                                  {
+                                    data_source_arn: ::String?,
+                                    data_source_description: ::String?
+                                  },
+                                ],
+                                ?app_configs: Array[
+                                  {
+                                    key: ("opensearchDashboards.dashboardAdmin.users" | "opensearchDashboards.dashboardAdmin.groups")?,
+                                    value: ::String?
+                                  },
+                                ]
+                              ) -> _UpdateApplicationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateApplicationResponseSuccess
 
       interface _UpdateDataSourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDataSourceResponse]
@@ -1060,6 +1179,12 @@ module Aws
                                       public_key: ::String?
                                     }?,
                                     anonymous_auth_enabled: bool?
+                                  },
+                                  ?identity_center_options: {
+                                    enabled_api_access: bool?,
+                                    identity_center_instance_arn: ::String?,
+                                    subject_key: ("UserName" | "UserId" | "Email")?,
+                                    roles_key: ("GroupName" | "GroupId")?
                                   },
                                   ?auto_tune_options: {
                                     desired_state: ("ENABLED" | "DISABLED")?,

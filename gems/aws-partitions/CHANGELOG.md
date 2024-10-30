@@ -1,6 +1,15 @@
 Unreleased Changes
 ------------------
 
+1.999.0 (2024-10-30)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::GeoRoutes`.
+
+* Feature - Added support for enumerating regions for  `Aws::GeoPlaces`.
+
+* Feature - Added support for enumerating regions for  `Aws::GeoMaps`.
+
 1.998.0 (2024-10-29)
 ------------------
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.271.0 (2024-10-30)
+------------------
+
+* Feature - Added support for Model Registry Staging construct. Users can define series of stages that models can progress through for model workflows and lifecycle. This simplifies tracking and managing models as they transition through development, testing, and production stages.
+
 1.270.0 (2024-10-29)
 ------------------
 

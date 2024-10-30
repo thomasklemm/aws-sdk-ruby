@@ -1484,6 +1484,7 @@ module Aws::SageMaker
     ModelInsightsLocation = Shapes::StringShape.new(name: 'ModelInsightsLocation')
     ModelLatencyThreshold = Shapes::StructureShape.new(name: 'ModelLatencyThreshold')
     ModelLatencyThresholds = Shapes::ListShape.new(name: 'ModelLatencyThresholds')
+    ModelLifeCycle = Shapes::StructureShape.new(name: 'ModelLifeCycle')
     ModelMetadataFilter = Shapes::StructureShape.new(name: 'ModelMetadataFilter')
     ModelMetadataFilterType = Shapes::StringShape.new(name: 'ModelMetadataFilterType')
     ModelMetadataFilters = Shapes::ListShape.new(name: 'ModelMetadataFilters')
@@ -2034,6 +2035,7 @@ module Aws::SageMaker
     SpaceStorageSettings = Shapes::StructureShape.new(name: 'SpaceStorageSettings')
     SpawnRate = Shapes::IntegerShape.new(name: 'SpawnRate')
     SplitType = Shapes::StringShape.new(name: 'SplitType')
+    StageDescription = Shapes::StringShape.new(name: 'StageDescription')
     StageStatus = Shapes::StringShape.new(name: 'StageStatus')
     Stairs = Shapes::StructureShape.new(name: 'Stairs')
     StartEdgeDeploymentStageRequest = Shapes::StructureShape.new(name: 'StartEdgeDeploymentStageRequest')
@@ -3668,6 +3670,7 @@ module Aws::SageMaker
     CreateModelPackageInput.add_member(:source_uri, Shapes::ShapeRef.new(shape: ModelPackageSourceUri, location_name: "SourceUri"))
     CreateModelPackageInput.add_member(:security_config, Shapes::ShapeRef.new(shape: ModelPackageSecurityConfig, location_name: "SecurityConfig"))
     CreateModelPackageInput.add_member(:model_card, Shapes::ShapeRef.new(shape: ModelPackageModelCard, location_name: "ModelCard"))
+    CreateModelPackageInput.add_member(:model_life_cycle, Shapes::ShapeRef.new(shape: ModelLifeCycle, location_name: "ModelLifeCycle"))
     CreateModelPackageInput.struct_class = Types::CreateModelPackageInput
 
     CreateModelPackageOutput.add_member(:model_package_arn, Shapes::ShapeRef.new(shape: ModelPackageArn, required: true, location_name: "ModelPackageArn"))
@@ -5109,6 +5112,7 @@ module Aws::SageMaker
     DescribeModelPackageOutput.add_member(:source_uri, Shapes::ShapeRef.new(shape: ModelPackageSourceUri, location_name: "SourceUri"))
     DescribeModelPackageOutput.add_member(:security_config, Shapes::ShapeRef.new(shape: ModelPackageSecurityConfig, location_name: "SecurityConfig"))
     DescribeModelPackageOutput.add_member(:model_card, Shapes::ShapeRef.new(shape: ModelPackageModelCard, location_name: "ModelCard"))
+    DescribeModelPackageOutput.add_member(:model_life_cycle, Shapes::ShapeRef.new(shape: ModelLifeCycle, location_name: "ModelLifeCycle"))
     DescribeModelPackageOutput.struct_class = Types::DescribeModelPackageOutput
 
     DescribeModelQualityJobDefinitionRequest.add_member(:job_definition_name, Shapes::ShapeRef.new(shape: MonitoringJobDefinitionName, required: true, location_name: "JobDefinitionName"))
@@ -7975,6 +7979,11 @@ module Aws::SageMaker
 
     ModelLatencyThresholds.member = Shapes::ShapeRef.new(shape: ModelLatencyThreshold)
 
+    ModelLifeCycle.add_member(:stage, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "Stage"))
+    ModelLifeCycle.add_member(:stage_status, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "StageStatus"))
+    ModelLifeCycle.add_member(:stage_description, Shapes::ShapeRef.new(shape: StageDescription, location_name: "StageDescription"))
+    ModelLifeCycle.struct_class = Types::ModelLifeCycle
+
     ModelMetadataFilter.add_member(:name, Shapes::ShapeRef.new(shape: ModelMetadataFilterType, required: true, location_name: "Name"))
     ModelMetadataFilter.add_member(:value, Shapes::ShapeRef.new(shape: String256, required: true, location_name: "Value"))
     ModelMetadataFilter.struct_class = Types::ModelMetadataFilter
@@ -8025,6 +8034,7 @@ module Aws::SageMaker
     ModelPackage.add_member(:source_uri, Shapes::ShapeRef.new(shape: ModelPackageSourceUri, location_name: "SourceUri"))
     ModelPackage.add_member(:security_config, Shapes::ShapeRef.new(shape: ModelPackageSecurityConfig, location_name: "SecurityConfig"))
     ModelPackage.add_member(:model_card, Shapes::ShapeRef.new(shape: ModelPackageModelCard, location_name: "ModelCard"))
+    ModelPackage.add_member(:model_life_cycle, Shapes::ShapeRef.new(shape: ModelLifeCycle, location_name: "ModelLifeCycle"))
     ModelPackage.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     ModelPackage.add_member(:customer_metadata_properties, Shapes::ShapeRef.new(shape: CustomerMetadataMap, location_name: "CustomerMetadataProperties"))
     ModelPackage.add_member(:drift_check_baselines, Shapes::ShapeRef.new(shape: DriftCheckBaselines, location_name: "DriftCheckBaselines"))
@@ -10194,6 +10204,8 @@ module Aws::SageMaker
     UpdateModelPackageInput.add_member(:inference_specification, Shapes::ShapeRef.new(shape: InferenceSpecification, location_name: "InferenceSpecification"))
     UpdateModelPackageInput.add_member(:source_uri, Shapes::ShapeRef.new(shape: ModelPackageSourceUri, location_name: "SourceUri"))
     UpdateModelPackageInput.add_member(:model_card, Shapes::ShapeRef.new(shape: ModelPackageModelCard, location_name: "ModelCard"))
+    UpdateModelPackageInput.add_member(:model_life_cycle, Shapes::ShapeRef.new(shape: ModelLifeCycle, location_name: "ModelLifeCycle"))
+    UpdateModelPackageInput.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken"))
     UpdateModelPackageInput.struct_class = Types::UpdateModelPackageInput
 
     UpdateModelPackageOutput.add_member(:model_package_arn, Shapes::ShapeRef.new(shape: ModelPackageArn, required: true, location_name: "ModelPackageArn"))
