@@ -2935,6 +2935,79 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Represents an error encountered when deleting a node from a SageMaker
+    # HyperPod cluster.
+    #
+    # @!attribute [rw] code
+    #   The error code associated with the error encountered when deleting a
+    #   node.
+    #
+    #   The code provides information about the specific issue encountered,
+    #   such as the node not being found, the node's status being invalid
+    #   for deletion, or the node ID being in use by another process.
+    #   @return [String]
+    #
+    # @!attribute [rw] message
+    #   A message describing the error encountered when deleting a node.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_id
+    #   The ID of the node that encountered an error during the deletion
+    #   process.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/BatchDeleteClusterNodesError AWS API Documentation
+    #
+    class BatchDeleteClusterNodesError < Struct.new(
+      :code,
+      :message,
+      :node_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cluster_name
+    #   The name of the SageMaker HyperPod cluster from which to delete the
+    #   specified nodes.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_ids
+    #   A list of node IDs to be deleted from the specified cluster.
+    #
+    #   <note markdown="1"> For SageMaker HyperPod clusters using the Slurm workload manager,
+    #   you cannot remove instances that are configured as Slurm controller
+    #   nodes.
+    #
+    #    </note>
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/BatchDeleteClusterNodesRequest AWS API Documentation
+    #
+    class BatchDeleteClusterNodesRequest < Struct.new(
+      :cluster_name,
+      :node_ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] failed
+    #   A list of errors encountered when deleting the specified nodes.
+    #   @return [Array<Types::BatchDeleteClusterNodesError>]
+    #
+    # @!attribute [rw] successful
+    #   A list of node IDs that were successfully deleted from the specified
+    #   cluster.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/BatchDeleteClusterNodesResponse AWS API Documentation
+    #
+    class BatchDeleteClusterNodesResponse < Struct.new(
+      :failed,
+      :successful)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The error code and error description associated with the resource.
     #
     # @!attribute [rw] error_code
@@ -43498,6 +43571,10 @@ module Aws::SageMaker
     #   The status of the training job.
     #   @return [String]
     #
+    # @!attribute [rw] secondary_status
+    #   The secondary status of the training job.
+    #   @return [String]
+    #
     # @!attribute [rw] warm_pool_status
     #   The status of the warm pool associated with the training job.
     #   @return [Types::WarmPoolStatus]
@@ -43511,6 +43588,7 @@ module Aws::SageMaker
       :training_end_time,
       :last_modified_time,
       :training_job_status,
+      :secondary_status,
       :warm_pool_status)
       SENSITIVE = []
       include Aws::Structure

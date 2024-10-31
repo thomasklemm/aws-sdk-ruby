@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.272.0 (2024-10-31)
+------------------
+
+* Feature - SageMaker HyperPod adds scale-down at instance level via BatchDeleteClusterNodes API and group level via UpdateCluster API. SageMaker Training exposes secondary job status in TrainingJobSummary from ListTrainingJobs API. SageMaker now supports G6, G6e, P5e instances for HyperPod and Training.
+
 1.271.0 (2024-10-30)
 ------------------
 
