@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.100.0 (2024-11-01)
+------------------
+
+* Feature - This release introduces an improvement in PutLogEvents
+
 1.99.0 (2024-10-29)
 ------------------
 
