@@ -15,7 +15,7 @@ if defined?(JRUBY_VERSION)
 end
 
 # protocol parsers
-gem 'json'
+gem 'json', '2.7.5' if defined?(JRUBY_VERSION) # temporary due to json 2.8.0 release
 gem 'nokogiri', '>= 1.6.8.1'
 gem 'oga'
 gem 'rexml'
