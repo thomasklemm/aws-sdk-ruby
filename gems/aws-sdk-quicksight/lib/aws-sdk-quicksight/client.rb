@@ -2400,6 +2400,16 @@ module Aws::QuickSight
     #         host: "Host", # required
     #         database: "Database", # required
     #         warehouse: "Warehouse", # required
+    #         authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #         database_access_control_role: "DatabaseAccessControlRole",
+    #         o_auth_parameters: {
+    #           token_provider_url: "TokenProviderUrl", # required
+    #           o_auth_scope: "OAuthScope",
+    #           identity_provider_vpc_connection_properties: {
+    #             vpc_connection_arn: "Arn", # required
+    #           },
+    #           identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #         },
     #       },
     #       spark_parameters: {
     #         host: "Host", # required
@@ -2436,6 +2446,16 @@ module Aws::QuickSight
     #         port: 1, # required
     #         catalog: "Catalog", # required
     #         product_type: "GALAXY", # accepts GALAXY, ENTERPRISE
+    #         database_access_control_role: "DatabaseAccessControlRole",
+    #         authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #         o_auth_parameters: {
+    #           token_provider_url: "TokenProviderUrl", # required
+    #           o_auth_scope: "OAuthScope",
+    #           identity_provider_vpc_connection_properties: {
+    #             vpc_connection_arn: "Arn", # required
+    #           },
+    #           identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #         },
     #       },
     #       trino_parameters: {
     #         host: "Host", # required
@@ -2534,6 +2554,16 @@ module Aws::QuickSight
     #               host: "Host", # required
     #               database: "Database", # required
     #               warehouse: "Warehouse", # required
+    #               authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #               database_access_control_role: "DatabaseAccessControlRole",
+    #               o_auth_parameters: {
+    #                 token_provider_url: "TokenProviderUrl", # required
+    #                 o_auth_scope: "OAuthScope",
+    #                 identity_provider_vpc_connection_properties: {
+    #                   vpc_connection_arn: "Arn", # required
+    #                 },
+    #                 identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #               },
     #             },
     #             spark_parameters: {
     #               host: "Host", # required
@@ -2570,6 +2600,16 @@ module Aws::QuickSight
     #               port: 1, # required
     #               catalog: "Catalog", # required
     #               product_type: "GALAXY", # accepts GALAXY, ENTERPRISE
+    #               database_access_control_role: "DatabaseAccessControlRole",
+    #               authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #               o_auth_parameters: {
+    #                 token_provider_url: "TokenProviderUrl", # required
+    #                 o_auth_scope: "OAuthScope",
+    #                 identity_provider_vpc_connection_properties: {
+    #                   vpc_connection_arn: "Arn", # required
+    #                 },
+    #                 identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #               },
     #             },
     #             trino_parameters: {
     #               host: "Host", # required
@@ -5621,6 +5661,12 @@ module Aws::QuickSight
     #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.host #=> String
     #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.database #=> String
     #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.warehouse #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.database_access_control_role #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.override_parameters.data_sources[0].data_source_parameters.spark_parameters.host #=> String
     #   resp.override_parameters.data_sources[0].data_source_parameters.spark_parameters.port #=> Integer
     #   resp.override_parameters.data_sources[0].data_source_parameters.sql_server_parameters.host #=> String
@@ -5641,6 +5687,12 @@ module Aws::QuickSight
     #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.port #=> Integer
     #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.catalog #=> String
     #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.product_type #=> String, one of "GALAXY", "ENTERPRISE"
+    #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.database_access_control_role #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.override_parameters.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.override_parameters.data_sources[0].data_source_parameters.trino_parameters.host #=> String
     #   resp.override_parameters.data_sources[0].data_source_parameters.trino_parameters.port #=> Integer
     #   resp.override_parameters.data_sources[0].data_source_parameters.trino_parameters.catalog #=> String
@@ -6444,6 +6496,12 @@ module Aws::QuickSight
     #   resp.data_source.data_source_parameters.snowflake_parameters.host #=> String
     #   resp.data_source.data_source_parameters.snowflake_parameters.database #=> String
     #   resp.data_source.data_source_parameters.snowflake_parameters.warehouse #=> String
+    #   resp.data_source.data_source_parameters.snowflake_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_source.data_source_parameters.snowflake_parameters.database_access_control_role #=> String
+    #   resp.data_source.data_source_parameters.snowflake_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_source.data_source_parameters.snowflake_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_source.data_source_parameters.snowflake_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_source.data_source_parameters.snowflake_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_source.data_source_parameters.spark_parameters.host #=> String
     #   resp.data_source.data_source_parameters.spark_parameters.port #=> Integer
     #   resp.data_source.data_source_parameters.sql_server_parameters.host #=> String
@@ -6464,6 +6522,12 @@ module Aws::QuickSight
     #   resp.data_source.data_source_parameters.starburst_parameters.port #=> Integer
     #   resp.data_source.data_source_parameters.starburst_parameters.catalog #=> String
     #   resp.data_source.data_source_parameters.starburst_parameters.product_type #=> String, one of "GALAXY", "ENTERPRISE"
+    #   resp.data_source.data_source_parameters.starburst_parameters.database_access_control_role #=> String
+    #   resp.data_source.data_source_parameters.starburst_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_source.data_source_parameters.starburst_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_source.data_source_parameters.starburst_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_source.data_source_parameters.starburst_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_source.data_source_parameters.starburst_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_source.data_source_parameters.trino_parameters.host #=> String
     #   resp.data_source.data_source_parameters.trino_parameters.port #=> Integer
     #   resp.data_source.data_source_parameters.trino_parameters.catalog #=> String
@@ -6515,6 +6579,12 @@ module Aws::QuickSight
     #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.host #=> String
     #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.database #=> String
     #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.warehouse #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.database_access_control_role #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_source.alternate_data_source_parameters[0].spark_parameters.host #=> String
     #   resp.data_source.alternate_data_source_parameters[0].spark_parameters.port #=> Integer
     #   resp.data_source.alternate_data_source_parameters[0].sql_server_parameters.host #=> String
@@ -6535,6 +6605,12 @@ module Aws::QuickSight
     #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.port #=> Integer
     #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.catalog #=> String
     #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.product_type #=> String, one of "GALAXY", "ENTERPRISE"
+    #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.database_access_control_role #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_source.alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_source.alternate_data_source_parameters[0].trino_parameters.host #=> String
     #   resp.data_source.alternate_data_source_parameters[0].trino_parameters.port #=> Integer
     #   resp.data_source.alternate_data_source_parameters[0].trino_parameters.catalog #=> String
@@ -9007,6 +9083,12 @@ module Aws::QuickSight
     #   resp.data_sources[0].data_source_parameters.snowflake_parameters.host #=> String
     #   resp.data_sources[0].data_source_parameters.snowflake_parameters.database #=> String
     #   resp.data_sources[0].data_source_parameters.snowflake_parameters.warehouse #=> String
+    #   resp.data_sources[0].data_source_parameters.snowflake_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_sources[0].data_source_parameters.snowflake_parameters.database_access_control_role #=> String
+    #   resp.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_sources[0].data_source_parameters.snowflake_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_sources[0].data_source_parameters.spark_parameters.host #=> String
     #   resp.data_sources[0].data_source_parameters.spark_parameters.port #=> Integer
     #   resp.data_sources[0].data_source_parameters.sql_server_parameters.host #=> String
@@ -9027,6 +9109,12 @@ module Aws::QuickSight
     #   resp.data_sources[0].data_source_parameters.starburst_parameters.port #=> Integer
     #   resp.data_sources[0].data_source_parameters.starburst_parameters.catalog #=> String
     #   resp.data_sources[0].data_source_parameters.starburst_parameters.product_type #=> String, one of "GALAXY", "ENTERPRISE"
+    #   resp.data_sources[0].data_source_parameters.starburst_parameters.database_access_control_role #=> String
+    #   resp.data_sources[0].data_source_parameters.starburst_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_sources[0].data_source_parameters.starburst_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_sources[0].data_source_parameters.trino_parameters.host #=> String
     #   resp.data_sources[0].data_source_parameters.trino_parameters.port #=> Integer
     #   resp.data_sources[0].data_source_parameters.trino_parameters.catalog #=> String
@@ -9078,6 +9166,12 @@ module Aws::QuickSight
     #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.host #=> String
     #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.database #=> String
     #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.warehouse #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.database_access_control_role #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].snowflake_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_sources[0].alternate_data_source_parameters[0].spark_parameters.host #=> String
     #   resp.data_sources[0].alternate_data_source_parameters[0].spark_parameters.port #=> Integer
     #   resp.data_sources[0].alternate_data_source_parameters[0].sql_server_parameters.host #=> String
@@ -9098,6 +9192,12 @@ module Aws::QuickSight
     #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.port #=> Integer
     #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.catalog #=> String
     #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.product_type #=> String, one of "GALAXY", "ENTERPRISE"
+    #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.database_access_control_role #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.authentication_type #=> String, one of "PASSWORD", "TOKEN", "X509"
+    #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.token_provider_url #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.o_auth_scope #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.identity_provider_vpc_connection_properties.vpc_connection_arn #=> String
+    #   resp.data_sources[0].alternate_data_source_parameters[0].starburst_parameters.o_auth_parameters.identity_provider_resource_uri #=> String
     #   resp.data_sources[0].alternate_data_source_parameters[0].trino_parameters.host #=> String
     #   resp.data_sources[0].alternate_data_source_parameters[0].trino_parameters.port #=> Integer
     #   resp.data_sources[0].alternate_data_source_parameters[0].trino_parameters.catalog #=> String
@@ -11959,6 +12059,16 @@ module Aws::QuickSight
     #               host: "Host", # required
     #               database: "Database", # required
     #               warehouse: "Warehouse", # required
+    #               authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #               database_access_control_role: "DatabaseAccessControlRole",
+    #               o_auth_parameters: {
+    #                 token_provider_url: "TokenProviderUrl", # required
+    #                 o_auth_scope: "OAuthScope",
+    #                 identity_provider_vpc_connection_properties: {
+    #                   vpc_connection_arn: "Arn", # required
+    #                 },
+    #                 identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #               },
     #             },
     #             spark_parameters: {
     #               host: "Host", # required
@@ -11995,6 +12105,16 @@ module Aws::QuickSight
     #               port: 1, # required
     #               catalog: "Catalog", # required
     #               product_type: "GALAXY", # accepts GALAXY, ENTERPRISE
+    #               database_access_control_role: "DatabaseAccessControlRole",
+    #               authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #               o_auth_parameters: {
+    #                 token_provider_url: "TokenProviderUrl", # required
+    #                 o_auth_scope: "OAuthScope",
+    #                 identity_provider_vpc_connection_properties: {
+    #                   vpc_connection_arn: "Arn", # required
+    #                 },
+    #                 identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #               },
     #             },
     #             trino_parameters: {
     #               host: "Host", # required
@@ -13583,6 +13703,16 @@ module Aws::QuickSight
     #         host: "Host", # required
     #         database: "Database", # required
     #         warehouse: "Warehouse", # required
+    #         authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #         database_access_control_role: "DatabaseAccessControlRole",
+    #         o_auth_parameters: {
+    #           token_provider_url: "TokenProviderUrl", # required
+    #           o_auth_scope: "OAuthScope",
+    #           identity_provider_vpc_connection_properties: {
+    #             vpc_connection_arn: "Arn", # required
+    #           },
+    #           identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #         },
     #       },
     #       spark_parameters: {
     #         host: "Host", # required
@@ -13619,6 +13749,16 @@ module Aws::QuickSight
     #         port: 1, # required
     #         catalog: "Catalog", # required
     #         product_type: "GALAXY", # accepts GALAXY, ENTERPRISE
+    #         database_access_control_role: "DatabaseAccessControlRole",
+    #         authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #         o_auth_parameters: {
+    #           token_provider_url: "TokenProviderUrl", # required
+    #           o_auth_scope: "OAuthScope",
+    #           identity_provider_vpc_connection_properties: {
+    #             vpc_connection_arn: "Arn", # required
+    #           },
+    #           identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #         },
     #       },
     #       trino_parameters: {
     #         host: "Host", # required
@@ -13717,6 +13857,16 @@ module Aws::QuickSight
     #               host: "Host", # required
     #               database: "Database", # required
     #               warehouse: "Warehouse", # required
+    #               authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #               database_access_control_role: "DatabaseAccessControlRole",
+    #               o_auth_parameters: {
+    #                 token_provider_url: "TokenProviderUrl", # required
+    #                 o_auth_scope: "OAuthScope",
+    #                 identity_provider_vpc_connection_properties: {
+    #                   vpc_connection_arn: "Arn", # required
+    #                 },
+    #                 identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #               },
     #             },
     #             spark_parameters: {
     #               host: "Host", # required
@@ -13753,6 +13903,16 @@ module Aws::QuickSight
     #               port: 1, # required
     #               catalog: "Catalog", # required
     #               product_type: "GALAXY", # accepts GALAXY, ENTERPRISE
+    #               database_access_control_role: "DatabaseAccessControlRole",
+    #               authentication_type: "PASSWORD", # accepts PASSWORD, TOKEN, X509
+    #               o_auth_parameters: {
+    #                 token_provider_url: "TokenProviderUrl", # required
+    #                 o_auth_scope: "OAuthScope",
+    #                 identity_provider_vpc_connection_properties: {
+    #                   vpc_connection_arn: "Arn", # required
+    #                 },
+    #                 identity_provider_resource_uri: "IdentityProviderResourceUri",
+    #               },
     #             },
     #             trino_parameters: {
     #               host: "Host", # required
@@ -15549,7 +15709,7 @@ module Aws::QuickSight
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-quicksight'
-      context[:gem_version] = '1.134.0'
+      context[:gem_version] = '1.135.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

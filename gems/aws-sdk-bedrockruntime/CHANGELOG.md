@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.31.0 (2024-11-07)
+------------------
+
+* Feature - Add Prompt management support to Bedrock runtime APIs: Converse, ConverseStream, InvokeModel, InvokeModelWithStreamingResponse
+
 1.30.0 (2024-11-06)
 ------------------
 

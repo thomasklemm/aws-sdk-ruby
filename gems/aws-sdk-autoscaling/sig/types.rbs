@@ -142,6 +142,7 @@ module Aws::AutoScaling
       attr_accessor default_instance_warmup: ::Integer
       attr_accessor traffic_sources: ::Array[Types::TrafficSourceIdentifier]
       attr_accessor instance_maintenance_policy: Types::InstanceMaintenancePolicy
+      attr_accessor availability_zone_distribution: Types::AvailabilityZoneDistribution
       SENSITIVE: []
     end
 
@@ -176,6 +177,11 @@ module Aws::AutoScaling
     class AutoScalingInstancesType
       attr_accessor auto_scaling_instances: ::Array[Types::AutoScalingInstanceDetails]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class AvailabilityZoneDistribution
+      attr_accessor capacity_distribution_strategy: ("balanced-only" | "balanced-best-effort")
       SENSITIVE: []
     end
 
@@ -272,6 +278,7 @@ module Aws::AutoScaling
       attr_accessor default_instance_warmup: ::Integer
       attr_accessor traffic_sources: ::Array[Types::TrafficSourceIdentifier]
       attr_accessor instance_maintenance_policy: Types::InstanceMaintenancePolicy
+      attr_accessor availability_zone_distribution: Types::AvailabilityZoneDistribution
       SENSITIVE: []
     end
 
@@ -1391,6 +1398,7 @@ module Aws::AutoScaling
       attr_accessor desired_capacity_type: ::String
       attr_accessor default_instance_warmup: ::Integer
       attr_accessor instance_maintenance_policy: Types::InstanceMaintenancePolicy
+      attr_accessor availability_zone_distribution: Types::AvailabilityZoneDistribution
       SENSITIVE: []
     end
 

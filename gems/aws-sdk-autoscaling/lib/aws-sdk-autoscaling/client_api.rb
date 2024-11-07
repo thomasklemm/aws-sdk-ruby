@@ -62,6 +62,7 @@ module Aws::AutoScaling
     AutoScalingInstances = Shapes::ListShape.new(name: 'AutoScalingInstances')
     AutoScalingInstancesType = Shapes::StructureShape.new(name: 'AutoScalingInstancesType')
     AutoScalingNotificationTypes = Shapes::ListShape.new(name: 'AutoScalingNotificationTypes')
+    AvailabilityZoneDistribution = Shapes::StructureShape.new(name: 'AvailabilityZoneDistribution')
     AvailabilityZones = Shapes::ListShape.new(name: 'AvailabilityZones')
     BakeTime = Shapes::IntegerShape.new(name: 'BakeTime')
     BareMetal = Shapes::StringShape.new(name: 'BareMetal')
@@ -81,6 +82,7 @@ module Aws::AutoScaling
     BurstablePerformance = Shapes::StringShape.new(name: 'BurstablePerformance')
     CancelInstanceRefreshAnswer = Shapes::StructureShape.new(name: 'CancelInstanceRefreshAnswer')
     CancelInstanceRefreshType = Shapes::StructureShape.new(name: 'CancelInstanceRefreshType')
+    CapacityDistributionStrategy = Shapes::StringShape.new(name: 'CapacityDistributionStrategy')
     CapacityForecast = Shapes::StructureShape.new(name: 'CapacityForecast')
     CapacityRebalanceEnabled = Shapes::BooleanShape.new(name: 'CapacityRebalanceEnabled')
     CheckpointDelay = Shapes::IntegerShape.new(name: 'CheckpointDelay')
@@ -518,6 +520,7 @@ module Aws::AutoScaling
     AutoScalingGroup.add_member(:default_instance_warmup, Shapes::ShapeRef.new(shape: DefaultInstanceWarmup, location_name: "DefaultInstanceWarmup"))
     AutoScalingGroup.add_member(:traffic_sources, Shapes::ShapeRef.new(shape: TrafficSources, location_name: "TrafficSources"))
     AutoScalingGroup.add_member(:instance_maintenance_policy, Shapes::ShapeRef.new(shape: InstanceMaintenancePolicy, location_name: "InstanceMaintenancePolicy"))
+    AutoScalingGroup.add_member(:availability_zone_distribution, Shapes::ShapeRef.new(shape: AvailabilityZoneDistribution, location_name: "AvailabilityZoneDistribution"))
     AutoScalingGroup.struct_class = Types::AutoScalingGroup
 
     AutoScalingGroupNames.member = Shapes::ShapeRef.new(shape: XmlStringMaxLen255)
@@ -553,6 +556,9 @@ module Aws::AutoScaling
     AutoScalingInstancesType.struct_class = Types::AutoScalingInstancesType
 
     AutoScalingNotificationTypes.member = Shapes::ShapeRef.new(shape: XmlStringMaxLen255)
+
+    AvailabilityZoneDistribution.add_member(:capacity_distribution_strategy, Shapes::ShapeRef.new(shape: CapacityDistributionStrategy, location_name: "CapacityDistributionStrategy"))
+    AvailabilityZoneDistribution.struct_class = Types::AvailabilityZoneDistribution
 
     AvailabilityZones.member = Shapes::ShapeRef.new(shape: XmlStringMaxLen255)
 
@@ -635,6 +641,7 @@ module Aws::AutoScaling
     CreateAutoScalingGroupType.add_member(:default_instance_warmup, Shapes::ShapeRef.new(shape: DefaultInstanceWarmup, location_name: "DefaultInstanceWarmup"))
     CreateAutoScalingGroupType.add_member(:traffic_sources, Shapes::ShapeRef.new(shape: TrafficSources, location_name: "TrafficSources"))
     CreateAutoScalingGroupType.add_member(:instance_maintenance_policy, Shapes::ShapeRef.new(shape: InstanceMaintenancePolicy, location_name: "InstanceMaintenancePolicy"))
+    CreateAutoScalingGroupType.add_member(:availability_zone_distribution, Shapes::ShapeRef.new(shape: AvailabilityZoneDistribution, location_name: "AvailabilityZoneDistribution"))
     CreateAutoScalingGroupType.struct_class = Types::CreateAutoScalingGroupType
 
     CreateLaunchConfigurationType.add_member(:launch_configuration_name, Shapes::ShapeRef.new(shape: XmlStringMaxLen255, required: true, location_name: "LaunchConfigurationName"))
@@ -1553,6 +1560,7 @@ module Aws::AutoScaling
     UpdateAutoScalingGroupType.add_member(:desired_capacity_type, Shapes::ShapeRef.new(shape: XmlStringMaxLen255, location_name: "DesiredCapacityType"))
     UpdateAutoScalingGroupType.add_member(:default_instance_warmup, Shapes::ShapeRef.new(shape: DefaultInstanceWarmup, location_name: "DefaultInstanceWarmup"))
     UpdateAutoScalingGroupType.add_member(:instance_maintenance_policy, Shapes::ShapeRef.new(shape: InstanceMaintenancePolicy, location_name: "InstanceMaintenancePolicy"))
+    UpdateAutoScalingGroupType.add_member(:availability_zone_distribution, Shapes::ShapeRef.new(shape: AvailabilityZoneDistribution, location_name: "AvailabilityZoneDistribution"))
     UpdateAutoScalingGroupType.struct_class = Types::UpdateAutoScalingGroupType
 
     VCpuCountRequest.add_member(:min, Shapes::ShapeRef.new(shape: NullablePositiveInteger, required: true, location_name: "Min"))

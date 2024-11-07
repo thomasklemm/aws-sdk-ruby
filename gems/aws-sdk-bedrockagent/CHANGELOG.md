@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.34.0 (2024-11-07)
+------------------
+
+* Feature - Add prompt support for chat template configuration and agent generative AI resource. Add support for configuring an optional guardrail in Prompt and Knowledge Base nodes in Prompt Flows. Add API to validate flow definition
+
 1.33.0 (2024-11-06)
 ------------------
 

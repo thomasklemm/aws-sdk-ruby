@@ -1309,6 +1309,9 @@ module Aws::AutoScaling
     #
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-maintenance-policy.html
     #
+    # @option params [Types::AvailabilityZoneDistribution] :availability_zone_distribution
+    #   The instance capacity distribution across Availability Zones.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     #
@@ -1573,6 +1576,9 @@ module Aws::AutoScaling
     #     instance_maintenance_policy: {
     #       min_healthy_percentage: 1,
     #       max_healthy_percentage: 1,
+    #     },
+    #     availability_zone_distribution: {
+    #       capacity_distribution_strategy: "balanced-only", # accepts balanced-only, balanced-best-effort
     #     },
     #   })
     #
@@ -2681,6 +2687,7 @@ module Aws::AutoScaling
     #   resp.auto_scaling_groups[0].traffic_sources[0].type #=> String
     #   resp.auto_scaling_groups[0].instance_maintenance_policy.min_healthy_percentage #=> Integer
     #   resp.auto_scaling_groups[0].instance_maintenance_policy.max_healthy_percentage #=> Integer
+    #   resp.auto_scaling_groups[0].availability_zone_distribution.capacity_distribution_strategy #=> String, one of "balanced-only", "balanced-best-effort"
     #   resp.next_token #=> String
     #
     #
@@ -7156,6 +7163,9 @@ module Aws::AutoScaling
     #
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-maintenance-policy.html
     #
+    # @option params [Types::AvailabilityZoneDistribution] :availability_zone_distribution
+    #   The instance capacity distribution across Availability Zones.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     #
@@ -7286,6 +7296,9 @@ module Aws::AutoScaling
     #       min_healthy_percentage: 1,
     #       max_healthy_percentage: 1,
     #     },
+    #     availability_zone_distribution: {
+    #       capacity_distribution_strategy: "balanced-only", # accepts balanced-only, balanced-best-effort
+    #     },
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/UpdateAutoScalingGroup AWS API Documentation
@@ -7315,7 +7328,7 @@ module Aws::AutoScaling
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-autoscaling'
-      context[:gem_version] = '1.124.0'
+      context[:gem_version] = '1.125.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

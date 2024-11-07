@@ -22245,6 +22245,38 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # An object that contains information needed to create a data source
+    # connection that uses OAuth client credentials. This option is
+    # available for data source connections that are made with Snowflake and
+    # Starburst.
+    #
+    # @!attribute [rw] token_provider_url
+    #   The token endpoint URL of the identity provider.
+    #   @return [String]
+    #
+    # @!attribute [rw] o_auth_scope
+    #   The OAuth scope.
+    #   @return [String]
+    #
+    # @!attribute [rw] identity_provider_vpc_connection_properties
+    #   VPC connection properties.
+    #   @return [Types::VpcConnectionProperties]
+    #
+    # @!attribute [rw] identity_provider_resource_uri
+    #   The resource uri of the identity provider.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/OAuthParameters AWS API Documentation
+    #
+    class OAuthParameters < Struct.new(
+      :token_provider_url,
+      :o_auth_scope,
+      :identity_provider_vpc_connection_properties,
+      :identity_provider_resource_uri)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The parameters for Oracle.
     #
     # @!attribute [rw] host
@@ -27800,12 +27832,29 @@ module Aws::QuickSight
     #   Warehouse.
     #   @return [String]
     #
+    # @!attribute [rw] authentication_type
+    #   The authentication type that you want to use for your connection.
+    #   This parameter accepts OAuth and non-OAuth authentication types.
+    #   @return [String]
+    #
+    # @!attribute [rw] database_access_control_role
+    #   The database access control role.
+    #   @return [String]
+    #
+    # @!attribute [rw] o_auth_parameters
+    #   An object that contains information needed to create a data source
+    #   connection between an Amazon QuickSight account and Snowflake.
+    #   @return [Types::OAuthParameters]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SnowflakeParameters AWS API Documentation
     #
     class SnowflakeParameters < Struct.new(
       :host,
       :database,
-      :warehouse)
+      :warehouse,
+      :authentication_type,
+      :database_access_control_role,
+      :o_auth_parameters)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -27916,13 +27965,30 @@ module Aws::QuickSight
     #   The product type for the Starburst data source.
     #   @return [String]
     #
+    # @!attribute [rw] database_access_control_role
+    #   The database access control role.
+    #   @return [String]
+    #
+    # @!attribute [rw] authentication_type
+    #   The authentication type that you want to use for your connection.
+    #   This parameter accepts OAuth and non-OAuth authentication types.
+    #   @return [String]
+    #
+    # @!attribute [rw] o_auth_parameters
+    #   An object that contains information needed to create a data source
+    #   connection between an Amazon QuickSight account and Starburst.
+    #   @return [Types::OAuthParameters]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/StarburstParameters AWS API Documentation
     #
     class StarburstParameters < Struct.new(
       :host,
       :port,
       :catalog,
-      :product_type)
+      :product_type,
+      :database_access_control_role,
+      :authentication_type,
+      :o_auth_parameters)
       SENSITIVE = []
       include Aws::Structure
     end

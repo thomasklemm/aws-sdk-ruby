@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.135.0 (2024-11-07)
+------------------
+
+* Feature - Add Client Credentials based OAuth support for Snowflake and Starburst
+
 1.134.0 (2024-11-06)
 ------------------
 
