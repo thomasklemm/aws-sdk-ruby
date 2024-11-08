@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.31.0 (2024-11-08)
+------------------
+
+* Feature - This release adds trace functionality to Bedrock Prompt Flows
+
 1.30.0 (2024-11-06)
 ------------------
 

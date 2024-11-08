@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.105.0 (2024-11-08)
+------------------
+
+* Feature - This feature allows override LaunchTemplates to be specified in an AWS Batch Compute Environment.
+
 1.104.0 (2024-11-06)
 ------------------
 

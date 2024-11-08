@@ -1497,19 +1497,33 @@ module Aws::Lambda
     #
     # @option params [String] :kms_key_arn
     #   The ARN of the Key Management Service (KMS) customer managed key
-    #   that's used to encrypt your function's [environment variables][1].
-    #   When [Lambda SnapStart][2] is activated, Lambda also uses this key is
-    #   to encrypt your function's snapshot. If you deploy your function
-    #   using a container image, Lambda also uses this key to encrypt your
-    #   function when it's deployed. Note that this is not the same key
-    #   that's used to protect your container image in the Amazon Elastic
-    #   Container Registry (Amazon ECR). If you don't provide a customer
-    #   managed key, Lambda uses a default service key.
+    #   that's used to encrypt the following resources:
+    #
+    #   * The function's [environment variables][1].
+    #
+    #   * The function's [Lambda SnapStart][2] snapshots.
+    #
+    #   * When used with `SourceKMSKeyArn`, the unzipped version of the .zip
+    #     deployment package that's used for function invocations. For more
+    #     information, see [ Specifying a customer managed key for Lambda][3].
+    #
+    #   * The optimized version of the container image that's used for
+    #     function invocations. Note that this is not the same key that's
+    #     used to protect your container image in the Amazon Elastic Container
+    #     Registry (Amazon ECR). For more information, see [Function
+    #     lifecycle][4].
+    #
+    #   If you don't provide a customer managed key, Lambda uses an [Amazon
+    #   Web Services owned key][5] or an [Amazon Web Services managed key][6].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption
     #   [2]: https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html
+    #   [3]: https://docs.aws.amazon.com/lambda/latest/dg/encrypt-zip-package.html#enable-zip-custom-encryption
+    #   [4]: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-lifecycle
+    #   [5]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk
+    #   [6]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk
     #
     # @option params [Types::TracingConfig] :tracing_config
     #   Set `Mode` to `Active` to sample and trace a subset of incoming
@@ -1690,6 +1704,7 @@ module Aws::Lambda
     #       s3_key: "S3Key",
     #       s3_object_version: "S3ObjectVersion",
     #       image_uri: "String",
+    #       source_kms_key_arn: "KMSKeyArn",
     #     },
     #     description: "Description",
     #     timeout: 1,
@@ -2904,6 +2919,7 @@ module Aws::Lambda
     #   resp.code.location #=> String
     #   resp.code.image_uri #=> String
     #   resp.code.resolved_image_uri #=> String
+    #   resp.code.source_kms_key_arn #=> String
     #   resp.tags #=> Hash
     #   resp.tags["TagKey"] #=> String
     #   resp.tags_error.error_code #=> String
@@ -3708,9 +3724,9 @@ module Aws::Lambda
     #   * {Types::GetProvisionedConcurrencyConfigResponse#last_modified #last_modified} => Time
     #
     #
-    # @example Example: To get a provisioned concurrency configuration
+    # @example Example: To view a provisioned concurrency configuration
     #
-    #   # The following example returns details for the provisioned concurrency configuration for the BLUE alias of the specified
+    #   # The following example displays details for the provisioned concurrency configuration for the BLUE alias of the specified
     #   # function.
     #
     #   resp = client.get_provisioned_concurrency_config({
@@ -3727,9 +3743,9 @@ module Aws::Lambda
     #     status: "READY", 
     #   }
     #
-    # @example Example: To view a provisioned concurrency configuration
+    # @example Example: To get a provisioned concurrency configuration
     #
-    #   # The following example displays details for the provisioned concurrency configuration for the BLUE alias of the specified
+    #   # The following example returns details for the provisioned concurrency configuration for the BLUE alias of the specified
     #   # function.
     #
     #   resp = client.get_provisioned_concurrency_config({
@@ -7237,6 +7253,12 @@ module Aws::Lambda
     #   string array with one of the valid values (arm64 or x86\_64). The
     #   default value is `x86_64`.
     #
+    # @option params [String] :source_kms_key_arn
+    #   The ARN of the Key Management Service (KMS) customer managed key
+    #   that's used to encrypt your function's .zip deployment package. If
+    #   you don't provide a customer managed key, Lambda uses an Amazon Web
+    #   Services managed key.
+    #
     # @return [Types::FunctionConfiguration] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::FunctionConfiguration#function_name #function_name} => String
@@ -7321,6 +7343,7 @@ module Aws::Lambda
     #     dry_run: false,
     #     revision_id: "String",
     #     architectures: ["x86_64"], # accepts x86_64, arm64
+    #     source_kms_key_arn: "KMSKeyArn",
     #   })
     #
     # @example Response structure
@@ -7519,19 +7542,33 @@ module Aws::Lambda
     #
     # @option params [String] :kms_key_arn
     #   The ARN of the Key Management Service (KMS) customer managed key
-    #   that's used to encrypt your function's [environment variables][1].
-    #   When [Lambda SnapStart][2] is activated, Lambda also uses this key is
-    #   to encrypt your function's snapshot. If you deploy your function
-    #   using a container image, Lambda also uses this key to encrypt your
-    #   function when it's deployed. Note that this is not the same key
-    #   that's used to protect your container image in the Amazon Elastic
-    #   Container Registry (Amazon ECR). If you don't provide a customer
-    #   managed key, Lambda uses a default service key.
+    #   that's used to encrypt the following resources:
+    #
+    #   * The function's [environment variables][1].
+    #
+    #   * The function's [Lambda SnapStart][2] snapshots.
+    #
+    #   * When used with `SourceKMSKeyArn`, the unzipped version of the .zip
+    #     deployment package that's used for function invocations. For more
+    #     information, see [ Specifying a customer managed key for Lambda][3].
+    #
+    #   * The optimized version of the container image that's used for
+    #     function invocations. Note that this is not the same key that's
+    #     used to protect your container image in the Amazon Elastic Container
+    #     Registry (Amazon ECR). For more information, see [Function
+    #     lifecycle][4].
+    #
+    #   If you don't provide a customer managed key, Lambda uses an [Amazon
+    #   Web Services owned key][5] or an [Amazon Web Services managed key][6].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/configuration-envvars.html#configuration-envvars-encryption
     #   [2]: https://docs.aws.amazon.com/lambda/latest/dg/snapstart-security.html
+    #   [3]: https://docs.aws.amazon.com/lambda/latest/dg/encrypt-zip-package.html#enable-zip-custom-encryption
+    #   [4]: https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-lifecycle
+    #   [5]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-owned-cmk
+    #   [6]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk
     #
     # @option params [Types::TracingConfig] :tracing_config
     #   Set `Mode` to `Active` to sample and trace a subset of incoming
@@ -8034,7 +8071,7 @@ module Aws::Lambda
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-lambda'
-      context[:gem_version] = '1.139.0'
+      context[:gem_version] = '1.140.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

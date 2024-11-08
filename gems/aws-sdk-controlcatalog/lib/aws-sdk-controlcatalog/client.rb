@@ -483,6 +483,8 @@ module Aws::ControlCatalog
     #   * {Types::GetControlResponse#description #description} => String
     #   * {Types::GetControlResponse#behavior #behavior} => String
     #   * {Types::GetControlResponse#region_configuration #region_configuration} => Types::RegionConfiguration
+    #   * {Types::GetControlResponse#implementation #implementation} => Types::ImplementationDetails
+    #   * {Types::GetControlResponse#parameters #parameters} => Array&lt;Types::ControlParameter&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -499,6 +501,9 @@ module Aws::ControlCatalog
     #   resp.region_configuration.scope #=> String, one of "GLOBAL", "REGIONAL"
     #   resp.region_configuration.deployable_regions #=> Array
     #   resp.region_configuration.deployable_regions[0] #=> String
+    #   resp.implementation.type #=> String
+    #   resp.parameters #=> Array
+    #   resp.parameters[0].name #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/controlcatalog-2018-05-10/GetControl AWS API Documentation
     #
@@ -736,7 +741,7 @@ module Aws::ControlCatalog
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-controlcatalog'
-      context[:gem_version] = '1.15.0'
+      context[:gem_version] = '1.16.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

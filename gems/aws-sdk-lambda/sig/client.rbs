@@ -296,7 +296,8 @@ module Aws
                                s3_bucket: ::String?,
                                s3_key: ::String?,
                                s3_object_version: ::String?,
-                               image_uri: ::String?
+                               image_uri: ::String?,
+                               source_kms_key_arn: ::String?
                              },
                              ?description: ::String,
                              ?timeout: ::Integer,
@@ -1338,7 +1339,8 @@ module Aws
                                   ?publish: bool,
                                   ?dry_run: bool,
                                   ?revision_id: ::String,
-                                  ?architectures: Array[("x86_64" | "arm64")]
+                                  ?architectures: Array[("x86_64" | "arm64")],
+                                  ?source_kms_key_arn: ::String
                                 ) -> _UpdateFunctionCodeResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateFunctionCodeResponseSuccess
 

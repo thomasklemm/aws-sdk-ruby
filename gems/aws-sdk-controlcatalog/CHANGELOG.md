@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.16.0 (2024-11-08)
+------------------
+
+* Feature - AWS Control Catalog GetControl public API returns additional data in output, including Implementation and Parameters
+
 1.15.0 (2024-11-06)
 ------------------
 

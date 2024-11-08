@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.140.0 (2024-11-08)
+------------------
+
+* Feature - This release adds support for using AWS KMS customer managed keys to encrypt AWS Lambda .zip deployment packages.
+
 1.139.0 (2024-11-06)
 ------------------
 
