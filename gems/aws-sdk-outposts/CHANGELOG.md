@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.72.0 (2024-11-11)
+------------------
+
+* Feature - This release updates StartCapacityTask to allow an active Outpost to be modified. It also adds a new API to list all running EC2 instances on the Outpost.
+
 1.71.0 (2024-10-18)
 ------------------
 
