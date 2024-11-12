@@ -1770,8 +1770,8 @@ module Aws::RDS
     #   support for that engine version. For more information, see the
     #   following sections:
     #
-    #   * Amazon Aurora (PostgreSQL only) - [Using Amazon RDS Extended
-    #     Support][1] in the *Amazon Aurora User Guide*
+    #   * Amazon Aurora - [Using Amazon RDS Extended Support][1] in the
+    #     *Amazon Aurora User Guide*
     #
     #   * Amazon RDS - [Using Amazon RDS Extended Support][2] in the *Amazon
     #     RDS User Guide*
@@ -3136,8 +3136,8 @@ module Aws::RDS
     #   support for that engine version. For more information, see the
     #   following sections:
     #
-    #   * Amazon Aurora (PostgreSQL only) - [Using Amazon RDS Extended
-    #     Support][1] in the *Amazon Aurora User Guide*
+    #   * Amazon Aurora - [Using Amazon RDS Extended Support][1] in the
+    #     *Amazon Aurora User Guide*
     #
     #   * Amazon RDS - [Using Amazon RDS Extended Support][2] in the *Amazon
     #     RDS User Guide*

@@ -3504,8 +3504,8 @@ module Aws::RDS
     #   support for that engine version. For more information, see the
     #   following sections:
     #
-    #   * Amazon Aurora (PostgreSQL only) - [Using Amazon RDS Extended
-    #     Support][1] in the *Amazon Aurora User Guide*
+    #   * Amazon Aurora - [Using Amazon RDS Extended Support][1] in the
+    #     *Amazon Aurora User Guide*
     #
     #   * Amazon RDS - [Using Amazon RDS Extended Support][2] in the *Amazon
     #     RDS User Guide*
@@ -25039,8 +25039,8 @@ module Aws::RDS
     #   support for that engine version. For more information, see the
     #   following sections:
     #
-    #   * Amazon Aurora (PostgreSQL only) - [Using Amazon RDS Extended
-    #     Support][1] in the *Amazon Aurora User Guide*
+    #   * Amazon Aurora - [Using Amazon RDS Extended Support][1] in the
+    #     *Amazon Aurora User Guide*
     #
     #   * Amazon RDS - [Using Amazon RDS Extended Support][2] in the *Amazon
     #     RDS User Guide*
@@ -25852,8 +25852,8 @@ module Aws::RDS
     #   support for that engine version. For more information, see the
     #   following sections:
     #
-    #   * Amazon Aurora (PostgreSQL only) - [Using Amazon RDS Extended
-    #     Support][1] in the *Amazon Aurora User Guide*
+    #   * Amazon Aurora - [Using Amazon RDS Extended Support][1] in the
+    #     *Amazon Aurora User Guide*
     #
     #   * Amazon RDS - [Using Amazon RDS Extended Support][2] in the *Amazon
     #     RDS User Guide*
@@ -26651,8 +26651,8 @@ module Aws::RDS
     #   support for that engine version. For more information, see the
     #   following sections:
     #
-    #   * Amazon Aurora (PostgreSQL only) - [Using Amazon RDS Extended
-    #     Support][1] in the *Amazon Aurora User Guide*
+    #   * Amazon Aurora - [Using Amazon RDS Extended Support][1] in the
+    #     *Amazon Aurora User Guide*
     #
     #   * Amazon RDS - [Using Amazon RDS Extended Support][2] in the *Amazon
     #     RDS User Guide*
@@ -31686,7 +31686,7 @@ module Aws::RDS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-rds'
-      context[:gem_version] = '1.257.0'
+      context[:gem_version] = '1.258.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

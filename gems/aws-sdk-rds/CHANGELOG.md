@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.258.0 (2024-11-12)
+------------------
+
+* Feature - Updates Amazon RDS documentation for Amazon RDS Extended Support for Amazon Aurora MySQL.
+
 1.257.0 (2024-11-06)
 ------------------
 

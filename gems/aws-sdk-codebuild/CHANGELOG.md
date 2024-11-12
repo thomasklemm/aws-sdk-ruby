@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.137.0 (2024-11-12)
+------------------
+
+* Feature - AWS CodeBuild now supports non-containerized Linux and Windows builds on Reserved Capacity.
+
 1.136.0 (2024-11-06)
 ------------------
 

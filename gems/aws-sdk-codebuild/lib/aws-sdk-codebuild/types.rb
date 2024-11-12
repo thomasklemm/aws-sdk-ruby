@@ -1488,9 +1488,21 @@ module Aws::CodeBuild
     #     Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and
     #     South America (São Paulo).
     #
+    #   * The environment type `ARM_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
+    #
     #   * The environment type `LINUX_CONTAINER` is available only in
     #     regions US East (N. Virginia), US East (Ohio), US West (Oregon),
     #     EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
+    #
+    #   * The environment type `LINUX_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
     #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
     #     Asia Pacific (Mumbai).
     #
@@ -1506,6 +1518,12 @@ module Aws::CodeBuild
     #   * The environment type `MAC_ARM` is available for Large fleets only
     #     in regions US East (N. Virginia), US East (Ohio), US West
     #     (Oregon), and Asia Pacific (Sydney).
+    #
+    #   * The environment type `WINDOWS_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
     #
     #   * The environment type `WINDOWS_SERVER_2019_CONTAINER` is available
     #     only in regions US East (N. Virginia), US East (Ohio), US West
@@ -2551,9 +2569,21 @@ module Aws::CodeBuild
     #     Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and
     #     South America (São Paulo).
     #
+    #   * The environment type `ARM_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
+    #
     #   * The environment type `LINUX_CONTAINER` is available only in
     #     regions US East (N. Virginia), US East (Ohio), US West (Oregon),
     #     EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
+    #
+    #   * The environment type `LINUX_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
     #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
     #     Asia Pacific (Mumbai).
     #
@@ -2569,6 +2599,12 @@ module Aws::CodeBuild
     #   * The environment type `MAC_ARM` is available for Large fleets only
     #     in regions US East (N. Virginia), US East (Ohio), US West
     #     (Oregon), and Asia Pacific (Sydney).
+    #
+    #   * The environment type `WINDOWS_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
     #
     #   * The environment type `WINDOWS_SERVER_2019_CONTAINER` is available
     #     only in regions US East (N. Virginia), US East (Ohio), US West
@@ -6660,9 +6696,21 @@ module Aws::CodeBuild
     #     Pacific (Singapore), Asia Pacific (Sydney), EU (Frankfurt), and
     #     South America (São Paulo).
     #
+    #   * The environment type `ARM_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
+    #
     #   * The environment type `LINUX_CONTAINER` is available only in
     #     regions US East (N. Virginia), US East (Ohio), US West (Oregon),
     #     EU (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
+    #
+    #   * The environment type `LINUX_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
     #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
     #     Asia Pacific (Mumbai).
     #
@@ -6678,6 +6726,12 @@ module Aws::CodeBuild
     #   * The environment type `MAC_ARM` is available for Large fleets only
     #     in regions US East (N. Virginia), US East (Ohio), US West
     #     (Oregon), and Asia Pacific (Sydney).
+    #
+    #   * The environment type `WINDOWS_EC2` is available only in regions US
+    #     East (N. Virginia), US East (Ohio), US West (Oregon), EU
+    #     (Ireland), EU (Frankfurt), Asia Pacific (Tokyo), Asia Pacific
+    #     (Singapore), Asia Pacific (Sydney), South America (São Paulo), and
+    #     Asia Pacific (Mumbai).
     #
     #   * The environment type `WINDOWS_SERVER_2019_CONTAINER` is available
     #     only in regions US East (N. Virginia), US East (Ohio), US West
