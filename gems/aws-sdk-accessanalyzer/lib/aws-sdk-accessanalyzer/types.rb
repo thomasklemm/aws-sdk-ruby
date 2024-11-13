@@ -21,8 +21,9 @@ module Aws::AccessAnalyzer
     #
     # @!attribute [rw] resources
     #   A list of resources for the access permissions. Any strings that can
-    #   be used as a resource in an IAM policy can be used in the list of
-    #   resources to check.
+    #   be used as an Amazon Resource Name (ARN) in an IAM policy can be
+    #   used in the list of resources to check. You can only use a wildcard
+    #   in the portion of the ARN that specifies the resource ID.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/Access AWS API Documentation
@@ -191,6 +192,11 @@ module Aws::AccessAnalyzer
     #   bucket findings.
     #   @return [Array<Types::FindingSource>]
     #
+    # @!attribute [rw] resource_control_policy_restriction
+    #   The type of restriction applied to the finding by the resource owner
+    #   with an Organizations resource control policy (RCP).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/AccessPreviewFinding AWS API Documentation
     #
     class AccessPreviewFinding < Struct.new(
@@ -208,7 +214,8 @@ module Aws::AccessAnalyzer
       :status,
       :resource_owner_account,
       :error,
-      :sources)
+      :sources,
+      :resource_control_policy_restriction)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -583,12 +590,13 @@ module Aws::AccessAnalyzer
     # @!attribute [rw] access
     #   An access object containing the permissions that shouldn't be
     #   granted by the specified policy. If only actions are specified, IAM
-    #   Access Analyzer checks for access of the actions on all resources in
-    #   the policy. If only resources are specified, then IAM Access
-    #   Analyzer checks which actions have access to the specified
-    #   resources. If both actions and resources are specified, then IAM
-    #   Access Analyzer checks which of the specified actions have access to
-    #   the specified resources.
+    #   Access Analyzer checks for access to peform at least one of the
+    #   actions on any resource in the policy. If only resources are
+    #   specified, then IAM Access Analyzer checks for access to perform any
+    #   action on at least one of the resources. If both actions and
+    #   resources are specified, IAM Access Analyzer checks for access to
+    #   perform at least one of the specified actions on at least one of the
+    #   specified resources.
     #   @return [Array<Types::Access>]
     #
     # @!attribute [rw] policy_type
@@ -598,9 +606,7 @@ module Aws::AccessAnalyzer
     #
     #   Resource policies grant permissions on Amazon Web Services
     #   resources. Resource policies include trust policies for IAM roles
-    #   and bucket policies for Amazon S3 buckets. You can provide a generic
-    #   input such as identity policy or resource policy or a specific input
-    #   such as managed policy or Amazon S3 bucket policy.
+    #   and bucket policies for Amazon S3 buckets.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/CheckAccessNotGrantedRequest AWS API Documentation
@@ -1411,6 +1417,11 @@ module Aws::AccessAnalyzer
     #   Amazon S3 bucket findings.
     #   @return [Array<Types::FindingSource>]
     #
+    # @!attribute [rw] resource_control_policy_restriction
+    #   The type of restriction applied to the finding by the resource owner
+    #   with an Organizations resource control policy (RCP).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/ExternalAccessDetails AWS API Documentation
     #
     class ExternalAccessDetails < Struct.new(
@@ -1418,7 +1429,8 @@ module Aws::AccessAnalyzer
       :condition,
       :is_public,
       :principal,
-      :sources)
+      :sources,
+      :resource_control_policy_restriction)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1487,6 +1499,11 @@ module Aws::AccessAnalyzer
     #   bucket findings.
     #   @return [Array<Types::FindingSource>]
     #
+    # @!attribute [rw] resource_control_policy_restriction
+    #   The type of restriction applied to the finding by the resource owner
+    #   with an Organizations resource control policy (RCP).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/Finding AWS API Documentation
     #
     class Finding < Struct.new(
@@ -1503,7 +1520,8 @@ module Aws::AccessAnalyzer
       :status,
       :resource_owner_account,
       :error,
-      :sources)
+      :sources,
+      :resource_control_policy_restriction)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1668,6 +1686,11 @@ module Aws::AccessAnalyzer
     #   bucket findings.
     #   @return [Array<Types::FindingSource>]
     #
+    # @!attribute [rw] resource_control_policy_restriction
+    #   The type of restriction applied to the finding by the resource owner
+    #   with an Organizations resource control policy (RCP).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/FindingSummary AWS API Documentation
     #
     class FindingSummary < Struct.new(
@@ -1684,7 +1707,8 @@ module Aws::AccessAnalyzer
       :status,
       :resource_owner_account,
       :error,
-      :sources)
+      :sources,
+      :resource_control_policy_restriction)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -514,11 +514,12 @@ module Aws::AccessAnalyzer
     # @option params [required, Array<Types::Access>] :access
     #   An access object containing the permissions that shouldn't be granted
     #   by the specified policy. If only actions are specified, IAM Access
-    #   Analyzer checks for access of the actions on all resources in the
-    #   policy. If only resources are specified, then IAM Access Analyzer
-    #   checks which actions have access to the specified resources. If both
-    #   actions and resources are specified, then IAM Access Analyzer checks
-    #   which of the specified actions have access to the specified resources.
+    #   Analyzer checks for access to peform at least one of the actions on
+    #   any resource in the policy. If only resources are specified, then IAM
+    #   Access Analyzer checks for access to perform any action on at least
+    #   one of the resources. If both actions and resources are specified, IAM
+    #   Access Analyzer checks for access to perform at least one of the
+    #   specified actions on at least one of the specified resources.
     #
     # @option params [required, String] :policy_type
     #   The type of policy. Identity policies grant permissions to IAM
@@ -527,9 +528,7 @@ module Aws::AccessAnalyzer
     #
     #   Resource policies grant permissions on Amazon Web Services resources.
     #   Resource policies include trust policies for IAM roles and bucket
-    #   policies for Amazon S3 buckets. You can provide a generic input such
-    #   as identity policy or resource policy or a specific input such as
-    #   managed policy or Amazon S3 bucket policy.
+    #   policies for Amazon S3 buckets.
     #
     # @return [Types::CheckAccessNotGrantedResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1452,6 +1451,7 @@ module Aws::AccessAnalyzer
     #   resp.finding.sources[0].type #=> String, one of "POLICY", "BUCKET_ACL", "S3_ACCESS_POINT", "S3_ACCESS_POINT_ACCOUNT"
     #   resp.finding.sources[0].detail.access_point_arn #=> String
     #   resp.finding.sources[0].detail.access_point_account #=> String
+    #   resp.finding.resource_control_policy_restriction #=> String, one of "APPLICABLE", "FAILED_TO_EVALUATE_RCP", "NOT_APPLICABLE"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetFinding AWS API Documentation
     #
@@ -1678,6 +1678,7 @@ module Aws::AccessAnalyzer
     #   resp.finding_details[0].external_access_details.sources[0].type #=> String, one of "POLICY", "BUCKET_ACL", "S3_ACCESS_POINT", "S3_ACCESS_POINT_ACCOUNT"
     #   resp.finding_details[0].external_access_details.sources[0].detail.access_point_arn #=> String
     #   resp.finding_details[0].external_access_details.sources[0].detail.access_point_account #=> String
+    #   resp.finding_details[0].external_access_details.resource_control_policy_restriction #=> String, one of "APPLICABLE", "FAILED_TO_EVALUATE_RCP", "NOT_APPLICABLE"
     #   resp.finding_details[0].unused_permission_details.actions #=> Array
     #   resp.finding_details[0].unused_permission_details.actions[0].action #=> String
     #   resp.finding_details[0].unused_permission_details.actions[0].last_accessed #=> Time
@@ -1835,6 +1836,7 @@ module Aws::AccessAnalyzer
     #   resp.findings[0].sources[0].type #=> String, one of "POLICY", "BUCKET_ACL", "S3_ACCESS_POINT", "S3_ACCESS_POINT_ACCOUNT"
     #   resp.findings[0].sources[0].detail.access_point_arn #=> String
     #   resp.findings[0].sources[0].detail.access_point_account #=> String
+    #   resp.findings[0].resource_control_policy_restriction #=> String, one of "APPLICABLE", "FAILED_TO_EVALUATE_RCP", "NOT_APPLICABLE"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/ListAccessPreviewFindings AWS API Documentation
@@ -2134,6 +2136,7 @@ module Aws::AccessAnalyzer
     #   resp.findings[0].sources[0].type #=> String, one of "POLICY", "BUCKET_ACL", "S3_ACCESS_POINT", "S3_ACCESS_POINT_ACCOUNT"
     #   resp.findings[0].sources[0].detail.access_point_arn #=> String
     #   resp.findings[0].sources[0].detail.access_point_account #=> String
+    #   resp.findings[0].resource_control_policy_restriction #=> String, one of "APPLICABLE", "FAILED_TO_EVALUATE_RCP", "NOT_APPLICABLE"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/ListFindings AWS API Documentation
@@ -2610,7 +2613,7 @@ module Aws::AccessAnalyzer
     #     max_results: 1,
     #     next_token: "Token",
     #     policy_document: "PolicyDocument", # required
-    #     policy_type: "IDENTITY_POLICY", # required, accepts IDENTITY_POLICY, RESOURCE_POLICY, SERVICE_CONTROL_POLICY
+    #     policy_type: "IDENTITY_POLICY", # required, accepts IDENTITY_POLICY, RESOURCE_POLICY, SERVICE_CONTROL_POLICY, RESOURCE_CONTROL_POLICY
     #     validate_policy_resource_type: "AWS::S3::Bucket", # accepts AWS::S3::Bucket, AWS::S3::AccessPoint, AWS::S3::MultiRegionAccessPoint, AWS::S3ObjectLambda::AccessPoint, AWS::IAM::AssumeRolePolicyDocument, AWS::DynamoDB::Table
     #   })
     #
@@ -2663,7 +2666,7 @@ module Aws::AccessAnalyzer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-accessanalyzer'
-      context[:gem_version] = '1.62.0'
+      context[:gem_version] = '1.63.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.488.0 (2024-11-13)
+------------------
+
+* Feature - This release adds the source AMI details in DescribeImages API
+
 1.487.0 (2024-11-06)
 ------------------
 

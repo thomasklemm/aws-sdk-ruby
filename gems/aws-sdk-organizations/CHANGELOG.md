@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.107.0 (2024-11-13)
+------------------
+
+* Feature - Add support for policy operations on the Resource Control Polices.
+
 1.106.0 (2024-11-06)
 ------------------
 

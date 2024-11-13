@@ -321,6 +321,7 @@ RubyGems.org page under "LINKS" section.
 | AWS Backup                                            | Aws::Backup                              | aws-sdk-backup                              | 2018-11-15  |
 | AWS Backup Gateway                                    | Aws::BackupGateway                       | aws-sdk-backupgateway                       | 2021-01-01  |
 | AWS Batch                                             | Aws::Batch                               | aws-sdk-batch                               | 2016-08-10  |
+| AWS Billing                                           | Aws::Billing                             | aws-sdk-billing                             | 2023-09-07  |
 | AWS Billing and Cost Management Data Exports          | Aws::BCMDataExports                      | aws-sdk-bcmdataexports                      | 2023-11-26  |
 | AWS Budgets                                           | Aws::Budgets                             | aws-sdk-budgets                             | 2016-10-20  |
 | AWS Certificate Manager                               | Aws::ACM                                 | aws-sdk-acm                                 | 2015-12-08  |

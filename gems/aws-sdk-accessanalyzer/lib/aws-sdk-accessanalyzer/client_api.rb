@@ -225,6 +225,7 @@ module Aws::AccessAnalyzer
     RegionList = Shapes::ListShape.new(name: 'RegionList')
     Resource = Shapes::StringShape.new(name: 'Resource')
     ResourceArn = Shapes::StringShape.new(name: 'ResourceArn')
+    ResourceControlPolicyRestriction = Shapes::StringShape.new(name: 'ResourceControlPolicyRestriction')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourceType = Shapes::StringShape.new(name: 'ResourceType')
     RetiringPrincipal = Shapes::StringShape.new(name: 'RetiringPrincipal')
@@ -327,6 +328,7 @@ module Aws::AccessAnalyzer
     AccessPreviewFinding.add_member(:resource_owner_account, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceOwnerAccount"))
     AccessPreviewFinding.add_member(:error, Shapes::ShapeRef.new(shape: String, location_name: "error"))
     AccessPreviewFinding.add_member(:sources, Shapes::ShapeRef.new(shape: FindingSourceList, location_name: "sources"))
+    AccessPreviewFinding.add_member(:resource_control_policy_restriction, Shapes::ShapeRef.new(shape: ResourceControlPolicyRestriction, location_name: "resourceControlPolicyRestriction"))
     AccessPreviewFinding.struct_class = Types::AccessPreviewFinding
 
     AccessPreviewFindingsList.member = Shapes::ShapeRef.new(shape: AccessPreviewFinding)
@@ -564,6 +566,7 @@ module Aws::AccessAnalyzer
     ExternalAccessDetails.add_member(:is_public, Shapes::ShapeRef.new(shape: Boolean, location_name: "isPublic"))
     ExternalAccessDetails.add_member(:principal, Shapes::ShapeRef.new(shape: PrincipalMap, location_name: "principal"))
     ExternalAccessDetails.add_member(:sources, Shapes::ShapeRef.new(shape: FindingSourceList, location_name: "sources"))
+    ExternalAccessDetails.add_member(:resource_control_policy_restriction, Shapes::ShapeRef.new(shape: ResourceControlPolicyRestriction, location_name: "resourceControlPolicyRestriction"))
     ExternalAccessDetails.struct_class = Types::ExternalAccessDetails
 
     FilterCriteriaMap.key = Shapes::ShapeRef.new(shape: String)
@@ -583,6 +586,7 @@ module Aws::AccessAnalyzer
     Finding.add_member(:resource_owner_account, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceOwnerAccount"))
     Finding.add_member(:error, Shapes::ShapeRef.new(shape: String, location_name: "error"))
     Finding.add_member(:sources, Shapes::ShapeRef.new(shape: FindingSourceList, location_name: "sources"))
+    Finding.add_member(:resource_control_policy_restriction, Shapes::ShapeRef.new(shape: ResourceControlPolicyRestriction, location_name: "resourceControlPolicyRestriction"))
     Finding.struct_class = Types::Finding
 
     FindingDetails.add_member(:external_access_details, Shapes::ShapeRef.new(shape: ExternalAccessDetails, location_name: "externalAccessDetails"))
@@ -627,6 +631,7 @@ module Aws::AccessAnalyzer
     FindingSummary.add_member(:resource_owner_account, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceOwnerAccount"))
     FindingSummary.add_member(:error, Shapes::ShapeRef.new(shape: String, location_name: "error"))
     FindingSummary.add_member(:sources, Shapes::ShapeRef.new(shape: FindingSourceList, location_name: "sources"))
+    FindingSummary.add_member(:resource_control_policy_restriction, Shapes::ShapeRef.new(shape: ResourceControlPolicyRestriction, location_name: "resourceControlPolicyRestriction"))
     FindingSummary.struct_class = Types::FindingSummary
 
     FindingSummaryV2.add_member(:analyzed_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "analyzedAt"))
@@ -1183,6 +1188,7 @@ module Aws::AccessAnalyzer
 
       api.metadata = {
         "apiVersion" => "2019-11-01",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "access-analyzer",
         "protocol" => "rest-json",
         "protocols" => ["rest-json"],

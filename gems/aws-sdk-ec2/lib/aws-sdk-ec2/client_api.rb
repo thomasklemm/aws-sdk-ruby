@@ -9872,6 +9872,8 @@ module Aws::EC2
     Image.add_member(:source_instance_id, Shapes::ShapeRef.new(shape: String, location_name: "sourceInstanceId"))
     Image.add_member(:deregistration_protection, Shapes::ShapeRef.new(shape: String, location_name: "deregistrationProtection"))
     Image.add_member(:last_launched_time, Shapes::ShapeRef.new(shape: String, location_name: "lastLaunchedTime"))
+    Image.add_member(:source_image_id, Shapes::ShapeRef.new(shape: String, location_name: "sourceImageId"))
+    Image.add_member(:source_image_region, Shapes::ShapeRef.new(shape: String, location_name: "sourceImageRegion"))
     Image.add_member(:image_id, Shapes::ShapeRef.new(shape: String, location_name: "imageId"))
     Image.add_member(:image_location, Shapes::ShapeRef.new(shape: String, location_name: "imageLocation"))
     Image.add_member(:state, Shapes::ShapeRef.new(shape: ImageState, location_name: "imageState"))

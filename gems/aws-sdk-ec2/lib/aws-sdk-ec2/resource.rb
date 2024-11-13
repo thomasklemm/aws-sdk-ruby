@@ -1840,8 +1840,7 @@ module Aws::EC2
     # @option options [required, String] :key_name
     #   A unique name for the key pair.
     # @option options [required, String, StringIO, File] :public_key_material
-    #   The public key. For API calls, the text must be base64-encoded. For
-    #   command line tools, base64 encoding is performed for you.
+    #   The public key.
     # @return [KeyPairInfo]
     def import_key_pair(options = {})
       resp = Aws::Plugins::UserAgent.metric('RESOURCE_MODEL') do
@@ -2261,9 +2260,9 @@ module Aws::EC2
     # @option options [Array<String>] :owners
     #   Scopes the results to images with the specified owners. You can
     #   specify a combination of Amazon Web Services account IDs, `self`,
-    #   `amazon`, and `aws-marketplace`. If you omit this parameter, the
-    #   results include all images for which you have launch permissions,
-    #   regardless of ownership.
+    #   `amazon`, `aws-backup-vault`, and `aws-marketplace`. If you omit this
+    #   parameter, the results include all images for which you have launch
+    #   permissions, regardless of ownership.
     # @option options [Boolean] :include_deprecated
     #   Specifies whether to include deprecated AMIs.
     #
@@ -2333,11 +2332,11 @@ module Aws::EC2
     #
     #   * `name` - The name of the AMI (provided during image creation).
     #
-    #   * `owner-alias` - The owner alias (`amazon` \| `aws-marketplace`). The
-    #     valid aliases are defined in an Amazon-maintained list. This is not
-    #     the Amazon Web Services account alias that can be set using the IAM
-    #     console. We recommend that you use the **Owner** request parameter
-    #     instead of this filter.
+    #   * `owner-alias` - The owner alias (`amazon` \| `aws-backup-vault` \|
+    #     `aws-marketplace`). The valid aliases are defined in an
+    #     Amazon-maintained list. This is not the Amazon Web Services account
+    #     alias that can be set using the IAM console. We recommend that you
+    #     use the **Owner** request parameter instead of this filter.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the owner. We
     #     recommend that you use the **Owner** request parameter instead of

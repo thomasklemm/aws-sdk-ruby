@@ -45,6 +45,7 @@ module Aws::AccessAnalyzer
       attr_accessor resource_owner_account: ::String
       attr_accessor error: ::String
       attr_accessor sources: ::Array[Types::FindingSource]
+      attr_accessor resource_control_policy_restriction: ("APPLICABLE" | "FAILED_TO_EVALUATE_RCP" | "NOT_APPLICABLE")
       SENSITIVE: []
     end
 
@@ -348,6 +349,7 @@ module Aws::AccessAnalyzer
       attr_accessor is_public: bool
       attr_accessor principal: ::Hash[::String, ::String]
       attr_accessor sources: ::Array[Types::FindingSource]
+      attr_accessor resource_control_policy_restriction: ("APPLICABLE" | "FAILED_TO_EVALUATE_RCP" | "NOT_APPLICABLE")
       SENSITIVE: []
     end
 
@@ -366,6 +368,7 @@ module Aws::AccessAnalyzer
       attr_accessor resource_owner_account: ::String
       attr_accessor error: ::String
       attr_accessor sources: ::Array[Types::FindingSource]
+      attr_accessor resource_control_policy_restriction: ("APPLICABLE" | "FAILED_TO_EVALUATE_RCP" | "NOT_APPLICABLE")
       SENSITIVE: []
     end
 
@@ -419,6 +422,7 @@ module Aws::AccessAnalyzer
       attr_accessor resource_owner_account: ::String
       attr_accessor error: ::String
       attr_accessor sources: ::Array[Types::FindingSource]
+      attr_accessor resource_control_policy_restriction: ("APPLICABLE" | "FAILED_TO_EVALUATE_RCP" | "NOT_APPLICABLE")
       SENSITIVE: []
     end
 
@@ -1092,7 +1096,7 @@ module Aws::AccessAnalyzer
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
       attr_accessor policy_document: ::String
-      attr_accessor policy_type: ("IDENTITY_POLICY" | "RESOURCE_POLICY" | "SERVICE_CONTROL_POLICY")
+      attr_accessor policy_type: ("IDENTITY_POLICY" | "RESOURCE_POLICY" | "SERVICE_CONTROL_POLICY" | "RESOURCE_CONTROL_POLICY")
       attr_accessor validate_policy_resource_type: ("AWS::S3::Bucket" | "AWS::S3::AccessPoint" | "AWS::S3::MultiRegionAccessPoint" | "AWS::S3ObjectLambda::AccessPoint" | "AWS::IAM::AssumeRolePolicyDocument" | "AWS::DynamoDB::Table")
       SENSITIVE: []
     end

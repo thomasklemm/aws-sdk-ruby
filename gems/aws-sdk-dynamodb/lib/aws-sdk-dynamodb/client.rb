@@ -1290,10 +1290,16 @@ module Aws::DynamoDB
     #   resp.global_table_description.replication_group[0].kms_master_key_id #=> String
     #   resp.global_table_description.replication_group[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.global_table_description.replication_group[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.global_table_description.replication_group[0].global_secondary_indexes #=> Array
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].index_name #=> String
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.global_table_description.replication_group[0].replica_inaccessible_date_time #=> Time
     #   resp.global_table_description.replication_group[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.global_table_description.replication_group[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -1540,6 +1546,10 @@ module Aws::DynamoDB
     #   Indicates whether deletion protection is to be enabled (true) or
     #   disabled (false) on the table.
     #
+    # @option params [Types::WarmThroughput] :warm_throughput
+    #   Represents the warm throughput (in read units per second and write
+    #   units per second) for creating a table.
+    #
     # @option params [String] :resource_policy
     #   An Amazon Web Services resource-based policy document in JSON format
     #   that will be attached to the table.
@@ -1692,6 +1702,10 @@ module Aws::DynamoDB
     #           max_read_request_units: 1,
     #           max_write_request_units: 1,
     #         },
+    #         warm_throughput: {
+    #           read_units_per_second: 1,
+    #           write_units_per_second: 1,
+    #         },
     #       },
     #     ],
     #     billing_mode: "PROVISIONED", # accepts PROVISIONED, PAY_PER_REQUEST
@@ -1716,6 +1730,10 @@ module Aws::DynamoDB
     #     ],
     #     table_class: "STANDARD", # accepts STANDARD, STANDARD_INFREQUENT_ACCESS
     #     deletion_protection_enabled: false,
+    #     warm_throughput: {
+    #       read_units_per_second: 1,
+    #       write_units_per_second: 1,
+    #     },
     #     resource_policy: "ResourcePolicy",
     #     on_demand_throughput: {
     #       max_read_request_units: 1,
@@ -1776,6 +1794,9 @@ module Aws::DynamoDB
     #   resp.table_description.global_secondary_indexes[0].index_arn #=> String
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.stream_specification.stream_enabled #=> Boolean
     #   resp.table_description.stream_specification.stream_view_type #=> String, one of "NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"
     #   resp.table_description.latest_stream_label #=> String
@@ -1789,10 +1810,16 @@ module Aws::DynamoDB
     #   resp.table_description.replicas[0].kms_master_key_id #=> String
     #   resp.table_description.replicas[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.table_description.replicas[0].global_secondary_indexes #=> Array
     #   resp.table_description.replicas[0].global_secondary_indexes[0].index_name #=> String
     #   resp.table_description.replicas[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.replicas[0].replica_inaccessible_date_time #=> Time
     #   resp.table_description.replicas[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.table_description.replicas[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -1812,6 +1839,9 @@ module Aws::DynamoDB
     #   resp.table_description.deletion_protection_enabled #=> Boolean
     #   resp.table_description.on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/CreateTable AWS API Documentation
     #
@@ -2369,6 +2399,9 @@ module Aws::DynamoDB
     #   resp.table_description.global_secondary_indexes[0].index_arn #=> String
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.stream_specification.stream_enabled #=> Boolean
     #   resp.table_description.stream_specification.stream_view_type #=> String, one of "NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"
     #   resp.table_description.latest_stream_label #=> String
@@ -2382,10 +2415,16 @@ module Aws::DynamoDB
     #   resp.table_description.replicas[0].kms_master_key_id #=> String
     #   resp.table_description.replicas[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.table_description.replicas[0].global_secondary_indexes #=> Array
     #   resp.table_description.replicas[0].global_secondary_indexes[0].index_name #=> String
     #   resp.table_description.replicas[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.replicas[0].replica_inaccessible_date_time #=> Time
     #   resp.table_description.replicas[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.table_description.replicas[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -2405,6 +2444,9 @@ module Aws::DynamoDB
     #   resp.table_description.deletion_protection_enabled #=> Boolean
     #   resp.table_description.on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/DeleteTable AWS API Documentation
     #
@@ -2707,10 +2749,16 @@ module Aws::DynamoDB
     #   resp.global_table_description.replication_group[0].kms_master_key_id #=> String
     #   resp.global_table_description.replication_group[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.global_table_description.replication_group[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.global_table_description.replication_group[0].global_secondary_indexes #=> Array
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].index_name #=> String
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.global_table_description.replication_group[0].replica_inaccessible_date_time #=> Time
     #   resp.global_table_description.replication_group[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.global_table_description.replication_group[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -2888,6 +2936,8 @@ module Aws::DynamoDB
     #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].provisioned_throughput.write_capacity_units #=> Integer
     #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
     #   resp.import_table_description.start_time #=> Time
     #   resp.import_table_description.end_time #=> Time
     #   resp.import_table_description.processed_size_bytes #=> Integer
@@ -3178,6 +3228,9 @@ module Aws::DynamoDB
     #   resp.table.global_secondary_indexes[0].index_arn #=> String
     #   resp.table.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table.global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table.stream_specification.stream_enabled #=> Boolean
     #   resp.table.stream_specification.stream_view_type #=> String, one of "NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"
     #   resp.table.latest_stream_label #=> String
@@ -3191,10 +3244,16 @@ module Aws::DynamoDB
     #   resp.table.replicas[0].kms_master_key_id #=> String
     #   resp.table.replicas[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table.replicas[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table.replicas[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table.replicas[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table.replicas[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.table.replicas[0].global_secondary_indexes #=> Array
     #   resp.table.replicas[0].global_secondary_indexes[0].index_name #=> String
     #   resp.table.replicas[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table.replicas[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table.replicas[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table.replicas[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table.replicas[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table.replicas[0].replica_inaccessible_date_time #=> Time
     #   resp.table.replicas[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.table.replicas[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -3214,6 +3273,9 @@ module Aws::DynamoDB
     #   resp.table.deletion_protection_enabled #=> Boolean
     #   resp.table.on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table.on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table.warm_throughput.read_units_per_second #=> Integer
+    #   resp.table.warm_throughput.write_units_per_second #=> Integer
+    #   resp.table.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -4144,6 +4206,10 @@ module Aws::DynamoDB
     #             max_read_request_units: 1,
     #             max_write_request_units: 1,
     #           },
+    #           warm_throughput: {
+    #             read_units_per_second: 1,
+    #             write_units_per_second: 1,
+    #           },
     #         },
     #       ],
     #     },
@@ -4193,6 +4259,8 @@ module Aws::DynamoDB
     #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].provisioned_throughput.write_capacity_units #=> Integer
     #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.import_table_description.table_creation_parameters.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
     #   resp.import_table_description.start_time #=> Time
     #   resp.import_table_description.end_time #=> Time
     #   resp.import_table_description.processed_size_bytes #=> Integer
@@ -5670,6 +5738,10 @@ module Aws::DynamoDB
     #           max_read_request_units: 1,
     #           max_write_request_units: 1,
     #         },
+    #         warm_throughput: {
+    #           read_units_per_second: 1,
+    #           write_units_per_second: 1,
+    #         },
     #       },
     #     ],
     #     local_secondary_index_override: [
@@ -5755,6 +5827,9 @@ module Aws::DynamoDB
     #   resp.table_description.global_secondary_indexes[0].index_arn #=> String
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.stream_specification.stream_enabled #=> Boolean
     #   resp.table_description.stream_specification.stream_view_type #=> String, one of "NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"
     #   resp.table_description.latest_stream_label #=> String
@@ -5768,10 +5843,16 @@ module Aws::DynamoDB
     #   resp.table_description.replicas[0].kms_master_key_id #=> String
     #   resp.table_description.replicas[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.table_description.replicas[0].global_secondary_indexes #=> Array
     #   resp.table_description.replicas[0].global_secondary_indexes[0].index_name #=> String
     #   resp.table_description.replicas[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.replicas[0].replica_inaccessible_date_time #=> Time
     #   resp.table_description.replicas[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.table_description.replicas[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -5791,6 +5872,9 @@ module Aws::DynamoDB
     #   resp.table_description.deletion_protection_enabled #=> Boolean
     #   resp.table_description.on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/RestoreTableFromBackup AWS API Documentation
     #
@@ -5917,6 +6001,10 @@ module Aws::DynamoDB
     #           max_read_request_units: 1,
     #           max_write_request_units: 1,
     #         },
+    #         warm_throughput: {
+    #           read_units_per_second: 1,
+    #           write_units_per_second: 1,
+    #         },
     #       },
     #     ],
     #     local_secondary_index_override: [
@@ -6002,6 +6090,9 @@ module Aws::DynamoDB
     #   resp.table_description.global_secondary_indexes[0].index_arn #=> String
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.stream_specification.stream_enabled #=> Boolean
     #   resp.table_description.stream_specification.stream_view_type #=> String, one of "NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"
     #   resp.table_description.latest_stream_label #=> String
@@ -6015,10 +6106,16 @@ module Aws::DynamoDB
     #   resp.table_description.replicas[0].kms_master_key_id #=> String
     #   resp.table_description.replicas[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.table_description.replicas[0].global_secondary_indexes #=> Array
     #   resp.table_description.replicas[0].global_secondary_indexes[0].index_name #=> String
     #   resp.table_description.replicas[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.replicas[0].replica_inaccessible_date_time #=> Time
     #   resp.table_description.replicas[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.table_description.replicas[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -6038,6 +6135,9 @@ module Aws::DynamoDB
     #   resp.table_description.deletion_protection_enabled #=> Boolean
     #   resp.table_description.on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/RestoreTableToPointInTime AWS API Documentation
     #
@@ -7108,10 +7208,16 @@ module Aws::DynamoDB
     #   resp.global_table_description.replication_group[0].kms_master_key_id #=> String
     #   resp.global_table_description.replication_group[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.global_table_description.replication_group[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.global_table_description.replication_group[0].global_secondary_indexes #=> Array
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].index_name #=> String
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.global_table_description.replication_group[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.global_table_description.replication_group[0].replica_inaccessible_date_time #=> Time
     #   resp.global_table_description.replication_group[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.global_table_description.replication_group[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -7904,6 +8010,10 @@ module Aws::DynamoDB
     #   table in on-demand capacity mode. If you use this parameter, you must
     #   specify `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
     #
+    # @option params [Types::WarmThroughput] :warm_throughput
+    #   Represents the warm throughput (in read units per second and write
+    #   units per second) for updating a table.
+    #
     # @return [Types::UpdateTableOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateTableOutput#table_description #table_description} => Types::TableDescription
@@ -7985,6 +8095,10 @@ module Aws::DynamoDB
     #             max_read_request_units: 1,
     #             max_write_request_units: 1,
     #           },
+    #           warm_throughput: {
+    #             read_units_per_second: 1,
+    #             write_units_per_second: 1,
+    #           },
     #         },
     #         create: {
     #           index_name: "IndexName", # required
@@ -8005,6 +8119,10 @@ module Aws::DynamoDB
     #           on_demand_throughput: {
     #             max_read_request_units: 1,
     #             max_write_request_units: 1,
+    #           },
+    #           warm_throughput: {
+    #             read_units_per_second: 1,
+    #             write_units_per_second: 1,
     #           },
     #         },
     #         delete: {
@@ -8078,6 +8196,10 @@ module Aws::DynamoDB
     #       max_read_request_units: 1,
     #       max_write_request_units: 1,
     #     },
+    #     warm_throughput: {
+    #       read_units_per_second: 1,
+    #       write_units_per_second: 1,
+    #     },
     #   })
     #
     # @example Response structure
@@ -8133,6 +8255,9 @@ module Aws::DynamoDB
     #   resp.table_description.global_secondary_indexes[0].index_arn #=> String
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.global_secondary_indexes[0].on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.stream_specification.stream_enabled #=> Boolean
     #   resp.table_description.stream_specification.stream_view_type #=> String, one of "NEW_IMAGE", "OLD_IMAGE", "NEW_AND_OLD_IMAGES", "KEYS_ONLY"
     #   resp.table_description.latest_stream_label #=> String
@@ -8146,10 +8271,16 @@ module Aws::DynamoDB
     #   resp.table_description.replicas[0].kms_master_key_id #=> String
     #   resp.table_description.replicas[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #   resp.table_description.replicas[0].global_secondary_indexes #=> Array
     #   resp.table_description.replicas[0].global_secondary_indexes[0].index_name #=> String
     #   resp.table_description.replicas[0].global_secondary_indexes[0].provisioned_throughput_override.read_capacity_units #=> Integer
     #   resp.table_description.replicas[0].global_secondary_indexes[0].on_demand_throughput_override.max_read_request_units #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.replicas[0].global_secondary_indexes[0].warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE"
     #   resp.table_description.replicas[0].replica_inaccessible_date_time #=> Time
     #   resp.table_description.replicas[0].replica_table_class_summary.table_class #=> String, one of "STANDARD", "STANDARD_INFREQUENT_ACCESS"
     #   resp.table_description.replicas[0].replica_table_class_summary.last_update_date_time #=> Time
@@ -8169,6 +8300,9 @@ module Aws::DynamoDB
     #   resp.table_description.deletion_protection_enabled #=> Boolean
     #   resp.table_description.on_demand_throughput.max_read_request_units #=> Integer
     #   resp.table_description.on_demand_throughput.max_write_request_units #=> Integer
+    #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
+    #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/UpdateTable AWS API Documentation
     #
@@ -8436,7 +8570,7 @@ module Aws::DynamoDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dynamodb'
-      context[:gem_version] = '1.128.0'
+      context[:gem_version] = '1.129.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

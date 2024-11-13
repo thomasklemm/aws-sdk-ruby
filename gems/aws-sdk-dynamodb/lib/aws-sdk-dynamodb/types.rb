@@ -1732,6 +1732,11 @@ module Aws::DynamoDB
     #   `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
     #   @return [Types::OnDemandThroughput]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput value (in read units per second and
+    #   write units per second) when creating a secondary index.
+    #   @return [Types::WarmThroughput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/CreateGlobalSecondaryIndexAction AWS API Documentation
     #
     class CreateGlobalSecondaryIndexAction < Struct.new(
@@ -1739,7 +1744,8 @@ module Aws::DynamoDB
       :key_schema,
       :projection,
       :provisioned_throughput,
-      :on_demand_throughput)
+      :on_demand_throughput,
+      :warm_throughput)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2061,6 +2067,11 @@ module Aws::DynamoDB
     #   disabled (false) on the table.
     #   @return [Boolean]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput (in read units per second and write
+    #   units per second) for creating a table.
+    #   @return [Types::WarmThroughput]
+    #
     # @!attribute [rw] resource_policy
     #   An Amazon Web Services resource-based policy document in JSON format
     #   that will be attached to the table.
@@ -2106,6 +2117,7 @@ module Aws::DynamoDB
       :tags,
       :table_class,
       :deletion_protection_enabled,
+      :warm_throughput,
       :resource_policy,
       :on_demand_throughput)
       SENSITIVE = []
@@ -4125,6 +4137,13 @@ module Aws::DynamoDB
     #   `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
     #   @return [Types::OnDemandThroughput]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput value (in read units per second and
+    #   write units per second) for the specified secondary index. If you
+    #   use this parameter, you must specify `ReadUnitsPerSecond`,
+    #   `WriteUnitsPerSecond`, or both.
+    #   @return [Types::WarmThroughput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/GlobalSecondaryIndex AWS API Documentation
     #
     class GlobalSecondaryIndex < Struct.new(
@@ -4132,7 +4151,8 @@ module Aws::DynamoDB
       :key_schema,
       :projection,
       :provisioned_throughput,
-      :on_demand_throughput)
+      :on_demand_throughput,
+      :warm_throughput)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4261,6 +4281,11 @@ module Aws::DynamoDB
     #   `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
     #   @return [Types::OnDemandThroughput]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput value (in read units per second and
+    #   write units per second) for the specified secondary index.
+    #   @return [Types::GlobalSecondaryIndexWarmThroughputDescription]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/GlobalSecondaryIndexDescription AWS API Documentation
     #
     class GlobalSecondaryIndexDescription < Struct.new(
@@ -4273,7 +4298,8 @@ module Aws::DynamoDB
       :index_size_bytes,
       :item_count,
       :index_arn,
-      :on_demand_throughput)
+      :on_demand_throughput,
+      :warm_throughput)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4376,6 +4402,35 @@ module Aws::DynamoDB
       :update,
       :create,
       :delete)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The description of the warm throughput value on a global secondary
+    # index.
+    #
+    # @!attribute [rw] read_units_per_second
+    #   Represents warm throughput read units per second value for a global
+    #   secondary index.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] write_units_per_second
+    #   Represents warm throughput write units per second value for a global
+    #   secondary index.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   Represents the warm throughput status being created or updated on a
+    #   global secondary index. The status can only be `UPDATING` or
+    #   `ACTIVE`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/GlobalSecondaryIndexWarmThroughputDescription AWS API Documentation
+    #
+    class GlobalSecondaryIndexWarmThroughputDescription < Struct.new(
+      :read_units_per_second,
+      :write_units_per_second,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7148,6 +7203,10 @@ module Aws::DynamoDB
     #   specified replica table.
     #   @return [Types::OnDemandThroughputOverride]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput value for this replica.
+    #   @return [Types::TableWarmThroughputDescription]
+    #
     # @!attribute [rw] global_secondary_indexes
     #   Replica-specific global secondary index settings.
     #   @return [Array<Types::ReplicaGlobalSecondaryIndexDescription>]
@@ -7172,6 +7231,7 @@ module Aws::DynamoDB
       :kms_master_key_id,
       :provisioned_throughput_override,
       :on_demand_throughput_override,
+      :warm_throughput,
       :global_secondary_indexes,
       :replica_inaccessible_date_time,
       :replica_table_class_summary)
@@ -7283,12 +7343,18 @@ module Aws::DynamoDB
     #   secondary index in the specified replica table.
     #   @return [Types::OnDemandThroughputOverride]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput of the global secondary index for
+    #   this replica.
+    #   @return [Types::GlobalSecondaryIndexWarmThroughputDescription]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/ReplicaGlobalSecondaryIndexDescription AWS API Documentation
     #
     class ReplicaGlobalSecondaryIndexDescription < Struct.new(
       :index_name,
       :provisioned_throughput_override,
-      :on_demand_throughput_override)
+      :on_demand_throughput_override,
+      :warm_throughput)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8923,6 +8989,10 @@ module Aws::DynamoDB
     #   `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
     #   @return [Types::OnDemandThroughput]
     #
+    # @!attribute [rw] warm_throughput
+    #   Describes the warm throughput value of the base table.
+    #   @return [Types::TableWarmThroughputDescription]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/TableDescription AWS API Documentation
     #
     class TableDescription < Struct.new(
@@ -8949,7 +9019,8 @@ module Aws::DynamoDB
       :archival_summary,
       :table_class_summary,
       :deletion_protection_enabled,
-      :on_demand_throughput)
+      :on_demand_throughput,
+      :warm_throughput)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8979,6 +9050,33 @@ module Aws::DynamoDB
     #
     class TableNotFoundException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents the warm throughput value (in read units per second and
+    # write units per second) of the base table.
+    #
+    # @!attribute [rw] read_units_per_second
+    #   Represents the base table's warm throughput value in read units per
+    #   second.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] write_units_per_second
+    #   Represents the base table's warm throughput value in write units
+    #   per second.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   Represents warm throughput value of the base table..
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/TableWarmThroughputDescription AWS API Documentation
+    #
+    class TableWarmThroughputDescription < Struct.new(
+      :read_units_per_second,
+      :write_units_per_second,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9695,12 +9793,18 @@ module Aws::DynamoDB
     #   `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
     #   @return [Types::OnDemandThroughput]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput value of the new provisioned
+    #   throughput settings to be applied to a global secondary index.
+    #   @return [Types::WarmThroughput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/UpdateGlobalSecondaryIndexAction AWS API Documentation
     #
     class UpdateGlobalSecondaryIndexAction < Struct.new(
       :index_name,
       :provisioned_throughput,
-      :on_demand_throughput)
+      :on_demand_throughput,
+      :warm_throughput)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -10415,6 +10519,11 @@ module Aws::DynamoDB
     #   must specify `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
     #   @return [Types::OnDemandThroughput]
     #
+    # @!attribute [rw] warm_throughput
+    #   Represents the warm throughput (in read units per second and write
+    #   units per second) for updating a table.
+    #   @return [Types::WarmThroughput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/UpdateTableInput AWS API Documentation
     #
     class UpdateTableInput < Struct.new(
@@ -10428,7 +10537,8 @@ module Aws::DynamoDB
       :replica_updates,
       :table_class,
       :deletion_protection_enabled,
-      :on_demand_throughput)
+      :on_demand_throughput,
+      :warm_throughput)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -10520,6 +10630,30 @@ module Aws::DynamoDB
     #
     class UpdateTimeToLiveOutput < Struct.new(
       :time_to_live_specification)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provides visibility into the number of read and write operations your
+    # table or secondary index can instantaneously support. The settings can
+    # be modified using the `UpdateTable` operation to meet the throughput
+    # requirements of an upcoming peak event.
+    #
+    # @!attribute [rw] read_units_per_second
+    #   Represents the number of read operations your base table can
+    #   instantaneously support.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] write_units_per_second
+    #   Represents the number of write operations your base table can
+    #   instantaneously support.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/WarmThroughput AWS API Documentation
+    #
+    class WarmThroughput < Struct.new(
+      :read_units_per_second,
+      :write_units_per_second)
       SENSITIVE = []
       include Aws::Structure
     end

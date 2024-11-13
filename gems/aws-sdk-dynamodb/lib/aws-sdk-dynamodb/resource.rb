@@ -301,6 +301,10 @@ module Aws::DynamoDB
     #           max_read_request_units: 1,
     #           max_write_request_units: 1,
     #         },
+    #         warm_throughput: {
+    #           read_units_per_second: 1,
+    #           write_units_per_second: 1,
+    #         },
     #       },
     #     ],
     #     billing_mode: "PROVISIONED", # accepts PROVISIONED, PAY_PER_REQUEST
@@ -325,6 +329,10 @@ module Aws::DynamoDB
     #     ],
     #     table_class: "STANDARD", # accepts STANDARD, STANDARD_INFREQUENT_ACCESS
     #     deletion_protection_enabled: false,
+    #     warm_throughput: {
+    #       read_units_per_second: 1,
+    #       write_units_per_second: 1,
+    #     },
     #     resource_policy: "ResourcePolicy",
     #     on_demand_throughput: {
     #       max_read_request_units: 1,
@@ -530,6 +538,9 @@ module Aws::DynamoDB
     # @option options [Boolean] :deletion_protection_enabled
     #   Indicates whether deletion protection is to be enabled (true) or
     #   disabled (false) on the table.
+    # @option options [Types::WarmThroughput] :warm_throughput
+    #   Represents the warm throughput (in read units per second and write
+    #   units per second) for creating a table.
     # @option options [String] :resource_policy
     #   An Amazon Web Services resource-based policy document in JSON format
     #   that will be attached to the table.

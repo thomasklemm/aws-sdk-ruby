@@ -57,6 +57,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency('aws-sdk-bedrockagent', '~> 1')
   spec.add_dependency('aws-sdk-bedrockagentruntime', '~> 1')
   spec.add_dependency('aws-sdk-bedrockruntime', '~> 1')
+  spec.add_dependency('aws-sdk-billing', '~> 1')
   spec.add_dependency('aws-sdk-billingconductor', '~> 1')
   spec.add_dependency('aws-sdk-braket', '~> 1')
   spec.add_dependency('aws-sdk-budgets', '~> 1')

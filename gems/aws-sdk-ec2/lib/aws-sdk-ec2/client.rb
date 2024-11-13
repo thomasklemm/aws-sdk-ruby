@@ -5296,9 +5296,9 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Create a new Capacity Reservation by splitting the available capacity
-    # of the source Capacity Reservation. The new Capacity Reservation will
-    # have the same attributes as the source Capacity Reservation except for
+    # Create a new Capacity Reservation by splitting the capacity of the
+    # source Capacity Reservation. The new Capacity Reservation will have
+    # the same attributes as the source Capacity Reservation except for
     # tags. The source Capacity Reservation must be `active` and owned by
     # your Amazon Web Services account.
     #
@@ -5322,7 +5322,7 @@ module Aws::EC2
     #
     # @option params [required, String] :source_capacity_reservation_id
     #   The ID of the Capacity Reservation from which you want to split the
-    #   available capacity.
+    #   capacity.
     #
     # @option params [required, Integer] :instance_count
     #   The number of instances to split from the source Capacity Reservation.
@@ -8445,12 +8445,11 @@ module Aws::EC2
     end
 
     # Creates an ED25519 or 2048-bit RSA key pair with the specified name
-    # and in the specified PEM or PPK format. Amazon EC2 stores the public
-    # key and displays the private key for you to save to a file. The
-    # private key is returned as an unencrypted PEM encoded PKCS#1 private
-    # key or an unencrypted PPK formatted private key for use with PuTTY. If
-    # a key with the specified name already exists, Amazon EC2 returns an
-    # error.
+    # and in the specified format. Amazon EC2 stores the public key and
+    # displays the private key for you to save to a file. The private key is
+    # returned as an unencrypted PEM encoded PKCS#1 private key or an
+    # unencrypted PPK formatted private key for use with PuTTY. If a key
+    # with the specified name already exists, Amazon EC2 returns an error.
     #
     # The key pair returned to you is available only in the Amazon Web
     # Services Region in which you create it. If you prefer, you can create
@@ -8459,8 +8458,8 @@ module Aws::EC2
     #
     # You can have up to 5,000 key pairs per Amazon Web Services Region.
     #
-    # For more information, see [Amazon EC2 key pairs][1] in the *Amazon
-    # Elastic Compute Cloud User Guide*.
+    # For more information, see [Amazon EC2 key pairs][1] in the *Amazon EC2
+    # User Guide*.
     #
     #
     #
@@ -11816,9 +11815,8 @@ module Aws::EC2
     #
     # A security group acts as a virtual firewall for your instance to
     # control inbound and outbound traffic. For more information, see
-    # [Amazon EC2 security groups][1] in the *Amazon Elastic Compute Cloud
-    # User Guide* and [Security groups for your VPC][2] in the *Amazon
-    # Virtual Private Cloud User Guide*.
+    # [Amazon EC2 security groups][1] in the *Amazon EC2 User Guide* and
+    # [Security groups for your VPC][2] in the *Amazon VPC User Guide*.
     #
     # When you create a security group, you specify a friendly name of your
     # choice. You can't have two security groups for the same VPC with the
@@ -24130,9 +24128,9 @@ module Aws::EC2
     # @option params [Array<String>] :owners
     #   Scopes the results to images with the specified owners. You can
     #   specify a combination of Amazon Web Services account IDs, `self`,
-    #   `amazon`, and `aws-marketplace`. If you omit this parameter, the
-    #   results include all images for which you have launch permissions,
-    #   regardless of ownership.
+    #   `amazon`, `aws-backup-vault`, and `aws-marketplace`. If you omit this
+    #   parameter, the results include all images for which you have launch
+    #   permissions, regardless of ownership.
     #
     # @option params [Boolean] :include_deprecated
     #   Specifies whether to include deprecated AMIs.
@@ -24219,11 +24217,11 @@ module Aws::EC2
     #
     #   * `name` - The name of the AMI (provided during image creation).
     #
-    #   * `owner-alias` - The owner alias (`amazon` \| `aws-marketplace`). The
-    #     valid aliases are defined in an Amazon-maintained list. This is not
-    #     the Amazon Web Services account alias that can be set using the IAM
-    #     console. We recommend that you use the **Owner** request parameter
-    #     instead of this filter.
+    #   * `owner-alias` - The owner alias (`amazon` \| `aws-backup-vault` \|
+    #     `aws-marketplace`). The valid aliases are defined in an
+    #     Amazon-maintained list. This is not the Amazon Web Services account
+    #     alias that can be set using the IAM console. We recommend that you
+    #     use the **Owner** request parameter instead of this filter.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the owner. We
     #     recommend that you use the **Owner** request parameter instead of
@@ -24384,6 +24382,8 @@ module Aws::EC2
     #   resp.images[0].source_instance_id #=> String
     #   resp.images[0].deregistration_protection #=> String
     #   resp.images[0].last_launched_time #=> String
+    #   resp.images[0].source_image_id #=> String
+    #   resp.images[0].source_image_region #=> String
     #   resp.images[0].image_id #=> String
     #   resp.images[0].image_location #=> String
     #   resp.images[0].state #=> String, one of "pending", "available", "invalid", "deregistered", "transient", "failed", "error", "disabled"
@@ -27552,7 +27552,7 @@ module Aws::EC2
     # Describes the specified key pairs or all of your key pairs.
     #
     # For more information about key pairs, see [Amazon EC2 key pairs][1] in
-    # the *Amazon Elastic Compute Cloud User Guide*.
+    # the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -46402,19 +46402,17 @@ module Aws::EC2
     end
 
     # Imports the public key from an RSA or ED25519 key pair that you
-    # created with a third-party tool. Compare this with CreateKeyPair, in
-    # which Amazon Web Services creates the key pair and gives the keys to
-    # you (Amazon Web Services keeps a copy of the public key). With
-    # ImportKeyPair, you create the key pair and give Amazon Web Services
-    # just the public key. The private key is never transferred between you
-    # and Amazon Web Services.
+    # created using a third-party tool. You give Amazon Web Services only
+    # the public key. The private key is never transferred between you and
+    # Amazon Web Services.
     #
-    # For more information about key pairs, see [Amazon EC2 key pairs][1] in
-    # the *Amazon Elastic Compute Cloud User Guide*.
+    # For more information about the requirements for importing a key pair,
+    # see [Create a key pair and import the public key to Amazon EC2][1] in
+    # the *Amazon EC2 User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/create-key-pairs.html#how-to-generate-your-own-key-and-import-it-to-aws
     #
     # @option params [Array<Types::TagSpecification>] :tag_specifications
     #   The tags to apply to the imported key pair.
@@ -46429,8 +46427,7 @@ module Aws::EC2
     #   A unique name for the key pair.
     #
     # @option params [required, String, StringIO, File] :public_key_material
-    #   The public key. For API calls, the text must be base64-encoded. For
-    #   command line tools, base64 encoding is performed for you.
+    #   The public key.
     #
     # @return [Types::ImportKeyPairResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -57139,7 +57136,11 @@ module Aws::EC2
     #   The ID of the Active Directory group for which to revoke access.
     #
     # @option params [Boolean] :revoke_all_groups
-    #   Indicates whether access should be revoked for all clients.
+    #   Indicates whether access should be revoked for all groups for a single
+    #   `TargetNetworkCidr` that earlier authorized ingress for all groups
+    #   using `AuthorizeAllGroups`. This does not impact other authorization
+    #   rules that allowed ingress to the same `TargetNetworkCidr` with a
+    #   specific `AccessGroupId`.
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -60848,7 +60849,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.487.0'
+      context[:gem_version] = '1.488.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

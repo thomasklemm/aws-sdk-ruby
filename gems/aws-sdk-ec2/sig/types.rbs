@@ -8642,6 +8642,8 @@ module Aws::EC2
       attr_accessor source_instance_id: ::String
       attr_accessor deregistration_protection: ::String
       attr_accessor last_launched_time: ::String
+      attr_accessor source_image_id: ::String
+      attr_accessor source_image_region: ::String
       attr_accessor image_id: ::String
       attr_accessor image_location: ::String
       attr_accessor state: ("pending" | "available" | "invalid" | "deregistered" | "transient" | "failed" | "error" | "disabled")

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.212.0 (2024-11-13)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-billing` gem.
+
 3.211.0 (2024-10-30)
 ------------------
 

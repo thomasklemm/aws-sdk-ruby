@@ -6933,7 +6933,7 @@ module Aws::EC2
     #
     # @!attribute [rw] source_capacity_reservation_id
     #   The ID of the Capacity Reservation from which you want to split the
-    #   available capacity.
+    #   capacity.
     #   @return [String]
     #
     # @!attribute [rw] instance_count
@@ -19757,9 +19757,9 @@ module Aws::EC2
     # @!attribute [rw] owners
     #   Scopes the results to images with the specified owners. You can
     #   specify a combination of Amazon Web Services account IDs, `self`,
-    #   `amazon`, and `aws-marketplace`. If you omit this parameter, the
-    #   results include all images for which you have launch permissions,
-    #   regardless of ownership.
+    #   `amazon`, `aws-backup-vault`, and `aws-marketplace`. If you omit
+    #   this parameter, the results include all images for which you have
+    #   launch permissions, regardless of ownership.
     #   @return [Array<String>]
     #
     # @!attribute [rw] include_deprecated
@@ -19855,11 +19855,12 @@ module Aws::EC2
     #
     #   * `name` - The name of the AMI (provided during image creation).
     #
-    #   * `owner-alias` - The owner alias (`amazon` \| `aws-marketplace`).
-    #     The valid aliases are defined in an Amazon-maintained list. This
-    #     is not the Amazon Web Services account alias that can be set using
-    #     the IAM console. We recommend that you use the **Owner** request
-    #     parameter instead of this filter.
+    #   * `owner-alias` - The owner alias (`amazon` \| `aws-backup-vault` \|
+    #     `aws-marketplace`). The valid aliases are defined in an
+    #     Amazon-maintained list. This is not the Amazon Web Services
+    #     account alias that can be set using the IAM console. We recommend
+    #     that you use the **Owner** request parameter instead of this
+    #     filter.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the owner. We
     #     recommend that you use the **Owner** request parameter instead of
@@ -38382,7 +38383,8 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] image_owner_alias
-    #   The owner alias (`amazon` \| `aws-marketplace`).
+    #   The owner alias (`amazon` \| `aws-backup-vault` \|
+    #   `aws-marketplace`).
     #   @return [String]
     #
     # @!attribute [rw] name
@@ -38484,6 +38486,36 @@ module Aws::EC2
     #   [1]: http://www.iso.org/iso/iso8601
     #   @return [String]
     #
+    # @!attribute [rw] source_image_id
+    #   The ID of the source AMI from which the AMI was created.
+    #
+    #   The ID only appears if the AMI was created using CreateImage,
+    #   CopyImage, or CreateRestoreImageTask. The ID does not appear if the
+    #   AMI was created using any other API. For some older AMIs, the ID
+    #   might not be available. For more information, see [Identify the
+    #   source AMI used to create a new AMI][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify-source-ami-used-to-create-new-ami.html
+    #   @return [String]
+    #
+    # @!attribute [rw] source_image_region
+    #   The Region of the source AMI.
+    #
+    #   The Region only appears if the AMI was created using CreateImage,
+    #   CopyImage, or CreateRestoreImageTask. The Region does not appear if
+    #   the AMI was created using any other API. For some older AMIs, the
+    #   Region might not be available. For more information, see [Identify
+    #   the source AMI used to create a new AMI][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/identify-source-ami-used-to-create-new-ami.html
+    #   @return [String]
+    #
     # @!attribute [rw] image_id
     #   The ID of the AMI.
     #   @return [String]
@@ -38562,6 +38594,8 @@ module Aws::EC2
       :source_instance_id,
       :deregistration_protection,
       :last_launched_time,
+      :source_image_id,
+      :source_image_region,
       :image_id,
       :image_location,
       :state,
@@ -38754,7 +38788,7 @@ module Aws::EC2
     # @!attribute [rw] image_owner_alias
     #   The alias of the AMI owner.
     #
-    #   Valid values: `amazon` \| `aws-marketplace`
+    #   Valid values: `amazon` \| `aws-backup-vault` \| `aws-marketplace`
     #   @return [String]
     #
     # @!attribute [rw] creation_date
@@ -39465,8 +39499,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] public_key_material
-    #   The public key. For API calls, the text must be base64-encoded. For
-    #   command line tools, base64 encoding is performed for you.
+    #   The public key.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ImportKeyPairRequest AWS API Documentation
@@ -40090,7 +40123,9 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] launch_time
-    #   The time the instance was launched.
+    #   The time that the instance was last launched. To determine the time
+    #   that instance was first launched, see the attachment time for the
+    #   primary network interface.
     #   @return [Time]
     #
     # @!attribute [rw] placement
@@ -59931,7 +59966,11 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] revoke_all_groups
-    #   Indicates whether access should be revoked for all clients.
+    #   Indicates whether access should be revoked for all groups for a
+    #   single `TargetNetworkCidr` that earlier authorized ingress for all
+    #   groups using `AuthorizeAllGroups`. This does not impact other
+    #   authorization rules that allowed ingress to the same
+    #   `TargetNetworkCidr` with a specific `AccessGroupId`.
     #   @return [Boolean]
     #
     # @!attribute [rw] dry_run

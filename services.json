@@ -129,6 +129,9 @@
   "BedrockRuntime": {
     "models": "bedrock-runtime/2023-09-30"
   },
+  "Billing": {
+    "models": "billing/2023-09-07"
+  },
   "BillingConductor": {
     "models": "billingconductor/2021-07-30"
   },

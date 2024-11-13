@@ -373,7 +373,9 @@ module Aws::EC2
       data[:instance_type]
     end
 
-    # The time the instance was launched.
+    # The time that the instance was last launched. To determine the time
+    # that instance was first launched, see the attachment time for the
+    # primary network interface.
     # @return [Time]
     def launch_time
       data[:launch_time]

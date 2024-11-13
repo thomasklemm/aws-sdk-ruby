@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1006.0 (2024-11-13)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::Billing`.
+
 1.1005.0 (2024-11-12)
 ------------------
 

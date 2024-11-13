@@ -378,6 +378,12 @@ module Aws::DynamoDB
       data[:on_demand_throughput]
     end
 
+    # Describes the warm throughput value of the base table.
+    # @return [Types::TableWarmThroughputDescription]
+    def warm_throughput
+      data[:warm_throughput]
+    end
+
     # @!endgroup
 
     # @return [Client]
@@ -1816,6 +1822,10 @@ module Aws::DynamoDB
     #             max_read_request_units: 1,
     #             max_write_request_units: 1,
     #           },
+    #           warm_throughput: {
+    #             read_units_per_second: 1,
+    #             write_units_per_second: 1,
+    #           },
     #         },
     #         create: {
     #           index_name: "IndexName", # required
@@ -1836,6 +1846,10 @@ module Aws::DynamoDB
     #           on_demand_throughput: {
     #             max_read_request_units: 1,
     #             max_write_request_units: 1,
+    #           },
+    #           warm_throughput: {
+    #             read_units_per_second: 1,
+    #             write_units_per_second: 1,
     #           },
     #         },
     #         delete: {
@@ -1908,6 +1922,10 @@ module Aws::DynamoDB
     #     on_demand_throughput: {
     #       max_read_request_units: 1,
     #       max_write_request_units: 1,
+    #     },
+    #     warm_throughput: {
+    #       read_units_per_second: 1,
+    #       write_units_per_second: 1,
     #     },
     #   })
     # @param [Hash] options ({})
@@ -1987,6 +2005,9 @@ module Aws::DynamoDB
     #   Updates the maximum number of read and write units for the specified
     #   table in on-demand capacity mode. If you use this parameter, you must
     #   specify `MaxReadRequestUnits`, `MaxWriteRequestUnits`, or both.
+    # @option options [Types::WarmThroughput] :warm_throughput
+    #   Represents the warm throughput (in read units per second and write
+    #   units per second) for updating a table.
     # @return [Table]
     def update(options = {})
       options = options.merge(table_name: @name)
