@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+3.213.0 (2024-11-14)
+------------------
+
+* Feature - Updated Aws::STS::Client with the latest API changes.
+
+* Feature - This release introduces the new API 'AssumeRoot', which returns short-term credentials that you can use to perform privileged tasks.
+
 3.212.0 (2024-11-06)
 ------------------
 

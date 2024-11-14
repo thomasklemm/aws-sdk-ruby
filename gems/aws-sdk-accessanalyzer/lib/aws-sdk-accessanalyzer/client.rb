@@ -950,7 +950,15 @@ module Aws::AccessAnalyzer
     #   the rule.
     #
     # @option params [Hash<String,String>] :tags
-    #   An array of key-value pairs to apply to the analyzer.
+    #   An array of key-value pairs to apply to the analyzer. You can use the
+    #   set of Unicode letters, digits, whitespace, `_`, `.`, `/`, `=`, `+`,
+    #   and `-`.
+    #
+    #   For the tag key, you can specify a value that is 1 to 128 characters
+    #   in length and cannot be prefixed with `aws:`.
+    #
+    #   For the tag value, you can specify a value that is 0 to 256 characters
+    #   in length.
     #
     # @option params [String] :client_token
     #   A client token.
@@ -961,8 +969,7 @@ module Aws::AccessAnalyzer
     # @option params [Types::AnalyzerConfiguration] :configuration
     #   Specifies the configuration of the analyzer. If the analyzer is an
     #   unused access analyzer, the specified scope of unused access is used
-    #   for the configuration. If the analyzer is an external access analyzer,
-    #   this field is not used.
+    #   for the configuration.
     #
     # @return [Types::CreateAnalyzerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -993,6 +1000,18 @@ module Aws::AccessAnalyzer
     #     configuration: {
     #       unused_access: {
     #         unused_access_age: 1,
+    #         analysis_rule: {
+    #           exclusions: [
+    #             {
+    #               account_ids: ["String"],
+    #               resource_tags: [
+    #                 {
+    #                   "String" => "String",
+    #                 },
+    #               ],
+    #             },
+    #           ],
+    #         },
     #       },
     #     },
     #   })
@@ -1294,7 +1313,7 @@ module Aws::AccessAnalyzer
     # @example Response structure
     #
     #   resp.resource.resource_arn #=> String
-    #   resp.resource.resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream"
+    #   resp.resource.resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream", "AWS::IAM::User"
     #   resp.resource.created_at #=> Time
     #   resp.resource.analyzed_at #=> Time
     #   resp.resource.updated_at #=> Time
@@ -1344,6 +1363,12 @@ module Aws::AccessAnalyzer
     #   resp.analyzer.status #=> String, one of "ACTIVE", "CREATING", "DISABLED", "FAILED"
     #   resp.analyzer.status_reason.code #=> String, one of "AWS_SERVICE_ACCESS_DISABLED", "DELEGATED_ADMINISTRATOR_DEREGISTERED", "ORGANIZATION_DELETED", "SERVICE_LINKED_ROLE_CREATION_FAILED"
     #   resp.analyzer.configuration.unused_access.unused_access_age #=> Integer
+    #   resp.analyzer.configuration.unused_access.analysis_rule.exclusions #=> Array
+    #   resp.analyzer.configuration.unused_access.analysis_rule.exclusions[0].account_ids #=> Array
+    #   resp.analyzer.configuration.unused_access.analysis_rule.exclusions[0].account_ids[0] #=> String
+    #   resp.analyzer.configuration.unused_access.analysis_rule.exclusions[0].resource_tags #=> Array
+    #   resp.analyzer.configuration.unused_access.analysis_rule.exclusions[0].resource_tags[0] #=> Hash
+    #   resp.analyzer.configuration.unused_access.analysis_rule.exclusions[0].resource_tags[0]["String"] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetAnalyzer AWS API Documentation
     #
@@ -1438,7 +1463,7 @@ module Aws::AccessAnalyzer
     #   resp.finding.action[0] #=> String
     #   resp.finding.resource #=> String
     #   resp.finding.is_public #=> Boolean
-    #   resp.finding.resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream"
+    #   resp.finding.resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream", "AWS::IAM::User"
     #   resp.finding.condition #=> Hash
     #   resp.finding.condition["String"] #=> String
     #   resp.finding.created_at #=> Time
@@ -1662,7 +1687,7 @@ module Aws::AccessAnalyzer
     #   resp.id #=> String
     #   resp.next_token #=> String
     #   resp.resource #=> String
-    #   resp.resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream"
+    #   resp.resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream", "AWS::IAM::User"
     #   resp.resource_owner_account #=> String
     #   resp.status #=> String, one of "ACTIVE", "ARCHIVED", "RESOLVED"
     #   resp.updated_at #=> Time
@@ -1826,7 +1851,7 @@ module Aws::AccessAnalyzer
     #   resp.findings[0].condition["String"] #=> String
     #   resp.findings[0].resource #=> String
     #   resp.findings[0].is_public #=> Boolean
-    #   resp.findings[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream"
+    #   resp.findings[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream", "AWS::IAM::User"
     #   resp.findings[0].created_at #=> Time
     #   resp.findings[0].change_type #=> String, one of "CHANGED", "NEW", "UNCHANGED"
     #   resp.findings[0].status #=> String, one of "ACTIVE", "ARCHIVED", "RESOLVED"
@@ -1898,8 +1923,7 @@ module Aws::AccessAnalyzer
     end
 
     # Retrieves a list of resources of the specified type that have been
-    # analyzed by the specified external access analyzer. This action is not
-    # supported for unused access analyzers.
+    # analyzed by the specified analyzer.
     #
     # @option params [required, String] :analyzer_arn
     #   The [ARN of the analyzer][1] to retrieve a list of analyzed resources
@@ -1929,7 +1953,7 @@ module Aws::AccessAnalyzer
     #
     #   resp = client.list_analyzed_resources({
     #     analyzer_arn: "AnalyzerArn", # required
-    #     resource_type: "AWS::S3::Bucket", # accepts AWS::S3::Bucket, AWS::IAM::Role, AWS::SQS::Queue, AWS::Lambda::Function, AWS::Lambda::LayerVersion, AWS::KMS::Key, AWS::SecretsManager::Secret, AWS::EFS::FileSystem, AWS::EC2::Snapshot, AWS::ECR::Repository, AWS::RDS::DBSnapshot, AWS::RDS::DBClusterSnapshot, AWS::SNS::Topic, AWS::S3Express::DirectoryBucket, AWS::DynamoDB::Table, AWS::DynamoDB::Stream
+    #     resource_type: "AWS::S3::Bucket", # accepts AWS::S3::Bucket, AWS::IAM::Role, AWS::SQS::Queue, AWS::Lambda::Function, AWS::Lambda::LayerVersion, AWS::KMS::Key, AWS::SecretsManager::Secret, AWS::EFS::FileSystem, AWS::EC2::Snapshot, AWS::ECR::Repository, AWS::RDS::DBSnapshot, AWS::RDS::DBClusterSnapshot, AWS::SNS::Topic, AWS::S3Express::DirectoryBucket, AWS::DynamoDB::Table, AWS::DynamoDB::Stream, AWS::IAM::User
     #     next_token: "Token",
     #     max_results: 1,
     #   })
@@ -1939,7 +1963,7 @@ module Aws::AccessAnalyzer
     #   resp.analyzed_resources #=> Array
     #   resp.analyzed_resources[0].resource_arn #=> String
     #   resp.analyzed_resources[0].resource_owner_account #=> String
-    #   resp.analyzed_resources[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream"
+    #   resp.analyzed_resources[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream", "AWS::IAM::User"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/ListAnalyzedResources AWS API Documentation
@@ -1991,6 +2015,12 @@ module Aws::AccessAnalyzer
     #   resp.analyzers[0].status #=> String, one of "ACTIVE", "CREATING", "DISABLED", "FAILED"
     #   resp.analyzers[0].status_reason.code #=> String, one of "AWS_SERVICE_ACCESS_DISABLED", "DELEGATED_ADMINISTRATOR_DEREGISTERED", "ORGANIZATION_DELETED", "SERVICE_LINKED_ROLE_CREATION_FAILED"
     #   resp.analyzers[0].configuration.unused_access.unused_access_age #=> Integer
+    #   resp.analyzers[0].configuration.unused_access.analysis_rule.exclusions #=> Array
+    #   resp.analyzers[0].configuration.unused_access.analysis_rule.exclusions[0].account_ids #=> Array
+    #   resp.analyzers[0].configuration.unused_access.analysis_rule.exclusions[0].account_ids[0] #=> String
+    #   resp.analyzers[0].configuration.unused_access.analysis_rule.exclusions[0].resource_tags #=> Array
+    #   resp.analyzers[0].configuration.unused_access.analysis_rule.exclusions[0].resource_tags[0] #=> Hash
+    #   resp.analyzers[0].configuration.unused_access.analysis_rule.exclusions[0].resource_tags[0]["String"] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/ListAnalyzers AWS API Documentation
@@ -2123,7 +2153,7 @@ module Aws::AccessAnalyzer
     #   resp.findings[0].action[0] #=> String
     #   resp.findings[0].resource #=> String
     #   resp.findings[0].is_public #=> Boolean
-    #   resp.findings[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream"
+    #   resp.findings[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream", "AWS::IAM::User"
     #   resp.findings[0].condition #=> Hash
     #   resp.findings[0].condition["String"] #=> String
     #   resp.findings[0].created_at #=> Time
@@ -2216,7 +2246,7 @@ module Aws::AccessAnalyzer
     #   resp.findings[0].error #=> String
     #   resp.findings[0].id #=> String
     #   resp.findings[0].resource #=> String
-    #   resp.findings[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream"
+    #   resp.findings[0].resource_type #=> String, one of "AWS::S3::Bucket", "AWS::IAM::Role", "AWS::SQS::Queue", "AWS::Lambda::Function", "AWS::Lambda::LayerVersion", "AWS::KMS::Key", "AWS::SecretsManager::Secret", "AWS::EFS::FileSystem", "AWS::EC2::Snapshot", "AWS::ECR::Repository", "AWS::RDS::DBSnapshot", "AWS::RDS::DBClusterSnapshot", "AWS::SNS::Topic", "AWS::S3Express::DirectoryBucket", "AWS::DynamoDB::Table", "AWS::DynamoDB::Stream", "AWS::IAM::User"
     #   resp.findings[0].resource_owner_account #=> String
     #   resp.findings[0].status #=> String, one of "ACTIVE", "ARCHIVED", "RESOLVED"
     #   resp.findings[0].updated_at #=> Time
@@ -2462,6 +2492,61 @@ module Aws::AccessAnalyzer
       req.send_request(options)
     end
 
+    # Modifies the configuration of an existing analyzer.
+    #
+    # @option params [required, String] :analyzer_name
+    #   The name of the analyzer to modify.
+    #
+    # @option params [Types::AnalyzerConfiguration] :configuration
+    #   Contains information about the configuration of an analyzer for an
+    #   Amazon Web Services organization or account.
+    #
+    # @return [Types::UpdateAnalyzerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateAnalyzerResponse#configuration #configuration} => Types::AnalyzerConfiguration
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_analyzer({
+    #     analyzer_name: "Name", # required
+    #     configuration: {
+    #       unused_access: {
+    #         unused_access_age: 1,
+    #         analysis_rule: {
+    #           exclusions: [
+    #             {
+    #               account_ids: ["String"],
+    #               resource_tags: [
+    #                 {
+    #                   "String" => "String",
+    #                 },
+    #               ],
+    #             },
+    #           ],
+    #         },
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.configuration.unused_access.unused_access_age #=> Integer
+    #   resp.configuration.unused_access.analysis_rule.exclusions #=> Array
+    #   resp.configuration.unused_access.analysis_rule.exclusions[0].account_ids #=> Array
+    #   resp.configuration.unused_access.analysis_rule.exclusions[0].account_ids[0] #=> String
+    #   resp.configuration.unused_access.analysis_rule.exclusions[0].resource_tags #=> Array
+    #   resp.configuration.unused_access.analysis_rule.exclusions[0].resource_tags[0] #=> Hash
+    #   resp.configuration.unused_access.analysis_rule.exclusions[0].resource_tags[0]["String"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/UpdateAnalyzer AWS API Documentation
+    #
+    # @overload update_analyzer(params = {})
+    # @param [Hash] params ({})
+    def update_analyzer(params = {}, options = {})
+      req = build_request(:update_analyzer, params)
+      req.send_request(options)
+    end
+
     # Updates the criteria and values for the specified archive rule.
     #
     # @option params [required, String] :analyzer_name
@@ -2666,7 +2751,7 @@ module Aws::AccessAnalyzer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-accessanalyzer'
-      context[:gem_version] = '1.63.0'
+      context[:gem_version] = '1.64.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

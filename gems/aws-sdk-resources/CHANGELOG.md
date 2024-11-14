@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.213.0 (2024-11-14)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-partnercentralselling` gem.
+
 3.212.0 (2024-11-13)
 ------------------
 

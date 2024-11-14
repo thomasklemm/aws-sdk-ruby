@@ -280,6 +280,7 @@ module Aws
   autoload :PCS, 'aws-sdk-pcs'
   autoload :PI, 'aws-sdk-pi'
   autoload :Panorama, 'aws-sdk-panorama'
+  autoload :PartnerCentralSelling, 'aws-sdk-partnercentralselling'
   autoload :PaymentCryptography, 'aws-sdk-paymentcryptography'
   autoload :PaymentCryptographyData, 'aws-sdk-paymentcryptographydata'
   autoload :PcaConnectorAd, 'aws-sdk-pcaconnectorad'

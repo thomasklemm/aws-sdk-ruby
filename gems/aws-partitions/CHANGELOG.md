@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1007.0 (2024-11-14)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::PartnerCentralSelling`.
+
 1.1006.0 (2024-11-13)
 ------------------
 

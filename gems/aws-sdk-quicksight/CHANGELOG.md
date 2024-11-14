@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.136.0 (2024-11-14)
+------------------
+
+* Feature - This release adds APIs for Custom Permissions management in QuickSight, and APIs to support QuickSight Branding.
+
 1.135.0 (2024-11-07)
 ------------------
 

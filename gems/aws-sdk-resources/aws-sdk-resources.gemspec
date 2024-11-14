@@ -290,6 +290,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency('aws-sdk-pcs', '~> 1')
   spec.add_dependency('aws-sdk-pi', '~> 1')
   spec.add_dependency('aws-sdk-panorama', '~> 1')
+  spec.add_dependency('aws-sdk-partnercentralselling', '~> 1')
   spec.add_dependency('aws-sdk-paymentcryptography', '~> 1')
   spec.add_dependency('aws-sdk-paymentcryptographydata', '~> 1')
   spec.add_dependency('aws-sdk-pcaconnectorad', '~> 1')

@@ -872,6 +872,9 @@
   "Panorama": {
     "models": "panorama/2019-07-24"
   },
+  "PartnerCentralSelling": {
+    "models": "partnercentral-selling/2022-07-26"
+  },
   "PaymentCryptography": {
     "models": "payment-cryptography/2021-09-14"
   },

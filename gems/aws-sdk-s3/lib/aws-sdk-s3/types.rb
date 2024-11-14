@@ -9869,6 +9869,14 @@ module Aws::S3
     #   Length Constraints: Minimum length of 0. Maximum length of 1024.
     #
     #   Required: No.
+    #
+    #   <note markdown="1"> If you specify the `bucket-region`, `prefix`, or
+    #   `continuation-token` query parameters without using `max-buckets` to
+    #   set the maximum number of buckets returned in the response, Amazon
+    #   S3 applies a default page size of 10,000 and provides a continuation
+    #   token if there are more buckets.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] prefix

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.274.0 (2024-11-14)
+------------------
+
+* Feature - Add support for Neuron instance types [ trn1/trn1n/inf2 ] on SageMaker Notebook Instances Platform.
+
 1.273.0 (2024-11-06)
 ------------------
 

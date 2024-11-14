@@ -518,6 +518,7 @@ module Aws
             'PCS' => 'pcs',
             'PI' => 'pi',
             'Panorama' => 'panorama',
+            'PartnerCentralSelling' => 'partnercentral-selling',
             'PaymentCryptography' => 'controlplane.payment-cryptography',
             'PaymentCryptographyData' => 'dataplane.payment-cryptography',
             'PcaConnectorAd' => 'pca-connector-ad',

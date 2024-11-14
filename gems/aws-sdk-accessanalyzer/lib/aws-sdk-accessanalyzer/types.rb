@@ -318,6 +318,57 @@ module Aws::AccessAnalyzer
       class Unknown < AclGrantee; end
     end
 
+    # Contains information about analysis rules for the analyzer. Analysis
+    # rules determine which entities will generate findings based on the
+    # criteria you define when you create the rule.
+    #
+    # @!attribute [rw] exclusions
+    #   A list of rules for the analyzer containing criteria to exclude from
+    #   analysis. Entities that meet the rule criteria will not generate
+    #   findings.
+    #   @return [Array<Types::AnalysisRuleCriteria>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/AnalysisRule AWS API Documentation
+    #
+    class AnalysisRule < Struct.new(
+      :exclusions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The criteria for an analysis rule for an analyzer. The criteria
+    # determine which entities will generate findings.
+    #
+    # @!attribute [rw] account_ids
+    #   A list of Amazon Web Services account IDs to apply to the analysis
+    #   rule criteria. The accounts cannot include the organization analyzer
+    #   owner account. Account IDs can only be applied to the analysis rule
+    #   criteria for organization-level analyzers. The list cannot include
+    #   more than 2,000 account IDs.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] resource_tags
+    #   An array of key-value pairs to match for your resources. You can use
+    #   the set of Unicode letters, digits, whitespace, `_`, `.`, `/`, `=`,
+    #   `+`, and `-`.
+    #
+    #   For the tag key, you can specify a value that is 1 to 128 characters
+    #   in length and cannot be prefixed with `aws:`.
+    #
+    #   For the tag value, you can specify a value that is 0 to 256
+    #   characters in length. If the specified tag value is 0 characters,
+    #   the rule is applied to all principals with the specified tag key.
+    #   @return [Array<Hash<String,String>>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/AnalysisRuleCriteria AWS API Documentation
+    #
+    class AnalysisRuleCriteria < Struct.new(
+      :account_ids,
+      :resource_tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains details about the analyzed resource.
     #
     # @!attribute [rw] resource_arn
@@ -410,8 +461,8 @@ module Aws::AccessAnalyzer
       include Aws::Structure
     end
 
-    # Contains information about the configuration of an unused access
-    # analyzer for an Amazon Web Services organization or account.
+    # Contains information about the configuration of an analyzer for an
+    # Amazon Web Services organization or account.
     #
     # @note AnalyzerConfiguration is a union - when making an API calls you must set exactly one of the members.
     #
@@ -419,8 +470,7 @@ module Aws::AccessAnalyzer
     #
     # @!attribute [rw] unused_access
     #   Specifies the configuration of an unused access analyzer for an
-    #   Amazon Web Services organization or account. External access
-    #   analyzers do not support any configuration.
+    #   Amazon Web Services organization or account.
     #   @return [Types::UnusedAccessConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/AnalyzerConfiguration AWS API Documentation
@@ -535,7 +585,9 @@ module Aws::AccessAnalyzer
       include Aws::Structure
     end
 
-    # Contains information about an archive rule.
+    # Contains information about an archive rule. Archive rules
+    # automatically archive new findings that meet the criteria you define
+    # when you create the rule.
     #
     # @!attribute [rw] rule_name
     #   The name of the archive rule.
@@ -1012,7 +1064,15 @@ module Aws::AccessAnalyzer
     #   @return [Array<Types::InlineArchiveRule>]
     #
     # @!attribute [rw] tags
-    #   An array of key-value pairs to apply to the analyzer.
+    #   An array of key-value pairs to apply to the analyzer. You can use
+    #   the set of Unicode letters, digits, whitespace, `_`, `.`, `/`, `=`,
+    #   `+`, and `-`.
+    #
+    #   For the tag key, you can specify a value that is 1 to 128 characters
+    #   in length and cannot be prefixed with `aws:`.
+    #
+    #   For the tag value, you can specify a value that is 0 to 256
+    #   characters in length.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] client_token
@@ -1025,8 +1085,7 @@ module Aws::AccessAnalyzer
     # @!attribute [rw] configuration
     #   Specifies the configuration of the analyzer. If the analyzer is an
     #   unused access analyzer, the specified scope of unused access is used
-    #   for the configuration. If the analyzer is an external access
-    #   analyzer, this field is not used.
+    #   for the configuration.
     #   @return [Types::AnalyzerConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/CreateAnalyzerRequest AWS API Documentation
@@ -1988,7 +2047,9 @@ module Aws::AccessAnalyzer
     # The response to the request.
     #
     # @!attribute [rw] archive_rule
-    #   Contains information about an archive rule.
+    #   Contains information about an archive rule. Archive rules
+    #   automatically archive new findings that meet the criteria you define
+    #   when you create the rule.
     #   @return [Types::ArchiveRuleSummary]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/GetArchiveRuleResponse AWS API Documentation
@@ -4038,13 +4099,20 @@ module Aws::AccessAnalyzer
     #   will generate findings for IAM entities within the accounts of the
     #   selected organization for any access that hasn't been used in 90 or
     #   more days since the analyzer's last scan. You can choose a value
-    #   between 1 and 180 days.
+    #   between 1 and 365 days.
     #   @return [Integer]
+    #
+    # @!attribute [rw] analysis_rule
+    #   Contains information about analysis rules for the analyzer. Analysis
+    #   rules determine which entities will generate findings based on the
+    #   criteria you define when you create the rule.
+    #   @return [Types::AnalysisRule]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/UnusedAccessConfiguration AWS API Documentation
     #
     class UnusedAccessConfiguration < Struct.new(
-      :unused_access_age)
+      :unused_access_age,
+      :analysis_rule)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4208,6 +4276,37 @@ module Aws::AccessAnalyzer
       :recommended_action,
       :recommended_policy,
       :existing_policy_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] analyzer_name
+    #   The name of the analyzer to modify.
+    #   @return [String]
+    #
+    # @!attribute [rw] configuration
+    #   Contains information about the configuration of an analyzer for an
+    #   Amazon Web Services organization or account.
+    #   @return [Types::AnalyzerConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/UpdateAnalyzerRequest AWS API Documentation
+    #
+    class UpdateAnalyzerRequest < Struct.new(
+      :analyzer_name,
+      :configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] configuration
+    #   Contains information about the configuration of an analyzer for an
+    #   Amazon Web Services organization or account.
+    #   @return [Types::AnalyzerConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/accessanalyzer-2019-11-01/UpdateAnalyzerResponse AWS API Documentation
+    #
+    class UpdateAnalyzerResponse < Struct.new(
+      :configuration)
       SENSITIVE = []
       include Aws::Structure
     end
