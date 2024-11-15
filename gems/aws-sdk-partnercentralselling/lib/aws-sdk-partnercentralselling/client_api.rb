@@ -100,7 +100,6 @@ module Aws::PartnerCentralSelling
     EngagementScore = Shapes::StringShape.new(name: 'EngagementScore')
     EngagementTitle = Shapes::StringShape.new(name: 'EngagementTitle')
     ExpectedCustomerSpend = Shapes::StructureShape.new(name: 'ExpectedCustomerSpend')
-    ExpectedCustomerSpendAmountString = Shapes::StringShape.new(name: 'ExpectedCustomerSpendAmountString')
     ExpectedCustomerSpendCurrencyCodeEnum = Shapes::StringShape.new(name: 'ExpectedCustomerSpendCurrencyCodeEnum')
     ExpectedCustomerSpendList = Shapes::ListShape.new(name: 'ExpectedCustomerSpendList')
     ExpectedCustomerSpendTargetCompanyString = Shapes::StringShape.new(name: 'ExpectedCustomerSpendTargetCompanyString')
@@ -388,7 +387,7 @@ module Aws::PartnerCentralSelling
 
     EngagementInvitationsPayloadType.member = Shapes::ShapeRef.new(shape: EngagementInvitationPayloadType)
 
-    ExpectedCustomerSpend.add_member(:amount, Shapes::ShapeRef.new(shape: ExpectedCustomerSpendAmountString, required: true, location_name: "Amount"))
+    ExpectedCustomerSpend.add_member(:amount, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Amount"))
     ExpectedCustomerSpend.add_member(:currency_code, Shapes::ShapeRef.new(shape: ExpectedCustomerSpendCurrencyCodeEnum, required: true, location_name: "CurrencyCode"))
     ExpectedCustomerSpend.add_member(:frequency, Shapes::ShapeRef.new(shape: PaymentFrequency, required: true, location_name: "Frequency"))
     ExpectedCustomerSpend.add_member(:target_company, Shapes::ShapeRef.new(shape: ExpectedCustomerSpendTargetCompanyString, required: true, location_name: "TargetCompany"))

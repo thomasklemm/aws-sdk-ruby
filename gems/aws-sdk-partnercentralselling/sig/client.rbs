@@ -359,7 +359,7 @@ module Aws
         def engagement_invitation_id: () -> ::String
         def message: () -> ::String
         def opportunity_id: () -> ::String
-        def reason_code: () -> ("InvitationAccessDenied" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "EngagementValidationFailed" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "InternalError" | "OpportunityValidationFailed" | "OpportunityConflict")
+        def reason_code: () -> ("InvitationAccessDenied" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "EngagementValidationFailed" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "InternalError" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied")
         def start_time: () -> ::Time
         def task_arn: () -> ::String
         def task_id: () -> ::String
@@ -377,7 +377,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::StartEngagementFromOpportunityTaskResponse]
         def message: () -> ::String
         def opportunity_id: () -> ::String
-        def reason_code: () -> ("InvitationAccessDenied" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "EngagementValidationFailed" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "InternalError" | "OpportunityValidationFailed" | "OpportunityConflict")
+        def reason_code: () -> ("InvitationAccessDenied" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "EngagementValidationFailed" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "InternalError" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied")
         def start_time: () -> ::Time
         def task_arn: () -> ::String
         def task_id: () -> ::String

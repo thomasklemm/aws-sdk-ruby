@@ -477,7 +477,7 @@ module Aws::PartnerCentralSelling
     #   string value from a predefined list: `AWS` or `Sandbox`. The catalog
     #   determines which environment the opportunity is assigned in. Use `AWS`
     #   to assign real opportunities in the Amazon Web Services catalog, and
-    #   `Sandbox` to test in a secure and isolated environment.
+    #   `Sandbox` for testing in secure, isolated environments.
     #
     # @option params [required, String] :identifier
     #   Requires the `Opportunity`'s unique identifier when you want to
@@ -510,19 +510,17 @@ module Aws::PartnerCentralSelling
 
     # Enables you to create a formal association between an `Opportunity`
     # and various related entities, enriching the context and details of the
-    # opportunity for better collaboration and decision-making. You can
-    # associate an opportunity with the following types of entities:
+    # opportunity for better collaboration and decision making. You can
+    # associate an opportunity with the following entity types:
     #
     # * Partner Solution: A software product or consulting practice created
     #   and delivered by Partners. Partner Solutions help customers address
-    #   specific business challenges or achieve particular goals using
-    #   Amazon Web Services services.
+    #   business challenges using Amazon Web Services services.
     #
-    # * Amazon Web Services Product: Amazon Web Services offers a wide range
-    #   of products and services designed to provide scalable, reliable, and
+    # * Amazon Web Services Products: Amazon Web Services offers many
+    #   products and services that provide scalable, reliable, and
     #   cost-effective infrastructure solutions. For the latest list of
-    #   Amazon Web Services products, refer to [Amazon Web Services
-    #   products][1].
+    #   Amazon Web Services products, see [Amazon Web Services products][1].
     #
     # * Amazon Web Services Marketplace private offer: Allows Amazon Web
     #   Services Marketplace sellers to extend custom pricing and terms to
@@ -530,36 +528,35 @@ module Aws::PartnerCentralSelling
     #   custom prices, payment schedules, and end user license terms through
     #   private offers, enabling Amazon Web Services customers to acquire
     #   software solutions tailored to their specific needs. For more
-    #   information, refer to [Private offers in Amazon Web Services
+    #   information, see [Private offers in Amazon Web Services
     #   Marketplace][2].
     #
     # To obtain identifiers for these entities, use the following methods:
     #
     # * Solution: Use the `ListSolutions` operation.
     #
-    # * AWS products: For the latest list of Amazon Web Services products,
-    #   refer to the Amazon Web Services products list.
+    # * AWS Products: For the latest list of Amazon Web Services products,
+    #   see [Amazon Web Services products][1].
     #
-    # * Amazon Web Services Marketplace private offer: Use the [AWS
-    #   Marketplace Catalog API][3] to list entities. Specifically, use the
-    #   `ListEntities` operation to retrieve a list of private offers. The
-    #   request to the `ListEntities` API returns the details of the private
-    #   offers available to you. For more information, refer to
-    #   [ListEntities][4].
+    # * Amazon Web Services Marketplace private offer: Use the [Using the
+    #   Amazon Web Services Marketplace Catalog API][3] to list entities.
+    #   Specifically, use the `ListEntities` operation to retrieve a list of
+    #   private offers. The request returns the details of available private
+    #   offers. For more information, see [ListEntities][4].
     #
     #
     #
     # [1]: https://github.com/aws-samples/partner-crm-integration-samples/blob/main/resources/aws_products.json
     # [2]: https://docs.aws.amazon.com/marketplace/latest/buyerguide/buyer-private-offers.html
-    # [3]: https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html
+    # [3]: https://docs.aws.amazon.com/marketplace/latest/APIReference/catalog-apis.html
     # [4]: https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/API_ListEntities.html
     #
     # @option params [required, String] :catalog
     #   Specifies the catalog associated with the request. This field takes a
     #   string value from a predefined list: `AWS` or `Sandbox`. The catalog
-    #   determines whichenvironment the opportunity association is made in.
+    #   determines which environment the opportunity association is made in.
     #   Use `AWS` to associate opportunities in the Amazon Web Services
-    #   catalog, and `Sandbox` to test in a secure and isolated environment.
+    #   catalog, and `Sandbox` for testing in secure, isolated environments.
     #
     # @option params [required, String] :opportunity_identifier
     #   Requires the `Opportunity`'s unique identifier when you want to
@@ -577,8 +574,8 @@ module Aws::PartnerCentralSelling
     #   [1]: https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html
     #
     # @option params [required, String] :related_entity_type
-    #   Specifies the type of the related entity you're associating with the
-    #   ` Opportunity`. This helps to categorize and properly process the
+    #   Specifies the entity type that you're associating with the `
+    #   Opportunity`. This helps to categorize and properly process the
     #   association.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
@@ -602,34 +599,34 @@ module Aws::PartnerCentralSelling
     end
 
     # Creates an `Opportunity` record in Partner Central. Use this operation
-    # to create a potential business opportunity intended to be submitted to
-    # Amazon Web Services. Creating an opportunity sets its
-    # `Lifecycle.ReviewStatus` to `Pending Submission`.
+    # to create a potential business opportunity for submission to Amazon
+    # Web Services. Creating an opportunity sets `Lifecycle.ReviewStatus` to
+    # `Pending Submission`.
     #
-    # To fully submit an opportunity, follow these steps:
+    # To submit an opportunity, follow these steps:
     #
     # 1.  To create the opportunity, use `CreateOpportunity`.
     #
     # 2.  To associate a solution with the opportunity, use
     #     `AssociateOpportunity`.
     #
-    # 3.  To submit the opportunity, use `SubmitOpportunity`.
+    # 3.  To submit the opportunity, use
+    #     `StartEngagementFromOpportunityTask`.
     #
     # After submission, you can't edit the opportunity until the review is
-    # complete. However, opportunities in the `Pending Submission` state
-    # still need all details completed. You can update the opportunity while
-    # it's in the `Pending Submission` state.
+    # complete. But opportunities in the `Pending Submission` state must
+    # have complete details. You can update the opportunity while it's in
+    # the `Pending Submission` state.
     #
-    # There's a set of mandatory fields required to create opportunities,
-    # but consider providing optional fields to enrich the opportunity
-    # record.
+    # There's a set of mandatory fields to create opportunities, but
+    # consider providing optional fields to enrich the opportunity record.
     #
     # @option params [required, String] :catalog
     #   Specifies the catalog associated with the request. This field takes a
     #   string value from a predefined list: `AWS` or `Sandbox`. The catalog
     #   determines which environment the opportunity is created in. Use `AWS`
     #   to create opportunities in the Amazon Web Services catalog, and
-    #   `Sandbox` to test in a secure and isolated environment.
+    #   `Sandbox` for testing in secure, isolated environments.
     #
     # @option params [required, String] :client_token
     #   Required to be unique, and should be unchanging, it can be randomly
@@ -637,12 +634,11 @@ module Aws::PartnerCentralSelling
     #
     #   Default: None
     #
-    #   Best practice: To ensure uniqueness and avoid collisions, we recommend
-    #   you use a UUID (Universally Unique Identifier) as the `ClientToken`.
-    #   You can use standard libraries available in most programming languages
-    #   to generated this. If you use the same client token, the API throws
-    #   this error: "Conflicting client token submitted for a new request
-    #   body".
+    #   Best practice: To help ensure uniqueness and avoid conflicts, use a
+    #   Universally Unique Identifier (UUID) as the `ClientToken`. You can use
+    #   standard libraries from most programming languages to generate this.
+    #   If you use the same client token, the API returns the following error:
+    #   "Conflicting client token submitted for a new request body."
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
@@ -665,8 +661,8 @@ module Aws::PartnerCentralSelling
     #   marked as `NationalSecurity`.
     #
     # @option params [Array<Types::Contact>] :opportunity_team
-    #   Represents the internal team handling the opportunity. Specify the
-    #   members involved in collaborating on this opportunity within the
+    #   Represents the internal team handling the opportunity. Specify
+    #   collaborating members of this opportunity who are within the
     #   partner's organization.
     #
     # @option params [String] :opportunity_type
@@ -699,11 +695,11 @@ module Aws::PartnerCentralSelling
     # @option params [String] :partner_opportunity_identifier
     #   Specifies the opportunity's unique identifier in the partner's CRM
     #   system. This value is essential to track and reconcile because it's
-    #   included in the outbound payload sent back to the partner.
+    #   included in the outbound payload to the partner.
     #
-    #   This field allows partners to link an opportunity to their CRM, to
-    #   ensure seamless integration and accurate synchronization between the
-    #   Partner Central API and the partner's internal systems.
+    #   This field allows partners to link an opportunity to their CRM, which
+    #   helps to ensure seamless integration and accurate synchronization
+    #   between the Partner Central API and the partner's internal systems.
     #
     # @option params [Array<String>] :primary_needs_from_aws
     #   Identifies the type of support the partner needs from Amazon Web
@@ -711,51 +707,51 @@ module Aws::PartnerCentralSelling
     #
     #   Valid values:
     #
-    #   * Co-Sell - Architectural Validation: Confirmation from Amazon Web
+    #   * Cosell—Architectural Validation: Confirmation from Amazon Web
     #     Services that the partner's proposed solution architecture is
     #     aligned with Amazon Web Services best practices and poses minimal
     #     architectural risks.
     #
-    #   * Co-Sell - Business Presentation: Request Amazon Web Services
-    #     seller's participation in a joint customer presentation.
+    #   * Cosell—Business Presentation: Request Amazon Web Services seller's
+    #     participation in a joint customer presentation.
     #
-    #   * Co-Sell - Competitive Information: Access to Amazon Web Services
+    #   * Cosell—Competitive Information: Access to Amazon Web Services
     #     competitive resources and support for the partner's proposed
     #     solution.
     #
-    #   * Co-Sell - Pricing Assistance: Connect with an Amazon Web Services
+    #   * Cosell—Pricing Assistance: Connect with an Amazon Web Services
     #     seller for support situations where a partner may be receiving an
     #     upfront discount on a service (for example: EDP deals).
     #
-    #   * Co-Sell - Technical Consultation: Connect with an Amazon Web
-    #     Services Solutions Architect to address the partner's questions
-    #     about the proposed solution.
+    #   * Cosell—Technical Consultation: Connect with an Amazon Web Services
+    #     Solutions Architect to address the partner's questions about the
+    #     proposed solution.
     #
-    #   * Co-Sell - Total Cost of Ownership Evaluation: Assistance with
-    #     quoting different cost savings of proposed solutions on Amazon Web
-    #     Services versus on-premises or a traditional hosting environment.
+    #   * Cosell—Total Cost of Ownership Evaluation: Assistance with quoting
+    #     different cost savings of proposed solutions on Amazon Web Services
+    #     versus on-premises or a traditional hosting environment.
     #
-    #   * Co-Sell - Deal Support: Request Amazon Web Services seller's
-    #     support to progress the opportunity (for example: joint customer
-    #     call, strategic positioning).
+    #   * Cosell—Deal Support: Request Amazon Web Services seller's support
+    #     to progress the opportunity (for example: joint customer call,
+    #     strategic positioning).
     #
-    #   * Co-Sell - Support for Public Tender / RFx: Opportunity related to
-    #     the public sector where the partner needs Amazon Web Services RFx
+    #   * Cosell—Support for Public Tender/RFx: Opportunity related to the
+    #     public sector where the partner needs Amazon Web Services RFx
     #     support.
     #
     #   * Do Not Need Support from AWS Sales Rep: Indicates that a partner
     #     doesn't need support from an Amazon Web Services sales
     #     representative, and the partner solely manages the opportunity.
-    #     It's possible to request co-selling support on these opportunities
-    #     at any stage during their lifecycle. Also known as,
+    #     It's possible to request coselling support on these opportunities
+    #     at any stage during their lifecycles. This is also known as a
     #     for-visibility-only (FVO) opportunity.
     #
     # @option params [Types::Project] :project
     #   An object that contains project details for the `Opportunity`.
     #
     # @option params [Types::SoftwareRevenue] :software_revenue
-    #   Specifies details of a customer's procurement terms. Required only
-    #   for partners in eligible programs.
+    #   Specifies details of a customer's procurement terms. This is required
+    #   only for partners in eligible programs.
     #
     # @return [Types::CreateOpportunityResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -839,7 +835,7 @@ module Aws::PartnerCentralSelling
     #       delivery_models: ["SaaS or PaaS"], # accepts SaaS or PaaS, BYOL or AMI, Managed Services, Professional Services, Resell, Other
     #       expected_customer_spend: [
     #         {
-    #           amount: "ExpectedCustomerSpendAmountString", # required
+    #           amount: "String", # required
     #           currency_code: "USD", # required, accepts USD, EUR, GBP, AUD, CAD, CNY, NZD, INR, JPY, CHF, SEK, AED, AFN, ALL, AMD, ANG, AOA, ARS, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYN, BZD, CDF, CHE, CHW, CLF, CLP, COP, COU, CRC, CUC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, FJD, FKP, GEL, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IQD, IRR, ISK, JMD, JOD, KES, KGS, KHR, KMF, KPW, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRU, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NIO, NOK, NPR, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SGD, SHP, SLL, SOS, SRD, SSP, STN, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USN, UYI, UYU, UZS, VEF, VND, VUV, WST, XAF, XCD, XDR, XOF, XPF, XSU, XUA, YER, ZAR, ZMW, ZWL
     #           frequency: "Monthly", # required, accepts Monthly
     #           target_company: "ExpectedCustomerSpendTargetCompanyString", # required
@@ -878,7 +874,7 @@ module Aws::PartnerCentralSelling
     end
 
     # Allows you to remove an existing association between an `Opportunity`
-    # and related entities such as a Partner Solution, Amazon Web Services
+    # and related entities, such as a Partner Solution, Amazon Web Services
     # product, or an Amazon Web Services Marketplace offer. This operation
     # is the counterpart to `AssociateOpportunity`, and it provides
     # flexibility to manage associations as business needs change.
@@ -888,23 +884,22 @@ module Aws::PartnerCentralSelling
     # error. Ensuring accurate associations helps maintain clarity and
     # accuracy to track and manage business opportunities. When you replace
     # an entity, first attach the new entity and then disassociate the one
-    # to be removed, especially if it's the last remaining related entity
-    # that's required.
+    # to be removed, especially if it's the last remaining entity that's
+    # required.
     #
     # @option params [required, String] :catalog
     #   Specifies the catalog associated with the request. This field takes a
     #   string value from a predefined list: `AWS` or `Sandbox`. The catalog
     #   determines which environment the opportunity disassociation is made
     #   in. Use `AWS` to disassociate opportunities in the Amazon Web Services
-    #   catalog, and `Sandbox` to test in a secure and isolated environment.
+    #   catalog, and `Sandbox` for testing in secure, isolated environments.
     #
     # @option params [required, String] :opportunity_identifier
     #   The opportunity's unique identifier for when you want to disassociate
-    #   it from related entities. This identifier is crucial to ensure the
-    #   correct opportunity is updated, especially in environments with
-    #   numerous opportunities.
+    #   it from related entities. This identifier helps to ensure that the
+    #   correct opportunity is updated.
     #
-    #   Validation: Ensure that the identifier provided corresponds to an
+    #   Validation: Ensure that the provided identifier corresponds to an
     #   existing opportunity in the Amazon Web Services system because
     #   incorrect identifiers result in an error and no changes are made.
     #
@@ -916,12 +911,12 @@ module Aws::PartnerCentralSelling
     #
     #   For Amazon Web Services Marketplace entities, use the Amazon Web
     #   Services Marketplace API to obtain the necessary ARNs. For guidance on
-    #   retrieving these ARNs, refer to [ Amazon Web Services Marketplace
-    #   Catalog API][1] .
+    #   retrieving these ARNs, see [ Amazon Web Services MarketplaceUsing the
+    #   Amazon Web Services Marketplace Catalog API][1].
     #
     #   Validation: Ensure the identifier or ARN is valid and corresponds to
-    #   an existing related entity. An incorrect or invalid identifier results
-    #   in an error.
+    #   an existing entity. An incorrect or invalid identifier results in an
+    #   error.
     #
     #
     #
@@ -930,15 +925,16 @@ module Aws::PartnerCentralSelling
     # @option params [required, String] :related_entity_type
     #   The type of the entity that you're disassociating from the
     #   opportunity. When you specify the entity type, it helps the system
-    #   correctly process the disassociation request and ensures that the
-    #   right connections are removed.
+    #   correctly process the disassociation request to ensure that the right
+    #   connections are removed.
     #
     #   Examples of entity types include Partner Solution, Amazon Web Services
-    #   product, and Amazon Web Services Marketplace offer. Ensure that the
+    #   product, and Amazon Web Services Marketplaceoffer. Ensure that the
     #   value matches one of the expected entity types.
     #
-    #   Validation: Provide a valid entity type to ensure successful
-    #   disassociation. Invalid or incorrect entity types result in an error.
+    #   Validation: Provide a valid entity type to help ensure successful
+    #   disassociation. An invalid or incorrect entity type results in an
+    #   error.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -975,7 +971,7 @@ module Aws::PartnerCentralSelling
     # @option params [required, String] :related_opportunity_identifier
     #   The unique identifier for the related partner opportunity. Use this
     #   field to correlate an AWS opportunity with its corresponding partner
-    #   opportunity in your CRM system.
+    #   opportunity.
     #
     # @return [Types::GetAwsOpportunitySummaryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1047,8 +1043,10 @@ module Aws::PartnerCentralSelling
     end
 
     # Retrieves the details of an engagement invitation shared by AWS with a
-    # partner. The information includes key aspects such as the customer,
-    # project details, and lifecycle information related to the engagement.
+    # partner. The information includes aspects such as customer, project
+    # details, and lifecycle information. To connect an engagement
+    # invitation with an opportunity, match the invitation’s
+    # `Payload.Project.Title` with opportunity `Project.Title`.
     #
     # @option params [required, String] :catalog
     #   Specifies the catalog associated with the request. The field accepts
@@ -1056,8 +1054,8 @@ module Aws::PartnerCentralSelling
     #   for testing environments.
     #
     # @option params [required, String] :identifier
-    #   Specifies the unique identifier for the engagement invitation being
-    #   retrieved.
+    #   Specifies the unique identifier for the retrieved engagement
+    #   invitation.
     #
     # @return [Types::GetEngagementInvitationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1138,8 +1136,8 @@ module Aws::PartnerCentralSelling
     #   string value from a predefined list: `AWS` or `Sandbox`. The catalog
     #   determines which environment the opportunity is fetched from. Use
     #   `AWS` to retrieve opportunities in the Amazon Web Services catalog,
-    #   and `Sandbox` to retrieve opportunities in a secure and isolated
-    #   testing environment.
+    #   and `Sandbox` to retrieve opportunities in a secure, isolated testing
+    #   environment.
     #
     # @option params [required, String] :identifier
     #   Read-only, system generated `Opportunity` unique identifier.
@@ -1340,10 +1338,9 @@ module Aws::PartnerCentralSelling
       req.send_request(options)
     end
 
-    # This request accepts a list of filters to use to retrieve a specific
-    # subset of opportunities, as well as sort options. This feature is
-    # available to partners from [Partner Central][1] using the
-    # `ListOpportunities` API action.
+    # This request accepts a list of filters that retrieve opportunity
+    # subsets as well as sort options. This feature is available to partners
+    # from [Partner Central][1] using the `ListOpportunities` API action.
     #
     # To synchronize your system with Amazon Web Services, only list the
     # opportunities that were newly created or updated. We recommend you
@@ -1373,8 +1370,7 @@ module Aws::PartnerCentralSelling
     #   string value from a predefined list: `AWS` or `Sandbox`. The catalog
     #   determines which environment the opportunities are listed in. Use
     #   `AWS` for listing real opportunities in the Amazon Web Services
-    #   catalog, and `Sandbox` for to test in a secure and isolated
-    #   environment.
+    #   catalog, and `Sandbox` for testing in secure, isolated environments.
     #
     # @option params [Array<String>] :customer_company_name
     #   Filters the opportunities based on the customer's company name. This
@@ -1406,7 +1402,7 @@ module Aws::PartnerCentralSelling
     # @option params [Integer] :max_results
     #   Specifies the maximum number of results to return in a single call.
     #   This limits the number of opportunities returned in the response to
-    #   avoid overloading with too many results at once.
+    #   avoid providing too many results at once.
     #
     #   Default: 20
     #
@@ -1525,10 +1521,8 @@ module Aws::PartnerCentralSelling
     #   `Sort.SortBy` is `Identifier`.
     #
     # @option params [Array<String>] :status
-    #   Filters the solutions based on their status. This filter helps
-    #   retrieve solutions with statuses such as `Active`, `Inactive`, or
-    #   `Pending Approval`, allowing partners to manage their solution
-    #   portfolios effectively.
+    #   Filters solutions based on their status. This filter helps partners
+    #   manage their solution portfolios effectively.
     #
     # @return [Types::ListSolutionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1572,40 +1566,39 @@ module Aws::PartnerCentralSelling
       req.send_request(options)
     end
 
-    # Use this action to reject an `EngagementInvitation` that has been
-    # shared by AWS. Rejecting the engagement invitation indicates that the
-    # partner does not wish to pursue the opportunity, and all related data
-    # will be inaccessible after the rejection.
+    # This action rejects an `EngagementInvitation` that AWS shared.
+    # Rejecting an invitation indicates that the partner doesn't want to
+    # pursue the opportunity, and all related data will become inaccessible
+    # thereafter.
     #
     # @option params [required, String] :catalog
-    #   Specifies the catalog related to the engagement invitation. Accepted
-    #   values are `AWS` and `Sandbox`, which determine the environment in
-    #   which the opportunity is managed.
+    #   This is the catalog that's associated with the engagement invitation.
+    #   Acceptable values are `AWS` or `Sandbox`, and these values determine
+    #   the environment in which the opportunity is managed.
     #
     # @option params [required, String] :identifier
-    #   Specifies the unique identifier of the `EngagementInvitation` to be
-    #   rejected. Providing the correct identifier ensures that the intended
+    #   This is the unique identifier of the rejected `EngagementInvitation`.
+    #   Providing the correct identifier helps to ensure that the intended
     #   invitation is rejected.
     #
     # @option params [String] :rejection_reason
-    #   Specifies the reason for rejecting the engagement invitation.
-    #   Providing a reason helps document the rationale behind the rejection
-    #   and assists AWS in tracking patterns or issues. Possible values
-    #   include:
+    #   This describes the reason for rejecting the engagement invitation,
+    #   which helps AWS track usage patterns. Acceptable values include the
+    #   following:
     #
-    #   * *Customer problem unclear:* The customer's problem is not clearly
-    #     defined.
+    #   * *Customer problem unclear:* The customer's problem isn't
+    #     understood.
     #
-    #   * *Next steps unclear:* The next steps required to proceed are not
-    #     clear.
+    #   * *Next steps unclear:* The next steps required to proceed aren't
+    #     understood.
     #
     #   * *Unable to support:* The partner is unable to provide support due to
     #     resource or capability constraints.
     #
-    #   * *Duplicate of Partner Referral:* The opportunity is a duplicate of
+    #   * *Duplicate of partner referral:* The opportunity is a duplicate of
     #     an existing referral.
     #
-    #   * *Other:* Any other reason not covered by the specified values.
+    #   * *Other:* Any reason not covered by other values.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1627,11 +1620,11 @@ module Aws::PartnerCentralSelling
     end
 
     # This action starts the engagement by accepting an
-    # `EngagementInvitation`. The task is asynchronous and involves several
-    # steps: accepting the invitation, creating an opportunity in the
-    # partner’s account from the AWS Opportunity, and copying over key
-    # details for tracking. Once completed, an `Opportunity Created` event
-    # is generated, indicating that the opportunity has been successfully
+    # `EngagementInvitation`. The task is asynchronous and involves the
+    # following steps: accepting the invitation, creating an opportunity in
+    # the partner’s account from the AWS opportunity, and copying details
+    # for tracking. When completed, an `Opportunity Created` event is
+    # generated, indicating that the opportunity has been successfully
     # created in the partner's account.
     #
     # @option params [required, String] :catalog
@@ -1639,17 +1632,17 @@ module Aws::PartnerCentralSelling
     #   engagements and `Sandbox` for testing scenarios.
     #
     # @option params [required, String] :client_token
-    #   A unique, case-sensitive identifier provided by the client to ensure
-    #   the idempotency of the request. Can be a random or meaningful string,
-    #   but must be unique for each request.
+    #   A unique, case-sensitive identifier provided by the client that helps
+    #   to ensure the idempotency of the request. This can be a random or
+    #   meaningful string but must be unique for each request.
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
     #
     # @option params [required, String] :identifier
     #   Specifies the unique identifier of the `EngagementInvitation` to be
-    #   accepted. Providing the correct identifier ensures the right
-    #   engagement invitation is processed.
+    #   accepted. Providing the correct identifier helps ensure that the
+    #   correct engagement is processed.
     #
     # @return [Types::StartEngagementByAcceptingInvitationTaskResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1675,7 +1668,7 @@ module Aws::PartnerCentralSelling
     #   resp.engagement_invitation_id #=> String
     #   resp.message #=> String
     #   resp.opportunity_id #=> String
-    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "EngagementValidationFailed", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "InternalError", "OpportunityValidationFailed", "OpportunityConflict"
+    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "EngagementValidationFailed", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "InternalError", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied"
     #   resp.start_time #=> Time
     #   resp.task_arn #=> String
     #   resp.task_id #=> String
@@ -1698,9 +1691,8 @@ module Aws::PartnerCentralSelling
     #
     # @option params [required, Types::AwsSubmission] :aws_submission
     #   Indicates the level of AWS involvement in the opportunity. This field
-    #   helps track AWS's role and participation throughout the engagement,
-    #   such as providing technical support, deal assistance, or sales
-    #   support.
+    #   helps track AWS participation throughout the engagement, such as
+    #   providing technical support, deal assistance, and sales support.
     #
     # @option params [required, String] :catalog
     #   Specifies the catalog in which the engagement is tracked. Acceptable
@@ -1708,17 +1700,17 @@ module Aws::PartnerCentralSelling
     #   environments.
     #
     # @option params [required, String] :client_token
-    #   A unique token provided by the client to ensure the idempotency of the
-    #   request. It helps prevent the same task from being performed multiple
-    #   times.
+    #   A unique token provided by the client to help ensure the idempotency
+    #   of the request. It helps prevent the same task from being performed
+    #   multiple times.
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
     #
     # @option params [required, String] :identifier
     #   The unique identifier of the opportunity from which the engagement
-    #   task is to be initiated. This ensures the task is applied to the
-    #   correct opportunity.
+    #   task is to be initiated. This helps ensure that the task is applied to
+    #   the correct opportunity.
     #
     # @return [Types::StartEngagementFromOpportunityTaskResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1746,7 +1738,7 @@ module Aws::PartnerCentralSelling
     #
     #   resp.message #=> String
     #   resp.opportunity_id #=> String
-    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "EngagementValidationFailed", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "InternalError", "OpportunityValidationFailed", "OpportunityConflict"
+    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "EngagementValidationFailed", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "InternalError", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied"
     #   resp.start_time #=> Time
     #   resp.task_arn #=> String
     #   resp.task_id #=> String
@@ -1777,13 +1769,13 @@ module Aws::PartnerCentralSelling
     #   string value from a predefined list: `AWS` or `Sandbox`. The catalog
     #   determines which environment the opportunity is updated in. Use `AWS`
     #   to update real opportunities in the production environment, and
-    #   `Sandbox` to test in a secure and isolated environment. When you use
+    #   `Sandbox` for testing in secure, isolated environments. When you use
     #   the `Sandbox` catalog, it allows you to simulate and validate your
     #   interactions with Amazon Web Services services without affecting live
     #   data or operations.
     #
     # @option params [Types::Customer] :customer
-    #   Specifies details of the customer associated with the `Opportunity` .
+    #   Specifies details of the customer associated with the `Opportunity`.
     #
     # @option params [required, String] :identifier
     #   Read-only, system generated `Opportunity` unique identifier.
@@ -1800,9 +1792,9 @@ module Aws::PartnerCentralSelling
     # @option params [String] :national_security
     #   Specifies if the opportunity is associated with national security
     #   concerns. This flag is only applicable when the industry is
-    #   `Government`. For national security-related opportunities, specific
-    #   validation and compliance rules may apply, impacting the
-    #   opportunity's visibility and processing.
+    #   `Government`. For national-security-related opportunities, validation
+    #   and compliance rules may apply, impacting the opportunity's
+    #   visibility and processing.
     #
     # @option params [String] :opportunity_type
     #   Specifies the opportunity type as a renewal, new, or expansion.
@@ -1833,42 +1825,42 @@ module Aws::PartnerCentralSelling
     #
     #   Valid values:
     #
-    #   * Co-Sell - Architectural Validation: Confirmation from Amazon Web
+    #   * Cosell—Architectural Validation: Confirmation from Amazon Web
     #     Services that the partner's proposed solution architecture is
     #     aligned with Amazon Web Services best practices and poses minimal
     #     architectural risks.
     #
-    #   * Co-Sell - Business Presentation: Request Amazon Web Services
-    #     seller's participation in a joint customer presentation.
+    #   * Cosell—Business Presentation: Request Amazon Web Services seller's
+    #     participation in a joint customer presentation.
     #
-    #   * Co-Sell - Competitive Information: Access to Amazon Web Services
+    #   * Cosell—Competitive Information: Access to Amazon Web Services
     #     competitive resources and support for the partner's proposed
     #     solution.
     #
-    #   * Co-Sell - Pricing Assistance: Connect with an AWS seller for support
+    #   * Cosell—Pricing Assistance: Connect with an AWS seller for support
     #     situations where a partner may be receiving an upfront discount on a
     #     service (for example: EDP deals).
     #
-    #   * Co-Sell - Technical Consultation: Connection with an Amazon Web
+    #   * Cosell—Technical Consultation: Connection with an Amazon Web
     #     Services Solutions Architect to address the partner's questions
     #     about the proposed solution.
     #
-    #   * Co-Sell - Total Cost of Ownership Evaluation: Assistance with
-    #     quoting different cost savings of proposed solutions on Amazon Web
-    #     Services versus on-premises or a traditional hosting environment.
+    #   * Cosell—Total Cost of Ownership Evaluation: Assistance with quoting
+    #     different cost savings of proposed solutions on Amazon Web Services
+    #     versus on-premises or a traditional hosting environment.
     #
-    #   * Co-Sell - Deal Support: Request Amazon Web Services seller's
-    #     support to progress the opportunity (for example: joint customer
-    #     call, strategic positioning).
+    #   * Cosell—Deal Support: Request Amazon Web Services seller's support
+    #     to progress the opportunity (for example: joint customer call,
+    #     strategic positioning).
     #
-    #   * Co-Sell - Support for Public Tender / RFx: Opportunity related to
-    #     the public sector where the partner needs RFx support from Amazon
-    #     Web Services.
+    #   * Cosell—Support for Public Tender/RFx: Opportunity related to the
+    #     public sector where the partner needs RFx support from Amazon Web
+    #     Services.
     #
     #   * Do Not Need Support from AWS Sales Rep: Indicates that a partner
     #     doesn't need support from an Amazon Web Services Sales
     #     representative. The opportunity is managed solely by the partner.
-    #     It's possible to request co-selling support on these opportunities
+    #     It's possible to request coselling support on these opportunities
     #     at any stage during their lifecycle. Also known as,
     #     for-visibility-only (FVO) opportunity.
     #
@@ -1951,7 +1943,7 @@ module Aws::PartnerCentralSelling
     #       delivery_models: ["SaaS or PaaS"], # accepts SaaS or PaaS, BYOL or AMI, Managed Services, Professional Services, Resell, Other
     #       expected_customer_spend: [
     #         {
-    #           amount: "ExpectedCustomerSpendAmountString", # required
+    #           amount: "String", # required
     #           currency_code: "USD", # required, accepts USD, EUR, GBP, AUD, CAD, CNY, NZD, INR, JPY, CHF, SEK, AED, AFN, ALL, AMD, ANG, AOA, ARS, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYN, BZD, CDF, CHE, CHW, CLF, CLP, COP, COU, CRC, CUC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, FJD, FKP, GEL, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IQD, IRR, ISK, JMD, JOD, KES, KGS, KHR, KMF, KPW, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRU, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NIO, NOK, NPR, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SGD, SHP, SLL, SOS, SRD, SSP, STN, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USN, UYI, UYU, UZS, VEF, VND, VUV, WST, XAF, XCD, XDR, XOF, XPF, XSU, XUA, YER, ZAR, ZMW, ZWL
     #           frequency: "Monthly", # required, accepts Monthly
     #           target_company: "ExpectedCustomerSpendTargetCompanyString", # required
@@ -2006,7 +1998,7 @@ module Aws::PartnerCentralSelling
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-partnercentralselling'
-      context[:gem_version] = '1.0.0'
+      context[:gem_version] = '1.1.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

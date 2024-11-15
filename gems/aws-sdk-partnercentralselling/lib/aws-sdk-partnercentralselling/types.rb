@@ -51,7 +51,7 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] industry
     #   Specifies the industry the end `Customer` belongs to that's
-    #   associated with the `Opportunity` . It refers to the category or
+    #   associated with the `Opportunity`. It refers to the category or
     #   sector where the customer's business operates. This is a required
     #   field.
     #   @return [String]
@@ -121,8 +121,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] industry
     #   Specifies which industry the end `Customer` belongs to associated
-    #   with the `Opportunity` . It refers to the category or sector that
-    #   the customer's business operates in.
+    #   with the `Opportunity`. It refers to the category or sector that the
+    #   customer's business operates in.
     #
     #   To submit a value outside the picklist, use `Other`.
     #
@@ -268,7 +268,7 @@ module Aws::PartnerCentralSelling
     #   a string value from a predefined list: `AWS` or `Sandbox`. The
     #   catalog determines which environment the opportunity is assigned in.
     #   Use `AWS` to assign real opportunities in the Amazon Web Services
-    #   catalog, and `Sandbox` to test in a secure and isolated environment.
+    #   catalog, and `Sandbox` for testing in secure, isolated environments.
     #   @return [String]
     #
     # @!attribute [rw] identifier
@@ -288,14 +288,14 @@ module Aws::PartnerCentralSelling
     end
 
     # Represents the contact details of the individual assigned to manage
-    # the opportunity within the partner organization. This ensures that
-    # there is a clear point of contact for the opportunity's progress and
-    # updates.
+    # the opportunity within the partner organization. This helps to ensure
+    # that there is a point of contact for the opportunity's progress.
     #
     # @!attribute [rw] business_title
     #   Specifies the business title of the assignee managing the
     #   opportunity. This helps clarify the individual's role and
-    #   responsibilities within the organization.
+    #   responsibilities within the organization. Use the value
+    #   `PartnerAccountManager` to update details of the opportunity owner.
     #   @return [String]
     #
     # @!attribute [rw] email
@@ -305,10 +305,14 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] first_name
     #   Specifies the first name of the assignee managing the opportunity.
+    #   The system automatically retrieves this value from the user profile
+    #   by referencing the associated email address.
     #   @return [String]
     #
     # @!attribute [rw] last_name
     #   Specifies the last name of the assignee managing the opportunity.
+    #   The system automatically retrieves this value from the user profile
+    #   by referencing the associated email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/AssigneeContact AWS API Documentation
@@ -325,10 +329,10 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] catalog
     #   Specifies the catalog associated with the request. This field takes
     #   a string value from a predefined list: `AWS` or `Sandbox`. The
-    #   catalog determines whichenvironment the opportunity association is
+    #   catalog determines which environment the opportunity association is
     #   made in. Use `AWS` to associate opportunities in the Amazon Web
-    #   Services catalog, and `Sandbox` to test in a secure and isolated
-    #   environment.
+    #   Services catalog, and `Sandbox` for testing in secure, isolated
+    #   environments.
     #   @return [String]
     #
     # @!attribute [rw] opportunity_identifier
@@ -349,9 +353,9 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] related_entity_type
-    #   Specifies the type of the related entity you're associating with
-    #   the ` Opportunity`. This helps to categorize and properly process
-    #   the association.
+    #   Specifies the entity type that you're associating with the `
+    #   Opportunity`. This helps to categorize and properly process the
+    #   association.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/AssociateOpportunityRequest AWS API Documentation
@@ -371,8 +375,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] contacts
     #   Provides a list of customer contacts involved in the opportunity.
-    #   These contacts may include decision-makers, influencers, and other
-    #   key stakeholders within the customer's organization.
+    #   These contacts may include decision makers, influencers, and other
+    #   stakeholders within the customer's organization.
     #   @return [Array<Types::Contact>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/AwsOpportunityCustomer AWS API Documentation
@@ -420,8 +424,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] next_steps
     #   Specifies the immediate next steps required to progress the
-    #   opportunity. These steps are based on AWS's guidance and the
-    #   current stage of the opportunity.
+    #   opportunity. These steps are based on AWS guidance and the current
+    #   stage of the opportunity.
     #   @return [String]
     #
     # @!attribute [rw] next_steps_history
@@ -505,18 +509,17 @@ module Aws::PartnerCentralSelling
     end
 
     # Indicates the level of AWS involvement in the opportunity. This field
-    # helps track AWS's role and participation throughout the engagement,
-    # such as providing technical support, deal assistance, or sales
-    # support.
+    # helps track AWS participation throughout the engagement, such as
+    # providing technical support, deal assistance, and sales support.
     #
     # @!attribute [rw] involvement_type
     #   Specifies the type of AWS involvement in the opportunity, such as
-    #   co-selling, deal support, or technical consultation. This helps
-    #   categorize the nature of AWS's participation.
+    #   coselling, deal support, or technical consultation. This helps
+    #   categorize the nature of AWS participation.
     #   @return [String]
     #
     # @!attribute [rw] visibility
-    #   Determines who can view AWS's involvement in the opportunity.
+    #   Determines who can view AWS involvement in the opportunity.
     #   Typically, this field is set to `Full` for most cases, but it may be
     #   restricted based on special program requirements or confidentiality
     #   needs.
@@ -584,7 +587,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] business_title
     #   The partner contact's title (job title or role) associated with the
-    #   `Opportunity`.
+    #   `Opportunity`. `BusinessTitle` supports either
+    #   `PartnerAccountManager` or `OpportunityOwner`.
     #   @return [String]
     #
     # @!attribute [rw] email
@@ -620,7 +624,7 @@ module Aws::PartnerCentralSelling
     #   a string value from a predefined list: `AWS` or `Sandbox`. The
     #   catalog determines which environment the opportunity is created in.
     #   Use `AWS` to create opportunities in the Amazon Web Services
-    #   catalog, and `Sandbox` to test in a secure and isolated environment.
+    #   catalog, and `Sandbox` for testing in secure, isolated environments.
     #   @return [String]
     #
     # @!attribute [rw] client_token
@@ -629,12 +633,12 @@ module Aws::PartnerCentralSelling
     #
     #   Default: None
     #
-    #   Best practice: To ensure uniqueness and avoid collisions, we
-    #   recommend you use a UUID (Universally Unique Identifier) as the
-    #   `ClientToken`. You can use standard libraries available in most
-    #   programming languages to generated this. If you use the same client
-    #   token, the API throws this error: "Conflicting client token
-    #   submitted for a new request body".
+    #   Best practice: To help ensure uniqueness and avoid conflicts, use a
+    #   Universally Unique Identifier (UUID) as the `ClientToken`. You can
+    #   use standard libraries from most programming languages to generate
+    #   this. If you use the same client token, the API returns the
+    #   following error: "Conflicting client token submitted for a new
+    #   request body."
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
@@ -662,8 +666,8 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] opportunity_team
-    #   Represents the internal team handling the opportunity. Specify the
-    #   members involved in collaborating on this opportunity within the
+    #   Represents the internal team handling the opportunity. Specify
+    #   collaborating members of this opportunity who are within the
     #   partner's organization.
     #   @return [Array<Types::Contact>]
     #
@@ -699,11 +703,12 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] partner_opportunity_identifier
     #   Specifies the opportunity's unique identifier in the partner's CRM
     #   system. This value is essential to track and reconcile because it's
-    #   included in the outbound payload sent back to the partner.
+    #   included in the outbound payload to the partner.
     #
-    #   This field allows partners to link an opportunity to their CRM, to
-    #   ensure seamless integration and accurate synchronization between the
-    #   Partner Central API and the partner's internal systems.
+    #   This field allows partners to link an opportunity to their CRM,
+    #   which helps to ensure seamless integration and accurate
+    #   synchronization between the Partner Central API and the partner's
+    #   internal systems.
     #   @return [String]
     #
     # @!attribute [rw] primary_needs_from_aws
@@ -712,43 +717,43 @@ module Aws::PartnerCentralSelling
     #
     #   Valid values:
     #
-    #   * Co-Sell - Architectural Validation: Confirmation from Amazon Web
+    #   * Cosell—Architectural Validation: Confirmation from Amazon Web
     #     Services that the partner's proposed solution architecture is
     #     aligned with Amazon Web Services best practices and poses minimal
     #     architectural risks.
     #
-    #   * Co-Sell - Business Presentation: Request Amazon Web Services
+    #   * Cosell—Business Presentation: Request Amazon Web Services
     #     seller's participation in a joint customer presentation.
     #
-    #   * Co-Sell - Competitive Information: Access to Amazon Web Services
+    #   * Cosell—Competitive Information: Access to Amazon Web Services
     #     competitive resources and support for the partner's proposed
     #     solution.
     #
-    #   * Co-Sell - Pricing Assistance: Connect with an Amazon Web Services
+    #   * Cosell—Pricing Assistance: Connect with an Amazon Web Services
     #     seller for support situations where a partner may be receiving an
     #     upfront discount on a service (for example: EDP deals).
     #
-    #   * Co-Sell - Technical Consultation: Connect with an Amazon Web
-    #     Services Solutions Architect to address the partner's questions
-    #     about the proposed solution.
+    #   * Cosell—Technical Consultation: Connect with an Amazon Web Services
+    #     Solutions Architect to address the partner's questions about the
+    #     proposed solution.
     #
-    #   * Co-Sell - Total Cost of Ownership Evaluation: Assistance with
-    #     quoting different cost savings of proposed solutions on Amazon Web
+    #   * Cosell—Total Cost of Ownership Evaluation: Assistance with quoting
+    #     different cost savings of proposed solutions on Amazon Web
     #     Services versus on-premises or a traditional hosting environment.
     #
-    #   * Co-Sell - Deal Support: Request Amazon Web Services seller's
-    #     support to progress the opportunity (for example: joint customer
-    #     call, strategic positioning).
+    #   * Cosell—Deal Support: Request Amazon Web Services seller's support
+    #     to progress the opportunity (for example: joint customer call,
+    #     strategic positioning).
     #
-    #   * Co-Sell - Support for Public Tender / RFx: Opportunity related to
-    #     the public sector where the partner needs Amazon Web Services RFx
+    #   * Cosell—Support for Public Tender/RFx: Opportunity related to the
+    #     public sector where the partner needs Amazon Web Services RFx
     #     support.
     #
     #   * Do Not Need Support from AWS Sales Rep: Indicates that a partner
     #     doesn't need support from an Amazon Web Services sales
     #     representative, and the partner solely manages the opportunity.
-    #     It's possible to request co-selling support on these
-    #     opportunities at any stage during their lifecycle. Also known as,
+    #     It's possible to request coselling support on these opportunities
+    #     at any stage during their lifecycles. This is also known as a
     #     for-visibility-only (FVO) opportunity.
     #   @return [Array<String>]
     #
@@ -757,8 +762,8 @@ module Aws::PartnerCentralSelling
     #   @return [Types::Project]
     #
     # @!attribute [rw] software_revenue
-    #   Specifies details of a customer's procurement terms. Required only
-    #   for partners in eligible programs.
+    #   Specifies details of a customer's procurement terms. This is
+    #   required only for partners in eligible programs.
     #   @return [Types::SoftwareRevenue]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/CreateOpportunityRequest AWS API Documentation
@@ -784,14 +789,14 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] id
     #   Read-only, system-generated `Opportunity` unique identifier. Amazon
     #   Web Services creates this identifier, and it's used for all
-    #   subsequent actions on the opportunity, such as updates,
-    #   associations, and submissions. It ensures that each opportunity can
-    #   be accurately tracked and managed within the system.
+    #   subsequent opportunity actions, such as updates, associations, and
+    #   submissions. It helps to ensure that each opportunity is accurately
+    #   tracked and managed.
     #   @return [String]
     #
     # @!attribute [rw] last_modified_date
     #   `DateTime` when the opportunity was last modified. When the
-    #   `Opportunity` is created, its value is equal to `CreatedDate`.
+    #   `Opportunity` is created, its value is `CreatedDate`.
     #   @return [Time]
     #
     # @!attribute [rw] partner_opportunity_identifier
@@ -852,17 +857,16 @@ module Aws::PartnerCentralSelling
     #   a string value from a predefined list: `AWS` or `Sandbox`. The
     #   catalog determines which environment the opportunity disassociation
     #   is made in. Use `AWS` to disassociate opportunities in the Amazon
-    #   Web Services catalog, and `Sandbox` to test in a secure and isolated
-    #   environment.
+    #   Web Services catalog, and `Sandbox` for testing in secure, isolated
+    #   environments.
     #   @return [String]
     #
     # @!attribute [rw] opportunity_identifier
     #   The opportunity's unique identifier for when you want to
-    #   disassociate it from related entities. This identifier is crucial to
-    #   ensure the correct opportunity is updated, especially in
-    #   environments with numerous opportunities.
+    #   disassociate it from related entities. This identifier helps to
+    #   ensure that the correct opportunity is updated.
     #
-    #   Validation: Ensure that the identifier provided corresponds to an
+    #   Validation: Ensure that the provided identifier corresponds to an
     #   existing opportunity in the Amazon Web Services system because
     #   incorrect identifiers result in an error and no changes are made.
     #   @return [String]
@@ -875,12 +879,12 @@ module Aws::PartnerCentralSelling
     #
     #   For Amazon Web Services Marketplace entities, use the Amazon Web
     #   Services Marketplace API to obtain the necessary ARNs. For guidance
-    #   on retrieving these ARNs, refer to [ Amazon Web Services Marketplace
-    #   Catalog API][1] .
+    #   on retrieving these ARNs, see [ Amazon Web Services MarketplaceUsing
+    #   the Amazon Web Services Marketplace Catalog API][1].
     #
     #   Validation: Ensure the identifier or ARN is valid and corresponds to
-    #   an existing related entity. An incorrect or invalid identifier
-    #   results in an error.
+    #   an existing entity. An incorrect or invalid identifier results in an
+    #   error.
     #
     #
     #
@@ -890,15 +894,15 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] related_entity_type
     #   The type of the entity that you're disassociating from the
     #   opportunity. When you specify the entity type, it helps the system
-    #   correctly process the disassociation request and ensures that the
+    #   correctly process the disassociation request to ensure that the
     #   right connections are removed.
     #
     #   Examples of entity types include Partner Solution, Amazon Web
-    #   Services product, and Amazon Web Services Marketplace offer. Ensure
+    #   Services product, and Amazon Web Services Marketplaceoffer. Ensure
     #   that the value matches one of the expected entity types.
     #
-    #   Validation: Provide a valid entity type to ensure successful
-    #   disassociation. Invalid or incorrect entity types result in an
+    #   Validation: Provide a valid entity type to help ensure successful
+    #   disassociation. An invalid or incorrect entity type results in an
     #   error.
     #   @return [String]
     #
@@ -914,7 +918,7 @@ module Aws::PartnerCentralSelling
     end
 
     # Contains details about the customer associated with the Engagement
-    # Invitation, including key company information and industry.
+    # Invitation, including company information and industry.
     #
     # @!attribute [rw] company_name
     #   Represents the name of the customer’s company associated with the
@@ -950,9 +954,9 @@ module Aws::PartnerCentralSelling
       include Aws::Structure
     end
 
-    # Provides a summarized view of the Engagement Invitation, including key
-    # details like the identifier, status, and sender information. This
-    # summary helps partners track and manage AWS-originated opportunities.
+    # Provides a summarized view of the Engagement Invitation, including
+    # details like the identifier, status, and sender. This summary helps
+    # partners track and manage AWS originated opportunities.
     #
     # @!attribute [rw] arn
     #   The Amazon Resource Name (ARN) of the Engagement Invitation. The ARN
@@ -975,8 +979,7 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] expiration_date
     #   Indicates the date and time when the Engagement Invitation will
     #   expire. After this date, the invitation can no longer be accepted,
-    #   and the opportunity will no longer be available for the partner to
-    #   engage.
+    #   and the opportunity will be unavailable to the partner.
     #   @return [Time]
     #
     # @!attribute [rw] id
@@ -1075,7 +1078,7 @@ module Aws::PartnerCentralSelling
       :currency_code,
       :frequency,
       :target_company)
-      SENSITIVE = []
+      SENSITIVE = [:currency_code]
       include Aws::Structure
     end
 
@@ -1089,7 +1092,7 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] related_opportunity_identifier
     #   The unique identifier for the related partner opportunity. Use this
     #   field to correlate an AWS opportunity with its corresponding partner
-    #   opportunity in your CRM system.
+    #   opportunity.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/GetAwsOpportunitySummaryRequest AWS API Documentation
@@ -1109,7 +1112,7 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] customer
     #   Provides details about the customer associated with the AWS
-    #   Opportunity, including account information, industry, and other key
+    #   Opportunity, including account information, industry, and other
     #   customer data. These details help partners understand the business
     #   context of the opportunity.
     #   @return [Types::AwsOpportunityCustomer]
@@ -1121,8 +1124,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] involvement_type
     #   Specifies the type of involvement AWS has in the opportunity, such
-    #   as direct co-sell or advisory support. This field helps partners
-    #   understand the role AWS will play in advancing the opportunity.
+    #   as direct cosell or advisory support. This field helps partners
+    #   understand the role AWS plays in advancing the opportunity.
     #   @return [String]
     #
     # @!attribute [rw] involvement_type_change_reason
@@ -1139,9 +1142,9 @@ module Aws::PartnerCentralSelling
     #   @return [Types::AwsOpportunityLifeCycle]
     #
     # @!attribute [rw] opportunity_team
-    #   Details the AWS Opportunity team, including key members involved in
-    #   the opportunity. This information helps partners know who from AWS
-    #   is engaged and their roles in the opportunity.
+    #   Details the AWS opportunity team, including members involved. This
+    #   information helps partners know who from AWS is engaged and what
+    #   their role is.
     #   @return [Array<Types::AwsTeamMember>]
     #
     # @!attribute [rw] origin
@@ -1202,8 +1205,8 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] identifier
-    #   Specifies the unique identifier for the engagement invitation being
-    #   retrieved.
+    #   Specifies the unique identifier for the retrieved engagement
+    #   invitation.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/GetEngagementInvitationRequest AWS API Documentation
@@ -1216,8 +1219,8 @@ module Aws::PartnerCentralSelling
     end
 
     # @!attribute [rw] arn
-    #   The Amazon Resource Name (ARN) that uniquely identifies the
-    #   engagement invitation.
+    #   The Amazon Resource Name (ARN) that identifies the engagement
+    #   invitation.
     #   @return [String]
     #
     # @!attribute [rw] catalog
@@ -1228,7 +1231,7 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] engagement_title
     #   The title of the engagement invitation, summarizing the purpose or
-    #   key objectives of the opportunity shared by AWS.
+    #   objectives of the opportunity shared by AWS.
     #   @return [String]
     #
     # @!attribute [rw] expiration_date
@@ -1277,8 +1280,7 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   The current status of the engagement invitation (e.g., `Accepted`,
-    #   `Pending`, or `Rejected`).
+    #   The current status of the engagement invitation.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/GetEngagementInvitationResponse AWS API Documentation
@@ -1306,7 +1308,7 @@ module Aws::PartnerCentralSelling
     #   a string value from a predefined list: `AWS` or `Sandbox`. The
     #   catalog determines which environment the opportunity is fetched
     #   from. Use `AWS` to retrieve opportunities in the Amazon Web Services
-    #   catalog, and `Sandbox` to retrieve opportunities in a secure and
+    #   catalog, and `Sandbox` to retrieve opportunities in a secure,
     #   isolated testing environment.
     #   @return [String]
     #
@@ -1380,13 +1382,12 @@ module Aws::PartnerCentralSelling
     #     solutions or services.
     #
     #   * Renewal opportunity: Represents an opportunity to renew an
-    #     existing contract or subscription with a current customer,
-    #     ensuring continuity of service.
+    #     existing contract or subscription with a current customer, which
+    #     helps to ensure service continuity.
     #
     #   * Expansion opportunity: Represents an opportunity to expand the
-    #     scope of an existing contract or subscription, either by adding
-    #     new services or increasing the volume of existing services for a
-    #     current customer.
+    #     scope of a customer's contract or subscription, either by adding
+    #     new services or increasing the volume of existing services.
     #   @return [String]
     #
     # @!attribute [rw] partner_opportunity_identifier
@@ -1401,42 +1402,42 @@ module Aws::PartnerCentralSelling
     #
     #   Valid values:
     #
-    #   * Co-Sell - Architectural Validation: Confirmation from Amazon Web
+    #   * Cosell—Architectural Validation: Confirmation from Amazon Web
     #     Services that the partner's proposed solution architecture is
     #     aligned with Amazon Web Services best practices and poses minimal
     #     architectural risks.
     #
-    #   * Co-Sell - Business Presentation: Request Amazon Web Services
+    #   * Cosell—Business Presentation: Request Amazon Web Services
     #     seller's participation in a joint customer presentation.
     #
-    #   * Co-Sell - Competitive Information: Access to Amazon Web Services
+    #   * Cosell—Competitive Information: Access to Amazon Web Services
     #     competitive resources and support for the partner's proposed
     #     solution.
     #
-    #   * Co-Sell - Pricing Assistance: Connect with an Amazon Web Services
+    #   * Cosell—Pricing Assistance: Connect with an Amazon Web Services
     #     seller for support situations where a partner may be receiving an
     #     upfront discount on a service (for example: EDP deals).
     #
-    #   * Co-Sell - Technical Consultation: Connect with an Amazon Web
-    #     Services Solutions Architect to address the partner's questions
-    #     about the proposed solution.
+    #   * Cosell—Technical Consultation: Connect with an Amazon Web Services
+    #     Solutions Architect to address the partner's questions about the
+    #     proposed solution.
     #
-    #   * Co-Sell - Total Cost of Ownership Evaluation: Assistance with
-    #     quoting different cost savings of proposed solutions on Amazon Web
+    #   * Cosell—Total Cost of Ownership Evaluation: Assistance with quoting
+    #     different cost savings of proposed solutions on Amazon Web
     #     Services versus on-premises or a traditional hosting environment.
     #
-    #   * Co-Sell - Deal Support: Request Amazon Web Services seller's
-    #     support to progress the opportunity (for example: joint customer
-    #     call, strategic positioning).
+    #   * Cosell—Deal Support: Request Amazon Web Services seller's support
+    #     to progress the opportunity (for example: joint customer call,
+    #     strategic positioning).
     #
-    #   * Co-Sell - Support for Public Tender / RFx: Opportunity related to
-    #     the public sector where the partner needs Amazon Web Services RFx
+    #   * Cosell—Support for Public Tender/RFx: Opportunity related to the
+    #     public sector where the partner needs Amazon Web Services RFx
     #     support.
     #
     #   * Do Not Need Support from Amazon Web Services Sales Rep: Indicates
     #     that a partner doesn't need support from an Amazon Web Services
     #     sales representative, and the partner solely manages the
-    #     opportunity. It's possible to request co-selling support on these
+    #     opportunity. It's possible to request coselling support on these
     #     opportunities at any stage during their lifecycle. Also known as,
     #     for-visibility-only (FVO) opportunity.
     #   @return [Array<String>]
@@ -1540,18 +1541,18 @@ module Aws::PartnerCentralSelling
     #   * Legal/Tax/Regulatory: Legal, tax, or regulatory issues prevented
     #     progress.
     #
-    #   * Lost to Competitor - Google: The opportunity was lost to Google.
+    #   * Lost to Competitor—Google: The opportunity was lost to Google.
     #
-    #   * Lost to Competitor - Microsoft: The opportunity was lost to
+    #   * Lost to Competitor—Microsoft: The opportunity was lost to
     #     Microsoft.
     #
-    #   * Lost to Competitor - SoftLayer: The opportunity was lost to
+    #   * Lost to Competitor—SoftLayer: The opportunity was lost to
     #     SoftLayer.
     #
-    #   * Lost to Competitor - VMWare: The opportunity was lost to VMWare.
+    #   * Lost to Competitor—VMWare: The opportunity was lost to VMWare.
     #
-    #   * Lost to Competitor - Other: The opportunity was lost to a
-    #     competitor not listed above.
+    #   * Lost to Competitor—Other: The opportunity was lost to a competitor
+    #     not listed above.
     #
     #   * No Opportunity: There was no opportunity to pursue.
     #
@@ -1584,8 +1585,8 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] next_steps
-    #   Specifies the upcoming actions or tasks for the `Opportunity`. This
-    #   field is utilized to communicate to Amazon Web Services the next
+    #   Specifies the upcoming actions or tasks for the `Opportunity`. Use
+    #   this field to communicate with Amazon Web Services about the next
     #   actions required for the `Opportunity`.
     #   @return [String]
     #
@@ -1595,7 +1596,7 @@ module Aws::PartnerCentralSelling
     #   @return [Array<Types::NextStepsHistory>]
     #
     # @!attribute [rw] review_comments
-    #   Indicates why an opportuntiy was sent back for further details.
+    #   Indicates why an opportunity was sent back for further details.
     #   Partners must take corrective action based on the `ReviewComments`.
     #   @return [String]
     #
@@ -1613,9 +1614,9 @@ module Aws::PartnerCentralSelling
     #
     #   * Action Required: Issues that Amazon Web Services highlights need
     #     to be addressed. Partners should use the `UpdateOpportunity` API
-    #     action to update the opportunity, and ensure all required changes
-    #     are made. Only these fields are editable when the
-    #     `Lifecycle.ReviewStatus` is `Action Required`:
+    #     action to update the opportunity and helps to ensure that all
+    #     required changes are made. Only the following fields are editable
+    #     when the `Lifecycle.ReviewStatus` is `Action Required`:
     #
     #     * Customer.Account.Address.City
     #
@@ -1677,10 +1678,10 @@ module Aws::PartnerCentralSelling
     #     latent (Your account team believes it exists based on research,
     #     account plans, sales plays).
     #
-    #   * Qualified: Your account team engaged with the prospect/end
-    #     customer to discuss viability and understand requirements. The
-    #     prospect/end customer agreed that the opportunity is real, of
-    #     interest, and may solve key business/technical needs.
+    #   * Qualified: Your account team engaged with the customer to discuss
+    #     viability and requirements. The customer agreed that the
+    #     opportunity is real, of interest, and may solve business/technical
+    #     needs.
     #
     #   * Technical Validation: All parties understand the implementation
     #     plan.
@@ -1739,7 +1740,7 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] review_comments
-    #   Indicates why an opportuntiy was sent back for further details.
+    #   Indicates why an opportunity was sent back for further details.
     #   Partners must take corrective action based on the `ReviewComments`.
     #   @return [String]
     #
@@ -1821,16 +1822,16 @@ module Aws::PartnerCentralSelling
     #     latent (Your account team believes it exists based on research,
     #     account plans, sales plays).
     #
-    #   * Qualified: Your account team engaged with the prospect/end
-    #     customer to discuss viability and understand requirements. The
-    #     prospect/end customer agreed that the opportunity is real, of
-    #     interest, and may solve key business/technical needs.
+    #   * Qualified: Your account team engaged with the customer to discuss
+    #     viability and understand requirements. The customer agreed that
+    #     the opportunity is real, of interest, and may solve
+    #     business/technical needs.
     #
     #   * Technical Validation: All parties understand the implementation
     #     plan.
     #
-    #   * Business Validation: Pricing has been proposed, Pricing was
-    #     proposed, and all parties agree to the steps to close.
+    #   * Business Validation: Pricing was proposed, and all parties agree
+    #     to the steps to close.
     #
     #   * Committed: The customer signed the contract, but Amazon Web
     #     Services hasn't started billing.
@@ -1916,7 +1917,7 @@ module Aws::PartnerCentralSelling
 
     # @!attribute [rw] engagement_invitation_summaries
     #   An array containing summaries of engagement invitations. Each
-    #   summary includes key information such as the invitation title,
+    #   summary includes information such as the invitation title,
     #   invitation date, and the current status of the invitation.
     #   @return [Array<Types::EngagementInvitationSummary>]
     #
@@ -1940,8 +1941,8 @@ module Aws::PartnerCentralSelling
     #   a string value from a predefined list: `AWS` or `Sandbox`. The
     #   catalog determines which environment the opportunities are listed
     #   in. Use `AWS` for listing real opportunities in the Amazon Web
-    #   Services catalog, and `Sandbox` for to test in a secure and isolated
-    #   environment.
+    #   Services catalog, and `Sandbox` for testing in secure, isolated
+    #   environments.
     #   @return [String]
     #
     # @!attribute [rw] customer_company_name
@@ -1980,7 +1981,7 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] max_results
     #   Specifies the maximum number of results to return in a single call.
     #   This limits the number of opportunities returned in the response to
-    #   avoid overloading with too many results at once.
+    #   avoid providing too many results at once.
     #
     #   Default: 20
     #   @return [Integer]
@@ -2074,10 +2075,8 @@ module Aws::PartnerCentralSelling
     #   @return [Types::SolutionSort]
     #
     # @!attribute [rw] status
-    #   Filters the solutions based on their status. This filter helps
-    #   retrieve solutions with statuses such as `Active`, `Inactive`, or
-    #   `Pending Approval`, allowing partners to manage their solution
-    #   portfolios effectively.
+    #   Filters solutions based on their status. This filter helps partners
+    #   manage their solution portfolios effectively.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListSolutionsRequest AWS API Documentation
@@ -2122,13 +2121,12 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] campaign_name
-    #   Specifies the `Opportunity`'s unique marketing campaign name. The
-    #   Amazon Web Services campaign name serves as a reference to specific
-    #   marketing initiatives, promotions, or activities related to the
-    #   `Opportunity`. This field captures the identifier used to track and
-    #   categorize the `Opportunity` within Amazon Web Services's marketing
-    #   campaigns. If you don't have a campaign name, reach out to your
-    #   Amazon Web Services point of contact to obtain one.
+    #   Specifies the `Opportunity` marketing campaign code. The Amazon Web
+    #   Services campaign code is a reference to specific marketing
+    #   initiatives, promotions, or activities. This field captures the
+    #   identifier used to track and categorize the `Opportunity` within
+    #   marketing campaigns. If you don't have a campaign code, contact
+    #   your Amazon Web Services point of contact to obtain one.
     #   @return [String]
     #
     # @!attribute [rw] channels
@@ -2190,7 +2188,7 @@ module Aws::PartnerCentralSelling
     class MonetaryValue < Struct.new(
       :amount,
       :currency_code)
-      SENSITIVE = []
+      SENSITIVE = [:currency_code]
       include Aws::Structure
     end
 
@@ -2260,8 +2258,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] sender_contacts
     #   Represents the contact details of the AWS representatives involved
-    #   in sending the Engagement Invitation. These contacts are key
-    #   stakeholders for the opportunity.
+    #   in sending the Engagement Invitation. These contacts are opportunity
+    #   stakeholders.
     #   @return [Array<Types::SenderContact>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/OpportunityInvitationPayload AWS API Documentation
@@ -2449,17 +2447,17 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] customer_business_problem
     #   Describes the problem the end customer has, and how the partner is
-    #   helping. Utilize this field to provide a clear and concise narrative
-    #   that outlines the specific business challenge or issue the customer
-    #   has. Elaborate on how the partner's solution or offerings align to
-    #   resolve the customer's business problem. Include relevant
-    #   information about the partner's value proposition, unique selling
-    #   points, and expertise to tackle the issue. Offer insights on how the
-    #   proposed solution meets the customer's needs and provides value.
-    #   Use concise language and precise descriptions to convey the context
-    #   and significance of the `Opportunity`. The content in this field
-    #   helps Amazon Web Services understand the nature of the `Opportunity`
-    #   and the strategic fit of the partner's solution.
+    #   helping. Utilize this field to provide a concise narrative that
+    #   outlines the customer's business challenge or issue. Elaborate on
+    #   how the partner's solution or offerings align to resolve the
+    #   customer's business problem. Include relevant information about the
+    #   partner's value proposition, unique selling points, and expertise
+    #   to tackle the issue. Offer insights on how the proposed solution
+    #   meets the customer's needs and provides value. Use concise language
+    #   and precise descriptions to convey the context and significance of
+    #   the `Opportunity`. The content in this field helps Amazon Web
+    #   Services understand the nature of the `Opportunity` and the
+    #   strategic fit of the partner's solution.
     #   @return [String]
     #
     # @!attribute [rw] customer_use_case
@@ -2469,20 +2467,20 @@ module Aws::PartnerCentralSelling
     #   addressed workload.
     #
     #   Valid values: `AI Machine Learning and Analytics | Archiving | Big
-    #   Data: Data Warehouse / Data Integration / ETL / Data Lake / BI |
-    #   Blockchain | Business Applications: Mainframe Modernization |
-    #   Business Applications & Contact Center | Business Applications & SAP
+    #   Data: Data Warehouse/Data Integration/ETL/Data Lake/BI | Blockchain
+    #   | Business Applications: Mainframe Modernization | Business
+    #   Applications & Contact Center | Business Applications & SAP
     #   Production | Centralized Operations Management | Cloud Management
     #   Tools | Cloud Management Tools & DevOps with Continuous Integration
     #   & Continuous Delivery (CICD) | Configuration, Compliance & Auditing
     #   | Connected Services | Containers & Serverless | Content Delivery &
-    #   Edge Services | Database | Edge Computing / End User Computing |
+    #   Edge Services | Database | Edge Computing/End User Computing |
     #   Energy | Enterprise Governance & Controls | Enterprise Resource
     #   Planning | Financial Services | Healthcare and Life Sciences | High
     #   Performance Computing | Hybrid Application Platform | Industrial
     #   Software | IOT | Manufacturing, Supply Chain and Operations | Media
-    #   & High performance computing (HPC) | Migration / Database Migration
-    #   | Monitoring, logging and performance | Monitoring & Observability |
+    #   & High performance computing (HPC) | Migration/Database Migration |
+    #   Monitoring, logging and performance | Monitoring & Observability |
     #   Networking | Outpost | SAP | Security & Compliance | Storage &
     #   Backup | Training | VMC | VMWare | Web development & DevOps`
     #   @return [String]
@@ -2549,10 +2547,10 @@ module Aws::PartnerCentralSelling
     #   * Customer has shown interest in solution: After initial
     #     discussions, the customer is interested in your solution.
     #
-    #   * Conducted POC / Demo: You conducted a proof of concept (POC) or
+    #   * Conducted POC/demo: You conducted a proof of concept (POC) or
     #     demonstration of the solution for the customer.
     #
-    #   * In evaluation / planning stage: The customer is evaluating the
+    #   * In evaluation/planning stage: The customer is evaluating the
     #     solution and planning potential implementation.
     #
     #   * Agreed on solution to Business Problem: Both parties agree on how
@@ -2698,36 +2696,36 @@ module Aws::PartnerCentralSelling
     end
 
     # @!attribute [rw] catalog
-    #   Specifies the catalog related to the engagement invitation. Accepted
-    #   values are `AWS` and `Sandbox`, which determine the environment in
-    #   which the opportunity is managed.
+    #   This is the catalog that's associated with the engagement
+    #   invitation. Acceptable values are `AWS` or `Sandbox`, and these
+    #   values determine the environment in which the opportunity is
+    #   managed.
     #   @return [String]
     #
     # @!attribute [rw] identifier
-    #   Specifies the unique identifier of the `EngagementInvitation` to be
-    #   rejected. Providing the correct identifier ensures that the intended
-    #   invitation is rejected.
+    #   This is the unique identifier of the rejected
+    #   `EngagementInvitation`. Providing the correct identifier helps to
+    #   ensure that the intended invitation is rejected.
     #   @return [String]
     #
     # @!attribute [rw] rejection_reason
-    #   Specifies the reason for rejecting the engagement invitation.
-    #   Providing a reason helps document the rationale behind the rejection
-    #   and assists AWS in tracking patterns or issues. Possible values
-    #   include:
+    #   This describes the reason for rejecting the engagement invitation,
+    #   which helps AWS track usage patterns. Acceptable values include the
+    #   following:
     #
-    #   * *Customer problem unclear:* The customer's problem is not clearly
-    #     defined.
+    #   * *Customer problem unclear:* The customer's problem isn't
+    #     understood.
     #
-    #   * *Next steps unclear:* The next steps required to proceed are not
-    #     clear.
+    #   * *Next steps unclear:* The next steps required to proceed aren't
+    #     understood.
     #
     #   * *Unable to support:* The partner is unable to provide support due
     #     to resource or capability constraints.
     #
-    #   * *Duplicate of Partner Referral:* The opportunity is a duplicate of
+    #   * *Duplicate of partner referral:* The opportunity is a duplicate of
     #     an existing referral.
     #
-    #   * *Other:* Any other reason not covered by the specified values.
+    #   * *Other:* Any reason not covered by other values.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/RejectEngagementInvitationRequest AWS API Documentation
@@ -2780,13 +2778,13 @@ module Aws::PartnerCentralSelling
     #
     #   If the specific solution identifier is not available, you can use
     #   the value `Other` and provide details about the solution in the
-    #   `otherSolutionOffered` field. However, once the opportunity reaches
-    #   the `Committed` stage or beyond, the `Other` value cannot be used,
-    #   and a valid solution identifier must be provided.
+    #   `otherSolutionOffered` field. But when the opportunity reaches the
+    #   `Committed` stage or beyond, the `Other` value cannot be used, and a
+    #   valid solution identifier must be provided.
     #
     #   By associating the relevant solutions with the opportunity, you can
-    #   clearly communicate the offerings that are being considered or
-    #   implemented to address the customer's business problem.
+    #   communicate the offerings that are being considered or implemented
+    #   to address the customer's business problem.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/RelatedEntityIdentifiers AWS API Documentation
@@ -2863,9 +2861,8 @@ module Aws::PartnerCentralSelling
     # specific resource, and this error indicates that the request would
     # surpass that limit.
     #
-    # Suggested action: Review the [service quotas][1] for the specific
-    # resource, and reduce the usage or request a quota increase through
-    # support if necessary.
+    # Suggested action: Review the [Quotas][1] for the resource, and either
+    # reduce usage or request a quota increase.
     #
     #
     #
@@ -2998,9 +2995,9 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] client_token
-    #   A unique, case-sensitive identifier provided by the client to ensure
-    #   the idempotency of the request. Can be a random or meaningful
-    #   string, but must be unique for each request.
+    #   A unique, case-sensitive identifier provided by the client that
+    #   helps to ensure the idempotency of the request. This can be a random
+    #   or meaningful string but must be unique for each request.
     #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
@@ -3008,8 +3005,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] identifier
     #   Specifies the unique identifier of the `EngagementInvitation` to be
-    #   accepted. Providing the correct identifier ensures the right
-    #   engagement invitation is processed.
+    #   accepted. Providing the correct identifier helps ensure that the
+    #   correct engagement is processed.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/StartEngagementByAcceptingInvitationTaskRequest AWS API Documentation
@@ -3039,10 +3036,6 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] reason_code
     #   Indicates the reason for task failure using an enumerated code.
-    #   Possible values are: `ACCEPT_ENGAGEMENT_INVITATION_FAILED`,
-    #   `GET_ENGAGEMENT_INVITATION_FAILED`, `CREATE_OPPORTUNITY_FAILED`,
-    #   `CREATE_RESOURCE_VIEW_AUTOMATION_FAILED`,
-    #   `SUBMIT_OPPORTUNITY_FAILED`.
     #   @return [String]
     #
     # @!attribute [rw] start_time
@@ -3057,13 +3050,11 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] task_id
     #   The unique identifier of the task, used to track the task’s
-    #   progress. This value follows a specific pattern:
-    #   `^oit-[0-9a-z]{13}$`.
+    #   progress.
     #   @return [String]
     #
     # @!attribute [rw] task_status
-    #   Indicates the current status of the task. Valid values include
-    #   `IN_PROGRESS`, `COMPLETE`, and `FAILED`.
+    #   Indicates the current status of the task.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/StartEngagementByAcceptingInvitationTaskResponse AWS API Documentation
@@ -3083,9 +3074,8 @@ module Aws::PartnerCentralSelling
 
     # @!attribute [rw] aws_submission
     #   Indicates the level of AWS involvement in the opportunity. This
-    #   field helps track AWS's role and participation throughout the
-    #   engagement, such as providing technical support, deal assistance, or
-    #   sales support.
+    #   field helps track AWS participation throughout the engagement, such
+    #   as providing technical support, deal assistance, and sales support.
     #   @return [Types::AwsSubmission]
     #
     # @!attribute [rw] catalog
@@ -3095,8 +3085,8 @@ module Aws::PartnerCentralSelling
     #   @return [String]
     #
     # @!attribute [rw] client_token
-    #   A unique token provided by the client to ensure the idempotency of
-    #   the request. It helps prevent the same task from being performed
+    #   A unique token provided by the client to help ensure the idempotency
+    #   of the request. It helps prevent the same task from being performed
     #   multiple times.
     #
     #   **A suitable default value is auto-generated.** You should normally
@@ -3105,8 +3095,8 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] identifier
     #   The unique identifier of the opportunity from which the engagement
-    #   task is to be initiated. This ensures the task is applied to the
-    #   correct opportunity.
+    #   task is to be initiated. This helps ensure that the task is applied
+    #   to the correct opportunity.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/StartEngagementFromOpportunityTaskRequest AWS API Documentation
@@ -3133,10 +3123,6 @@ module Aws::PartnerCentralSelling
     #
     # @!attribute [rw] reason_code
     #   Indicates the reason for task failure using an enumerated code.
-    #   Possible values are: `ACCEPT_ENGAGEMENT_INVITATION_FAILED`,
-    #   `GET_ENGAGEMENT_INVITATION_FAILED`, `CREATE_OPPORTUNITY_FAILED`,
-    #   `CREATE_RESOURCE_VIEW_AUTOMATION_FAILED`,
-    #   `SUBMIT_OPPORTUNITY_FAILED`.
     #   @return [String]
     #
     # @!attribute [rw] start_time
@@ -3178,7 +3164,7 @@ module Aws::PartnerCentralSelling
     # provided quotas and adapt your usage to avoid throttling.
     #
     # This error occurs when there are too many requests sent. Review the
-    # provided [quotas][1] and retry after the provided delay.
+    # provided [Quotas][1] and retry after the provided delay.
     #
     #
     #
@@ -3200,15 +3186,14 @@ module Aws::PartnerCentralSelling
     #   a string value from a predefined list: `AWS` or `Sandbox`. The
     #   catalog determines which environment the opportunity is updated in.
     #   Use `AWS` to update real opportunities in the production
-    #   environment, and `Sandbox` to test in a secure and isolated
-    #   environment. When you use the `Sandbox` catalog, it allows you to
+    #   environment, and `Sandbox` for testing in secure, isolated
+    #   environments. When you use the `Sandbox` catalog, it allows you to
     #   simulate and validate your interactions with Amazon Web Services
     #   services without affecting live data or operations.
     #   @return [String]
     #
     # @!attribute [rw] customer
-    #   Specifies details of the customer associated with the `Opportunity`
-    #   .
+    #   Specifies details of the customer associated with the `Opportunity`.
     #   @return [Types::Customer]
     #
     # @!attribute [rw] identifier
@@ -3230,7 +3215,7 @@ module Aws::PartnerCentralSelling
     # @!attribute [rw] national_security
     #   Specifies if the opportunity is associated with national security
     #   concerns. This flag is only applicable when the industry is
-    #   `Government`. For national security-related opportunities, specific
+    #   `Government`. For national-security-related opportunities,
     #   validation and compliance rules may apply, impacting the
     #   opportunity's visibility and processing.
     #   @return [String]
@@ -3266,43 +3251,43 @@ module Aws::PartnerCentralSelling
     #
     #   Valid values:
     #
-    #   * Co-Sell - Architectural Validation: Confirmation from Amazon Web
+    #   * Cosell—Architectural Validation: Confirmation from Amazon Web
     #     Services that the partner's proposed solution architecture is
     #     aligned with Amazon Web Services best practices and poses minimal
     #     architectural risks.
     #
-    #   * Co-Sell - Business Presentation: Request Amazon Web Services
+    #   * Cosell—Business Presentation: Request Amazon Web Services
     #     seller's participation in a joint customer presentation.
     #
-    #   * Co-Sell - Competitive Information: Access to Amazon Web Services
+    #   * Cosell—Competitive Information: Access to Amazon Web Services
     #     competitive resources and support for the partner's proposed
     #     solution.
     #
-    #   * Co-Sell - Pricing Assistance: Connect with an AWS seller for
-    #     support situations where a partner may be receiving an upfront
-    #     discount on a service (for example: EDP deals).
+    #   * Cosell—Pricing Assistance: Connect with an AWS seller for support
+    #     situations where a partner may be receiving an upfront discount on
+    #     a service (for example: EDP deals).
     #
-    #   * Co-Sell - Technical Consultation: Connection with an Amazon Web
+    #   * Cosell—Technical Consultation: Connection with an Amazon Web
     #     Services Solutions Architect to address the partner's questions
     #     about the proposed solution.
     #
-    #   * Co-Sell - Total Cost of Ownership Evaluation: Assistance with
-    #     quoting different cost savings of proposed solutions on Amazon Web
+    #   * Cosell—Total Cost of Ownership Evaluation: Assistance with quoting
+    #     different cost savings of proposed solutions on Amazon Web
     #     Services versus on-premises or a traditional hosting environment.
     #
-    #   * Co-Sell - Deal Support: Request Amazon Web Services seller's
-    #     support to progress the opportunity (for example: joint customer
-    #     call, strategic positioning).
+    #   * Cosell—Deal Support: Request Amazon Web Services seller's support
+    #     to progress the opportunity (for example: joint customer call,
+    #     strategic positioning).
     #
-    #   * Co-Sell - Support for Public Tender / RFx: Opportunity related to
-    #     the public sector where the partner needs RFx support from Amazon
-    #     Web Services.
+    #   * Cosell—Support for Public Tender/RFx: Opportunity related to the
+    #     public sector where the partner needs RFx support from Amazon Web
+    #     Services.
     #
     #   * Do Not Need Support from AWS Sales Rep: Indicates that a partner
     #     doesn't need support from an Amazon Web Services Sales
     #     representative. The opportunity is managed solely by the partner.
-    #     It's possible to request co-selling support on these
-    #     opportunities at any stage during their lifecycle. Also known as,
+    #     It's possible to request coselling support on these opportunities
+    #     at any stage during their lifecycle. Also known as,
     #     for-visibility-only (FVO) opportunity.
     #   @return [Array<String>]
     #
