@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.106.0 (2024-11-15)
+------------------
+
+* Feature - Adds support for adding related Entity information to metrics ingested through PutMetricData.
+
 1.105.0 (2024-11-06)
 ------------------
 

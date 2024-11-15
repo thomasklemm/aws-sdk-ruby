@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.92.0 (2024-11-15)
+------------------
+
+* Feature - Doc-only updates and enhancements related to creating DataSync tasks and describing task executions.
+
 1.91.0 (2024-10-30)
 ------------------
 

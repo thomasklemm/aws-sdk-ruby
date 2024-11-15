@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.489.0 (2024-11-15)
+------------------
+
+* Feature - Remove non-functional enum variants for FleetCapacityReservationUsageStrategy
+
 1.488.0 (2024-11-13)
 ------------------
 

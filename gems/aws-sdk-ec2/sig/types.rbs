@@ -1228,12 +1228,12 @@ module Aws::EC2
     end
 
     class CapacityReservationOptions
-      attr_accessor usage_strategy: ("use-capacity-reservations-first" | "use-capacity-reservations-only" | "none")
+      attr_accessor usage_strategy: ("use-capacity-reservations-first")
       SENSITIVE: []
     end
 
     class CapacityReservationOptionsRequest
-      attr_accessor usage_strategy: ("use-capacity-reservations-first" | "use-capacity-reservations-only" | "none")
+      attr_accessor usage_strategy: ("use-capacity-reservations-first")
       SENSITIVE: []
     end
 

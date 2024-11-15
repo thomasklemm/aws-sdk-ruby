@@ -6717,7 +6717,7 @@ module Aws::EC2
     #     on_demand_options: {
     #       allocation_strategy: "lowest-price", # accepts lowest-price, prioritized
     #       capacity_reservation_options: {
-    #         usage_strategy: "use-capacity-reservations-first", # accepts use-capacity-reservations-first, use-capacity-reservations-only, none
+    #         usage_strategy: "use-capacity-reservations-first", # accepts use-capacity-reservations-first
     #       },
     #       single_instance_type: false,
     #       single_availability_zone: false,
@@ -23022,7 +23022,7 @@ module Aws::EC2
     #   resp.fleets[0].spot_options.min_target_capacity #=> Integer
     #   resp.fleets[0].spot_options.max_total_price #=> String
     #   resp.fleets[0].on_demand_options.allocation_strategy #=> String, one of "lowest-price", "prioritized"
-    #   resp.fleets[0].on_demand_options.capacity_reservation_options.usage_strategy #=> String, one of "use-capacity-reservations-first", "use-capacity-reservations-only", "none"
+    #   resp.fleets[0].on_demand_options.capacity_reservation_options.usage_strategy #=> String, one of "use-capacity-reservations-first"
     #   resp.fleets[0].on_demand_options.single_instance_type #=> Boolean
     #   resp.fleets[0].on_demand_options.single_availability_zone #=> Boolean
     #   resp.fleets[0].on_demand_options.min_target_capacity #=> Integer
@@ -60849,7 +60849,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.488.0'
+      context[:gem_version] = '1.489.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

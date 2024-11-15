@@ -1424,7 +1424,7 @@ module Aws
                           ?on_demand_options: {
                             allocation_strategy: ("lowest-price" | "prioritized")?,
                             capacity_reservation_options: {
-                              usage_strategy: ("use-capacity-reservations-first" | "use-capacity-reservations-only" | "none")?
+                              usage_strategy: ("use-capacity-reservations-first")?
                             }?,
                             single_instance_type: bool?,
                             single_availability_zone: bool?,
