@@ -3769,7 +3769,6 @@ module Aws::CloudWatch
     #
     #     * `MissingRequiredFields` - There are missing required fields in the
     #       `KeyAttributes` for the provided `Type`.
-    #
     #     For details of the requirements for specifying an entity, see [How
     #     to add related information to telemetry][1] in the *CloudWatch User
     #     Guide*.
@@ -4282,7 +4281,7 @@ module Aws::CloudWatch
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudwatch'
-      context[:gem_version] = '1.106.0'
+      context[:gem_version] = '1.107.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

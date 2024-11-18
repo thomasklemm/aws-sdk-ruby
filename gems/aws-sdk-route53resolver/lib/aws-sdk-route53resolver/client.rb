@@ -3482,7 +3482,6 @@ module Aws::Route53Resolver
     #
     #     * `ACCESS_DENIED`: Permissions don't allow sending logs to the
     #       destination.
-    #
     #     If `Status` is a value other than `FAILED`, `ERROR` is null.
     #
     #   * `Id`: The ID of the query logging association
@@ -4875,7 +4874,7 @@ module Aws::Route53Resolver
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-route53resolver'
-      context[:gem_version] = '1.73.0'
+      context[:gem_version] = '1.74.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

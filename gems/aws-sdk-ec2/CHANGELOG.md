@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.490.0 (2024-11-18)
+------------------
+
+* Feature - Adding request and response elements for managed resources.
+
 1.489.0 (2024-11-15)
 ------------------
 

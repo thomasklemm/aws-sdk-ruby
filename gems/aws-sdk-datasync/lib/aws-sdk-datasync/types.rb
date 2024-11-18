@@ -2728,7 +2728,6 @@ module Aws::DataSync
     #     * **(Basic task mode only)** The number of items that DataSync
     #       expects to delete (if [PreserveDeletedFiles][4] is set to
     #       `REMOVE`).
-    #
     #   * If `TranserMode` is set to `ALL` - The calculation is based only
     #     on the items that DataSync finds at the source location.
     #
@@ -4640,7 +4639,6 @@ module Aws::DataSync
     #
     #       DataSync won't copy NTFS system access control lists (SACLs)
     #       with this option.
-    #
     #   * `OWNER_DACL_SACL` - For each copied object, DataSync copies the
     #     following metadata:
     #
@@ -4658,7 +4656,6 @@ module Aws::DataSync
     #       see required permissions for [SMB][2], [FSx for Windows File
     #       Server][3], or [FSx for ONTAP][4] (depending on the type of
     #       location in your transfer).
-    #
     #   * `NONE` - None of the SMB security descriptor components are
     #     copied. Destination objects are owned by the user that was
     #     provided for accessing the destination location. DACLs and SACLs

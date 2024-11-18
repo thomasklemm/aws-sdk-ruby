@@ -1348,7 +1348,6 @@ module Aws::Route53Resolver
     #     * `CloudWatchLogs`
     #
     #     * `KinesisFirehose`
-    #
     #   * `DestinationArn`: The ARN of the location that Resolver is sending
     #     query logs to. This value can be the ARN for an S3 bucket, a
     #     CloudWatch Logs log group, or a Kinesis Data Firehose delivery
@@ -3399,7 +3398,6 @@ module Aws::Route53Resolver
     #
     #     * `ACCESS_DENIED`: Permissions don't allow sending logs to the
     #       destination.
-    #
     #     If `Status` is a value other than `FAILED`, `ERROR` is null.
     #
     #   * `Id`: The ID of the query logging association
@@ -4209,7 +4207,6 @@ module Aws::Route53Resolver
     #
     #     * The network interface couldn't be created for some reason
     #       that's outside the control of Resolver.
-    #
     #   * `DELETING`: Resolver is deleting this endpoint and the associated
     #     network interfaces.
     #

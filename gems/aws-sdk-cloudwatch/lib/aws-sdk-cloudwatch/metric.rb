@@ -880,7 +880,6 @@ module Aws::CloudWatch
     #
     #     * `MissingRequiredFields` - There are missing required fields in the
     #       `KeyAttributes` for the provided `Type`.
-    #
     #     For details of the requirements for specifying an entity, see [How
     #     to add related information to telemetry][1] in the *CloudWatch User
     #     Guide*.

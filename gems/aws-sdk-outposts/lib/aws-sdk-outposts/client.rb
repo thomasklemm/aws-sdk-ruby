@@ -2170,7 +2170,6 @@ module Aws::Outposts
     #     * **L6-30P** – (common in US); 30A; single phase
     #
     #     * **IEC309 (blue)** – P+N+E, 6hr; 32 A; single phase
-    #
     #   * Three-phase AC feed
     #
     #     * **AH530P7W (red)** – 3P+N+E, 7hr; 30A; three phase
@@ -2312,7 +2311,7 @@ module Aws::Outposts
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-outposts'
-      context[:gem_version] = '1.73.0'
+      context[:gem_version] = '1.74.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
