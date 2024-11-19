@@ -8,6 +8,11 @@
 module Aws::TaxSettings
   module Types
 
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: [:message]
+    end
+
     class AccountDetails
       attr_accessor account_id: ::String
       attr_accessor account_meta_data: Types::AccountMetaData
@@ -75,6 +80,17 @@ module Aws::TaxSettings
       SENSITIVE: []
     end
 
+    class AttachmentUploadException
+      attr_accessor message: ::String
+      SENSITIVE: [:message]
+    end
+
+    class Authority
+      attr_accessor country: ::String
+      attr_accessor state: ::String
+      SENSITIVE: []
+    end
+
     class BatchDeleteTaxRegistrationError
       attr_accessor account_id: ::String
       attr_accessor code: ::String
@@ -89,6 +105,17 @@ module Aws::TaxSettings
 
     class BatchDeleteTaxRegistrationResponse
       attr_accessor errors: ::Array[Types::BatchDeleteTaxRegistrationError]
+      SENSITIVE: []
+    end
+
+    class BatchGetTaxExemptionsRequest
+      attr_accessor account_ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchGetTaxExemptionsResponse
+      attr_accessor failed_accounts: ::Array[::String]
+      attr_accessor tax_exemption_details_map: ::Hash[::String, Types::TaxExemptionDetails]
       SENSITIVE: []
     end
 
@@ -125,6 +152,11 @@ module Aws::TaxSettings
       SENSITIVE: []
     end
 
+    class CaseCreationLimitExceededException
+      attr_accessor message: ::String
+      SENSITIVE: [:message]
+    end
+
     class ConflictException
       attr_accessor error_code: ::String
       attr_accessor message: ::String
@@ -158,8 +190,30 @@ module Aws::TaxSettings
       SENSITIVE: []
     end
 
+    class ExemptionCertificate
+      attr_accessor document_file: ::String
+      attr_accessor document_name: ::String
+      SENSITIVE: []
+    end
+
     class GeorgiaAdditionalInfo
       attr_accessor person_type: ("Legal Person" | "Physical Person" | "Business")
+      SENSITIVE: []
+    end
+
+    class GetTaxExemptionTypesRequest < Aws::EmptyStructure
+    end
+
+    class GetTaxExemptionTypesResponse
+      attr_accessor tax_exemption_types: ::Array[Types::TaxExemptionType]
+      SENSITIVE: []
+    end
+
+    class GetTaxInheritanceRequest < Aws::EmptyStructure
+    end
+
+    class GetTaxInheritanceResponse
+      attr_accessor heritage_status: ("OptIn" | "OptOut")
       SENSITIVE: []
     end
 
@@ -171,6 +225,7 @@ module Aws::TaxSettings
 
     class GetTaxRegistrationDocumentResponse
       attr_accessor destination_file_path: ::String
+      attr_accessor presigned_s3_url: ::String
       SENSITIVE: []
     end
 
@@ -232,6 +287,18 @@ module Aws::TaxSettings
       SENSITIVE: []
     end
 
+    class ListTaxExemptionsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTaxExemptionsResponse
+      attr_accessor next_token: ::String
+      attr_accessor tax_exemption_details_map: ::Hash[::String, Types::TaxExemptionDetails]
+      SENSITIVE: []
+    end
+
     class ListTaxRegistrationsRequest
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -266,6 +333,27 @@ module Aws::TaxSettings
       attr_accessor authority_id: ::String
       attr_accessor status: ("Verified" | "Pending" | "Deleted" | "Rejected")
       SENSITIVE: []
+    end
+
+    class PutTaxExemptionRequest
+      attr_accessor account_ids: ::Array[::String]
+      attr_accessor authority: Types::Authority
+      attr_accessor exemption_certificate: Types::ExemptionCertificate
+      attr_accessor exemption_type: ::String
+      SENSITIVE: []
+    end
+
+    class PutTaxExemptionResponse
+      attr_accessor case_id: ::String
+      SENSITIVE: []
+    end
+
+    class PutTaxInheritanceRequest
+      attr_accessor heritage_status: ("OptIn" | "OptOut")
+      SENSITIVE: []
+    end
+
+    class PutTaxInheritanceResponse < Aws::EmptyStructure
     end
 
     class PutTaxRegistrationRequest
@@ -337,6 +425,31 @@ module Aws::TaxSettings
       SENSITIVE: []
     end
 
+    class TaxExemption
+      attr_accessor authority: Types::Authority
+      attr_accessor effective_date: ::Time
+      attr_accessor expiration_date: ::Time
+      attr_accessor status: ("None" | "Valid" | "Expired" | "Pending")
+      attr_accessor system_effective_date: ::Time
+      attr_accessor tax_exemption_type: Types::TaxExemptionType
+      SENSITIVE: []
+    end
+
+    class TaxExemptionDetails
+      attr_accessor heritage_obtained_details: bool
+      attr_accessor heritage_obtained_parent_entity: ::String
+      attr_accessor heritage_obtained_reason: ::String
+      attr_accessor tax_exemptions: ::Array[Types::TaxExemption]
+      SENSITIVE: []
+    end
+
+    class TaxExemptionType
+      attr_accessor applicable_jurisdictions: ::Array[Types::Authority]
+      attr_accessor description: ::String
+      attr_accessor display_name: ::String
+      SENSITIVE: []
+    end
+
     class TaxInheritanceDetails
       attr_accessor inheritance_obtained_reason: ::String
       attr_accessor parent_entity_id: ::String
@@ -356,7 +469,14 @@ module Aws::TaxSettings
       SENSITIVE: []
     end
 
+    class TaxRegistrationDocFile
+      attr_accessor file_content: ::String
+      attr_accessor file_name: ::String
+      SENSITIVE: []
+    end
+
     class TaxRegistrationDocument
+      attr_accessor file: Types::TaxRegistrationDocFile
       attr_accessor s3_location: Types::SourceS3Location
       SENSITIVE: []
     end

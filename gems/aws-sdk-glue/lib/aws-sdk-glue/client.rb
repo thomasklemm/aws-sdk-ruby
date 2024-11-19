@@ -2159,6 +2159,7 @@ module Aws::Glue
     #   resp.table_optimizers[0].table_optimizer.type #=> String, one of "compaction", "retention", "orphan_file_deletion"
     #   resp.table_optimizers[0].table_optimizer.configuration.role_arn #=> String
     #   resp.table_optimizers[0].table_optimizer.configuration.enabled #=> Boolean
+    #   resp.table_optimizers[0].table_optimizer.configuration.vpc_configuration.glue_connection_name #=> String
     #   resp.table_optimizers[0].table_optimizer.configuration.retention_configuration.iceberg_configuration.snapshot_retention_period_in_days #=> Integer
     #   resp.table_optimizers[0].table_optimizer.configuration.retention_configuration.iceberg_configuration.number_of_snapshots_to_retain #=> Integer
     #   resp.table_optimizers[0].table_optimizer.configuration.retention_configuration.iceberg_configuration.clean_expired_files #=> Boolean
@@ -4866,8 +4867,7 @@ module Aws::Glue
       req.send_request(options)
     end
 
-    # Creates a new table optimizer for a specific function. `compaction` is
-    # the only currently supported optimizer type.
+    # Creates a new table optimizer for a specific function.
     #
     # @option params [required, String] :catalog_id
     #   The Catalog ID of the table.
@@ -4879,8 +4879,7 @@ module Aws::Glue
     #   The name of the table.
     #
     # @option params [required, String] :type
-    #   The type of table optimizer. Currently, the only valid value is
-    #   `compaction`.
+    #   The type of table optimizer.
     #
     # @option params [required, Types::TableOptimizerConfiguration] :table_optimizer_configuration
     #   A `TableOptimizerConfiguration` object representing the configuration
@@ -4898,6 +4897,9 @@ module Aws::Glue
     #     table_optimizer_configuration: { # required
     #       role_arn: "ArnString",
     #       enabled: false,
+    #       vpc_configuration: {
+    #         glue_connection_name: "glueConnectionNameString",
+    #       },
     #       retention_configuration: {
     #         iceberg_configuration: {
     #           snapshot_retention_period_in_days: 1,
@@ -11525,6 +11527,7 @@ module Aws::Glue
     #   resp.table_optimizer.type #=> String, one of "compaction", "retention", "orphan_file_deletion"
     #   resp.table_optimizer.configuration.role_arn #=> String
     #   resp.table_optimizer.configuration.enabled #=> Boolean
+    #   resp.table_optimizer.configuration.vpc_configuration.glue_connection_name #=> String
     #   resp.table_optimizer.configuration.retention_configuration.iceberg_configuration.snapshot_retention_period_in_days #=> Integer
     #   resp.table_optimizer.configuration.retention_configuration.iceberg_configuration.number_of_snapshots_to_retain #=> Integer
     #   resp.table_optimizer.configuration.retention_configuration.iceberg_configuration.clean_expired_files #=> Boolean
@@ -14558,8 +14561,7 @@ module Aws::Glue
     #   The name of the table.
     #
     # @option params [required, String] :type
-    #   The type of table optimizer. Currently, the only valid value is
-    #   `compaction`.
+    #   The type of table optimizer.
     #
     # @option params [Integer] :max_results
     #   The maximum number of optimizer runs to return on each call.
@@ -18155,8 +18157,7 @@ module Aws::Glue
     #   The name of the table.
     #
     # @option params [required, String] :type
-    #   The type of table optimizer. Currently, the only valid value is
-    #   `compaction`.
+    #   The type of table optimizer.
     #
     # @option params [required, Types::TableOptimizerConfiguration] :table_optimizer_configuration
     #   A `TableOptimizerConfiguration` object representing the configuration
@@ -18174,6 +18175,9 @@ module Aws::Glue
     #     table_optimizer_configuration: { # required
     #       role_arn: "ArnString",
     #       enabled: false,
+    #       vpc_configuration: {
+    #         glue_connection_name: "glueConnectionNameString",
+    #       },
     #       retention_configuration: {
     #         iceberg_configuration: {
     #           snapshot_retention_period_in_days: 1,
@@ -18456,7 +18460,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.202.0'
+      context[:gem_version] = '1.203.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

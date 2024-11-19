@@ -184,6 +184,7 @@ module Aws
         def original_source_file_system_arn: () -> ::String
         def creation_time: () -> ::Time
         def destinations: () -> ::Array[Types::Destination]
+        def source_file_system_owner_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EFS/Client.html#create_replication_configuration-instance_method
       def create_replication_configuration: (
@@ -193,7 +194,8 @@ module Aws
                                                   region: ::String?,
                                                   availability_zone_name: ::String?,
                                                   kms_key_id: ::String?,
-                                                  file_system_id: ::String?
+                                                  file_system_id: ::String?,
+                                                  role_arn: ::String?
                                                 },
                                               ]
                                             ) -> _CreateReplicationConfigurationResponseSuccess
@@ -237,7 +239,8 @@ module Aws
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EFS/Client.html#delete_replication_configuration-instance_method
       def delete_replication_configuration: (
-                                              source_file_system_id: ::String
+                                              source_file_system_id: ::String,
+                                              ?deletion_mode: ("ALL_CONFIGURATIONS" | "LOCAL_CONFIGURATION_ONLY")
                                             ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 

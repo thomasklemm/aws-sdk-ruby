@@ -172,6 +172,7 @@ module Aws::Keyspaces
       attr_accessor resource_arn: ::String
       attr_accessor replication_strategy: ("SINGLE_REGION" | "MULTI_REGION")
       attr_accessor replication_regions: ::Array[::String]
+      attr_accessor replication_group_statuses: ::Array[Types::ReplicationGroupStatus]
       SENSITIVE: []
     end
 
@@ -333,6 +334,13 @@ module Aws::Keyspaces
       SENSITIVE: []
     end
 
+    class ReplicationGroupStatus
+      attr_accessor region: ::String
+      attr_accessor keyspace_status: ("ACTIVE" | "CREATING" | "UPDATING" | "DELETING")
+      attr_accessor tables_replication_progress: ::String
+      SENSITIVE: []
+    end
+
     class ReplicationSpecification
       attr_accessor replication_strategy: ("SINGLE_REGION" | "MULTI_REGION")
       attr_accessor region_list: ::Array[::String]
@@ -425,6 +433,18 @@ module Aws::Keyspaces
     end
 
     class UntagResourceResponse < Aws::EmptyStructure
+    end
+
+    class UpdateKeyspaceRequest
+      attr_accessor keyspace_name: ::String
+      attr_accessor replication_specification: Types::ReplicationSpecification
+      attr_accessor client_side_timestamps: Types::ClientSideTimestamps
+      SENSITIVE: []
+    end
+
+    class UpdateKeyspaceResponse
+      attr_accessor resource_arn: ::String
+      SENSITIVE: []
     end
 
     class UpdateTableRequest

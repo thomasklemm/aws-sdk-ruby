@@ -2196,11 +2196,11 @@ module Aws::EC2
     #   * `owner-id` - The ID of the Amazon Web Services account that owns the
     #     DHCP options set.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,
@@ -2947,11 +2947,11 @@ module Aws::EC2
     #   * `owner-id` - The ID of the Amazon Web Services account that owns the
     #     internet gateway.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,
@@ -3090,11 +3090,11 @@ module Aws::EC2
     #
     #   * `subnet-id` - The ID of the subnet in which the NAT gateway resides.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,
@@ -3199,11 +3199,11 @@ module Aws::EC2
     #   * `owner-id` - The ID of the Amazon Web Services account that owns the
     #     network ACL.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,
@@ -3583,11 +3583,11 @@ module Aws::EC2
     #   * `route.vpc-peering-connection-id` - The ID of a VPC peering
     #     connection specified in a route in the table.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,
@@ -3960,11 +3960,11 @@ module Aws::EC2
     #
     #   * `subnet-id` - The ID of the subnet.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,
@@ -4257,11 +4257,11 @@ module Aws::EC2
     #   * `status-message` - A message that provides more information about
     #     the status of the VPC peering connection, if applicable.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,
@@ -4340,11 +4340,11 @@ module Aws::EC2
     #
     #   * `state` - The state of the VPC (`pending` \| `available`).
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have a
-    #     tag with the key `Owner` and the value `TeamA`, specify `tag:Owner`
-    #     for the filter name and `TeamA` for the filter value.
+    #   * `tag` - The key/value combination of a tag assigned to the resource.
+    #     Use the tag key in the filter name and the tag value as the filter
+    #     value. For example, to find all resources that have a tag with the
+    #     key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #     filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
     #     filter to find all resources assigned a tag with a specific key,

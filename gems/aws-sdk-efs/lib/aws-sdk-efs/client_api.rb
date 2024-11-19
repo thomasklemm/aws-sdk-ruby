@@ -45,6 +45,7 @@ module Aws::EFS
     DeleteMountTargetRequest = Shapes::StructureShape.new(name: 'DeleteMountTargetRequest')
     DeleteReplicationConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteReplicationConfigurationRequest')
     DeleteTagsRequest = Shapes::StructureShape.new(name: 'DeleteTagsRequest')
+    DeletionMode = Shapes::StringShape.new(name: 'DeletionMode')
     DependencyTimeout = Shapes::StructureShape.new(name: 'DependencyTimeout')
     DescribeAccessPointsRequest = Shapes::StructureShape.new(name: 'DescribeAccessPointsRequest')
     DescribeAccessPointsResponse = Shapes::StructureShape.new(name: 'DescribeAccessPointsResponse')
@@ -138,6 +139,7 @@ module Aws::EFS
     ResourceIdPreference = Shapes::StructureShape.new(name: 'ResourceIdPreference')
     ResourceIdType = Shapes::StringShape.new(name: 'ResourceIdType')
     Resources = Shapes::ListShape.new(name: 'Resources')
+    RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     RootDirectory = Shapes::StructureShape.new(name: 'RootDirectory')
     SecondaryGids = Shapes::ListShape.new(name: 'SecondaryGids')
     SecurityGroup = Shapes::StringShape.new(name: 'SecurityGroup')
@@ -145,6 +147,7 @@ module Aws::EFS
     SecurityGroupNotFound = Shapes::StructureShape.new(name: 'SecurityGroupNotFound')
     SecurityGroups = Shapes::ListShape.new(name: 'SecurityGroups')
     Status = Shapes::StringShape.new(name: 'Status')
+    StatusMessage = Shapes::StringShape.new(name: 'StatusMessage')
     SubnetId = Shapes::StringShape.new(name: 'SubnetId')
     SubnetNotFound = Shapes::StructureShape.new(name: 'SubnetNotFound')
     Tag = Shapes::StructureShape.new(name: 'Tag')
@@ -265,6 +268,7 @@ module Aws::EFS
     DeleteMountTargetRequest.struct_class = Types::DeleteMountTargetRequest
 
     DeleteReplicationConfigurationRequest.add_member(:source_file_system_id, Shapes::ShapeRef.new(shape: FileSystemId, required: true, location: "uri", location_name: "SourceFileSystemId"))
+    DeleteReplicationConfigurationRequest.add_member(:deletion_mode, Shapes::ShapeRef.new(shape: DeletionMode, location: "querystring", location_name: "deletionMode"))
     DeleteReplicationConfigurationRequest.struct_class = Types::DeleteReplicationConfigurationRequest
 
     DeleteTagsRequest.add_member(:file_system_id, Shapes::ShapeRef.new(shape: FileSystemId, required: true, location: "uri", location_name: "FileSystemId"))
@@ -354,12 +358,16 @@ module Aws::EFS
     Destination.add_member(:file_system_id, Shapes::ShapeRef.new(shape: FileSystemId, required: true, location_name: "FileSystemId"))
     Destination.add_member(:region, Shapes::ShapeRef.new(shape: RegionName, required: true, location_name: "Region"))
     Destination.add_member(:last_replicated_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastReplicatedTimestamp"))
+    Destination.add_member(:owner_id, Shapes::ShapeRef.new(shape: AwsAccountId, location_name: "OwnerId"))
+    Destination.add_member(:status_message, Shapes::ShapeRef.new(shape: StatusMessage, location_name: "StatusMessage"))
+    Destination.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
     Destination.struct_class = Types::Destination
 
     DestinationToCreate.add_member(:region, Shapes::ShapeRef.new(shape: RegionName, location_name: "Region"))
     DestinationToCreate.add_member(:availability_zone_name, Shapes::ShapeRef.new(shape: AvailabilityZoneName, location_name: "AvailabilityZoneName"))
     DestinationToCreate.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "KmsKeyId"))
     DestinationToCreate.add_member(:file_system_id, Shapes::ShapeRef.new(shape: FileSystemId, location_name: "FileSystemId"))
+    DestinationToCreate.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
     DestinationToCreate.struct_class = Types::DestinationToCreate
 
     Destinations.member = Shapes::ShapeRef.new(shape: Destination)
@@ -534,6 +542,7 @@ module Aws::EFS
     ReplicationConfigurationDescription.add_member(:original_source_file_system_arn, Shapes::ShapeRef.new(shape: FileSystemArn, required: true, location_name: "OriginalSourceFileSystemArn"))
     ReplicationConfigurationDescription.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "CreationTime"))
     ReplicationConfigurationDescription.add_member(:destinations, Shapes::ShapeRef.new(shape: Destinations, required: true, location_name: "Destinations"))
+    ReplicationConfigurationDescription.add_member(:source_file_system_owner_id, Shapes::ShapeRef.new(shape: AwsAccountId, location_name: "SourceFileSystemOwnerId"))
     ReplicationConfigurationDescription.struct_class = Types::ReplicationConfigurationDescription
 
     ReplicationConfigurationDescriptions.member = Shapes::ShapeRef.new(shape: ReplicationConfigurationDescription)

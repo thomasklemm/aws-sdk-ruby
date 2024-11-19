@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.89.0 (2024-11-19)
+------------------
+
+* Feature - Add support for the new parameters in EFS replication APIs
+
 1.88.0 (2024-11-18)
 ------------------
 

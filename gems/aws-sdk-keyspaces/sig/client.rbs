@@ -261,6 +261,7 @@ module Aws
         def resource_arn: () -> ::String
         def replication_strategy: () -> ("SINGLE_REGION" | "MULTI_REGION")
         def replication_regions: () -> ::Array[::String]
+        def replication_group_statuses: () -> ::Array[Types::ReplicationGroupStatus]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Keyspaces/Client.html#get_keyspace-instance_method
       def get_keyspace: (
@@ -485,6 +486,23 @@ module Aws
                             ]
                           ) -> _UntagResourceResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateKeyspaceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateKeyspaceResponse]
+        def resource_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Keyspaces/Client.html#update_keyspace-instance_method
+      def update_keyspace: (
+                             keyspace_name: ::String,
+                             replication_specification: {
+                               replication_strategy: ("SINGLE_REGION" | "MULTI_REGION"),
+                               region_list: Array[::String]?
+                             },
+                             ?client_side_timestamps: {
+                               status: ("ENABLED")
+                             }
+                           ) -> _UpdateKeyspaceResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateKeyspaceResponseSuccess
 
       interface _UpdateTableResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateTableResponse]

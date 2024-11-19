@@ -6124,8 +6124,7 @@ module Aws::Glue
     #   @return [String]
     #
     # @!attribute [rw] type
-    #   The type of table optimizer. Currently, the only valid value is
-    #   `compaction`.
+    #   The type of table optimizer.
     #   @return [String]
     #
     # @!attribute [rw] table_optimizer_configuration
@@ -16585,8 +16584,7 @@ module Aws::Glue
     #   @return [String]
     #
     # @!attribute [rw] type
-    #   The type of table optimizer. Currently, the only valid value is
-    #   `compaction`.
+    #   The type of table optimizer.
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -22881,6 +22879,14 @@ module Aws::Glue
     #   Whether table optimization is enabled.
     #   @return [Boolean]
     #
+    # @!attribute [rw] vpc_configuration
+    #   A `TableOptimizerVpcConfiguration` object representing the VPC
+    #   configuration for a table optimizer.
+    #
+    #   This configuration is necessary to perform optimization on tables
+    #   that are in a customer VPC.
+    #   @return [Types::TableOptimizerVpcConfiguration]
+    #
     # @!attribute [rw] retention_configuration
     #   The configuration for a snapshot retention optimizer.
     #   @return [Types::RetentionConfiguration]
@@ -22894,6 +22900,7 @@ module Aws::Glue
     class TableOptimizerConfiguration < Struct.new(
       :role_arn,
       :enabled,
+      :vpc_configuration,
       :retention_configuration,
       :orphan_file_deletion_configuration)
       SENSITIVE = []
@@ -22954,6 +22961,33 @@ module Aws::Glue
       :orphan_file_deletion_metrics)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # An object that describes the VPC configuration for a table optimizer.
+    #
+    # This configuration is necessary to perform optimization on tables that
+    # are in a customer VPC.
+    #
+    # @note TableOptimizerVpcConfiguration is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note TableOptimizerVpcConfiguration is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of TableOptimizerVpcConfiguration corresponding to the set member.
+    #
+    # @!attribute [rw] glue_connection_name
+    #   The name of the Glue connection used for the VPC for the table
+    #   optimizer.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TableOptimizerVpcConfiguration AWS API Documentation
+    #
+    class TableOptimizerVpcConfiguration < Struct.new(
+      :glue_connection_name,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class GlueConnectionName < TableOptimizerVpcConfiguration; end
+      class Unknown < TableOptimizerVpcConfiguration; end
     end
 
     # A structure containing information about the state of an asynchronous
@@ -24811,8 +24845,7 @@ module Aws::Glue
     #   @return [String]
     #
     # @!attribute [rw] type
-    #   The type of table optimizer. Currently, the only valid value is
-    #   `compaction`.
+    #   The type of table optimizer.
     #   @return [String]
     #
     # @!attribute [rw] table_optimizer_configuration

@@ -63,6 +63,7 @@ module Aws::Keyspaces
     IntegerObject = Shapes::IntegerShape.new(name: 'IntegerObject')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     KeyspaceName = Shapes::StringShape.new(name: 'KeyspaceName')
+    KeyspaceStatus = Shapes::StringShape.new(name: 'KeyspaceStatus')
     KeyspaceSummary = Shapes::StructureShape.new(name: 'KeyspaceSummary')
     KeyspaceSummaryList = Shapes::ListShape.new(name: 'KeyspaceSummaryList')
     ListKeyspacesRequest = Shapes::StructureShape.new(name: 'ListKeyspacesRequest')
@@ -87,6 +88,8 @@ module Aws::Keyspaces
     ReplicaSpecificationList = Shapes::ListShape.new(name: 'ReplicaSpecificationList')
     ReplicaSpecificationSummary = Shapes::StructureShape.new(name: 'ReplicaSpecificationSummary')
     ReplicaSpecificationSummaryList = Shapes::ListShape.new(name: 'ReplicaSpecificationSummaryList')
+    ReplicationGroupStatus = Shapes::StructureShape.new(name: 'ReplicationGroupStatus')
+    ReplicationGroupStatusList = Shapes::ListShape.new(name: 'ReplicationGroupStatusList')
     ReplicationSpecification = Shapes::StructureShape.new(name: 'ReplicationSpecification')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     RestoreTableRequest = Shapes::StructureShape.new(name: 'RestoreTableRequest')
@@ -102,6 +105,7 @@ module Aws::Keyspaces
     TableStatus = Shapes::StringShape.new(name: 'TableStatus')
     TableSummary = Shapes::StructureShape.new(name: 'TableSummary')
     TableSummaryList = Shapes::ListShape.new(name: 'TableSummaryList')
+    TablesReplicationProgress = Shapes::StringShape.new(name: 'TablesReplicationProgress')
     Tag = Shapes::StructureShape.new(name: 'Tag')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagList = Shapes::ListShape.new(name: 'TagList')
@@ -118,6 +122,8 @@ module Aws::Keyspaces
     TypeStatus = Shapes::StringShape.new(name: 'TypeStatus')
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
+    UpdateKeyspaceRequest = Shapes::StructureShape.new(name: 'UpdateKeyspaceRequest')
+    UpdateKeyspaceResponse = Shapes::StructureShape.new(name: 'UpdateKeyspaceResponse')
     UpdateTableRequest = Shapes::StructureShape.new(name: 'UpdateTableRequest')
     UpdateTableResponse = Shapes::StructureShape.new(name: 'UpdateTableResponse')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
@@ -244,6 +250,7 @@ module Aws::Keyspaces
     GetKeyspaceResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "resourceArn"))
     GetKeyspaceResponse.add_member(:replication_strategy, Shapes::ShapeRef.new(shape: rs, required: true, location_name: "replicationStrategy"))
     GetKeyspaceResponse.add_member(:replication_regions, Shapes::ShapeRef.new(shape: RegionList, location_name: "replicationRegions"))
+    GetKeyspaceResponse.add_member(:replication_group_statuses, Shapes::ShapeRef.new(shape: ReplicationGroupStatusList, location_name: "replicationGroupStatuses"))
     GetKeyspaceResponse.struct_class = Types::GetKeyspaceResponse
 
     GetTableAutoScalingSettingsRequest.add_member(:keyspace_name, Shapes::ShapeRef.new(shape: KeyspaceName, required: true, location_name: "keyspaceName"))
@@ -372,6 +379,13 @@ module Aws::Keyspaces
 
     ReplicaSpecificationSummaryList.member = Shapes::ShapeRef.new(shape: ReplicaSpecificationSummary)
 
+    ReplicationGroupStatus.add_member(:region, Shapes::ShapeRef.new(shape: region, required: true, location_name: "region"))
+    ReplicationGroupStatus.add_member(:keyspace_status, Shapes::ShapeRef.new(shape: KeyspaceStatus, required: true, location_name: "keyspaceStatus"))
+    ReplicationGroupStatus.add_member(:tables_replication_progress, Shapes::ShapeRef.new(shape: TablesReplicationProgress, location_name: "tablesReplicationProgress"))
+    ReplicationGroupStatus.struct_class = Types::ReplicationGroupStatus
+
+    ReplicationGroupStatusList.member = Shapes::ShapeRef.new(shape: ReplicationGroupStatus)
+
     ReplicationSpecification.add_member(:replication_strategy, Shapes::ShapeRef.new(shape: rs, required: true, location_name: "replicationStrategy"))
     ReplicationSpecification.add_member(:region_list, Shapes::ShapeRef.new(shape: RegionList, location_name: "regionList"))
     ReplicationSpecification.struct_class = Types::ReplicationSpecification
@@ -447,6 +461,14 @@ module Aws::Keyspaces
     UntagResourceRequest.struct_class = Types::UntagResourceRequest
 
     UntagResourceResponse.struct_class = Types::UntagResourceResponse
+
+    UpdateKeyspaceRequest.add_member(:keyspace_name, Shapes::ShapeRef.new(shape: KeyspaceName, required: true, location_name: "keyspaceName"))
+    UpdateKeyspaceRequest.add_member(:replication_specification, Shapes::ShapeRef.new(shape: ReplicationSpecification, required: true, location_name: "replicationSpecification"))
+    UpdateKeyspaceRequest.add_member(:client_side_timestamps, Shapes::ShapeRef.new(shape: ClientSideTimestamps, location_name: "clientSideTimestamps"))
+    UpdateKeyspaceRequest.struct_class = Types::UpdateKeyspaceRequest
+
+    UpdateKeyspaceResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "resourceArn"))
+    UpdateKeyspaceResponse.struct_class = Types::UpdateKeyspaceResponse
 
     UpdateTableRequest.add_member(:keyspace_name, Shapes::ShapeRef.new(shape: KeyspaceName, required: true, location_name: "keyspaceName"))
     UpdateTableRequest.add_member(:table_name, Shapes::ShapeRef.new(shape: TableName, required: true, location_name: "tableName"))
@@ -733,6 +755,20 @@ module Aws::Keyspaces
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: UntagResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: UntagResourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:update_keyspace, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateKeyspace"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateKeyspaceRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateKeyspaceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)

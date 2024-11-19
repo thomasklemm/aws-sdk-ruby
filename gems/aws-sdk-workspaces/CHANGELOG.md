@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.124.0 (2024-11-19)
+------------------
+
+* Feature - Releasing new ErrorCodes for Image Validation failure during CreateWorkspaceImage process
+
 1.123.0 (2024-10-18)
 ------------------
 

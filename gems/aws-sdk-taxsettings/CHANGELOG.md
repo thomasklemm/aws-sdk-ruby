@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.15.0 (2024-11-19)
+------------------
+
+* Feature - Release Tax Inheritance APIs,  Tax Exemption APIs, and functionality update for some existing Tax Registration APIs
+
 1.14.0 (2024-11-18)
 ------------------
 

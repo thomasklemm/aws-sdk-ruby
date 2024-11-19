@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.24.0 (2024-11-19)
+------------------
+
+* Feature - Add new X12 transactions sets and versions
+
 1.23.0 (2024-11-13)
 ------------------
 

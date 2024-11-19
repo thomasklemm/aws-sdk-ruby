@@ -186,6 +186,7 @@ module Aws::ECS
       attr_accessor depends_on: ::Array[Types::ContainerDependency]
       attr_accessor start_timeout: ::Integer
       attr_accessor stop_timeout: ::Integer
+      attr_accessor version_consistency: ("enabled" | "disabled")
       attr_accessor hostname: ::String
       attr_accessor user: ::String
       attr_accessor working_directory: ::String

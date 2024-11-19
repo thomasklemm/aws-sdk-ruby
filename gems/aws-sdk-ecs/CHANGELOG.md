@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.169.0 (2024-11-19)
+------------------
+
+* Feature - This release introduces support for configuring the version consistency feature for individual containers defined within a task definition. The configuration allows to specify whether ECS should resolve the container image tag specified in the container definition to an image digest.
+
 1.168.0 (2024-11-18)
 ------------------
 

@@ -859,12 +859,16 @@ module Aws::Keyspaces
     # The `CreateType` operation creates a new user-defined type in the
     # specified keyspace.
     #
-    # For more information, see [User-defined types (UDTs)][1] in the
+    # To configure the required permissions, see [Permissions to create a
+    # UDT][1] in the *Amazon Keyspaces Developer Guide*.
+    #
+    # For more information, see [User-defined types (UDTs)][2] in the
     # *Amazon Keyspaces Developer Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html
+    # [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-create
+    # [2]: https://docs.aws.amazon.com/keyspaces/latest/devguide/udts.html
     #
     # @option params [required, String] :keyspace_name
     #   The name of the keyspace.
@@ -980,6 +984,13 @@ module Aws::Keyspaces
     # The `DeleteType` operation deletes a user-defined type (UDT). You can
     # only delete a type that is not used in a table or another UDT.
     #
+    # To configure the required permissions, see [Permissions to delete a
+    # UDT][1] in the *Amazon Keyspaces Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-drop
+    #
     # @option params [required, String] :keyspace_name
     #   The name of the keyspace of the to be deleted type.
     #
@@ -1012,8 +1023,10 @@ module Aws::Keyspaces
       req.send_request(options)
     end
 
-    # Returns the name and the Amazon Resource Name (ARN) of the specified
-    # table.
+    # Returns the name of the specified keyspace, the Amazon Resource Name
+    # (ARN), the replication strategy, the Amazon Web Services Regions of a
+    # multi-Region keyspace, and the status of newly added Regions after an
+    # `UpdateKeyspace` operation.
     #
     # @option params [required, String] :keyspace_name
     #   The name of the keyspace.
@@ -1024,6 +1037,7 @@ module Aws::Keyspaces
     #   * {Types::GetKeyspaceResponse#resource_arn #resource_arn} => String
     #   * {Types::GetKeyspaceResponse#replication_strategy #replication_strategy} => String
     #   * {Types::GetKeyspaceResponse#replication_regions #replication_regions} => Array&lt;String&gt;
+    #   * {Types::GetKeyspaceResponse#replication_group_statuses #replication_group_statuses} => Array&lt;Types::ReplicationGroupStatus&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -1038,6 +1052,10 @@ module Aws::Keyspaces
     #   resp.replication_strategy #=> String, one of "SINGLE_REGION", "MULTI_REGION"
     #   resp.replication_regions #=> Array
     #   resp.replication_regions[0] #=> String
+    #   resp.replication_group_statuses #=> Array
+    #   resp.replication_group_statuses[0].region #=> String
+    #   resp.replication_group_statuses[0].keyspace_status #=> String, one of "ACTIVE", "CREATING", "UPDATING", "DELETING"
+    #   resp.replication_group_statuses[0].tables_replication_progress #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/GetKeyspace AWS API Documentation
     #
@@ -1229,7 +1247,13 @@ module Aws::Keyspaces
     # type is used in other types and tables.
     #
     # To read keyspace metadata using `GetType`, the IAM principal needs
-    # `Select` action permissions for the system keyspace.
+    # `Select` action permissions for the system keyspace. To configure the
+    # required permissions, see [Permissions to view a UDT][1] in the
+    # *Amazon Keyspaces Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view
     #
     # @option params [required, String] :keyspace_name
     #   The name of the keyspace that contains this type.
@@ -1435,7 +1459,13 @@ module Aws::Keyspaces
     # keyspace.
     #
     # To read keyspace metadata using `ListTypes`, the IAM principal needs
-    # `Select` action permissions for the system keyspace.
+    # `Select` action permissions for the system keyspace. To configure the
+    # required permissions, see [Permissions to view a UDT][1] in the
+    # *Amazon Keyspaces Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/configure-udt-permissions.html#udt-permissions-view
     #
     # @option params [String] :next_token
     #   The pagination token. To resume pagination, provide the `NextToken`
@@ -1799,6 +1829,75 @@ module Aws::Keyspaces
       req.send_request(options)
     end
 
+    # Adds a new Amazon Web Services Region to the keyspace. You can add a
+    # new Region to a keyspace that is either a single or a multi-Region
+    # keyspace. The new replica Region is applied to all tables in the
+    # keyspace. For more information, see [Add an Amazon Web Services Region
+    # to a keyspace in Amazon Keyspaces][1] in the *Amazon Keyspaces
+    # Developer Guide*.
+    #
+    # To change a single-Region to a multi-Region keyspace, you have to
+    # enable client-side timestamps for all tables in the keyspace. For more
+    # information, see [Client-side timestamps in Amazon Keyspaces][2] in
+    # the *Amazon Keyspaces Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/keyspaces-multi-region-add-replica.html
+    # [2]: https://docs.aws.amazon.com/keyspaces/latest/devguide/client-side-timestamps.html
+    #
+    # @option params [required, String] :keyspace_name
+    #   The name of the keyspace.
+    #
+    # @option params [required, Types::ReplicationSpecification] :replication_specification
+    #   The replication specification of the keyspace includes:
+    #
+    #   * `regionList` - up to six Amazon Web Services Regions where the
+    #     keyspace is replicated in.
+    #
+    #   * `replicationStrategy` - the required value is `SINGLE_REGION` or
+    #     `MULTI_REGION`.
+    #
+    # @option params [Types::ClientSideTimestamps] :client_side_timestamps
+    #   The client-side timestamp setting of the table.
+    #
+    #   For more information, see [How it works: Amazon Keyspaces client-side
+    #   timestamps][1] in the *Amazon Keyspaces Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/client-side-timestamps-how-it-works.html
+    #
+    # @return [Types::UpdateKeyspaceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateKeyspaceResponse#resource_arn #resource_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_keyspace({
+    #     keyspace_name: "KeyspaceName", # required
+    #     replication_specification: { # required
+    #       replication_strategy: "SINGLE_REGION", # required, accepts SINGLE_REGION, MULTI_REGION
+    #       region_list: ["region"],
+    #     },
+    #     client_side_timestamps: {
+    #       status: "ENABLED", # required, accepts ENABLED
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/UpdateKeyspace AWS API Documentation
+    #
+    # @overload update_keyspace(params = {})
+    # @param [Hash] params ({})
+    def update_keyspace(params = {}, options = {})
+      req = build_request(:update_keyspace, params)
+      req.send_request(options)
+    end
+
     # Adds new columns to the table or updates one of the table's settings,
     # for example capacity mode, auto scaling, encryption, point-in-time
     # recovery, or ttl settings. Note that you can only update one specific
@@ -2054,7 +2153,7 @@ module Aws::Keyspaces
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-keyspaces'
-      context[:gem_version] = '1.32.0'
+      context[:gem_version] = '1.33.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

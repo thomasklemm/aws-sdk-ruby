@@ -489,6 +489,52 @@ module Aws::TaxSettings
       req.send_request(options)
     end
 
+    # Get the active tax exemptions for a given list of accounts.
+    #
+    # @option params [required, Array<String>] :account_ids
+    #   List of unique account identifiers.
+    #
+    # @return [Types::BatchGetTaxExemptionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::BatchGetTaxExemptionsResponse#failed_accounts #failed_accounts} => Array&lt;String&gt;
+    #   * {Types::BatchGetTaxExemptionsResponse#tax_exemption_details_map #tax_exemption_details_map} => Hash&lt;String,Types::TaxExemptionDetails&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.batch_get_tax_exemptions({
+    #     account_ids: ["AccountId"], # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.failed_accounts #=> Array
+    #   resp.failed_accounts[0] #=> String
+    #   resp.tax_exemption_details_map #=> Hash
+    #   resp.tax_exemption_details_map["AccountId"].heritage_obtained_details #=> Boolean
+    #   resp.tax_exemption_details_map["AccountId"].heritage_obtained_parent_entity #=> String
+    #   resp.tax_exemption_details_map["AccountId"].heritage_obtained_reason #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions #=> Array
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].authority.country #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].authority.state #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].effective_date #=> Time
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].expiration_date #=> Time
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].status #=> String, one of "None", "Valid", "Expired", "Pending"
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].system_effective_date #=> Time
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.applicable_jurisdictions #=> Array
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.applicable_jurisdictions[0].country #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.applicable_jurisdictions[0].state #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.description #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.display_name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/BatchGetTaxExemptions AWS API Documentation
+    #
+    # @overload batch_get_tax_exemptions(params = {})
+    # @param [Hash] params ({})
+    def batch_get_tax_exemptions(params = {}, options = {})
+      req = build_request(:batch_get_tax_exemptions, params)
+      req.send_request(options)
+    end
+
     # Adds or updates tax registration for multiple accounts in batch. This
     # can be used to add or update tax registrations for up to five accounts
     # in one batch. You can't set a TRN if there's a pending TRN. You'll
@@ -740,7 +786,11 @@ module Aws::TaxSettings
     #         date_of_birth: "DateOfBirth",
     #         tax_registration_documents: [
     #           {
-    #             s3_location: { # required
+    #             file: {
+    #               file_content: "data", # required
+    #               file_name: "TaxDocumentName", # required
+    #             },
+    #             s3_location: {
     #               bucket: "S3BucketName", # required
     #               key: "S3Key", # required
     #             },
@@ -824,6 +874,49 @@ module Aws::TaxSettings
       req.send_request(options)
     end
 
+    # Get supported tax exemption types.
+    #
+    # @return [Types::GetTaxExemptionTypesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetTaxExemptionTypesResponse#tax_exemption_types #tax_exemption_types} => Array&lt;Types::TaxExemptionType&gt;
+    #
+    # @example Response structure
+    #
+    #   resp.tax_exemption_types #=> Array
+    #   resp.tax_exemption_types[0].applicable_jurisdictions #=> Array
+    #   resp.tax_exemption_types[0].applicable_jurisdictions[0].country #=> String
+    #   resp.tax_exemption_types[0].applicable_jurisdictions[0].state #=> String
+    #   resp.tax_exemption_types[0].description #=> String
+    #   resp.tax_exemption_types[0].display_name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxExemptionTypes AWS API Documentation
+    #
+    # @overload get_tax_exemption_types(params = {})
+    # @param [Hash] params ({})
+    def get_tax_exemption_types(params = {}, options = {})
+      req = build_request(:get_tax_exemption_types, params)
+      req.send_request(options)
+    end
+
+    # The get account tax inheritance status.
+    #
+    # @return [Types::GetTaxInheritanceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetTaxInheritanceResponse#heritage_status #heritage_status} => String
+    #
+    # @example Response structure
+    #
+    #   resp.heritage_status #=> String, one of "OptIn", "OptOut"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxInheritance AWS API Documentation
+    #
+    # @overload get_tax_inheritance(params = {})
+    # @param [Hash] params ({})
+    def get_tax_inheritance(params = {}, options = {})
+      req = build_request(:get_tax_inheritance, params)
+      req.send_request(options)
+    end
+
     # Retrieves tax registration for a single account.
     #
     # @option params [String] :account_id
@@ -904,7 +997,7 @@ module Aws::TaxSettings
     # Downloads your tax documents to the Amazon S3 bucket that you specify
     # in your request.
     #
-    # @option params [required, Types::DestinationS3Location] :destination_s3_location
+    # @option params [Types::DestinationS3Location] :destination_s3_location
     #   The Amazon S3 bucket that you specify to download your tax documents
     #   to.
     #
@@ -914,11 +1007,12 @@ module Aws::TaxSettings
     # @return [Types::GetTaxRegistrationDocumentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetTaxRegistrationDocumentResponse#destination_file_path #destination_file_path} => String
+    #   * {Types::GetTaxRegistrationDocumentResponse#presigned_s3_url #presigned_s3_url} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_tax_registration_document({
-    #     destination_s3_location: { # required
+    #     destination_s3_location: {
     #       bucket: "S3BucketName", # required
     #       prefix: "S3Prefix",
     #     },
@@ -931,6 +1025,7 @@ module Aws::TaxSettings
     # @example Response structure
     #
     #   resp.destination_file_path #=> String
+    #   resp.presigned_s3_url #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxRegistrationDocument AWS API Documentation
     #
@@ -987,6 +1082,58 @@ module Aws::TaxSettings
     # @param [Hash] params ({})
     def list_supplemental_tax_registrations(params = {}, options = {})
       req = build_request(:list_supplemental_tax_registrations, params)
+      req.send_request(options)
+    end
+
+    # Retrieves the tax exemption of accounts listed in a consolidated
+    # billing family.
+    #
+    # @option params [Integer] :max_results
+    #   The number of results you want in one response.
+    #
+    # @option params [String] :next_token
+    #   The token to retrieve the next set of results.
+    #
+    # @return [Types::ListTaxExemptionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListTaxExemptionsResponse#next_token #next_token} => String
+    #   * {Types::ListTaxExemptionsResponse#tax_exemption_details_map #tax_exemption_details_map} => Hash&lt;String,Types::TaxExemptionDetails&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_tax_exemptions({
+    #     max_results: 1,
+    #     next_token: "PaginationTokenString",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.tax_exemption_details_map #=> Hash
+    #   resp.tax_exemption_details_map["AccountId"].heritage_obtained_details #=> Boolean
+    #   resp.tax_exemption_details_map["AccountId"].heritage_obtained_parent_entity #=> String
+    #   resp.tax_exemption_details_map["AccountId"].heritage_obtained_reason #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions #=> Array
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].authority.country #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].authority.state #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].effective_date #=> Time
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].expiration_date #=> Time
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].status #=> String, one of "None", "Valid", "Expired", "Pending"
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].system_effective_date #=> Time
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.applicable_jurisdictions #=> Array
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.applicable_jurisdictions[0].country #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.applicable_jurisdictions[0].state #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.description #=> String
+    #   resp.tax_exemption_details_map["AccountId"].tax_exemptions[0].tax_exemption_type.display_name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/ListTaxExemptions AWS API Documentation
+    #
+    # @overload list_tax_exemptions(params = {})
+    # @param [Hash] params ({})
+    def list_tax_exemptions(params = {}, options = {})
+      req = build_request(:list_tax_exemptions, params)
       req.send_request(options)
     end
 
@@ -1131,6 +1278,75 @@ module Aws::TaxSettings
     # @param [Hash] params ({})
     def put_supplemental_tax_registration(params = {}, options = {})
       req = build_request(:put_supplemental_tax_registration, params)
+      req.send_request(options)
+    end
+
+    # Adds the tax exemption for a single account or all accounts listed in
+    # a consolidated billing family.
+    #
+    # @option params [required, Array<String>] :account_ids
+    #   The list of unique account identifiers.
+    #
+    # @option params [required, Types::Authority] :authority
+    #   The address domain associate with the tax information.
+    #
+    # @option params [required, Types::ExemptionCertificate] :exemption_certificate
+    #   The exemption certificate.
+    #
+    # @option params [required, String] :exemption_type
+    #   The exemption type.
+    #
+    # @return [Types::PutTaxExemptionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutTaxExemptionResponse#case_id #case_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_tax_exemption({
+    #     account_ids: ["AccountId"], # required
+    #     authority: { # required
+    #       country: "CountryCode", # required
+    #       state: "State",
+    #     },
+    #     exemption_certificate: { # required
+    #       document_file: "data", # required
+    #       document_name: "ExemptionDocumentName", # required
+    #     },
+    #     exemption_type: "GenericString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.case_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/PutTaxExemption AWS API Documentation
+    #
+    # @overload put_tax_exemption(params = {})
+    # @param [Hash] params ({})
+    def put_tax_exemption(params = {}, options = {})
+      req = build_request(:put_tax_exemption, params)
+      req.send_request(options)
+    end
+
+    # The updated tax inheritance status.
+    #
+    # @option params [String] :heritage_status
+    #   The tax inheritance status.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_tax_inheritance({
+    #     heritage_status: "OptIn", # accepts OptIn, OptOut
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/PutTaxInheritance AWS API Documentation
+    #
+    # @overload put_tax_inheritance(params = {})
+    # @param [Hash] params ({})
+    def put_tax_inheritance(params = {}, options = {})
+      req = build_request(:put_tax_inheritance, params)
       req.send_request(options)
     end
 
@@ -1383,7 +1599,11 @@ module Aws::TaxSettings
     #         date_of_birth: "DateOfBirth",
     #         tax_registration_documents: [
     #           {
-    #             s3_location: { # required
+    #             file: {
+    #               file_content: "data", # required
+    #               file_name: "TaxDocumentName", # required
+    #             },
+    #             s3_location: {
     #               bucket: "S3BucketName", # required
     #               key: "S3Key", # required
     #             },
@@ -1424,7 +1644,7 @@ module Aws::TaxSettings
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-taxsettings'
-      context[:gem_version] = '1.14.0'
+      context[:gem_version] = '1.15.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

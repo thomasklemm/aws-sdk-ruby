@@ -14,6 +14,7 @@ module Aws::TaxSettings
 
     include Seahorse::Model
 
+    AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     AccountDetails = Shapes::StructureShape.new(name: 'AccountDetails')
     AccountDetailsList = Shapes::ListShape.new(name: 'AccountDetailsList')
     AccountId = Shapes::StringShape.new(name: 'AccountId')
@@ -28,10 +29,15 @@ module Aws::TaxSettings
     AddressLine3 = Shapes::StringShape.new(name: 'AddressLine3')
     AddressRoleMap = Shapes::MapShape.new(name: 'AddressRoleMap')
     AddressRoleType = Shapes::StringShape.new(name: 'AddressRoleType')
+    AttachmentUploadException = Shapes::StructureShape.new(name: 'AttachmentUploadException')
+    Authorities = Shapes::ListShape.new(name: 'Authorities')
+    Authority = Shapes::StructureShape.new(name: 'Authority')
     BatchDeleteTaxRegistrationError = Shapes::StructureShape.new(name: 'BatchDeleteTaxRegistrationError')
     BatchDeleteTaxRegistrationErrors = Shapes::ListShape.new(name: 'BatchDeleteTaxRegistrationErrors')
     BatchDeleteTaxRegistrationRequest = Shapes::StructureShape.new(name: 'BatchDeleteTaxRegistrationRequest')
     BatchDeleteTaxRegistrationResponse = Shapes::StructureShape.new(name: 'BatchDeleteTaxRegistrationResponse')
+    BatchGetTaxExemptionsRequest = Shapes::StructureShape.new(name: 'BatchGetTaxExemptionsRequest')
+    BatchGetTaxExemptionsResponse = Shapes::StructureShape.new(name: 'BatchGetTaxExemptionsResponse')
     BatchPutTaxRegistrationError = Shapes::StructureShape.new(name: 'BatchPutTaxRegistrationError')
     BatchPutTaxRegistrationErrors = Shapes::ListShape.new(name: 'BatchPutTaxRegistrationErrors')
     BatchPutTaxRegistrationRequest = Shapes::StructureShape.new(name: 'BatchPutTaxRegistrationRequest')
@@ -44,6 +50,7 @@ module Aws::TaxSettings
     CanadaProvincialSalesTaxIdString = Shapes::StringShape.new(name: 'CanadaProvincialSalesTaxIdString')
     CanadaQuebecSalesTaxNumberString = Shapes::StringShape.new(name: 'CanadaQuebecSalesTaxNumberString')
     CanadaRetailSalesTaxNumberString = Shapes::StringShape.new(name: 'CanadaRetailSalesTaxNumberString')
+    CaseCreationLimitExceededException = Shapes::StructureShape.new(name: 'CaseCreationLimitExceededException')
     CcmCode = Shapes::StringShape.new(name: 'CcmCode')
     CertifiedEmailId = Shapes::StringShape.new(name: 'CertifiedEmailId')
     CigNumber = Shapes::StringShape.new(name: 'CigNumber')
@@ -58,17 +65,28 @@ module Aws::TaxSettings
     DeleteTaxRegistrationResponse = Shapes::StructureShape.new(name: 'DeleteTaxRegistrationResponse')
     DestinationFilePath = Shapes::StringShape.new(name: 'DestinationFilePath')
     DestinationS3Location = Shapes::StructureShape.new(name: 'DestinationS3Location')
+    DisplayName = Shapes::StringShape.new(name: 'DisplayName')
     District = Shapes::StringShape.new(name: 'District')
+    EntityExemptionAccountStatus = Shapes::StringShape.new(name: 'EntityExemptionAccountStatus')
     ErrorCode = Shapes::StringShape.new(name: 'ErrorCode')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     EstoniaAdditionalInfo = Shapes::StructureShape.new(name: 'EstoniaAdditionalInfo')
+    ExemptionCertificate = Shapes::StructureShape.new(name: 'ExemptionCertificate')
+    ExemptionDocumentName = Shapes::StringShape.new(name: 'ExemptionDocumentName')
+    ExemptionFileBlob = Shapes::BlobShape.new(name: 'ExemptionFileBlob')
     FieldName = Shapes::StringShape.new(name: 'FieldName')
+    FileBlob = Shapes::BlobShape.new(name: 'FileBlob')
     GenericString = Shapes::StringShape.new(name: 'GenericString')
     GeorgiaAdditionalInfo = Shapes::StructureShape.new(name: 'GeorgiaAdditionalInfo')
+    GetTaxExemptionTypesRequest = Shapes::StructureShape.new(name: 'GetTaxExemptionTypesRequest')
+    GetTaxExemptionTypesResponse = Shapes::StructureShape.new(name: 'GetTaxExemptionTypesResponse')
+    GetTaxInheritanceRequest = Shapes::StructureShape.new(name: 'GetTaxInheritanceRequest')
+    GetTaxInheritanceResponse = Shapes::StructureShape.new(name: 'GetTaxInheritanceResponse')
     GetTaxRegistrationDocumentRequest = Shapes::StructureShape.new(name: 'GetTaxRegistrationDocumentRequest')
     GetTaxRegistrationDocumentResponse = Shapes::StructureShape.new(name: 'GetTaxRegistrationDocumentResponse')
     GetTaxRegistrationRequest = Shapes::StructureShape.new(name: 'GetTaxRegistrationRequest')
     GetTaxRegistrationResponse = Shapes::StructureShape.new(name: 'GetTaxRegistrationResponse')
+    HeritageStatus = Shapes::StringShape.new(name: 'HeritageStatus')
     IndiaAdditionalInfo = Shapes::StructureShape.new(name: 'IndiaAdditionalInfo')
     IndividualRegistrationNumber = Shapes::StringShape.new(name: 'IndividualRegistrationNumber')
     Industries = Shapes::StringShape.new(name: 'Industries')
@@ -87,6 +105,8 @@ module Aws::TaxSettings
     LineOfBusiness = Shapes::StringShape.new(name: 'LineOfBusiness')
     ListSupplementalTaxRegistrationsRequest = Shapes::StructureShape.new(name: 'ListSupplementalTaxRegistrationsRequest')
     ListSupplementalTaxRegistrationsResponse = Shapes::StructureShape.new(name: 'ListSupplementalTaxRegistrationsResponse')
+    ListTaxExemptionsRequest = Shapes::StructureShape.new(name: 'ListTaxExemptionsRequest')
+    ListTaxExemptionsResponse = Shapes::StructureShape.new(name: 'ListTaxExemptionsResponse')
     ListTaxRegistrationsRequest = Shapes::StructureShape.new(name: 'ListTaxRegistrationsRequest')
     ListTaxRegistrationsResponse = Shapes::StructureShape.new(name: 'ListTaxRegistrationsResponse')
     MalaysiaAdditionalInfo = Shapes::StructureShape.new(name: 'MalaysiaAdditionalInfo')
@@ -100,6 +120,10 @@ module Aws::TaxSettings
     PostalCode = Shapes::StringShape.new(name: 'PostalCode')
     PutSupplementalTaxRegistrationRequest = Shapes::StructureShape.new(name: 'PutSupplementalTaxRegistrationRequest')
     PutSupplementalTaxRegistrationResponse = Shapes::StructureShape.new(name: 'PutSupplementalTaxRegistrationResponse')
+    PutTaxExemptionRequest = Shapes::StructureShape.new(name: 'PutTaxExemptionRequest')
+    PutTaxExemptionResponse = Shapes::StructureShape.new(name: 'PutTaxExemptionResponse')
+    PutTaxInheritanceRequest = Shapes::StructureShape.new(name: 'PutTaxInheritanceRequest')
+    PutTaxInheritanceResponse = Shapes::StructureShape.new(name: 'PutTaxInheritanceResponse')
     PutTaxRegistrationRequest = Shapes::StructureShape.new(name: 'PutTaxRegistrationRequest')
     PutTaxRegistrationResponse = Shapes::StructureShape.new(name: 'PutTaxRegistrationResponse')
     RegistrationId = Shapes::StringShape.new(name: 'RegistrationId')
@@ -129,10 +153,17 @@ module Aws::TaxSettings
     TaxDocumentMetadata = Shapes::StructureShape.new(name: 'TaxDocumentMetadata')
     TaxDocumentMetadatas = Shapes::ListShape.new(name: 'TaxDocumentMetadatas')
     TaxDocumentName = Shapes::StringShape.new(name: 'TaxDocumentName')
+    TaxExemption = Shapes::StructureShape.new(name: 'TaxExemption')
+    TaxExemptionDetails = Shapes::StructureShape.new(name: 'TaxExemptionDetails')
+    TaxExemptionDetailsMap = Shapes::MapShape.new(name: 'TaxExemptionDetailsMap')
+    TaxExemptionType = Shapes::StructureShape.new(name: 'TaxExemptionType')
+    TaxExemptionTypes = Shapes::ListShape.new(name: 'TaxExemptionTypes')
+    TaxExemptions = Shapes::ListShape.new(name: 'TaxExemptions')
     TaxInformationNumber = Shapes::StringShape.new(name: 'TaxInformationNumber')
     TaxInheritanceDetails = Shapes::StructureShape.new(name: 'TaxInheritanceDetails')
     TaxOffice = Shapes::StringShape.new(name: 'TaxOffice')
     TaxRegistration = Shapes::StructureShape.new(name: 'TaxRegistration')
+    TaxRegistrationDocFile = Shapes::StructureShape.new(name: 'TaxRegistrationDocFile')
     TaxRegistrationDocument = Shapes::StructureShape.new(name: 'TaxRegistrationDocument')
     TaxRegistrationDocuments = Shapes::ListShape.new(name: 'TaxRegistrationDocuments')
     TaxRegistrationEntry = Shapes::StructureShape.new(name: 'TaxRegistrationEntry')
@@ -140,14 +171,19 @@ module Aws::TaxSettings
     TaxRegistrationStatus = Shapes::StringShape.new(name: 'TaxRegistrationStatus')
     TaxRegistrationType = Shapes::StringShape.new(name: 'TaxRegistrationType')
     TaxRegistrationWithJurisdiction = Shapes::StructureShape.new(name: 'TaxRegistrationWithJurisdiction')
+    Timestamp = Shapes::TimestampShape.new(name: 'Timestamp')
     TurkeyAdditionalInfo = Shapes::StructureShape.new(name: 'TurkeyAdditionalInfo')
     UkraineAdditionalInfo = Shapes::StructureShape.new(name: 'UkraineAdditionalInfo')
     UkraineTrnType = Shapes::StringShape.new(name: 'UkraineTrnType')
+    Url = Shapes::StringShape.new(name: 'Url')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValidationExceptionErrorCode = Shapes::StringShape.new(name: 'ValidationExceptionErrorCode')
     ValidationExceptionField = Shapes::StructureShape.new(name: 'ValidationExceptionField')
     ValidationExceptionFieldList = Shapes::ListShape.new(name: 'ValidationExceptionFieldList')
     VerificationDetails = Shapes::StructureShape.new(name: 'VerificationDetails')
+
+    AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
+    AccessDeniedException.struct_class = Types::AccessDeniedException
 
     AccountDetails.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "accountId"))
     AccountDetails.add_member(:account_meta_data, Shapes::ShapeRef.new(shape: AccountMetaData, location_name: "accountMetaData"))
@@ -213,6 +249,15 @@ module Aws::TaxSettings
     AddressRoleMap.key = Shapes::ShapeRef.new(shape: AddressRoleType)
     AddressRoleMap.value = Shapes::ShapeRef.new(shape: Jurisdiction)
 
+    AttachmentUploadException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
+    AttachmentUploadException.struct_class = Types::AttachmentUploadException
+
+    Authorities.member = Shapes::ShapeRef.new(shape: Authority)
+
+    Authority.add_member(:country, Shapes::ShapeRef.new(shape: CountryCode, required: true, location_name: "country"))
+    Authority.add_member(:state, Shapes::ShapeRef.new(shape: State, location_name: "state"))
+    Authority.struct_class = Types::Authority
+
     BatchDeleteTaxRegistrationError.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "accountId"))
     BatchDeleteTaxRegistrationError.add_member(:code, Shapes::ShapeRef.new(shape: ErrorCode, location_name: "code"))
     BatchDeleteTaxRegistrationError.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
@@ -225,6 +270,13 @@ module Aws::TaxSettings
 
     BatchDeleteTaxRegistrationResponse.add_member(:errors, Shapes::ShapeRef.new(shape: BatchDeleteTaxRegistrationErrors, required: true, location_name: "errors"))
     BatchDeleteTaxRegistrationResponse.struct_class = Types::BatchDeleteTaxRegistrationResponse
+
+    BatchGetTaxExemptionsRequest.add_member(:account_ids, Shapes::ShapeRef.new(shape: AccountIds, required: true, location_name: "accountIds"))
+    BatchGetTaxExemptionsRequest.struct_class = Types::BatchGetTaxExemptionsRequest
+
+    BatchGetTaxExemptionsResponse.add_member(:failed_accounts, Shapes::ShapeRef.new(shape: AccountIds, location_name: "failedAccounts"))
+    BatchGetTaxExemptionsResponse.add_member(:tax_exemption_details_map, Shapes::ShapeRef.new(shape: TaxExemptionDetailsMap, location_name: "taxExemptionDetailsMap"))
+    BatchGetTaxExemptionsResponse.struct_class = Types::BatchGetTaxExemptionsResponse
 
     BatchPutTaxRegistrationError.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, required: true, location_name: "accountId"))
     BatchPutTaxRegistrationError.add_member(:code, Shapes::ShapeRef.new(shape: ErrorCode, location_name: "code"))
@@ -251,6 +303,9 @@ module Aws::TaxSettings
     CanadaAdditionalInfo.add_member(:provincial_sales_tax_id, Shapes::ShapeRef.new(shape: CanadaProvincialSalesTaxIdString, location_name: "provincialSalesTaxId"))
     CanadaAdditionalInfo.struct_class = Types::CanadaAdditionalInfo
 
+    CaseCreationLimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
+    CaseCreationLimitExceededException.struct_class = Types::CaseCreationLimitExceededException
+
     ConflictException.add_member(:error_code, Shapes::ShapeRef.new(shape: ErrorCode, required: true, location_name: "errorCode"))
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
     ConflictException.struct_class = Types::ConflictException
@@ -272,14 +327,29 @@ module Aws::TaxSettings
     EstoniaAdditionalInfo.add_member(:registry_commercial_code, Shapes::ShapeRef.new(shape: RegistryCommercialCode, required: true, location_name: "registryCommercialCode"))
     EstoniaAdditionalInfo.struct_class = Types::EstoniaAdditionalInfo
 
+    ExemptionCertificate.add_member(:document_file, Shapes::ShapeRef.new(shape: ExemptionFileBlob, required: true, location_name: "documentFile"))
+    ExemptionCertificate.add_member(:document_name, Shapes::ShapeRef.new(shape: ExemptionDocumentName, required: true, location_name: "documentName"))
+    ExemptionCertificate.struct_class = Types::ExemptionCertificate
+
     GeorgiaAdditionalInfo.add_member(:person_type, Shapes::ShapeRef.new(shape: PersonType, required: true, location_name: "personType"))
     GeorgiaAdditionalInfo.struct_class = Types::GeorgiaAdditionalInfo
 
-    GetTaxRegistrationDocumentRequest.add_member(:destination_s3_location, Shapes::ShapeRef.new(shape: DestinationS3Location, required: true, location_name: "destinationS3Location"))
+    GetTaxExemptionTypesRequest.struct_class = Types::GetTaxExemptionTypesRequest
+
+    GetTaxExemptionTypesResponse.add_member(:tax_exemption_types, Shapes::ShapeRef.new(shape: TaxExemptionTypes, location_name: "taxExemptionTypes"))
+    GetTaxExemptionTypesResponse.struct_class = Types::GetTaxExemptionTypesResponse
+
+    GetTaxInheritanceRequest.struct_class = Types::GetTaxInheritanceRequest
+
+    GetTaxInheritanceResponse.add_member(:heritage_status, Shapes::ShapeRef.new(shape: HeritageStatus, location_name: "heritageStatus"))
+    GetTaxInheritanceResponse.struct_class = Types::GetTaxInheritanceResponse
+
+    GetTaxRegistrationDocumentRequest.add_member(:destination_s3_location, Shapes::ShapeRef.new(shape: DestinationS3Location, location_name: "destinationS3Location"))
     GetTaxRegistrationDocumentRequest.add_member(:tax_document_metadata, Shapes::ShapeRef.new(shape: TaxDocumentMetadata, required: true, location_name: "taxDocumentMetadata"))
     GetTaxRegistrationDocumentRequest.struct_class = Types::GetTaxRegistrationDocumentRequest
 
     GetTaxRegistrationDocumentResponse.add_member(:destination_file_path, Shapes::ShapeRef.new(shape: DestinationFilePath, location_name: "destinationFilePath"))
+    GetTaxRegistrationDocumentResponse.add_member(:presigned_s3_url, Shapes::ShapeRef.new(shape: Url, location_name: "presignedS3Url"))
     GetTaxRegistrationDocumentResponse.struct_class = Types::GetTaxRegistrationDocumentResponse
 
     GetTaxRegistrationRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "accountId"))
@@ -320,6 +390,14 @@ module Aws::TaxSettings
     ListSupplementalTaxRegistrationsResponse.add_member(:tax_registrations, Shapes::ShapeRef.new(shape: SupplementalTaxRegistrationList, required: true, location_name: "taxRegistrations"))
     ListSupplementalTaxRegistrationsResponse.struct_class = Types::ListSupplementalTaxRegistrationsResponse
 
+    ListTaxExemptionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
+    ListTaxExemptionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationTokenString, location_name: "nextToken"))
+    ListTaxExemptionsRequest.struct_class = Types::ListTaxExemptionsRequest
+
+    ListTaxExemptionsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationTokenString, location_name: "nextToken"))
+    ListTaxExemptionsResponse.add_member(:tax_exemption_details_map, Shapes::ShapeRef.new(shape: TaxExemptionDetailsMap, location_name: "taxExemptionDetailsMap"))
+    ListTaxExemptionsResponse.struct_class = Types::ListTaxExemptionsResponse
+
     ListTaxRegistrationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
     ListTaxRegistrationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationTokenString, location_name: "nextToken"))
     ListTaxRegistrationsRequest.struct_class = Types::ListTaxRegistrationsRequest
@@ -345,6 +423,20 @@ module Aws::TaxSettings
     PutSupplementalTaxRegistrationResponse.add_member(:authority_id, Shapes::ShapeRef.new(shape: GenericString, required: true, location_name: "authorityId"))
     PutSupplementalTaxRegistrationResponse.add_member(:status, Shapes::ShapeRef.new(shape: TaxRegistrationStatus, required: true, location_name: "status"))
     PutSupplementalTaxRegistrationResponse.struct_class = Types::PutSupplementalTaxRegistrationResponse
+
+    PutTaxExemptionRequest.add_member(:account_ids, Shapes::ShapeRef.new(shape: AccountIds, required: true, location_name: "accountIds"))
+    PutTaxExemptionRequest.add_member(:authority, Shapes::ShapeRef.new(shape: Authority, required: true, location_name: "authority"))
+    PutTaxExemptionRequest.add_member(:exemption_certificate, Shapes::ShapeRef.new(shape: ExemptionCertificate, required: true, location_name: "exemptionCertificate"))
+    PutTaxExemptionRequest.add_member(:exemption_type, Shapes::ShapeRef.new(shape: GenericString, required: true, location_name: "exemptionType"))
+    PutTaxExemptionRequest.struct_class = Types::PutTaxExemptionRequest
+
+    PutTaxExemptionResponse.add_member(:case_id, Shapes::ShapeRef.new(shape: GenericString, location_name: "caseId"))
+    PutTaxExemptionResponse.struct_class = Types::PutTaxExemptionResponse
+
+    PutTaxInheritanceRequest.add_member(:heritage_status, Shapes::ShapeRef.new(shape: HeritageStatus, location_name: "heritageStatus"))
+    PutTaxInheritanceRequest.struct_class = Types::PutTaxInheritanceRequest
+
+    PutTaxInheritanceResponse.struct_class = Types::PutTaxInheritanceResponse
 
     PutTaxRegistrationRequest.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "accountId"))
     PutTaxRegistrationRequest.add_member(:tax_registration_entry, Shapes::ShapeRef.new(shape: TaxRegistrationEntry, required: true, location_name: "taxRegistrationEntry"))
@@ -397,6 +489,32 @@ module Aws::TaxSettings
 
     TaxDocumentMetadatas.member = Shapes::ShapeRef.new(shape: TaxDocumentMetadata)
 
+    TaxExemption.add_member(:authority, Shapes::ShapeRef.new(shape: Authority, required: true, location_name: "authority"))
+    TaxExemption.add_member(:effective_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "effectiveDate"))
+    TaxExemption.add_member(:expiration_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "expirationDate"))
+    TaxExemption.add_member(:status, Shapes::ShapeRef.new(shape: EntityExemptionAccountStatus, location_name: "status"))
+    TaxExemption.add_member(:system_effective_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "systemEffectiveDate"))
+    TaxExemption.add_member(:tax_exemption_type, Shapes::ShapeRef.new(shape: TaxExemptionType, required: true, location_name: "taxExemptionType"))
+    TaxExemption.struct_class = Types::TaxExemption
+
+    TaxExemptionDetails.add_member(:heritage_obtained_details, Shapes::ShapeRef.new(shape: Boolean, location_name: "heritageObtainedDetails"))
+    TaxExemptionDetails.add_member(:heritage_obtained_parent_entity, Shapes::ShapeRef.new(shape: GenericString, location_name: "heritageObtainedParentEntity"))
+    TaxExemptionDetails.add_member(:heritage_obtained_reason, Shapes::ShapeRef.new(shape: GenericString, location_name: "heritageObtainedReason"))
+    TaxExemptionDetails.add_member(:tax_exemptions, Shapes::ShapeRef.new(shape: TaxExemptions, location_name: "taxExemptions"))
+    TaxExemptionDetails.struct_class = Types::TaxExemptionDetails
+
+    TaxExemptionDetailsMap.key = Shapes::ShapeRef.new(shape: AccountId)
+    TaxExemptionDetailsMap.value = Shapes::ShapeRef.new(shape: TaxExemptionDetails)
+
+    TaxExemptionType.add_member(:applicable_jurisdictions, Shapes::ShapeRef.new(shape: Authorities, location_name: "applicableJurisdictions"))
+    TaxExemptionType.add_member(:description, Shapes::ShapeRef.new(shape: GenericString, location_name: "description"))
+    TaxExemptionType.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayName, location_name: "displayName"))
+    TaxExemptionType.struct_class = Types::TaxExemptionType
+
+    TaxExemptionTypes.member = Shapes::ShapeRef.new(shape: TaxExemptionType)
+
+    TaxExemptions.member = Shapes::ShapeRef.new(shape: TaxExemption)
+
     TaxInheritanceDetails.add_member(:inheritance_obtained_reason, Shapes::ShapeRef.new(shape: InheritanceObtainedReason, location_name: "inheritanceObtainedReason"))
     TaxInheritanceDetails.add_member(:parent_entity_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "parentEntityId"))
     TaxInheritanceDetails.struct_class = Types::TaxInheritanceDetails
@@ -412,7 +530,12 @@ module Aws::TaxSettings
     TaxRegistration.add_member(:tax_document_metadatas, Shapes::ShapeRef.new(shape: TaxDocumentMetadatas, location_name: "taxDocumentMetadatas"))
     TaxRegistration.struct_class = Types::TaxRegistration
 
-    TaxRegistrationDocument.add_member(:s3_location, Shapes::ShapeRef.new(shape: SourceS3Location, required: true, location_name: "s3Location"))
+    TaxRegistrationDocFile.add_member(:file_content, Shapes::ShapeRef.new(shape: FileBlob, required: true, location_name: "fileContent"))
+    TaxRegistrationDocFile.add_member(:file_name, Shapes::ShapeRef.new(shape: TaxDocumentName, required: true, location_name: "fileName"))
+    TaxRegistrationDocFile.struct_class = Types::TaxRegistrationDocFile
+
+    TaxRegistrationDocument.add_member(:file, Shapes::ShapeRef.new(shape: TaxRegistrationDocFile, location_name: "file"))
+    TaxRegistrationDocument.add_member(:s3_location, Shapes::ShapeRef.new(shape: SourceS3Location, location_name: "s3Location"))
     TaxRegistrationDocument.struct_class = Types::TaxRegistrationDocument
 
     TaxRegistrationDocuments.member = Shapes::ShapeRef.new(shape: TaxRegistrationDocument)
@@ -492,6 +615,17 @@ module Aws::TaxSettings
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:batch_get_tax_exemptions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "BatchGetTaxExemptions"
+        o.http_method = "POST"
+        o.http_request_uri = "/BatchGetTaxExemptions"
+        o.input = Shapes::ShapeRef.new(shape: BatchGetTaxExemptionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: BatchGetTaxExemptionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
       api.add_operation(:batch_put_tax_registration, Seahorse::Model::Operation.new.tap do |o|
         o.name = "BatchPutTaxRegistration"
         o.http_method = "POST"
@@ -523,6 +657,28 @@ module Aws::TaxSettings
         o.output = Shapes::ShapeRef.new(shape: DeleteTaxRegistrationResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:get_tax_exemption_types, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetTaxExemptionTypes"
+        o.http_method = "POST"
+        o.http_request_uri = "/GetTaxExemptionTypes"
+        o.input = Shapes::ShapeRef.new(shape: GetTaxExemptionTypesRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetTaxExemptionTypesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:get_tax_inheritance, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetTaxInheritance"
+        o.http_method = "POST"
+        o.http_request_uri = "/GetTaxInheritance"
+        o.input = Shapes::ShapeRef.new(shape: GetTaxInheritanceRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetTaxInheritanceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
@@ -565,6 +721,23 @@ module Aws::TaxSettings
         )
       end)
 
+      api.add_operation(:list_tax_exemptions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListTaxExemptions"
+        o.http_method = "POST"
+        o.http_request_uri = "/ListTaxExemptions"
+        o.input = Shapes::ShapeRef.new(shape: ListTaxExemptionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListTaxExemptionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_tax_registrations, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListTaxRegistrations"
         o.http_method = "POST"
@@ -590,6 +763,32 @@ module Aws::TaxSettings
         o.output = Shapes::ShapeRef.new(shape: PutSupplementalTaxRegistrationResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:put_tax_exemption, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutTaxExemption"
+        o.http_method = "POST"
+        o.http_request_uri = "/PutTaxExemption"
+        o.input = Shapes::ShapeRef.new(shape: PutTaxExemptionRequest)
+        o.output = Shapes::ShapeRef.new(shape: PutTaxExemptionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: CaseCreationLimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AttachmentUploadException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:put_tax_inheritance, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutTaxInheritance"
+        o.http_method = "POST"
+        o.http_request_uri = "/PutTaxInheritance"
+        o.input = Shapes::ShapeRef.new(shape: PutTaxInheritanceRequest)
+        o.output = Shapes::ShapeRef.new(shape: PutTaxInheritanceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 

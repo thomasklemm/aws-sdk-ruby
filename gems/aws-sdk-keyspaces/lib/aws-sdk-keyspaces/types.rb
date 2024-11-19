@@ -898,13 +898,19 @@ module Aws::Keyspaces
     #   list of replication Regions is returned.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] replication_group_statuses
+    #   A list of all Regions the keyspace is replicated in after the update
+    #   keyspace operation and their status.
+    #   @return [Array<Types::ReplicationGroupStatus>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/GetKeyspaceResponse AWS API Documentation
     #
     class GetKeyspaceResponse < Struct.new(
       :keyspace_name,
       :resource_arn,
       :replication_strategy,
-      :replication_regions)
+      :replication_regions,
+      :replication_group_statuses)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1522,6 +1528,34 @@ module Aws::Keyspaces
       include Aws::Structure
     end
 
+    # This shows the summary status of the keyspace after a new Amazon Web
+    # Services Region was added.
+    #
+    # @!attribute [rw] region
+    #   The name of the Region that was added to the keyspace.
+    #   @return [String]
+    #
+    # @!attribute [rw] keyspace_status
+    #   The status of the keyspace.
+    #   @return [String]
+    #
+    # @!attribute [rw] tables_replication_progress
+    #   This shows the replication progress of tables in the keyspace. The
+    #   value is expressed as a percentage of the newly replicated tables
+    #   with status `Active` compared to the total number of tables in the
+    #   keyspace.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/ReplicationGroupStatus AWS API Documentation
+    #
+    class ReplicationGroupStatus < Struct.new(
+      :region,
+      :keyspace_status,
+      :tables_replication_progress)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The replication specification of the keyspace includes:
     #
     # * `regionList` - up to six Amazon Web Services Regions where the
@@ -1559,7 +1593,7 @@ module Aws::Keyspaces
     #
     # @!attribute [rw] resource_arn
     #   The unique identifier in the format of Amazon Resource Name (ARN)
-    #   for the resource could't be found.
+    #   for the resource couldn’t be found.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/ResourceNotFoundException AWS API Documentation
@@ -1955,6 +1989,55 @@ module Aws::Keyspaces
     # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/UntagResourceResponse AWS API Documentation
     #
     class UntagResourceResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] keyspace_name
+    #   The name of the keyspace.
+    #   @return [String]
+    #
+    # @!attribute [rw] replication_specification
+    #   The replication specification of the keyspace includes:
+    #
+    #   * `regionList` - up to six Amazon Web Services Regions where the
+    #     keyspace is replicated in.
+    #
+    #   * `replicationStrategy` - the required value is `SINGLE_REGION` or
+    #     `MULTI_REGION`.
+    #   @return [Types::ReplicationSpecification]
+    #
+    # @!attribute [rw] client_side_timestamps
+    #   The client-side timestamp setting of the table.
+    #
+    #   For more information, see [How it works: Amazon Keyspaces
+    #   client-side timestamps][1] in the *Amazon Keyspaces Developer
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/keyspaces/latest/devguide/client-side-timestamps-how-it-works.html
+    #   @return [Types::ClientSideTimestamps]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/UpdateKeyspaceRequest AWS API Documentation
+    #
+    class UpdateKeyspaceRequest < Struct.new(
+      :keyspace_name,
+      :replication_specification,
+      :client_side_timestamps)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The unique identifier of the keyspace in the format of an Amazon
+    #   Resource Name (ARN).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/keyspaces-2022-02-10/UpdateKeyspaceResponse AWS API Documentation
+    #
+    class UpdateKeyspaceResponse < Struct.new(
+      :resource_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] keyspace_name
     #   The name of the keyspace the specified table is stored in.

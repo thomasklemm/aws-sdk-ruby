@@ -2413,6 +2413,9 @@ module Aws
                                     table_optimizer_configuration: {
                                       role_arn: ::String?,
                                       enabled: bool?,
+                                      vpc_configuration: {
+                                        glue_connection_name: ::String?
+                                      }?,
                                       retention_configuration: {
                                         iceberg_configuration: {
                                           snapshot_retention_period_in_days: ::Integer?,
@@ -6930,6 +6933,9 @@ module Aws
                                     table_optimizer_configuration: {
                                       role_arn: ::String?,
                                       enabled: bool?,
+                                      vpc_configuration: {
+                                        glue_connection_name: ::String?
+                                      }?,
                                       retention_configuration: {
                                         iceberg_configuration: {
                                           snapshot_retention_period_in_days: ::Integer?,

@@ -2701,6 +2701,7 @@ module Aws::ECS
     #   resp.task_definitions[0].container_definitions[0].depends_on[0].condition #=> String, one of "START", "COMPLETE", "SUCCESS", "HEALTHY"
     #   resp.task_definitions[0].container_definitions[0].start_timeout #=> Integer
     #   resp.task_definitions[0].container_definitions[0].stop_timeout #=> Integer
+    #   resp.task_definitions[0].container_definitions[0].version_consistency #=> String, one of "enabled", "disabled"
     #   resp.task_definitions[0].container_definitions[0].hostname #=> String
     #   resp.task_definitions[0].container_definitions[0].user #=> String
     #   resp.task_definitions[0].container_definitions[0].working_directory #=> String
@@ -3162,6 +3163,7 @@ module Aws::ECS
     #   resp.task_definition.container_definitions[0].depends_on[0].condition #=> String, one of "START", "COMPLETE", "SUCCESS", "HEALTHY"
     #   resp.task_definition.container_definitions[0].start_timeout #=> Integer
     #   resp.task_definition.container_definitions[0].stop_timeout #=> Integer
+    #   resp.task_definition.container_definitions[0].version_consistency #=> String, one of "enabled", "disabled"
     #   resp.task_definition.container_definitions[0].hostname #=> String
     #   resp.task_definition.container_definitions[0].user #=> String
     #   resp.task_definition.container_definitions[0].working_directory #=> String
@@ -4325,6 +4327,7 @@ module Aws::ECS
     #   resp.task_definition.container_definitions[0].depends_on[0].condition #=> String, one of "START", "COMPLETE", "SUCCESS", "HEALTHY"
     #   resp.task_definition.container_definitions[0].start_timeout #=> Integer
     #   resp.task_definition.container_definitions[0].stop_timeout #=> Integer
+    #   resp.task_definition.container_definitions[0].version_consistency #=> String, one of "enabled", "disabled"
     #   resp.task_definition.container_definitions[0].hostname #=> String
     #   resp.task_definition.container_definitions[0].user #=> String
     #   resp.task_definition.container_definitions[0].working_directory #=> String
@@ -7298,6 +7301,7 @@ module Aws::ECS
     #         ],
     #         start_timeout: 1,
     #         stop_timeout: 1,
+    #         version_consistency: "enabled", # accepts enabled, disabled
     #         hostname: "String",
     #         user: "String",
     #         working_directory: "String",
@@ -7512,6 +7516,7 @@ module Aws::ECS
     #   resp.task_definition.container_definitions[0].depends_on[0].condition #=> String, one of "START", "COMPLETE", "SUCCESS", "HEALTHY"
     #   resp.task_definition.container_definitions[0].start_timeout #=> Integer
     #   resp.task_definition.container_definitions[0].stop_timeout #=> Integer
+    #   resp.task_definition.container_definitions[0].version_consistency #=> String, one of "enabled", "disabled"
     #   resp.task_definition.container_definitions[0].hostname #=> String
     #   resp.task_definition.container_definitions[0].user #=> String
     #   resp.task_definition.container_definitions[0].working_directory #=> String
@@ -10767,7 +10772,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.168.0'
+      context[:gem_version] = '1.169.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

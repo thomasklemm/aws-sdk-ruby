@@ -85,6 +85,17 @@ module Aws
                                          ) -> _BatchDeleteTaxRegistrationResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchDeleteTaxRegistrationResponseSuccess
 
+      interface _BatchGetTaxExemptionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchGetTaxExemptionsResponse]
+        def failed_accounts: () -> ::Array[::String]
+        def tax_exemption_details_map: () -> ::Hash[::String, Types::TaxExemptionDetails]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TaxSettings/Client.html#batch_get_tax_exemptions-instance_method
+      def batch_get_tax_exemptions: (
+                                      account_ids: Array[::String]
+                                    ) -> _BatchGetTaxExemptionsResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetTaxExemptionsResponseSuccess
+
       interface _BatchPutTaxRegistrationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::BatchPutTaxRegistrationResponse]
         def errors: () -> ::Array[Types::BatchPutTaxRegistrationError]
@@ -172,10 +183,14 @@ module Aws
                                             date_of_birth: ::String?,
                                             tax_registration_documents: Array[
                                               {
+                                                file: {
+                                                  file_content: ::String,
+                                                  file_name: ::String
+                                                }?,
                                                 s3_location: {
                                                   bucket: ::String,
                                                   key: ::String
-                                                }
+                                                }?
                                               },
                                             ]?
                                           }?
@@ -201,6 +216,24 @@ module Aws
                                    ) -> _DeleteTaxRegistrationResponseSuccess
                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteTaxRegistrationResponseSuccess
 
+      interface _GetTaxExemptionTypesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetTaxExemptionTypesResponse]
+        def tax_exemption_types: () -> ::Array[Types::TaxExemptionType]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TaxSettings/Client.html#get_tax_exemption_types-instance_method
+      def get_tax_exemption_types: (
+                                   ) -> _GetTaxExemptionTypesResponseSuccess
+                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTaxExemptionTypesResponseSuccess
+
+      interface _GetTaxInheritanceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetTaxInheritanceResponse]
+        def heritage_status: () -> ("OptIn" | "OptOut")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TaxSettings/Client.html#get_tax_inheritance-instance_method
+      def get_tax_inheritance: (
+                               ) -> _GetTaxInheritanceResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTaxInheritanceResponseSuccess
+
       interface _GetTaxRegistrationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTaxRegistrationResponse]
         def tax_registration: () -> Types::TaxRegistration
@@ -214,10 +247,11 @@ module Aws
       interface _GetTaxRegistrationDocumentResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTaxRegistrationDocumentResponse]
         def destination_file_path: () -> ::String
+        def presigned_s3_url: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TaxSettings/Client.html#get_tax_registration_document-instance_method
       def get_tax_registration_document: (
-                                           destination_s3_location: {
+                                           ?destination_s3_location: {
                                              bucket: ::String,
                                              prefix: ::String?
                                            },
@@ -239,6 +273,18 @@ module Aws
                                                  ?next_token: ::String
                                                ) -> _ListSupplementalTaxRegistrationsResponseSuccess
                                              | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSupplementalTaxRegistrationsResponseSuccess
+
+      interface _ListTaxExemptionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTaxExemptionsResponse]
+        def next_token: () -> ::String
+        def tax_exemption_details_map: () -> ::Hash[::String, Types::TaxExemptionDetails]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TaxSettings/Client.html#list_tax_exemptions-instance_method
+      def list_tax_exemptions: (
+                                 ?max_results: ::Integer,
+                                 ?next_token: ::String
+                               ) -> _ListTaxExemptionsResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTaxExemptionsResponseSuccess
 
       interface _ListTaxRegistrationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListTaxRegistrationsResponse]
@@ -276,6 +322,34 @@ module Aws
                                                }
                                              ) -> _PutSupplementalTaxRegistrationResponseSuccess
                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutSupplementalTaxRegistrationResponseSuccess
+
+      interface _PutTaxExemptionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutTaxExemptionResponse]
+        def case_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TaxSettings/Client.html#put_tax_exemption-instance_method
+      def put_tax_exemption: (
+                               account_ids: Array[::String],
+                               authority: {
+                                 country: ::String,
+                                 state: ::String?
+                               },
+                               exemption_certificate: {
+                                 document_file: ::String,
+                                 document_name: ::String
+                               },
+                               exemption_type: ::String
+                             ) -> _PutTaxExemptionResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutTaxExemptionResponseSuccess
+
+      interface _PutTaxInheritanceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutTaxInheritanceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TaxSettings/Client.html#put_tax_inheritance-instance_method
+      def put_tax_inheritance: (
+                                 ?heritage_status: ("OptIn" | "OptOut")
+                               ) -> _PutTaxInheritanceResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutTaxInheritanceResponseSuccess
 
       interface _PutTaxRegistrationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PutTaxRegistrationResponse]
@@ -363,10 +437,14 @@ module Aws
                                       date_of_birth: ::String?,
                                       tax_registration_documents: Array[
                                         {
+                                          file: {
+                                            file_content: ::String,
+                                            file_name: ::String
+                                          }?,
                                           s3_location: {
                                             bucket: ::String,
                                             key: ::String
-                                          }
+                                          }?
                                         },
                                       ]?
                                     }?

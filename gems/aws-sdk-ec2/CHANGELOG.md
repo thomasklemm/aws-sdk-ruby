@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.491.0 (2024-11-19)
+------------------
+
+* Feature - This release adds VPC Block Public Access (VPC BPA), a new declarative control which blocks resources in VPCs and subnets that you own in a Region from reaching or being reached from the internet through internet gateways and egress-only internet gateways.
+
 1.490.0 (2024-11-18)
 ------------------
 

@@ -205,9 +205,9 @@ module Aws::MWAA
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] environment_class
-    #   The environment class type. Valid values: `mw1.small`, `mw1.medium`,
-    #   `mw1.large`, `mw1.xlarge`, and `mw1.2xlarge`. For more information,
-    #   see [Amazon MWAA environment class][1].
+    #   The environment class type. Valid values: `mw1.micro`, `mw1.small`,
+    #   `mw1.medium`, `mw1.large`, `mw1.xlarge`, and `mw1.2xlarge`. For more
+    #   information, see [Amazon MWAA environment class][1].
     #
     #
     #
@@ -293,7 +293,9 @@ module Aws::MWAA
     #   The number of Apache Airflow schedulers to run in your environment.
     #   Valid values:
     #
-    #   * v2 - Accepts between `2` to `5`. Defaults to `2`.
+    #   * v2 - For environments larger than mw1.micro, accepts values from
+    #     `2` to `5`. Defaults to `2` for all environment sizes except
+    #     mw1.micro, which defaults to `1`.
     #
     #   * v1 - Accepts `1`.
     #   @return [Integer]
@@ -322,7 +324,9 @@ module Aws::MWAA
     #   additional web servers, and scales down to the number set in
     #   `MinxWebserers`.
     #
-    #   Valid values: Accepts between `2` and `5`. Defaults to `2`.
+    #   Valid values: For environments larger than mw1.micro, accepts values
+    #   from `2` to `5`. Defaults to `2` for all environment sizes except
+    #   mw1.micro, which defaults to `1`.
     #   @return [Integer]
     #
     # @!attribute [rw] max_webservers
@@ -338,7 +342,9 @@ module Aws::MWAA
     #   additional web servers, and scales down to the number set in
     #   `MinxWebserers`.
     #
-    #   Valid values: Accepts between `2` and `5`. Defaults to `2`.
+    #   Valid values: For environments larger than mw1.micro, accepts values
+    #   from `2` to `5`. Defaults to `2` for all environment sizes except
+    #   mw1.micro, which defaults to `1`.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mwaa-2020-07-01/CreateEnvironmentInput AWS API Documentation
@@ -713,9 +719,9 @@ module Aws::MWAA
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] environment_class
-    #   The environment class type. Valid values: `mw1.small`, `mw1.medium`,
-    #   `mw1.large`, `mw1.xlarge`, and `mw1.2xlarge`. For more information,
-    #   see [Amazon MWAA environment class][1].
+    #   The environment class type. Valid values: `mw1.micro`, `mw1.small`,
+    #   `mw1.medium`, `mw1.large`, `mw1.xlarge`, and `mw1.2xlarge`. For more
+    #   information, see [Amazon MWAA environment class][1].
     #
     #
     #
@@ -818,7 +824,9 @@ module Aws::MWAA
     #   additional web servers, and scales down to the number set in
     #   `MinxWebserers`.
     #
-    #   Valid values: Accepts between `2` and `5`. Defaults to `2`.
+    #   Valid values: For environments larger than mw1.micro, accepts values
+    #   from `2` to `5`. Defaults to `2` for all environment sizes except
+    #   mw1.micro, which defaults to `1`.
     #   @return [Integer]
     #
     # @!attribute [rw] max_webservers
@@ -834,7 +842,9 @@ module Aws::MWAA
     #   additional web servers, and scales down to the number set in
     #   `MinxWebserers`.
     #
-    #   Valid values: Accepts between `2` and `5`. Defaults to `2`.
+    #   Valid values: For environments larger than mw1.micro, accepts values
+    #   from `2` to `5`. Defaults to `2` for all environment sizes except
+    #   mw1.micro, which defaults to `1`.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mwaa-2020-07-01/Environment AWS API Documentation
@@ -1595,9 +1605,9 @@ module Aws::MWAA
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] environment_class
-    #   The environment class type. Valid values: `mw1.small`, `mw1.medium`,
-    #   `mw1.large`, `mw1.xlarge`, and `mw1.2xlarge`. For more information,
-    #   see [Amazon MWAA environment class][1].
+    #   The environment class type. Valid values: `mw1.micro`, `mw1.small`,
+    #   `mw1.medium`, `mw1.large`, `mw1.xlarge`, and `mw1.2xlarge`. For more
+    #   information, see [Amazon MWAA environment class][1].
     #
     #
     #
@@ -1670,7 +1680,9 @@ module Aws::MWAA
     #   additional web servers, and scales down to the number set in
     #   `MinxWebserers`.
     #
-    #   Valid values: Accepts between `2` and `5`. Defaults to `2`.
+    #   Valid values: For environments larger than mw1.micro, accepts values
+    #   from `2` to `5`. Defaults to `2` for all environment sizes except
+    #   mw1.micro, which defaults to `1`.
     #   @return [Integer]
     #
     # @!attribute [rw] max_webservers
@@ -1686,7 +1698,9 @@ module Aws::MWAA
     #   additional web servers, and scales down to the number set in
     #   `MinxWebserers`.
     #
-    #   Valid values: Accepts between `2` and `5`. Defaults to `2`.
+    #   Valid values: For environments larger than mw1.micro, accepts values
+    #   from `2` to `5`. Defaults to `2` for all environment sizes except
+    #   mw1.micro, which defaults to `1`.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mwaa-2020-07-01/UpdateEnvironmentInput AWS API Documentation

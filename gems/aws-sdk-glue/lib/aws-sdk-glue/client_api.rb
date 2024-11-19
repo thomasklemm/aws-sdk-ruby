@@ -1206,6 +1206,7 @@ module Aws::Glue
     TableOptimizerRunTimestamp = Shapes::TimestampShape.new(name: 'TableOptimizerRunTimestamp')
     TableOptimizerRuns = Shapes::ListShape.new(name: 'TableOptimizerRuns')
     TableOptimizerType = Shapes::StringShape.new(name: 'TableOptimizerType')
+    TableOptimizerVpcConfiguration = Shapes::UnionShape.new(name: 'TableOptimizerVpcConfiguration')
     TablePrefix = Shapes::StringShape.new(name: 'TablePrefix')
     TableStatus = Shapes::StructureShape.new(name: 'TableStatus')
     TableTypeString = Shapes::StringShape.new(name: 'TableTypeString')
@@ -1373,6 +1374,7 @@ module Aws::Glue
     double = Shapes::FloatShape.new(name: 'double')
     dpuCounts = Shapes::IntegerShape.new(name: 'dpuCounts')
     dpuDurationInHour = Shapes::FloatShape.new(name: 'dpuDurationInHour')
+    glueConnectionNameString = Shapes::StringShape.new(name: 'glueConnectionNameString')
     metricCounts = Shapes::IntegerShape.new(name: 'metricCounts')
     tableNameString = Shapes::StringShape.new(name: 'tableNameString')
 
@@ -5931,6 +5933,7 @@ module Aws::Glue
 
     TableOptimizerConfiguration.add_member(:role_arn, Shapes::ShapeRef.new(shape: ArnString, location_name: "roleArn"))
     TableOptimizerConfiguration.add_member(:enabled, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "enabled"))
+    TableOptimizerConfiguration.add_member(:vpc_configuration, Shapes::ShapeRef.new(shape: TableOptimizerVpcConfiguration, location_name: "vpcConfiguration"))
     TableOptimizerConfiguration.add_member(:retention_configuration, Shapes::ShapeRef.new(shape: RetentionConfiguration, location_name: "retentionConfiguration"))
     TableOptimizerConfiguration.add_member(:orphan_file_deletion_configuration, Shapes::ShapeRef.new(shape: OrphanFileDeletionConfiguration, location_name: "orphanFileDeletionConfiguration"))
     TableOptimizerConfiguration.struct_class = Types::TableOptimizerConfiguration
@@ -5946,6 +5949,12 @@ module Aws::Glue
     TableOptimizerRun.struct_class = Types::TableOptimizerRun
 
     TableOptimizerRuns.member = Shapes::ShapeRef.new(shape: TableOptimizerRun)
+
+    TableOptimizerVpcConfiguration.add_member(:glue_connection_name, Shapes::ShapeRef.new(shape: glueConnectionNameString, location_name: "glueConnectionName"))
+    TableOptimizerVpcConfiguration.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    TableOptimizerVpcConfiguration.add_member_subclass(:glue_connection_name, Types::TableOptimizerVpcConfiguration::GlueConnectionName)
+    TableOptimizerVpcConfiguration.add_member_subclass(:unknown, Types::TableOptimizerVpcConfiguration::Unknown)
+    TableOptimizerVpcConfiguration.struct_class = Types::TableOptimizerVpcConfiguration
 
     TableStatus.add_member(:requested_by, Shapes::ShapeRef.new(shape: NameString, location_name: "RequestedBy"))
     TableStatus.add_member(:updated_by, Shapes::ShapeRef.new(shape: NameString, location_name: "UpdatedBy"))

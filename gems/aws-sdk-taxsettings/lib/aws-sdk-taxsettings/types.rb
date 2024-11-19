@@ -10,6 +10,19 @@
 module Aws::TaxSettings
   module Types
 
+    # The access is denied for the Amazon Web Services Support API.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/AccessDeniedException AWS API Documentation
+    #
+    class AccessDeniedException < Struct.new(
+      :message)
+      SENSITIVE = [:message]
+      include Aws::Structure
+    end
+
     # An object with your `accountId` and TRN information.
     #
     # @!attribute [rw] account_id
@@ -324,6 +337,39 @@ module Aws::TaxSettings
       include Aws::Structure
     end
 
+    # Failed to upload the tax exemption document to Amazon Web Services
+    # Support case.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/AttachmentUploadException AWS API Documentation
+    #
+    class AttachmentUploadException < Struct.new(
+      :message)
+      SENSITIVE = [:message]
+      include Aws::Structure
+    end
+
+    # The address domain associate with the tax information.
+    #
+    # @!attribute [rw] country
+    #   The country code for the country that the address is in.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The state that the address is located.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/Authority AWS API Documentation
+    #
+    class Authority < Struct.new(
+      :country,
+      :state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The error object for representing failures in the
     # `BatchDeleteTaxRegistration` operation.
     #
@@ -374,6 +420,36 @@ module Aws::TaxSettings
     #
     class BatchDeleteTaxRegistrationResponse < Struct.new(
       :errors)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_ids
+    #   List of unique account identifiers.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/BatchGetTaxExemptionsRequest AWS API Documentation
+    #
+    class BatchGetTaxExemptionsRequest < Struct.new(
+      :account_ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] failed_accounts
+    #   The list of accounts that failed to get tax exemptions.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] tax_exemption_details_map
+    #   The tax exemption details map of accountId and tax exemption
+    #   details.
+    #   @return [Hash<String,Types::TaxExemptionDetails>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/BatchGetTaxExemptionsResponse AWS API Documentation
+    #
+    class BatchGetTaxExemptionsResponse < Struct.new(
+      :failed_accounts,
+      :tax_exemption_details_map)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -520,6 +596,20 @@ module Aws::TaxSettings
       include Aws::Structure
     end
 
+    # You've exceeded the Amazon Web Services Support case creation limit
+    # for your account.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/CaseCreationLimitExceededException AWS API Documentation
+    #
+    class CaseCreationLimitExceededException < Struct.new(
+      :message)
+      SENSITIVE = [:message]
+      include Aws::Structure
+    end
+
     # The exception when the input is creating conflict with the given
     # state.
     #
@@ -611,6 +701,25 @@ module Aws::TaxSettings
       include Aws::Structure
     end
 
+    # The exemption certificate.
+    #
+    # @!attribute [rw] document_file
+    #   The exemption certificate file content.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_name
+    #   The exemption certificate file name.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/ExemptionCertificate AWS API Documentation
+    #
+    class ExemptionCertificate < Struct.new(
+      :document_file,
+      :document_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Additional tax information associated with your TRN in Georgia.
     #
     # @!attribute [rw] person_type
@@ -621,6 +730,42 @@ module Aws::TaxSettings
     #
     class GeorgiaAdditionalInfo < Struct.new(
       :person_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @api private
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxExemptionTypesRequest AWS API Documentation
+    #
+    class GetTaxExemptionTypesRequest < Aws::EmptyStructure; end
+
+    # @!attribute [rw] tax_exemption_types
+    #   The supported types of tax exemptions.
+    #   @return [Array<Types::TaxExemptionType>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxExemptionTypesResponse AWS API Documentation
+    #
+    class GetTaxExemptionTypesResponse < Struct.new(
+      :tax_exemption_types)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @api private
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxInheritanceRequest AWS API Documentation
+    #
+    class GetTaxInheritanceRequest < Aws::EmptyStructure; end
+
+    # @!attribute [rw] heritage_status
+    #   The tax inheritance status.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxInheritanceResponse AWS API Documentation
+    #
+    class GetTaxInheritanceResponse < Struct.new(
+      :heritage_status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -648,10 +793,15 @@ module Aws::TaxSettings
     #   your tax document to.
     #   @return [String]
     #
+    # @!attribute [rw] presigned_s3_url
+    #   The Amazon S3 presigned URL of the tax registration document.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/GetTaxRegistrationDocumentResponse AWS API Documentation
     #
     class GetTaxRegistrationDocumentResponse < Struct.new(
-      :destination_file_path)
+      :destination_file_path,
+      :presigned_s3_url)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -843,6 +993,41 @@ module Aws::TaxSettings
     end
 
     # @!attribute [rw] max_results
+    #   The number of results you want in one response.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token to retrieve the next set of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/ListTaxExemptionsRequest AWS API Documentation
+    #
+    class ListTaxExemptionsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The token to retrieve the next set of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] tax_exemption_details_map
+    #   The tax exemption details map of `accountId` and tax exemption
+    #   details.
+    #   @return [Hash<String,Types::TaxExemptionDetails>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/ListTaxExemptionsResponse AWS API Documentation
+    #
+    class ListTaxExemptionsResponse < Struct.new(
+      :next_token,
+      :tax_exemption_details_map)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
     #   Number of `accountDetails` results you want in one response.
     #   @return [Integer]
     #
@@ -986,6 +1171,61 @@ module Aws::TaxSettings
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # @!attribute [rw] account_ids
+    #   The list of unique account identifiers.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] authority
+    #   The address domain associate with the tax information.
+    #   @return [Types::Authority]
+    #
+    # @!attribute [rw] exemption_certificate
+    #   The exemption certificate.
+    #   @return [Types::ExemptionCertificate]
+    #
+    # @!attribute [rw] exemption_type
+    #   The exemption type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/PutTaxExemptionRequest AWS API Documentation
+    #
+    class PutTaxExemptionRequest < Struct.new(
+      :account_ids,
+      :authority,
+      :exemption_certificate,
+      :exemption_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] case_id
+    #   The customer support case ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/PutTaxExemptionResponse AWS API Documentation
+    #
+    class PutTaxExemptionResponse < Struct.new(
+      :case_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] heritage_status
+    #   The tax inheritance status.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/PutTaxInheritanceRequest AWS API Documentation
+    #
+    class PutTaxInheritanceRequest < Struct.new(
+      :heritage_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/PutTaxInheritanceResponse AWS API Documentation
+    #
+    class PutTaxInheritanceResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] account_id
     #   Your unique account identifier.
@@ -1224,6 +1464,100 @@ module Aws::TaxSettings
       include Aws::Structure
     end
 
+    # The tax exemption.
+    #
+    # @!attribute [rw] authority
+    #   The address domain associate with tax exemption.
+    #   @return [Types::Authority]
+    #
+    # @!attribute [rw] effective_date
+    #   The tax exemption effective date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] expiration_date
+    #   The tax exemption expiration date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The tax exemption status.
+    #   @return [String]
+    #
+    # @!attribute [rw] system_effective_date
+    #   The tax exemption recording time in the `TaxSettings` system.
+    #   @return [Time]
+    #
+    # @!attribute [rw] tax_exemption_type
+    #   The tax exemption type.
+    #   @return [Types::TaxExemptionType]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/TaxExemption AWS API Documentation
+    #
+    class TaxExemption < Struct.new(
+      :authority,
+      :effective_date,
+      :expiration_date,
+      :status,
+      :system_effective_date,
+      :tax_exemption_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The tax exemption details.
+    #
+    # @!attribute [rw] heritage_obtained_details
+    #   The indicator if the tax exemption is inherited from the
+    #   consolidated billing family management account.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] heritage_obtained_parent_entity
+    #   The consolidated billing family management account the tax exemption
+    #   inherited from.
+    #   @return [String]
+    #
+    # @!attribute [rw] heritage_obtained_reason
+    #   The reason of the heritage inheritance.
+    #   @return [String]
+    #
+    # @!attribute [rw] tax_exemptions
+    #   Tax exemptions.
+    #   @return [Array<Types::TaxExemption>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/TaxExemptionDetails AWS API Documentation
+    #
+    class TaxExemptionDetails < Struct.new(
+      :heritage_obtained_details,
+      :heritage_obtained_parent_entity,
+      :heritage_obtained_reason,
+      :tax_exemptions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The tax exemption type.
+    #
+    # @!attribute [rw] applicable_jurisdictions
+    #   The tax exemption's applicable jurisdictions.
+    #   @return [Array<Types::Authority>]
+    #
+    # @!attribute [rw] description
+    #   The tax exemption's type description.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The tax exemption's type display name.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/TaxExemptionType AWS API Documentation
+    #
+    class TaxExemptionType < Struct.new(
+      :applicable_jurisdictions,
+      :description,
+      :display_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Tax inheritance information associated with the account.
     #
     # @!attribute [rw] inheritance_obtained_reason
@@ -1304,7 +1638,30 @@ module Aws::TaxSettings
       include Aws::Structure
     end
 
+    # The tax registration document.
+    #
+    # @!attribute [rw] file_content
+    #   The tax registration document content.
+    #   @return [String]
+    #
+    # @!attribute [rw] file_name
+    #   The tax registration document name.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/TaxRegistrationDocFile AWS API Documentation
+    #
+    class TaxRegistrationDocFile < Struct.new(
+      :file_content,
+      :file_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Tax registration document information.
+    #
+    # @!attribute [rw] file
+    #   The tax registration document.
+    #   @return [Types::TaxRegistrationDocFile]
     #
     # @!attribute [rw] s3_location
     #   The Amazon S3 location where your tax registration document is
@@ -1314,6 +1671,7 @@ module Aws::TaxSettings
     # @see http://docs.aws.amazon.com/goto/WebAPI/taxsettings-2018-05-10/TaxRegistrationDocument AWS API Documentation
     #
     class TaxRegistrationDocument < Struct.new(
+      :file,
       :s3_location)
       SENSITIVE = []
       include Aws::Structure

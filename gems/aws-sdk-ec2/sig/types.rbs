@@ -947,6 +947,11 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class BlockPublicAccessStates
+      attr_accessor internet_gateway_block_mode: ("off" | "block-bidirectional" | "block-ingress")
+      SENSITIVE: []
+    end
+
     class BundleInstanceRequest
       attr_accessor instance_id: ::String
       attr_accessor storage: Types::Storage
@@ -2938,6 +2943,20 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class CreateVpcBlockPublicAccessExclusionRequest
+      attr_accessor dry_run: bool
+      attr_accessor subnet_id: ::String
+      attr_accessor vpc_id: ::String
+      attr_accessor internet_gateway_exclusion_mode: ("allow-bidirectional" | "allow-egress")
+      attr_accessor tag_specifications: ::Array[Types::TagSpecification]
+      SENSITIVE: []
+    end
+
+    class CreateVpcBlockPublicAccessExclusionResult
+      attr_accessor vpc_block_public_access_exclusion: Types::VpcBlockPublicAccessExclusion
+      SENSITIVE: []
+    end
+
     class CreateVpcEndpointConnectionNotificationRequest
       attr_accessor dry_run: bool
       attr_accessor service_id: ::String
@@ -3842,6 +3861,17 @@ module Aws::EC2
     class DeleteVolumeRequest
       attr_accessor volume_id: ::String
       attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class DeleteVpcBlockPublicAccessExclusionRequest
+      attr_accessor dry_run: bool
+      attr_accessor exclusion_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteVpcBlockPublicAccessExclusionResult
+      attr_accessor vpc_block_public_access_exclusion: Types::VpcBlockPublicAccessExclusion
       SENSITIVE: []
     end
 
@@ -6160,6 +6190,31 @@ module Aws::EC2
       attr_accessor enable_dns_support: Types::AttributeBooleanValue
       attr_accessor enable_network_address_usage_metrics: Types::AttributeBooleanValue
       attr_accessor vpc_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeVpcBlockPublicAccessExclusionsRequest
+      attr_accessor dry_run: bool
+      attr_accessor filters: ::Array[Types::Filter]
+      attr_accessor exclusion_ids: ::Array[::String]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class DescribeVpcBlockPublicAccessExclusionsResult
+      attr_accessor vpc_block_public_access_exclusions: ::Array[Types::VpcBlockPublicAccessExclusion]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeVpcBlockPublicAccessOptionsRequest
+      attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class DescribeVpcBlockPublicAccessOptionsResult
+      attr_accessor vpc_block_public_access_options: Types::VpcBlockPublicAccessOptions
       SENSITIVE: []
     end
 
@@ -11372,6 +11427,29 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class ModifyVpcBlockPublicAccessExclusionRequest
+      attr_accessor dry_run: bool
+      attr_accessor exclusion_id: ::String
+      attr_accessor internet_gateway_exclusion_mode: ("allow-bidirectional" | "allow-egress")
+      SENSITIVE: []
+    end
+
+    class ModifyVpcBlockPublicAccessExclusionResult
+      attr_accessor vpc_block_public_access_exclusion: Types::VpcBlockPublicAccessExclusion
+      SENSITIVE: []
+    end
+
+    class ModifyVpcBlockPublicAccessOptionsRequest
+      attr_accessor dry_run: bool
+      attr_accessor internet_gateway_block_mode: ("off" | "block-bidirectional" | "block-ingress")
+      SENSITIVE: []
+    end
+
+    class ModifyVpcBlockPublicAccessOptionsResult
+      attr_accessor vpc_block_public_access_options: Types::VpcBlockPublicAccessOptions
+      SENSITIVE: []
+    end
+
     class ModifyVpcEndpointConnectionNotificationRequest
       attr_accessor dry_run: bool
       attr_accessor connection_notification_id: ::String
@@ -14173,6 +14251,7 @@ module Aws::EC2
       attr_accessor enable_dns_64: bool
       attr_accessor ipv_6_native: bool
       attr_accessor private_dns_name_options_on_launch: Types::PrivateDnsNameOptionsOnLaunch
+      attr_accessor block_public_access_states: Types::BlockPublicAccessStates
       attr_accessor subnet_id: ::String
       attr_accessor state: ("pending" | "available" | "unavailable")
       attr_accessor vpc_id: ::String
@@ -15327,6 +15406,7 @@ module Aws::EC2
       attr_accessor cidr_block_association_set: ::Array[Types::VpcCidrBlockAssociation]
       attr_accessor is_default: bool
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor block_public_access_states: Types::BlockPublicAccessStates
       attr_accessor vpc_id: ::String
       attr_accessor state: ("pending" | "available")
       attr_accessor cidr_block: ::String
@@ -15337,6 +15417,29 @@ module Aws::EC2
     class VpcAttachment
       attr_accessor vpc_id: ::String
       attr_accessor state: ("attaching" | "attached" | "detaching" | "detached")
+      SENSITIVE: []
+    end
+
+    class VpcBlockPublicAccessExclusion
+      attr_accessor exclusion_id: ::String
+      attr_accessor internet_gateway_exclusion_mode: ("allow-bidirectional" | "allow-egress")
+      attr_accessor resource_arn: ::String
+      attr_accessor state: ("create-in-progress" | "create-complete" | "create-failed" | "update-in-progress" | "update-complete" | "update-failed" | "delete-in-progress" | "delete-complete" | "disable-in-progress" | "disable-complete")
+      attr_accessor reason: ::String
+      attr_accessor creation_timestamp: ::Time
+      attr_accessor last_update_timestamp: ::Time
+      attr_accessor deletion_timestamp: ::Time
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class VpcBlockPublicAccessOptions
+      attr_accessor aws_account_id: ::String
+      attr_accessor aws_region: ::String
+      attr_accessor state: ("default-state" | "update-in-progress" | "update-complete")
+      attr_accessor internet_gateway_block_mode: ("off" | "block-bidirectional" | "block-ingress")
+      attr_accessor reason: ::String
+      attr_accessor last_update_timestamp: ::Time
       SENSITIVE: []
     end
 

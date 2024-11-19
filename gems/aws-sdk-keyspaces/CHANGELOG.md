@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.33.0 (2024-11-19)
+------------------
+
+* Feature - Amazon Keyspaces Multi-Region Replication: Adds support to add new regions to multi and single-region keyspaces.
+
 1.32.0 (2024-10-30)
 ------------------
 

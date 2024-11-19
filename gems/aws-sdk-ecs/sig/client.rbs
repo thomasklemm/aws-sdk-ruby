@@ -1008,6 +1008,7 @@ module Aws
                                           ]?,
                                           start_timeout: ::Integer?,
                                           stop_timeout: ::Integer?,
+                                          version_consistency: ("enabled" | "disabled")?,
                                           hostname: ::String?,
                                           user: ::String?,
                                           working_directory: ::String?,

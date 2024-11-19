@@ -140,6 +140,7 @@ module Aws::EFS
 
     class DeleteReplicationConfigurationRequest
       attr_accessor source_file_system_id: ::String
+      attr_accessor deletion_mode: ("ALL_CONFIGURATIONS" | "LOCAL_CONFIGURATION_ONLY")
       SENSITIVE: []
     end
 
@@ -269,6 +270,9 @@ module Aws::EFS
       attr_accessor file_system_id: ::String
       attr_accessor region: ::String
       attr_accessor last_replicated_timestamp: ::Time
+      attr_accessor owner_id: ::String
+      attr_accessor status_message: ::String
+      attr_accessor role_arn: ::String
       SENSITIVE: []
     end
 
@@ -277,6 +281,7 @@ module Aws::EFS
       attr_accessor availability_zone_name: ::String
       attr_accessor kms_key_id: ::String
       attr_accessor file_system_id: ::String
+      attr_accessor role_arn: ::String
       SENSITIVE: []
     end
 
@@ -507,6 +512,7 @@ module Aws::EFS
       attr_accessor original_source_file_system_arn: ::String
       attr_accessor creation_time: ::Time
       attr_accessor destinations: ::Array[Types::Destination]
+      attr_accessor source_file_system_owner_id: ::String
       SENSITIVE: []
     end
 

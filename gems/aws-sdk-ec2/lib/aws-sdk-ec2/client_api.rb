@@ -228,6 +228,8 @@ module Aws::EC2
     BlockDeviceMapping = Shapes::StructureShape.new(name: 'BlockDeviceMapping')
     BlockDeviceMappingList = Shapes::ListShape.new(name: 'BlockDeviceMappingList')
     BlockDeviceMappingRequestList = Shapes::ListShape.new(name: 'BlockDeviceMappingRequestList')
+    BlockPublicAccessMode = Shapes::StringShape.new(name: 'BlockPublicAccessMode')
+    BlockPublicAccessStates = Shapes::StructureShape.new(name: 'BlockPublicAccessStates')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BootModeType = Shapes::StringShape.new(name: 'BootModeType')
     BootModeTypeList = Shapes::ListShape.new(name: 'BootModeTypeList')
@@ -577,6 +579,8 @@ module Aws::EC2
     CreateVolumePermissionList = Shapes::ListShape.new(name: 'CreateVolumePermissionList')
     CreateVolumePermissionModifications = Shapes::StructureShape.new(name: 'CreateVolumePermissionModifications')
     CreateVolumeRequest = Shapes::StructureShape.new(name: 'CreateVolumeRequest')
+    CreateVpcBlockPublicAccessExclusionRequest = Shapes::StructureShape.new(name: 'CreateVpcBlockPublicAccessExclusionRequest')
+    CreateVpcBlockPublicAccessExclusionResult = Shapes::StructureShape.new(name: 'CreateVpcBlockPublicAccessExclusionResult')
     CreateVpcEndpointConnectionNotificationRequest = Shapes::StructureShape.new(name: 'CreateVpcEndpointConnectionNotificationRequest')
     CreateVpcEndpointConnectionNotificationResult = Shapes::StructureShape.new(name: 'CreateVpcEndpointConnectionNotificationResult')
     CreateVpcEndpointRequest = Shapes::StructureShape.new(name: 'CreateVpcEndpointRequest')
@@ -750,6 +754,8 @@ module Aws::EC2
     DeleteVerifiedAccessTrustProviderRequest = Shapes::StructureShape.new(name: 'DeleteVerifiedAccessTrustProviderRequest')
     DeleteVerifiedAccessTrustProviderResult = Shapes::StructureShape.new(name: 'DeleteVerifiedAccessTrustProviderResult')
     DeleteVolumeRequest = Shapes::StructureShape.new(name: 'DeleteVolumeRequest')
+    DeleteVpcBlockPublicAccessExclusionRequest = Shapes::StructureShape.new(name: 'DeleteVpcBlockPublicAccessExclusionRequest')
+    DeleteVpcBlockPublicAccessExclusionResult = Shapes::StructureShape.new(name: 'DeleteVpcBlockPublicAccessExclusionResult')
     DeleteVpcEndpointConnectionNotificationsRequest = Shapes::StructureShape.new(name: 'DeleteVpcEndpointConnectionNotificationsRequest')
     DeleteVpcEndpointConnectionNotificationsResult = Shapes::StructureShape.new(name: 'DeleteVpcEndpointConnectionNotificationsResult')
     DeleteVpcEndpointServiceConfigurationsRequest = Shapes::StructureShape.new(name: 'DeleteVpcEndpointServiceConfigurationsRequest')
@@ -1128,6 +1134,11 @@ module Aws::EC2
     DescribeVolumesResult = Shapes::StructureShape.new(name: 'DescribeVolumesResult')
     DescribeVpcAttributeRequest = Shapes::StructureShape.new(name: 'DescribeVpcAttributeRequest')
     DescribeVpcAttributeResult = Shapes::StructureShape.new(name: 'DescribeVpcAttributeResult')
+    DescribeVpcBlockPublicAccessExclusionsMaxResults = Shapes::IntegerShape.new(name: 'DescribeVpcBlockPublicAccessExclusionsMaxResults')
+    DescribeVpcBlockPublicAccessExclusionsRequest = Shapes::StructureShape.new(name: 'DescribeVpcBlockPublicAccessExclusionsRequest')
+    DescribeVpcBlockPublicAccessExclusionsResult = Shapes::StructureShape.new(name: 'DescribeVpcBlockPublicAccessExclusionsResult')
+    DescribeVpcBlockPublicAccessOptionsRequest = Shapes::StructureShape.new(name: 'DescribeVpcBlockPublicAccessOptionsRequest')
+    DescribeVpcBlockPublicAccessOptionsResult = Shapes::StructureShape.new(name: 'DescribeVpcBlockPublicAccessOptionsResult')
     DescribeVpcClassicLinkDnsSupportMaxResults = Shapes::IntegerShape.new(name: 'DescribeVpcClassicLinkDnsSupportMaxResults')
     DescribeVpcClassicLinkDnsSupportNextToken = Shapes::StringShape.new(name: 'DescribeVpcClassicLinkDnsSupportNextToken')
     DescribeVpcClassicLinkDnsSupportRequest = Shapes::StructureShape.new(name: 'DescribeVpcClassicLinkDnsSupportRequest')
@@ -1822,6 +1833,8 @@ module Aws::EC2
     InternetGateway = Shapes::StructureShape.new(name: 'InternetGateway')
     InternetGatewayAttachment = Shapes::StructureShape.new(name: 'InternetGatewayAttachment')
     InternetGatewayAttachmentList = Shapes::ListShape.new(name: 'InternetGatewayAttachmentList')
+    InternetGatewayBlockMode = Shapes::StringShape.new(name: 'InternetGatewayBlockMode')
+    InternetGatewayExclusionMode = Shapes::StringShape.new(name: 'InternetGatewayExclusionMode')
     InternetGatewayId = Shapes::StringShape.new(name: 'InternetGatewayId')
     InternetGatewayIdList = Shapes::ListShape.new(name: 'InternetGatewayIdList')
     InternetGatewayList = Shapes::ListShape.new(name: 'InternetGatewayList')
@@ -2242,6 +2255,10 @@ module Aws::EC2
     ModifyVolumeRequest = Shapes::StructureShape.new(name: 'ModifyVolumeRequest')
     ModifyVolumeResult = Shapes::StructureShape.new(name: 'ModifyVolumeResult')
     ModifyVpcAttributeRequest = Shapes::StructureShape.new(name: 'ModifyVpcAttributeRequest')
+    ModifyVpcBlockPublicAccessExclusionRequest = Shapes::StructureShape.new(name: 'ModifyVpcBlockPublicAccessExclusionRequest')
+    ModifyVpcBlockPublicAccessExclusionResult = Shapes::StructureShape.new(name: 'ModifyVpcBlockPublicAccessExclusionResult')
+    ModifyVpcBlockPublicAccessOptionsRequest = Shapes::StructureShape.new(name: 'ModifyVpcBlockPublicAccessOptionsRequest')
+    ModifyVpcBlockPublicAccessOptionsResult = Shapes::StructureShape.new(name: 'ModifyVpcBlockPublicAccessOptionsResult')
     ModifyVpcEndpointConnectionNotificationRequest = Shapes::StructureShape.new(name: 'ModifyVpcEndpointConnectionNotificationRequest')
     ModifyVpcEndpointConnectionNotificationResult = Shapes::StructureShape.new(name: 'ModifyVpcEndpointConnectionNotificationResult')
     ModifyVpcEndpointRequest = Shapes::StructureShape.new(name: 'ModifyVpcEndpointRequest')
@@ -3191,6 +3208,13 @@ module Aws::EC2
     VpcAttachment = Shapes::StructureShape.new(name: 'VpcAttachment')
     VpcAttachmentList = Shapes::ListShape.new(name: 'VpcAttachmentList')
     VpcAttributeName = Shapes::StringShape.new(name: 'VpcAttributeName')
+    VpcBlockPublicAccessExclusion = Shapes::StructureShape.new(name: 'VpcBlockPublicAccessExclusion')
+    VpcBlockPublicAccessExclusionId = Shapes::StringShape.new(name: 'VpcBlockPublicAccessExclusionId')
+    VpcBlockPublicAccessExclusionIdList = Shapes::ListShape.new(name: 'VpcBlockPublicAccessExclusionIdList')
+    VpcBlockPublicAccessExclusionList = Shapes::ListShape.new(name: 'VpcBlockPublicAccessExclusionList')
+    VpcBlockPublicAccessExclusionState = Shapes::StringShape.new(name: 'VpcBlockPublicAccessExclusionState')
+    VpcBlockPublicAccessOptions = Shapes::StructureShape.new(name: 'VpcBlockPublicAccessOptions')
+    VpcBlockPublicAccessState = Shapes::StringShape.new(name: 'VpcBlockPublicAccessState')
     VpcCidrAssociationId = Shapes::StringShape.new(name: 'VpcCidrAssociationId')
     VpcCidrBlockAssociation = Shapes::StructureShape.new(name: 'VpcCidrBlockAssociation')
     VpcCidrBlockAssociationSet = Shapes::ListShape.new(name: 'VpcCidrBlockAssociationSet')
@@ -4029,6 +4053,9 @@ module Aws::EC2
     BlockDeviceMappingList.member = Shapes::ShapeRef.new(shape: BlockDeviceMapping, location_name: "item")
 
     BlockDeviceMappingRequestList.member = Shapes::ShapeRef.new(shape: BlockDeviceMapping, location_name: "BlockDeviceMapping")
+
+    BlockPublicAccessStates.add_member(:internet_gateway_block_mode, Shapes::ShapeRef.new(shape: BlockPublicAccessMode, location_name: "internetGatewayBlockMode"))
+    BlockPublicAccessStates.struct_class = Types::BlockPublicAccessStates
 
     BootModeTypeList.member = Shapes::ShapeRef.new(shape: BootModeType, location_name: "item")
 
@@ -5603,6 +5630,16 @@ module Aws::EC2
     CreateVolumeRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CreateVolumeRequest.struct_class = Types::CreateVolumeRequest
 
+    CreateVpcBlockPublicAccessExclusionRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    CreateVpcBlockPublicAccessExclusionRequest.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, location_name: "SubnetId"))
+    CreateVpcBlockPublicAccessExclusionRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "VpcId"))
+    CreateVpcBlockPublicAccessExclusionRequest.add_member(:internet_gateway_exclusion_mode, Shapes::ShapeRef.new(shape: InternetGatewayExclusionMode, required: true, location_name: "InternetGatewayExclusionMode"))
+    CreateVpcBlockPublicAccessExclusionRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateVpcBlockPublicAccessExclusionRequest.struct_class = Types::CreateVpcBlockPublicAccessExclusionRequest
+
+    CreateVpcBlockPublicAccessExclusionResult.add_member(:vpc_block_public_access_exclusion, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusion, location_name: "vpcBlockPublicAccessExclusion"))
+    CreateVpcBlockPublicAccessExclusionResult.struct_class = Types::CreateVpcBlockPublicAccessExclusionResult
+
     CreateVpcEndpointConnectionNotificationRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateVpcEndpointConnectionNotificationRequest.add_member(:service_id, Shapes::ShapeRef.new(shape: VpcEndpointServiceId, location_name: "ServiceId"))
     CreateVpcEndpointConnectionNotificationRequest.add_member(:vpc_endpoint_id, Shapes::ShapeRef.new(shape: VpcEndpointId, location_name: "VpcEndpointId"))
@@ -6239,6 +6276,13 @@ module Aws::EC2
     DeleteVolumeRequest.add_member(:volume_id, Shapes::ShapeRef.new(shape: VolumeId, required: true, location_name: "VolumeId"))
     DeleteVolumeRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DeleteVolumeRequest.struct_class = Types::DeleteVolumeRequest
+
+    DeleteVpcBlockPublicAccessExclusionRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DeleteVpcBlockPublicAccessExclusionRequest.add_member(:exclusion_id, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusionId, required: true, location_name: "ExclusionId"))
+    DeleteVpcBlockPublicAccessExclusionRequest.struct_class = Types::DeleteVpcBlockPublicAccessExclusionRequest
+
+    DeleteVpcBlockPublicAccessExclusionResult.add_member(:vpc_block_public_access_exclusion, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusion, location_name: "vpcBlockPublicAccessExclusion"))
+    DeleteVpcBlockPublicAccessExclusionResult.struct_class = Types::DeleteVpcBlockPublicAccessExclusionResult
 
     DeleteVpcEndpointConnectionNotificationsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DeleteVpcEndpointConnectionNotificationsRequest.add_member(:connection_notification_ids, Shapes::ShapeRef.new(shape: ConnectionNotificationIdsList, required: true, location_name: "ConnectionNotificationId"))
@@ -7941,6 +7985,23 @@ module Aws::EC2
     DescribeVpcAttributeResult.add_member(:enable_network_address_usage_metrics, Shapes::ShapeRef.new(shape: AttributeBooleanValue, location_name: "enableNetworkAddressUsageMetrics"))
     DescribeVpcAttributeResult.add_member(:vpc_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcId"))
     DescribeVpcAttributeResult.struct_class = Types::DescribeVpcAttributeResult
+
+    DescribeVpcBlockPublicAccessExclusionsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeVpcBlockPublicAccessExclusionsRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    DescribeVpcBlockPublicAccessExclusionsRequest.add_member(:exclusion_ids, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusionIdList, location_name: "ExclusionId"))
+    DescribeVpcBlockPublicAccessExclusionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeVpcBlockPublicAccessExclusionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DescribeVpcBlockPublicAccessExclusionsMaxResults, location_name: "MaxResults"))
+    DescribeVpcBlockPublicAccessExclusionsRequest.struct_class = Types::DescribeVpcBlockPublicAccessExclusionsRequest
+
+    DescribeVpcBlockPublicAccessExclusionsResult.add_member(:vpc_block_public_access_exclusions, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusionList, location_name: "vpcBlockPublicAccessExclusionSet"))
+    DescribeVpcBlockPublicAccessExclusionsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeVpcBlockPublicAccessExclusionsResult.struct_class = Types::DescribeVpcBlockPublicAccessExclusionsResult
+
+    DescribeVpcBlockPublicAccessOptionsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeVpcBlockPublicAccessOptionsRequest.struct_class = Types::DescribeVpcBlockPublicAccessOptionsRequest
+
+    DescribeVpcBlockPublicAccessOptionsResult.add_member(:vpc_block_public_access_options, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessOptions, location_name: "vpcBlockPublicAccessOptions"))
+    DescribeVpcBlockPublicAccessOptionsResult.struct_class = Types::DescribeVpcBlockPublicAccessOptionsResult
 
     DescribeVpcClassicLinkDnsSupportRequest.add_member(:vpc_ids, Shapes::ShapeRef.new(shape: VpcClassicLinkIdList, location_name: "VpcIds"))
     DescribeVpcClassicLinkDnsSupportRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DescribeVpcClassicLinkDnsSupportMaxResults, location_name: "maxResults"))
@@ -12265,6 +12326,21 @@ module Aws::EC2
     ModifyVpcAttributeRequest.add_member(:enable_network_address_usage_metrics, Shapes::ShapeRef.new(shape: AttributeBooleanValue, location_name: "EnableNetworkAddressUsageMetrics"))
     ModifyVpcAttributeRequest.struct_class = Types::ModifyVpcAttributeRequest
 
+    ModifyVpcBlockPublicAccessExclusionRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    ModifyVpcBlockPublicAccessExclusionRequest.add_member(:exclusion_id, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusionId, required: true, location_name: "ExclusionId"))
+    ModifyVpcBlockPublicAccessExclusionRequest.add_member(:internet_gateway_exclusion_mode, Shapes::ShapeRef.new(shape: InternetGatewayExclusionMode, required: true, location_name: "InternetGatewayExclusionMode"))
+    ModifyVpcBlockPublicAccessExclusionRequest.struct_class = Types::ModifyVpcBlockPublicAccessExclusionRequest
+
+    ModifyVpcBlockPublicAccessExclusionResult.add_member(:vpc_block_public_access_exclusion, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusion, location_name: "vpcBlockPublicAccessExclusion"))
+    ModifyVpcBlockPublicAccessExclusionResult.struct_class = Types::ModifyVpcBlockPublicAccessExclusionResult
+
+    ModifyVpcBlockPublicAccessOptionsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    ModifyVpcBlockPublicAccessOptionsRequest.add_member(:internet_gateway_block_mode, Shapes::ShapeRef.new(shape: InternetGatewayBlockMode, required: true, location_name: "InternetGatewayBlockMode"))
+    ModifyVpcBlockPublicAccessOptionsRequest.struct_class = Types::ModifyVpcBlockPublicAccessOptionsRequest
+
+    ModifyVpcBlockPublicAccessOptionsResult.add_member(:vpc_block_public_access_options, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessOptions, location_name: "vpcBlockPublicAccessOptions"))
+    ModifyVpcBlockPublicAccessOptionsResult.struct_class = Types::ModifyVpcBlockPublicAccessOptionsResult
+
     ModifyVpcEndpointConnectionNotificationRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     ModifyVpcEndpointConnectionNotificationRequest.add_member(:connection_notification_id, Shapes::ShapeRef.new(shape: ConnectionNotificationId, required: true, location_name: "ConnectionNotificationId"))
     ModifyVpcEndpointConnectionNotificationRequest.add_member(:connection_notification_arn, Shapes::ShapeRef.new(shape: String, location_name: "ConnectionNotificationArn"))
@@ -14747,6 +14823,7 @@ module Aws::EC2
     Subnet.add_member(:enable_dns_64, Shapes::ShapeRef.new(shape: Boolean, location_name: "enableDns64"))
     Subnet.add_member(:ipv_6_native, Shapes::ShapeRef.new(shape: Boolean, location_name: "ipv6Native"))
     Subnet.add_member(:private_dns_name_options_on_launch, Shapes::ShapeRef.new(shape: PrivateDnsNameOptionsOnLaunch, location_name: "privateDnsNameOptionsOnLaunch"))
+    Subnet.add_member(:block_public_access_states, Shapes::ShapeRef.new(shape: BlockPublicAccessStates, location_name: "blockPublicAccessStates"))
     Subnet.add_member(:subnet_id, Shapes::ShapeRef.new(shape: String, location_name: "subnetId"))
     Subnet.add_member(:state, Shapes::ShapeRef.new(shape: SubnetState, location_name: "state"))
     Subnet.add_member(:vpc_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcId"))
@@ -15833,6 +15910,7 @@ module Aws::EC2
     Vpc.add_member(:cidr_block_association_set, Shapes::ShapeRef.new(shape: VpcCidrBlockAssociationSet, location_name: "cidrBlockAssociationSet"))
     Vpc.add_member(:is_default, Shapes::ShapeRef.new(shape: Boolean, location_name: "isDefault"))
     Vpc.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    Vpc.add_member(:block_public_access_states, Shapes::ShapeRef.new(shape: BlockPublicAccessStates, location_name: "blockPublicAccessStates"))
     Vpc.add_member(:vpc_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcId"))
     Vpc.add_member(:state, Shapes::ShapeRef.new(shape: VpcState, location_name: "state"))
     Vpc.add_member(:cidr_block, Shapes::ShapeRef.new(shape: String, location_name: "cidrBlock"))
@@ -15844,6 +15922,29 @@ module Aws::EC2
     VpcAttachment.struct_class = Types::VpcAttachment
 
     VpcAttachmentList.member = Shapes::ShapeRef.new(shape: VpcAttachment, location_name: "item")
+
+    VpcBlockPublicAccessExclusion.add_member(:exclusion_id, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusionId, location_name: "exclusionId"))
+    VpcBlockPublicAccessExclusion.add_member(:internet_gateway_exclusion_mode, Shapes::ShapeRef.new(shape: InternetGatewayExclusionMode, location_name: "internetGatewayExclusionMode"))
+    VpcBlockPublicAccessExclusion.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "resourceArn"))
+    VpcBlockPublicAccessExclusion.add_member(:state, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusionState, location_name: "state"))
+    VpcBlockPublicAccessExclusion.add_member(:reason, Shapes::ShapeRef.new(shape: String, location_name: "reason"))
+    VpcBlockPublicAccessExclusion.add_member(:creation_timestamp, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "creationTimestamp"))
+    VpcBlockPublicAccessExclusion.add_member(:last_update_timestamp, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "lastUpdateTimestamp"))
+    VpcBlockPublicAccessExclusion.add_member(:deletion_timestamp, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "deletionTimestamp"))
+    VpcBlockPublicAccessExclusion.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    VpcBlockPublicAccessExclusion.struct_class = Types::VpcBlockPublicAccessExclusion
+
+    VpcBlockPublicAccessExclusionIdList.member = Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusionId, location_name: "item")
+
+    VpcBlockPublicAccessExclusionList.member = Shapes::ShapeRef.new(shape: VpcBlockPublicAccessExclusion, location_name: "item")
+
+    VpcBlockPublicAccessOptions.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: String, location_name: "awsAccountId"))
+    VpcBlockPublicAccessOptions.add_member(:aws_region, Shapes::ShapeRef.new(shape: String, location_name: "awsRegion"))
+    VpcBlockPublicAccessOptions.add_member(:state, Shapes::ShapeRef.new(shape: VpcBlockPublicAccessState, location_name: "state"))
+    VpcBlockPublicAccessOptions.add_member(:internet_gateway_block_mode, Shapes::ShapeRef.new(shape: InternetGatewayBlockMode, location_name: "internetGatewayBlockMode"))
+    VpcBlockPublicAccessOptions.add_member(:reason, Shapes::ShapeRef.new(shape: String, location_name: "reason"))
+    VpcBlockPublicAccessOptions.add_member(:last_update_timestamp, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "lastUpdateTimestamp"))
+    VpcBlockPublicAccessOptions.struct_class = Types::VpcBlockPublicAccessOptions
 
     VpcCidrBlockAssociation.add_member(:association_id, Shapes::ShapeRef.new(shape: String, location_name: "associationId"))
     VpcCidrBlockAssociation.add_member(:cidr_block, Shapes::ShapeRef.new(shape: String, location_name: "cidrBlock"))
@@ -17174,6 +17275,14 @@ module Aws::EC2
         o.output = Shapes::ShapeRef.new(shape: CreateVpcResult)
       end)
 
+      api.add_operation(:create_vpc_block_public_access_exclusion, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateVpcBlockPublicAccessExclusion"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateVpcBlockPublicAccessExclusionRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateVpcBlockPublicAccessExclusionResult)
+      end)
+
       api.add_operation(:create_vpc_endpoint, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateVpcEndpoint"
         o.http_method = "POST"
@@ -17772,6 +17881,14 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DeleteVpcRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+      end)
+
+      api.add_operation(:delete_vpc_block_public_access_exclusion, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteVpcBlockPublicAccessExclusion"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteVpcBlockPublicAccessExclusionRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteVpcBlockPublicAccessExclusionResult)
       end)
 
       api.add_operation(:delete_vpc_endpoint_connection_notifications, Seahorse::Model::Operation.new.tap do |o|
@@ -19691,6 +19808,22 @@ module Aws::EC2
         o.output = Shapes::ShapeRef.new(shape: DescribeVpcAttributeResult)
       end)
 
+      api.add_operation(:describe_vpc_block_public_access_exclusions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeVpcBlockPublicAccessExclusions"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeVpcBlockPublicAccessExclusionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeVpcBlockPublicAccessExclusionsResult)
+      end)
+
+      api.add_operation(:describe_vpc_block_public_access_options, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeVpcBlockPublicAccessOptions"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeVpcBlockPublicAccessOptionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeVpcBlockPublicAccessOptionsResult)
+      end)
+
       api.add_operation(:describe_vpc_classic_link, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DescribeVpcClassicLink"
         o.http_method = "POST"
@@ -21369,6 +21502,22 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: ModifyVpcAttributeRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+      end)
+
+      api.add_operation(:modify_vpc_block_public_access_exclusion, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyVpcBlockPublicAccessExclusion"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyVpcBlockPublicAccessExclusionRequest)
+        o.output = Shapes::ShapeRef.new(shape: ModifyVpcBlockPublicAccessExclusionResult)
+      end)
+
+      api.add_operation(:modify_vpc_block_public_access_options, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyVpcBlockPublicAccessOptions"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyVpcBlockPublicAccessOptionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ModifyVpcBlockPublicAccessOptionsResult)
       end)
 
       api.add_operation(:modify_vpc_endpoint, Seahorse::Model::Operation.new.tap do |o|

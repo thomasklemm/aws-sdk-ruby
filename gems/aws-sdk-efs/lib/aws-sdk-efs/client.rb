@@ -632,16 +632,13 @@ module Aws::EFS
     #
     # This operation accepts an optional `PerformanceMode` parameter that
     # you choose for your file system. We recommend `generalPurpose`
-    # performance mode for all file systems. File systems using the `maxIO`
-    # mode is a previous generation performance type that is designed for
-    # highly parallelized workloads that can tolerate higher latencies than
-    # the General Purpose mode. Max I/O mode is not supported for One Zone
-    # file systems or file systems that use Elastic throughput.
+    # `PerformanceMode` for all file systems. The `maxIO` mode is a previous
+    # generation performance type that is designed for highly parallelized
+    # workloads that can tolerate higher latencies than the `generalPurpose`
+    # mode. `MaxIO` mode is not supported for One Zone file systems or file
+    # systems that use Elastic throughput.
     #
-    # Due to the higher per-operation latencies with Max I/O, we recommend
-    # using General Purpose performance mode for all file systems.
-    #
-    # The performance mode can't be changed after the file system has been
+    # The `PerformanceMode` can't be changed after the file system has been
     # created. For more information, see [Amazon EFS performance modes][2].
     #
     # You can set the throughput mode for the file system using the
@@ -680,7 +677,7 @@ module Aws::EFS
     #   not need to pass this option.**
     #
     # @option params [String] :performance_mode
-    #   The Performance mode of the file system. We recommend `generalPurpose`
+    #   The performance mode of the file system. We recommend `generalPurpose`
     #   performance mode for all file systems. File systems using the `maxIO`
     #   performance mode can scale to higher levels of aggregate throughput
     #   and operations per second with a tradeoff of slightly higher latencies
@@ -756,11 +753,11 @@ module Aws::EFS
     #   [1]: https://docs.aws.amazon.com/efs/latest/ug/limits.html#soft-limits
     #
     # @option params [String] :availability_zone_name
-    #   Used to create a One Zone file system. It specifies the Amazon Web
-    #   Services Availability Zone in which to create the file system. Use the
-    #   format `us-east-1a` to specify the Availability Zone. For more
-    #   information about One Zone file systems, see [Using EFS storage
-    #   classes][1] in the *Amazon EFS User Guide*.
+    #   For One Zone file systems, specify the Amazon Web Services
+    #   Availability Zone in which to create the file system. Use the format
+    #   `us-east-1a` to specify the Availability Zone. For more information
+    #   about One Zone file systems, see [EFS file system types][1] in the
+    #   *Amazon EFS User Guide*.
     #
     #   <note markdown="1"> One Zone file systems are not available in all Availability Zones in
     #   Amazon Web Services Regions where Amazon EFS is available.
@@ -769,7 +766,7 @@ module Aws::EFS
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html
+    #   [1]: https://docs.aws.amazon.com/efs/latest/ug/availability-durability.html#file-system-type
     #
     # @option params [Boolean] :backup
     #   Specifies whether automatic backups are enabled on the file system
@@ -1124,86 +1121,37 @@ module Aws::EFS
       req.send_request(options)
     end
 
-    # Creates a replication configuration that replicates an existing EFS
-    # file system to a new, read-only file system. For more information, see
-    # [Amazon EFS replication][1] in the *Amazon EFS User Guide*. The
-    # replication configuration specifies the following:
+    # Creates a replication conﬁguration to either a new or existing EFS
+    # file system. For more information, see [Amazon EFS replication][1] in
+    # the *Amazon EFS User Guide*. The replication configuration specifies
+    # the following:
     #
-    # * **Source file system** – The EFS file system that you want
-    #   replicated. The source file system cannot be a destination file
-    #   system in an existing replication configuration.
+    # * **Source file system** – The EFS file system that you want to
+    #   replicate.
     #
-    # * **Amazon Web Services Region** – The Amazon Web Services Region in
-    #   which the destination file system is created. Amazon EFS replication
-    #   is available in all Amazon Web Services Regions in which EFS is
-    #   available. The Region must be enabled. For more information, see
-    #   [Managing Amazon Web Services Regions][2] in the *Amazon Web
-    #   Services General Reference Reference Guide*.
+    # * **Destination file system** – The destination file system to which
+    #   the source file system is replicated. There can only be one
+    #   destination file system in a replication configuration.
     #
-    # * **Destination file system configuration** – The configuration of the
-    #   destination file system to which the source file system will be
-    #   replicated. There can only be one destination file system in a
-    #   replication configuration.
+    #   <note markdown="1"> A file system can be part of only one replication configuration.
     #
-    #   Parameters for the replication configuration include:
+    #    </note>
     #
-    #   * **File system ID** – The ID of the destination file system for the
-    #     replication. If no ID is provided, then EFS creates a new file
-    #     system with the default settings. For existing file systems, the
-    #     file system's replication overwrite protection must be disabled.
-    #     For more information, see [ Replicating to an existing file
-    #     system][3].
+    #   The destination parameters for the replication configuration depend
+    #   on whether you are replicating to a new file system or to an
+    #   existing file system, and if you are replicating across Amazon Web
+    #   Services accounts. See DestinationToCreate for more information.
     #
-    #   * **Availability Zone** – If you want the destination file system to
-    #     use One Zone storage, you must specify the Availability Zone to
-    #     create the file system in. For more information, see [ EFS file
-    #     system types][4] in the *Amazon EFS User Guide*.
-    #
-    #   * **Encryption** – All destination file systems are created with
-    #     encryption at rest enabled. You can specify the Key Management
-    #     Service (KMS) key that is used to encrypt the destination file
-    #     system. If you don't specify a KMS key, your service-managed KMS
-    #     key for Amazon EFS is used.
-    #
-    #     <note markdown="1"> After the file system is created, you cannot change the KMS key.
-    #
-    #      </note>
-    #
-    # <note markdown="1"> After the file system is created, you cannot change the KMS key.
-    #
-    #  </note>
-    #
-    # For new destination file systems, the following properties are set by
-    # default:
-    #
-    # * **Performance mode** - The destination file system's performance
-    #   mode matches that of the source file system, unless the destination
-    #   file system uses EFS One Zone storage. In that case, the General
-    #   Purpose performance mode is used. The performance mode cannot be
-    #   changed.
-    #
-    # * **Throughput mode** - The destination file system's throughput mode
-    #   matches that of the source file system. After the file system is
-    #   created, you can modify the throughput mode.
-    # ^
-    #
-    # * **Lifecycle management** – Lifecycle management is not enabled on
-    #   the destination file system. After the destination file system is
-    #   created, you can enable lifecycle management.
-    #
-    # * **Automatic backups** – Automatic daily backups are enabled on the
-    #   destination file system. After the file system is created, you can
-    #   change this setting.
-    #
-    # For more information, see [Amazon EFS replication][1] in the *Amazon
-    # EFS User Guide*.
+    # This operation requires permissions for the
+    # `elasticfilesystem:CreateReplicationConfiguration` action.
+    # Additionally, other permissions are required depending on how you are
+    # replicating file systems. For more information, see [Required
+    # permissions for replication][2] in the *Amazon EFS User Guide*.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/efs/latest/ug/efs-replication.html
-    # [2]: https://docs.aws.amazon.com/general/latest/gr/rande-manage.html#rande-manage-enable
-    # [3]: https://docs.aws.amazon.com/efs/latest/ug/efs-replication#replicate-existing-destination
-    # [4]: https://docs.aws.amazon.com/efs/latest/ug/storage-classes.html
+    # [2]: https://docs.aws.amazon.com/efs/latest/ug/efs-replication.html#efs-replication-permissions
     #
     # @option params [required, String] :source_file_system_id
     #   Specifies the Amazon EFS file system that you want to replicate. This
@@ -1222,6 +1170,7 @@ module Aws::EFS
     #   * {Types::ReplicationConfigurationDescription#original_source_file_system_arn #original_source_file_system_arn} => String
     #   * {Types::ReplicationConfigurationDescription#creation_time #creation_time} => Time
     #   * {Types::ReplicationConfigurationDescription#destinations #destinations} => Array&lt;Types::Destination&gt;
+    #   * {Types::ReplicationConfigurationDescription#source_file_system_owner_id #source_file_system_owner_id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1233,6 +1182,7 @@ module Aws::EFS
     #         availability_zone_name: "AvailabilityZoneName",
     #         kms_key_id: "KmsKeyId",
     #         file_system_id: "FileSystemId",
+    #         role_arn: "RoleArn",
     #       },
     #     ],
     #   })
@@ -1249,6 +1199,10 @@ module Aws::EFS
     #   resp.destinations[0].file_system_id #=> String
     #   resp.destinations[0].region #=> String
     #   resp.destinations[0].last_replicated_timestamp #=> Time
+    #   resp.destinations[0].owner_id #=> String
+    #   resp.destinations[0].status_message #=> String
+    #   resp.destinations[0].role_arn #=> String
+    #   resp.source_file_system_owner_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticfilesystem-2015-02-01/CreateReplicationConfiguration AWS API Documentation
     #
@@ -1357,7 +1311,7 @@ module Aws::EFS
     # you when you use the Amazon Web Services console to delete a file
     # system.
     #
-    # <note markdown="1"> You cannot delete a file system that is part of an EFS Replication
+    # <note markdown="1"> You cannot delete a file system that is part of an EFS replication
     # configuration. You need to delete the replication configuration first.
     #
     #  </note>
@@ -1518,12 +1472,35 @@ module Aws::EFS
     # @option params [required, String] :source_file_system_id
     #   The ID of the source file system in the replication configuration.
     #
+    # @option params [String] :deletion_mode
+    #   When replicating across Amazon Web Services accounts or across Amazon
+    #   Web Services Regions, Amazon EFS deletes the replication configuration
+    #   from both the source and destination account or Region
+    #   (`ALL_CONFIGURATIONS`) by default. If there's a configuration or
+    #   permissions issue that prevents Amazon EFS from deleting the
+    #   replication configuration from both sides, you can use the
+    #   `LOCAL_CONFIGURATION_ONLY` mode to delete the replication
+    #   configuration from only the local side (the account or Region from
+    #   which the delete is performed).
+    #
+    #   <note markdown="1"> Only use the `LOCAL_CONFIGURATION_ONLY` mode in the case that Amazon
+    #   EFS is unable to delete the replication configuration in both the
+    #   source and destination account or Region. Deleting the local
+    #   configuration leaves the configuration in the other account or Region
+    #   unrecoverable.
+    #
+    #    Additionally, do not use this mode for same-account, same-region
+    #   replication as doing so results in a BadRequest exception error.
+    #
+    #    </note>
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_replication_configuration({
     #     source_file_system_id: "FileSystemId", # required
+    #     deletion_mode: "ALL_CONFIGURATIONS", # accepts ALL_CONFIGURATIONS, LOCAL_CONFIGURATION_ONLY
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticfilesystem-2015-02-01/DeleteReplicationConfiguration AWS API Documentation
@@ -2131,7 +2108,9 @@ module Aws::EFS
     #
     # @option params [String] :file_system_id
     #   You can retrieve the replication configuration for a specific file
-    #   system by providing its file system ID.
+    #   system by providing its file system ID. For cross-account,cross-region
+    #   replication, an account can only describe the replication
+    #   configuration for a file system in its own Region.
     #
     # @option params [String] :next_token
     #   `NextToken` is present if the response is paginated. You can use
@@ -2169,6 +2148,10 @@ module Aws::EFS
     #   resp.replications[0].destinations[0].file_system_id #=> String
     #   resp.replications[0].destinations[0].region #=> String
     #   resp.replications[0].destinations[0].last_replicated_timestamp #=> Time
+    #   resp.replications[0].destinations[0].owner_id #=> String
+    #   resp.replications[0].destinations[0].status_message #=> String
+    #   resp.replications[0].destinations[0].role_arn #=> String
+    #   resp.replications[0].source_file_system_owner_id #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticfilesystem-2015-02-01/DescribeReplicationConfigurations AWS API Documentation
@@ -2463,7 +2446,7 @@ module Aws::EFS
     # set or updated using this API operation. EFS file system policies have
     # a 20,000 character limit. When an explicit policy is set, it overrides
     # the default policy. For more information about the default file system
-    # policy, see [Default EFS File System Policy][1].
+    # policy, see [ Default EFS file system policy][1].
     #
     # <note markdown="1"> EFS file system policies have a 20,000 character limit.
     #
@@ -2484,11 +2467,11 @@ module Aws::EFS
     #   The `FileSystemPolicy` that you're creating. Accepts a JSON formatted
     #   policy definition. EFS file system policies have a 20,000 character
     #   limit. To find out more about the elements that make up a file system
-    #   policy, see [EFS Resource-based Policies][1].
+    #   policy, see [Resource-based policies within Amazon EFS][1].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/efs/latest/ug/access-control-overview.html#access-control-manage-access-intro-resource-policies
+    #   [1]: https://docs.aws.amazon.com/efs/latest/ug/security_iam_service-with-iam.html#security_iam_service-with-iam-resource-based-policies
     #
     # @option params [Boolean] :bypass_policy_lockout_safety_check
     #   (Optional) A boolean that specifies whether or not to bypass the
@@ -2545,7 +2528,7 @@ module Aws::EFS
     #   either not be set or must be later than TransitionToIA.
     #
     #   <note markdown="1"> The Archive storage class is available only for file systems that
-    #   use the Elastic Throughput mode and the General Purpose Performance
+    #   use the Elastic throughput mode and the General Purpose performance
     #   mode.
     #
     #    </note>
@@ -2568,7 +2551,7 @@ module Aws::EFS
     # `LifecycleConfiguration`. In the request, specify the following:
     #
     # * The ID for the file system for which you are enabling, disabling, or
-    #   modifying Lifecycle management.
+    #   modifying lifecycle management.
     #
     # * A `LifecyclePolicies` array of `LifecyclePolicy` objects that define
     #   when to move files to IA storage, to Archive storage, and back to
@@ -2599,7 +2582,7 @@ module Aws::EFS
     # @option params [required, Array<Types::LifecyclePolicy>] :lifecycle_policies
     #   An array of `LifecyclePolicy` objects that define the file system's
     #   `LifecycleConfiguration` object. A `LifecycleConfiguration` object
-    #   informs EFS Lifecycle management of the following:
+    #   informs lifecycle management of the following:
     #
     #   * <b> <code>TransitionToIA</code> </b> – When to move files in the
     #     file system from primary storage (Standard storage class) into the
@@ -2614,7 +2597,7 @@ module Aws::EFS
     #     either not be set or must be later than TransitionToIA.
     #
     #     <note markdown="1"> The Archive storage class is available only for file systems that
-    #     use the Elastic Throughput mode and the General Purpose Performance
+    #     use the Elastic throughput mode and the General Purpose performance
     #     mode.
     #
     #      </note>
@@ -2873,7 +2856,7 @@ module Aws::EFS
     #     read-only and is only modified only by EFS replication.
     #
     #   If the replication configuration is deleted, the file system's
-    #   replication overwrite protection is re-enabled, the file system
+    #   replication overwrite protection is re-enabled and the file system
     #   becomes writeable.
     #
     # @return [Types::FileSystemProtectionDescription] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
@@ -2918,7 +2901,7 @@ module Aws::EFS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-efs'
-      context[:gem_version] = '1.88.0'
+      context[:gem_version] = '1.89.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

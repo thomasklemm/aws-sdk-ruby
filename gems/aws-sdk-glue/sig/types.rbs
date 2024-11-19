@@ -5639,6 +5639,7 @@ module Aws::Glue
     class TableOptimizerConfiguration
       attr_accessor role_arn: ::String
       attr_accessor enabled: bool
+      attr_accessor vpc_configuration: Types::TableOptimizerVpcConfiguration
       attr_accessor retention_configuration: Types::RetentionConfiguration
       attr_accessor orphan_file_deletion_configuration: Types::OrphanFileDeletionConfiguration
       SENSITIVE: []
@@ -5654,6 +5655,17 @@ module Aws::Glue
       attr_accessor retention_metrics: Types::RetentionMetrics
       attr_accessor orphan_file_deletion_metrics: Types::OrphanFileDeletionMetrics
       SENSITIVE: []
+    end
+
+    class TableOptimizerVpcConfiguration
+      attr_accessor glue_connection_name: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class GlueConnectionName < TableOptimizerVpcConfiguration
+      end
+      class Unknown < TableOptimizerVpcConfiguration
+      end
     end
 
     class TableStatus

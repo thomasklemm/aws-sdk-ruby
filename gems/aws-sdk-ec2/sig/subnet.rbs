@@ -57,6 +57,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Subnet.html#private_dns_name_options_on_launch-instance_method
       def private_dns_name_options_on_launch: () -> Types::PrivateDnsNameOptionsOnLaunch
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Subnet.html#block_public_access_states-instance_method
+      def block_public_access_states: () -> Types::BlockPublicAccessStates
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Subnet.html#state-instance_method
       def state: () -> ("pending" | "available" | "unavailable")
 

@@ -3848,6 +3848,30 @@ module Aws
                       ) -> _CreateVpcResponseSuccess
                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateVpcResponseSuccess
 
+      interface _CreateVpcBlockPublicAccessExclusionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateVpcBlockPublicAccessExclusionResult]
+        def vpc_block_public_access_exclusion: () -> Types::VpcBlockPublicAccessExclusion
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#create_vpc_block_public_access_exclusion-instance_method
+      def create_vpc_block_public_access_exclusion: (
+                                                      ?dry_run: bool,
+                                                      ?subnet_id: ::String,
+                                                      ?vpc_id: ::String,
+                                                      internet_gateway_exclusion_mode: ("allow-bidirectional" | "allow-egress"),
+                                                      ?tag_specifications: Array[
+                                                        {
+                                                          resource_type: ("capacity-reservation" | "client-vpn-endpoint" | "customer-gateway" | "carrier-gateway" | "coip-pool" | "dedicated-host" | "dhcp-options" | "egress-only-internet-gateway" | "elastic-ip" | "elastic-gpu" | "export-image-task" | "export-instance-task" | "fleet" | "fpga-image" | "host-reservation" | "image" | "import-image-task" | "import-snapshot-task" | "instance" | "instance-event-window" | "internet-gateway" | "ipam" | "ipam-pool" | "ipam-scope" | "ipv4pool-ec2" | "ipv6pool-ec2" | "key-pair" | "launch-template" | "local-gateway" | "local-gateway-route-table" | "local-gateway-virtual-interface" | "local-gateway-virtual-interface-group" | "local-gateway-route-table-vpc-association" | "local-gateway-route-table-virtual-interface-group-association" | "natgateway" | "network-acl" | "network-interface" | "network-insights-analysis" | "network-insights-path" | "network-insights-access-scope" | "network-insights-access-scope-analysis" | "placement-group" | "prefix-list" | "replace-root-volume-task" | "reserved-instances" | "route-table" | "security-group" | "security-group-rule" | "snapshot" | "spot-fleet-request" | "spot-instances-request" | "subnet" | "subnet-cidr-reservation" | "traffic-mirror-filter" | "traffic-mirror-session" | "traffic-mirror-target" | "transit-gateway" | "transit-gateway-attachment" | "transit-gateway-connect-peer" | "transit-gateway-multicast-domain" | "transit-gateway-policy-table" | "transit-gateway-route-table" | "transit-gateway-route-table-announcement" | "volume" | "vpc" | "vpc-endpoint" | "vpc-endpoint-connection" | "vpc-endpoint-service" | "vpc-endpoint-service-permission" | "vpc-peering-connection" | "vpn-connection" | "vpn-gateway" | "vpc-flow-log" | "capacity-reservation-fleet" | "traffic-mirror-filter-rule" | "vpc-endpoint-connection-device-type" | "verified-access-instance" | "verified-access-group" | "verified-access-endpoint" | "verified-access-policy" | "verified-access-trust-provider" | "vpn-connection-device-type" | "vpc-block-public-access-exclusion" | "ipam-resource-discovery" | "ipam-resource-discovery-association" | "instance-connect-endpoint" | "ipam-external-resource-verification-token")?,
+                                                          tags: Array[
+                                                            {
+                                                              key: ::String?,
+                                                              value: ::String?
+                                                            },
+                                                          ]?
+                                                        },
+                                                      ]
+                                                    ) -> _CreateVpcBlockPublicAccessExclusionResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateVpcBlockPublicAccessExclusionResponseSuccess
+
       interface _CreateVpcEndpointResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateVpcEndpointResult]
         def vpc_endpoint: () -> Types::VpcEndpoint
@@ -4804,6 +4828,17 @@ module Aws
                         ?dry_run: bool
                       ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _DeleteVpcBlockPublicAccessExclusionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteVpcBlockPublicAccessExclusionResult]
+        def vpc_block_public_access_exclusion: () -> Types::VpcBlockPublicAccessExclusion
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#delete_vpc_block_public_access_exclusion-instance_method
+      def delete_vpc_block_public_access_exclusion: (
+                                                      ?dry_run: bool,
+                                                      exclusion_id: ::String
+                                                    ) -> _DeleteVpcBlockPublicAccessExclusionResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteVpcBlockPublicAccessExclusionResponseSuccess
 
       interface _DeleteVpcEndpointConnectionNotificationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteVpcEndpointConnectionNotificationsResult]
@@ -7708,6 +7743,36 @@ module Aws
                                     ?dry_run: bool
                                   ) -> _DescribeVpcAttributeResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeVpcAttributeResponseSuccess
+
+      interface _DescribeVpcBlockPublicAccessExclusionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeVpcBlockPublicAccessExclusionsResult]
+        def vpc_block_public_access_exclusions: () -> ::Array[Types::VpcBlockPublicAccessExclusion]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#describe_vpc_block_public_access_exclusions-instance_method
+      def describe_vpc_block_public_access_exclusions: (
+                                                         ?dry_run: bool,
+                                                         ?filters: Array[
+                                                           {
+                                                             name: ::String?,
+                                                             values: Array[::String]?
+                                                           },
+                                                         ],
+                                                         ?exclusion_ids: Array[::String],
+                                                         ?next_token: ::String,
+                                                         ?max_results: ::Integer
+                                                       ) -> _DescribeVpcBlockPublicAccessExclusionsResponseSuccess
+                                                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeVpcBlockPublicAccessExclusionsResponseSuccess
+
+      interface _DescribeVpcBlockPublicAccessOptionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeVpcBlockPublicAccessOptionsResult]
+        def vpc_block_public_access_options: () -> Types::VpcBlockPublicAccessOptions
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#describe_vpc_block_public_access_options-instance_method
+      def describe_vpc_block_public_access_options: (
+                                                      ?dry_run: bool
+                                                    ) -> _DescribeVpcBlockPublicAccessOptionsResponseSuccess
+                                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeVpcBlockPublicAccessOptionsResponseSuccess
 
       interface _DescribeVpcClassicLinkResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeVpcClassicLinkResult]
@@ -11086,6 +11151,29 @@ module Aws
                                   }
                                 ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _ModifyVpcBlockPublicAccessExclusionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ModifyVpcBlockPublicAccessExclusionResult]
+        def vpc_block_public_access_exclusion: () -> Types::VpcBlockPublicAccessExclusion
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#modify_vpc_block_public_access_exclusion-instance_method
+      def modify_vpc_block_public_access_exclusion: (
+                                                      ?dry_run: bool,
+                                                      exclusion_id: ::String,
+                                                      internet_gateway_exclusion_mode: ("allow-bidirectional" | "allow-egress")
+                                                    ) -> _ModifyVpcBlockPublicAccessExclusionResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyVpcBlockPublicAccessExclusionResponseSuccess
+
+      interface _ModifyVpcBlockPublicAccessOptionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ModifyVpcBlockPublicAccessOptionsResult]
+        def vpc_block_public_access_options: () -> Types::VpcBlockPublicAccessOptions
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#modify_vpc_block_public_access_options-instance_method
+      def modify_vpc_block_public_access_options: (
+                                                    ?dry_run: bool,
+                                                    internet_gateway_block_mode: ("off" | "block-bidirectional" | "block-ingress")
+                                                  ) -> _ModifyVpcBlockPublicAccessOptionsResponseSuccess
+                                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyVpcBlockPublicAccessOptionsResponseSuccess
 
       interface _ModifyVpcEndpointResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ModifyVpcEndpointResult]

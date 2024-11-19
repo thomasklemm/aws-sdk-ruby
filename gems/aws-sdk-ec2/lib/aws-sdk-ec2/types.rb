@@ -3769,6 +3769,34 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # The state of VPC Block Public Access (BPA).
+    #
+    # @!attribute [rw] internet_gateway_block_mode
+    #   The mode of VPC BPA.
+    #
+    #   * `bidirectional-access-allowed`: VPC BPA is not enabled and traffic
+    #     is allowed to and from internet gateways and egress-only internet
+    #     gateways in this Region.
+    #
+    #   * `bidirectional-access-blocked`: Block all traffic to and from
+    #     internet gateways and egress-only internet gateways in this Region
+    #     (except for excluded VPCs and subnets).
+    #
+    #   * `ingress-access-blocked`: Block all internet traffic to the VPCs
+    #     in this Region (except for VPCs or subnets which are excluded).
+    #     Only traffic to and from NAT gateways and egress-only internet
+    #     gateways is allowed because these gateways only allow outbound
+    #     connections to be established.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/BlockPublicAccessStates AWS API Documentation
+    #
+    class BlockPublicAccessStates < Struct.new(
+      :internet_gateway_block_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains the parameters for BundleInstance.
     #
     # @!attribute [rw] instance_id
@@ -13026,6 +13054,65 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #   @return [Boolean]
     #
+    # @!attribute [rw] subnet_id
+    #   A subnet ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   A VPC ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] internet_gateway_exclusion_mode
+    #   The exclusion mode for internet gateway traffic.
+    #
+    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
+    #     from the excluded VPCs and subnets.
+    #
+    #   * `egress-access-allowed`: Allow outbound internet traffic from the
+    #     excluded VPCs and subnets. Block inbound internet traffic to the
+    #     excluded VPCs and subnets. Only applies when VPC Block Public
+    #     Access is set to Bidirectional.
+    #   @return [String]
+    #
+    # @!attribute [rw] tag_specifications
+    #   `tag` - The key/value combination of a tag assigned to the resource.
+    #   Use the tag key in the filter name and the tag value as the filter
+    #   value. For example, to find all resources that have a tag with the
+    #   key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #   filter name and `TeamA` for the filter value.
+    #   @return [Array<Types::TagSpecification>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVpcBlockPublicAccessExclusionRequest AWS API Documentation
+    #
+    class CreateVpcBlockPublicAccessExclusionRequest < Struct.new(
+      :dry_run,
+      :subnet_id,
+      :vpc_id,
+      :internet_gateway_exclusion_mode,
+      :tag_specifications)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_block_public_access_exclusion
+    #   Details about an exclusion.
+    #   @return [Types::VpcBlockPublicAccessExclusion]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVpcBlockPublicAccessExclusionResult AWS API Documentation
+    #
+    class CreateVpcBlockPublicAccessExclusionResult < Struct.new(
+      :vpc_block_public_access_exclusion)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
     # @!attribute [rw] service_id
     #   The ID of the endpoint service.
     #   @return [String]
@@ -16213,6 +16300,38 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #   @return [Boolean]
     #
+    # @!attribute [rw] exclusion_id
+    #   The ID of the exclusion.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVpcBlockPublicAccessExclusionRequest AWS API Documentation
+    #
+    class DeleteVpcBlockPublicAccessExclusionRequest < Struct.new(
+      :dry_run,
+      :exclusion_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_block_public_access_exclusion
+    #   Details about an exclusion.
+    #   @return [Types::VpcBlockPublicAccessExclusion]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteVpcBlockPublicAccessExclusionResult AWS API Documentation
+    #
+    class DeleteVpcBlockPublicAccessExclusionResult < Struct.new(
+      :vpc_block_public_access_exclusion)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
     # @!attribute [rw] connection_notification_ids
     #   The IDs of the notifications.
     #   @return [Array<String>]
@@ -17696,10 +17815,10 @@ module Aws::EC2
     #
     #   * `instance-id` - The ID of the instance.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -18270,10 +18389,10 @@ module Aws::EC2
     #   * `owner-id` - The ID of the Amazon Web Services account that owns
     #     the DHCP options set.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -18341,10 +18460,10 @@ module Aws::EC2
     # @!attribute [rw] filters
     #   The filters.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -21537,10 +21656,10 @@ module Aws::EC2
     #   * `owner-id` - The ID of the Amazon Web Services account that owns
     #     the internet gateway.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -23029,10 +23148,10 @@ module Aws::EC2
     #   * `subnet-id` - The ID of the subnet in which the NAT gateway
     #     resides.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -23165,10 +23284,10 @@ module Aws::EC2
     #   * `owner-id` - The ID of the Amazon Web Services account that owns
     #     the network ACL.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -24682,10 +24801,10 @@ module Aws::EC2
     #   * `route.vpc-peering-connection-id` - The ID of a VPC peering
     #     connection specified in a route in the table.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -26206,10 +26325,10 @@ module Aws::EC2
     #
     #   * `subnet-id` - The ID of the subnet.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -28092,6 +28211,119 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] filters
+    #   Filters for the request:
+    #
+    #   * `resource-arn` - The Amazon Resource Name (ARN) of a exclusion.
+    #
+    #   * `internet-gateway-exclusion-mode` - The mode of a VPC BPA
+    #     exclusion. Possible values: `bidirectional-access-allowed |
+    #     egress-access-allowed`.
+    #
+    #   * `state` - The state of VPC BPA. Possible values:
+    #     `create-in-progress | create-complete | update-in-progress |
+    #     update-complete | delete-in-progress | deleted-complete |
+    #     disable-in-progress | disable-complete`
+    #
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
+    #     `tag:Owner` for the filter name and `TeamA` for the filter value.
+    #
+    #   * `tag-key` - The key of a tag assigned to the resource. Use this
+    #     filter to find all resources assigned a tag with a specific key,
+    #     regardless of the tag value.
+    #
+    #   * `tag-value`: The value of a tag assigned to the resource. Use this
+    #     filter to find all resources assigned a tag with a specific value,
+    #     regardless of the tag key.
+    #   @return [Array<Types::Filter>]
+    #
+    # @!attribute [rw] exclusion_ids
+    #   IDs of exclusions.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token returned from a previous paginated request. Pagination
+    #   continues from the end of the items returned by the previous
+    #   request.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this request. To get the
+    #   next page of items, make another request with the token returned in
+    #   the output. For more information, see [Pagination][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcBlockPublicAccessExclusionsRequest AWS API Documentation
+    #
+    class DescribeVpcBlockPublicAccessExclusionsRequest < Struct.new(
+      :dry_run,
+      :filters,
+      :exclusion_ids,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_block_public_access_exclusions
+    #   Details related to the exclusions.
+    #   @return [Array<Types::VpcBlockPublicAccessExclusion>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to include in another request to get the next page of
+    #   items. This value is `null` when there are no more items to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcBlockPublicAccessExclusionsResult AWS API Documentation
+    #
+    class DescribeVpcBlockPublicAccessExclusionsResult < Struct.new(
+      :vpc_block_public_access_exclusions,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcBlockPublicAccessOptionsRequest AWS API Documentation
+    #
+    class DescribeVpcBlockPublicAccessOptionsRequest < Struct.new(
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_block_public_access_options
+    #   Details related to the options.
+    #   @return [Types::VpcBlockPublicAccessOptions]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcBlockPublicAccessOptionsResult AWS API Documentation
+    #
+    class DescribeVpcBlockPublicAccessOptionsResult < Struct.new(
+      :vpc_block_public_access_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] vpc_ids
     #   The IDs of the VPCs.
     #   @return [Array<String>]
@@ -28157,10 +28389,10 @@ module Aws::EC2
     #   * `is-classic-link-enabled` - Whether the VPC is enabled for
     #     ClassicLink (`true` \| `false`).
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -28691,10 +28923,10 @@ module Aws::EC2
     #   * `status-message` - A message that provides more information about
     #     the status of the VPC peering connection, if applicable.
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -28773,10 +29005,10 @@ module Aws::EC2
     #
     #   * `state` - The state of the VPC (`pending` \| `available`).
     #
-    #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
-    #     the resource. Use the tag key in the filter name and the tag value
-    #     as the filter value. For example, to find all resources that have
-    #     a tag with the key `Owner` and the value `TeamA`, specify
+    #   * `tag` - The key/value combination of a tag assigned to the
+    #     resource. Use the tag key in the filter name and the tag value as
+    #     the filter value. For example, to find all resources that have a
+    #     tag with the key `Owner` and the value `TeamA`, specify
     #     `tag:Owner` for the filter name and `TeamA` for the filter value.
     #
     #   * `tag-key` - The key of a tag assigned to the resource. Use this
@@ -52015,6 +52247,97 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #   @return [Boolean]
     #
+    # @!attribute [rw] exclusion_id
+    #   The ID of an exclusion.
+    #   @return [String]
+    #
+    # @!attribute [rw] internet_gateway_exclusion_mode
+    #   The exclusion mode for internet gateway traffic.
+    #
+    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
+    #     from the excluded VPCs and subnets.
+    #
+    #   * `egress-access-allowed`: Allow outbound internet traffic from the
+    #     excluded VPCs and subnets. Block inbound internet traffic to the
+    #     excluded VPCs and subnets. Only applies when VPC Block Public
+    #     Access is set to Bidirectional.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcBlockPublicAccessExclusionRequest AWS API Documentation
+    #
+    class ModifyVpcBlockPublicAccessExclusionRequest < Struct.new(
+      :dry_run,
+      :exclusion_id,
+      :internet_gateway_exclusion_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_block_public_access_exclusion
+    #   Details related to the exclusion.
+    #   @return [Types::VpcBlockPublicAccessExclusion]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcBlockPublicAccessExclusionResult AWS API Documentation
+    #
+    class ModifyVpcBlockPublicAccessExclusionResult < Struct.new(
+      :vpc_block_public_access_exclusion)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] internet_gateway_block_mode
+    #   The mode of VPC BPA.
+    #
+    #   * `bidirectional-access-allowed`: VPC BPA is not enabled and traffic
+    #     is allowed to and from internet gateways and egress-only internet
+    #     gateways in this Region.
+    #
+    #   * `bidirectional-access-blocked`: Block all traffic to and from
+    #     internet gateways and egress-only internet gateways in this Region
+    #     (except for excluded VPCs and subnets).
+    #
+    #   * `ingress-access-blocked`: Block all internet traffic to the VPCs
+    #     in this Region (except for VPCs or subnets which are excluded).
+    #     Only traffic to and from NAT gateways and egress-only internet
+    #     gateways is allowed because these gateways only allow outbound
+    #     connections to be established.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcBlockPublicAccessOptionsRequest AWS API Documentation
+    #
+    class ModifyVpcBlockPublicAccessOptionsRequest < Struct.new(
+      :dry_run,
+      :internet_gateway_block_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_block_public_access_options
+    #   Details related to the VPC Block Public Access (BPA) options.
+    #   @return [Types::VpcBlockPublicAccessOptions]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcBlockPublicAccessOptionsResult AWS API Documentation
+    #
+    class ModifyVpcBlockPublicAccessOptionsResult < Struct.new(
+      :vpc_block_public_access_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
     # @!attribute [rw] connection_notification_id
     #   The ID of the notification.
     #   @return [String]
@@ -65147,6 +65470,10 @@ module Aws::EC2
     #   the instance.
     #   @return [Types::PrivateDnsNameOptionsOnLaunch]
     #
+    # @!attribute [rw] block_public_access_states
+    #   The state of VPC Block Public Access (BPA).
+    #   @return [Types::BlockPublicAccessStates]
+    #
     # @!attribute [rw] subnet_id
     #   The ID of the subnet.
     #   @return [String]
@@ -65207,6 +65534,7 @@ module Aws::EC2
       :enable_dns_64,
       :ipv_6_native,
       :private_dns_name_options_on_launch,
+      :block_public_access_states,
       :subnet_id,
       :state,
       :vpc_id,
@@ -69779,6 +70107,10 @@ module Aws::EC2
     #   Any tags assigned to the VPC.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] block_public_access_states
+    #   The state of VPC Block Public Access (BPA).
+    #   @return [Types::BlockPublicAccessStates]
+    #
     # @!attribute [rw] vpc_id
     #   The ID of the VPC.
     #   @return [String]
@@ -69804,6 +70136,7 @@ module Aws::EC2
       :cidr_block_association_set,
       :is_default,
       :tags,
+      :block_public_access_states,
       :vpc_id,
       :state,
       :cidr_block,
@@ -69827,6 +70160,143 @@ module Aws::EC2
     class VpcAttachment < Struct.new(
       :vpc_id,
       :state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A VPC BPA exclusion is a mode that can be applied to a single VPC or
+    # subnet that exempts it from the account’s BPA mode and will allow
+    # bidirectional or egress-only access. You can create BPA exclusions for
+    # VPCs and subnets even when BPA is not enabled on the account to ensure
+    # that there is no traffic disruption to the exclusions when VPC BPA is
+    # turned on. To learn more about VPC BPA, see [Block public access to
+    # VPCs and subnets][1] in the *Amazon VPC User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
+    #
+    # @!attribute [rw] exclusion_id
+    #   The ID of the exclusion.
+    #   @return [String]
+    #
+    # @!attribute [rw] internet_gateway_exclusion_mode
+    #   The exclusion mode for internet gateway traffic.
+    #
+    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
+    #     from the excluded VPCs and subnets.
+    #
+    #   * `egress-access-allowed`: Allow outbound internet traffic from the
+    #     excluded VPCs and subnets. Block inbound internet traffic to the
+    #     excluded VPCs and subnets. Only applies when VPC Block Public
+    #     Access is set to Bidirectional.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_arn
+    #   The ARN of the exclusion.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The state of the exclusion.
+    #   @return [String]
+    #
+    # @!attribute [rw] reason
+    #   The reason for the current exclusion state.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_timestamp
+    #   When the exclusion was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_update_timestamp
+    #   When the exclusion was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] deletion_timestamp
+    #   When the exclusion was deleted.
+    #   @return [Time]
+    #
+    # @!attribute [rw] tags
+    #   `tag` - The key/value combination of a tag assigned to the resource.
+    #   Use the tag key in the filter name and the tag value as the filter
+    #   value. For example, to find all resources that have a tag with the
+    #   key `Owner` and the value `TeamA`, specify `tag:Owner` for the
+    #   filter name and `TeamA` for the filter value.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VpcBlockPublicAccessExclusion AWS API Documentation
+    #
+    class VpcBlockPublicAccessExclusion < Struct.new(
+      :exclusion_id,
+      :internet_gateway_exclusion_mode,
+      :resource_arn,
+      :state,
+      :reason,
+      :creation_timestamp,
+      :last_update_timestamp,
+      :deletion_timestamp,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # VPC Block public Access (BPA) enables you to block resources in VPCs
+    # and subnets that you own in a Region from reaching or being reached
+    # from the internet through internet gateways and egress-only internet
+    # gateways. To learn more about VPC BPA, see [Block public access to
+    # VPCs and subnets][1] in the *Amazon VPC User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
+    #
+    # @!attribute [rw] aws_account_id
+    #   An Amazon Web Services account ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] aws_region
+    #   An Amazon Web Services Region.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The current state of VPC BPA.
+    #   @return [String]
+    #
+    # @!attribute [rw] internet_gateway_block_mode
+    #   The current mode of VPC BPA.
+    #
+    #   * `bidirectional-access-allowed`: VPC BPA is not enabled and traffic
+    #     is allowed to and from internet gateways and egress-only internet
+    #     gateways in this Region.
+    #
+    #   * `bidirectional-access-blocked`: Block all traffic to and from
+    #     internet gateways and egress-only internet gateways in this Region
+    #     (except for excluded VPCs and subnets).
+    #
+    #   * `ingress-access-blocked`: Block all internet traffic to the VPCs
+    #     in this Region (except for VPCs or subnets which are excluded).
+    #     Only traffic to and from NAT gateways and egress-only internet
+    #     gateways is allowed because these gateways only allow outbound
+    #     connections to be established.
+    #   @return [String]
+    #
+    # @!attribute [rw] reason
+    #   The reason for the current state.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_update_timestamp
+    #   The last time the VPC BPA mode was updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VpcBlockPublicAccessOptions AWS API Documentation
+    #
+    class VpcBlockPublicAccessOptions < Struct.new(
+      :aws_account_id,
+      :aws_region,
+      :state,
+      :internet_gateway_block_mode,
+      :reason,
+      :last_update_timestamp)
       SENSITIVE = []
       include Aws::Structure
     end
