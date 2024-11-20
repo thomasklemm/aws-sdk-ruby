@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.142.0 (2024-11-20)
+------------------
+
+* Feature - Add Node 22.x (node22.x) support to AWS Lambda
+
 1.141.0 (2024-11-11)
 ------------------
 

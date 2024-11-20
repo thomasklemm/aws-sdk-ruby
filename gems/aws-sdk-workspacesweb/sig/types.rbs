@@ -25,6 +25,18 @@ module Aws::WorkSpacesWeb
       SENSITIVE: []
     end
 
+    class AssociateDataProtectionSettingsRequest
+      attr_accessor data_protection_settings_arn: ::String
+      attr_accessor portal_arn: ::String
+      SENSITIVE: []
+    end
+
+    class AssociateDataProtectionSettingsResponse
+      attr_accessor data_protection_settings_arn: ::String
+      attr_accessor portal_arn: ::String
+      SENSITIVE: []
+    end
+
     class AssociateIpAccessSettingsRequest
       attr_accessor ip_access_settings_arn: ::String
       attr_accessor portal_arn: ::String
@@ -152,6 +164,22 @@ module Aws::WorkSpacesWeb
       SENSITIVE: []
     end
 
+    class CreateDataProtectionSettingsRequest
+      attr_accessor additional_encryption_context: ::Hash[::String, ::String]
+      attr_accessor client_token: ::String
+      attr_accessor customer_managed_key: ::String
+      attr_accessor description: ::String
+      attr_accessor display_name: ::String
+      attr_accessor inline_redaction_configuration: Types::InlineRedactionConfiguration
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: [:description, :display_name]
+    end
+
+    class CreateDataProtectionSettingsResponse
+      attr_accessor data_protection_settings_arn: ::String
+      SENSITIVE: []
+    end
+
     class CreateIdentityProviderRequest
       attr_accessor client_token: ::String
       attr_accessor identity_provider_details: ::Hash[::String, ::String]
@@ -261,12 +289,48 @@ module Aws::WorkSpacesWeb
       SENSITIVE: []
     end
 
+    class CustomPattern
+      attr_accessor keyword_regex: ::String
+      attr_accessor pattern_description: ::String
+      attr_accessor pattern_name: ::String
+      attr_accessor pattern_regex: ::String
+      SENSITIVE: [:keyword_regex, :pattern_description, :pattern_name, :pattern_regex]
+    end
+
+    class DataProtectionSettings
+      attr_accessor additional_encryption_context: ::Hash[::String, ::String]
+      attr_accessor associated_portal_arns: ::Array[::String]
+      attr_accessor creation_date: ::Time
+      attr_accessor customer_managed_key: ::String
+      attr_accessor data_protection_settings_arn: ::String
+      attr_accessor description: ::String
+      attr_accessor display_name: ::String
+      attr_accessor inline_redaction_configuration: Types::InlineRedactionConfiguration
+      SENSITIVE: [:description, :display_name]
+    end
+
+    class DataProtectionSettingsSummary
+      attr_accessor creation_date: ::Time
+      attr_accessor data_protection_settings_arn: ::String
+      attr_accessor description: ::String
+      attr_accessor display_name: ::String
+      SENSITIVE: [:description, :display_name]
+    end
+
     class DeleteBrowserSettingsRequest
       attr_accessor browser_settings_arn: ::String
       SENSITIVE: []
     end
 
     class DeleteBrowserSettingsResponse < Aws::EmptyStructure
+    end
+
+    class DeleteDataProtectionSettingsRequest
+      attr_accessor data_protection_settings_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDataProtectionSettingsResponse < Aws::EmptyStructure
     end
 
     class DeleteIdentityProviderRequest
@@ -333,6 +397,14 @@ module Aws::WorkSpacesWeb
     class DisassociateBrowserSettingsResponse < Aws::EmptyStructure
     end
 
+    class DisassociateDataProtectionSettingsRequest
+      attr_accessor portal_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DisassociateDataProtectionSettingsResponse < Aws::EmptyStructure
+    end
+
     class DisassociateIpAccessSettingsRequest
       attr_accessor portal_arn: ::String
       SENSITIVE: []
@@ -389,6 +461,16 @@ module Aws::WorkSpacesWeb
 
     class GetBrowserSettingsResponse
       attr_accessor browser_settings: Types::BrowserSettings
+      SENSITIVE: []
+    end
+
+    class GetDataProtectionSettingsRequest
+      attr_accessor data_protection_settings_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetDataProtectionSettingsResponse
+      attr_accessor data_protection_settings: Types::DataProtectionSettings
       SENSITIVE: []
     end
 
@@ -511,6 +593,24 @@ module Aws::WorkSpacesWeb
       SENSITIVE: [:identity_provider_name]
     end
 
+    class InlineRedactionConfiguration
+      attr_accessor global_confidence_level: ::Integer
+      attr_accessor global_enforced_urls: ::Array[::String]
+      attr_accessor global_exempt_urls: ::Array[::String]
+      attr_accessor inline_redaction_patterns: ::Array[Types::InlineRedactionPattern]
+      SENSITIVE: []
+    end
+
+    class InlineRedactionPattern
+      attr_accessor built_in_pattern_id: ::String
+      attr_accessor confidence_level: ::Integer
+      attr_accessor custom_pattern: Types::CustomPattern
+      attr_accessor enforced_urls: ::Array[::String]
+      attr_accessor exempt_urls: ::Array[::String]
+      attr_accessor redaction_place_holder: Types::RedactionPlaceHolder
+      SENSITIVE: [:built_in_pattern_id]
+    end
+
     class InternalServerException
       attr_accessor message: ::String
       attr_accessor retry_after_seconds: ::Integer
@@ -551,6 +651,18 @@ module Aws::WorkSpacesWeb
 
     class ListBrowserSettingsResponse
       attr_accessor browser_settings: ::Array[Types::BrowserSettingsSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListDataProtectionSettingsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListDataProtectionSettingsResponse
+      attr_accessor data_protection_settings: ::Array[Types::DataProtectionSettingsSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -703,6 +815,7 @@ module Aws::WorkSpacesWeb
       attr_accessor browser_type: ("Chrome")
       attr_accessor creation_date: ::Time
       attr_accessor customer_managed_key: ::String
+      attr_accessor data_protection_settings_arn: ::String
       attr_accessor display_name: ::String
       attr_accessor instance_type: ("standard.regular" | "standard.large" | "standard.xlarge")
       attr_accessor ip_access_settings_arn: ::String
@@ -724,6 +837,7 @@ module Aws::WorkSpacesWeb
       attr_accessor browser_settings_arn: ::String
       attr_accessor browser_type: ("Chrome")
       attr_accessor creation_date: ::Time
+      attr_accessor data_protection_settings_arn: ::String
       attr_accessor display_name: ::String
       attr_accessor instance_type: ("standard.regular" | "standard.large" | "standard.xlarge")
       attr_accessor ip_access_settings_arn: ::String
@@ -737,6 +851,12 @@ module Aws::WorkSpacesWeb
       attr_accessor user_access_logging_settings_arn: ::String
       attr_accessor user_settings_arn: ::String
       SENSITIVE: [:display_name]
+    end
+
+    class RedactionPlaceHolder
+      attr_accessor redaction_place_holder_text: ::String
+      attr_accessor redaction_place_holder_type: ("CustomText")
+      SENSITIVE: [:redaction_place_holder_text]
     end
 
     class ResourceNotFoundException
@@ -835,6 +955,20 @@ module Aws::WorkSpacesWeb
 
     class UpdateBrowserSettingsResponse
       attr_accessor browser_settings: Types::BrowserSettings
+      SENSITIVE: []
+    end
+
+    class UpdateDataProtectionSettingsRequest
+      attr_accessor client_token: ::String
+      attr_accessor data_protection_settings_arn: ::String
+      attr_accessor description: ::String
+      attr_accessor display_name: ::String
+      attr_accessor inline_redaction_configuration: Types::InlineRedactionConfiguration
+      SENSITIVE: [:description, :display_name]
+    end
+
+    class UpdateDataProtectionSettingsResponse
+      attr_accessor data_protection_settings: Types::DataProtectionSettings
       SENSITIVE: []
     end
 

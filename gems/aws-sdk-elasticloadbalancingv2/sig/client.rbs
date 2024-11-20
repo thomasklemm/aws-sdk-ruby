@@ -483,6 +483,19 @@ module Aws
                                    ) -> _DescribeAccountLimitsResponseSuccess
                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeAccountLimitsResponseSuccess
 
+      interface _DescribeCapacityReservationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeCapacityReservationOutput]
+        def last_modified_time: () -> ::Time
+        def decrease_requests_remaining: () -> ::Integer
+        def minimum_load_balancer_capacity: () -> Types::MinimumLoadBalancerCapacity
+        def capacity_reservation_state: () -> ::Array[Types::ZonalCapacityReservationState]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ElasticLoadBalancingV2/Client.html#describe_capacity_reservation-instance_method
+      def describe_capacity_reservation: (
+                                           load_balancer_arn: ::String
+                                         ) -> _DescribeCapacityReservationResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeCapacityReservationResponseSuccess
+
       interface _DescribeListenerAttributesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeListenerAttributesOutput]
         def attributes: () -> ::Array[Types::ListenerAttribute]
@@ -696,6 +709,23 @@ module Aws
                                                 revocation_id: ::Integer
                                               ) -> _GetTrustStoreRevocationContentResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTrustStoreRevocationContentResponseSuccess
+
+      interface _ModifyCapacityReservationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ModifyCapacityReservationOutput]
+        def last_modified_time: () -> ::Time
+        def decrease_requests_remaining: () -> ::Integer
+        def minimum_load_balancer_capacity: () -> Types::MinimumLoadBalancerCapacity
+        def capacity_reservation_state: () -> ::Array[Types::ZonalCapacityReservationState]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ElasticLoadBalancingV2/Client.html#modify_capacity_reservation-instance_method
+      def modify_capacity_reservation: (
+                                         load_balancer_arn: ::String,
+                                         ?minimum_load_balancer_capacity: {
+                                           capacity_units: ::Integer?
+                                         },
+                                         ?reset_capacity_reservation: bool
+                                       ) -> _ModifyCapacityReservationResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyCapacityReservationResponseSuccess
 
       interface _ModifyListenerResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ModifyListenerOutput]

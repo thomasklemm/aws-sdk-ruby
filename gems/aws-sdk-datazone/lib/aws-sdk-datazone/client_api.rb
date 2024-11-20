@@ -57,7 +57,9 @@ module Aws::DataZone
     AssetTargetNameMap = Shapes::StructureShape.new(name: 'AssetTargetNameMap')
     AssetTargetNames = Shapes::ListShape.new(name: 'AssetTargetNames')
     AssetTypeIdentifier = Shapes::StringShape.new(name: 'AssetTypeIdentifier')
+    AssetTypeIdentifiers = Shapes::ListShape.new(name: 'AssetTypeIdentifiers')
     AssetTypeItem = Shapes::StructureShape.new(name: 'AssetTypeItem')
+    AssetTypesForRule = Shapes::StructureShape.new(name: 'AssetTypesForRule')
     AssociateEnvironmentRoleInput = Shapes::StructureShape.new(name: 'AssociateEnvironmentRoleInput')
     AssociateEnvironmentRoleOutput = Shapes::StructureShape.new(name: 'AssociateEnvironmentRoleOutput')
     Attribute = Shapes::StringShape.new(name: 'Attribute')
@@ -127,6 +129,8 @@ module Aws::DataZone
     CreateProjectMembershipOutput = Shapes::StructureShape.new(name: 'CreateProjectMembershipOutput')
     CreateProjectOutput = Shapes::StructureShape.new(name: 'CreateProjectOutput')
     CreateProjectPolicyGrantDetail = Shapes::StructureShape.new(name: 'CreateProjectPolicyGrantDetail')
+    CreateRuleInput = Shapes::StructureShape.new(name: 'CreateRuleInput')
+    CreateRuleOutput = Shapes::StructureShape.new(name: 'CreateRuleOutput')
     CreateSubscriptionGrantInput = Shapes::StructureShape.new(name: 'CreateSubscriptionGrantInput')
     CreateSubscriptionGrantOutput = Shapes::StructureShape.new(name: 'CreateSubscriptionGrantOutput')
     CreateSubscriptionRequestInput = Shapes::StructureShape.new(name: 'CreateSubscriptionRequestInput')
@@ -207,6 +211,8 @@ module Aws::DataZone
     DeleteProjectMembershipInput = Shapes::StructureShape.new(name: 'DeleteProjectMembershipInput')
     DeleteProjectMembershipOutput = Shapes::StructureShape.new(name: 'DeleteProjectMembershipOutput')
     DeleteProjectOutput = Shapes::StructureShape.new(name: 'DeleteProjectOutput')
+    DeleteRuleInput = Shapes::StructureShape.new(name: 'DeleteRuleInput')
+    DeleteRuleOutput = Shapes::StructureShape.new(name: 'DeleteRuleOutput')
     DeleteSubscriptionGrantInput = Shapes::StructureShape.new(name: 'DeleteSubscriptionGrantInput')
     DeleteSubscriptionGrantOutput = Shapes::StructureShape.new(name: 'DeleteSubscriptionGrantOutput')
     DeleteSubscriptionRequestInput = Shapes::StructureShape.new(name: 'DeleteSubscriptionRequestInput')
@@ -245,6 +251,7 @@ module Aws::DataZone
     DomainUnitPolicyGrantPrincipal = Shapes::StructureShape.new(name: 'DomainUnitPolicyGrantPrincipal')
     DomainUnitSummaries = Shapes::ListShape.new(name: 'DomainUnitSummaries')
     DomainUnitSummary = Shapes::StructureShape.new(name: 'DomainUnitSummary')
+    DomainUnitTarget = Shapes::StructureShape.new(name: 'DomainUnitTarget')
     DomainUnitUserProperties = Shapes::StructureShape.new(name: 'DomainUnitUserProperties')
     EdgeDirection = Shapes::StringShape.new(name: 'EdgeDirection')
     EditedValue = Shapes::StringShape.new(name: 'EditedValue')
@@ -355,6 +362,8 @@ module Aws::DataZone
     GetMetadataGenerationRunOutput = Shapes::StructureShape.new(name: 'GetMetadataGenerationRunOutput')
     GetProjectInput = Shapes::StructureShape.new(name: 'GetProjectInput')
     GetProjectOutput = Shapes::StructureShape.new(name: 'GetProjectOutput')
+    GetRuleInput = Shapes::StructureShape.new(name: 'GetRuleInput')
+    GetRuleOutput = Shapes::StructureShape.new(name: 'GetRuleOutput')
     GetSubscriptionGrantInput = Shapes::StructureShape.new(name: 'GetSubscriptionGrantInput')
     GetSubscriptionGrantOutput = Shapes::StructureShape.new(name: 'GetSubscriptionGrantOutput')
     GetSubscriptionInput = Shapes::StructureShape.new(name: 'GetSubscriptionInput')
@@ -465,6 +474,9 @@ module Aws::DataZone
     ListProjectMembershipsOutput = Shapes::StructureShape.new(name: 'ListProjectMembershipsOutput')
     ListProjectsInput = Shapes::StructureShape.new(name: 'ListProjectsInput')
     ListProjectsOutput = Shapes::StructureShape.new(name: 'ListProjectsOutput')
+    ListRulesInput = Shapes::StructureShape.new(name: 'ListRulesInput')
+    ListRulesInputMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListRulesInputMaxResultsInteger')
+    ListRulesOutput = Shapes::StructureShape.new(name: 'ListRulesOutput')
     ListSubscriptionGrantsInput = Shapes::StructureShape.new(name: 'ListSubscriptionGrantsInput')
     ListSubscriptionGrantsOutput = Shapes::StructureShape.new(name: 'ListSubscriptionGrantsOutput')
     ListSubscriptionRequestsInput = Shapes::StructureShape.new(name: 'ListSubscriptionRequestsInput')
@@ -494,6 +506,12 @@ module Aws::DataZone
     Member = Shapes::UnionShape.new(name: 'Member')
     MemberDetails = Shapes::UnionShape.new(name: 'MemberDetails')
     Message = Shapes::StringShape.new(name: 'Message')
+    MetadataFormEnforcementDetail = Shapes::StructureShape.new(name: 'MetadataFormEnforcementDetail')
+    MetadataFormInputs = Shapes::ListShape.new(name: 'MetadataFormInputs')
+    MetadataFormReference = Shapes::StructureShape.new(name: 'MetadataFormReference')
+    MetadataFormSummary = Shapes::StructureShape.new(name: 'MetadataFormSummary')
+    MetadataForms = Shapes::ListShape.new(name: 'MetadataForms')
+    MetadataFormsSummary = Shapes::ListShape.new(name: 'MetadataFormsSummary')
     MetadataGenerationRunIdentifier = Shapes::StringShape.new(name: 'MetadataGenerationRunIdentifier')
     MetadataGenerationRunItem = Shapes::StructureShape.new(name: 'MetadataGenerationRunItem')
     MetadataGenerationRunStatus = Shapes::StringShape.new(name: 'MetadataGenerationRunStatus')
@@ -537,6 +555,7 @@ module Aws::DataZone
     ProjectDesignation = Shapes::StringShape.new(name: 'ProjectDesignation')
     ProjectGrantFilter = Shapes::UnionShape.new(name: 'ProjectGrantFilter')
     ProjectId = Shapes::StringShape.new(name: 'ProjectId')
+    ProjectIds = Shapes::ListShape.new(name: 'ProjectIds')
     ProjectMember = Shapes::StructureShape.new(name: 'ProjectMember')
     ProjectMembers = Shapes::ListShape.new(name: 'ProjectMembers')
     ProjectName = Shapes::StringShape.new(name: 'ProjectName')
@@ -544,6 +563,7 @@ module Aws::DataZone
     ProjectStatus = Shapes::StringShape.new(name: 'ProjectStatus')
     ProjectSummaries = Shapes::ListShape.new(name: 'ProjectSummaries')
     ProjectSummary = Shapes::StructureShape.new(name: 'ProjectSummary')
+    ProjectsForRule = Shapes::StructureShape.new(name: 'ProjectsForRule')
     ProvisioningConfiguration = Shapes::UnionShape.new(name: 'ProvisioningConfiguration')
     ProvisioningConfigurationList = Shapes::ListShape.new(name: 'ProvisioningConfigurationList')
     ProvisioningProperties = Shapes::UnionShape.new(name: 'ProvisioningProperties')
@@ -586,10 +606,12 @@ module Aws::DataZone
     RemovePolicyGrantInput = Shapes::StructureShape.new(name: 'RemovePolicyGrantInput')
     RemovePolicyGrantOutput = Shapes::StructureShape.new(name: 'RemovePolicyGrantOutput')
     RequestReason = Shapes::StringShape.new(name: 'RequestReason')
+    RequiredMetadataFormList = Shapes::ListShape.new(name: 'RequiredMetadataFormList')
     Resource = Shapes::StructureShape.new(name: 'Resource')
     ResourceList = Shapes::ListShape.new(name: 'ResourceList')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     Revision = Shapes::StringShape.new(name: 'Revision')
+    RevisionInput = Shapes::StringShape.new(name: 'RevisionInput')
     RevokeSubscriptionInput = Shapes::StructureShape.new(name: 'RevokeSubscriptionInput')
     RevokeSubscriptionOutput = Shapes::StructureShape.new(name: 'RevokeSubscriptionOutput')
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
@@ -597,6 +619,19 @@ module Aws::DataZone
     RowFilterConfiguration = Shapes::StructureShape.new(name: 'RowFilterConfiguration')
     RowFilterExpression = Shapes::UnionShape.new(name: 'RowFilterExpression')
     RowFilterList = Shapes::ListShape.new(name: 'RowFilterList')
+    RuleAction = Shapes::StringShape.new(name: 'RuleAction')
+    RuleAssetTypeList = Shapes::ListShape.new(name: 'RuleAssetTypeList')
+    RuleDetail = Shapes::UnionShape.new(name: 'RuleDetail')
+    RuleId = Shapes::StringShape.new(name: 'RuleId')
+    RuleName = Shapes::StringShape.new(name: 'RuleName')
+    RuleProjectIdentifierList = Shapes::ListShape.new(name: 'RuleProjectIdentifierList')
+    RuleScope = Shapes::StructureShape.new(name: 'RuleScope')
+    RuleScopeSelectionMode = Shapes::StringShape.new(name: 'RuleScopeSelectionMode')
+    RuleSummaries = Shapes::ListShape.new(name: 'RuleSummaries')
+    RuleSummary = Shapes::StructureShape.new(name: 'RuleSummary')
+    RuleTarget = Shapes::UnionShape.new(name: 'RuleTarget')
+    RuleTargetType = Shapes::StringShape.new(name: 'RuleTargetType')
+    RuleType = Shapes::StringShape.new(name: 'RuleType')
     RunStatisticsForAssets = Shapes::StructureShape.new(name: 'RunStatisticsForAssets')
     S3Location = Shapes::StringShape.new(name: 'S3Location')
     S3LocationList = Shapes::ListShape.new(name: 'S3LocationList')
@@ -735,6 +770,8 @@ module Aws::DataZone
     UpdateGroupProfileOutput = Shapes::StructureShape.new(name: 'UpdateGroupProfileOutput')
     UpdateProjectInput = Shapes::StructureShape.new(name: 'UpdateProjectInput')
     UpdateProjectOutput = Shapes::StructureShape.new(name: 'UpdateProjectOutput')
+    UpdateRuleInput = Shapes::StructureShape.new(name: 'UpdateRuleInput')
+    UpdateRuleOutput = Shapes::StructureShape.new(name: 'UpdateRuleOutput')
     UpdateSubscriptionGrantStatusInput = Shapes::StructureShape.new(name: 'UpdateSubscriptionGrantStatusInput')
     UpdateSubscriptionGrantStatusOutput = Shapes::StructureShape.new(name: 'UpdateSubscriptionGrantStatusOutput')
     UpdateSubscriptionRequestInput = Shapes::StructureShape.new(name: 'UpdateSubscriptionRequestInput')
@@ -798,7 +835,9 @@ module Aws::DataZone
     AcceptSubscriptionRequestOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
     AcceptSubscriptionRequestOutput.add_member(:decision_comment, Shapes::ShapeRef.new(shape: DecisionComment, location_name: "decisionComment"))
     AcceptSubscriptionRequestOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
+    AcceptSubscriptionRequestOutput.add_member(:existing_subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "existingSubscriptionId"))
     AcceptSubscriptionRequestOutput.add_member(:id, Shapes::ShapeRef.new(shape: SubscriptionRequestId, required: true, location_name: "id"))
+    AcceptSubscriptionRequestOutput.add_member(:metadata_forms, Shapes::ShapeRef.new(shape: MetadataForms, location_name: "metadataForms"))
     AcceptSubscriptionRequestOutput.add_member(:request_reason, Shapes::ShapeRef.new(shape: RequestReason, required: true, location_name: "requestReason"))
     AcceptSubscriptionRequestOutput.add_member(:reviewer_id, Shapes::ShapeRef.new(shape: String, location_name: "reviewerId"))
     AcceptSubscriptionRequestOutput.add_member(:status, Shapes::ShapeRef.new(shape: SubscriptionRequestStatus, required: true, location_name: "status"))
@@ -960,6 +999,8 @@ module Aws::DataZone
 
     AssetTargetNames.member = Shapes::ShapeRef.new(shape: AssetTargetNameMap)
 
+    AssetTypeIdentifiers.member = Shapes::ShapeRef.new(shape: AssetTypeIdentifier)
+
     AssetTypeItem.add_member(:created_at, Shapes::ShapeRef.new(shape: CreatedAt, location_name: "createdAt"))
     AssetTypeItem.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, location_name: "createdBy"))
     AssetTypeItem.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -973,6 +1014,10 @@ module Aws::DataZone
     AssetTypeItem.add_member(:updated_at, Shapes::ShapeRef.new(shape: UpdatedAt, location_name: "updatedAt"))
     AssetTypeItem.add_member(:updated_by, Shapes::ShapeRef.new(shape: UpdatedBy, location_name: "updatedBy"))
     AssetTypeItem.struct_class = Types::AssetTypeItem
+
+    AssetTypesForRule.add_member(:selection_mode, Shapes::ShapeRef.new(shape: RuleScopeSelectionMode, required: true, location_name: "selectionMode"))
+    AssetTypesForRule.add_member(:specific_asset_types, Shapes::ShapeRef.new(shape: RuleAssetTypeList, location_name: "specificAssetTypes"))
+    AssetTypesForRule.struct_class = Types::AssetTypesForRule
 
     AssociateEnvironmentRoleInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
     AssociateEnvironmentRoleInput.add_member(:environment_identifier, Shapes::ShapeRef.new(shape: EnvironmentId, required: true, location: "uri", location_name: "environmentIdentifier"))
@@ -1468,6 +1513,29 @@ module Aws::DataZone
     CreateProjectPolicyGrantDetail.add_member(:include_child_domain_units, Shapes::ShapeRef.new(shape: Boolean, location_name: "includeChildDomainUnits"))
     CreateProjectPolicyGrantDetail.struct_class = Types::CreateProjectPolicyGrantDetail
 
+    CreateRuleInput.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, required: true, location_name: "action"))
+    CreateRuleInput.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateRuleInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
+    CreateRuleInput.add_member(:detail, Shapes::ShapeRef.new(shape: RuleDetail, required: true, location_name: "detail"))
+    CreateRuleInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
+    CreateRuleInput.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, required: true, location_name: "name"))
+    CreateRuleInput.add_member(:scope, Shapes::ShapeRef.new(shape: RuleScope, required: true, location_name: "scope"))
+    CreateRuleInput.add_member(:target, Shapes::ShapeRef.new(shape: RuleTarget, required: true, location_name: "target"))
+    CreateRuleInput.struct_class = Types::CreateRuleInput
+
+    CreateRuleOutput.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, required: true, location_name: "action"))
+    CreateRuleOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: CreatedAt, required: true, location_name: "createdAt"))
+    CreateRuleOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
+    CreateRuleOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
+    CreateRuleOutput.add_member(:detail, Shapes::ShapeRef.new(shape: RuleDetail, required: true, location_name: "detail"))
+    CreateRuleOutput.add_member(:identifier, Shapes::ShapeRef.new(shape: RuleId, required: true, location_name: "identifier"))
+    CreateRuleOutput.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, required: true, location_name: "name"))
+    CreateRuleOutput.add_member(:rule_type, Shapes::ShapeRef.new(shape: RuleType, required: true, location_name: "ruleType"))
+    CreateRuleOutput.add_member(:scope, Shapes::ShapeRef.new(shape: RuleScope, required: true, location_name: "scope"))
+    CreateRuleOutput.add_member(:target, Shapes::ShapeRef.new(shape: RuleTarget, required: true, location_name: "target"))
+    CreateRuleOutput.add_member(:target_type, Shapes::ShapeRef.new(shape: RuleTargetType, location_name: "targetType"))
+    CreateRuleOutput.struct_class = Types::CreateRuleOutput
+
     CreateSubscriptionGrantInput.add_member(:asset_target_names, Shapes::ShapeRef.new(shape: AssetTargetNames, location_name: "assetTargetNames"))
     CreateSubscriptionGrantInput.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateSubscriptionGrantInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
@@ -1491,6 +1559,7 @@ module Aws::DataZone
 
     CreateSubscriptionRequestInput.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateSubscriptionRequestInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
+    CreateSubscriptionRequestInput.add_member(:metadata_forms, Shapes::ShapeRef.new(shape: MetadataFormInputs, location_name: "metadataForms"))
     CreateSubscriptionRequestInput.add_member(:request_reason, Shapes::ShapeRef.new(shape: RequestReason, required: true, location_name: "requestReason"))
     CreateSubscriptionRequestInput.add_member(:subscribed_listings, Shapes::ShapeRef.new(shape: SubscribedListingInputs, required: true, location_name: "subscribedListings"))
     CreateSubscriptionRequestInput.add_member(:subscribed_principals, Shapes::ShapeRef.new(shape: SubscribedPrincipalInputs, required: true, location_name: "subscribedPrincipals"))
@@ -1500,7 +1569,9 @@ module Aws::DataZone
     CreateSubscriptionRequestOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
     CreateSubscriptionRequestOutput.add_member(:decision_comment, Shapes::ShapeRef.new(shape: DecisionComment, location_name: "decisionComment"))
     CreateSubscriptionRequestOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
+    CreateSubscriptionRequestOutput.add_member(:existing_subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "existingSubscriptionId"))
     CreateSubscriptionRequestOutput.add_member(:id, Shapes::ShapeRef.new(shape: SubscriptionRequestId, required: true, location_name: "id"))
+    CreateSubscriptionRequestOutput.add_member(:metadata_forms, Shapes::ShapeRef.new(shape: MetadataForms, location_name: "metadataForms"))
     CreateSubscriptionRequestOutput.add_member(:request_reason, Shapes::ShapeRef.new(shape: RequestReason, required: true, location_name: "requestReason"))
     CreateSubscriptionRequestOutput.add_member(:reviewer_id, Shapes::ShapeRef.new(shape: String, location_name: "reviewerId"))
     CreateSubscriptionRequestOutput.add_member(:status, Shapes::ShapeRef.new(shape: SubscriptionRequestStatus, required: true, location_name: "status"))
@@ -1812,6 +1883,12 @@ module Aws::DataZone
 
     DeleteProjectOutput.struct_class = Types::DeleteProjectOutput
 
+    DeleteRuleInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
+    DeleteRuleInput.add_member(:identifier, Shapes::ShapeRef.new(shape: RuleId, required: true, location: "uri", location_name: "identifier"))
+    DeleteRuleInput.struct_class = Types::DeleteRuleInput
+
+    DeleteRuleOutput.struct_class = Types::DeleteRuleOutput
+
     DeleteSubscriptionGrantInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
     DeleteSubscriptionGrantInput.add_member(:identifier, Shapes::ShapeRef.new(shape: SubscriptionGrantId, required: true, location: "uri", location_name: "identifier"))
     DeleteSubscriptionGrantInput.struct_class = Types::DeleteSubscriptionGrantInput
@@ -1922,6 +1999,10 @@ module Aws::DataZone
     DomainUnitSummary.add_member(:id, Shapes::ShapeRef.new(shape: DomainUnitId, required: true, location_name: "id"))
     DomainUnitSummary.add_member(:name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "name"))
     DomainUnitSummary.struct_class = Types::DomainUnitSummary
+
+    DomainUnitTarget.add_member(:domain_unit_id, Shapes::ShapeRef.new(shape: DomainUnitId, required: true, location_name: "domainUnitId"))
+    DomainUnitTarget.add_member(:include_child_domain_units, Shapes::ShapeRef.new(shape: Boolean, location_name: "includeChildDomainUnits"))
+    DomainUnitTarget.struct_class = Types::DomainUnitTarget
 
     DomainUnitUserProperties.add_member(:user_id, Shapes::ShapeRef.new(shape: String, location_name: "userId"))
     DomainUnitUserProperties.struct_class = Types::DomainUnitUserProperties
@@ -2052,7 +2133,7 @@ module Aws::DataZone
     FormInput.add_member(:content, Shapes::ShapeRef.new(shape: FormInputContentString, location_name: "content"))
     FormInput.add_member(:form_name, Shapes::ShapeRef.new(shape: FormName, required: true, location_name: "formName"))
     FormInput.add_member(:type_identifier, Shapes::ShapeRef.new(shape: FormTypeIdentifier, location_name: "typeIdentifier"))
-    FormInput.add_member(:type_revision, Shapes::ShapeRef.new(shape: Revision, location_name: "typeRevision"))
+    FormInput.add_member(:type_revision, Shapes::ShapeRef.new(shape: RevisionInput, location_name: "typeRevision"))
     FormInput.struct_class = Types::FormInput
 
     FormInputList.member = Shapes::ShapeRef.new(shape: FormInput)
@@ -2489,6 +2570,27 @@ module Aws::DataZone
     GetProjectOutput.add_member(:project_status, Shapes::ShapeRef.new(shape: ProjectStatus, location_name: "projectStatus"))
     GetProjectOutput.struct_class = Types::GetProjectOutput
 
+    GetRuleInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
+    GetRuleInput.add_member(:identifier, Shapes::ShapeRef.new(shape: RuleId, required: true, location: "uri", location_name: "identifier"))
+    GetRuleInput.add_member(:revision, Shapes::ShapeRef.new(shape: Revision, location: "querystring", location_name: "revision"))
+    GetRuleInput.struct_class = Types::GetRuleInput
+
+    GetRuleOutput.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, required: true, location_name: "action"))
+    GetRuleOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: CreatedAt, required: true, location_name: "createdAt"))
+    GetRuleOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
+    GetRuleOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
+    GetRuleOutput.add_member(:detail, Shapes::ShapeRef.new(shape: RuleDetail, required: true, location_name: "detail"))
+    GetRuleOutput.add_member(:identifier, Shapes::ShapeRef.new(shape: RuleId, required: true, location_name: "identifier"))
+    GetRuleOutput.add_member(:last_updated_by, Shapes::ShapeRef.new(shape: UpdatedBy, required: true, location_name: "lastUpdatedBy"))
+    GetRuleOutput.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, required: true, location_name: "name"))
+    GetRuleOutput.add_member(:revision, Shapes::ShapeRef.new(shape: Revision, required: true, location_name: "revision"))
+    GetRuleOutput.add_member(:rule_type, Shapes::ShapeRef.new(shape: RuleType, required: true, location_name: "ruleType"))
+    GetRuleOutput.add_member(:scope, Shapes::ShapeRef.new(shape: RuleScope, required: true, location_name: "scope"))
+    GetRuleOutput.add_member(:target, Shapes::ShapeRef.new(shape: RuleTarget, required: true, location_name: "target"))
+    GetRuleOutput.add_member(:target_type, Shapes::ShapeRef.new(shape: RuleTargetType, location_name: "targetType"))
+    GetRuleOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: UpdatedAt, required: true, location_name: "updatedAt"))
+    GetRuleOutput.struct_class = Types::GetRuleOutput
+
     GetSubscriptionGrantInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
     GetSubscriptionGrantInput.add_member(:identifier, Shapes::ShapeRef.new(shape: SubscriptionGrantId, required: true, location: "uri", location_name: "identifier"))
     GetSubscriptionGrantInput.struct_class = Types::GetSubscriptionGrantInput
@@ -2531,7 +2633,9 @@ module Aws::DataZone
     GetSubscriptionRequestDetailsOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
     GetSubscriptionRequestDetailsOutput.add_member(:decision_comment, Shapes::ShapeRef.new(shape: DecisionComment, location_name: "decisionComment"))
     GetSubscriptionRequestDetailsOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
+    GetSubscriptionRequestDetailsOutput.add_member(:existing_subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "existingSubscriptionId"))
     GetSubscriptionRequestDetailsOutput.add_member(:id, Shapes::ShapeRef.new(shape: SubscriptionRequestId, required: true, location_name: "id"))
+    GetSubscriptionRequestDetailsOutput.add_member(:metadata_forms, Shapes::ShapeRef.new(shape: MetadataForms, location_name: "metadataForms"))
     GetSubscriptionRequestDetailsOutput.add_member(:request_reason, Shapes::ShapeRef.new(shape: RequestReason, required: true, location_name: "requestReason"))
     GetSubscriptionRequestDetailsOutput.add_member(:reviewer_id, Shapes::ShapeRef.new(shape: String, location_name: "reviewerId"))
     GetSubscriptionRequestDetailsOutput.add_member(:status, Shapes::ShapeRef.new(shape: SubscriptionRequestStatus, required: true, location_name: "status"))
@@ -2981,6 +3085,23 @@ module Aws::DataZone
     ListProjectsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListProjectsOutput.struct_class = Types::ListProjectsOutput
 
+    ListRulesInput.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, location: "querystring", location_name: "ruleAction"))
+    ListRulesInput.add_member(:asset_types, Shapes::ShapeRef.new(shape: AssetTypeIdentifiers, location: "querystring", location_name: "assetTypes"))
+    ListRulesInput.add_member(:data_product, Shapes::ShapeRef.new(shape: Boolean, location: "querystring", location_name: "dataProduct"))
+    ListRulesInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
+    ListRulesInput.add_member(:include_cascaded, Shapes::ShapeRef.new(shape: Boolean, location: "querystring", location_name: "includeCascaded"))
+    ListRulesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListRulesInputMaxResultsInteger, location: "querystring", location_name: "maxResults"))
+    ListRulesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
+    ListRulesInput.add_member(:project_ids, Shapes::ShapeRef.new(shape: ProjectIds, location: "querystring", location_name: "projectIds"))
+    ListRulesInput.add_member(:rule_type, Shapes::ShapeRef.new(shape: RuleType, location: "querystring", location_name: "ruleType"))
+    ListRulesInput.add_member(:target_identifier, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "targetIdentifier"))
+    ListRulesInput.add_member(:target_type, Shapes::ShapeRef.new(shape: RuleTargetType, required: true, location: "uri", location_name: "targetType"))
+    ListRulesInput.struct_class = Types::ListRulesInput
+
+    ListRulesOutput.add_member(:items, Shapes::ShapeRef.new(shape: RuleSummaries, required: true, location_name: "items"))
+    ListRulesOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListRulesOutput.struct_class = Types::ListRulesOutput
+
     ListSubscriptionGrantsInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
     ListSubscriptionGrantsInput.add_member(:environment_id, Shapes::ShapeRef.new(shape: EnvironmentId, location: "querystring", location_name: "environmentId"))
     ListSubscriptionGrantsInput.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
@@ -3105,6 +3226,24 @@ module Aws::DataZone
     MemberDetails.add_member_subclass(:user, Types::MemberDetails::User)
     MemberDetails.add_member_subclass(:unknown, Types::MemberDetails::Unknown)
     MemberDetails.struct_class = Types::MemberDetails
+
+    MetadataFormEnforcementDetail.add_member(:required_metadata_forms, Shapes::ShapeRef.new(shape: RequiredMetadataFormList, location_name: "requiredMetadataForms"))
+    MetadataFormEnforcementDetail.struct_class = Types::MetadataFormEnforcementDetail
+
+    MetadataFormInputs.member = Shapes::ShapeRef.new(shape: FormInput)
+
+    MetadataFormReference.add_member(:type_identifier, Shapes::ShapeRef.new(shape: FormTypeIdentifier, required: true, location_name: "typeIdentifier"))
+    MetadataFormReference.add_member(:type_revision, Shapes::ShapeRef.new(shape: Revision, required: true, location_name: "typeRevision"))
+    MetadataFormReference.struct_class = Types::MetadataFormReference
+
+    MetadataFormSummary.add_member(:form_name, Shapes::ShapeRef.new(shape: FormName, location_name: "formName"))
+    MetadataFormSummary.add_member(:type_name, Shapes::ShapeRef.new(shape: FormTypeName, required: true, location_name: "typeName"))
+    MetadataFormSummary.add_member(:type_revision, Shapes::ShapeRef.new(shape: Revision, required: true, location_name: "typeRevision"))
+    MetadataFormSummary.struct_class = Types::MetadataFormSummary
+
+    MetadataForms.member = Shapes::ShapeRef.new(shape: FormOutput)
+
+    MetadataFormsSummary.member = Shapes::ShapeRef.new(shape: MetadataFormSummary)
 
     MetadataGenerationRunItem.add_member(:created_at, Shapes::ShapeRef.new(shape: CreatedAt, location_name: "createdAt"))
     MetadataGenerationRunItem.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, location_name: "createdBy"))
@@ -3283,6 +3422,8 @@ module Aws::DataZone
     ProjectGrantFilter.add_member_subclass(:unknown, Types::ProjectGrantFilter::Unknown)
     ProjectGrantFilter.struct_class = Types::ProjectGrantFilter
 
+    ProjectIds.member = Shapes::ShapeRef.new(shape: ProjectId)
+
     ProjectMember.add_member(:designation, Shapes::ShapeRef.new(shape: UserDesignation, required: true, location_name: "designation"))
     ProjectMember.add_member(:member_details, Shapes::ShapeRef.new(shape: MemberDetails, required: true, location_name: "memberDetails"))
     ProjectMember.struct_class = Types::ProjectMember
@@ -3307,6 +3448,10 @@ module Aws::DataZone
     ProjectSummary.add_member(:project_status, Shapes::ShapeRef.new(shape: ProjectStatus, location_name: "projectStatus"))
     ProjectSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "updatedAt"))
     ProjectSummary.struct_class = Types::ProjectSummary
+
+    ProjectsForRule.add_member(:selection_mode, Shapes::ShapeRef.new(shape: RuleScopeSelectionMode, required: true, location_name: "selectionMode"))
+    ProjectsForRule.add_member(:specific_projects, Shapes::ShapeRef.new(shape: RuleProjectIdentifierList, location_name: "specificProjects"))
+    ProjectsForRule.struct_class = Types::ProjectsForRule
 
     ProvisioningConfiguration.add_member(:lake_formation_configuration, Shapes::ShapeRef.new(shape: LakeFormationConfiguration, location_name: "lakeFormationConfiguration"))
     ProvisioningConfiguration.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
@@ -3417,7 +3562,9 @@ module Aws::DataZone
     RejectSubscriptionRequestOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
     RejectSubscriptionRequestOutput.add_member(:decision_comment, Shapes::ShapeRef.new(shape: DecisionComment, location_name: "decisionComment"))
     RejectSubscriptionRequestOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
+    RejectSubscriptionRequestOutput.add_member(:existing_subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "existingSubscriptionId"))
     RejectSubscriptionRequestOutput.add_member(:id, Shapes::ShapeRef.new(shape: SubscriptionRequestId, required: true, location_name: "id"))
+    RejectSubscriptionRequestOutput.add_member(:metadata_forms, Shapes::ShapeRef.new(shape: MetadataForms, location_name: "metadataForms"))
     RejectSubscriptionRequestOutput.add_member(:request_reason, Shapes::ShapeRef.new(shape: RequestReason, required: true, location_name: "requestReason"))
     RejectSubscriptionRequestOutput.add_member(:reviewer_id, Shapes::ShapeRef.new(shape: String, location_name: "reviewerId"))
     RejectSubscriptionRequestOutput.add_member(:status, Shapes::ShapeRef.new(shape: SubscriptionRequestStatus, required: true, location_name: "status"))
@@ -3456,6 +3603,8 @@ module Aws::DataZone
     RemovePolicyGrantInput.struct_class = Types::RemovePolicyGrantInput
 
     RemovePolicyGrantOutput.struct_class = Types::RemovePolicyGrantOutput
+
+    RequiredMetadataFormList.member = Shapes::ShapeRef.new(shape: MetadataFormReference)
 
     Resource.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "name"))
     Resource.add_member(:provider, Shapes::ShapeRef.new(shape: String, location_name: "provider"))
@@ -3529,6 +3678,41 @@ module Aws::DataZone
     RowFilterExpression.struct_class = Types::RowFilterExpression
 
     RowFilterList.member = Shapes::ShapeRef.new(shape: RowFilter)
+
+    RuleAssetTypeList.member = Shapes::ShapeRef.new(shape: AssetTypeIdentifier)
+
+    RuleDetail.add_member(:metadata_form_enforcement_detail, Shapes::ShapeRef.new(shape: MetadataFormEnforcementDetail, location_name: "metadataFormEnforcementDetail"))
+    RuleDetail.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    RuleDetail.add_member_subclass(:metadata_form_enforcement_detail, Types::RuleDetail::MetadataFormEnforcementDetail)
+    RuleDetail.add_member_subclass(:unknown, Types::RuleDetail::Unknown)
+    RuleDetail.struct_class = Types::RuleDetail
+
+    RuleProjectIdentifierList.member = Shapes::ShapeRef.new(shape: ProjectId)
+
+    RuleScope.add_member(:asset_type, Shapes::ShapeRef.new(shape: AssetTypesForRule, location_name: "assetType"))
+    RuleScope.add_member(:data_product, Shapes::ShapeRef.new(shape: Boolean, location_name: "dataProduct"))
+    RuleScope.add_member(:project, Shapes::ShapeRef.new(shape: ProjectsForRule, location_name: "project"))
+    RuleScope.struct_class = Types::RuleScope
+
+    RuleSummaries.member = Shapes::ShapeRef.new(shape: RuleSummary)
+
+    RuleSummary.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, location_name: "action"))
+    RuleSummary.add_member(:identifier, Shapes::ShapeRef.new(shape: RuleId, location_name: "identifier"))
+    RuleSummary.add_member(:last_updated_by, Shapes::ShapeRef.new(shape: UpdatedBy, location_name: "lastUpdatedBy"))
+    RuleSummary.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, location_name: "name"))
+    RuleSummary.add_member(:revision, Shapes::ShapeRef.new(shape: Revision, location_name: "revision"))
+    RuleSummary.add_member(:rule_type, Shapes::ShapeRef.new(shape: RuleType, location_name: "ruleType"))
+    RuleSummary.add_member(:scope, Shapes::ShapeRef.new(shape: RuleScope, location_name: "scope"))
+    RuleSummary.add_member(:target, Shapes::ShapeRef.new(shape: RuleTarget, location_name: "target"))
+    RuleSummary.add_member(:target_type, Shapes::ShapeRef.new(shape: RuleTargetType, location_name: "targetType"))
+    RuleSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: UpdatedAt, location_name: "updatedAt"))
+    RuleSummary.struct_class = Types::RuleSummary
+
+    RuleTarget.add_member(:domain_unit_target, Shapes::ShapeRef.new(shape: DomainUnitTarget, location_name: "domainUnitTarget"))
+    RuleTarget.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    RuleTarget.add_member_subclass(:domain_unit_target, Types::RuleTarget::DomainUnitTarget)
+    RuleTarget.add_member_subclass(:unknown, Types::RuleTarget::Unknown)
+    RuleTarget.struct_class = Types::RuleTarget
 
     RunStatisticsForAssets.add_member(:added, Shapes::ShapeRef.new(shape: Integer, location_name: "added"))
     RunStatisticsForAssets.add_member(:failed, Shapes::ShapeRef.new(shape: Integer, location_name: "failed"))
@@ -3816,7 +4000,9 @@ module Aws::DataZone
     SubscriptionRequestSummary.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
     SubscriptionRequestSummary.add_member(:decision_comment, Shapes::ShapeRef.new(shape: DecisionComment, location_name: "decisionComment"))
     SubscriptionRequestSummary.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
+    SubscriptionRequestSummary.add_member(:existing_subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "existingSubscriptionId"))
     SubscriptionRequestSummary.add_member(:id, Shapes::ShapeRef.new(shape: SubscriptionRequestId, required: true, location_name: "id"))
+    SubscriptionRequestSummary.add_member(:metadata_forms_summary, Shapes::ShapeRef.new(shape: MetadataFormsSummary, location_name: "metadataFormsSummary"))
     SubscriptionRequestSummary.add_member(:request_reason, Shapes::ShapeRef.new(shape: RequestReason, required: true, location_name: "requestReason"))
     SubscriptionRequestSummary.add_member(:reviewer_id, Shapes::ShapeRef.new(shape: String, location_name: "reviewerId"))
     SubscriptionRequestSummary.add_member(:status, Shapes::ShapeRef.new(shape: SubscriptionRequestStatus, required: true, location_name: "status"))
@@ -4168,6 +4354,30 @@ module Aws::DataZone
     UpdateProjectOutput.add_member(:project_status, Shapes::ShapeRef.new(shape: ProjectStatus, location_name: "projectStatus"))
     UpdateProjectOutput.struct_class = Types::UpdateProjectOutput
 
+    UpdateRuleInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
+    UpdateRuleInput.add_member(:detail, Shapes::ShapeRef.new(shape: RuleDetail, location_name: "detail"))
+    UpdateRuleInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
+    UpdateRuleInput.add_member(:identifier, Shapes::ShapeRef.new(shape: RuleId, required: true, location: "uri", location_name: "identifier"))
+    UpdateRuleInput.add_member(:include_child_domain_units, Shapes::ShapeRef.new(shape: Boolean, location_name: "includeChildDomainUnits"))
+    UpdateRuleInput.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, location_name: "name"))
+    UpdateRuleInput.add_member(:scope, Shapes::ShapeRef.new(shape: RuleScope, location_name: "scope"))
+    UpdateRuleInput.struct_class = Types::UpdateRuleInput
+
+    UpdateRuleOutput.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, required: true, location_name: "action"))
+    UpdateRuleOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: CreatedAt, required: true, location_name: "createdAt"))
+    UpdateRuleOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
+    UpdateRuleOutput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
+    UpdateRuleOutput.add_member(:detail, Shapes::ShapeRef.new(shape: RuleDetail, required: true, location_name: "detail"))
+    UpdateRuleOutput.add_member(:identifier, Shapes::ShapeRef.new(shape: RuleId, required: true, location_name: "identifier"))
+    UpdateRuleOutput.add_member(:last_updated_by, Shapes::ShapeRef.new(shape: UpdatedBy, required: true, location_name: "lastUpdatedBy"))
+    UpdateRuleOutput.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, required: true, location_name: "name"))
+    UpdateRuleOutput.add_member(:revision, Shapes::ShapeRef.new(shape: Revision, required: true, location_name: "revision"))
+    UpdateRuleOutput.add_member(:rule_type, Shapes::ShapeRef.new(shape: RuleType, required: true, location_name: "ruleType"))
+    UpdateRuleOutput.add_member(:scope, Shapes::ShapeRef.new(shape: RuleScope, required: true, location_name: "scope"))
+    UpdateRuleOutput.add_member(:target, Shapes::ShapeRef.new(shape: RuleTarget, required: true, location_name: "target"))
+    UpdateRuleOutput.add_member(:updated_at, Shapes::ShapeRef.new(shape: UpdatedAt, required: true, location_name: "updatedAt"))
+    UpdateRuleOutput.struct_class = Types::UpdateRuleOutput
+
     UpdateSubscriptionGrantStatusInput.add_member(:asset_identifier, Shapes::ShapeRef.new(shape: AssetId, required: true, location: "uri", location_name: "assetIdentifier"))
     UpdateSubscriptionGrantStatusInput.add_member(:domain_identifier, Shapes::ShapeRef.new(shape: DomainId, required: true, location: "uri", location_name: "domainIdentifier"))
     UpdateSubscriptionGrantStatusInput.add_member(:failure_cause, Shapes::ShapeRef.new(shape: FailureCause, location_name: "failureCause"))
@@ -4198,7 +4408,9 @@ module Aws::DataZone
     UpdateSubscriptionRequestOutput.add_member(:created_by, Shapes::ShapeRef.new(shape: CreatedBy, required: true, location_name: "createdBy"))
     UpdateSubscriptionRequestOutput.add_member(:decision_comment, Shapes::ShapeRef.new(shape: DecisionComment, location_name: "decisionComment"))
     UpdateSubscriptionRequestOutput.add_member(:domain_id, Shapes::ShapeRef.new(shape: DomainId, required: true, location_name: "domainId"))
+    UpdateSubscriptionRequestOutput.add_member(:existing_subscription_id, Shapes::ShapeRef.new(shape: SubscriptionId, location_name: "existingSubscriptionId"))
     UpdateSubscriptionRequestOutput.add_member(:id, Shapes::ShapeRef.new(shape: SubscriptionRequestId, required: true, location_name: "id"))
+    UpdateSubscriptionRequestOutput.add_member(:metadata_forms, Shapes::ShapeRef.new(shape: MetadataForms, location_name: "metadataForms"))
     UpdateSubscriptionRequestOutput.add_member(:request_reason, Shapes::ShapeRef.new(shape: RequestReason, required: true, location_name: "requestReason"))
     UpdateSubscriptionRequestOutput.add_member(:reviewer_id, Shapes::ShapeRef.new(shape: String, location_name: "reviewerId"))
     UpdateSubscriptionRequestOutput.add_member(:status, Shapes::ShapeRef.new(shape: SubscriptionRequestStatus, required: true, location_name: "status"))
@@ -4700,6 +4912,22 @@ module Aws::DataZone
         o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
       end)
 
+      api.add_operation(:create_rule, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateRule"
+        o.http_method = "POST"
+        o.http_request_uri = "/v2/domains/{domainIdentifier}/rules"
+        o.input = Shapes::ShapeRef.new(shape: CreateRuleInput)
+        o.output = Shapes::ShapeRef.new(shape: CreateRuleOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+      end)
+
       api.add_operation(:create_subscription_grant, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateSubscriptionGrant"
         o.http_method = "POST"
@@ -5006,6 +5234,21 @@ module Aws::DataZone
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+      end)
+
+      api.add_operation(:delete_rule, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteRule"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/v2/domains/{domainIdentifier}/rules/{identifier}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteRuleInput)
+        o.output = Shapes::ShapeRef.new(shape: DeleteRuleOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
       end)
@@ -5404,6 +5647,20 @@ module Aws::DataZone
         o.http_request_uri = "/v2/domains/{domainIdentifier}/projects/{identifier}"
         o.input = Shapes::ShapeRef.new(shape: GetProjectInput)
         o.output = Shapes::ShapeRef.new(shape: GetProjectOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+      end)
+
+      api.add_operation(:get_rule, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetRule"
+        o.http_method = "GET"
+        o.http_request_uri = "/v2/domains/{domainIdentifier}/rules/{identifier}"
+        o.input = Shapes::ShapeRef.new(shape: GetRuleInput)
+        o.output = Shapes::ShapeRef.new(shape: GetRuleOutput)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -5885,6 +6142,26 @@ module Aws::DataZone
         o.input = Shapes::ShapeRef.new(shape: ListProjectsInput)
         o.output = Shapes::ShapeRef.new(shape: ListProjectsOutput)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_rules, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListRules"
+        o.http_method = "GET"
+        o.http_request_uri = "/v2/domains/{domainIdentifier}/list-rules/{targetType}/{targetIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: ListRulesInput)
+        o.output = Shapes::ShapeRef.new(shape: ListRulesOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -6444,6 +6721,22 @@ module Aws::DataZone
         o.http_request_uri = "/v2/domains/{domainIdentifier}/projects/{identifier}"
         o.input = Shapes::ShapeRef.new(shape: UpdateProjectInput)
         o.output = Shapes::ShapeRef.new(shape: UpdateProjectOutput)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+      end)
+
+      api.add_operation(:update_rule, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateRule"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/v2/domains/{domainIdentifier}/rules/{identifier}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateRuleInput)
+        o.output = Shapes::ShapeRef.new(shape: UpdateRuleOutput)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)

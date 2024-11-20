@@ -2624,6 +2624,19 @@ module Aws::ECS
     #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-types.html
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone_rebalancing
+    #   Indicates whether to use Availability Zone rebalancing for the
+    #   service.
+    #
+    #   For more information, see [Balancing an Amazon ECS service across
+    #   Availability Zones][1] in the *Amazon Elastic Container Service
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html
+    #   @return [String]
+    #
     # @!attribute [rw] load_balancers
     #   A load balancer object representing the load balancers to use with
     #   your service. For more information, see [Service load balancing][1]
@@ -2991,6 +3004,7 @@ module Aws::ECS
       :cluster,
       :service_name,
       :task_definition,
+      :availability_zone_rebalancing,
       :load_balancers,
       :service_registries,
       :desired_count,
@@ -3923,13 +3937,7 @@ module Aws::ECS
       include Aws::Structure
     end
 
-    # The deployment controller to use for the service. For more
-    # information, see [Amazon ECS deployment types][1] in the *Amazon
-    # Elastic Container Service Developer Guide*.
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-types.html
+    # The deployment controller to use for the service.
     #
     # @!attribute [rw] type
     #   The deployment controller type to use.
@@ -3946,6 +3954,10 @@ module Aws::ECS
     #     service deployment, as specified in the
     #     [DeploymentConfiguration][1].
     #
+    #     For more information about rolling deployments, see [Deploy Amazon
+    #     ECS services by replacing tasks][2] in the *Amazon Elastic
+    #     Container Service Developer Guide*.
+    #
     #   CODE\_DEPLOY
     #
     #   : The blue/green (`CODE_DEPLOY`) deployment type uses the blue/green
@@ -3953,15 +3965,26 @@ module Aws::ECS
     #     a new deployment of a service before sending production traffic to
     #     it.
     #
+    #     For more information about blue/green deployments, see [Validate
+    #     the state of an Amazon ECS service before deployment ][3] in the
+    #     *Amazon Elastic Container Service Developer Guide*.
+    #
     #   EXTERNAL
     #
     #   : The external (`EXTERNAL`) deployment type enables you to use any
     #     third-party deployment controller for full control over the
     #     deployment process for an Amazon ECS service.
     #
+    #     For more information about external deployments, see [Deploy
+    #     Amazon ECS services using a third-party controller ][4] in the
+    #     *Amazon Elastic Container Service Developer Guide*.
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_DeploymentConfiguration.html
+    #   [2]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-ecs.html
+    #   [3]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-bluegreen.html
+    #   [4]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-type-external.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/DeploymentController AWS API Documentation
@@ -9503,6 +9526,19 @@ module Aws::ECS
     #   turned on for all containers in tasks as part of the service.
     #   @return [Boolean]
     #
+    # @!attribute [rw] availability_zone_rebalancing
+    #   Indicates whether to use Availability Zone rebalancing for the
+    #   service.
+    #
+    #   For more information, see [Balancing an Amazon ECS service across
+    #   Availability Zones][1] in the *Amazon Elastic Container Service
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/Service AWS API Documentation
     #
     class Service < Struct.new(
@@ -9536,7 +9572,8 @@ module Aws::ECS
       :created_by,
       :enable_ecs_managed_tags,
       :propagate_tags,
-      :enable_execute_command)
+      :enable_execute_command,
+      :availability_zone_rebalancing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13149,6 +13186,19 @@ module Aws::ECS
     #   tasks.
     #   @return [Types::DeploymentConfiguration]
     #
+    # @!attribute [rw] availability_zone_rebalancing
+    #   Indicates whether to use Availability Zone rebalancing for the
+    #   service.
+    #
+    #   For more information, see [Balancing an Amazon ECS service across
+    #   Availability Zones][1] in the *Amazon Elastic Container Service
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html
+    #   @return [String]
+    #
     # @!attribute [rw] network_configuration
     #   An object representing the network configuration for the service.
     #   @return [Types::NetworkConfiguration]
@@ -13350,6 +13400,7 @@ module Aws::ECS
       :task_definition,
       :capacity_provider_strategy,
       :deployment_configuration,
+      :availability_zone_rebalancing,
       :network_configuration,
       :placement_constraints,
       :placement_strategy,

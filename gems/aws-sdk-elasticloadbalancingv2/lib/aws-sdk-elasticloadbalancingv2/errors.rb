@@ -31,6 +31,9 @@ module Aws::ElasticLoadBalancingV2
   # * {AllocationIdNotFoundException}
   # * {AvailabilityZoneNotSupportedException}
   # * {CaCertificatesBundleNotFoundException}
+  # * {CapacityDecreaseRequestsLimitExceededException}
+  # * {CapacityReservationPendingException}
+  # * {CapacityUnitsLimitExceededException}
   # * {CertificateNotFoundException}
   # * {DeleteAssociationSameAccountException}
   # * {DuplicateListenerException}
@@ -40,6 +43,7 @@ module Aws::ElasticLoadBalancingV2
   # * {DuplicateTrustStoreNameException}
   # * {HealthUnavailableException}
   # * {IncompatibleProtocolsException}
+  # * {InsufficientCapacityException}
   # * {InvalidCaCertificatesBundleException}
   # * {InvalidConfigurationRequestException}
   # * {InvalidLoadBalancerActionException}
@@ -51,6 +55,7 @@ module Aws::ElasticLoadBalancingV2
   # * {ListenerNotFoundException}
   # * {LoadBalancerNotFoundException}
   # * {OperationNotPermittedException}
+  # * {PriorRequestNotCompleteException}
   # * {PriorityInUseException}
   # * {ResourceInUseException}
   # * {ResourceNotFoundException}
@@ -120,6 +125,36 @@ module Aws::ElasticLoadBalancingV2
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::ElasticLoadBalancingV2::Types::CaCertificatesBundleNotFoundException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class CapacityDecreaseRequestsLimitExceededException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ElasticLoadBalancingV2::Types::CapacityDecreaseRequestsLimitExceededException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class CapacityReservationPendingException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ElasticLoadBalancingV2::Types::CapacityReservationPendingException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class CapacityUnitsLimitExceededException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ElasticLoadBalancingV2::Types::CapacityUnitsLimitExceededException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end
@@ -210,6 +245,16 @@ module Aws::ElasticLoadBalancingV2
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::ElasticLoadBalancingV2::Types::IncompatibleProtocolsException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class InsufficientCapacityException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ElasticLoadBalancingV2::Types::InsufficientCapacityException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end
@@ -320,6 +365,16 @@ module Aws::ElasticLoadBalancingV2
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::ElasticLoadBalancingV2::Types::OperationNotPermittedException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class PriorRequestNotCompleteException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ElasticLoadBalancingV2::Types::PriorRequestNotCompleteException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

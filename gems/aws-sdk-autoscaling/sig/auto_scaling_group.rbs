@@ -120,6 +120,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/AutoScaling/AutoScalingGroup.html#availability_zone_impairment_policy-instance_method
       def availability_zone_impairment_policy: () -> Types::AvailabilityZoneImpairmentPolicy
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/AutoScaling/AutoScalingGroup.html#capacity_reservation_specification-instance_method
+      def capacity_reservation_specification: () -> Types::CapacityReservationSpecification
+
       def client: () -> Client
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/AutoScaling/AutoScalingGroup.html#load-instance_method
@@ -447,7 +450,16 @@ module Aws
                                 min: ::Float?,
                                 max: ::Float?
                               }?,
-                              allowed_instance_types: Array[::String]?
+                              allowed_instance_types: Array[::String]?,
+                              baseline_performance_factors: {
+                                cpu: {
+                                  references: Array[
+                                    {
+                                      instance_family: ::String?
+                                    },
+                                  ]?
+                                }?
+                              }?
                             }?
                           },
                         ]?
@@ -489,7 +501,14 @@ module Aws
                       zonal_shift_enabled: bool?,
                       impaired_zone_health_check_behavior: ("ReplaceUnhealthy" | "IgnoreUnhealthy")?
                     },
-                    ?skip_zonal_shift_validation: bool
+                    ?skip_zonal_shift_validation: bool,
+                    ?capacity_reservation_specification: {
+                      capacity_reservation_preference: ("capacity-reservations-only" | "capacity-reservations-first" | "none" | "default")?,
+                      capacity_reservation_target: {
+                        capacity_reservation_ids: Array[::String]?,
+                        capacity_reservation_resource_group_arns: Array[::String]?
+                      }?
+                    }
                   ) -> AutoScalingGroup
                 | (?Hash[Symbol, untyped]) -> AutoScalingGroup
 

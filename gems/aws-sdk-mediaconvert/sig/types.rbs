@@ -506,6 +506,7 @@ module Aws::MediaConvert
     end
 
     class CreateQueueRequest
+      attr_accessor concurrent_jobs: ::Integer
       attr_accessor description: ::String
       attr_accessor name: ::String
       attr_accessor pricing_plan: ("ON_DEMAND" | "RESERVED")
@@ -1413,6 +1414,8 @@ module Aws::MediaConvert
     class ListQueuesResponse
       attr_accessor next_token: ::String
       attr_accessor queues: ::Array[Types::Queue]
+      attr_accessor total_concurrent_jobs: ::Integer
+      attr_accessor unallocated_concurrent_jobs: ::Integer
       SENSITIVE: []
     end
 
@@ -1855,6 +1858,7 @@ module Aws::MediaConvert
 
     class Queue
       attr_accessor arn: ::String
+      attr_accessor concurrent_jobs: ::Integer
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
       attr_accessor last_updated: ::Time
@@ -1862,6 +1866,7 @@ module Aws::MediaConvert
       attr_accessor pricing_plan: ("ON_DEMAND" | "RESERVED")
       attr_accessor progressing_jobs_count: ::Integer
       attr_accessor reservation_plan: Types::ReservationPlan
+      attr_accessor service_overrides: ::Array[Types::ServiceOverride]
       attr_accessor status: ("ACTIVE" | "PAUSED")
       attr_accessor submitted_jobs_count: ::Integer
       attr_accessor type: ("SYSTEM" | "CUSTOM")
@@ -1952,6 +1957,14 @@ module Aws::MediaConvert
     class SearchJobsResponse
       attr_accessor jobs: ::Array[Types::Job]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceOverride
+      attr_accessor message: ::String
+      attr_accessor name: ::String
+      attr_accessor override_value: ::String
+      attr_accessor value: ::String
       SENSITIVE: []
     end
 
@@ -2103,6 +2116,7 @@ module Aws::MediaConvert
     end
 
     class UpdateQueueRequest
+      attr_accessor concurrent_jobs: ::Integer
       attr_accessor description: ::String
       attr_accessor name: ::String
       attr_accessor reservation_plan_settings: Types::ReservationPlanSettings

@@ -32,6 +32,9 @@ module Aws
       class CannotDeleteEntityWhileInUse < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class CannotUpdateEntityWhileInUse < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class CloudFrontOriginAccessIdentityAlreadyExists < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end

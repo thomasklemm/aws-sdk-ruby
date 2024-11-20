@@ -27,11 +27,12 @@ module Aws::BedrockAgentRuntime
 
     # Contains information about the action group being invoked. For more
     # information about the possible structures, see the InvocationInput tab
-    # in [OrchestrationTrace][1] in the Amazon Bedrock User Guide.
+    # in [OrchestrationTrace][1] in the [Amazon Bedrock User Guide][2].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/trace-orchestration.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html
     #
     # @!attribute [rw] action_group_name
     #   The name of the action group.
@@ -99,6 +100,22 @@ module Aws::BedrockAgentRuntime
     class ActionGroupInvocationOutput < Struct.new(
       :text)
       SENSITIVE = [:text]
+      include Aws::Structure
+    end
+
+    # An event in which the prompt was analyzed in preparation for
+    # optimization.
+    #
+    # @!attribute [rw] message
+    #   A message describing the analysis of the prompt.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AnalyzePromptEvent AWS API Documentation
+    #
+    class AnalyzePromptEvent < Struct.new(
+      :message,
+      :event_type)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -1769,6 +1786,27 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains information about the prompt to optimize.
+    #
+    # @note InputPrompt is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] text_prompt
+    #   Contains information about the text prompt to optimize.
+    #   @return [Types::TextPrompt]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InputPrompt AWS API Documentation
+    #
+    class InputPrompt < Struct.new(
+      :text_prompt,
+      :unknown)
+      SENSITIVE = [:text_prompt]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class TextPrompt < InputPrompt; end
+      class Unknown < InputPrompt; end
+    end
+
     # An internal server error occurred. Retry your request.
     #
     # @!attribute [rw] message
@@ -2524,6 +2562,73 @@ module Aws::BedrockAgentRuntime
       :trace_id,
       :type)
       SENSITIVE = [:reprompt_response]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] input
+    #   Contains the prompt to optimize.
+    #   @return [Types::InputPrompt]
+    #
+    # @!attribute [rw] target_model_id
+    #   The unique identifier of the model that you want to optimize the
+    #   prompt for.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/OptimizePromptRequest AWS API Documentation
+    #
+    class OptimizePromptRequest < Struct.new(
+      :input,
+      :target_model_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] optimized_prompt
+    #   The prompt after being optimized for the task.
+    #   @return [Types::OptimizedPromptStream]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/OptimizePromptResponse AWS API Documentation
+    #
+    class OptimizePromptResponse < Struct.new(
+      :optimized_prompt)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the optimized prompt.
+    #
+    # @note OptimizedPrompt is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of OptimizedPrompt corresponding to the set member.
+    #
+    # @!attribute [rw] text_prompt
+    #   Contains information about the text in the prompt that was
+    #   optimized.
+    #   @return [Types::TextPrompt]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/OptimizedPrompt AWS API Documentation
+    #
+    class OptimizedPrompt < Struct.new(
+      :text_prompt,
+      :unknown)
+      SENSITIVE = [:text_prompt]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class TextPrompt < OptimizedPrompt; end
+      class Unknown < OptimizedPrompt; end
+    end
+
+    # An event in which the prompt was optimized.
+    #
+    # @!attribute [rw] optimized_prompt
+    #   Contains information about the optimized prompt.
+    #   @return [Types::OptimizedPrompt]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/OptimizedPromptEvent AWS API Documentation
+    #
+    class OptimizedPromptEvent < Struct.new(
+      :optimized_prompt,
+      :event_type)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -3949,6 +4054,20 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains information about the text prompt to optimize.
+    #
+    # @!attribute [rw] text
+    #   The text in the text prompt to optimize.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/TextPrompt AWS API Documentation
+    #
+    class TextPrompt < Struct.new(
+      :text)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains the part of the generated text that contains a citation,
     # alongside where it begins and ends.
     #
@@ -4159,6 +4278,30 @@ module Aws::BedrockAgentRuntime
           :internal_server_exception,
           :resource_not_found_exception,
           :service_quota_exceeded_exception,
+          :throttling_exception,
+          :validation_exception
+        ]
+      end
+
+    end
+
+    # The stream containing events in the prompt optimization process.
+    #
+    # EventStream is an Enumerator of Events.
+    #  #event_types #=> Array, returns all modeled event types in the stream
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/OptimizedPromptStream AWS API Documentation
+    #
+    class OptimizedPromptStream < Enumerator
+
+      def event_types
+        [
+          :access_denied_exception,
+          :analyze_prompt_event,
+          :bad_gateway_exception,
+          :dependency_failed_exception,
+          :internal_server_exception,
+          :optimized_prompt_event,
           :throttling_exception,
           :validation_exception
         ]

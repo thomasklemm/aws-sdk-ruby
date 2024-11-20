@@ -681,11 +681,19 @@ module Aws::TimestreamQuery
     #
     #   * {Types::DescribeAccountSettingsResponse#max_query_tcu #max_query_tcu} => Integer
     #   * {Types::DescribeAccountSettingsResponse#query_pricing_model #query_pricing_model} => String
+    #   * {Types::DescribeAccountSettingsResponse#query_compute #query_compute} => Types::QueryComputeResponse
     #
     # @example Response structure
     #
     #   resp.max_query_tcu #=> Integer
     #   resp.query_pricing_model #=> String, one of "BYTES_SCANNED", "COMPUTE_UNITS"
+    #   resp.query_compute.compute_mode #=> String, one of "ON_DEMAND", "PROVISIONED"
+    #   resp.query_compute.provisioned_capacity.active_query_tcu #=> Integer
+    #   resp.query_compute.provisioned_capacity.notification_configuration.sns_configuration.topic_arn #=> String
+    #   resp.query_compute.provisioned_capacity.notification_configuration.role_arn #=> String
+    #   resp.query_compute.provisioned_capacity.last_update.target_query_tcu #=> Integer
+    #   resp.query_compute.provisioned_capacity.last_update.status #=> String, one of "PENDING", "FAILED", "SUCCEEDED"
+    #   resp.query_compute.provisioned_capacity.last_update.status_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/DescribeAccountSettings AWS API Documentation
     #
@@ -850,7 +858,12 @@ module Aws::TimestreamQuery
     # If you enabled `QueryInsights`, this API also returns insights and
     # metrics related to the query that you executed as part of an Amazon
     # SNS notification. `QueryInsights` helps with performance tuning of
-    # your query.
+    # your query. For more information about `QueryInsights`, see [Using
+    # query insights to optimize queries in Amazon Timestream][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/timestream/latest/developerguide/using-query-insights.html
     #
     # @option params [required, String] :scheduled_query_arn
     #   ARN of the scheduled query.
@@ -1058,7 +1071,9 @@ module Aws::TimestreamQuery
     #
     # If you enabled `QueryInsights`, this API also returns insights and
     # metrics related to the query that you executed. `QueryInsights` helps
-    # with performance tuning of your query.
+    # with performance tuning of your query. For more information about
+    # `QueryInsights`, see [Using query insights to optimize queries in
+    # Amazon Timestream][1].
     #
     # <note markdown="1"> The maximum number of `Query` API requests you're allowed to make
     # with `QueryInsights` enabled is 1 query per second (QPS). If you
@@ -1068,7 +1083,7 @@ module Aws::TimestreamQuery
     #
     # `Query` will time out after 60 seconds. You must update the default
     # timeout in the SDK to support a timeout of 60 seconds. See the [code
-    # sample][1] for details.
+    # sample][2] for details.
     #
     # Your query request will fail in the following cases:
     #
@@ -1091,7 +1106,8 @@ module Aws::TimestreamQuery
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.run-query.html
+    # [1]: https://docs.aws.amazon.com/timestream/latest/developerguide/using-query-insights.html
+    # [2]: https://docs.aws.amazon.com/timestream/latest/developerguide/code-samples.run-query.html
     #
     # @option params [required, String] :query_string
     #   The query to be run by Timestream.
@@ -1324,11 +1340,16 @@ module Aws::TimestreamQuery
     #   The maximum number of compute units the service will use at any point
     #   in time to serve your queries. To run queries, you must set a minimum
     #   capacity of 4 TCU. You can set the maximum number of TCU in multiples
-    #   of 4, for example, 4, 8, 16, 32, and so on.
+    #   of 4, for example, 4, 8, 16, 32, and so on. The maximum value
+    #   supported for `MaxQueryTCU` is 1000. To request an increase to this
+    #   soft limit, contact Amazon Web Services Support. For information about
+    #   the default quota for maxQueryTCU, see Default quotas. This
+    #   configuration is applicable only for on-demand usage of Timestream
+    #   Compute Units (TCUs).
     #
     #   The maximum value supported for `MaxQueryTCU` is 1000. To request an
     #   increase to this soft limit, contact Amazon Web Services Support. For
-    #   information about the default quota for maxQueryTCU, see [Default
+    #   information about the default quota for `maxQueryTCU`, see [Default
     #   quotas][1].
     #
     #
@@ -1344,22 +1365,52 @@ module Aws::TimestreamQuery
     #
     #    </note>
     #
+    # @option params [Types::QueryComputeRequest] :query_compute
+    #   Modifies the query compute settings configured in your account,
+    #   including the query pricing model and provisioned Timestream Compute
+    #   Units (TCUs) in your account.
+    #
+    #   <note markdown="1"> This API is idempotent, meaning that making the same request multiple
+    #   times will have the same effect as making the request once.
+    #
+    #    </note>
+    #
     # @return [Types::UpdateAccountSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateAccountSettingsResponse#max_query_tcu #max_query_tcu} => Integer
     #   * {Types::UpdateAccountSettingsResponse#query_pricing_model #query_pricing_model} => String
+    #   * {Types::UpdateAccountSettingsResponse#query_compute #query_compute} => Types::QueryComputeResponse
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_account_settings({
     #     max_query_tcu: 1,
     #     query_pricing_model: "BYTES_SCANNED", # accepts BYTES_SCANNED, COMPUTE_UNITS
+    #     query_compute: {
+    #       compute_mode: "ON_DEMAND", # accepts ON_DEMAND, PROVISIONED
+    #       provisioned_capacity: {
+    #         target_query_tcu: 1, # required
+    #         notification_configuration: {
+    #           sns_configuration: {
+    #             topic_arn: "AmazonResourceName", # required
+    #           },
+    #           role_arn: "AmazonResourceName", # required
+    #         },
+    #       },
+    #     },
     #   })
     #
     # @example Response structure
     #
     #   resp.max_query_tcu #=> Integer
     #   resp.query_pricing_model #=> String, one of "BYTES_SCANNED", "COMPUTE_UNITS"
+    #   resp.query_compute.compute_mode #=> String, one of "ON_DEMAND", "PROVISIONED"
+    #   resp.query_compute.provisioned_capacity.active_query_tcu #=> Integer
+    #   resp.query_compute.provisioned_capacity.notification_configuration.sns_configuration.topic_arn #=> String
+    #   resp.query_compute.provisioned_capacity.notification_configuration.role_arn #=> String
+    #   resp.query_compute.provisioned_capacity.last_update.target_query_tcu #=> Integer
+    #   resp.query_compute.provisioned_capacity.last_update.status #=> String, one of "PENDING", "FAILED", "SUCCEEDED"
+    #   resp.query_compute.provisioned_capacity.last_update.status_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/UpdateAccountSettings AWS API Documentation
     #
@@ -1414,7 +1465,7 @@ module Aws::TimestreamQuery
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-timestreamquery'
-      context[:gem_version] = '1.46.0'
+      context[:gem_version] = '1.47.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -2075,9 +2075,8 @@ module Aws::RDS
     # A blue/green deployment creates a staging environment that copies the
     # production environment. In a blue/green deployment, the blue
     # environment is the current production environment. The green
-    # environment is the staging environment. The staging environment stays
-    # in sync with the current production environment using logical
-    # replication.
+    # environment is the staging environment, and it stays in sync with the
+    # current production environment.
     #
     # You can make changes to the databases in the green environment without
     # affecting production workloads. For example, you can upgrade the major
@@ -2159,6 +2158,39 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html#USER_PIOPS.UpgradeFileSystem
+    #
+    # @option params [Integer] :target_iops
+    #   The amount of Provisioned IOPS (input/output operations per second) to
+    #   allocate for the green DB instance. For information about valid IOPS
+    #   values, see [Amazon RDS DB instance storage][1] in the *Amazon RDS
+    #   User Guide*.
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html
+    #
+    # @option params [String] :target_storage_type
+    #   The storage type to associate with the green DB instance.
+    #
+    #   Valid Values: `gp2 | gp3 | io1 | io2`
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
+    #
+    # @option params [Integer] :target_allocated_storage
+    #   The amount of storage in gibibytes (GiB) to allocate for the green DB
+    #   instance. You can choose to increase or decrease the allocated storage
+    #   on the green DB instance.
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
+    #
+    # @option params [Integer] :target_storage_throughput
+    #   The storage throughput value for the green DB instance.
+    #
+    #   This setting applies only to the `gp3` storage type.
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
     #
     # @return [Types::CreateBlueGreenDeploymentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2302,6 +2334,10 @@ module Aws::RDS
     #     ],
     #     target_db_instance_class: "TargetDBInstanceClass",
     #     upgrade_target_storage_config: false,
+    #     target_iops: 1,
+    #     target_storage_type: "TargetStorageType",
+    #     target_allocated_storage: 1,
+    #     target_storage_throughput: 1,
     #   })
     #
     # @example Response structure
@@ -31709,7 +31745,7 @@ module Aws::RDS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-rds'
-      context[:gem_version] = '1.259.0'
+      context[:gem_version] = '1.260.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

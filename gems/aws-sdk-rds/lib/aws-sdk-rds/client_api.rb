@@ -738,6 +738,7 @@ module Aws::RDS
     TargetList = Shapes::ListShape.new(name: 'TargetList')
     TargetRole = Shapes::StringShape.new(name: 'TargetRole')
     TargetState = Shapes::StringShape.new(name: 'TargetState')
+    TargetStorageType = Shapes::StringShape.new(name: 'TargetStorageType')
     TargetType = Shapes::StringShape.new(name: 'TargetType')
     TenantDatabase = Shapes::StructureShape.new(name: 'TenantDatabase')
     TenantDatabaseAlreadyExistsFault = Shapes::StructureShape.new(name: 'TenantDatabaseAlreadyExistsFault', error: {"code"=>"TenantDatabaseAlreadyExists", "httpStatusCode"=>400, "senderFault"=>true})
@@ -999,6 +1000,10 @@ module Aws::RDS
     CreateBlueGreenDeploymentRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateBlueGreenDeploymentRequest.add_member(:target_db_instance_class, Shapes::ShapeRef.new(shape: TargetDBInstanceClass, location_name: "TargetDBInstanceClass"))
     CreateBlueGreenDeploymentRequest.add_member(:upgrade_target_storage_config, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "UpgradeTargetStorageConfig"))
+    CreateBlueGreenDeploymentRequest.add_member(:target_iops, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "TargetIops"))
+    CreateBlueGreenDeploymentRequest.add_member(:target_storage_type, Shapes::ShapeRef.new(shape: TargetStorageType, location_name: "TargetStorageType"))
+    CreateBlueGreenDeploymentRequest.add_member(:target_allocated_storage, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "TargetAllocatedStorage"))
+    CreateBlueGreenDeploymentRequest.add_member(:target_storage_throughput, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "TargetStorageThroughput"))
     CreateBlueGreenDeploymentRequest.struct_class = Types::CreateBlueGreenDeploymentRequest
 
     CreateBlueGreenDeploymentResponse.add_member(:blue_green_deployment, Shapes::ShapeRef.new(shape: BlueGreenDeployment, location_name: "BlueGreenDeployment"))

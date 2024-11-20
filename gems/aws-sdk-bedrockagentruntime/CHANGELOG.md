@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.32.0 (2024-11-20)
+------------------
+
+* Feature - Releasing new Prompt Optimization to enhance your prompts for improved performance
+
 1.31.0 (2024-11-08)
 ------------------
 

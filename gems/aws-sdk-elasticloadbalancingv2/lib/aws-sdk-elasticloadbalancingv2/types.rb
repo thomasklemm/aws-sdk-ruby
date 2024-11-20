@@ -430,6 +430,44 @@ module Aws::ElasticLoadBalancingV2
     #
     class CaCertificatesBundleNotFoundException < Aws::EmptyStructure; end
 
+    # You've exceeded the daily capacity decrease limit for this
+    # reservation.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/CapacityDecreaseRequestsLimitExceededException AWS API Documentation
+    #
+    class CapacityDecreaseRequestsLimitExceededException < Aws::EmptyStructure; end
+
+    # There is a pending capacity reservation.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/CapacityReservationPendingException AWS API Documentation
+    #
+    class CapacityReservationPendingException < Aws::EmptyStructure; end
+
+    # The status of a capacity reservation.
+    #
+    # @!attribute [rw] code
+    #   The status code.
+    #   @return [String]
+    #
+    # @!attribute [rw] reason
+    #   The reason code for the status.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/CapacityReservationStatus AWS API Documentation
+    #
+    class CapacityReservationStatus < Struct.new(
+      :code,
+      :reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # You've exceeded the capacity units limit.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/CapacityUnitsLimitExceededException AWS API Documentation
+    #
+    class CapacityUnitsLimitExceededException < Aws::EmptyStructure; end
+
     # Information about an SSL server certificate.
     #
     # @!attribute [rw] certificate_arn
@@ -1153,6 +1191,45 @@ module Aws::ElasticLoadBalancingV2
     class DescribeAccountLimitsOutput < Struct.new(
       :limits,
       :next_marker)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] load_balancer_arn
+    #   The Amazon Resource Name (ARN) of the load balancer.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/DescribeCapacityReservationInput AWS API Documentation
+    #
+    class DescribeCapacityReservationInput < Struct.new(
+      :load_balancer_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] last_modified_time
+    #   The last time the capacity reservation was modified.
+    #   @return [Time]
+    #
+    # @!attribute [rw] decrease_requests_remaining
+    #   The amount of daily capacity decreases remaining.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] minimum_load_balancer_capacity
+    #   The requested minimum capacity reservation for the load balancer
+    #   @return [Types::MinimumLoadBalancerCapacity]
+    #
+    # @!attribute [rw] capacity_reservation_state
+    #   The state of the capacity reservation.
+    #   @return [Array<Types::ZonalCapacityReservationState>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/DescribeCapacityReservationOutput AWS API Documentation
+    #
+    class DescribeCapacityReservationOutput < Struct.new(
+      :last_modified_time,
+      :decrease_requests_remaining,
+      :minimum_load_balancer_capacity,
+      :capacity_reservation_state)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1983,6 +2060,12 @@ module Aws::ElasticLoadBalancingV2
     #
     class IncompatibleProtocolsException < Aws::EmptyStructure; end
 
+    # There is insufficient capacity to reserve.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/InsufficientCapacityException AWS API Documentation
+    #
+    class InsufficientCapacityException < Aws::EmptyStructure; end
+
     # The specified ca certificate bundle is in an invalid format, or
     # corrupt.
     #
@@ -2549,6 +2632,69 @@ module Aws::ElasticLoadBalancingV2
       include Aws::Structure
     end
 
+    # The minimum capacity for a load balancer.
+    #
+    # @!attribute [rw] capacity_units
+    #   The number of capacity units.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/MinimumLoadBalancerCapacity AWS API Documentation
+    #
+    class MinimumLoadBalancerCapacity < Struct.new(
+      :capacity_units)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] load_balancer_arn
+    #   The Amazon Resource Name (ARN) of the load balancer.
+    #   @return [String]
+    #
+    # @!attribute [rw] minimum_load_balancer_capacity
+    #   The minimum load balancer capacity reserved.
+    #   @return [Types::MinimumLoadBalancerCapacity]
+    #
+    # @!attribute [rw] reset_capacity_reservation
+    #   Resets the capacity reservation.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyCapacityReservationInput AWS API Documentation
+    #
+    class ModifyCapacityReservationInput < Struct.new(
+      :load_balancer_arn,
+      :minimum_load_balancer_capacity,
+      :reset_capacity_reservation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] last_modified_time
+    #   The last time the capacity reservation was modified.
+    #   @return [Time]
+    #
+    # @!attribute [rw] decrease_requests_remaining
+    #   The amount of daily capacity decreases remaining.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] minimum_load_balancer_capacity
+    #   The requested minimum capacity reservation for the load balancer
+    #   @return [Types::MinimumLoadBalancerCapacity]
+    #
+    # @!attribute [rw] capacity_reservation_state
+    #   The state of the capacity reservation.
+    #   @return [Array<Types::ZonalCapacityReservationState>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyCapacityReservationOutput AWS API Documentation
+    #
+    class ModifyCapacityReservationOutput < Struct.new(
+      :last_modified_time,
+      :decrease_requests_remaining,
+      :minimum_load_balancer_capacity,
+      :capacity_reservation_state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] listener_arn
     #   The Amazon Resource Name (ARN) of the listener.
     #   @return [String]
@@ -2956,6 +3102,13 @@ module Aws::ElasticLoadBalancingV2
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # This operation is not allowed while a prior request has not been
+    # completed.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/PriorRequestNotCompleteException AWS API Documentation
+    #
+    class PriorRequestNotCompleteException < Aws::EmptyStructure; end
 
     # The specified priority is in use.
     #
@@ -4472,6 +4625,30 @@ module Aws::ElasticLoadBalancingV2
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/UnsupportedProtocolException AWS API Documentation
     #
     class UnsupportedProtocolException < Aws::EmptyStructure; end
+
+    # The capacity reservation status for each availability zone.
+    #
+    # @!attribute [rw] state
+    #   The state of the capacity reservation.
+    #   @return [Types::CapacityReservationStatus]
+    #
+    # @!attribute [rw] availability_zone
+    #   Information about the availability zone.
+    #   @return [String]
+    #
+    # @!attribute [rw] effective_capacity_units
+    #   The number of effective capacity units.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ZonalCapacityReservationState AWS API Documentation
+    #
+    class ZonalCapacityReservationState < Struct.new(
+      :state,
+      :availability_zone,
+      :effective_capacity_units)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
   end
 end

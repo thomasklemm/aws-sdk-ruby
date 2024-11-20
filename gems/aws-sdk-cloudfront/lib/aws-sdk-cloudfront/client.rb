@@ -603,6 +603,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -649,6 +650,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -698,6 +700,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -741,6 +744,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.is_ipv6_enabled #=> Boolean
     #   resp.distribution.distribution_config.continuous_deployment_policy_id #=> String
     #   resp.distribution.distribution_config.staging #=> Boolean
+    #   resp.distribution.distribution_config.anycast_ip_list_id #=> String
     #   resp.distribution.alias_icp_recordals #=> Array
     #   resp.distribution.alias_icp_recordals[0].cname #=> String
     #   resp.distribution.alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
@@ -753,6 +757,59 @@ module Aws::CloudFront
     # @param [Hash] params ({})
     def copy_distribution(params = {}, options = {})
       req = build_request(:copy_distribution, params)
+      req.send_request(options)
+    end
+
+    # Creates an Anycast static IP list.
+    #
+    # @option params [required, String] :name
+    #   Name of the Anycast static IP list.
+    #
+    # @option params [required, Integer] :ip_count
+    #   The number of static IP addresses that are allocated to the Anycast
+    #   static IP list.
+    #
+    # @option params [Types::Tags] :tags
+    #   A complex type that contains zero or more `Tag` elements.
+    #
+    # @return [Types::CreateAnycastIpListResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateAnycastIpListResult#anycast_ip_list #anycast_ip_list} => Types::AnycastIpList
+    #   * {Types::CreateAnycastIpListResult#etag #etag} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_anycast_ip_list({
+    #     name: "AnycastIpListName", # required
+    #     ip_count: 1, # required
+    #     tags: {
+    #       items: [
+    #         {
+    #           key: "TagKey", # required
+    #           value: "TagValue",
+    #         },
+    #       ],
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.anycast_ip_list.id #=> String
+    #   resp.anycast_ip_list.name #=> String
+    #   resp.anycast_ip_list.status #=> String
+    #   resp.anycast_ip_list.arn #=> String
+    #   resp.anycast_ip_list.anycast_ips #=> Array
+    #   resp.anycast_ip_list.anycast_ips[0] #=> String
+    #   resp.anycast_ip_list.ip_count #=> Integer
+    #   resp.anycast_ip_list.last_modified_time #=> Time
+    #   resp.etag #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateAnycastIpList AWS API Documentation
+    #
+    # @overload create_anycast_ip_list(params = {})
+    # @param [Hash] params ({})
+    def create_anycast_ip_list(params = {}, options = {})
+      req = build_request(:create_anycast_ip_list, params)
       req.send_request(options)
     end
 
@@ -1037,6 +1094,9 @@ module Aws::CloudFront
     #               origin_read_timeout: 1,
     #               origin_keepalive_timeout: 1,
     #             },
+    #             vpc_origin_config: {
+    #               vpc_origin_id: "string", # required
+    #             },
     #             connection_attempts: 1,
     #             connection_timeout: 1,
     #             origin_shield: {
@@ -1116,6 +1176,9 @@ module Aws::CloudFront
     #         cache_policy_id: "string",
     #         origin_request_policy_id: "string",
     #         response_headers_policy_id: "string",
+    #         grpc_config: {
+    #           enabled: false, # required
+    #         },
     #         forwarded_values: {
     #           query_string: false, # required
     #           cookies: { # required
@@ -1189,6 +1252,9 @@ module Aws::CloudFront
     #             cache_policy_id: "string",
     #             origin_request_policy_id: "string",
     #             response_headers_policy_id: "string",
+    #             grpc_config: {
+    #               enabled: false, # required
+    #             },
     #             forwarded_values: {
     #               query_string: false, # required
     #               cookies: { # required
@@ -1226,10 +1292,10 @@ module Aws::CloudFront
     #       },
     #       comment: "CommentType", # required
     #       logging: {
-    #         enabled: false, # required
-    #         include_cookies: false, # required
-    #         bucket: "string", # required
-    #         prefix: "string", # required
+    #         enabled: false,
+    #         include_cookies: false,
+    #         bucket: "string",
+    #         prefix: "string",
     #       },
     #       price_class: "PriceClass_100", # accepts PriceClass_100, PriceClass_200, PriceClass_All
     #       enabled: false, # required
@@ -1254,6 +1320,7 @@ module Aws::CloudFront
     #       is_ipv6_enabled: false,
     #       continuous_deployment_policy_id: "string",
     #       staging: false,
+    #       anycast_ip_list_id: "string",
     #     },
     #   })
     #
@@ -1302,6 +1369,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -1348,6 +1416,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -1397,6 +1466,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -1440,6 +1510,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.is_ipv6_enabled #=> Boolean
     #   resp.distribution.distribution_config.continuous_deployment_policy_id #=> String
     #   resp.distribution.distribution_config.staging #=> Boolean
+    #   resp.distribution.distribution_config.anycast_ip_list_id #=> String
     #   resp.distribution.alias_icp_recordals #=> Array
     #   resp.distribution.alias_icp_recordals[0].cname #=> String
     #   resp.distribution.alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
@@ -1516,6 +1587,9 @@ module Aws::CloudFront
     #                 },
     #                 origin_read_timeout: 1,
     #                 origin_keepalive_timeout: 1,
+    #               },
+    #               vpc_origin_config: {
+    #                 vpc_origin_id: "string", # required
     #               },
     #               connection_attempts: 1,
     #               connection_timeout: 1,
@@ -1596,6 +1670,9 @@ module Aws::CloudFront
     #           cache_policy_id: "string",
     #           origin_request_policy_id: "string",
     #           response_headers_policy_id: "string",
+    #           grpc_config: {
+    #             enabled: false, # required
+    #           },
     #           forwarded_values: {
     #             query_string: false, # required
     #             cookies: { # required
@@ -1669,6 +1746,9 @@ module Aws::CloudFront
     #               cache_policy_id: "string",
     #               origin_request_policy_id: "string",
     #               response_headers_policy_id: "string",
+    #               grpc_config: {
+    #                 enabled: false, # required
+    #               },
     #               forwarded_values: {
     #                 query_string: false, # required
     #                 cookies: { # required
@@ -1706,10 +1786,10 @@ module Aws::CloudFront
     #         },
     #         comment: "CommentType", # required
     #         logging: {
-    #           enabled: false, # required
-    #           include_cookies: false, # required
-    #           bucket: "string", # required
-    #           prefix: "string", # required
+    #           enabled: false,
+    #           include_cookies: false,
+    #           bucket: "string",
+    #           prefix: "string",
     #         },
     #         price_class: "PriceClass_100", # accepts PriceClass_100, PriceClass_200, PriceClass_All
     #         enabled: false, # required
@@ -1734,6 +1814,7 @@ module Aws::CloudFront
     #         is_ipv6_enabled: false,
     #         continuous_deployment_policy_id: "string",
     #         staging: false,
+    #         anycast_ip_list_id: "string",
     #       },
     #       tags: { # required
     #         items: [
@@ -1791,6 +1872,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -1837,6 +1919,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -1886,6 +1969,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -1929,6 +2013,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.is_ipv6_enabled #=> Boolean
     #   resp.distribution.distribution_config.continuous_deployment_policy_id #=> String
     #   resp.distribution.distribution_config.staging #=> Boolean
+    #   resp.distribution.distribution_config.anycast_ip_list_id #=> String
     #   resp.distribution.alias_icp_recordals #=> Array
     #   resp.distribution.alias_icp_recordals[0].cname #=> String
     #   resp.distribution.alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
@@ -2348,7 +2433,7 @@ module Aws::CloudFront
     #   resp = client.create_key_value_store({
     #     comment: "my-key-valuestore-comment", 
     #     import_source: {
-    #       source_arn: "arn:aws:s3:::my-bucket/validJSON.json", 
+    #       source_arn: "arn:aws:s3:::amzn-s3-demo-bucket/validJSON.json", 
     #       source_type: "S3", 
     #     }, 
     #     name: "my-keyvaluestore-name", 
@@ -3087,6 +3172,147 @@ module Aws::CloudFront
       req.send_request(options)
     end
 
+    # Create an Amazon CloudFront VPC origin.
+    #
+    # @option params [required, Types::VpcOriginEndpointConfig] :vpc_origin_endpoint_config
+    #   The VPC origin endpoint configuration.
+    #
+    # @option params [Types::Tags] :tags
+    #   A complex type that contains zero or more `Tag` elements.
+    #
+    # @return [Types::CreateVpcOriginResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateVpcOriginResult#vpc_origin #vpc_origin} => Types::VpcOrigin
+    #   * {Types::CreateVpcOriginResult#location #location} => String
+    #   * {Types::CreateVpcOriginResult#etag #etag} => String
+    #
+    #
+    # @example Example: To create a VPC origin
+    #
+    #   # The following command creates a VPC origin:
+    #
+    #   resp = client.create_vpc_origin({
+    #     vpc_origin_endpoint_config: {
+    #       arn: "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d", 
+    #       http_port: 80, 
+    #       https_port: 443, 
+    #       name: "my-vpcorigin-name", 
+    #       origin_protocol_policy: "match-viewer", 
+    #       origin_ssl_protocols: {
+    #         items: [
+    #           "TLSv1.1", 
+    #           "TLSv1.2", 
+    #         ], 
+    #         quantity: 2, 
+    #       }, 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "E23ZP02F085DFQ", 
+    #     location: "https://cloudfront.amazonaws.com/2020-05-31/vpc-origin/vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #     vpc_origin: {
+    #       arn: "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       created_time: Time.parse("2024-10-15T17:19:42.318Z"), 
+    #       id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       last_modified_time: Time.parse("2024-10-15T17:19:42.318Z"), 
+    #       status: "Deploying", 
+    #       vpc_origin_endpoint_config: {
+    #         arn: "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d", 
+    #         http_port: 80, 
+    #         https_port: 443, 
+    #         name: "my-vpcorigin-name", 
+    #         origin_protocol_policy: "match-viewer", 
+    #         origin_ssl_protocols: {
+    #           items: [
+    #             "TLSv1.1", 
+    #             "TLSv1.2", 
+    #           ], 
+    #           quantity: 2, 
+    #         }, 
+    #       }, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_vpc_origin({
+    #     vpc_origin_endpoint_config: { # required
+    #       name: "string", # required
+    #       arn: "string", # required
+    #       http_port: 1, # required
+    #       https_port: 1, # required
+    #       origin_protocol_policy: "http-only", # required, accepts http-only, match-viewer, https-only
+    #       origin_ssl_protocols: {
+    #         quantity: 1, # required
+    #         items: ["SSLv3"], # required, accepts SSLv3, TLSv1, TLSv1.1, TLSv1.2
+    #       },
+    #     },
+    #     tags: {
+    #       items: [
+    #         {
+    #           key: "TagKey", # required
+    #           value: "TagValue",
+    #         },
+    #       ],
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.vpc_origin.id #=> String
+    #   resp.vpc_origin.arn #=> String
+    #   resp.vpc_origin.status #=> String
+    #   resp.vpc_origin.created_time #=> Time
+    #   resp.vpc_origin.last_modified_time #=> Time
+    #   resp.vpc_origin.vpc_origin_endpoint_config.name #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.arn #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.http_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.https_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_protocol_policy #=> String, one of "http-only", "match-viewer", "https-only"
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.quantity #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items #=> Array
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
+    #   resp.location #=> String
+    #   resp.etag #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateVpcOrigin AWS API Documentation
+    #
+    # @overload create_vpc_origin(params = {})
+    # @param [Hash] params ({})
+    def create_vpc_origin(params = {}, options = {})
+      req = build_request(:create_vpc_origin, params)
+      req.send_request(options)
+    end
+
+    # Deletes an Anycast static IP list.
+    #
+    # @option params [required, String] :id
+    #   The ID of the Anycast static IP list.
+    #
+    # @option params [required, String] :if_match
+    #   The current version (`ETag` value) of the Anycast static IP list that
+    #   you are deleting.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_anycast_ip_list({
+    #     id: "string", # required
+    #     if_match: "string", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteAnycastIpList AWS API Documentation
+    #
+    # @overload delete_anycast_ip_list(params = {})
+    # @param [Hash] params ({})
+    def delete_anycast_ip_list(params = {}, options = {})
+      req = build_request(:delete_anycast_ip_list, params)
+      req.send_request(options)
+    end
+
     # Deletes a cache policy.
     #
     # You cannot delete a cache policy if it's attached to a cache
@@ -3642,6 +3868,88 @@ module Aws::CloudFront
       req.send_request(options)
     end
 
+    # Delete an Amazon CloudFront VPC origin.
+    #
+    # @option params [required, String] :id
+    #   The VPC origin ID.
+    #
+    # @option params [required, String] :if_match
+    #   The VPC origin to delete, if a match occurs.
+    #
+    # @return [Types::DeleteVpcOriginResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteVpcOriginResult#vpc_origin #vpc_origin} => Types::VpcOrigin
+    #   * {Types::DeleteVpcOriginResult#etag #etag} => String
+    #
+    #
+    # @example Example: To delete a VPC origin
+    #
+    #   # The following command deletes a VPC origin:
+    #
+    #   resp = client.delete_vpc_origin({
+    #     id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #     if_match: "E1F83G8C2ARO7P", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "E1PA6795UKMFR9", 
+    #     vpc_origin: {
+    #       arn: "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       created_time: Time.parse("2024-10-15T17:19:42.318Z"), 
+    #       id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       last_modified_time: Time.parse("2024-10-15T17:57:08.965Z"), 
+    #       status: "Deploying", 
+    #       vpc_origin_endpoint_config: {
+    #         arn: "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d", 
+    #         http_port: 80, 
+    #         https_port: 443, 
+    #         name: "my-vpcorigin-name", 
+    #         origin_protocol_policy: "match-viewer", 
+    #         origin_ssl_protocols: {
+    #           items: [
+    #             "TLSv1.1", 
+    #             "TLSv1.2", 
+    #           ], 
+    #           quantity: 2, 
+    #         }, 
+    #       }, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_vpc_origin({
+    #     id: "string", # required
+    #     if_match: "string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.vpc_origin.id #=> String
+    #   resp.vpc_origin.arn #=> String
+    #   resp.vpc_origin.status #=> String
+    #   resp.vpc_origin.created_time #=> Time
+    #   resp.vpc_origin.last_modified_time #=> Time
+    #   resp.vpc_origin.vpc_origin_endpoint_config.name #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.arn #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.http_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.https_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_protocol_policy #=> String, one of "http-only", "match-viewer", "https-only"
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.quantity #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items #=> Array
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
+    #   resp.etag #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteVpcOrigin AWS API Documentation
+    #
+    # @overload delete_vpc_origin(params = {})
+    # @param [Hash] params ({})
+    def delete_vpc_origin(params = {}, options = {})
+      req = build_request(:delete_vpc_origin, params)
+      req.send_request(options)
+    end
+
     # Gets configuration information and metadata about a CloudFront
     # function, but not the function's code. To get a function's code, use
     # `GetFunction`.
@@ -3746,6 +4054,43 @@ module Aws::CloudFront
     # @param [Hash] params ({})
     def describe_key_value_store(params = {}, options = {})
       req = build_request(:describe_key_value_store, params)
+      req.send_request(options)
+    end
+
+    # Gets an Anycast static IP list.
+    #
+    # @option params [required, String] :id
+    #   The ID of the Anycast static IP list.
+    #
+    # @return [Types::GetAnycastIpListResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAnycastIpListResult#anycast_ip_list #anycast_ip_list} => Types::AnycastIpList
+    #   * {Types::GetAnycastIpListResult#etag #etag} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_anycast_ip_list({
+    #     id: "string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.anycast_ip_list.id #=> String
+    #   resp.anycast_ip_list.name #=> String
+    #   resp.anycast_ip_list.status #=> String
+    #   resp.anycast_ip_list.arn #=> String
+    #   resp.anycast_ip_list.anycast_ips #=> Array
+    #   resp.anycast_ip_list.anycast_ips[0] #=> String
+    #   resp.anycast_ip_list.ip_count #=> Integer
+    #   resp.anycast_ip_list.last_modified_time #=> Time
+    #   resp.etag #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetAnycastIpList AWS API Documentation
+    #
+    # @overload get_anycast_ip_list(params = {})
+    # @param [Hash] params ({})
+    def get_anycast_ip_list(params = {}, options = {})
+      req = build_request(:get_anycast_ip_list, params)
       req.send_request(options)
     end
 
@@ -4081,6 +4426,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -4127,6 +4473,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -4176,6 +4523,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -4219,6 +4567,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.is_ipv6_enabled #=> Boolean
     #   resp.distribution.distribution_config.continuous_deployment_policy_id #=> String
     #   resp.distribution.distribution_config.staging #=> Boolean
+    #   resp.distribution.distribution_config.anycast_ip_list_id #=> String
     #   resp.distribution.alias_icp_recordals #=> Array
     #   resp.distribution.alias_icp_recordals[0].cname #=> String
     #   resp.distribution.alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
@@ -4280,6 +4629,7 @@ module Aws::CloudFront
     #   resp.distribution_config.origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -4326,6 +4676,7 @@ module Aws::CloudFront
     #   resp.distribution_config.default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution_config.default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution_config.default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution_config.default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution_config.default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution_config.default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_config.default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -4375,6 +4726,7 @@ module Aws::CloudFront
     #   resp.distribution_config.cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution_config.cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution_config.cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution_config.cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution_config.cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -4418,6 +4770,7 @@ module Aws::CloudFront
     #   resp.distribution_config.is_ipv6_enabled #=> Boolean
     #   resp.distribution_config.continuous_deployment_policy_id #=> String
     #   resp.distribution_config.staging #=> Boolean
+    #   resp.distribution_config.anycast_ip_list_id #=> String
     #   resp.etag #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetDistributionConfig AWS API Documentation
@@ -5375,6 +5728,130 @@ module Aws::CloudFront
       req.send_request(options)
     end
 
+    # Get the details of an Amazon CloudFront VPC origin.
+    #
+    # @option params [required, String] :id
+    #   The VPC origin ID.
+    #
+    # @return [Types::GetVpcOriginResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetVpcOriginResult#vpc_origin #vpc_origin} => Types::VpcOrigin
+    #   * {Types::GetVpcOriginResult#etag #etag} => String
+    #
+    #
+    # @example Example: To get a VPC origin
+    #
+    #   # The following command gets a VPC origin:
+    #
+    #   resp = client.get_vpc_origin({
+    #     id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "ETVPDKIKX0DER", 
+    #     vpc_origin: {
+    #       arn: "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       created_time: Time.parse("2024-10-15T17:19:42.318Z"), 
+    #       id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       last_modified_time: Time.parse("2024-10-15T17:24:35.188Z"), 
+    #       status: "Deployed", 
+    #       vpc_origin_endpoint_config: {
+    #         arn: "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d", 
+    #         http_port: 80, 
+    #         https_port: 443, 
+    #         name: "my-vpcorigin-name", 
+    #         origin_protocol_policy: "match-viewer", 
+    #         origin_ssl_protocols: {
+    #           items: [
+    #             "TLSv1.1", 
+    #             "TLSv1.2", 
+    #           ], 
+    #           quantity: 2, 
+    #         }, 
+    #       }, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_vpc_origin({
+    #     id: "string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.vpc_origin.id #=> String
+    #   resp.vpc_origin.arn #=> String
+    #   resp.vpc_origin.status #=> String
+    #   resp.vpc_origin.created_time #=> Time
+    #   resp.vpc_origin.last_modified_time #=> Time
+    #   resp.vpc_origin.vpc_origin_endpoint_config.name #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.arn #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.http_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.https_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_protocol_policy #=> String, one of "http-only", "match-viewer", "https-only"
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.quantity #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items #=> Array
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
+    #   resp.etag #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetVpcOrigin AWS API Documentation
+    #
+    # @overload get_vpc_origin(params = {})
+    # @param [Hash] params ({})
+    def get_vpc_origin(params = {}, options = {})
+      req = build_request(:get_vpc_origin, params)
+      req.send_request(options)
+    end
+
+    # Lists your Anycast static IP lists.
+    #
+    # @option params [String] :marker
+    #   Use this field when paginating results to indicate where to begin in
+    #   your list. The response includes items in the list that occur after
+    #   the marker. To get the next page of the list, set this field's value
+    #   to the value of `NextMarker` from the current page's response.
+    #
+    # @option params [Integer] :max_items
+    #   The maximum number of Anycast static IP lists that you want returned
+    #   in the response.
+    #
+    # @return [Types::ListAnycastIpListsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAnycastIpListsResult#anycast_ip_lists #anycast_ip_lists} => Types::AnycastIpListCollection
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_anycast_ip_lists({
+    #     marker: "string",
+    #     max_items: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.anycast_ip_lists.items #=> Array
+    #   resp.anycast_ip_lists.items[0].id #=> String
+    #   resp.anycast_ip_lists.items[0].name #=> String
+    #   resp.anycast_ip_lists.items[0].status #=> String
+    #   resp.anycast_ip_lists.items[0].arn #=> String
+    #   resp.anycast_ip_lists.items[0].ip_count #=> Integer
+    #   resp.anycast_ip_lists.items[0].last_modified_time #=> Time
+    #   resp.anycast_ip_lists.marker #=> String
+    #   resp.anycast_ip_lists.next_marker #=> String
+    #   resp.anycast_ip_lists.max_items #=> Integer
+    #   resp.anycast_ip_lists.is_truncated #=> Boolean
+    #   resp.anycast_ip_lists.quantity #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListAnycastIpLists AWS API Documentation
+    #
+    # @overload list_anycast_ip_lists(params = {})
+    # @param [Hash] params ({})
+    def list_anycast_ip_lists(params = {}, options = {})
+      req = build_request(:list_anycast_ip_lists, params)
+      req.send_request(options)
+    end
+
     # Gets a list of cache policies.
     #
     # You can optionally apply a filter to return only the managed policies
@@ -5710,6 +6187,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
@@ -5756,6 +6234,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -5805,6 +6284,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution_list.items[0].cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution_list.items[0].cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -5846,6 +6326,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].alias_icp_recordals[0].cname #=> String
     #   resp.distribution_list.items[0].alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
     #   resp.distribution_list.items[0].staging #=> Boolean
+    #   resp.distribution_list.items[0].anycast_ip_list_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributions AWS API Documentation
     #
@@ -5853,6 +6334,218 @@ module Aws::CloudFront
     # @param [Hash] params ({})
     def list_distributions(params = {}, options = {})
       req = build_request(:list_distributions, params)
+      req.send_request(options)
+    end
+
+    # Lists the distributions in your account that are associated with the
+    # specified `AnycastIpListId`.
+    #
+    # @option params [String] :marker
+    #   Use this field when paginating results to indicate where to begin in
+    #   your list. The response includes items in the list that occur after
+    #   the marker. To get the next page of the list, set this field's value
+    #   to the value of `NextMarker` from the current page's response.
+    #
+    # @option params [Integer] :max_items
+    #   The maximum number of distributions that you want returned in the
+    #   response.
+    #
+    # @option params [required, String] :anycast_ip_list_id
+    #   The ID of the Anycast static IP list.
+    #
+    # @return [Types::ListDistributionsByAnycastIpListIdResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDistributionsByAnycastIpListIdResult#distribution_list #distribution_list} => Types::DistributionList
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_distributions_by_anycast_ip_list_id({
+    #     marker: "string",
+    #     max_items: 1,
+    #     anycast_ip_list_id: "string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.distribution_list.marker #=> String
+    #   resp.distribution_list.next_marker #=> String
+    #   resp.distribution_list.max_items #=> Integer
+    #   resp.distribution_list.is_truncated #=> Boolean
+    #   resp.distribution_list.quantity #=> Integer
+    #   resp.distribution_list.items #=> Array
+    #   resp.distribution_list.items[0].id #=> String
+    #   resp.distribution_list.items[0].arn #=> String
+    #   resp.distribution_list.items[0].status #=> String
+    #   resp.distribution_list.items[0].last_modified_time #=> Time
+    #   resp.distribution_list.items[0].domain_name #=> String
+    #   resp.distribution_list.items[0].aliases.quantity #=> Integer
+    #   resp.distribution_list.items[0].aliases.items #=> Array
+    #   resp.distribution_list.items[0].aliases.items[0] #=> String
+    #   resp.distribution_list.items[0].origins.quantity #=> Integer
+    #   resp.distribution_list.items[0].origins.items #=> Array
+    #   resp.distribution_list.items[0].origins.items[0].id #=> String
+    #   resp.distribution_list.items[0].origins.items[0].domain_name #=> String
+    #   resp.distribution_list.items[0].origins.items[0].origin_path #=> String
+    #   resp.distribution_list.items[0].origins.items[0].custom_headers.quantity #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].custom_headers.items #=> Array
+    #   resp.distribution_list.items[0].origins.items[0].custom_headers.items[0].header_name #=> String
+    #   resp.distribution_list.items[0].origins.items[0].custom_headers.items[0].header_value #=> String
+    #   resp.distribution_list.items[0].origins.items[0].s3_origin_config.origin_access_identity #=> String
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.http_port #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.https_port #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_protocol_policy #=> String, one of "http-only", "match-viewer", "https-only"
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_ssl_protocols.quantity #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_ssl_protocols.items #=> Array
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
+    #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
+    #   resp.distribution_list.items[0].origins.items[0].origin_shield.origin_shield_region #=> String
+    #   resp.distribution_list.items[0].origins.items[0].origin_access_control_id #=> String
+    #   resp.distribution_list.items[0].origin_groups.quantity #=> Integer
+    #   resp.distribution_list.items[0].origin_groups.items #=> Array
+    #   resp.distribution_list.items[0].origin_groups.items[0].id #=> String
+    #   resp.distribution_list.items[0].origin_groups.items[0].failover_criteria.status_codes.quantity #=> Integer
+    #   resp.distribution_list.items[0].origin_groups.items[0].failover_criteria.status_codes.items #=> Array
+    #   resp.distribution_list.items[0].origin_groups.items[0].failover_criteria.status_codes.items[0] #=> Integer
+    #   resp.distribution_list.items[0].origin_groups.items[0].members.quantity #=> Integer
+    #   resp.distribution_list.items[0].origin_groups.items[0].members.items #=> Array
+    #   resp.distribution_list.items[0].origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.target_origin_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.enabled #=> Boolean
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.items[0] #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_key_groups.enabled #=> Boolean
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_key_groups.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_key_groups.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.trusted_key_groups.items[0] #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.viewer_protocol_policy #=> String, one of "allow-all", "https-only", "redirect-to-https"
+    #   resp.distribution_list.items[0].default_cache_behavior.allowed_methods.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.allowed_methods.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.allowed_methods.items[0] #=> String, one of "GET", "HEAD", "POST", "PUT", "PATCH", "OPTIONS", "DELETE"
+    #   resp.distribution_list.items[0].default_cache_behavior.allowed_methods.cached_methods.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.allowed_methods.cached_methods.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.allowed_methods.cached_methods.items[0] #=> String, one of "GET", "HEAD", "POST", "PUT", "PATCH", "OPTIONS", "DELETE"
+    #   resp.distribution_list.items[0].default_cache_behavior.smooth_streaming #=> Boolean
+    #   resp.distribution_list.items[0].default_cache_behavior.compress #=> Boolean
+    #   resp.distribution_list.items[0].default_cache_behavior.lambda_function_associations.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.lambda_function_associations.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.lambda_function_associations.items[0].lambda_function_arn #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.lambda_function_associations.items[0].event_type #=> String, one of "viewer-request", "viewer-response", "origin-request", "origin-response"
+    #   resp.distribution_list.items[0].default_cache_behavior.lambda_function_associations.items[0].include_body #=> Boolean
+    #   resp.distribution_list.items[0].default_cache_behavior.function_associations.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.function_associations.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.function_associations.items[0].function_arn #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.function_associations.items[0].event_type #=> String, one of "viewer-request", "viewer-response", "origin-request", "origin-response"
+    #   resp.distribution_list.items[0].default_cache_behavior.field_level_encryption_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.realtime_log_config_arn #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.cache_policy_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.origin_request_policy_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.grpc_config.enabled #=> Boolean
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.query_string #=> Boolean
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.whitelisted_names.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.whitelisted_names.items[0] #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.headers.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.headers.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.headers.items[0] #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.query_string_cache_keys.quantity #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.query_string_cache_keys.items #=> Array
+    #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.query_string_cache_keys.items[0] #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.min_ttl #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.default_ttl #=> Integer
+    #   resp.distribution_list.items[0].default_cache_behavior.max_ttl #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].path_pattern #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].target_origin_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_signers.enabled #=> Boolean
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_signers.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_signers.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_signers.items[0] #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_key_groups.enabled #=> Boolean
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_key_groups.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_key_groups.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].trusted_key_groups.items[0] #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].viewer_protocol_policy #=> String, one of "allow-all", "https-only", "redirect-to-https"
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].allowed_methods.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].allowed_methods.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].allowed_methods.items[0] #=> String, one of "GET", "HEAD", "POST", "PUT", "PATCH", "OPTIONS", "DELETE"
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].allowed_methods.cached_methods.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].allowed_methods.cached_methods.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].allowed_methods.cached_methods.items[0] #=> String, one of "GET", "HEAD", "POST", "PUT", "PATCH", "OPTIONS", "DELETE"
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].smooth_streaming #=> Boolean
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].compress #=> Boolean
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].lambda_function_associations.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].lambda_function_associations.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].lambda_function_associations.items[0].lambda_function_arn #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].lambda_function_associations.items[0].event_type #=> String, one of "viewer-request", "viewer-response", "origin-request", "origin-response"
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].lambda_function_associations.items[0].include_body #=> Boolean
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].function_associations.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].function_associations.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].function_associations.items[0].function_arn #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].function_associations.items[0].event_type #=> String, one of "viewer-request", "viewer-response", "origin-request", "origin-response"
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].field_level_encryption_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].realtime_log_config_arn #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].cache_policy_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].origin_request_policy_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].grpc_config.enabled #=> Boolean
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.items[0] #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.headers.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.headers.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.headers.items[0] #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.query_string_cache_keys.quantity #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.query_string_cache_keys.items #=> Array
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.query_string_cache_keys.items[0] #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].min_ttl #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].default_ttl #=> Integer
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].max_ttl #=> Integer
+    #   resp.distribution_list.items[0].custom_error_responses.quantity #=> Integer
+    #   resp.distribution_list.items[0].custom_error_responses.items #=> Array
+    #   resp.distribution_list.items[0].custom_error_responses.items[0].error_code #=> Integer
+    #   resp.distribution_list.items[0].custom_error_responses.items[0].response_page_path #=> String
+    #   resp.distribution_list.items[0].custom_error_responses.items[0].response_code #=> String
+    #   resp.distribution_list.items[0].custom_error_responses.items[0].error_caching_min_ttl #=> Integer
+    #   resp.distribution_list.items[0].comment #=> String
+    #   resp.distribution_list.items[0].price_class #=> String, one of "PriceClass_100", "PriceClass_200", "PriceClass_All"
+    #   resp.distribution_list.items[0].enabled #=> Boolean
+    #   resp.distribution_list.items[0].viewer_certificate.cloud_front_default_certificate #=> Boolean
+    #   resp.distribution_list.items[0].viewer_certificate.iam_certificate_id #=> String
+    #   resp.distribution_list.items[0].viewer_certificate.acm_certificate_arn #=> String
+    #   resp.distribution_list.items[0].viewer_certificate.ssl_support_method #=> String, one of "sni-only", "vip", "static-ip"
+    #   resp.distribution_list.items[0].viewer_certificate.minimum_protocol_version #=> String, one of "SSLv3", "TLSv1", "TLSv1_2016", "TLSv1.1_2016", "TLSv1.2_2018", "TLSv1.2_2019", "TLSv1.2_2021"
+    #   resp.distribution_list.items[0].viewer_certificate.certificate #=> String
+    #   resp.distribution_list.items[0].viewer_certificate.certificate_source #=> String, one of "cloudfront", "iam", "acm"
+    #   resp.distribution_list.items[0].restrictions.geo_restriction.restriction_type #=> String, one of "blacklist", "whitelist", "none"
+    #   resp.distribution_list.items[0].restrictions.geo_restriction.quantity #=> Integer
+    #   resp.distribution_list.items[0].restrictions.geo_restriction.items #=> Array
+    #   resp.distribution_list.items[0].restrictions.geo_restriction.items[0] #=> String
+    #   resp.distribution_list.items[0].web_acl_id #=> String
+    #   resp.distribution_list.items[0].http_version #=> String, one of "http1.1", "http2", "http3", "http2and3"
+    #   resp.distribution_list.items[0].is_ipv6_enabled #=> Boolean
+    #   resp.distribution_list.items[0].alias_icp_recordals #=> Array
+    #   resp.distribution_list.items[0].alias_icp_recordals[0].cname #=> String
+    #   resp.distribution_list.items[0].alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
+    #   resp.distribution_list.items[0].staging #=> Boolean
+    #   resp.distribution_list.items[0].anycast_ip_list_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByAnycastIpListId AWS API Documentation
+    #
+    # @overload list_distributions_by_anycast_ip_list_id(params = {})
+    # @param [Hash] params ({})
+    def list_distributions_by_anycast_ip_list_id(params = {}, options = {})
+      req = build_request(:list_distributions_by_anycast_ip_list_id, params)
       req.send_request(options)
     end
 
@@ -6101,6 +6794,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
@@ -6147,6 +6841,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -6196,6 +6891,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution_list.items[0].cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution_list.items[0].cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -6237,6 +6933,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].alias_icp_recordals[0].cname #=> String
     #   resp.distribution_list.items[0].alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
     #   resp.distribution_list.items[0].staging #=> Boolean
+    #   resp.distribution_list.items[0].anycast_ip_list_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByRealtimeLogConfig AWS API Documentation
     #
@@ -6301,6 +6998,69 @@ module Aws::CloudFront
     # @param [Hash] params ({})
     def list_distributions_by_response_headers_policy_id(params = {}, options = {})
       req = build_request(:list_distributions_by_response_headers_policy_id, params)
+      req.send_request(options)
+    end
+
+    # List CloudFront distributions by their VPC origin ID.
+    #
+    # @option params [String] :marker
+    #   The marker associated with the VPC origin distributions list.
+    #
+    # @option params [Integer] :max_items
+    #   The maximum number of items included in the list.
+    #
+    # @option params [required, String] :vpc_origin_id
+    #   The VPC origin ID.
+    #
+    # @return [Types::ListDistributionsByVpcOriginIdResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDistributionsByVpcOriginIdResult#distribution_id_list #distribution_id_list} => Types::DistributionIdList
+    #
+    #
+    # @example Example: To list distributions by VPC origin ID
+    #
+    #   # The following command lists distributions by VPC origin ID:
+    #
+    #   resp = client.list_distributions_by_vpc_origin_id({
+    #     vpc_origin_id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     distribution_id_list: {
+    #       is_truncated: false, 
+    #       items: [
+    #       ], 
+    #       marker: "a", 
+    #       max_items: 100, 
+    #       quantity: 0, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_distributions_by_vpc_origin_id({
+    #     marker: "string",
+    #     max_items: 1,
+    #     vpc_origin_id: "string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.distribution_id_list.marker #=> String
+    #   resp.distribution_id_list.next_marker #=> String
+    #   resp.distribution_id_list.max_items #=> Integer
+    #   resp.distribution_id_list.is_truncated #=> Boolean
+    #   resp.distribution_id_list.quantity #=> Integer
+    #   resp.distribution_id_list.items #=> Array
+    #   resp.distribution_id_list.items[0] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByVpcOriginId AWS API Documentation
+    #
+    # @overload list_distributions_by_vpc_origin_id(params = {})
+    # @param [Hash] params ({})
+    def list_distributions_by_vpc_origin_id(params = {}, options = {})
+      req = build_request(:list_distributions_by_vpc_origin_id, params)
       req.send_request(options)
     end
 
@@ -6376,6 +7136,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution_list.items[0].origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution_list.items[0].origins.items[0].connection_attempts #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].connection_timeout #=> Integer
     #   resp.distribution_list.items[0].origins.items[0].origin_shield.enabled #=> Boolean
@@ -6422,6 +7183,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_list.items[0].default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -6471,6 +7233,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution_list.items[0].cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution_list.items[0].cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution_list.items[0].cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution_list.items[0].cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -6512,6 +7275,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].alias_icp_recordals[0].cname #=> String
     #   resp.distribution_list.items[0].alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
     #   resp.distribution_list.items[0].staging #=> Boolean
+    #   resp.distribution_list.items[0].anycast_ip_list_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByWebACLId AWS API Documentation
     #
@@ -7321,6 +8085,79 @@ module Aws::CloudFront
       req.send_request(options)
     end
 
+    # List the CloudFront VPC origins in your account.
+    #
+    # @option params [String] :marker
+    #   The marker associated with the VPC origins list.
+    #
+    # @option params [Integer] :max_items
+    #   The maximum number of items included in the list.
+    #
+    # @return [Types::ListVpcOriginsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListVpcOriginsResult#vpc_origin_list #vpc_origin_list} => Types::VpcOriginList
+    #
+    #
+    # @example Example: To list VPC origins
+    #
+    #   # The following command lists VPC origins:
+    #
+    #   resp = client.list_vpc_origins({
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     vpc_origin_list: {
+    #       is_truncated: true, 
+    #       items: [
+    #         {
+    #           arn: "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #           created_time: Time.parse("2024-10-15T17:19:42.318Z"), 
+    #           id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #           last_modified_time: Time.parse("2024-10-15T17:24:35.188Z"), 
+    #           name: "my-vpcorigin-name", 
+    #           origin_endpoint_arn: "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d", 
+    #           status: "Deployed", 
+    #         }, 
+    #       ], 
+    #       marker: "a", 
+    #       max_items: 100, 
+    #       quantity: 1, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_vpc_origins({
+    #     marker: "string",
+    #     max_items: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.vpc_origin_list.marker #=> String
+    #   resp.vpc_origin_list.next_marker #=> String
+    #   resp.vpc_origin_list.max_items #=> Integer
+    #   resp.vpc_origin_list.is_truncated #=> Boolean
+    #   resp.vpc_origin_list.quantity #=> Integer
+    #   resp.vpc_origin_list.items #=> Array
+    #   resp.vpc_origin_list.items[0].id #=> String
+    #   resp.vpc_origin_list.items[0].name #=> String
+    #   resp.vpc_origin_list.items[0].status #=> String
+    #   resp.vpc_origin_list.items[0].created_time #=> Time
+    #   resp.vpc_origin_list.items[0].last_modified_time #=> Time
+    #   resp.vpc_origin_list.items[0].arn #=> String
+    #   resp.vpc_origin_list.items[0].origin_endpoint_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListVpcOrigins AWS API Documentation
+    #
+    # @overload list_vpc_origins(params = {})
+    # @param [Hash] params ({})
+    def list_vpc_origins(params = {}, options = {})
+      req = build_request(:list_vpc_origins, params)
+      req.send_request(options)
+    end
+
     # Publishes a CloudFront function by copying the function code from the
     # `DEVELOPMENT` stage to `LIVE`. This automatically updates all cache
     # behaviors that are using this function to use the newly published copy
@@ -7850,6 +8687,9 @@ module Aws::CloudFront
     #               origin_read_timeout: 1,
     #               origin_keepalive_timeout: 1,
     #             },
+    #             vpc_origin_config: {
+    #               vpc_origin_id: "string", # required
+    #             },
     #             connection_attempts: 1,
     #             connection_timeout: 1,
     #             origin_shield: {
@@ -7929,6 +8769,9 @@ module Aws::CloudFront
     #         cache_policy_id: "string",
     #         origin_request_policy_id: "string",
     #         response_headers_policy_id: "string",
+    #         grpc_config: {
+    #           enabled: false, # required
+    #         },
     #         forwarded_values: {
     #           query_string: false, # required
     #           cookies: { # required
@@ -8002,6 +8845,9 @@ module Aws::CloudFront
     #             cache_policy_id: "string",
     #             origin_request_policy_id: "string",
     #             response_headers_policy_id: "string",
+    #             grpc_config: {
+    #               enabled: false, # required
+    #             },
     #             forwarded_values: {
     #               query_string: false, # required
     #               cookies: { # required
@@ -8039,10 +8885,10 @@ module Aws::CloudFront
     #       },
     #       comment: "CommentType", # required
     #       logging: {
-    #         enabled: false, # required
-    #         include_cookies: false, # required
-    #         bucket: "string", # required
-    #         prefix: "string", # required
+    #         enabled: false,
+    #         include_cookies: false,
+    #         bucket: "string",
+    #         prefix: "string",
     #       },
     #       price_class: "PriceClass_100", # accepts PriceClass_100, PriceClass_200, PriceClass_All
     #       enabled: false, # required
@@ -8067,6 +8913,7 @@ module Aws::CloudFront
     #       is_ipv6_enabled: false,
     #       continuous_deployment_policy_id: "string",
     #       staging: false,
+    #       anycast_ip_list_id: "string",
     #     },
     #     id: "string", # required
     #     if_match: "string",
@@ -8117,6 +8964,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -8163,6 +9011,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -8212,6 +9061,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -8255,6 +9105,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.is_ipv6_enabled #=> Boolean
     #   resp.distribution.distribution_config.continuous_deployment_policy_id #=> String
     #   resp.distribution.distribution_config.staging #=> Boolean
+    #   resp.distribution.distribution_config.anycast_ip_list_id #=> String
     #   resp.distribution.alias_icp_recordals #=> Array
     #   resp.distribution.alias_icp_recordals[0].cname #=> String
     #   resp.distribution.alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
@@ -8367,6 +9218,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_read_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].custom_origin_config.origin_keepalive_timeout #=> Integer
+    #   resp.distribution.distribution_config.origins.items[0].vpc_origin_config.vpc_origin_id #=> String
     #   resp.distribution.distribution_config.origins.items[0].connection_attempts #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].connection_timeout #=> Integer
     #   resp.distribution.distribution_config.origins.items[0].origin_shield.enabled #=> Boolean
@@ -8413,6 +9265,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.default_cache_behavior.cache_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.default_cache_behavior.grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.default_cache_behavior.forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -8462,6 +9315,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.cache_behaviors.items[0].cache_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].origin_request_policy_id #=> String
     #   resp.distribution.distribution_config.cache_behaviors.items[0].response_headers_policy_id #=> String
+    #   resp.distribution.distribution_config.cache_behaviors.items[0].grpc_config.enabled #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.query_string #=> Boolean
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.forward #=> String, one of "none", "whitelist", "all"
     #   resp.distribution.distribution_config.cache_behaviors.items[0].forwarded_values.cookies.whitelisted_names.quantity #=> Integer
@@ -8505,6 +9359,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.is_ipv6_enabled #=> Boolean
     #   resp.distribution.distribution_config.continuous_deployment_policy_id #=> String
     #   resp.distribution.distribution_config.staging #=> Boolean
+    #   resp.distribution.distribution_config.anycast_ip_list_id #=> String
     #   resp.distribution.alias_icp_recordals #=> Array
     #   resp.distribution.alias_icp_recordals[0].cname #=> String
     #   resp.distribution.alias_icp_recordals[0].icp_recordal_status #=> String, one of "APPROVED", "SUSPENDED", "PENDING"
@@ -9471,6 +10326,116 @@ module Aws::CloudFront
       req.send_request(options)
     end
 
+    # Update an Amazon CloudFront VPC origin in your account.
+    #
+    # @option params [required, Types::VpcOriginEndpointConfig] :vpc_origin_endpoint_config
+    #   The VPC origin endpoint configuration.
+    #
+    # @option params [required, String] :id
+    #   The VPC origin ID.
+    #
+    # @option params [required, String] :if_match
+    #   The VPC origin to update, if a match occurs.
+    #
+    # @return [Types::UpdateVpcOriginResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateVpcOriginResult#vpc_origin #vpc_origin} => Types::VpcOrigin
+    #   * {Types::UpdateVpcOriginResult#etag #etag} => String
+    #
+    #
+    # @example Example: To update a VPC origin
+    #
+    #   # The following command updates a VPC origin:
+    #
+    #   resp = client.update_vpc_origin({
+    #     id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #     if_match: "ETVPDKIKX0DER", 
+    #     vpc_origin_endpoint_config: {
+    #       arn: "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d", 
+    #       http_port: 80, 
+    #       https_port: 443, 
+    #       name: "my-vpcorigin-name", 
+    #       origin_protocol_policy: "match-viewer", 
+    #       origin_ssl_protocols: {
+    #         items: [
+    #           "TLSv1.1", 
+    #           "TLSv1.2", 
+    #         ], 
+    #         quantity: 2, 
+    #       }, 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "E3UN6WX5RRO2AG", 
+    #     vpc_origin: {
+    #       arn: "arn:aws:cloudfront::123456789012:vpcorigin/vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       created_time: Time.parse("2024-10-15T17:19:42.318Z"), 
+    #       id: "vo_BQwjxxQxjCaBcQLzJUFkDM", 
+    #       last_modified_time: Time.parse("2024-10-15T17:47:08.133Z"), 
+    #       status: "Deploying", 
+    #       vpc_origin_endpoint_config: {
+    #         arn: "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-alb-us-west-2/e6aa5c7d26415c6d", 
+    #         http_port: 80, 
+    #         https_port: 443, 
+    #         name: "my-vpcorigin-name", 
+    #         origin_protocol_policy: "match-viewer", 
+    #         origin_ssl_protocols: {
+    #           items: [
+    #             "TLSv1.1", 
+    #             "TLSv1.2", 
+    #           ], 
+    #           quantity: 2, 
+    #         }, 
+    #       }, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_vpc_origin({
+    #     vpc_origin_endpoint_config: { # required
+    #       name: "string", # required
+    #       arn: "string", # required
+    #       http_port: 1, # required
+    #       https_port: 1, # required
+    #       origin_protocol_policy: "http-only", # required, accepts http-only, match-viewer, https-only
+    #       origin_ssl_protocols: {
+    #         quantity: 1, # required
+    #         items: ["SSLv3"], # required, accepts SSLv3, TLSv1, TLSv1.1, TLSv1.2
+    #       },
+    #     },
+    #     id: "string", # required
+    #     if_match: "string", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.vpc_origin.id #=> String
+    #   resp.vpc_origin.arn #=> String
+    #   resp.vpc_origin.status #=> String
+    #   resp.vpc_origin.created_time #=> Time
+    #   resp.vpc_origin.last_modified_time #=> Time
+    #   resp.vpc_origin.vpc_origin_endpoint_config.name #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.arn #=> String
+    #   resp.vpc_origin.vpc_origin_endpoint_config.http_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.https_port #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_protocol_policy #=> String, one of "http-only", "match-viewer", "https-only"
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.quantity #=> Integer
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items #=> Array
+    #   resp.vpc_origin.vpc_origin_endpoint_config.origin_ssl_protocols.items[0] #=> String, one of "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"
+    #   resp.etag #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateVpcOrigin AWS API Documentation
+    #
+    # @overload update_vpc_origin(params = {})
+    # @param [Hash] params ({})
+    def update_vpc_origin(params = {}, options = {})
+      req = build_request(:update_vpc_origin, params)
+      req.send_request(options)
+    end
+
     # @!endgroup
 
     # @param params ({})
@@ -9489,7 +10454,7 @@ module Aws::CloudFront
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudfront'
-      context[:gem_version] = '1.105.0'
+      context[:gem_version] = '1.106.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

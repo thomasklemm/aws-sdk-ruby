@@ -81,7 +81,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ComputeOptimizer/Client.html#delete_recommendation_preferences-instance_method
       def delete_recommendation_preferences: (
-                                               resource_type: ("Ec2Instance" | "AutoScalingGroup" | "EbsVolume" | "LambdaFunction" | "NotApplicable" | "EcsService" | "License" | "RdsDBInstance"),
+                                               resource_type: ("Ec2Instance" | "AutoScalingGroup" | "EbsVolume" | "LambdaFunction" | "NotApplicable" | "EcsService" | "License" | "RdsDBInstance" | "Idle"),
                                                ?scope: {
                                                  name: ("Organization" | "AccountId" | "ResourceArn")?,
                                                  value: ::String?
@@ -211,6 +211,30 @@ module Aws
                                               ) -> _ExportECSServiceRecommendationsResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ExportECSServiceRecommendationsResponseSuccess
 
+      interface _ExportIdleRecommendationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ExportIdleRecommendationsResponse]
+        def job_id: () -> ::String
+        def s3_destination: () -> Types::S3Destination
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ComputeOptimizer/Client.html#export_idle_recommendations-instance_method
+      def export_idle_recommendations: (
+                                         ?account_ids: Array[::String],
+                                         ?filters: Array[
+                                           {
+                                             name: ("Finding" | "ResourceType")?,
+                                             values: Array[::String]?
+                                           },
+                                         ],
+                                         ?fields_to_export: Array[("AccountId" | "ResourceArn" | "ResourceId" | "ResourceType" | "LastRefreshTimestamp" | "LookbackPeriodInDays" | "SavingsOpportunity" | "SavingsOpportunityAfterDiscount" | "UtilizationMetricsCpuMaximum" | "UtilizationMetricsMemoryMaximum" | "UtilizationMetricsNetworkOutBytesPerSecondMaximum" | "UtilizationMetricsNetworkInBytesPerSecondMaximum" | "UtilizationMetricsDatabaseConnectionsMaximum" | "UtilizationMetricsEBSVolumeReadIOPSMaximum" | "UtilizationMetricsEBSVolumeWriteIOPSMaximum" | "UtilizationMetricsVolumeReadOpsPerSecondMaximum" | "UtilizationMetricsVolumeWriteOpsPerSecondMaximum" | "Finding" | "FindingDescription" | "Tags")],
+                                         s3_destination_config: {
+                                           bucket: ::String?,
+                                           key_prefix: ::String?
+                                         },
+                                         ?file_format: ("Csv"),
+                                         ?include_member_accounts: bool
+                                       ) -> _ExportIdleRecommendationsResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ExportIdleRecommendationsResponseSuccess
+
       interface _ExportLambdaFunctionRecommendationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ExportLambdaFunctionRecommendationsResponse]
         def job_id: () -> ::String
@@ -273,7 +297,7 @@ module Aws
                                                      values: Array[::String]?
                                                    },
                                                  ],
-                                                 ?fields_to_export: Array[("ResourceArn" | "AccountId" | "Engine" | "EngineVersion" | "Idle" | "MultiAZDBInstance" | "CurrentDBInstanceClass" | "CurrentStorageConfigurationStorageType" | "CurrentStorageConfigurationAllocatedStorage" | "CurrentStorageConfigurationMaxAllocatedStorage" | "CurrentStorageConfigurationIOPS" | "CurrentStorageConfigurationStorageThroughput" | "CurrentInstanceOnDemandHourlyPrice" | "CurrentStorageOnDemandMonthlyPrice" | "LookbackPeriodInDays" | "UtilizationMetricsCpuMaximum" | "UtilizationMetricsMemoryMaximum" | "UtilizationMetricsEBSVolumeStorageSpaceUtilizationMaximum" | "UtilizationMetricsNetworkReceiveThroughputMaximum" | "UtilizationMetricsNetworkTransmitThroughputMaximum" | "UtilizationMetricsEBSVolumeReadIOPSMaximum" | "UtilizationMetricsEBSVolumeWriteIOPSMaximum" | "UtilizationMetricsEBSVolumeReadThroughputMaximum" | "UtilizationMetricsEBSVolumeWriteThroughputMaximum" | "UtilizationMetricsDatabaseConnectionsMaximum" | "InstanceFinding" | "InstanceFindingReasonCodes" | "StorageFinding" | "StorageFindingReasonCodes" | "InstanceRecommendationOptionsDBInstanceClass" | "InstanceRecommendationOptionsRank" | "InstanceRecommendationOptionsPerformanceRisk" | "InstanceRecommendationOptionsProjectedUtilizationMetricsCpuMaximum" | "StorageRecommendationOptionsStorageType" | "StorageRecommendationOptionsAllocatedStorage" | "StorageRecommendationOptionsMaxAllocatedStorage" | "StorageRecommendationOptionsIOPS" | "StorageRecommendationOptionsStorageThroughput" | "StorageRecommendationOptionsRank" | "InstanceRecommendationOptionsInstanceOnDemandHourlyPrice" | "InstanceRecommendationOptionsSavingsOpportunityPercentage" | "InstanceRecommendationOptionsEstimatedMonthlySavingsCurrency" | "InstanceRecommendationOptionsEstimatedMonthlySavingsValue" | "InstanceRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage" | "InstanceRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts" | "InstanceRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts" | "StorageRecommendationOptionsOnDemandMonthlyPrice" | "StorageRecommendationOptionsSavingsOpportunityPercentage" | "StorageRecommendationOptionsEstimatedMonthlySavingsCurrency" | "StorageRecommendationOptionsEstimatedMonthlySavingsValue" | "StorageRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage" | "StorageRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts" | "StorageRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts" | "EffectiveRecommendationPreferencesCpuVendorArchitectures" | "EffectiveRecommendationPreferencesEnhancedInfrastructureMetrics" | "EffectiveRecommendationPreferencesLookBackPeriod" | "EffectiveRecommendationPreferencesSavingsEstimationMode" | "LastRefreshTimestamp" | "Tags")],
+                                                 ?fields_to_export: Array[("ResourceArn" | "AccountId" | "Engine" | "EngineVersion" | "Idle" | "MultiAZDBInstance" | "CurrentDBInstanceClass" | "CurrentStorageConfigurationStorageType" | "CurrentStorageConfigurationAllocatedStorage" | "CurrentStorageConfigurationMaxAllocatedStorage" | "CurrentStorageConfigurationIOPS" | "CurrentStorageConfigurationStorageThroughput" | "CurrentInstanceOnDemandHourlyPrice" | "CurrentStorageOnDemandMonthlyPrice" | "LookbackPeriodInDays" | "CurrentInstancePerformanceRisk" | "UtilizationMetricsCpuMaximum" | "UtilizationMetricsMemoryMaximum" | "UtilizationMetricsEBSVolumeStorageSpaceUtilizationMaximum" | "UtilizationMetricsNetworkReceiveThroughputMaximum" | "UtilizationMetricsNetworkTransmitThroughputMaximum" | "UtilizationMetricsEBSVolumeReadIOPSMaximum" | "UtilizationMetricsEBSVolumeWriteIOPSMaximum" | "UtilizationMetricsEBSVolumeReadThroughputMaximum" | "UtilizationMetricsEBSVolumeWriteThroughputMaximum" | "UtilizationMetricsDatabaseConnectionsMaximum" | "UtilizationMetricsStorageNetworkReceiveThroughputMaximum" | "UtilizationMetricsStorageNetworkTransmitThroughputMaximum" | "UtilizationMetricsAuroraMemoryHealthStateMaximum" | "UtilizationMetricsAuroraMemoryNumDeclinedSqlTotalMaximum" | "UtilizationMetricsAuroraMemoryNumKillConnTotalMaximum" | "UtilizationMetricsAuroraMemoryNumKillQueryTotalMaximum" | "UtilizationMetricsReadIOPSEphemeralStorageMaximum" | "UtilizationMetricsWriteIOPSEphemeralStorageMaximum" | "InstanceFinding" | "InstanceFindingReasonCodes" | "StorageFinding" | "StorageFindingReasonCodes" | "InstanceRecommendationOptionsDBInstanceClass" | "InstanceRecommendationOptionsRank" | "InstanceRecommendationOptionsPerformanceRisk" | "InstanceRecommendationOptionsProjectedUtilizationMetricsCpuMaximum" | "StorageRecommendationOptionsStorageType" | "StorageRecommendationOptionsAllocatedStorage" | "StorageRecommendationOptionsMaxAllocatedStorage" | "StorageRecommendationOptionsIOPS" | "StorageRecommendationOptionsStorageThroughput" | "StorageRecommendationOptionsRank" | "InstanceRecommendationOptionsInstanceOnDemandHourlyPrice" | "InstanceRecommendationOptionsSavingsOpportunityPercentage" | "InstanceRecommendationOptionsEstimatedMonthlySavingsCurrency" | "InstanceRecommendationOptionsEstimatedMonthlySavingsValue" | "InstanceRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage" | "InstanceRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts" | "InstanceRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts" | "StorageRecommendationOptionsOnDemandMonthlyPrice" | "StorageRecommendationOptionsSavingsOpportunityPercentage" | "StorageRecommendationOptionsEstimatedMonthlySavingsCurrency" | "StorageRecommendationOptionsEstimatedMonthlySavingsValue" | "StorageRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage" | "StorageRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts" | "StorageRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts" | "EffectiveRecommendationPreferencesCpuVendorArchitectures" | "EffectiveRecommendationPreferencesEnhancedInfrastructureMetrics" | "EffectiveRecommendationPreferencesLookBackPeriod" | "EffectiveRecommendationPreferencesSavingsEstimationMode" | "LastRefreshTimestamp" | "Tags" | "DBClusterIdentifier" | "PromotionTier")],
                                                  s3_destination_config: {
                                                    bucket: ::String?,
                                                    key_prefix: ::String?
@@ -452,6 +476,31 @@ module Aws
                                                     ) -> _GetEnrollmentStatusesForOrganizationResponseSuccess
                                                   | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetEnrollmentStatusesForOrganizationResponseSuccess
 
+      interface _GetIdleRecommendationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetIdleRecommendationsResponse]
+        def next_token: () -> ::String
+        def idle_recommendations: () -> ::Array[Types::IdleRecommendation]
+        def errors: () -> ::Array[Types::IdleRecommendationError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ComputeOptimizer/Client.html#get_idle_recommendations-instance_method
+      def get_idle_recommendations: (
+                                      ?resource_arns: Array[::String],
+                                      ?next_token: ::String,
+                                      ?max_results: ::Integer,
+                                      ?filters: Array[
+                                        {
+                                          name: ("Finding" | "ResourceType")?,
+                                          values: Array[::String]?
+                                        },
+                                      ],
+                                      ?account_ids: Array[::String],
+                                      ?order_by: {
+                                        dimension: ("SavingsValue" | "SavingsValueAfterDiscount")?,
+                                        order: ("Asc" | "Desc")?
+                                      }
+                                    ) -> _GetIdleRecommendationsResponseSuccess
+                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetIdleRecommendationsResponseSuccess
+
       interface _GetLambdaFunctionRecommendationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetLambdaFunctionRecommendationsResponse]
         def next_token: () -> ::String
@@ -541,7 +590,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ComputeOptimizer/Client.html#get_recommendation_preferences-instance_method
       def get_recommendation_preferences: (
-                                            resource_type: ("Ec2Instance" | "AutoScalingGroup" | "EbsVolume" | "LambdaFunction" | "NotApplicable" | "EcsService" | "License" | "RdsDBInstance"),
+                                            resource_type: ("Ec2Instance" | "AutoScalingGroup" | "EbsVolume" | "LambdaFunction" | "NotApplicable" | "EcsService" | "License" | "RdsDBInstance" | "Idle"),
                                             ?scope: {
                                               name: ("Organization" | "AccountId" | "ResourceArn")?,
                                               value: ::String?
@@ -569,7 +618,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ComputeOptimizer/Client.html#put_recommendation_preferences-instance_method
       def put_recommendation_preferences: (
-                                            resource_type: ("Ec2Instance" | "AutoScalingGroup" | "EbsVolume" | "LambdaFunction" | "NotApplicable" | "EcsService" | "License" | "RdsDBInstance"),
+                                            resource_type: ("Ec2Instance" | "AutoScalingGroup" | "EbsVolume" | "LambdaFunction" | "NotApplicable" | "EcsService" | "License" | "RdsDBInstance" | "Idle"),
                                             ?scope: {
                                               name: ("Organization" | "AccountId" | "ResourceArn")?,
                                               value: ::String?

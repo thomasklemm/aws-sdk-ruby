@@ -10,7 +10,8 @@
 module Aws::TimestreamQuery
   module Types
 
-    # You are not authorized to perform this action.
+    # You do not have the necessary permissions to access the account
+    # settings.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -19,6 +20,27 @@ module Aws::TimestreamQuery
     #
     class AccessDeniedException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration settings for notifications related to account settings.
+    #
+    # @!attribute [rw] sns_configuration
+    #   Details on SNS that are required to send the notification.
+    #   @return [Types::SnsConfiguration]
+    #
+    # @!attribute [rw] role_arn
+    #   An Amazon Resource Name (ARN) that grants Timestream permission to
+    #   publish notifications. This field is only visible if SNS Topic is
+    #   provided when updating the account settings.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/AccountSettingsNotificationConfiguration AWS API Documentation
+    #
+    class AccountSettingsNotificationConfiguration < Struct.new(
+      :sns_configuration,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -244,7 +266,11 @@ module Aws::TimestreamQuery
 
     # @!attribute [rw] max_query_tcu
     #   The maximum number of [Timestream compute units][1] (TCUs) the
-    #   service will use at any point in time to serve your queries.
+    #   service will use at any point in time to serve your queries. To run
+    #   queries, you must set a minimum capacity of 4 TCU. You can set the
+    #   maximum number of TCU in multiples of 4, for example, 4, 8, 16, 32,
+    #   and so on. This configuration is applicable only for on-demand usage
+    #   of (TCUs).
     #
     #
     #
@@ -253,13 +279,25 @@ module Aws::TimestreamQuery
     #
     # @!attribute [rw] query_pricing_model
     #   The pricing model for queries in your account.
+    #
+    #   <note markdown="1"> The `QueryPricingModel` parameter is used by several Timestream
+    #   operations; however, the `UpdateAccountSettings` API operation
+    #   doesn't recognize any values other than `COMPUTE_UNITS`.
+    #
+    #    </note>
     #   @return [String]
+    #
+    # @!attribute [rw] query_compute
+    #   An object that contains the usage settings for Timestream Compute
+    #   Units (TCUs) in your account for the query workload.
+    #   @return [Types::QueryComputeResponse]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/DescribeAccountSettingsResponse AWS API Documentation
     #
     class DescribeAccountSettingsResponse < Struct.new(
       :max_query_tcu,
-      :query_pricing_model)
+      :query_pricing_model,
+      :query_compute)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -453,8 +491,7 @@ module Aws::TimestreamQuery
       include Aws::Structure
     end
 
-    # The service was unable to fully process this request because of an
-    # internal server error.
+    # An internal server error occurred while processing the request.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -467,7 +504,7 @@ module Aws::TimestreamQuery
       include Aws::Structure
     end
 
-    # The requested endpoint was not valid.
+    # The requested endpoint is invalid.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -476,6 +513,34 @@ module Aws::TimestreamQuery
     #
     class InvalidEndpointException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration object that contains the most recent account settings
+    # update, visible only if settings have been updated previously.
+    #
+    # @!attribute [rw] target_query_tcu
+    #   The number of TimeStream Compute Units (TCUs) requested in the last
+    #   account settings update.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   The status of the last update. Can be either `PENDING`, `FAILED`, or
+    #   `SUCCEEDED`.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   Error message describing the last account settings update status,
+    #   visible only if an error occurred.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/LastUpdate AWS API Documentation
+    #
+    class LastUpdate < Struct.new(
+      :target_query_tcu,
+      :status,
+      :status_message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -656,7 +721,9 @@ module Aws::TimestreamQuery
     # updated or when it is deleted.
     #
     # @!attribute [rw] sns_configuration
-    #   Details on SNS configuration.
+    #   Details about the Amazon Simple Notification Service (SNS)
+    #   configuration. This field is visible only when SNS Topic is provided
+    #   when updating the account settings.
     #   @return [Types::SnsConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/NotificationConfiguration AWS API Documentation
@@ -730,6 +797,104 @@ module Aws::TimestreamQuery
       :columns,
       :parameters)
       SENSITIVE = [:query_string]
+      include Aws::Structure
+    end
+
+    # A request to update the provisioned capacity settings for querying
+    # data.
+    #
+    # @!attribute [rw] target_query_tcu
+    #   The target compute capacity for querying data, specified in
+    #   Timestream Compute Units (TCUs).
+    #   @return [Integer]
+    #
+    # @!attribute [rw] notification_configuration
+    #   Configuration settings for notifications related to the provisioned
+    #   capacity update.
+    #   @return [Types::AccountSettingsNotificationConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/ProvisionedCapacityRequest AWS API Documentation
+    #
+    class ProvisionedCapacityRequest < Struct.new(
+      :target_query_tcu,
+      :notification_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The response to a request to update the provisioned capacity settings
+    # for querying data.
+    #
+    # @!attribute [rw] active_query_tcu
+    #   The number of Timestream Compute Units (TCUs) provisioned in the
+    #   account. This field is only visible when the compute mode is
+    #   `PROVISIONED`.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] notification_configuration
+    #   An object that contains settings for notifications that are sent
+    #   whenever the provisioned capacity settings are modified. This field
+    #   is only visible when the compute mode is `PROVISIONED`.
+    #   @return [Types::AccountSettingsNotificationConfiguration]
+    #
+    # @!attribute [rw] last_update
+    #   Information about the last update to the provisioned capacity
+    #   settings.
+    #   @return [Types::LastUpdate]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/ProvisionedCapacityResponse AWS API Documentation
+    #
+    class ProvisionedCapacityResponse < Struct.new(
+      :active_query_tcu,
+      :notification_configuration,
+      :last_update)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A request to retrieve or update the compute capacity settings for
+    # querying data.
+    #
+    # @!attribute [rw] compute_mode
+    #   The mode in which Timestream Compute Units (TCUs) are allocated and
+    #   utilized within an account. Note that in the Asia Pacific (Mumbai)
+    #   region, the API operation only recognizes the value `PROVISIONED`.
+    #   @return [String]
+    #
+    # @!attribute [rw] provisioned_capacity
+    #   Configuration object that contains settings for provisioned
+    #   Timestream Compute Units (TCUs) in your account.
+    #   @return [Types::ProvisionedCapacityRequest]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/QueryComputeRequest AWS API Documentation
+    #
+    class QueryComputeRequest < Struct.new(
+      :compute_mode,
+      :provisioned_capacity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The response to a request to retrieve or update the compute capacity
+    # settings for querying data.
+    #
+    # @!attribute [rw] compute_mode
+    #   The mode in which Timestream Compute Units (TCUs) are allocated and
+    #   utilized within an account. Note that in the Asia Pacific (Mumbai)
+    #   region, the API operation only recognizes the value `PROVISIONED`.
+    #   @return [String]
+    #
+    # @!attribute [rw] provisioned_capacity
+    #   Configuration object that contains settings for provisioned
+    #   Timestream Compute Units (TCUs) in your account.
+    #   @return [Types::ProvisionedCapacityResponse]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/QueryComputeResponse AWS API Documentation
+    #
+    class QueryComputeResponse < Struct.new(
+      :compute_mode,
+      :provisioned_capacity)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -1653,7 +1818,7 @@ module Aws::TimestreamQuery
       include Aws::Structure
     end
 
-    # The request was denied due to request throttling.
+    # The request was throttled due to excessive requests.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -1825,11 +1990,16 @@ module Aws::TimestreamQuery
     #   The maximum number of compute units the service will use at any
     #   point in time to serve your queries. To run queries, you must set a
     #   minimum capacity of 4 TCU. You can set the maximum number of TCU in
-    #   multiples of 4, for example, 4, 8, 16, 32, and so on.
+    #   multiples of 4, for example, 4, 8, 16, 32, and so on. The maximum
+    #   value supported for `MaxQueryTCU` is 1000. To request an increase to
+    #   this soft limit, contact Amazon Web Services Support. For
+    #   information about the default quota for maxQueryTCU, see Default
+    #   quotas. This configuration is applicable only for on-demand usage of
+    #   Timestream Compute Units (TCUs).
     #
     #   The maximum value supported for `MaxQueryTCU` is 1000. To request an
     #   increase to this soft limit, contact Amazon Web Services Support.
-    #   For information about the default quota for maxQueryTCU, see
+    #   For information about the default quota for `maxQueryTCU`, see
     #   [Default quotas][1].
     #
     #
@@ -1847,11 +2017,23 @@ module Aws::TimestreamQuery
     #    </note>
     #   @return [String]
     #
+    # @!attribute [rw] query_compute
+    #   Modifies the query compute settings configured in your account,
+    #   including the query pricing model and provisioned Timestream Compute
+    #   Units (TCUs) in your account.
+    #
+    #   <note markdown="1"> This API is idempotent, meaning that making the same request
+    #   multiple times will have the same effect as making the request once.
+    #
+    #    </note>
+    #   @return [Types::QueryComputeRequest]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/UpdateAccountSettingsRequest AWS API Documentation
     #
     class UpdateAccountSettingsRequest < Struct.new(
       :max_query_tcu,
-      :query_pricing_model)
+      :query_pricing_model,
+      :query_compute)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1865,11 +2047,17 @@ module Aws::TimestreamQuery
     #   The pricing model for an account.
     #   @return [String]
     #
+    # @!attribute [rw] query_compute
+    #   Confirms the updated account settings for querying data in your
+    #   account.
+    #   @return [Types::QueryComputeResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-query-2018-11-01/UpdateAccountSettingsResponse AWS API Documentation
     #
     class UpdateAccountSettingsResponse < Struct.new(
       :max_query_tcu,
-      :query_pricing_model)
+      :query_pricing_model,
+      :query_compute)
       SENSITIVE = []
       include Aws::Structure
     end

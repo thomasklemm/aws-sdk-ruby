@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.71.0 (2024-11-20)
+------------------
+
+* Feature - This release enables AWS Compute Optimizer to analyze and generate optimization recommendations for Amazon Aurora database instances. It also enables Compute Optimizer to identify idle Amazon EC2 instances, Amazon EBS volumes, Amazon ECS services running on Fargate, and Amazon RDS databases.
+
 1.70.0 (2024-11-06)
 ------------------
 

@@ -31,6 +31,12 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: [:text]
     end
 
+    class AnalyzePromptEvent
+      attr_accessor message: ::String
+      attr_accessor event_type: untyped
+      SENSITIVE: []
+    end
+
     class ApiInvocationInput
       attr_accessor action_group: ::String
       attr_accessor action_invocation_type: ("RESULT" | "USER_CONFIRMATION" | "USER_CONFIRMATION_AND_RESULT")
@@ -475,6 +481,17 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class InputPrompt
+      attr_accessor text_prompt: Types::TextPrompt
+      attr_accessor unknown: untyped
+      SENSITIVE: [:text_prompt]
+
+      class TextPrompt < InputPrompt
+      end
+      class Unknown < InputPrompt
+      end
+    end
+
     class InternalServerException
       attr_accessor message: ::String
       attr_accessor event_type: untyped
@@ -647,6 +664,34 @@ module Aws::BedrockAgentRuntime
       attr_accessor trace_id: ::String
       attr_accessor type: ("ACTION_GROUP" | "KNOWLEDGE_BASE" | "FINISH" | "ASK_USER" | "REPROMPT")
       SENSITIVE: [:reprompt_response]
+    end
+
+    class OptimizePromptRequest
+      attr_accessor input: Types::InputPrompt
+      attr_accessor target_model_id: ::String
+      SENSITIVE: []
+    end
+
+    class OptimizePromptResponse
+      attr_accessor optimized_prompt: Types::OptimizedPromptStream
+      SENSITIVE: []
+    end
+
+    class OptimizedPrompt
+      attr_accessor text_prompt: Types::TextPrompt
+      attr_accessor unknown: untyped
+      SENSITIVE: [:text_prompt]
+
+      class TextPrompt < OptimizedPrompt
+      end
+      class Unknown < OptimizedPrompt
+      end
+    end
+
+    class OptimizedPromptEvent
+      attr_accessor optimized_prompt: Types::OptimizedPrompt
+      attr_accessor event_type: untyped
+      SENSITIVE: []
     end
 
     class OrchestrationConfiguration
@@ -999,6 +1044,11 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class TextPrompt
+      attr_accessor text: ::String
+      SENSITIVE: []
+    end
+
     class TextResponsePart
       attr_accessor span: Types::Span
       attr_accessor text: ::String
@@ -1058,6 +1108,10 @@ module Aws::BedrockAgentRuntime
 
     class FlowResponseStream < Enumerator[untyped, untyped]
       def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :conflict_exception, :dependency_failed_exception, :flow_completion_event, :flow_output_event, :flow_trace_event, :internal_server_exception, :resource_not_found_exception, :service_quota_exceeded_exception, :throttling_exception, :validation_exception]
+    end
+
+    class OptimizedPromptStream < Enumerator[untyped, untyped]
+      def event_types: () -> [:access_denied_exception, :analyze_prompt_event, :bad_gateway_exception, :dependency_failed_exception, :internal_server_exception, :optimized_prompt_event, :throttling_exception, :validation_exception]
     end
 
     class ResponseStream < Enumerator[untyped, untyped]

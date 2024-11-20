@@ -51,7 +51,9 @@ module Aws::DataZone
       attr_accessor created_by: ::String
       attr_accessor decision_comment: ::String
       attr_accessor domain_id: ::String
+      attr_accessor existing_subscription_id: ::String
       attr_accessor id: ::String
+      attr_accessor metadata_forms: ::Array[Types::FormOutput]
       attr_accessor request_reason: ::String
       attr_accessor reviewer_id: ::String
       attr_accessor status: ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -259,6 +261,12 @@ module Aws::DataZone
       attr_accessor updated_at: ::Time
       attr_accessor updated_by: ::String
       SENSITIVE: [:description]
+    end
+
+    class AssetTypesForRule
+      attr_accessor selection_mode: ("ALL" | "SPECIFIC")
+      attr_accessor specific_asset_types: ::Array[::String]
+      SENSITIVE: []
     end
 
     class AssociateEnvironmentRoleInput
@@ -860,6 +868,33 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class CreateRuleInput
+      attr_accessor action: ("CREATE_SUBSCRIPTION_REQUEST")
+      attr_accessor client_token: ::String
+      attr_accessor description: ::String
+      attr_accessor detail: Types::RuleDetail
+      attr_accessor domain_identifier: ::String
+      attr_accessor name: ::String
+      attr_accessor scope: Types::RuleScope
+      attr_accessor target: Types::RuleTarget
+      SENSITIVE: [:description, :name]
+    end
+
+    class CreateRuleOutput
+      attr_accessor action: ("CREATE_SUBSCRIPTION_REQUEST")
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor detail: Types::RuleDetail
+      attr_accessor identifier: ::String
+      attr_accessor name: ::String
+      attr_accessor rule_type: ("METADATA_FORM_ENFORCEMENT")
+      attr_accessor scope: Types::RuleScope
+      attr_accessor target: Types::RuleTarget
+      attr_accessor target_type: ("DOMAIN_UNIT")
+      SENSITIVE: [:description, :name]
+    end
+
     class CreateSubscriptionGrantInput
       attr_accessor asset_target_names: ::Array[Types::AssetTargetNameMap]
       attr_accessor client_token: ::String
@@ -888,6 +923,7 @@ module Aws::DataZone
     class CreateSubscriptionRequestInput
       attr_accessor client_token: ::String
       attr_accessor domain_identifier: ::String
+      attr_accessor metadata_forms: ::Array[Types::FormInput]
       attr_accessor request_reason: ::String
       attr_accessor subscribed_listings: ::Array[Types::SubscribedListingInput]
       attr_accessor subscribed_principals: ::Array[Types::SubscribedPrincipalInput]
@@ -899,7 +935,9 @@ module Aws::DataZone
       attr_accessor created_by: ::String
       attr_accessor decision_comment: ::String
       attr_accessor domain_id: ::String
+      attr_accessor existing_subscription_id: ::String
       attr_accessor id: ::String
+      attr_accessor metadata_forms: ::Array[Types::FormOutput]
       attr_accessor request_reason: ::String
       attr_accessor reviewer_id: ::String
       attr_accessor status: ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -1287,6 +1325,15 @@ module Aws::DataZone
     class DeleteProjectOutput < Aws::EmptyStructure
     end
 
+    class DeleteRuleInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteRuleOutput < Aws::EmptyStructure
+    end
+
     class DeleteSubscriptionGrantInput
       attr_accessor domain_identifier: ::String
       attr_accessor identifier: ::String
@@ -1424,6 +1471,12 @@ module Aws::DataZone
     class DomainUnitSummary
       attr_accessor id: ::String
       attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class DomainUnitTarget
+      attr_accessor domain_unit_id: ::String
+      attr_accessor include_child_domain_units: bool
       SENSITIVE: []
     end
 
@@ -2092,6 +2145,31 @@ module Aws::DataZone
       SENSITIVE: [:description, :name]
     end
 
+    class GetRuleInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      attr_accessor revision: ::String
+      SENSITIVE: []
+    end
+
+    class GetRuleOutput
+      attr_accessor action: ("CREATE_SUBSCRIPTION_REQUEST")
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor detail: Types::RuleDetail
+      attr_accessor identifier: ::String
+      attr_accessor last_updated_by: ::String
+      attr_accessor name: ::String
+      attr_accessor revision: ::String
+      attr_accessor rule_type: ("METADATA_FORM_ENFORCEMENT")
+      attr_accessor scope: Types::RuleScope
+      attr_accessor target: Types::RuleTarget
+      attr_accessor target_type: ("DOMAIN_UNIT")
+      attr_accessor updated_at: ::Time
+      SENSITIVE: [:description, :name]
+    end
+
     class GetSubscriptionGrantInput
       attr_accessor domain_identifier: ::String
       attr_accessor identifier: ::String
@@ -2145,7 +2223,9 @@ module Aws::DataZone
       attr_accessor created_by: ::String
       attr_accessor decision_comment: ::String
       attr_accessor domain_id: ::String
+      attr_accessor existing_subscription_id: ::String
       attr_accessor id: ::String
+      attr_accessor metadata_forms: ::Array[Types::FormOutput]
       attr_accessor request_reason: ::String
       attr_accessor reviewer_id: ::String
       attr_accessor status: ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -2729,6 +2809,27 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class ListRulesInput
+      attr_accessor action: ("CREATE_SUBSCRIPTION_REQUEST")
+      attr_accessor asset_types: ::Array[::String]
+      attr_accessor data_product: bool
+      attr_accessor domain_identifier: ::String
+      attr_accessor include_cascaded: bool
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor project_ids: ::Array[::String]
+      attr_accessor rule_type: ("METADATA_FORM_ENFORCEMENT")
+      attr_accessor target_identifier: ::String
+      attr_accessor target_type: ("DOMAIN_UNIT")
+      SENSITIVE: []
+    end
+
+    class ListRulesOutput
+      attr_accessor items: ::Array[Types::RuleSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListSubscriptionGrantsInput
       attr_accessor domain_identifier: ::String
       attr_accessor environment_id: ::String
@@ -2898,6 +2999,24 @@ module Aws::DataZone
       end
       class Unknown < MemberDetails
       end
+    end
+
+    class MetadataFormEnforcementDetail
+      attr_accessor required_metadata_forms: ::Array[Types::MetadataFormReference]
+      SENSITIVE: []
+    end
+
+    class MetadataFormReference
+      attr_accessor type_identifier: ::String
+      attr_accessor type_revision: ::String
+      SENSITIVE: []
+    end
+
+    class MetadataFormSummary
+      attr_accessor form_name: ::String
+      attr_accessor type_name: ::String
+      attr_accessor type_revision: ::String
+      SENSITIVE: [:type_name]
     end
 
     class MetadataGenerationRunItem
@@ -3173,6 +3292,12 @@ module Aws::DataZone
       SENSITIVE: [:description, :name]
     end
 
+    class ProjectsForRule
+      attr_accessor selection_mode: ("ALL" | "SPECIFIC")
+      attr_accessor specific_projects: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class ProvisioningConfiguration
       attr_accessor lake_formation_configuration: Types::LakeFormationConfiguration
       attr_accessor unknown: untyped
@@ -3317,7 +3442,9 @@ module Aws::DataZone
       attr_accessor created_by: ::String
       attr_accessor decision_comment: ::String
       attr_accessor domain_id: ::String
+      attr_accessor existing_subscription_id: ::String
       attr_accessor id: ::String
+      attr_accessor metadata_forms: ::Array[Types::FormOutput]
       attr_accessor request_reason: ::String
       attr_accessor reviewer_id: ::String
       attr_accessor status: ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -3459,6 +3586,49 @@ module Aws::DataZone
       class NotLike < RowFilterExpression
       end
       class Unknown < RowFilterExpression
+      end
+    end
+
+    class RuleDetail
+      attr_accessor metadata_form_enforcement_detail: Types::MetadataFormEnforcementDetail
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class MetadataFormEnforcementDetail < RuleDetail
+      end
+      class Unknown < RuleDetail
+      end
+    end
+
+    class RuleScope
+      attr_accessor asset_type: Types::AssetTypesForRule
+      attr_accessor data_product: bool
+      attr_accessor project: Types::ProjectsForRule
+      SENSITIVE: []
+    end
+
+    class RuleSummary
+      attr_accessor action: ("CREATE_SUBSCRIPTION_REQUEST")
+      attr_accessor identifier: ::String
+      attr_accessor last_updated_by: ::String
+      attr_accessor name: ::String
+      attr_accessor revision: ::String
+      attr_accessor rule_type: ("METADATA_FORM_ENFORCEMENT")
+      attr_accessor scope: Types::RuleScope
+      attr_accessor target: Types::RuleTarget
+      attr_accessor target_type: ("DOMAIN_UNIT")
+      attr_accessor updated_at: ::Time
+      SENSITIVE: [:name]
+    end
+
+    class RuleTarget
+      attr_accessor domain_unit_target: Types::DomainUnitTarget
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class DomainUnitTarget < RuleTarget
+      end
+      class Unknown < RuleTarget
       end
     end
 
@@ -3828,7 +3998,9 @@ module Aws::DataZone
       attr_accessor created_by: ::String
       attr_accessor decision_comment: ::String
       attr_accessor domain_id: ::String
+      attr_accessor existing_subscription_id: ::String
       attr_accessor id: ::String
+      attr_accessor metadata_forms_summary: ::Array[Types::MetadataFormSummary]
       attr_accessor request_reason: ::String
       attr_accessor reviewer_id: ::String
       attr_accessor status: ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -4225,6 +4397,34 @@ module Aws::DataZone
       SENSITIVE: [:description, :name]
     end
 
+    class UpdateRuleInput
+      attr_accessor description: ::String
+      attr_accessor detail: Types::RuleDetail
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      attr_accessor include_child_domain_units: bool
+      attr_accessor name: ::String
+      attr_accessor scope: Types::RuleScope
+      SENSITIVE: [:description, :name]
+    end
+
+    class UpdateRuleOutput
+      attr_accessor action: ("CREATE_SUBSCRIPTION_REQUEST")
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor detail: Types::RuleDetail
+      attr_accessor identifier: ::String
+      attr_accessor last_updated_by: ::String
+      attr_accessor name: ::String
+      attr_accessor revision: ::String
+      attr_accessor rule_type: ("METADATA_FORM_ENFORCEMENT")
+      attr_accessor scope: Types::RuleScope
+      attr_accessor target: Types::RuleTarget
+      attr_accessor updated_at: ::Time
+      SENSITIVE: [:description, :name]
+    end
+
     class UpdateSubscriptionGrantStatusInput
       attr_accessor asset_identifier: ::String
       attr_accessor domain_identifier: ::String
@@ -4262,7 +4462,9 @@ module Aws::DataZone
       attr_accessor created_by: ::String
       attr_accessor decision_comment: ::String
       attr_accessor domain_id: ::String
+      attr_accessor existing_subscription_id: ::String
       attr_accessor id: ::String
+      attr_accessor metadata_forms: ::Array[Types::FormOutput]
       attr_accessor request_reason: ::String
       attr_accessor reviewer_id: ::String
       attr_accessor status: ("PENDING" | "ACCEPTED" | "REJECTED")

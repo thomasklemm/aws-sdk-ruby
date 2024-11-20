@@ -2008,6 +2008,121 @@ module Aws::ComputeOptimizer
     end
 
     # @!attribute [rw] account_ids
+    #   The Amazon Web Services account IDs for the export idle resource
+    #   recommendations.
+    #
+    #   If your account is the management account or the delegated
+    #   administrator of an organization, use this parameter to specify the
+    #   member account you want to export recommendations to.
+    #
+    #   This parameter can't be specified together with the include member
+    #   accounts parameter. The parameters are mutually exclusive.
+    #
+    #   If this parameter or the include member accounts parameter is
+    #   omitted, the recommendations for member accounts aren't included in
+    #   the export.
+    #
+    #   You can specify multiple account IDs per request.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] filters
+    #   An array of objects to specify a filter that exports a more specific
+    #   set of idle resource recommendations.
+    #   @return [Array<Types::IdleRecommendationFilter>]
+    #
+    # @!attribute [rw] fields_to_export
+    #   The recommendations data to include in the export file. For more
+    #   information about the fields that can be exported, see [Exported
+    #   files][1] in the *Compute Optimizer User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/exporting-recommendations.html#exported-files
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] s3_destination_config
+    #   Describes the destination Amazon Simple Storage Service (Amazon S3)
+    #   bucket name and key prefix for a recommendations export job.
+    #
+    #   You must create the destination Amazon S3 bucket for your
+    #   recommendations export before you create the export job. Compute
+    #   Optimizer does not create the S3 bucket for you. After you create
+    #   the S3 bucket, ensure that it has the required permission policy to
+    #   allow Compute Optimizer to write the export file to it. If you plan
+    #   to specify an object prefix when you create the export job, you must
+    #   include the object prefix in the policy that you add to the S3
+    #   bucket. For more information, see [Amazon S3 Bucket Policy for
+    #   Compute Optimizer][1] in the *Compute Optimizer User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/create-s3-bucket-policy-for-compute-optimizer.html
+    #   @return [Types::S3DestinationConfig]
+    #
+    # @!attribute [rw] file_format
+    #   The format of the export file. The CSV file is the only export file
+    #   format currently supported.
+    #   @return [String]
+    #
+    # @!attribute [rw] include_member_accounts
+    #   If your account is the management account or the delegated
+    #   administrator of an organization, this parameter indicates whether
+    #   to include recommendations for resources in all member accounts of
+    #   the organization.
+    #
+    #   The member accounts must also be opted in to Compute Optimizer, and
+    #   trusted access for Compute Optimizer must be enabled in the
+    #   organization account. For more information, see [Compute Optimizer
+    #   and Amazon Web Services Organizations trusted access][1] in the
+    #   *Compute Optimizer User Guide*.
+    #
+    #   If this parameter is omitted, recommendations for member accounts of
+    #   the organization aren't included in the export file.
+    #
+    #   If this parameter or the account ID parameter is omitted,
+    #   recommendations for member accounts aren't included in the export.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/security-iam.html#trusted-service-access
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/ExportIdleRecommendationsRequest AWS API Documentation
+    #
+    class ExportIdleRecommendationsRequest < Struct.new(
+      :account_ids,
+      :filters,
+      :fields_to_export,
+      :s3_destination_config,
+      :file_format,
+      :include_member_accounts)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] job_id
+    #   The identification number of the export job.
+    #
+    #   To view the status of an export job, use the
+    #   DescribeRecommendationExportJobs action and specify the job ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_destination
+    #   Describes the destination Amazon Simple Storage Service (Amazon S3)
+    #   bucket name and object keys of a recommendations export file, and
+    #   its associated metadata file.
+    #   @return [Types::S3Destination]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/ExportIdleRecommendationsResponse AWS API Documentation
+    #
+    class ExportIdleRecommendationsResponse < Struct.new(
+      :job_id,
+      :s3_destination)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account_ids
     #   The IDs of the Amazon Web Services accounts for which to export
     #   Lambda function recommendations.
     #
@@ -3168,6 +3283,79 @@ module Aws::ComputeOptimizer
       include Aws::Structure
     end
 
+    # @!attribute [rw] resource_arns
+    #   The ARN that identifies the idle resource.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to advance to the next page of idle resource
+    #   recommendations.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of idle resource recommendations to return with a
+    #   single request.
+    #
+    #   To retrieve the remaining results, make another request with the
+    #   returned `nextToken` value.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] filters
+    #   An array of objects to specify a filter that returns a more specific
+    #   list of idle resource recommendations.
+    #   @return [Array<Types::IdleRecommendationFilter>]
+    #
+    # @!attribute [rw] account_ids
+    #   Return the idle resource recommendations to the specified Amazon Web
+    #   Services account IDs.
+    #
+    #   If your account is the management account or the delegated
+    #   administrator of an organization, use this parameter to return the
+    #   idle resource recommendations to specific member accounts.
+    #
+    #   You can only specify one account ID per request.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] order_by
+    #   The order to sort the idle resource recommendations.
+    #   @return [Types::OrderBy]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/GetIdleRecommendationsRequest AWS API Documentation
+    #
+    class GetIdleRecommendationsRequest < Struct.new(
+      :resource_arns,
+      :next_token,
+      :max_results,
+      :filters,
+      :account_ids,
+      :order_by)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The token to advance to the next page of idle resource
+    #   recommendations.
+    #   @return [String]
+    #
+    # @!attribute [rw] idle_recommendations
+    #   An array of objects that describe the idle resource recommendations.
+    #   @return [Array<Types::IdleRecommendation>]
+    #
+    # @!attribute [rw] errors
+    #   An array of objects that describe errors of the request.
+    #   @return [Array<Types::IdleRecommendationError>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/GetIdleRecommendationsResponse AWS API Documentation
+    #
+    class GetIdleRecommendationsResponse < Struct.new(
+      :next_token,
+      :idle_recommendations,
+      :errors)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] function_arns
     #   The Amazon Resource Name (ARN) of the functions for which to return
     #   recommendations.
@@ -3638,6 +3826,277 @@ module Aws::ComputeOptimizer
     #
     class GpuInfo < Struct.new(
       :gpus)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the estimated monthly savings possible for idle resources by
+    # adopting Compute Optimizer recommendations.
+    #
+    # @!attribute [rw] currency
+    #   The currency of the estimated monthly savings.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the estimated monthly savings for Idle resources.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleEstimatedMonthlySavings AWS API Documentation
+    #
+    class IdleEstimatedMonthlySavings < Struct.new(
+      :currency,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes an Idle resource recommendation.
+    #
+    # @!attribute [rw] resource_arn
+    #   The ARN of the current idle resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_id
+    #   The unique identifier for the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_type
+    #   The type of resource that is idle.
+    #   @return [String]
+    #
+    # @!attribute [rw] account_id
+    #   The Amazon Web Services account ID of the idle resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] finding
+    #   The finding classification of an idle resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] finding_description
+    #   A summary of the findings for the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] savings_opportunity
+    #   The savings opportunity for the idle resource.
+    #   @return [Types::IdleSavingsOpportunity]
+    #
+    # @!attribute [rw] savings_opportunity_after_discounts
+    #   The savings opportunity for the idle resource after any applying
+    #   discounts.
+    #   @return [Types::IdleSavingsOpportunityAfterDiscounts]
+    #
+    # @!attribute [rw] utilization_metrics
+    #   An array of objects that describe the utilization metrics of the
+    #   idle resource.
+    #   @return [Array<Types::IdleUtilizationMetric>]
+    #
+    # @!attribute [rw] look_back_period_in_days
+    #   The number of days the idle resource utilization metrics were
+    #   analyzed.
+    #   @return [Float]
+    #
+    # @!attribute [rw] last_refresh_timestamp
+    #   The timestamp of when the idle resource recommendation was last
+    #   generated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] tags
+    #   A list of tags assigned to your idle resource recommendations.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleRecommendation AWS API Documentation
+    #
+    class IdleRecommendation < Struct.new(
+      :resource_arn,
+      :resource_id,
+      :resource_type,
+      :account_id,
+      :finding,
+      :finding_description,
+      :savings_opportunity,
+      :savings_opportunity_after_discounts,
+      :utilization_metrics,
+      :look_back_period_in_days,
+      :last_refresh_timestamp,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Returns of list of resources that doesn't have idle recommendations.
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the error.
+    #   @return [String]
+    #
+    # @!attribute [rw] code
+    #   The error code.
+    #   @return [String]
+    #
+    # @!attribute [rw] message
+    #   The error message.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_type
+    #   The type of resource associated with the error.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleRecommendationError AWS API Documentation
+    #
+    class IdleRecommendationError < Struct.new(
+      :identifier,
+      :code,
+      :message,
+      :resource_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a filter that returns a more specific list of idle resource
+    # recommendations.
+    #
+    # @!attribute [rw] name
+    #   The name of the filter.
+    #
+    #   Specify `Finding` to return recommendations with a specific finding
+    #   classification.
+    #
+    #   You can filter your idle resource recommendations by `tag:key` and
+    #   `tag-key` tags.
+    #
+    #   A `tag:key` is a key and value combination of a tag assigned to your
+    #   idle resource recommendations. Use the tag key in the filter name
+    #   and the tag value as the filter value. For example, to find all idle
+    #   resource service recommendations that have a tag with the key of
+    #   `Owner` and the value of `TeamA`, specify `tag:Owner` for the filter
+    #   name and `TeamA` for the filter value.
+    #
+    #   A `tag-key` is the key of a tag assigned to your idle resource
+    #   recommendations. Use this filter to find all of your idle resource
+    #   recommendations that have a tag with a specific key. This doesn’t
+    #   consider the tag value. For example, you can find your idle resource
+    #   service recommendations with a tag key value of `Owner` or without
+    #   any tag keys assigned.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   The value of the filter.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleRecommendationFilter AWS API Documentation
+    #
+    class IdleRecommendationFilter < Struct.new(
+      :name,
+      :values)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the savings opportunity for idle resource recommendations.
+    #
+    # @!attribute [rw] savings_opportunity_percentage
+    #   The estimated monthly savings possible as a percentage of monthly
+    #   cost by adopting Compute Optimizer's idle resource recommendations.
+    #   @return [Float]
+    #
+    # @!attribute [rw] estimated_monthly_savings
+    #   The estimated monthly savings possible by adopting Compute
+    #   Optimizer's idle resource recommendations.
+    #   @return [Types::IdleEstimatedMonthlySavings]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleSavingsOpportunity AWS API Documentation
+    #
+    class IdleSavingsOpportunity < Struct.new(
+      :savings_opportunity_percentage,
+      :estimated_monthly_savings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the savings opportunity for idle resource recommendations
+    # after applying discounts.
+    #
+    # Savings opportunity represents the estimated monthly savings after
+    # applying discounts. You can achieve this by implementing a given
+    # Compute Optimizer recommendation.
+    #
+    # @!attribute [rw] savings_opportunity_percentage
+    #   The estimated monthly savings possible as a percentage of monthly
+    #   cost by adopting Compute Optimizer's idle resource recommendations.
+    #   This includes any applicable discounts.
+    #   @return [Float]
+    #
+    # @!attribute [rw] estimated_monthly_savings
+    #   The estimated monthly savings possible by adopting Compute
+    #   Optimizer's idle resource recommendations. This includes any
+    #   applicable discounts.
+    #   @return [Types::IdleEstimatedMonthlySavings]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleSavingsOpportunityAfterDiscounts AWS API Documentation
+    #
+    class IdleSavingsOpportunityAfterDiscounts < Struct.new(
+      :savings_opportunity_percentage,
+      :estimated_monthly_savings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the findings summary of the idle resources.
+    #
+    # @!attribute [rw] name
+    #   The name of the finding group for the idle resources.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The count of idle resources in the finding group.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleSummary AWS API Documentation
+    #
+    class IdleSummary < Struct.new(
+      :name,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the utilization metric of an idle resource.
+    #
+    # @!attribute [rw] name
+    #   The name of the utilization metric.
+    #   @return [String]
+    #
+    # @!attribute [rw] statistic
+    #   The statistic of the utilization metric.
+    #
+    #   The Compute Optimizer API, Command Line Interface (CLI), and SDKs
+    #   return utilization metrics using only the `Maximum` statistic, which
+    #   is the highest value observed during the specified period.
+    #
+    #   The Compute Optimizer console displays graphs for some utilization
+    #   metrics using the `Average` statistic, which is the value of `Sum` /
+    #   `SampleCount` during the specified period. For more information, see
+    #   [Viewing resource recommendations][1] in the *Compute Optimizer User
+    #   Guide*. You can also get averaged utilization metric data for your
+    #   resources using Amazon CloudWatch. For more information, see the
+    #   [Amazon CloudWatch User Guide][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/viewing-recommendations.html
+    #   [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the utilization metric.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/IdleUtilizationMetric AWS API Documentation
+    #
+    class IdleUtilizationMetric < Struct.new(
+      :name,
+      :statistic,
+      :value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5082,6 +5541,25 @@ module Aws::ComputeOptimizer
       include Aws::Structure
     end
 
+    # Describes how the recommendations are ordered.
+    #
+    # @!attribute [rw] dimension
+    #   The dimension values to sort the recommendations.
+    #   @return [String]
+    #
+    # @!attribute [rw] order
+    #   The order to sort the recommendations.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/OrderBy AWS API Documentation
+    #
+    class OrderBy < Struct.new(
+      :dimension,
+      :order)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The preference to control which resource type values are considered
     # when generating rightsizing recommendations. You can specify this
     # preference as a combination of include and exclude lists. You must
@@ -5498,6 +5976,10 @@ module Aws::ComputeOptimizer
     #   The database engine version.
     #   @return [String]
     #
+    # @!attribute [rw] promotion_tier
+    #   The promotion tier for the Aurora instance.
+    #   @return [Integer]
+    #
     # @!attribute [rw] current_db_instance_class
     #   The DB instance class of the current RDS instance.
     #   @return [String]
@@ -5505,6 +5987,10 @@ module Aws::ComputeOptimizer
     # @!attribute [rw] current_storage_configuration
     #   The configuration of the current RDS storage.
     #   @return [Types::DBStorageConfiguration]
+    #
+    # @!attribute [rw] db_cluster_identifier
+    #   The identifier for DB cluster.
+    #   @return [String]
     #
     # @!attribute [rw] idle
     #   This indicates if the RDS instance is idle or not.
@@ -5550,6 +6036,10 @@ module Aws::ComputeOptimizer
     #   The reason for the finding classification of an Amazon RDS instance.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] current_instance_performance_risk
+    #   The performance risk for the current DB instance.
+    #   @return [String]
+    #
     # @!attribute [rw] storage_finding_reason_codes
     #   The reason for the finding classification of Amazon RDS storage.
     #   @return [Array<String>]
@@ -5593,12 +6083,15 @@ module Aws::ComputeOptimizer
       :account_id,
       :engine,
       :engine_version,
+      :promotion_tier,
       :current_db_instance_class,
       :current_storage_configuration,
+      :db_cluster_identifier,
       :idle,
       :instance_finding,
       :storage_finding,
       :instance_finding_reason_codes,
+      :current_instance_performance_risk,
       :storage_finding_reason_codes,
       :instance_recommendation_options,
       :storage_recommendation_options,
@@ -6210,6 +6703,10 @@ module Aws::ComputeOptimizer
     #   An array of objects that describe a recommendation summary.
     #   @return [Array<Types::Summary>]
     #
+    # @!attribute [rw] idle_summaries
+    #   Describes the findings summary of the idle resources.
+    #   @return [Array<Types::IdleSummary>]
+    #
     # @!attribute [rw] recommendation_resource_type
     #   The resource type that the recommendation summary applies to.
     #   @return [String]
@@ -6222,6 +6719,58 @@ module Aws::ComputeOptimizer
     #   An object that describes the savings opportunity for a given
     #   resource type. Savings opportunity includes the estimated monthly
     #   savings amount and percentage.
+    #   @return [Types::SavingsOpportunity]
+    #
+    # @!attribute [rw] idle_savings_opportunity
+    #   Describes the savings opportunity for recommendations of a given
+    #   resource type or for the recommendation option of an individual
+    #   resource.
+    #
+    #   Savings opportunity represents the estimated monthly savings you can
+    #   achieve by implementing a given Compute Optimizer recommendation.
+    #
+    #   Savings opportunity data requires that you opt in to Cost Explorer,
+    #   as well as activate **Receive Amazon EC2 resource recommendations**
+    #   in the Cost Explorer preferences page. That creates a connection
+    #   between Cost Explorer and Compute Optimizer. With this connection,
+    #   Cost Explorer generates savings estimates considering the price of
+    #   existing resources, the price of recommended resources, and
+    #   historical usage data. Estimated monthly savings reflects the
+    #   projected dollar savings associated with each of the recommendations
+    #   generated. For more information, see [Enabling Cost Explorer][1] and
+    #   [Optimizing your cost with Rightsizing Recommendations][2] in the
+    #   *Cost Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cost-management/latest/userguide/ce-enable.html
+    #   [2]: https://docs.aws.amazon.com/cost-management/latest/userguide/ce-rightsizing.html
+    #   @return [Types::SavingsOpportunity]
+    #
+    # @!attribute [rw] aggregated_savings_opportunity
+    #   Describes the savings opportunity for recommendations of a given
+    #   resource type or for the recommendation option of an individual
+    #   resource.
+    #
+    #   Savings opportunity represents the estimated monthly savings you can
+    #   achieve by implementing a given Compute Optimizer recommendation.
+    #
+    #   Savings opportunity data requires that you opt in to Cost Explorer,
+    #   as well as activate **Receive Amazon EC2 resource recommendations**
+    #   in the Cost Explorer preferences page. That creates a connection
+    #   between Cost Explorer and Compute Optimizer. With this connection,
+    #   Cost Explorer generates savings estimates considering the price of
+    #   existing resources, the price of recommended resources, and
+    #   historical usage data. Estimated monthly savings reflects the
+    #   projected dollar savings associated with each of the recommendations
+    #   generated. For more information, see [Enabling Cost Explorer][1] and
+    #   [Optimizing your cost with Rightsizing Recommendations][2] in the
+    #   *Cost Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cost-management/latest/userguide/ce-enable.html
+    #   [2]: https://docs.aws.amazon.com/cost-management/latest/userguide/ce-rightsizing.html
     #   @return [Types::SavingsOpportunity]
     #
     # @!attribute [rw] current_performance_risk_ratings
@@ -6240,9 +6789,12 @@ module Aws::ComputeOptimizer
     #
     class RecommendationSummary < Struct.new(
       :summaries,
+      :idle_summaries,
       :recommendation_resource_type,
       :account_id,
       :savings_opportunity,
+      :idle_savings_opportunity,
+      :aggregated_savings_opportunity,
       :current_performance_risk_ratings,
       :inferred_workload_savings)
       SENSITIVE = []
@@ -6866,9 +7418,17 @@ module Aws::ComputeOptimizer
     # @!attribute [rw] volume_type
     #   The volume type.
     #
-    #   This can be `gp2` for General Purpose SSD, `io1` or `io2` for
-    #   Provisioned IOPS SSD, `st1` for Throughput Optimized HDD, `sc1` for
-    #   Cold HDD, or `standard` for Magnetic volumes.
+    #   The volume types can be the following:
+    #
+    #   * General Purpose SSD `gp2` and `gp3`
+    #
+    #   * Provisioned IOPS SSD `io1`, `io2`, and `io2 Block Express`
+    #
+    #   * Throughput Optimized HDD `st1`
+    #
+    #   * Cold HDD `sc1`
+    #
+    #   * Magnetic volumes `standard`
     #   @return [String]
     #
     # @!attribute [rw] volume_size

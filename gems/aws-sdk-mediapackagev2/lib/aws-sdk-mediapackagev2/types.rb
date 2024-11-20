@@ -314,6 +314,18 @@ module Aws::MediaPackageV2
     #   Enter any descriptive text that helps you to identify the channel.
     #   @return [String]
     #
+    # @!attribute [rw] input_switch_configuration
+    #   The configuration for input switching based on the media quality
+    #   confidence score (MQCS) as provided from AWS Elemental MediaLive.
+    #   This setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::InputSwitchConfiguration]
+    #
+    # @!attribute [rw] output_header_configuration
+    #   The settings for what common media server data (CMSD) headers AWS
+    #   Elemental MediaPackage includes in responses to the CDN. This
+    #   setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::OutputHeaderConfiguration]
+    #
     # @!attribute [rw] tags
     #   A comma-separated list of tag key:value pairs that you define. For
     #   example:
@@ -331,6 +343,8 @@ module Aws::MediaPackageV2
       :client_token,
       :input_type,
       :description,
+      :input_switch_configuration,
+      :output_header_configuration,
       :tags)
       SENSITIVE = []
       include Aws::Structure
@@ -393,6 +407,18 @@ module Aws::MediaPackageV2
     #   channel.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] input_switch_configuration
+    #   The configuration for input switching based on the media quality
+    #   confidence score (MQCS) as provided from AWS Elemental MediaLive.
+    #   This setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::InputSwitchConfiguration]
+    #
+    # @!attribute [rw] output_header_configuration
+    #   The settings for what common media server data (CMSD) headers AWS
+    #   Elemental MediaPackage includes in responses to the CDN. This
+    #   setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::OutputHeaderConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/CreateChannelResponse AWS API Documentation
     #
     class CreateChannelResponse < Struct.new(
@@ -405,7 +431,9 @@ module Aws::MediaPackageV2
       :ingest_endpoints,
       :input_type,
       :etag,
-      :tags)
+      :tags,
+      :input_switch_configuration,
+      :output_header_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -701,9 +729,7 @@ module Aws::MediaPackageV2
     #   interval that you specify. If you don't enter an interval,
     #   EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The
     #   tags sync the stream to the wall clock so that viewers can seek to a
-    #   specific time in the playback timeline on the player. ID3Timed
-    #   metadata messages generate every 5 seconds whenever the content is
-    #   ingested.
+    #   specific time in the playback timeline on the player.
     #
     #   Irrespective of this parameter, if any ID3Timed metadata is in the
     #   HLS input, it is passed through to the HLS output.
@@ -771,9 +797,7 @@ module Aws::MediaPackageV2
     #   interval that you specify. If you don't enter an interval,
     #   EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The
     #   tags sync the stream to the wall clock so that viewers can seek to a
-    #   specific time in the playback timeline on the player. ID3Timed
-    #   metadata messages generate every 5 seconds whenever the content is
-    #   ingested.
+    #   specific time in the playback timeline on the player.
     #
     #   Irrespective of this parameter, if any ID3Timed metadata is in the
     #   HLS input, it is passed through to the HLS output.
@@ -1577,6 +1601,18 @@ module Aws::MediaPackageV2
     #   channel.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] input_switch_configuration
+    #   The configuration for input switching based on the media quality
+    #   confidence score (MQCS) as provided from AWS Elemental MediaLive.
+    #   This setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::InputSwitchConfiguration]
+    #
+    # @!attribute [rw] output_header_configuration
+    #   The settings for what common media server data (CMSD) headers AWS
+    #   Elemental MediaPackage includes in responses to the CDN. This
+    #   setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::OutputHeaderConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/GetChannelResponse AWS API Documentation
     #
     class GetChannelResponse < Struct.new(
@@ -1589,7 +1625,9 @@ module Aws::MediaPackageV2
       :ingest_endpoints,
       :input_type,
       :etag,
-      :tags)
+      :tags,
+      :input_switch_configuration,
+      :output_header_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1844,9 +1882,7 @@ module Aws::MediaPackageV2
     #   interval that you specify. If you don't enter an interval,
     #   EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The
     #   tags sync the stream to the wall clock so that viewers can seek to a
-    #   specific time in the playback timeline on the player. ID3Timed
-    #   metadata messages generate every 5 seconds whenever the content is
-    #   ingested.
+    #   specific time in the playback timeline on the player.
     #
     #   Irrespective of this parameter, if any ID3Timed metadata is in the
     #   HLS input, it is passed through to the HLS output.
@@ -1919,9 +1955,7 @@ module Aws::MediaPackageV2
     #   interval that you specify. If you don't enter an interval,
     #   EXT-X-PROGRAM-DATE-TIME tags aren't included in the manifest. The
     #   tags sync the stream to the wall clock so that viewers can seek to a
-    #   specific time in the playback timeline on the player. ID3Timed
-    #   metadata messages generate every 5 seconds whenever the content is
-    #   ingested.
+    #   specific time in the playback timeline on the player.
     #
     #   Irrespective of this parameter, if any ID3Timed metadata is in the
     #   HLS input, it is passed through to the HLS output.
@@ -2334,6 +2368,23 @@ module Aws::MediaPackageV2
       include Aws::Structure
     end
 
+    # The configuration for input switching based on the media quality
+    # confidence score (MQCS) as provided from AWS Elemental MediaLive.
+    #
+    # @!attribute [rw] mqcs_input_switching
+    #   When true, AWS Elemental MediaPackage performs input switching based
+    #   on the MQCS. Default is true. This setting is valid only when
+    #   `InputType` is `CMAF`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/InputSwitchConfiguration AWS API Documentation
+    #
+    class InputSwitchConfiguration < Struct.new(
+      :mqcs_input_switching)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Indicates that an error from the service occurred while trying to
     # process a request.
     #
@@ -2735,6 +2786,22 @@ module Aws::MediaPackageV2
       :low_latency_hls_manifests,
       :dash_manifests,
       :force_endpoint_error_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The settings for what common media server data (CMSD) headers AWS
+    # Elemental MediaPackage includes in responses to the CDN.
+    #
+    # @!attribute [rw] publish_mqcs
+    #   When true, AWS Elemental MediaPackage includes the MQCS in responses
+    #   to the CDN. This setting is valid only when `InputType` is `CMAF`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/OutputHeaderConfiguration AWS API Documentation
+    #
+    class OutputHeaderConfiguration < Struct.new(
+      :publish_mqcs)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3234,13 +3301,27 @@ module Aws::MediaPackageV2
     #   future identification purposes.
     #   @return [String]
     #
+    # @!attribute [rw] input_switch_configuration
+    #   The configuration for input switching based on the media quality
+    #   confidence score (MQCS) as provided from AWS Elemental MediaLive.
+    #   This setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::InputSwitchConfiguration]
+    #
+    # @!attribute [rw] output_header_configuration
+    #   The settings for what common media server data (CMSD) headers AWS
+    #   Elemental MediaPackage includes in responses to the CDN. This
+    #   setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::OutputHeaderConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/UpdateChannelRequest AWS API Documentation
     #
     class UpdateChannelRequest < Struct.new(
       :channel_group_name,
       :channel_name,
       :etag,
-      :description)
+      :description,
+      :input_switch_configuration,
+      :output_header_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3302,6 +3383,18 @@ module Aws::MediaPackageV2
     #   channel.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] input_switch_configuration
+    #   The configuration for input switching based on the media quality
+    #   confidence score (MQCS) as provided from AWS Elemental MediaLive.
+    #   This setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::InputSwitchConfiguration]
+    #
+    # @!attribute [rw] output_header_configuration
+    #   The settings for what common media server data (CMSD) headers AWS
+    #   Elemental MediaPackage includes in responses to the CDN. This
+    #   setting is valid only when `InputType` is `CMAF`.
+    #   @return [Types::OutputHeaderConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/UpdateChannelResponse AWS API Documentation
     #
     class UpdateChannelResponse < Struct.new(
@@ -3314,7 +3407,9 @@ module Aws::MediaPackageV2
       :ingest_endpoints,
       :input_type,
       :etag,
-      :tags)
+      :tags,
+      :input_switch_configuration,
+      :output_header_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

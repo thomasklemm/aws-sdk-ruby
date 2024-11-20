@@ -265,6 +265,21 @@ module Aws
                        ) ?{ (*untyped) -> void } -> _InvokeFlowResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _InvokeFlowResponseSuccess
 
+      interface _OptimizePromptResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::OptimizePromptResponse]
+        def optimized_prompt: () -> Types::OptimizedPromptStream
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgentRuntime/Client.html#optimize_prompt-instance_method
+      def optimize_prompt: (
+                             input: {
+                               text_prompt: {
+                                 text: ::String
+                               }?
+                             },
+                             target_model_id: ::String
+                           ) ?{ (*untyped) -> void } -> _OptimizePromptResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _OptimizePromptResponseSuccess
+
       interface _RetrieveResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::RetrieveResponse]
         def next_token: () -> ::String

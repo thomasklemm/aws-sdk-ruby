@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.260.0 (2024-11-20)
+------------------
+
+* Feature - This release adds support for scale storage on the DB instance using a Blue/Green Deployment.
+
 1.259.0 (2024-11-18)
 ------------------
 

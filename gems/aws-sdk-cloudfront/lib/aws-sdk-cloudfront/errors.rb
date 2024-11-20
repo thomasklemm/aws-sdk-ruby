@@ -34,6 +34,7 @@ module Aws::CloudFront
   # * {CachePolicyInUse}
   # * {CannotChangeImmutablePublicKeyFields}
   # * {CannotDeleteEntityWhileInUse}
+  # * {CannotUpdateEntityWhileInUse}
   # * {CloudFrontOriginAccessIdentityAlreadyExists}
   # * {CloudFrontOriginAccessIdentityInUse}
   # * {ContinuousDeploymentPolicyAlreadyExists}
@@ -278,6 +279,21 @@ module Aws::CloudFront
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::CloudFront::Types::CannotDeleteEntityWhileInUse] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class CannotUpdateEntityWhileInUse < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::CloudFront::Types::CannotUpdateEntityWhileInUse] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

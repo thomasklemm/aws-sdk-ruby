@@ -259,6 +259,25 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class CreateRunCacheRequest
+      attr_accessor cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
+      attr_accessor cache_s3_location: ::String
+      attr_accessor description: ::String
+      attr_accessor name: ::String
+      attr_accessor request_id: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor cache_bucket_owner_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateRunCacheResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor status: ("ACTIVE" | "DELETED" | "FAILED")
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
     class CreateRunGroupRequest
       attr_accessor name: ::String
       attr_accessor max_cpus: ::Integer
@@ -393,6 +412,11 @@ module Aws::Omics
     end
 
     class DeleteReferenceStoreResponse < Aws::EmptyStructure
+    end
+
+    class DeleteRunCacheRequest
+      attr_accessor id: ::String
+      SENSITIVE: []
     end
 
     class DeleteRunGroupRequest
@@ -735,6 +759,25 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class GetRunCacheRequest
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
+    class GetRunCacheResponse
+      attr_accessor arn: ::String
+      attr_accessor cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
+      attr_accessor cache_bucket_owner_id: ::String
+      attr_accessor cache_s3_uri: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor description: ::String
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("ACTIVE" | "DELETED" | "FAILED")
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
     class GetRunGroupRequest
       attr_accessor id: ::String
       SENSITIVE: []
@@ -762,6 +805,9 @@ module Aws::Omics
     class GetRunResponse
       attr_accessor arn: ::String
       attr_accessor id: ::String
+      attr_accessor cache_id: ::String
+      attr_accessor cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
+      attr_accessor engine_version: ::String
       attr_accessor status: ("PENDING" | "STARTING" | "RUNNING" | "STOPPING" | "COMPLETED" | "DELETED" | "CANCELLED" | "FAILED")
       attr_accessor workflow_id: ::String
       attr_accessor workflow_type: ("PRIVATE" | "READY2RUN")
@@ -805,6 +851,8 @@ module Aws::Omics
       attr_accessor status: ("PENDING" | "STARTING" | "RUNNING" | "STOPPING" | "COMPLETED" | "CANCELLED" | "FAILED")
       attr_accessor name: ::String
       attr_accessor cpus: ::Integer
+      attr_accessor cache_hit: bool
+      attr_accessor cache_s3_uri: ::String
       attr_accessor memory: ::Integer
       attr_accessor creation_time: ::Time
       attr_accessor start_time: ::Time
@@ -1165,6 +1213,18 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class ListRunCachesRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor starting_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListRunCachesResponse
+      attr_accessor items: ::Array[Types::RunCacheListItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListRunGroupsRequest
       attr_accessor name: ::String
       attr_accessor starting_token: ::String
@@ -1467,6 +1527,17 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class RunCacheListItem
+      attr_accessor arn: ::String
+      attr_accessor cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
+      attr_accessor cache_s3_uri: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("ACTIVE" | "DELETED" | "FAILED")
+      SENSITIVE: []
+    end
+
     class RunGroupListItem
       attr_accessor arn: ::String
       attr_accessor id: ::String
@@ -1679,6 +1750,8 @@ module Aws::Omics
       attr_accessor run_id: ::String
       attr_accessor role_arn: ::String
       attr_accessor name: ::String
+      attr_accessor cache_id: ::String
+      attr_accessor cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
       attr_accessor run_group_id: ::String
       attr_accessor priority: ::Integer
       attr_accessor parameters: untyped
@@ -1742,6 +1815,8 @@ module Aws::Omics
       attr_accessor status: ("PENDING" | "STARTING" | "RUNNING" | "STOPPING" | "COMPLETED" | "CANCELLED" | "FAILED")
       attr_accessor name: ::String
       attr_accessor cpus: ::Integer
+      attr_accessor cache_hit: bool
+      attr_accessor cache_s3_uri: ::String
       attr_accessor memory: ::Integer
       attr_accessor creation_time: ::Time
       attr_accessor start_time: ::Time
@@ -1819,6 +1894,14 @@ module Aws::Omics
       attr_accessor description: ::String
       attr_accessor creation_time: ::Time
       attr_accessor update_time: ::Time
+      SENSITIVE: []
+    end
+
+    class UpdateRunCacheRequest
+      attr_accessor cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
+      attr_accessor description: ::String
+      attr_accessor id: ::String
+      attr_accessor name: ::String
       SENSITIVE: []
     end
 

@@ -582,6 +582,7 @@ module Aws::MediaConvert
     SccDestinationSettings = Shapes::StructureShape.new(name: 'SccDestinationSettings')
     SearchJobsRequest = Shapes::StructureShape.new(name: 'SearchJobsRequest')
     SearchJobsResponse = Shapes::StructureShape.new(name: 'SearchJobsResponse')
+    ServiceOverride = Shapes::StructureShape.new(name: 'ServiceOverride')
     SimulateReservedQueue = Shapes::StringShape.new(name: 'SimulateReservedQueue')
     SpekeKeyProvider = Shapes::StructureShape.new(name: 'SpekeKeyProvider')
     SpekeKeyProviderCmaf = Shapes::StructureShape.new(name: 'SpekeKeyProviderCmaf')
@@ -838,6 +839,7 @@ module Aws::MediaConvert
     __listOfPreset = Shapes::ListShape.new(name: '__listOfPreset')
     __listOfQueue = Shapes::ListShape.new(name: '__listOfQueue')
     __listOfQueueTransition = Shapes::ListShape.new(name: '__listOfQueueTransition')
+    __listOfServiceOverride = Shapes::ListShape.new(name: '__listOfServiceOverride')
     __listOfTeletextPageType = Shapes::ListShape.new(name: '__listOfTeletextPageType')
     __listOfVideoOverlay = Shapes::ListShape.new(name: '__listOfVideoOverlay')
     __listOfVideoOverlayInputClipping = Shapes::ListShape.new(name: '__listOfVideoOverlayInputClipping')
@@ -1307,6 +1309,7 @@ module Aws::MediaConvert
     CreatePresetResponse.add_member(:preset, Shapes::ShapeRef.new(shape: Preset, location_name: "preset"))
     CreatePresetResponse.struct_class = Types::CreatePresetResponse
 
+    CreateQueueRequest.add_member(:concurrent_jobs, Shapes::ShapeRef.new(shape: __integer, location_name: "concurrentJobs"))
     CreateQueueRequest.add_member(:description, Shapes::ShapeRef.new(shape: __string, location_name: "description"))
     CreateQueueRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "name"))
     CreateQueueRequest.add_member(:pricing_plan, Shapes::ShapeRef.new(shape: PricingPlan, location_name: "pricingPlan"))
@@ -2035,6 +2038,8 @@ module Aws::MediaConvert
 
     ListQueuesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: __string, location_name: "nextToken"))
     ListQueuesResponse.add_member(:queues, Shapes::ShapeRef.new(shape: __listOfQueue, location_name: "queues"))
+    ListQueuesResponse.add_member(:total_concurrent_jobs, Shapes::ShapeRef.new(shape: __integer, location_name: "totalConcurrentJobs"))
+    ListQueuesResponse.add_member(:unallocated_concurrent_jobs, Shapes::ShapeRef.new(shape: __integer, location_name: "unallocatedConcurrentJobs"))
     ListQueuesResponse.struct_class = Types::ListQueuesResponse
 
     ListTagsForResourceRequest.add_member(:arn, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "arn"))
@@ -2383,6 +2388,7 @@ module Aws::MediaConvert
     PutPolicyResponse.struct_class = Types::PutPolicyResponse
 
     Queue.add_member(:arn, Shapes::ShapeRef.new(shape: __string, location_name: "arn"))
+    Queue.add_member(:concurrent_jobs, Shapes::ShapeRef.new(shape: __integer, location_name: "concurrentJobs"))
     Queue.add_member(:created_at, Shapes::ShapeRef.new(shape: __timestampUnix, location_name: "createdAt"))
     Queue.add_member(:description, Shapes::ShapeRef.new(shape: __string, location_name: "description"))
     Queue.add_member(:last_updated, Shapes::ShapeRef.new(shape: __timestampUnix, location_name: "lastUpdated"))
@@ -2390,6 +2396,7 @@ module Aws::MediaConvert
     Queue.add_member(:pricing_plan, Shapes::ShapeRef.new(shape: PricingPlan, location_name: "pricingPlan"))
     Queue.add_member(:progressing_jobs_count, Shapes::ShapeRef.new(shape: __integer, location_name: "progressingJobsCount"))
     Queue.add_member(:reservation_plan, Shapes::ShapeRef.new(shape: ReservationPlan, location_name: "reservationPlan"))
+    Queue.add_member(:service_overrides, Shapes::ShapeRef.new(shape: __listOfServiceOverride, location_name: "serviceOverrides"))
     Queue.add_member(:status, Shapes::ShapeRef.new(shape: QueueStatus, location_name: "status"))
     Queue.add_member(:submitted_jobs_count, Shapes::ShapeRef.new(shape: __integer, location_name: "submittedJobsCount"))
     Queue.add_member(:type, Shapes::ShapeRef.new(shape: Type, location_name: "type"))
@@ -2457,6 +2464,12 @@ module Aws::MediaConvert
     SearchJobsResponse.add_member(:jobs, Shapes::ShapeRef.new(shape: __listOfJob, location_name: "jobs"))
     SearchJobsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: __string, location_name: "nextToken"))
     SearchJobsResponse.struct_class = Types::SearchJobsResponse
+
+    ServiceOverride.add_member(:message, Shapes::ShapeRef.new(shape: __string, location_name: "message"))
+    ServiceOverride.add_member(:name, Shapes::ShapeRef.new(shape: __string, location_name: "name"))
+    ServiceOverride.add_member(:override_value, Shapes::ShapeRef.new(shape: __string, location_name: "overrideValue"))
+    ServiceOverride.add_member(:value, Shapes::ShapeRef.new(shape: __string, location_name: "value"))
+    ServiceOverride.struct_class = Types::ServiceOverride
 
     SpekeKeyProvider.add_member(:certificate_arn, Shapes::ShapeRef.new(shape: __stringPatternArnAwsUsGovAcm, location_name: "certificateArn"))
     SpekeKeyProvider.add_member(:encryption_contract_configuration, Shapes::ShapeRef.new(shape: EncryptionContractConfiguration, location_name: "encryptionContractConfiguration"))
@@ -2563,6 +2576,7 @@ module Aws::MediaConvert
     UpdatePresetResponse.add_member(:preset, Shapes::ShapeRef.new(shape: Preset, location_name: "preset"))
     UpdatePresetResponse.struct_class = Types::UpdatePresetResponse
 
+    UpdateQueueRequest.add_member(:concurrent_jobs, Shapes::ShapeRef.new(shape: __integer, location_name: "concurrentJobs"))
     UpdateQueueRequest.add_member(:description, Shapes::ShapeRef.new(shape: __string, location_name: "description"))
     UpdateQueueRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "name"))
     UpdateQueueRequest.add_member(:reservation_plan_settings, Shapes::ShapeRef.new(shape: ReservationPlanSettings, location_name: "reservationPlanSettings"))
@@ -2837,6 +2851,8 @@ module Aws::MediaConvert
     __listOfQueue.member = Shapes::ShapeRef.new(shape: Queue)
 
     __listOfQueueTransition.member = Shapes::ShapeRef.new(shape: QueueTransition)
+
+    __listOfServiceOverride.member = Shapes::ShapeRef.new(shape: ServiceOverride)
 
     __listOfTeletextPageType.member = Shapes::ShapeRef.new(shape: TeletextPageType)
 

@@ -113,6 +113,21 @@ module Aws::ElasticLoadBalancingV2
     class CaCertificatesBundleNotFoundException < Aws::EmptyStructure
     end
 
+    class CapacityDecreaseRequestsLimitExceededException < Aws::EmptyStructure
+    end
+
+    class CapacityReservationPendingException < Aws::EmptyStructure
+    end
+
+    class CapacityReservationStatus
+      attr_accessor code: ("provisioned" | "pending" | "rebalancing" | "failed")
+      attr_accessor reason: ::String
+      SENSITIVE: []
+    end
+
+    class CapacityUnitsLimitExceededException < Aws::EmptyStructure
+    end
+
     class Certificate
       attr_accessor certificate_arn: ::String
       attr_accessor is_default: bool
@@ -289,6 +304,19 @@ module Aws::ElasticLoadBalancingV2
     class DescribeAccountLimitsOutput
       attr_accessor limits: ::Array[Types::Limit]
       attr_accessor next_marker: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeCapacityReservationInput
+      attr_accessor load_balancer_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeCapacityReservationOutput
+      attr_accessor last_modified_time: ::Time
+      attr_accessor decrease_requests_remaining: ::Integer
+      attr_accessor minimum_load_balancer_capacity: Types::MinimumLoadBalancerCapacity
+      attr_accessor capacity_reservation_state: ::Array[Types::ZonalCapacityReservationState]
       SENSITIVE: []
     end
 
@@ -558,6 +586,9 @@ module Aws::ElasticLoadBalancingV2
     class IncompatibleProtocolsException < Aws::EmptyStructure
     end
 
+    class InsufficientCapacityException < Aws::EmptyStructure
+    end
+
     class InvalidCaCertificatesBundleException < Aws::EmptyStructure
     end
 
@@ -655,6 +686,26 @@ module Aws::ElasticLoadBalancingV2
     class Matcher
       attr_accessor http_code: ::String
       attr_accessor grpc_code: ::String
+      SENSITIVE: []
+    end
+
+    class MinimumLoadBalancerCapacity
+      attr_accessor capacity_units: ::Integer
+      SENSITIVE: []
+    end
+
+    class ModifyCapacityReservationInput
+      attr_accessor load_balancer_arn: ::String
+      attr_accessor minimum_load_balancer_capacity: Types::MinimumLoadBalancerCapacity
+      attr_accessor reset_capacity_reservation: bool
+      SENSITIVE: []
+    end
+
+    class ModifyCapacityReservationOutput
+      attr_accessor last_modified_time: ::Time
+      attr_accessor decrease_requests_remaining: ::Integer
+      attr_accessor minimum_load_balancer_capacity: Types::MinimumLoadBalancerCapacity
+      attr_accessor capacity_reservation_state: ::Array[Types::ZonalCapacityReservationState]
       SENSITIVE: []
     end
 
@@ -766,6 +817,9 @@ module Aws::ElasticLoadBalancingV2
     class PathPatternConditionConfig
       attr_accessor values: ::Array[::String]
       SENSITIVE: []
+    end
+
+    class PriorRequestNotCompleteException < Aws::EmptyStructure
     end
 
     class PriorityInUseException < Aws::EmptyStructure
@@ -1108,6 +1162,13 @@ module Aws::ElasticLoadBalancingV2
     end
 
     class UnsupportedProtocolException < Aws::EmptyStructure
+    end
+
+    class ZonalCapacityReservationState
+      attr_accessor state: Types::CapacityReservationStatus
+      attr_accessor availability_zone: ::String
+      attr_accessor effective_capacity_units: ::Float
+      SENSITIVE: []
     end
   end
 end

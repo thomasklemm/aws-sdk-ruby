@@ -211,6 +211,141 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
+    # An Anycast static IP list.
+    #
+    # @!attribute [rw] id
+    #   The ID of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the Anycast static IP list. Valid values: `Deployed`,
+    #   `Deploying`, or `Failed`.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] anycast_ips
+    #   The static IP addresses that are allocated to the Anycast static IP
+    #   list.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] ip_count
+    #   The number of IP addresses in the Anycast static IP list.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] last_modified_time
+    #   The last time the Anycast static IP list was modified.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/AnycastIpList AWS API Documentation
+    #
+    class AnycastIpList < Struct.new(
+      :id,
+      :name,
+      :status,
+      :arn,
+      :anycast_ips,
+      :ip_count,
+      :last_modified_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The Anycast static IP list collection.
+    #
+    # @!attribute [rw] items
+    #   Items in the Anycast static IP list collection. Each item is of the
+    #   AnycastIpListSummary structure type.
+    #   @return [Array<Types::AnycastIpListSummary>]
+    #
+    # @!attribute [rw] marker
+    #   Use this field when paginating results to indicate where to begin in
+    #   your list. The response includes items in the list that occur after
+    #   the marker. To get the next page of the list, set this field's
+    #   value to the value of `NextMarker` from the current page's
+    #   response.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_marker
+    #   Indicates the next page of the Anycast static IP list collection. To
+    #   get the next page of the list, use this value in the `Marker` field
+    #   of your request.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_items
+    #   The maximum number of Anycast static IP list collections that you
+    #   want returned in the response.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] is_truncated
+    #   If there are more items in the list collection than are in this
+    #   response, this value is `true`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] quantity
+    #   The quantity of Anycast static IP lists in the collection.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/AnycastIpListCollection AWS API Documentation
+    #
+    class AnycastIpListCollection < Struct.new(
+      :items,
+      :marker,
+      :next_marker,
+      :max_items,
+      :is_truncated,
+      :quantity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An abbreviated version of the AnycastIpList structure. Omits the
+    # allocated static IP addresses (AnycastIpList$AnycastIps).
+    #
+    # @!attribute [rw] id
+    #   The ID of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The deployment status of the Anycast static IP list. Valid values:
+    #   Deployed, Deploying, or Failed.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_count
+    #   The number of IP addresses in the Anycast static IP list.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] last_modified_time
+    #   The last time the Anycast static IP list was modified.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/AnycastIpListSummary AWS API Documentation
+    #
+    class AnycastIpListSummary < Struct.new(
+      :id,
+      :name,
+      :status,
+      :arn,
+      :ip_count,
+      :last_modified_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] target_distribution_id
     #   The ID of the distribution that you're associating the alias with.
     #   @return [String]
@@ -492,6 +627,10 @@ module Aws::CloudFront
     #   The identifier for a response headers policy.
     #   @return [String]
     #
+    # @!attribute [rw] grpc_config
+    #   The gRPC configuration for your cache behavior.
+    #   @return [Types::GrpcConfig]
+    #
     # @!attribute [rw] forwarded_values
     #   This field is deprecated. We recommend that you use a cache policy
     #   or an origin request policy instead of this field. For more
@@ -608,6 +747,7 @@ module Aws::CloudFront
       :cache_policy_id,
       :origin_request_policy_id,
       :response_headers_policy_id,
+      :grpc_config,
       :forwarded_values,
       :min_ttl,
       :default_ttl,
@@ -1025,7 +1165,7 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # The key value store entity cannot be deleted while it is in use.
+    # The entity cannot be deleted while it is in use.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -1033,6 +1173,19 @@ module Aws::CloudFront
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CannotDeleteEntityWhileInUse AWS API Documentation
     #
     class CannotDeleteEntityWhileInUse < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The entity cannot be updated while it is in use.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CannotUpdateEntityWhileInUse AWS API Documentation
+    #
+    class CannotUpdateEntityWhileInUse < Struct.new(
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -1712,6 +1865,48 @@ module Aws::CloudFront
     class CopyDistributionResult < Struct.new(
       :distribution,
       :location,
+      :etag)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   Name of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_count
+    #   The number of static IP addresses that are allocated to the Anycast
+    #   static IP list.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] tags
+    #   A complex type that contains zero or more `Tag` elements.
+    #   @return [Types::Tags]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateAnycastIpListRequest AWS API Documentation
+    #
+    class CreateAnycastIpListRequest < Struct.new(
+      :name,
+      :ip_count,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] anycast_ip_list
+    #   A response structure that includes the version identifier (ETag) and
+    #   the created AnycastIpList structure.
+    #   @return [Types::AnycastIpList]
+    #
+    # @!attribute [rw] etag
+    #   The version identifier for the current version of the Anycast static
+    #   IP list.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateAnycastIpListResult AWS API Documentation
+    #
+    class CreateAnycastIpListResult < Struct.new(
+      :anycast_ip_list,
       :etag)
       SENSITIVE = []
       include Aws::Structure
@@ -2456,6 +2651,45 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
+    # @!attribute [rw] vpc_origin_endpoint_config
+    #   The VPC origin endpoint configuration.
+    #   @return [Types::VpcOriginEndpointConfig]
+    #
+    # @!attribute [rw] tags
+    #   A complex type that contains zero or more `Tag` elements.
+    #   @return [Types::Tags]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateVpcOriginRequest AWS API Documentation
+    #
+    class CreateVpcOriginRequest < Struct.new(
+      :vpc_origin_endpoint_config,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_origin
+    #   The VPC origin.
+    #   @return [Types::VpcOrigin]
+    #
+    # @!attribute [rw] location
+    #   The VPC origin location.
+    #   @return [String]
+    #
+    # @!attribute [rw] etag
+    #   The VPC origin ETag.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/CreateVpcOriginResult AWS API Documentation
+    #
+    class CreateVpcOriginResult < Struct.new(
+      :vpc_origin,
+      :location,
+      :etag)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A complex type that controls:
     #
     # * Whether CloudFront replaces HTTP status codes in the 4xx and 5xx
@@ -2881,6 +3115,10 @@ module Aws::CloudFront
     #   The identifier for a response headers policy.
     #   @return [String]
     #
+    # @!attribute [rw] grpc_config
+    #   The gRPC configuration for your cache behavior.
+    #   @return [Types::GrpcConfig]
+    #
     # @!attribute [rw] forwarded_values
     #   This field is deprecated. We recommend that you use a cache policy
     #   or an origin request policy instead of this field. For more
@@ -2996,10 +3234,29 @@ module Aws::CloudFront
       :cache_policy_id,
       :origin_request_policy_id,
       :response_headers_policy_id,
+      :grpc_config,
       :forwarded_values,
       :min_ttl,
       :default_ttl,
       :max_ttl)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
+    #   The ID of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @!attribute [rw] if_match
+    #   The current version (`ETag` value) of the Anycast static IP list
+    #   that you are deleting.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteAnycastIpListRequest AWS API Documentation
+    #
+    class DeleteAnycastIpListRequest < Struct.new(
+      :id,
+      :if_match)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3349,6 +3606,40 @@ module Aws::CloudFront
     class DeleteStreamingDistributionRequest < Struct.new(
       :id,
       :if_match)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
+    #   The VPC origin ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] if_match
+    #   The VPC origin to delete, if a match occurs.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteVpcOriginRequest AWS API Documentation
+    #
+    class DeleteVpcOriginRequest < Struct.new(
+      :id,
+      :if_match)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_origin
+    #   The VPC origin.
+    #   @return [Types::VpcOrigin]
+    #
+    # @!attribute [rw] etag
+    #   The VPC origin ETag.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DeleteVpcOriginResult AWS API Documentation
+    #
+    class DeleteVpcOriginResult < Struct.new(
+      :vpc_origin,
+      :etag)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3759,6 +4050,11 @@ module Aws::CloudFront
     #   value is `false`, this is not a staging distribution.
     #   @return [Boolean]
     #
+    # @!attribute [rw] anycast_ip_list_id
+    #   ID of the Anycast static IP list that is associated with the
+    #   distribution.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DistributionConfig AWS API Documentation
     #
     class DistributionConfig < Struct.new(
@@ -3780,7 +4076,8 @@ module Aws::CloudFront
       :http_version,
       :is_ipv6_enabled,
       :continuous_deployment_policy_id,
-      :staging)
+      :staging,
+      :anycast_ip_list_id)
       SENSITIVE = [:comment]
       include Aws::Structure
     end
@@ -4030,6 +4327,11 @@ module Aws::CloudFront
     #   value is `false`, this is not a staging distribution.
     #   @return [Boolean]
     #
+    # @!attribute [rw] anycast_ip_list_id
+    #   ID of the Anycast static IP list that is associated with the
+    #   distribution.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/DistributionSummary AWS API Documentation
     #
     class DistributionSummary < Struct.new(
@@ -4053,7 +4355,8 @@ module Aws::CloudFront
       :http_version,
       :is_ipv6_enabled,
       :alias_icp_recordals,
-      :staging)
+      :staging,
+      :anycast_ip_list_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4136,8 +4439,7 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # The key value store entity already exists. You must provide a unique
-    # key value store entity.
+    # The entity already exists. You must provide a unique entity.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -4150,7 +4452,7 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # The key value store entity limit has been exceeded.
+    # The entity limit has been exceeded.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -4163,7 +4465,7 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # The key value store entity was not found.
+    # The entity was not found.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -4176,7 +4478,7 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # The key value store entity size limit was exceeded.
+    # The entity size limit was exceeded.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -4949,6 +5251,36 @@ module Aws::CloudFront
       :restriction_type,
       :quantity,
       :items)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
+    #   The ID of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetAnycastIpListRequest AWS API Documentation
+    #
+    class GetAnycastIpListRequest < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] anycast_ip_list
+    #   The Anycast static IP list details.
+    #   @return [Types::AnycastIpList]
+    #
+    # @!attribute [rw] etag
+    #   The version identifier for the current version of the Anycast static
+    #   IP list.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetAnycastIpListResult AWS API Documentation
+    #
+    class GetAnycastIpListResult < Struct.new(
+      :anycast_ip_list,
+      :etag)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5870,6 +6202,64 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
+    # @!attribute [rw] id
+    #   The VPC origin ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetVpcOriginRequest AWS API Documentation
+    #
+    class GetVpcOriginRequest < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_origin
+    #   The VPC origin.
+    #   @return [Types::VpcOrigin]
+    #
+    # @!attribute [rw] etag
+    #   The VPC origin ETag.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GetVpcOriginResult AWS API Documentation
+    #
+    class GetVpcOriginResult < Struct.new(
+      :vpc_origin,
+      :etag)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Amazon CloudFront supports gRPC, an open-source remote procedure call
+    # (RPC) framework built on HTTP/2. gRPC offers bi-directional streaming
+    # and binary protocol that buffers payloads, making it suitable for
+    # applications that require low latency communications.
+    #
+    # To enable your distribution to handle gRPC requests, you must include
+    # HTTP/2 as one of the supported `HTTP` versions and allow `HTTP`
+    # methods, including `POST`.
+    #
+    # For more information, see [Using gRPC with CloudFront
+    # distributions][1] in the *Amazon CloudFront Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/distribution-using-grpc.html
+    #
+    # @!attribute [rw] enabled
+    #   Enables your CloudFront distribution to receive gRPC requests and to
+    #   proxy them directly to your origins.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/GrpcConfig AWS API Documentation
+    #
+    class GrpcConfig < Struct.new(
+      :enabled)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains a list of HTTP header names.
     #
     # @!attribute [rw] quantity
@@ -5889,7 +6279,7 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # You cannot delete a managed policy.
+    # Deletion is not allowed for this entity.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -6864,6 +7254,40 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
+    # @!attribute [rw] marker
+    #   Use this field when paginating results to indicate where to begin in
+    #   your list. The response includes items in the list that occur after
+    #   the marker. To get the next page of the list, set this field's
+    #   value to the value of `NextMarker` from the current page's
+    #   response.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_items
+    #   The maximum number of Anycast static IP lists that you want returned
+    #   in the response.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListAnycastIpListsRequest AWS API Documentation
+    #
+    class ListAnycastIpListsRequest < Struct.new(
+      :marker,
+      :max_items)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] anycast_ip_lists
+    #   Root level tag for the `AnycastIpLists` parameters.
+    #   @return [Types::AnycastIpListCollection]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListAnycastIpListsResult AWS API Documentation
+    #
+    class ListAnycastIpListsResult < Struct.new(
+      :anycast_ip_lists)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] type
     #   A filter to return only the specified kinds of cache policies. Valid
     #   values are:
@@ -7023,6 +7447,45 @@ module Aws::CloudFront
     #
     class ListContinuousDeploymentPoliciesResult < Struct.new(
       :continuous_deployment_policy_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marker
+    #   Use this field when paginating results to indicate where to begin in
+    #   your list. The response includes items in the list that occur after
+    #   the marker. To get the next page of the list, set this field's
+    #   value to the value of `NextMarker` from the current page's
+    #   response.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_items
+    #   The maximum number of distributions that you want returned in the
+    #   response.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] anycast_ip_list_id
+    #   The ID of the Anycast static IP list.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByAnycastIpListIdRequest AWS API Documentation
+    #
+    class ListDistributionsByAnycastIpListIdRequest < Struct.new(
+      :marker,
+      :max_items,
+      :anycast_ip_list_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] distribution_list
+    #   A distribution list.
+    #   @return [Types::DistributionList]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByAnycastIpListIdResult AWS API Documentation
+    #
+    class ListDistributionsByAnycastIpListIdResult < Struct.new(
+      :distribution_list)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7227,6 +7690,40 @@ module Aws::CloudFront
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByResponseHeadersPolicyIdResult AWS API Documentation
     #
     class ListDistributionsByResponseHeadersPolicyIdResult < Struct.new(
+      :distribution_id_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marker
+    #   The marker associated with the VPC origin distributions list.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_items
+    #   The maximum number of items included in the list.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] vpc_origin_id
+    #   The VPC origin ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByVpcOriginIdRequest AWS API Documentation
+    #
+    class ListDistributionsByVpcOriginIdRequest < Struct.new(
+      :marker,
+      :max_items,
+      :vpc_origin_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] distribution_id_list
+    #   A list of distribution IDs.
+    #   @return [Types::DistributionIdList]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListDistributionsByVpcOriginIdResult AWS API Documentation
+    #
+    class ListDistributionsByVpcOriginIdResult < Struct.new(
       :distribution_id_list)
       SENSITIVE = []
       include Aws::Structure
@@ -7805,8 +8302,52 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # A complex type that controls whether access logs are written for the
+    # @!attribute [rw] marker
+    #   The marker associated with the VPC origins list.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_items
+    #   The maximum number of items included in the list.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListVpcOriginsRequest AWS API Documentation
+    #
+    class ListVpcOriginsRequest < Struct.new(
+      :marker,
+      :max_items)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_origin_list
+    #   List of VPC origins.
+    #   @return [Types::VpcOriginList]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/ListVpcOriginsResult AWS API Documentation
+    #
+    class ListVpcOriginsResult < Struct.new(
+      :vpc_origin_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A complex type that specifies whether access logs are written for the
     # distribution.
+    #
+    # <note markdown="1"> If you already enabled standard logging (legacy) and you want to
+    # enable standard logging (v2) to send your access logs to Amazon S3, we
+    # recommend that you specify a *different* Amazon S3 bucket or use a
+    # *separate path* in the same bucket (for example, use a log prefix or
+    # partitioning). This helps you keep track of which log files are
+    # associated with which logging subscription and prevents log files from
+    # overwriting each other. For more information, see [Standard logging
+    # (access logs)][1] in the *Amazon CloudFront Developer Guide*.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
     #
     # @!attribute [rw] enabled
     #   Specifies whether you want CloudFront to save access logs to an
@@ -7814,8 +8355,8 @@ module Aws::CloudFront
     #   create a distribution or if you want to disable logging for an
     #   existing distribution, specify `false` for `Enabled`, and specify
     #   empty `Bucket` and `Prefix` elements. If you specify `false` for
-    #   `Enabled` but you specify values for `Bucket`, `prefix`, and
-    #   `IncludeCookies`, the values are automatically deleted.
+    #   `Enabled` but you specify values for `Bucket` and `prefix`, the
+    #   values are automatically deleted.
     #   @return [Boolean]
     #
     # @!attribute [rw] include_cookies
@@ -7830,7 +8371,7 @@ module Aws::CloudFront
     #
     # @!attribute [rw] bucket
     #   The Amazon S3 bucket to store the access logs in, for example,
-    #   `myawslogbucket.s3.amazonaws.com`.
+    #   `amzn-s3-demo-bucket.s3.amazonaws.com`.
     #   @return [String]
     #
     # @!attribute [rw] prefix
@@ -8208,6 +8749,10 @@ module Aws::CloudFront
     #   type instead.
     #   @return [Types::CustomOriginConfig]
     #
+    # @!attribute [rw] vpc_origin_config
+    #   The VPC origin configuration.
+    #   @return [Types::VpcOriginConfig]
+    #
     # @!attribute [rw] connection_attempts
     #   The number of times that CloudFront attempts to connect to the
     #   origin. The minimum number is 1, the maximum is 3, and the default
@@ -8273,6 +8818,7 @@ module Aws::CloudFront
       :custom_headers,
       :s3_origin_config,
       :custom_origin_config,
+      :vpc_origin_config,
       :connection_attempts,
       :connection_timeout,
       :origin_shield,
@@ -11155,7 +11701,7 @@ module Aws::CloudFront
     #
     # @!attribute [rw] bucket
     #   The Amazon S3 bucket to store the access logs in, for example,
-    #   `myawslogbucket.s3.amazonaws.com`.
+    #   `amzn-s3-demo-bucket.s3.amazonaws.com`.
     #   @return [String]
     #
     # @!attribute [rw] prefix
@@ -13064,6 +13610,45 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
+    # @!attribute [rw] vpc_origin_endpoint_config
+    #   The VPC origin endpoint configuration.
+    #   @return [Types::VpcOriginEndpointConfig]
+    #
+    # @!attribute [rw] id
+    #   The VPC origin ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] if_match
+    #   The VPC origin to update, if a match occurs.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateVpcOriginRequest AWS API Documentation
+    #
+    class UpdateVpcOriginRequest < Struct.new(
+      :vpc_origin_endpoint_config,
+      :id,
+      :if_match)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_origin
+    #   The VPC origin.
+    #   @return [Types::VpcOrigin]
+    #
+    # @!attribute [rw] etag
+    #   The VPC origin ETag.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/UpdateVpcOriginResult AWS API Documentation
+    #
+    class UpdateVpcOriginResult < Struct.new(
+      :vpc_origin,
+      :etag)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A complex type that determines the distribution's SSL/TLS
     # configuration for communicating with viewers.
     #
@@ -13261,6 +13846,187 @@ module Aws::CloudFront
       :minimum_protocol_version,
       :certificate,
       :certificate_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An Amazon CloudFront VPC origin.
+    #
+    # @!attribute [rw] id
+    #   The VPC origin ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The VPC origin ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The VPC origin status.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_time
+    #   The VPC origin created time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_time
+    #   The VPC origin last modified time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] vpc_origin_endpoint_config
+    #   The VPC origin endpoint configuration.
+    #   @return [Types::VpcOriginEndpointConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/VpcOrigin AWS API Documentation
+    #
+    class VpcOrigin < Struct.new(
+      :id,
+      :arn,
+      :status,
+      :created_time,
+      :last_modified_time,
+      :vpc_origin_endpoint_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An Amazon CloudFront VPC origin configuration.
+    #
+    # @!attribute [rw] vpc_origin_id
+    #   The VPC origin ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/VpcOriginConfig AWS API Documentation
+    #
+    class VpcOriginConfig < Struct.new(
+      :vpc_origin_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An Amazon CloudFront VPC origin endpoint configuration.
+    #
+    # @!attribute [rw] name
+    #   The name of the CloudFront VPC origin endpoint configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The ARN of the CloudFront VPC origin endpoint configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] http_port
+    #   The HTTP port for the CloudFront VPC origin endpoint configuration.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] https_port
+    #   The HTTPS port of the CloudFront VPC origin endpoint configuration.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] origin_protocol_policy
+    #   The origin protocol policy for the CloudFront VPC origin endpoint
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] origin_ssl_protocols
+    #   A complex type that contains information about the SSL/TLS protocols
+    #   that CloudFront can use when establishing an HTTPS connection with
+    #   your origin.
+    #   @return [Types::OriginSslProtocols]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/VpcOriginEndpointConfig AWS API Documentation
+    #
+    class VpcOriginEndpointConfig < Struct.new(
+      :name,
+      :arn,
+      :http_port,
+      :https_port,
+      :origin_protocol_policy,
+      :origin_ssl_protocols)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A list of CloudFront VPC origins.
+    #
+    # @!attribute [rw] marker
+    #   The marker associated with the VPC origins list.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_marker
+    #   The next marker associated with the VPC origins list.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_items
+    #   The maximum number of items included in the list.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] is_truncated
+    #   A flag that indicates whether more VPC origins remain to be listed.
+    #   If your results were truncated, you can make a follow-up pagination
+    #   request using the `Marker` request parameter to retrieve more VPC
+    #   origins in the list.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] quantity
+    #   The number of VPC origins in the list.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] items
+    #   The items of the VPC origins list.
+    #   @return [Array<Types::VpcOriginSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/VpcOriginList AWS API Documentation
+    #
+    class VpcOriginList < Struct.new(
+      :marker,
+      :next_marker,
+      :max_items,
+      :is_truncated,
+      :quantity,
+      :items)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A summary of the CloudFront VPC origin.
+    #
+    # @!attribute [rw] id
+    #   The VPC origin summary ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The VPC origin summary name.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The VPC origin summary status.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_time
+    #   The VPC origin summary created time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_time
+    #   The VPC origin summary last modified time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] arn
+    #   The VPC origin summary ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] origin_endpoint_arn
+    #   The VPC origin summary origin endpoint ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/VpcOriginSummary AWS API Documentation
+    #
+    class VpcOriginSummary < Struct.new(
+      :id,
+      :name,
+      :status,
+      :created_time,
+      :last_modified_time,
+      :arn,
+      :origin_endpoint_arn)
       SENSITIVE = []
       include Aws::Structure
     end

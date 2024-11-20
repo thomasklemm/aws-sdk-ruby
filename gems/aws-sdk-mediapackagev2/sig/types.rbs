@@ -77,6 +77,8 @@ module Aws::MediaPackageV2
       attr_accessor client_token: ::String
       attr_accessor input_type: ("HLS" | "CMAF")
       attr_accessor description: ::String
+      attr_accessor input_switch_configuration: Types::InputSwitchConfiguration
+      attr_accessor output_header_configuration: Types::OutputHeaderConfiguration
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
     end
@@ -92,6 +94,8 @@ module Aws::MediaPackageV2
       attr_accessor input_type: ("HLS" | "CMAF")
       attr_accessor etag: ::String
       attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor input_switch_configuration: Types::InputSwitchConfiguration
+      attr_accessor output_header_configuration: Types::OutputHeaderConfiguration
       SENSITIVE: []
     end
 
@@ -340,6 +344,8 @@ module Aws::MediaPackageV2
       attr_accessor input_type: ("HLS" | "CMAF")
       attr_accessor etag: ::String
       attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor input_switch_configuration: Types::InputSwitchConfiguration
+      attr_accessor output_header_configuration: Types::OutputHeaderConfiguration
       SENSITIVE: []
     end
 
@@ -504,6 +510,11 @@ module Aws::MediaPackageV2
       SENSITIVE: []
     end
 
+    class InputSwitchConfiguration
+      attr_accessor mqcs_input_switching: bool
+      SENSITIVE: []
+    end
+
     class InternalServerException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -607,6 +618,11 @@ module Aws::MediaPackageV2
       attr_accessor low_latency_hls_manifests: ::Array[Types::ListLowLatencyHlsManifestConfiguration]
       attr_accessor dash_manifests: ::Array[Types::ListDashManifestConfiguration]
       attr_accessor force_endpoint_error_configuration: Types::ForceEndpointErrorConfiguration
+      SENSITIVE: []
+    end
+
+    class OutputHeaderConfiguration
+      attr_accessor publish_mqcs: bool
       SENSITIVE: []
     end
 
@@ -730,6 +746,8 @@ module Aws::MediaPackageV2
       attr_accessor channel_name: ::String
       attr_accessor etag: ::String
       attr_accessor description: ::String
+      attr_accessor input_switch_configuration: Types::InputSwitchConfiguration
+      attr_accessor output_header_configuration: Types::OutputHeaderConfiguration
       SENSITIVE: []
     end
 
@@ -744,6 +762,8 @@ module Aws::MediaPackageV2
       attr_accessor input_type: ("HLS" | "CMAF")
       attr_accessor etag: ::String
       attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor input_switch_configuration: Types::InputSwitchConfiguration
+      attr_accessor output_header_configuration: Types::OutputHeaderConfiguration
       SENSITIVE: []
     end
 
@@ -785,7 +805,7 @@ module Aws::MediaPackageV2
 
     class ValidationException
       attr_accessor message: ::String
-      attr_accessor validation_exception_type: ("CONTAINER_TYPE_IMMUTABLE" | "INVALID_PAGINATION_TOKEN" | "INVALID_PAGINATION_MAX_RESULTS" | "INVALID_POLICY" | "INVALID_ROLE_ARN" | "MANIFEST_NAME_COLLISION" | "ENCRYPTION_METHOD_CONTAINER_TYPE_MISMATCH" | "CENC_IV_INCOMPATIBLE" | "ENCRYPTION_CONTRACT_WITHOUT_AUDIO_RENDITION_INCOMPATIBLE" | "ENCRYPTION_CONTRACT_UNENCRYPTED" | "ENCRYPTION_CONTRACT_SHARED" | "NUM_MANIFESTS_LOW" | "NUM_MANIFESTS_HIGH" | "MANIFEST_DRM_SYSTEMS_INCOMPATIBLE" | "DRM_SYSTEMS_ENCRYPTION_METHOD_INCOMPATIBLE" | "ROLE_ARN_NOT_ASSUMABLE" | "ROLE_ARN_LENGTH_OUT_OF_RANGE" | "ROLE_ARN_INVALID_FORMAT" | "URL_INVALID" | "URL_SCHEME" | "URL_USER_INFO" | "URL_PORT" | "URL_UNKNOWN_HOST" | "URL_LOCAL_ADDRESS" | "URL_LOOPBACK_ADDRESS" | "URL_LINK_LOCAL_ADDRESS" | "URL_MULTICAST_ADDRESS" | "MEMBER_INVALID" | "MEMBER_MISSING" | "MEMBER_MIN_VALUE" | "MEMBER_MAX_VALUE" | "MEMBER_MIN_LENGTH" | "MEMBER_MAX_LENGTH" | "MEMBER_INVALID_ENUM_VALUE" | "MEMBER_DOES_NOT_MATCH_PATTERN" | "INVALID_MANIFEST_FILTER" | "INVALID_TIME_DELAY_SECONDS" | "END_TIME_EARLIER_THAN_START_TIME" | "TS_CONTAINER_TYPE_WITH_DASH_MANIFEST" | "DIRECT_MODE_WITH_TIMING_SOURCE" | "NONE_MODE_WITH_TIMING_SOURCE" | "TIMING_SOURCE_MISSING" | "UPDATE_PERIOD_SMALLER_THAN_SEGMENT_DURATION" | "PERIOD_TRIGGERS_NONE_SPECIFIED_WITH_ADDITIONAL_VALUES" | "DRM_SIGNALING_MISMATCH_SEGMENT_ENCRYPTION_STATUS" | "ONLY_CMAF_INPUT_TYPE_ALLOW_FORCE_ENDPOINT_ERROR_CONFIGURATION" | "SOURCE_DISRUPTIONS_ENABLED_INCORRECTLY" | "HARVESTED_MANIFEST_HAS_START_END_FILTER_CONFIGURATION" | "HARVESTED_MANIFEST_NOT_FOUND_ON_ENDPOINT" | "TOO_MANY_IN_PROGRESS_HARVEST_JOBS" | "HARVEST_JOB_INELIGIBLE_FOR_CANCELLATION" | "INVALID_HARVEST_JOB_DURATION" | "HARVEST_JOB_S3_DESTINATION_MISSING_OR_INCOMPLETE" | "HARVEST_JOB_UNABLE_TO_WRITE_TO_S3_DESTINATION" | "HARVEST_JOB_CUSTOMER_ENDPOINT_READ_ACCESS_DENIED" | "CLIP_START_TIME_WITH_START_OR_END" | "START_TAG_TIME_OFFSET_INVALID")
+      attr_accessor validation_exception_type: ("CONTAINER_TYPE_IMMUTABLE" | "INVALID_PAGINATION_TOKEN" | "INVALID_PAGINATION_MAX_RESULTS" | "INVALID_POLICY" | "INVALID_ROLE_ARN" | "MANIFEST_NAME_COLLISION" | "ENCRYPTION_METHOD_CONTAINER_TYPE_MISMATCH" | "CENC_IV_INCOMPATIBLE" | "ENCRYPTION_CONTRACT_WITHOUT_AUDIO_RENDITION_INCOMPATIBLE" | "ENCRYPTION_CONTRACT_UNENCRYPTED" | "ENCRYPTION_CONTRACT_SHARED" | "NUM_MANIFESTS_LOW" | "NUM_MANIFESTS_HIGH" | "MANIFEST_DRM_SYSTEMS_INCOMPATIBLE" | "DRM_SYSTEMS_ENCRYPTION_METHOD_INCOMPATIBLE" | "ROLE_ARN_NOT_ASSUMABLE" | "ROLE_ARN_LENGTH_OUT_OF_RANGE" | "ROLE_ARN_INVALID_FORMAT" | "URL_INVALID" | "URL_SCHEME" | "URL_USER_INFO" | "URL_PORT" | "URL_UNKNOWN_HOST" | "URL_LOCAL_ADDRESS" | "URL_LOOPBACK_ADDRESS" | "URL_LINK_LOCAL_ADDRESS" | "URL_MULTICAST_ADDRESS" | "MEMBER_INVALID" | "MEMBER_MISSING" | "MEMBER_MIN_VALUE" | "MEMBER_MAX_VALUE" | "MEMBER_MIN_LENGTH" | "MEMBER_MAX_LENGTH" | "MEMBER_INVALID_ENUM_VALUE" | "MEMBER_DOES_NOT_MATCH_PATTERN" | "INVALID_MANIFEST_FILTER" | "INVALID_TIME_DELAY_SECONDS" | "END_TIME_EARLIER_THAN_START_TIME" | "TS_CONTAINER_TYPE_WITH_DASH_MANIFEST" | "DIRECT_MODE_WITH_TIMING_SOURCE" | "NONE_MODE_WITH_TIMING_SOURCE" | "TIMING_SOURCE_MISSING" | "UPDATE_PERIOD_SMALLER_THAN_SEGMENT_DURATION" | "PERIOD_TRIGGERS_NONE_SPECIFIED_WITH_ADDITIONAL_VALUES" | "DRM_SIGNALING_MISMATCH_SEGMENT_ENCRYPTION_STATUS" | "ONLY_CMAF_INPUT_TYPE_ALLOW_FORCE_ENDPOINT_ERROR_CONFIGURATION" | "SOURCE_DISRUPTIONS_ENABLED_INCORRECTLY" | "HARVESTED_MANIFEST_HAS_START_END_FILTER_CONFIGURATION" | "HARVESTED_MANIFEST_NOT_FOUND_ON_ENDPOINT" | "TOO_MANY_IN_PROGRESS_HARVEST_JOBS" | "HARVEST_JOB_INELIGIBLE_FOR_CANCELLATION" | "INVALID_HARVEST_JOB_DURATION" | "HARVEST_JOB_S3_DESTINATION_MISSING_OR_INCOMPLETE" | "HARVEST_JOB_UNABLE_TO_WRITE_TO_S3_DESTINATION" | "HARVEST_JOB_CUSTOMER_ENDPOINT_READ_ACCESS_DENIED" | "CLIP_START_TIME_WITH_START_OR_END" | "START_TAG_TIME_OFFSET_INVALID" | "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_INPUT_SWITCHING" | "ONLY_CMAF_INPUT_TYPE_ALLOW_MQCS_OUTPUT_CONFIGURATION")
       SENSITIVE: []
     end
   end

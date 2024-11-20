@@ -191,7 +191,7 @@ module Aws
                                 amd_sev_snp: ("enabled" | "disabled")?
                               },
                               ?capacity_reservation_specification: {
-                                capacity_reservation_preference: ("open" | "none")?,
+                                capacity_reservation_preference: ("capacity-reservations-only" | "open" | "none")?,
                                 capacity_reservation_target: {
                                   capacity_reservation_id: ::String?,
                                   capacity_reservation_resource_group_arn: ::String?

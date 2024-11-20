@@ -49,13 +49,14 @@ module Aws::RecycleBin
     #   @return [String]
     #
     # @!attribute [rw] resource_tags
-    #   Specifies the resource tags to use to identify resources that are to
-    #   be retained by a tag-level retention rule. For tag-level retention
-    #   rules, only deleted resources, of the specified resource type, that
-    #   have one or more of the specified tag key and value pairs are
-    #   retained. If a resource is deleted, but it does not have any of the
-    #   specified tag key and value pairs, it is immediately deleted without
-    #   being retained by the retention rule.
+    #   \[Tag-level retention rules only\] Specifies the resource tags to
+    #   use to identify resources that are to be retained by a tag-level
+    #   retention rule. For tag-level retention rules, only deleted
+    #   resources, of the specified resource type, that have one or more of
+    #   the specified tag key and value pairs are retained. If a resource is
+    #   deleted, but it does not have any of the specified tag key and value
+    #   pairs, it is immediately deleted without being retained by the
+    #   retention rule.
     #
     #   You can add the same tag key and value pair to a maximum or five
     #   retention rules.
@@ -71,6 +72,15 @@ module Aws::RecycleBin
     #   Information about the retention rule lock configuration.
     #   @return [Types::LockConfiguration]
     #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Specifies the exclusion tags
+    #   to use to identify resources that are to be excluded, or ignored, by
+    #   a Region-level retention rule. Resources that have any of these tags
+    #   are not retained by the retention rule upon deletion.
+    #
+    #   You can't specify exclusion tags for tag-level retention rules.
+    #   @return [Array<Types::ResourceTag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/CreateRuleRequest AWS API Documentation
     #
     class CreateRuleRequest < Struct.new(
@@ -79,7 +89,8 @@ module Aws::RecycleBin
       :tags,
       :resource_type,
       :resource_tags,
-      :lock_configuration)
+      :lock_configuration,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -106,8 +117,9 @@ module Aws::RecycleBin
     #   @return [String]
     #
     # @!attribute [rw] resource_tags
-    #   Information about the resource tags used to identify resources that
-    #   are retained by the retention rule.
+    #   \[Tag-level retention rules only\] Information about the resource
+    #   tags used to identify resources that are retained by the retention
+    #   rule.
     #   @return [Array<Types::ResourceTag>]
     #
     # @!attribute [rw] status
@@ -120,7 +132,8 @@ module Aws::RecycleBin
     #   @return [Types::LockConfiguration]
     #
     # @!attribute [rw] lock_state
-    #   The lock state for the retention rule.
+    #   \[Region-level retention rules only\] The lock state for the
+    #   retention rule.
     #
     #   * `locked` - The retention rule is locked and can't be modified or
     #     deleted.
@@ -143,6 +156,12 @@ module Aws::RecycleBin
     #   The Amazon Resource Name (ARN) of the retention rule.
     #   @return [String]
     #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Information about the
+    #   exclusion tags used to identify resources that are to be excluded,
+    #   or ignored, by the retention rule.
+    #   @return [Array<Types::ResourceTag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/CreateRuleResponse AWS API Documentation
     #
     class CreateRuleResponse < Struct.new(
@@ -155,7 +174,8 @@ module Aws::RecycleBin
       :status,
       :lock_configuration,
       :lock_state,
-      :rule_arn)
+      :rule_arn,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -206,8 +226,9 @@ module Aws::RecycleBin
     #   @return [Types::RetentionPeriod]
     #
     # @!attribute [rw] resource_tags
-    #   Information about the resource tags used to identify resources that
-    #   are retained by the retention rule.
+    #   \[Tag-level retention rules only\] Information about the resource
+    #   tags used to identify resources that are retained by the retention
+    #   rule.
     #   @return [Array<Types::ResourceTag>]
     #
     # @!attribute [rw] status
@@ -220,7 +241,8 @@ module Aws::RecycleBin
     #   @return [Types::LockConfiguration]
     #
     # @!attribute [rw] lock_state
-    #   The lock state for the retention rule.
+    #   \[Region-level retention rules only\] The lock state for the
+    #   retention rule.
     #
     #   * `locked` - The retention rule is locked and can't be modified or
     #     deleted.
@@ -249,6 +271,12 @@ module Aws::RecycleBin
     #   The Amazon Resource Name (ARN) of the retention rule.
     #   @return [String]
     #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Information about the
+    #   exclusion tags used to identify resources that are to be excluded,
+    #   or ignored, by the retention rule.
+    #   @return [Array<Types::ResourceTag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/GetRuleResponse AWS API Documentation
     #
     class GetRuleResponse < Struct.new(
@@ -261,7 +289,8 @@ module Aws::RecycleBin
       :lock_configuration,
       :lock_state,
       :lock_end_time,
-      :rule_arn)
+      :rule_arn,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -300,14 +329,21 @@ module Aws::RecycleBin
     #   @return [String]
     #
     # @!attribute [rw] resource_tags
-    #   Information about the resource tags used to identify resources that
-    #   are retained by the retention rule.
+    #   \[Tag-level retention rules only\] Information about the resource
+    #   tags used to identify resources that are retained by the retention
+    #   rule.
     #   @return [Array<Types::ResourceTag>]
     #
     # @!attribute [rw] lock_state
     #   The lock state of the retention rules to list. Only retention rules
     #   with the specified lock state are returned.
     #   @return [String]
+    #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Information about the
+    #   exclusion tags used to identify resources that are to be excluded,
+    #   or ignored, by the retention rule.
+    #   @return [Array<Types::ResourceTag>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/ListRulesRequest AWS API Documentation
     #
@@ -316,7 +352,8 @@ module Aws::RecycleBin
       :next_token,
       :resource_type,
       :resource_tags,
-      :lock_state)
+      :lock_state,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -412,8 +449,9 @@ module Aws::RecycleBin
     #   @return [Types::RetentionPeriod]
     #
     # @!attribute [rw] resource_tags
-    #   Information about the resource tags used to identify resources that
-    #   are retained by the retention rule.
+    #   \[Tag-level retention rules only\] Information about the resource
+    #   tags used to identify resources that are retained by the retention
+    #   rule.
     #   @return [Array<Types::ResourceTag>]
     #
     # @!attribute [rw] status
@@ -426,7 +464,8 @@ module Aws::RecycleBin
     #   @return [Types::LockConfiguration]
     #
     # @!attribute [rw] lock_state
-    #   The lock state for the retention rule.
+    #   \[Region-level retention rules only\] The lock state for the
+    #   retention rule.
     #
     #   * `locked` - The retention rule is locked and can't be modified or
     #     deleted.
@@ -449,6 +488,12 @@ module Aws::RecycleBin
     #   The Amazon Resource Name (ARN) of the retention rule.
     #   @return [String]
     #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Information about the
+    #   exclusion tags used to identify resources that are to be excluded,
+    #   or ignored, by the retention rule.
+    #   @return [Array<Types::ResourceTag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/LockRuleResponse AWS API Documentation
     #
     class LockRuleResponse < Struct.new(
@@ -460,7 +505,8 @@ module Aws::RecycleBin
       :status,
       :lock_configuration,
       :lock_state,
-      :rule_arn)
+      :rule_arn,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -483,8 +529,8 @@ module Aws::RecycleBin
       include Aws::Structure
     end
 
-    # Information about the resource tags used to identify resources that
-    # are retained by the retention rule.
+    # \[Tag-level retention rules only\] Information about the resource tags
+    # used to identify resources that are retained by the retention rule.
     #
     # @!attribute [rw] resource_tag_key
     #   The tag key.
@@ -542,7 +588,8 @@ module Aws::RecycleBin
     #   @return [Types::RetentionPeriod]
     #
     # @!attribute [rw] lock_state
-    #   The lock state for the retention rule.
+    #   \[Region-level retention rules only\] The lock state for the
+    #   retention rule.
     #
     #   * `locked` - The retention rule is locked and can't be modified or
     #     deleted.
@@ -691,8 +738,9 @@ module Aws::RecycleBin
     #   @return [Types::RetentionPeriod]
     #
     # @!attribute [rw] resource_tags
-    #   Information about the resource tags used to identify resources that
-    #   are retained by the retention rule.
+    #   \[Tag-level retention rules only\] Information about the resource
+    #   tags used to identify resources that are retained by the retention
+    #   rule.
     #   @return [Array<Types::ResourceTag>]
     #
     # @!attribute [rw] status
@@ -705,7 +753,8 @@ module Aws::RecycleBin
     #   @return [Types::LockConfiguration]
     #
     # @!attribute [rw] lock_state
-    #   The lock state for the retention rule.
+    #   \[Region-level retention rules only\] The lock state for the
+    #   retention rule.
     #
     #   * `locked` - The retention rule is locked and can't be modified or
     #     deleted.
@@ -734,6 +783,12 @@ module Aws::RecycleBin
     #   The Amazon Resource Name (ARN) of the retention rule.
     #   @return [String]
     #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Information about the
+    #   exclusion tags used to identify resources that are to be excluded,
+    #   or ignored, by the retention rule.
+    #   @return [Array<Types::ResourceTag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/UnlockRuleResponse AWS API Documentation
     #
     class UnlockRuleResponse < Struct.new(
@@ -746,7 +801,8 @@ module Aws::RecycleBin
       :lock_configuration,
       :lock_state,
       :lock_end_time,
-      :rule_arn)
+      :rule_arn,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -794,13 +850,14 @@ module Aws::RecycleBin
     #   @return [String]
     #
     # @!attribute [rw] resource_tags
-    #   Specifies the resource tags to use to identify resources that are to
-    #   be retained by a tag-level retention rule. For tag-level retention
-    #   rules, only deleted resources, of the specified resource type, that
-    #   have one or more of the specified tag key and value pairs are
-    #   retained. If a resource is deleted, but it does not have any of the
-    #   specified tag key and value pairs, it is immediately deleted without
-    #   being retained by the retention rule.
+    #   \[Tag-level retention rules only\] Specifies the resource tags to
+    #   use to identify resources that are to be retained by a tag-level
+    #   retention rule. For tag-level retention rules, only deleted
+    #   resources, of the specified resource type, that have one or more of
+    #   the specified tag key and value pairs are retained. If a resource is
+    #   deleted, but it does not have any of the specified tag key and value
+    #   pairs, it is immediately deleted without being retained by the
+    #   retention rule.
     #
     #   You can add the same tag key and value pair to a maximum or five
     #   retention rules.
@@ -812,6 +869,15 @@ module Aws::RecycleBin
     #   the resources are not tagged.
     #   @return [Array<Types::ResourceTag>]
     #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Specifies the exclusion tags
+    #   to use to identify resources that are to be excluded, or ignored, by
+    #   a Region-level retention rule. Resources that have any of these tags
+    #   are not retained by the retention rule upon deletion.
+    #
+    #   You can't specify exclusion tags for tag-level retention rules.
+    #   @return [Array<Types::ResourceTag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/UpdateRuleRequest AWS API Documentation
     #
     class UpdateRuleRequest < Struct.new(
@@ -819,7 +885,8 @@ module Aws::RecycleBin
       :retention_period,
       :description,
       :resource_type,
-      :resource_tags)
+      :resource_tags,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -842,8 +909,9 @@ module Aws::RecycleBin
     #   @return [String]
     #
     # @!attribute [rw] resource_tags
-    #   Information about the resource tags used to identify resources that
-    #   are retained by the retention rule.
+    #   \[Tag-level retention rules only\] Information about the resource
+    #   tags used to identify resources that are retained by the retention
+    #   rule.
     #   @return [Array<Types::ResourceTag>]
     #
     # @!attribute [rw] status
@@ -852,7 +920,8 @@ module Aws::RecycleBin
     #   @return [String]
     #
     # @!attribute [rw] lock_state
-    #   The lock state for the retention rule.
+    #   \[Region-level retention rules only\] The lock state for the
+    #   retention rule.
     #
     #   * `locked` - The retention rule is locked and can't be modified or
     #     deleted.
@@ -881,6 +950,12 @@ module Aws::RecycleBin
     #   The Amazon Resource Name (ARN) of the retention rule.
     #   @return [String]
     #
+    # @!attribute [rw] exclude_resource_tags
+    #   \[Region-level retention rules only\] Information about the
+    #   exclusion tags used to identify resources that are to be excluded,
+    #   or ignored, by the retention rule.
+    #   @return [Array<Types::ResourceTag>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/UpdateRuleResponse AWS API Documentation
     #
     class UpdateRuleResponse < Struct.new(
@@ -892,7 +967,8 @@ module Aws::RecycleBin
       :status,
       :lock_state,
       :lock_end_time,
-      :rule_arn)
+      :rule_arn,
+      :exclude_resource_tags)
       SENSITIVE = []
       include Aws::Structure
     end

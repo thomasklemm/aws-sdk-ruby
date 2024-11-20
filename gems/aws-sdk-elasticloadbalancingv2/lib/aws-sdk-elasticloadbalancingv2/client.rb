@@ -2114,6 +2114,45 @@ module Aws::ElasticLoadBalancingV2
       req.send_request(options)
     end
 
+    # Describes the capacity reservation status for the specified load
+    # balancer.
+    #
+    # @option params [required, String] :load_balancer_arn
+    #   The Amazon Resource Name (ARN) of the load balancer.
+    #
+    # @return [Types::DescribeCapacityReservationOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeCapacityReservationOutput#last_modified_time #last_modified_time} => Time
+    #   * {Types::DescribeCapacityReservationOutput#decrease_requests_remaining #decrease_requests_remaining} => Integer
+    #   * {Types::DescribeCapacityReservationOutput#minimum_load_balancer_capacity #minimum_load_balancer_capacity} => Types::MinimumLoadBalancerCapacity
+    #   * {Types::DescribeCapacityReservationOutput#capacity_reservation_state #capacity_reservation_state} => Array&lt;Types::ZonalCapacityReservationState&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_capacity_reservation({
+    #     load_balancer_arn: "LoadBalancerArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.last_modified_time #=> Time
+    #   resp.decrease_requests_remaining #=> Integer
+    #   resp.minimum_load_balancer_capacity.capacity_units #=> Integer
+    #   resp.capacity_reservation_state #=> Array
+    #   resp.capacity_reservation_state[0].state.code #=> String, one of "provisioned", "pending", "rebalancing", "failed"
+    #   resp.capacity_reservation_state[0].state.reason #=> String
+    #   resp.capacity_reservation_state[0].availability_zone #=> String
+    #   resp.capacity_reservation_state[0].effective_capacity_units #=> Float
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/DescribeCapacityReservation AWS API Documentation
+    #
+    # @overload describe_capacity_reservation(params = {})
+    # @param [Hash] params ({})
+    def describe_capacity_reservation(params = {}, options = {})
+      req = build_request(:describe_capacity_reservation, params)
+      req.send_request(options)
+    end
+
     # Describes the attributes for the specified listener.
     #
     # @option params [required, String] :listener_arn
@@ -3478,6 +3517,57 @@ module Aws::ElasticLoadBalancingV2
     # @param [Hash] params ({})
     def get_trust_store_revocation_content(params = {}, options = {})
       req = build_request(:get_trust_store_revocation_content, params)
+      req.send_request(options)
+    end
+
+    # Modifies the capacity reservation of the specified load balancer.
+    #
+    # When modifying capacity reservation, you must include at least one
+    # `MinimumLoadBalancerCapacity` or `ResetCapacityReservation`.
+    #
+    # @option params [required, String] :load_balancer_arn
+    #   The Amazon Resource Name (ARN) of the load balancer.
+    #
+    # @option params [Types::MinimumLoadBalancerCapacity] :minimum_load_balancer_capacity
+    #   The minimum load balancer capacity reserved.
+    #
+    # @option params [Boolean] :reset_capacity_reservation
+    #   Resets the capacity reservation.
+    #
+    # @return [Types::ModifyCapacityReservationOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ModifyCapacityReservationOutput#last_modified_time #last_modified_time} => Time
+    #   * {Types::ModifyCapacityReservationOutput#decrease_requests_remaining #decrease_requests_remaining} => Integer
+    #   * {Types::ModifyCapacityReservationOutput#minimum_load_balancer_capacity #minimum_load_balancer_capacity} => Types::MinimumLoadBalancerCapacity
+    #   * {Types::ModifyCapacityReservationOutput#capacity_reservation_state #capacity_reservation_state} => Array&lt;Types::ZonalCapacityReservationState&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.modify_capacity_reservation({
+    #     load_balancer_arn: "LoadBalancerArn", # required
+    #     minimum_load_balancer_capacity: {
+    #       capacity_units: 1,
+    #     },
+    #     reset_capacity_reservation: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.last_modified_time #=> Time
+    #   resp.decrease_requests_remaining #=> Integer
+    #   resp.minimum_load_balancer_capacity.capacity_units #=> Integer
+    #   resp.capacity_reservation_state #=> Array
+    #   resp.capacity_reservation_state[0].state.code #=> String, one of "provisioned", "pending", "rebalancing", "failed"
+    #   resp.capacity_reservation_state[0].state.reason #=> String
+    #   resp.capacity_reservation_state[0].availability_zone #=> String
+    #   resp.capacity_reservation_state[0].effective_capacity_units #=> Float
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyCapacityReservation AWS API Documentation
+    #
+    # @overload modify_capacity_reservation(params = {})
+    # @param [Hash] params ({})
+    def modify_capacity_reservation(params = {}, options = {})
+      req = build_request(:modify_capacity_reservation, params)
       req.send_request(options)
     end
 
@@ -5096,7 +5186,7 @@ module Aws::ElasticLoadBalancingV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-elasticloadbalancingv2'
-      context[:gem_version] = '1.122.0'
+      context[:gem_version] = '1.123.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

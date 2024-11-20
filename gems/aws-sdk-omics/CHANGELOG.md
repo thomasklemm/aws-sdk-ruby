@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.40.0 (2024-11-20)
+------------------
+
+* Feature - Enabling call caching feature that allows customers to reuse previously computed results from a set of completed tasks in a new workflow run.
+
 1.39.0 (2024-10-18)
 ------------------
 

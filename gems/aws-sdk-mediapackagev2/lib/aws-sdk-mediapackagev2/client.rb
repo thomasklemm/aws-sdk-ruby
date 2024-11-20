@@ -547,6 +547,16 @@ module Aws::MediaPackageV2
     # @option params [String] :description
     #   Enter any descriptive text that helps you to identify the channel.
     #
+    # @option params [Types::InputSwitchConfiguration] :input_switch_configuration
+    #   The configuration for input switching based on the media quality
+    #   confidence score (MQCS) as provided from AWS Elemental MediaLive. This
+    #   setting is valid only when `InputType` is `CMAF`.
+    #
+    # @option params [Types::OutputHeaderConfiguration] :output_header_configuration
+    #   The settings for what common media server data (CMSD) headers AWS
+    #   Elemental MediaPackage includes in responses to the CDN. This setting
+    #   is valid only when `InputType` is `CMAF`.
+    #
     # @option params [Hash<String,String>] :tags
     #   A comma-separated list of tag key:value pairs that you define. For
     #   example:
@@ -567,6 +577,8 @@ module Aws::MediaPackageV2
     #   * {Types::CreateChannelResponse#input_type #input_type} => String
     #   * {Types::CreateChannelResponse#etag #etag} => String
     #   * {Types::CreateChannelResponse#tags #tags} => Hash&lt;String,String&gt;
+    #   * {Types::CreateChannelResponse#input_switch_configuration #input_switch_configuration} => Types::InputSwitchConfiguration
+    #   * {Types::CreateChannelResponse#output_header_configuration #output_header_configuration} => Types::OutputHeaderConfiguration
     #
     #
     # @example Example: Creating a Channel
@@ -616,6 +628,12 @@ module Aws::MediaPackageV2
     #     client_token: "IdempotencyToken",
     #     input_type: "HLS", # accepts HLS, CMAF
     #     description: "ResourceDescription",
+    #     input_switch_configuration: {
+    #       mqcs_input_switching: false,
+    #     },
+    #     output_header_configuration: {
+    #       publish_mqcs: false,
+    #     },
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
@@ -636,6 +654,8 @@ module Aws::MediaPackageV2
     #   resp.etag #=> String
     #   resp.tags #=> Hash
     #   resp.tags["TagKey"] #=> String
+    #   resp.input_switch_configuration.mqcs_input_switching #=> Boolean
+    #   resp.output_header_configuration.publish_mqcs #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/CreateChannel AWS API Documentation
     #
@@ -1973,6 +1993,8 @@ module Aws::MediaPackageV2
     #   * {Types::GetChannelResponse#input_type #input_type} => String
     #   * {Types::GetChannelResponse#etag #etag} => String
     #   * {Types::GetChannelResponse#tags #tags} => Hash&lt;String,String&gt;
+    #   * {Types::GetChannelResponse#input_switch_configuration #input_switch_configuration} => Types::InputSwitchConfiguration
+    #   * {Types::GetChannelResponse#output_header_configuration #output_header_configuration} => Types::OutputHeaderConfiguration
     #
     #
     # @example Example: Getting a Channel
@@ -2030,6 +2052,8 @@ module Aws::MediaPackageV2
     #   resp.etag #=> String
     #   resp.tags #=> Hash
     #   resp.tags["TagKey"] #=> String
+    #   resp.input_switch_configuration.mqcs_input_switching #=> Boolean
+    #   resp.output_header_configuration.publish_mqcs #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/GetChannel AWS API Documentation
     #
@@ -3297,6 +3321,16 @@ module Aws::MediaPackageV2
     #   Any descriptive information that you want to add to the channel for
     #   future identification purposes.
     #
+    # @option params [Types::InputSwitchConfiguration] :input_switch_configuration
+    #   The configuration for input switching based on the media quality
+    #   confidence score (MQCS) as provided from AWS Elemental MediaLive. This
+    #   setting is valid only when `InputType` is `CMAF`.
+    #
+    # @option params [Types::OutputHeaderConfiguration] :output_header_configuration
+    #   The settings for what common media server data (CMSD) headers AWS
+    #   Elemental MediaPackage includes in responses to the CDN. This setting
+    #   is valid only when `InputType` is `CMAF`.
+    #
     # @return [Types::UpdateChannelResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateChannelResponse#arn #arn} => String
@@ -3309,6 +3343,8 @@ module Aws::MediaPackageV2
     #   * {Types::UpdateChannelResponse#input_type #input_type} => String
     #   * {Types::UpdateChannelResponse#etag #etag} => String
     #   * {Types::UpdateChannelResponse#tags #tags} => Hash&lt;String,String&gt;
+    #   * {Types::UpdateChannelResponse#input_switch_configuration #input_switch_configuration} => Types::InputSwitchConfiguration
+    #   * {Types::UpdateChannelResponse#output_header_configuration #output_header_configuration} => Types::OutputHeaderConfiguration
     #
     #
     # @example Example: Updating a Channel
@@ -3352,6 +3388,12 @@ module Aws::MediaPackageV2
     #     channel_name: "ResourceName", # required
     #     etag: "EntityTag",
     #     description: "ResourceDescription",
+    #     input_switch_configuration: {
+    #       mqcs_input_switching: false,
+    #     },
+    #     output_header_configuration: {
+    #       publish_mqcs: false,
+    #     },
     #   })
     #
     # @example Response structure
@@ -3369,6 +3411,8 @@ module Aws::MediaPackageV2
     #   resp.etag #=> String
     #   resp.tags #=> Hash
     #   resp.tags["TagKey"] #=> String
+    #   resp.input_switch_configuration.mqcs_input_switching #=> Boolean
+    #   resp.output_header_configuration.publish_mqcs #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediapackagev2-2022-12-25/UpdateChannel AWS API Documentation
     #
@@ -3954,7 +3998,7 @@ module Aws::MediaPackageV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediapackagev2'
-      context[:gem_version] = '1.32.0'
+      context[:gem_version] = '1.33.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

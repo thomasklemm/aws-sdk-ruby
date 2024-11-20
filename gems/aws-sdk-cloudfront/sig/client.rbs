@@ -98,6 +98,26 @@ module Aws
                              ) -> _CopyDistributionResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CopyDistributionResponseSuccess
 
+      interface _CreateAnycastIpListResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateAnycastIpListResult]
+        def anycast_ip_list: () -> Types::AnycastIpList
+        def etag: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#create_anycast_ip_list-instance_method
+      def create_anycast_ip_list: (
+                                    name: ::String,
+                                    ip_count: ::Integer,
+                                    ?tags: {
+                                      items: Array[
+                                        {
+                                          key: ::String,
+                                          value: ::String?
+                                        },
+                                      ]?
+                                    }
+                                  ) -> _CreateAnycastIpListResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAnycastIpListResponseSuccess
+
       interface _CreateCachePolicyResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateCachePolicyResult]
         def cache_policy: () -> Types::CachePolicy
@@ -233,6 +253,9 @@ module Aws
                                            origin_read_timeout: ::Integer?,
                                            origin_keepalive_timeout: ::Integer?
                                          }?,
+                                         vpc_origin_config: {
+                                           vpc_origin_id: ::String
+                                         }?,
                                          connection_attempts: ::Integer?,
                                          connection_timeout: ::Integer?,
                                          origin_shield: {
@@ -312,6 +335,9 @@ module Aws
                                      cache_policy_id: ::String?,
                                      origin_request_policy_id: ::String?,
                                      response_headers_policy_id: ::String?,
+                                     grpc_config: {
+                                       enabled: bool
+                                     }?,
                                      forwarded_values: {
                                        query_string: bool,
                                        cookies: {
@@ -385,6 +411,9 @@ module Aws
                                          cache_policy_id: ::String?,
                                          origin_request_policy_id: ::String?,
                                          response_headers_policy_id: ::String?,
+                                         grpc_config: {
+                                           enabled: bool
+                                         }?,
                                          forwarded_values: {
                                            query_string: bool,
                                            cookies: {
@@ -422,10 +451,10 @@ module Aws
                                    }?,
                                    comment: ::String,
                                    logging: {
-                                     enabled: bool,
-                                     include_cookies: bool,
-                                     bucket: ::String,
-                                     prefix: ::String
+                                     enabled: bool?,
+                                     include_cookies: bool?,
+                                     bucket: ::String?,
+                                     prefix: ::String?
                                    }?,
                                    price_class: ("PriceClass_100" | "PriceClass_200" | "PriceClass_All")?,
                                    enabled: bool,
@@ -449,7 +478,8 @@ module Aws
                                    http_version: ("http1.1" | "http2" | "http3" | "http2and3")?,
                                    is_ipv6_enabled: bool?,
                                    continuous_deployment_policy_id: ::String?,
-                                   staging: bool?
+                                   staging: bool?,
+                                   anycast_ip_list_id: ::String?
                                  }
                                ) -> _CreateDistributionResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDistributionResponseSuccess
@@ -499,6 +529,9 @@ module Aws
                                                        }?,
                                                        origin_read_timeout: ::Integer?,
                                                        origin_keepalive_timeout: ::Integer?
+                                                     }?,
+                                                     vpc_origin_config: {
+                                                       vpc_origin_id: ::String
                                                      }?,
                                                      connection_attempts: ::Integer?,
                                                      connection_timeout: ::Integer?,
@@ -579,6 +612,9 @@ module Aws
                                                  cache_policy_id: ::String?,
                                                  origin_request_policy_id: ::String?,
                                                  response_headers_policy_id: ::String?,
+                                                 grpc_config: {
+                                                   enabled: bool
+                                                 }?,
                                                  forwarded_values: {
                                                    query_string: bool,
                                                    cookies: {
@@ -652,6 +688,9 @@ module Aws
                                                      cache_policy_id: ::String?,
                                                      origin_request_policy_id: ::String?,
                                                      response_headers_policy_id: ::String?,
+                                                     grpc_config: {
+                                                       enabled: bool
+                                                     }?,
                                                      forwarded_values: {
                                                        query_string: bool,
                                                        cookies: {
@@ -689,10 +728,10 @@ module Aws
                                                }?,
                                                comment: ::String,
                                                logging: {
-                                                 enabled: bool,
-                                                 include_cookies: bool,
-                                                 bucket: ::String,
-                                                 prefix: ::String
+                                                 enabled: bool?,
+                                                 include_cookies: bool?,
+                                                 bucket: ::String?,
+                                                 prefix: ::String?
                                                }?,
                                                price_class: ("PriceClass_100" | "PriceClass_200" | "PriceClass_All")?,
                                                enabled: bool,
@@ -716,7 +755,8 @@ module Aws
                                                http_version: ("http1.1" | "http2" | "http3" | "http2and3")?,
                                                is_ipv6_enabled: bool?,
                                                continuous_deployment_policy_id: ::String?,
-                                               staging: bool?
+                                               staging: bool?,
+                                               anycast_ip_list_id: ::String?
                                              },
                                              tags: {
                                                items: Array[
@@ -1149,6 +1189,43 @@ module Aws
                                                    ) -> _CreateStreamingDistributionWithTagsResponseSuccess
                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateStreamingDistributionWithTagsResponseSuccess
 
+      interface _CreateVpcOriginResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateVpcOriginResult]
+        def vpc_origin: () -> Types::VpcOrigin
+        def location: () -> ::String
+        def etag: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#create_vpc_origin-instance_method
+      def create_vpc_origin: (
+                               vpc_origin_endpoint_config: {
+                                 name: ::String,
+                                 arn: ::String,
+                                 http_port: ::Integer,
+                                 https_port: ::Integer,
+                                 origin_protocol_policy: ("http-only" | "match-viewer" | "https-only"),
+                                 origin_ssl_protocols: {
+                                   quantity: ::Integer,
+                                   items: Array[("SSLv3" | "TLSv1" | "TLSv1.1" | "TLSv1.2")]
+                                 }?
+                               },
+                               ?tags: {
+                                 items: Array[
+                                   {
+                                     key: ::String,
+                                     value: ::String?
+                                   },
+                                 ]?
+                               }
+                             ) -> _CreateVpcOriginResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateVpcOriginResponseSuccess
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#delete_anycast_ip_list-instance_method
+      def delete_anycast_ip_list: (
+                                    id: ::String,
+                                    if_match: ::String
+                                  ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#delete_cache_policy-instance_method
       def delete_cache_policy: (
                                  id: ::String,
@@ -1263,6 +1340,18 @@ module Aws
                                          ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      interface _DeleteVpcOriginResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteVpcOriginResult]
+        def vpc_origin: () -> Types::VpcOrigin
+        def etag: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#delete_vpc_origin-instance_method
+      def delete_vpc_origin: (
+                               id: ::String,
+                               if_match: ::String
+                             ) -> _DeleteVpcOriginResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteVpcOriginResponseSuccess
+
       interface _DescribeFunctionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeFunctionResult]
         def function_summary: () -> Types::FunctionSummary
@@ -1285,6 +1374,17 @@ module Aws
                                       name: ::String
                                     ) -> _DescribeKeyValueStoreResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeKeyValueStoreResponseSuccess
+
+      interface _GetAnycastIpListResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetAnycastIpListResult]
+        def anycast_ip_list: () -> Types::AnycastIpList
+        def etag: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#get_anycast_ip_list-instance_method
+      def get_anycast_ip_list: (
+                                 id: ::String
+                               ) -> _GetAnycastIpListResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAnycastIpListResponseSuccess
 
       interface _GetCachePolicyResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetCachePolicyResult]
@@ -1595,6 +1695,28 @@ module Aws
                                              ) -> _GetStreamingDistributionConfigResponseSuccess
                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetStreamingDistributionConfigResponseSuccess
 
+      interface _GetVpcOriginResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetVpcOriginResult]
+        def vpc_origin: () -> Types::VpcOrigin
+        def etag: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#get_vpc_origin-instance_method
+      def get_vpc_origin: (
+                            id: ::String
+                          ) -> _GetVpcOriginResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetVpcOriginResponseSuccess
+
+      interface _ListAnycastIpListsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAnycastIpListsResult]
+        def anycast_ip_lists: () -> Types::AnycastIpListCollection
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#list_anycast_ip_lists-instance_method
+      def list_anycast_ip_lists: (
+                                   ?marker: ::String,
+                                   ?max_items: ::Integer
+                                 ) -> _ListAnycastIpListsResponseSuccess
+                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAnycastIpListsResponseSuccess
+
       interface _ListCachePoliciesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListCachePoliciesResult]
         def cache_policy_list: () -> Types::CachePolicyList
@@ -1652,6 +1774,18 @@ module Aws
                                 ?max_items: ::Integer
                               ) -> _ListDistributionsResponseSuccess
                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDistributionsResponseSuccess
+
+      interface _ListDistributionsByAnycastIpListIdResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDistributionsByAnycastIpListIdResult]
+        def distribution_list: () -> Types::DistributionList
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#list_distributions_by_anycast_ip_list_id-instance_method
+      def list_distributions_by_anycast_ip_list_id: (
+                                                      ?marker: ::String,
+                                                      ?max_items: ::Integer,
+                                                      anycast_ip_list_id: ::String
+                                                    ) -> _ListDistributionsByAnycastIpListIdResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDistributionsByAnycastIpListIdResponseSuccess
 
       interface _ListDistributionsByCachePolicyIdResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDistributionsByCachePolicyIdResult]
@@ -1713,6 +1847,18 @@ module Aws
                                                               response_headers_policy_id: ::String
                                                             ) -> _ListDistributionsByResponseHeadersPolicyIdResponseSuccess
                                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDistributionsByResponseHeadersPolicyIdResponseSuccess
+
+      interface _ListDistributionsByVpcOriginIdResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDistributionsByVpcOriginIdResult]
+        def distribution_id_list: () -> Types::DistributionIdList
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#list_distributions_by_vpc_origin_id-instance_method
+      def list_distributions_by_vpc_origin_id: (
+                                                 ?marker: ::String,
+                                                 ?max_items: ::Integer,
+                                                 vpc_origin_id: ::String
+                                               ) -> _ListDistributionsByVpcOriginIdResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDistributionsByVpcOriginIdResponseSuccess
 
       interface _ListDistributionsByWebACLIdResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDistributionsByWebACLIdResult]
@@ -1872,6 +2018,17 @@ module Aws
                                     resource: ::String
                                   ) -> _ListTagsForResourceResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _ListVpcOriginsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListVpcOriginsResult]
+        def vpc_origin_list: () -> Types::VpcOriginList
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#list_vpc_origins-instance_method
+      def list_vpc_origins: (
+                              ?marker: ::String,
+                              ?max_items: ::Integer
+                            ) -> _ListVpcOriginsResponseSuccess
+                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListVpcOriginsResponseSuccess
 
       interface _PublishFunctionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PublishFunctionResult]
@@ -2057,6 +2214,9 @@ module Aws
                                            origin_read_timeout: ::Integer?,
                                            origin_keepalive_timeout: ::Integer?
                                          }?,
+                                         vpc_origin_config: {
+                                           vpc_origin_id: ::String
+                                         }?,
                                          connection_attempts: ::Integer?,
                                          connection_timeout: ::Integer?,
                                          origin_shield: {
@@ -2136,6 +2296,9 @@ module Aws
                                      cache_policy_id: ::String?,
                                      origin_request_policy_id: ::String?,
                                      response_headers_policy_id: ::String?,
+                                     grpc_config: {
+                                       enabled: bool
+                                     }?,
                                      forwarded_values: {
                                        query_string: bool,
                                        cookies: {
@@ -2209,6 +2372,9 @@ module Aws
                                          cache_policy_id: ::String?,
                                          origin_request_policy_id: ::String?,
                                          response_headers_policy_id: ::String?,
+                                         grpc_config: {
+                                           enabled: bool
+                                         }?,
                                          forwarded_values: {
                                            query_string: bool,
                                            cookies: {
@@ -2246,10 +2412,10 @@ module Aws
                                    }?,
                                    comment: ::String,
                                    logging: {
-                                     enabled: bool,
-                                     include_cookies: bool,
-                                     bucket: ::String,
-                                     prefix: ::String
+                                     enabled: bool?,
+                                     include_cookies: bool?,
+                                     bucket: ::String?,
+                                     prefix: ::String?
                                    }?,
                                    price_class: ("PriceClass_100" | "PriceClass_200" | "PriceClass_All")?,
                                    enabled: bool,
@@ -2273,7 +2439,8 @@ module Aws
                                    http_version: ("http1.1" | "http2" | "http3" | "http2and3")?,
                                    is_ipv6_enabled: bool?,
                                    continuous_deployment_policy_id: ::String?,
-                                   staging: bool?
+                                   staging: bool?,
+                                   anycast_ip_list_id: ::String?
                                  },
                                  id: ::String,
                                  ?if_match: ::String
@@ -2638,6 +2805,29 @@ module Aws
                                            ?if_match: ::String
                                          ) -> _UpdateStreamingDistributionResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateStreamingDistributionResponseSuccess
+
+      interface _UpdateVpcOriginResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateVpcOriginResult]
+        def vpc_origin: () -> Types::VpcOrigin
+        def etag: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#update_vpc_origin-instance_method
+      def update_vpc_origin: (
+                               vpc_origin_endpoint_config: {
+                                 name: ::String,
+                                 arn: ::String,
+                                 http_port: ::Integer,
+                                 https_port: ::Integer,
+                                 origin_protocol_policy: ("http-only" | "match-viewer" | "https-only"),
+                                 origin_ssl_protocols: {
+                                   quantity: ::Integer,
+                                   items: Array[("SSLv3" | "TLSv1" | "TLSv1.1" | "TLSv1.2")]
+                                 }?
+                               },
+                               id: ::String,
+                               if_match: ::String
+                             ) -> _UpdateVpcOriginResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateVpcOriginResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudFront/Client.html#wait_until-instance_method
       def wait_until: (:distribution_deployed waiter_name, 

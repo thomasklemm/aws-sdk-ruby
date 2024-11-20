@@ -967,6 +967,110 @@ module Aws::Omics
       req.send_request(options)
     end
 
+    # You can create a run cache to save the task outputs from completed
+    # tasks in a run for a private workflow. Subsequent runs use the task
+    # outputs from the cache, rather than computing the task outputs again.
+    # You specify an Amazon S3 location where HealthOmics saves the cached
+    # data. This data must be immediately accessible (not in an archived
+    # state).
+    #
+    # For more information, see [Creating a run cache][1] in the AWS
+    # HealthOmics User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/omics/latest/dev/workflow-cache-create.html
+    #
+    # @option params [String] :cache_behavior
+    #   Default cache behavior for runs that use this cache. Supported values
+    #   are:
+    #
+    #   `CACHE_ON_FAILURE`: Caches task outputs from completed tasks for runs
+    #   that fail. This setting is useful if you're debugging a workflow that
+    #   fails after several tasks completed successfully. The subsequent run
+    #   uses the cache outputs for previously-completed tasks if the task
+    #   definition, inputs, and container in ECR are identical to the prior
+    #   run.
+    #
+    #   `CACHE_ALWAYS`: Caches task outputs from completed tasks for all runs.
+    #   This setting is useful in development mode, but do not use it in a
+    #   production setting.
+    #
+    #   If you don't specify a value, the default behavior is
+    #   CACHE\_ON\_FAILURE. When you start a run that uses this cache, you can
+    #   override the default cache behavior.
+    #
+    #   For more information, see [Run cache behavior][1] in the AWS
+    #   HealthOmics User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior
+    #
+    # @option params [required, String] :cache_s3_location
+    #   Specify the S3 location for storing the cached task outputs. This data
+    #   must be immediately accessible (not in an archived state).
+    #
+    # @option params [String] :description
+    #   Enter a description of the run cache.
+    #
+    # @option params [String] :name
+    #   Enter a user-friendly name for the run cache.
+    #
+    # @option params [required, String] :request_id
+    #   A unique request token, to ensure idempotency. If you don't specify a
+    #   token, HealthOmics automatically generates a universally unique
+    #   identifier (UUID) for the request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [Hash<String,String>] :tags
+    #   Specify one or more tags to associate with this run cache.
+    #
+    # @option params [String] :cache_bucket_owner_id
+    #   The AWS account ID of the expected owner of the S3 bucket for the run
+    #   cache. If not provided, your account ID is set as the owner of the
+    #   bucket.
+    #
+    # @return [Types::CreateRunCacheResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateRunCacheResponse#arn #arn} => String
+    #   * {Types::CreateRunCacheResponse#id #id} => String
+    #   * {Types::CreateRunCacheResponse#status #status} => String
+    #   * {Types::CreateRunCacheResponse#tags #tags} => Hash&lt;String,String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_run_cache({
+    #     cache_behavior: "CACHE_ON_FAILURE", # accepts CACHE_ON_FAILURE, CACHE_ALWAYS
+    #     cache_s3_location: "S3UriForBucketOrObject", # required
+    #     description: "UserCustomDescription",
+    #     name: "UserCustomName",
+    #     request_id: "RunCacheRequestId", # required
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #     cache_bucket_owner_id: "AwsAccountId",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #   resp.status #=> String, one of "ACTIVE", "DELETED", "FAILED"
+    #   resp.tags #=> Hash
+    #   resp.tags["TagKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateRunCache AWS API Documentation
+    #
+    # @overload create_run_cache(params = {})
+    # @param [Hash] params ({})
+    def create_run_cache(params = {}, options = {})
+      req = build_request(:create_run_cache, params)
+      req.send_request(options)
+    end
+
     # You can optionally create a run group to limit the compute resources
     # for the runs that you add to the group.
     #
@@ -1443,6 +1547,39 @@ module Aws::Omics
     # @param [Hash] params ({})
     def delete_run(params = {}, options = {})
       req = build_request(:delete_run, params)
+      req.send_request(options)
+    end
+
+    # Delete a run cache. This action removes the cache metadata stored in
+    # the service account, but doesn't delete the data in Amazon S3. You
+    # can access the cache data in Amazon S3, for inspection or to
+    # troubleshoot issues. You can remove old cache data using standard S3
+    # `Delete` operations.
+    #
+    # For more information, see [Deleting a run cache][1] in the AWS
+    # HealthOmics User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/omics/latest/dev/workflow-cache-delete.html
+    #
+    # @option params [required, String] :id
+    #   Run cache identifier for the cache you want to delete.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_run_cache({
+    #     id: "RunCacheId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteRunCache AWS API Documentation
+    #
+    # @overload delete_run_cache(params = {})
+    # @param [Hash] params ({})
+    def delete_run_cache(params = {}, options = {})
+      req = build_request(:delete_run_cache, params)
       req.send_request(options)
     end
 
@@ -2282,6 +2419,16 @@ module Aws::Omics
     # If a workflow is shared with you, you cannot export information about
     # the run.
     #
+    # HealthOmics stores a fixed number of runs that are available to the
+    # console and API. If GetRun doesn't return the requested run, you can
+    # find run logs for all runs in the CloudWatch logs. For more
+    # information about viewing the run logs, see [CloudWatch logs][1] in
+    # the *AWS HealthOmics User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/omics/latest/dev/cloudwatch-logs.html
+    #
     # @option params [required, String] :id
     #   The run's ID.
     #
@@ -2292,6 +2439,9 @@ module Aws::Omics
     #
     #   * {Types::GetRunResponse#arn #arn} => String
     #   * {Types::GetRunResponse#id #id} => String
+    #   * {Types::GetRunResponse#cache_id #cache_id} => String
+    #   * {Types::GetRunResponse#cache_behavior #cache_behavior} => String
+    #   * {Types::GetRunResponse#engine_version #engine_version} => String
     #   * {Types::GetRunResponse#status #status} => String
     #   * {Types::GetRunResponse#workflow_id #workflow_id} => String
     #   * {Types::GetRunResponse#workflow_type #workflow_type} => String
@@ -2333,6 +2483,9 @@ module Aws::Omics
     #
     #   resp.arn #=> String
     #   resp.id #=> String
+    #   resp.cache_id #=> String
+    #   resp.cache_behavior #=> String, one of "CACHE_ON_FAILURE", "CACHE_ALWAYS"
+    #   resp.engine_version #=> String
     #   resp.status #=> String, one of "PENDING", "STARTING", "RUNNING", "STOPPING", "COMPLETED", "DELETED", "CANCELLED", "FAILED"
     #   resp.workflow_id #=> String
     #   resp.workflow_type #=> String, one of "PRIVATE", "READY2RUN"
@@ -2377,6 +2530,60 @@ module Aws::Omics
     # @param [Hash] params ({})
     def get_run(params = {}, options = {})
       req = build_request(:get_run, params)
+      req.send_request(options)
+    end
+
+    # Retrieve the details for the specified run cache.
+    #
+    # For more information, see [Call caching for HealthOmics runs][1] in
+    # the AWS HealthOmics User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/omics/latest/dev/workflow-call-caching.html
+    #
+    # @option params [required, String] :id
+    #   The identifier of the run cache to retrieve.
+    #
+    # @return [Types::GetRunCacheResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetRunCacheResponse#arn #arn} => String
+    #   * {Types::GetRunCacheResponse#cache_behavior #cache_behavior} => String
+    #   * {Types::GetRunCacheResponse#cache_bucket_owner_id #cache_bucket_owner_id} => String
+    #   * {Types::GetRunCacheResponse#cache_s3_uri #cache_s3_uri} => String
+    #   * {Types::GetRunCacheResponse#creation_time #creation_time} => Time
+    #   * {Types::GetRunCacheResponse#description #description} => String
+    #   * {Types::GetRunCacheResponse#id #id} => String
+    #   * {Types::GetRunCacheResponse#name #name} => String
+    #   * {Types::GetRunCacheResponse#status #status} => String
+    #   * {Types::GetRunCacheResponse#tags #tags} => Hash&lt;String,String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_run_cache({
+    #     id: "RunCacheId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.cache_behavior #=> String, one of "CACHE_ON_FAILURE", "CACHE_ALWAYS"
+    #   resp.cache_bucket_owner_id #=> String
+    #   resp.cache_s3_uri #=> String
+    #   resp.creation_time #=> Time
+    #   resp.description #=> String
+    #   resp.id #=> String
+    #   resp.name #=> String
+    #   resp.status #=> String, one of "ACTIVE", "DELETED", "FAILED"
+    #   resp.tags #=> Hash
+    #   resp.tags["TagKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetRunCache AWS API Documentation
+    #
+    # @overload get_run_cache(params = {})
+    # @param [Hash] params ({})
+    def get_run_cache(params = {}, options = {})
+      req = build_request(:get_run_cache, params)
       req.send_request(options)
     end
 
@@ -2439,6 +2646,8 @@ module Aws::Omics
     #   * {Types::GetRunTaskResponse#status #status} => String
     #   * {Types::GetRunTaskResponse#name #name} => String
     #   * {Types::GetRunTaskResponse#cpus #cpus} => Integer
+    #   * {Types::GetRunTaskResponse#cache_hit #cache_hit} => Boolean
+    #   * {Types::GetRunTaskResponse#cache_s3_uri #cache_s3_uri} => String
     #   * {Types::GetRunTaskResponse#memory #memory} => Integer
     #   * {Types::GetRunTaskResponse#creation_time #creation_time} => Time
     #   * {Types::GetRunTaskResponse#start_time #start_time} => Time
@@ -2462,6 +2671,8 @@ module Aws::Omics
     #   resp.status #=> String, one of "PENDING", "STARTING", "RUNNING", "STOPPING", "COMPLETED", "CANCELLED", "FAILED"
     #   resp.name #=> String
     #   resp.cpus #=> Integer
+    #   resp.cache_hit #=> Boolean
+    #   resp.cache_s3_uri #=> String
     #   resp.memory #=> Integer
     #   resp.creation_time #=> Time
     #   resp.start_time #=> Time
@@ -3473,6 +3684,50 @@ module Aws::Omics
       req.send_request(options)
     end
 
+    # Retrieves a list of your run caches.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return.
+    #
+    # @option params [String] :starting_token
+    #   Optional pagination token returned from a prior call to the
+    #   `ListRunCaches` API operation.
+    #
+    # @return [Types::ListRunCachesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListRunCachesResponse#items #items} => Array&lt;Types::RunCacheListItem&gt;
+    #   * {Types::ListRunCachesResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_run_caches({
+    #     max_results: 1,
+    #     starting_token: "ListToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].arn #=> String
+    #   resp.items[0].cache_behavior #=> String, one of "CACHE_ON_FAILURE", "CACHE_ALWAYS"
+    #   resp.items[0].cache_s3_uri #=> String
+    #   resp.items[0].creation_time #=> Time
+    #   resp.items[0].id #=> String
+    #   resp.items[0].name #=> String
+    #   resp.items[0].status #=> String, one of "ACTIVE", "DELETED", "FAILED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListRunCaches AWS API Documentation
+    #
+    # @overload list_run_caches(params = {})
+    # @param [Hash] params ({})
+    def list_run_caches(params = {}, options = {})
+      req = build_request(:list_run_caches, params)
+      req.send_request(options)
+    end
+
     # Retrieves a list of run groups.
     #
     # @option params [String] :name
@@ -3560,6 +3815,8 @@ module Aws::Omics
     #   resp.items[0].status #=> String, one of "PENDING", "STARTING", "RUNNING", "STOPPING", "COMPLETED", "CANCELLED", "FAILED"
     #   resp.items[0].name #=> String
     #   resp.items[0].cpus #=> Integer
+    #   resp.items[0].cache_hit #=> Boolean
+    #   resp.items[0].cache_s3_uri #=> String
     #   resp.items[0].memory #=> Integer
     #   resp.items[0].creation_time #=> Time
     #   resp.items[0].start_time #=> Time
@@ -3578,6 +3835,16 @@ module Aws::Omics
     end
 
     # Retrieves a list of runs.
+    #
+    # HealthOmics stores a fixed number of runs that are available to the
+    # console and API. If the ListRuns response doesn't include specific
+    # runs that you expected, you can find run logs for all runs in the
+    # CloudWatch logs. For more information about viewing the run logs, see
+    # [CloudWatch logs][1] in the *AWS HealthOmics User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/omics/latest/dev/cloudwatch-logs.html
     #
     # @option params [String] :name
     #   Filter the list by run name.
@@ -4264,10 +4531,11 @@ module Aws::Omics
     # StartRun will not support re-run for a workflow that is shared with
     # you.
     #
-    # The total number of runs in your account is subject to a quota per
-    # Region. To avoid needing to delete runs manually, you can set the
-    # retention mode to `REMOVE`. Runs with this setting are deleted
-    # automatically when the run quoata is exceeded.
+    # HealthOmics stores a fixed number of runs that are available to the
+    # console and API. By default, HealthOmics doesn't any remove any runs.
+    # If HealthOmics reaches the maximum number of runs, you must manually
+    # remove runs. To have older runs removed automatically, set the
+    # retention mode to `REMOVE`.
     #
     # By default, the run uses STATIC storage. For STATIC storage, set the
     # `storageCapacity` field. You can set the storage type to DYNAMIC. You
@@ -4294,6 +4562,20 @@ module Aws::Omics
     #
     # @option params [String] :name
     #   A name for the run.
+    #
+    # @option params [String] :cache_id
+    #   Identifier of the cache associated with this run. If you don't
+    #   specify a cache ID, no task outputs are cached for this run.
+    #
+    # @option params [String] :cache_behavior
+    #   The cache behavior for the run. You specify this value if you want to
+    #   override the default behavior for the cache. You had set the default
+    #   value when you created the cache. For more information, see [Run cache
+    #   behavior][1] in the AWS HealthOmics User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior
     #
     # @option params [String] :run_group_id
     #   The run's group ID.
@@ -4331,7 +4613,22 @@ module Aws::Omics
     #   not need to pass this option.**
     #
     # @option params [String] :retention_mode
-    #   The retention mode for the run.
+    #   The retention mode for the run. The default value is RETAIN.
+    #
+    #   HealthOmics stores a fixed number of runs that are available to the
+    #   console and API. In the default mode (RETAIN), you need to remove runs
+    #   manually when the number of run exceeds the maximum. If you set the
+    #   retention mode to `REMOVE`, HealthOmics automatically removes runs
+    #   (that have mode set to REMOVE) when the number of run exceeds the
+    #   maximum. All run logs are available in CloudWatch logs, if you need
+    #   information about a run that is no longer available to the API.
+    #
+    #   For more information about retention mode, see [Specifying run
+    #   retention mode][1] in the *AWS HealthOmics User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/starting-a-run.html
     #
     # @option params [String] :storage_type
     #   The run's storage type. By default, the run uses STATIC storage type,
@@ -4359,6 +4656,8 @@ module Aws::Omics
     #     run_id: "RunId",
     #     role_arn: "RunRoleArn", # required
     #     name: "RunName",
+    #     cache_id: "NumericIdInArn",
+    #     cache_behavior: "CACHE_ON_FAILURE", # accepts CACHE_ON_FAILURE, CACHE_ALWAYS
     #     run_group_id: "RunGroupId",
     #     priority: 1,
     #     parameters: {
@@ -4601,6 +4900,40 @@ module Aws::Omics
       req.send_request(options)
     end
 
+    # Update a run cache.
+    #
+    # @option params [String] :cache_behavior
+    #   Update the default run cache behavior.
+    #
+    # @option params [String] :description
+    #   Update the run cache description.
+    #
+    # @option params [required, String] :id
+    #   The identifier of the run cache you want to update.
+    #
+    # @option params [String] :name
+    #   Update the name of the run cache.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_run_cache({
+    #     cache_behavior: "CACHE_ON_FAILURE", # accepts CACHE_ON_FAILURE, CACHE_ALWAYS
+    #     description: "UserCustomDescription",
+    #     id: "RunCacheId", # required
+    #     name: "UserCustomName",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateRunCache AWS API Documentation
+    #
+    # @overload update_run_cache(params = {})
+    # @param [Hash] params ({})
+    def update_run_cache(params = {}, options = {})
+      req = build_request(:update_run_cache, params)
+      req.send_request(options)
+    end
+
     # Updates a run group.
     #
     # @option params [required, String] :id
@@ -4781,7 +5114,7 @@ module Aws::Omics
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-omics'
-      context[:gem_version] = '1.39.0'
+      context[:gem_version] = '1.40.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

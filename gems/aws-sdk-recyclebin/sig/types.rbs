@@ -21,6 +21,7 @@ module Aws::RecycleBin
       attr_accessor resource_type: ("EBS_SNAPSHOT" | "EC2_IMAGE")
       attr_accessor resource_tags: ::Array[Types::ResourceTag]
       attr_accessor lock_configuration: Types::LockConfiguration
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 
@@ -35,6 +36,7 @@ module Aws::RecycleBin
       attr_accessor lock_configuration: Types::LockConfiguration
       attr_accessor lock_state: ("locked" | "pending_unlock" | "unlocked")
       attr_accessor rule_arn: ::String
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 
@@ -62,6 +64,7 @@ module Aws::RecycleBin
       attr_accessor lock_state: ("locked" | "pending_unlock" | "unlocked")
       attr_accessor lock_end_time: ::Time
       attr_accessor rule_arn: ::String
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 
@@ -76,6 +79,7 @@ module Aws::RecycleBin
       attr_accessor resource_type: ("EBS_SNAPSHOT" | "EC2_IMAGE")
       attr_accessor resource_tags: ::Array[Types::ResourceTag]
       attr_accessor lock_state: ("locked" | "pending_unlock" | "unlocked")
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 
@@ -116,6 +120,7 @@ module Aws::RecycleBin
       attr_accessor lock_configuration: Types::LockConfiguration
       attr_accessor lock_state: ("locked" | "pending_unlock" | "unlocked")
       attr_accessor rule_arn: ::String
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 
@@ -189,6 +194,7 @@ module Aws::RecycleBin
       attr_accessor lock_state: ("locked" | "pending_unlock" | "unlocked")
       attr_accessor lock_end_time: ::Time
       attr_accessor rule_arn: ::String
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 
@@ -207,6 +213,7 @@ module Aws::RecycleBin
       attr_accessor description: ::String
       attr_accessor resource_type: ("EBS_SNAPSHOT" | "EC2_IMAGE")
       attr_accessor resource_tags: ::Array[Types::ResourceTag]
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 
@@ -220,6 +227,7 @@ module Aws::RecycleBin
       attr_accessor lock_state: ("locked" | "pending_unlock" | "unlocked")
       attr_accessor lock_end_time: ::Time
       attr_accessor rule_arn: ::String
+      attr_accessor exclude_resource_tags: ::Array[Types::ResourceTag]
       SENSITIVE: []
     end
 

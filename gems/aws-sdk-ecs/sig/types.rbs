@@ -313,6 +313,7 @@ module Aws::ECS
       attr_accessor cluster: ::String
       attr_accessor service_name: ::String
       attr_accessor task_definition: ::String
+      attr_accessor availability_zone_rebalancing: ("ENABLED" | "DISABLED")
       attr_accessor load_balancers: ::Array[Types::LoadBalancer]
       attr_accessor service_registries: ::Array[Types::ServiceRegistry]
       attr_accessor desired_count: ::Integer
@@ -1347,6 +1348,7 @@ module Aws::ECS
       attr_accessor enable_ecs_managed_tags: bool
       attr_accessor propagate_tags: ("TASK_DEFINITION" | "SERVICE" | "NONE")
       attr_accessor enable_execute_command: bool
+      attr_accessor availability_zone_rebalancing: ("ENABLED" | "DISABLED")
       SENSITIVE: []
     end
 
@@ -1897,6 +1899,7 @@ module Aws::ECS
       attr_accessor task_definition: ::String
       attr_accessor capacity_provider_strategy: ::Array[Types::CapacityProviderStrategyItem]
       attr_accessor deployment_configuration: Types::DeploymentConfiguration
+      attr_accessor availability_zone_rebalancing: ("ENABLED" | "DISABLED")
       attr_accessor network_configuration: Types::NetworkConfiguration
       attr_accessor placement_constraints: ::Array[Types::PlacementConstraint]
       attr_accessor placement_strategy: ::Array[Types::PlacementStrategy]

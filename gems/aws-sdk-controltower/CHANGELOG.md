@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.36.0 (2024-11-20)
+------------------
+
+* Feature - Adds support for child enabled baselines which allow you to see the enabled baseline status for individual accounts.
+
 1.35.0 (2024-11-12)
 ------------------
 

@@ -558,6 +558,13 @@ module Aws::ControlTower
     #   Shows the parameters that are applied when enabling this `Baseline`.
     #   @return [Array<Types::EnabledBaselineParameterSummary>]
     #
+    # @!attribute [rw] parent_identifier
+    #   An ARN that represents the parent `EnabledBaseline` at the
+    #   Organizational Unit (OU) level, from which the child
+    #   `EnabledBaseline` inherits its configuration. The value is returned
+    #   by `GetEnabledBaseline`.
+    #   @return [String]
+    #
     # @!attribute [rw] status_summary
     #   The deployment summary of an `EnabledControl` or `EnabledBaseline`
     #   resource.
@@ -574,6 +581,7 @@ module Aws::ControlTower
       :baseline_identifier,
       :baseline_version,
       :parameters,
+      :parent_identifier,
       :status_summary,
       :target_identifier)
       SENSITIVE = []
@@ -589,6 +597,11 @@ module Aws::ControlTower
     #   filter operation.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] parent_identifiers
+    #   An optional filter that sets up a list of `parentIdentifiers` to
+    #   filter the results of the `ListEnabledBaseline` output.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] target_identifiers
     #   Identifiers for the targets of the `Baseline` filter operation.
     #   @return [Array<String>]
@@ -597,6 +610,7 @@ module Aws::ControlTower
     #
     class EnabledBaselineFilter < Struct.new(
       :baseline_identifiers,
+      :parent_identifiers,
       :target_identifiers)
       SENSITIVE = []
       include Aws::Structure
@@ -657,6 +671,11 @@ module Aws::ControlTower
     #   The enabled version of the baseline.
     #   @return [String]
     #
+    # @!attribute [rw] parent_identifier
+    #   An ARN that represents an object returned by `ListEnabledBaseline`,
+    #   to describe an enabled baseline.
+    #   @return [String]
+    #
     # @!attribute [rw] status_summary
     #   The deployment summary of an `EnabledControl` or `EnabledBaseline`
     #   resource.
@@ -672,6 +691,7 @@ module Aws::ControlTower
       :arn,
       :baseline_identifier,
       :baseline_version,
+      :parent_identifier,
       :status_summary,
       :target_identifier)
       SENSITIVE = []
@@ -1321,6 +1341,11 @@ module Aws::ControlTower
     #   filter can be applied for either, or both.
     #   @return [Types::EnabledBaselineFilter]
     #
+    # @!attribute [rw] include_children
+    #   A value that can be set to include the child enabled baselines in
+    #   responses. The default value is false.
+    #   @return [Boolean]
+    #
     # @!attribute [rw] max_results
     #   The maximum number of results to be shown.
     #   @return [Integer]
@@ -1333,6 +1358,7 @@ module Aws::ControlTower
     #
     class ListEnabledBaselinesInput < Struct.new(
       :filter,
+      :include_children,
       :max_results,
       :next_token)
       SENSITIVE = []

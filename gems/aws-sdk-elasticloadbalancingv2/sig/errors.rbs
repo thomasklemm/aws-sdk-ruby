@@ -19,6 +19,12 @@ module Aws
       end
       class CaCertificatesBundleNotFoundException < ::Aws::Errors::ServiceError
       end
+      class CapacityDecreaseRequestsLimitExceededException < ::Aws::Errors::ServiceError
+      end
+      class CapacityReservationPendingException < ::Aws::Errors::ServiceError
+      end
+      class CapacityUnitsLimitExceededException < ::Aws::Errors::ServiceError
+      end
       class CertificateNotFoundException < ::Aws::Errors::ServiceError
       end
       class DeleteAssociationSameAccountException < ::Aws::Errors::ServiceError
@@ -36,6 +42,8 @@ module Aws
       class HealthUnavailableException < ::Aws::Errors::ServiceError
       end
       class IncompatibleProtocolsException < ::Aws::Errors::ServiceError
+      end
+      class InsufficientCapacityException < ::Aws::Errors::ServiceError
       end
       class InvalidCaCertificatesBundleException < ::Aws::Errors::ServiceError
       end
@@ -58,6 +66,8 @@ module Aws
       class LoadBalancerNotFoundException < ::Aws::Errors::ServiceError
       end
       class OperationNotPermittedException < ::Aws::Errors::ServiceError
+      end
+      class PriorRequestNotCompleteException < ::Aws::Errors::ServiceError
       end
       class PriorityInUseException < ::Aws::Errors::ServiceError
       end

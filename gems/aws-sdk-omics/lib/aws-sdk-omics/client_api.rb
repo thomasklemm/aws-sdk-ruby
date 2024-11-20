@@ -42,10 +42,12 @@ module Aws::Omics
     AnnotationType = Shapes::StringShape.new(name: 'AnnotationType')
     Arn = Shapes::StringShape.new(name: 'Arn')
     ArnList = Shapes::ListShape.new(name: 'ArnList')
+    AwsAccountId = Shapes::StringShape.new(name: 'AwsAccountId')
     BatchDeleteReadSetRequest = Shapes::StructureShape.new(name: 'BatchDeleteReadSetRequest')
     BatchDeleteReadSetResponse = Shapes::StructureShape.new(name: 'BatchDeleteReadSetResponse')
     Blob = Shapes::BlobShape.new(name: 'Blob')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
+    CacheBehavior = Shapes::StringShape.new(name: 'CacheBehavior')
     CancelAnnotationImportRequest = Shapes::StructureShape.new(name: 'CancelAnnotationImportRequest')
     CancelAnnotationImportResponse = Shapes::StructureShape.new(name: 'CancelAnnotationImportResponse')
     CancelRunRequest = Shapes::StructureShape.new(name: 'CancelRunRequest')
@@ -69,6 +71,8 @@ module Aws::Omics
     CreateMultipartReadSetUploadResponse = Shapes::StructureShape.new(name: 'CreateMultipartReadSetUploadResponse')
     CreateReferenceStoreRequest = Shapes::StructureShape.new(name: 'CreateReferenceStoreRequest')
     CreateReferenceStoreResponse = Shapes::StructureShape.new(name: 'CreateReferenceStoreResponse')
+    CreateRunCacheRequest = Shapes::StructureShape.new(name: 'CreateRunCacheRequest')
+    CreateRunCacheResponse = Shapes::StructureShape.new(name: 'CreateRunCacheResponse')
     CreateRunGroupRequest = Shapes::StructureShape.new(name: 'CreateRunGroupRequest')
     CreateRunGroupRequestMaxCpusInteger = Shapes::IntegerShape.new(name: 'CreateRunGroupRequestMaxCpusInteger')
     CreateRunGroupRequestMaxDurationInteger = Shapes::IntegerShape.new(name: 'CreateRunGroupRequestMaxDurationInteger')
@@ -95,6 +99,7 @@ module Aws::Omics
     DeleteReferenceResponse = Shapes::StructureShape.new(name: 'DeleteReferenceResponse')
     DeleteReferenceStoreRequest = Shapes::StructureShape.new(name: 'DeleteReferenceStoreRequest')
     DeleteReferenceStoreResponse = Shapes::StructureShape.new(name: 'DeleteReferenceStoreResponse')
+    DeleteRunCacheRequest = Shapes::StructureShape.new(name: 'DeleteRunCacheRequest')
     DeleteRunGroupRequest = Shapes::StructureShape.new(name: 'DeleteRunGroupRequest')
     DeleteRunRequest = Shapes::StructureShape.new(name: 'DeleteRunRequest')
     DeleteSequenceStoreRequest = Shapes::StructureShape.new(name: 'DeleteSequenceStoreRequest')
@@ -111,6 +116,7 @@ module Aws::Omics
     Encoding = Shapes::StringShape.new(name: 'Encoding')
     EncryptionType = Shapes::StringShape.new(name: 'EncryptionType')
     EngineLogStream = Shapes::StringShape.new(name: 'EngineLogStream')
+    EngineVersion = Shapes::StringShape.new(name: 'EngineVersion')
     EscapeChar = Shapes::StringShape.new(name: 'EscapeChar')
     EscapeQuotes = Shapes::BooleanShape.new(name: 'EscapeQuotes')
     ExportJobId = Shapes::StringShape.new(name: 'ExportJobId')
@@ -157,6 +163,8 @@ module Aws::Omics
     GetReferenceResponse = Shapes::StructureShape.new(name: 'GetReferenceResponse')
     GetReferenceStoreRequest = Shapes::StructureShape.new(name: 'GetReferenceStoreRequest')
     GetReferenceStoreResponse = Shapes::StructureShape.new(name: 'GetReferenceStoreResponse')
+    GetRunCacheRequest = Shapes::StructureShape.new(name: 'GetRunCacheRequest')
+    GetRunCacheResponse = Shapes::StructureShape.new(name: 'GetRunCacheResponse')
     GetRunGroupRequest = Shapes::StructureShape.new(name: 'GetRunGroupRequest')
     GetRunGroupResponse = Shapes::StructureShape.new(name: 'GetRunGroupResponse')
     GetRunGroupResponseMaxCpusInteger = Shapes::IntegerShape.new(name: 'GetRunGroupResponseMaxCpusInteger')
@@ -245,6 +253,9 @@ module Aws::Omics
     ListReferencesRequest = Shapes::StructureShape.new(name: 'ListReferencesRequest')
     ListReferencesRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListReferencesRequestMaxResultsInteger')
     ListReferencesResponse = Shapes::StructureShape.new(name: 'ListReferencesResponse')
+    ListRunCachesRequest = Shapes::StructureShape.new(name: 'ListRunCachesRequest')
+    ListRunCachesRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListRunCachesRequestMaxResultsInteger')
+    ListRunCachesResponse = Shapes::StructureShape.new(name: 'ListRunCachesResponse')
     ListRunGroupsRequest = Shapes::StructureShape.new(name: 'ListRunGroupsRequest')
     ListRunGroupsRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListRunGroupsRequestMaxResultsInteger')
     ListRunGroupsResponse = Shapes::StructureShape.new(name: 'ListRunGroupsResponse')
@@ -261,6 +272,7 @@ module Aws::Omics
     ListSharesResponse = Shapes::StructureShape.new(name: 'ListSharesResponse')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
+    ListToken = Shapes::StringShape.new(name: 'ListToken')
     ListVariantImportJobsFilter = Shapes::StructureShape.new(name: 'ListVariantImportJobsFilter')
     ListVariantImportJobsRequest = Shapes::StructureShape.new(name: 'ListVariantImportJobsRequest')
     ListVariantImportJobsRequestIdsList = Shapes::ListShape.new(name: 'ListVariantImportJobsRequestIdsList')
@@ -282,6 +294,7 @@ module Aws::Omics
     MultipartReadSetUploadListItem = Shapes::StructureShape.new(name: 'MultipartReadSetUploadListItem')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NotSupportedOperationException = Shapes::StructureShape.new(name: 'NotSupportedOperationException')
+    NumericIdInArn = Shapes::StringShape.new(name: 'NumericIdInArn')
     PrimitiveBoolean = Shapes::BooleanShape.new(name: 'PrimitiveBoolean')
     Quote = Shapes::StringShape.new(name: 'Quote')
     QuoteAll = Shapes::BooleanShape.new(name: 'QuoteAll')
@@ -347,6 +360,13 @@ module Aws::Omics
     ResourceOwner = Shapes::StringShape.new(name: 'ResourceOwner')
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     RunArn = Shapes::StringShape.new(name: 'RunArn')
+    RunCacheArn = Shapes::StringShape.new(name: 'RunCacheArn')
+    RunCacheId = Shapes::StringShape.new(name: 'RunCacheId')
+    RunCacheList = Shapes::ListShape.new(name: 'RunCacheList')
+    RunCacheListItem = Shapes::StructureShape.new(name: 'RunCacheListItem')
+    RunCacheRequestId = Shapes::StringShape.new(name: 'RunCacheRequestId')
+    RunCacheStatus = Shapes::StringShape.new(name: 'RunCacheStatus')
+    RunCacheTimestamp = Shapes::TimestampShape.new(name: 'RunCacheTimestamp', timestampFormat: "iso8601")
     RunExport = Shapes::StringShape.new(name: 'RunExport')
     RunExportList = Shapes::ListShape.new(name: 'RunExportList')
     RunFailureReason = Shapes::StringShape.new(name: 'RunFailureReason')
@@ -389,6 +409,7 @@ module Aws::Omics
     S3AccessPointArn = Shapes::StringShape.new(name: 'S3AccessPointArn')
     S3Destination = Shapes::StringShape.new(name: 'S3Destination')
     S3Uri = Shapes::StringShape.new(name: 'S3Uri')
+    S3UriForBucketOrObject = Shapes::StringShape.new(name: 'S3UriForBucketOrObject')
     SampleId = Shapes::StringShape.new(name: 'SampleId')
     SchemaItem = Shapes::MapShape.new(name: 'SchemaItem')
     SchemaItemKeyString = Shapes::StringShape.new(name: 'SchemaItemKeyString')
@@ -480,6 +501,7 @@ module Aws::Omics
     UpdateAnnotationStoreResponse = Shapes::StructureShape.new(name: 'UpdateAnnotationStoreResponse')
     UpdateAnnotationStoreVersionRequest = Shapes::StructureShape.new(name: 'UpdateAnnotationStoreVersionRequest')
     UpdateAnnotationStoreVersionResponse = Shapes::StructureShape.new(name: 'UpdateAnnotationStoreVersionResponse')
+    UpdateRunCacheRequest = Shapes::StructureShape.new(name: 'UpdateRunCacheRequest')
     UpdateRunGroupRequest = Shapes::StructureShape.new(name: 'UpdateRunGroupRequest')
     UpdateRunGroupRequestMaxCpusInteger = Shapes::IntegerShape.new(name: 'UpdateRunGroupRequestMaxCpusInteger')
     UpdateRunGroupRequestMaxDurationInteger = Shapes::IntegerShape.new(name: 'UpdateRunGroupRequestMaxDurationInteger')
@@ -493,6 +515,8 @@ module Aws::Omics
     UploadReadSetPartRequest = Shapes::StructureShape.new(name: 'UploadReadSetPartRequest')
     UploadReadSetPartRequestPartNumberInteger = Shapes::IntegerShape.new(name: 'UploadReadSetPartRequestPartNumberInteger')
     UploadReadSetPartResponse = Shapes::StructureShape.new(name: 'UploadReadSetPartResponse')
+    UserCustomDescription = Shapes::StringShape.new(name: 'UserCustomDescription')
+    UserCustomName = Shapes::StringShape.new(name: 'UserCustomName')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     VariantImportItemDetail = Shapes::StructureShape.new(name: 'VariantImportItemDetail')
     VariantImportItemDetails = Shapes::ListShape.new(name: 'VariantImportItemDetails')
@@ -747,6 +771,21 @@ module Aws::Omics
     CreateReferenceStoreResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "creationTime"))
     CreateReferenceStoreResponse.struct_class = Types::CreateReferenceStoreResponse
 
+    CreateRunCacheRequest.add_member(:cache_behavior, Shapes::ShapeRef.new(shape: CacheBehavior, location_name: "cacheBehavior"))
+    CreateRunCacheRequest.add_member(:cache_s3_location, Shapes::ShapeRef.new(shape: S3UriForBucketOrObject, required: true, location_name: "cacheS3Location"))
+    CreateRunCacheRequest.add_member(:description, Shapes::ShapeRef.new(shape: UserCustomDescription, location_name: "description"))
+    CreateRunCacheRequest.add_member(:name, Shapes::ShapeRef.new(shape: UserCustomName, location_name: "name"))
+    CreateRunCacheRequest.add_member(:request_id, Shapes::ShapeRef.new(shape: RunCacheRequestId, required: true, location_name: "requestId", metadata: {"idempotencyToken"=>true}))
+    CreateRunCacheRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    CreateRunCacheRequest.add_member(:cache_bucket_owner_id, Shapes::ShapeRef.new(shape: AwsAccountId, location_name: "cacheBucketOwnerId"))
+    CreateRunCacheRequest.struct_class = Types::CreateRunCacheRequest
+
+    CreateRunCacheResponse.add_member(:arn, Shapes::ShapeRef.new(shape: RunCacheArn, location_name: "arn"))
+    CreateRunCacheResponse.add_member(:id, Shapes::ShapeRef.new(shape: RunCacheId, location_name: "id"))
+    CreateRunCacheResponse.add_member(:status, Shapes::ShapeRef.new(shape: RunCacheStatus, location_name: "status"))
+    CreateRunCacheResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    CreateRunCacheResponse.struct_class = Types::CreateRunCacheResponse
+
     CreateRunGroupRequest.add_member(:name, Shapes::ShapeRef.new(shape: RunGroupName, location_name: "name"))
     CreateRunGroupRequest.add_member(:max_cpus, Shapes::ShapeRef.new(shape: CreateRunGroupRequestMaxCpusInteger, location_name: "maxCpus"))
     CreateRunGroupRequest.add_member(:max_runs, Shapes::ShapeRef.new(shape: CreateRunGroupRequestMaxRunsInteger, location_name: "maxRuns"))
@@ -848,6 +887,9 @@ module Aws::Omics
     DeleteReferenceStoreRequest.struct_class = Types::DeleteReferenceStoreRequest
 
     DeleteReferenceStoreResponse.struct_class = Types::DeleteReferenceStoreResponse
+
+    DeleteRunCacheRequest.add_member(:id, Shapes::ShapeRef.new(shape: RunCacheId, required: true, location: "uri", location_name: "id"))
+    DeleteRunCacheRequest.struct_class = Types::DeleteRunCacheRequest
 
     DeleteRunGroupRequest.add_member(:id, Shapes::ShapeRef.new(shape: RunGroupId, required: true, location: "uri", location_name: "id"))
     DeleteRunGroupRequest.struct_class = Types::DeleteRunGroupRequest
@@ -1115,6 +1157,21 @@ module Aws::Omics
     GetReferenceStoreResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "creationTime"))
     GetReferenceStoreResponse.struct_class = Types::GetReferenceStoreResponse
 
+    GetRunCacheRequest.add_member(:id, Shapes::ShapeRef.new(shape: RunCacheId, required: true, location: "uri", location_name: "id"))
+    GetRunCacheRequest.struct_class = Types::GetRunCacheRequest
+
+    GetRunCacheResponse.add_member(:arn, Shapes::ShapeRef.new(shape: RunCacheArn, location_name: "arn"))
+    GetRunCacheResponse.add_member(:cache_behavior, Shapes::ShapeRef.new(shape: CacheBehavior, location_name: "cacheBehavior"))
+    GetRunCacheResponse.add_member(:cache_bucket_owner_id, Shapes::ShapeRef.new(shape: AwsAccountId, location_name: "cacheBucketOwnerId"))
+    GetRunCacheResponse.add_member(:cache_s3_uri, Shapes::ShapeRef.new(shape: S3UriForBucketOrObject, location_name: "cacheS3Uri"))
+    GetRunCacheResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: RunCacheTimestamp, location_name: "creationTime"))
+    GetRunCacheResponse.add_member(:description, Shapes::ShapeRef.new(shape: UserCustomDescription, location_name: "description"))
+    GetRunCacheResponse.add_member(:id, Shapes::ShapeRef.new(shape: RunCacheId, location_name: "id"))
+    GetRunCacheResponse.add_member(:name, Shapes::ShapeRef.new(shape: UserCustomName, location_name: "name"))
+    GetRunCacheResponse.add_member(:status, Shapes::ShapeRef.new(shape: RunCacheStatus, location_name: "status"))
+    GetRunCacheResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    GetRunCacheResponse.struct_class = Types::GetRunCacheResponse
+
     GetRunGroupRequest.add_member(:id, Shapes::ShapeRef.new(shape: RunGroupId, required: true, location: "uri", location_name: "id"))
     GetRunGroupRequest.struct_class = Types::GetRunGroupRequest
 
@@ -1135,6 +1192,9 @@ module Aws::Omics
 
     GetRunResponse.add_member(:arn, Shapes::ShapeRef.new(shape: RunArn, location_name: "arn"))
     GetRunResponse.add_member(:id, Shapes::ShapeRef.new(shape: RunId, location_name: "id"))
+    GetRunResponse.add_member(:cache_id, Shapes::ShapeRef.new(shape: NumericIdInArn, location_name: "cacheId"))
+    GetRunResponse.add_member(:cache_behavior, Shapes::ShapeRef.new(shape: CacheBehavior, location_name: "cacheBehavior"))
+    GetRunResponse.add_member(:engine_version, Shapes::ShapeRef.new(shape: EngineVersion, location_name: "engineVersion"))
     GetRunResponse.add_member(:status, Shapes::ShapeRef.new(shape: RunStatus, location_name: "status"))
     GetRunResponse.add_member(:workflow_id, Shapes::ShapeRef.new(shape: WorkflowId, location_name: "workflowId"))
     GetRunResponse.add_member(:workflow_type, Shapes::ShapeRef.new(shape: WorkflowType, location_name: "workflowType"))
@@ -1174,6 +1234,8 @@ module Aws::Omics
     GetRunTaskResponse.add_member(:status, Shapes::ShapeRef.new(shape: TaskStatus, location_name: "status"))
     GetRunTaskResponse.add_member(:name, Shapes::ShapeRef.new(shape: TaskName, location_name: "name"))
     GetRunTaskResponse.add_member(:cpus, Shapes::ShapeRef.new(shape: GetRunTaskResponseCpusInteger, location_name: "cpus"))
+    GetRunTaskResponse.add_member(:cache_hit, Shapes::ShapeRef.new(shape: Boolean, location_name: "cacheHit"))
+    GetRunTaskResponse.add_member(:cache_s3_uri, Shapes::ShapeRef.new(shape: S3UriForBucketOrObject, location_name: "cacheS3Uri"))
     GetRunTaskResponse.add_member(:memory, Shapes::ShapeRef.new(shape: GetRunTaskResponseMemoryInteger, location_name: "memory"))
     GetRunTaskResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: TaskTimestamp, location_name: "creationTime"))
     GetRunTaskResponse.add_member(:start_time, Shapes::ShapeRef.new(shape: TaskTimestamp, location_name: "startTime"))
@@ -1457,6 +1519,14 @@ module Aws::Omics
     ListReferencesResponse.add_member(:references, Shapes::ShapeRef.new(shape: ReferenceList, required: true, location_name: "references"))
     ListReferencesResponse.struct_class = Types::ListReferencesResponse
 
+    ListRunCachesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListRunCachesRequestMaxResultsInteger, location: "querystring", location_name: "maxResults"))
+    ListRunCachesRequest.add_member(:starting_token, Shapes::ShapeRef.new(shape: ListToken, location: "querystring", location_name: "startingToken"))
+    ListRunCachesRequest.struct_class = Types::ListRunCachesRequest
+
+    ListRunCachesResponse.add_member(:items, Shapes::ShapeRef.new(shape: RunCacheList, location_name: "items"))
+    ListRunCachesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: ListToken, location_name: "nextToken"))
+    ListRunCachesResponse.struct_class = Types::ListRunCachesResponse
+
     ListRunGroupsRequest.add_member(:name, Shapes::ShapeRef.new(shape: RunGroupName, location: "querystring", location_name: "name"))
     ListRunGroupsRequest.add_member(:starting_token, Shapes::ShapeRef.new(shape: RunGroupListToken, location: "querystring", location_name: "startingToken"))
     ListRunGroupsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListRunGroupsRequestMaxResultsInteger, location: "querystring", location_name: "maxResults"))
@@ -1696,6 +1766,17 @@ module Aws::Omics
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
+    RunCacheList.member = Shapes::ShapeRef.new(shape: RunCacheListItem)
+
+    RunCacheListItem.add_member(:arn, Shapes::ShapeRef.new(shape: RunCacheArn, location_name: "arn"))
+    RunCacheListItem.add_member(:cache_behavior, Shapes::ShapeRef.new(shape: CacheBehavior, location_name: "cacheBehavior"))
+    RunCacheListItem.add_member(:cache_s3_uri, Shapes::ShapeRef.new(shape: S3UriForBucketOrObject, location_name: "cacheS3Uri"))
+    RunCacheListItem.add_member(:creation_time, Shapes::ShapeRef.new(shape: RunCacheTimestamp, location_name: "creationTime"))
+    RunCacheListItem.add_member(:id, Shapes::ShapeRef.new(shape: RunCacheId, location_name: "id"))
+    RunCacheListItem.add_member(:name, Shapes::ShapeRef.new(shape: UserCustomName, location_name: "name"))
+    RunCacheListItem.add_member(:status, Shapes::ShapeRef.new(shape: RunCacheStatus, location_name: "status"))
+    RunCacheListItem.struct_class = Types::RunCacheListItem
+
     RunExportList.member = Shapes::ShapeRef.new(shape: RunExport)
 
     RunGroupList.member = Shapes::ShapeRef.new(shape: RunGroupListItem)
@@ -1883,6 +1964,8 @@ module Aws::Omics
     StartRunRequest.add_member(:run_id, Shapes::ShapeRef.new(shape: RunId, location_name: "runId"))
     StartRunRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RunRoleArn, required: true, location_name: "roleArn"))
     StartRunRequest.add_member(:name, Shapes::ShapeRef.new(shape: RunName, location_name: "name"))
+    StartRunRequest.add_member(:cache_id, Shapes::ShapeRef.new(shape: NumericIdInArn, location_name: "cacheId"))
+    StartRunRequest.add_member(:cache_behavior, Shapes::ShapeRef.new(shape: CacheBehavior, location_name: "cacheBehavior"))
     StartRunRequest.add_member(:run_group_id, Shapes::ShapeRef.new(shape: RunGroupId, location_name: "runGroupId"))
     StartRunRequest.add_member(:priority, Shapes::ShapeRef.new(shape: StartRunRequestPriorityInteger, location_name: "priority"))
     StartRunRequest.add_member(:parameters, Shapes::ShapeRef.new(shape: RunParameters, location_name: "parameters"))
@@ -1942,6 +2025,8 @@ module Aws::Omics
     TaskListItem.add_member(:status, Shapes::ShapeRef.new(shape: TaskStatus, location_name: "status"))
     TaskListItem.add_member(:name, Shapes::ShapeRef.new(shape: TaskName, location_name: "name"))
     TaskListItem.add_member(:cpus, Shapes::ShapeRef.new(shape: TaskListItemCpusInteger, location_name: "cpus"))
+    TaskListItem.add_member(:cache_hit, Shapes::ShapeRef.new(shape: Boolean, location_name: "cacheHit"))
+    TaskListItem.add_member(:cache_s3_uri, Shapes::ShapeRef.new(shape: S3UriForBucketOrObject, location_name: "cacheS3Uri"))
     TaskListItem.add_member(:memory, Shapes::ShapeRef.new(shape: TaskListItemMemoryInteger, location_name: "memory"))
     TaskListItem.add_member(:creation_time, Shapes::ShapeRef.new(shape: TaskTimestamp, location_name: "creationTime"))
     TaskListItem.add_member(:start_time, Shapes::ShapeRef.new(shape: TaskTimestamp, location_name: "startTime"))
@@ -2007,6 +2092,12 @@ module Aws::Omics
     UpdateAnnotationStoreVersionResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: CreationTime, required: true, location_name: "creationTime"))
     UpdateAnnotationStoreVersionResponse.add_member(:update_time, Shapes::ShapeRef.new(shape: UpdateTime, required: true, location_name: "updateTime"))
     UpdateAnnotationStoreVersionResponse.struct_class = Types::UpdateAnnotationStoreVersionResponse
+
+    UpdateRunCacheRequest.add_member(:cache_behavior, Shapes::ShapeRef.new(shape: CacheBehavior, location_name: "cacheBehavior"))
+    UpdateRunCacheRequest.add_member(:description, Shapes::ShapeRef.new(shape: UserCustomDescription, location_name: "description"))
+    UpdateRunCacheRequest.add_member(:id, Shapes::ShapeRef.new(shape: RunCacheId, required: true, location: "uri", location_name: "id"))
+    UpdateRunCacheRequest.add_member(:name, Shapes::ShapeRef.new(shape: UserCustomName, location_name: "name"))
+    UpdateRunCacheRequest.struct_class = Types::UpdateRunCacheRequest
 
     UpdateRunGroupRequest.add_member(:id, Shapes::ShapeRef.new(shape: RunGroupId, required: true, location: "uri", location_name: "id"))
     UpdateRunGroupRequest.add_member(:name, Shapes::ShapeRef.new(shape: RunGroupName, location_name: "name"))
@@ -2346,6 +2437,25 @@ module Aws::Omics
         o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
       end)
 
+      api.add_operation(:create_run_cache, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateRunCache"
+        o.http_method = "POST"
+        o.http_request_uri = "/runCache"
+        o.endpoint_pattern = {
+          "hostPrefix" => "workflows-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: CreateRunCacheRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateRunCacheResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+      end)
+
       api.add_operation(:create_run_group, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateRunGroup"
         o.http_method = "POST"
@@ -2515,6 +2625,25 @@ module Aws::Omics
           "hostPrefix" => "workflows-",
         }
         o.input = Shapes::ShapeRef.new(shape: DeleteRunRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+      end)
+
+      api.add_operation(:delete_run_cache, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteRunCache"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/runCache/{id}"
+        o.endpoint_pattern = {
+          "hostPrefix" => "workflows-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: DeleteRunCacheRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
@@ -2830,6 +2959,25 @@ module Aws::Omics
         }
         o.input = Shapes::ShapeRef.new(shape: GetRunRequest)
         o.output = Shapes::ShapeRef.new(shape: GetRunResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+      end)
+
+      api.add_operation(:get_run_cache, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetRunCache"
+        o.http_method = "GET"
+        o.http_request_uri = "/runCache/{id}"
+        o.endpoint_pattern = {
+          "hostPrefix" => "workflows-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: GetRunCacheRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetRunCacheResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -3240,6 +3388,31 @@ module Aws::Omics
         )
       end)
 
+      api.add_operation(:list_run_caches, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListRunCaches"
+        o.http_method = "GET"
+        o.http_request_uri = "/runCache"
+        o.endpoint_pattern = {
+          "hostPrefix" => "workflows-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: ListRunCachesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListRunCachesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "starting_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_run_groups, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListRunGroups"
         o.http_method = "GET"
@@ -3642,6 +3815,25 @@ module Aws::Omics
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:update_run_cache, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateRunCache"
+        o.http_method = "POST"
+        o.http_request_uri = "/runCache/{id}"
+        o.endpoint_pattern = {
+          "hostPrefix" => "workflows-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: UpdateRunCacheRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
       end)
 
       api.add_operation(:update_run_group, Seahorse::Model::Operation.new.tap do |o|

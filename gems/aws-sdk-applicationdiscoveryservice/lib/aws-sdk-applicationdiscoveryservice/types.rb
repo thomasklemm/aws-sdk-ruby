@@ -508,22 +508,27 @@ module Aws::ApplicationDiscoveryService
     end
 
     # @!attribute [rw] name
-    #   Name of the application to be created.
+    #   The name of the application to be created.
     #   @return [String]
     #
     # @!attribute [rw] description
-    #   Description of the application to be created.
+    #   The description of the application to be created.
+    #   @return [String]
+    #
+    # @!attribute [rw] wave
+    #   The name of the migration wave of the application to be created.
     #   @return [String]
     #
     class CreateApplicationRequest < Struct.new(
       :name,
-      :description)
+      :description,
+      :wave)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # @!attribute [rw] configuration_id
-    #   Configuration ID of an application to be created.
+    #   The configuration ID of an application to be created.
     #   @return [String]
     #
     class CreateApplicationResponse < Struct.new(
@@ -1484,6 +1489,10 @@ module Aws::ApplicationDiscoveryService
     #   Unix time stamp format.
     #   @return [Time]
     #
+    # @!attribute [rw] file_classification
+    #   The type of file detected by the import task.
+    #   @return [String]
+    #
     # @!attribute [rw] server_import_success
     #   The total number of server records in the import file that were
     #   successfully imported.
@@ -1531,6 +1540,7 @@ module Aws::ApplicationDiscoveryService
       :import_request_time,
       :import_completion_time,
       :import_deleted_time,
+      :file_classification,
       :server_import_success,
       :server_import_failure,
       :application_import_success,
@@ -2158,10 +2168,15 @@ module Aws::ApplicationDiscoveryService
     #   New description of the application to be updated.
     #   @return [String]
     #
+    # @!attribute [rw] wave
+    #   The new migration wave of the application that you want to update.
+    #   @return [String]
+    #
     class UpdateApplicationRequest < Struct.new(
       :configuration_id,
       :name,
-      :description)
+      :description,
+      :wave)
       SENSITIVE = []
       include Aws::Structure
     end

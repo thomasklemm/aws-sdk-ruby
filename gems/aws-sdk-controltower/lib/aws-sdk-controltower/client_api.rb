@@ -23,6 +23,7 @@ module Aws::ControlTower
     BaselineSummary = Shapes::StructureShape.new(name: 'BaselineSummary')
     BaselineVersion = Shapes::StringShape.new(name: 'BaselineVersion')
     Baselines = Shapes::ListShape.new(name: 'Baselines')
+    Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ControlIdentifier = Shapes::StringShape.new(name: 'ControlIdentifier')
     ControlIdentifiers = Shapes::ListShape.new(name: 'ControlIdentifiers')
@@ -58,6 +59,7 @@ module Aws::ControlTower
     EnabledBaselineParameterSummaries = Shapes::ListShape.new(name: 'EnabledBaselineParameterSummaries')
     EnabledBaselineParameterSummary = Shapes::StructureShape.new(name: 'EnabledBaselineParameterSummary')
     EnabledBaselineParameters = Shapes::ListShape.new(name: 'EnabledBaselineParameters')
+    EnabledBaselineParentIdentifiers = Shapes::ListShape.new(name: 'EnabledBaselineParentIdentifiers')
     EnabledBaselineSummary = Shapes::StructureShape.new(name: 'EnabledBaselineSummary')
     EnabledBaselineTargetIdentifiers = Shapes::ListShape.new(name: 'EnabledBaselineTargetIdentifiers')
     EnabledBaselines = Shapes::ListShape.new(name: 'EnabledBaselines')
@@ -279,11 +281,13 @@ module Aws::ControlTower
     EnabledBaselineDetails.add_member(:baseline_identifier, Shapes::ShapeRef.new(shape: String, required: true, location_name: "baselineIdentifier"))
     EnabledBaselineDetails.add_member(:baseline_version, Shapes::ShapeRef.new(shape: String, location_name: "baselineVersion"))
     EnabledBaselineDetails.add_member(:parameters, Shapes::ShapeRef.new(shape: EnabledBaselineParameterSummaries, location_name: "parameters"))
+    EnabledBaselineDetails.add_member(:parent_identifier, Shapes::ShapeRef.new(shape: Arn, location_name: "parentIdentifier"))
     EnabledBaselineDetails.add_member(:status_summary, Shapes::ShapeRef.new(shape: EnablementStatusSummary, required: true, location_name: "statusSummary"))
     EnabledBaselineDetails.add_member(:target_identifier, Shapes::ShapeRef.new(shape: String, required: true, location_name: "targetIdentifier"))
     EnabledBaselineDetails.struct_class = Types::EnabledBaselineDetails
 
     EnabledBaselineFilter.add_member(:baseline_identifiers, Shapes::ShapeRef.new(shape: EnabledBaselineBaselineIdentifiers, location_name: "baselineIdentifiers"))
+    EnabledBaselineFilter.add_member(:parent_identifiers, Shapes::ShapeRef.new(shape: EnabledBaselineParentIdentifiers, location_name: "parentIdentifiers"))
     EnabledBaselineFilter.add_member(:target_identifiers, Shapes::ShapeRef.new(shape: EnabledBaselineTargetIdentifiers, location_name: "targetIdentifiers"))
     EnabledBaselineFilter.struct_class = Types::EnabledBaselineFilter
 
@@ -299,9 +303,12 @@ module Aws::ControlTower
 
     EnabledBaselineParameters.member = Shapes::ShapeRef.new(shape: EnabledBaselineParameter)
 
+    EnabledBaselineParentIdentifiers.member = Shapes::ShapeRef.new(shape: Arn)
+
     EnabledBaselineSummary.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "arn"))
     EnabledBaselineSummary.add_member(:baseline_identifier, Shapes::ShapeRef.new(shape: String, required: true, location_name: "baselineIdentifier"))
     EnabledBaselineSummary.add_member(:baseline_version, Shapes::ShapeRef.new(shape: String, location_name: "baselineVersion"))
+    EnabledBaselineSummary.add_member(:parent_identifier, Shapes::ShapeRef.new(shape: Arn, location_name: "parentIdentifier"))
     EnabledBaselineSummary.add_member(:status_summary, Shapes::ShapeRef.new(shape: EnablementStatusSummary, required: true, location_name: "statusSummary"))
     EnabledBaselineSummary.add_member(:target_identifier, Shapes::ShapeRef.new(shape: String, required: true, location_name: "targetIdentifier"))
     EnabledBaselineSummary.struct_class = Types::EnabledBaselineSummary
@@ -455,6 +462,7 @@ module Aws::ControlTower
     ListControlOperationsOutput.struct_class = Types::ListControlOperationsOutput
 
     ListEnabledBaselinesInput.add_member(:filter, Shapes::ShapeRef.new(shape: EnabledBaselineFilter, location_name: "filter"))
+    ListEnabledBaselinesInput.add_member(:include_children, Shapes::ShapeRef.new(shape: Boolean, location_name: "includeChildren"))
     ListEnabledBaselinesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: ListEnabledBaselinesMaxResults, location_name: "maxResults"))
     ListEnabledBaselinesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: ListEnabledBaselinesNextToken, location_name: "nextToken"))
     ListEnabledBaselinesInput.struct_class = Types::ListEnabledBaselinesInput

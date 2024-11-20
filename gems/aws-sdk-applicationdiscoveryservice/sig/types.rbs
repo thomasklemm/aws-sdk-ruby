@@ -126,6 +126,7 @@ module Aws::ApplicationDiscoveryService
     class CreateApplicationRequest
       attr_accessor name: ::String
       attr_accessor description: ::String
+      attr_accessor wave: ::String
       SENSITIVE: []
     end
 
@@ -411,10 +412,11 @@ module Aws::ApplicationDiscoveryService
       attr_accessor client_request_token: ::String
       attr_accessor name: ::String
       attr_accessor import_url: ::String
-      attr_accessor status: ("IMPORT_IN_PROGRESS" | "IMPORT_COMPLETE" | "IMPORT_COMPLETE_WITH_ERRORS" | "IMPORT_FAILED" | "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED" | "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED" | "DELETE_IN_PROGRESS" | "DELETE_COMPLETE" | "DELETE_FAILED" | "DELETE_FAILED_LIMIT_EXCEEDED" | "INTERNAL_ERROR")
+      attr_accessor status: ("IMPORT_IN_PROGRESS" | "IMPORT_COMPLETE" | "IMPORT_COMPLETE_WITH_ERRORS" | "IMPORT_FAILED" | "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED" | "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED" | "IMPORT_FAILED_UNSUPPORTED_FILE_TYPE" | "DELETE_IN_PROGRESS" | "DELETE_COMPLETE" | "DELETE_FAILED" | "DELETE_FAILED_LIMIT_EXCEEDED" | "INTERNAL_ERROR")
       attr_accessor import_request_time: ::Time
       attr_accessor import_completion_time: ::Time
       attr_accessor import_deleted_time: ::Time
+      attr_accessor file_classification: ("MODELIZEIT_EXPORT" | "RVTOOLS_EXPORT" | "VMWARE_NSX_EXPORT" | "IMPORT_TEMPLATE")
       attr_accessor server_import_success: ::Integer
       attr_accessor server_import_failure: ::Integer
       attr_accessor application_import_success: ::Integer
@@ -424,7 +426,7 @@ module Aws::ApplicationDiscoveryService
     end
 
     class ImportTaskFilter
-      attr_accessor name: ("IMPORT_TASK_ID" | "STATUS" | "NAME")
+      attr_accessor name: ("IMPORT_TASK_ID" | "STATUS" | "NAME" | "FILE_CLASSIFICATION")
       attr_accessor values: ::Array[::String]
       SENSITIVE: []
     end
@@ -613,6 +615,7 @@ module Aws::ApplicationDiscoveryService
       attr_accessor configuration_id: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
+      attr_accessor wave: ::String
       SENSITIVE: []
     end
 

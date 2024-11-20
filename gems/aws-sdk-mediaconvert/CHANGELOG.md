@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.145.0 (2024-11-20)
+------------------
+
+* Feature - This release adds the ability to reconfigure concurrent job settings for existing queues and create queues with custom concurrent job settings.
+
 1.144.0 (2024-11-13)
 ------------------
 

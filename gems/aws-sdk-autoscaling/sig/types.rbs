@@ -145,6 +145,7 @@ module Aws::AutoScaling
       attr_accessor instance_maintenance_policy: Types::InstanceMaintenancePolicy
       attr_accessor availability_zone_distribution: Types::AvailabilityZoneDistribution
       attr_accessor availability_zone_impairment_policy: Types::AvailabilityZoneImpairmentPolicy
+      attr_accessor capacity_reservation_specification: Types::CapacityReservationSpecification
       SENSITIVE: []
     end
 
@@ -199,6 +200,11 @@ module Aws::AutoScaling
       SENSITIVE: []
     end
 
+    class BaselinePerformanceFactorsRequest
+      attr_accessor cpu: Types::CpuPerformanceFactorRequest
+      SENSITIVE: []
+    end
+
     class BatchDeleteScheduledActionAnswer
       attr_accessor failed_scheduled_actions: ::Array[Types::FailedScheduledUpdateGroupActionRequest]
       SENSITIVE: []
@@ -245,6 +251,18 @@ module Aws::AutoScaling
       SENSITIVE: []
     end
 
+    class CapacityReservationSpecification
+      attr_accessor capacity_reservation_preference: ("capacity-reservations-only" | "capacity-reservations-first" | "none" | "default")
+      attr_accessor capacity_reservation_target: Types::CapacityReservationTarget
+      SENSITIVE: []
+    end
+
+    class CapacityReservationTarget
+      attr_accessor capacity_reservation_ids: ::Array[::String]
+      attr_accessor capacity_reservation_resource_group_arns: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class CompleteLifecycleActionAnswer < Aws::EmptyStructure
     end
 
@@ -254,6 +272,11 @@ module Aws::AutoScaling
       attr_accessor lifecycle_action_token: ::String
       attr_accessor lifecycle_action_result: ::String
       attr_accessor instance_id: ::String
+      SENSITIVE: []
+    end
+
+    class CpuPerformanceFactorRequest
+      attr_accessor references: ::Array[Types::PerformanceFactorReferenceRequest]
       SENSITIVE: []
     end
 
@@ -289,6 +312,7 @@ module Aws::AutoScaling
       attr_accessor availability_zone_distribution: Types::AvailabilityZoneDistribution
       attr_accessor availability_zone_impairment_policy: Types::AvailabilityZoneImpairmentPolicy
       attr_accessor skip_zonal_shift_validation: bool
+      attr_accessor capacity_reservation_specification: Types::CapacityReservationSpecification
       SENSITIVE: []
     end
 
@@ -775,6 +799,7 @@ module Aws::AutoScaling
       attr_accessor accelerator_total_memory_mi_b: Types::AcceleratorTotalMemoryMiBRequest
       attr_accessor network_bandwidth_gbps: Types::NetworkBandwidthGbpsRequest
       attr_accessor allowed_instance_types: ::Array[::String]
+      attr_accessor baseline_performance_factors: Types::BaselinePerformanceFactorsRequest
       SENSITIVE: []
     end
 
@@ -987,6 +1012,11 @@ module Aws::AutoScaling
       attr_accessor auto_scaling_group_name: ::String
       attr_accessor topic_arn: ::String
       attr_accessor notification_type: ::String
+      SENSITIVE: []
+    end
+
+    class PerformanceFactorReferenceRequest
+      attr_accessor instance_family: ::String
       SENSITIVE: []
     end
 
@@ -1411,6 +1441,7 @@ module Aws::AutoScaling
       attr_accessor availability_zone_distribution: Types::AvailabilityZoneDistribution
       attr_accessor availability_zone_impairment_policy: Types::AvailabilityZoneImpairmentPolicy
       attr_accessor skip_zonal_shift_validation: bool
+      attr_accessor capacity_reservation_specification: Types::CapacityReservationSpecification
       SENSITIVE: []
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.125.0 (2024-11-20)
+------------------
+
+* Feature - Added support for Rocky Linux 8 on Amazon WorkSpaces Personal.
+
 1.124.0 (2024-11-19)
 ------------------
 

@@ -300,7 +300,11 @@ module Aws
                                             },
                                           ],
                                           ?target_db_instance_class: ::String,
-                                          ?upgrade_target_storage_config: bool
+                                          ?upgrade_target_storage_config: bool,
+                                          ?target_iops: ::Integer,
+                                          ?target_storage_type: ::String,
+                                          ?target_allocated_storage: ::Integer,
+                                          ?target_storage_throughput: ::Integer
                                         ) -> _CreateBlueGreenDeploymentResponseSuccess
                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBlueGreenDeploymentResponseSuccess
 

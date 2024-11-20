@@ -100,6 +100,8 @@ module Aws
         def input_type: () -> ("HLS" | "CMAF")
         def etag: () -> ::String
         def tags: () -> ::Hash[::String, ::String]
+        def input_switch_configuration: () -> Types::InputSwitchConfiguration
+        def output_header_configuration: () -> Types::OutputHeaderConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaPackageV2/Client.html#create_channel-instance_method
       def create_channel: (
@@ -108,6 +110,12 @@ module Aws
                             ?client_token: ::String,
                             ?input_type: ("HLS" | "CMAF"),
                             ?description: ::String,
+                            ?input_switch_configuration: {
+                              mqcs_input_switching: bool?
+                            },
+                            ?output_header_configuration: {
+                              publish_mqcs: bool?
+                            },
                             ?tags: Hash[::String, ::String]
                           ) -> _CreateChannelResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateChannelResponseSuccess
@@ -385,6 +393,8 @@ module Aws
         def input_type: () -> ("HLS" | "CMAF")
         def etag: () -> ::String
         def tags: () -> ::Hash[::String, ::String]
+        def input_switch_configuration: () -> Types::InputSwitchConfiguration
+        def output_header_configuration: () -> Types::OutputHeaderConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaPackageV2/Client.html#get_channel-instance_method
       def get_channel: (
@@ -606,13 +616,21 @@ module Aws
         def input_type: () -> ("HLS" | "CMAF")
         def etag: () -> ::String
         def tags: () -> ::Hash[::String, ::String]
+        def input_switch_configuration: () -> Types::InputSwitchConfiguration
+        def output_header_configuration: () -> Types::OutputHeaderConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaPackageV2/Client.html#update_channel-instance_method
       def update_channel: (
                             channel_group_name: ::String,
                             channel_name: ::String,
                             ?etag: ::String,
-                            ?description: ::String
+                            ?description: ::String,
+                            ?input_switch_configuration: {
+                              mqcs_input_switching: bool?
+                            },
+                            ?output_header_configuration: {
+                              publish_mqcs: bool?
+                            }
                           ) -> _UpdateChannelResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateChannelResponseSuccess
 

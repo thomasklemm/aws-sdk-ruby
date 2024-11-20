@@ -57,6 +57,40 @@ module Aws::WorkSpacesWeb
       include Aws::Structure
     end
 
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] portal_arn
+    #   The ARN of the web portal.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/AssociateDataProtectionSettingsRequest AWS API Documentation
+    #
+    class AssociateDataProtectionSettingsRequest < Struct.new(
+      :data_protection_settings_arn,
+      :portal_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] portal_arn
+    #   The ARN of the web portal.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/AssociateDataProtectionSettingsResponse AWS API Documentation
+    #
+    class AssociateDataProtectionSettingsResponse < Struct.new(
+      :data_protection_settings_arn,
+      :portal_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] ip_access_settings_arn
     #   The ARN of the IP access settings.
     #   @return [String]
@@ -476,6 +510,73 @@ module Aws::WorkSpacesWeb
     #
     class CreateBrowserSettingsResponse < Struct.new(
       :browser_settings_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] additional_encryption_context
+    #   Additional encryption context of the data protection settings.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. Idempotency ensures that an API request
+    #   completes only once. With an idempotent request, if the original
+    #   request completes successfully, subsequent retries with the same
+    #   client token returns the result from the original successful
+    #   request.
+    #
+    #   If you do not specify a client token, one is automatically generated
+    #   by the Amazon Web Services SDK.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] customer_managed_key
+    #   The custom managed key of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The display name of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] inline_redaction_configuration
+    #   The inline redaction configuration of the data protection settings
+    #   that will be applied to all sessions.
+    #   @return [Types::InlineRedactionConfiguration]
+    #
+    # @!attribute [rw] tags
+    #   The tags to add to the data protection settings resource. A tag is a
+    #   key-value pair.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/CreateDataProtectionSettingsRequest AWS API Documentation
+    #
+    class CreateDataProtectionSettingsRequest < Struct.new(
+      :additional_encryption_context,
+      :client_token,
+      :customer_managed_key,
+      :description,
+      :display_name,
+      :inline_redaction_configuration,
+      :tags)
+      SENSITIVE = [:description, :display_name, :tags]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/CreateDataProtectionSettingsResponse AWS API Documentation
+    #
+    class CreateDataProtectionSettingsResponse < Struct.new(
+      :data_protection_settings_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1017,6 +1118,126 @@ module Aws::WorkSpacesWeb
       include Aws::Structure
     end
 
+    # The pattern configuration for redacting custom data types in session.
+    #
+    # @!attribute [rw] keyword_regex
+    #   The keyword regex for the customer pattern. After there is a match
+    #   to the pattern regex, the keyword regex is used to search within the
+    #   proximity of the match. If there is a keyword match, then the match
+    #   is confirmed. If no keyword regex is provided, the pattern regex
+    #   match will automatically be confirmed. The format must follow
+    #   JavaScript regex format. The pattern must be enclosed between
+    #   slashes, and can have flags behind the second slash. For example,
+    #   “/ab+c/gi”
+    #   @return [String]
+    #
+    # @!attribute [rw] pattern_description
+    #   The pattern description for the customer pattern.
+    #   @return [String]
+    #
+    # @!attribute [rw] pattern_name
+    #   The pattern name for the custom pattern.
+    #   @return [String]
+    #
+    # @!attribute [rw] pattern_regex
+    #   The pattern regex for the customer pattern. The format must follow
+    #   JavaScript regex format. The pattern must be enclosed between
+    #   slashes, and can have flags behind the second slash. For example:
+    #   “/ab+c/gi”.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/CustomPattern AWS API Documentation
+    #
+    class CustomPattern < Struct.new(
+      :keyword_regex,
+      :pattern_description,
+      :pattern_name,
+      :pattern_regex)
+      SENSITIVE = [:keyword_regex, :pattern_description, :pattern_name, :pattern_regex]
+      include Aws::Structure
+    end
+
+    # The data protection settings resource that can be associated with a
+    # web portal.
+    #
+    # @!attribute [rw] additional_encryption_context
+    #   The additional encryption context of the data protection settings.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] associated_portal_arns
+    #   A list of web portal ARNs that this data protection settings
+    #   resource is associated with.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] creation_date
+    #   The creation date timestamp of the data protection settings.
+    #   @return [Time]
+    #
+    # @!attribute [rw] customer_managed_key
+    #   The customer managed key used to encrypt sensitive information in
+    #   the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The display name of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] inline_redaction_configuration
+    #   The inline redaction configuration for the data protection settings.
+    #   @return [Types::InlineRedactionConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DataProtectionSettings AWS API Documentation
+    #
+    class DataProtectionSettings < Struct.new(
+      :additional_encryption_context,
+      :associated_portal_arns,
+      :creation_date,
+      :customer_managed_key,
+      :data_protection_settings_arn,
+      :description,
+      :display_name,
+      :inline_redaction_configuration)
+      SENSITIVE = [:description, :display_name]
+      include Aws::Structure
+    end
+
+    # The summary of the data protection settings.
+    #
+    # @!attribute [rw] creation_date
+    #   The creation date timestamp of the data protection settings.
+    #   @return [Time]
+    #
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The display name of the data protection settings.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DataProtectionSettingsSummary AWS API Documentation
+    #
+    class DataProtectionSettingsSummary < Struct.new(
+      :creation_date,
+      :data_protection_settings_arn,
+      :description,
+      :display_name)
+      SENSITIVE = [:description, :display_name]
+      include Aws::Structure
+    end
+
     # @!attribute [rw] browser_settings_arn
     #   The ARN of the browser settings.
     #   @return [String]
@@ -1032,6 +1253,22 @@ module Aws::WorkSpacesWeb
     # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DeleteBrowserSettingsResponse AWS API Documentation
     #
     class DeleteBrowserSettingsResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DeleteDataProtectionSettingsRequest AWS API Documentation
+    #
+    class DeleteDataProtectionSettingsRequest < Struct.new(
+      :data_protection_settings_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DeleteDataProtectionSettingsResponse AWS API Documentation
+    #
+    class DeleteDataProtectionSettingsResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] identity_provider_arn
     #   The ARN of the identity provider.
@@ -1165,6 +1402,22 @@ module Aws::WorkSpacesWeb
     #   The ARN of the web portal.
     #   @return [String]
     #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateDataProtectionSettingsRequest AWS API Documentation
+    #
+    class DisassociateDataProtectionSettingsRequest < Struct.new(
+      :portal_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateDataProtectionSettingsResponse AWS API Documentation
+    #
+    class DisassociateDataProtectionSettingsResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] portal_arn
+    #   The ARN of the web portal.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateIpAccessSettingsRequest AWS API Documentation
     #
     class DisassociateIpAccessSettingsRequest < Struct.new(
@@ -1282,6 +1535,30 @@ module Aws::WorkSpacesWeb
     #
     class GetBrowserSettingsResponse < Struct.new(
       :browser_settings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/GetDataProtectionSettingsRequest AWS API Documentation
+    #
+    class GetDataProtectionSettingsRequest < Struct.new(
+      :data_protection_settings_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_protection_settings
+    #   The data protection settings.
+    #   @return [Types::DataProtectionSettings]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/GetDataProtectionSettingsResponse AWS API Documentation
+    #
+    class GetDataProtectionSettingsResponse < Struct.new(
+      :data_protection_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1663,6 +1940,102 @@ module Aws::WorkSpacesWeb
       include Aws::Structure
     end
 
+    # The configuration for in-session inline redaction.
+    #
+    # @!attribute [rw] global_confidence_level
+    #   The global confidence level for the inline redaction configuration.
+    #   This indicates the certainty of data type matches in the redaction
+    #   process. Confidence level 3 means high confidence, and requires a
+    #   formatted text pattern match in order for content to be redacted.
+    #   Confidence level 2 means medium confidence, and redaction considers
+    #   both formatted and unformatted text, and adds keyword associate to
+    #   the logic. Confidence level 1 means low confidence, and redaction is
+    #   enforced for both formatted pattern + unformatted pattern without
+    #   keyword. This is applied to patterns that do not have a
+    #   pattern-level confidence level. Defaults to confidence level 2.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] global_enforced_urls
+    #   The global enforced URL configuration for the inline redaction
+    #   configuration. This is applied to patterns that do not have a
+    #   pattern-level enforced URL list.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] global_exempt_urls
+    #   The global exempt URL configuration for the inline redaction
+    #   configuration. This is applied to patterns that do not have a
+    #   pattern-level exempt URL list.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] inline_redaction_patterns
+    #   The inline redaction patterns to be enabled for the inline redaction
+    #   configuration.
+    #   @return [Array<Types::InlineRedactionPattern>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/InlineRedactionConfiguration AWS API Documentation
+    #
+    class InlineRedactionConfiguration < Struct.new(
+      :global_confidence_level,
+      :global_enforced_urls,
+      :global_exempt_urls,
+      :inline_redaction_patterns)
+      SENSITIVE = [:global_enforced_urls, :global_exempt_urls]
+      include Aws::Structure
+    end
+
+    # The set of patterns that determine the data types redacted in session.
+    #
+    # @!attribute [rw] built_in_pattern_id
+    #   The built-in pattern from the list of preconfigured patterns. Either
+    #   a customPattern or builtInPatternId is required.
+    #   @return [String]
+    #
+    # @!attribute [rw] confidence_level
+    #   The confidence level for inline redaction pattern. This indicates
+    #   the certainty of data type matches in the redaction process.
+    #   Confidence level 3 means high confidence, and requires a formatted
+    #   text pattern match in order for content to be redacted. Confidence
+    #   level 2 means medium confidence, and redaction considers both
+    #   formatted and unformatted text, and adds keyword associate to the
+    #   logic. Confidence level 1 means low confidence, and redaction is
+    #   enforced for both formatted pattern + unformatted pattern without
+    #   keyword. This overrides the global confidence level.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] custom_pattern
+    #   &gt;The configuration for a custom pattern. Either a customPattern
+    #   or builtInPatternId is required.
+    #   @return [Types::CustomPattern]
+    #
+    # @!attribute [rw] enforced_urls
+    #   The enforced URL configuration for the inline redaction pattern.
+    #   This will override the global enforced URL configuration.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] exempt_urls
+    #   The exempt URL configuration for the inline redaction pattern. This
+    #   will override the global exempt URL configuration for the inline
+    #   redaction pattern.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] redaction_place_holder
+    #   The redaction placeholder that will replace the redacted text in
+    #   session for the inline redaction pattern.
+    #   @return [Types::RedactionPlaceHolder]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/InlineRedactionPattern AWS API Documentation
+    #
+    class InlineRedactionPattern < Struct.new(
+      :built_in_pattern_id,
+      :confidence_level,
+      :custom_pattern,
+      :enforced_urls,
+      :exempt_urls,
+      :redaction_place_holder)
+      SENSITIVE = [:built_in_pattern_id, :enforced_urls, :exempt_urls]
+      include Aws::Structure
+    end
+
     # There is an internal server error.
     #
     # @!attribute [rw] message
@@ -1812,6 +2185,42 @@ module Aws::WorkSpacesWeb
     #
     class ListBrowserSettingsResponse < Struct.new(
       :browser_settings,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of results to be included in the next page.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The pagination token used to retrieve the next page of results for
+    #   this operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/ListDataProtectionSettingsRequest AWS API Documentation
+    #
+    class ListDataProtectionSettingsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_protection_settings
+    #   The data protection settings.
+    #   @return [Array<Types::DataProtectionSettingsSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The pagination token used to retrieve the next page of results for
+    #   this operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/ListDataProtectionSettingsResponse AWS API Documentation
+    #
+    class ListDataProtectionSettingsResponse < Struct.new(
+      :data_protection_settings,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -2304,6 +2713,10 @@ module Aws::WorkSpacesWeb
     #   the portal.
     #   @return [String]
     #
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #   @return [String]
+    #
     # @!attribute [rw] display_name
     #   The name of the web portal.
     #   @return [String]
@@ -2368,6 +2781,7 @@ module Aws::WorkSpacesWeb
       :browser_type,
       :creation_date,
       :customer_managed_key,
+      :data_protection_settings_arn,
       :display_name,
       :instance_type,
       :ip_access_settings_arn,
@@ -2415,6 +2829,10 @@ module Aws::WorkSpacesWeb
     # @!attribute [rw] creation_date
     #   The creation date of the web portal.
     #   @return [Time]
+    #
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #   @return [String]
     #
     # @!attribute [rw] display_name
     #   The name of the web portal.
@@ -2474,6 +2892,7 @@ module Aws::WorkSpacesWeb
       :browser_settings_arn,
       :browser_type,
       :creation_date,
+      :data_protection_settings_arn,
       :display_name,
       :instance_type,
       :ip_access_settings_arn,
@@ -2487,6 +2906,28 @@ module Aws::WorkSpacesWeb
       :user_access_logging_settings_arn,
       :user_settings_arn)
       SENSITIVE = [:display_name]
+      include Aws::Structure
+    end
+
+    # The redaction placeholder that will replace the redacted text in
+    # session.
+    #
+    # @!attribute [rw] redaction_place_holder_text
+    #   The redaction placeholder text that will replace the redacted text
+    #   in session for the custom text redaction placeholder type.
+    #   @return [String]
+    #
+    # @!attribute [rw] redaction_place_holder_type
+    #   The redaction placeholder type that will replace the redacted text
+    #   in session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/RedactionPlaceHolder AWS API Documentation
+    #
+    class RedactionPlaceHolder < Struct.new(
+      :redaction_place_holder_text,
+      :redaction_place_holder_type)
+      SENSITIVE = [:redaction_place_holder_text]
       include Aws::Structure
     end
 
@@ -2832,6 +3273,61 @@ module Aws::WorkSpacesWeb
     #
     class UpdateBrowserSettingsResponse < Struct.new(
       :browser_settings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. Idempotency ensures that an API request
+    #   completes only once. With an idempotent request, if the original
+    #   request completes successfully, subsequent retries with the same
+    #   client token return the result from the original successful request.
+    #
+    #   If you do not specify a client token, one is automatically generated
+    #   by the Amazon Web Services SDK.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The display name of the data protection settings.
+    #   @return [String]
+    #
+    # @!attribute [rw] inline_redaction_configuration
+    #   The inline redaction configuration of the data protection settings
+    #   that will be applied to all sessions.
+    #   @return [Types::InlineRedactionConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/UpdateDataProtectionSettingsRequest AWS API Documentation
+    #
+    class UpdateDataProtectionSettingsRequest < Struct.new(
+      :client_token,
+      :data_protection_settings_arn,
+      :description,
+      :display_name,
+      :inline_redaction_configuration)
+      SENSITIVE = [:description, :display_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_protection_settings
+    #   The data protection settings.
+    #   @return [Types::DataProtectionSettings]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/UpdateDataProtectionSettingsResponse AWS API Documentation
+    #
+    class UpdateDataProtectionSettingsResponse < Struct.new(
+      :data_protection_settings)
       SENSITIVE = []
       include Aws::Structure
     end

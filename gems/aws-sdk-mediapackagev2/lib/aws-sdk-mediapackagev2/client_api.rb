@@ -115,6 +115,7 @@ module Aws::MediaPackageV2
     IdempotencyToken = Shapes::StringShape.new(name: 'IdempotencyToken')
     IngestEndpoint = Shapes::StructureShape.new(name: 'IngestEndpoint')
     IngestEndpointList = Shapes::ListShape.new(name: 'IngestEndpointList')
+    InputSwitchConfiguration = Shapes::StructureShape.new(name: 'InputSwitchConfiguration')
     InputType = Shapes::StringShape.new(name: 'InputType')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
@@ -141,6 +142,7 @@ module Aws::MediaPackageV2
     ManifestName = Shapes::StringShape.new(name: 'ManifestName')
     OriginEndpointListConfiguration = Shapes::StructureShape.new(name: 'OriginEndpointListConfiguration')
     OriginEndpointsList = Shapes::ListShape.new(name: 'OriginEndpointsList')
+    OutputHeaderConfiguration = Shapes::StructureShape.new(name: 'OutputHeaderConfiguration')
     PolicyText = Shapes::StringShape.new(name: 'PolicyText')
     PresetSpeke20Audio = Shapes::StringShape.new(name: 'PresetSpeke20Audio')
     PresetSpeke20Video = Shapes::StringShape.new(name: 'PresetSpeke20Video')
@@ -248,6 +250,8 @@ module Aws::MediaPackageV2
     CreateChannelRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location: "header", location_name: "x-amzn-client-token", metadata: {"idempotencyToken"=>true}))
     CreateChannelRequest.add_member(:input_type, Shapes::ShapeRef.new(shape: InputType, location_name: "InputType"))
     CreateChannelRequest.add_member(:description, Shapes::ShapeRef.new(shape: ResourceDescription, location_name: "Description"))
+    CreateChannelRequest.add_member(:input_switch_configuration, Shapes::ShapeRef.new(shape: InputSwitchConfiguration, location_name: "InputSwitchConfiguration"))
+    CreateChannelRequest.add_member(:output_header_configuration, Shapes::ShapeRef.new(shape: OutputHeaderConfiguration, location_name: "OutputHeaderConfiguration"))
     CreateChannelRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     CreateChannelRequest.struct_class = Types::CreateChannelRequest
 
@@ -261,6 +265,8 @@ module Aws::MediaPackageV2
     CreateChannelResponse.add_member(:input_type, Shapes::ShapeRef.new(shape: InputType, location_name: "InputType"))
     CreateChannelResponse.add_member(:etag, Shapes::ShapeRef.new(shape: EntityTag, location_name: "ETag"))
     CreateChannelResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
+    CreateChannelResponse.add_member(:input_switch_configuration, Shapes::ShapeRef.new(shape: InputSwitchConfiguration, location_name: "InputSwitchConfiguration"))
+    CreateChannelResponse.add_member(:output_header_configuration, Shapes::ShapeRef.new(shape: OutputHeaderConfiguration, location_name: "OutputHeaderConfiguration"))
     CreateChannelResponse.struct_class = Types::CreateChannelResponse
 
     CreateDashManifestConfiguration.add_member(:manifest_name, Shapes::ShapeRef.new(shape: ManifestName, required: true, location_name: "ManifestName"))
@@ -464,6 +470,8 @@ module Aws::MediaPackageV2
     GetChannelResponse.add_member(:input_type, Shapes::ShapeRef.new(shape: InputType, location_name: "InputType"))
     GetChannelResponse.add_member(:etag, Shapes::ShapeRef.new(shape: EntityTag, location_name: "ETag"))
     GetChannelResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
+    GetChannelResponse.add_member(:input_switch_configuration, Shapes::ShapeRef.new(shape: InputSwitchConfiguration, location_name: "InputSwitchConfiguration"))
+    GetChannelResponse.add_member(:output_header_configuration, Shapes::ShapeRef.new(shape: OutputHeaderConfiguration, location_name: "OutputHeaderConfiguration"))
     GetChannelResponse.struct_class = Types::GetChannelResponse
 
     GetDashManifestConfiguration.add_member(:manifest_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location_name: "ManifestName"))
@@ -611,6 +619,9 @@ module Aws::MediaPackageV2
 
     IngestEndpointList.member = Shapes::ShapeRef.new(shape: IngestEndpoint)
 
+    InputSwitchConfiguration.add_member(:mqcs_input_switching, Shapes::ShapeRef.new(shape: Boolean, location_name: "MQCSInputSwitching"))
+    InputSwitchConfiguration.struct_class = Types::InputSwitchConfiguration
+
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     InternalServerException.struct_class = Types::InternalServerException
 
@@ -694,6 +705,9 @@ module Aws::MediaPackageV2
     OriginEndpointListConfiguration.struct_class = Types::OriginEndpointListConfiguration
 
     OriginEndpointsList.member = Shapes::ShapeRef.new(shape: OriginEndpointListConfiguration)
+
+    OutputHeaderConfiguration.add_member(:publish_mqcs, Shapes::ShapeRef.new(shape: Boolean, location_name: "PublishMQCS"))
+    OutputHeaderConfiguration.struct_class = Types::OutputHeaderConfiguration
 
     PutChannelPolicyRequest.add_member(:channel_group_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelGroupName"))
     PutChannelPolicyRequest.add_member(:channel_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelName"))
@@ -789,6 +803,8 @@ module Aws::MediaPackageV2
     UpdateChannelRequest.add_member(:channel_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelName"))
     UpdateChannelRequest.add_member(:etag, Shapes::ShapeRef.new(shape: EntityTag, location: "header", location_name: "x-amzn-update-if-match"))
     UpdateChannelRequest.add_member(:description, Shapes::ShapeRef.new(shape: ResourceDescription, location_name: "Description"))
+    UpdateChannelRequest.add_member(:input_switch_configuration, Shapes::ShapeRef.new(shape: InputSwitchConfiguration, location_name: "InputSwitchConfiguration"))
+    UpdateChannelRequest.add_member(:output_header_configuration, Shapes::ShapeRef.new(shape: OutputHeaderConfiguration, location_name: "OutputHeaderConfiguration"))
     UpdateChannelRequest.struct_class = Types::UpdateChannelRequest
 
     UpdateChannelResponse.add_member(:arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Arn"))
@@ -801,6 +817,8 @@ module Aws::MediaPackageV2
     UpdateChannelResponse.add_member(:input_type, Shapes::ShapeRef.new(shape: InputType, location_name: "InputType"))
     UpdateChannelResponse.add_member(:etag, Shapes::ShapeRef.new(shape: EntityTag, location_name: "ETag"))
     UpdateChannelResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    UpdateChannelResponse.add_member(:input_switch_configuration, Shapes::ShapeRef.new(shape: InputSwitchConfiguration, location_name: "InputSwitchConfiguration"))
+    UpdateChannelResponse.add_member(:output_header_configuration, Shapes::ShapeRef.new(shape: OutputHeaderConfiguration, location_name: "OutputHeaderConfiguration"))
     UpdateChannelResponse.struct_class = Types::UpdateChannelResponse
 
     UpdateOriginEndpointRequest.add_member(:channel_group_name, Shapes::ShapeRef.new(shape: ResourceName, required: true, location: "uri", location_name: "ChannelGroupName"))

@@ -13,6 +13,12 @@ module Aws::TimestreamQuery
       SENSITIVE: []
     end
 
+    class AccountSettingsNotificationConfiguration
+      attr_accessor sns_configuration: Types::SnsConfiguration
+      attr_accessor role_arn: ::String
+      SENSITIVE: []
+    end
+
     class CancelQueryRequest
       attr_accessor query_id: ::String
       SENSITIVE: []
@@ -73,6 +79,7 @@ module Aws::TimestreamQuery
     class DescribeAccountSettingsResponse
       attr_accessor max_query_tcu: ::Integer
       attr_accessor query_pricing_model: ("BYTES_SCANNED" | "COMPUTE_UNITS")
+      attr_accessor query_compute: Types::QueryComputeResponse
       SENSITIVE: []
     end
 
@@ -141,6 +148,13 @@ module Aws::TimestreamQuery
 
     class InvalidEndpointException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class LastUpdate
+      attr_accessor target_query_tcu: ::Integer
+      attr_accessor status: ("PENDING" | "FAILED" | "SUCCEEDED")
+      attr_accessor status_message: ::String
       SENSITIVE: []
     end
 
@@ -213,6 +227,31 @@ module Aws::TimestreamQuery
       attr_accessor columns: ::Array[Types::SelectColumn]
       attr_accessor parameters: ::Array[Types::ParameterMapping]
       SENSITIVE: [:query_string]
+    end
+
+    class ProvisionedCapacityRequest
+      attr_accessor target_query_tcu: ::Integer
+      attr_accessor notification_configuration: Types::AccountSettingsNotificationConfiguration
+      SENSITIVE: []
+    end
+
+    class ProvisionedCapacityResponse
+      attr_accessor active_query_tcu: ::Integer
+      attr_accessor notification_configuration: Types::AccountSettingsNotificationConfiguration
+      attr_accessor last_update: Types::LastUpdate
+      SENSITIVE: []
+    end
+
+    class QueryComputeRequest
+      attr_accessor compute_mode: ("ON_DEMAND" | "PROVISIONED")
+      attr_accessor provisioned_capacity: Types::ProvisionedCapacityRequest
+      SENSITIVE: []
+    end
+
+    class QueryComputeResponse
+      attr_accessor compute_mode: ("ON_DEMAND" | "PROVISIONED")
+      attr_accessor provisioned_capacity: Types::ProvisionedCapacityResponse
+      SENSITIVE: []
     end
 
     class QueryExecutionException
@@ -464,12 +503,14 @@ module Aws::TimestreamQuery
     class UpdateAccountSettingsRequest
       attr_accessor max_query_tcu: ::Integer
       attr_accessor query_pricing_model: ("BYTES_SCANNED" | "COMPUTE_UNITS")
+      attr_accessor query_compute: Types::QueryComputeRequest
       SENSITIVE: []
     end
 
     class UpdateAccountSettingsResponse
       attr_accessor max_query_tcu: ::Integer
       attr_accessor query_pricing_model: ("BYTES_SCANNED" | "COMPUTE_UNITS")
+      attr_accessor query_compute: Types::QueryComputeResponse
       SENSITIVE: []
     end
 

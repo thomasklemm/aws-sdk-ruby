@@ -27,6 +27,7 @@ module Aws::ApplicationDiscoveryService
     ApplicationId = Shapes::StringShape.new(name: 'ApplicationId')
     ApplicationIdsList = Shapes::ListShape.new(name: 'ApplicationIdsList')
     ApplicationName = Shapes::StringShape.new(name: 'ApplicationName')
+    ApplicationWave = Shapes::StringShape.new(name: 'ApplicationWave')
     AssociateConfigurationItemsToApplicationRequest = Shapes::StructureShape.new(name: 'AssociateConfigurationItemsToApplicationRequest')
     AssociateConfigurationItemsToApplicationResponse = Shapes::StructureShape.new(name: 'AssociateConfigurationItemsToApplicationResponse')
     AuthorizationErrorException = Shapes::StructureShape.new(name: 'AuthorizationErrorException')
@@ -123,6 +124,7 @@ module Aws::ApplicationDiscoveryService
     ExportsInfo = Shapes::ListShape.new(name: 'ExportsInfo')
     FailedConfiguration = Shapes::StructureShape.new(name: 'FailedConfiguration')
     FailedConfigurationList = Shapes::ListShape.new(name: 'FailedConfigurationList')
+    FileClassification = Shapes::StringShape.new(name: 'FileClassification')
     Filter = Shapes::StructureShape.new(name: 'Filter')
     FilterName = Shapes::StringShape.new(name: 'FilterName')
     FilterValue = Shapes::StringShape.new(name: 'FilterValue')
@@ -317,6 +319,7 @@ module Aws::ApplicationDiscoveryService
 
     CreateApplicationRequest.add_member(:name, Shapes::ShapeRef.new(shape: ApplicationName, required: true, location_name: "name"))
     CreateApplicationRequest.add_member(:description, Shapes::ShapeRef.new(shape: ApplicationDescription, location_name: "description"))
+    CreateApplicationRequest.add_member(:wave, Shapes::ShapeRef.new(shape: ApplicationWave, location_name: "wave"))
     CreateApplicationRequest.struct_class = Types::CreateApplicationRequest
 
     CreateApplicationResponse.add_member(:configuration_id, Shapes::ShapeRef.new(shape: String, location_name: "configurationId"))
@@ -551,6 +554,7 @@ module Aws::ApplicationDiscoveryService
     ImportTask.add_member(:import_request_time, Shapes::ShapeRef.new(shape: TimeStamp, location_name: "importRequestTime"))
     ImportTask.add_member(:import_completion_time, Shapes::ShapeRef.new(shape: TimeStamp, location_name: "importCompletionTime"))
     ImportTask.add_member(:import_deleted_time, Shapes::ShapeRef.new(shape: TimeStamp, location_name: "importDeletedTime"))
+    ImportTask.add_member(:file_classification, Shapes::ShapeRef.new(shape: FileClassification, location_name: "fileClassification"))
     ImportTask.add_member(:server_import_success, Shapes::ShapeRef.new(shape: Integer, location_name: "serverImportSuccess"))
     ImportTask.add_member(:server_import_failure, Shapes::ShapeRef.new(shape: Integer, location_name: "serverImportFailure"))
     ImportTask.add_member(:application_import_success, Shapes::ShapeRef.new(shape: Integer, location_name: "applicationImportSuccess"))
@@ -703,6 +707,7 @@ module Aws::ApplicationDiscoveryService
     UpdateApplicationRequest.add_member(:configuration_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location_name: "configurationId"))
     UpdateApplicationRequest.add_member(:name, Shapes::ShapeRef.new(shape: ApplicationName, location_name: "name"))
     UpdateApplicationRequest.add_member(:description, Shapes::ShapeRef.new(shape: ApplicationDescription, location_name: "description"))
+    UpdateApplicationRequest.add_member(:wave, Shapes::ShapeRef.new(shape: ApplicationWave, location_name: "wave"))
     UpdateApplicationRequest.struct_class = Types::UpdateApplicationRequest
 
     UpdateApplicationResponse.struct_class = Types::UpdateApplicationResponse
@@ -1053,6 +1058,7 @@ module Aws::ApplicationDiscoveryService
         o.errors << Shapes::ShapeRef.new(shape: HomeRegionNotSetException)
         o.errors << Shapes::ShapeRef.new(shape: OperationNotPermittedException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
       end)
 
       api.add_operation(:start_continuous_export, Seahorse::Model::Operation.new.tap do |o|

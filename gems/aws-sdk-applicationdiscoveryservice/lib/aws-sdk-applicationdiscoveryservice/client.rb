@@ -563,10 +563,13 @@ module Aws::ApplicationDiscoveryService
     # Creates an application with the given name and description.
     #
     # @option params [required, String] :name
-    #   Name of the application to be created.
+    #   The name of the application to be created.
     #
     # @option params [String] :description
-    #   Description of the application to be created.
+    #   The description of the application to be created.
+    #
+    # @option params [String] :wave
+    #   The name of the migration wave of the application to be created.
     #
     # @return [Types::CreateApplicationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -577,6 +580,7 @@ module Aws::ApplicationDiscoveryService
     #   resp = client.create_application({
     #     name: "ApplicationName", # required
     #     description: "ApplicationDescription",
+    #     wave: "ApplicationWave",
     #   })
     #
     # @example Response structure
@@ -1050,7 +1054,7 @@ module Aws::ApplicationDiscoveryService
     #   resp = client.describe_import_tasks({
     #     filters: [
     #       {
-    #         name: "IMPORT_TASK_ID", # accepts IMPORT_TASK_ID, STATUS, NAME
+    #         name: "IMPORT_TASK_ID", # accepts IMPORT_TASK_ID, STATUS, NAME, FILE_CLASSIFICATION
     #         values: ["ImportTaskFilterValue"],
     #       },
     #     ],
@@ -1066,10 +1070,11 @@ module Aws::ApplicationDiscoveryService
     #   resp.tasks[0].client_request_token #=> String
     #   resp.tasks[0].name #=> String
     #   resp.tasks[0].import_url #=> String
-    #   resp.tasks[0].status #=> String, one of "IMPORT_IN_PROGRESS", "IMPORT_COMPLETE", "IMPORT_COMPLETE_WITH_ERRORS", "IMPORT_FAILED", "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED", "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED", "DELETE_IN_PROGRESS", "DELETE_COMPLETE", "DELETE_FAILED", "DELETE_FAILED_LIMIT_EXCEEDED", "INTERNAL_ERROR"
+    #   resp.tasks[0].status #=> String, one of "IMPORT_IN_PROGRESS", "IMPORT_COMPLETE", "IMPORT_COMPLETE_WITH_ERRORS", "IMPORT_FAILED", "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED", "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED", "IMPORT_FAILED_UNSUPPORTED_FILE_TYPE", "DELETE_IN_PROGRESS", "DELETE_COMPLETE", "DELETE_FAILED", "DELETE_FAILED_LIMIT_EXCEEDED", "INTERNAL_ERROR"
     #   resp.tasks[0].import_request_time #=> Time
     #   resp.tasks[0].import_completion_time #=> Time
     #   resp.tasks[0].import_deleted_time #=> Time
+    #   resp.tasks[0].file_classification #=> String, one of "MODELIZEIT_EXPORT", "RVTOOLS_EXPORT", "VMWARE_NSX_EXPORT", "IMPORT_TEMPLATE"
     #   resp.tasks[0].server_import_success #=> Integer
     #   resp.tasks[0].server_import_failure #=> Integer
     #   resp.tasks[0].application_import_success #=> Integer
@@ -1691,10 +1696,11 @@ module Aws::ApplicationDiscoveryService
     #   resp.task.client_request_token #=> String
     #   resp.task.name #=> String
     #   resp.task.import_url #=> String
-    #   resp.task.status #=> String, one of "IMPORT_IN_PROGRESS", "IMPORT_COMPLETE", "IMPORT_COMPLETE_WITH_ERRORS", "IMPORT_FAILED", "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED", "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED", "DELETE_IN_PROGRESS", "DELETE_COMPLETE", "DELETE_FAILED", "DELETE_FAILED_LIMIT_EXCEEDED", "INTERNAL_ERROR"
+    #   resp.task.status #=> String, one of "IMPORT_IN_PROGRESS", "IMPORT_COMPLETE", "IMPORT_COMPLETE_WITH_ERRORS", "IMPORT_FAILED", "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED", "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED", "IMPORT_FAILED_UNSUPPORTED_FILE_TYPE", "DELETE_IN_PROGRESS", "DELETE_COMPLETE", "DELETE_FAILED", "DELETE_FAILED_LIMIT_EXCEEDED", "INTERNAL_ERROR"
     #   resp.task.import_request_time #=> Time
     #   resp.task.import_completion_time #=> Time
     #   resp.task.import_deleted_time #=> Time
+    #   resp.task.file_classification #=> String, one of "MODELIZEIT_EXPORT", "RVTOOLS_EXPORT", "VMWARE_NSX_EXPORT", "IMPORT_TEMPLATE"
     #   resp.task.server_import_success #=> Integer
     #   resp.task.server_import_failure #=> Integer
     #   resp.task.application_import_success #=> Integer
@@ -1777,6 +1783,9 @@ module Aws::ApplicationDiscoveryService
     # @option params [String] :description
     #   New description of the application to be updated.
     #
+    # @option params [String] :wave
+    #   The new migration wave of the application that you want to update.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -1785,6 +1794,7 @@ module Aws::ApplicationDiscoveryService
     #     configuration_id: "ApplicationId", # required
     #     name: "ApplicationName",
     #     description: "ApplicationDescription",
+    #     wave: "ApplicationWave",
     #   })
     #
     # @overload update_application(params = {})
@@ -1812,7 +1822,7 @@ module Aws::ApplicationDiscoveryService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-applicationdiscoveryservice'
-      context[:gem_version] = '1.80.0'
+      context[:gem_version] = '1.81.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

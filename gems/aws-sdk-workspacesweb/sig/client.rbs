@@ -87,6 +87,18 @@ module Aws
                                       ) -> _AssociateBrowserSettingsResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateBrowserSettingsResponseSuccess
 
+      interface _AssociateDataProtectionSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::AssociateDataProtectionSettingsResponse]
+        def data_protection_settings_arn: () -> ::String
+        def portal_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpacesWeb/Client.html#associate_data_protection_settings-instance_method
+      def associate_data_protection_settings: (
+                                                data_protection_settings_arn: ::String,
+                                                portal_arn: ::String
+                                              ) -> _AssociateDataProtectionSettingsResponseSuccess
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateDataProtectionSettingsResponseSuccess
+
       interface _AssociateIpAccessSettingsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::AssociateIpAccessSettingsResponse]
         def ip_access_settings_arn: () -> ::String
@@ -165,6 +177,49 @@ module Aws
                                      ]
                                    ) -> _CreateBrowserSettingsResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBrowserSettingsResponseSuccess
+
+      interface _CreateDataProtectionSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateDataProtectionSettingsResponse]
+        def data_protection_settings_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpacesWeb/Client.html#create_data_protection_settings-instance_method
+      def create_data_protection_settings: (
+                                             ?additional_encryption_context: Hash[::String, ::String],
+                                             ?client_token: ::String,
+                                             ?customer_managed_key: ::String,
+                                             ?description: ::String,
+                                             ?display_name: ::String,
+                                             ?inline_redaction_configuration: {
+                                               global_confidence_level: ::Integer?,
+                                               global_enforced_urls: Array[::String]?,
+                                               global_exempt_urls: Array[::String]?,
+                                               inline_redaction_patterns: Array[
+                                                 {
+                                                   built_in_pattern_id: ::String?,
+                                                   confidence_level: ::Integer?,
+                                                   custom_pattern: {
+                                                     keyword_regex: ::String?,
+                                                     pattern_description: ::String?,
+                                                     pattern_name: ::String,
+                                                     pattern_regex: ::String
+                                                   }?,
+                                                   enforced_urls: Array[::String]?,
+                                                   exempt_urls: Array[::String]?,
+                                                   redaction_place_holder: {
+                                                     redaction_place_holder_text: ::String?,
+                                                     redaction_place_holder_type: ("CustomText")
+                                                   }
+                                                 },
+                                               ]
+                                             },
+                                             ?tags: Array[
+                                               {
+                                                 key: ::String,
+                                                 value: ::String
+                                               },
+                                             ]
+                                           ) -> _CreateDataProtectionSettingsResponseSuccess
+                                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDataProtectionSettingsResponseSuccess
 
       interface _CreateIdentityProviderResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateIdentityProviderResponse]
@@ -339,6 +394,15 @@ module Aws
                                    ) -> _DeleteBrowserSettingsResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteBrowserSettingsResponseSuccess
 
+      interface _DeleteDataProtectionSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDataProtectionSettingsResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpacesWeb/Client.html#delete_data_protection_settings-instance_method
+      def delete_data_protection_settings: (
+                                             data_protection_settings_arn: ::String
+                                           ) -> _DeleteDataProtectionSettingsResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteDataProtectionSettingsResponseSuccess
+
       interface _DeleteIdentityProviderResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteIdentityProviderResponse]
       end
@@ -411,6 +475,15 @@ module Aws
                                          ) -> _DisassociateBrowserSettingsResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateBrowserSettingsResponseSuccess
 
+      interface _DisassociateDataProtectionSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DisassociateDataProtectionSettingsResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpacesWeb/Client.html#disassociate_data_protection_settings-instance_method
+      def disassociate_data_protection_settings: (
+                                                   portal_arn: ::String
+                                                 ) -> _DisassociateDataProtectionSettingsResponseSuccess
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateDataProtectionSettingsResponseSuccess
+
       interface _DisassociateIpAccessSettingsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DisassociateIpAccessSettingsResponse]
       end
@@ -475,6 +548,16 @@ module Aws
                                   browser_settings_arn: ::String
                                 ) -> _GetBrowserSettingsResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBrowserSettingsResponseSuccess
+
+      interface _GetDataProtectionSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetDataProtectionSettingsResponse]
+        def data_protection_settings: () -> Types::DataProtectionSettings
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpacesWeb/Client.html#get_data_protection_settings-instance_method
+      def get_data_protection_settings: (
+                                          data_protection_settings_arn: ::String
+                                        ) -> _GetDataProtectionSettingsResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDataProtectionSettingsResponseSuccess
 
       interface _GetIdentityProviderResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetIdentityProviderResponse]
@@ -591,6 +674,18 @@ module Aws
                                    ?next_token: ::String
                                  ) -> _ListBrowserSettingsResponseSuccess
                                | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBrowserSettingsResponseSuccess
+
+      interface _ListDataProtectionSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDataProtectionSettingsResponse]
+        def data_protection_settings: () -> ::Array[Types::DataProtectionSettingsSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpacesWeb/Client.html#list_data_protection_settings-instance_method
+      def list_data_protection_settings: (
+                                           ?max_results: ::Integer,
+                                           ?next_token: ::String
+                                         ) -> _ListDataProtectionSettingsResponseSuccess
+                                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDataProtectionSettingsResponseSuccess
 
       interface _ListIdentityProvidersResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListIdentityProvidersResponse]
@@ -755,6 +850,42 @@ module Aws
                                      ?client_token: ::String
                                    ) -> _UpdateBrowserSettingsResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBrowserSettingsResponseSuccess
+
+      interface _UpdateDataProtectionSettingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDataProtectionSettingsResponse]
+        def data_protection_settings: () -> Types::DataProtectionSettings
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/WorkSpacesWeb/Client.html#update_data_protection_settings-instance_method
+      def update_data_protection_settings: (
+                                             ?client_token: ::String,
+                                             data_protection_settings_arn: ::String,
+                                             ?description: ::String,
+                                             ?display_name: ::String,
+                                             ?inline_redaction_configuration: {
+                                               global_confidence_level: ::Integer?,
+                                               global_enforced_urls: Array[::String]?,
+                                               global_exempt_urls: Array[::String]?,
+                                               inline_redaction_patterns: Array[
+                                                 {
+                                                   built_in_pattern_id: ::String?,
+                                                   confidence_level: ::Integer?,
+                                                   custom_pattern: {
+                                                     keyword_regex: ::String?,
+                                                     pattern_description: ::String?,
+                                                     pattern_name: ::String,
+                                                     pattern_regex: ::String
+                                                   }?,
+                                                   enforced_urls: Array[::String]?,
+                                                   exempt_urls: Array[::String]?,
+                                                   redaction_place_holder: {
+                                                     redaction_place_holder_text: ::String?,
+                                                     redaction_place_holder_type: ("CustomText")
+                                                   }
+                                                 },
+                                               ]
+                                             }
+                                           ) -> _UpdateDataProtectionSettingsResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDataProtectionSettingsResponseSuccess
 
       interface _UpdateIdentityProviderResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateIdentityProviderResponse]

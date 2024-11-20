@@ -2136,6 +2136,14 @@ module Aws::MediaConvert
     # Working With Queues in the User Guide at
     # https://docs.aws.amazon.com/mediaconvert/latest/ug/working-with-queues.html
     #
+    # @option params [Integer] :concurrent_jobs
+    #   Specify the maximum number of jobs your queue can process
+    #   concurrently. For on-demand queues, the value you enter is constrained
+    #   by your service quotas for Maximum concurrent jobs, per on-demand
+    #   queue and Maximum concurrent jobs, per account. For reserved queues,
+    #   specify the number of jobs you can process concurrently in your
+    #   reservation plan instead.
+    #
     # @option params [String] :description
     #   Optional. A description of the queue that you are creating.
     #
@@ -2169,6 +2177,7 @@ module Aws::MediaConvert
     # @example Request syntax with placeholder values
     #
     #   resp = client.create_queue({
+    #     concurrent_jobs: 1,
     #     description: "__string",
     #     name: "__string", # required
     #     pricing_plan: "ON_DEMAND", # accepts ON_DEMAND, RESERVED
@@ -2186,6 +2195,7 @@ module Aws::MediaConvert
     # @example Response structure
     #
     #   resp.queue.arn #=> String
+    #   resp.queue.concurrent_jobs #=> Integer
     #   resp.queue.created_at #=> Time
     #   resp.queue.description #=> String
     #   resp.queue.last_updated #=> Time
@@ -2198,6 +2208,11 @@ module Aws::MediaConvert
     #   resp.queue.reservation_plan.renewal_type #=> String, one of "AUTO_RENEW", "EXPIRE"
     #   resp.queue.reservation_plan.reserved_slots #=> Integer
     #   resp.queue.reservation_plan.status #=> String, one of "ACTIVE", "EXPIRED"
+    #   resp.queue.service_overrides #=> Array
+    #   resp.queue.service_overrides[0].message #=> String
+    #   resp.queue.service_overrides[0].name #=> String
+    #   resp.queue.service_overrides[0].override_value #=> String
+    #   resp.queue.service_overrides[0].value #=> String
     #   resp.queue.status #=> String, one of "ACTIVE", "PAUSED"
     #   resp.queue.submitted_jobs_count #=> Integer
     #   resp.queue.type #=> String, one of "SYSTEM", "CUSTOM"
@@ -3109,6 +3124,7 @@ module Aws::MediaConvert
     # @example Response structure
     #
     #   resp.queue.arn #=> String
+    #   resp.queue.concurrent_jobs #=> Integer
     #   resp.queue.created_at #=> Time
     #   resp.queue.description #=> String
     #   resp.queue.last_updated #=> Time
@@ -3121,6 +3137,11 @@ module Aws::MediaConvert
     #   resp.queue.reservation_plan.renewal_type #=> String, one of "AUTO_RENEW", "EXPIRE"
     #   resp.queue.reservation_plan.reserved_slots #=> Integer
     #   resp.queue.reservation_plan.status #=> String, one of "ACTIVE", "EXPIRED"
+    #   resp.queue.service_overrides #=> Array
+    #   resp.queue.service_overrides[0].message #=> String
+    #   resp.queue.service_overrides[0].name #=> String
+    #   resp.queue.service_overrides[0].override_value #=> String
+    #   resp.queue.service_overrides[0].value #=> String
     #   resp.queue.status #=> String, one of "ACTIVE", "PAUSED"
     #   resp.queue.submitted_jobs_count #=> Integer
     #   resp.queue.type #=> String, one of "SYSTEM", "CUSTOM"
@@ -3953,6 +3974,8 @@ module Aws::MediaConvert
     #
     #   * {Types::ListQueuesResponse#next_token #next_token} => String
     #   * {Types::ListQueuesResponse#queues #queues} => Array&lt;Types::Queue&gt;
+    #   * {Types::ListQueuesResponse#total_concurrent_jobs #total_concurrent_jobs} => Integer
+    #   * {Types::ListQueuesResponse#unallocated_concurrent_jobs #unallocated_concurrent_jobs} => Integer
     #
     # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
@@ -3970,6 +3993,7 @@ module Aws::MediaConvert
     #   resp.next_token #=> String
     #   resp.queues #=> Array
     #   resp.queues[0].arn #=> String
+    #   resp.queues[0].concurrent_jobs #=> Integer
     #   resp.queues[0].created_at #=> Time
     #   resp.queues[0].description #=> String
     #   resp.queues[0].last_updated #=> Time
@@ -3982,9 +4006,16 @@ module Aws::MediaConvert
     #   resp.queues[0].reservation_plan.renewal_type #=> String, one of "AUTO_RENEW", "EXPIRE"
     #   resp.queues[0].reservation_plan.reserved_slots #=> Integer
     #   resp.queues[0].reservation_plan.status #=> String, one of "ACTIVE", "EXPIRED"
+    #   resp.queues[0].service_overrides #=> Array
+    #   resp.queues[0].service_overrides[0].message #=> String
+    #   resp.queues[0].service_overrides[0].name #=> String
+    #   resp.queues[0].service_overrides[0].override_value #=> String
+    #   resp.queues[0].service_overrides[0].value #=> String
     #   resp.queues[0].status #=> String, one of "ACTIVE", "PAUSED"
     #   resp.queues[0].submitted_jobs_count #=> Integer
     #   resp.queues[0].type #=> String, one of "SYSTEM", "CUSTOM"
+    #   resp.total_concurrent_jobs #=> Integer
+    #   resp.unallocated_concurrent_jobs #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/ListQueues AWS API Documentation
     #
@@ -5744,6 +5775,14 @@ module Aws::MediaConvert
 
     # Modify one of your existing queues.
     #
+    # @option params [Integer] :concurrent_jobs
+    #   Specify the maximum number of jobs your queue can process
+    #   concurrently. For on-demand queues, the value you enter is constrained
+    #   by your service quotas for Maximum concurrent jobs, per on-demand
+    #   queue and Maximum concurrent jobs, per account. For reserved queues,
+    #   update your reservation plan instead in order to increase your yearly
+    #   commitment.
+    #
     # @option params [String] :description
     #   The new description for the queue, if you are changing it.
     #
@@ -5771,6 +5810,7 @@ module Aws::MediaConvert
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_queue({
+    #     concurrent_jobs: 1,
     #     description: "__string",
     #     name: "__string", # required
     #     reservation_plan_settings: {
@@ -5784,6 +5824,7 @@ module Aws::MediaConvert
     # @example Response structure
     #
     #   resp.queue.arn #=> String
+    #   resp.queue.concurrent_jobs #=> Integer
     #   resp.queue.created_at #=> Time
     #   resp.queue.description #=> String
     #   resp.queue.last_updated #=> Time
@@ -5796,6 +5837,11 @@ module Aws::MediaConvert
     #   resp.queue.reservation_plan.renewal_type #=> String, one of "AUTO_RENEW", "EXPIRE"
     #   resp.queue.reservation_plan.reserved_slots #=> Integer
     #   resp.queue.reservation_plan.status #=> String, one of "ACTIVE", "EXPIRED"
+    #   resp.queue.service_overrides #=> Array
+    #   resp.queue.service_overrides[0].message #=> String
+    #   resp.queue.service_overrides[0].name #=> String
+    #   resp.queue.service_overrides[0].override_value #=> String
+    #   resp.queue.service_overrides[0].value #=> String
     #   resp.queue.status #=> String, one of "ACTIVE", "PAUSED"
     #   resp.queue.submitted_jobs_count #=> Integer
     #   resp.queue.type #=> String, one of "SYSTEM", "CUSTOM"
@@ -5827,7 +5873,7 @@ module Aws::MediaConvert
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediaconvert'
-      context[:gem_version] = '1.144.0'
+      context[:gem_version] = '1.145.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -447,13 +447,30 @@ module Aws::RecycleBin
 
     # @!group API Operations
 
-    # Creates a Recycle Bin retention rule. For more information, see [
-    # Create Recycle Bin retention rules][1] in the *Amazon Elastic Compute
-    # Cloud User Guide*.
+    # Creates a Recycle Bin retention rule. You can create two types of
+    # retention rules:
+    #
+    # * **Tag-level retention rules** - These retention rules use resource
+    #   tags to identify the resources to protect. For each retention rule,
+    #   you specify one or more tag key and value pairs. Resources (of the
+    #   specified type) that have at least one of these tag key and value
+    #   pairs are automatically retained in the Recycle Bin upon deletion.
+    #   Use this type of retention rule to protect specific resources in
+    #   your account based on their tags.
+    #
+    # * **Region-level retention rules** - These retention rules, by
+    #   default, apply to all of the resources (of the specified type) in
+    #   the Region, even if the resources are not tagged. However, you can
+    #   specify exclusion tags to exclude resources that have specific tags.
+    #   Use this type of retention rule to protect all resources of a
+    #   specific type in a Region.
+    #
+    # For more information, see [ Create Recycle Bin retention rules][1] in
+    # the *Amazon EBS User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/recycle-bin-working-with-rules.html#recycle-bin-create-rule
+    # [1]: https://docs.aws.amazon.com/ebs/latest/userguide/recycle-bin.html
     #
     # @option params [required, Types::RetentionPeriod] :retention_period
     #   Information about the retention period for which the retention rule is
@@ -472,13 +489,13 @@ module Aws::RecycleBin
     #   `EC2_IMAGE`.
     #
     # @option params [Array<Types::ResourceTag>] :resource_tags
-    #   Specifies the resource tags to use to identify resources that are to
-    #   be retained by a tag-level retention rule. For tag-level retention
-    #   rules, only deleted resources, of the specified resource type, that
-    #   have one or more of the specified tag key and value pairs are
-    #   retained. If a resource is deleted, but it does not have any of the
-    #   specified tag key and value pairs, it is immediately deleted without
-    #   being retained by the retention rule.
+    #   \[Tag-level retention rules only\] Specifies the resource tags to use
+    #   to identify resources that are to be retained by a tag-level retention
+    #   rule. For tag-level retention rules, only deleted resources, of the
+    #   specified resource type, that have one or more of the specified tag
+    #   key and value pairs are retained. If a resource is deleted, but it
+    #   does not have any of the specified tag key and value pairs, it is
+    #   immediately deleted without being retained by the retention rule.
     #
     #   You can add the same tag key and value pair to a maximum or five
     #   retention rules.
@@ -492,6 +509,14 @@ module Aws::RecycleBin
     # @option params [Types::LockConfiguration] :lock_configuration
     #   Information about the retention rule lock configuration.
     #
+    # @option params [Array<Types::ResourceTag>] :exclude_resource_tags
+    #   \[Region-level retention rules only\] Specifies the exclusion tags to
+    #   use to identify resources that are to be excluded, or ignored, by a
+    #   Region-level retention rule. Resources that have any of these tags are
+    #   not retained by the retention rule upon deletion.
+    #
+    #   You can't specify exclusion tags for tag-level retention rules.
+    #
     # @return [Types::CreateRuleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateRuleResponse#identifier #identifier} => String
@@ -504,6 +529,7 @@ module Aws::RecycleBin
     #   * {Types::CreateRuleResponse#lock_configuration #lock_configuration} => Types::LockConfiguration
     #   * {Types::CreateRuleResponse#lock_state #lock_state} => String
     #   * {Types::CreateRuleResponse#rule_arn #rule_arn} => String
+    #   * {Types::CreateRuleResponse#exclude_resource_tags #exclude_resource_tags} => Array&lt;Types::ResourceTag&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -532,6 +558,12 @@ module Aws::RecycleBin
     #         unlock_delay_unit: "DAYS", # required, accepts DAYS
     #       },
     #     },
+    #     exclude_resource_tags: [
+    #       {
+    #         resource_tag_key: "ResourceTagKey", # required
+    #         resource_tag_value: "ResourceTagValue",
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -552,6 +584,9 @@ module Aws::RecycleBin
     #   resp.lock_configuration.unlock_delay.unlock_delay_unit #=> String, one of "DAYS"
     #   resp.lock_state #=> String, one of "locked", "pending_unlock", "unlocked"
     #   resp.rule_arn #=> String
+    #   resp.exclude_resource_tags #=> Array
+    #   resp.exclude_resource_tags[0].resource_tag_key #=> String
+    #   resp.exclude_resource_tags[0].resource_tag_value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/CreateRule AWS API Documentation
     #
@@ -607,6 +642,7 @@ module Aws::RecycleBin
     #   * {Types::GetRuleResponse#lock_state #lock_state} => String
     #   * {Types::GetRuleResponse#lock_end_time #lock_end_time} => Time
     #   * {Types::GetRuleResponse#rule_arn #rule_arn} => String
+    #   * {Types::GetRuleResponse#exclude_resource_tags #exclude_resource_tags} => Array&lt;Types::ResourceTag&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -630,6 +666,9 @@ module Aws::RecycleBin
     #   resp.lock_state #=> String, one of "locked", "pending_unlock", "unlocked"
     #   resp.lock_end_time #=> Time
     #   resp.rule_arn #=> String
+    #   resp.exclude_resource_tags #=> Array
+    #   resp.exclude_resource_tags[0].resource_tag_key #=> String
+    #   resp.exclude_resource_tags[0].resource_tag_value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/GetRule AWS API Documentation
     #
@@ -658,12 +697,17 @@ module Aws::RecycleBin
     #   retention rules that retain EBS-backed AMIs, specify `EC2_IMAGE`.
     #
     # @option params [Array<Types::ResourceTag>] :resource_tags
-    #   Information about the resource tags used to identify resources that
-    #   are retained by the retention rule.
+    #   \[Tag-level retention rules only\] Information about the resource tags
+    #   used to identify resources that are retained by the retention rule.
     #
     # @option params [String] :lock_state
     #   The lock state of the retention rules to list. Only retention rules
     #   with the specified lock state are returned.
+    #
+    # @option params [Array<Types::ResourceTag>] :exclude_resource_tags
+    #   \[Region-level retention rules only\] Information about the exclusion
+    #   tags used to identify resources that are to be excluded, or ignored,
+    #   by the retention rule.
     #
     # @return [Types::ListRulesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -685,6 +729,12 @@ module Aws::RecycleBin
     #       },
     #     ],
     #     lock_state: "locked", # accepts locked, pending_unlock, unlocked
+    #     exclude_resource_tags: [
+    #       {
+    #         resource_tag_key: "ResourceTagKey", # required
+    #         resource_tag_value: "ResourceTagValue",
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -737,8 +787,13 @@ module Aws::RecycleBin
       req.send_request(options)
     end
 
-    # Locks a retention rule. A locked retention rule can't be modified or
-    # deleted.
+    # Locks a Region-level retention rule. A locked retention rule can't be
+    # modified or deleted.
+    #
+    # <note markdown="1"> You can't lock tag-level retention rules, or Region-level retention
+    # rules that have exclusion tags.
+    #
+    #  </note>
     #
     # @option params [required, String] :identifier
     #   The unique ID of the retention rule.
@@ -757,6 +812,7 @@ module Aws::RecycleBin
     #   * {Types::LockRuleResponse#lock_configuration #lock_configuration} => Types::LockConfiguration
     #   * {Types::LockRuleResponse#lock_state #lock_state} => String
     #   * {Types::LockRuleResponse#rule_arn #rule_arn} => String
+    #   * {Types::LockRuleResponse#exclude_resource_tags #exclude_resource_tags} => Array&lt;Types::ResourceTag&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -785,6 +841,9 @@ module Aws::RecycleBin
     #   resp.lock_configuration.unlock_delay.unlock_delay_unit #=> String, one of "DAYS"
     #   resp.lock_state #=> String, one of "locked", "pending_unlock", "unlocked"
     #   resp.rule_arn #=> String
+    #   resp.exclude_resource_tags #=> Array
+    #   resp.exclude_resource_tags[0].resource_tag_key #=> String
+    #   resp.exclude_resource_tags[0].resource_tag_value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/LockRule AWS API Documentation
     #
@@ -844,6 +903,7 @@ module Aws::RecycleBin
     #   * {Types::UnlockRuleResponse#lock_state #lock_state} => String
     #   * {Types::UnlockRuleResponse#lock_end_time #lock_end_time} => Time
     #   * {Types::UnlockRuleResponse#rule_arn #rule_arn} => String
+    #   * {Types::UnlockRuleResponse#exclude_resource_tags #exclude_resource_tags} => Array&lt;Types::ResourceTag&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -867,6 +927,9 @@ module Aws::RecycleBin
     #   resp.lock_state #=> String, one of "locked", "pending_unlock", "unlocked"
     #   resp.lock_end_time #=> Time
     #   resp.rule_arn #=> String
+    #   resp.exclude_resource_tags #=> Array
+    #   resp.exclude_resource_tags[0].resource_tag_key #=> String
+    #   resp.exclude_resource_tags[0].resource_tag_value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/UnlockRule AWS API Documentation
     #
@@ -932,13 +995,13 @@ module Aws::RecycleBin
     #    </note>
     #
     # @option params [Array<Types::ResourceTag>] :resource_tags
-    #   Specifies the resource tags to use to identify resources that are to
-    #   be retained by a tag-level retention rule. For tag-level retention
-    #   rules, only deleted resources, of the specified resource type, that
-    #   have one or more of the specified tag key and value pairs are
-    #   retained. If a resource is deleted, but it does not have any of the
-    #   specified tag key and value pairs, it is immediately deleted without
-    #   being retained by the retention rule.
+    #   \[Tag-level retention rules only\] Specifies the resource tags to use
+    #   to identify resources that are to be retained by a tag-level retention
+    #   rule. For tag-level retention rules, only deleted resources, of the
+    #   specified resource type, that have one or more of the specified tag
+    #   key and value pairs are retained. If a resource is deleted, but it
+    #   does not have any of the specified tag key and value pairs, it is
+    #   immediately deleted without being retained by the retention rule.
     #
     #   You can add the same tag key and value pair to a maximum or five
     #   retention rules.
@@ -948,6 +1011,14 @@ module Aws::RecycleBin
     #   It retains all deleted resources of the specified resource type in the
     #   Region in which the rule is created, even if the resources are not
     #   tagged.
+    #
+    # @option params [Array<Types::ResourceTag>] :exclude_resource_tags
+    #   \[Region-level retention rules only\] Specifies the exclusion tags to
+    #   use to identify resources that are to be excluded, or ignored, by a
+    #   Region-level retention rule. Resources that have any of these tags are
+    #   not retained by the retention rule upon deletion.
+    #
+    #   You can't specify exclusion tags for tag-level retention rules.
     #
     # @return [Types::UpdateRuleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -960,6 +1031,7 @@ module Aws::RecycleBin
     #   * {Types::UpdateRuleResponse#lock_state #lock_state} => String
     #   * {Types::UpdateRuleResponse#lock_end_time #lock_end_time} => Time
     #   * {Types::UpdateRuleResponse#rule_arn #rule_arn} => String
+    #   * {Types::UpdateRuleResponse#exclude_resource_tags #exclude_resource_tags} => Array&lt;Types::ResourceTag&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -972,6 +1044,12 @@ module Aws::RecycleBin
     #     description: "Description",
     #     resource_type: "EBS_SNAPSHOT", # accepts EBS_SNAPSHOT, EC2_IMAGE
     #     resource_tags: [
+    #       {
+    #         resource_tag_key: "ResourceTagKey", # required
+    #         resource_tag_value: "ResourceTagValue",
+    #       },
+    #     ],
+    #     exclude_resource_tags: [
     #       {
     #         resource_tag_key: "ResourceTagKey", # required
     #         resource_tag_value: "ResourceTagValue",
@@ -993,6 +1071,9 @@ module Aws::RecycleBin
     #   resp.lock_state #=> String, one of "locked", "pending_unlock", "unlocked"
     #   resp.lock_end_time #=> Time
     #   resp.rule_arn #=> String
+    #   resp.exclude_resource_tags #=> Array
+    #   resp.exclude_resource_tags[0].resource_tag_key #=> String
+    #   resp.exclude_resource_tags[0].resource_tag_value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rbin-2021-06-15/UpdateRule AWS API Documentation
     #
@@ -1021,7 +1102,7 @@ module Aws::RecycleBin
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-recyclebin'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

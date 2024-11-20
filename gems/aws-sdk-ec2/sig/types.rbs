@@ -934,6 +934,16 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class BaselinePerformanceFactors
+      attr_accessor cpu: Types::CpuPerformanceFactor
+      SENSITIVE: []
+    end
+
+    class BaselinePerformanceFactorsRequest
+      attr_accessor cpu: Types::CpuPerformanceFactorRequest
+      SENSITIVE: []
+    end
+
     class BlobAttributeValue
       attr_accessor value: ::String
       SENSITIVE: []
@@ -1243,13 +1253,13 @@ module Aws::EC2
     end
 
     class CapacityReservationSpecification
-      attr_accessor capacity_reservation_preference: ("open" | "none")
+      attr_accessor capacity_reservation_preference: ("capacity-reservations-only" | "open" | "none")
       attr_accessor capacity_reservation_target: Types::CapacityReservationTarget
       SENSITIVE: []
     end
 
     class CapacityReservationSpecificationResponse
-      attr_accessor capacity_reservation_preference: ("open" | "none")
+      attr_accessor capacity_reservation_preference: ("capacity-reservations-only" | "open" | "none")
       attr_accessor capacity_reservation_target: Types::CapacityReservationTargetResponse
       SENSITIVE: []
     end
@@ -1642,6 +1652,16 @@ module Aws::EC2
       attr_accessor core_count: ::Integer
       attr_accessor threads_per_core: ::Integer
       attr_accessor amd_sev_snp: ("enabled" | "disabled")
+      SENSITIVE: []
+    end
+
+    class CpuPerformanceFactor
+      attr_accessor references: ::Array[Types::PerformanceFactorReference]
+      SENSITIVE: []
+    end
+
+    class CpuPerformanceFactorRequest
+      attr_accessor references: ::Array[Types::PerformanceFactorReferenceRequest]
       SENSITIVE: []
     end
 
@@ -9349,7 +9369,7 @@ module Aws::EC2
     class InstanceRequirements
       attr_accessor v_cpu_count: Types::VCpuCountRange
       attr_accessor memory_mi_b: Types::MemoryMiB
-      attr_accessor cpu_manufacturers: ::Array[("intel" | "amd" | "amazon-web-services")]
+      attr_accessor cpu_manufacturers: ::Array[("intel" | "amd" | "amazon-web-services" | "apple")]
       attr_accessor memory_gi_b_per_v_cpu: Types::MemoryGiBPerVCpu
       attr_accessor excluded_instance_types: ::Array[::String]
       attr_accessor instance_generations: ::Array[("current" | "previous")]
@@ -9371,13 +9391,14 @@ module Aws::EC2
       attr_accessor network_bandwidth_gbps: Types::NetworkBandwidthGbps
       attr_accessor allowed_instance_types: ::Array[::String]
       attr_accessor max_spot_price_as_percentage_of_optimal_on_demand_price: ::Integer
+      attr_accessor baseline_performance_factors: Types::BaselinePerformanceFactors
       SENSITIVE: []
     end
 
     class InstanceRequirementsRequest
       attr_accessor v_cpu_count: Types::VCpuCountRangeRequest
       attr_accessor memory_mi_b: Types::MemoryMiBRequest
-      attr_accessor cpu_manufacturers: ::Array[("intel" | "amd" | "amazon-web-services")]
+      attr_accessor cpu_manufacturers: ::Array[("intel" | "amd" | "amazon-web-services" | "apple")]
       attr_accessor memory_gi_b_per_v_cpu: Types::MemoryGiBPerVCpuRequest
       attr_accessor excluded_instance_types: ::Array[::String]
       attr_accessor instance_generations: ::Array[("current" | "previous")]
@@ -9399,6 +9420,7 @@ module Aws::EC2
       attr_accessor network_bandwidth_gbps: Types::NetworkBandwidthGbpsRequest
       attr_accessor allowed_instance_types: ::Array[::String]
       attr_accessor max_spot_price_as_percentage_of_optimal_on_demand_price: ::Integer
+      attr_accessor baseline_performance_factors: Types::BaselinePerformanceFactorsRequest
       SENSITIVE: []
     end
 
@@ -10000,13 +10022,13 @@ module Aws::EC2
     end
 
     class LaunchTemplateCapacityReservationSpecificationRequest
-      attr_accessor capacity_reservation_preference: ("open" | "none")
+      attr_accessor capacity_reservation_preference: ("capacity-reservations-only" | "open" | "none")
       attr_accessor capacity_reservation_target: Types::CapacityReservationTarget
       SENSITIVE: []
     end
 
     class LaunchTemplateCapacityReservationSpecificationResponse
-      attr_accessor capacity_reservation_preference: ("open" | "none")
+      attr_accessor capacity_reservation_preference: ("capacity-reservations-only" | "open" | "none")
       attr_accessor capacity_reservation_target: Types::CapacityReservationTargetResponse
       SENSITIVE: []
     end
@@ -12154,6 +12176,16 @@ module Aws::EC2
       attr_accessor core_network_id: ::String
       attr_accessor owner_id: ::String
       attr_accessor region: ::String
+      SENSITIVE: []
+    end
+
+    class PerformanceFactorReference
+      attr_accessor instance_family: ::String
+      SENSITIVE: []
+    end
+
+    class PerformanceFactorReferenceRequest
+      attr_accessor instance_family: ::String
       SENSITIVE: []
     end
 

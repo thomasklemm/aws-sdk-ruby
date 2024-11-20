@@ -1338,6 +1338,9 @@ module Aws::AutoScaling
     #
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html
     #
+    # @option params [Types::CapacityReservationSpecification] :capacity_reservation_specification
+    #   The capacity reservation specification for the Auto Scaling group.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     #
@@ -1540,6 +1543,15 @@ module Aws::AutoScaling
     #                 max: 1.0,
     #               },
     #               allowed_instance_types: ["AllowedInstanceType"],
+    #               baseline_performance_factors: {
+    #                 cpu: {
+    #                   references: [
+    #                     {
+    #                       instance_family: "String",
+    #                     },
+    #                   ],
+    #                 },
+    #               },
     #             },
     #           },
     #         ],
@@ -1611,6 +1623,13 @@ module Aws::AutoScaling
     #       impaired_zone_health_check_behavior: "ReplaceUnhealthy", # accepts ReplaceUnhealthy, IgnoreUnhealthy
     #     },
     #     skip_zonal_shift_validation: false,
+    #     capacity_reservation_specification: {
+    #       capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, capacity-reservations-first, none, default
+    #       capacity_reservation_target: {
+    #         capacity_reservation_ids: ["AsciiStringMaxLen255"],
+    #         capacity_reservation_resource_group_arns: ["ResourceName"],
+    #       },
+    #     },
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CreateAutoScalingGroup AWS API Documentation
@@ -2651,6 +2670,8 @@ module Aws::AutoScaling
     #   resp.auto_scaling_groups[0].mixed_instances_policy.launch_template.overrides[0].instance_requirements.network_bandwidth_gbps.max #=> Float
     #   resp.auto_scaling_groups[0].mixed_instances_policy.launch_template.overrides[0].instance_requirements.allowed_instance_types #=> Array
     #   resp.auto_scaling_groups[0].mixed_instances_policy.launch_template.overrides[0].instance_requirements.allowed_instance_types[0] #=> String
+    #   resp.auto_scaling_groups[0].mixed_instances_policy.launch_template.overrides[0].instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.auto_scaling_groups[0].mixed_instances_policy.launch_template.overrides[0].instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.auto_scaling_groups[0].mixed_instances_policy.instances_distribution.on_demand_allocation_strategy #=> String
     #   resp.auto_scaling_groups[0].mixed_instances_policy.instances_distribution.on_demand_base_capacity #=> Integer
     #   resp.auto_scaling_groups[0].mixed_instances_policy.instances_distribution.on_demand_percentage_above_base_capacity #=> Integer
@@ -2721,6 +2742,11 @@ module Aws::AutoScaling
     #   resp.auto_scaling_groups[0].availability_zone_distribution.capacity_distribution_strategy #=> String, one of "balanced-only", "balanced-best-effort"
     #   resp.auto_scaling_groups[0].availability_zone_impairment_policy.zonal_shift_enabled #=> Boolean
     #   resp.auto_scaling_groups[0].availability_zone_impairment_policy.impaired_zone_health_check_behavior #=> String, one of "ReplaceUnhealthy", "IgnoreUnhealthy"
+    #   resp.auto_scaling_groups[0].capacity_reservation_specification.capacity_reservation_preference #=> String, one of "capacity-reservations-only", "capacity-reservations-first", "none", "default"
+    #   resp.auto_scaling_groups[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_ids #=> Array
+    #   resp.auto_scaling_groups[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_ids[0] #=> String
+    #   resp.auto_scaling_groups[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_resource_group_arns #=> Array
+    #   resp.auto_scaling_groups[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_resource_group_arns[0] #=> String
     #   resp.next_token #=> String
     #
     #
@@ -3057,6 +3083,8 @@ module Aws::AutoScaling
     #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.launch_template.overrides[0].instance_requirements.network_bandwidth_gbps.max #=> Float
     #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.launch_template.overrides[0].instance_requirements.allowed_instance_types #=> Array
     #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.launch_template.overrides[0].instance_requirements.allowed_instance_types[0] #=> String
+    #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.launch_template.overrides[0].instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.launch_template.overrides[0].instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.instances_distribution.on_demand_allocation_strategy #=> String
     #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.instances_distribution.on_demand_base_capacity #=> Integer
     #   resp.instance_refreshes[0].desired_configuration.mixed_instances_policy.instances_distribution.on_demand_percentage_above_base_capacity #=> Integer
@@ -6729,6 +6757,15 @@ module Aws::AutoScaling
     #                   max: 1.0,
     #                 },
     #                 allowed_instance_types: ["AllowedInstanceType"],
+    #                 baseline_performance_factors: {
+    #                   cpu: {
+    #                     references: [
+    #                       {
+    #                         instance_family: "String",
+    #                       },
+    #                     ],
+    #                   },
+    #                 },
     #               },
     #             },
     #           ],
@@ -7213,6 +7250,9 @@ module Aws::AutoScaling
     #
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html
     #
+    # @option params [Types::CapacityReservationSpecification] :capacity_reservation_specification
+    #   The capacity reservation specification for the Auto Scaling group.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     #
@@ -7309,6 +7349,15 @@ module Aws::AutoScaling
     #                 max: 1.0,
     #               },
     #               allowed_instance_types: ["AllowedInstanceType"],
+    #               baseline_performance_factors: {
+    #                 cpu: {
+    #                   references: [
+    #                     {
+    #                       instance_family: "String",
+    #                     },
+    #                   ],
+    #                 },
+    #               },
     #             },
     #           },
     #         ],
@@ -7351,6 +7400,13 @@ module Aws::AutoScaling
     #       impaired_zone_health_check_behavior: "ReplaceUnhealthy", # accepts ReplaceUnhealthy, IgnoreUnhealthy
     #     },
     #     skip_zonal_shift_validation: false,
+    #     capacity_reservation_specification: {
+    #       capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, capacity-reservations-first, none, default
+    #       capacity_reservation_target: {
+    #         capacity_reservation_ids: ["AsciiStringMaxLen255"],
+    #         capacity_reservation_resource_group_arns: ["ResourceName"],
+    #       },
+    #     },
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/UpdateAutoScalingGroup AWS API Documentation
@@ -7380,7 +7436,7 @@ module Aws::AutoScaling
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-autoscaling'
-      context[:gem_version] = '1.126.0'
+      context[:gem_version] = '1.127.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

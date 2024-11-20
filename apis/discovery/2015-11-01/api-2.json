@@ -355,7 +355,8 @@
         {"shape":"ServerInternalErrorException"},
         {"shape":"HomeRegionNotSetException"},
         {"shape":"OperationNotPermittedException"},
-        {"shape":"InvalidParameterValueException"}
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"InvalidParameterException"}
       ]
     },
     "StartContinuousExport":{
@@ -562,6 +563,12 @@
       "type":"string",
       "max":127,
       "pattern":"[\\s\\S]*\\S[\\s\\S]*"
+    },
+    "ApplicationWave":{
+      "type":"string",
+      "max":256,
+      "min":0,
+      "pattern":"^($|[^\\s\\x00]( *[^\\s\\x00])*$)"
     },
     "AssociateConfigurationItemsToApplicationRequest":{
       "type":"structure",
@@ -782,7 +789,8 @@
       "required":["name"],
       "members":{
         "name":{"shape":"ApplicationName"},
-        "description":{"shape":"ApplicationDescription"}
+        "description":{"shape":"ApplicationDescription"},
+        "wave":{"shape":"ApplicationWave"}
       }
     },
     "CreateApplicationResponse":{
@@ -1234,6 +1242,15 @@
       "type":"list",
       "member":{"shape":"FailedConfiguration"}
     },
+    "FileClassification":{
+      "type":"string",
+      "enum":[
+        "MODELIZEIT_EXPORT",
+        "RVTOOLS_EXPORT",
+        "VMWARE_NSX_EXPORT",
+        "IMPORT_TEMPLATE"
+      ]
+    },
     "Filter":{
       "type":"structure",
       "required":[
@@ -1299,6 +1316,7 @@
         "IMPORT_FAILED",
         "IMPORT_FAILED_SERVER_LIMIT_EXCEEDED",
         "IMPORT_FAILED_RECORD_LIMIT_EXCEEDED",
+        "IMPORT_FAILED_UNSUPPORTED_FILE_TYPE",
         "DELETE_IN_PROGRESS",
         "DELETE_COMPLETE",
         "DELETE_FAILED",
@@ -1317,6 +1335,7 @@
         "importRequestTime":{"shape":"TimeStamp"},
         "importCompletionTime":{"shape":"TimeStamp"},
         "importDeletedTime":{"shape":"TimeStamp"},
+        "fileClassification":{"shape":"FileClassification"},
         "serverImportSuccess":{"shape":"Integer"},
         "serverImportFailure":{"shape":"Integer"},
         "applicationImportSuccess":{"shape":"Integer"},
@@ -1336,7 +1355,8 @@
       "enum":[
         "IMPORT_TASK_ID",
         "STATUS",
-        "NAME"
+        "NAME",
+        "FILE_CLASSIFICATION"
       ]
     },
     "ImportTaskFilterValue":{
@@ -1717,7 +1737,8 @@
       "members":{
         "configurationId":{"shape":"ApplicationId"},
         "name":{"shape":"ApplicationName"},
-        "description":{"shape":"ApplicationDescription"}
+        "description":{"shape":"ApplicationDescription"},
+        "wave":{"shape":"ApplicationWave"}
       }
     },
     "UpdateApplicationResponse":{

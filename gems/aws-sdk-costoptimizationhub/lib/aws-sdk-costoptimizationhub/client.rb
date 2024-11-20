@@ -541,7 +541,7 @@ module Aws::CostOptimizationHub
     #   resp.estimated_monthly_cost #=> Float
     #   resp.implementation_effort #=> String, one of "VeryLow", "Low", "Medium", "High", "VeryHigh"
     #   resp.restart_needed #=> Boolean
-    #   resp.action_type #=> String, one of "Rightsize", "Stop", "Upgrade", "PurchaseSavingsPlans", "PurchaseReservedInstances", "MigrateToGraviton"
+    #   resp.action_type #=> String, one of "Rightsize", "Stop", "Upgrade", "PurchaseSavingsPlans", "PurchaseReservedInstances", "MigrateToGraviton", "Delete"
     #   resp.rollback_possible #=> Boolean
     #   resp.current_resource_details.lambda_function.configuration.compute.v_cpu #=> Float
     #   resp.current_resource_details.lambda_function.configuration.compute.memory_size_in_mb #=> Integer
@@ -1097,7 +1097,7 @@ module Aws::CostOptimizationHub
     #       account_ids: ["AccountId"],
     #       regions: ["String"],
     #       resource_types: ["Ec2Instance"], # accepts Ec2Instance, LambdaFunction, EbsVolume, EcsService, Ec2AutoScalingGroup, Ec2InstanceSavingsPlans, ComputeSavingsPlans, SageMakerSavingsPlans, Ec2ReservedInstances, RdsReservedInstances, OpenSearchReservedInstances, RedshiftReservedInstances, ElastiCacheReservedInstances, RdsDbInstanceStorage, RdsDbInstance
-    #       action_types: ["Rightsize"], # accepts Rightsize, Stop, Upgrade, PurchaseSavingsPlans, PurchaseReservedInstances, MigrateToGraviton
+    #       action_types: ["Rightsize"], # accepts Rightsize, Stop, Upgrade, PurchaseSavingsPlans, PurchaseReservedInstances, MigrateToGraviton, Delete
     #       tags: [
     #         {
     #           key: "String",
@@ -1171,7 +1171,7 @@ module Aws::CostOptimizationHub
     #       account_ids: ["AccountId"],
     #       regions: ["String"],
     #       resource_types: ["Ec2Instance"], # accepts Ec2Instance, LambdaFunction, EbsVolume, EcsService, Ec2AutoScalingGroup, Ec2InstanceSavingsPlans, ComputeSavingsPlans, SageMakerSavingsPlans, Ec2ReservedInstances, RdsReservedInstances, OpenSearchReservedInstances, RedshiftReservedInstances, ElastiCacheReservedInstances, RdsDbInstanceStorage, RdsDbInstance
-    #       action_types: ["Rightsize"], # accepts Rightsize, Stop, Upgrade, PurchaseSavingsPlans, PurchaseReservedInstances, MigrateToGraviton
+    #       action_types: ["Rightsize"], # accepts Rightsize, Stop, Upgrade, PurchaseSavingsPlans, PurchaseReservedInstances, MigrateToGraviton, Delete
     #       tags: [
     #         {
     #           key: "String",
@@ -1325,7 +1325,7 @@ module Aws::CostOptimizationHub
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-costoptimizationhub'
-      context[:gem_version] = '1.18.0'
+      context[:gem_version] = '1.19.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

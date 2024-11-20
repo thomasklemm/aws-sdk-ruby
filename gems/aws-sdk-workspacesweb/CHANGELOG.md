@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.36.0 (2024-11-20)
+------------------
+
+* Feature - Added data protection settings with support for inline data redaction.
+
 1.35.0 (2024-11-18)
 ------------------
 

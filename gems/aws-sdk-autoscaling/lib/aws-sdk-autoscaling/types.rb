@@ -512,6 +512,10 @@ module Aws::AutoScaling
     #   The Availability Zone impairment policy.
     #   @return [Types::AvailabilityZoneImpairmentPolicy]
     #
+    # @!attribute [rw] capacity_reservation_specification
+    #   The capacity reservation specification.
+    #   @return [Types::CapacityReservationSpecification]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/AutoScalingGroup AWS API Documentation
     #
     class AutoScalingGroup < Struct.new(
@@ -551,7 +555,8 @@ module Aws::AutoScaling
       :traffic_sources,
       :instance_maintenance_policy,
       :availability_zone_distribution,
-      :availability_zone_impairment_policy)
+      :availability_zone_impairment_policy,
+      :capacity_reservation_specification)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -791,6 +796,30 @@ module Aws::AutoScaling
       include Aws::Structure
     end
 
+    # The baseline performance to consider, using an instance family as a
+    # baseline reference. The instance family establishes the lowest
+    # acceptable level of performance. Auto Scaling uses this baseline to
+    # guide instance type selection, but there is no guarantee that the
+    # selected instance types will always exceed the baseline for every
+    # application.
+    #
+    # Currently, this parameter only supports CPU performance as a baseline
+    # performance factor. For example, specifying `c6i` uses the CPU
+    # performance of the `c6i` family as the baseline reference.
+    #
+    # @!attribute [rw] cpu
+    #   The CPU performance to consider, using an instance family as the
+    #   baseline reference.
+    #   @return [Types::CpuPerformanceFactorRequest]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/BaselinePerformanceFactorsRequest AWS API Documentation
+    #
+    class BaselinePerformanceFactorsRequest < Struct.new(
+      :cpu)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] failed_scheduled_actions
     #   The names of the scheduled actions that could not be deleted,
     #   including an error message.
@@ -949,6 +978,66 @@ module Aws::AutoScaling
       include Aws::Structure
     end
 
+    # Describes the Capacity Reservation preference and targeting options.
+    # If you specify `open` or `none` for `CapacityReservationPreference`,
+    # do not specify a `CapacityReservationTarget`.
+    #
+    # @!attribute [rw] capacity_reservation_preference
+    #   The capacity reservation preference. The following options are
+    #   available:
+    #
+    #   * `capacity-reservations-only` - Auto Scaling will only launch
+    #     instances into a Capacity Reservation or Capacity Reservation
+    #     resource group. If capacity isn't available, instances will fail
+    #     to launch.
+    #
+    #   * `capacity-reservations-first` - Auto Scaling will try to launch
+    #     instances into a Capacity Reservation or Capacity Reservation
+    #     resource group first. If capacity isn't available, instances will
+    #     run in On-Demand capacity.
+    #
+    #   * `none` - Auto Scaling will not launch instances into a Capacity
+    #     Reservation. Instances will run in On-Demand capacity.
+    #
+    #   * `default` - Auto Scaling uses the Capacity Reservation preference
+    #     from your launch template or an open Capacity Reservation.
+    #   @return [String]
+    #
+    # @!attribute [rw] capacity_reservation_target
+    #   Describes a target Capacity Reservation or Capacity Reservation
+    #   resource group.
+    #   @return [Types::CapacityReservationTarget]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CapacityReservationSpecification AWS API Documentation
+    #
+    class CapacityReservationSpecification < Struct.new(
+      :capacity_reservation_preference,
+      :capacity_reservation_target)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The target for the Capacity Reservation. Specify Capacity Reservations
+    # IDs or Capacity Reservation resource group ARNs.
+    #
+    # @!attribute [rw] capacity_reservation_ids
+    #   The Capacity Reservation IDs to launch instances into.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] capacity_reservation_resource_group_arns
+    #   The resource group ARNs of the Capacity Reservation to launch
+    #   instances into.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CapacityReservationTarget AWS API Documentation
+    #
+    class CapacityReservationTarget < Struct.new(
+      :capacity_reservation_ids,
+      :capacity_reservation_resource_group_arns)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CompleteLifecycleActionAnswer AWS API Documentation
     #
     class CompleteLifecycleActionAnswer < Aws::EmptyStructure; end
@@ -985,6 +1074,29 @@ module Aws::AutoScaling
       :lifecycle_action_token,
       :lifecycle_action_result,
       :instance_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The CPU performance to consider, using an instance family as the
+    # baseline reference.
+    #
+    # @!attribute [rw] references
+    #   Specify an instance family to use as the baseline reference for CPU
+    #   performance. All instance types that match your specified attributes
+    #   will be compared against the CPU performance of the referenced
+    #   instance family, regardless of CPU manufacturer or architecture
+    #   differences.
+    #
+    #   <note markdown="1"> Currently only one instance family can be specified in the list.
+    #
+    #    </note>
+    #   @return [Array<Types::PerformanceFactorReferenceRequest>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CpuPerformanceFactorRequest AWS API Documentation
+    #
+    class CpuPerformanceFactorRequest < Struct.new(
+      :references)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1358,6 +1470,10 @@ module Aws::AutoScaling
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] capacity_reservation_specification
+    #   The capacity reservation specification for the Auto Scaling group.
+    #   @return [Types::CapacityReservationSpecification]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/CreateAutoScalingGroupType AWS API Documentation
     #
     class CreateAutoScalingGroupType < Struct.new(
@@ -1391,7 +1507,8 @@ module Aws::AutoScaling
       :instance_maintenance_policy,
       :availability_zone_distribution,
       :availability_zone_impairment_policy,
-      :skip_zonal_shift_validation)
+      :skip_zonal_shift_validation,
+      :capacity_reservation_specification)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4002,6 +4119,10 @@ module Aws::AutoScaling
     #   Default: All instance types
     #   @return [Array<String>]
     #
+    # @!attribute [rw] baseline_performance_factors
+    #   The baseline performance factors for the instance requirements.
+    #   @return [Types::BaselinePerformanceFactorsRequest]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/InstanceRequirements AWS API Documentation
     #
     class InstanceRequirements < Struct.new(
@@ -4028,7 +4149,8 @@ module Aws::AutoScaling
       :accelerator_names,
       :accelerator_total_memory_mi_b,
       :network_bandwidth_gbps,
-      :allowed_instance_types)
+      :allowed_instance_types,
+      :baseline_performance_factors)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5390,6 +5512,68 @@ module Aws::AutoScaling
       :auto_scaling_group_name,
       :topic_arn,
       :notification_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specify an instance family to use as the baseline reference for CPU
+    # performance. All instance types that All instance types that match
+    # your specified attributes will be compared against the CPU performance
+    # of the referenced instance family, regardless of CPU manufacturer or
+    # architecture differences.
+    #
+    # <note markdown="1"> Currently only one instance family can be specified in the list.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] instance_family
+    #   The instance family to use as a baseline reference.
+    #
+    #   <note markdown="1"> Make sure that you specify the correct value for the instance
+    #   family. The instance family is everything before the period (.) in
+    #   the instance type name. For example, in the instance `c6i.large`,
+    #   the instance family is `c6i`, not `c6`. For more information, see
+    #   [Amazon EC2 instance type naming conventions][1] in *Amazon EC2
+    #   Instance Types*.
+    #
+    #    </note>
+    #
+    #   The following instance types are *not supported* for performance
+    #   protection.
+    #
+    #   * `c1`
+    #
+    #   * `g3| g3s`
+    #
+    #   * `hpc7g`
+    #
+    #   * `m1| m2`
+    #
+    #   * `mac1 | mac2 | mac2-m1ultra | mac2-m2 | mac2-m2pro`
+    #
+    #   * `p3dn | p4d | p5`
+    #
+    #   * `t1`
+    #
+    #   * `u-12tb1 | u-18tb1 | u-24tb1 | u-3tb1 | u-6tb1 | u-9tb1 | u7i-12tb
+    #     | u7in-16tb | u7in-24tb | u7in-32tb`
+    #
+    #   If you performance protection by specifying a supported instance
+    #   family, the returned instance types will exclude the preceding
+    #   unsupported instance families.
+    #
+    #   If you specify an unsupported instance family as a value for
+    #   baseline performance, the API returns an empty response.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/PerformanceFactorReferenceRequest AWS API Documentation
+    #
+    class PerformanceFactorReferenceRequest < Struct.new(
+      :instance_family)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8023,6 +8207,10 @@ module Aws::AutoScaling
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] capacity_reservation_specification
+    #   The capacity reservation specification for the Auto Scaling group.
+    #   @return [Types::CapacityReservationSpecification]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/UpdateAutoScalingGroupType AWS API Documentation
     #
     class UpdateAutoScalingGroupType < Struct.new(
@@ -8050,7 +8238,8 @@ module Aws::AutoScaling
       :instance_maintenance_policy,
       :availability_zone_distribution,
       :availability_zone_impairment_policy,
-      :skip_zonal_shift_validation)
+      :skip_zonal_shift_validation,
+      :capacity_reservation_specification)
       SENSITIVE = []
       include Aws::Structure
     end

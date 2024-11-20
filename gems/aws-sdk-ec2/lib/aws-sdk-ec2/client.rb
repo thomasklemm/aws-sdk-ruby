@@ -6762,7 +6762,7 @@ module Aws::EC2
     #                 min: 1, # required
     #                 max: 1,
     #               },
-    #               cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #               cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #               memory_gi_b_per_v_cpu: {
     #                 min: 1.0,
     #                 max: 1.0,
@@ -6805,6 +6805,15 @@ module Aws::EC2
     #               },
     #               allowed_instance_types: ["AllowedInstanceType"],
     #               max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #               baseline_performance_factors: {
+    #                 cpu: {
+    #                   references: [
+    #                     {
+    #                       instance_family: "String",
+    #                     },
+    #                   ],
+    #                 },
+    #               },
     #             },
     #             image_id: "ImageId",
     #           },
@@ -6856,7 +6865,7 @@ module Aws::EC2
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.min #=> Integer
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.max #=> Integer
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers #=> Array
-    #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.excluded_instance_types #=> Array
@@ -6892,6 +6901,8 @@ module Aws::EC2
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types #=> Array
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types[0] #=> String
     #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.errors[0].launch_template_and_overrides.overrides.image_id #=> String
     #   resp.errors[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.errors[0].error_code #=> String
@@ -6912,7 +6923,7 @@ module Aws::EC2
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.min #=> Integer
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.max #=> Integer
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers #=> Array
-    #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.excluded_instance_types #=> Array
@@ -6948,6 +6959,8 @@ module Aws::EC2
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types #=> Array
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types[0] #=> String
     #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.instances[0].launch_template_and_overrides.overrides.image_id #=> String
     #   resp.instances[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.instances[0].instance_ids #=> Array
@@ -8806,7 +8819,7 @@ module Aws::EC2
     #         amd_sev_snp: "enabled", # accepts enabled, disabled
     #       },
     #       capacity_reservation_specification: {
-    #         capacity_reservation_preference: "open", # accepts open, none
+    #         capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, open, none
     #         capacity_reservation_target: {
     #           capacity_reservation_id: "CapacityReservationId",
     #           capacity_reservation_resource_group_arn: "String",
@@ -8839,7 +8852,7 @@ module Aws::EC2
     #           min: 1, # required
     #           max: 1,
     #         },
-    #         cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #         cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #         memory_gi_b_per_v_cpu: {
     #           min: 1.0,
     #           max: 1.0,
@@ -8882,6 +8895,15 @@ module Aws::EC2
     #         },
     #         allowed_instance_types: ["AllowedInstanceType"],
     #         max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #         baseline_performance_factors: {
+    #           cpu: {
+    #             references: [
+    #               {
+    #                 instance_family: "String",
+    #               },
+    #             ],
+    #           },
+    #         },
     #       },
     #       private_dns_name_options: {
     #         hostname_type: "ip-name", # accepts ip-name, resource-name
@@ -9216,7 +9238,7 @@ module Aws::EC2
     #         amd_sev_snp: "enabled", # accepts enabled, disabled
     #       },
     #       capacity_reservation_specification: {
-    #         capacity_reservation_preference: "open", # accepts open, none
+    #         capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, open, none
     #         capacity_reservation_target: {
     #           capacity_reservation_id: "CapacityReservationId",
     #           capacity_reservation_resource_group_arn: "String",
@@ -9249,7 +9271,7 @@ module Aws::EC2
     #           min: 1, # required
     #           max: 1,
     #         },
-    #         cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #         cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #         memory_gi_b_per_v_cpu: {
     #           min: 1.0,
     #           max: 1.0,
@@ -9292,6 +9314,15 @@ module Aws::EC2
     #         },
     #         allowed_instance_types: ["AllowedInstanceType"],
     #         max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #         baseline_performance_factors: {
+    #           cpu: {
+    #             references: [
+    #               {
+    #                 instance_family: "String",
+    #               },
+    #             ],
+    #           },
+    #         },
     #       },
     #       private_dns_name_options: {
     #         hostname_type: "ip-name", # accepts ip-name, resource-name
@@ -9408,7 +9439,7 @@ module Aws::EC2
     #   resp.launch_template_version.launch_template_data.cpu_options.core_count #=> Integer
     #   resp.launch_template_version.launch_template_data.cpu_options.threads_per_core #=> Integer
     #   resp.launch_template_version.launch_template_data.cpu_options.amd_sev_snp #=> String, one of "enabled", "disabled"
-    #   resp.launch_template_version.launch_template_data.capacity_reservation_specification.capacity_reservation_preference #=> String, one of "open", "none"
+    #   resp.launch_template_version.launch_template_data.capacity_reservation_specification.capacity_reservation_preference #=> String, one of "capacity-reservations-only", "open", "none"
     #   resp.launch_template_version.launch_template_data.capacity_reservation_specification.capacity_reservation_target.capacity_reservation_id #=> String
     #   resp.launch_template_version.launch_template_data.capacity_reservation_specification.capacity_reservation_target.capacity_reservation_resource_group_arn #=> String
     #   resp.launch_template_version.launch_template_data.license_specifications #=> Array
@@ -9426,7 +9457,7 @@ module Aws::EC2
     #   resp.launch_template_version.launch_template_data.instance_requirements.memory_mi_b.min #=> Integer
     #   resp.launch_template_version.launch_template_data.instance_requirements.memory_mi_b.max #=> Integer
     #   resp.launch_template_version.launch_template_data.instance_requirements.cpu_manufacturers #=> Array
-    #   resp.launch_template_version.launch_template_data.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.launch_template_version.launch_template_data.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.launch_template_version.launch_template_data.instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.launch_template_version.launch_template_data.instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.launch_template_version.launch_template_data.instance_requirements.excluded_instance_types #=> Array
@@ -9462,6 +9493,8 @@ module Aws::EC2
     #   resp.launch_template_version.launch_template_data.instance_requirements.allowed_instance_types #=> Array
     #   resp.launch_template_version.launch_template_data.instance_requirements.allowed_instance_types[0] #=> String
     #   resp.launch_template_version.launch_template_data.instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.launch_template_version.launch_template_data.instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.launch_template_version.launch_template_data.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.launch_template_version.launch_template_data.private_dns_name_options.hostname_type #=> String, one of "ip-name", "resource-name"
     #   resp.launch_template_version.launch_template_data.private_dns_name_options.enable_resource_name_dns_a_record #=> Boolean
     #   resp.launch_template_version.launch_template_data.private_dns_name_options.enable_resource_name_dns_aaaa_record #=> Boolean
@@ -23148,7 +23181,7 @@ module Aws::EC2
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.memory_mi_b.min #=> Integer
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.memory_mi_b.max #=> Integer
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.cpu_manufacturers #=> Array
-    #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.excluded_instance_types #=> Array
@@ -23184,6 +23217,8 @@ module Aws::EC2
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.allowed_instance_types #=> Array
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.allowed_instance_types[0] #=> String
     #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.fleets[0].launch_template_configs[0].overrides[0].instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.fleets[0].launch_template_configs[0].overrides[0].image_id #=> String
     #   resp.fleets[0].target_capacity_specification.total_target_capacity #=> Integer
     #   resp.fleets[0].target_capacity_specification.on_demand_target_capacity #=> Integer
@@ -23229,7 +23264,7 @@ module Aws::EC2
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.min #=> Integer
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.max #=> Integer
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers #=> Array
-    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.excluded_instance_types #=> Array
@@ -23265,6 +23300,8 @@ module Aws::EC2
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types #=> Array
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types[0] #=> String
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.fleets[0].errors[0].launch_template_and_overrides.overrides.image_id #=> String
     #   resp.fleets[0].errors[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.fleets[0].errors[0].error_code #=> String
@@ -23285,7 +23322,7 @@ module Aws::EC2
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.min #=> Integer
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_mi_b.max #=> Integer
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers #=> Array
-    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.excluded_instance_types #=> Array
@@ -23321,6 +23358,8 @@ module Aws::EC2
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types #=> Array
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.allowed_instance_types[0] #=> String
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.fleets[0].instances[0].launch_template_and_overrides.overrides.image_id #=> String
     #   resp.fleets[0].instances[0].lifecycle #=> String, one of "spot", "on-demand"
     #   resp.fleets[0].instances[0].instance_ids #=> Array
@@ -26909,7 +26948,7 @@ module Aws::EC2
     #   resp.reservations[0].instances[0].cpu_options.threads_per_core #=> Integer
     #   resp.reservations[0].instances[0].cpu_options.amd_sev_snp #=> String, one of "enabled", "disabled"
     #   resp.reservations[0].instances[0].capacity_reservation_id #=> String
-    #   resp.reservations[0].instances[0].capacity_reservation_specification.capacity_reservation_preference #=> String, one of "open", "none"
+    #   resp.reservations[0].instances[0].capacity_reservation_specification.capacity_reservation_preference #=> String, one of "capacity-reservations-only", "open", "none"
     #   resp.reservations[0].instances[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_id #=> String
     #   resp.reservations[0].instances[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_resource_group_arn #=> String
     #   resp.reservations[0].instances[0].hibernation_options.configured #=> Boolean
@@ -28158,7 +28197,7 @@ module Aws::EC2
     #   resp.launch_template_versions[0].launch_template_data.cpu_options.core_count #=> Integer
     #   resp.launch_template_versions[0].launch_template_data.cpu_options.threads_per_core #=> Integer
     #   resp.launch_template_versions[0].launch_template_data.cpu_options.amd_sev_snp #=> String, one of "enabled", "disabled"
-    #   resp.launch_template_versions[0].launch_template_data.capacity_reservation_specification.capacity_reservation_preference #=> String, one of "open", "none"
+    #   resp.launch_template_versions[0].launch_template_data.capacity_reservation_specification.capacity_reservation_preference #=> String, one of "capacity-reservations-only", "open", "none"
     #   resp.launch_template_versions[0].launch_template_data.capacity_reservation_specification.capacity_reservation_target.capacity_reservation_id #=> String
     #   resp.launch_template_versions[0].launch_template_data.capacity_reservation_specification.capacity_reservation_target.capacity_reservation_resource_group_arn #=> String
     #   resp.launch_template_versions[0].launch_template_data.license_specifications #=> Array
@@ -28176,7 +28215,7 @@ module Aws::EC2
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.memory_mi_b.min #=> Integer
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.memory_mi_b.max #=> Integer
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.cpu_manufacturers #=> Array
-    #   resp.launch_template_versions[0].launch_template_data.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.launch_template_versions[0].launch_template_data.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.excluded_instance_types #=> Array
@@ -28212,6 +28251,8 @@ module Aws::EC2
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.allowed_instance_types #=> Array
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.allowed_instance_types[0] #=> String
     #   resp.launch_template_versions[0].launch_template_data.instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.launch_template_versions[0].launch_template_data.instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.launch_template_versions[0].launch_template_data.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.launch_template_versions[0].launch_template_data.private_dns_name_options.hostname_type #=> String, one of "ip-name", "resource-name"
     #   resp.launch_template_versions[0].launch_template_data.private_dns_name_options.enable_resource_name_dns_a_record #=> Boolean
     #   resp.launch_template_versions[0].launch_template_data.private_dns_name_options.enable_resource_name_dns_aaaa_record #=> Boolean
@@ -34145,7 +34186,7 @@ module Aws::EC2
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.memory_mi_b.min #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.memory_mi_b.max #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.cpu_manufacturers #=> Array
-    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.excluded_instance_types #=> Array
@@ -34181,6 +34222,8 @@ module Aws::EC2
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.allowed_instance_types #=> Array
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.allowed_instance_types[0] #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].security_groups #=> Array
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].security_groups[0].group_id #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_specifications[0].security_groups[0].group_name #=> String
@@ -34200,7 +34243,7 @@ module Aws::EC2
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.memory_mi_b.min #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.memory_mi_b.max #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.cpu_manufacturers #=> Array
-    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.excluded_instance_types #=> Array
@@ -34236,6 +34279,8 @@ module Aws::EC2
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.allowed_instance_types #=> Array
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.allowed_instance_types[0] #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.launch_template_configs[0].overrides[0].instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.spot_price #=> String
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.target_capacity #=> Integer
     #   resp.spot_fleet_request_configs[0].spot_fleet_request_config.on_demand_target_capacity #=> Integer
@@ -43442,7 +43487,7 @@ module Aws::EC2
     #         min: 1, # required
     #         max: 1,
     #       },
-    #       cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #       cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #       memory_gi_b_per_v_cpu: {
     #         min: 1.0,
     #         max: 1.0,
@@ -43485,6 +43530,15 @@ module Aws::EC2
     #       },
     #       allowed_instance_types: ["AllowedInstanceType"],
     #       max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #       baseline_performance_factors: {
+    #         cpu: {
+    #           references: [
+    #             {
+    #               instance_family: "String",
+    #             },
+    #           ],
+    #         },
+    #       },
     #     },
     #     max_results: 1,
     #     next_token: "String",
@@ -44329,7 +44383,7 @@ module Aws::EC2
     #   resp.launch_template_data.cpu_options.core_count #=> Integer
     #   resp.launch_template_data.cpu_options.threads_per_core #=> Integer
     #   resp.launch_template_data.cpu_options.amd_sev_snp #=> String, one of "enabled", "disabled"
-    #   resp.launch_template_data.capacity_reservation_specification.capacity_reservation_preference #=> String, one of "open", "none"
+    #   resp.launch_template_data.capacity_reservation_specification.capacity_reservation_preference #=> String, one of "capacity-reservations-only", "open", "none"
     #   resp.launch_template_data.capacity_reservation_specification.capacity_reservation_target.capacity_reservation_id #=> String
     #   resp.launch_template_data.capacity_reservation_specification.capacity_reservation_target.capacity_reservation_resource_group_arn #=> String
     #   resp.launch_template_data.license_specifications #=> Array
@@ -44347,7 +44401,7 @@ module Aws::EC2
     #   resp.launch_template_data.instance_requirements.memory_mi_b.min #=> Integer
     #   resp.launch_template_data.instance_requirements.memory_mi_b.max #=> Integer
     #   resp.launch_template_data.instance_requirements.cpu_manufacturers #=> Array
-    #   resp.launch_template_data.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services"
+    #   resp.launch_template_data.instance_requirements.cpu_manufacturers[0] #=> String, one of "intel", "amd", "amazon-web-services", "apple"
     #   resp.launch_template_data.instance_requirements.memory_gi_b_per_v_cpu.min #=> Float
     #   resp.launch_template_data.instance_requirements.memory_gi_b_per_v_cpu.max #=> Float
     #   resp.launch_template_data.instance_requirements.excluded_instance_types #=> Array
@@ -44383,6 +44437,8 @@ module Aws::EC2
     #   resp.launch_template_data.instance_requirements.allowed_instance_types #=> Array
     #   resp.launch_template_data.instance_requirements.allowed_instance_types[0] #=> String
     #   resp.launch_template_data.instance_requirements.max_spot_price_as_percentage_of_optimal_on_demand_price #=> Integer
+    #   resp.launch_template_data.instance_requirements.baseline_performance_factors.cpu.references #=> Array
+    #   resp.launch_template_data.instance_requirements.baseline_performance_factors.cpu.references[0].instance_family #=> String
     #   resp.launch_template_data.private_dns_name_options.hostname_type #=> String, one of "ip-name", "resource-name"
     #   resp.launch_template_data.private_dns_name_options.enable_resource_name_dns_a_record #=> Boolean
     #   resp.launch_template_data.private_dns_name_options.enable_resource_name_dns_aaaa_record #=> Boolean
@@ -45411,7 +45467,7 @@ module Aws::EC2
     #           min: 1, # required
     #           max: 1,
     #         },
-    #         cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #         cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #         memory_gi_b_per_v_cpu: {
     #           min: 1.0,
     #           max: 1.0,
@@ -45454,6 +45510,15 @@ module Aws::EC2
     #         },
     #         allowed_instance_types: ["AllowedInstanceType"],
     #         max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #         baseline_performance_factors: {
+    #           cpu: {
+    #             references: [
+    #               {
+    #                 instance_family: "String",
+    #               },
+    #             ],
+    #           },
+    #         },
     #       },
     #     },
     #     dry_run: false,
@@ -47994,7 +48059,7 @@ module Aws::EC2
     #                 min: 1, # required
     #                 max: 1,
     #               },
-    #               cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #               cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #               memory_gi_b_per_v_cpu: {
     #                 min: 1.0,
     #                 max: 1.0,
@@ -48037,6 +48102,15 @@ module Aws::EC2
     #               },
     #               allowed_instance_types: ["AllowedInstanceType"],
     #               max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #               baseline_performance_factors: {
+    #                 cpu: {
+    #                   references: [
+    #                     {
+    #                       instance_family: "String",
+    #                     },
+    #                   ],
+    #                 },
+    #               },
     #             },
     #             image_id: "ImageId",
     #           },
@@ -48803,7 +48877,8 @@ module Aws::EC2
     # Modifies the Capacity Reservation settings for a stopped instance. Use
     # this action to configure an instance to target a specific Capacity
     # Reservation, run in any `open` Capacity Reservation with matching
-    # attributes, or run On-Demand Instance capacity.
+    # attributes, run in On-Demand Instance capacity, or only run in a
+    # Capacity Reservation.
     #
     # @option params [required, String] :instance_id
     #   The ID of the instance to be modified.
@@ -48826,7 +48901,7 @@ module Aws::EC2
     #   resp = client.modify_instance_capacity_reservation_attributes({
     #     instance_id: "InstanceId", # required
     #     capacity_reservation_specification: { # required
-    #       capacity_reservation_preference: "open", # accepts open, none
+    #       capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, open, none
     #       capacity_reservation_target: {
     #         capacity_reservation_id: "CapacityReservationId",
     #         capacity_reservation_resource_group_arn: "String",
@@ -50793,7 +50868,7 @@ module Aws::EC2
     #                 min: 1,
     #                 max: 1,
     #               },
-    #               cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #               cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #               memory_gi_b_per_v_cpu: {
     #                 min: 1.0,
     #                 max: 1.0,
@@ -50836,6 +50911,15 @@ module Aws::EC2
     #               },
     #               allowed_instance_types: ["AllowedInstanceType"],
     #               max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #               baseline_performance_factors: {
+    #                 cpu: {
+    #                   references: [
+    #                     {
+    #                       instance_family: "String",
+    #                     },
+    #                   ],
+    #                 },
+    #               },
     #             },
     #           },
     #         ],
@@ -56428,7 +56512,7 @@ module Aws::EC2
     #               min: 1,
     #               max: 1,
     #             },
-    #             cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #             cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #             memory_gi_b_per_v_cpu: {
     #               min: 1.0,
     #               max: 1.0,
@@ -56471,6 +56555,15 @@ module Aws::EC2
     #             },
     #             allowed_instance_types: ["AllowedInstanceType"],
     #             max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #             baseline_performance_factors: {
+    #               cpu: {
+    #                 references: [
+    #                   {
+    #                     instance_family: "String",
+    #                   },
+    #                 ],
+    #               },
+    #             },
     #           },
     #           security_groups: [
     #             {
@@ -56504,7 +56597,7 @@ module Aws::EC2
     #                   min: 1,
     #                   max: 1,
     #                 },
-    #                 cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services
+    #                 cpu_manufacturers: ["intel"], # accepts intel, amd, amazon-web-services, apple
     #                 memory_gi_b_per_v_cpu: {
     #                   min: 1.0,
     #                   max: 1.0,
@@ -56547,6 +56640,15 @@ module Aws::EC2
     #                 },
     #                 allowed_instance_types: ["AllowedInstanceType"],
     #                 max_spot_price_as_percentage_of_optimal_on_demand_price: 1,
+    #                 baseline_performance_factors: {
+    #                   cpu: {
+    #                     references: [
+    #                       {
+    #                         instance_family: "String",
+    #                       },
+    #                     ],
+    #                   },
+    #                 },
     #               },
     #             },
     #           ],
@@ -58293,7 +58395,7 @@ module Aws::EC2
     #   not specify this parameter, the instance's Capacity Reservation
     #   preference defaults to `open`, which enables it to run in any open
     #   Capacity Reservation that has matching attributes (instance type,
-    #   platform, Availability Zone).
+    #   platform, Availability Zone, and tenancy).
     #
     # @option params [Types::HibernationOptionsRequest] :hibernation_options
     #   Indicates whether an instance is enabled for hibernation. This
@@ -58593,7 +58695,7 @@ module Aws::EC2
     #       amd_sev_snp: "enabled", # accepts enabled, disabled
     #     },
     #     capacity_reservation_specification: {
-    #       capacity_reservation_preference: "open", # accepts open, none
+    #       capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, open, none
     #       capacity_reservation_target: {
     #         capacity_reservation_id: "CapacityReservationId",
     #         capacity_reservation_resource_group_arn: "String",
@@ -58801,7 +58903,7 @@ module Aws::EC2
     #   resp.instances[0].cpu_options.threads_per_core #=> Integer
     #   resp.instances[0].cpu_options.amd_sev_snp #=> String, one of "enabled", "disabled"
     #   resp.instances[0].capacity_reservation_id #=> String
-    #   resp.instances[0].capacity_reservation_specification.capacity_reservation_preference #=> String, one of "open", "none"
+    #   resp.instances[0].capacity_reservation_specification.capacity_reservation_preference #=> String, one of "capacity-reservations-only", "open", "none"
     #   resp.instances[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_id #=> String
     #   resp.instances[0].capacity_reservation_specification.capacity_reservation_target.capacity_reservation_resource_group_arn #=> String
     #   resp.instances[0].hibernation_options.configured #=> Boolean
@@ -61348,7 +61450,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.491.0'
+      context[:gem_version] = '1.492.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

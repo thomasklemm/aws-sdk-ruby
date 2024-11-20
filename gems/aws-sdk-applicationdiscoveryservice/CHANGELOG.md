@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.81.0 (2024-11-20)
+------------------
+
+* Feature - Add support to import data from commercially available discovery tools without file manipulation.
+
 1.80.0 (2024-11-18)
 ------------------
 

@@ -972,6 +972,18 @@ module Aws::ECS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/deployment-types.html
     #
+    # @option params [String] :availability_zone_rebalancing
+    #   Indicates whether to use Availability Zone rebalancing for the
+    #   service.
+    #
+    #   For more information, see [Balancing an Amazon ECS service across
+    #   Availability Zones][1] in the *Amazon Elastic Container Service
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html
+    #
     # @option params [Array<Types::LoadBalancer>] :load_balancers
     #   A load balancer object representing the load balancers to use with
     #   your service. For more information, see [Service load balancing][1] in
@@ -1432,6 +1444,7 @@ module Aws::ECS
     #     cluster: "String",
     #     service_name: "String", # required
     #     task_definition: "String",
+    #     availability_zone_rebalancing: "ENABLED", # accepts ENABLED, DISABLED
     #     load_balancers: [
     #       {
     #         target_group_arn: "String",
@@ -1758,6 +1771,7 @@ module Aws::ECS
     #   resp.service.enable_ecs_managed_tags #=> Boolean
     #   resp.service.propagate_tags #=> String, one of "TASK_DEFINITION", "SERVICE", "NONE"
     #   resp.service.enable_execute_command #=> Boolean
+    #   resp.service.availability_zone_rebalancing #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/CreateService AWS API Documentation
     #
@@ -2175,13 +2189,14 @@ module Aws::ECS
     # transitioned to use the capacity from the remaining capacity
     # providers. Only capacity providers that aren't associated with a
     # cluster can be deleted. To remove a capacity provider from a cluster,
-    # you can either use [PutCapacityProviderProviders][1] or delete the
+    # you can either use [PutClusterCapacityProviders][3] or delete the
     # cluster.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_PutCapacityProviderProviders.html
     # [2]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_UpdateService.html
+    # [3]: https://docs.aws.amazon.com/AmazonECS/latest/APIReference/API_PutClusterCapacityProviders.html
     #
     # @option params [required, String] :capacity_provider
     #   The short name or full Amazon Resource Name (ARN) of the capacity
@@ -2573,6 +2588,7 @@ module Aws::ECS
     #   resp.service.enable_ecs_managed_tags #=> Boolean
     #   resp.service.propagate_tags #=> String, one of "TASK_DEFINITION", "SERVICE", "NONE"
     #   resp.service.enable_execute_command #=> Boolean
+    #   resp.service.availability_zone_rebalancing #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/DeleteService AWS API Documentation
     #
@@ -4145,6 +4161,7 @@ module Aws::ECS
     #   resp.services[0].enable_ecs_managed_tags #=> Boolean
     #   resp.services[0].propagate_tags #=> String, one of "TASK_DEFINITION", "SERVICE", "NONE"
     #   resp.services[0].enable_execute_command #=> Boolean
+    #   resp.services[0].availability_zone_rebalancing #=> String, one of "ENABLED", "DISABLED"
     #   resp.failures #=> Array
     #   resp.failures[0].arn #=> String
     #   resp.failures[0].reason #=> String
@@ -9863,6 +9880,18 @@ module Aws::ECS
     #   Optional deployment parameters that control how many tasks run during
     #   the deployment and the ordering of stopping and starting tasks.
     #
+    # @option params [String] :availability_zone_rebalancing
+    #   Indicates whether to use Availability Zone rebalancing for the
+    #   service.
+    #
+    #   For more information, see [Balancing an Amazon ECS service across
+    #   Availability Zones][1] in the *Amazon Elastic Container Service
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-rebalancing.html
+    #
     # @option params [Types::NetworkConfiguration] :network_configuration
     #   An object representing the network configuration for the service.
     #
@@ -10093,6 +10122,7 @@ module Aws::ECS
     #         enable: false, # required
     #       },
     #     },
+    #     availability_zone_rebalancing: "ENABLED", # accepts ENABLED, DISABLED
     #     network_configuration: {
     #       awsvpc_configuration: {
     #         subnets: ["String"], # required
@@ -10386,6 +10416,7 @@ module Aws::ECS
     #   resp.service.enable_ecs_managed_tags #=> Boolean
     #   resp.service.propagate_tags #=> String, one of "TASK_DEFINITION", "SERVICE", "NONE"
     #   resp.service.enable_execute_command #=> Boolean
+    #   resp.service.availability_zone_rebalancing #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/UpdateService AWS API Documentation
     #
@@ -10772,7 +10803,7 @@ module Aws::ECS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ecs'
-      context[:gem_version] = '1.169.0'
+      context[:gem_version] = '1.170.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -175,9 +175,17 @@ module Aws::DataZone
     #   specified subscription request was accepted.
     #   @return [String]
     #
+    # @!attribute [rw] existing_subscription_id
+    #   The ID of the existing subscription.
+    #   @return [String]
+    #
     # @!attribute [rw] id
     #   The identifier of the subscription request.
     #   @return [String]
+    #
+    # @!attribute [rw] metadata_forms
+    #   The metadata form in the subscription request.
+    #   @return [Array<Types::FormOutput>]
     #
     # @!attribute [rw] request_reason
     #   Specifies the reason for requesting a subscription to the asset.
@@ -217,7 +225,9 @@ module Aws::DataZone
       :created_by,
       :decision_comment,
       :domain_id,
+      :existing_subscription_id,
       :id,
+      :metadata_forms,
       :request_reason,
       :reviewer_id,
       :status,
@@ -953,6 +963,25 @@ module Aws::DataZone
       :updated_at,
       :updated_by)
       SENSITIVE = [:description]
+      include Aws::Structure
+    end
+
+    # The asset type for the rule details.
+    #
+    # @!attribute [rw] selection_mode
+    #   The selection mode for the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] specific_asset_types
+    #   The specific asset types that are included in the rule.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/AssetTypesForRule AWS API Documentation
+    #
+    class AssetTypesForRule < Struct.new(
+      :selection_mode,
+      :specific_asset_types)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -3392,6 +3421,119 @@ module Aws::DataZone
       include Aws::Structure
     end
 
+    # @!attribute [rw] action
+    #   The action of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that is provided to ensure the
+    #   idempotency of the request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] detail
+    #   The detail of the rule.
+    #   @return [Types::RuleDetail]
+    #
+    # @!attribute [rw] domain_identifier
+    #   The ID of the domain where the rule is created.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The scope of the rule.
+    #   @return [Types::RuleScope]
+    #
+    # @!attribute [rw] target
+    #   The target of the rule.
+    #   @return [Types::RuleTarget]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/CreateRuleInput AWS API Documentation
+    #
+    class CreateRuleInput < Struct.new(
+      :action,
+      :client_token,
+      :description,
+      :detail,
+      :domain_identifier,
+      :name,
+      :scope,
+      :target)
+      SENSITIVE = [:description, :name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] action
+    #   The action of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp at which the rule is created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   The user who creates the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] detail
+    #   The detail of the rule.
+    #   @return [Types::RuleDetail]
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] rule_type
+    #   The type of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The scope of the rule.
+    #   @return [Types::RuleScope]
+    #
+    # @!attribute [rw] target
+    #   The target of the rule.
+    #   @return [Types::RuleTarget]
+    #
+    # @!attribute [rw] target_type
+    #   The target type of the rule.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/CreateRuleOutput AWS API Documentation
+    #
+    class CreateRuleOutput < Struct.new(
+      :action,
+      :created_at,
+      :created_by,
+      :description,
+      :detail,
+      :identifier,
+      :name,
+      :rule_type,
+      :scope,
+      :target,
+      :target_type)
+      SENSITIVE = [:description, :name]
+      include Aws::Structure
+    end
+
     # @!attribute [rw] asset_target_names
     #   The names of the assets for which the subscription grant is created.
     #   @return [Array<Types::AssetTargetNameMap>]
@@ -3513,6 +3655,10 @@ module Aws::DataZone
     #   request is created.
     #   @return [String]
     #
+    # @!attribute [rw] metadata_forms
+    #   The metadata form included in the subscription request.
+    #   @return [Array<Types::FormInput>]
+    #
     # @!attribute [rw] request_reason
     #   The reason for the subscription request.
     #   @return [String]
@@ -3532,10 +3678,11 @@ module Aws::DataZone
     class CreateSubscriptionRequestInput < Struct.new(
       :client_token,
       :domain_identifier,
+      :metadata_forms,
       :request_reason,
       :subscribed_listings,
       :subscribed_principals)
-      SENSITIVE = [:request_reason]
+      SENSITIVE = [:metadata_forms, :request_reason]
       include Aws::Structure
     end
 
@@ -3556,9 +3703,17 @@ module Aws::DataZone
     #   request is created.
     #   @return [String]
     #
+    # @!attribute [rw] existing_subscription_id
+    #   The ID of the existing subscription.
+    #   @return [String]
+    #
     # @!attribute [rw] id
     #   The ID of the subscription request.
     #   @return [String]
+    #
+    # @!attribute [rw] metadata_forms
+    #   The metadata form included in the subscription request.
+    #   @return [Array<Types::FormOutput>]
     #
     # @!attribute [rw] request_reason
     #   The reason for the subscription request.
@@ -3596,7 +3751,9 @@ module Aws::DataZone
       :created_by,
       :decision_comment,
       :domain_id,
+      :existing_subscription_id,
       :id,
+      :metadata_forms,
       :request_reason,
       :reviewer_id,
       :status,
@@ -4924,6 +5081,27 @@ module Aws::DataZone
     class DeleteProjectOutput < Aws::EmptyStructure; end
 
     # @!attribute [rw] domain_identifier
+    #   The ID of the domain that where the rule is to be deleted.
+    #   @return [String]
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the rule that is to be deleted.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/DeleteRuleInput AWS API Documentation
+    #
+    class DeleteRuleInput < Struct.new(
+      :domain_identifier,
+      :identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/DeleteRuleOutput AWS API Documentation
+    #
+    class DeleteRuleOutput < Aws::EmptyStructure; end
+
+    # @!attribute [rw] domain_identifier
     #   The ID of the Amazon DataZone domain where the subscription grant is
     #   deleted.
     #   @return [String]
@@ -5380,6 +5558,25 @@ module Aws::DataZone
     class DomainUnitSummary < Struct.new(
       :id,
       :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The target for the domain unit.
+    #
+    # @!attribute [rw] domain_unit_id
+    #   The ID of the domain unit.
+    #   @return [String]
+    #
+    # @!attribute [rw] include_child_domain_units
+    #   Specifies whether to apply a rule to the child domain units.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/DomainUnitTarget AWS API Documentation
+    #
+    class DomainUnitTarget < Struct.new(
+      :domain_unit_id,
+      :include_child_domain_units)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7946,6 +8143,105 @@ module Aws::DataZone
     end
 
     # @!attribute [rw] domain_identifier
+    #   The ID of the domain where the `GetRule` action is to be invoked.
+    #   @return [String]
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] revision
+    #   The revision of the rule.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetRuleInput AWS API Documentation
+    #
+    class GetRuleInput < Struct.new(
+      :domain_identifier,
+      :identifier,
+      :revision)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] action
+    #   The action of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp at which the rule was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   The user who created the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] detail
+    #   The detail of the rule.
+    #   @return [Types::RuleDetail]
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_updated_by
+    #   The timestamp at which the rule was last updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] revision
+    #   The revision of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] rule_type
+    #   The type of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The scope of the rule.
+    #   @return [Types::RuleScope]
+    #
+    # @!attribute [rw] target
+    #   The target of the rule.
+    #   @return [Types::RuleTarget]
+    #
+    # @!attribute [rw] target_type
+    #   The target type of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp at which the rule was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetRuleOutput AWS API Documentation
+    #
+    class GetRuleOutput < Struct.new(
+      :action,
+      :created_at,
+      :created_by,
+      :description,
+      :detail,
+      :identifier,
+      :last_updated_by,
+      :name,
+      :revision,
+      :rule_type,
+      :scope,
+      :target,
+      :target_type,
+      :updated_at)
+      SENSITIVE = [:description, :name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] domain_identifier
     #   The ID of the Amazon DataZone domain in which the subscription grant
     #   exists.
     #   @return [String]
@@ -8144,9 +8440,17 @@ module Aws::DataZone
     #   The Amazon DataZone domain of the subscription request.
     #   @return [String]
     #
+    # @!attribute [rw] existing_subscription_id
+    #   The ID of the existing subscription.
+    #   @return [String]
+    #
     # @!attribute [rw] id
     #   The identifier of the subscription request.
     #   @return [String]
+    #
+    # @!attribute [rw] metadata_forms
+    #   The metadata forms included in the subscription request.
+    #   @return [Array<Types::FormOutput>]
     #
     # @!attribute [rw] request_reason
     #   The reason for the subscription request.
@@ -8184,7 +8488,9 @@ module Aws::DataZone
       :created_by,
       :decision_comment,
       :domain_id,
+      :existing_subscription_id,
       :id,
+      :metadata_forms,
       :request_reason,
       :reviewer_id,
       :status,
@@ -10460,6 +10766,99 @@ module Aws::DataZone
       include Aws::Structure
     end
 
+    # @!attribute [rw] action
+    #   The action of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] asset_types
+    #   The asset types of the rule.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] data_product
+    #   The data product of the rule.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] domain_identifier
+    #   The ID of the domain in which the rules are to be listed.
+    #   @return [String]
+    #
+    # @!attribute [rw] include_cascaded
+    #   Specifies whether to include cascading rules in the results.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of rules to return in a single call to
+    #   `ListRules`. When the number of rules to be listed is greater than
+    #   the value of `MaxResults`, the response contains a `NextToken` value
+    #   that you can use in a subsequent call to `ListRules` to list the
+    #   next set of rules.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   When the number of rules is greater than the default value for the
+    #   `MaxResults` parameter, or if you explicitly specify a value for
+    #   `MaxResults` that is less than the number of rules, the response
+    #   includes a pagination token named `NextToken`. You can specify this
+    #   `NextToken` value in a subsequent call to `ListRules` to list the
+    #   next set of rules.
+    #   @return [String]
+    #
+    # @!attribute [rw] project_ids
+    #   The IDs of projects in which rules are to be listed.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] rule_type
+    #   The type of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_identifier
+    #   The target ID of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_type
+    #   The target type of the rule.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ListRulesInput AWS API Documentation
+    #
+    class ListRulesInput < Struct.new(
+      :action,
+      :asset_types,
+      :data_product,
+      :domain_identifier,
+      :include_cascaded,
+      :max_results,
+      :next_token,
+      :project_ids,
+      :rule_type,
+      :target_identifier,
+      :target_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   The results of the `ListRules` action.
+    #   @return [Array<Types::RuleSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   When the number of rules is greater than the default value for the
+    #   `MaxResults` parameter, or if you explicitly specify a value for
+    #   `MaxResults` that is less than the number of rules, the response
+    #   includes a pagination token named `NextToken`. You can specify this
+    #   `NextToken` value in a subsequent call to `ListRules` to list the
+    #   next set of rules.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ListRulesOutput AWS API Documentation
+    #
+    class ListRulesOutput < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] domain_identifier
     #   The identifier of the Amazon DataZone domain.
     #   @return [String]
@@ -11088,6 +11487,63 @@ module Aws::DataZone
       class Group < MemberDetails; end
       class User < MemberDetails; end
       class Unknown < MemberDetails; end
+    end
+
+    # The enforcement details of a metadata form.
+    #
+    # @!attribute [rw] required_metadata_forms
+    #   The required metadata forms.
+    #   @return [Array<Types::MetadataFormReference>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/MetadataFormEnforcementDetail AWS API Documentation
+    #
+    class MetadataFormEnforcementDetail < Struct.new(
+      :required_metadata_forms)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The reference of a metadata form.
+    #
+    # @!attribute [rw] type_identifier
+    #   The type ID of the metadata form reference.
+    #   @return [String]
+    #
+    # @!attribute [rw] type_revision
+    #   The type revision of the metadata form reference.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/MetadataFormReference AWS API Documentation
+    #
+    class MetadataFormReference < Struct.new(
+      :type_identifier,
+      :type_revision)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The summary of the metadata form.
+    #
+    # @!attribute [rw] form_name
+    #   The form name of the metadata form.
+    #   @return [String]
+    #
+    # @!attribute [rw] type_name
+    #   The type name of the metadata form.
+    #   @return [String]
+    #
+    # @!attribute [rw] type_revision
+    #   The type revision of the metadata form.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/MetadataFormSummary AWS API Documentation
+    #
+    class MetadataFormSummary < Struct.new(
+      :form_name,
+      :type_name,
+      :type_revision)
+      SENSITIVE = [:type_name]
+      include Aws::Structure
     end
 
     # The metadata generation run.
@@ -11885,6 +12341,25 @@ module Aws::DataZone
       include Aws::Structure
     end
 
+    # Specifies projects in which the rule is created.
+    #
+    # @!attribute [rw] selection_mode
+    #   The selection mode of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] specific_projects
+    #   The specific projects in which the rule is created.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ProjectsForRule AWS API Documentation
+    #
+    class ProjectsForRule < Struct.new(
+      :selection_mode,
+      :specific_projects)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The provisioning configuration of the blueprint.
     #
     # @note ProvisioningConfiguration is a union - when making an API calls you must set exactly one of the members.
@@ -12357,9 +12832,17 @@ module Aws::DataZone
     #   subscription request was rejected.
     #   @return [String]
     #
+    # @!attribute [rw] existing_subscription_id
+    #   The ID of the existing subscription.
+    #   @return [String]
+    #
     # @!attribute [rw] id
     #   The identifier of the subscription request that was rejected.
     #   @return [String]
+    #
+    # @!attribute [rw] metadata_forms
+    #   Metadata forms included in the subscription request.
+    #   @return [Array<Types::FormOutput>]
     #
     # @!attribute [rw] request_reason
     #   The reason for the subscription request.
@@ -12396,7 +12879,9 @@ module Aws::DataZone
       :created_by,
       :decision_comment,
       :domain_id,
+      :existing_subscription_id,
       :id,
+      :metadata_forms,
       :request_reason,
       :reviewer_id,
       :status,
@@ -12798,6 +13283,135 @@ module Aws::DataZone
       class NotIn < RowFilterExpression; end
       class NotLike < RowFilterExpression; end
       class Unknown < RowFilterExpression; end
+    end
+
+    # The details of a rule.
+    #
+    # @note RuleDetail is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note RuleDetail is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of RuleDetail corresponding to the set member.
+    #
+    # @!attribute [rw] metadata_form_enforcement_detail
+    #   The enforcement detail of the metadata form.
+    #   @return [Types::MetadataFormEnforcementDetail]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/RuleDetail AWS API Documentation
+    #
+    class RuleDetail < Struct.new(
+      :metadata_form_enforcement_detail,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class MetadataFormEnforcementDetail < RuleDetail; end
+      class Unknown < RuleDetail; end
+    end
+
+    # The scope of a rule.
+    #
+    # @!attribute [rw] asset_type
+    #   The asset type included in the rule scope.
+    #   @return [Types::AssetTypesForRule]
+    #
+    # @!attribute [rw] data_product
+    #   The data product included in the rule scope.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] project
+    #   The project included in the rule scope.
+    #   @return [Types::ProjectsForRule]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/RuleScope AWS API Documentation
+    #
+    class RuleScope < Struct.new(
+      :asset_type,
+      :data_product,
+      :project)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The summary of the rule.
+    #
+    # @!attribute [rw] action
+    #   The action of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_updated_by
+    #   The timestamp at which the rule was last updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] revision
+    #   The revision of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] rule_type
+    #   The type of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The scope of the rule.
+    #   @return [Types::RuleScope]
+    #
+    # @!attribute [rw] target
+    #   The target of the rule.
+    #   @return [Types::RuleTarget]
+    #
+    # @!attribute [rw] target_type
+    #   The target type of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp at which the rule was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/RuleSummary AWS API Documentation
+    #
+    class RuleSummary < Struct.new(
+      :action,
+      :identifier,
+      :last_updated_by,
+      :name,
+      :revision,
+      :rule_type,
+      :scope,
+      :target,
+      :target_type,
+      :updated_at)
+      SENSITIVE = [:name]
+      include Aws::Structure
+    end
+
+    # The target of the rule.
+    #
+    # @note RuleTarget is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note RuleTarget is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of RuleTarget corresponding to the set member.
+    #
+    # @!attribute [rw] domain_unit_target
+    #   The ID of the domain unit.
+    #   @return [Types::DomainUnitTarget]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/RuleTarget AWS API Documentation
+    #
+    class RuleTarget < Struct.new(
+      :domain_unit_target,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class DomainUnitTarget < RuleTarget; end
+      class Unknown < RuleTarget; end
     end
 
     # The asset statistics from the data source run.
@@ -14070,9 +14684,17 @@ module Aws::DataZone
     #   request exists.
     #   @return [String]
     #
+    # @!attribute [rw] existing_subscription_id
+    #   The ID of the existing subscription.
+    #   @return [String]
+    #
     # @!attribute [rw] id
     #   The identifier of the subscription request.
     #   @return [String]
+    #
+    # @!attribute [rw] metadata_forms_summary
+    #   The summary of the metadata forms.
+    #   @return [Array<Types::MetadataFormSummary>]
     #
     # @!attribute [rw] request_reason
     #   The reason for the subscription request.
@@ -14110,7 +14732,9 @@ module Aws::DataZone
       :created_by,
       :decision_comment,
       :domain_id,
+      :existing_subscription_id,
       :id,
+      :metadata_forms_summary,
       :request_reason,
       :reviewer_id,
       :status,
@@ -15678,6 +16302,120 @@ module Aws::DataZone
       include Aws::Structure
     end
 
+    # @!attribute [rw] description
+    #   The description of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] detail
+    #   The detail of the rule.
+    #   @return [Types::RuleDetail]
+    #
+    # @!attribute [rw] domain_identifier
+    #   The ID of the domain in which a rule is to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the rule that is to be updated
+    #   @return [String]
+    #
+    # @!attribute [rw] include_child_domain_units
+    #   Specifies whether to update this rule in the child domain units.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] name
+    #   The name of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The scrope of the rule.
+    #   @return [Types::RuleScope]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateRuleInput AWS API Documentation
+    #
+    class UpdateRuleInput < Struct.new(
+      :description,
+      :detail,
+      :domain_identifier,
+      :identifier,
+      :include_child_domain_units,
+      :name,
+      :scope)
+      SENSITIVE = [:description, :name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] action
+    #   The action of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp at which the rule was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   The user who created the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] detail
+    #   The detail of the rule.
+    #   @return [Types::RuleDetail]
+    #
+    # @!attribute [rw] identifier
+    #   The ID of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_updated_by
+    #   The timestamp at which the rule was last updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] revision
+    #   The revision of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] rule_type
+    #   The type of the rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The scope of the rule.
+    #   @return [Types::RuleScope]
+    #
+    # @!attribute [rw] target
+    #   The target of the rule.
+    #   @return [Types::RuleTarget]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp at which the rule was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateRuleOutput AWS API Documentation
+    #
+    class UpdateRuleOutput < Struct.new(
+      :action,
+      :created_at,
+      :created_by,
+      :description,
+      :detail,
+      :identifier,
+      :last_updated_by,
+      :name,
+      :revision,
+      :rule_type,
+      :scope,
+      :target,
+      :updated_at)
+      SENSITIVE = [:description, :name]
+      include Aws::Structure
+    end
+
     # @!attribute [rw] asset_identifier
     #   The identifier of the asset the subscription grant status of which
     #   is to be updated.
@@ -15830,9 +16568,17 @@ module Aws::DataZone
     #   request is to be updated.
     #   @return [String]
     #
+    # @!attribute [rw] existing_subscription_id
+    #   The ID of the existing subscription.
+    #   @return [String]
+    #
     # @!attribute [rw] id
     #   The identifier of the subscription request that is to be updated.
     #   @return [String]
+    #
+    # @!attribute [rw] metadata_forms
+    #   Metadata forms included in the subscription request.
+    #   @return [Array<Types::FormOutput>]
     #
     # @!attribute [rw] request_reason
     #   The reason for the `UpdateSubscriptionRequest` action.
@@ -15870,7 +16616,9 @@ module Aws::DataZone
       :created_by,
       :decision_comment,
       :domain_id,
+      :existing_subscription_id,
       :id,
+      :metadata_forms,
       :request_reason,
       :reviewer_id,
       :status,

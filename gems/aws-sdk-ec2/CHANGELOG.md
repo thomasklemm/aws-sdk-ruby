@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.492.0 (2024-11-20)
+------------------
+
+* Feature - With this release, customers can express their desire to launch instances only in an ODCR or ODCR group rather than OnDemand capacity. Customers can express their baseline instances' CPU-performance in attribute-based Instance Requirements configuration by referencing an instance family.
+
 1.491.0 (2024-11-19)
 ------------------
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.123.0 (2024-11-20)
+------------------
+
+* Feature - This release adds support for configuring Load balancer Capacity Unit reservations
+
 1.122.0 (2024-11-18)
 ------------------
 

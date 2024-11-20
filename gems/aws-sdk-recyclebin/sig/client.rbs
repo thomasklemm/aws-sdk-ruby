@@ -87,6 +87,7 @@ module Aws
         def lock_configuration: () -> Types::LockConfiguration
         def lock_state: () -> ("locked" | "pending_unlock" | "unlocked")
         def rule_arn: () -> ::String
+        def exclude_resource_tags: () -> ::Array[Types::ResourceTag]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RecycleBin/Client.html#create_rule-instance_method
       def create_rule: (
@@ -113,7 +114,13 @@ module Aws
                              unlock_delay_value: ::Integer,
                              unlock_delay_unit: ("DAYS")
                            }
-                         }
+                         },
+                         ?exclude_resource_tags: Array[
+                           {
+                             resource_tag_key: ::String,
+                             resource_tag_value: ::String?
+                           },
+                         ]
                        ) -> _CreateRuleResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateRuleResponseSuccess
 
@@ -138,6 +145,7 @@ module Aws
         def lock_state: () -> ("locked" | "pending_unlock" | "unlocked")
         def lock_end_time: () -> ::Time
         def rule_arn: () -> ::String
+        def exclude_resource_tags: () -> ::Array[Types::ResourceTag]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RecycleBin/Client.html#get_rule-instance_method
       def get_rule: (
@@ -161,7 +169,13 @@ module Aws
                             resource_tag_value: ::String?
                           },
                         ],
-                        ?lock_state: ("locked" | "pending_unlock" | "unlocked")
+                        ?lock_state: ("locked" | "pending_unlock" | "unlocked"),
+                        ?exclude_resource_tags: Array[
+                          {
+                            resource_tag_key: ::String,
+                            resource_tag_value: ::String?
+                          },
+                        ]
                       ) -> _ListRulesResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRulesResponseSuccess
 
@@ -186,6 +200,7 @@ module Aws
         def lock_configuration: () -> Types::LockConfiguration
         def lock_state: () -> ("locked" | "pending_unlock" | "unlocked")
         def rule_arn: () -> ::String
+        def exclude_resource_tags: () -> ::Array[Types::ResourceTag]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RecycleBin/Client.html#lock_rule-instance_method
       def lock_rule: (
@@ -226,6 +241,7 @@ module Aws
         def lock_state: () -> ("locked" | "pending_unlock" | "unlocked")
         def lock_end_time: () -> ::Time
         def rule_arn: () -> ::String
+        def exclude_resource_tags: () -> ::Array[Types::ResourceTag]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RecycleBin/Client.html#unlock_rule-instance_method
       def unlock_rule: (
@@ -254,6 +270,7 @@ module Aws
         def lock_state: () -> ("locked" | "pending_unlock" | "unlocked")
         def lock_end_time: () -> ::Time
         def rule_arn: () -> ::String
+        def exclude_resource_tags: () -> ::Array[Types::ResourceTag]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RecycleBin/Client.html#update_rule-instance_method
       def update_rule: (
@@ -265,6 +282,12 @@ module Aws
                          ?description: ::String,
                          ?resource_type: ("EBS_SNAPSHOT" | "EC2_IMAGE"),
                          ?resource_tags: Array[
+                           {
+                             resource_tag_key: ::String,
+                             resource_tag_value: ::String?
+                           },
+                         ],
+                         ?exclude_resource_tags: Array[
                            {
                              resource_tag_key: ::String,
                              resource_tag_value: ::String?

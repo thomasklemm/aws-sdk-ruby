@@ -1248,7 +1248,7 @@ module Aws::BedrockAgentRuntime
     # Invokes an alias of a flow to run the inputs that you specify and
     # return the output of each node as a stream. If there's an error, the
     # error is returned. For more information, see [Test a flow in Amazon
-    # Bedrock][1] in the Amazon Bedrock User Guide.
+    # Bedrock][1] in the [Amazon Bedrock User Guide][2].
     #
     # <note markdown="1"> The CLI doesn't support streaming operations in Amazon Bedrock,
     # including `InvokeFlow`.
@@ -1258,6 +1258,7 @@ module Aws::BedrockAgentRuntime
     #
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/flows-test.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html
     #
     # @option params [Boolean] :enable_trace
     #   Specifies whether to return the trace for the flow or not. Traces
@@ -1559,6 +1560,242 @@ module Aws::BedrockAgentRuntime
       yield(event_stream_handler) if block_given?
 
       req = build_request(:invoke_flow, params)
+
+      req.context[:event_stream_handler] = event_stream_handler
+      req.handlers.add(Aws::Binary::DecodeHandler, priority: 95)
+
+      req.send_request(options, &block)
+    end
+
+    # Optimizes a prompt for the task that you specify. For more
+    # information, see [Optimize a prompt][1] in the [Amazon Bedrock User
+    # Guide][2].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-optimize.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/what-is-service.html
+    #
+    # @option params [required, Types::InputPrompt] :input
+    #   Contains the prompt to optimize.
+    #
+    # @option params [required, String] :target_model_id
+    #   The unique identifier of the model that you want to optimize the
+    #   prompt for.
+    #
+    # @return [Types::OptimizePromptResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::OptimizePromptResponse#optimized_prompt #optimized_prompt} => Types::OptimizedPromptStream
+    #
+    # @example EventStream Operation Example
+    #
+    #   You can process the event once it arrives immediately, or wait until the
+    #   full response is complete and iterate through the eventstream enumerator.
+    #
+    #   To interact with event immediately, you need to register #optimize_prompt
+    #   with callbacks. Callbacks can be registered for specific events or for all
+    #   events, including error events.
+    #
+    #   Callbacks can be passed into the `:event_stream_handler` option or within a
+    #   block statement attached to the #optimize_prompt call directly. Hybrid
+    #   pattern of both is also supported.
+    #
+    #   `:event_stream_handler` option takes in either a Proc object or
+    #   Aws::BedrockAgentRuntime::EventStreams::OptimizedPromptStream object.
+    #
+    #   Usage pattern a): Callbacks with a block attached to #optimize_prompt
+    #     Example for registering callbacks for all event types and an error event
+    #
+    #     client.optimize_prompt( # params input# ) do |stream|
+    #       stream.on_error_event do |event|
+    #         # catch unmodeled error event in the stream
+    #         raise event
+    #         # => Aws::Errors::EventError
+    #         # event.event_type => :error
+    #         # event.error_code => String
+    #         # event.error_message => String
+    #       end
+    #
+    #       stream.on_event do |event|
+    #         # process all events arrive
+    #         puts event.event_type
+    #         ...
+    #       end
+    #
+    #     end
+    #
+    #   Usage pattern b): Pass in `:event_stream_handler` for #optimize_prompt
+    #
+    #     1) Create a Aws::BedrockAgentRuntime::EventStreams::OptimizedPromptStream object
+    #     Example for registering callbacks with specific events
+    #
+    #       handler = Aws::BedrockAgentRuntime::EventStreams::OptimizedPromptStream.new
+    #       handler.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       handler.on_analyze_prompt_event_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::analyzePromptEvent
+    #       end
+    #       handler.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       handler.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       handler.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       handler.on_optimized_prompt_event_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::optimizedPromptEvent
+    #       end
+    #       handler.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       handler.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #
+    #     client.optimize_prompt( # params input #, event_stream_handler: handler)
+    #
+    #     2) Use a Ruby Proc object
+    #     Example for registering callbacks with specific events
+    #
+    #     handler = Proc.new do |stream|
+    #       stream.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       stream.on_analyze_prompt_event_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::analyzePromptEvent
+    #       end
+    #       stream.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       stream.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       stream.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       stream.on_optimized_prompt_event_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::optimizedPromptEvent
+    #       end
+    #       stream.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       stream.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #     end
+    #
+    #     client.optimize_prompt( # params input #, event_stream_handler: handler)
+    #
+    #   Usage pattern c): Hybrid pattern of a) and b)
+    #
+    #       handler = Aws::BedrockAgentRuntime::EventStreams::OptimizedPromptStream.new
+    #       handler.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       handler.on_analyze_prompt_event_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::analyzePromptEvent
+    #       end
+    #       handler.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       handler.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       handler.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       handler.on_optimized_prompt_event_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::optimizedPromptEvent
+    #       end
+    #       handler.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       handler.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #
+    #     client.optimize_prompt( # params input #, event_stream_handler: handler) do |stream|
+    #       stream.on_error_event do |event|
+    #         # catch unmodeled error event in the stream
+    #         raise event
+    #         # => Aws::Errors::EventError
+    #         # event.event_type => :error
+    #         # event.error_code => String
+    #         # event.error_message => String
+    #       end
+    #     end
+    #
+    #   You can also iterate through events after the response complete.
+    #
+    #   Events are available at resp.optimized_prompt # => Enumerator
+    #   For parameter input example, please refer to following request syntax
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.optimize_prompt({
+    #     input: { # required
+    #       text_prompt: {
+    #         text: "TextPromptTextString", # required
+    #       },
+    #     },
+    #     target_model_id: "OptimizePromptRequestTargetModelIdString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   All events are available at resp.optimized_prompt:
+    #   resp.optimized_prompt #=> Enumerator
+    #   resp.optimized_prompt.event_types #=> [:access_denied_exception, :analyze_prompt_event, :bad_gateway_exception, :dependency_failed_exception, :internal_server_exception, :optimized_prompt_event, :throttling_exception, :validation_exception]
+    #
+    #   For :access_denied_exception event available at #on_access_denied_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :analyze_prompt_event event available at #on_analyze_prompt_event_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :bad_gateway_exception event available at #on_bad_gateway_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #   event.resource_name #=> String
+    #
+    #   For :dependency_failed_exception event available at #on_dependency_failed_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #   event.resource_name #=> String
+    #
+    #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :optimized_prompt_event event available at #on_optimized_prompt_event_event callback and response eventstream enumerator:
+    #   event.optimized_prompt.text_prompt.text #=> String
+    #
+    #   For :throttling_exception event available at #on_throttling_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :validation_exception event available at #on_validation_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/OptimizePrompt AWS API Documentation
+    #
+    # @overload optimize_prompt(params = {})
+    # @param [Hash] params ({})
+    def optimize_prompt(params = {}, options = {}, &block)
+      params = params.dup
+      event_stream_handler = case handler = params.delete(:event_stream_handler)
+        when EventStreams::OptimizedPromptStream then handler
+        when Proc then EventStreams::OptimizedPromptStream.new.tap(&handler)
+        when nil then EventStreams::OptimizedPromptStream.new
+        else
+          msg = "expected :event_stream_handler to be a block or "\
+                "instance of Aws::BedrockAgentRuntime::EventStreams::OptimizedPromptStream"\
+                ", got `#{handler.inspect}` instead"
+          raise ArgumentError, msg
+        end
+
+      yield(event_stream_handler) if block_given?
+
+      req = build_request(:optimize_prompt, params)
 
       req.context[:event_stream_handler] = event_stream_handler
       req.handlers.add(Aws::Binary::DecodeHandler, priority: 95)
@@ -1954,7 +2191,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.31.0'
+      context[:gem_version] = '1.32.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

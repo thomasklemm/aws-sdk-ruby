@@ -481,6 +481,40 @@ module Aws::WorkSpacesWeb
       req.send_request(options)
     end
 
+    # Associates a data protection settings resource with a web portal.
+    #
+    # @option params [required, String] :data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #
+    # @option params [required, String] :portal_arn
+    #   The ARN of the web portal.
+    #
+    # @return [Types::AssociateDataProtectionSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::AssociateDataProtectionSettingsResponse#data_protection_settings_arn #data_protection_settings_arn} => String
+    #   * {Types::AssociateDataProtectionSettingsResponse#portal_arn #portal_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.associate_data_protection_settings({
+    #     data_protection_settings_arn: "ARN", # required
+    #     portal_arn: "ARN", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_protection_settings_arn #=> String
+    #   resp.portal_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/AssociateDataProtectionSettings AWS API Documentation
+    #
+    # @overload associate_data_protection_settings(params = {})
+    # @param [Hash] params ({})
+    def associate_data_protection_settings(params = {}, options = {})
+      req = build_request(:associate_data_protection_settings, params)
+      req.send_request(options)
+    end
+
     # Associates an IP access settings resource with a web portal.
     #
     # @option params [required, String] :ip_access_settings_arn
@@ -714,6 +748,100 @@ module Aws::WorkSpacesWeb
     # @param [Hash] params ({})
     def create_browser_settings(params = {}, options = {})
       req = build_request(:create_browser_settings, params)
+      req.send_request(options)
+    end
+
+    # Creates a data protection settings resource that can be associated
+    # with a web portal.
+    #
+    # @option params [Hash<String,String>] :additional_encryption_context
+    #   Additional encryption context of the data protection settings.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. Idempotency ensures that an API request
+    #   completes only once. With an idempotent request, if the original
+    #   request completes successfully, subsequent retries with the same
+    #   client token returns the result from the original successful request.
+    #
+    #   If you do not specify a client token, one is automatically generated
+    #   by the Amazon Web Services SDK.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [String] :customer_managed_key
+    #   The custom managed key of the data protection settings.
+    #
+    # @option params [String] :description
+    #   The description of the data protection settings.
+    #
+    # @option params [String] :display_name
+    #   The display name of the data protection settings.
+    #
+    # @option params [Types::InlineRedactionConfiguration] :inline_redaction_configuration
+    #   The inline redaction configuration of the data protection settings
+    #   that will be applied to all sessions.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   The tags to add to the data protection settings resource. A tag is a
+    #   key-value pair.
+    #
+    # @return [Types::CreateDataProtectionSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateDataProtectionSettingsResponse#data_protection_settings_arn #data_protection_settings_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_data_protection_settings({
+    #     additional_encryption_context: {
+    #       "StringType" => "StringType",
+    #     },
+    #     client_token: "ClientToken",
+    #     customer_managed_key: "keyArn",
+    #     description: "DescriptionSafe",
+    #     display_name: "DisplayNameSafe",
+    #     inline_redaction_configuration: {
+    #       global_confidence_level: 1,
+    #       global_enforced_urls: ["InlineRedactionUrl"],
+    #       global_exempt_urls: ["InlineRedactionUrl"],
+    #       inline_redaction_patterns: [ # required
+    #         {
+    #           built_in_pattern_id: "BuiltInPatternId",
+    #           confidence_level: 1,
+    #           custom_pattern: {
+    #             keyword_regex: "Regex",
+    #             pattern_description: "DescriptionSafe",
+    #             pattern_name: "PatternName", # required
+    #             pattern_regex: "Regex", # required
+    #           },
+    #           enforced_urls: ["InlineRedactionUrl"],
+    #           exempt_urls: ["InlineRedactionUrl"],
+    #           redaction_place_holder: { # required
+    #             redaction_place_holder_text: "RedactionPlaceHolderText",
+    #             redaction_place_holder_type: "CustomText", # required, accepts CustomText
+    #           },
+    #         },
+    #       ],
+    #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_protection_settings_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/CreateDataProtectionSettings AWS API Documentation
+    #
+    # @overload create_data_protection_settings(params = {})
+    # @param [Hash] params ({})
+    def create_data_protection_settings(params = {}, options = {})
+      req = build_request(:create_data_protection_settings, params)
       req.send_request(options)
     end
 
@@ -1331,6 +1459,28 @@ module Aws::WorkSpacesWeb
       req.send_request(options)
     end
 
+    # Deletes data protection settings.
+    #
+    # @option params [required, String] :data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_data_protection_settings({
+    #     data_protection_settings_arn: "ARN", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DeleteDataProtectionSettings AWS API Documentation
+    #
+    # @overload delete_data_protection_settings(params = {})
+    # @param [Hash] params ({})
+    def delete_data_protection_settings(params = {}, options = {})
+      req = build_request(:delete_data_protection_settings, params)
+      req.send_request(options)
+    end
+
     # Deletes the identity provider.
     #
     # @option params [required, String] :identity_provider_arn
@@ -1507,6 +1657,28 @@ module Aws::WorkSpacesWeb
       req.send_request(options)
     end
 
+    # Disassociates data protection settings from a web portal.
+    #
+    # @option params [required, String] :portal_arn
+    #   The ARN of the web portal.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.disassociate_data_protection_settings({
+    #     portal_arn: "ARN", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateDataProtectionSettings AWS API Documentation
+    #
+    # @overload disassociate_data_protection_settings(params = {})
+    # @param [Hash] params ({})
+    def disassociate_data_protection_settings(params = {}, options = {})
+      req = build_request(:disassociate_data_protection_settings, params)
+      req.send_request(options)
+    end
+
     # Disassociates IP access settings from a web portal.
     #
     # @option params [required, String] :portal_arn
@@ -1677,6 +1849,60 @@ module Aws::WorkSpacesWeb
       req.send_request(options)
     end
 
+    # Gets the data protection settings.
+    #
+    # @option params [required, String] :data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #
+    # @return [Types::GetDataProtectionSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetDataProtectionSettingsResponse#data_protection_settings #data_protection_settings} => Types::DataProtectionSettings
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_data_protection_settings({
+    #     data_protection_settings_arn: "ARN", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_protection_settings.additional_encryption_context #=> Hash
+    #   resp.data_protection_settings.additional_encryption_context["StringType"] #=> String
+    #   resp.data_protection_settings.associated_portal_arns #=> Array
+    #   resp.data_protection_settings.associated_portal_arns[0] #=> String
+    #   resp.data_protection_settings.creation_date #=> Time
+    #   resp.data_protection_settings.customer_managed_key #=> String
+    #   resp.data_protection_settings.data_protection_settings_arn #=> String
+    #   resp.data_protection_settings.description #=> String
+    #   resp.data_protection_settings.display_name #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.global_confidence_level #=> Integer
+    #   resp.data_protection_settings.inline_redaction_configuration.global_enforced_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.global_enforced_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.global_exempt_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.global_exempt_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].built_in_pattern_id #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].confidence_level #=> Integer
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.keyword_regex #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.pattern_description #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.pattern_name #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.pattern_regex #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].enforced_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].enforced_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].exempt_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].exempt_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].redaction_place_holder.redaction_place_holder_text #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].redaction_place_holder.redaction_place_holder_type #=> String, one of "CustomText"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/GetDataProtectionSettings AWS API Documentation
+    #
+    # @overload get_data_protection_settings(params = {})
+    # @param [Hash] params ({})
+    def get_data_protection_settings(params = {}, options = {})
+      req = build_request(:get_data_protection_settings, params)
+      req.send_request(options)
+    end
+
     # Gets the identity provider.
     #
     # @option params [required, String] :identity_provider_arn
@@ -1807,6 +2033,7 @@ module Aws::WorkSpacesWeb
     #   resp.portal.browser_type #=> String, one of "Chrome"
     #   resp.portal.creation_date #=> Time
     #   resp.portal.customer_managed_key #=> String
+    #   resp.portal.data_protection_settings_arn #=> String
     #   resp.portal.display_name #=> String
     #   resp.portal.instance_type #=> String, one of "standard.regular", "standard.large", "standard.xlarge"
     #   resp.portal.ip_access_settings_arn #=> String
@@ -2086,6 +2313,47 @@ module Aws::WorkSpacesWeb
       req.send_request(options)
     end
 
+    # Retrieves a list of data protection settings.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to be included in the next page.
+    #
+    # @option params [String] :next_token
+    #   The pagination token used to retrieve the next page of results for
+    #   this operation.
+    #
+    # @return [Types::ListDataProtectionSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDataProtectionSettingsResponse#data_protection_settings #data_protection_settings} => Array&lt;Types::DataProtectionSettingsSummary&gt;
+    #   * {Types::ListDataProtectionSettingsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_data_protection_settings({
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_protection_settings #=> Array
+    #   resp.data_protection_settings[0].creation_date #=> Time
+    #   resp.data_protection_settings[0].data_protection_settings_arn #=> String
+    #   resp.data_protection_settings[0].description #=> String
+    #   resp.data_protection_settings[0].display_name #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/ListDataProtectionSettings AWS API Documentation
+    #
+    # @overload list_data_protection_settings(params = {})
+    # @param [Hash] params ({})
+    def list_data_protection_settings(params = {}, options = {})
+      req = build_request(:list_data_protection_settings, params)
+      req.send_request(options)
+    end
+
     # Retrieves a list of identity providers for a specific web portal.
     #
     # @option params [Integer] :max_results
@@ -2241,6 +2509,7 @@ module Aws::WorkSpacesWeb
     #   resp.portals[0].browser_settings_arn #=> String
     #   resp.portals[0].browser_type #=> String, one of "Chrome"
     #   resp.portals[0].creation_date #=> Time
+    #   resp.portals[0].data_protection_settings_arn #=> String
     #   resp.portals[0].display_name #=> String
     #   resp.portals[0].instance_type #=> String, one of "standard.regular", "standard.large", "standard.xlarge"
     #   resp.portals[0].ip_access_settings_arn #=> String
@@ -2660,6 +2929,109 @@ module Aws::WorkSpacesWeb
       req.send_request(options)
     end
 
+    # Updates data protection settings.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. Idempotency ensures that an API request
+    #   completes only once. With an idempotent request, if the original
+    #   request completes successfully, subsequent retries with the same
+    #   client token return the result from the original successful request.
+    #
+    #   If you do not specify a client token, one is automatically generated
+    #   by the Amazon Web Services SDK.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :data_protection_settings_arn
+    #   The ARN of the data protection settings.
+    #
+    # @option params [String] :description
+    #   The description of the data protection settings.
+    #
+    # @option params [String] :display_name
+    #   The display name of the data protection settings.
+    #
+    # @option params [Types::InlineRedactionConfiguration] :inline_redaction_configuration
+    #   The inline redaction configuration of the data protection settings
+    #   that will be applied to all sessions.
+    #
+    # @return [Types::UpdateDataProtectionSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateDataProtectionSettingsResponse#data_protection_settings #data_protection_settings} => Types::DataProtectionSettings
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_data_protection_settings({
+    #     client_token: "ClientToken",
+    #     data_protection_settings_arn: "ARN", # required
+    #     description: "DescriptionSafe",
+    #     display_name: "DisplayNameSafe",
+    #     inline_redaction_configuration: {
+    #       global_confidence_level: 1,
+    #       global_enforced_urls: ["InlineRedactionUrl"],
+    #       global_exempt_urls: ["InlineRedactionUrl"],
+    #       inline_redaction_patterns: [ # required
+    #         {
+    #           built_in_pattern_id: "BuiltInPatternId",
+    #           confidence_level: 1,
+    #           custom_pattern: {
+    #             keyword_regex: "Regex",
+    #             pattern_description: "DescriptionSafe",
+    #             pattern_name: "PatternName", # required
+    #             pattern_regex: "Regex", # required
+    #           },
+    #           enforced_urls: ["InlineRedactionUrl"],
+    #           exempt_urls: ["InlineRedactionUrl"],
+    #           redaction_place_holder: { # required
+    #             redaction_place_holder_text: "RedactionPlaceHolderText",
+    #             redaction_place_holder_type: "CustomText", # required, accepts CustomText
+    #           },
+    #         },
+    #       ],
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_protection_settings.additional_encryption_context #=> Hash
+    #   resp.data_protection_settings.additional_encryption_context["StringType"] #=> String
+    #   resp.data_protection_settings.associated_portal_arns #=> Array
+    #   resp.data_protection_settings.associated_portal_arns[0] #=> String
+    #   resp.data_protection_settings.creation_date #=> Time
+    #   resp.data_protection_settings.customer_managed_key #=> String
+    #   resp.data_protection_settings.data_protection_settings_arn #=> String
+    #   resp.data_protection_settings.description #=> String
+    #   resp.data_protection_settings.display_name #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.global_confidence_level #=> Integer
+    #   resp.data_protection_settings.inline_redaction_configuration.global_enforced_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.global_enforced_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.global_exempt_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.global_exempt_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].built_in_pattern_id #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].confidence_level #=> Integer
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.keyword_regex #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.pattern_description #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.pattern_name #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].custom_pattern.pattern_regex #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].enforced_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].enforced_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].exempt_urls #=> Array
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].exempt_urls[0] #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].redaction_place_holder.redaction_place_holder_text #=> String
+    #   resp.data_protection_settings.inline_redaction_configuration.inline_redaction_patterns[0].redaction_place_holder.redaction_place_holder_type #=> String, one of "CustomText"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/UpdateDataProtectionSettings AWS API Documentation
+    #
+    # @overload update_data_protection_settings(params = {})
+    # @param [Hash] params ({})
+    def update_data_protection_settings(params = {}, options = {})
+      req = build_request(:update_data_protection_settings, params)
+      req.send_request(options)
+    end
+
     # Updates the identity provider.
     #
     # @option params [String] :client_token
@@ -2971,6 +3343,7 @@ module Aws::WorkSpacesWeb
     #   resp.portal.browser_type #=> String, one of "Chrome"
     #   resp.portal.creation_date #=> Time
     #   resp.portal.customer_managed_key #=> String
+    #   resp.portal.data_protection_settings_arn #=> String
     #   resp.portal.display_name #=> String
     #   resp.portal.instance_type #=> String, one of "standard.regular", "standard.large", "standard.xlarge"
     #   resp.portal.ip_access_settings_arn #=> String
@@ -3237,7 +3610,7 @@ module Aws::WorkSpacesWeb
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-workspacesweb'
-      context[:gem_version] = '1.35.0'
+      context[:gem_version] = '1.36.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

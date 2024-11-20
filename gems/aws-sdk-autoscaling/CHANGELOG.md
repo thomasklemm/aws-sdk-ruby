@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.127.0 (2024-11-20)
+------------------
+
+* Feature - With this release, customers can prioritize launching instances into ODCRs using targets from ASGs or Launch Templates. Customers can express their baseline instances' CPU-performance in attribute-based Instance Requirements configuration by referencing an instance family that meets their needs.
+
 1.126.0 (2024-11-18)
 ------------------
 

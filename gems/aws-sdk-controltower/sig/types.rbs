@@ -153,6 +153,7 @@ module Aws::ControlTower
       attr_accessor baseline_identifier: ::String
       attr_accessor baseline_version: ::String
       attr_accessor parameters: ::Array[Types::EnabledBaselineParameterSummary]
+      attr_accessor parent_identifier: ::String
       attr_accessor status_summary: Types::EnablementStatusSummary
       attr_accessor target_identifier: ::String
       SENSITIVE: []
@@ -160,6 +161,7 @@ module Aws::ControlTower
 
     class EnabledBaselineFilter
       attr_accessor baseline_identifiers: ::Array[::String]
+      attr_accessor parent_identifiers: ::Array[::String]
       attr_accessor target_identifiers: ::Array[::String]
       SENSITIVE: []
     end
@@ -180,6 +182,7 @@ module Aws::ControlTower
       attr_accessor arn: ::String
       attr_accessor baseline_identifier: ::String
       attr_accessor baseline_version: ::String
+      attr_accessor parent_identifier: ::String
       attr_accessor status_summary: Types::EnablementStatusSummary
       attr_accessor target_identifier: ::String
       SENSITIVE: []
@@ -377,6 +380,7 @@ module Aws::ControlTower
 
     class ListEnabledBaselinesInput
       attr_accessor filter: Types::EnabledBaselineFilter
+      attr_accessor include_children: bool
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
       SENSITIVE: []

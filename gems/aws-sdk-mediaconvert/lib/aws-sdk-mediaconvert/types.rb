@@ -3217,6 +3217,15 @@ module Aws::MediaConvert
     # create a reserved queue, you enter into a 12-month commitment to
     # purchase the RTS that you specify. You can't cancel this commitment.
     #
+    # @!attribute [rw] concurrent_jobs
+    #   Specify the maximum number of jobs your queue can process
+    #   concurrently. For on-demand queues, the value you enter is
+    #   constrained by your service quotas for Maximum concurrent jobs, per
+    #   on-demand queue and Maximum concurrent jobs, per account. For
+    #   reserved queues, specify the number of jobs you can process
+    #   concurrently in your reservation plan instead.
+    #   @return [Integer]
+    #
     # @!attribute [rw] description
     #   Optional. A description of the queue that you are creating.
     #   @return [String]
@@ -3252,6 +3261,7 @@ module Aws::MediaConvert
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/CreateQueueRequest AWS API Documentation
     #
     class CreateQueueRequest < Struct.new(
+      :concurrent_jobs,
       :description,
       :name,
       :pricing_plan,
@@ -8880,11 +8890,24 @@ module Aws::MediaConvert
     #   List of queues.
     #   @return [Array<Types::Queue>]
     #
+    # @!attribute [rw] total_concurrent_jobs
+    #   The maximum number of jobs that MediaConvert can process at one
+    #   time, across all of your on-demand queues in the current AWS Region.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] unallocated_concurrent_jobs
+    #   The remaining number of concurrent jobs that are not associated with
+    #   a queue and are available to allocate to a queue. You can allocate
+    #   these jobs when you create or update a queue.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/ListQueuesResponse AWS API Documentation
     #
     class ListQueuesResponse < Struct.new(
       :next_token,
-      :queues)
+      :queues,
+      :total_concurrent_jobs,
+      :unallocated_concurrent_jobs)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11468,6 +11491,10 @@ module Aws::MediaConvert
     #   An identifier for this resource that is unique within all of AWS.
     #   @return [String]
     #
+    # @!attribute [rw] concurrent_jobs
+    #   The maximum number of jobs your queue can process concurrently.
+    #   @return [Integer]
+    #
     # @!attribute [rw] created_at
     #   The timestamp in epoch seconds for when you created the queue.
     #   @return [Time]
@@ -11503,6 +11530,12 @@ module Aws::MediaConvert
     #   reserved queues and not applicable to on-demand queues.
     #   @return [Types::ReservationPlan]
     #
+    # @!attribute [rw] service_overrides
+    #   A list of any service overrides applied by MediaConvert to the
+    #   settings that you have configured. If you see any overrides, we
+    #   recommend that you contact AWS Support.
+    #   @return [Array<Types::ServiceOverride>]
+    #
     # @!attribute [rw] status
     #   Queues can be ACTIVE or PAUSED. If you pause a queue, the service
     #   won't begin processing jobs in that queue. Jobs that are running
@@ -11524,6 +11557,7 @@ module Aws::MediaConvert
     #
     class Queue < Struct.new(
       :arn,
+      :concurrent_jobs,
       :created_at,
       :description,
       :last_updated,
@@ -11531,6 +11565,7 @@ module Aws::MediaConvert
       :pricing_plan,
       :progressing_jobs_count,
       :reservation_plan,
+      :service_overrides,
       :status,
       :submitted_jobs_count,
       :type)
@@ -11962,6 +11997,40 @@ module Aws::MediaConvert
     class SearchJobsResponse < Struct.new(
       :jobs,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A service override applied by MediaConvert to the settings that you
+    # have configured. If you see any overrides, we recommend that you
+    # contact AWS Support.
+    #
+    # @!attribute [rw] message
+    #   Details about the service override that MediaConvert has applied.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the setting that MediaConvert has applied an override
+    #   to.
+    #   @return [String]
+    #
+    # @!attribute [rw] override_value
+    #   The current value of the service override that MediaConvert has
+    #   applied.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the setting that you configured, prior to any overrides
+    #   that MediaConvert has applied.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/ServiceOverride AWS API Documentation
+    #
+    class ServiceOverride < Struct.new(
+      :message,
+      :name,
+      :override_value,
+      :value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12661,6 +12730,15 @@ module Aws::MediaConvert
     # Modify a queue by sending a request with the queue name and any
     # changes to the queue.
     #
+    # @!attribute [rw] concurrent_jobs
+    #   Specify the maximum number of jobs your queue can process
+    #   concurrently. For on-demand queues, the value you enter is
+    #   constrained by your service quotas for Maximum concurrent jobs, per
+    #   on-demand queue and Maximum concurrent jobs, per account. For
+    #   reserved queues, update your reservation plan instead in order to
+    #   increase your yearly commitment.
+    #   @return [Integer]
+    #
     # @!attribute [rw] description
     #   The new description for the queue, if you are changing it.
     #   @return [String]
@@ -12688,6 +12766,7 @@ module Aws::MediaConvert
     # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/UpdateQueueRequest AWS API Documentation
     #
     class UpdateQueueRequest < Struct.new(
+      :concurrent_jobs,
       :description,
       :name,
       :reservation_plan_settings,

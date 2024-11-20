@@ -192,6 +192,75 @@ module Aws::BedrockAgentRuntime
       attr_reader :event_emitter
 
     end
+    class OptimizedPromptStream
+
+      def initialize
+        @event_emitter = Aws::EventEmitter.new
+      end
+
+      def on_access_denied_exception_event(&block)
+        @event_emitter.on(:access_denied_exception, block) if block_given?
+      end
+
+      def on_analyze_prompt_event_event(&block)
+        @event_emitter.on(:analyze_prompt_event, block) if block_given?
+      end
+
+      def on_bad_gateway_exception_event(&block)
+        @event_emitter.on(:bad_gateway_exception, block) if block_given?
+      end
+
+      def on_dependency_failed_exception_event(&block)
+        @event_emitter.on(:dependency_failed_exception, block) if block_given?
+      end
+
+      def on_internal_server_exception_event(&block)
+        @event_emitter.on(:internal_server_exception, block) if block_given?
+      end
+
+      def on_optimized_prompt_event_event(&block)
+        @event_emitter.on(:optimized_prompt_event, block) if block_given?
+      end
+
+      def on_throttling_exception_event(&block)
+        @event_emitter.on(:throttling_exception, block) if block_given?
+      end
+
+      def on_validation_exception_event(&block)
+        @event_emitter.on(:validation_exception, block) if block_given?
+      end
+
+      def on_error_event(&block)
+        @event_emitter.on(:error, block) if block_given?
+      end
+
+      def on_initial_response_event(&block)
+        @event_emitter.on(:initial_response, block) if block_given?
+      end
+
+      def on_unknown_event(&block)
+        @event_emitter.on(:unknown_event, block) if block_given?
+      end
+
+      def on_event(&block)
+        on_access_denied_exception_event(&block)
+        on_analyze_prompt_event_event(&block)
+        on_bad_gateway_exception_event(&block)
+        on_dependency_failed_exception_event(&block)
+        on_internal_server_exception_event(&block)
+        on_optimized_prompt_event_event(&block)
+        on_throttling_exception_event(&block)
+        on_validation_exception_event(&block)
+        on_error_event(&block)
+        on_initial_response_event(&block)
+        on_unknown_event(&block)
+      end
+
+      # @api private
+      # @return Aws::EventEmitter
+      attr_reader :event_emitter
+
+    end
 
   end
 end

@@ -63,6 +63,13 @@ module Aws::ElasticLoadBalancingV2
     AvailabilityZones = Shapes::ListShape.new(name: 'AvailabilityZones')
     CaCertificatesBundleNotFoundException = Shapes::StructureShape.new(name: 'CaCertificatesBundleNotFoundException', error: {"code"=>"CaCertificatesBundleNotFound", "httpStatusCode"=>400, "senderFault"=>true})
     CanonicalHostedZoneId = Shapes::StringShape.new(name: 'CanonicalHostedZoneId')
+    CapacityDecreaseRequestsLimitExceededException = Shapes::StructureShape.new(name: 'CapacityDecreaseRequestsLimitExceededException', error: {"code"=>"CapacityDecreaseRequestLimitExceeded", "httpStatusCode"=>400, "senderFault"=>true})
+    CapacityReservationPendingException = Shapes::StructureShape.new(name: 'CapacityReservationPendingException', error: {"code"=>"CapacityReservationPending", "httpStatusCode"=>400, "senderFault"=>true})
+    CapacityReservationStateEnum = Shapes::StringShape.new(name: 'CapacityReservationStateEnum')
+    CapacityReservationStatus = Shapes::StructureShape.new(name: 'CapacityReservationStatus')
+    CapacityUnits = Shapes::IntegerShape.new(name: 'CapacityUnits')
+    CapacityUnitsDouble = Shapes::FloatShape.new(name: 'CapacityUnitsDouble')
+    CapacityUnitsLimitExceededException = Shapes::StructureShape.new(name: 'CapacityUnitsLimitExceededException', error: {"code"=>"CapacityUnitsLimitExceeded", "httpStatusCode"=>400, "senderFault"=>true})
     Certificate = Shapes::StructureShape.new(name: 'Certificate')
     CertificateArn = Shapes::StringShape.new(name: 'CertificateArn')
     CertificateList = Shapes::ListShape.new(name: 'CertificateList')
@@ -85,6 +92,7 @@ module Aws::ElasticLoadBalancingV2
     CreatedTime = Shapes::TimestampShape.new(name: 'CreatedTime')
     CustomerOwnedIpv4Pool = Shapes::StringShape.new(name: 'CustomerOwnedIpv4Pool')
     DNSName = Shapes::StringShape.new(name: 'DNSName')
+    DecreaseRequestsRemaining = Shapes::IntegerShape.new(name: 'DecreaseRequestsRemaining')
     Default = Shapes::BooleanShape.new(name: 'Default')
     DeleteAssociationSameAccountException = Shapes::StructureShape.new(name: 'DeleteAssociationSameAccountException', error: {"code"=>"DeleteAssociationSameAccount", "httpStatusCode"=>400, "senderFault"=>true})
     DeleteListenerInput = Shapes::StructureShape.new(name: 'DeleteListenerInput')
@@ -103,6 +111,8 @@ module Aws::ElasticLoadBalancingV2
     DeregisterTargetsOutput = Shapes::StructureShape.new(name: 'DeregisterTargetsOutput')
     DescribeAccountLimitsInput = Shapes::StructureShape.new(name: 'DescribeAccountLimitsInput')
     DescribeAccountLimitsOutput = Shapes::StructureShape.new(name: 'DescribeAccountLimitsOutput')
+    DescribeCapacityReservationInput = Shapes::StructureShape.new(name: 'DescribeCapacityReservationInput')
+    DescribeCapacityReservationOutput = Shapes::StructureShape.new(name: 'DescribeCapacityReservationOutput')
     DescribeListenerAttributesInput = Shapes::StructureShape.new(name: 'DescribeListenerAttributesInput')
     DescribeListenerAttributesOutput = Shapes::StructureShape.new(name: 'DescribeListenerAttributesOutput')
     DescribeListenerCertificatesInput = Shapes::StructureShape.new(name: 'DescribeListenerCertificatesInput')
@@ -169,6 +179,7 @@ module Aws::ElasticLoadBalancingV2
     IPv6Address = Shapes::StringShape.new(name: 'IPv6Address')
     IgnoreClientCertificateExpiry = Shapes::BooleanShape.new(name: 'IgnoreClientCertificateExpiry')
     IncompatibleProtocolsException = Shapes::StructureShape.new(name: 'IncompatibleProtocolsException', error: {"code"=>"IncompatibleProtocols", "httpStatusCode"=>400, "senderFault"=>true})
+    InsufficientCapacityException = Shapes::StructureShape.new(name: 'InsufficientCapacityException', error: {"code"=>"InsufficientCapacity", "httpStatusCode"=>500})
     InvalidCaCertificatesBundleException = Shapes::StructureShape.new(name: 'InvalidCaCertificatesBundleException', error: {"code"=>"InvalidCaCertificatesBundle", "httpStatusCode"=>400, "senderFault"=>true})
     InvalidConfigurationRequestException = Shapes::StructureShape.new(name: 'InvalidConfigurationRequestException', error: {"code"=>"InvalidConfigurationRequest", "httpStatusCode"=>400, "senderFault"=>true})
     InvalidLoadBalancerActionException = Shapes::StructureShape.new(name: 'InvalidLoadBalancerActionException', error: {"code"=>"InvalidLoadBalancerAction", "httpStatusCode"=>400, "senderFault"=>true})
@@ -180,6 +191,7 @@ module Aws::ElasticLoadBalancingV2
     IpAddress = Shapes::StringShape.new(name: 'IpAddress')
     IpAddressType = Shapes::StringShape.new(name: 'IpAddressType')
     IsDefault = Shapes::BooleanShape.new(name: 'IsDefault')
+    LastModifiedTime = Shapes::TimestampShape.new(name: 'LastModifiedTime')
     Limit = Shapes::StructureShape.new(name: 'Limit')
     Limits = Shapes::ListShape.new(name: 'Limits')
     ListOfDescribeTargetHealthIncludeOptions = Shapes::ListShape.new(name: 'ListOfDescribeTargetHealthIncludeOptions')
@@ -214,8 +226,11 @@ module Aws::ElasticLoadBalancingV2
     Marker = Shapes::StringShape.new(name: 'Marker')
     Matcher = Shapes::StructureShape.new(name: 'Matcher')
     Max = Shapes::StringShape.new(name: 'Max')
+    MinimumLoadBalancerCapacity = Shapes::StructureShape.new(name: 'MinimumLoadBalancerCapacity')
     MitigationInEffectEnum = Shapes::StringShape.new(name: 'MitigationInEffectEnum')
     Mode = Shapes::StringShape.new(name: 'Mode')
+    ModifyCapacityReservationInput = Shapes::StructureShape.new(name: 'ModifyCapacityReservationInput')
+    ModifyCapacityReservationOutput = Shapes::StructureShape.new(name: 'ModifyCapacityReservationOutput')
     ModifyListenerAttributesInput = Shapes::StructureShape.new(name: 'ModifyListenerAttributesInput')
     ModifyListenerAttributesOutput = Shapes::StructureShape.new(name: 'ModifyListenerAttributesOutput')
     ModifyListenerInput = Shapes::StructureShape.new(name: 'ModifyListenerInput')
@@ -241,6 +256,7 @@ module Aws::ElasticLoadBalancingV2
     PathPatternConditionConfig = Shapes::StructureShape.new(name: 'PathPatternConditionConfig')
     Policy = Shapes::StringShape.new(name: 'Policy')
     Port = Shapes::IntegerShape.new(name: 'Port')
+    PriorRequestNotCompleteException = Shapes::StructureShape.new(name: 'PriorRequestNotCompleteException', error: {"code"=>"PriorRequestNotComplete", "httpStatusCode"=>429, "senderFault"=>true})
     PriorityInUseException = Shapes::StructureShape.new(name: 'PriorityInUseException', error: {"code"=>"PriorityInUse", "httpStatusCode"=>400, "senderFault"=>true})
     PrivateIPv4Address = Shapes::StringShape.new(name: 'PrivateIPv4Address')
     ProtocolEnum = Shapes::StringShape.new(name: 'ProtocolEnum')
@@ -263,6 +279,7 @@ module Aws::ElasticLoadBalancingV2
     RemoveTagsOutput = Shapes::StructureShape.new(name: 'RemoveTagsOutput')
     RemoveTrustStoreRevocationsInput = Shapes::StructureShape.new(name: 'RemoveTrustStoreRevocationsInput')
     RemoveTrustStoreRevocationsOutput = Shapes::StructureShape.new(name: 'RemoveTrustStoreRevocationsOutput')
+    ResetCapacityReservation = Shapes::BooleanShape.new(name: 'ResetCapacityReservation')
     ResourceArn = Shapes::StringShape.new(name: 'ResourceArn')
     ResourceArns = Shapes::ListShape.new(name: 'ResourceArns')
     ResourceInUseException = Shapes::StructureShape.new(name: 'ResourceInUseException', error: {"code"=>"ResourceInUse", "httpStatusCode"=>400, "senderFault"=>true})
@@ -384,6 +401,8 @@ module Aws::ElasticLoadBalancingV2
     TrustStores = Shapes::ListShape.new(name: 'TrustStores')
     UnsupportedProtocolException = Shapes::StructureShape.new(name: 'UnsupportedProtocolException', error: {"code"=>"UnsupportedProtocol", "httpStatusCode"=>400, "senderFault"=>true})
     VpcId = Shapes::StringShape.new(name: 'VpcId')
+    ZonalCapacityReservationState = Shapes::StructureShape.new(name: 'ZonalCapacityReservationState')
+    ZonalCapacityReservationStates = Shapes::ListShape.new(name: 'ZonalCapacityReservationStates')
     ZoneName = Shapes::StringShape.new(name: 'ZoneName')
 
     ALPNPolicyNotSupportedException.struct_class = Types::ALPNPolicyNotSupportedException
@@ -475,6 +494,16 @@ module Aws::ElasticLoadBalancingV2
     AvailabilityZones.member = Shapes::ShapeRef.new(shape: AvailabilityZone)
 
     CaCertificatesBundleNotFoundException.struct_class = Types::CaCertificatesBundleNotFoundException
+
+    CapacityDecreaseRequestsLimitExceededException.struct_class = Types::CapacityDecreaseRequestsLimitExceededException
+
+    CapacityReservationPendingException.struct_class = Types::CapacityReservationPendingException
+
+    CapacityReservationStatus.add_member(:code, Shapes::ShapeRef.new(shape: CapacityReservationStateEnum, location_name: "Code"))
+    CapacityReservationStatus.add_member(:reason, Shapes::ShapeRef.new(shape: StateReason, location_name: "Reason"))
+    CapacityReservationStatus.struct_class = Types::CapacityReservationStatus
+
+    CapacityUnitsLimitExceededException.struct_class = Types::CapacityUnitsLimitExceededException
 
     Certificate.add_member(:certificate_arn, Shapes::ShapeRef.new(shape: CertificateArn, location_name: "CertificateArn"))
     Certificate.add_member(:is_default, Shapes::ShapeRef.new(shape: Default, location_name: "IsDefault"))
@@ -607,6 +636,15 @@ module Aws::ElasticLoadBalancingV2
     DescribeAccountLimitsOutput.add_member(:limits, Shapes::ShapeRef.new(shape: Limits, location_name: "Limits"))
     DescribeAccountLimitsOutput.add_member(:next_marker, Shapes::ShapeRef.new(shape: Marker, location_name: "NextMarker"))
     DescribeAccountLimitsOutput.struct_class = Types::DescribeAccountLimitsOutput
+
+    DescribeCapacityReservationInput.add_member(:load_balancer_arn, Shapes::ShapeRef.new(shape: LoadBalancerArn, required: true, location_name: "LoadBalancerArn"))
+    DescribeCapacityReservationInput.struct_class = Types::DescribeCapacityReservationInput
+
+    DescribeCapacityReservationOutput.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: LastModifiedTime, location_name: "LastModifiedTime"))
+    DescribeCapacityReservationOutput.add_member(:decrease_requests_remaining, Shapes::ShapeRef.new(shape: DecreaseRequestsRemaining, location_name: "DecreaseRequestsRemaining"))
+    DescribeCapacityReservationOutput.add_member(:minimum_load_balancer_capacity, Shapes::ShapeRef.new(shape: MinimumLoadBalancerCapacity, location_name: "MinimumLoadBalancerCapacity"))
+    DescribeCapacityReservationOutput.add_member(:capacity_reservation_state, Shapes::ShapeRef.new(shape: ZonalCapacityReservationStates, location_name: "CapacityReservationState"))
+    DescribeCapacityReservationOutput.struct_class = Types::DescribeCapacityReservationOutput
 
     DescribeListenerAttributesInput.add_member(:listener_arn, Shapes::ShapeRef.new(shape: ListenerArn, required: true, location_name: "ListenerArn"))
     DescribeListenerAttributesInput.struct_class = Types::DescribeListenerAttributesInput
@@ -789,6 +827,8 @@ module Aws::ElasticLoadBalancingV2
 
     IncompatibleProtocolsException.struct_class = Types::IncompatibleProtocolsException
 
+    InsufficientCapacityException.struct_class = Types::InsufficientCapacityException
+
     InvalidCaCertificatesBundleException.struct_class = Types::InvalidCaCertificatesBundleException
 
     InvalidConfigurationRequestException.struct_class = Types::InvalidConfigurationRequestException
@@ -885,6 +925,20 @@ module Aws::ElasticLoadBalancingV2
     Matcher.add_member(:grpc_code, Shapes::ShapeRef.new(shape: GrpcCode, location_name: "GrpcCode"))
     Matcher.struct_class = Types::Matcher
 
+    MinimumLoadBalancerCapacity.add_member(:capacity_units, Shapes::ShapeRef.new(shape: CapacityUnits, location_name: "CapacityUnits"))
+    MinimumLoadBalancerCapacity.struct_class = Types::MinimumLoadBalancerCapacity
+
+    ModifyCapacityReservationInput.add_member(:load_balancer_arn, Shapes::ShapeRef.new(shape: LoadBalancerArn, required: true, location_name: "LoadBalancerArn"))
+    ModifyCapacityReservationInput.add_member(:minimum_load_balancer_capacity, Shapes::ShapeRef.new(shape: MinimumLoadBalancerCapacity, location_name: "MinimumLoadBalancerCapacity"))
+    ModifyCapacityReservationInput.add_member(:reset_capacity_reservation, Shapes::ShapeRef.new(shape: ResetCapacityReservation, location_name: "ResetCapacityReservation"))
+    ModifyCapacityReservationInput.struct_class = Types::ModifyCapacityReservationInput
+
+    ModifyCapacityReservationOutput.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: LastModifiedTime, location_name: "LastModifiedTime"))
+    ModifyCapacityReservationOutput.add_member(:decrease_requests_remaining, Shapes::ShapeRef.new(shape: DecreaseRequestsRemaining, location_name: "DecreaseRequestsRemaining"))
+    ModifyCapacityReservationOutput.add_member(:minimum_load_balancer_capacity, Shapes::ShapeRef.new(shape: MinimumLoadBalancerCapacity, location_name: "MinimumLoadBalancerCapacity"))
+    ModifyCapacityReservationOutput.add_member(:capacity_reservation_state, Shapes::ShapeRef.new(shape: ZonalCapacityReservationStates, location_name: "CapacityReservationState"))
+    ModifyCapacityReservationOutput.struct_class = Types::ModifyCapacityReservationOutput
+
     ModifyListenerAttributesInput.add_member(:listener_arn, Shapes::ShapeRef.new(shape: ListenerArn, required: true, location_name: "ListenerArn"))
     ModifyListenerAttributesInput.add_member(:attributes, Shapes::ShapeRef.new(shape: ListenerAttributes, required: true, location_name: "Attributes"))
     ModifyListenerAttributesInput.struct_class = Types::ModifyListenerAttributesInput
@@ -961,6 +1015,8 @@ module Aws::ElasticLoadBalancingV2
 
     PathPatternConditionConfig.add_member(:values, Shapes::ShapeRef.new(shape: ListOfString, location_name: "Values"))
     PathPatternConditionConfig.struct_class = Types::PathPatternConditionConfig
+
+    PriorRequestNotCompleteException.struct_class = Types::PriorRequestNotCompleteException
 
     PriorityInUseException.struct_class = Types::PriorityInUseException
 
@@ -1265,6 +1321,13 @@ module Aws::ElasticLoadBalancingV2
 
     UnsupportedProtocolException.struct_class = Types::UnsupportedProtocolException
 
+    ZonalCapacityReservationState.add_member(:state, Shapes::ShapeRef.new(shape: CapacityReservationStatus, location_name: "State"))
+    ZonalCapacityReservationState.add_member(:availability_zone, Shapes::ShapeRef.new(shape: ZoneName, location_name: "AvailabilityZone"))
+    ZonalCapacityReservationState.add_member(:effective_capacity_units, Shapes::ShapeRef.new(shape: CapacityUnitsDouble, location_name: "EffectiveCapacityUnits"))
+    ZonalCapacityReservationState.struct_class = Types::ZonalCapacityReservationState
+
+    ZonalCapacityReservationStates.member = Shapes::ShapeRef.new(shape: ZonalCapacityReservationState)
+
 
     # @api private
     API = Seahorse::Model::Api.new.tap do |api|
@@ -1500,6 +1563,15 @@ module Aws::ElasticLoadBalancingV2
         o.output = Shapes::ShapeRef.new(shape: DescribeAccountLimitsOutput)
       end)
 
+      api.add_operation(:describe_capacity_reservation, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeCapacityReservation"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeCapacityReservationInput)
+        o.output = Shapes::ShapeRef.new(shape: DescribeCapacityReservationOutput)
+        o.errors << Shapes::ShapeRef.new(shape: LoadBalancerNotFoundException)
+      end)
+
       api.add_operation(:describe_listener_attributes, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DescribeListenerAttributes"
         o.http_method = "POST"
@@ -1709,6 +1781,22 @@ module Aws::ElasticLoadBalancingV2
         o.errors << Shapes::ShapeRef.new(shape: RevocationIdNotFoundException)
       end)
 
+      api.add_operation(:modify_capacity_reservation, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyCapacityReservation"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyCapacityReservationInput)
+        o.output = Shapes::ShapeRef.new(shape: ModifyCapacityReservationOutput)
+        o.errors << Shapes::ShapeRef.new(shape: LoadBalancerNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidConfigurationRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: CapacityUnitsLimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: CapacityReservationPendingException)
+        o.errors << Shapes::ShapeRef.new(shape: InsufficientCapacityException)
+        o.errors << Shapes::ShapeRef.new(shape: CapacityDecreaseRequestsLimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: PriorRequestNotCompleteException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationNotPermittedException)
+      end)
+
       api.add_operation(:modify_listener, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ModifyListener"
         o.http_method = "POST"
@@ -1897,6 +1985,7 @@ module Aws::ElasticLoadBalancingV2
         o.errors << Shapes::ShapeRef.new(shape: InvalidSubnetException)
         o.errors << Shapes::ShapeRef.new(shape: AllocationIdNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AvailabilityZoneNotSupportedException)
+        o.errors << Shapes::ShapeRef.new(shape: CapacityReservationPendingException)
       end)
     end
 

@@ -893,6 +893,106 @@ module Aws::Omics
       include Aws::Structure
     end
 
+    # @!attribute [rw] cache_behavior
+    #   Default cache behavior for runs that use this cache. Supported
+    #   values are:
+    #
+    #   `CACHE_ON_FAILURE`: Caches task outputs from completed tasks for
+    #   runs that fail. This setting is useful if you're debugging a
+    #   workflow that fails after several tasks completed successfully. The
+    #   subsequent run uses the cache outputs for previously-completed tasks
+    #   if the task definition, inputs, and container in ECR are identical
+    #   to the prior run.
+    #
+    #   `CACHE_ALWAYS`: Caches task outputs from completed tasks for all
+    #   runs. This setting is useful in development mode, but do not use it
+    #   in a production setting.
+    #
+    #   If you don't specify a value, the default behavior is
+    #   CACHE\_ON\_FAILURE. When you start a run that uses this cache, you
+    #   can override the default cache behavior.
+    #
+    #   For more information, see [Run cache behavior][1] in the AWS
+    #   HealthOmics User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_s3_location
+    #   Specify the S3 location for storing the cached task outputs. This
+    #   data must be immediately accessible (not in an archived state).
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Enter a description of the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Enter a user-friendly name for the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_id
+    #   A unique request token, to ensure idempotency. If you don't specify
+    #   a token, HealthOmics automatically generates a universally unique
+    #   identifier (UUID) for the request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Specify one or more tags to associate with this run cache.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] cache_bucket_owner_id
+    #   The AWS account ID of the expected owner of the S3 bucket for the
+    #   run cache. If not provided, your account ID is set as the owner of
+    #   the bucket.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateRunCacheRequest AWS API Documentation
+    #
+    class CreateRunCacheRequest < Struct.new(
+      :cache_behavior,
+      :cache_s3_location,
+      :description,
+      :name,
+      :request_id,
+      :tags,
+      :cache_bucket_owner_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   Unique resource identifier for the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   Identifier for the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Run cache status.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags associated with this run cache.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateRunCacheResponse AWS API Documentation
+    #
+    class CreateRunCacheResponse < Struct.new(
+      :arn,
+      :id,
+      :status,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] name
     #   A name for the group.
     #   @return [String]
@@ -1360,6 +1460,18 @@ module Aws::Omics
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteReferenceStoreResponse AWS API Documentation
     #
     class DeleteReferenceStoreResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] id
+    #   Run cache identifier for the cache you want to delete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteRunCacheRequest AWS API Documentation
+    #
+    class DeleteRunCacheRequest < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] id
     #   The run group's ID.
@@ -2528,6 +2640,75 @@ module Aws::Omics
     end
 
     # @!attribute [rw] id
+    #   The identifier of the run cache to retrieve.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetRunCacheRequest AWS API Documentation
+    #
+    class GetRunCacheRequest < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   Unique resource identifier for the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_behavior
+    #   The default cache behavior for runs using this cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_bucket_owner_id
+    #   The identifier of the bucket owner.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_s3_uri
+    #   The S3 URI where the cache data is stored.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   Creation time of the run cache (an ISO 8601 formatted string).
+    #   @return [Time]
+    #
+    # @!attribute [rw] description
+    #   The run cache description.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The run cache ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The run cache name.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The run cache status.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags associated with the run cache.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetRunCacheResponse AWS API Documentation
+    #
+    class GetRunCacheResponse < Struct.new(
+      :arn,
+      :cache_behavior,
+      :cache_bucket_owner_id,
+      :cache_s3_uri,
+      :creation_time,
+      :description,
+      :id,
+      :name,
+      :status,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
     #   The group's ID.
     #   @return [String]
     #
@@ -2614,6 +2795,18 @@ module Aws::Omics
     #
     # @!attribute [rw] id
     #   The run's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_id
+    #   The run cache associated with the run.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_behavior
+    #   The run cache behavior for the run.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine_version
+    #   The workflow engine version.
     #   @return [String]
     #
     # @!attribute [rw] status
@@ -2739,6 +2932,9 @@ module Aws::Omics
     class GetRunResponse < Struct.new(
       :arn,
       :id,
+      :cache_id,
+      :cache_behavior,
+      :engine_version,
       :status,
       :workflow_id,
       :workflow_type,
@@ -2805,6 +3001,15 @@ module Aws::Omics
     #   The task's CPU usage.
     #   @return [Integer]
     #
+    # @!attribute [rw] cache_hit
+    #   Set to true if AWS HealthOmics found a matching entry in the run
+    #   cache for this task.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] cache_s3_uri
+    #   The S3 URI of the cache location.
+    #   @return [String]
+    #
     # @!attribute [rw] memory
     #   The task's memory use in gigabytes.
     #   @return [Integer]
@@ -2848,6 +3053,8 @@ module Aws::Omics
       :status,
       :name,
       :cpus,
+      :cache_hit,
+      :cache_s3_uri,
       :memory,
       :creation_time,
       :start_time,
@@ -4074,6 +4281,43 @@ module Aws::Omics
       include Aws::Structure
     end
 
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] starting_token
+    #   Optional pagination token returned from a prior call to the
+    #   `ListRunCaches` API operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListRunCachesRequest AWS API Documentation
+    #
+    class ListRunCachesRequest < Struct.new(
+      :max_results,
+      :starting_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   Details about each run cache in the response.
+    #   @return [Array<Types::RunCacheListItem>]
+    #
+    # @!attribute [rw] next_token
+    #   Pagination token to retrieve additional run caches. If the response
+    #   does not have a `nextToken`value, you have reached to the end of the
+    #   list.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListRunCachesResponse AWS API Documentation
+    #
+    class ListRunCachesResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] name
     #   The run groups' name.
     #   @return [String]
@@ -5113,6 +5357,51 @@ module Aws::Omics
       include Aws::Structure
     end
 
+    # List entry for one run cache.
+    #
+    # @!attribute [rw] arn
+    #   Unique resource identifier for the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_behavior
+    #   Default cache behavior for the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_s3_uri
+    #   The S3 uri for the run cache data.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   The time that this run cache was created (an ISO 8601 formatted
+    #   string).
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The identifier for this run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the run cache.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The run cache status.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/RunCacheListItem AWS API Documentation
+    #
+    class RunCacheListItem < Struct.new(
+      :arn,
+      :cache_behavior,
+      :cache_s3_uri,
+      :creation_time,
+      :id,
+      :name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A run group.
     #
     # @!attribute [rw] arn
@@ -5889,6 +6178,22 @@ module Aws::Omics
     #   A name for the run.
     #   @return [String]
     #
+    # @!attribute [rw] cache_id
+    #   Identifier of the cache associated with this run. If you don't
+    #   specify a cache ID, no task outputs are cached for this run.
+    #   @return [String]
+    #
+    # @!attribute [rw] cache_behavior
+    #   The cache behavior for the run. You specify this value if you want
+    #   to override the default behavior for the cache. You had set the
+    #   default value when you created the cache. For more information, see
+    #   [Run cache behavior][1] in the AWS HealthOmics User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/how-run-cache.html#run-cache-behavior
+    #   @return [String]
+    #
     # @!attribute [rw] run_group_id
     #   The run's group ID.
     #   @return [String]
@@ -5928,7 +6233,22 @@ module Aws::Omics
     #   @return [String]
     #
     # @!attribute [rw] retention_mode
-    #   The retention mode for the run.
+    #   The retention mode for the run. The default value is RETAIN.
+    #
+    #   HealthOmics stores a fixed number of runs that are available to the
+    #   console and API. In the default mode (RETAIN), you need to remove
+    #   runs manually when the number of run exceeds the maximum. If you set
+    #   the retention mode to `REMOVE`, HealthOmics automatically removes
+    #   runs (that have mode set to REMOVE) when the number of run exceeds
+    #   the maximum. All run logs are available in CloudWatch logs, if you
+    #   need information about a run that is no longer available to the API.
+    #
+    #   For more information about retention mode, see [Specifying run
+    #   retention mode][1] in the *AWS HealthOmics User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/omics/latest/dev/starting-a-run.html
     #   @return [String]
     #
     # @!attribute [rw] storage_type
@@ -5950,6 +6270,8 @@ module Aws::Omics
       :run_id,
       :role_arn,
       :name,
+      :cache_id,
+      :cache_behavior,
       :run_group_id,
       :priority,
       :parameters,
@@ -5966,7 +6288,7 @@ module Aws::Omics
     end
 
     # @!attribute [rw] arn
-    #   The run's ARN.
+    #   Unique resource identifier for the run.
     #   @return [String]
     #
     # @!attribute [rw] id
@@ -6108,6 +6430,15 @@ module Aws::Omics
     #   The task's CPU count.
     #   @return [Integer]
     #
+    # @!attribute [rw] cache_hit
+    #   Set to true if AWS HealthOmics found a matching entry in the run
+    #   cache for this task.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] cache_s3_uri
+    #   The S3 URI of the cache location.
+    #   @return [String]
+    #
     # @!attribute [rw] memory
     #   The task's memory use in gigabyes.
     #   @return [Integer]
@@ -6140,6 +6471,8 @@ module Aws::Omics
       :status,
       :name,
       :cpus,
+      :cache_hit,
+      :cache_s3_uri,
       :memory,
       :creation_time,
       :start_time,
@@ -6380,6 +6713,33 @@ module Aws::Omics
       :description,
       :creation_time,
       :update_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cache_behavior
+    #   Update the default run cache behavior.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Update the run cache description.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The identifier of the run cache you want to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Update the name of the run cache.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateRunCacheRequest AWS API Documentation
+    #
+    class UpdateRunCacheRequest < Struct.new(
+      :cache_behavior,
+      :description,
+      :id,
+      :name)
       SENSITIVE = []
       include Aws::Structure
     end

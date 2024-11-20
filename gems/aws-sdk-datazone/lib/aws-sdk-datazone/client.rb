@@ -539,7 +539,9 @@ module Aws::DataZone
     #   * {Types::AcceptSubscriptionRequestOutput#created_by #created_by} => String
     #   * {Types::AcceptSubscriptionRequestOutput#decision_comment #decision_comment} => String
     #   * {Types::AcceptSubscriptionRequestOutput#domain_id #domain_id} => String
+    #   * {Types::AcceptSubscriptionRequestOutput#existing_subscription_id #existing_subscription_id} => String
     #   * {Types::AcceptSubscriptionRequestOutput#id #id} => String
+    #   * {Types::AcceptSubscriptionRequestOutput#metadata_forms #metadata_forms} => Array&lt;Types::FormOutput&gt;
     #   * {Types::AcceptSubscriptionRequestOutput#request_reason #request_reason} => String
     #   * {Types::AcceptSubscriptionRequestOutput#reviewer_id #reviewer_id} => String
     #   * {Types::AcceptSubscriptionRequestOutput#status #status} => String
@@ -568,7 +570,13 @@ module Aws::DataZone
     #   resp.created_by #=> String
     #   resp.decision_comment #=> String
     #   resp.domain_id #=> String
+    #   resp.existing_subscription_id #=> String
     #   resp.id #=> String
+    #   resp.metadata_forms #=> Array
+    #   resp.metadata_forms[0].content #=> String
+    #   resp.metadata_forms[0].form_name #=> String
+    #   resp.metadata_forms[0].type_name #=> String
+    #   resp.metadata_forms[0].type_revision #=> String
     #   resp.request_reason #=> String
     #   resp.reviewer_id #=> String
     #   resp.status #=> String, one of "PENDING", "ACCEPTED", "REJECTED"
@@ -992,7 +1000,7 @@ module Aws::DataZone
     #         content: "FormInputContentString",
     #         form_name: "FormName", # required
     #         type_identifier: "FormTypeIdentifier",
-    #         type_revision: "Revision",
+    #         type_revision: "RevisionInput",
     #       },
     #     ],
     #     glossary_terms: ["GlossaryTermId"],
@@ -1293,7 +1301,7 @@ module Aws::DataZone
     #         content: "FormInputContentString",
     #         form_name: "FormName", # required
     #         type_identifier: "FormTypeIdentifier",
-    #         type_revision: "Revision",
+    #         type_revision: "RevisionInput",
     #       },
     #     ],
     #     glossary_terms: ["GlossaryTermId"],
@@ -1489,7 +1497,7 @@ module Aws::DataZone
     #         content: "FormInputContentString",
     #         form_name: "FormName", # required
     #         type_identifier: "FormTypeIdentifier",
-    #         type_revision: "Revision",
+    #         type_revision: "RevisionInput",
     #       },
     #     ],
     #     glossary_terms: ["GlossaryTermId"],
@@ -1599,7 +1607,7 @@ module Aws::DataZone
     #         content: "FormInputContentString",
     #         form_name: "FormName", # required
     #         type_identifier: "FormTypeIdentifier",
-    #         type_revision: "Revision",
+    #         type_revision: "RevisionInput",
     #       },
     #     ],
     #     glossary_terms: ["GlossaryTermId"],
@@ -1733,7 +1741,7 @@ module Aws::DataZone
     #         content: "FormInputContentString",
     #         form_name: "FormName", # required
     #         type_identifier: "FormTypeIdentifier",
-    #         type_revision: "Revision",
+    #         type_revision: "RevisionInput",
     #       },
     #     ],
     #     client_token: "String",
@@ -2723,6 +2731,127 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Creates a rule in Amazon DataZone. A rule is a formal agreement that
+    # enforces specific requirements across user workflows (e.g., publishing
+    # assets to the catalog, requesting subscriptions, creating projects)
+    # within the Amazon DataZone data portal. These rules help maintain
+    # consistency, ensure compliance, and uphold governance standards in
+    # data management processes. For instance, a metadata enforcement rule
+    # can specify the required information for creating a subscription
+    # request or publishing a data asset to the catalog, ensuring alignment
+    # with organizational standards.
+    #
+    # @option params [required, String] :action
+    #   The action of the rule.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that is provided to ensure the
+    #   idempotency of the request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [String] :description
+    #   The description of the rule.
+    #
+    # @option params [required, Types::RuleDetail] :detail
+    #   The detail of the rule.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where the rule is created.
+    #
+    # @option params [required, String] :name
+    #   The name of the rule.
+    #
+    # @option params [required, Types::RuleScope] :scope
+    #   The scope of the rule.
+    #
+    # @option params [required, Types::RuleTarget] :target
+    #   The target of the rule.
+    #
+    # @return [Types::CreateRuleOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateRuleOutput#action #action} => String
+    #   * {Types::CreateRuleOutput#created_at #created_at} => Time
+    #   * {Types::CreateRuleOutput#created_by #created_by} => String
+    #   * {Types::CreateRuleOutput#description #description} => String
+    #   * {Types::CreateRuleOutput#detail #detail} => Types::RuleDetail
+    #   * {Types::CreateRuleOutput#identifier #identifier} => String
+    #   * {Types::CreateRuleOutput#name #name} => String
+    #   * {Types::CreateRuleOutput#rule_type #rule_type} => String
+    #   * {Types::CreateRuleOutput#scope #scope} => Types::RuleScope
+    #   * {Types::CreateRuleOutput#target #target} => Types::RuleTarget
+    #   * {Types::CreateRuleOutput#target_type #target_type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_rule({
+    #     action: "CREATE_SUBSCRIPTION_REQUEST", # required, accepts CREATE_SUBSCRIPTION_REQUEST
+    #     client_token: "ClientToken",
+    #     description: "Description",
+    #     detail: { # required
+    #       metadata_form_enforcement_detail: {
+    #         required_metadata_forms: [
+    #           {
+    #             type_identifier: "FormTypeIdentifier", # required
+    #             type_revision: "Revision", # required
+    #           },
+    #         ],
+    #       },
+    #     },
+    #     domain_identifier: "DomainId", # required
+    #     name: "RuleName", # required
+    #     scope: { # required
+    #       asset_type: {
+    #         selection_mode: "ALL", # required, accepts ALL, SPECIFIC
+    #         specific_asset_types: ["AssetTypeIdentifier"],
+    #       },
+    #       data_product: false,
+    #       project: {
+    #         selection_mode: "ALL", # required, accepts ALL, SPECIFIC
+    #         specific_projects: ["ProjectId"],
+    #       },
+    #     },
+    #     target: { # required
+    #       domain_unit_target: {
+    #         domain_unit_id: "DomainUnitId", # required
+    #         include_child_domain_units: false,
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.action #=> String, one of "CREATE_SUBSCRIPTION_REQUEST"
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.description #=> String
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms #=> Array
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms[0].type_identifier #=> String
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms[0].type_revision #=> String
+    #   resp.identifier #=> String
+    #   resp.name #=> String
+    #   resp.rule_type #=> String, one of "METADATA_FORM_ENFORCEMENT"
+    #   resp.scope.asset_type.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.scope.asset_type.specific_asset_types #=> Array
+    #   resp.scope.asset_type.specific_asset_types[0] #=> String
+    #   resp.scope.data_product #=> Boolean
+    #   resp.scope.project.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.scope.project.specific_projects #=> Array
+    #   resp.scope.project.specific_projects[0] #=> String
+    #   resp.target.domain_unit_target.domain_unit_id #=> String
+    #   resp.target.domain_unit_target.include_child_domain_units #=> Boolean
+    #   resp.target_type #=> String, one of "DOMAIN_UNIT"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/CreateRule AWS API Documentation
+    #
+    # @overload create_rule(params = {})
+    # @param [Hash] params ({})
+    def create_rule(params = {}, options = {})
+      req = build_request(:create_rule, params)
+      req.send_request(options)
+    end
+
     # Creates a subsscription grant in Amazon DataZone.
     #
     # @option params [Array<Types::AssetTargetNameMap>] :asset_target_names
@@ -2833,6 +2962,9 @@ module Aws::DataZone
     #   The ID of the Amazon DataZone domain in which the subscription request
     #   is created.
     #
+    # @option params [Array<Types::FormInput>] :metadata_forms
+    #   The metadata form included in the subscription request.
+    #
     # @option params [required, String] :request_reason
     #   The reason for the subscription request.
     #
@@ -2849,7 +2981,9 @@ module Aws::DataZone
     #   * {Types::CreateSubscriptionRequestOutput#created_by #created_by} => String
     #   * {Types::CreateSubscriptionRequestOutput#decision_comment #decision_comment} => String
     #   * {Types::CreateSubscriptionRequestOutput#domain_id #domain_id} => String
+    #   * {Types::CreateSubscriptionRequestOutput#existing_subscription_id #existing_subscription_id} => String
     #   * {Types::CreateSubscriptionRequestOutput#id #id} => String
+    #   * {Types::CreateSubscriptionRequestOutput#metadata_forms #metadata_forms} => Array&lt;Types::FormOutput&gt;
     #   * {Types::CreateSubscriptionRequestOutput#request_reason #request_reason} => String
     #   * {Types::CreateSubscriptionRequestOutput#reviewer_id #reviewer_id} => String
     #   * {Types::CreateSubscriptionRequestOutput#status #status} => String
@@ -2863,6 +2997,14 @@ module Aws::DataZone
     #   resp = client.create_subscription_request({
     #     client_token: "String",
     #     domain_identifier: "DomainId", # required
+    #     metadata_forms: [
+    #       {
+    #         content: "FormInputContentString",
+    #         form_name: "FormName", # required
+    #         type_identifier: "FormTypeIdentifier",
+    #         type_revision: "RevisionInput",
+    #       },
+    #     ],
     #     request_reason: "RequestReason", # required
     #     subscribed_listings: [ # required
     #       {
@@ -2884,7 +3026,13 @@ module Aws::DataZone
     #   resp.created_by #=> String
     #   resp.decision_comment #=> String
     #   resp.domain_id #=> String
+    #   resp.existing_subscription_id #=> String
     #   resp.id #=> String
+    #   resp.metadata_forms #=> Array
+    #   resp.metadata_forms[0].content #=> String
+    #   resp.metadata_forms[0].form_name #=> String
+    #   resp.metadata_forms[0].type_name #=> String
+    #   resp.metadata_forms[0].type_revision #=> String
     #   resp.request_reason #=> String
     #   resp.reviewer_id #=> String
     #   resp.status #=> String, one of "PENDING", "ACCEPTED", "REJECTED"
@@ -3679,6 +3827,40 @@ module Aws::DataZone
     # @param [Hash] params ({})
     def delete_project_membership(params = {}, options = {})
       req = build_request(:delete_project_membership, params)
+      req.send_request(options)
+    end
+
+    # Deletes a rule in Amazon DataZone. A rule is a formal agreement that
+    # enforces specific requirements across user workflows (e.g., publishing
+    # assets to the catalog, requesting subscriptions, creating projects)
+    # within the Amazon DataZone data portal. These rules help maintain
+    # consistency, ensure compliance, and uphold governance standards in
+    # data management processes. For instance, a metadata enforcement rule
+    # can specify the required information for creating a subscription
+    # request or publishing a data asset to the catalog, ensuring alignment
+    # with organizational standards.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain that where the rule is to be deleted.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the rule that is to be deleted.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_rule({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "RuleId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/DeleteRule AWS API Documentation
+    #
+    # @overload delete_rule(params = {})
+    # @param [Hash] params ({})
+    def delete_rule(params = {}, options = {})
+      req = build_request(:delete_rule, params)
       req.send_request(options)
     end
 
@@ -5329,6 +5511,85 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Gets the details of a rule in Amazon DataZone. A rule is a formal
+    # agreement that enforces specific requirements across user workflows
+    # (e.g., publishing assets to the catalog, requesting subscriptions,
+    # creating projects) within the Amazon DataZone data portal. These rules
+    # help maintain consistency, ensure compliance, and uphold governance
+    # standards in data management processes. For instance, a metadata
+    # enforcement rule can specify the required information for creating a
+    # subscription request or publishing a data asset to the catalog,
+    # ensuring alignment with organizational standards.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where the `GetRule` action is to be invoked.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the rule.
+    #
+    # @option params [String] :revision
+    #   The revision of the rule.
+    #
+    # @return [Types::GetRuleOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetRuleOutput#action #action} => String
+    #   * {Types::GetRuleOutput#created_at #created_at} => Time
+    #   * {Types::GetRuleOutput#created_by #created_by} => String
+    #   * {Types::GetRuleOutput#description #description} => String
+    #   * {Types::GetRuleOutput#detail #detail} => Types::RuleDetail
+    #   * {Types::GetRuleOutput#identifier #identifier} => String
+    #   * {Types::GetRuleOutput#last_updated_by #last_updated_by} => String
+    #   * {Types::GetRuleOutput#name #name} => String
+    #   * {Types::GetRuleOutput#revision #revision} => String
+    #   * {Types::GetRuleOutput#rule_type #rule_type} => String
+    #   * {Types::GetRuleOutput#scope #scope} => Types::RuleScope
+    #   * {Types::GetRuleOutput#target #target} => Types::RuleTarget
+    #   * {Types::GetRuleOutput#target_type #target_type} => String
+    #   * {Types::GetRuleOutput#updated_at #updated_at} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_rule({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "RuleId", # required
+    #     revision: "Revision",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.action #=> String, one of "CREATE_SUBSCRIPTION_REQUEST"
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.description #=> String
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms #=> Array
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms[0].type_identifier #=> String
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms[0].type_revision #=> String
+    #   resp.identifier #=> String
+    #   resp.last_updated_by #=> String
+    #   resp.name #=> String
+    #   resp.revision #=> String
+    #   resp.rule_type #=> String, one of "METADATA_FORM_ENFORCEMENT"
+    #   resp.scope.asset_type.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.scope.asset_type.specific_asset_types #=> Array
+    #   resp.scope.asset_type.specific_asset_types[0] #=> String
+    #   resp.scope.data_product #=> Boolean
+    #   resp.scope.project.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.scope.project.specific_projects #=> Array
+    #   resp.scope.project.specific_projects[0] #=> String
+    #   resp.target.domain_unit_target.domain_unit_id #=> String
+    #   resp.target.domain_unit_target.include_child_domain_units #=> Boolean
+    #   resp.target_type #=> String, one of "DOMAIN_UNIT"
+    #   resp.updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetRule AWS API Documentation
+    #
+    # @overload get_rule(params = {})
+    # @param [Hash] params ({})
+    def get_rule(params = {}, options = {})
+      req = build_request(:get_rule, params)
+      req.send_request(options)
+    end
+
     # Gets a subscription in Amazon DataZone.
     #
     # @option params [required, String] :domain_identifier
@@ -5492,7 +5753,9 @@ module Aws::DataZone
     #   * {Types::GetSubscriptionRequestDetailsOutput#created_by #created_by} => String
     #   * {Types::GetSubscriptionRequestDetailsOutput#decision_comment #decision_comment} => String
     #   * {Types::GetSubscriptionRequestDetailsOutput#domain_id #domain_id} => String
+    #   * {Types::GetSubscriptionRequestDetailsOutput#existing_subscription_id #existing_subscription_id} => String
     #   * {Types::GetSubscriptionRequestDetailsOutput#id #id} => String
+    #   * {Types::GetSubscriptionRequestDetailsOutput#metadata_forms #metadata_forms} => Array&lt;Types::FormOutput&gt;
     #   * {Types::GetSubscriptionRequestDetailsOutput#request_reason #request_reason} => String
     #   * {Types::GetSubscriptionRequestDetailsOutput#reviewer_id #reviewer_id} => String
     #   * {Types::GetSubscriptionRequestDetailsOutput#status #status} => String
@@ -5514,7 +5777,13 @@ module Aws::DataZone
     #   resp.created_by #=> String
     #   resp.decision_comment #=> String
     #   resp.domain_id #=> String
+    #   resp.existing_subscription_id #=> String
     #   resp.id #=> String
+    #   resp.metadata_forms #=> Array
+    #   resp.metadata_forms[0].content #=> String
+    #   resp.metadata_forms[0].form_name #=> String
+    #   resp.metadata_forms[0].type_name #=> String
+    #   resp.metadata_forms[0].type_revision #=> String
     #   resp.request_reason #=> String
     #   resp.reviewer_id #=> String
     #   resp.status #=> String, one of "PENDING", "ACCEPTED", "REJECTED"
@@ -7158,6 +7427,111 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Lists existing rules. In Amazon DataZone, a rule is a formal agreement
+    # that enforces specific requirements across user workflows (e.g.,
+    # publishing assets to the catalog, requesting subscriptions, creating
+    # projects) within the Amazon DataZone data portal. These rules help
+    # maintain consistency, ensure compliance, and uphold governance
+    # standards in data management processes. For instance, a metadata
+    # enforcement rule can specify the required information for creating a
+    # subscription request or publishing a data asset to the catalog,
+    # ensuring alignment with organizational standards.
+    #
+    # @option params [String] :action
+    #   The action of the rule.
+    #
+    # @option params [Array<String>] :asset_types
+    #   The asset types of the rule.
+    #
+    # @option params [Boolean] :data_product
+    #   The data product of the rule.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain in which the rules are to be listed.
+    #
+    # @option params [Boolean] :include_cascaded
+    #   Specifies whether to include cascading rules in the results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of rules to return in a single call to `ListRules`.
+    #   When the number of rules to be listed is greater than the value of
+    #   `MaxResults`, the response contains a `NextToken` value that you can
+    #   use in a subsequent call to `ListRules` to list the next set of rules.
+    #
+    # @option params [String] :next_token
+    #   When the number of rules is greater than the default value for the
+    #   `MaxResults` parameter, or if you explicitly specify a value for
+    #   `MaxResults` that is less than the number of rules, the response
+    #   includes a pagination token named `NextToken`. You can specify this
+    #   `NextToken` value in a subsequent call to `ListRules` to list the next
+    #   set of rules.
+    #
+    # @option params [Array<String>] :project_ids
+    #   The IDs of projects in which rules are to be listed.
+    #
+    # @option params [String] :rule_type
+    #   The type of the rule.
+    #
+    # @option params [required, String] :target_identifier
+    #   The target ID of the rule.
+    #
+    # @option params [required, String] :target_type
+    #   The target type of the rule.
+    #
+    # @return [Types::ListRulesOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListRulesOutput#items #items} => Array&lt;Types::RuleSummary&gt;
+    #   * {Types::ListRulesOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_rules({
+    #     action: "CREATE_SUBSCRIPTION_REQUEST", # accepts CREATE_SUBSCRIPTION_REQUEST
+    #     asset_types: ["AssetTypeIdentifier"],
+    #     data_product: false,
+    #     domain_identifier: "DomainId", # required
+    #     include_cascaded: false,
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #     project_ids: ["ProjectId"],
+    #     rule_type: "METADATA_FORM_ENFORCEMENT", # accepts METADATA_FORM_ENFORCEMENT
+    #     target_identifier: "String", # required
+    #     target_type: "DOMAIN_UNIT", # required, accepts DOMAIN_UNIT
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].action #=> String, one of "CREATE_SUBSCRIPTION_REQUEST"
+    #   resp.items[0].identifier #=> String
+    #   resp.items[0].last_updated_by #=> String
+    #   resp.items[0].name #=> String
+    #   resp.items[0].revision #=> String
+    #   resp.items[0].rule_type #=> String, one of "METADATA_FORM_ENFORCEMENT"
+    #   resp.items[0].scope.asset_type.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.items[0].scope.asset_type.specific_asset_types #=> Array
+    #   resp.items[0].scope.asset_type.specific_asset_types[0] #=> String
+    #   resp.items[0].scope.data_product #=> Boolean
+    #   resp.items[0].scope.project.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.items[0].scope.project.specific_projects #=> Array
+    #   resp.items[0].scope.project.specific_projects[0] #=> String
+    #   resp.items[0].target.domain_unit_target.domain_unit_id #=> String
+    #   resp.items[0].target.domain_unit_target.include_child_domain_units #=> Boolean
+    #   resp.items[0].target_type #=> String, one of "DOMAIN_UNIT"
+    #   resp.items[0].updated_at #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ListRules AWS API Documentation
+    #
+    # @overload list_rules(params = {})
+    # @param [Hash] params ({})
+    def list_rules(params = {}, options = {})
+      req = build_request(:list_rules, params)
+      req.send_request(options)
+    end
+
     # Lists subscription grants.
     #
     # @option params [required, String] :domain_identifier
@@ -7332,7 +7706,12 @@ module Aws::DataZone
     #   resp.items[0].created_by #=> String
     #   resp.items[0].decision_comment #=> String
     #   resp.items[0].domain_id #=> String
+    #   resp.items[0].existing_subscription_id #=> String
     #   resp.items[0].id #=> String
+    #   resp.items[0].metadata_forms_summary #=> Array
+    #   resp.items[0].metadata_forms_summary[0].form_name #=> String
+    #   resp.items[0].metadata_forms_summary[0].type_name #=> String
+    #   resp.items[0].metadata_forms_summary[0].type_revision #=> String
     #   resp.items[0].request_reason #=> String
     #   resp.items[0].reviewer_id #=> String
     #   resp.items[0].status #=> String, one of "PENDING", "ACCEPTED", "REJECTED"
@@ -7975,7 +8354,9 @@ module Aws::DataZone
     #   * {Types::RejectSubscriptionRequestOutput#created_by #created_by} => String
     #   * {Types::RejectSubscriptionRequestOutput#decision_comment #decision_comment} => String
     #   * {Types::RejectSubscriptionRequestOutput#domain_id #domain_id} => String
+    #   * {Types::RejectSubscriptionRequestOutput#existing_subscription_id #existing_subscription_id} => String
     #   * {Types::RejectSubscriptionRequestOutput#id #id} => String
+    #   * {Types::RejectSubscriptionRequestOutput#metadata_forms #metadata_forms} => Array&lt;Types::FormOutput&gt;
     #   * {Types::RejectSubscriptionRequestOutput#request_reason #request_reason} => String
     #   * {Types::RejectSubscriptionRequestOutput#reviewer_id #reviewer_id} => String
     #   * {Types::RejectSubscriptionRequestOutput#status #status} => String
@@ -7998,7 +8379,13 @@ module Aws::DataZone
     #   resp.created_by #=> String
     #   resp.decision_comment #=> String
     #   resp.domain_id #=> String
+    #   resp.existing_subscription_id #=> String
     #   resp.id #=> String
+    #   resp.metadata_forms #=> Array
+    #   resp.metadata_forms[0].content #=> String
+    #   resp.metadata_forms[0].form_name #=> String
+    #   resp.metadata_forms[0].type_name #=> String
+    #   resp.metadata_forms[0].type_revision #=> String
     #   resp.request_reason #=> String
     #   resp.reviewer_id #=> String
     #   resp.status #=> String, one of "PENDING", "ACCEPTED", "REJECTED"
@@ -9257,7 +9644,7 @@ module Aws::DataZone
     #         content: "FormInputContentString",
     #         form_name: "FormName", # required
     #         type_identifier: "FormTypeIdentifier",
-    #         type_revision: "Revision",
+    #         type_revision: "RevisionInput",
     #       },
     #     ],
     #     configuration: {
@@ -10040,6 +10427,118 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Updates a rule. In Amazon DataZone, a rule is a formal agreement that
+    # enforces specific requirements across user workflows (e.g., publishing
+    # assets to the catalog, requesting subscriptions, creating projects)
+    # within the Amazon DataZone data portal. These rules help maintain
+    # consistency, ensure compliance, and uphold governance standards in
+    # data management processes. For instance, a metadata enforcement rule
+    # can specify the required information for creating a subscription
+    # request or publishing a data asset to the catalog, ensuring alignment
+    # with organizational standards.
+    #
+    # @option params [String] :description
+    #   The description of the rule.
+    #
+    # @option params [Types::RuleDetail] :detail
+    #   The detail of the rule.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain in which a rule is to be updated.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the rule that is to be updated
+    #
+    # @option params [Boolean] :include_child_domain_units
+    #   Specifies whether to update this rule in the child domain units.
+    #
+    # @option params [String] :name
+    #   The name of the rule.
+    #
+    # @option params [Types::RuleScope] :scope
+    #   The scrope of the rule.
+    #
+    # @return [Types::UpdateRuleOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateRuleOutput#action #action} => String
+    #   * {Types::UpdateRuleOutput#created_at #created_at} => Time
+    #   * {Types::UpdateRuleOutput#created_by #created_by} => String
+    #   * {Types::UpdateRuleOutput#description #description} => String
+    #   * {Types::UpdateRuleOutput#detail #detail} => Types::RuleDetail
+    #   * {Types::UpdateRuleOutput#identifier #identifier} => String
+    #   * {Types::UpdateRuleOutput#last_updated_by #last_updated_by} => String
+    #   * {Types::UpdateRuleOutput#name #name} => String
+    #   * {Types::UpdateRuleOutput#revision #revision} => String
+    #   * {Types::UpdateRuleOutput#rule_type #rule_type} => String
+    #   * {Types::UpdateRuleOutput#scope #scope} => Types::RuleScope
+    #   * {Types::UpdateRuleOutput#target #target} => Types::RuleTarget
+    #   * {Types::UpdateRuleOutput#updated_at #updated_at} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_rule({
+    #     description: "Description",
+    #     detail: {
+    #       metadata_form_enforcement_detail: {
+    #         required_metadata_forms: [
+    #           {
+    #             type_identifier: "FormTypeIdentifier", # required
+    #             type_revision: "Revision", # required
+    #           },
+    #         ],
+    #       },
+    #     },
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "RuleId", # required
+    #     include_child_domain_units: false,
+    #     name: "RuleName",
+    #     scope: {
+    #       asset_type: {
+    #         selection_mode: "ALL", # required, accepts ALL, SPECIFIC
+    #         specific_asset_types: ["AssetTypeIdentifier"],
+    #       },
+    #       data_product: false,
+    #       project: {
+    #         selection_mode: "ALL", # required, accepts ALL, SPECIFIC
+    #         specific_projects: ["ProjectId"],
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.action #=> String, one of "CREATE_SUBSCRIPTION_REQUEST"
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.description #=> String
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms #=> Array
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms[0].type_identifier #=> String
+    #   resp.detail.metadata_form_enforcement_detail.required_metadata_forms[0].type_revision #=> String
+    #   resp.identifier #=> String
+    #   resp.last_updated_by #=> String
+    #   resp.name #=> String
+    #   resp.revision #=> String
+    #   resp.rule_type #=> String, one of "METADATA_FORM_ENFORCEMENT"
+    #   resp.scope.asset_type.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.scope.asset_type.specific_asset_types #=> Array
+    #   resp.scope.asset_type.specific_asset_types[0] #=> String
+    #   resp.scope.data_product #=> Boolean
+    #   resp.scope.project.selection_mode #=> String, one of "ALL", "SPECIFIC"
+    #   resp.scope.project.specific_projects #=> Array
+    #   resp.scope.project.specific_projects[0] #=> String
+    #   resp.target.domain_unit_target.domain_unit_id #=> String
+    #   resp.target.domain_unit_target.include_child_domain_units #=> Boolean
+    #   resp.updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateRule AWS API Documentation
+    #
+    # @overload update_rule(params = {})
+    # @param [Hash] params ({})
+    def update_rule(params = {}, options = {})
+      req = build_request(:update_rule, params)
+      req.send_request(options)
+    end
+
     # Updates the status of the specified subscription grant status in
     # Amazon DataZone.
     #
@@ -10148,7 +10647,9 @@ module Aws::DataZone
     #   * {Types::UpdateSubscriptionRequestOutput#created_by #created_by} => String
     #   * {Types::UpdateSubscriptionRequestOutput#decision_comment #decision_comment} => String
     #   * {Types::UpdateSubscriptionRequestOutput#domain_id #domain_id} => String
+    #   * {Types::UpdateSubscriptionRequestOutput#existing_subscription_id #existing_subscription_id} => String
     #   * {Types::UpdateSubscriptionRequestOutput#id #id} => String
+    #   * {Types::UpdateSubscriptionRequestOutput#metadata_forms #metadata_forms} => Array&lt;Types::FormOutput&gt;
     #   * {Types::UpdateSubscriptionRequestOutput#request_reason #request_reason} => String
     #   * {Types::UpdateSubscriptionRequestOutput#reviewer_id #reviewer_id} => String
     #   * {Types::UpdateSubscriptionRequestOutput#status #status} => String
@@ -10171,7 +10672,13 @@ module Aws::DataZone
     #   resp.created_by #=> String
     #   resp.decision_comment #=> String
     #   resp.domain_id #=> String
+    #   resp.existing_subscription_id #=> String
     #   resp.id #=> String
+    #   resp.metadata_forms #=> Array
+    #   resp.metadata_forms[0].content #=> String
+    #   resp.metadata_forms[0].form_name #=> String
+    #   resp.metadata_forms[0].type_name #=> String
+    #   resp.metadata_forms[0].type_revision #=> String
     #   resp.request_reason #=> String
     #   resp.reviewer_id #=> String
     #   resp.status #=> String, one of "PENDING", "ACCEPTED", "REJECTED"
@@ -10395,7 +10902,7 @@ module Aws::DataZone
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-datazone'
-      context[:gem_version] = '1.27.0'
+      context[:gem_version] = '1.28.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

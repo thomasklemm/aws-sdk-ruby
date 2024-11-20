@@ -107,7 +107,9 @@ module Aws
         def created_by: () -> ::String
         def decision_comment: () -> ::String
         def domain_id: () -> ::String
+        def existing_subscription_id: () -> ::String
         def id: () -> ::String
+        def metadata_forms: () -> ::Array[Types::FormOutput]
         def request_reason: () -> ::String
         def reviewer_id: () -> ::String
         def status: () -> ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -955,6 +957,57 @@ module Aws
                                      ) -> _CreateProjectMembershipResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateProjectMembershipResponseSuccess
 
+      interface _CreateRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateRuleOutput]
+        def action: () -> ("CREATE_SUBSCRIPTION_REQUEST")
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def description: () -> ::String
+        def detail: () -> Types::RuleDetail
+        def identifier: () -> ::String
+        def name: () -> ::String
+        def rule_type: () -> ("METADATA_FORM_ENFORCEMENT")
+        def scope: () -> Types::RuleScope
+        def target: () -> Types::RuleTarget
+        def target_type: () -> ("DOMAIN_UNIT")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#create_rule-instance_method
+      def create_rule: (
+                         action: ("CREATE_SUBSCRIPTION_REQUEST"),
+                         ?client_token: ::String,
+                         ?description: ::String,
+                         detail: {
+                           metadata_form_enforcement_detail: {
+                             required_metadata_forms: Array[
+                               {
+                                 type_identifier: ::String,
+                                 type_revision: ::String
+                               },
+                             ]?
+                           }?
+                         },
+                         domain_identifier: ::String,
+                         name: ::String,
+                         scope: {
+                           asset_type: {
+                             selection_mode: ("ALL" | "SPECIFIC"),
+                             specific_asset_types: Array[::String]?
+                           }?,
+                           data_product: bool?,
+                           project: {
+                             selection_mode: ("ALL" | "SPECIFIC"),
+                             specific_projects: Array[::String]?
+                           }?
+                         },
+                         target: {
+                           domain_unit_target: {
+                             domain_unit_id: ::String,
+                             include_child_domain_units: bool?
+                           }?
+                         }
+                       ) -> _CreateRuleResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateRuleResponseSuccess
+
       interface _CreateSubscriptionGrantResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateSubscriptionGrantOutput]
         def assets: () -> ::Array[Types::SubscribedAsset]
@@ -996,7 +1049,9 @@ module Aws
         def created_by: () -> ::String
         def decision_comment: () -> ::String
         def domain_id: () -> ::String
+        def existing_subscription_id: () -> ::String
         def id: () -> ::String
+        def metadata_forms: () -> ::Array[Types::FormOutput]
         def request_reason: () -> ::String
         def reviewer_id: () -> ::String
         def status: () -> ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -1009,6 +1064,14 @@ module Aws
       def create_subscription_request: (
                                          ?client_token: ::String,
                                          domain_identifier: ::String,
+                                         ?metadata_forms: Array[
+                                           {
+                                             content: ::String?,
+                                             form_name: ::String,
+                                             type_identifier: ::String?,
+                                             type_revision: ::String?
+                                           },
+                                         ],
                                          request_reason: ::String,
                                          subscribed_listings: Array[
                                            {
@@ -1269,6 +1332,16 @@ module Aws
                                        project_identifier: ::String
                                      ) -> _DeleteProjectMembershipResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteProjectMembershipResponseSuccess
+
+      interface _DeleteRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteRuleOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#delete_rule-instance_method
+      def delete_rule: (
+                         domain_identifier: ::String,
+                         identifier: ::String
+                       ) -> _DeleteRuleResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteRuleResponseSuccess
 
       interface _DeleteSubscriptionGrantResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteSubscriptionGrantOutput]
@@ -1826,6 +1899,31 @@ module Aws
                        ) -> _GetProjectResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetProjectResponseSuccess
 
+      interface _GetRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetRuleOutput]
+        def action: () -> ("CREATE_SUBSCRIPTION_REQUEST")
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def description: () -> ::String
+        def detail: () -> Types::RuleDetail
+        def identifier: () -> ::String
+        def last_updated_by: () -> ::String
+        def name: () -> ::String
+        def revision: () -> ::String
+        def rule_type: () -> ("METADATA_FORM_ENFORCEMENT")
+        def scope: () -> Types::RuleScope
+        def target: () -> Types::RuleTarget
+        def target_type: () -> ("DOMAIN_UNIT")
+        def updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#get_rule-instance_method
+      def get_rule: (
+                      domain_identifier: ::String,
+                      identifier: ::String,
+                      ?revision: ::String
+                    ) -> _GetRuleResponseSuccess
+                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRuleResponseSuccess
+
       interface _GetSubscriptionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetSubscriptionOutput]
         def created_at: () -> ::Time
@@ -1874,7 +1972,9 @@ module Aws
         def created_by: () -> ::String
         def decision_comment: () -> ::String
         def domain_id: () -> ::String
+        def existing_subscription_id: () -> ::String
         def id: () -> ::String
+        def metadata_forms: () -> ::Array[Types::FormOutput]
         def request_reason: () -> ::String
         def reviewer_id: () -> ::String
         def status: () -> ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -2263,6 +2363,27 @@ module Aws
                          ) -> _ListProjectsResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListProjectsResponseSuccess
 
+      interface _ListRulesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListRulesOutput]
+        def items: () -> ::Array[Types::RuleSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#list_rules-instance_method
+      def list_rules: (
+                        ?action: ("CREATE_SUBSCRIPTION_REQUEST"),
+                        ?asset_types: Array[::String],
+                        ?data_product: bool,
+                        domain_identifier: ::String,
+                        ?include_cascaded: bool,
+                        ?max_results: ::Integer,
+                        ?next_token: ::String,
+                        ?project_ids: Array[::String],
+                        ?rule_type: ("METADATA_FORM_ENFORCEMENT"),
+                        target_identifier: ::String,
+                        target_type: ("DOMAIN_UNIT")
+                      ) -> _ListRulesResponseSuccess
+                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRulesResponseSuccess
+
       interface _ListSubscriptionGrantsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListSubscriptionGrantsOutput]
         def items: () -> ::Array[Types::SubscriptionGrantSummary]
@@ -2464,7 +2585,9 @@ module Aws
         def created_by: () -> ::String
         def decision_comment: () -> ::String
         def domain_id: () -> ::String
+        def existing_subscription_id: () -> ::String
         def id: () -> ::String
+        def metadata_forms: () -> ::Array[Types::FormOutput]
         def request_reason: () -> ::String
         def reviewer_id: () -> ::String
         def status: () -> ("PENDING" | "ACCEPTED" | "REJECTED")
@@ -3182,6 +3305,53 @@ module Aws
                           ) -> _UpdateProjectResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateProjectResponseSuccess
 
+      interface _UpdateRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateRuleOutput]
+        def action: () -> ("CREATE_SUBSCRIPTION_REQUEST")
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def description: () -> ::String
+        def detail: () -> Types::RuleDetail
+        def identifier: () -> ::String
+        def last_updated_by: () -> ::String
+        def name: () -> ::String
+        def revision: () -> ::String
+        def rule_type: () -> ("METADATA_FORM_ENFORCEMENT")
+        def scope: () -> Types::RuleScope
+        def target: () -> Types::RuleTarget
+        def updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#update_rule-instance_method
+      def update_rule: (
+                         ?description: ::String,
+                         ?detail: {
+                           metadata_form_enforcement_detail: {
+                             required_metadata_forms: Array[
+                               {
+                                 type_identifier: ::String,
+                                 type_revision: ::String
+                               },
+                             ]?
+                           }?
+                         },
+                         domain_identifier: ::String,
+                         identifier: ::String,
+                         ?include_child_domain_units: bool,
+                         ?name: ::String,
+                         ?scope: {
+                           asset_type: {
+                             selection_mode: ("ALL" | "SPECIFIC"),
+                             specific_asset_types: Array[::String]?
+                           }?,
+                           data_product: bool?,
+                           project: {
+                             selection_mode: ("ALL" | "SPECIFIC"),
+                             specific_projects: Array[::String]?
+                           }?
+                         }
+                       ) -> _UpdateRuleResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateRuleResponseSuccess
+
       interface _UpdateSubscriptionGrantStatusResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateSubscriptionGrantStatusOutput]
         def assets: () -> ::Array[Types::SubscribedAsset]
@@ -3215,7 +3385,9 @@ module Aws
         def created_by: () -> ::String
         def decision_comment: () -> ::String
         def domain_id: () -> ::String
+        def existing_subscription_id: () -> ::String
         def id: () -> ::String
+        def metadata_forms: () -> ::Array[Types::FormOutput]
         def request_reason: () -> ::String
         def reviewer_id: () -> ::String
         def status: () -> ("PENDING" | "ACCEPTED" | "REJECTED")

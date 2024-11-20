@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.170.0 (2024-11-20)
+------------------
+
+* Feature - This release adds support for the Availability Zone rebalancing feature on Amazon ECS.
+
 1.169.0 (2024-11-19)
 ------------------
 

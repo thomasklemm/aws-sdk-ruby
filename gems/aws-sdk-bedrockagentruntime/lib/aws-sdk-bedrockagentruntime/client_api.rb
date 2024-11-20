@@ -26,6 +26,7 @@ module Aws::BedrockAgentRuntime
     AgentAliasId = Shapes::StringShape.new(name: 'AgentAliasId')
     AgentId = Shapes::StringShape.new(name: 'AgentId')
     AgentVersion = Shapes::StringShape.new(name: 'AgentVersion')
+    AnalyzePromptEvent = Shapes::StructureShape.new(name: 'AnalyzePromptEvent')
     ApiContentMap = Shapes::MapShape.new(name: 'ApiContentMap')
     ApiInvocationInput = Shapes::StructureShape.new(name: 'ApiInvocationInput')
     ApiParameter = Shapes::StructureShape.new(name: 'ApiParameter')
@@ -145,6 +146,7 @@ module Aws::BedrockAgentRuntime
     InferenceConfiguration = Shapes::StructureShape.new(name: 'InferenceConfiguration')
     InputFile = Shapes::StructureShape.new(name: 'InputFile')
     InputFiles = Shapes::ListShape.new(name: 'InputFiles')
+    InputPrompt = Shapes::UnionShape.new(name: 'InputPrompt')
     InputText = Shapes::StringShape.new(name: 'InputText')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
@@ -191,6 +193,12 @@ module Aws::BedrockAgentRuntime
     NodeType = Shapes::StringShape.new(name: 'NodeType')
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
     Observation = Shapes::StructureShape.new(name: 'Observation')
+    OptimizePromptRequest = Shapes::StructureShape.new(name: 'OptimizePromptRequest')
+    OptimizePromptRequestTargetModelIdString = Shapes::StringShape.new(name: 'OptimizePromptRequestTargetModelIdString')
+    OptimizePromptResponse = Shapes::StructureShape.new(name: 'OptimizePromptResponse')
+    OptimizedPrompt = Shapes::UnionShape.new(name: 'OptimizedPrompt')
+    OptimizedPromptEvent = Shapes::StructureShape.new(name: 'OptimizedPromptEvent')
+    OptimizedPromptStream = Shapes::StructureShape.new(name: 'OptimizedPromptStream')
     OrchestrationConfiguration = Shapes::StructureShape.new(name: 'OrchestrationConfiguration')
     OrchestrationModelInvocationOutput = Shapes::StructureShape.new(name: 'OrchestrationModelInvocationOutput')
     OrchestrationTrace = Shapes::UnionShape.new(name: 'OrchestrationTrace')
@@ -270,7 +278,9 @@ module Aws::BedrockAgentRuntime
     SummaryText = Shapes::StringShape.new(name: 'SummaryText')
     Temperature = Shapes::FloatShape.new(name: 'Temperature')
     TextInferenceConfig = Shapes::StructureShape.new(name: 'TextInferenceConfig')
+    TextPrompt = Shapes::StructureShape.new(name: 'TextPrompt')
     TextPromptTemplate = Shapes::StringShape.new(name: 'TextPromptTemplate')
+    TextPromptTextString = Shapes::StringShape.new(name: 'TextPromptTextString')
     TextResponsePart = Shapes::StructureShape.new(name: 'TextResponsePart')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     TopK = Shapes::IntegerShape.new(name: 'TopK')
@@ -302,6 +312,9 @@ module Aws::BedrockAgentRuntime
 
     AdditionalModelRequestFields.key = Shapes::ShapeRef.new(shape: AdditionalModelRequestFieldsKey)
     AdditionalModelRequestFields.value = Shapes::ShapeRef.new(shape: AdditionalModelRequestFieldsValue)
+
+    AnalyzePromptEvent.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))
+    AnalyzePromptEvent.struct_class = Types::AnalyzePromptEvent
 
     ApiContentMap.key = Shapes::ShapeRef.new(shape: String)
     ApiContentMap.value = Shapes::ShapeRef.new(shape: PropertyParameters)
@@ -654,6 +667,12 @@ module Aws::BedrockAgentRuntime
 
     InputFiles.member = Shapes::ShapeRef.new(shape: InputFile)
 
+    InputPrompt.add_member(:text_prompt, Shapes::ShapeRef.new(shape: TextPrompt, location_name: "textPrompt"))
+    InputPrompt.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    InputPrompt.add_member_subclass(:text_prompt, Types::InputPrompt::TextPrompt)
+    InputPrompt.add_member_subclass(:unknown, Types::InputPrompt::Unknown)
+    InputPrompt.struct_class = Types::InputPrompt
+
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     InternalServerException.struct_class = Types::InternalServerException
 
@@ -785,6 +804,34 @@ module Aws::BedrockAgentRuntime
     Observation.add_member(:trace_id, Shapes::ShapeRef.new(shape: TraceId, location_name: "traceId"))
     Observation.add_member(:type, Shapes::ShapeRef.new(shape: Type, location_name: "type"))
     Observation.struct_class = Types::Observation
+
+    OptimizePromptRequest.add_member(:input, Shapes::ShapeRef.new(shape: InputPrompt, required: true, location_name: "input"))
+    OptimizePromptRequest.add_member(:target_model_id, Shapes::ShapeRef.new(shape: OptimizePromptRequestTargetModelIdString, required: true, location_name: "targetModelId"))
+    OptimizePromptRequest.struct_class = Types::OptimizePromptRequest
+
+    OptimizePromptResponse.add_member(:optimized_prompt, Shapes::ShapeRef.new(shape: OptimizedPromptStream, required: true, eventstream: true, location_name: "optimizedPrompt"))
+    OptimizePromptResponse.struct_class = Types::OptimizePromptResponse
+    OptimizePromptResponse[:payload] = :optimized_prompt
+    OptimizePromptResponse[:payload_member] = OptimizePromptResponse.member(:optimized_prompt)
+
+    OptimizedPrompt.add_member(:text_prompt, Shapes::ShapeRef.new(shape: TextPrompt, location_name: "textPrompt"))
+    OptimizedPrompt.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    OptimizedPrompt.add_member_subclass(:text_prompt, Types::OptimizedPrompt::TextPrompt)
+    OptimizedPrompt.add_member_subclass(:unknown, Types::OptimizedPrompt::Unknown)
+    OptimizedPrompt.struct_class = Types::OptimizedPrompt
+
+    OptimizedPromptEvent.add_member(:optimized_prompt, Shapes::ShapeRef.new(shape: OptimizedPrompt, location_name: "optimizedPrompt"))
+    OptimizedPromptEvent.struct_class = Types::OptimizedPromptEvent
+
+    OptimizedPromptStream.add_member(:access_denied_exception, Shapes::ShapeRef.new(shape: AccessDeniedException, location_name: "accessDeniedException"))
+    OptimizedPromptStream.add_member(:analyze_prompt_event, Shapes::ShapeRef.new(shape: AnalyzePromptEvent, event: true, location_name: "analyzePromptEvent"))
+    OptimizedPromptStream.add_member(:bad_gateway_exception, Shapes::ShapeRef.new(shape: BadGatewayException, location_name: "badGatewayException"))
+    OptimizedPromptStream.add_member(:dependency_failed_exception, Shapes::ShapeRef.new(shape: DependencyFailedException, location_name: "dependencyFailedException"))
+    OptimizedPromptStream.add_member(:internal_server_exception, Shapes::ShapeRef.new(shape: InternalServerException, location_name: "internalServerException"))
+    OptimizedPromptStream.add_member(:optimized_prompt_event, Shapes::ShapeRef.new(shape: OptimizedPromptEvent, event: true, location_name: "optimizedPromptEvent"))
+    OptimizedPromptStream.add_member(:throttling_exception, Shapes::ShapeRef.new(shape: ThrottlingException, location_name: "throttlingException"))
+    OptimizedPromptStream.add_member(:validation_exception, Shapes::ShapeRef.new(shape: ValidationException, location_name: "validationException"))
+    OptimizedPromptStream.struct_class = Types::OptimizedPromptStream
 
     OrchestrationConfiguration.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: AdditionalModelRequestFields, location_name: "additionalModelRequestFields"))
     OrchestrationConfiguration.add_member(:inference_config, Shapes::ShapeRef.new(shape: InferenceConfig, location_name: "inferenceConfig"))
@@ -1057,6 +1104,9 @@ module Aws::BedrockAgentRuntime
     TextInferenceConfig.add_member(:top_p, Shapes::ShapeRef.new(shape: TopP, location_name: "topP"))
     TextInferenceConfig.struct_class = Types::TextInferenceConfig
 
+    TextPrompt.add_member(:text, Shapes::ShapeRef.new(shape: TextPromptTextString, required: true, location_name: "text"))
+    TextPrompt.struct_class = Types::TextPrompt
+
     TextResponsePart.add_member(:span, Shapes::ShapeRef.new(shape: Span, location_name: "span"))
     TextResponsePart.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))
     TextResponsePart.struct_class = Types::TextResponsePart
@@ -1184,6 +1234,20 @@ module Aws::BedrockAgentRuntime
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:optimize_prompt, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "OptimizePrompt"
+        o.http_method = "POST"
+        o.http_request_uri = "/optimize-prompt"
+        o.input = Shapes::ShapeRef.new(shape: OptimizePromptRequest)
+        o.output = Shapes::ShapeRef.new(shape: OptimizePromptResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: DependencyFailedException)
+        o.errors << Shapes::ShapeRef.new(shape: BadGatewayException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:retrieve, Seahorse::Model::Operation.new.tap do |o|

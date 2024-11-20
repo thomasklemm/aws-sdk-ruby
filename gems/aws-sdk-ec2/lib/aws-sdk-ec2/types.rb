@@ -3711,6 +3711,54 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # The baseline performance to consider, using an instance family as a
+    # baseline reference. The instance family establishes the lowest
+    # acceptable level of performance. Amazon EC2 uses this baseline to
+    # guide instance type selection, but there is no guarantee that the
+    # selected instance types will always exceed the baseline for every
+    # application.
+    #
+    # Currently, this parameter only supports CPU performance as a baseline
+    # performance factor. For example, specifying `c6i` would use the CPU
+    # performance of the `c6i` family as the baseline reference.
+    #
+    # @!attribute [rw] cpu
+    #   The CPU performance to consider, using an instance family as the
+    #   baseline reference.
+    #   @return [Types::CpuPerformanceFactor]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/BaselinePerformanceFactors AWS API Documentation
+    #
+    class BaselinePerformanceFactors < Struct.new(
+      :cpu)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The baseline performance to consider, using an instance family as a
+    # baseline reference. The instance family establishes the lowest
+    # acceptable level of performance. Amazon EC2 uses this baseline to
+    # guide instance type selection, but there is no guarantee that the
+    # selected instance types will always exceed the baseline for every
+    # application.
+    #
+    # Currently, this parameter only supports CPU performance as a baseline
+    # performance factor. For example, specifying `c6i` would use the CPU
+    # performance of the `c6i` family as the baseline reference.
+    #
+    # @!attribute [rw] cpu
+    #   The CPU performance to consider, using an instance family as the
+    #   baseline reference.
+    #   @return [Types::CpuPerformanceFactorRequest]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/BaselinePerformanceFactorsRequest AWS API Documentation
+    #
+    class BaselinePerformanceFactorsRequest < Struct.new(
+      :cpu)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] value
     #   @return [String]
     #
@@ -5110,29 +5158,34 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # Describes an instance's Capacity Reservation targeting option. You
-    # can specify only one parameter at a time. If you specify
-    # `CapacityReservationPreference` and `CapacityReservationTarget`, the
-    # request fails.
+    # Describes an instance's Capacity Reservation targeting option.
     #
     # Use the `CapacityReservationPreference` parameter to configure the
-    # instance to run as an On-Demand Instance or to run in any `open`
-    # Capacity Reservation that has matching attributes (instance type,
-    # platform, Availability Zone). Use the `CapacityReservationTarget`
-    # parameter to explicitly target a specific Capacity Reservation or a
-    # Capacity Reservation group.
+    # instance to run as an On-Demand Instance, to run in any `open`
+    # Capacity Reservation that has matching attributes, or to run only in a
+    # Capacity Reservation or Capacity Reservation group. Use the
+    # `CapacityReservationTarget` parameter to explicitly target a specific
+    # Capacity Reservation or a Capacity Reservation group.
+    #
+    # You can only specify `CapacityReservationPreference` and
+    # `CapacityReservationTarget` if the `CapacityReservationPreference` is
+    # `capacity-reservations-only`.
     #
     # @!attribute [rw] capacity_reservation_preference
     #   Indicates the instance's Capacity Reservation preferences. Possible
     #   preferences include:
     #
+    #   * `capacity-reservations-only` - The instance will only run in a
+    #     Capacity Reservation or Capacity Reservation group. If capacity
+    #     isn't available, the instance will fail to launch.
+    #
     #   * `open` - The instance can run in any `open` Capacity Reservation
     #     that has matching attributes (instance type, platform,
-    #     Availability Zone).
+    #     Availability Zone, and tenancy). If capacity isn't available, the
+    #     instance runs as an On-Demand Instance.
     #
-    #   * `none` - The instance avoids running in a Capacity Reservation
-    #     even if one is available. The instance runs as an On-Demand
-    #     Instance.
+    #   * `none` - The instance doesn't run in a Capacity Reservation even
+    #     if one is available. The instance runs as an On-Demand Instance.
     #   @return [String]
     #
     # @!attribute [rw] capacity_reservation_target
@@ -6935,6 +6988,52 @@ module Aws::EC2
       :core_count,
       :threads_per_core,
       :amd_sev_snp)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The CPU performance to consider, using an instance family as the
+    # baseline reference.
+    #
+    # @!attribute [rw] references
+    #   Specify an instance family to use as the baseline reference for CPU
+    #   performance. All instance types that match your specified attributes
+    #   will be compared against the CPU performance of the referenced
+    #   instance family, regardless of CPU manufacturer or architecture
+    #   differences.
+    #
+    #   <note markdown="1"> Currently, only one instance family can be specified in the list.
+    #
+    #    </note>
+    #   @return [Array<Types::PerformanceFactorReference>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CpuPerformanceFactor AWS API Documentation
+    #
+    class CpuPerformanceFactor < Struct.new(
+      :references)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The CPU performance to consider, using an instance family as the
+    # baseline reference.
+    #
+    # @!attribute [rw] references
+    #   Specify an instance family to use as the baseline reference for CPU
+    #   performance. All instance types that match your specified attributes
+    #   will be compared against the CPU performance of the referenced
+    #   instance family, regardless of CPU manufacturer or architecture
+    #   differences.
+    #
+    #   <note markdown="1"> Currently, only one instance family can be specified in the list.
+    #
+    #    </note>
+    #   @return [Array<Types::PerformanceFactorReferenceRequest>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CpuPerformanceFactorRequest AWS API Documentation
+    #
+    class CpuPerformanceFactorRequest < Struct.new(
+      :references)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -42315,6 +42414,21 @@ module Aws::EC2
     #    </note>
     #   @return [Integer]
     #
+    # @!attribute [rw] baseline_performance_factors
+    #   The baseline performance to consider, using an instance family as a
+    #   baseline reference. The instance family establishes the lowest
+    #   acceptable level of performance. Amazon EC2 uses this baseline to
+    #   guide instance type selection, but there is no guarantee that the
+    #   selected instance types will always exceed the baseline for every
+    #   application. Currently, this parameter only supports CPU performance
+    #   as a baseline performance factor. For more information, see
+    #   [Performance protection][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-attribute-based-instance-type-selection.html#ec2fleet-abis-performance-protection
+    #   @return [Types::BaselinePerformanceFactors]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceRequirements AWS API Documentation
     #
     class InstanceRequirements < Struct.new(
@@ -42341,7 +42455,8 @@ module Aws::EC2
       :accelerator_total_memory_mi_b,
       :network_bandwidth_gbps,
       :allowed_instance_types,
-      :max_spot_price_as_percentage_of_optimal_on_demand_price)
+      :max_spot_price_as_percentage_of_optimal_on_demand_price,
+      :baseline_performance_factors)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -42785,6 +42900,21 @@ module Aws::EC2
     #    </note>
     #   @return [Integer]
     #
+    # @!attribute [rw] baseline_performance_factors
+    #   The baseline performance to consider, using an instance family as a
+    #   baseline reference. The instance family establishes the lowest
+    #   acceptable level of performance. Amazon EC2 uses this baseline to
+    #   guide instance type selection, but there is no guarantee that the
+    #   selected instance types will always exceed the baseline for every
+    #   application. Currently, this parameter only supports CPU performance
+    #   as a baseline performance factor. For more information, see
+    #   [Performance protection][1] in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-attribute-based-instance-type-selection.html#ec2fleet-abis-performance-protection
+    #   @return [Types::BaselinePerformanceFactorsRequest]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceRequirementsRequest AWS API Documentation
     #
     class InstanceRequirementsRequest < Struct.new(
@@ -42811,7 +42941,8 @@ module Aws::EC2
       :accelerator_total_memory_mi_b,
       :network_bandwidth_gbps,
       :allowed_instance_types,
-      :max_spot_price_as_percentage_of_optimal_on_demand_price)
+      :max_spot_price_as_percentage_of_optimal_on_demand_price,
+      :baseline_performance_factors)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -55367,6 +55498,132 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Specify an instance family to use as the baseline reference for CPU
+    # performance. All instance types that match your specified attributes
+    # will be compared against the CPU performance of the referenced
+    # instance family, regardless of CPU manufacturer or architecture.
+    #
+    # <note markdown="1"> Currently, only one instance family can be specified in the list.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] instance_family
+    #   The instance family to use as a baseline reference.
+    #
+    #   <note markdown="1"> Ensure that you specify the correct value for the instance family.
+    #   The instance family is everything before the period (`.`) in the
+    #   instance type name. For example, in the instance type `c6i.large`,
+    #   the instance family is `c6i`, not `c6`. For more information, see
+    #   [Amazon EC2 instance type naming conventions][1] in *Amazon EC2
+    #   Instance Types*.
+    #
+    #    </note>
+    #
+    #   The following instance families are *not supported* for performance
+    #   protection:
+    #
+    #   * `c1`
+    #
+    #   * `g3` \| `g3s`
+    #
+    #   * `hpc7g`
+    #
+    #   * `m1` \| `m2`
+    #
+    #   * `mac1` \| `mac2` \| `mac2-m1ultra` \| `mac2-m2` \| `mac2-m2pro`
+    #
+    #   * `p3dn` \| `p4d` \| `p5`
+    #
+    #   * `t1`
+    #
+    #   * `u-12tb1` \| `u-18tb1` \| `u-24tb1` \| `u-3tb1` \| `u-6tb1` \|
+    #     `u-9tb1` \| `u7i-12tb` \| `u7in-16tb` \| `u7in-24tb` \|
+    #     `u7in-32tb`
+    #
+    #   If you enable performance protection by specifying a supported
+    #   instance family, the returned instance types will exclude the above
+    #   unsupported instance families.
+    #
+    #   If you specify an unsupported instance family as a value for
+    #   baseline performance, the API returns an empty response for and an
+    #   exception for , , , and .
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PerformanceFactorReference AWS API Documentation
+    #
+    class PerformanceFactorReference < Struct.new(
+      :instance_family)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specify an instance family to use as the baseline reference for CPU
+    # performance. All instance types that match your specified attributes
+    # will be compared against the CPU performance of the referenced
+    # instance family, regardless of CPU manufacturer or architecture.
+    #
+    # <note markdown="1"> Currently, only one instance family can be specified in the list.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] instance_family
+    #   The instance family to use as a baseline reference.
+    #
+    #   <note markdown="1"> Ensure that you specify the correct value for the instance family.
+    #   The instance family is everything before the period (`.`) in the
+    #   instance type name. For example, in the instance type `c6i.large`,
+    #   the instance family is `c6i`, not `c6`. For more information, see
+    #   [Amazon EC2 instance type naming conventions][1] in *Amazon EC2
+    #   Instance Types*.
+    #
+    #    </note>
+    #
+    #   The following instance families are *not supported* for performance
+    #   protection:
+    #
+    #   * `c1`
+    #
+    #   * `g3` \| `g3s`
+    #
+    #   * `hpc7g`
+    #
+    #   * `m1` \| `m2`
+    #
+    #   * `mac1` \| `mac2` \| `mac2-m1ultra` \| `mac2-m2` \| `mac2-m2pro`
+    #
+    #   * `p3dn` \| `p4d` \| `p5`
+    #
+    #   * `t1`
+    #
+    #   * `u-12tb1` \| `u-18tb1` \| `u-24tb1` \| `u-3tb1` \| `u-6tb1` \|
+    #     `u-9tb1` \| `u7i-12tb` \| `u7in-16tb` \| `u7in-24tb` \|
+    #     `u7in-32tb`
+    #
+    #   If you enable performance protection by specifying a supported
+    #   instance family, the returned instance types will exclude the above
+    #   unsupported instance families.
+    #
+    #   If you specify an unsupported instance family as a value for
+    #   baseline performance, the API returns an empty response for and an
+    #   exception for , , , and .
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ec2/latest/instancetypes/instance-type-names.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PerformanceFactorReferenceRequest AWS API Documentation
+    #
+    class PerformanceFactorReferenceRequest < Struct.new(
+      :instance_family)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The Diffie-Hellmann group number for phase 1 IKE negotiations.
     #
     # @!attribute [rw] value
@@ -61216,7 +61473,7 @@ module Aws::EC2
     #   do not specify this parameter, the instance's Capacity Reservation
     #   preference defaults to `open`, which enables it to run in any open
     #   Capacity Reservation that has matching attributes (instance type,
-    #   platform, Availability Zone).
+    #   platform, Availability Zone, and tenancy).
     #   @return [Types::CapacityReservationSpecification]
     #
     # @!attribute [rw] hibernation_options

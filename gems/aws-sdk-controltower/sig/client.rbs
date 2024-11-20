@@ -273,8 +273,10 @@ module Aws
       def list_enabled_baselines: (
                                     ?filter: {
                                       baseline_identifiers: Array[::String]?,
+                                      parent_identifiers: Array[::String]?,
                                       target_identifiers: Array[::String]?
                                     },
+                                    ?include_children: bool,
                                     ?max_results: ::Integer,
                                     ?next_token: ::String
                                   ) -> _ListEnabledBaselinesResponseSuccess

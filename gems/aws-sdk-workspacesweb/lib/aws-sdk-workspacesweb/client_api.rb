@@ -19,6 +19,8 @@ module Aws::WorkSpacesWeb
     ArnList = Shapes::ListShape.new(name: 'ArnList')
     AssociateBrowserSettingsRequest = Shapes::StructureShape.new(name: 'AssociateBrowserSettingsRequest')
     AssociateBrowserSettingsResponse = Shapes::StructureShape.new(name: 'AssociateBrowserSettingsResponse')
+    AssociateDataProtectionSettingsRequest = Shapes::StructureShape.new(name: 'AssociateDataProtectionSettingsRequest')
+    AssociateDataProtectionSettingsResponse = Shapes::StructureShape.new(name: 'AssociateDataProtectionSettingsResponse')
     AssociateIpAccessSettingsRequest = Shapes::StructureShape.new(name: 'AssociateIpAccessSettingsRequest')
     AssociateIpAccessSettingsResponse = Shapes::StructureShape.new(name: 'AssociateIpAccessSettingsResponse')
     AssociateNetworkSettingsRequest = Shapes::StructureShape.new(name: 'AssociateNetworkSettingsRequest')
@@ -35,6 +37,7 @@ module Aws::WorkSpacesWeb
     BrowserSettingsList = Shapes::ListShape.new(name: 'BrowserSettingsList')
     BrowserSettingsSummary = Shapes::StructureShape.new(name: 'BrowserSettingsSummary')
     BrowserType = Shapes::StringShape.new(name: 'BrowserType')
+    BuiltInPatternId = Shapes::StringShape.new(name: 'BuiltInPatternId')
     Certificate = Shapes::StructureShape.new(name: 'Certificate')
     CertificateAuthorityBody = Shapes::BlobShape.new(name: 'CertificateAuthorityBody')
     CertificateList = Shapes::ListShape.new(name: 'CertificateList')
@@ -44,6 +47,7 @@ module Aws::WorkSpacesWeb
     CertificateThumbprint = Shapes::StringShape.new(name: 'CertificateThumbprint')
     CertificateThumbprintList = Shapes::ListShape.new(name: 'CertificateThumbprintList')
     ClientToken = Shapes::StringShape.new(name: 'ClientToken')
+    ConfidenceLevel = Shapes::IntegerShape.new(name: 'ConfidenceLevel')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     CookieDomain = Shapes::StringShape.new(name: 'CookieDomain')
     CookieName = Shapes::StringShape.new(name: 'CookieName')
@@ -53,6 +57,8 @@ module Aws::WorkSpacesWeb
     CookieSynchronizationConfiguration = Shapes::StructureShape.new(name: 'CookieSynchronizationConfiguration')
     CreateBrowserSettingsRequest = Shapes::StructureShape.new(name: 'CreateBrowserSettingsRequest')
     CreateBrowserSettingsResponse = Shapes::StructureShape.new(name: 'CreateBrowserSettingsResponse')
+    CreateDataProtectionSettingsRequest = Shapes::StructureShape.new(name: 'CreateDataProtectionSettingsRequest')
+    CreateDataProtectionSettingsResponse = Shapes::StructureShape.new(name: 'CreateDataProtectionSettingsResponse')
     CreateIdentityProviderRequest = Shapes::StructureShape.new(name: 'CreateIdentityProviderRequest')
     CreateIdentityProviderResponse = Shapes::StructureShape.new(name: 'CreateIdentityProviderResponse')
     CreateIpAccessSettingsRequest = Shapes::StructureShape.new(name: 'CreateIpAccessSettingsRequest')
@@ -67,8 +73,14 @@ module Aws::WorkSpacesWeb
     CreateUserAccessLoggingSettingsResponse = Shapes::StructureShape.new(name: 'CreateUserAccessLoggingSettingsResponse')
     CreateUserSettingsRequest = Shapes::StructureShape.new(name: 'CreateUserSettingsRequest')
     CreateUserSettingsResponse = Shapes::StructureShape.new(name: 'CreateUserSettingsResponse')
+    CustomPattern = Shapes::StructureShape.new(name: 'CustomPattern')
+    DataProtectionSettings = Shapes::StructureShape.new(name: 'DataProtectionSettings')
+    DataProtectionSettingsList = Shapes::ListShape.new(name: 'DataProtectionSettingsList')
+    DataProtectionSettingsSummary = Shapes::StructureShape.new(name: 'DataProtectionSettingsSummary')
     DeleteBrowserSettingsRequest = Shapes::StructureShape.new(name: 'DeleteBrowserSettingsRequest')
     DeleteBrowserSettingsResponse = Shapes::StructureShape.new(name: 'DeleteBrowserSettingsResponse')
+    DeleteDataProtectionSettingsRequest = Shapes::StructureShape.new(name: 'DeleteDataProtectionSettingsRequest')
+    DeleteDataProtectionSettingsResponse = Shapes::StructureShape.new(name: 'DeleteDataProtectionSettingsResponse')
     DeleteIdentityProviderRequest = Shapes::StructureShape.new(name: 'DeleteIdentityProviderRequest')
     DeleteIdentityProviderResponse = Shapes::StructureShape.new(name: 'DeleteIdentityProviderResponse')
     DeleteIpAccessSettingsRequest = Shapes::StructureShape.new(name: 'DeleteIpAccessSettingsRequest')
@@ -84,8 +96,11 @@ module Aws::WorkSpacesWeb
     DeleteUserSettingsRequest = Shapes::StructureShape.new(name: 'DeleteUserSettingsRequest')
     DeleteUserSettingsResponse = Shapes::StructureShape.new(name: 'DeleteUserSettingsResponse')
     Description = Shapes::StringShape.new(name: 'Description')
+    DescriptionSafe = Shapes::StringShape.new(name: 'DescriptionSafe')
     DisassociateBrowserSettingsRequest = Shapes::StructureShape.new(name: 'DisassociateBrowserSettingsRequest')
     DisassociateBrowserSettingsResponse = Shapes::StructureShape.new(name: 'DisassociateBrowserSettingsResponse')
+    DisassociateDataProtectionSettingsRequest = Shapes::StructureShape.new(name: 'DisassociateDataProtectionSettingsRequest')
+    DisassociateDataProtectionSettingsResponse = Shapes::StructureShape.new(name: 'DisassociateDataProtectionSettingsResponse')
     DisassociateIpAccessSettingsRequest = Shapes::StructureShape.new(name: 'DisassociateIpAccessSettingsRequest')
     DisassociateIpAccessSettingsResponse = Shapes::StructureShape.new(name: 'DisassociateIpAccessSettingsResponse')
     DisassociateNetworkSettingsRequest = Shapes::StructureShape.new(name: 'DisassociateNetworkSettingsRequest')
@@ -98,6 +113,7 @@ module Aws::WorkSpacesWeb
     DisassociateUserSettingsResponse = Shapes::StructureShape.new(name: 'DisassociateUserSettingsResponse')
     DisconnectTimeoutInMinutes = Shapes::IntegerShape.new(name: 'DisconnectTimeoutInMinutes')
     DisplayName = Shapes::StringShape.new(name: 'DisplayName')
+    DisplayNameSafe = Shapes::StringShape.new(name: 'DisplayNameSafe')
     EnabledType = Shapes::StringShape.new(name: 'EnabledType')
     EncryptionContextMap = Shapes::MapShape.new(name: 'EncryptionContextMap')
     ExceptionMessage = Shapes::StringShape.new(name: 'ExceptionMessage')
@@ -106,6 +122,8 @@ module Aws::WorkSpacesWeb
     FieldName = Shapes::StringShape.new(name: 'FieldName')
     GetBrowserSettingsRequest = Shapes::StructureShape.new(name: 'GetBrowserSettingsRequest')
     GetBrowserSettingsResponse = Shapes::StructureShape.new(name: 'GetBrowserSettingsResponse')
+    GetDataProtectionSettingsRequest = Shapes::StructureShape.new(name: 'GetDataProtectionSettingsRequest')
+    GetDataProtectionSettingsResponse = Shapes::StructureShape.new(name: 'GetDataProtectionSettingsResponse')
     GetIdentityProviderRequest = Shapes::StructureShape.new(name: 'GetIdentityProviderRequest')
     GetIdentityProviderResponse = Shapes::StructureShape.new(name: 'GetIdentityProviderResponse')
     GetIpAccessSettingsRequest = Shapes::StructureShape.new(name: 'GetIpAccessSettingsRequest')
@@ -126,6 +144,7 @@ module Aws::WorkSpacesWeb
     GetUserAccessLoggingSettingsResponse = Shapes::StructureShape.new(name: 'GetUserAccessLoggingSettingsResponse')
     GetUserSettingsRequest = Shapes::StructureShape.new(name: 'GetUserSettingsRequest')
     GetUserSettingsResponse = Shapes::StructureShape.new(name: 'GetUserSettingsResponse')
+    GlobalInlineRedactionUrls = Shapes::ListShape.new(name: 'GlobalInlineRedactionUrls')
     IdentityProvider = Shapes::StructureShape.new(name: 'IdentityProvider')
     IdentityProviderDetails = Shapes::MapShape.new(name: 'IdentityProviderDetails')
     IdentityProviderList = Shapes::ListShape.new(name: 'IdentityProviderList')
@@ -133,6 +152,11 @@ module Aws::WorkSpacesWeb
     IdentityProviderSummary = Shapes::StructureShape.new(name: 'IdentityProviderSummary')
     IdentityProviderType = Shapes::StringShape.new(name: 'IdentityProviderType')
     IdleDisconnectTimeoutInMinutes = Shapes::IntegerShape.new(name: 'IdleDisconnectTimeoutInMinutes')
+    InlineRedactionConfiguration = Shapes::StructureShape.new(name: 'InlineRedactionConfiguration')
+    InlineRedactionPattern = Shapes::StructureShape.new(name: 'InlineRedactionPattern')
+    InlineRedactionPatterns = Shapes::ListShape.new(name: 'InlineRedactionPatterns')
+    InlineRedactionUrl = Shapes::StringShape.new(name: 'InlineRedactionUrl')
+    InlineRedactionUrls = Shapes::ListShape.new(name: 'InlineRedactionUrls')
     InstanceType = Shapes::StringShape.new(name: 'InstanceType')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     IpAccessSettings = Shapes::StructureShape.new(name: 'IpAccessSettings')
@@ -146,6 +170,8 @@ module Aws::WorkSpacesWeb
     KinesisStreamArn = Shapes::StringShape.new(name: 'KinesisStreamArn')
     ListBrowserSettingsRequest = Shapes::StructureShape.new(name: 'ListBrowserSettingsRequest')
     ListBrowserSettingsResponse = Shapes::StructureShape.new(name: 'ListBrowserSettingsResponse')
+    ListDataProtectionSettingsRequest = Shapes::StructureShape.new(name: 'ListDataProtectionSettingsRequest')
+    ListDataProtectionSettingsResponse = Shapes::StructureShape.new(name: 'ListDataProtectionSettingsResponse')
     ListIdentityProvidersRequest = Shapes::StructureShape.new(name: 'ListIdentityProvidersRequest')
     ListIdentityProvidersResponse = Shapes::StructureShape.new(name: 'ListIdentityProvidersResponse')
     ListIpAccessSettingsRequest = Shapes::StructureShape.new(name: 'ListIpAccessSettingsRequest')
@@ -172,6 +198,7 @@ module Aws::WorkSpacesWeb
     NetworkSettingsList = Shapes::ListShape.new(name: 'NetworkSettingsList')
     NetworkSettingsSummary = Shapes::StructureShape.new(name: 'NetworkSettingsSummary')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
+    PatternName = Shapes::StringShape.new(name: 'PatternName')
     Portal = Shapes::StructureShape.new(name: 'Portal')
     PortalEndpoint = Shapes::StringShape.new(name: 'PortalEndpoint')
     PortalId = Shapes::StringShape.new(name: 'PortalId')
@@ -179,6 +206,10 @@ module Aws::WorkSpacesWeb
     PortalStatus = Shapes::StringShape.new(name: 'PortalStatus')
     PortalSummary = Shapes::StructureShape.new(name: 'PortalSummary')
     QuotaCode = Shapes::StringShape.new(name: 'QuotaCode')
+    RedactionPlaceHolder = Shapes::StructureShape.new(name: 'RedactionPlaceHolder')
+    RedactionPlaceHolderText = Shapes::StringShape.new(name: 'RedactionPlaceHolderText')
+    RedactionPlaceHolderType = Shapes::StringShape.new(name: 'RedactionPlaceHolderType')
+    Regex = Shapes::StringShape.new(name: 'Regex')
     RendererType = Shapes::StringShape.new(name: 'RendererType')
     ResourceId = Shapes::StringShape.new(name: 'ResourceId')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
@@ -218,6 +249,8 @@ module Aws::WorkSpacesWeb
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
     UpdateBrowserSettingsRequest = Shapes::StructureShape.new(name: 'UpdateBrowserSettingsRequest')
     UpdateBrowserSettingsResponse = Shapes::StructureShape.new(name: 'UpdateBrowserSettingsResponse')
+    UpdateDataProtectionSettingsRequest = Shapes::StructureShape.new(name: 'UpdateDataProtectionSettingsRequest')
+    UpdateDataProtectionSettingsResponse = Shapes::StructureShape.new(name: 'UpdateDataProtectionSettingsResponse')
     UpdateIdentityProviderRequest = Shapes::StructureShape.new(name: 'UpdateIdentityProviderRequest')
     UpdateIdentityProviderResponse = Shapes::StructureShape.new(name: 'UpdateIdentityProviderResponse')
     UpdateIpAccessSettingsRequest = Shapes::StructureShape.new(name: 'UpdateIpAccessSettingsRequest')
@@ -258,6 +291,14 @@ module Aws::WorkSpacesWeb
     AssociateBrowserSettingsResponse.add_member(:browser_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "browserSettingsArn"))
     AssociateBrowserSettingsResponse.add_member(:portal_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "portalArn"))
     AssociateBrowserSettingsResponse.struct_class = Types::AssociateBrowserSettingsResponse
+
+    AssociateDataProtectionSettingsRequest.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "querystring", location_name: "dataProtectionSettingsArn"))
+    AssociateDataProtectionSettingsRequest.add_member(:portal_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "portalArn"))
+    AssociateDataProtectionSettingsRequest.struct_class = Types::AssociateDataProtectionSettingsRequest
+
+    AssociateDataProtectionSettingsResponse.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "dataProtectionSettingsArn"))
+    AssociateDataProtectionSettingsResponse.add_member(:portal_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "portalArn"))
+    AssociateDataProtectionSettingsResponse.struct_class = Types::AssociateDataProtectionSettingsResponse
 
     AssociateIpAccessSettingsRequest.add_member(:ip_access_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "querystring", location_name: "ipAccessSettingsArn"))
     AssociateIpAccessSettingsRequest.add_member(:portal_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "portalArn"))
@@ -358,6 +399,18 @@ module Aws::WorkSpacesWeb
     CreateBrowserSettingsResponse.add_member(:browser_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "browserSettingsArn"))
     CreateBrowserSettingsResponse.struct_class = Types::CreateBrowserSettingsResponse
 
+    CreateDataProtectionSettingsRequest.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: EncryptionContextMap, location_name: "additionalEncryptionContext"))
+    CreateDataProtectionSettingsRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateDataProtectionSettingsRequest.add_member(:customer_managed_key, Shapes::ShapeRef.new(shape: keyArn, location_name: "customerManagedKey"))
+    CreateDataProtectionSettingsRequest.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionSafe, location_name: "description"))
+    CreateDataProtectionSettingsRequest.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayNameSafe, location_name: "displayName"))
+    CreateDataProtectionSettingsRequest.add_member(:inline_redaction_configuration, Shapes::ShapeRef.new(shape: InlineRedactionConfiguration, location_name: "inlineRedactionConfiguration"))
+    CreateDataProtectionSettingsRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
+    CreateDataProtectionSettingsRequest.struct_class = Types::CreateDataProtectionSettingsRequest
+
+    CreateDataProtectionSettingsResponse.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "dataProtectionSettingsArn"))
+    CreateDataProtectionSettingsResponse.struct_class = Types::CreateDataProtectionSettingsResponse
+
     CreateIdentityProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateIdentityProviderRequest.add_member(:identity_provider_details, Shapes::ShapeRef.new(shape: IdentityProviderDetails, required: true, location_name: "identityProviderDetails"))
     CreateIdentityProviderRequest.add_member(:identity_provider_name, Shapes::ShapeRef.new(shape: IdentityProviderName, required: true, location_name: "identityProviderName"))
@@ -439,10 +492,39 @@ module Aws::WorkSpacesWeb
     CreateUserSettingsResponse.add_member(:user_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "userSettingsArn"))
     CreateUserSettingsResponse.struct_class = Types::CreateUserSettingsResponse
 
+    CustomPattern.add_member(:keyword_regex, Shapes::ShapeRef.new(shape: Regex, location_name: "keywordRegex"))
+    CustomPattern.add_member(:pattern_description, Shapes::ShapeRef.new(shape: DescriptionSafe, location_name: "patternDescription"))
+    CustomPattern.add_member(:pattern_name, Shapes::ShapeRef.new(shape: PatternName, required: true, location_name: "patternName"))
+    CustomPattern.add_member(:pattern_regex, Shapes::ShapeRef.new(shape: Regex, required: true, location_name: "patternRegex"))
+    CustomPattern.struct_class = Types::CustomPattern
+
+    DataProtectionSettings.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: EncryptionContextMap, location_name: "additionalEncryptionContext"))
+    DataProtectionSettings.add_member(:associated_portal_arns, Shapes::ShapeRef.new(shape: ArnList, location_name: "associatedPortalArns"))
+    DataProtectionSettings.add_member(:creation_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationDate"))
+    DataProtectionSettings.add_member(:customer_managed_key, Shapes::ShapeRef.new(shape: keyArn, location_name: "customerManagedKey"))
+    DataProtectionSettings.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "dataProtectionSettingsArn"))
+    DataProtectionSettings.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionSafe, location_name: "description"))
+    DataProtectionSettings.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayNameSafe, location_name: "displayName"))
+    DataProtectionSettings.add_member(:inline_redaction_configuration, Shapes::ShapeRef.new(shape: InlineRedactionConfiguration, location_name: "inlineRedactionConfiguration"))
+    DataProtectionSettings.struct_class = Types::DataProtectionSettings
+
+    DataProtectionSettingsList.member = Shapes::ShapeRef.new(shape: DataProtectionSettingsSummary)
+
+    DataProtectionSettingsSummary.add_member(:creation_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationDate"))
+    DataProtectionSettingsSummary.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "dataProtectionSettingsArn"))
+    DataProtectionSettingsSummary.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionSafe, location_name: "description"))
+    DataProtectionSettingsSummary.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayNameSafe, location_name: "displayName"))
+    DataProtectionSettingsSummary.struct_class = Types::DataProtectionSettingsSummary
+
     DeleteBrowserSettingsRequest.add_member(:browser_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "browserSettingsArn"))
     DeleteBrowserSettingsRequest.struct_class = Types::DeleteBrowserSettingsRequest
 
     DeleteBrowserSettingsResponse.struct_class = Types::DeleteBrowserSettingsResponse
+
+    DeleteDataProtectionSettingsRequest.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "dataProtectionSettingsArn"))
+    DeleteDataProtectionSettingsRequest.struct_class = Types::DeleteDataProtectionSettingsRequest
+
+    DeleteDataProtectionSettingsResponse.struct_class = Types::DeleteDataProtectionSettingsResponse
 
     DeleteIdentityProviderRequest.add_member(:identity_provider_arn, Shapes::ShapeRef.new(shape: SubresourceARN, required: true, location: "uri", location_name: "identityProviderArn"))
     DeleteIdentityProviderRequest.struct_class = Types::DeleteIdentityProviderRequest
@@ -484,6 +566,11 @@ module Aws::WorkSpacesWeb
 
     DisassociateBrowserSettingsResponse.struct_class = Types::DisassociateBrowserSettingsResponse
 
+    DisassociateDataProtectionSettingsRequest.add_member(:portal_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "portalArn"))
+    DisassociateDataProtectionSettingsRequest.struct_class = Types::DisassociateDataProtectionSettingsRequest
+
+    DisassociateDataProtectionSettingsResponse.struct_class = Types::DisassociateDataProtectionSettingsResponse
+
     DisassociateIpAccessSettingsRequest.add_member(:portal_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "portalArn"))
     DisassociateIpAccessSettingsRequest.struct_class = Types::DisassociateIpAccessSettingsRequest
 
@@ -523,6 +610,12 @@ module Aws::WorkSpacesWeb
 
     GetBrowserSettingsResponse.add_member(:browser_settings, Shapes::ShapeRef.new(shape: BrowserSettings, location_name: "browserSettings"))
     GetBrowserSettingsResponse.struct_class = Types::GetBrowserSettingsResponse
+
+    GetDataProtectionSettingsRequest.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "dataProtectionSettingsArn"))
+    GetDataProtectionSettingsRequest.struct_class = Types::GetDataProtectionSettingsRequest
+
+    GetDataProtectionSettingsResponse.add_member(:data_protection_settings, Shapes::ShapeRef.new(shape: DataProtectionSettings, location_name: "dataProtectionSettings"))
+    GetDataProtectionSettingsResponse.struct_class = Types::GetDataProtectionSettingsResponse
 
     GetIdentityProviderRequest.add_member(:identity_provider_arn, Shapes::ShapeRef.new(shape: SubresourceARN, required: true, location: "uri", location_name: "identityProviderArn"))
     GetIdentityProviderRequest.struct_class = Types::GetIdentityProviderRequest
@@ -588,6 +681,8 @@ module Aws::WorkSpacesWeb
     GetUserSettingsResponse.add_member(:user_settings, Shapes::ShapeRef.new(shape: UserSettings, location_name: "userSettings"))
     GetUserSettingsResponse.struct_class = Types::GetUserSettingsResponse
 
+    GlobalInlineRedactionUrls.member = Shapes::ShapeRef.new(shape: InlineRedactionUrl)
+
     IdentityProvider.add_member(:identity_provider_arn, Shapes::ShapeRef.new(shape: SubresourceARN, required: true, location_name: "identityProviderArn"))
     IdentityProvider.add_member(:identity_provider_details, Shapes::ShapeRef.new(shape: IdentityProviderDetails, location_name: "identityProviderDetails"))
     IdentityProvider.add_member(:identity_provider_name, Shapes::ShapeRef.new(shape: IdentityProviderName, location_name: "identityProviderName"))
@@ -603,6 +698,24 @@ module Aws::WorkSpacesWeb
     IdentityProviderSummary.add_member(:identity_provider_name, Shapes::ShapeRef.new(shape: IdentityProviderName, location_name: "identityProviderName"))
     IdentityProviderSummary.add_member(:identity_provider_type, Shapes::ShapeRef.new(shape: IdentityProviderType, location_name: "identityProviderType"))
     IdentityProviderSummary.struct_class = Types::IdentityProviderSummary
+
+    InlineRedactionConfiguration.add_member(:global_confidence_level, Shapes::ShapeRef.new(shape: ConfidenceLevel, location_name: "globalConfidenceLevel"))
+    InlineRedactionConfiguration.add_member(:global_enforced_urls, Shapes::ShapeRef.new(shape: GlobalInlineRedactionUrls, location_name: "globalEnforcedUrls"))
+    InlineRedactionConfiguration.add_member(:global_exempt_urls, Shapes::ShapeRef.new(shape: GlobalInlineRedactionUrls, location_name: "globalExemptUrls"))
+    InlineRedactionConfiguration.add_member(:inline_redaction_patterns, Shapes::ShapeRef.new(shape: InlineRedactionPatterns, required: true, location_name: "inlineRedactionPatterns"))
+    InlineRedactionConfiguration.struct_class = Types::InlineRedactionConfiguration
+
+    InlineRedactionPattern.add_member(:built_in_pattern_id, Shapes::ShapeRef.new(shape: BuiltInPatternId, location_name: "builtInPatternId"))
+    InlineRedactionPattern.add_member(:confidence_level, Shapes::ShapeRef.new(shape: ConfidenceLevel, location_name: "confidenceLevel"))
+    InlineRedactionPattern.add_member(:custom_pattern, Shapes::ShapeRef.new(shape: CustomPattern, location_name: "customPattern"))
+    InlineRedactionPattern.add_member(:enforced_urls, Shapes::ShapeRef.new(shape: InlineRedactionUrls, location_name: "enforcedUrls"))
+    InlineRedactionPattern.add_member(:exempt_urls, Shapes::ShapeRef.new(shape: InlineRedactionUrls, location_name: "exemptUrls"))
+    InlineRedactionPattern.add_member(:redaction_place_holder, Shapes::ShapeRef.new(shape: RedactionPlaceHolder, required: true, location_name: "redactionPlaceHolder"))
+    InlineRedactionPattern.struct_class = Types::InlineRedactionPattern
+
+    InlineRedactionPatterns.member = Shapes::ShapeRef.new(shape: InlineRedactionPattern)
+
+    InlineRedactionUrls.member = Shapes::ShapeRef.new(shape: InlineRedactionUrl)
 
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: ExceptionMessage, location_name: "message"))
     InternalServerException.add_member(:retry_after_seconds, Shapes::ShapeRef.new(shape: RetryAfterSeconds, location: "header", location_name: "Retry-After"))
@@ -641,6 +754,14 @@ module Aws::WorkSpacesWeb
     ListBrowserSettingsResponse.add_member(:browser_settings, Shapes::ShapeRef.new(shape: BrowserSettingsList, location_name: "browserSettings"))
     ListBrowserSettingsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListBrowserSettingsResponse.struct_class = Types::ListBrowserSettingsResponse
+
+    ListDataProtectionSettingsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListDataProtectionSettingsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
+    ListDataProtectionSettingsRequest.struct_class = Types::ListDataProtectionSettingsRequest
+
+    ListDataProtectionSettingsResponse.add_member(:data_protection_settings, Shapes::ShapeRef.new(shape: DataProtectionSettingsList, location_name: "dataProtectionSettings"))
+    ListDataProtectionSettingsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListDataProtectionSettingsResponse.struct_class = Types::ListDataProtectionSettingsResponse
 
     ListIdentityProvidersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
     ListIdentityProvidersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
@@ -747,6 +868,7 @@ module Aws::WorkSpacesWeb
     Portal.add_member(:browser_type, Shapes::ShapeRef.new(shape: BrowserType, location_name: "browserType"))
     Portal.add_member(:creation_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationDate"))
     Portal.add_member(:customer_managed_key, Shapes::ShapeRef.new(shape: keyArn, location_name: "customerManagedKey"))
+    Portal.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "dataProtectionSettingsArn"))
     Portal.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayName, location_name: "displayName"))
     Portal.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
     Portal.add_member(:ip_access_settings_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "ipAccessSettingsArn"))
@@ -768,6 +890,7 @@ module Aws::WorkSpacesWeb
     PortalSummary.add_member(:browser_settings_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "browserSettingsArn"))
     PortalSummary.add_member(:browser_type, Shapes::ShapeRef.new(shape: BrowserType, location_name: "browserType"))
     PortalSummary.add_member(:creation_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "creationDate"))
+    PortalSummary.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "dataProtectionSettingsArn"))
     PortalSummary.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayName, location_name: "displayName"))
     PortalSummary.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
     PortalSummary.add_member(:ip_access_settings_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "ipAccessSettingsArn"))
@@ -781,6 +904,10 @@ module Aws::WorkSpacesWeb
     PortalSummary.add_member(:user_access_logging_settings_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "userAccessLoggingSettingsArn"))
     PortalSummary.add_member(:user_settings_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "userSettingsArn"))
     PortalSummary.struct_class = Types::PortalSummary
+
+    RedactionPlaceHolder.add_member(:redaction_place_holder_text, Shapes::ShapeRef.new(shape: RedactionPlaceHolderText, location_name: "redactionPlaceHolderText"))
+    RedactionPlaceHolder.add_member(:redaction_place_holder_type, Shapes::ShapeRef.new(shape: RedactionPlaceHolderType, required: true, location_name: "redactionPlaceHolderType"))
+    RedactionPlaceHolder.struct_class = Types::RedactionPlaceHolder
 
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: ExceptionMessage, location_name: "message"))
     ResourceNotFoundException.add_member(:resource_id, Shapes::ShapeRef.new(shape: ResourceId, location_name: "resourceId"))
@@ -864,6 +991,16 @@ module Aws::WorkSpacesWeb
 
     UpdateBrowserSettingsResponse.add_member(:browser_settings, Shapes::ShapeRef.new(shape: BrowserSettings, required: true, location_name: "browserSettings"))
     UpdateBrowserSettingsResponse.struct_class = Types::UpdateBrowserSettingsResponse
+
+    UpdateDataProtectionSettingsRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    UpdateDataProtectionSettingsRequest.add_member(:data_protection_settings_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location: "uri", location_name: "dataProtectionSettingsArn"))
+    UpdateDataProtectionSettingsRequest.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionSafe, location_name: "description"))
+    UpdateDataProtectionSettingsRequest.add_member(:display_name, Shapes::ShapeRef.new(shape: DisplayNameSafe, location_name: "displayName"))
+    UpdateDataProtectionSettingsRequest.add_member(:inline_redaction_configuration, Shapes::ShapeRef.new(shape: InlineRedactionConfiguration, location_name: "inlineRedactionConfiguration"))
+    UpdateDataProtectionSettingsRequest.struct_class = Types::UpdateDataProtectionSettingsRequest
+
+    UpdateDataProtectionSettingsResponse.add_member(:data_protection_settings, Shapes::ShapeRef.new(shape: DataProtectionSettings, required: true, location_name: "dataProtectionSettings"))
+    UpdateDataProtectionSettingsResponse.struct_class = Types::UpdateDataProtectionSettingsResponse
 
     UpdateIdentityProviderRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     UpdateIdentityProviderRequest.add_member(:identity_provider_arn, Shapes::ShapeRef.new(shape: SubresourceARN, required: true, location: "uri", location_name: "identityProviderArn"))
@@ -1023,6 +1160,20 @@ module Aws::WorkSpacesWeb
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
+      api.add_operation(:associate_data_protection_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "AssociateDataProtectionSettings"
+        o.http_method = "PUT"
+        o.http_request_uri = "/portals/{portalArn+}/dataProtectionSettings"
+        o.input = Shapes::ShapeRef.new(shape: AssociateDataProtectionSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: AssociateDataProtectionSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
       api.add_operation(:associate_ip_access_settings, Seahorse::Model::Operation.new.tap do |o|
         o.name = "AssociateIpAccessSettings"
         o.http_method = "PUT"
@@ -1099,6 +1250,21 @@ module Aws::WorkSpacesWeb
         o.http_request_uri = "/browserSettings"
         o.input = Shapes::ShapeRef.new(shape: CreateBrowserSettingsRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateBrowserSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
+      api.add_operation(:create_data_protection_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateDataProtectionSettings"
+        o.http_method = "POST"
+        o.http_request_uri = "/dataProtectionSettings"
+        o.input = Shapes::ShapeRef.new(shape: CreateDataProtectionSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateDataProtectionSettingsResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -1221,6 +1387,19 @@ module Aws::WorkSpacesWeb
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
+      api.add_operation(:delete_data_protection_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteDataProtectionSettings"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/dataProtectionSettings/{dataProtectionSettingsArn+}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteDataProtectionSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteDataProtectionSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
       api.add_operation(:delete_identity_provider, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteIdentityProvider"
         o.http_method = "DELETE"
@@ -1326,6 +1505,20 @@ module Aws::WorkSpacesWeb
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
+      api.add_operation(:disassociate_data_protection_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DisassociateDataProtectionSettings"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/portals/{portalArn+}/dataProtectionSettings"
+        o.input = Shapes::ShapeRef.new(shape: DisassociateDataProtectionSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DisassociateDataProtectionSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
       api.add_operation(:disassociate_ip_access_settings, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DisassociateIpAccessSettings"
         o.http_method = "DELETE"
@@ -1415,6 +1608,19 @@ module Aws::WorkSpacesWeb
         o.http_request_uri = "/browserSettings/{browserSettingsArn+}"
         o.input = Shapes::ShapeRef.new(shape: GetBrowserSettingsRequest)
         o.output = Shapes::ShapeRef.new(shape: GetBrowserSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+      end)
+
+      api.add_operation(:get_data_protection_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetDataProtectionSettings"
+        o.http_method = "GET"
+        o.http_request_uri = "/dataProtectionSettings/{dataProtectionSettingsArn+}"
+        o.input = Shapes::ShapeRef.new(shape: GetDataProtectionSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetDataProtectionSettingsResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -1558,6 +1764,24 @@ module Aws::WorkSpacesWeb
         o.http_request_uri = "/browserSettings"
         o.input = Shapes::ShapeRef.new(shape: ListBrowserSettingsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListBrowserSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_data_protection_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListDataProtectionSettings"
+        o.http_method = "GET"
+        o.http_request_uri = "/dataProtectionSettings"
+        o.input = Shapes::ShapeRef.new(shape: ListDataProtectionSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListDataProtectionSettingsResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1780,6 +2004,19 @@ module Aws::WorkSpacesWeb
         o.http_request_uri = "/browserSettings/{browserSettingsArn+}"
         o.input = Shapes::ShapeRef.new(shape: UpdateBrowserSettingsRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateBrowserSettingsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+      end)
+
+      api.add_operation(:update_data_protection_settings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateDataProtectionSettings"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/dataProtectionSettings/{dataProtectionSettingsArn+}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateDataProtectionSettingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateDataProtectionSettingsResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)

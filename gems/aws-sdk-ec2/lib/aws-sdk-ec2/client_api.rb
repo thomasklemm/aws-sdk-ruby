@@ -219,6 +219,8 @@ module Aws::EC2
     BaselineEbsBandwidthMbps = Shapes::StructureShape.new(name: 'BaselineEbsBandwidthMbps')
     BaselineEbsBandwidthMbpsRequest = Shapes::StructureShape.new(name: 'BaselineEbsBandwidthMbpsRequest')
     BaselineIops = Shapes::IntegerShape.new(name: 'BaselineIops')
+    BaselinePerformanceFactors = Shapes::StructureShape.new(name: 'BaselinePerformanceFactors')
+    BaselinePerformanceFactorsRequest = Shapes::StructureShape.new(name: 'BaselinePerformanceFactorsRequest')
     BaselineThroughputInMBps = Shapes::FloatShape.new(name: 'BaselineThroughputInMBps')
     BatchState = Shapes::StringShape.new(name: 'BatchState')
     BgpStatus = Shapes::StringShape.new(name: 'BgpStatus')
@@ -416,6 +418,8 @@ module Aws::EC2
     CpuManufacturerSet = Shapes::ListShape.new(name: 'CpuManufacturerSet')
     CpuOptions = Shapes::StructureShape.new(name: 'CpuOptions')
     CpuOptionsRequest = Shapes::StructureShape.new(name: 'CpuOptionsRequest')
+    CpuPerformanceFactor = Shapes::StructureShape.new(name: 'CpuPerformanceFactor')
+    CpuPerformanceFactorRequest = Shapes::StructureShape.new(name: 'CpuPerformanceFactorRequest')
     CreateCapacityReservationBySplittingRequest = Shapes::StructureShape.new(name: 'CreateCapacityReservationBySplittingRequest')
     CreateCapacityReservationBySplittingResult = Shapes::StructureShape.new(name: 'CreateCapacityReservationBySplittingResult')
     CreateCapacityReservationFleetRequest = Shapes::StructureShape.new(name: 'CreateCapacityReservationFleetRequest')
@@ -2418,6 +2422,10 @@ module Aws::EC2
     PeeringConnectionOptions = Shapes::StructureShape.new(name: 'PeeringConnectionOptions')
     PeeringConnectionOptionsRequest = Shapes::StructureShape.new(name: 'PeeringConnectionOptionsRequest')
     PeeringTgwInfo = Shapes::StructureShape.new(name: 'PeeringTgwInfo')
+    PerformanceFactorReference = Shapes::StructureShape.new(name: 'PerformanceFactorReference')
+    PerformanceFactorReferenceRequest = Shapes::StructureShape.new(name: 'PerformanceFactorReferenceRequest')
+    PerformanceFactorReferenceSet = Shapes::ListShape.new(name: 'PerformanceFactorReferenceSet')
+    PerformanceFactorReferenceSetRequest = Shapes::ListShape.new(name: 'PerformanceFactorReferenceSetRequest')
     PeriodType = Shapes::StringShape.new(name: 'PeriodType')
     PermissionGroup = Shapes::StringShape.new(name: 'PermissionGroup')
     Phase1DHGroupNumbersList = Shapes::ListShape.new(name: 'Phase1DHGroupNumbersList')
@@ -4039,6 +4047,12 @@ module Aws::EC2
     BaselineEbsBandwidthMbpsRequest.add_member(:max, Shapes::ShapeRef.new(shape: Integer, location_name: "Max"))
     BaselineEbsBandwidthMbpsRequest.struct_class = Types::BaselineEbsBandwidthMbpsRequest
 
+    BaselinePerformanceFactors.add_member(:cpu, Shapes::ShapeRef.new(shape: CpuPerformanceFactor, location_name: "cpu"))
+    BaselinePerformanceFactors.struct_class = Types::BaselinePerformanceFactors
+
+    BaselinePerformanceFactorsRequest.add_member(:cpu, Shapes::ShapeRef.new(shape: CpuPerformanceFactorRequest, location_name: "Cpu"))
+    BaselinePerformanceFactorsRequest.struct_class = Types::BaselinePerformanceFactorsRequest
+
     BillingProductList.member = Shapes::ShapeRef.new(shape: String, location_name: "item")
 
     BlobAttributeValue.add_member(:value, Shapes::ShapeRef.new(shape: Blob, location_name: "value"))
@@ -4641,6 +4655,12 @@ module Aws::EC2
     CpuOptionsRequest.add_member(:threads_per_core, Shapes::ShapeRef.new(shape: Integer, location_name: "ThreadsPerCore"))
     CpuOptionsRequest.add_member(:amd_sev_snp, Shapes::ShapeRef.new(shape: AmdSevSnpSpecification, location_name: "AmdSevSnp"))
     CpuOptionsRequest.struct_class = Types::CpuOptionsRequest
+
+    CpuPerformanceFactor.add_member(:references, Shapes::ShapeRef.new(shape: PerformanceFactorReferenceSet, location_name: "referenceSet"))
+    CpuPerformanceFactor.struct_class = Types::CpuPerformanceFactor
+
+    CpuPerformanceFactorRequest.add_member(:references, Shapes::ShapeRef.new(shape: PerformanceFactorReferenceSetRequest, location_name: "Reference"))
+    CpuPerformanceFactorRequest.struct_class = Types::CpuPerformanceFactorRequest
 
     CreateCapacityReservationBySplittingRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateCapacityReservationBySplittingRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
@@ -10559,6 +10579,7 @@ module Aws::EC2
     InstanceRequirements.add_member(:network_bandwidth_gbps, Shapes::ShapeRef.new(shape: NetworkBandwidthGbps, location_name: "networkBandwidthGbps"))
     InstanceRequirements.add_member(:allowed_instance_types, Shapes::ShapeRef.new(shape: AllowedInstanceTypeSet, location_name: "allowedInstanceTypeSet"))
     InstanceRequirements.add_member(:max_spot_price_as_percentage_of_optimal_on_demand_price, Shapes::ShapeRef.new(shape: Integer, location_name: "maxSpotPriceAsPercentageOfOptimalOnDemandPrice"))
+    InstanceRequirements.add_member(:baseline_performance_factors, Shapes::ShapeRef.new(shape: BaselinePerformanceFactors, location_name: "baselinePerformanceFactors"))
     InstanceRequirements.struct_class = Types::InstanceRequirements
 
     InstanceRequirementsRequest.add_member(:v_cpu_count, Shapes::ShapeRef.new(shape: VCpuCountRangeRequest, required: true, location_name: "VCpuCount"))
@@ -10585,6 +10606,7 @@ module Aws::EC2
     InstanceRequirementsRequest.add_member(:network_bandwidth_gbps, Shapes::ShapeRef.new(shape: NetworkBandwidthGbpsRequest, location_name: "NetworkBandwidthGbps"))
     InstanceRequirementsRequest.add_member(:allowed_instance_types, Shapes::ShapeRef.new(shape: AllowedInstanceTypeSet, location_name: "AllowedInstanceType"))
     InstanceRequirementsRequest.add_member(:max_spot_price_as_percentage_of_optimal_on_demand_price, Shapes::ShapeRef.new(shape: Integer, location_name: "MaxSpotPriceAsPercentageOfOptimalOnDemandPrice"))
+    InstanceRequirementsRequest.add_member(:baseline_performance_factors, Shapes::ShapeRef.new(shape: BaselinePerformanceFactorsRequest, location_name: "BaselinePerformanceFactors"))
     InstanceRequirementsRequest.struct_class = Types::InstanceRequirementsRequest
 
     InstanceRequirementsWithMetadataRequest.add_member(:architecture_types, Shapes::ShapeRef.new(shape: ArchitectureTypeSet, location_name: "ArchitectureType"))
@@ -12955,6 +12977,16 @@ module Aws::EC2
     PeeringTgwInfo.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
     PeeringTgwInfo.add_member(:region, Shapes::ShapeRef.new(shape: String, location_name: "region"))
     PeeringTgwInfo.struct_class = Types::PeeringTgwInfo
+
+    PerformanceFactorReference.add_member(:instance_family, Shapes::ShapeRef.new(shape: String, location_name: "instanceFamily"))
+    PerformanceFactorReference.struct_class = Types::PerformanceFactorReference
+
+    PerformanceFactorReferenceRequest.add_member(:instance_family, Shapes::ShapeRef.new(shape: String, location_name: "InstanceFamily"))
+    PerformanceFactorReferenceRequest.struct_class = Types::PerformanceFactorReferenceRequest
+
+    PerformanceFactorReferenceSet.member = Shapes::ShapeRef.new(shape: PerformanceFactorReference, location_name: "item")
+
+    PerformanceFactorReferenceSetRequest.member = Shapes::ShapeRef.new(shape: PerformanceFactorReferenceRequest, location_name: "item")
 
     Phase1DHGroupNumbersList.member = Shapes::ShapeRef.new(shape: Phase1DHGroupNumbersListValue, location_name: "item")
 

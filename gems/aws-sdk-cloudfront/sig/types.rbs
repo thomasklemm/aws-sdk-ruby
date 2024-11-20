@@ -46,6 +46,37 @@ module Aws::CloudFront
       SENSITIVE: []
     end
 
+    class AnycastIpList
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ::String
+      attr_accessor arn: ::String
+      attr_accessor anycast_ips: ::Array[::String]
+      attr_accessor ip_count: ::Integer
+      attr_accessor last_modified_time: ::Time
+      SENSITIVE: []
+    end
+
+    class AnycastIpListCollection
+      attr_accessor items: ::Array[Types::AnycastIpListSummary]
+      attr_accessor marker: ::String
+      attr_accessor next_marker: ::String
+      attr_accessor max_items: ::Integer
+      attr_accessor is_truncated: bool
+      attr_accessor quantity: ::Integer
+      SENSITIVE: []
+    end
+
+    class AnycastIpListSummary
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ::String
+      attr_accessor arn: ::String
+      attr_accessor ip_count: ::Integer
+      attr_accessor last_modified_time: ::Time
+      SENSITIVE: []
+    end
+
     class AssociateAliasRequest
       attr_accessor target_distribution_id: ::String
       attr_accessor alias: ::String
@@ -78,6 +109,7 @@ module Aws::CloudFront
       attr_accessor cache_policy_id: ::String
       attr_accessor origin_request_policy_id: ::String
       attr_accessor response_headers_policy_id: ::String
+      attr_accessor grpc_config: Types::GrpcConfig
       attr_accessor forwarded_values: Types::ForwardedValues
       attr_accessor min_ttl: ::Integer
       attr_accessor default_ttl: ::Integer
@@ -162,6 +194,11 @@ module Aws::CloudFront
     end
 
     class CannotDeleteEntityWhileInUse
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class CannotUpdateEntityWhileInUse
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -313,6 +350,19 @@ module Aws::CloudFront
     class CopyDistributionResult
       attr_accessor distribution: Types::Distribution
       attr_accessor location: ::String
+      attr_accessor etag: ::String
+      SENSITIVE: []
+    end
+
+    class CreateAnycastIpListRequest
+      attr_accessor name: ::String
+      attr_accessor ip_count: ::Integer
+      attr_accessor tags: Types::Tags
+      SENSITIVE: []
+    end
+
+    class CreateAnycastIpListResult
+      attr_accessor anycast_ip_list: Types::AnycastIpList
       attr_accessor etag: ::String
       SENSITIVE: []
     end
@@ -549,6 +599,19 @@ module Aws::CloudFront
       SENSITIVE: []
     end
 
+    class CreateVpcOriginRequest
+      attr_accessor vpc_origin_endpoint_config: Types::VpcOriginEndpointConfig
+      attr_accessor tags: Types::Tags
+      SENSITIVE: []
+    end
+
+    class CreateVpcOriginResult
+      attr_accessor vpc_origin: Types::VpcOrigin
+      attr_accessor location: ::String
+      attr_accessor etag: ::String
+      SENSITIVE: []
+    end
+
     class CustomErrorResponse
       attr_accessor error_code: ::Integer
       attr_accessor response_page_path: ::String
@@ -594,10 +657,17 @@ module Aws::CloudFront
       attr_accessor cache_policy_id: ::String
       attr_accessor origin_request_policy_id: ::String
       attr_accessor response_headers_policy_id: ::String
+      attr_accessor grpc_config: Types::GrpcConfig
       attr_accessor forwarded_values: Types::ForwardedValues
       attr_accessor min_ttl: ::Integer
       attr_accessor default_ttl: ::Integer
       attr_accessor max_ttl: ::Integer
+      SENSITIVE: []
+    end
+
+    class DeleteAnycastIpListRequest
+      attr_accessor id: ::String
+      attr_accessor if_match: ::String
       SENSITIVE: []
     end
 
@@ -699,6 +769,18 @@ module Aws::CloudFront
       SENSITIVE: []
     end
 
+    class DeleteVpcOriginRequest
+      attr_accessor id: ::String
+      attr_accessor if_match: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteVpcOriginResult
+      attr_accessor vpc_origin: Types::VpcOrigin
+      attr_accessor etag: ::String
+      SENSITIVE: []
+    end
+
     class DescribeFunctionRequest
       attr_accessor name: ::String
       attr_accessor stage: ("DEVELOPMENT" | "LIVE")
@@ -761,6 +843,7 @@ module Aws::CloudFront
       attr_accessor is_ipv6_enabled: bool
       attr_accessor continuous_deployment_policy_id: ::String
       attr_accessor staging: bool
+      attr_accessor anycast_ip_list_id: ::String
       SENSITIVE: [:comment]
     end
 
@@ -817,6 +900,7 @@ module Aws::CloudFront
       attr_accessor is_ipv6_enabled: bool
       attr_accessor alias_icp_recordals: ::Array[Types::AliasICPRecordal]
       attr_accessor staging: bool
+      attr_accessor anycast_ip_list_id: ::String
       SENSITIVE: []
     end
 
@@ -1024,6 +1108,17 @@ module Aws::CloudFront
       attr_accessor restriction_type: ("blacklist" | "whitelist" | "none")
       attr_accessor quantity: ::Integer
       attr_accessor items: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class GetAnycastIpListRequest
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
+    class GetAnycastIpListResult
+      attr_accessor anycast_ip_list: Types::AnycastIpList
+      attr_accessor etag: ::String
       SENSITIVE: []
     end
 
@@ -1336,6 +1431,22 @@ module Aws::CloudFront
       SENSITIVE: []
     end
 
+    class GetVpcOriginRequest
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
+    class GetVpcOriginResult
+      attr_accessor vpc_origin: Types::VpcOrigin
+      attr_accessor etag: ::String
+      SENSITIVE: []
+    end
+
+    class GrpcConfig
+      attr_accessor enabled: bool
+      SENSITIVE: []
+    end
+
     class Headers
       attr_accessor quantity: ::Integer
       attr_accessor items: ::Array[::String]
@@ -1626,6 +1737,17 @@ module Aws::CloudFront
       SENSITIVE: []
     end
 
+    class ListAnycastIpListsRequest
+      attr_accessor marker: ::String
+      attr_accessor max_items: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListAnycastIpListsResult
+      attr_accessor anycast_ip_lists: Types::AnycastIpListCollection
+      SENSITIVE: []
+    end
+
     class ListCachePoliciesRequest
       attr_accessor type: ("managed" | "custom")
       attr_accessor marker: ::String
@@ -1670,6 +1792,18 @@ module Aws::CloudFront
 
     class ListContinuousDeploymentPoliciesResult
       attr_accessor continuous_deployment_policy_list: Types::ContinuousDeploymentPolicyList
+      SENSITIVE: []
+    end
+
+    class ListDistributionsByAnycastIpListIdRequest
+      attr_accessor marker: ::String
+      attr_accessor max_items: ::Integer
+      attr_accessor anycast_ip_list_id: ::String
+      SENSITIVE: []
+    end
+
+    class ListDistributionsByAnycastIpListIdResult
+      attr_accessor distribution_list: Types::DistributionList
       SENSITIVE: []
     end
 
@@ -1730,6 +1864,18 @@ module Aws::CloudFront
     end
 
     class ListDistributionsByResponseHeadersPolicyIdResult
+      attr_accessor distribution_id_list: Types::DistributionIdList
+      SENSITIVE: []
+    end
+
+    class ListDistributionsByVpcOriginIdRequest
+      attr_accessor marker: ::String
+      attr_accessor max_items: ::Integer
+      attr_accessor vpc_origin_id: ::String
+      SENSITIVE: []
+    end
+
+    class ListDistributionsByVpcOriginIdResult
       attr_accessor distribution_id_list: Types::DistributionIdList
       SENSITIVE: []
     end
@@ -1904,6 +2050,17 @@ module Aws::CloudFront
       SENSITIVE: []
     end
 
+    class ListVpcOriginsRequest
+      attr_accessor marker: ::String
+      attr_accessor max_items: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListVpcOriginsResult
+      attr_accessor vpc_origin_list: Types::VpcOriginList
+      SENSITIVE: []
+    end
+
     class LoggingConfig
       attr_accessor enabled: bool
       attr_accessor include_cookies: bool
@@ -2019,6 +2176,7 @@ module Aws::CloudFront
       attr_accessor custom_headers: Types::CustomHeaders
       attr_accessor s3_origin_config: Types::S3OriginConfig
       attr_accessor custom_origin_config: Types::CustomOriginConfig
+      attr_accessor vpc_origin_config: Types::VpcOriginConfig
       attr_accessor connection_attempts: ::Integer
       attr_accessor connection_timeout: ::Integer
       attr_accessor origin_shield: Types::OriginShield
@@ -3166,6 +3324,19 @@ module Aws::CloudFront
       SENSITIVE: []
     end
 
+    class UpdateVpcOriginRequest
+      attr_accessor vpc_origin_endpoint_config: Types::VpcOriginEndpointConfig
+      attr_accessor id: ::String
+      attr_accessor if_match: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateVpcOriginResult
+      attr_accessor vpc_origin: Types::VpcOrigin
+      attr_accessor etag: ::String
+      SENSITIVE: []
+    end
+
     class ViewerCertificate
       attr_accessor cloud_front_default_certificate: bool
       attr_accessor iam_certificate_id: ::String
@@ -3174,6 +3345,52 @@ module Aws::CloudFront
       attr_accessor minimum_protocol_version: ("SSLv3" | "TLSv1" | "TLSv1_2016" | "TLSv1.1_2016" | "TLSv1.2_2018" | "TLSv1.2_2019" | "TLSv1.2_2021")
       attr_accessor certificate: ::String
       attr_accessor certificate_source: ("cloudfront" | "iam" | "acm")
+      SENSITIVE: []
+    end
+
+    class VpcOrigin
+      attr_accessor id: ::String
+      attr_accessor arn: ::String
+      attr_accessor status: ::String
+      attr_accessor created_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      attr_accessor vpc_origin_endpoint_config: Types::VpcOriginEndpointConfig
+      SENSITIVE: []
+    end
+
+    class VpcOriginConfig
+      attr_accessor vpc_origin_id: ::String
+      SENSITIVE: []
+    end
+
+    class VpcOriginEndpointConfig
+      attr_accessor name: ::String
+      attr_accessor arn: ::String
+      attr_accessor http_port: ::Integer
+      attr_accessor https_port: ::Integer
+      attr_accessor origin_protocol_policy: ("http-only" | "match-viewer" | "https-only")
+      attr_accessor origin_ssl_protocols: Types::OriginSslProtocols
+      SENSITIVE: []
+    end
+
+    class VpcOriginList
+      attr_accessor marker: ::String
+      attr_accessor next_marker: ::String
+      attr_accessor max_items: ::Integer
+      attr_accessor is_truncated: bool
+      attr_accessor quantity: ::Integer
+      attr_accessor items: ::Array[Types::VpcOriginSummary]
+      SENSITIVE: []
+    end
+
+    class VpcOriginSummary
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ::String
+      attr_accessor created_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      attr_accessor arn: ::String
+      attr_accessor origin_endpoint_arn: ::String
       SENSITIVE: []
     end
   end

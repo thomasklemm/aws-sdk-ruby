@@ -463,8 +463,8 @@ module Aws::WorkSpaces
     #   The identifier of the account link.
     #
     # @option params [String] :client_token
-    #   A string of up to 64 ASCII characters that Amazon EFS uses to ensure
-    #   idempotent creation.
+    #   A string of up to 64 ASCII characters that Amazon WorkSpaces uses to
+    #   ensure idempotent creation.
     #
     # @return [Types::AcceptAccountLinkInvitationResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -714,8 +714,8 @@ module Aws::WorkSpaces
     #   The identifier of the target account.
     #
     # @option params [String] :client_token
-    #   A string of up to 64 ASCII characters that Amazon EFS uses to ensure
-    #   idempotent creation.
+    #   A string of up to 64 ASCII characters that Amazon WorkSpaces uses to
+    #   ensure idempotent creation.
     #
     # @return [Types::CreateAccountLinkInvitationResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1221,7 +1221,8 @@ module Aws::WorkSpaces
     #   this value. For more information, see [Amazon WorkSpaces Core][1].
     #
     # * You don't need to specify the `PCOIP` protocol for Linux bundles
-    #   because `WSP` is the default protocol for those bundles.
+    #   because `DCV` (formerly WSP) is the default protocol for those
+    #   bundles.
     #
     # * User-decoupled WorkSpaces are only supported by Amazon WorkSpaces
     #   Core.
@@ -1263,7 +1264,7 @@ module Aws::WorkSpaces
     #           user_volume_size_gib: 1,
     #           compute_type_name: "VALUE", # accepts VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, GRAPHICSPRO_G4DN
     #           protocols: ["PCOIP"], # accepts PCOIP, WSP
-    #           operating_system_name: "AMAZON_LINUX_2", # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8
+    #           operating_system_name: "AMAZON_LINUX_2", # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8, ROCKY_8
     #         },
     #         tags: [
     #           {
@@ -1292,7 +1293,7 @@ module Aws::WorkSpaces
     #   resp.failed_requests[0].workspace_request.workspace_properties.compute_type_name #=> String, one of "VALUE", "STANDARD", "PERFORMANCE", "POWER", "GRAPHICS", "POWERPRO", "GRAPHICSPRO", "GRAPHICS_G4DN", "GRAPHICSPRO_G4DN"
     #   resp.failed_requests[0].workspace_request.workspace_properties.protocols #=> Array
     #   resp.failed_requests[0].workspace_request.workspace_properties.protocols[0] #=> String, one of "PCOIP", "WSP"
-    #   resp.failed_requests[0].workspace_request.workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8"
+    #   resp.failed_requests[0].workspace_request.workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8", "ROCKY_8"
     #   resp.failed_requests[0].workspace_request.tags #=> Array
     #   resp.failed_requests[0].workspace_request.tags[0].key #=> String
     #   resp.failed_requests[0].workspace_request.tags[0].value #=> String
@@ -1321,7 +1322,7 @@ module Aws::WorkSpaces
     #   resp.pending_requests[0].workspace_properties.compute_type_name #=> String, one of "VALUE", "STANDARD", "PERFORMANCE", "POWER", "GRAPHICS", "POWERPRO", "GRAPHICSPRO", "GRAPHICS_G4DN", "GRAPHICSPRO_G4DN"
     #   resp.pending_requests[0].workspace_properties.protocols #=> Array
     #   resp.pending_requests[0].workspace_properties.protocols[0] #=> String, one of "PCOIP", "WSP"
-    #   resp.pending_requests[0].workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8"
+    #   resp.pending_requests[0].workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8", "ROCKY_8"
     #   resp.pending_requests[0].modification_states #=> Array
     #   resp.pending_requests[0].modification_states[0].resource #=> String, one of "ROOT_VOLUME", "USER_VOLUME", "COMPUTE_TYPE"
     #   resp.pending_requests[0].modification_states[0].state #=> String, one of "UPDATE_INITIATED", "UPDATE_IN_PROGRESS"
@@ -1442,8 +1443,8 @@ module Aws::WorkSpaces
     #   The identifier of the account link.
     #
     # @option params [String] :client_token
-    #   A string of up to 64 ASCII characters that Amazon EFS uses to ensure
-    #   idempotent creation.
+    #   A string of up to 64 ASCII characters that Amazon WorkSpaces uses to
+    #   ensure idempotent creation.
     #
     # @return [Types::DeleteAccountLinkInvitationResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1924,7 +1925,7 @@ module Aws::WorkSpaces
     #     application_ids: ["WorkSpaceApplicationId"],
     #     compute_type_names: ["VALUE"], # accepts VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, GRAPHICSPRO_G4DN
     #     license_type: "LICENSED", # accepts LICENSED, UNLICENSED
-    #     operating_system_names: ["AMAZON_LINUX_2"], # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8
+    #     operating_system_names: ["AMAZON_LINUX_2"], # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8, ROCKY_8
     #     owner: "WorkSpaceApplicationOwner",
     #     max_results: 1,
     #     next_token: "PaginationToken",
@@ -1943,7 +1944,7 @@ module Aws::WorkSpaces
     #   resp.applications[0].supported_compute_type_names #=> Array
     #   resp.applications[0].supported_compute_type_names[0] #=> String, one of "VALUE", "STANDARD", "PERFORMANCE", "POWER", "GRAPHICS", "POWERPRO", "GRAPHICSPRO", "GRAPHICS_G4DN", "GRAPHICSPRO_G4DN"
     #   resp.applications[0].supported_operating_system_names #=> Array
-    #   resp.applications[0].supported_operating_system_names[0] #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8"
+    #   resp.applications[0].supported_operating_system_names[0] #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8", "ROCKY_8"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/workspaces-2015-04-08/DescribeApplications AWS API Documentation
@@ -2812,7 +2813,7 @@ module Aws::WorkSpaces
     #   resp.workspaces[0].workspace_properties.compute_type_name #=> String, one of "VALUE", "STANDARD", "PERFORMANCE", "POWER", "GRAPHICS", "POWERPRO", "GRAPHICSPRO", "GRAPHICS_G4DN", "GRAPHICSPRO_G4DN"
     #   resp.workspaces[0].workspace_properties.protocols #=> Array
     #   resp.workspaces[0].workspace_properties.protocols[0] #=> String, one of "PCOIP", "WSP"
-    #   resp.workspaces[0].workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8"
+    #   resp.workspaces[0].workspace_properties.operating_system_name #=> String, one of "AMAZON_LINUX_2", "UBUNTU_18_04", "UBUNTU_20_04", "UBUNTU_22_04", "UNKNOWN", "WINDOWS_10", "WINDOWS_11", "WINDOWS_7", "WINDOWS_SERVER_2016", "WINDOWS_SERVER_2019", "WINDOWS_SERVER_2022", "RHEL_8", "ROCKY_8"
     #   resp.workspaces[0].modification_states #=> Array
     #   resp.workspaces[0].modification_states[0].resource #=> String, one of "ROOT_VOLUME", "USER_VOLUME", "COMPUTE_TYPE"
     #   resp.workspaces[0].modification_states[0].state #=> String, one of "UPDATE_INITIATED", "UPDATE_IN_PROGRESS"
@@ -3322,13 +3323,13 @@ module Aws::WorkSpaces
     # @option params [required, String] :ingestion_process
     #   The ingestion process to be used when importing the image, depending
     #   on which protocol you want to use for your BYOL Workspace image,
-    #   either PCoIP, WorkSpaces Streaming Protocol (WSP), or bring your own
-    #   protocol (BYOP). To use WSP, specify a value that ends in `_WSP`. To
-    #   use PCoIP, specify a value that does not end in `_WSP`. To use BYOP,
-    #   specify a value that ends in `_BYOP`.
+    #   either PCoIP, DCV, or bring your own protocol (BYOP). To use WSP,
+    #   specify a value that ends in `_DCV`. To use PCoIP, specify a value
+    #   that does not end in `_DCV`. To use BYOP, specify a value that ends in
+    #   `_BYOP`.
     #
     #   For non-GPU-enabled bundles (bundles other than Graphics or
-    #   GraphicsPro), specify `BYOL_REGULAR`, `BYOL_REGULAR_WSP`, or
+    #   GraphicsPro), specify `BYOL_REGULAR`, `BYOL_REGULAR_DCV`, or
     #   `BYOL_REGULAR_BYOP`, depending on the protocol.
     #
     #   <note markdown="1"> The `BYOL_REGULAR_BYOP` and `BYOL_GRAPHICS_G4DN_BYOP` values are only
@@ -3360,9 +3361,10 @@ module Aws::WorkSpaces
     #   <note markdown="1"> * Although this parameter is an array, only one item is allowed at
     #     this time.
     #
-    #   * During the image import process, non-GPU WSP WorkSpaces with Windows
-    #     11 support only `Microsoft_Office_2019`. GPU WSP WorkSpaces with
-    #     Windows 11 do not support Office installation.
+    #   * During the image import process, non-GPU DCV (formerly WSP)
+    #     WorkSpaces with Windows 11 support only `Microsoft_Office_2019`. GPU
+    #     DCV (formerly WSP) WorkSpaces with Windows 11 do not support Office
+    #     installation.
     #
     #    </note>
     #
@@ -3884,7 +3886,7 @@ module Aws::WorkSpaces
     #       user_volume_size_gib: 1,
     #       compute_type_name: "VALUE", # accepts VALUE, STANDARD, PERFORMANCE, POWER, GRAPHICS, POWERPRO, GRAPHICSPRO, GRAPHICS_G4DN, GRAPHICSPRO_G4DN
     #       protocols: ["PCOIP"], # accepts PCOIP, WSP
-    #       operating_system_name: "AMAZON_LINUX_2", # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8
+    #       operating_system_name: "AMAZON_LINUX_2", # accepts AMAZON_LINUX_2, UBUNTU_18_04, UBUNTU_20_04, UBUNTU_22_04, UNKNOWN, WINDOWS_10, WINDOWS_11, WINDOWS_7, WINDOWS_SERVER_2016, WINDOWS_SERVER_2019, WINDOWS_SERVER_2022, RHEL_8, ROCKY_8
     #     },
     #     data_replication: "NO_REPLICATION", # accepts NO_REPLICATION, PRIMARY_AS_SOURCE
     #   })
@@ -4805,7 +4807,7 @@ module Aws::WorkSpaces
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-workspaces'
-      context[:gem_version] = '1.124.0'
+      context[:gem_version] = '1.125.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

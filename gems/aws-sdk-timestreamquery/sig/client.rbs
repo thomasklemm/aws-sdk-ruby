@@ -170,6 +170,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeAccountSettingsResponse]
         def max_query_tcu: () -> ::Integer
         def query_pricing_model: () -> ("BYTES_SCANNED" | "COMPUTE_UNITS")
+        def query_compute: () -> Types::QueryComputeResponse
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamQuery/Client.html#describe_account_settings-instance_method
       def describe_account_settings: (
@@ -294,11 +295,24 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateAccountSettingsResponse]
         def max_query_tcu: () -> ::Integer
         def query_pricing_model: () -> ("BYTES_SCANNED" | "COMPUTE_UNITS")
+        def query_compute: () -> Types::QueryComputeResponse
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/TimestreamQuery/Client.html#update_account_settings-instance_method
       def update_account_settings: (
                                      ?max_query_tcu: ::Integer,
-                                     ?query_pricing_model: ("BYTES_SCANNED" | "COMPUTE_UNITS")
+                                     ?query_pricing_model: ("BYTES_SCANNED" | "COMPUTE_UNITS"),
+                                     ?query_compute: {
+                                       compute_mode: ("ON_DEMAND" | "PROVISIONED")?,
+                                       provisioned_capacity: {
+                                         target_query_tcu: ::Integer,
+                                         notification_configuration: {
+                                           sns_configuration: {
+                                             topic_arn: ::String
+                                           }?,
+                                           role_arn: ::String
+                                         }?
+                                       }?
+                                     }
                                    ) -> _UpdateAccountSettingsResponseSuccess
                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAccountSettingsResponseSuccess
 

@@ -106,7 +106,7 @@ module Aws
         def estimated_monthly_cost: () -> ::Float
         def implementation_effort: () -> ("VeryLow" | "Low" | "Medium" | "High" | "VeryHigh")
         def restart_needed: () -> bool
-        def action_type: () -> ("Rightsize" | "Stop" | "Upgrade" | "PurchaseSavingsPlans" | "PurchaseReservedInstances" | "MigrateToGraviton")
+        def action_type: () -> ("Rightsize" | "Stop" | "Upgrade" | "PurchaseSavingsPlans" | "PurchaseReservedInstances" | "MigrateToGraviton" | "Delete")
         def rollback_possible: () -> bool
         def current_resource_details: () -> Types::ResourceDetails
         def recommended_resource_details: () -> Types::ResourceDetails
@@ -151,7 +151,7 @@ module Aws
                                              account_ids: Array[::String]?,
                                              regions: Array[::String]?,
                                              resource_types: Array[("Ec2Instance" | "LambdaFunction" | "EbsVolume" | "EcsService" | "Ec2AutoScalingGroup" | "Ec2InstanceSavingsPlans" | "ComputeSavingsPlans" | "SageMakerSavingsPlans" | "Ec2ReservedInstances" | "RdsReservedInstances" | "OpenSearchReservedInstances" | "RedshiftReservedInstances" | "ElastiCacheReservedInstances" | "RdsDbInstanceStorage" | "RdsDbInstance")]?,
-                                             action_types: Array[("Rightsize" | "Stop" | "Upgrade" | "PurchaseSavingsPlans" | "PurchaseReservedInstances" | "MigrateToGraviton")]?,
+                                             action_types: Array[("Rightsize" | "Stop" | "Upgrade" | "PurchaseSavingsPlans" | "PurchaseReservedInstances" | "MigrateToGraviton" | "Delete")]?,
                                              tags: Array[
                                                {
                                                  key: ::String?,
@@ -183,7 +183,7 @@ module Aws
                                     account_ids: Array[::String]?,
                                     regions: Array[::String]?,
                                     resource_types: Array[("Ec2Instance" | "LambdaFunction" | "EbsVolume" | "EcsService" | "Ec2AutoScalingGroup" | "Ec2InstanceSavingsPlans" | "ComputeSavingsPlans" | "SageMakerSavingsPlans" | "Ec2ReservedInstances" | "RdsReservedInstances" | "OpenSearchReservedInstances" | "RedshiftReservedInstances" | "ElastiCacheReservedInstances" | "RdsDbInstanceStorage" | "RdsDbInstance")]?,
-                                    action_types: Array[("Rightsize" | "Stop" | "Upgrade" | "PurchaseSavingsPlans" | "PurchaseReservedInstances" | "MigrateToGraviton")]?,
+                                    action_types: Array[("Rightsize" | "Stop" | "Upgrade" | "PurchaseSavingsPlans" | "PurchaseReservedInstances" | "MigrateToGraviton" | "Delete")]?,
                                     tags: Array[
                                       {
                                         key: ::String?,

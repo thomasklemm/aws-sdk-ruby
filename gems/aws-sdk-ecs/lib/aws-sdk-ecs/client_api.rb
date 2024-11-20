@@ -28,6 +28,7 @@ module Aws::ECS
     Attributes = Shapes::ListShape.new(name: 'Attributes')
     AutoScalingGroupProvider = Shapes::StructureShape.new(name: 'AutoScalingGroupProvider')
     AutoScalingGroupProviderUpdate = Shapes::StructureShape.new(name: 'AutoScalingGroupProviderUpdate')
+    AvailabilityZoneRebalancing = Shapes::StringShape.new(name: 'AvailabilityZoneRebalancing')
     AwsVpcConfiguration = Shapes::StructureShape.new(name: 'AwsVpcConfiguration')
     BlockedException = Shapes::StructureShape.new(name: 'BlockedException')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
@@ -722,6 +723,7 @@ module Aws::ECS
     CreateServiceRequest.add_member(:cluster, Shapes::ShapeRef.new(shape: String, location_name: "cluster"))
     CreateServiceRequest.add_member(:service_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "serviceName"))
     CreateServiceRequest.add_member(:task_definition, Shapes::ShapeRef.new(shape: String, location_name: "taskDefinition"))
+    CreateServiceRequest.add_member(:availability_zone_rebalancing, Shapes::ShapeRef.new(shape: AvailabilityZoneRebalancing, location_name: "availabilityZoneRebalancing"))
     CreateServiceRequest.add_member(:load_balancers, Shapes::ShapeRef.new(shape: LoadBalancers, location_name: "loadBalancers"))
     CreateServiceRequest.add_member(:service_registries, Shapes::ShapeRef.new(shape: ServiceRegistries, location_name: "serviceRegistries"))
     CreateServiceRequest.add_member(:desired_count, Shapes::ShapeRef.new(shape: BoxedInteger, location_name: "desiredCount"))
@@ -1546,6 +1548,7 @@ module Aws::ECS
     Service.add_member(:enable_ecs_managed_tags, Shapes::ShapeRef.new(shape: Boolean, location_name: "enableECSManagedTags"))
     Service.add_member(:propagate_tags, Shapes::ShapeRef.new(shape: PropagateTags, location_name: "propagateTags"))
     Service.add_member(:enable_execute_command, Shapes::ShapeRef.new(shape: Boolean, location_name: "enableExecuteCommand"))
+    Service.add_member(:availability_zone_rebalancing, Shapes::ShapeRef.new(shape: AvailabilityZoneRebalancing, location_name: "availabilityZoneRebalancing"))
     Service.struct_class = Types::Service
 
     ServiceConnectClientAlias.add_member(:port, Shapes::ShapeRef.new(shape: PortNumber, required: true, location_name: "port"))
@@ -2034,6 +2037,7 @@ module Aws::ECS
     UpdateServiceRequest.add_member(:task_definition, Shapes::ShapeRef.new(shape: String, location_name: "taskDefinition"))
     UpdateServiceRequest.add_member(:capacity_provider_strategy, Shapes::ShapeRef.new(shape: CapacityProviderStrategy, location_name: "capacityProviderStrategy"))
     UpdateServiceRequest.add_member(:deployment_configuration, Shapes::ShapeRef.new(shape: DeploymentConfiguration, location_name: "deploymentConfiguration"))
+    UpdateServiceRequest.add_member(:availability_zone_rebalancing, Shapes::ShapeRef.new(shape: AvailabilityZoneRebalancing, location_name: "availabilityZoneRebalancing"))
     UpdateServiceRequest.add_member(:network_configuration, Shapes::ShapeRef.new(shape: NetworkConfiguration, location_name: "networkConfiguration"))
     UpdateServiceRequest.add_member(:placement_constraints, Shapes::ShapeRef.new(shape: PlacementConstraints, location_name: "placementConstraints"))
     UpdateServiceRequest.add_member(:placement_strategy, Shapes::ShapeRef.new(shape: PlacementStrategies, location_name: "placementStrategy"))

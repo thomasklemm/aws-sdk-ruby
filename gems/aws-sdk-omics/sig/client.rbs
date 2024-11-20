@@ -264,6 +264,25 @@ module Aws
                                   ) -> _CreateReferenceStoreResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateReferenceStoreResponseSuccess
 
+      interface _CreateRunCacheResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateRunCacheResponse]
+        def arn: () -> ::String
+        def id: () -> ::String
+        def status: () -> ("ACTIVE" | "DELETED" | "FAILED")
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#create_run_cache-instance_method
+      def create_run_cache: (
+                              ?cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS"),
+                              cache_s3_location: ::String,
+                              ?description: ::String,
+                              ?name: ::String,
+                              request_id: ::String,
+                              ?tags: Hash[::String, ::String],
+                              ?cache_bucket_owner_id: ::String
+                            ) -> _CreateRunCacheResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateRunCacheResponseSuccess
+
       interface _CreateRunGroupResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateRunGroupResponse]
         def arn: () -> ::String
@@ -418,6 +437,12 @@ module Aws
                         id: ::String
                       ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#delete_run_cache-instance_method
+      def delete_run_cache: (
+                              id: ::String
+                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#delete_run_group-instance_method
       def delete_run_group: (
@@ -696,6 +721,9 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GetRunResponse]
         def arn: () -> ::String
         def id: () -> ::String
+        def cache_id: () -> ::String
+        def cache_behavior: () -> ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
+        def engine_version: () -> ::String
         def status: () -> ("PENDING" | "STARTING" | "RUNNING" | "STOPPING" | "COMPLETED" | "DELETED" | "CANCELLED" | "FAILED")
         def workflow_id: () -> ::String
         def workflow_type: () -> ("PRIVATE" | "READY2RUN")
@@ -733,6 +761,25 @@ module Aws
                    ) -> _GetRunResponseSuccess
                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRunResponseSuccess
 
+      interface _GetRunCacheResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetRunCacheResponse]
+        def arn: () -> ::String
+        def cache_behavior: () -> ("CACHE_ON_FAILURE" | "CACHE_ALWAYS")
+        def cache_bucket_owner_id: () -> ::String
+        def cache_s3_uri: () -> ::String
+        def creation_time: () -> ::Time
+        def description: () -> ::String
+        def id: () -> ::String
+        def name: () -> ::String
+        def status: () -> ("ACTIVE" | "DELETED" | "FAILED")
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#get_run_cache-instance_method
+      def get_run_cache: (
+                           id: ::String
+                         ) -> _GetRunCacheResponseSuccess
+                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRunCacheResponseSuccess
+
       interface _GetRunGroupResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetRunGroupResponse]
         def arn: () -> ::String
@@ -757,6 +804,8 @@ module Aws
         def status: () -> ("PENDING" | "STARTING" | "RUNNING" | "STOPPING" | "COMPLETED" | "CANCELLED" | "FAILED")
         def name: () -> ::String
         def cpus: () -> ::Integer
+        def cache_hit: () -> bool
+        def cache_s3_uri: () -> ::String
         def memory: () -> ::Integer
         def creation_time: () -> ::Time
         def start_time: () -> ::Time
@@ -1085,6 +1134,18 @@ module Aws
                            ) -> _ListReferencesResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListReferencesResponseSuccess
 
+      interface _ListRunCachesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListRunCachesResponse]
+        def items: () -> ::Array[Types::RunCacheListItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#list_run_caches-instance_method
+      def list_run_caches: (
+                             ?max_results: ::Integer,
+                             ?starting_token: ::String
+                           ) -> _ListRunCachesResponseSuccess
+                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRunCachesResponseSuccess
+
       interface _ListRunGroupsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListRunGroupsResponse]
         def items: () -> ::Array[Types::RunGroupListItem]
@@ -1370,6 +1431,8 @@ module Aws
                        ?run_id: ::String,
                        role_arn: ::String,
                        ?name: ::String,
+                       ?cache_id: ::String,
+                       ?cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS"),
                        ?run_group_id: ::String,
                        ?priority: ::Integer,
                        ?parameters: {
@@ -1460,6 +1523,15 @@ module Aws
                                              ?description: ::String
                                            ) -> _UpdateAnnotationStoreVersionResponseSuccess
                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAnnotationStoreVersionResponseSuccess
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#update_run_cache-instance_method
+      def update_run_cache: (
+                              ?cache_behavior: ("CACHE_ON_FAILURE" | "CACHE_ALWAYS"),
+                              ?description: ::String,
+                              id: ::String,
+                              ?name: ::String
+                            ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#update_run_group-instance_method
       def update_run_group: (

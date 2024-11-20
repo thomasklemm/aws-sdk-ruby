@@ -1860,6 +1860,43 @@ module Aws::RDS
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PIOPS.StorageTypes.html#USER_PIOPS.UpgradeFileSystem
     #   @return [Boolean]
     #
+    # @!attribute [rw] target_iops
+    #   The amount of Provisioned IOPS (input/output operations per second)
+    #   to allocate for the green DB instance. For information about valid
+    #   IOPS values, see [Amazon RDS DB instance storage][1] in the *Amazon
+    #   RDS User Guide*.
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Storage.html
+    #   @return [Integer]
+    #
+    # @!attribute [rw] target_storage_type
+    #   The storage type to associate with the green DB instance.
+    #
+    #   Valid Values: `gp2 | gp3 | io1 | io2`
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_allocated_storage
+    #   The amount of storage in gibibytes (GiB) to allocate for the green
+    #   DB instance. You can choose to increase or decrease the allocated
+    #   storage on the green DB instance.
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] target_storage_throughput
+    #   The storage throughput value for the green DB instance.
+    #
+    #   This setting applies only to the `gp3` storage type.
+    #
+    #   This setting doesn't apply to Amazon Aurora blue/green deployments.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/rds-2014-10-31/CreateBlueGreenDeploymentRequest AWS API Documentation
     #
     class CreateBlueGreenDeploymentRequest < Struct.new(
@@ -1870,7 +1907,11 @@ module Aws::RDS
       :target_db_cluster_parameter_group_name,
       :tags,
       :target_db_instance_class,
-      :upgrade_target_storage_config)
+      :upgrade_target_storage_config,
+      :target_iops,
+      :target_storage_type,
+      :target_allocated_storage,
+      :target_storage_throughput)
       SENSITIVE = []
       include Aws::Structure
     end

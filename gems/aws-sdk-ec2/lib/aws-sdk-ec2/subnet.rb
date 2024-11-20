@@ -419,7 +419,7 @@ module Aws::EC2
     #       amd_sev_snp: "enabled", # accepts enabled, disabled
     #     },
     #     capacity_reservation_specification: {
-    #       capacity_reservation_preference: "open", # accepts open, none
+    #       capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, open, none
     #       capacity_reservation_target: {
     #         capacity_reservation_id: "CapacityReservationId",
     #         capacity_reservation_resource_group_arn: "String",
@@ -719,7 +719,7 @@ module Aws::EC2
     #   not specify this parameter, the instance's Capacity Reservation
     #   preference defaults to `open`, which enables it to run in any open
     #   Capacity Reservation that has matching attributes (instance type,
-    #   platform, Availability Zone).
+    #   platform, Availability Zone, and tenancy).
     # @option options [Types::HibernationOptionsRequest] :hibernation_options
     #   Indicates whether an instance is enabled for hibernation. This
     #   parameter is valid only if the instance meets the [hibernation

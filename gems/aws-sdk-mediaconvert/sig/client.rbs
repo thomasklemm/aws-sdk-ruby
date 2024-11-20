@@ -3815,6 +3815,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaConvert/Client.html#create_queue-instance_method
       def create_queue: (
+                          ?concurrent_jobs: ::Integer,
                           ?description: ::String,
                           name: ::String,
                           ?pricing_plan: ("ON_DEMAND" | "RESERVED"),
@@ -3983,6 +3984,8 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::ListQueuesResponse]
         def next_token: () -> ::String
         def queues: () -> ::Array[Types::Queue]
+        def total_concurrent_jobs: () -> ::Integer
+        def unallocated_concurrent_jobs: () -> ::Integer
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaConvert/Client.html#list_queues-instance_method
       def list_queues: (
@@ -6322,6 +6325,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MediaConvert/Client.html#update_queue-instance_method
       def update_queue: (
+                          ?concurrent_jobs: ::Integer,
                           ?description: ::String,
                           name: ::String,
                           ?reservation_plan_settings: {

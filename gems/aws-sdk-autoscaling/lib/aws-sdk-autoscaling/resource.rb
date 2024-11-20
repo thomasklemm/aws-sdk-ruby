@@ -113,6 +113,15 @@ module Aws::AutoScaling
     #                 max: 1.0,
     #               },
     #               allowed_instance_types: ["AllowedInstanceType"],
+    #               baseline_performance_factors: {
+    #                 cpu: {
+    #                   references: [
+    #                     {
+    #                       instance_family: "String",
+    #                     },
+    #                   ],
+    #                 },
+    #               },
     #             },
     #           },
     #         ],
@@ -184,6 +193,13 @@ module Aws::AutoScaling
     #       impaired_zone_health_check_behavior: "ReplaceUnhealthy", # accepts ReplaceUnhealthy, IgnoreUnhealthy
     #     },
     #     skip_zonal_shift_validation: false,
+    #     capacity_reservation_specification: {
+    #       capacity_reservation_preference: "capacity-reservations-only", # accepts capacity-reservations-only, capacity-reservations-first, none, default
+    #       capacity_reservation_target: {
+    #         capacity_reservation_ids: ["AsciiStringMaxLen255"],
+    #         capacity_reservation_resource_group_arns: ["ResourceName"],
+    #       },
+    #     },
     #   })
     # @param [Hash] options ({})
     # @option options [required, String] :auto_scaling_group_name
@@ -490,6 +506,8 @@ module Aws::AutoScaling
     #
     #
     #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-zonal-shift.html
+    # @option options [Types::CapacityReservationSpecification] :capacity_reservation_specification
+    #   The capacity reservation specification for the Auto Scaling group.
     # @return [AutoScalingGroup]
     def create_group(options = {})
       Aws::Plugins::UserAgent.metric('RESOURCE_MODEL') do

@@ -303,6 +303,10 @@ module Aws::RDS
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor target_db_instance_class: ::String
       attr_accessor upgrade_target_storage_config: bool
+      attr_accessor target_iops: ::Integer
+      attr_accessor target_storage_type: ::String
+      attr_accessor target_allocated_storage: ::Integer
+      attr_accessor target_storage_throughput: ::Integer
       SENSITIVE: []
     end
 

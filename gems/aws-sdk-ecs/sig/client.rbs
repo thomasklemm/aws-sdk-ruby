@@ -163,6 +163,7 @@ module Aws
                             ?cluster: ::String,
                             service_name: ::String,
                             ?task_definition: ::String,
+                            ?availability_zone_rebalancing: ("ENABLED" | "DISABLED"),
                             ?load_balancers: Array[
                               {
                                 target_group_arn: ::String?,
@@ -1635,6 +1636,7 @@ module Aws
                                 enable: bool
                               }?
                             },
+                            ?availability_zone_rebalancing: ("ENABLED" | "DISABLED"),
                             ?network_configuration: {
                               awsvpc_configuration: {
                                 subnets: Array[::String],

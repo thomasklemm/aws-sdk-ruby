@@ -494,7 +494,7 @@ module Aws::ComputeOptimizer
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_recommendation_preferences({
-    #     resource_type: "Ec2Instance", # required, accepts Ec2Instance, AutoScalingGroup, EbsVolume, LambdaFunction, NotApplicable, EcsService, License, RdsDBInstance
+    #     resource_type: "Ec2Instance", # required, accepts Ec2Instance, AutoScalingGroup, EbsVolume, LambdaFunction, NotApplicable, EcsService, License, RdsDBInstance, Idle
     #     scope: {
     #       name: "Organization", # accepts Organization, AccountId, ResourceArn
     #       value: "ScopeValue",
@@ -569,7 +569,7 @@ module Aws::ComputeOptimizer
     #   resp.recommendation_export_jobs[0].destination.s3.bucket #=> String
     #   resp.recommendation_export_jobs[0].destination.s3.key #=> String
     #   resp.recommendation_export_jobs[0].destination.s3.metadata_key #=> String
-    #   resp.recommendation_export_jobs[0].resource_type #=> String, one of "Ec2Instance", "AutoScalingGroup", "EbsVolume", "LambdaFunction", "NotApplicable", "EcsService", "License", "RdsDBInstance"
+    #   resp.recommendation_export_jobs[0].resource_type #=> String, one of "Ec2Instance", "AutoScalingGroup", "EbsVolume", "LambdaFunction", "NotApplicable", "EcsService", "License", "RdsDBInstance", "Idle"
     #   resp.recommendation_export_jobs[0].status #=> String, one of "Queued", "InProgress", "Complete", "Failed"
     #   resp.recommendation_export_jobs[0].creation_timestamp #=> Time
     #   resp.recommendation_export_jobs[0].last_updated_timestamp #=> Time
@@ -1119,6 +1119,135 @@ module Aws::ComputeOptimizer
       req.send_request(options)
     end
 
+    # Export optimization recommendations for your idle resources.
+    #
+    # Recommendations are exported in a comma-separated values (CSV) file,
+    # and its metadata in a JavaScript Object Notation (JSON) file, to an
+    # existing Amazon Simple Storage Service (Amazon S3) bucket that you
+    # specify. For more information, see [Exporting Recommendations][1] in
+    # the *Compute Optimizer User Guide*.
+    #
+    # You can have only one idle resource export job in progress per Amazon
+    # Web Services Region.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/exporting-recommendations.html
+    #
+    # @option params [Array<String>] :account_ids
+    #   The Amazon Web Services account IDs for the export idle resource
+    #   recommendations.
+    #
+    #   If your account is the management account or the delegated
+    #   administrator of an organization, use this parameter to specify the
+    #   member account you want to export recommendations to.
+    #
+    #   This parameter can't be specified together with the include member
+    #   accounts parameter. The parameters are mutually exclusive.
+    #
+    #   If this parameter or the include member accounts parameter is omitted,
+    #   the recommendations for member accounts aren't included in the
+    #   export.
+    #
+    #   You can specify multiple account IDs per request.
+    #
+    # @option params [Array<Types::IdleRecommendationFilter>] :filters
+    #   An array of objects to specify a filter that exports a more specific
+    #   set of idle resource recommendations.
+    #
+    # @option params [Array<String>] :fields_to_export
+    #   The recommendations data to include in the export file. For more
+    #   information about the fields that can be exported, see [Exported
+    #   files][1] in the *Compute Optimizer User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/exporting-recommendations.html#exported-files
+    #
+    # @option params [required, Types::S3DestinationConfig] :s3_destination_config
+    #   Describes the destination Amazon Simple Storage Service (Amazon S3)
+    #   bucket name and key prefix for a recommendations export job.
+    #
+    #   You must create the destination Amazon S3 bucket for your
+    #   recommendations export before you create the export job. Compute
+    #   Optimizer does not create the S3 bucket for you. After you create the
+    #   S3 bucket, ensure that it has the required permission policy to allow
+    #   Compute Optimizer to write the export file to it. If you plan to
+    #   specify an object prefix when you create the export job, you must
+    #   include the object prefix in the policy that you add to the S3 bucket.
+    #   For more information, see [Amazon S3 Bucket Policy for Compute
+    #   Optimizer][1] in the *Compute Optimizer User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/create-s3-bucket-policy-for-compute-optimizer.html
+    #
+    # @option params [String] :file_format
+    #   The format of the export file. The CSV file is the only export file
+    #   format currently supported.
+    #
+    # @option params [Boolean] :include_member_accounts
+    #   If your account is the management account or the delegated
+    #   administrator of an organization, this parameter indicates whether to
+    #   include recommendations for resources in all member accounts of the
+    #   organization.
+    #
+    #   The member accounts must also be opted in to Compute Optimizer, and
+    #   trusted access for Compute Optimizer must be enabled in the
+    #   organization account. For more information, see [Compute Optimizer and
+    #   Amazon Web Services Organizations trusted access][1] in the *Compute
+    #   Optimizer User Guide*.
+    #
+    #   If this parameter is omitted, recommendations for member accounts of
+    #   the organization aren't included in the export file.
+    #
+    #   If this parameter or the account ID parameter is omitted,
+    #   recommendations for member accounts aren't included in the export.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/security-iam.html#trusted-service-access
+    #
+    # @return [Types::ExportIdleRecommendationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ExportIdleRecommendationsResponse#job_id #job_id} => String
+    #   * {Types::ExportIdleRecommendationsResponse#s3_destination #s3_destination} => Types::S3Destination
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.export_idle_recommendations({
+    #     account_ids: ["AccountId"],
+    #     filters: [
+    #       {
+    #         name: "Finding", # accepts Finding, ResourceType
+    #         values: ["FilterValue"],
+    #       },
+    #     ],
+    #     fields_to_export: ["AccountId"], # accepts AccountId, ResourceArn, ResourceId, ResourceType, LastRefreshTimestamp, LookbackPeriodInDays, SavingsOpportunity, SavingsOpportunityAfterDiscount, UtilizationMetricsCpuMaximum, UtilizationMetricsMemoryMaximum, UtilizationMetricsNetworkOutBytesPerSecondMaximum, UtilizationMetricsNetworkInBytesPerSecondMaximum, UtilizationMetricsDatabaseConnectionsMaximum, UtilizationMetricsEBSVolumeReadIOPSMaximum, UtilizationMetricsEBSVolumeWriteIOPSMaximum, UtilizationMetricsVolumeReadOpsPerSecondMaximum, UtilizationMetricsVolumeWriteOpsPerSecondMaximum, Finding, FindingDescription, Tags
+    #     s3_destination_config: { # required
+    #       bucket: "DestinationBucket",
+    #       key_prefix: "DestinationKeyPrefix",
+    #     },
+    #     file_format: "Csv", # accepts Csv
+    #     include_member_accounts: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.job_id #=> String
+    #   resp.s3_destination.bucket #=> String
+    #   resp.s3_destination.key #=> String
+    #   resp.s3_destination.metadata_key #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/ExportIdleRecommendations AWS API Documentation
+    #
+    # @overload export_idle_recommendations(params = {})
+    # @param [Hash] params ({})
+    def export_idle_recommendations(params = {}, options = {})
+      req = build_request(:export_idle_recommendations, params)
+      req.send_request(options)
+    end
+
     # Exports optimization recommendations for Lambda functions.
     #
     # Recommendations are exported in a comma-separated values (.csv) file,
@@ -1490,7 +1619,7 @@ module Aws::ComputeOptimizer
     #         values: ["FilterValue"],
     #       },
     #     ],
-    #     fields_to_export: ["ResourceArn"], # accepts ResourceArn, AccountId, Engine, EngineVersion, Idle, MultiAZDBInstance, CurrentDBInstanceClass, CurrentStorageConfigurationStorageType, CurrentStorageConfigurationAllocatedStorage, CurrentStorageConfigurationMaxAllocatedStorage, CurrentStorageConfigurationIOPS, CurrentStorageConfigurationStorageThroughput, CurrentInstanceOnDemandHourlyPrice, CurrentStorageOnDemandMonthlyPrice, LookbackPeriodInDays, UtilizationMetricsCpuMaximum, UtilizationMetricsMemoryMaximum, UtilizationMetricsEBSVolumeStorageSpaceUtilizationMaximum, UtilizationMetricsNetworkReceiveThroughputMaximum, UtilizationMetricsNetworkTransmitThroughputMaximum, UtilizationMetricsEBSVolumeReadIOPSMaximum, UtilizationMetricsEBSVolumeWriteIOPSMaximum, UtilizationMetricsEBSVolumeReadThroughputMaximum, UtilizationMetricsEBSVolumeWriteThroughputMaximum, UtilizationMetricsDatabaseConnectionsMaximum, InstanceFinding, InstanceFindingReasonCodes, StorageFinding, StorageFindingReasonCodes, InstanceRecommendationOptionsDBInstanceClass, InstanceRecommendationOptionsRank, InstanceRecommendationOptionsPerformanceRisk, InstanceRecommendationOptionsProjectedUtilizationMetricsCpuMaximum, StorageRecommendationOptionsStorageType, StorageRecommendationOptionsAllocatedStorage, StorageRecommendationOptionsMaxAllocatedStorage, StorageRecommendationOptionsIOPS, StorageRecommendationOptionsStorageThroughput, StorageRecommendationOptionsRank, InstanceRecommendationOptionsInstanceOnDemandHourlyPrice, InstanceRecommendationOptionsSavingsOpportunityPercentage, InstanceRecommendationOptionsEstimatedMonthlySavingsCurrency, InstanceRecommendationOptionsEstimatedMonthlySavingsValue, InstanceRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage, InstanceRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts, InstanceRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts, StorageRecommendationOptionsOnDemandMonthlyPrice, StorageRecommendationOptionsSavingsOpportunityPercentage, StorageRecommendationOptionsEstimatedMonthlySavingsCurrency, StorageRecommendationOptionsEstimatedMonthlySavingsValue, StorageRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage, StorageRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts, StorageRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts, EffectiveRecommendationPreferencesCpuVendorArchitectures, EffectiveRecommendationPreferencesEnhancedInfrastructureMetrics, EffectiveRecommendationPreferencesLookBackPeriod, EffectiveRecommendationPreferencesSavingsEstimationMode, LastRefreshTimestamp, Tags
+    #     fields_to_export: ["ResourceArn"], # accepts ResourceArn, AccountId, Engine, EngineVersion, Idle, MultiAZDBInstance, CurrentDBInstanceClass, CurrentStorageConfigurationStorageType, CurrentStorageConfigurationAllocatedStorage, CurrentStorageConfigurationMaxAllocatedStorage, CurrentStorageConfigurationIOPS, CurrentStorageConfigurationStorageThroughput, CurrentInstanceOnDemandHourlyPrice, CurrentStorageOnDemandMonthlyPrice, LookbackPeriodInDays, CurrentInstancePerformanceRisk, UtilizationMetricsCpuMaximum, UtilizationMetricsMemoryMaximum, UtilizationMetricsEBSVolumeStorageSpaceUtilizationMaximum, UtilizationMetricsNetworkReceiveThroughputMaximum, UtilizationMetricsNetworkTransmitThroughputMaximum, UtilizationMetricsEBSVolumeReadIOPSMaximum, UtilizationMetricsEBSVolumeWriteIOPSMaximum, UtilizationMetricsEBSVolumeReadThroughputMaximum, UtilizationMetricsEBSVolumeWriteThroughputMaximum, UtilizationMetricsDatabaseConnectionsMaximum, UtilizationMetricsStorageNetworkReceiveThroughputMaximum, UtilizationMetricsStorageNetworkTransmitThroughputMaximum, UtilizationMetricsAuroraMemoryHealthStateMaximum, UtilizationMetricsAuroraMemoryNumDeclinedSqlTotalMaximum, UtilizationMetricsAuroraMemoryNumKillConnTotalMaximum, UtilizationMetricsAuroraMemoryNumKillQueryTotalMaximum, UtilizationMetricsReadIOPSEphemeralStorageMaximum, UtilizationMetricsWriteIOPSEphemeralStorageMaximum, InstanceFinding, InstanceFindingReasonCodes, StorageFinding, StorageFindingReasonCodes, InstanceRecommendationOptionsDBInstanceClass, InstanceRecommendationOptionsRank, InstanceRecommendationOptionsPerformanceRisk, InstanceRecommendationOptionsProjectedUtilizationMetricsCpuMaximum, StorageRecommendationOptionsStorageType, StorageRecommendationOptionsAllocatedStorage, StorageRecommendationOptionsMaxAllocatedStorage, StorageRecommendationOptionsIOPS, StorageRecommendationOptionsStorageThroughput, StorageRecommendationOptionsRank, InstanceRecommendationOptionsInstanceOnDemandHourlyPrice, InstanceRecommendationOptionsSavingsOpportunityPercentage, InstanceRecommendationOptionsEstimatedMonthlySavingsCurrency, InstanceRecommendationOptionsEstimatedMonthlySavingsValue, InstanceRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage, InstanceRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts, InstanceRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts, StorageRecommendationOptionsOnDemandMonthlyPrice, StorageRecommendationOptionsSavingsOpportunityPercentage, StorageRecommendationOptionsEstimatedMonthlySavingsCurrency, StorageRecommendationOptionsEstimatedMonthlySavingsValue, StorageRecommendationOptionsSavingsOpportunityAfterDiscountsPercentage, StorageRecommendationOptionsEstimatedMonthlySavingsCurrencyAfterDiscounts, StorageRecommendationOptionsEstimatedMonthlySavingsValueAfterDiscounts, EffectiveRecommendationPreferencesCpuVendorArchitectures, EffectiveRecommendationPreferencesEnhancedInfrastructureMetrics, EffectiveRecommendationPreferencesLookBackPeriod, EffectiveRecommendationPreferencesSavingsEstimationMode, LastRefreshTimestamp, Tags, DBClusterIdentifier, PromotionTier
     #     s3_destination_config: { # required
     #       bucket: "DestinationBucket",
     #       key_prefix: "DestinationKeyPrefix",
@@ -2340,6 +2469,111 @@ module Aws::ComputeOptimizer
       req.send_request(options)
     end
 
+    # Returns idle resource recommendations. Compute Optimizer generates
+    # recommendations for idle resources that meet a specific set of
+    # requirements. For more information, see [Resource requirements][1] in
+    # the *Compute Optimizer User Guide*
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/compute-optimizer/latest/ug/requirements.html
+    #
+    # @option params [Array<String>] :resource_arns
+    #   The ARN that identifies the idle resource.
+    #
+    # @option params [String] :next_token
+    #   The token to advance to the next page of idle resource
+    #   recommendations.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of idle resource recommendations to return with a
+    #   single request.
+    #
+    #   To retrieve the remaining results, make another request with the
+    #   returned `nextToken` value.
+    #
+    # @option params [Array<Types::IdleRecommendationFilter>] :filters
+    #   An array of objects to specify a filter that returns a more specific
+    #   list of idle resource recommendations.
+    #
+    # @option params [Array<String>] :account_ids
+    #   Return the idle resource recommendations to the specified Amazon Web
+    #   Services account IDs.
+    #
+    #   If your account is the management account or the delegated
+    #   administrator of an organization, use this parameter to return the
+    #   idle resource recommendations to specific member accounts.
+    #
+    #   You can only specify one account ID per request.
+    #
+    # @option params [Types::OrderBy] :order_by
+    #   The order to sort the idle resource recommendations.
+    #
+    # @return [Types::GetIdleRecommendationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetIdleRecommendationsResponse#next_token #next_token} => String
+    #   * {Types::GetIdleRecommendationsResponse#idle_recommendations #idle_recommendations} => Array&lt;Types::IdleRecommendation&gt;
+    #   * {Types::GetIdleRecommendationsResponse#errors #errors} => Array&lt;Types::IdleRecommendationError&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_idle_recommendations({
+    #     resource_arns: ["ResourceArn"],
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #     filters: [
+    #       {
+    #         name: "Finding", # accepts Finding, ResourceType
+    #         values: ["FilterValue"],
+    #       },
+    #     ],
+    #     account_ids: ["AccountId"],
+    #     order_by: {
+    #       dimension: "SavingsValue", # accepts SavingsValue, SavingsValueAfterDiscount
+    #       order: "Asc", # accepts Asc, Desc
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.idle_recommendations #=> Array
+    #   resp.idle_recommendations[0].resource_arn #=> String
+    #   resp.idle_recommendations[0].resource_id #=> String
+    #   resp.idle_recommendations[0].resource_type #=> String, one of "EC2Instance", "AutoScalingGroup", "EBSVolume", "ECSService", "RDSDBInstance"
+    #   resp.idle_recommendations[0].account_id #=> String
+    #   resp.idle_recommendations[0].finding #=> String, one of "Idle", "Unattached"
+    #   resp.idle_recommendations[0].finding_description #=> String
+    #   resp.idle_recommendations[0].savings_opportunity.savings_opportunity_percentage #=> Float
+    #   resp.idle_recommendations[0].savings_opportunity.estimated_monthly_savings.currency #=> String, one of "USD", "CNY"
+    #   resp.idle_recommendations[0].savings_opportunity.estimated_monthly_savings.value #=> Float
+    #   resp.idle_recommendations[0].savings_opportunity_after_discounts.savings_opportunity_percentage #=> Float
+    #   resp.idle_recommendations[0].savings_opportunity_after_discounts.estimated_monthly_savings.currency #=> String, one of "USD", "CNY"
+    #   resp.idle_recommendations[0].savings_opportunity_after_discounts.estimated_monthly_savings.value #=> Float
+    #   resp.idle_recommendations[0].utilization_metrics #=> Array
+    #   resp.idle_recommendations[0].utilization_metrics[0].name #=> String, one of "CPU", "Memory", "NetworkOutBytesPerSecond", "NetworkInBytesPerSecond", "DatabaseConnections", "EBSVolumeReadIOPS", "EBSVolumeWriteIOPS", "VolumeReadOpsPerSecond", "VolumeWriteOpsPerSecond"
+    #   resp.idle_recommendations[0].utilization_metrics[0].statistic #=> String, one of "Maximum", "Average"
+    #   resp.idle_recommendations[0].utilization_metrics[0].value #=> Float
+    #   resp.idle_recommendations[0].look_back_period_in_days #=> Float
+    #   resp.idle_recommendations[0].last_refresh_timestamp #=> Time
+    #   resp.idle_recommendations[0].tags #=> Array
+    #   resp.idle_recommendations[0].tags[0].key #=> String
+    #   resp.idle_recommendations[0].tags[0].value #=> String
+    #   resp.errors #=> Array
+    #   resp.errors[0].identifier #=> String
+    #   resp.errors[0].code #=> String
+    #   resp.errors[0].message #=> String
+    #   resp.errors[0].resource_type #=> String, one of "EC2Instance", "AutoScalingGroup", "EBSVolume", "ECSService", "RDSDBInstance"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/compute-optimizer-2019-11-01/GetIdleRecommendations AWS API Documentation
+    #
+    # @overload get_idle_recommendations(params = {})
+    # @param [Hash] params ({})
+    def get_idle_recommendations(params = {}, options = {})
+      req = build_request(:get_idle_recommendations, params)
+      req.send_request(options)
+    end
+
     # Returns Lambda function recommendations.
     #
     # Compute Optimizer generates recommendations for functions that meet a
@@ -2617,7 +2851,7 @@ module Aws::ComputeOptimizer
     #   resp.recommended_option_projected_metrics[0].recommended_db_instance_class #=> String
     #   resp.recommended_option_projected_metrics[0].rank #=> Integer
     #   resp.recommended_option_projected_metrics[0].projected_metrics #=> Array
-    #   resp.recommended_option_projected_metrics[0].projected_metrics[0].name #=> String, one of "CPU", "Memory", "EBSVolumeStorageSpaceUtilization", "NetworkReceiveThroughput", "NetworkTransmitThroughput", "EBSVolumeReadIOPS", "EBSVolumeWriteIOPS", "EBSVolumeReadThroughput", "EBSVolumeWriteThroughput", "DatabaseConnections"
+    #   resp.recommended_option_projected_metrics[0].projected_metrics[0].name #=> String, one of "CPU", "Memory", "EBSVolumeStorageSpaceUtilization", "NetworkReceiveThroughput", "NetworkTransmitThroughput", "EBSVolumeReadIOPS", "EBSVolumeWriteIOPS", "EBSVolumeReadThroughput", "EBSVolumeWriteThroughput", "DatabaseConnections", "StorageNetworkReceiveThroughput", "StorageNetworkTransmitThroughput", "AuroraMemoryHealthState", "AuroraMemoryNumDeclinedSql", "AuroraMemoryNumKillConnTotal", "AuroraMemoryNumKillQueryTotal", "ReadIOPSEphemeralStorage", "WriteIOPSEphemeralStorage"
     #   resp.recommended_option_projected_metrics[0].projected_metrics[0].timestamps #=> Array
     #   resp.recommended_option_projected_metrics[0].projected_metrics[0].timestamps[0] #=> Time
     #   resp.recommended_option_projected_metrics[0].projected_metrics[0].values #=> Array
@@ -2715,23 +2949,26 @@ module Aws::ComputeOptimizer
     #   resp.rds_db_recommendations[0].account_id #=> String
     #   resp.rds_db_recommendations[0].engine #=> String
     #   resp.rds_db_recommendations[0].engine_version #=> String
+    #   resp.rds_db_recommendations[0].promotion_tier #=> Integer
     #   resp.rds_db_recommendations[0].current_db_instance_class #=> String
     #   resp.rds_db_recommendations[0].current_storage_configuration.storage_type #=> String
     #   resp.rds_db_recommendations[0].current_storage_configuration.allocated_storage #=> Integer
     #   resp.rds_db_recommendations[0].current_storage_configuration.iops #=> Integer
     #   resp.rds_db_recommendations[0].current_storage_configuration.max_allocated_storage #=> Integer
     #   resp.rds_db_recommendations[0].current_storage_configuration.storage_throughput #=> Integer
+    #   resp.rds_db_recommendations[0].db_cluster_identifier #=> String
     #   resp.rds_db_recommendations[0].idle #=> String, one of "True", "False"
     #   resp.rds_db_recommendations[0].instance_finding #=> String, one of "Optimized", "Underprovisioned", "Overprovisioned"
     #   resp.rds_db_recommendations[0].storage_finding #=> String, one of "Optimized", "Underprovisioned", "Overprovisioned"
     #   resp.rds_db_recommendations[0].instance_finding_reason_codes #=> Array
-    #   resp.rds_db_recommendations[0].instance_finding_reason_codes[0] #=> String, one of "CPUOverprovisioned", "NetworkBandwidthOverprovisioned", "EBSIOPSOverprovisioned", "EBSThroughputOverprovisioned", "CPUUnderprovisioned", "NetworkBandwidthUnderprovisioned", "EBSThroughputUnderprovisioned", "NewGenerationDBInstanceClassAvailable", "NewEngineVersionAvailable"
+    #   resp.rds_db_recommendations[0].instance_finding_reason_codes[0] #=> String, one of "CPUOverprovisioned", "NetworkBandwidthOverprovisioned", "EBSIOPSOverprovisioned", "EBSIOPSUnderprovisioned", "EBSThroughputOverprovisioned", "CPUUnderprovisioned", "NetworkBandwidthUnderprovisioned", "EBSThroughputUnderprovisioned", "NewGenerationDBInstanceClassAvailable", "NewEngineVersionAvailable", "DBClusterWriterUnderprovisioned", "MemoryUnderprovisioned", "InstanceStorageReadIOPSUnderprovisioned", "InstanceStorageWriteIOPSUnderprovisioned"
+    #   resp.rds_db_recommendations[0].current_instance_performance_risk #=> String, one of "VeryLow", "Low", "Medium", "High"
     #   resp.rds_db_recommendations[0].storage_finding_reason_codes #=> Array
     #   resp.rds_db_recommendations[0].storage_finding_reason_codes[0] #=> String, one of "EBSVolumeAllocatedStorageUnderprovisioned", "EBSVolumeThroughputUnderprovisioned", "EBSVolumeIOPSOverprovisioned", "EBSVolumeThroughputOverprovisioned", "NewGenerationStorageTypeAvailable"
     #   resp.rds_db_recommendations[0].instance_recommendation_options #=> Array
     #   resp.rds_db_recommendations[0].instance_recommendation_options[0].db_instance_class #=> String
     #   resp.rds_db_recommendations[0].instance_recommendation_options[0].projected_utilization_metrics #=> Array
-    #   resp.rds_db_recommendations[0].instance_recommendation_options[0].projected_utilization_metrics[0].name #=> String, one of "CPU", "Memory", "EBSVolumeStorageSpaceUtilization", "NetworkReceiveThroughput", "NetworkTransmitThroughput", "EBSVolumeReadIOPS", "EBSVolumeWriteIOPS", "EBSVolumeReadThroughput", "EBSVolumeWriteThroughput", "DatabaseConnections"
+    #   resp.rds_db_recommendations[0].instance_recommendation_options[0].projected_utilization_metrics[0].name #=> String, one of "CPU", "Memory", "EBSVolumeStorageSpaceUtilization", "NetworkReceiveThroughput", "NetworkTransmitThroughput", "EBSVolumeReadIOPS", "EBSVolumeWriteIOPS", "EBSVolumeReadThroughput", "EBSVolumeWriteThroughput", "DatabaseConnections", "StorageNetworkReceiveThroughput", "StorageNetworkTransmitThroughput", "AuroraMemoryHealthState", "AuroraMemoryNumDeclinedSql", "AuroraMemoryNumKillConnTotal", "AuroraMemoryNumKillQueryTotal", "ReadIOPSEphemeralStorage", "WriteIOPSEphemeralStorage"
     #   resp.rds_db_recommendations[0].instance_recommendation_options[0].projected_utilization_metrics[0].statistic #=> String, one of "Maximum", "Minimum", "Average"
     #   resp.rds_db_recommendations[0].instance_recommendation_options[0].projected_utilization_metrics[0].value #=> Float
     #   resp.rds_db_recommendations[0].instance_recommendation_options[0].performance_risk #=> Float
@@ -2756,7 +2993,7 @@ module Aws::ComputeOptimizer
     #   resp.rds_db_recommendations[0].storage_recommendation_options[0].savings_opportunity_after_discounts.estimated_monthly_savings.currency #=> String, one of "USD", "CNY"
     #   resp.rds_db_recommendations[0].storage_recommendation_options[0].savings_opportunity_after_discounts.estimated_monthly_savings.value #=> Float
     #   resp.rds_db_recommendations[0].utilization_metrics #=> Array
-    #   resp.rds_db_recommendations[0].utilization_metrics[0].name #=> String, one of "CPU", "Memory", "EBSVolumeStorageSpaceUtilization", "NetworkReceiveThroughput", "NetworkTransmitThroughput", "EBSVolumeReadIOPS", "EBSVolumeWriteIOPS", "EBSVolumeReadThroughput", "EBSVolumeWriteThroughput", "DatabaseConnections"
+    #   resp.rds_db_recommendations[0].utilization_metrics[0].name #=> String, one of "CPU", "Memory", "EBSVolumeStorageSpaceUtilization", "NetworkReceiveThroughput", "NetworkTransmitThroughput", "EBSVolumeReadIOPS", "EBSVolumeWriteIOPS", "EBSVolumeReadThroughput", "EBSVolumeWriteThroughput", "DatabaseConnections", "StorageNetworkReceiveThroughput", "StorageNetworkTransmitThroughput", "AuroraMemoryHealthState", "AuroraMemoryNumDeclinedSql", "AuroraMemoryNumKillConnTotal", "AuroraMemoryNumKillQueryTotal", "ReadIOPSEphemeralStorage", "WriteIOPSEphemeralStorage"
     #   resp.rds_db_recommendations[0].utilization_metrics[0].statistic #=> String, one of "Maximum", "Minimum", "Average"
     #   resp.rds_db_recommendations[0].utilization_metrics[0].value #=> Float
     #   resp.rds_db_recommendations[0].effective_recommendation_preferences.cpu_vendor_architectures #=> Array
@@ -2841,7 +3078,7 @@ module Aws::ComputeOptimizer
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_recommendation_preferences({
-    #     resource_type: "Ec2Instance", # required, accepts Ec2Instance, AutoScalingGroup, EbsVolume, LambdaFunction, NotApplicable, EcsService, License, RdsDBInstance
+    #     resource_type: "Ec2Instance", # required, accepts Ec2Instance, AutoScalingGroup, EbsVolume, LambdaFunction, NotApplicable, EcsService, License, RdsDBInstance, Idle
     #     scope: {
     #       name: "Organization", # accepts Organization, AccountId, ResourceArn
     #       value: "ScopeValue",
@@ -2856,7 +3093,7 @@ module Aws::ComputeOptimizer
     #   resp.recommendation_preferences_details #=> Array
     #   resp.recommendation_preferences_details[0].scope.name #=> String, one of "Organization", "AccountId", "ResourceArn"
     #   resp.recommendation_preferences_details[0].scope.value #=> String
-    #   resp.recommendation_preferences_details[0].resource_type #=> String, one of "Ec2Instance", "AutoScalingGroup", "EbsVolume", "LambdaFunction", "NotApplicable", "EcsService", "License", "RdsDBInstance"
+    #   resp.recommendation_preferences_details[0].resource_type #=> String, one of "Ec2Instance", "AutoScalingGroup", "EbsVolume", "LambdaFunction", "NotApplicable", "EcsService", "License", "RdsDBInstance", "Idle"
     #   resp.recommendation_preferences_details[0].enhanced_infrastructure_metrics #=> String, one of "Active", "Inactive"
     #   resp.recommendation_preferences_details[0].inferred_workload_types #=> String, one of "Active", "Inactive"
     #   resp.recommendation_preferences_details[0].external_metrics_preference.source #=> String, one of "Datadog", "Dynatrace", "NewRelic", "Instana"
@@ -2948,11 +3185,20 @@ module Aws::ComputeOptimizer
     #   resp.recommendation_summaries[0].summaries[0].reason_code_summaries #=> Array
     #   resp.recommendation_summaries[0].summaries[0].reason_code_summaries[0].name #=> String, one of "MemoryOverprovisioned", "MemoryUnderprovisioned"
     #   resp.recommendation_summaries[0].summaries[0].reason_code_summaries[0].value #=> Float
+    #   resp.recommendation_summaries[0].idle_summaries #=> Array
+    #   resp.recommendation_summaries[0].idle_summaries[0].name #=> String, one of "Idle", "Unattached"
+    #   resp.recommendation_summaries[0].idle_summaries[0].value #=> Float
     #   resp.recommendation_summaries[0].recommendation_resource_type #=> String, one of "Ec2Instance", "AutoScalingGroup", "EbsVolume", "LambdaFunction", "EcsService", "License", "RdsDBInstance", "RdsDBInstanceStorage"
     #   resp.recommendation_summaries[0].account_id #=> String
     #   resp.recommendation_summaries[0].savings_opportunity.savings_opportunity_percentage #=> Float
     #   resp.recommendation_summaries[0].savings_opportunity.estimated_monthly_savings.currency #=> String, one of "USD", "CNY"
     #   resp.recommendation_summaries[0].savings_opportunity.estimated_monthly_savings.value #=> Float
+    #   resp.recommendation_summaries[0].idle_savings_opportunity.savings_opportunity_percentage #=> Float
+    #   resp.recommendation_summaries[0].idle_savings_opportunity.estimated_monthly_savings.currency #=> String, one of "USD", "CNY"
+    #   resp.recommendation_summaries[0].idle_savings_opportunity.estimated_monthly_savings.value #=> Float
+    #   resp.recommendation_summaries[0].aggregated_savings_opportunity.savings_opportunity_percentage #=> Float
+    #   resp.recommendation_summaries[0].aggregated_savings_opportunity.estimated_monthly_savings.currency #=> String, one of "USD", "CNY"
+    #   resp.recommendation_summaries[0].aggregated_savings_opportunity.estimated_monthly_savings.value #=> Float
     #   resp.recommendation_summaries[0].current_performance_risk_ratings.high #=> Integer
     #   resp.recommendation_summaries[0].current_performance_risk_ratings.medium #=> Integer
     #   resp.recommendation_summaries[0].current_performance_risk_ratings.low #=> Integer
@@ -3140,7 +3386,7 @@ module Aws::ComputeOptimizer
     # @example Request syntax with placeholder values
     #
     #   resp = client.put_recommendation_preferences({
-    #     resource_type: "Ec2Instance", # required, accepts Ec2Instance, AutoScalingGroup, EbsVolume, LambdaFunction, NotApplicable, EcsService, License, RdsDBInstance
+    #     resource_type: "Ec2Instance", # required, accepts Ec2Instance, AutoScalingGroup, EbsVolume, LambdaFunction, NotApplicable, EcsService, License, RdsDBInstance, Idle
     #     scope: {
     #       name: "Organization", # accepts Organization, AccountId, ResourceArn
     #       value: "ScopeValue",
@@ -3273,7 +3519,7 @@ module Aws::ComputeOptimizer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-computeoptimizer'
-      context[:gem_version] = '1.70.0'
+      context[:gem_version] = '1.71.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

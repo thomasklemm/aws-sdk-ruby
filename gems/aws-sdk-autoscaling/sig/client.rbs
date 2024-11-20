@@ -250,7 +250,16 @@ module Aws
                                                    min: ::Float?,
                                                    max: ::Float?
                                                  }?,
-                                                 allowed_instance_types: Array[::String]?
+                                                 allowed_instance_types: Array[::String]?,
+                                                 baseline_performance_factors: {
+                                                   cpu: {
+                                                     references: Array[
+                                                       {
+                                                         instance_family: ::String?
+                                                       },
+                                                     ]?
+                                                   }?
+                                                 }?
                                                }?
                                              },
                                            ]?
@@ -321,7 +330,14 @@ module Aws
                                          zonal_shift_enabled: bool?,
                                          impaired_zone_health_check_behavior: ("ReplaceUnhealthy" | "IgnoreUnhealthy")?
                                        },
-                                       ?skip_zonal_shift_validation: bool
+                                       ?skip_zonal_shift_validation: bool,
+                                       ?capacity_reservation_specification: {
+                                         capacity_reservation_preference: ("capacity-reservations-only" | "capacity-reservations-first" | "none" | "default")?,
+                                         capacity_reservation_target: {
+                                           capacity_reservation_ids: Array[::String]?,
+                                           capacity_reservation_resource_group_arns: Array[::String]?
+                                         }?
+                                       }
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -1179,7 +1195,16 @@ module Aws
                                                   min: ::Float?,
                                                   max: ::Float?
                                                 }?,
-                                                allowed_instance_types: Array[::String]?
+                                                allowed_instance_types: Array[::String]?,
+                                                baseline_performance_factors: {
+                                                  cpu: {
+                                                    references: Array[
+                                                      {
+                                                        instance_family: ::String?
+                                                      },
+                                                    ]?
+                                                  }?
+                                                }?
                                               }?
                                             },
                                           ]?
@@ -1306,7 +1331,16 @@ module Aws
                                                    min: ::Float?,
                                                    max: ::Float?
                                                  }?,
-                                                 allowed_instance_types: Array[::String]?
+                                                 allowed_instance_types: Array[::String]?,
+                                                 baseline_performance_factors: {
+                                                   cpu: {
+                                                     references: Array[
+                                                       {
+                                                         instance_family: ::String?
+                                                       },
+                                                     ]?
+                                                   }?
+                                                 }?
                                                }?
                                              },
                                            ]?
@@ -1348,7 +1382,14 @@ module Aws
                                          zonal_shift_enabled: bool?,
                                          impaired_zone_health_check_behavior: ("ReplaceUnhealthy" | "IgnoreUnhealthy")?
                                        },
-                                       ?skip_zonal_shift_validation: bool
+                                       ?skip_zonal_shift_validation: bool,
+                                       ?capacity_reservation_specification: {
+                                         capacity_reservation_preference: ("capacity-reservations-only" | "capacity-reservations-first" | "none" | "default")?,
+                                         capacity_reservation_target: {
+                                           capacity_reservation_ids: Array[::String]?,
+                                           capacity_reservation_resource_group_arns: Array[::String]?
+                                         }?
+                                       }
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 

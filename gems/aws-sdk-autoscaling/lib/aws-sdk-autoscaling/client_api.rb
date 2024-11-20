@@ -68,6 +68,7 @@ module Aws::AutoScaling
     BakeTime = Shapes::IntegerShape.new(name: 'BakeTime')
     BareMetal = Shapes::StringShape.new(name: 'BareMetal')
     BaselineEbsBandwidthMbpsRequest = Shapes::StructureShape.new(name: 'BaselineEbsBandwidthMbpsRequest')
+    BaselinePerformanceFactorsRequest = Shapes::StructureShape.new(name: 'BaselinePerformanceFactorsRequest')
     BatchDeleteScheduledActionAnswer = Shapes::StructureShape.new(name: 'BatchDeleteScheduledActionAnswer')
     BatchDeleteScheduledActionType = Shapes::StructureShape.new(name: 'BatchDeleteScheduledActionType')
     BatchPutScheduledUpdateGroupActionAnswer = Shapes::StructureShape.new(name: 'BatchPutScheduledUpdateGroupActionAnswer')
@@ -86,6 +87,11 @@ module Aws::AutoScaling
     CapacityDistributionStrategy = Shapes::StringShape.new(name: 'CapacityDistributionStrategy')
     CapacityForecast = Shapes::StructureShape.new(name: 'CapacityForecast')
     CapacityRebalanceEnabled = Shapes::BooleanShape.new(name: 'CapacityRebalanceEnabled')
+    CapacityReservationIds = Shapes::ListShape.new(name: 'CapacityReservationIds')
+    CapacityReservationPreference = Shapes::StringShape.new(name: 'CapacityReservationPreference')
+    CapacityReservationResourceGroupArns = Shapes::ListShape.new(name: 'CapacityReservationResourceGroupArns')
+    CapacityReservationSpecification = Shapes::StructureShape.new(name: 'CapacityReservationSpecification')
+    CapacityReservationTarget = Shapes::StructureShape.new(name: 'CapacityReservationTarget')
     CheckpointDelay = Shapes::IntegerShape.new(name: 'CheckpointDelay')
     CheckpointPercentages = Shapes::ListShape.new(name: 'CheckpointPercentages')
     ClassicLinkVPCSecurityGroups = Shapes::ListShape.new(name: 'ClassicLinkVPCSecurityGroups')
@@ -95,6 +101,7 @@ module Aws::AutoScaling
     Cooldown = Shapes::IntegerShape.new(name: 'Cooldown')
     CpuManufacturer = Shapes::StringShape.new(name: 'CpuManufacturer')
     CpuManufacturers = Shapes::ListShape.new(name: 'CpuManufacturers')
+    CpuPerformanceFactorRequest = Shapes::StructureShape.new(name: 'CpuPerformanceFactorRequest')
     CreateAutoScalingGroupType = Shapes::StructureShape.new(name: 'CreateAutoScalingGroupType')
     CreateLaunchConfigurationType = Shapes::StructureShape.new(name: 'CreateLaunchConfigurationType')
     CreateOrUpdateTagsType = Shapes::StructureShape.new(name: 'CreateOrUpdateTagsType')
@@ -277,6 +284,8 @@ module Aws::AutoScaling
     OnDemandBaseCapacity = Shapes::IntegerShape.new(name: 'OnDemandBaseCapacity')
     OnDemandPercentageAboveBaseCapacity = Shapes::IntegerShape.new(name: 'OnDemandPercentageAboveBaseCapacity')
     Overrides = Shapes::ListShape.new(name: 'Overrides')
+    PerformanceFactorReferenceRequest = Shapes::StructureShape.new(name: 'PerformanceFactorReferenceRequest')
+    PerformanceFactorReferenceSetRequest = Shapes::ListShape.new(name: 'PerformanceFactorReferenceSetRequest')
     PoliciesType = Shapes::StructureShape.new(name: 'PoliciesType')
     PolicyARNType = Shapes::StructureShape.new(name: 'PolicyARNType')
     PolicyIncrement = Shapes::IntegerShape.new(name: 'PolicyIncrement')
@@ -358,6 +367,7 @@ module Aws::AutoScaling
     StartInstanceRefreshType = Shapes::StructureShape.new(name: 'StartInstanceRefreshType')
     StepAdjustment = Shapes::StructureShape.new(name: 'StepAdjustment')
     StepAdjustments = Shapes::ListShape.new(name: 'StepAdjustments')
+    String = Shapes::StringShape.new(name: 'String')
     SuspendedProcess = Shapes::StructureShape.new(name: 'SuspendedProcess')
     SuspendedProcesses = Shapes::ListShape.new(name: 'SuspendedProcesses')
     Tag = Shapes::StructureShape.new(name: 'Tag')
@@ -527,6 +537,7 @@ module Aws::AutoScaling
     AutoScalingGroup.add_member(:instance_maintenance_policy, Shapes::ShapeRef.new(shape: InstanceMaintenancePolicy, location_name: "InstanceMaintenancePolicy"))
     AutoScalingGroup.add_member(:availability_zone_distribution, Shapes::ShapeRef.new(shape: AvailabilityZoneDistribution, location_name: "AvailabilityZoneDistribution"))
     AutoScalingGroup.add_member(:availability_zone_impairment_policy, Shapes::ShapeRef.new(shape: AvailabilityZoneImpairmentPolicy, location_name: "AvailabilityZoneImpairmentPolicy"))
+    AutoScalingGroup.add_member(:capacity_reservation_specification, Shapes::ShapeRef.new(shape: CapacityReservationSpecification, location_name: "CapacityReservationSpecification"))
     AutoScalingGroup.struct_class = Types::AutoScalingGroup
 
     AutoScalingGroupNames.member = Shapes::ShapeRef.new(shape: XmlStringMaxLen255)
@@ -576,6 +587,9 @@ module Aws::AutoScaling
     BaselineEbsBandwidthMbpsRequest.add_member(:max, Shapes::ShapeRef.new(shape: NullablePositiveInteger, location_name: "Max"))
     BaselineEbsBandwidthMbpsRequest.struct_class = Types::BaselineEbsBandwidthMbpsRequest
 
+    BaselinePerformanceFactorsRequest.add_member(:cpu, Shapes::ShapeRef.new(shape: CpuPerformanceFactorRequest, location_name: "Cpu"))
+    BaselinePerformanceFactorsRequest.struct_class = Types::BaselinePerformanceFactorsRequest
+
     BatchDeleteScheduledActionAnswer.add_member(:failed_scheduled_actions, Shapes::ShapeRef.new(shape: FailedScheduledUpdateGroupActionRequests, location_name: "FailedScheduledActions"))
     BatchDeleteScheduledActionAnswer.struct_class = Types::BatchDeleteScheduledActionAnswer
 
@@ -608,6 +622,18 @@ module Aws::AutoScaling
     CapacityForecast.add_member(:values, Shapes::ShapeRef.new(shape: PredictiveScalingForecastValues, required: true, location_name: "Values"))
     CapacityForecast.struct_class = Types::CapacityForecast
 
+    CapacityReservationIds.member = Shapes::ShapeRef.new(shape: AsciiStringMaxLen255)
+
+    CapacityReservationResourceGroupArns.member = Shapes::ShapeRef.new(shape: ResourceName)
+
+    CapacityReservationSpecification.add_member(:capacity_reservation_preference, Shapes::ShapeRef.new(shape: CapacityReservationPreference, location_name: "CapacityReservationPreference"))
+    CapacityReservationSpecification.add_member(:capacity_reservation_target, Shapes::ShapeRef.new(shape: CapacityReservationTarget, location_name: "CapacityReservationTarget"))
+    CapacityReservationSpecification.struct_class = Types::CapacityReservationSpecification
+
+    CapacityReservationTarget.add_member(:capacity_reservation_ids, Shapes::ShapeRef.new(shape: CapacityReservationIds, location_name: "CapacityReservationIds"))
+    CapacityReservationTarget.add_member(:capacity_reservation_resource_group_arns, Shapes::ShapeRef.new(shape: CapacityReservationResourceGroupArns, location_name: "CapacityReservationResourceGroupArns"))
+    CapacityReservationTarget.struct_class = Types::CapacityReservationTarget
+
     CheckpointPercentages.member = Shapes::ShapeRef.new(shape: NonZeroIntPercent)
 
     ClassicLinkVPCSecurityGroups.member = Shapes::ShapeRef.new(shape: XmlStringMaxLen255)
@@ -622,6 +648,9 @@ module Aws::AutoScaling
     CompleteLifecycleActionType.struct_class = Types::CompleteLifecycleActionType
 
     CpuManufacturers.member = Shapes::ShapeRef.new(shape: CpuManufacturer)
+
+    CpuPerformanceFactorRequest.add_member(:references, Shapes::ShapeRef.new(shape: PerformanceFactorReferenceSetRequest, location_name: "Reference"))
+    CpuPerformanceFactorRequest.struct_class = Types::CpuPerformanceFactorRequest
 
     CreateAutoScalingGroupType.add_member(:auto_scaling_group_name, Shapes::ShapeRef.new(shape: XmlStringMaxLen255, required: true, location_name: "AutoScalingGroupName"))
     CreateAutoScalingGroupType.add_member(:launch_configuration_name, Shapes::ShapeRef.new(shape: XmlStringMaxLen255, location_name: "LaunchConfigurationName"))
@@ -654,6 +683,7 @@ module Aws::AutoScaling
     CreateAutoScalingGroupType.add_member(:availability_zone_distribution, Shapes::ShapeRef.new(shape: AvailabilityZoneDistribution, location_name: "AvailabilityZoneDistribution"))
     CreateAutoScalingGroupType.add_member(:availability_zone_impairment_policy, Shapes::ShapeRef.new(shape: AvailabilityZoneImpairmentPolicy, location_name: "AvailabilityZoneImpairmentPolicy"))
     CreateAutoScalingGroupType.add_member(:skip_zonal_shift_validation, Shapes::ShapeRef.new(shape: SkipZonalShiftValidation, location_name: "SkipZonalShiftValidation"))
+    CreateAutoScalingGroupType.add_member(:capacity_reservation_specification, Shapes::ShapeRef.new(shape: CapacityReservationSpecification, location_name: "CapacityReservationSpecification"))
     CreateAutoScalingGroupType.struct_class = Types::CreateAutoScalingGroupType
 
     CreateLaunchConfigurationType.add_member(:launch_configuration_name, Shapes::ShapeRef.new(shape: XmlStringMaxLen255, required: true, location_name: "LaunchConfigurationName"))
@@ -1023,6 +1053,7 @@ module Aws::AutoScaling
     InstanceRequirements.add_member(:accelerator_total_memory_mi_b, Shapes::ShapeRef.new(shape: AcceleratorTotalMemoryMiBRequest, location_name: "AcceleratorTotalMemoryMiB"))
     InstanceRequirements.add_member(:network_bandwidth_gbps, Shapes::ShapeRef.new(shape: NetworkBandwidthGbpsRequest, location_name: "NetworkBandwidthGbps"))
     InstanceRequirements.add_member(:allowed_instance_types, Shapes::ShapeRef.new(shape: AllowedInstanceTypes, location_name: "AllowedInstanceTypes"))
+    InstanceRequirements.add_member(:baseline_performance_factors, Shapes::ShapeRef.new(shape: BaselinePerformanceFactorsRequest, location_name: "BaselinePerformanceFactors"))
     InstanceRequirements.struct_class = Types::InstanceRequirements
 
     InstanceReusePolicy.add_member(:reuse_on_scale_in, Shapes::ShapeRef.new(shape: ReuseOnScaleIn, location_name: "ReuseOnScaleIn"))
@@ -1214,6 +1245,11 @@ module Aws::AutoScaling
     NotificationConfigurations.member = Shapes::ShapeRef.new(shape: NotificationConfiguration)
 
     Overrides.member = Shapes::ShapeRef.new(shape: LaunchTemplateOverrides)
+
+    PerformanceFactorReferenceRequest.add_member(:instance_family, Shapes::ShapeRef.new(shape: String, location_name: "InstanceFamily"))
+    PerformanceFactorReferenceRequest.struct_class = Types::PerformanceFactorReferenceRequest
+
+    PerformanceFactorReferenceSetRequest.member = Shapes::ShapeRef.new(shape: PerformanceFactorReferenceRequest, location_name: "item")
 
     PoliciesType.add_member(:scaling_policies, Shapes::ShapeRef.new(shape: ScalingPolicies, location_name: "ScalingPolicies"))
     PoliciesType.add_member(:next_token, Shapes::ShapeRef.new(shape: XmlString, location_name: "NextToken"))
@@ -1575,6 +1611,7 @@ module Aws::AutoScaling
     UpdateAutoScalingGroupType.add_member(:availability_zone_distribution, Shapes::ShapeRef.new(shape: AvailabilityZoneDistribution, location_name: "AvailabilityZoneDistribution"))
     UpdateAutoScalingGroupType.add_member(:availability_zone_impairment_policy, Shapes::ShapeRef.new(shape: AvailabilityZoneImpairmentPolicy, location_name: "AvailabilityZoneImpairmentPolicy"))
     UpdateAutoScalingGroupType.add_member(:skip_zonal_shift_validation, Shapes::ShapeRef.new(shape: SkipZonalShiftValidation, location_name: "SkipZonalShiftValidation"))
+    UpdateAutoScalingGroupType.add_member(:capacity_reservation_specification, Shapes::ShapeRef.new(shape: CapacityReservationSpecification, location_name: "CapacityReservationSpecification"))
     UpdateAutoScalingGroupType.struct_class = Types::UpdateAutoScalingGroupType
 
     VCpuCountRequest.add_member(:min, Shapes::ShapeRef.new(shape: NullablePositiveInteger, required: true, location_name: "Min"))

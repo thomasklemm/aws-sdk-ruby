@@ -902,6 +902,7 @@ module Aws::ControlTower
     #   resp.enabled_baseline_details.baseline_version #=> String
     #   resp.enabled_baseline_details.parameters #=> Array
     #   resp.enabled_baseline_details.parameters[0].key #=> String
+    #   resp.enabled_baseline_details.parent_identifier #=> String
     #   resp.enabled_baseline_details.status_summary.last_operation_identifier #=> String
     #   resp.enabled_baseline_details.status_summary.status #=> String, one of "SUCCEEDED", "FAILED", "UNDER_CHANGE"
     #   resp.enabled_baseline_details.target_identifier #=> String
@@ -1143,6 +1144,10 @@ module Aws::ControlTower
     #   filters are `baselineIdentifiers` and `targetIdentifiers`. The filter
     #   can be applied for either, or both.
     #
+    # @option params [Boolean] :include_children
+    #   A value that can be set to include the child enabled baselines in
+    #   responses. The default value is false.
+    #
     # @option params [Integer] :max_results
     #   The maximum number of results to be shown.
     #
@@ -1161,8 +1166,10 @@ module Aws::ControlTower
     #   resp = client.list_enabled_baselines({
     #     filter: {
     #       baseline_identifiers: ["Arn"],
+    #       parent_identifiers: ["Arn"],
     #       target_identifiers: ["Arn"],
     #     },
+    #     include_children: false,
     #     max_results: 1,
     #     next_token: "ListEnabledBaselinesNextToken",
     #   })
@@ -1173,6 +1180,7 @@ module Aws::ControlTower
     #   resp.enabled_baselines[0].arn #=> String
     #   resp.enabled_baselines[0].baseline_identifier #=> String
     #   resp.enabled_baselines[0].baseline_version #=> String
+    #   resp.enabled_baselines[0].parent_identifier #=> String
     #   resp.enabled_baselines[0].status_summary.last_operation_identifier #=> String
     #   resp.enabled_baselines[0].status_summary.status #=> String, one of "SUCCEEDED", "FAILED", "UNDER_CHANGE"
     #   resp.enabled_baselines[0].target_identifier #=> String
@@ -1720,7 +1728,7 @@ module Aws::ControlTower
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-controltower'
-      context[:gem_version] = '1.35.0'
+      context[:gem_version] = '1.36.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
