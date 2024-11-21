@@ -14,9 +14,18 @@ module Aws::CostExplorer
 
     include Seahorse::Model
 
+    AccountId = Shapes::StringShape.new(name: 'AccountId')
     AccountScope = Shapes::StringShape.new(name: 'AccountScope')
     AmortizedRecurringFee = Shapes::StringShape.new(name: 'AmortizedRecurringFee')
     AmortizedUpfrontFee = Shapes::StringShape.new(name: 'AmortizedUpfrontFee')
+    AnalysisDetails = Shapes::StructureShape.new(name: 'AnalysisDetails')
+    AnalysisId = Shapes::StringShape.new(name: 'AnalysisId')
+    AnalysisIds = Shapes::ListShape.new(name: 'AnalysisIds')
+    AnalysisNotFoundException = Shapes::StructureShape.new(name: 'AnalysisNotFoundException')
+    AnalysisStatus = Shapes::StringShape.new(name: 'AnalysisStatus')
+    AnalysisSummary = Shapes::StructureShape.new(name: 'AnalysisSummary')
+    AnalysisSummaryList = Shapes::ListShape.new(name: 'AnalysisSummaryList')
+    AnalysisType = Shapes::StringShape.new(name: 'AnalysisType')
     Anomalies = Shapes::ListShape.new(name: 'Anomalies')
     Anomaly = Shapes::StructureShape.new(name: 'Anomaly')
     AnomalyDateInterval = Shapes::StructureShape.new(name: 'AnomalyDateInterval')
@@ -35,6 +44,7 @@ module Aws::CostExplorer
     Attributes = Shapes::MapShape.new(name: 'Attributes')
     BackfillLimitExceededException = Shapes::StructureShape.new(name: 'BackfillLimitExceededException')
     BillExpirationException = Shapes::StructureShape.new(name: 'BillExpirationException')
+    CommitmentPurchaseAnalysisConfiguration = Shapes::StructureShape.new(name: 'CommitmentPurchaseAnalysisConfiguration')
     Context = Shapes::StringShape.new(name: 'Context')
     CostAllocationTag = Shapes::StructureShape.new(name: 'CostAllocationTag')
     CostAllocationTagBackfillRequest = Shapes::StructureShape.new(name: 'CostAllocationTagBackfillRequest')
@@ -113,6 +123,7 @@ module Aws::CostExplorer
     ESInstanceDetails = Shapes::StructureShape.new(name: 'ESInstanceDetails')
     ElastiCacheInstanceDetails = Shapes::StructureShape.new(name: 'ElastiCacheInstanceDetails')
     Entity = Shapes::StringShape.new(name: 'Entity')
+    ErrorCode = Shapes::StringShape.new(name: 'ErrorCode')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     Estimated = Shapes::BooleanShape.new(name: 'Estimated')
     Expression = Shapes::StructureShape.new(name: 'Expression')
@@ -136,6 +147,8 @@ module Aws::CostExplorer
     GetAnomalySubscriptionsResponse = Shapes::StructureShape.new(name: 'GetAnomalySubscriptionsResponse')
     GetApproximateUsageRecordsRequest = Shapes::StructureShape.new(name: 'GetApproximateUsageRecordsRequest')
     GetApproximateUsageRecordsResponse = Shapes::StructureShape.new(name: 'GetApproximateUsageRecordsResponse')
+    GetCommitmentPurchaseAnalysisRequest = Shapes::StructureShape.new(name: 'GetCommitmentPurchaseAnalysisRequest')
+    GetCommitmentPurchaseAnalysisResponse = Shapes::StructureShape.new(name: 'GetCommitmentPurchaseAnalysisResponse')
     GetCostAndUsageRequest = Shapes::StructureShape.new(name: 'GetCostAndUsageRequest')
     GetCostAndUsageResponse = Shapes::StructureShape.new(name: 'GetCostAndUsageResponse')
     GetCostAndUsageWithResourcesRequest = Shapes::StructureShape.new(name: 'GetCostAndUsageWithResourcesRequest')
@@ -181,6 +194,8 @@ module Aws::CostExplorer
     Key = Shapes::StringShape.new(name: 'Key')
     Keys = Shapes::ListShape.new(name: 'Keys')
     LimitExceededException = Shapes::StructureShape.new(name: 'LimitExceededException')
+    ListCommitmentPurchaseAnalysesRequest = Shapes::StructureShape.new(name: 'ListCommitmentPurchaseAnalysesRequest')
+    ListCommitmentPurchaseAnalysesResponse = Shapes::StructureShape.new(name: 'ListCommitmentPurchaseAnalysesResponse')
     ListCostAllocationTagBackfillHistoryRequest = Shapes::StructureShape.new(name: 'ListCostAllocationTagBackfillHistoryRequest')
     ListCostAllocationTagBackfillHistoryResponse = Shapes::StructureShape.new(name: 'ListCostAllocationTagBackfillHistoryResponse')
     ListCostAllocationTagsRequest = Shapes::StructureShape.new(name: 'ListCostAllocationTagsRequest')
@@ -275,19 +290,26 @@ module Aws::CostExplorer
     RootCause = Shapes::StructureShape.new(name: 'RootCause')
     RootCauses = Shapes::ListShape.new(name: 'RootCauses')
     SavingsPlanArn = Shapes::StringShape.new(name: 'SavingsPlanArn')
+    SavingsPlans = Shapes::StructureShape.new(name: 'SavingsPlans')
     SavingsPlansAmortizedCommitment = Shapes::StructureShape.new(name: 'SavingsPlansAmortizedCommitment')
+    SavingsPlansCommitment = Shapes::FloatShape.new(name: 'SavingsPlansCommitment')
     SavingsPlansCoverage = Shapes::StructureShape.new(name: 'SavingsPlansCoverage')
     SavingsPlansCoverageData = Shapes::StructureShape.new(name: 'SavingsPlansCoverageData')
     SavingsPlansCoverages = Shapes::ListShape.new(name: 'SavingsPlansCoverages')
     SavingsPlansDataType = Shapes::StringShape.new(name: 'SavingsPlansDataType')
     SavingsPlansDataTypes = Shapes::ListShape.new(name: 'SavingsPlansDataTypes')
     SavingsPlansDetails = Shapes::StructureShape.new(name: 'SavingsPlansDetails')
+    SavingsPlansId = Shapes::StringShape.new(name: 'SavingsPlansId')
+    SavingsPlansPurchaseAnalysisConfiguration = Shapes::StructureShape.new(name: 'SavingsPlansPurchaseAnalysisConfiguration')
+    SavingsPlansPurchaseAnalysisDetails = Shapes::StructureShape.new(name: 'SavingsPlansPurchaseAnalysisDetails')
     SavingsPlansPurchaseRecommendation = Shapes::StructureShape.new(name: 'SavingsPlansPurchaseRecommendation')
     SavingsPlansPurchaseRecommendationDetail = Shapes::StructureShape.new(name: 'SavingsPlansPurchaseRecommendationDetail')
     SavingsPlansPurchaseRecommendationDetailList = Shapes::ListShape.new(name: 'SavingsPlansPurchaseRecommendationDetailList')
     SavingsPlansPurchaseRecommendationMetadata = Shapes::StructureShape.new(name: 'SavingsPlansPurchaseRecommendationMetadata')
     SavingsPlansPurchaseRecommendationSummary = Shapes::StructureShape.new(name: 'SavingsPlansPurchaseRecommendationSummary')
     SavingsPlansSavings = Shapes::StructureShape.new(name: 'SavingsPlansSavings')
+    SavingsPlansToAdd = Shapes::ListShape.new(name: 'SavingsPlansToAdd')
+    SavingsPlansToExclude = Shapes::ListShape.new(name: 'SavingsPlansToExclude')
     SavingsPlansUtilization = Shapes::StructureShape.new(name: 'SavingsPlansUtilization')
     SavingsPlansUtilizationAggregates = Shapes::StructureShape.new(name: 'SavingsPlansUtilizationAggregates')
     SavingsPlansUtilizationByTime = Shapes::StructureShape.new(name: 'SavingsPlansUtilizationByTime')
@@ -301,6 +323,8 @@ module Aws::CostExplorer
     SortDefinitionKey = Shapes::StringShape.new(name: 'SortDefinitionKey')
     SortDefinitions = Shapes::ListShape.new(name: 'SortDefinitions')
     SortOrder = Shapes::StringShape.new(name: 'SortOrder')
+    StartCommitmentPurchaseAnalysisRequest = Shapes::StructureShape.new(name: 'StartCommitmentPurchaseAnalysisRequest')
+    StartCommitmentPurchaseAnalysisResponse = Shapes::StructureShape.new(name: 'StartCommitmentPurchaseAnalysisResponse')
     StartCostAllocationTagBackfillRequest = Shapes::StructureShape.new(name: 'StartCostAllocationTagBackfillRequest')
     StartCostAllocationTagBackfillResponse = Shapes::StructureShape.new(name: 'StartCostAllocationTagBackfillResponse')
     StartSavingsPlansPurchaseRecommendationGenerationRequest = Shapes::StructureShape.new(name: 'StartSavingsPlansPurchaseRecommendationGenerationRequest')
@@ -356,6 +380,25 @@ module Aws::CostExplorer
     Values = Shapes::ListShape.new(name: 'Values')
     YearMonthDay = Shapes::StringShape.new(name: 'YearMonthDay')
     ZonedDateTime = Shapes::StringShape.new(name: 'ZonedDateTime')
+
+    AnalysisDetails.add_member(:savings_plans_purchase_analysis_details, Shapes::ShapeRef.new(shape: SavingsPlansPurchaseAnalysisDetails, location_name: "SavingsPlansPurchaseAnalysisDetails"))
+    AnalysisDetails.struct_class = Types::AnalysisDetails
+
+    AnalysisIds.member = Shapes::ShapeRef.new(shape: AnalysisId)
+
+    AnalysisNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
+    AnalysisNotFoundException.struct_class = Types::AnalysisNotFoundException
+
+    AnalysisSummary.add_member(:estimated_completion_time, Shapes::ShapeRef.new(shape: ZonedDateTime, location_name: "EstimatedCompletionTime"))
+    AnalysisSummary.add_member(:analysis_completion_time, Shapes::ShapeRef.new(shape: ZonedDateTime, location_name: "AnalysisCompletionTime"))
+    AnalysisSummary.add_member(:analysis_started_time, Shapes::ShapeRef.new(shape: ZonedDateTime, location_name: "AnalysisStartedTime"))
+    AnalysisSummary.add_member(:analysis_status, Shapes::ShapeRef.new(shape: AnalysisStatus, location_name: "AnalysisStatus"))
+    AnalysisSummary.add_member(:error_code, Shapes::ShapeRef.new(shape: ErrorCode, location_name: "ErrorCode"))
+    AnalysisSummary.add_member(:analysis_id, Shapes::ShapeRef.new(shape: AnalysisId, location_name: "AnalysisId"))
+    AnalysisSummary.add_member(:commitment_purchase_analysis_configuration, Shapes::ShapeRef.new(shape: CommitmentPurchaseAnalysisConfiguration, location_name: "CommitmentPurchaseAnalysisConfiguration"))
+    AnalysisSummary.struct_class = Types::AnalysisSummary
+
+    AnalysisSummaryList.member = Shapes::ShapeRef.new(shape: AnalysisSummary)
 
     Anomalies.member = Shapes::ShapeRef.new(shape: Anomaly)
 
@@ -414,6 +457,9 @@ module Aws::CostExplorer
 
     BillExpirationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     BillExpirationException.struct_class = Types::BillExpirationException
+
+    CommitmentPurchaseAnalysisConfiguration.add_member(:savings_plans_purchase_analysis_configuration, Shapes::ShapeRef.new(shape: SavingsPlansPurchaseAnalysisConfiguration, location_name: "SavingsPlansPurchaseAnalysisConfiguration"))
+    CommitmentPurchaseAnalysisConfiguration.struct_class = Types::CommitmentPurchaseAnalysisConfiguration
 
     CostAllocationTag.add_member(:tag_key, Shapes::ShapeRef.new(shape: TagKey, required: true, location_name: "TagKey"))
     CostAllocationTag.add_member(:type, Shapes::ShapeRef.new(shape: CostAllocationTagType, required: true, location_name: "Type"))
@@ -754,6 +800,19 @@ module Aws::CostExplorer
     GetApproximateUsageRecordsResponse.add_member(:lookback_period, Shapes::ShapeRef.new(shape: DateInterval, location_name: "LookbackPeriod"))
     GetApproximateUsageRecordsResponse.struct_class = Types::GetApproximateUsageRecordsResponse
 
+    GetCommitmentPurchaseAnalysisRequest.add_member(:analysis_id, Shapes::ShapeRef.new(shape: AnalysisId, required: true, location_name: "AnalysisId"))
+    GetCommitmentPurchaseAnalysisRequest.struct_class = Types::GetCommitmentPurchaseAnalysisRequest
+
+    GetCommitmentPurchaseAnalysisResponse.add_member(:estimated_completion_time, Shapes::ShapeRef.new(shape: ZonedDateTime, required: true, location_name: "EstimatedCompletionTime"))
+    GetCommitmentPurchaseAnalysisResponse.add_member(:analysis_completion_time, Shapes::ShapeRef.new(shape: ZonedDateTime, location_name: "AnalysisCompletionTime"))
+    GetCommitmentPurchaseAnalysisResponse.add_member(:analysis_started_time, Shapes::ShapeRef.new(shape: ZonedDateTime, required: true, location_name: "AnalysisStartedTime"))
+    GetCommitmentPurchaseAnalysisResponse.add_member(:analysis_id, Shapes::ShapeRef.new(shape: AnalysisId, required: true, location_name: "AnalysisId"))
+    GetCommitmentPurchaseAnalysisResponse.add_member(:analysis_status, Shapes::ShapeRef.new(shape: AnalysisStatus, required: true, location_name: "AnalysisStatus"))
+    GetCommitmentPurchaseAnalysisResponse.add_member(:error_code, Shapes::ShapeRef.new(shape: ErrorCode, location_name: "ErrorCode"))
+    GetCommitmentPurchaseAnalysisResponse.add_member(:analysis_details, Shapes::ShapeRef.new(shape: AnalysisDetails, location_name: "AnalysisDetails"))
+    GetCommitmentPurchaseAnalysisResponse.add_member(:commitment_purchase_analysis_configuration, Shapes::ShapeRef.new(shape: CommitmentPurchaseAnalysisConfiguration, required: true, location_name: "CommitmentPurchaseAnalysisConfiguration"))
+    GetCommitmentPurchaseAnalysisResponse.struct_class = Types::GetCommitmentPurchaseAnalysisResponse
+
     GetCostAndUsageRequest.add_member(:time_period, Shapes::ShapeRef.new(shape: DateInterval, required: true, location_name: "TimePeriod"))
     GetCostAndUsageRequest.add_member(:granularity, Shapes::ShapeRef.new(shape: Granularity, required: true, location_name: "Granularity"))
     GetCostAndUsageRequest.add_member(:filter, Shapes::ShapeRef.new(shape: Expression, location_name: "Filter"))
@@ -1005,6 +1064,16 @@ module Aws::CostExplorer
 
     LimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     LimitExceededException.struct_class = Types::LimitExceededException
+
+    ListCommitmentPurchaseAnalysesRequest.add_member(:analysis_status, Shapes::ShapeRef.new(shape: AnalysisStatus, location_name: "AnalysisStatus"))
+    ListCommitmentPurchaseAnalysesRequest.add_member(:next_page_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextPageToken"))
+    ListCommitmentPurchaseAnalysesRequest.add_member(:page_size, Shapes::ShapeRef.new(shape: NonNegativeInteger, location_name: "PageSize"))
+    ListCommitmentPurchaseAnalysesRequest.add_member(:analysis_ids, Shapes::ShapeRef.new(shape: AnalysisIds, location_name: "AnalysisIds"))
+    ListCommitmentPurchaseAnalysesRequest.struct_class = Types::ListCommitmentPurchaseAnalysesRequest
+
+    ListCommitmentPurchaseAnalysesResponse.add_member(:analysis_summary_list, Shapes::ShapeRef.new(shape: AnalysisSummaryList, location_name: "AnalysisSummaryList"))
+    ListCommitmentPurchaseAnalysesResponse.add_member(:next_page_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextPageToken"))
+    ListCommitmentPurchaseAnalysesResponse.struct_class = Types::ListCommitmentPurchaseAnalysesResponse
 
     ListCostAllocationTagBackfillHistoryRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextPageToken, location_name: "NextToken"))
     ListCostAllocationTagBackfillHistoryRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: CostAllocationTagsMaxResults, location_name: "MaxResults", metadata: {"box"=>true}))
@@ -1297,6 +1366,15 @@ module Aws::CostExplorer
 
     RootCauses.member = Shapes::ShapeRef.new(shape: RootCause)
 
+    SavingsPlans.add_member(:payment_option, Shapes::ShapeRef.new(shape: PaymentOption, location_name: "PaymentOption"))
+    SavingsPlans.add_member(:savings_plans_type, Shapes::ShapeRef.new(shape: SupportedSavingsPlansType, location_name: "SavingsPlansType"))
+    SavingsPlans.add_member(:region, Shapes::ShapeRef.new(shape: GenericString, location_name: "Region"))
+    SavingsPlans.add_member(:instance_family, Shapes::ShapeRef.new(shape: GenericString, location_name: "InstanceFamily"))
+    SavingsPlans.add_member(:term_in_years, Shapes::ShapeRef.new(shape: TermInYears, location_name: "TermInYears"))
+    SavingsPlans.add_member(:savings_plans_commitment, Shapes::ShapeRef.new(shape: SavingsPlansCommitment, location_name: "SavingsPlansCommitment"))
+    SavingsPlans.add_member(:offering_id, Shapes::ShapeRef.new(shape: GenericString, location_name: "OfferingId"))
+    SavingsPlans.struct_class = Types::SavingsPlans
+
     SavingsPlansAmortizedCommitment.add_member(:amortized_recurring_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "AmortizedRecurringCommitment"))
     SavingsPlansAmortizedCommitment.add_member(:amortized_upfront_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "AmortizedUpfrontCommitment"))
     SavingsPlansAmortizedCommitment.add_member(:total_amortized_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "TotalAmortizedCommitment"))
@@ -1321,6 +1399,38 @@ module Aws::CostExplorer
     SavingsPlansDetails.add_member(:instance_family, Shapes::ShapeRef.new(shape: GenericString, location_name: "InstanceFamily"))
     SavingsPlansDetails.add_member(:offering_id, Shapes::ShapeRef.new(shape: GenericString, location_name: "OfferingId"))
     SavingsPlansDetails.struct_class = Types::SavingsPlansDetails
+
+    SavingsPlansPurchaseAnalysisConfiguration.add_member(:account_scope, Shapes::ShapeRef.new(shape: AccountScope, location_name: "AccountScope"))
+    SavingsPlansPurchaseAnalysisConfiguration.add_member(:account_id, Shapes::ShapeRef.new(shape: AccountId, location_name: "AccountId"))
+    SavingsPlansPurchaseAnalysisConfiguration.add_member(:analysis_type, Shapes::ShapeRef.new(shape: AnalysisType, required: true, location_name: "AnalysisType"))
+    SavingsPlansPurchaseAnalysisConfiguration.add_member(:savings_plans_to_add, Shapes::ShapeRef.new(shape: SavingsPlansToAdd, required: true, location_name: "SavingsPlansToAdd"))
+    SavingsPlansPurchaseAnalysisConfiguration.add_member(:savings_plans_to_exclude, Shapes::ShapeRef.new(shape: SavingsPlansToExclude, location_name: "SavingsPlansToExclude"))
+    SavingsPlansPurchaseAnalysisConfiguration.add_member(:look_back_time_period, Shapes::ShapeRef.new(shape: DateInterval, required: true, location_name: "LookBackTimePeriod"))
+    SavingsPlansPurchaseAnalysisConfiguration.struct_class = Types::SavingsPlansPurchaseAnalysisConfiguration
+
+    SavingsPlansPurchaseAnalysisDetails.add_member(:currency_code, Shapes::ShapeRef.new(shape: GenericString, location_name: "CurrencyCode"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:lookback_period_in_hours, Shapes::ShapeRef.new(shape: GenericString, location_name: "LookbackPeriodInHours"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:current_average_coverage, Shapes::ShapeRef.new(shape: GenericString, location_name: "CurrentAverageCoverage"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:current_average_hourly_on_demand_spend, Shapes::ShapeRef.new(shape: GenericString, location_name: "CurrentAverageHourlyOnDemandSpend"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:current_maximum_hourly_on_demand_spend, Shapes::ShapeRef.new(shape: GenericString, location_name: "CurrentMaximumHourlyOnDemandSpend"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:current_minimum_hourly_on_demand_spend, Shapes::ShapeRef.new(shape: GenericString, location_name: "CurrentMinimumHourlyOnDemandSpend"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:current_on_demand_spend, Shapes::ShapeRef.new(shape: GenericString, location_name: "CurrentOnDemandSpend"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:existing_hourly_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "ExistingHourlyCommitment"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:hourly_commitment_to_purchase, Shapes::ShapeRef.new(shape: GenericString, location_name: "HourlyCommitmentToPurchase"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_average_coverage, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedAverageCoverage"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_average_utilization, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedAverageUtilization"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_monthly_savings_amount, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedMonthlySavingsAmount"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_on_demand_cost, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedOnDemandCost"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_on_demand_cost_with_current_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedOnDemandCostWithCurrentCommitment"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_roi, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedROI"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_savings_amount, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedSavingsAmount"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_savings_percentage, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedSavingsPercentage"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:estimated_commitment_cost, Shapes::ShapeRef.new(shape: GenericString, location_name: "EstimatedCommitmentCost"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:latest_usage_timestamp, Shapes::ShapeRef.new(shape: GenericString, location_name: "LatestUsageTimestamp"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:upfront_cost, Shapes::ShapeRef.new(shape: GenericString, location_name: "UpfrontCost"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:additional_metadata, Shapes::ShapeRef.new(shape: GenericString, location_name: "AdditionalMetadata"))
+    SavingsPlansPurchaseAnalysisDetails.add_member(:metrics_over_lookback_period, Shapes::ShapeRef.new(shape: MetricsOverLookbackPeriod, location_name: "MetricsOverLookbackPeriod"))
+    SavingsPlansPurchaseAnalysisDetails.struct_class = Types::SavingsPlansPurchaseAnalysisDetails
 
     SavingsPlansPurchaseRecommendation.add_member(:account_scope, Shapes::ShapeRef.new(shape: AccountScope, location_name: "AccountScope"))
     SavingsPlansPurchaseRecommendation.add_member(:savings_plans_type, Shapes::ShapeRef.new(shape: SupportedSavingsPlansType, location_name: "SavingsPlansType"))
@@ -1374,6 +1484,10 @@ module Aws::CostExplorer
     SavingsPlansSavings.add_member(:on_demand_cost_equivalent, Shapes::ShapeRef.new(shape: GenericString, location_name: "OnDemandCostEquivalent"))
     SavingsPlansSavings.struct_class = Types::SavingsPlansSavings
 
+    SavingsPlansToAdd.member = Shapes::ShapeRef.new(shape: SavingsPlans)
+
+    SavingsPlansToExclude.member = Shapes::ShapeRef.new(shape: SavingsPlansId)
+
     SavingsPlansUtilization.add_member(:total_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "TotalCommitment"))
     SavingsPlansUtilization.add_member(:used_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "UsedCommitment"))
     SavingsPlansUtilization.add_member(:unused_commitment, Shapes::ShapeRef.new(shape: GenericString, location_name: "UnusedCommitment"))
@@ -1413,6 +1527,14 @@ module Aws::CostExplorer
     SortDefinition.struct_class = Types::SortDefinition
 
     SortDefinitions.member = Shapes::ShapeRef.new(shape: SortDefinition)
+
+    StartCommitmentPurchaseAnalysisRequest.add_member(:commitment_purchase_analysis_configuration, Shapes::ShapeRef.new(shape: CommitmentPurchaseAnalysisConfiguration, required: true, location_name: "CommitmentPurchaseAnalysisConfiguration"))
+    StartCommitmentPurchaseAnalysisRequest.struct_class = Types::StartCommitmentPurchaseAnalysisRequest
+
+    StartCommitmentPurchaseAnalysisResponse.add_member(:analysis_id, Shapes::ShapeRef.new(shape: AnalysisId, required: true, location_name: "AnalysisId"))
+    StartCommitmentPurchaseAnalysisResponse.add_member(:analysis_started_time, Shapes::ShapeRef.new(shape: ZonedDateTime, required: true, location_name: "AnalysisStartedTime"))
+    StartCommitmentPurchaseAnalysisResponse.add_member(:estimated_completion_time, Shapes::ShapeRef.new(shape: ZonedDateTime, required: true, location_name: "EstimatedCompletionTime"))
+    StartCommitmentPurchaseAnalysisResponse.struct_class = Types::StartCommitmentPurchaseAnalysisResponse
 
     StartCostAllocationTagBackfillRequest.add_member(:backfill_from, Shapes::ShapeRef.new(shape: ZonedDateTime, required: true, location_name: "BackfillFrom"))
     StartCostAllocationTagBackfillRequest.struct_class = Types::StartCostAllocationTagBackfillRequest
@@ -1676,6 +1798,17 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
       end)
 
+      api.add_operation(:get_commitment_purchase_analysis, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetCommitmentPurchaseAnalysis"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetCommitmentPurchaseAnalysisRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetCommitmentPurchaseAnalysisResponse)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: AnalysisNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
+      end)
+
       api.add_operation(:get_cost_and_usage, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetCostAndUsage"
         o.http_method = "POST"
@@ -1869,6 +2002,17 @@ module Aws::CostExplorer
         o.errors << Shapes::ShapeRef.new(shape: UnresolvableUsageUnitException)
       end)
 
+      api.add_operation(:list_commitment_purchase_analyses, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListCommitmentPurchaseAnalyses"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListCommitmentPurchaseAnalysesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListCommitmentPurchaseAnalysesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
+      end)
+
       api.add_operation(:list_cost_allocation_tag_backfill_history, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListCostAllocationTagBackfillHistory"
         o.http_method = "POST"
@@ -1944,6 +2088,18 @@ module Aws::CostExplorer
         o.input = Shapes::ShapeRef.new(shape: ProvideAnomalyFeedbackRequest)
         o.output = Shapes::ShapeRef.new(shape: ProvideAnomalyFeedbackResponse)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+      end)
+
+      api.add_operation(:start_commitment_purchase_analysis, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartCommitmentPurchaseAnalysis"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartCommitmentPurchaseAnalysisRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartCommitmentPurchaseAnalysisResponse)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: DataUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: GenerationExistsException)
       end)
 
       api.add_operation(:start_cost_allocation_tag_backfill, Seahorse::Model::Operation.new.tap do |o|

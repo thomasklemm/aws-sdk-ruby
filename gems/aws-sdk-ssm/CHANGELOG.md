@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.186.0 (2024-11-21)
+------------------
+
+* Feature - Added support for providing high-level overviews of managed nodes and previewing the potential impact of a runbook execution.
+
 1.185.0 (2024-11-18)
 ------------------
 

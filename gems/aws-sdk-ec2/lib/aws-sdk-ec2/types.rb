@@ -559,6 +559,59 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Add an Organizational Unit (OU) exclusion to your IPAM. If your IPAM
+    # is integrated with Amazon Web Services Organizations and you add an
+    # organizational unit (OU) exclusion, IPAM will not manage the IP
+    # addresses in accounts in that OU exclusion. There is a limit on the
+    # number of exclusions you can create. For more information, see [Quotas
+    # for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #
+    # @!attribute [rw] organizations_entity_path
+    #   An Amazon Web Services Organizations entity path. Build the path for
+    #   the OU(s) using Amazon Web Services Organizations IDs separated by a
+    #   `/`. Include all child OUs by ending the path with `/*`.
+    #
+    #   * Example 1
+    #
+    #     * Path to a child OU:
+    #       `o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/ou-jkl0-awsddddd/`
+    #
+    #     * In this example, `o-a1b2c3d4e5` is the organization ID,
+    #       `r-f6g7h8i9j0example` is the root ID , `ou-ghi0-awsccccc` is an
+    #       OU ID, and `ou-jkl0-awsddddd` is a child OU ID.
+    #
+    #     * IPAM will not manage the IP addresses in accounts in the child
+    #       OU.
+    #   * Example 2
+    #
+    #     * Path where all child OUs will be part of the exclusion:
+    #       `o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/*`
+    #
+    #     * In this example, IPAM will not manage the IP addresses in
+    #       accounts in the OU (`ou-ghi0-awsccccc`) or in accounts in any
+    #       OUs that are children of the OU.
+    #
+    #   For more information on how to construct an entity path, see
+    #   [Understand the Amazon Web Services Organizations entity path][1] in
+    #   the *Amazon Web Services Identity and Access Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_last-accessed-view-data-orgs.html#access_policies_access-advisor-viewing-orgs-entity-path
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AddIpamOrganizationalUnitExclusion AWS API Documentation
+    #
+    class AddIpamOrganizationalUnitExclusion < Struct.new(
+      :organizations_entity_path)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An entry for a prefix list.
     #
     # @!attribute [rw] cidr
@@ -3822,19 +3875,19 @@ module Aws::EC2
     # @!attribute [rw] internet_gateway_block_mode
     #   The mode of VPC BPA.
     #
-    #   * `bidirectional-access-allowed`: VPC BPA is not enabled and traffic
-    #     is allowed to and from internet gateways and egress-only internet
-    #     gateways in this Region.
+    #   * `off`: VPC BPA is not enabled and traffic is allowed to and from
+    #     internet gateways and egress-only internet gateways in this
+    #     Region.
     #
-    #   * `bidirectional-access-blocked`: Block all traffic to and from
-    #     internet gateways and egress-only internet gateways in this Region
-    #     (except for excluded VPCs and subnets).
+    #   * `block-bidirectional`: Block all traffic to and from internet
+    #     gateways and egress-only internet gateways in this Region (except
+    #     for excluded VPCs and subnets).
     #
-    #   * `ingress-access-blocked`: Block all internet traffic to the VPCs
-    #     in this Region (except for VPCs or subnets which are excluded).
-    #     Only traffic to and from NAT gateways and egress-only internet
-    #     gateways is allowed because these gateways only allow outbound
-    #     connections to be established.
+    #   * `block-ingress`: Block all internet traffic to the VPCs in this
+    #     Region (except for VPCs or subnets which are excluded). Only
+    #     traffic to and from NAT gateways and egress-only internet gateways
+    #     is allowed because these gateways only allow outbound connections
+    #     to be established.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/BlockPublicAccessStates AWS API Documentation
@@ -4544,6 +4597,181 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes a Capacity Block extension. With an extension, you can
+    # extend the duration of time for an existing Capacity Block.
+    #
+    # @!attribute [rw] capacity_reservation_id
+    #   The reservation ID of the Capacity Block extension.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_type
+    #   The instance type of the Capacity Block extension.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_count
+    #   The number of instances in the Capacity Block extension.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] availability_zone
+    #   The Availability Zone of the Capacity Block extension.
+    #   @return [String]
+    #
+    # @!attribute [rw] availability_zone_id
+    #   The Availability Zone ID of the Capacity Block extension.
+    #   @return [String]
+    #
+    # @!attribute [rw] capacity_block_extension_offering_id
+    #   The ID of the Capacity Block extension offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] capacity_block_extension_duration_hours
+    #   The duration of the Capacity Block extension in hours.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] capacity_block_extension_status
+    #   The status of the Capacity Block extension. A Capacity Block
+    #   extension can have one of the following statuses:
+    #
+    #   * `payment-pending` - The Capacity Block extension payment is
+    #     processing. If your payment can't be processed within 12 hours,
+    #     the Capacity Block extension is failed.
+    #
+    #   * `payment-failed` - Payment for the Capacity Block extension
+    #     request was not successful.
+    #
+    #   * `payment-succeeded` - Payment for the Capacity Block extension
+    #     request was successful. You receive an invoice that reflects the
+    #     one-time upfront payment. In the invoice, you can associate the
+    #     paid amount with the Capacity Block reservation ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] capacity_block_extension_purchase_date
+    #   The date when the Capacity Block extension was purchased.
+    #   @return [Time]
+    #
+    # @!attribute [rw] capacity_block_extension_start_date
+    #   The start date of the Capacity Block extension.
+    #   @return [Time]
+    #
+    # @!attribute [rw] capacity_block_extension_end_date
+    #   The end date of the Capacity Block extension.
+    #   @return [Time]
+    #
+    # @!attribute [rw] upfront_fee
+    #   The total price to be paid up front.
+    #   @return [String]
+    #
+    # @!attribute [rw] currency_code
+    #   The currency of the payment for the Capacity Block extension.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CapacityBlockExtension AWS API Documentation
+    #
+    class CapacityBlockExtension < Struct.new(
+      :capacity_reservation_id,
+      :instance_type,
+      :instance_count,
+      :availability_zone,
+      :availability_zone_id,
+      :capacity_block_extension_offering_id,
+      :capacity_block_extension_duration_hours,
+      :capacity_block_extension_status,
+      :capacity_block_extension_purchase_date,
+      :capacity_block_extension_start_date,
+      :capacity_block_extension_end_date,
+      :upfront_fee,
+      :currency_code)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The recommended Capacity Block extension that fits your search
+    # requirements.
+    #
+    # @!attribute [rw] capacity_block_extension_offering_id
+    #   The ID of the Capacity Block extension offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_type
+    #   The instance type of the Capacity Block that will be extended.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_count
+    #   The number of instances in the Capacity Block extension offering.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] availability_zone
+    #   The Availability Zone of the Capacity Block that will be extended.
+    #   @return [String]
+    #
+    # @!attribute [rw] availability_zone_id
+    #   The Availability Zone ID of the Capacity Block that will be
+    #   extended.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_date
+    #   The start date of the Capacity Block that will be extended.
+    #   @return [Time]
+    #
+    # @!attribute [rw] capacity_block_extension_start_date
+    #   The date and time at which the Capacity Block extension will start.
+    #   This date is also the same as the end date of the Capacity Block
+    #   that will be extended.
+    #   @return [Time]
+    #
+    # @!attribute [rw] capacity_block_extension_end_date
+    #   The date and time at which the Capacity Block extension expires.
+    #   When a Capacity Block expires, the reserved capacity is released and
+    #   you can no longer launch instances into it. The Capacity Block's
+    #   state changes to `expired` when it reaches its end date
+    #   @return [Time]
+    #
+    # @!attribute [rw] capacity_block_extension_duration_hours
+    #   The amount of time of the Capacity Block extension offering in
+    #   hours.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] upfront_fee
+    #   The total price of the Capacity Block extension offering, to be paid
+    #   up front.
+    #   @return [String]
+    #
+    # @!attribute [rw] currency_code
+    #   The currency of the payment for the Capacity Block extension
+    #   offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] tenancy
+    #   Indicates the tenancy of the Capacity Block extension offering. A
+    #   Capacity Block can have one of the following tenancy settings:
+    #
+    #   * `default` - The Capacity Block is created on hardware that is
+    #     shared with other Amazon Web Services accounts.
+    #
+    #   * `dedicated` - The Capacity Block is created on single-tenant
+    #     hardware that is dedicated to a single Amazon Web Services
+    #     account.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CapacityBlockExtensionOffering AWS API Documentation
+    #
+    class CapacityBlockExtensionOffering < Struct.new(
+      :capacity_block_extension_offering_id,
+      :instance_type,
+      :instance_count,
+      :availability_zone,
+      :availability_zone_id,
+      :start_date,
+      :capacity_block_extension_start_date,
+      :capacity_block_extension_end_date,
+      :capacity_block_extension_duration_hours,
+      :upfront_fee,
+      :currency_code,
+      :tenancy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The recommended Capacity Block that fits your search requirements.
     #
     # @!attribute [rw] capacity_block_offering_id
@@ -4571,7 +4799,10 @@ module Aws::EC2
     #   @return [Time]
     #
     # @!attribute [rw] capacity_block_duration_hours
-    #   The amount of time of the Capacity Block reservation in hours.
+    #   The number of hours (in addition to `capacityBlockDurationMinutes`)
+    #   for the duration of the Capacity Block reservation. For example, if
+    #   a Capacity Block starts at **04:55** and ends at **11:30**, the
+    #   hours field would be **6**.
     #   @return [Integer]
     #
     # @!attribute [rw] upfront_fee
@@ -4586,6 +4817,13 @@ module Aws::EC2
     #   The tenancy of the Capacity Block.
     #   @return [String]
     #
+    # @!attribute [rw] capacity_block_duration_minutes
+    #   The number of minutes (in addition to `capacityBlockDurationHours`)
+    #   for the duration of the Capacity Block reservation. For example, if
+    #   a Capacity Block starts at **08:55** and ends at **11:30**, the
+    #   minutes field would be **35**.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CapacityBlockOffering AWS API Documentation
     #
     class CapacityBlockOffering < Struct.new(
@@ -4598,7 +4836,8 @@ module Aws::EC2
       :capacity_block_duration_hours,
       :upfront_fee,
       :currency_code,
-      :tenancy)
+      :tenancy,
+      :capacity_block_duration_minutes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4675,23 +4914,41 @@ module Aws::EC2
     #   The current state of the Capacity Reservation. A Capacity
     #   Reservation can be in one of the following states:
     #
-    #   * `active` - The Capacity Reservation is active and the capacity is
-    #     available for your use.
+    #   * `active` - The capacity is available for use.
     #
     #   * `expired` - The Capacity Reservation expired automatically at the
-    #     date and time specified in your request. The reserved capacity is
-    #     no longer available for your use.
+    #     date and time specified in your reservation request. The reserved
+    #     capacity is no longer available for your use.
     #
-    #   * `cancelled` - The Capacity Reservation was cancelled. The reserved
+    #   * `cancelled` - The Capacity Reservation was canceled. The reserved
     #     capacity is no longer available for your use.
     #
     #   * `pending` - The Capacity Reservation request was successful but
     #     the capacity provisioning is still pending.
     #
     #   * `failed` - The Capacity Reservation request has failed. A request
-    #     might fail due to invalid request parameters, capacity
-    #     constraints, or instance limit constraints. Failed requests are
-    #     retained for 60 minutes.
+    #     can fail due to request parameters that are not valid, capacity
+    #     constraints, or instance limit constraints. You can view a failed
+    #     request for 60 minutes.
+    #
+    #   * `scheduled` - (*Future-dated Capacity Reservations only*) The
+    #     future-dated Capacity Reservation request was approved and the
+    #     Capacity Reservation is scheduled for delivery on the requested
+    #     start date.
+    #
+    #   * `assessing` - (*Future-dated Capacity Reservations only*) Amazon
+    #     EC2 is assessing your request for a future-dated Capacity
+    #     Reservation.
+    #
+    #   * `delayed` - (*Future-dated Capacity Reservations only*) Amazon EC2
+    #     encountered a delay in provisioning the requested future-dated
+    #     Capacity Reservation. Amazon EC2 is unable to deliver the
+    #     requested capacity by the requested start date and time.
+    #
+    #   * `unsupported` - (*Future-dated Capacity Reservations only*) Amazon
+    #     EC2 can't support the future-dated Capacity Reservation request
+    #     due to capacity constraints. You can view unsupported requests for
+    #     30 days. The Capacity Reservation will not be delivered.
     #   @return [String]
     #
     # @!attribute [rw] start_date
@@ -4777,6 +5034,18 @@ module Aws::EC2
     #   unused capacity of the Capacity Reservation is assigned.
     #   @return [String]
     #
+    # @!attribute [rw] commitment_info
+    #   Information about your commitment for a future-dated Capacity
+    #   Reservation.
+    #   @return [Types::CapacityReservationCommitmentInfo]
+    #
+    # @!attribute [rw] delivery_preference
+    #   The delivery method for a future-dated Capacity Reservation.
+    #   `incremental` indicates that the requested capacity is delivered in
+    #   addition to any running instances and reserved capacity that you
+    #   have in your account at the requested date and time.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CapacityReservation AWS API Documentation
     #
     class CapacityReservation < Struct.new(
@@ -4804,7 +5073,9 @@ module Aws::EC2
       :placement_group_arn,
       :capacity_allocations,
       :reservation_type,
-      :unused_reservation_billing_owner_id)
+      :unused_reservation_billing_owner_id,
+      :commitment_info,
+      :delivery_preference)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4859,6 +5130,30 @@ module Aws::EC2
       :status,
       :status_message,
       :capacity_reservation_info)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about your commitment for a future-dated Capacity
+    # Reservation.
+    #
+    # @!attribute [rw] committed_instance_count
+    #   The instance capacity that you committed to when you requested the
+    #   future-dated Capacity Reservation.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] commitment_end_date
+    #   The date and time at which the commitment duration expires, in the
+    #   ISO8601 format in the UTC time zone (`YYYY-MM-DDThh:mm:ss.sssZ`).
+    #   You can't decrease the instance count or cancel the Capacity
+    #   Reservation before this date and time.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CapacityReservationCommitmentInfo AWS API Documentation
+    #
+    class CapacityReservationCommitmentInfo < Struct.new(
+      :committed_instance_count,
+      :commitment_end_date)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7296,8 +7591,15 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] instance_type
-    #   The instance type for which to reserve capacity. For more
-    #   information, see [Instance types][1] in the *Amazon EC2 User Guide*.
+    #   The instance type for which to reserve capacity.
+    #
+    #   <note markdown="1"> You can request future-dated Capacity Reservations for instance
+    #   types in the C, M, R, I, and T instance families only.
+    #
+    #    </note>
+    #
+    #   For more information, see [Instance types][1] in the *Amazon EC2
+    #   User Guide*.
     #
     #
     #
@@ -7332,6 +7634,13 @@ module Aws::EC2
     # @!attribute [rw] instance_count
     #   The number of instances for which to reserve capacity.
     #
+    #   <note markdown="1"> You can request future-dated Capacity Reservations for an instance
+    #   count with a minimum of 100 VPUs. For example, if you request a
+    #   future-dated Capacity Reservation for `m5.xlarge` instances, you
+    #   must request at least 25 instances (*25 * m5.xlarge = 100 vCPUs*).
+    #
+    #    </note>
+    #
     #   Valid range: 1 - 1000
     #   @return [Integer]
     #
@@ -7362,6 +7671,10 @@ module Aws::EC2
     #   cancelled within an hour from the specified time. For example, if
     #   you specify 5/31/2019, 13:30:55, the Capacity Reservation is
     #   guaranteed to end between 13:30:55 and 14:30:55 on 5/31/2019.
+    #
+    #   If you are requesting a future-dated Capacity Reservation, you
+    #   can't specify an end date and time that is within the commitment
+    #   duration.
     #   @return [Time]
     #
     # @!attribute [rw] end_date_type
@@ -7393,6 +7706,11 @@ module Aws::EC2
     #     Reservation. This ensures that only permitted instances can use
     #     the reserved capacity.
     #
+    #   <note markdown="1"> If you are requesting a future-dated Capacity Reservation, you must
+    #   specify `targeted`.
+    #
+    #    </note>
+    #
     #   Default: `open`
     #   @return [String]
     #
@@ -7408,11 +7726,19 @@ module Aws::EC2
     #   @return [Boolean]
     #
     # @!attribute [rw] outpost_arn
+    #   <note markdown="1"> Not supported for future-dated Capacity Reservations.
+    #
+    #    </note>
+    #
     #   The Amazon Resource Name (ARN) of the Outpost on which to create the
     #   Capacity Reservation.
     #   @return [String]
     #
     # @!attribute [rw] placement_group_arn
+    #   <note markdown="1"> Not supported for future-dated Capacity Reservations.
+    #
+    #    </note>
+    #
     #   The Amazon Resource Name (ARN) of the cluster placement group in
     #   which to create the Capacity Reservation. For more information, see
     #   [ Capacity Reservations for cluster placement groups][1] in the
@@ -7421,6 +7747,53 @@ module Aws::EC2
     #
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html
+    #   @return [String]
+    #
+    # @!attribute [rw] start_date
+    #   <note markdown="1"> Required for future-dated Capacity Reservations only. To create a
+    #   Capacity Reservation for immediate use, omit this parameter.
+    #
+    #    </note>
+    #
+    #   The date and time at which the future-dated Capacity Reservation
+    #   should become available for use, in the ISO8601 format in the UTC
+    #   time zone (`YYYY-MM-DDThh:mm:ss.sssZ`).
+    #
+    #   You can request a future-dated Capacity Reservation between 5 and
+    #   120 days in advance.
+    #   @return [Time]
+    #
+    # @!attribute [rw] commitment_duration
+    #   <note markdown="1"> Required for future-dated Capacity Reservations only. To create a
+    #   Capacity Reservation for immediate use, omit this parameter.
+    #
+    #    </note>
+    #
+    #   Specify a commitment duration, in seconds, for the future-dated
+    #   Capacity Reservation.
+    #
+    #   The commitment duration is a minimum duration for which you commit
+    #   to having the future-dated Capacity Reservation in the `active`
+    #   state in your account after it has been delivered.
+    #
+    #   For more information, see [ Commitment duration][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-concepts.html#cr-commitment-duration
+    #   @return [Integer]
+    #
+    # @!attribute [rw] delivery_preference
+    #   <note markdown="1"> Required for future-dated Capacity Reservations only. To create a
+    #   Capacity Reservation for immediate use, omit this parameter.
+    #
+    #    </note>
+    #
+    #   Indicates that the requested capacity will be delivered in addition
+    #   to any running instances or reserved capacity that you have in your
+    #   account at the requested date and time.
+    #
+    #   The only supported value is `incremental`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateCapacityReservationRequest AWS API Documentation
@@ -7441,7 +7814,10 @@ module Aws::EC2
       :tag_specifications,
       :dry_run,
       :outpost_arn,
-      :placement_group_arn)
+      :placement_group_arn,
+      :start_date,
+      :commitment_duration,
+      :delivery_preference)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13164,13 +13540,13 @@ module Aws::EC2
     # @!attribute [rw] internet_gateway_exclusion_mode
     #   The exclusion mode for internet gateway traffic.
     #
-    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
-    #     from the excluded VPCs and subnets.
+    #   * `allow-bidirectional`: Allow all internet traffic to and from the
+    #     excluded VPCs and subnets.
     #
-    #   * `egress-access-allowed`: Allow outbound internet traffic from the
-    #     excluded VPCs and subnets. Block inbound internet traffic to the
-    #     excluded VPCs and subnets. Only applies when VPC Block Public
-    #     Access is set to Bidirectional.
+    #   * `allow-egress`: Allow outbound internet traffic from the excluded
+    #     VPCs and subnets. Block inbound internet traffic to the excluded
+    #     VPCs and subnets. Only applies when VPC Block Public Access is set
+    #     to Bidirectional.
     #   @return [String]
     #
     # @!attribute [rw] tag_specifications
@@ -17444,6 +17820,143 @@ module Aws::EC2
     #
     class DescribeByoipCidrsResult < Struct.new(
       :byoip_cidrs,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] capacity_reservation_ids
+    #   The IDs of Capacity Block reservations that you want to display the
+    #   history for.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this request. To get the
+    #   next page of items, make another request with the token returned in
+    #   the output. For more information, see [Pagination][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination
+    #   @return [Integer]
+    #
+    # @!attribute [rw] filters
+    #   One or more filters
+    #
+    #   * `availability-zone` - The Availability Zone of the extension.
+    #
+    #   * `availability-zone-id` - The Availability Zone ID of the
+    #     extension.
+    #
+    #   * `capacity-block-extension-offering-id` - The ID of the extension
+    #     offering.
+    #
+    #   * `capacity-block-extension-status` - The status of the extension
+    #     (`payment-pending` \| `payment-failed` \| `payment-succeeded`).
+    #
+    #   * `capacity-reservation-id` - The reservation ID of the extension.
+    #
+    #   * `instance-type` - The instance type of the extension.
+    #   @return [Array<Types::Filter>]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityBlockExtensionHistoryRequest AWS API Documentation
+    #
+    class DescribeCapacityBlockExtensionHistoryRequest < Struct.new(
+      :capacity_reservation_ids,
+      :next_token,
+      :max_results,
+      :filters,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] capacity_block_extensions
+    #   Describes one or more of your Capacity Block extensions. The results
+    #   describe only the Capacity Block extensions in the Amazon Web
+    #   Services Region that you're currently using.
+    #   @return [Array<Types::CapacityBlockExtension>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityBlockExtensionHistoryResult AWS API Documentation
+    #
+    class DescribeCapacityBlockExtensionHistoryResult < Struct.new(
+      :capacity_block_extensions,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] capacity_block_extension_duration_hours
+    #   The duration of the Capacity Block extension offering in hours.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] capacity_reservation_id
+    #   The ID of the Capacity reservation to be extended.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this request. To get the
+    #   next page of items, make another request with the token returned in
+    #   the output. For more information, see [Pagination][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityBlockExtensionOfferingsRequest AWS API Documentation
+    #
+    class DescribeCapacityBlockExtensionOfferingsRequest < Struct.new(
+      :dry_run,
+      :capacity_block_extension_duration_hours,
+      :capacity_reservation_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] capacity_block_extension_offerings
+    #   The recommended Capacity Block extension offerings for the dates
+    #   specified.
+    #   @return [Array<Types::CapacityBlockExtensionOffering>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityBlockExtensionOfferingsResult AWS API Documentation
+    #
+    class DescribeCapacityBlockExtensionOfferingsResult < Struct.new(
+      :capacity_block_extension_offerings,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -28323,8 +28836,7 @@ module Aws::EC2
     #   * `resource-arn` - The Amazon Resource Name (ARN) of a exclusion.
     #
     #   * `internet-gateway-exclusion-mode` - The mode of a VPC BPA
-    #     exclusion. Possible values: `bidirectional-access-allowed |
-    #     egress-access-allowed`.
+    #     exclusion. Possible values: `allow-bidirectional | allow-egress`.
     #
     #   * `state` - The state of VPC BPA. Possible values:
     #     `create-in-progress | create-complete | update-in-progress |
@@ -35504,23 +36016,41 @@ module Aws::EC2
     #   The current state of the Capacity Reservation. A Capacity
     #   Reservation can be in one of the following states:
     #
-    #   * `active` - The Capacity Reservation is active and the capacity is
-    #     available for your use.
+    #   * `active` - The capacity is available for use.
     #
     #   * `expired` - The Capacity Reservation expired automatically at the
-    #     date and time specified in your request. The reserved capacity is
-    #     no longer available for your use.
+    #     date and time specified in your reservation request. The reserved
+    #     capacity is no longer available for your use.
     #
-    #   * `cancelled` - The Capacity Reservation was cancelled. The reserved
+    #   * `cancelled` - The Capacity Reservation was canceled. The reserved
     #     capacity is no longer available for your use.
     #
     #   * `pending` - The Capacity Reservation request was successful but
     #     the capacity provisioning is still pending.
     #
     #   * `failed` - The Capacity Reservation request has failed. A request
-    #     might fail due to invalid request parameters, capacity
-    #     constraints, or instance limit constraints. Failed requests are
-    #     retained for 60 minutes.
+    #     can fail due to request parameters that are not valid, capacity
+    #     constraints, or instance limit constraints. You can view a failed
+    #     request for 60 minutes.
+    #
+    #   * `scheduled` - (*Future-dated Capacity Reservations only*) The
+    #     future-dated Capacity Reservation request was approved and the
+    #     Capacity Reservation is scheduled for delivery on the requested
+    #     start date.
+    #
+    #   * `assessing` - (*Future-dated Capacity Reservations only*) Amazon
+    #     EC2 is assessing your request for a future-dated Capacity
+    #     Reservation.
+    #
+    #   * `delayed` - (*Future-dated Capacity Reservations only*) Amazon EC2
+    #     encountered a delay in provisioning the requested future-dated
+    #     Capacity Reservation. Amazon EC2 is unable to deliver the
+    #     requested capacity by the requested start date and time.
+    #
+    #   * `unsupported` - (*Future-dated Capacity Reservations only*) Amazon
+    #     EC2 can't support the future-dated Capacity Reservation request
+    #     due to capacity constraints. You can view unsupported requests for
+    #     30 days. The Capacity Reservation will not be delivered.
     #   @return [String]
     #
     # @!attribute [rw] instance_usages
@@ -43979,6 +44509,11 @@ module Aws::EC2
     #   The last successful resource discovery time.
     #   @return [Time]
     #
+    # @!attribute [rw] organizational_unit_id
+    #   The ID of an Organizational Unit in Amazon Web Services
+    #   Organizations.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/IpamDiscoveredAccount AWS API Documentation
     #
     class IpamDiscoveredAccount < Struct.new(
@@ -43986,7 +44521,8 @@ module Aws::EC2
       :discovery_region,
       :failure_reason,
       :last_attempted_discovery_time,
-      :last_successful_discovery_time)
+      :last_successful_discovery_time,
+      :organizational_unit_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -44341,6 +44877,29 @@ module Aws::EC2
     #
     class IpamOperatingRegion < Struct.new(
       :region_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # If your IPAM is integrated with Amazon Web Services Organizations and
+    # you add an organizational unit (OU) exclusion, IPAM will not manage
+    # the IP addresses in accounts in that OU exclusion.
+    #
+    # @!attribute [rw] organizations_entity_path
+    #   An Amazon Web Services Organizations entity path. For more
+    #   information on the entity path, see [Understand the Amazon Web
+    #   Services Organizations entity path][1] in the *Amazon Web Services
+    #   Identity and Access Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_last-accessed-view-data-orgs.html#access_policies_access-advisor-viewing-orgs-entity-path
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/IpamOrganizationalUnitExclusion AWS API Documentation
+    #
+    class IpamOrganizationalUnitExclusion < Struct.new(
+      :organizations_entity_path)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -44970,6 +45529,12 @@ module Aws::EC2
     #   Services costs.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] organizational_unit_exclusions
+    #   If your IPAM is integrated with Amazon Web Services Organizations
+    #   and you add an organizational unit (OU) exclusion, IPAM will not
+    #   manage the IP addresses in accounts in that OU exclusion.
+    #   @return [Array<Types::IpamOrganizationalUnitExclusion>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/IpamResourceDiscovery AWS API Documentation
     #
     class IpamResourceDiscovery < Struct.new(
@@ -44981,7 +45546,8 @@ module Aws::EC2
       :operating_regions,
       :is_default,
       :state,
-      :tags)
+      :tags,
+      :organizational_unit_exclusions)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -50408,6 +50974,32 @@ module Aws::EC2
     #   Remove operating Regions.
     #   @return [Array<Types::RemoveIpamOperatingRegion>]
     #
+    # @!attribute [rw] add_organizational_unit_exclusions
+    #   Add an Organizational Unit (OU) exclusion to your IPAM. If your IPAM
+    #   is integrated with Amazon Web Services Organizations and you add an
+    #   organizational unit (OU) exclusion, IPAM will not manage the IP
+    #   addresses in accounts in that OU exclusion. There is a limit on the
+    #   number of exclusions you can create. For more information, see
+    #   [Quotas for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #   @return [Array<Types::AddIpamOrganizationalUnitExclusion>]
+    #
+    # @!attribute [rw] remove_organizational_unit_exclusions
+    #   Remove an Organizational Unit (OU) exclusion to your IPAM. If your
+    #   IPAM is integrated with Amazon Web Services Organizations and you
+    #   add an organizational unit (OU) exclusion, IPAM will not manage the
+    #   IP addresses in accounts in that OU exclusion. There is a limit on
+    #   the number of exclusions you can create. For more information, see
+    #   [Quotas for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #   @return [Array<Types::RemoveIpamOrganizationalUnitExclusion>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIpamResourceDiscoveryRequest AWS API Documentation
     #
     class ModifyIpamResourceDiscoveryRequest < Struct.new(
@@ -50415,7 +51007,9 @@ module Aws::EC2
       :ipam_resource_discovery_id,
       :description,
       :add_operating_regions,
-      :remove_operating_regions)
+      :remove_operating_regions,
+      :add_organizational_unit_exclusions,
+      :remove_organizational_unit_exclusions)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -52385,13 +52979,13 @@ module Aws::EC2
     # @!attribute [rw] internet_gateway_exclusion_mode
     #   The exclusion mode for internet gateway traffic.
     #
-    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
-    #     from the excluded VPCs and subnets.
+    #   * `allow-bidirectional`: Allow all internet traffic to and from the
+    #     excluded VPCs and subnets.
     #
-    #   * `egress-access-allowed`: Allow outbound internet traffic from the
-    #     excluded VPCs and subnets. Block inbound internet traffic to the
-    #     excluded VPCs and subnets. Only applies when VPC Block Public
-    #     Access is set to Bidirectional.
+    #   * `allow-egress`: Allow outbound internet traffic from the excluded
+    #     VPCs and subnets. Block inbound internet traffic to the excluded
+    #     VPCs and subnets. Only applies when VPC Block Public Access is set
+    #     to Bidirectional.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcBlockPublicAccessExclusionRequest AWS API Documentation
@@ -52426,19 +53020,19 @@ module Aws::EC2
     # @!attribute [rw] internet_gateway_block_mode
     #   The mode of VPC BPA.
     #
-    #   * `bidirectional-access-allowed`: VPC BPA is not enabled and traffic
-    #     is allowed to and from internet gateways and egress-only internet
-    #     gateways in this Region.
+    #   * `off`: VPC BPA is not enabled and traffic is allowed to and from
+    #     internet gateways and egress-only internet gateways in this
+    #     Region.
     #
-    #   * `bidirectional-access-blocked`: Block all traffic to and from
-    #     internet gateways and egress-only internet gateways in this Region
-    #     (except for excluded VPCs and subnets).
+    #   * `block-bidirectional`: Block all traffic to and from internet
+    #     gateways and egress-only internet gateways in this Region (except
+    #     for excluded VPCs and subnets).
     #
-    #   * `ingress-access-blocked`: Block all internet traffic to the VPCs
-    #     in this Region (except for VPCs or subnets which are excluded).
-    #     Only traffic to and from NAT gateways and egress-only internet
-    #     gateways is allowed because these gateways only allow outbound
-    #     connections to be established.
+    #   * `block-ingress`: Block all internet traffic to the VPCs in this
+    #     Region (except for VPCs or subnets which are excluded). Only
+    #     traffic to and from NAT gateways and egress-only internet gateways
+    #     is allowed because these gateways only allow outbound connections
+    #     to be established.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcBlockPublicAccessOptionsRequest AWS API Documentation
@@ -56902,6 +57496,43 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] capacity_block_extension_offering_id
+    #   The ID of the Capacity Block extension offering to purchase.
+    #   @return [String]
+    #
+    # @!attribute [rw] capacity_reservation_id
+    #   The ID of the Capacity reservation to be extended.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PurchaseCapacityBlockExtensionRequest AWS API Documentation
+    #
+    class PurchaseCapacityBlockExtensionRequest < Struct.new(
+      :capacity_block_extension_offering_id,
+      :capacity_reservation_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] capacity_block_extensions
+    #   The purchased Capacity Block extensions.
+    #   @return [Array<Types::CapacityBlockExtension>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PurchaseCapacityBlockExtensionResult AWS API Documentation
+    #
+    class PurchaseCapacityBlockExtensionResult < Struct.new(
+      :capacity_block_extensions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -57968,6 +58599,59 @@ module Aws::EC2
     #
     class RemoveIpamOperatingRegion < Struct.new(
       :region_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Remove an Organizational Unit (OU) exclusion to your IPAM. If your
+    # IPAM is integrated with Amazon Web Services Organizations and you add
+    # an organizational unit (OU) exclusion, IPAM will not manage the IP
+    # addresses in accounts in that OU exclusion. There is a limit on the
+    # number of exclusions you can create. For more information, see [Quotas
+    # for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #
+    # @!attribute [rw] organizations_entity_path
+    #   An Amazon Web Services Organizations entity path. Build the path for
+    #   the OU(s) using Amazon Web Services Organizations IDs separated by a
+    #   `/`. Include all child OUs by ending the path with `/*`.
+    #
+    #   * Example 1
+    #
+    #     * Path to a child OU:
+    #       `o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/ou-jkl0-awsddddd/`
+    #
+    #     * In this example, `o-a1b2c3d4e5` is the organization ID,
+    #       `r-f6g7h8i9j0example` is the root ID , `ou-ghi0-awsccccc` is an
+    #       OU ID, and `ou-jkl0-awsddddd` is a child OU ID.
+    #
+    #     * IPAM will not manage the IP addresses in accounts in the child
+    #       OU.
+    #   * Example 2
+    #
+    #     * Path where all child OUs will be part of the exclusion:
+    #       `o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/*`
+    #
+    #     * In this example, IPAM will not manage the IP addresses in
+    #       accounts in the OU (`ou-ghi0-awsccccc`) or in accounts in any
+    #       OUs that are children of the OU.
+    #
+    #   For more information on how to construct an entity path, see
+    #   [Understand the Amazon Web Services Organizations entity path][1] in
+    #   the *Amazon Web Services Identity and Access Management User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_last-accessed-view-data-orgs.html#access_policies_access-advisor-viewing-orgs-entity-path
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RemoveIpamOrganizationalUnitExclusion AWS API Documentation
+    #
+    class RemoveIpamOrganizationalUnitExclusion < Struct.new(
+      :organizations_entity_path)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -70440,13 +71124,13 @@ module Aws::EC2
     # @!attribute [rw] internet_gateway_exclusion_mode
     #   The exclusion mode for internet gateway traffic.
     #
-    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
-    #     from the excluded VPCs and subnets.
+    #   * `allow-bidirectional`: Allow all internet traffic to and from the
+    #     excluded VPCs and subnets.
     #
-    #   * `egress-access-allowed`: Allow outbound internet traffic from the
-    #     excluded VPCs and subnets. Block inbound internet traffic to the
-    #     excluded VPCs and subnets. Only applies when VPC Block Public
-    #     Access is set to Bidirectional.
+    #   * `allow-egress`: Allow outbound internet traffic from the excluded
+    #     VPCs and subnets. Block inbound internet traffic to the excluded
+    #     VPCs and subnets. Only applies when VPC Block Public Access is set
+    #     to Bidirectional.
     #   @return [String]
     #
     # @!attribute [rw] resource_arn
@@ -70497,7 +71181,7 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # VPC Block public Access (BPA) enables you to block resources in VPCs
+    # VPC Block Public Access (BPA) enables you to block resources in VPCs
     # and subnets that you own in a Region from reaching or being reached
     # from the internet through internet gateways and egress-only internet
     # gateways. To learn more about VPC BPA, see [Block public access to
@@ -70522,19 +71206,19 @@ module Aws::EC2
     # @!attribute [rw] internet_gateway_block_mode
     #   The current mode of VPC BPA.
     #
-    #   * `bidirectional-access-allowed`: VPC BPA is not enabled and traffic
-    #     is allowed to and from internet gateways and egress-only internet
-    #     gateways in this Region.
+    #   * `off`: VPC BPA is not enabled and traffic is allowed to and from
+    #     internet gateways and egress-only internet gateways in this
+    #     Region.
     #
-    #   * `bidirectional-access-blocked`: Block all traffic to and from
-    #     internet gateways and egress-only internet gateways in this Region
-    #     (except for excluded VPCs and subnets).
+    #   * `block-bidirectional`: Block all traffic to and from internet
+    #     gateways and egress-only internet gateways in this Region (except
+    #     for excluded VPCs and subnets).
     #
-    #   * `ingress-access-blocked`: Block all internet traffic to the VPCs
-    #     in this Region (except for VPCs or subnets which are excluded).
-    #     Only traffic to and from NAT gateways and egress-only internet
-    #     gateways is allowed because these gateways only allow outbound
-    #     connections to be established.
+    #   * `block-ingress`: Block all internet traffic to the VPCs in this
+    #     Region (except for VPCs or subnets which are excluded). Only
+    #     traffic to and from NAT gateways and egress-only internet gateways
+    #     is allowed because these gateways only allow outbound connections
+    #     to be established.
     #   @return [String]
     #
     # @!attribute [rw] reason

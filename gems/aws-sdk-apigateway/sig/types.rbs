@@ -151,6 +151,7 @@ module Aws::APIGateway
 
     class CreateBasePathMappingRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       attr_accessor base_path: ::String
       attr_accessor rest_api_id: ::String
       attr_accessor stage: ::String
@@ -185,6 +186,14 @@ module Aws::APIGateway
       SENSITIVE: []
     end
 
+    class CreateDomainNameAccessAssociationRequest
+      attr_accessor domain_name_arn: ::String
+      attr_accessor access_association_source_type: ("VPCE")
+      attr_accessor access_association_source: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
     class CreateDomainNameRequest
       attr_accessor domain_name: ::String
       attr_accessor certificate_name: ::String
@@ -199,6 +208,7 @@ module Aws::APIGateway
       attr_accessor security_policy: ("TLS_1_0" | "TLS_1_2")
       attr_accessor mutual_tls_authentication: Types::MutualTlsAuthenticationInput
       attr_accessor ownership_verification_certificate_arn: ::String
+      attr_accessor policy: ::String
       SENSITIVE: []
     end
 
@@ -294,6 +304,7 @@ module Aws::APIGateway
 
     class DeleteBasePathMappingRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       attr_accessor base_path: ::String
       SENSITIVE: []
     end
@@ -321,8 +332,14 @@ module Aws::APIGateway
       SENSITIVE: []
     end
 
+    class DeleteDomainNameAccessAssociationRequest
+      attr_accessor domain_name_access_association_arn: ::String
+      SENSITIVE: []
+    end
+
     class DeleteDomainNameRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       SENSITIVE: []
     end
 
@@ -471,6 +488,8 @@ module Aws::APIGateway
 
     class DomainName
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
+      attr_accessor domain_name_arn: ::String
       attr_accessor certificate_name: ::String
       attr_accessor certificate_arn: ::String
       attr_accessor certificate_upload_date: ::Time
@@ -487,6 +506,23 @@ module Aws::APIGateway
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor mutual_tls_authentication: Types::MutualTlsAuthentication
       attr_accessor ownership_verification_certificate_arn: ::String
+      attr_accessor management_policy: ::String
+      attr_accessor policy: ::String
+      SENSITIVE: []
+    end
+
+    class DomainNameAccessAssociation
+      attr_accessor domain_name_access_association_arn: ::String
+      attr_accessor domain_name_arn: ::String
+      attr_accessor access_association_source_type: ("VPCE")
+      attr_accessor access_association_source: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class DomainNameAccessAssociations
+      attr_accessor position: ::String
+      attr_accessor items: ::Array[Types::DomainNameAccessAssociation]
       SENSITIVE: []
     end
 
@@ -575,12 +611,14 @@ module Aws::APIGateway
 
     class GetBasePathMappingRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       attr_accessor base_path: ::String
       SENSITIVE: []
     end
 
     class GetBasePathMappingsRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       attr_accessor position: ::String
       attr_accessor limit: ::Integer
       SENSITIVE: []
@@ -641,14 +679,23 @@ module Aws::APIGateway
       SENSITIVE: []
     end
 
+    class GetDomainNameAccessAssociationsRequest
+      attr_accessor position: ::String
+      attr_accessor limit: ::Integer
+      attr_accessor resource_owner: ("SELF" | "OTHER_ACCOUNTS")
+      SENSITIVE: []
+    end
+
     class GetDomainNameRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       SENSITIVE: []
     end
 
     class GetDomainNamesRequest
       attr_accessor position: ::String
       attr_accessor limit: ::Integer
+      attr_accessor resource_owner: ("SELF" | "OTHER_ACCOUNTS")
       SENSITIVE: []
     end
 
@@ -1070,6 +1117,12 @@ module Aws::APIGateway
       SENSITIVE: []
     end
 
+    class RejectDomainNameAccessAssociationRequest
+      attr_accessor domain_name_access_association_arn: ::String
+      attr_accessor domain_name_arn: ::String
+      SENSITIVE: []
+    end
+
     class RequestValidator
       attr_accessor id: ::String
       attr_accessor name: ::String
@@ -1301,6 +1354,7 @@ module Aws::APIGateway
 
     class UpdateBasePathMappingRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       attr_accessor base_path: ::String
       attr_accessor patch_operations: ::Array[Types::PatchOperation]
       SENSITIVE: []
@@ -1335,6 +1389,7 @@ module Aws::APIGateway
 
     class UpdateDomainNameRequest
       attr_accessor domain_name: ::String
+      attr_accessor domain_name_id: ::String
       attr_accessor patch_operations: ::Array[Types::PatchOperation]
       SENSITIVE: []
     end

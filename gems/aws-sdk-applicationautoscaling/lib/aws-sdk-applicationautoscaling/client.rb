@@ -1339,6 +1339,7 @@ module Aws::ApplicationAutoScaling
     #   resp.scalable_targets[0].scalable_dimension #=> String, one of "ecs:service:DesiredCount", "ec2:spot-fleet-request:TargetCapacity", "elasticmapreduce:instancegroup:InstanceCount", "appstream:fleet:DesiredCapacity", "dynamodb:table:ReadCapacityUnits", "dynamodb:table:WriteCapacityUnits", "dynamodb:index:ReadCapacityUnits", "dynamodb:index:WriteCapacityUnits", "rds:cluster:ReadReplicaCount", "sagemaker:variant:DesiredInstanceCount", "custom-resource:ResourceType:Property", "comprehend:document-classifier-endpoint:DesiredInferenceUnits", "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits", "lambda:function:ProvisionedConcurrency", "cassandra:table:ReadCapacityUnits", "cassandra:table:WriteCapacityUnits", "kafka:broker-storage:VolumeSize", "elasticache:replication-group:NodeGroups", "elasticache:replication-group:Replicas", "neptune:cluster:ReadReplicaCount", "sagemaker:variant:DesiredProvisionedConcurrency", "sagemaker:inference-component:DesiredCopyCount", "workspaces:workspacespool:DesiredUserSessions"
     #   resp.scalable_targets[0].min_capacity #=> Integer
     #   resp.scalable_targets[0].max_capacity #=> Integer
+    #   resp.scalable_targets[0].predicted_capacity #=> Integer
     #   resp.scalable_targets[0].role_arn #=> String
     #   resp.scalable_targets[0].creation_time #=> Time
     #   resp.scalable_targets[0].suspended_state.dynamic_scaling_in_suspended #=> Boolean
@@ -1900,7 +1901,7 @@ module Aws::ApplicationAutoScaling
     #   resp.scaling_policies[0].service_namespace #=> String, one of "ecs", "elasticmapreduce", "ec2", "appstream", "dynamodb", "rds", "sagemaker", "custom-resource", "comprehend", "lambda", "cassandra", "kafka", "elasticache", "neptune", "workspaces"
     #   resp.scaling_policies[0].resource_id #=> String
     #   resp.scaling_policies[0].scalable_dimension #=> String, one of "ecs:service:DesiredCount", "ec2:spot-fleet-request:TargetCapacity", "elasticmapreduce:instancegroup:InstanceCount", "appstream:fleet:DesiredCapacity", "dynamodb:table:ReadCapacityUnits", "dynamodb:table:WriteCapacityUnits", "dynamodb:index:ReadCapacityUnits", "dynamodb:index:WriteCapacityUnits", "rds:cluster:ReadReplicaCount", "sagemaker:variant:DesiredInstanceCount", "custom-resource:ResourceType:Property", "comprehend:document-classifier-endpoint:DesiredInferenceUnits", "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits", "lambda:function:ProvisionedConcurrency", "cassandra:table:ReadCapacityUnits", "cassandra:table:WriteCapacityUnits", "kafka:broker-storage:VolumeSize", "elasticache:replication-group:NodeGroups", "elasticache:replication-group:Replicas", "neptune:cluster:ReadReplicaCount", "sagemaker:variant:DesiredProvisionedConcurrency", "sagemaker:inference-component:DesiredCopyCount", "workspaces:workspacespool:DesiredUserSessions"
-    #   resp.scaling_policies[0].policy_type #=> String, one of "StepScaling", "TargetTrackingScaling"
+    #   resp.scaling_policies[0].policy_type #=> String, one of "StepScaling", "TargetTrackingScaling", "PredictiveScaling"
     #   resp.scaling_policies[0].step_scaling_policy_configuration.adjustment_type #=> String, one of "ChangeInCapacity", "PercentChangeInCapacity", "ExactCapacity"
     #   resp.scaling_policies[0].step_scaling_policy_configuration.step_adjustments #=> Array
     #   resp.scaling_policies[0].step_scaling_policy_configuration.step_adjustments[0].metric_interval_lower_bound #=> Float
@@ -1934,6 +1935,54 @@ module Aws::ApplicationAutoScaling
     #   resp.scaling_policies[0].target_tracking_scaling_policy_configuration.scale_out_cooldown #=> Integer
     #   resp.scaling_policies[0].target_tracking_scaling_policy_configuration.scale_in_cooldown #=> Integer
     #   resp.scaling_policies[0].target_tracking_scaling_policy_configuration.disable_scale_in #=> Boolean
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications #=> Array
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].target_value #=> Float
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].predefined_metric_pair_specification.predefined_metric_type #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].predefined_metric_pair_specification.resource_label #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].predefined_scaling_metric_specification.predefined_metric_type #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].predefined_scaling_metric_specification.resource_label #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].predefined_load_metric_specification.predefined_metric_type #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].predefined_load_metric_specification.resource_label #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries #=> Array
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].id #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].expression #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions #=> Array
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].name #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].value #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.metric_name #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.namespace #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].metric_stat.stat #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].metric_stat.unit #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].label #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_scaling_metric_specification.metric_data_queries[0].return_data #=> Boolean
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries #=> Array
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].id #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].expression #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions #=> Array
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].name #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].value #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.metric_name #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.namespace #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].metric_stat.stat #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].metric_stat.unit #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].label #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_load_metric_specification.metric_data_queries[0].return_data #=> Boolean
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries #=> Array
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].id #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].expression #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions #=> Array
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].name #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].value #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.metric_name #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.namespace #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].metric_stat.stat #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].metric_stat.unit #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].label #=> String
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.metric_specifications[0].customized_capacity_metric_specification.metric_data_queries[0].return_data #=> Boolean
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.mode #=> String, one of "ForecastOnly", "ForecastAndScale"
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.scheduling_buffer_time #=> Integer
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.max_capacity_breach_behavior #=> String, one of "HonorMaxCapacity", "IncreaseMaxCapacity"
+    #   resp.scaling_policies[0].predictive_scaling_policy_configuration.max_capacity_buffer #=> Integer
     #   resp.scaling_policies[0].alarms #=> Array
     #   resp.scaling_policies[0].alarms[0].alarm_name #=> String
     #   resp.scaling_policies[0].alarms[0].alarm_arn #=> String
@@ -2225,6 +2274,123 @@ module Aws::ApplicationAutoScaling
     # @param [Hash] params ({})
     def describe_scheduled_actions(params = {}, options = {})
       req = build_request(:describe_scheduled_actions, params)
+      req.send_request(options)
+    end
+
+    # Retrieves the forecast data for a predictive scaling policy.
+    #
+    # Load forecasts are predictions of the hourly load values using
+    # historical load data from CloudWatch and an analysis of historical
+    # trends. Capacity forecasts are represented as predicted values for the
+    # minimum capacity that is needed on an hourly basis, based on the
+    # hourly load forecast.
+    #
+    # A minimum of 24 hours of data is required to create the initial
+    # forecasts. However, having a full 14 days of historical data results
+    # in more accurate forecasts.
+    #
+    # @option params [required, String] :service_namespace
+    #   The namespace of the Amazon Web Services service that provides the
+    #   resource. For a resource provided by your own application or service,
+    #   use `custom-resource` instead.
+    #
+    # @option params [required, String] :resource_id
+    #   The identifier of the resource.
+    #
+    # @option params [required, String] :scalable_dimension
+    #   The scalable dimension.
+    #
+    # @option params [required, String] :policy_name
+    #   The name of the policy.
+    #
+    # @option params [required, Time,DateTime,Date,Integer,String] :start_time
+    #   The inclusive start time of the time range for the forecast data to
+    #   get. At most, the date and time can be one year before the current
+    #   date and time
+    #
+    # @option params [required, Time,DateTime,Date,Integer,String] :end_time
+    #   The exclusive end time of the time range for the forecast data to get.
+    #   The maximum time duration between the start and end time is 30 days.
+    #
+    # @return [Types::GetPredictiveScalingForecastResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetPredictiveScalingForecastResponse#load_forecast #load_forecast} => Array&lt;Types::LoadForecast&gt;
+    #   * {Types::GetPredictiveScalingForecastResponse#capacity_forecast #capacity_forecast} => Types::CapacityForecast
+    #   * {Types::GetPredictiveScalingForecastResponse#update_time #update_time} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_predictive_scaling_forecast({
+    #     service_namespace: "ecs", # required, accepts ecs, elasticmapreduce, ec2, appstream, dynamodb, rds, sagemaker, custom-resource, comprehend, lambda, cassandra, kafka, elasticache, neptune, workspaces
+    #     resource_id: "ResourceIdMaxLen1600", # required
+    #     scalable_dimension: "ecs:service:DesiredCount", # required, accepts ecs:service:DesiredCount, ec2:spot-fleet-request:TargetCapacity, elasticmapreduce:instancegroup:InstanceCount, appstream:fleet:DesiredCapacity, dynamodb:table:ReadCapacityUnits, dynamodb:table:WriteCapacityUnits, dynamodb:index:ReadCapacityUnits, dynamodb:index:WriteCapacityUnits, rds:cluster:ReadReplicaCount, sagemaker:variant:DesiredInstanceCount, custom-resource:ResourceType:Property, comprehend:document-classifier-endpoint:DesiredInferenceUnits, comprehend:entity-recognizer-endpoint:DesiredInferenceUnits, lambda:function:ProvisionedConcurrency, cassandra:table:ReadCapacityUnits, cassandra:table:WriteCapacityUnits, kafka:broker-storage:VolumeSize, elasticache:replication-group:NodeGroups, elasticache:replication-group:Replicas, neptune:cluster:ReadReplicaCount, sagemaker:variant:DesiredProvisionedConcurrency, sagemaker:inference-component:DesiredCopyCount, workspaces:workspacespool:DesiredUserSessions
+    #     policy_name: "PolicyName", # required
+    #     start_time: Time.now, # required
+    #     end_time: Time.now, # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.load_forecast #=> Array
+    #   resp.load_forecast[0].timestamps #=> Array
+    #   resp.load_forecast[0].timestamps[0] #=> Time
+    #   resp.load_forecast[0].values #=> Array
+    #   resp.load_forecast[0].values[0] #=> Float
+    #   resp.load_forecast[0].metric_specification.target_value #=> Float
+    #   resp.load_forecast[0].metric_specification.predefined_metric_pair_specification.predefined_metric_type #=> String
+    #   resp.load_forecast[0].metric_specification.predefined_metric_pair_specification.resource_label #=> String
+    #   resp.load_forecast[0].metric_specification.predefined_scaling_metric_specification.predefined_metric_type #=> String
+    #   resp.load_forecast[0].metric_specification.predefined_scaling_metric_specification.resource_label #=> String
+    #   resp.load_forecast[0].metric_specification.predefined_load_metric_specification.predefined_metric_type #=> String
+    #   resp.load_forecast[0].metric_specification.predefined_load_metric_specification.resource_label #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries #=> Array
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].id #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].expression #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions #=> Array
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].name #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].value #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.metric_name #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].metric_stat.metric.namespace #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].metric_stat.stat #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].metric_stat.unit #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].label #=> String
+    #   resp.load_forecast[0].metric_specification.customized_scaling_metric_specification.metric_data_queries[0].return_data #=> Boolean
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries #=> Array
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].id #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].expression #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions #=> Array
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].name #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].value #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.metric_name #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].metric_stat.metric.namespace #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].metric_stat.stat #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].metric_stat.unit #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].label #=> String
+    #   resp.load_forecast[0].metric_specification.customized_load_metric_specification.metric_data_queries[0].return_data #=> Boolean
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries #=> Array
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].id #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].expression #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions #=> Array
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].name #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.dimensions[0].value #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.metric_name #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].metric_stat.metric.namespace #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].metric_stat.stat #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].metric_stat.unit #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].label #=> String
+    #   resp.load_forecast[0].metric_specification.customized_capacity_metric_specification.metric_data_queries[0].return_data #=> Boolean
+    #   resp.capacity_forecast.timestamps #=> Array
+    #   resp.capacity_forecast.timestamps[0] #=> Time
+    #   resp.capacity_forecast.values #=> Array
+    #   resp.capacity_forecast.values[0] #=> Float
+    #   resp.update_time #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/GetPredictiveScalingForecast AWS API Documentation
+    #
+    # @overload get_predictive_scaling_forecast(params = {})
+    # @param [Hash] params ({})
+    def get_predictive_scaling_forecast(params = {}, options = {})
+      req = build_request(:get_predictive_scaling_forecast, params)
       req.send_request(options)
     end
 
@@ -2535,6 +2701,9 @@ module Aws::ApplicationAutoScaling
     #   This parameter is required if you are creating a policy and the policy
     #   type is `TargetTrackingScaling`.
     #
+    # @option params [Types::PredictiveScalingPolicyConfiguration] :predictive_scaling_policy_configuration
+    #   The configuration of the predictive scaling policy.
+    #
     # @return [Types::PutScalingPolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::PutScalingPolicyResponse#policy_arn #policy_arn} => String
@@ -2585,7 +2754,7 @@ module Aws::ApplicationAutoScaling
     #     service_namespace: "ecs", # required, accepts ecs, elasticmapreduce, ec2, appstream, dynamodb, rds, sagemaker, custom-resource, comprehend, lambda, cassandra, kafka, elasticache, neptune, workspaces
     #     resource_id: "ResourceIdMaxLen1600", # required
     #     scalable_dimension: "ecs:service:DesiredCount", # required, accepts ecs:service:DesiredCount, ec2:spot-fleet-request:TargetCapacity, elasticmapreduce:instancegroup:InstanceCount, appstream:fleet:DesiredCapacity, dynamodb:table:ReadCapacityUnits, dynamodb:table:WriteCapacityUnits, dynamodb:index:ReadCapacityUnits, dynamodb:index:WriteCapacityUnits, rds:cluster:ReadReplicaCount, sagemaker:variant:DesiredInstanceCount, custom-resource:ResourceType:Property, comprehend:document-classifier-endpoint:DesiredInferenceUnits, comprehend:entity-recognizer-endpoint:DesiredInferenceUnits, lambda:function:ProvisionedConcurrency, cassandra:table:ReadCapacityUnits, cassandra:table:WriteCapacityUnits, kafka:broker-storage:VolumeSize, elasticache:replication-group:NodeGroups, elasticache:replication-group:Replicas, neptune:cluster:ReadReplicaCount, sagemaker:variant:DesiredProvisionedConcurrency, sagemaker:inference-component:DesiredCopyCount, workspaces:workspacespool:DesiredUserSessions
-    #     policy_type: "StepScaling", # accepts StepScaling, TargetTrackingScaling
+    #     policy_type: "StepScaling", # accepts StepScaling, TargetTrackingScaling, PredictiveScaling
     #     step_scaling_policy_configuration: {
     #       adjustment_type: "ChangeInCapacity", # accepts ChangeInCapacity, PercentChangeInCapacity, ExactCapacity
     #       step_adjustments: [
@@ -2642,6 +2811,101 @@ module Aws::ApplicationAutoScaling
     #       scale_out_cooldown: 1,
     #       scale_in_cooldown: 1,
     #       disable_scale_in: false,
+    #     },
+    #     predictive_scaling_policy_configuration: {
+    #       metric_specifications: [ # required
+    #         {
+    #           target_value: 1.0, # required
+    #           predefined_metric_pair_specification: {
+    #             predefined_metric_type: "PredictiveScalingMetricType", # required
+    #             resource_label: "ResourceLabel",
+    #           },
+    #           predefined_scaling_metric_specification: {
+    #             predefined_metric_type: "PredictiveScalingMetricType", # required
+    #             resource_label: "ResourceLabel",
+    #           },
+    #           predefined_load_metric_specification: {
+    #             predefined_metric_type: "PredictiveScalingMetricType", # required
+    #             resource_label: "ResourceLabel",
+    #           },
+    #           customized_scaling_metric_specification: {
+    #             metric_data_queries: [ # required
+    #               {
+    #                 id: "Id", # required
+    #                 expression: "Expression",
+    #                 metric_stat: {
+    #                   metric: { # required
+    #                     dimensions: [
+    #                       {
+    #                         name: "PredictiveScalingMetricDimensionName", # required
+    #                         value: "PredictiveScalingMetricDimensionValue", # required
+    #                       },
+    #                     ],
+    #                     metric_name: "PredictiveScalingMetricName",
+    #                     namespace: "PredictiveScalingMetricNamespace",
+    #                   },
+    #                   stat: "XmlString", # required
+    #                   unit: "PredictiveScalingMetricUnit",
+    #                 },
+    #                 label: "XmlString",
+    #                 return_data: false,
+    #               },
+    #             ],
+    #           },
+    #           customized_load_metric_specification: {
+    #             metric_data_queries: [ # required
+    #               {
+    #                 id: "Id", # required
+    #                 expression: "Expression",
+    #                 metric_stat: {
+    #                   metric: { # required
+    #                     dimensions: [
+    #                       {
+    #                         name: "PredictiveScalingMetricDimensionName", # required
+    #                         value: "PredictiveScalingMetricDimensionValue", # required
+    #                       },
+    #                     ],
+    #                     metric_name: "PredictiveScalingMetricName",
+    #                     namespace: "PredictiveScalingMetricNamespace",
+    #                   },
+    #                   stat: "XmlString", # required
+    #                   unit: "PredictiveScalingMetricUnit",
+    #                 },
+    #                 label: "XmlString",
+    #                 return_data: false,
+    #               },
+    #             ],
+    #           },
+    #           customized_capacity_metric_specification: {
+    #             metric_data_queries: [ # required
+    #               {
+    #                 id: "Id", # required
+    #                 expression: "Expression",
+    #                 metric_stat: {
+    #                   metric: { # required
+    #                     dimensions: [
+    #                       {
+    #                         name: "PredictiveScalingMetricDimensionName", # required
+    #                         value: "PredictiveScalingMetricDimensionValue", # required
+    #                       },
+    #                     ],
+    #                     metric_name: "PredictiveScalingMetricName",
+    #                     namespace: "PredictiveScalingMetricNamespace",
+    #                   },
+    #                   stat: "XmlString", # required
+    #                   unit: "PredictiveScalingMetricUnit",
+    #                 },
+    #                 label: "XmlString",
+    #                 return_data: false,
+    #               },
+    #             ],
+    #           },
+    #         },
+    #       ],
+    #       mode: "ForecastOnly", # accepts ForecastOnly, ForecastAndScale
+    #       scheduling_buffer_time: 1,
+    #       max_capacity_breach_behavior: "HonorMaxCapacity", # accepts HonorMaxCapacity, IncreaseMaxCapacity
+    #       max_capacity_buffer: 1,
     #     },
     #   })
     #
@@ -3515,7 +3779,7 @@ module Aws::ApplicationAutoScaling
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-applicationautoscaling'
-      context[:gem_version] = '1.97.0'
+      context[:gem_version] = '1.98.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

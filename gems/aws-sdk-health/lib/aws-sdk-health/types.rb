@@ -87,6 +87,10 @@ module Aws::Health
     #    </note>
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] entity_metadata
+    #   Additional metadata about the affected entity.
+    #   @return [Hash<String,String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/health-2016-08-04/AffectedEntity AWS API Documentation
     #
     class AffectedEntity < Struct.new(
@@ -97,7 +101,8 @@ module Aws::Health
       :aws_account_id,
       :last_updated_time,
       :status_code,
-      :tags)
+      :tags,
+      :entity_metadata)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -192,7 +197,7 @@ module Aws::Health
     #
     # @!attribute [rw] event_scope_code
     #   This parameter specifies if the Health event is a public Amazon Web
-    #   Service event or an account-specific event.
+    #   Services service event or an account-specific event.
     #
     #   * If the `eventScopeCode` value is `PUBLIC`, then the
     #     `affectedAccounts` value is always empty.
@@ -879,8 +884,8 @@ module Aws::Health
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   The Amazon Web Service that is affected by the event. For example,
-    #   `EC2`, `RDS`.
+    #   The Amazon Web Services service that is affected by the event. For
+    #   example, `EC2`, `RDS`.
     #   @return [String]
     #
     # @!attribute [rw] event_type_code
@@ -923,7 +928,7 @@ module Aws::Health
     #
     # @!attribute [rw] event_scope_code
     #   This parameter specifies if the Health event is a public Amazon Web
-    #   Service event or an account-specific event.
+    #   Services service event or an account-specific event.
     #
     #   * If the `eventScopeCode` value is `PUBLIC`, then the
     #     `affectedAccounts` value is always empty.
@@ -1120,8 +1125,8 @@ module Aws::Health
     #   @return [Array<String>]
     #
     # @!attribute [rw] services
-    #   The Amazon Web Services associated with the event. For example,
-    #   `EC2`, `RDS`.
+    #   The Amazon Web Services services associated with the event. For
+    #   example, `EC2`, `RDS`.
     #   @return [Array<String>]
     #
     # @!attribute [rw] regions
@@ -1212,8 +1217,8 @@ module Aws::Health
     # [2]: https://docs.aws.amazon.com/health/latest/ug/cloudwatch-events-health.html
     #
     # @!attribute [rw] service
-    #   The Amazon Web Service that is affected by the event. For example,
-    #   `EC2`, `RDS`.
+    #   The Amazon Web Services service that is affected by the event. For
+    #   example, `EC2`, `RDS`.
     #   @return [String]
     #
     # @!attribute [rw] code
@@ -1250,8 +1255,8 @@ module Aws::Health
     #   @return [Array<String>]
     #
     # @!attribute [rw] services
-    #   The Amazon Web Services associated with the event. For example,
-    #   `EC2`, `RDS`.
+    #   The Amazon Web Services services associated with the event. For
+    #   example, `EC2`, `RDS`.
     #   @return [Array<String>]
     #
     # @!attribute [rw] event_type_categories
@@ -1387,8 +1392,8 @@ module Aws::Health
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   The Amazon Web Service that is affected by the event, such as EC2
-    #   and RDS.
+    #   The Amazon Web Services service that is affected by the event, such
+    #   as EC2 and RDS.
     #   @return [String]
     #
     # @!attribute [rw] event_type_code
@@ -1405,7 +1410,7 @@ module Aws::Health
     #
     # @!attribute [rw] event_scope_code
     #   This parameter specifies if the Health event is a public Amazon Web
-    #   Service event or an account-specific event.
+    #   Services service event or an account-specific event.
     #
     #   * If the `eventScopeCode` value is `PUBLIC`, then the
     #     `affectedAccounts` value is always empty.
@@ -1608,8 +1613,8 @@ module Aws::Health
     #   @return [Array<String>]
     #
     # @!attribute [rw] services
-    #   The Amazon Web Services associated with the event. For example,
-    #   `EC2`, `RDS`.
+    #   The Amazon Web Services services associated with the event. For
+    #   example, `EC2`, `RDS`.
     #   @return [Array<String>]
     #
     # @!attribute [rw] regions

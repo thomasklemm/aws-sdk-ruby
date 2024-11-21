@@ -103,6 +103,9 @@ module Aws::Lambda
     EphemeralStorageSize = Shapes::IntegerShape.new(name: 'EphemeralStorageSize')
     EventSourceMappingArn = Shapes::StringShape.new(name: 'EventSourceMappingArn')
     EventSourceMappingConfiguration = Shapes::StructureShape.new(name: 'EventSourceMappingConfiguration')
+    EventSourceMappingMetric = Shapes::StringShape.new(name: 'EventSourceMappingMetric')
+    EventSourceMappingMetricList = Shapes::ListShape.new(name: 'EventSourceMappingMetricList')
+    EventSourceMappingMetricsConfig = Shapes::StructureShape.new(name: 'EventSourceMappingMetricsConfig')
     EventSourceMappingsList = Shapes::ListShape.new(name: 'EventSourceMappingsList')
     EventSourcePosition = Shapes::StringShape.new(name: 'EventSourcePosition')
     EventSourceToken = Shapes::StringShape.new(name: 'EventSourceToken')
@@ -533,6 +536,7 @@ module Aws::Lambda
     CreateEventSourceMappingRequest.add_member(:scaling_config, Shapes::ShapeRef.new(shape: ScalingConfig, location_name: "ScalingConfig"))
     CreateEventSourceMappingRequest.add_member(:document_db_event_source_config, Shapes::ShapeRef.new(shape: DocumentDBEventSourceConfig, location_name: "DocumentDBEventSourceConfig"))
     CreateEventSourceMappingRequest.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: KMSKeyArn, location_name: "KMSKeyArn"))
+    CreateEventSourceMappingRequest.add_member(:metrics_config, Shapes::ShapeRef.new(shape: EventSourceMappingMetricsConfig, location_name: "MetricsConfig"))
     CreateEventSourceMappingRequest.struct_class = Types::CreateEventSourceMappingRequest
 
     CreateFunctionRequest.add_member(:function_name, Shapes::ShapeRef.new(shape: FunctionName, required: true, location_name: "FunctionName"))
@@ -711,7 +715,13 @@ module Aws::Lambda
     EventSourceMappingConfiguration.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: KMSKeyArn, location_name: "KMSKeyArn"))
     EventSourceMappingConfiguration.add_member(:filter_criteria_error, Shapes::ShapeRef.new(shape: FilterCriteriaError, location_name: "FilterCriteriaError"))
     EventSourceMappingConfiguration.add_member(:event_source_mapping_arn, Shapes::ShapeRef.new(shape: EventSourceMappingArn, location_name: "EventSourceMappingArn"))
+    EventSourceMappingConfiguration.add_member(:metrics_config, Shapes::ShapeRef.new(shape: EventSourceMappingMetricsConfig, location_name: "MetricsConfig"))
     EventSourceMappingConfiguration.struct_class = Types::EventSourceMappingConfiguration
+
+    EventSourceMappingMetricList.member = Shapes::ShapeRef.new(shape: EventSourceMappingMetric)
+
+    EventSourceMappingMetricsConfig.add_member(:metrics, Shapes::ShapeRef.new(shape: EventSourceMappingMetricList, location_name: "Metrics"))
+    EventSourceMappingMetricsConfig.struct_class = Types::EventSourceMappingMetricsConfig
 
     EventSourceMappingsList.member = Shapes::ShapeRef.new(shape: EventSourceMappingConfiguration)
 
@@ -1480,6 +1490,7 @@ module Aws::Lambda
     UpdateEventSourceMappingRequest.add_member(:scaling_config, Shapes::ShapeRef.new(shape: ScalingConfig, location_name: "ScalingConfig"))
     UpdateEventSourceMappingRequest.add_member(:document_db_event_source_config, Shapes::ShapeRef.new(shape: DocumentDBEventSourceConfig, location_name: "DocumentDBEventSourceConfig"))
     UpdateEventSourceMappingRequest.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: KMSKeyArn, location_name: "KMSKeyArn"))
+    UpdateEventSourceMappingRequest.add_member(:metrics_config, Shapes::ShapeRef.new(shape: EventSourceMappingMetricsConfig, location_name: "MetricsConfig"))
     UpdateEventSourceMappingRequest.struct_class = Types::UpdateEventSourceMappingRequest
 
     UpdateFunctionCodeRequest.add_member(:function_name, Shapes::ShapeRef.new(shape: FunctionName, required: true, location: "uri", location_name: "FunctionName"))

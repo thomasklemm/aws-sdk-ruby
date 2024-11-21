@@ -29,12 +29,16 @@ module Aws::S3
   # ## Error Classes
   # * {BucketAlreadyExists}
   # * {BucketAlreadyOwnedByYou}
+  # * {EncryptionTypeMismatch}
   # * {InvalidObjectState}
+  # * {InvalidRequest}
+  # * {InvalidWriteOffset}
   # * {NoSuchBucket}
   # * {NoSuchKey}
   # * {NoSuchUpload}
   # * {ObjectAlreadyInActiveTierError}
   # * {ObjectNotInActiveTierError}
+  # * {TooManyParts}
   #
   # Additionally, error classes are dynamically generated for service errors based on the error code
   # if they are not defined above.
@@ -62,6 +66,16 @@ module Aws::S3
       end
     end
 
+    class EncryptionTypeMismatch < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::S3::Types::EncryptionTypeMismatch] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
     class InvalidObjectState < ServiceError
 
       # @param [Seahorse::Client::RequestContext] context
@@ -79,6 +93,26 @@ module Aws::S3
       # @return [String]
       def access_tier
         @data[:access_tier]
+      end
+    end
+
+    class InvalidRequest < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::S3::Types::InvalidRequest] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class InvalidWriteOffset < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::S3::Types::InvalidWriteOffset] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
       end
     end
 
@@ -127,6 +161,16 @@ module Aws::S3
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::S3::Types::ObjectNotInActiveTierError] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class TooManyParts < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::S3::Types::TooManyParts] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

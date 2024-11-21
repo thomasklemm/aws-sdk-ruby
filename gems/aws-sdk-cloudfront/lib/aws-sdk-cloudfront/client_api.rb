@@ -449,6 +449,7 @@ module Aws::CloudFront
     OriginGroupMember = Shapes::StructureShape.new(name: 'OriginGroupMember')
     OriginGroupMemberList = Shapes::ListShape.new(name: 'OriginGroupMemberList')
     OriginGroupMembers = Shapes::StructureShape.new(name: 'OriginGroupMembers')
+    OriginGroupSelectionCriteria = Shapes::StringShape.new(name: 'OriginGroupSelectionCriteria')
     OriginGroups = Shapes::StructureShape.new(name: 'OriginGroups')
     OriginList = Shapes::ListShape.new(name: 'OriginList')
     OriginProtocolPolicy = Shapes::StringShape.new(name: 'OriginProtocolPolicy')
@@ -2471,6 +2472,7 @@ module Aws::CloudFront
     OriginGroup.add_member(:id, Shapes::ShapeRef.new(shape: string, required: true, location_name: "Id"))
     OriginGroup.add_member(:failover_criteria, Shapes::ShapeRef.new(shape: OriginGroupFailoverCriteria, required: true, location_name: "FailoverCriteria"))
     OriginGroup.add_member(:members, Shapes::ShapeRef.new(shape: OriginGroupMembers, required: true, location_name: "Members"))
+    OriginGroup.add_member(:selection_criteria, Shapes::ShapeRef.new(shape: OriginGroupSelectionCriteria, location_name: "SelectionCriteria"))
     OriginGroup.struct_class = Types::OriginGroup
 
     OriginGroupFailoverCriteria.add_member(:status_codes, Shapes::ShapeRef.new(shape: StatusCodes, required: true, location_name: "StatusCodes"))

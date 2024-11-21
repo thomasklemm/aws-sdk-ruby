@@ -14,6 +14,12 @@ module Aws::ApplicationAutoScaling
       SENSITIVE: []
     end
 
+    class CapacityForecast
+      attr_accessor timestamps: ::Array[::Time]
+      attr_accessor values: ::Array[::Float]
+      SENSITIVE: []
+    end
+
     class ConcurrentUpdateException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -129,6 +135,23 @@ module Aws::ApplicationAutoScaling
       SENSITIVE: []
     end
 
+    class GetPredictiveScalingForecastRequest
+      attr_accessor service_namespace: ("ecs" | "elasticmapreduce" | "ec2" | "appstream" | "dynamodb" | "rds" | "sagemaker" | "custom-resource" | "comprehend" | "lambda" | "cassandra" | "kafka" | "elasticache" | "neptune" | "workspaces")
+      attr_accessor resource_id: ::String
+      attr_accessor scalable_dimension: ("ecs:service:DesiredCount" | "ec2:spot-fleet-request:TargetCapacity" | "elasticmapreduce:instancegroup:InstanceCount" | "appstream:fleet:DesiredCapacity" | "dynamodb:table:ReadCapacityUnits" | "dynamodb:table:WriteCapacityUnits" | "dynamodb:index:ReadCapacityUnits" | "dynamodb:index:WriteCapacityUnits" | "rds:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredInstanceCount" | "custom-resource:ResourceType:Property" | "comprehend:document-classifier-endpoint:DesiredInferenceUnits" | "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits" | "lambda:function:ProvisionedConcurrency" | "cassandra:table:ReadCapacityUnits" | "cassandra:table:WriteCapacityUnits" | "kafka:broker-storage:VolumeSize" | "elasticache:replication-group:NodeGroups" | "elasticache:replication-group:Replicas" | "neptune:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredProvisionedConcurrency" | "sagemaker:inference-component:DesiredCopyCount" | "workspaces:workspacespool:DesiredUserSessions")
+      attr_accessor policy_name: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      SENSITIVE: []
+    end
+
+    class GetPredictiveScalingForecastResponse
+      attr_accessor load_forecast: ::Array[Types::LoadForecast]
+      attr_accessor capacity_forecast: Types::CapacityForecast
+      attr_accessor update_time: ::Time
+      SENSITIVE: []
+    end
+
     class InternalServiceException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -151,6 +174,13 @@ module Aws::ApplicationAutoScaling
 
     class ListTagsForResourceResponse
       attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class LoadForecast
+      attr_accessor timestamps: ::Array[::Time]
+      attr_accessor values: ::Array[::Float]
+      attr_accessor metric_specification: Types::PredictiveScalingMetricSpecification
       SENSITIVE: []
     end
 
@@ -179,14 +209,87 @@ module Aws::ApplicationAutoScaling
       SENSITIVE: []
     end
 
+    class PredictiveScalingCustomizedMetricSpecification
+      attr_accessor metric_data_queries: ::Array[Types::PredictiveScalingMetricDataQuery]
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingMetric
+      attr_accessor dimensions: ::Array[Types::PredictiveScalingMetricDimension]
+      attr_accessor metric_name: ::String
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingMetricDataQuery
+      attr_accessor id: ::String
+      attr_accessor expression: ::String
+      attr_accessor metric_stat: Types::PredictiveScalingMetricStat
+      attr_accessor label: ::String
+      attr_accessor return_data: bool
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingMetricDimension
+      attr_accessor name: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingMetricSpecification
+      attr_accessor target_value: ::Float
+      attr_accessor predefined_metric_pair_specification: Types::PredictiveScalingPredefinedMetricPairSpecification
+      attr_accessor predefined_scaling_metric_specification: Types::PredictiveScalingPredefinedScalingMetricSpecification
+      attr_accessor predefined_load_metric_specification: Types::PredictiveScalingPredefinedLoadMetricSpecification
+      attr_accessor customized_scaling_metric_specification: Types::PredictiveScalingCustomizedMetricSpecification
+      attr_accessor customized_load_metric_specification: Types::PredictiveScalingCustomizedMetricSpecification
+      attr_accessor customized_capacity_metric_specification: Types::PredictiveScalingCustomizedMetricSpecification
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingMetricStat
+      attr_accessor metric: Types::PredictiveScalingMetric
+      attr_accessor stat: ::String
+      attr_accessor unit: ::String
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingPolicyConfiguration
+      attr_accessor metric_specifications: ::Array[Types::PredictiveScalingMetricSpecification]
+      attr_accessor mode: ("ForecastOnly" | "ForecastAndScale")
+      attr_accessor scheduling_buffer_time: ::Integer
+      attr_accessor max_capacity_breach_behavior: ("HonorMaxCapacity" | "IncreaseMaxCapacity")
+      attr_accessor max_capacity_buffer: ::Integer
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingPredefinedLoadMetricSpecification
+      attr_accessor predefined_metric_type: ::String
+      attr_accessor resource_label: ::String
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingPredefinedMetricPairSpecification
+      attr_accessor predefined_metric_type: ::String
+      attr_accessor resource_label: ::String
+      SENSITIVE: []
+    end
+
+    class PredictiveScalingPredefinedScalingMetricSpecification
+      attr_accessor predefined_metric_type: ::String
+      attr_accessor resource_label: ::String
+      SENSITIVE: []
+    end
+
     class PutScalingPolicyRequest
       attr_accessor policy_name: ::String
       attr_accessor service_namespace: ("ecs" | "elasticmapreduce" | "ec2" | "appstream" | "dynamodb" | "rds" | "sagemaker" | "custom-resource" | "comprehend" | "lambda" | "cassandra" | "kafka" | "elasticache" | "neptune" | "workspaces")
       attr_accessor resource_id: ::String
       attr_accessor scalable_dimension: ("ecs:service:DesiredCount" | "ec2:spot-fleet-request:TargetCapacity" | "elasticmapreduce:instancegroup:InstanceCount" | "appstream:fleet:DesiredCapacity" | "dynamodb:table:ReadCapacityUnits" | "dynamodb:table:WriteCapacityUnits" | "dynamodb:index:ReadCapacityUnits" | "dynamodb:index:WriteCapacityUnits" | "rds:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredInstanceCount" | "custom-resource:ResourceType:Property" | "comprehend:document-classifier-endpoint:DesiredInferenceUnits" | "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits" | "lambda:function:ProvisionedConcurrency" | "cassandra:table:ReadCapacityUnits" | "cassandra:table:WriteCapacityUnits" | "kafka:broker-storage:VolumeSize" | "elasticache:replication-group:NodeGroups" | "elasticache:replication-group:Replicas" | "neptune:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredProvisionedConcurrency" | "sagemaker:inference-component:DesiredCopyCount" | "workspaces:workspacespool:DesiredUserSessions")
-      attr_accessor policy_type: ("StepScaling" | "TargetTrackingScaling")
+      attr_accessor policy_type: ("StepScaling" | "TargetTrackingScaling" | "PredictiveScaling")
       attr_accessor step_scaling_policy_configuration: Types::StepScalingPolicyConfiguration
       attr_accessor target_tracking_scaling_policy_configuration: Types::TargetTrackingScalingPolicyConfiguration
+      attr_accessor predictive_scaling_policy_configuration: Types::PredictiveScalingPolicyConfiguration
       SENSITIVE: []
     end
 
@@ -241,6 +344,7 @@ module Aws::ApplicationAutoScaling
       attr_accessor scalable_dimension: ("ecs:service:DesiredCount" | "ec2:spot-fleet-request:TargetCapacity" | "elasticmapreduce:instancegroup:InstanceCount" | "appstream:fleet:DesiredCapacity" | "dynamodb:table:ReadCapacityUnits" | "dynamodb:table:WriteCapacityUnits" | "dynamodb:index:ReadCapacityUnits" | "dynamodb:index:WriteCapacityUnits" | "rds:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredInstanceCount" | "custom-resource:ResourceType:Property" | "comprehend:document-classifier-endpoint:DesiredInferenceUnits" | "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits" | "lambda:function:ProvisionedConcurrency" | "cassandra:table:ReadCapacityUnits" | "cassandra:table:WriteCapacityUnits" | "kafka:broker-storage:VolumeSize" | "elasticache:replication-group:NodeGroups" | "elasticache:replication-group:Replicas" | "neptune:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredProvisionedConcurrency" | "sagemaker:inference-component:DesiredCopyCount" | "workspaces:workspacespool:DesiredUserSessions")
       attr_accessor min_capacity: ::Integer
       attr_accessor max_capacity: ::Integer
+      attr_accessor predicted_capacity: ::Integer
       attr_accessor role_arn: ::String
       attr_accessor creation_time: ::Time
       attr_accessor suspended_state: Types::SuspendedState
@@ -276,9 +380,10 @@ module Aws::ApplicationAutoScaling
       attr_accessor service_namespace: ("ecs" | "elasticmapreduce" | "ec2" | "appstream" | "dynamodb" | "rds" | "sagemaker" | "custom-resource" | "comprehend" | "lambda" | "cassandra" | "kafka" | "elasticache" | "neptune" | "workspaces")
       attr_accessor resource_id: ::String
       attr_accessor scalable_dimension: ("ecs:service:DesiredCount" | "ec2:spot-fleet-request:TargetCapacity" | "elasticmapreduce:instancegroup:InstanceCount" | "appstream:fleet:DesiredCapacity" | "dynamodb:table:ReadCapacityUnits" | "dynamodb:table:WriteCapacityUnits" | "dynamodb:index:ReadCapacityUnits" | "dynamodb:index:WriteCapacityUnits" | "rds:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredInstanceCount" | "custom-resource:ResourceType:Property" | "comprehend:document-classifier-endpoint:DesiredInferenceUnits" | "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits" | "lambda:function:ProvisionedConcurrency" | "cassandra:table:ReadCapacityUnits" | "cassandra:table:WriteCapacityUnits" | "kafka:broker-storage:VolumeSize" | "elasticache:replication-group:NodeGroups" | "elasticache:replication-group:Replicas" | "neptune:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredProvisionedConcurrency" | "sagemaker:inference-component:DesiredCopyCount" | "workspaces:workspacespool:DesiredUserSessions")
-      attr_accessor policy_type: ("StepScaling" | "TargetTrackingScaling")
+      attr_accessor policy_type: ("StepScaling" | "TargetTrackingScaling" | "PredictiveScaling")
       attr_accessor step_scaling_policy_configuration: Types::StepScalingPolicyConfiguration
       attr_accessor target_tracking_scaling_policy_configuration: Types::TargetTrackingScalingPolicyConfiguration
+      attr_accessor predictive_scaling_policy_configuration: Types::PredictiveScalingPolicyConfiguration
       attr_accessor alarms: ::Array[Types::Alarm]
       attr_accessor creation_time: ::Time
       SENSITIVE: []

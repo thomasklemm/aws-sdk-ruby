@@ -1538,6 +1538,109 @@ module Aws::IoT
       req.send_request(options)
     end
 
+    # Creates a command. A command contains reusable configurations that can
+    # be applied before they are sent to the devices.
+    #
+    # @option params [required, String] :command_id
+    #   A unique identifier for the command. We recommend using UUID.
+    #   Alpha-numeric characters, hyphens, and underscores are valid for use
+    #   here.
+    #
+    # @option params [String] :namespace
+    #   The namespace of the command. The MQTT reserved topics and validations
+    #   will be used for command executions according to the namespace
+    #   setting.
+    #
+    # @option params [String] :display_name
+    #   The user-friendly name in the console for the command. This name
+    #   doesn't have to be unique. You can update the user-friendly name
+    #   after you define it.
+    #
+    # @option params [String] :description
+    #   A short text decription of the command.
+    #
+    # @option params [Types::CommandPayload] :payload
+    #   The payload object for the command. You must specify this information
+    #   when using the `AWS-IoT` namespace.
+    #
+    #   You can upload a static payload file from your local storage that
+    #   contains the instructions for the device to process. The payload file
+    #   can use any format. To make sure that the device correctly interprets
+    #   the payload, we recommend you to specify the payload content type.
+    #
+    # @option params [Array<Types::CommandParameter>] :mandatory_parameters
+    #   A list of parameters that are required by the `StartCommandExecution`
+    #   API. These parameters need to be specified only when using the
+    #   `AWS-IoT-FleetWise` namespace. You can either specify them here or
+    #   when running the command using the `StartCommandExecution` API.
+    #
+    # @option params [String] :role_arn
+    #   The IAM role that allows access to create the command.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   Name-value pairs that are used as metadata to manage a command.
+    #
+    # @return [Types::CreateCommandResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateCommandResponse#command_id #command_id} => String
+    #   * {Types::CreateCommandResponse#command_arn #command_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_command({
+    #     command_id: "CommandId", # required
+    #     namespace: "AWS-IoT", # accepts AWS-IoT, AWS-IoT-FleetWise
+    #     display_name: "DisplayName",
+    #     description: "CommandDescription",
+    #     payload: {
+    #       content: "data",
+    #       content_type: "MimeType",
+    #     },
+    #     mandatory_parameters: [
+    #       {
+    #         name: "CommandParameterName", # required
+    #         value: {
+    #           s: "StringParameterValue",
+    #           b: false,
+    #           i: 1,
+    #           l: 1,
+    #           d: 1.0,
+    #           bin: "data",
+    #           ul: "UnsignedLongParameterValue",
+    #         },
+    #         default_value: {
+    #           s: "StringParameterValue",
+    #           b: false,
+    #           i: 1,
+    #           l: 1,
+    #           d: 1.0,
+    #           bin: "data",
+    #           ul: "UnsignedLongParameterValue",
+    #         },
+    #         description: "CommandParameterDescription",
+    #       },
+    #     ],
+    #     role_arn: "RoleArn",
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue",
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.command_id #=> String
+    #   resp.command_arn #=> String
+    #
+    # @overload create_command(params = {})
+    # @param [Hash] params ({})
+    def create_command(params = {}, options = {})
+      req = build_request(:create_command, params)
+      req.send_request(options)
+    end
+
     # Use this API to define a Custom Metric published by your devices to
     # Device Defender.
     #
@@ -2040,9 +2143,9 @@ module Aws::IoT
     # [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions
     #
     # @option params [required, String] :job_id
-    #   A job identifier which must be unique for your Amazon Web Services
-    #   account. We recommend using a UUID. Alpha-numeric characters, "-"
-    #   and "\_" are valid for use here.
+    #   A job identifier which must be unique for your account. We recommend
+    #   using a UUID. Alpha-numeric characters, "-" and "\_" are valid for
+    #   use here.
     #
     # @option params [required, Array<String>] :targets
     #   A list of things and thing groups to which the job should be sent.
@@ -4472,6 +4575,63 @@ module Aws::IoT
       req.send_request(options)
     end
 
+    # Delete a command resource.
+    #
+    # @option params [required, String] :command_id
+    #   The unique identifier of the command to be deleted.
+    #
+    # @return [Types::DeleteCommandResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteCommandResponse#status_code #status_code} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_command({
+    #     command_id: "CommandId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status_code #=> Integer
+    #
+    # @overload delete_command(params = {})
+    # @param [Hash] params ({})
+    def delete_command(params = {}, options = {})
+      req = build_request(:delete_command, params)
+      req.send_request(options)
+    end
+
+    # Delete a command execution.
+    #
+    # <note markdown="1"> Only command executions that enter a terminal state can be deleted
+    # from your account.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :execution_id
+    #   The unique identifier of the command execution that you want to delete
+    #   from your account.
+    #
+    # @option params [required, String] :target_arn
+    #   The Amazon Resource Number (ARN) of the target device for which you
+    #   want to delete command executions.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_command_execution({
+    #     execution_id: "CommandExecutionId", # required
+    #     target_arn: "TargetArn", # required
+    #   })
+    #
+    # @overload delete_command_execution(params = {})
+    # @param [Hash] params ({})
+    def delete_command_execution(params = {}, options = {})
+      req = build_request(:delete_command_execution, params)
+      req.send_request(options)
+    end
+
     # Deletes a Device Defender detect custom metric.
     #
     # Requires permission to access the [DeleteCustomMetric][1] action.
@@ -6378,8 +6538,8 @@ module Aws::IoT
     #   The unique identifier you assigned to this job when it was created.
     #
     # @option params [Boolean] :before_substitution
-    #   A flag that provides a view of the job document before and after the
-    #   substitution parameters have been resolved with their exact values.
+    #   Provides a view of the job document before and after the substitution
+    #   parameters have been resolved with their exact values.
     #
     # @return [Types::DescribeJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -7582,6 +7742,148 @@ module Aws::IoT
       req.send_request(options)
     end
 
+    # Gets information about the specified command.
+    #
+    # @option params [required, String] :command_id
+    #   The unique identifier of the command for which you want to retrieve
+    #   information.
+    #
+    # @return [Types::GetCommandResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetCommandResponse#command_id #command_id} => String
+    #   * {Types::GetCommandResponse#command_arn #command_arn} => String
+    #   * {Types::GetCommandResponse#namespace #namespace} => String
+    #   * {Types::GetCommandResponse#display_name #display_name} => String
+    #   * {Types::GetCommandResponse#description #description} => String
+    #   * {Types::GetCommandResponse#mandatory_parameters #mandatory_parameters} => Array&lt;Types::CommandParameter&gt;
+    #   * {Types::GetCommandResponse#payload #payload} => Types::CommandPayload
+    #   * {Types::GetCommandResponse#role_arn #role_arn} => String
+    #   * {Types::GetCommandResponse#created_at #created_at} => Time
+    #   * {Types::GetCommandResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::GetCommandResponse#deprecated #deprecated} => Boolean
+    #   * {Types::GetCommandResponse#pending_deletion #pending_deletion} => Boolean
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_command({
+    #     command_id: "CommandId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.command_id #=> String
+    #   resp.command_arn #=> String
+    #   resp.namespace #=> String, one of "AWS-IoT", "AWS-IoT-FleetWise"
+    #   resp.display_name #=> String
+    #   resp.description #=> String
+    #   resp.mandatory_parameters #=> Array
+    #   resp.mandatory_parameters[0].name #=> String
+    #   resp.mandatory_parameters[0].value.s #=> String
+    #   resp.mandatory_parameters[0].value.b #=> Boolean
+    #   resp.mandatory_parameters[0].value.i #=> Integer
+    #   resp.mandatory_parameters[0].value.l #=> Integer
+    #   resp.mandatory_parameters[0].value.d #=> Float
+    #   resp.mandatory_parameters[0].value.bin #=> String
+    #   resp.mandatory_parameters[0].value.ul #=> String
+    #   resp.mandatory_parameters[0].default_value.s #=> String
+    #   resp.mandatory_parameters[0].default_value.b #=> Boolean
+    #   resp.mandatory_parameters[0].default_value.i #=> Integer
+    #   resp.mandatory_parameters[0].default_value.l #=> Integer
+    #   resp.mandatory_parameters[0].default_value.d #=> Float
+    #   resp.mandatory_parameters[0].default_value.bin #=> String
+    #   resp.mandatory_parameters[0].default_value.ul #=> String
+    #   resp.mandatory_parameters[0].description #=> String
+    #   resp.payload.content #=> String
+    #   resp.payload.content_type #=> String
+    #   resp.role_arn #=> String
+    #   resp.created_at #=> Time
+    #   resp.last_updated_at #=> Time
+    #   resp.deprecated #=> Boolean
+    #   resp.pending_deletion #=> Boolean
+    #
+    # @overload get_command(params = {})
+    # @param [Hash] params ({})
+    def get_command(params = {}, options = {})
+      req = build_request(:get_command, params)
+      req.send_request(options)
+    end
+
+    # Gets information about the specific command execution on a single
+    # device.
+    #
+    # @option params [required, String] :execution_id
+    #   The unique identifier for the command execution. This information is
+    #   returned as a response of the `StartCommandExecution` API request.
+    #
+    # @option params [required, String] :target_arn
+    #   The Amazon Resource Number (ARN) of the device on which the command
+    #   execution is being performed.
+    #
+    # @option params [Boolean] :include_result
+    #   Can be used to specify whether to include the result of the command
+    #   execution in the `GetCommandExecution` API response. Your device can
+    #   use this field to provide additional information about the command
+    #   execution. You only need to specify this field when using the
+    #   `AWS-IoT` namespace.
+    #
+    # @return [Types::GetCommandExecutionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetCommandExecutionResponse#execution_id #execution_id} => String
+    #   * {Types::GetCommandExecutionResponse#command_arn #command_arn} => String
+    #   * {Types::GetCommandExecutionResponse#target_arn #target_arn} => String
+    #   * {Types::GetCommandExecutionResponse#status #status} => String
+    #   * {Types::GetCommandExecutionResponse#status_reason #status_reason} => Types::StatusReason
+    #   * {Types::GetCommandExecutionResponse#result #result} => Hash&lt;String,Types::CommandExecutionResult&gt;
+    #   * {Types::GetCommandExecutionResponse#parameters #parameters} => Hash&lt;String,Types::CommandParameterValue&gt;
+    #   * {Types::GetCommandExecutionResponse#execution_timeout_seconds #execution_timeout_seconds} => Integer
+    #   * {Types::GetCommandExecutionResponse#created_at #created_at} => Time
+    #   * {Types::GetCommandExecutionResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::GetCommandExecutionResponse#started_at #started_at} => Time
+    #   * {Types::GetCommandExecutionResponse#completed_at #completed_at} => Time
+    #   * {Types::GetCommandExecutionResponse#time_to_live #time_to_live} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_command_execution({
+    #     execution_id: "CommandExecutionId", # required
+    #     target_arn: "TargetArn", # required
+    #     include_result: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.execution_id #=> String
+    #   resp.command_arn #=> String
+    #   resp.target_arn #=> String
+    #   resp.status #=> String, one of "CREATED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "REJECTED", "TIMED_OUT"
+    #   resp.status_reason.reason_code #=> String
+    #   resp.status_reason.reason_description #=> String
+    #   resp.result #=> Hash
+    #   resp.result["CommandExecutionResultName"].s #=> String
+    #   resp.result["CommandExecutionResultName"].b #=> Boolean
+    #   resp.result["CommandExecutionResultName"].bin #=> String
+    #   resp.parameters #=> Hash
+    #   resp.parameters["CommandParameterName"].s #=> String
+    #   resp.parameters["CommandParameterName"].b #=> Boolean
+    #   resp.parameters["CommandParameterName"].i #=> Integer
+    #   resp.parameters["CommandParameterName"].l #=> Integer
+    #   resp.parameters["CommandParameterName"].d #=> Float
+    #   resp.parameters["CommandParameterName"].bin #=> String
+    #   resp.parameters["CommandParameterName"].ul #=> String
+    #   resp.execution_timeout_seconds #=> Integer
+    #   resp.created_at #=> Time
+    #   resp.last_updated_at #=> Time
+    #   resp.started_at #=> Time
+    #   resp.completed_at #=> Time
+    #   resp.time_to_live #=> Time
+    #
+    # @overload get_command_execution(params = {})
+    # @param [Hash] params ({})
+    def get_command_execution(params = {}, options = {})
+      req = build_request(:get_command_execution, params)
+      req.send_request(options)
+    end
+
     # Gets a list of the policies that have an effect on the authorization
     # behavior of the specified device when it connects to the IoT device
     # gateway.
@@ -7688,8 +7990,8 @@ module Aws::IoT
     #   The unique identifier you assigned to this job when it was created.
     #
     # @option params [Boolean] :before_substitution
-    #   A flag that provides a view of the job document before and after the
-    #   substitution parameters have been resolved with their exact values.
+    #   Provides a view of the job document before and after the substitution
+    #   parameters have been resolved with their exact values.
     #
     # @return [Types::GetJobDocumentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -9435,6 +9737,166 @@ module Aws::IoT
     # @param [Hash] params ({})
     def list_certificates_by_ca(params = {}, options = {})
       req = build_request(:list_certificates_by_ca, params)
+      req.send_request(options)
+    end
+
+    # List all command executions.
+    #
+    # You must provide only the `startedTimeFilter` or the
+    # `completedTimeFilter` information. If you provide both time filters,
+    # the API will generate an error. You can use this information to find
+    # command executions that started within a specific timeframe.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in this operation.
+    #
+    # @option params [String] :next_token
+    #   To retrieve the next set of results, the `nextToken` value from a
+    #   previous response; otherwise `null` to receive the first set of
+    #   results.
+    #
+    # @option params [String] :namespace
+    #   The namespace of the command.
+    #
+    # @option params [String] :status
+    #   List all command executions for the device that have a particular
+    #   status. For example, you can filter the list to display only command
+    #   executions that have failed or timed out.
+    #
+    # @option params [String] :sort_order
+    #   Specify whether to list the command executions that were created in
+    #   the ascending or descending order. By default, the API returns all
+    #   commands in the descending order based on the start time or completion
+    #   time of the executions, that are determined by the `startTimeFilter`
+    #   and `completeTimeFilter` parameters.
+    #
+    # @option params [Types::TimeFilter] :started_time_filter
+    #   List all command executions that started any time before or after the
+    #   date and time that you specify. The date and time uses the format
+    #   `yyyy-MM-dd'T'HH:mm`.
+    #
+    # @option params [Types::TimeFilter] :completed_time_filter
+    #   List all command executions that completed any time before or after
+    #   the date and time that you specify. The date and time uses the format
+    #   `yyyy-MM-dd'T'HH:mm`.
+    #
+    # @option params [String] :target_arn
+    #   The Amazon Resource Number (ARN) of the target device. You can use
+    #   this information to list all command executions for a particular
+    #   device.
+    #
+    # @option params [String] :command_arn
+    #   The Amazon Resource Number (ARN) of the command. You can use this
+    #   information to list all command executions for a particular command.
+    #
+    # @return [Types::ListCommandExecutionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListCommandExecutionsResponse#command_executions #command_executions} => Array&lt;Types::CommandExecutionSummary&gt;
+    #   * {Types::ListCommandExecutionsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_command_executions({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     namespace: "AWS-IoT", # accepts AWS-IoT, AWS-IoT-FleetWise
+    #     status: "CREATED", # accepts CREATED, IN_PROGRESS, SUCCEEDED, FAILED, REJECTED, TIMED_OUT
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     started_time_filter: {
+    #       after: "StringDateTime",
+    #       before: "StringDateTime",
+    #     },
+    #     completed_time_filter: {
+    #       after: "StringDateTime",
+    #       before: "StringDateTime",
+    #     },
+    #     target_arn: "TargetArn",
+    #     command_arn: "CommandArn",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.command_executions #=> Array
+    #   resp.command_executions[0].command_arn #=> String
+    #   resp.command_executions[0].execution_id #=> String
+    #   resp.command_executions[0].target_arn #=> String
+    #   resp.command_executions[0].status #=> String, one of "CREATED", "IN_PROGRESS", "SUCCEEDED", "FAILED", "REJECTED", "TIMED_OUT"
+    #   resp.command_executions[0].created_at #=> Time
+    #   resp.command_executions[0].started_at #=> Time
+    #   resp.command_executions[0].completed_at #=> Time
+    #   resp.next_token #=> String
+    #
+    # @overload list_command_executions(params = {})
+    # @param [Hash] params ({})
+    def list_command_executions(params = {}, options = {})
+      req = build_request(:list_command_executions, params)
+      req.send_request(options)
+    end
+
+    # List all commands in your account.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in this operation. By default,
+    #   the API returns up to a maximum of 25 results. You can override this
+    #   default value to return up to a maximum of 100 results for this
+    #   operation.
+    #
+    # @option params [String] :next_token
+    #   To retrieve the next set of results, the `nextToken` value from a
+    #   previous response; otherwise `null` to receive the first set of
+    #   results.
+    #
+    # @option params [String] :namespace
+    #   The namespace of the command. By default, the API returns all commands
+    #   that have been created for both `AWS-IoT` and `AWS-IoT-FleetWise`
+    #   namespaces. You can override this default value if you want to return
+    #   all commands that have been created only for a specific namespace.
+    #
+    # @option params [String] :command_parameter_name
+    #   A filter that can be used to display the list of commands that have a
+    #   specific command parameter name.
+    #
+    # @option params [String] :sort_order
+    #   Specify whether to list the commands that you have created in the
+    #   ascending or descending order. By default, the API returns all
+    #   commands in the descending order based on the time that they were
+    #   created.
+    #
+    # @return [Types::ListCommandsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListCommandsResponse#commands #commands} => Array&lt;Types::CommandSummary&gt;
+    #   * {Types::ListCommandsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_commands({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     namespace: "AWS-IoT", # accepts AWS-IoT, AWS-IoT-FleetWise
+    #     command_parameter_name: "CommandParameterName",
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.commands #=> Array
+    #   resp.commands[0].command_arn #=> String
+    #   resp.commands[0].command_id #=> String
+    #   resp.commands[0].display_name #=> String
+    #   resp.commands[0].deprecated #=> Boolean
+    #   resp.commands[0].created_at #=> Time
+    #   resp.commands[0].last_updated_at #=> Time
+    #   resp.commands[0].pending_deletion #=> Boolean
+    #   resp.next_token #=> String
+    #
+    # @overload list_commands(params = {})
+    # @param [Hash] params ({})
+    def list_commands(params = {}, options = {})
+      req = build_request(:list_commands, params)
       req.send_request(options)
     end
 
@@ -14231,6 +14693,52 @@ module Aws::IoT
       req.send_request(options)
     end
 
+    # Update information about a command or mark a command for deprecation.
+    #
+    # @option params [required, String] :command_id
+    #   The unique identifier of the command to be updated.
+    #
+    # @option params [String] :display_name
+    #   The new user-friendly name to use in the console for the command.
+    #
+    # @option params [String] :description
+    #   A short text description of the command.
+    #
+    # @option params [Boolean] :deprecated
+    #   A boolean that you can use to specify whether to deprecate a command.
+    #
+    # @return [Types::UpdateCommandResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateCommandResponse#command_id #command_id} => String
+    #   * {Types::UpdateCommandResponse#display_name #display_name} => String
+    #   * {Types::UpdateCommandResponse#description #description} => String
+    #   * {Types::UpdateCommandResponse#deprecated #deprecated} => Boolean
+    #   * {Types::UpdateCommandResponse#last_updated_at #last_updated_at} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_command({
+    #     command_id: "CommandId", # required
+    #     display_name: "DisplayName",
+    #     description: "CommandDescription",
+    #     deprecated: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.command_id #=> String
+    #   resp.display_name #=> String
+    #   resp.description #=> String
+    #   resp.deprecated #=> Boolean
+    #   resp.last_updated_at #=> Time
+    #
+    # @overload update_command(params = {})
+    # @param [Hash] params ({})
+    def update_command(params = {}, options = {})
+      req = build_request(:update_command, params)
+      req.send_request(options)
+    end
+
     # Updates a Device Defender detect custom metric.
     #
     # Requires permission to access the [UpdateCustomMetric][1] action.
@@ -15828,7 +16336,7 @@ module Aws::IoT
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iot'
-      context[:gem_version] = '1.139.0'
+      context[:gem_version] = '1.140.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

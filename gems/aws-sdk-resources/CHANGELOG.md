@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+3.215.0 (2024-11-21)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-notificationscontacts` gem.
+
+* Feature - Added a dependency on the new `aws-sdk-notifications` gem.
+
 3.214.0 (2024-11-15)
 ------------------
 

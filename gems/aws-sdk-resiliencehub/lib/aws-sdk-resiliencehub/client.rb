@@ -462,8 +462,8 @@ module Aws::ResilienceHub
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
     #
     # @option params [required, Array<Types::AcceptGroupingRecommendationEntry>] :entries
-    #   Indicates the list of resource grouping recommendations you want to
-    #   include in your application.
+    #   List of resource grouping recommendations you want to include in your
+    #   application.
     #
     # @return [Types::AcceptResourceGroupingRecommendationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1147,10 +1147,10 @@ module Aws::ResilienceHub
     #   time objective (RTO) and recovery point objective (RPO) in seconds.
     #
     # @option params [String] :policy_description
-    #   The description for the policy.
+    #   Description of the resiliency policy.
     #
     # @option params [required, String] :policy_name
-    #   The name of the policy
+    #   Name of the resiliency policy.
     #
     # @option params [Hash<String,String>] :tags
     #   Tags assigned to the resource. A tag is a label that you assign to an
@@ -2163,6 +2163,41 @@ module Aws::ResilienceHub
       req.send_request(options)
     end
 
+    # Describes the metrics of the application configuration being exported.
+    #
+    # @option params [required, String] :metrics_export_id
+    #   Identifier of the metrics export task.
+    #
+    # @return [Types::DescribeMetricsExportResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeMetricsExportResponse#error_message #error_message} => String
+    #   * {Types::DescribeMetricsExportResponse#export_location #export_location} => Types::S3Location
+    #   * {Types::DescribeMetricsExportResponse#metrics_export_id #metrics_export_id} => String
+    #   * {Types::DescribeMetricsExportResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_metrics_export({
+    #     metrics_export_id: "String255", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.error_message #=> String
+    #   resp.export_location.bucket #=> String
+    #   resp.export_location.prefix #=> String
+    #   resp.metrics_export_id #=> String
+    #   resp.status #=> String, one of "Pending", "InProgress", "Failed", "Success"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/DescribeMetricsExport AWS API Documentation
+    #
+    # @overload describe_metrics_export(params = {})
+    # @param [Hash] params ({})
+    def describe_metrics_export(params = {}, options = {})
+      req = build_request(:describe_metrics_export, params)
+      req.send_request(options)
+    end
+
     # Describes a specified resiliency policy for an Resilience Hub
     # application. The returned policy object includes creation time, data
     # location constraints, the Amazon Resource Name (ARN) for the policy,
@@ -2228,7 +2263,7 @@ module Aws::ResilienceHub
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
     #
     # @option params [String] :grouping_id
-    #   Indicates the identifier of the grouping recommendation task.
+    #   Identifier of the grouping recommendation task.
     #
     # @return [Types::DescribeResourceGroupingRecommendationTaskResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2411,8 +2446,8 @@ module Aws::ResilienceHub
       req.send_request(options)
     end
 
-    # Indicates the list of compliance drifts that were detected while
-    # running an assessment.
+    # List of compliance drifts that were detected while running an
+    # assessment.
     #
     # @option params [required, String] :assessment_arn
     #   Amazon Resource Name (ARN) of the assessment. The format for this ARN
@@ -2426,7 +2461,7 @@ module Aws::ResilienceHub
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
     #
     # @option params [Integer] :max_results
-    #   Indicates the maximum number of compliance drifts requested.
+    #   Maximum number of compliance drifts requested.
     #
     # @option params [String] :next_token
     #   Null, or the token from a previous call to get the next set of
@@ -2491,8 +2526,8 @@ module Aws::ResilienceHub
       req.send_request(options)
     end
 
-    # Indicates the list of resource drifts that were detected while running
-    # an assessment.
+    # List of resource drifts that were detected while running an
+    # assessment.
     #
     # @option params [required, String] :assessment_arn
     #   Amazon Resource Name (ARN) of the assessment. The format for this ARN
@@ -2506,10 +2541,10 @@ module Aws::ResilienceHub
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
     #
     # @option params [Integer] :max_results
-    #   Indicates the maximum number of drift results to include in the
-    #   response. If more results exist than the specified `MaxResults` value,
-    #   a token is included in the response so that the remaining results can
-    #   be retrieved.
+    #   Maximum number of drift results to include in the response. If more
+    #   results exist than the specified `MaxResults` value, a token is
+    #   included in the response so that the remaining results can be
+    #   retrieved.
     #
     # @option params [String] :next_token
     #   Null, or the token from a previous call to get the next set of
@@ -3184,8 +3219,8 @@ module Aws::ResilienceHub
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
     #
     # @option params [Time,DateTime,Date,Integer,String] :from_last_assessment_time
-    #   Indicates the lower limit of the range that is used to filter
-    #   applications based on their last assessment times.
+    #   Lower limit of the range that is used to filter applications based on
+    #   their last assessment times.
     #
     # @option params [Integer] :max_results
     #   Maximum number of results to include in the response. If more results
@@ -3206,8 +3241,8 @@ module Aws::ResilienceHub
     #   descending order, set this field to `True`.
     #
     # @option params [Time,DateTime,Date,Integer,String] :to_last_assessment_time
-    #   Indicates the upper limit of the range that is used to filter the
-    #   applications based on their last assessment times.
+    #   Upper limit of the range that is used to filter the applications based
+    #   on their last assessment times.
     #
     # @return [Types::ListAppsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3253,6 +3288,81 @@ module Aws::ResilienceHub
     # @param [Hash] params ({})
     def list_apps(params = {}, options = {})
       req = build_request(:list_apps, params)
+      req.send_request(options)
+    end
+
+    # Lists the metrics that can be exported.
+    #
+    # @option params [Array<Types::Condition>] :conditions
+    #   Indicates the list of all the conditions that were applied on the
+    #   metrics.
+    #
+    # @option params [String] :data_source
+    #   Indicates the data source of the metrics.
+    #
+    # @option params [Array<Types::Field>] :fields
+    #   Indicates the list of fields in the data source.
+    #
+    # @option params [Integer] :max_results
+    #   Maximum number of results to include in the response. If more results
+    #   exist than the specified `MaxResults` value, a token is included in
+    #   the response so that the remaining results can be retrieved.
+    #
+    # @option params [String] :next_token
+    #   Null, or the token from a previous call to get the next set of
+    #   results.
+    #
+    # @option params [Array<Types::Sort>] :sorts
+    #   (Optional) Indicates the order in which you want to sort the fields in
+    #   the metrics. By default, the fields are sorted in the ascending order.
+    #
+    # @return [Types::ListMetricsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListMetricsResponse#next_token #next_token} => String
+    #   * {Types::ListMetricsResponse#rows #rows} => Array&lt;Array&lt;String&gt;&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_metrics({
+    #     conditions: [
+    #       {
+    #         field: "String255", # required
+    #         operator: "Equals", # required, accepts Equals, NotEquals, GreaterThen, GreaterOrEquals, LessThen, LessOrEquals
+    #         value: "String255",
+    #       },
+    #     ],
+    #     data_source: "String255",
+    #     fields: [
+    #       {
+    #         aggregation: "Min", # accepts Min, Max, Sum, Avg, Count
+    #         name: "String255", # required
+    #       },
+    #     ],
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     sorts: [
+    #       {
+    #         ascending: false,
+    #         field: "String255", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.rows #=> Array
+    #   resp.rows[0] #=> Array
+    #   resp.rows[0][0] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/ListMetrics AWS API Documentation
+    #
+    # @overload list_metrics(params = {})
+    # @param [Hash] params ({})
+    def list_metrics(params = {}, options = {})
+      req = build_request(:list_metrics, params)
       req.send_request(options)
     end
 
@@ -3355,7 +3465,7 @@ module Aws::ResilienceHub
     #   results.
     #
     # @option params [String] :policy_name
-    #   The name of the policy
+    #   Name of the resiliency policy.
     #
     # @return [Types::ListResiliencyPoliciesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4102,8 +4212,8 @@ module Aws::ResilienceHub
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
     #
     # @option params [required, Array<Types::RejectGroupingRecommendationEntry>] :entries
-    #   Indicates the list of resource grouping recommendations you have
-    #   selected to exclude from your application.
+    #   List of resource grouping recommendations you have selected to exclude
+    #   from your application.
     #
     # @return [Types::RejectResourceGroupingRecommendationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4371,6 +4481,46 @@ module Aws::ResilienceHub
     # @param [Hash] params ({})
     def start_app_assessment(params = {}, options = {})
       req = build_request(:start_app_assessment, params)
+      req.send_request(options)
+    end
+
+    # Initiates the export task of metrics.
+    #
+    # @option params [String] :bucket_name
+    #   (Optional) Specifies the name of the Amazon Simple Storage Service
+    #   bucket where the exported metrics will be stored.
+    #
+    # @option params [String] :client_token
+    #   Used for an idempotency token. A client token is a unique,
+    #   case-sensitive string of up to 64 ASCII characters. You should not
+    #   reuse the same client token for other API requests.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Types::StartMetricsExportResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartMetricsExportResponse#metrics_export_id #metrics_export_id} => String
+    #   * {Types::StartMetricsExportResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_metrics_export({
+    #     bucket_name: "EntityName",
+    #     client_token: "ClientToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.metrics_export_id #=> String
+    #   resp.status #=> String, one of "Pending", "InProgress", "Failed", "Success"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/StartMetricsExport AWS API Documentation
+    #
+    # @overload start_metrics_export(params = {})
+    # @param [Hash] params ({})
+    def start_metrics_export(params = {}, options = {})
+      req = build_request(:start_metrics_export, params)
       req.send_request(options)
     end
 
@@ -4868,8 +5018,8 @@ module Aws::ResilienceHub
     #   resilience policy data can be stored.
     #
     # @option params [Hash<String,Types::FailurePolicy>] :policy
-    #   The type of resiliency policy to be created, including the recovery
-    #   time objective (RTO) and recovery point objective (RPO) in seconds.
+    #   Resiliency policy to be created, including the recovery time objective
+    #   (RTO) and recovery point objective (RPO) in seconds.
     #
     # @option params [required, String] :policy_arn
     #   Amazon Resource Name (ARN) of the resiliency policy. The format for
@@ -4883,10 +5033,10 @@ module Aws::ResilienceHub
     #   [1]: https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html
     #
     # @option params [String] :policy_description
-    #   The description for the policy.
+    #   Description of the resiliency policy.
     #
     # @option params [String] :policy_name
-    #   The name of the policy
+    #   Name of the resiliency policy.
     #
     # @option params [String] :tier
     #   The tier for this resiliency policy, ranging from the highest severity
@@ -4954,7 +5104,7 @@ module Aws::ResilienceHub
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-resiliencehub'
-      context[:gem_version] = '1.43.0'
+      context[:gem_version] = '1.44.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

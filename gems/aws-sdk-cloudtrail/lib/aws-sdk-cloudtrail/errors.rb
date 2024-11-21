@@ -105,6 +105,7 @@ module Aws::CloudTrail
   # * {ResourcePolicyNotValidException}
   # * {ResourceTypeNotSupportedException}
   # * {S3BucketDoesNotExistException}
+  # * {ServiceQuotaExceededException}
   # * {TagsLimitExceededException}
   # * {ThrottlingException}
   # * {TrailAlreadyExistsException}
@@ -893,6 +894,16 @@ module Aws::CloudTrail
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::CloudTrail::Types::S3BucketDoesNotExistException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class ServiceQuotaExceededException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::CloudTrail::Types::ServiceQuotaExceededException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

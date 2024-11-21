@@ -16,19 +16,32 @@ module Aws::IoTJobsDataPlane
 
     ApproximateSecondsBeforeTimedOut = Shapes::IntegerShape.new(name: 'ApproximateSecondsBeforeTimedOut')
     BinaryBlob = Shapes::BlobShape.new(name: 'BinaryBlob')
+    BinaryParameterValue = Shapes::BlobShape.new(name: 'BinaryParameterValue')
+    BooleanParameterValue = Shapes::BooleanShape.new(name: 'BooleanParameterValue')
     CertificateValidationException = Shapes::StructureShape.new(name: 'CertificateValidationException')
+    ClientRequestTokenV2 = Shapes::StringShape.new(name: 'ClientRequestTokenV2')
+    CommandArn = Shapes::StringShape.new(name: 'CommandArn')
+    CommandExecutionId = Shapes::StringShape.new(name: 'CommandExecutionId')
+    CommandExecutionParameterMap = Shapes::MapShape.new(name: 'CommandExecutionParameterMap')
+    CommandExecutionTimeoutInSeconds = Shapes::IntegerShape.new(name: 'CommandExecutionTimeoutInSeconds')
+    CommandParameterName = Shapes::StringShape.new(name: 'CommandParameterName')
+    CommandParameterValue = Shapes::StructureShape.new(name: 'CommandParameterValue')
+    ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     DescribeJobExecutionJobId = Shapes::StringShape.new(name: 'DescribeJobExecutionJobId')
     DescribeJobExecutionRequest = Shapes::StructureShape.new(name: 'DescribeJobExecutionRequest')
     DescribeJobExecutionResponse = Shapes::StructureShape.new(name: 'DescribeJobExecutionResponse')
     DetailsKey = Shapes::StringShape.new(name: 'DetailsKey')
     DetailsMap = Shapes::MapShape.new(name: 'DetailsMap')
     DetailsValue = Shapes::StringShape.new(name: 'DetailsValue')
+    DoubleParameterValue = Shapes::FloatShape.new(name: 'DoubleParameterValue')
     ExecutionNumber = Shapes::IntegerShape.new(name: 'ExecutionNumber')
     ExpectedVersion = Shapes::IntegerShape.new(name: 'ExpectedVersion')
     GetPendingJobExecutionsRequest = Shapes::StructureShape.new(name: 'GetPendingJobExecutionsRequest')
     GetPendingJobExecutionsResponse = Shapes::StructureShape.new(name: 'GetPendingJobExecutionsResponse')
     IncludeExecutionState = Shapes::BooleanShape.new(name: 'IncludeExecutionState')
     IncludeJobDocument = Shapes::BooleanShape.new(name: 'IncludeJobDocument')
+    IntegerParameterValue = Shapes::IntegerShape.new(name: 'IntegerParameterValue')
+    InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     InvalidRequestException = Shapes::StructureShape.new(name: 'InvalidRequestException')
     InvalidStateTransitionException = Shapes::StructureShape.new(name: 'InvalidStateTransitionException')
     JobDocument = Shapes::StringShape.new(name: 'JobDocument')
@@ -39,23 +52,48 @@ module Aws::IoTJobsDataPlane
     JobExecutionSummaryList = Shapes::ListShape.new(name: 'JobExecutionSummaryList')
     JobId = Shapes::StringShape.new(name: 'JobId')
     LastUpdatedAt = Shapes::IntegerShape.new(name: 'LastUpdatedAt')
+    LongParameterValue = Shapes::IntegerShape.new(name: 'LongParameterValue')
     QueuedAt = Shapes::IntegerShape.new(name: 'QueuedAt')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
+    ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
     ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
+    StartCommandExecutionRequest = Shapes::StructureShape.new(name: 'StartCommandExecutionRequest')
+    StartCommandExecutionResponse = Shapes::StructureShape.new(name: 'StartCommandExecutionResponse')
     StartNextPendingJobExecutionRequest = Shapes::StructureShape.new(name: 'StartNextPendingJobExecutionRequest')
     StartNextPendingJobExecutionResponse = Shapes::StructureShape.new(name: 'StartNextPendingJobExecutionResponse')
     StartedAt = Shapes::IntegerShape.new(name: 'StartedAt')
     StepTimeoutInMinutes = Shapes::IntegerShape.new(name: 'StepTimeoutInMinutes')
+    StringParameterValue = Shapes::StringShape.new(name: 'StringParameterValue')
+    TargetArn = Shapes::StringShape.new(name: 'TargetArn')
     TerminalStateException = Shapes::StructureShape.new(name: 'TerminalStateException')
     ThingName = Shapes::StringShape.new(name: 'ThingName')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
+    UnsignedLongParameterValue = Shapes::StringShape.new(name: 'UnsignedLongParameterValue')
     UpdateJobExecutionRequest = Shapes::StructureShape.new(name: 'UpdateJobExecutionRequest')
     UpdateJobExecutionResponse = Shapes::StructureShape.new(name: 'UpdateJobExecutionResponse')
+    ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     VersionNumber = Shapes::IntegerShape.new(name: 'VersionNumber')
     errorMessage = Shapes::StringShape.new(name: 'errorMessage')
+    resourceId = Shapes::StringShape.new(name: 'resourceId')
 
     CertificateValidationException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
     CertificateValidationException.struct_class = Types::CertificateValidationException
+
+    CommandExecutionParameterMap.key = Shapes::ShapeRef.new(shape: CommandParameterName)
+    CommandExecutionParameterMap.value = Shapes::ShapeRef.new(shape: CommandParameterValue)
+
+    CommandParameterValue.add_member(:s, Shapes::ShapeRef.new(shape: StringParameterValue, location_name: "S"))
+    CommandParameterValue.add_member(:b, Shapes::ShapeRef.new(shape: BooleanParameterValue, location_name: "B"))
+    CommandParameterValue.add_member(:i, Shapes::ShapeRef.new(shape: IntegerParameterValue, location_name: "I"))
+    CommandParameterValue.add_member(:l, Shapes::ShapeRef.new(shape: LongParameterValue, location_name: "L"))
+    CommandParameterValue.add_member(:d, Shapes::ShapeRef.new(shape: DoubleParameterValue, location_name: "D"))
+    CommandParameterValue.add_member(:bin, Shapes::ShapeRef.new(shape: BinaryParameterValue, location_name: "BIN"))
+    CommandParameterValue.add_member(:ul, Shapes::ShapeRef.new(shape: UnsignedLongParameterValue, location_name: "UL"))
+    CommandParameterValue.struct_class = Types::CommandParameterValue
+
+    ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
+    ConflictException.add_member(:resource_id, Shapes::ShapeRef.new(shape: resourceId, location_name: "resourceId"))
+    ConflictException.struct_class = Types::ConflictException
 
     DescribeJobExecutionRequest.add_member(:job_id, Shapes::ShapeRef.new(shape: DescribeJobExecutionJobId, required: true, location: "uri", location_name: "jobId"))
     DescribeJobExecutionRequest.add_member(:thing_name, Shapes::ShapeRef.new(shape: ThingName, required: true, location: "uri", location_name: "thingName"))
@@ -75,6 +113,9 @@ module Aws::IoTJobsDataPlane
     GetPendingJobExecutionsResponse.add_member(:in_progress_jobs, Shapes::ShapeRef.new(shape: JobExecutionSummaryList, location_name: "inProgressJobs"))
     GetPendingJobExecutionsResponse.add_member(:queued_jobs, Shapes::ShapeRef.new(shape: JobExecutionSummaryList, location_name: "queuedJobs"))
     GetPendingJobExecutionsResponse.struct_class = Types::GetPendingJobExecutionsResponse
+
+    InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
+    InternalServerException.struct_class = Types::InternalServerException
 
     InvalidRequestException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
     InvalidRequestException.struct_class = Types::InvalidRequestException
@@ -113,8 +154,21 @@ module Aws::IoTJobsDataPlane
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
+    ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
+    ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
+
     ServiceUnavailableException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
     ServiceUnavailableException.struct_class = Types::ServiceUnavailableException
+
+    StartCommandExecutionRequest.add_member(:target_arn, Shapes::ShapeRef.new(shape: TargetArn, required: true, location_name: "targetArn"))
+    StartCommandExecutionRequest.add_member(:command_arn, Shapes::ShapeRef.new(shape: CommandArn, required: true, location_name: "commandArn"))
+    StartCommandExecutionRequest.add_member(:parameters, Shapes::ShapeRef.new(shape: CommandExecutionParameterMap, location_name: "parameters"))
+    StartCommandExecutionRequest.add_member(:execution_timeout_seconds, Shapes::ShapeRef.new(shape: CommandExecutionTimeoutInSeconds, location_name: "executionTimeoutSeconds"))
+    StartCommandExecutionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientRequestTokenV2, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    StartCommandExecutionRequest.struct_class = Types::StartCommandExecutionRequest
+
+    StartCommandExecutionResponse.add_member(:execution_id, Shapes::ShapeRef.new(shape: CommandExecutionId, location_name: "executionId"))
+    StartCommandExecutionResponse.struct_class = Types::StartCommandExecutionResponse
 
     StartNextPendingJobExecutionRequest.add_member(:thing_name, Shapes::ShapeRef.new(shape: ThingName, required: true, location: "uri", location_name: "thingName"))
     StartNextPendingJobExecutionRequest.add_member(:status_details, Shapes::ShapeRef.new(shape: DetailsMap, location_name: "statusDetails"))
@@ -145,6 +199,9 @@ module Aws::IoTJobsDataPlane
     UpdateJobExecutionResponse.add_member(:execution_state, Shapes::ShapeRef.new(shape: JobExecutionState, location_name: "executionState"))
     UpdateJobExecutionResponse.add_member(:job_document, Shapes::ShapeRef.new(shape: JobDocument, location_name: "jobDocument"))
     UpdateJobExecutionResponse.struct_class = Types::UpdateJobExecutionResponse
+
+    ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "message"))
+    ValidationException.struct_class = Types::ValidationException
 
 
     # @api private
@@ -190,6 +247,20 @@ module Aws::IoTJobsDataPlane
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: CertificateValidationException)
+      end)
+
+      api.add_operation(:start_command_execution, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartCommandExecution"
+        o.http_method = "POST"
+        o.http_request_uri = "/command-executions"
+        o.input = Shapes::ShapeRef.new(shape: StartCommandExecutionRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartCommandExecutionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
       api.add_operation(:start_next_pending_job_execution, Seahorse::Model::Operation.new.tap do |o|

@@ -143,6 +143,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#create_base_path_mapping-instance_method
       def create_base_path_mapping: (
                                       domain_name: ::String,
+                                      ?domain_name_id: ::String,
                                       ?base_path: ::String,
                                       rest_api_id: ::String,
                                       ?stage: ::String
@@ -212,6 +213,8 @@ module Aws
       interface _CreateDomainNameResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DomainName]
         def domain_name: () -> ::String
+        def domain_name_id: () -> ::String
+        def domain_name_arn: () -> ::String
         def certificate_name: () -> ::String
         def certificate_arn: () -> ::String
         def certificate_upload_date: () -> ::Time
@@ -228,6 +231,8 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def mutual_tls_authentication: () -> Types::MutualTlsAuthentication
         def ownership_verification_certificate_arn: () -> ::String
+        def management_policy: () -> ::String
+        def policy: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#create_domain_name-instance_method
       def create_domain_name: (
@@ -249,9 +254,27 @@ module Aws
                                   truststore_uri: ::String?,
                                   truststore_version: ::String?
                                 },
-                                ?ownership_verification_certificate_arn: ::String
+                                ?ownership_verification_certificate_arn: ::String,
+                                ?policy: ::String
                               ) -> _CreateDomainNameResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDomainNameResponseSuccess
+
+      interface _CreateDomainNameAccessAssociationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DomainNameAccessAssociation]
+        def domain_name_access_association_arn: () -> ::String
+        def domain_name_arn: () -> ::String
+        def access_association_source_type: () -> ("VPCE")
+        def access_association_source: () -> ::String
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#create_domain_name_access_association-instance_method
+      def create_domain_name_access_association: (
+                                                   domain_name_arn: ::String,
+                                                   access_association_source_type: ("VPCE"),
+                                                   access_association_source: ::String,
+                                                   ?tags: Hash[::String, ::String]
+                                                 ) -> _CreateDomainNameAccessAssociationResponseSuccess
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDomainNameAccessAssociationResponseSuccess
 
       interface _CreateModelResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::Model]
@@ -468,6 +491,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#delete_base_path_mapping-instance_method
       def delete_base_path_mapping: (
                                       domain_name: ::String,
+                                      ?domain_name_id: ::String,
                                       base_path: ::String
                                     ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
@@ -501,9 +525,16 @@ module Aws
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#delete_domain_name-instance_method
       def delete_domain_name: (
-                                domain_name: ::String
+                                domain_name: ::String,
+                                ?domain_name_id: ::String
                               ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#delete_domain_name_access_association-instance_method
+      def delete_domain_name_access_association: (
+                                                   domain_name_access_association_arn: ::String
+                                                 ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#delete_gateway_response-instance_method
       def delete_gateway_response: (
@@ -719,6 +750,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#get_base_path_mapping-instance_method
       def get_base_path_mapping: (
                                    domain_name: ::String,
+                                   ?domain_name_id: ::String,
                                    base_path: ::String
                                  ) -> _GetBasePathMappingResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBasePathMappingResponseSuccess
@@ -731,6 +763,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#get_base_path_mappings-instance_method
       def get_base_path_mappings: (
                                     domain_name: ::String,
+                                    ?domain_name_id: ::String,
                                     ?position: ::String,
                                     ?limit: ::Integer
                                   ) -> _GetBasePathMappingsResponseSuccess
@@ -850,6 +883,8 @@ module Aws
       interface _GetDomainNameResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DomainName]
         def domain_name: () -> ::String
+        def domain_name_id: () -> ::String
+        def domain_name_arn: () -> ::String
         def certificate_name: () -> ::String
         def certificate_arn: () -> ::String
         def certificate_upload_date: () -> ::Time
@@ -866,12 +901,28 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def mutual_tls_authentication: () -> Types::MutualTlsAuthentication
         def ownership_verification_certificate_arn: () -> ::String
+        def management_policy: () -> ::String
+        def policy: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#get_domain_name-instance_method
       def get_domain_name: (
-                             domain_name: ::String
+                             domain_name: ::String,
+                             ?domain_name_id: ::String
                            ) -> _GetDomainNameResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDomainNameResponseSuccess
+
+      interface _GetDomainNameAccessAssociationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DomainNameAccessAssociations]
+        def position: () -> ::String
+        def items: () -> ::Array[Types::DomainNameAccessAssociation]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#get_domain_name_access_associations-instance_method
+      def get_domain_name_access_associations: (
+                                                 ?position: ::String,
+                                                 ?limit: ::Integer,
+                                                 ?resource_owner: ("SELF" | "OTHER_ACCOUNTS")
+                                               ) -> _GetDomainNameAccessAssociationsResponseSuccess
+                                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDomainNameAccessAssociationsResponseSuccess
 
       interface _GetDomainNamesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DomainNames]
@@ -881,7 +932,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#get_domain_names-instance_method
       def get_domain_names: (
                               ?position: ::String,
-                              ?limit: ::Integer
+                              ?limit: ::Integer,
+                              ?resource_owner: ("SELF" | "OTHER_ACCOUNTS")
                             ) -> _GetDomainNamesResponseSuccess
                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDomainNamesResponseSuccess
 
@@ -1543,6 +1595,13 @@ module Aws
                         ) -> _PutRestApiResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutRestApiResponseSuccess
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#reject_domain_name_access_association-instance_method
+      def reject_domain_name_access_association: (
+                                                   domain_name_access_association_arn: ::String,
+                                                   domain_name_arn: ::String
+                                                 ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#tag_resource-instance_method
       def tag_resource: (
                           resource_arn: ::String,
@@ -1687,6 +1746,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#update_base_path_mapping-instance_method
       def update_base_path_mapping: (
                                       domain_name: ::String,
+                                      ?domain_name_id: ::String,
                                       base_path: ::String,
                                       ?patch_operations: Array[
                                         {
@@ -1789,6 +1849,8 @@ module Aws
       interface _UpdateDomainNameResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DomainName]
         def domain_name: () -> ::String
+        def domain_name_id: () -> ::String
+        def domain_name_arn: () -> ::String
         def certificate_name: () -> ::String
         def certificate_arn: () -> ::String
         def certificate_upload_date: () -> ::Time
@@ -1805,10 +1867,13 @@ module Aws
         def tags: () -> ::Hash[::String, ::String]
         def mutual_tls_authentication: () -> Types::MutualTlsAuthentication
         def ownership_verification_certificate_arn: () -> ::String
+        def management_policy: () -> ::String
+        def policy: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/APIGateway/Client.html#update_domain_name-instance_method
       def update_domain_name: (
                                 domain_name: ::String,
+                                ?domain_name_id: ::String,
                                 ?patch_operations: Array[
                                   {
                                     op: ("add" | "remove" | "replace" | "move" | "copy" | "test")?,

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.110.0 (2024-11-21)
+------------------
+
+* Feature - Added support for custom domain names for private APIs.
+
 1.109.0 (2024-11-06)
 ------------------
 

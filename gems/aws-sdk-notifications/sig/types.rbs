@@ -1,0 +1,467 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::Notifications
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class AssociateChannelRequest
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      SENSITIVE: []
+    end
+
+    class AssociateChannelResponse < Aws::EmptyStructure
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateEventRuleRequest
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor source: ::String
+      attr_accessor event_type: ::String
+      attr_accessor event_pattern: ::String
+      attr_accessor regions: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class CreateEventRuleResponse
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor status_summary_by_region: ::Hash[::String, Types::EventRuleStatusSummary]
+      SENSITIVE: []
+    end
+
+    class CreateNotificationConfigurationRequest
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor aggregation_duration: ("LONG" | "SHORT" | "NONE")
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateNotificationConfigurationResponse
+      attr_accessor arn: ::String
+      attr_accessor status: ("ACTIVE" | "PARTIALLY_ACTIVE" | "INACTIVE" | "DELETING")
+      SENSITIVE: []
+    end
+
+    class DeleteEventRuleRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteEventRuleResponse < Aws::EmptyStructure
+    end
+
+    class DeleteNotificationConfigurationRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteNotificationConfigurationResponse < Aws::EmptyStructure
+    end
+
+    class DeregisterNotificationHubRequest
+      attr_accessor notification_hub_region: ::String
+      SENSITIVE: []
+    end
+
+    class DeregisterNotificationHubResponse
+      attr_accessor notification_hub_region: ::String
+      attr_accessor status_summary: Types::NotificationHubStatusSummary
+      SENSITIVE: []
+    end
+
+    class Dimension
+      attr_accessor name: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class DisassociateChannelRequest
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DisassociateChannelResponse < Aws::EmptyStructure
+    end
+
+    class EventRuleStatusSummary
+      attr_accessor status: ("ACTIVE" | "INACTIVE" | "CREATING" | "UPDATING" | "DELETING")
+      attr_accessor reason: ::String
+      SENSITIVE: []
+    end
+
+    class EventRuleStructure
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor source: ::String
+      attr_accessor event_type: ::String
+      attr_accessor event_pattern: ::String
+      attr_accessor regions: ::Array[::String]
+      attr_accessor managed_rules: ::Array[::String]
+      attr_accessor status_summary_by_region: ::Hash[::String, Types::EventRuleStatusSummary]
+      SENSITIVE: []
+    end
+
+    class GetEventRuleRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetEventRuleResponse
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor source: ::String
+      attr_accessor event_type: ::String
+      attr_accessor event_pattern: ::String
+      attr_accessor regions: ::Array[::String]
+      attr_accessor managed_rules: ::Array[::String]
+      attr_accessor status_summary_by_region: ::Hash[::String, Types::EventRuleStatusSummary]
+      SENSITIVE: []
+    end
+
+    class GetNotificationConfigurationRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetNotificationConfigurationResponse
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor status: ("ACTIVE" | "PARTIALLY_ACTIVE" | "INACTIVE" | "DELETING")
+      attr_accessor creation_time: ::Time
+      attr_accessor aggregation_duration: ("LONG" | "SHORT" | "NONE")
+      SENSITIVE: []
+    end
+
+    class GetNotificationEventRequest
+      attr_accessor arn: ::String
+      attr_accessor locale: ("de_DE" | "en_CA" | "en_US" | "en_UK" | "es_ES" | "fr_CA" | "fr_FR" | "id_ID" | "it_IT" | "ja_JP" | "ko_KR" | "pt_BR" | "tr_TR" | "zh_CN" | "zh_TW")
+      SENSITIVE: []
+    end
+
+    class GetNotificationEventResponse
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor content: Types::NotificationEvent
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListChannelsRequest
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListChannelsResponse
+      attr_accessor next_token: ::String
+      attr_accessor channels: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class ListEventRulesRequest
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListEventRulesResponse
+      attr_accessor next_token: ::String
+      attr_accessor event_rules: ::Array[Types::EventRuleStructure]
+      SENSITIVE: []
+    end
+
+    class ListNotificationConfigurationsRequest
+      attr_accessor event_rule_source: ::String
+      attr_accessor channel_arn: ::String
+      attr_accessor status: ("ACTIVE" | "PARTIALLY_ACTIVE" | "INACTIVE" | "DELETING")
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListNotificationConfigurationsResponse
+      attr_accessor next_token: ::String
+      attr_accessor notification_configurations: ::Array[Types::NotificationConfigurationStructure]
+      SENSITIVE: []
+    end
+
+    class ListNotificationEventsRequest
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor locale: ("de_DE" | "en_CA" | "en_US" | "en_UK" | "es_ES" | "fr_CA" | "fr_FR" | "id_ID" | "it_IT" | "ja_JP" | "ko_KR" | "pt_BR" | "tr_TR" | "zh_CN" | "zh_TW")
+      attr_accessor source: ::String
+      attr_accessor include_child_events: bool
+      attr_accessor aggregate_notification_event_arn: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListNotificationEventsResponse
+      attr_accessor next_token: ::String
+      attr_accessor notification_events: ::Array[Types::NotificationEventOverview]
+      SENSITIVE: []
+    end
+
+    class ListNotificationHubsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListNotificationHubsResponse
+      attr_accessor notification_hubs: ::Array[Types::NotificationHubOverview]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceResponse
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class MediaElement
+      attr_accessor media_id: ::String
+      attr_accessor type: ("IMAGE")
+      attr_accessor url: ::String
+      attr_accessor caption: ::String
+      SENSITIVE: []
+    end
+
+    class MessageComponents
+      attr_accessor headline: ::String
+      attr_accessor paragraph_summary: ::String
+      attr_accessor complete_description: ::String
+      attr_accessor dimensions: ::Array[Types::Dimension]
+      SENSITIVE: []
+    end
+
+    class MessageComponentsSummary
+      attr_accessor headline: ::String
+      SENSITIVE: []
+    end
+
+    class NotificationConfigurationStructure
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor status: ("ACTIVE" | "PARTIALLY_ACTIVE" | "INACTIVE" | "DELETING")
+      attr_accessor creation_time: ::Time
+      attr_accessor aggregation_duration: ("LONG" | "SHORT" | "NONE")
+      SENSITIVE: []
+    end
+
+    class NotificationEvent
+      attr_accessor schema_version: ("v1.0")
+      attr_accessor id: ::String
+      attr_accessor source_event_metadata: Types::SourceEventMetadata
+      attr_accessor message_components: Types::MessageComponents
+      attr_accessor source_event_detail_url: ::String
+      attr_accessor source_event_detail_url_display_text: ::String
+      attr_accessor notification_type: ("ALERT" | "WARNING" | "ANNOUNCEMENT" | "INFORMATIONAL")
+      attr_accessor event_status: ("HEALTHY" | "UNHEALTHY")
+      attr_accessor aggregation_event_type: ("AGGREGATE" | "CHILD" | "NONE")
+      attr_accessor aggregate_notification_event_arn: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor text_parts: ::Hash[::String, Types::TextPartValue]
+      attr_accessor media: ::Array[Types::MediaElement]
+      SENSITIVE: []
+    end
+
+    class NotificationEventOverview
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor related_account: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor notification_event: Types::NotificationEventSummary
+      attr_accessor aggregation_event_type: ("AGGREGATE" | "CHILD" | "NONE")
+      attr_accessor aggregate_notification_event_arn: ::String
+      SENSITIVE: []
+    end
+
+    class NotificationEventSummary
+      attr_accessor schema_version: ("v1.0")
+      attr_accessor source_event_metadata: Types::SourceEventMetadataSummary
+      attr_accessor message_components: Types::MessageComponentsSummary
+      attr_accessor event_status: ("HEALTHY" | "UNHEALTHY")
+      attr_accessor notification_type: ("ALERT" | "WARNING" | "ANNOUNCEMENT" | "INFORMATIONAL")
+      SENSITIVE: []
+    end
+
+    class NotificationHubOverview
+      attr_accessor notification_hub_region: ::String
+      attr_accessor status_summary: Types::NotificationHubStatusSummary
+      attr_accessor creation_time: ::Time
+      attr_accessor last_activation_time: ::Time
+      SENSITIVE: []
+    end
+
+    class NotificationHubStatusSummary
+      attr_accessor status: ("ACTIVE" | "REGISTERING" | "DEREGISTERING" | "INACTIVE")
+      attr_accessor reason: ::String
+      SENSITIVE: []
+    end
+
+    class RegisterNotificationHubRequest
+      attr_accessor notification_hub_region: ::String
+      SENSITIVE: []
+    end
+
+    class RegisterNotificationHubResponse
+      attr_accessor notification_hub_region: ::String
+      attr_accessor status_summary: Types::NotificationHubStatusSummary
+      attr_accessor creation_time: ::Time
+      attr_accessor last_activation_time: ::Time
+      SENSITIVE: []
+    end
+
+    class Resource
+      attr_accessor id: ::String
+      attr_accessor arn: ::String
+      attr_accessor detail_url: ::String
+      attr_accessor tags: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      attr_accessor resource_type: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      SENSITIVE: []
+    end
+
+    class SourceEventMetadata
+      attr_accessor event_type_version: ::String
+      attr_accessor source_event_id: ::String
+      attr_accessor event_origin_region: ::String
+      attr_accessor related_account: ::String
+      attr_accessor source: ::String
+      attr_accessor event_occurrence_time: ::Time
+      attr_accessor event_type: ::String
+      attr_accessor related_resources: ::Array[Types::Resource]
+      SENSITIVE: []
+    end
+
+    class SourceEventMetadataSummary
+      attr_accessor event_origin_region: ::String
+      attr_accessor source: ::String
+      attr_accessor event_type: ::String
+      SENSITIVE: []
+    end
+
+    class TagResourceRequest
+      attr_accessor arn: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class TextPartValue
+      attr_accessor type: ("LOCALIZED_TEXT" | "PLAIN_TEXT" | "URL")
+      attr_accessor display_text: ::String
+      attr_accessor text_by_locale: ::Hash[("de_DE" | "en_CA" | "en_US" | "en_UK" | "es_ES" | "fr_CA" | "fr_FR" | "id_ID" | "it_IT" | "ja_JP" | "ko_KR" | "pt_BR" | "tr_TR" | "zh_CN" | "zh_TW"), ::String]
+      attr_accessor url: ::String
+      SENSITIVE: []
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class UntagResourceRequest
+      attr_accessor arn: ::String
+      attr_accessor tag_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UntagResourceResponse < Aws::EmptyStructure
+    end
+
+    class UpdateEventRuleRequest
+      attr_accessor arn: ::String
+      attr_accessor event_pattern: ::String
+      attr_accessor regions: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UpdateEventRuleResponse
+      attr_accessor arn: ::String
+      attr_accessor notification_configuration_arn: ::String
+      attr_accessor status_summary_by_region: ::Hash[::String, Types::EventRuleStatusSummary]
+      SENSITIVE: []
+    end
+
+    class UpdateNotificationConfigurationRequest
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor aggregation_duration: ("LONG" | "SHORT" | "NONE")
+      SENSITIVE: []
+    end
+
+    class UpdateNotificationConfigurationResponse
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      attr_accessor reason: ("fieldValidationFailed" | "other")
+      attr_accessor field_list: ::Array[Types::ValidationExceptionField]
+      SENSITIVE: []
+    end
+
+    class ValidationExceptionField
+      attr_accessor name: ::String
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+  end
+end

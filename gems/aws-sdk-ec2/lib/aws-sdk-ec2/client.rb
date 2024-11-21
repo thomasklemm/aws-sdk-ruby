@@ -4066,6 +4066,18 @@ module Aws::EC2
     # capacity, and changes the Capacity Reservation's state to
     # `cancelled`.
     #
+    # You can cancel a Capacity Reservation that is in the following states:
+    #
+    # * `assessing`
+    #
+    # * `active` and there is no commitment duration or the commitment
+    #   duration has elapsed. You can't cancel a future-dated Capacity
+    #   Reservation during the commitment duration.
+    #
+    # If a future-dated Capacity Reservation enters the `delayed` state, the
+    # commitment duration is waived, and you can cancel it as soon as it
+    # enters the `active` state.
+    #
     # Instances running in the reserved capacity continue running until you
     # stop them. Stopped instances that target the Capacity Reservation can
     # no longer launch. Modify these instances to either target a different
@@ -5070,30 +5082,28 @@ module Aws::EC2
     end
 
     # Creates a new Capacity Reservation with the specified attributes.
-    #
     # Capacity Reservations enable you to reserve capacity for your Amazon
-    # EC2 instances in a specific Availability Zone for any duration. This
-    # gives you the flexibility to selectively add capacity reservations and
-    # still get the Regional RI discounts for that usage. By creating
-    # Capacity Reservations, you ensure that you always have access to
-    # Amazon EC2 capacity when you need it, for as long as you need it. For
-    # more information, see [Capacity Reservations][1] in the *Amazon EC2
-    # User Guide*.
+    # EC2 instances in a specific Availability Zone for any duration.
     #
-    # Your request to create a Capacity Reservation could fail if Amazon EC2
-    # does not have sufficient capacity to fulfill the request. If your
-    # request fails due to Amazon EC2 capacity constraints, either try again
-    # at a later time, try in a different Availability Zone, or request a
-    # smaller capacity reservation. If your application is flexible across
-    # instance types and sizes, try to create a Capacity Reservation with
-    # different instance attributes.
+    # You can create a Capacity Reservation at any time, and you can choose
+    # when it starts. You can create a Capacity Reservation for immediate
+    # use or you can request a Capacity Reservation for a future date.
     #
-    # Your request could also fail if the requested quantity exceeds your
-    # On-Demand Instance limit for the selected instance type. If your
-    # request fails due to limit constraints, increase your On-Demand
-    # Instance limit for the required instance type and try again. For more
-    # information about increasing your instance limits, see [Amazon EC2
-    # Service Quotas][2] in the *Amazon EC2 User Guide*.
+    # For more information, see [ Reserve compute capacity with On-Demand
+    # Capacity Reservations][1] in the *Amazon EC2 User Guide*.
+    #
+    # Your request to create a Capacity Reservation could fail if:
+    #
+    # * Amazon EC2 does not have sufficient capacity. In this case, try
+    #   again at a later time, try in a different Availability Zone, or
+    #   request a smaller Capacity Reservation. If your workload is flexible
+    #   across instance types and sizes, try with different instance
+    #   attributes.
+    #
+    # * The requested quantity exceeds your On-Demand Instance quota. In
+    #   this case, increase your On-Demand Instance quota for the requested
+    #   instance type and try again. For more information, see [ Amazon EC2
+    #   Service Quotas][2] in the *Amazon EC2 User Guide*.
     #
     #
     #
@@ -5110,8 +5120,15 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
     #
     # @option params [required, String] :instance_type
-    #   The instance type for which to reserve capacity. For more information,
-    #   see [Instance types][1] in the *Amazon EC2 User Guide*.
+    #   The instance type for which to reserve capacity.
+    #
+    #   <note markdown="1"> You can request future-dated Capacity Reservations for instance types
+    #   in the C, M, R, I, and T instance families only.
+    #
+    #    </note>
+    #
+    #   For more information, see [Instance types][1] in the *Amazon EC2 User
+    #   Guide*.
     #
     #
     #
@@ -5139,6 +5156,13 @@ module Aws::EC2
     #
     # @option params [required, Integer] :instance_count
     #   The number of instances for which to reserve capacity.
+    #
+    #   <note markdown="1"> You can request future-dated Capacity Reservations for an instance
+    #   count with a minimum of 100 VPUs. For example, if you request a
+    #   future-dated Capacity Reservation for `m5.xlarge` instances, you must
+    #   request at least 25 instances (*25 * m5.xlarge = 100 vCPUs*).
+    #
+    #    </note>
     #
     #   Valid range: 1 - 1000
     #
@@ -5168,6 +5192,9 @@ module Aws::EC2
     #   specify 5/31/2019, 13:30:55, the Capacity Reservation is guaranteed to
     #   end between 13:30:55 and 14:30:55 on 5/31/2019.
     #
+    #   If you are requesting a future-dated Capacity Reservation, you can't
+    #   specify an end date and time that is within the commitment duration.
+    #
     # @option params [String] :end_date_type
     #   Indicates the way in which the Capacity Reservation ends. A Capacity
     #   Reservation can have one of the following end types:
@@ -5195,6 +5222,11 @@ module Aws::EC2
     #     Zone), and explicitly target the Capacity Reservation. This ensures
     #     that only permitted instances can use the reserved capacity.
     #
+    #   <note markdown="1"> If you are requesting a future-dated Capacity Reservation, you must
+    #   specify `targeted`.
+    #
+    #    </note>
+    #
     #   Default: `open`
     #
     # @option params [Array<Types::TagSpecification>] :tag_specifications
@@ -5207,10 +5239,18 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #
     # @option params [String] :outpost_arn
+    #   <note markdown="1"> Not supported for future-dated Capacity Reservations.
+    #
+    #    </note>
+    #
     #   The Amazon Resource Name (ARN) of the Outpost on which to create the
     #   Capacity Reservation.
     #
     # @option params [String] :placement_group_arn
+    #   <note markdown="1"> Not supported for future-dated Capacity Reservations.
+    #
+    #    </note>
+    #
     #   The Amazon Resource Name (ARN) of the cluster placement group in which
     #   to create the Capacity Reservation. For more information, see [
     #   Capacity Reservations for cluster placement groups][1] in the *Amazon
@@ -5219,6 +5259,50 @@ module Aws::EC2
     #
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-cpg.html
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :start_date
+    #   <note markdown="1"> Required for future-dated Capacity Reservations only. To create a
+    #   Capacity Reservation for immediate use, omit this parameter.
+    #
+    #    </note>
+    #
+    #   The date and time at which the future-dated Capacity Reservation
+    #   should become available for use, in the ISO8601 format in the UTC time
+    #   zone (`YYYY-MM-DDThh:mm:ss.sssZ`).
+    #
+    #   You can request a future-dated Capacity Reservation between 5 and 120
+    #   days in advance.
+    #
+    # @option params [Integer] :commitment_duration
+    #   <note markdown="1"> Required for future-dated Capacity Reservations only. To create a
+    #   Capacity Reservation for immediate use, omit this parameter.
+    #
+    #    </note>
+    #
+    #   Specify a commitment duration, in seconds, for the future-dated
+    #   Capacity Reservation.
+    #
+    #   The commitment duration is a minimum duration for which you commit to
+    #   having the future-dated Capacity Reservation in the `active` state in
+    #   your account after it has been delivered.
+    #
+    #   For more information, see [ Commitment duration][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/cr-concepts.html#cr-commitment-duration
+    #
+    # @option params [String] :delivery_preference
+    #   <note markdown="1"> Required for future-dated Capacity Reservations only. To create a
+    #   Capacity Reservation for immediate use, omit this parameter.
+    #
+    #    </note>
+    #
+    #   Indicates that the requested capacity will be delivered in addition to
+    #   any running instances or reserved capacity that you have in your
+    #   account at the requested date and time.
+    #
+    #   The only supported value is `incremental`.
     #
     # @return [Types::CreateCapacityReservationResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -5253,6 +5337,9 @@ module Aws::EC2
     #     dry_run: false,
     #     outpost_arn: "OutpostArn",
     #     placement_group_arn: "PlacementGroupArn",
+    #     start_date: Time.now,
+    #     commitment_duration: 1,
+    #     delivery_preference: "fixed", # accepts fixed, incremental
     #   })
     #
     # @example Response structure
@@ -5269,7 +5356,7 @@ module Aws::EC2
     #   resp.capacity_reservation.available_instance_count #=> Integer
     #   resp.capacity_reservation.ebs_optimized #=> Boolean
     #   resp.capacity_reservation.ephemeral_storage #=> Boolean
-    #   resp.capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.capacity_reservation.start_date #=> Time
     #   resp.capacity_reservation.end_date #=> Time
     #   resp.capacity_reservation.end_date_type #=> String, one of "unlimited", "limited"
@@ -5286,6 +5373,9 @@ module Aws::EC2
     #   resp.capacity_reservation.capacity_allocations[0].count #=> Integer
     #   resp.capacity_reservation.reservation_type #=> String, one of "default", "capacity-block"
     #   resp.capacity_reservation.unused_reservation_billing_owner_id #=> String
+    #   resp.capacity_reservation.commitment_info.committed_instance_count #=> Integer
+    #   resp.capacity_reservation.commitment_info.commitment_end_date #=> Time
+    #   resp.capacity_reservation.delivery_preference #=> String, one of "fixed", "incremental"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateCapacityReservation AWS API Documentation
     #
@@ -5370,7 +5460,7 @@ module Aws::EC2
     #   resp.source_capacity_reservation.available_instance_count #=> Integer
     #   resp.source_capacity_reservation.ebs_optimized #=> Boolean
     #   resp.source_capacity_reservation.ephemeral_storage #=> Boolean
-    #   resp.source_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.source_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.source_capacity_reservation.start_date #=> Time
     #   resp.source_capacity_reservation.end_date #=> Time
     #   resp.source_capacity_reservation.end_date_type #=> String, one of "unlimited", "limited"
@@ -5387,6 +5477,9 @@ module Aws::EC2
     #   resp.source_capacity_reservation.capacity_allocations[0].count #=> Integer
     #   resp.source_capacity_reservation.reservation_type #=> String, one of "default", "capacity-block"
     #   resp.source_capacity_reservation.unused_reservation_billing_owner_id #=> String
+    #   resp.source_capacity_reservation.commitment_info.committed_instance_count #=> Integer
+    #   resp.source_capacity_reservation.commitment_info.commitment_end_date #=> Time
+    #   resp.source_capacity_reservation.delivery_preference #=> String, one of "fixed", "incremental"
     #   resp.destination_capacity_reservation.capacity_reservation_id #=> String
     #   resp.destination_capacity_reservation.owner_id #=> String
     #   resp.destination_capacity_reservation.capacity_reservation_arn #=> String
@@ -5399,7 +5492,7 @@ module Aws::EC2
     #   resp.destination_capacity_reservation.available_instance_count #=> Integer
     #   resp.destination_capacity_reservation.ebs_optimized #=> Boolean
     #   resp.destination_capacity_reservation.ephemeral_storage #=> Boolean
-    #   resp.destination_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.destination_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.destination_capacity_reservation.start_date #=> Time
     #   resp.destination_capacity_reservation.end_date #=> Time
     #   resp.destination_capacity_reservation.end_date_type #=> String, one of "unlimited", "limited"
@@ -5416,6 +5509,9 @@ module Aws::EC2
     #   resp.destination_capacity_reservation.capacity_allocations[0].count #=> Integer
     #   resp.destination_capacity_reservation.reservation_type #=> String, one of "default", "capacity-block"
     #   resp.destination_capacity_reservation.unused_reservation_billing_owner_id #=> String
+    #   resp.destination_capacity_reservation.commitment_info.committed_instance_count #=> Integer
+    #   resp.destination_capacity_reservation.commitment_info.commitment_end_date #=> Time
+    #   resp.destination_capacity_reservation.delivery_preference #=> String, one of "fixed", "incremental"
     #   resp.instance_count #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateCapacityReservationBySplitting AWS API Documentation
@@ -8354,6 +8450,8 @@ module Aws::EC2
     #   resp.ipam_resource_discovery.tags #=> Array
     #   resp.ipam_resource_discovery.tags[0].key #=> String
     #   resp.ipam_resource_discovery.tags[0].value #=> String
+    #   resp.ipam_resource_discovery.organizational_unit_exclusions #=> Array
+    #   resp.ipam_resource_discovery.organizational_unit_exclusions[0].organizations_entity_path #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateIpamResourceDiscovery AWS API Documentation
     #
@@ -15138,13 +15236,13 @@ module Aws::EC2
     # @option params [required, String] :internet_gateway_exclusion_mode
     #   The exclusion mode for internet gateway traffic.
     #
-    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
-    #     from the excluded VPCs and subnets.
+    #   * `allow-bidirectional`: Allow all internet traffic to and from the
+    #     excluded VPCs and subnets.
     #
-    #   * `egress-access-allowed`: Allow outbound internet traffic from the
-    #     excluded VPCs and subnets. Block inbound internet traffic to the
-    #     excluded VPCs and subnets. Only applies when VPC Block Public Access
-    #     is set to Bidirectional.
+    #   * `allow-egress`: Allow outbound internet traffic from the excluded
+    #     VPCs and subnets. Block inbound internet traffic to the excluded
+    #     VPCs and subnets. Only applies when VPC Block Public Access is set
+    #     to Bidirectional.
     #
     # @option params [Array<Types::TagSpecification>] :tag_specifications
     #   `tag` - The key/value combination of a tag assigned to the resource.
@@ -16938,6 +17036,8 @@ module Aws::EC2
     #   resp.ipam_resource_discovery.tags #=> Array
     #   resp.ipam_resource_discovery.tags[0].key #=> String
     #   resp.ipam_resource_discovery.tags[0].value #=> String
+    #   resp.ipam_resource_discovery.organizational_unit_exclusions #=> Array
+    #   resp.ipam_resource_discovery.organizational_unit_exclusions[0].organizations_entity_path #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteIpamResourceDiscovery AWS API Documentation
     #
@@ -20992,6 +21092,167 @@ module Aws::EC2
       req.send_request(options)
     end
 
+    # Describes the events for the specified Capacity Block extension during
+    # the specified time.
+    #
+    # @option params [Array<String>] :capacity_reservation_ids
+    #   The IDs of Capacity Block reservations that you want to display the
+    #   history for.
+    #
+    # @option params [String] :next_token
+    #   The token to use to retrieve the next page of results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return for this request. To get the
+    #   next page of items, make another request with the token returned in
+    #   the output. For more information, see [Pagination][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination
+    #
+    # @option params [Array<Types::Filter>] :filters
+    #   One or more filters
+    #
+    #   * `availability-zone` - The Availability Zone of the extension.
+    #
+    #   * `availability-zone-id` - The Availability Zone ID of the extension.
+    #
+    #   * `capacity-block-extension-offering-id` - The ID of the extension
+    #     offering.
+    #
+    #   * `capacity-block-extension-status` - The status of the extension
+    #     (`payment-pending` \| `payment-failed` \| `payment-succeeded`).
+    #
+    #   * `capacity-reservation-id` - The reservation ID of the extension.
+    #
+    #   * `instance-type` - The instance type of the extension.
+    #
+    # @option params [Boolean] :dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #
+    # @return [Types::DescribeCapacityBlockExtensionHistoryResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeCapacityBlockExtensionHistoryResult#capacity_block_extensions #capacity_block_extensions} => Array&lt;Types::CapacityBlockExtension&gt;
+    #   * {Types::DescribeCapacityBlockExtensionHistoryResult#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_capacity_block_extension_history({
+    #     capacity_reservation_ids: ["CapacityReservationId"],
+    #     next_token: "String",
+    #     max_results: 1,
+    #     filters: [
+    #       {
+    #         name: "String",
+    #         values: ["String"],
+    #       },
+    #     ],
+    #     dry_run: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.capacity_block_extensions #=> Array
+    #   resp.capacity_block_extensions[0].capacity_reservation_id #=> String
+    #   resp.capacity_block_extensions[0].instance_type #=> String
+    #   resp.capacity_block_extensions[0].instance_count #=> Integer
+    #   resp.capacity_block_extensions[0].availability_zone #=> String
+    #   resp.capacity_block_extensions[0].availability_zone_id #=> String
+    #   resp.capacity_block_extensions[0].capacity_block_extension_offering_id #=> String
+    #   resp.capacity_block_extensions[0].capacity_block_extension_duration_hours #=> Integer
+    #   resp.capacity_block_extensions[0].capacity_block_extension_status #=> String, one of "payment-pending", "payment-failed", "payment-succeeded"
+    #   resp.capacity_block_extensions[0].capacity_block_extension_purchase_date #=> Time
+    #   resp.capacity_block_extensions[0].capacity_block_extension_start_date #=> Time
+    #   resp.capacity_block_extensions[0].capacity_block_extension_end_date #=> Time
+    #   resp.capacity_block_extensions[0].upfront_fee #=> String
+    #   resp.capacity_block_extensions[0].currency_code #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityBlockExtensionHistory AWS API Documentation
+    #
+    # @overload describe_capacity_block_extension_history(params = {})
+    # @param [Hash] params ({})
+    def describe_capacity_block_extension_history(params = {}, options = {})
+      req = build_request(:describe_capacity_block_extension_history, params)
+      req.send_request(options)
+    end
+
+    # Describes Capacity Block extension offerings available for purchase in
+    # the Amazon Web Services Region that you're currently using.
+    #
+    # @option params [Boolean] :dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #
+    # @option params [required, Integer] :capacity_block_extension_duration_hours
+    #   The duration of the Capacity Block extension offering in hours.
+    #
+    # @option params [required, String] :capacity_reservation_id
+    #   The ID of the Capacity reservation to be extended.
+    #
+    # @option params [String] :next_token
+    #   The token to use to retrieve the next page of results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return for this request. To get the
+    #   next page of items, make another request with the token returned in
+    #   the output. For more information, see [Pagination][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination
+    #
+    # @return [Types::DescribeCapacityBlockExtensionOfferingsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeCapacityBlockExtensionOfferingsResult#capacity_block_extension_offerings #capacity_block_extension_offerings} => Array&lt;Types::CapacityBlockExtensionOffering&gt;
+    #   * {Types::DescribeCapacityBlockExtensionOfferingsResult#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_capacity_block_extension_offerings({
+    #     dry_run: false,
+    #     capacity_block_extension_duration_hours: 1, # required
+    #     capacity_reservation_id: "CapacityReservationId", # required
+    #     next_token: "String",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.capacity_block_extension_offerings #=> Array
+    #   resp.capacity_block_extension_offerings[0].capacity_block_extension_offering_id #=> String
+    #   resp.capacity_block_extension_offerings[0].instance_type #=> String
+    #   resp.capacity_block_extension_offerings[0].instance_count #=> Integer
+    #   resp.capacity_block_extension_offerings[0].availability_zone #=> String
+    #   resp.capacity_block_extension_offerings[0].availability_zone_id #=> String
+    #   resp.capacity_block_extension_offerings[0].start_date #=> Time
+    #   resp.capacity_block_extension_offerings[0].capacity_block_extension_start_date #=> Time
+    #   resp.capacity_block_extension_offerings[0].capacity_block_extension_end_date #=> Time
+    #   resp.capacity_block_extension_offerings[0].capacity_block_extension_duration_hours #=> Integer
+    #   resp.capacity_block_extension_offerings[0].upfront_fee #=> String
+    #   resp.capacity_block_extension_offerings[0].currency_code #=> String
+    #   resp.capacity_block_extension_offerings[0].tenancy #=> String, one of "default", "dedicated"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityBlockExtensionOfferings AWS API Documentation
+    #
+    # @overload describe_capacity_block_extension_offerings(params = {})
+    # @param [Hash] params ({})
+    def describe_capacity_block_extension_offerings(params = {}, options = {})
+      req = build_request(:describe_capacity_block_extension_offerings, params)
+      req.send_request(options)
+    end
+
     # Describes Capacity Block offerings available for purchase in the
     # Amazon Web Services Region that you're currently using. With Capacity
     # Blocks, you purchase a specific instance type for a period of time.
@@ -21063,6 +21324,7 @@ module Aws::EC2
     #   resp.capacity_block_offerings[0].upfront_fee #=> String
     #   resp.capacity_block_offerings[0].currency_code #=> String
     #   resp.capacity_block_offerings[0].tenancy #=> String, one of "default", "dedicated"
+    #   resp.capacity_block_offerings[0].capacity_block_duration_minutes #=> Integer
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityBlockOfferings AWS API Documentation
@@ -21419,7 +21681,7 @@ module Aws::EC2
     #   resp.capacity_reservations[0].available_instance_count #=> Integer
     #   resp.capacity_reservations[0].ebs_optimized #=> Boolean
     #   resp.capacity_reservations[0].ephemeral_storage #=> Boolean
-    #   resp.capacity_reservations[0].state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.capacity_reservations[0].state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.capacity_reservations[0].start_date #=> Time
     #   resp.capacity_reservations[0].end_date #=> Time
     #   resp.capacity_reservations[0].end_date_type #=> String, one of "unlimited", "limited"
@@ -21436,6 +21698,9 @@ module Aws::EC2
     #   resp.capacity_reservations[0].capacity_allocations[0].count #=> Integer
     #   resp.capacity_reservations[0].reservation_type #=> String, one of "default", "capacity-block"
     #   resp.capacity_reservations[0].unused_reservation_billing_owner_id #=> String
+    #   resp.capacity_reservations[0].commitment_info.committed_instance_count #=> Integer
+    #   resp.capacity_reservations[0].commitment_info.commitment_end_date #=> Time
+    #   resp.capacity_reservations[0].delivery_preference #=> String, one of "fixed", "incremental"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeCapacityReservations AWS API Documentation
     #
@@ -27461,6 +27726,8 @@ module Aws::EC2
     #   resp.ipam_resource_discoveries[0].tags #=> Array
     #   resp.ipam_resource_discoveries[0].tags[0].key #=> String
     #   resp.ipam_resource_discoveries[0].tags[0].value #=> String
+    #   resp.ipam_resource_discoveries[0].organizational_unit_exclusions #=> Array
+    #   resp.ipam_resource_discoveries[0].organizational_unit_exclusions[0].organizations_entity_path #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeIpamResourceDiscoveries AWS API Documentation
@@ -37891,8 +38158,7 @@ module Aws::EC2
     #   * `resource-arn` - The Amazon Resource Name (ARN) of a exclusion.
     #
     #   * `internet-gateway-exclusion-mode` - The mode of a VPC BPA exclusion.
-    #     Possible values: `bidirectional-access-allowed |
-    #     egress-access-allowed`.
+    #     Possible values: `allow-bidirectional | allow-egress`.
     #
     #   * `state` - The state of VPC BPA. Possible values: `create-in-progress
     #     | create-complete | update-in-progress | update-complete |
@@ -37974,7 +38240,7 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Describe VPC Block Public Access (BPA) options. VPC Block public
+    # Describe VPC Block Public Access (BPA) options. VPC Block Public
     # Access (BPA) enables you to block resources in VPCs and subnets that
     # you own in a Region from reaching or being reached from the internet
     # through internet gateways and egress-only internet gateways. To learn
@@ -42756,7 +43022,7 @@ module Aws::EC2
     #   resp.instance_type #=> String
     #   resp.total_instance_count #=> Integer
     #   resp.available_instance_count #=> Integer
-    #   resp.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.instance_usages #=> Array
     #   resp.instance_usages[0].account_id #=> String
     #   resp.instance_usages[0].used_instance_count #=> Integer
@@ -43763,6 +44029,7 @@ module Aws::EC2
     #   resp.ipam_discovered_accounts[0].failure_reason.message #=> String
     #   resp.ipam_discovered_accounts[0].last_attempted_discovery_time #=> Time
     #   resp.ipam_discovered_accounts[0].last_successful_discovery_time #=> Time
+    #   resp.ipam_discovered_accounts[0].organizational_unit_id #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetIpamDiscoveredAccounts AWS API Documentation
@@ -47511,8 +47778,26 @@ module Aws::EC2
     # instance store settings, Availability Zone, or tenancy. If you need to
     # modify any of these attributes, we recommend that you cancel the
     # Capacity Reservation, and then create a new one with the required
-    # attributes. For more information, see [Modify an active Capacity
+    # attributes. For more information, see [ Modify an active Capacity
     # Reservation][1].
+    #
+    # The allowed modifications depend on the state of the Capacity
+    # Reservation:
+    #
+    # * `assessing` or `scheduled` state - You can modify the tags only.
+    #
+    # * `pending` state - You can't modify the Capacity Reservation in any
+    #   way.
+    #
+    # * `active` state but still within the commitment duration - You can't
+    #   decrease the instance count or set an end date that is within the
+    #   commitment duration. All other modifications are allowed.
+    #
+    # * `active` state with no commitment duration or elapsed commitment
+    #   duration - All modifications are allowed.
+    #
+    # * `expired`, `cancelled`, `unsupported`, or `failed` state - You
+    #   can't modify the Capacity Reservation in any way.
     #
     #
     #
@@ -49916,6 +50201,30 @@ module Aws::EC2
     # @option params [Array<Types::RemoveIpamOperatingRegion>] :remove_operating_regions
     #   Remove operating Regions.
     #
+    # @option params [Array<Types::AddIpamOrganizationalUnitExclusion>] :add_organizational_unit_exclusions
+    #   Add an Organizational Unit (OU) exclusion to your IPAM. If your IPAM
+    #   is integrated with Amazon Web Services Organizations and you add an
+    #   organizational unit (OU) exclusion, IPAM will not manage the IP
+    #   addresses in accounts in that OU exclusion. There is a limit on the
+    #   number of exclusions you can create. For more information, see [Quotas
+    #   for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #
+    # @option params [Array<Types::RemoveIpamOrganizationalUnitExclusion>] :remove_organizational_unit_exclusions
+    #   Remove an Organizational Unit (OU) exclusion to your IPAM. If your
+    #   IPAM is integrated with Amazon Web Services Organizations and you add
+    #   an organizational unit (OU) exclusion, IPAM will not manage the IP
+    #   addresses in accounts in that OU exclusion. There is a limit on the
+    #   number of exclusions you can create. For more information, see [Quotas
+    #   for your IPAM][1] in the *Amazon VPC IPAM User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/ipam/quotas-ipam.html
+    #
     # @return [Types::ModifyIpamResourceDiscoveryResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyIpamResourceDiscoveryResult#ipam_resource_discovery #ipam_resource_discovery} => Types::IpamResourceDiscovery
@@ -49936,6 +50245,16 @@ module Aws::EC2
     #         region_name: "String",
     #       },
     #     ],
+    #     add_organizational_unit_exclusions: [
+    #       {
+    #         organizations_entity_path: "String",
+    #       },
+    #     ],
+    #     remove_organizational_unit_exclusions: [
+    #       {
+    #         organizations_entity_path: "String",
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -49952,6 +50271,8 @@ module Aws::EC2
     #   resp.ipam_resource_discovery.tags #=> Array
     #   resp.ipam_resource_discovery.tags[0].key #=> String
     #   resp.ipam_resource_discovery.tags[0].value #=> String
+    #   resp.ipam_resource_discovery.organizational_unit_exclusions #=> Array
+    #   resp.ipam_resource_discovery.organizational_unit_exclusions[0].organizations_entity_path #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyIpamResourceDiscovery AWS API Documentation
     #
@@ -52477,13 +52798,13 @@ module Aws::EC2
     # @option params [required, String] :internet_gateway_exclusion_mode
     #   The exclusion mode for internet gateway traffic.
     #
-    #   * `bidirectional-access-allowed`: Allow all internet traffic to and
-    #     from the excluded VPCs and subnets.
+    #   * `allow-bidirectional`: Allow all internet traffic to and from the
+    #     excluded VPCs and subnets.
     #
-    #   * `egress-access-allowed`: Allow outbound internet traffic from the
-    #     excluded VPCs and subnets. Block inbound internet traffic to the
-    #     excluded VPCs and subnets. Only applies when VPC Block Public Access
-    #     is set to Bidirectional.
+    #   * `allow-egress`: Allow outbound internet traffic from the excluded
+    #     VPCs and subnets. Block inbound internet traffic to the excluded
+    #     VPCs and subnets. Only applies when VPC Block Public Access is set
+    #     to Bidirectional.
     #
     # @return [Types::ModifyVpcBlockPublicAccessExclusionResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -52520,7 +52841,7 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Modify VPC Block Public Access (BPA) options. VPC Block public Access
+    # Modify VPC Block Public Access (BPA) options. VPC Block Public Access
     # (BPA) enables you to block resources in VPCs and subnets that you own
     # in a Region from reaching or being reached from the internet through
     # internet gateways and egress-only internet gateways. To learn more
@@ -52540,19 +52861,18 @@ module Aws::EC2
     # @option params [required, String] :internet_gateway_block_mode
     #   The mode of VPC BPA.
     #
-    #   * `bidirectional-access-allowed`: VPC BPA is not enabled and traffic
-    #     is allowed to and from internet gateways and egress-only internet
-    #     gateways in this Region.
+    #   * `off`: VPC BPA is not enabled and traffic is allowed to and from
+    #     internet gateways and egress-only internet gateways in this Region.
     #
-    #   * `bidirectional-access-blocked`: Block all traffic to and from
-    #     internet gateways and egress-only internet gateways in this Region
-    #     (except for excluded VPCs and subnets).
+    #   * `block-bidirectional`: Block all traffic to and from internet
+    #     gateways and egress-only internet gateways in this Region (except
+    #     for excluded VPCs and subnets).
     #
-    #   * `ingress-access-blocked`: Block all internet traffic to the VPCs in
-    #     this Region (except for VPCs or subnets which are excluded). Only
-    #     traffic to and from NAT gateways and egress-only internet gateways
-    #     is allowed because these gateways only allow outbound connections to
-    #     be established.
+    #   * `block-ingress`: Block all internet traffic to the VPCs in this
+    #     Region (except for VPCs or subnets which are excluded). Only traffic
+    #     to and from NAT gateways and egress-only internet gateways is
+    #     allowed because these gateways only allow outbound connections to be
+    #     established.
     #
     # @return [Types::ModifyVpcBlockPublicAccessOptionsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -53866,7 +54186,7 @@ module Aws::EC2
     #   resp.source_capacity_reservation.available_instance_count #=> Integer
     #   resp.source_capacity_reservation.ebs_optimized #=> Boolean
     #   resp.source_capacity_reservation.ephemeral_storage #=> Boolean
-    #   resp.source_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.source_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.source_capacity_reservation.start_date #=> Time
     #   resp.source_capacity_reservation.end_date #=> Time
     #   resp.source_capacity_reservation.end_date_type #=> String, one of "unlimited", "limited"
@@ -53883,6 +54203,9 @@ module Aws::EC2
     #   resp.source_capacity_reservation.capacity_allocations[0].count #=> Integer
     #   resp.source_capacity_reservation.reservation_type #=> String, one of "default", "capacity-block"
     #   resp.source_capacity_reservation.unused_reservation_billing_owner_id #=> String
+    #   resp.source_capacity_reservation.commitment_info.committed_instance_count #=> Integer
+    #   resp.source_capacity_reservation.commitment_info.commitment_end_date #=> Time
+    #   resp.source_capacity_reservation.delivery_preference #=> String, one of "fixed", "incremental"
     #   resp.destination_capacity_reservation.capacity_reservation_id #=> String
     #   resp.destination_capacity_reservation.owner_id #=> String
     #   resp.destination_capacity_reservation.capacity_reservation_arn #=> String
@@ -53895,7 +54218,7 @@ module Aws::EC2
     #   resp.destination_capacity_reservation.available_instance_count #=> Integer
     #   resp.destination_capacity_reservation.ebs_optimized #=> Boolean
     #   resp.destination_capacity_reservation.ephemeral_storage #=> Boolean
-    #   resp.destination_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.destination_capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.destination_capacity_reservation.start_date #=> Time
     #   resp.destination_capacity_reservation.end_date #=> Time
     #   resp.destination_capacity_reservation.end_date_type #=> String, one of "unlimited", "limited"
@@ -53912,6 +54235,9 @@ module Aws::EC2
     #   resp.destination_capacity_reservation.capacity_allocations[0].count #=> Integer
     #   resp.destination_capacity_reservation.reservation_type #=> String, one of "default", "capacity-block"
     #   resp.destination_capacity_reservation.unused_reservation_billing_owner_id #=> String
+    #   resp.destination_capacity_reservation.commitment_info.committed_instance_count #=> Integer
+    #   resp.destination_capacity_reservation.commitment_info.commitment_end_date #=> Time
+    #   resp.destination_capacity_reservation.delivery_preference #=> String, one of "fixed", "incremental"
     #   resp.instance_count #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/MoveCapacityReservationInstances AWS API Documentation
@@ -54337,7 +54663,7 @@ module Aws::EC2
     #   resp.capacity_reservation.available_instance_count #=> Integer
     #   resp.capacity_reservation.ebs_optimized #=> Boolean
     #   resp.capacity_reservation.ephemeral_storage #=> Boolean
-    #   resp.capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed"
+    #   resp.capacity_reservation.state #=> String, one of "active", "expired", "cancelled", "pending", "failed", "scheduled", "payment-pending", "payment-failed", "assessing", "delayed", "unsupported"
     #   resp.capacity_reservation.start_date #=> Time
     #   resp.capacity_reservation.end_date #=> Time
     #   resp.capacity_reservation.end_date_type #=> String, one of "unlimited", "limited"
@@ -54354,6 +54680,9 @@ module Aws::EC2
     #   resp.capacity_reservation.capacity_allocations[0].count #=> Integer
     #   resp.capacity_reservation.reservation_type #=> String, one of "default", "capacity-block"
     #   resp.capacity_reservation.unused_reservation_billing_owner_id #=> String
+    #   resp.capacity_reservation.commitment_info.committed_instance_count #=> Integer
+    #   resp.capacity_reservation.commitment_info.commitment_end_date #=> Time
+    #   resp.capacity_reservation.delivery_preference #=> String, one of "fixed", "incremental"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PurchaseCapacityBlock AWS API Documentation
     #
@@ -54361,6 +54690,60 @@ module Aws::EC2
     # @param [Hash] params ({})
     def purchase_capacity_block(params = {}, options = {})
       req = build_request(:purchase_capacity_block, params)
+      req.send_request(options)
+    end
+
+    # Purchase the Capacity Block extension for use with your account. You
+    # must specify the ID of the Capacity Block extension offering you are
+    # purchasing.
+    #
+    # @option params [required, String] :capacity_block_extension_offering_id
+    #   The ID of the Capacity Block extension offering to purchase.
+    #
+    # @option params [required, String] :capacity_reservation_id
+    #   The ID of the Capacity reservation to be extended.
+    #
+    # @option params [Boolean] :dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #
+    # @return [Types::PurchaseCapacityBlockExtensionResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PurchaseCapacityBlockExtensionResult#capacity_block_extensions #capacity_block_extensions} => Array&lt;Types::CapacityBlockExtension&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.purchase_capacity_block_extension({
+    #     capacity_block_extension_offering_id: "OfferingId", # required
+    #     capacity_reservation_id: "CapacityReservationId", # required
+    #     dry_run: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.capacity_block_extensions #=> Array
+    #   resp.capacity_block_extensions[0].capacity_reservation_id #=> String
+    #   resp.capacity_block_extensions[0].instance_type #=> String
+    #   resp.capacity_block_extensions[0].instance_count #=> Integer
+    #   resp.capacity_block_extensions[0].availability_zone #=> String
+    #   resp.capacity_block_extensions[0].availability_zone_id #=> String
+    #   resp.capacity_block_extensions[0].capacity_block_extension_offering_id #=> String
+    #   resp.capacity_block_extensions[0].capacity_block_extension_duration_hours #=> Integer
+    #   resp.capacity_block_extensions[0].capacity_block_extension_status #=> String, one of "payment-pending", "payment-failed", "payment-succeeded"
+    #   resp.capacity_block_extensions[0].capacity_block_extension_purchase_date #=> Time
+    #   resp.capacity_block_extensions[0].capacity_block_extension_start_date #=> Time
+    #   resp.capacity_block_extensions[0].capacity_block_extension_end_date #=> Time
+    #   resp.capacity_block_extensions[0].upfront_fee #=> String
+    #   resp.capacity_block_extensions[0].currency_code #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/PurchaseCapacityBlockExtension AWS API Documentation
+    #
+    # @overload purchase_capacity_block_extension(params = {})
+    # @param [Hash] params ({})
+    def purchase_capacity_block_extension(params = {}, options = {})
+      req = build_request(:purchase_capacity_block_extension, params)
       req.send_request(options)
     end
 
@@ -61450,7 +61833,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.492.0'
+      context[:gem_version] = '1.493.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

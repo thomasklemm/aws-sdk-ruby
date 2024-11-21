@@ -528,9 +528,10 @@ module Aws::Health
     # Returns a list of entities that have been affected by the specified
     # events, based on the specified filter criteria. Entities can refer to
     # individual customer resources, groups of customer resources, or any
-    # other construct, depending on the Amazon Web Service. Events that have
-    # impact beyond that of the affected entities, or where the extent of
-    # impact is unknown, include at least one entity indicating this.
+    # other construct, depending on the Amazon Web Services service. Events
+    # that have impact beyond that of the affected entities, or where the
+    # extent of impact is unknown, include at least one entity indicating
+    # this.
     #
     # At least one event ARN is required.
     #
@@ -611,6 +612,8 @@ module Aws::Health
     #   resp.entities[0].status_code #=> String, one of "IMPAIRED", "UNIMPAIRED", "UNKNOWN", "PENDING", "RESOLVED"
     #   resp.entities[0].tags #=> Hash
     #   resp.entities[0].tags["tagKey"] #=> String
+    #   resp.entities[0].entity_metadata #=> Hash
+    #   resp.entities[0].entity_metadata["entityMetadataKey"] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/health-2016-08-04/DescribeAffectedEntities AWS API Documentation
@@ -626,7 +629,7 @@ module Aws::Health
     # events for one or more accounts in your organization in Organizations,
     # based on the filter criteria. Entities can refer to individual
     # customer resources, groups of customer resources, or any other
-    # construct, depending on the Amazon Web Service.
+    # construct, depending on the Amazon Web Services service.
     #
     # At least one event Amazon Resource Name (ARN) and account ID are
     # required.
@@ -715,6 +718,8 @@ module Aws::Health
     #   resp.entities[0].status_code #=> String, one of "IMPAIRED", "UNIMPAIRED", "UNKNOWN", "PENDING", "RESOLVED"
     #   resp.entities[0].tags #=> Hash
     #   resp.entities[0].tags["tagKey"] #=> String
+    #   resp.entities[0].entity_metadata #=> Hash
+    #   resp.entities[0].entity_metadata["entityMetadataKey"] #=> String
     #   resp.failed_set #=> Array
     #   resp.failed_set[0].aws_account_id #=> String
     #   resp.failed_set[0].event_arn #=> String
@@ -1085,8 +1090,8 @@ module Aws::Health
 
     # Returns the event types that meet the specified filter criteria. You
     # can use this API operation to find information about the Health event,
-    # such as the category, Amazon Web Service, and event code. The metadata
-    # for each event appears in the [EventType][1] object.
+    # such as the category, Amazon Web Services service, and event code. The
+    # metadata for each event appears in the [EventType][1] object.
     #
     # If you don't specify a filter criteria, the API operation returns all
     # event types, in no particular order.
@@ -1519,7 +1524,7 @@ module Aws::Health
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-health'
-      context[:gem_version] = '1.74.0'
+      context[:gem_version] = '1.75.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

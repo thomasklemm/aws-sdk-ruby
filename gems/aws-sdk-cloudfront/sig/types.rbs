@@ -2239,6 +2239,7 @@ module Aws::CloudFront
       attr_accessor id: ::String
       attr_accessor failover_criteria: Types::OriginGroupFailoverCriteria
       attr_accessor members: Types::OriginGroupMembers
+      attr_accessor selection_criteria: ("default" | "media-quality-based")
       SENSITIVE: []
     end
 

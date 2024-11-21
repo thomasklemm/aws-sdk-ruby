@@ -1433,6 +1433,55 @@ module Aws::SSM
       include Aws::Structure
     end
 
+    # Information about the optional inputs that can be specified for an
+    # automation execution preview.
+    #
+    # @!attribute [rw] parameters
+    #   Information about parameters that can be specified for the preview
+    #   operation.
+    #   @return [Hash<String,Array<String>>]
+    #
+    # @!attribute [rw] target_parameter_name
+    #   The name of the parameter used as the target resource for the
+    #   rate-controlled execution. Required if you specify targets.
+    #   @return [String]
+    #
+    # @!attribute [rw] targets
+    #   Information about the resources that would be included in the actual
+    #   runbook execution, if it were to be run. Both Targets and TargetMaps
+    #   can't be specified together.
+    #   @return [Array<Types::Target>]
+    #
+    # @!attribute [rw] target_maps
+    #   A key-value mapping of document parameters to target resources. Both
+    #   Targets and TargetMaps can't be specified together.
+    #   @return [Array<Hash<String,Array<String>>>]
+    #
+    # @!attribute [rw] target_locations
+    #   Information about the Amazon Web Services Regions and Amazon Web
+    #   Services accounts targeted by the Automation execution preview
+    #   operation.
+    #   @return [Array<Types::TargetLocation>]
+    #
+    # @!attribute [rw] target_locations_url
+    #   A publicly accessible URL for a file that contains the
+    #   `TargetLocations` body. Currently, only files in presigned Amazon S3
+    #   buckets are supported.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/AutomationExecutionInputs AWS API Documentation
+    #
+    class AutomationExecutionInputs < Struct.new(
+      :parameters,
+      :target_parameter_name,
+      :targets,
+      :target_maps,
+      :target_locations,
+      :target_locations_url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The number of simultaneously running Automation executions exceeded
     # the allowable limit.
     #
@@ -1646,6 +1695,55 @@ module Aws::SSM
     #
     class AutomationExecutionNotFoundException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about the results of the execution preview.
+    #
+    # @!attribute [rw] step_previews
+    #   Information about the type of impact a runbook step would have on a
+    #   resource.
+    #
+    #   * `Mutating`: The runbook step would make changes to the targets
+    #     through actions that create, modify, or delete resources.
+    #
+    #   * `Non_Mutating`: The runbook step would retrieve data about
+    #     resources but not make changes to them. This category generally
+    #     includes `Describe*`, `List*`, `Get*`, and similar read-only API
+    #     actions.
+    #
+    #   * `Undetermined`: An undetermined step invokes executions performed
+    #     by another orchestration service like Lambda, Step Functions, or
+    #     Amazon Web Services Systems Manager Run Command. An undetermined
+    #     step might also call a third-party API. Systems Manager Automation
+    #     doesn't know the outcome of the orchestration processes or
+    #     third-party API executions, so the results of the steps are
+    #     undetermined.
+    #   @return [Hash<String,Integer>]
+    #
+    # @!attribute [rw] regions
+    #   Information about the Amazon Web Services Regions targeted by the
+    #   execution preview.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] target_previews
+    #   Information that provides a preview of what the impact of running
+    #   the specified Automation runbook would be.
+    #   @return [Array<Types::TargetPreview>]
+    #
+    # @!attribute [rw] total_accounts
+    #   Information about the Amazon Web Services accounts that were
+    #   included in the execution preview.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/AutomationExecutionPreview AWS API Documentation
+    #
+    class AutomationExecutionPreview < Struct.new(
+      :step_previews,
+      :regions,
+      :target_previews,
+      :total_accounts)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3847,6 +3945,11 @@ module Aws::SSM
     #
     # @!attribute [rw] global_filters
     #   A set of global filters used to include patches in the baseline.
+    #
+    #   The `GlobalFilters` parameter can be configured only by using the
+    #   CLI or an Amazon Web Services SDK. It can't be configured from the
+    #   Patch Manager console, and its value isn't displayed in the
+    #   console.
     #   @return [Types::PatchFilterGroup]
     #
     # @!attribute [rw] approval_rules
@@ -7288,6 +7391,51 @@ module Aws::SSM
       include Aws::Structure
     end
 
+    # Information about the inputs for an execution preview.
+    #
+    # @note ExecutionInputs is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] automation
+    #   Information about the optional inputs that can be specified for an
+    #   automation execution preview.
+    #   @return [Types::AutomationExecutionInputs]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ExecutionInputs AWS API Documentation
+    #
+    class ExecutionInputs < Struct.new(
+      :automation,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Automation < ExecutionInputs; end
+      class Unknown < ExecutionInputs; end
+    end
+
+    # Information about the changes that would be made if an execution were
+    # run.
+    #
+    # @note ExecutionPreview is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of ExecutionPreview corresponding to the set member.
+    #
+    # @!attribute [rw] automation
+    #   Information about the changes that would be made if an Automation
+    #   workflow were run.
+    #   @return [Types::AutomationExecutionPreview]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ExecutionPreview AWS API Documentation
+    #
+    class ExecutionPreview < Struct.new(
+      :automation,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Automation < ExecutionPreview; end
+      class Unknown < ExecutionPreview; end
+    end
+
     # Describes a failed association.
     #
     # @!attribute [rw] entry
@@ -7892,6 +8040,53 @@ module Aws::SSM
       :requires,
       :attachments_content,
       :review_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_preview_id
+    #   The ID of the existing execution preview.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetExecutionPreviewRequest AWS API Documentation
+    #
+    class GetExecutionPreviewRequest < Struct.new(
+      :execution_preview_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_preview_id
+    #   The generated ID for the existing execution preview.
+    #   @return [String]
+    #
+    # @!attribute [rw] ended_at
+    #   A UTC timestamp indicating when the execution preview operation
+    #   ended.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The current status of the execution preview operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   Supplemental information about the current status of the execution
+    #   preview.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_preview
+    #   Information about the changes that would be made if an execution
+    #   were run.
+    #   @return [Types::ExecutionPreview]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetExecutionPreviewResponse AWS API Documentation
+    #
+    class GetExecutionPreviewResponse < Struct.new(
+      :execution_preview_id,
+      :ended_at,
+      :status,
+      :status_message,
+      :execution_preview)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9163,15 +9358,19 @@ module Aws::SSM
     #   The ID of the service setting to get. The setting ID can be one of
     #   the following.
     #
-    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
+    #   * `/ssm/appmanager/appmanager-enabled`
     #
     #   * `/ssm/automation/customer-script-log-destination`
     #
     #   * `/ssm/automation/customer-script-log-group-name`
     #
+    #   * /ssm/automation/enable-adaptive-concurrency
+    #
     #   * `/ssm/documents/console/public-sharing-permission`
     #
     #   * `/ssm/managed-instance/activation-tier`
+    #
+    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
     #
     #   * `/ssm/opsinsights/opscenter`
     #
@@ -9431,6 +9630,67 @@ module Aws::SSM
       :output_url,
       :association_name)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details about a specific managed node.
+    #
+    # @!attribute [rw] agent_type
+    #   The type of agent installed on the node.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   The version number of the agent installed on the node.
+    #   @return [String]
+    #
+    # @!attribute [rw] computer_name
+    #   The fully qualified host name of the managed node.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_status
+    #   The current status of the managed node.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_address
+    #   The IP address of the managed node.
+    #   @return [String]
+    #
+    # @!attribute [rw] managed_status
+    #   Indicates whether the node is managed by Systems Manager.
+    #   @return [String]
+    #
+    # @!attribute [rw] platform_type
+    #   The operating system platform type of the managed node.
+    #   @return [String]
+    #
+    # @!attribute [rw] platform_name
+    #   The name of the operating system platform running on your managed
+    #   node.
+    #   @return [String]
+    #
+    # @!attribute [rw] platform_version
+    #   The version of the OS platform running on your managed node.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_type
+    #   The type of instance, either an EC2 instance or another supported
+    #   machine type in a hybrid fleet.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/InstanceInfo AWS API Documentation
+    #
+    class InstanceInfo < Struct.new(
+      :agent_type,
+      :agent_version,
+      :computer_name,
+      :instance_status,
+      :ip_address,
+      :managed_status,
+      :platform_type,
+      :platform_name,
+      :platform_version,
+      :resource_type)
+      SENSITIVE = [:ip_address]
       include Aws::Structure
     end
 
@@ -9962,7 +10222,7 @@ module Aws::SSM
     #
     # @!attribute [rw] platform_type
     #   The operating system platform type of the managed node. For example,
-    #   Windows.
+    #   Windows Server or Amazon Linux 2.
     #   @return [String]
     #
     # @!attribute [rw] platform_name
@@ -10126,7 +10386,7 @@ module Aws::SSM
       include Aws::Structure
     end
 
-    # The activation ID isn't valid. Verify the you entered the correct
+    # The activation ID isn't valid. Verify that you entered the correct
     # ActivationId or ActivationCode and try again.
     #
     # @!attribute [rw] message
@@ -10140,9 +10400,8 @@ module Aws::SSM
       include Aws::Structure
     end
 
-    # The specified aggregator isn't valid for inventory groups. Verify
-    # that the aggregator uses a valid inventory type such as
-    # `AWS:Application` or `AWS:InstanceInformation`.
+    # The specified aggregator isn't valid for the group type. Verify that
+    # the aggregator you provided is supported.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -10356,7 +10615,7 @@ module Aws::SSM
       include Aws::Structure
     end
 
-    # The filter name isn't valid. Verify the you entered the correct name
+    # The filter name isn't valid. Verify that you entered the correct name
     # and try again.
     #
     # @!attribute [rw] message
@@ -11795,6 +12054,117 @@ module Aws::SSM
       include Aws::Structure
     end
 
+    # @!attribute [rw] sync_name
+    #   The name of the resource data sync to retrieve information about.
+    #   Required for cross-account/cross-Region configurations. Optional for
+    #   single account/single-Region configurations.
+    #   @return [String]
+    #
+    # @!attribute [rw] filters
+    #   One or more filters. Use a filter to return a more specific list of
+    #   managed nodes.
+    #   @return [Array<Types::NodeFilter>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ListNodesRequest AWS API Documentation
+    #
+    class ListNodesRequest < Struct.new(
+      :sync_name,
+      :filters,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] nodes
+    #   A list of managed nodes that match the specified filter criteria.
+    #   @return [Array<Types::Node>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use when requesting the next set of items. If there are
+    #   no additional items to return, the string is empty.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ListNodesResult AWS API Documentation
+    #
+    class ListNodesResult < Struct.new(
+      :nodes,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] sync_name
+    #   The name of the resource data sync to retrieve information about.
+    #   Required for cross-account/cross-Region configuration. Optional for
+    #   single account/single-Region configurations.
+    #   @return [String]
+    #
+    # @!attribute [rw] filters
+    #   One or more filters. Use a filter to generate a summary that matches
+    #   your specified filter criteria.
+    #   @return [Array<Types::NodeFilter>]
+    #
+    # @!attribute [rw] aggregators
+    #   Specify one or more aggregators to return a count of managed nodes
+    #   that match that expression. For example, a count of managed nodes by
+    #   operating system.
+    #   @return [Array<Types::NodeAggregator>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.) The call also returns a token that you
+    #   can specify in a subsequent call to get the next set of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ListNodesSummaryRequest AWS API Documentation
+    #
+    class ListNodesSummaryRequest < Struct.new(
+      :sync_name,
+      :filters,
+      :aggregators,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] summary
+    #   A collection of objects reporting information about your managed
+    #   nodes, such as the count of nodes by operating system.
+    #   @return [Array<Hash<String,String>>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use when requesting the next set of items. If there are
+    #   no additional items to return, the string is empty.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ListNodesSummaryResult AWS API Documentation
+    #
+    class ListNodesSummaryResult < Struct.new(
+      :summary,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] filters
     #   One or more OpsItem filters. Use a filter to return a more specific
     #   list of results.
@@ -13003,6 +13373,149 @@ module Aws::SSM
     # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ModifyDocumentPermissionResponse AWS API Documentation
     #
     class ModifyDocumentPermissionResponse < Aws::EmptyStructure; end
+
+    # Details about an individual managed node.
+    #
+    # @!attribute [rw] capture_time
+    #   The UTC timestamp for when the managed node data was last captured.
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The ID of the managed node.
+    #   @return [String]
+    #
+    # @!attribute [rw] owner
+    #   Information about the ownership of the managed node.
+    #   @return [Types::NodeOwnerInfo]
+    #
+    # @!attribute [rw] region
+    #   The Amazon Web Services Region that a managed node was created in or
+    #   assigned to.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_type
+    #   Information about the type of node.
+    #   @return [Types::NodeType]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/Node AWS API Documentation
+    #
+    class Node < Struct.new(
+      :capture_time,
+      :id,
+      :owner,
+      :region,
+      :node_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # One or more aggregators for viewing counts of nodes using different
+    # dimensions.
+    #
+    # @!attribute [rw] aggregator_type
+    #   The aggregator type for limiting a node summary. Currently, only
+    #   `Count` is supported.
+    #   @return [String]
+    #
+    # @!attribute [rw] type_name
+    #   The data type name to use for viewing counts of nodes. Currently,
+    #   only `Instance` is supported.
+    #   @return [String]
+    #
+    # @!attribute [rw] attribute_name
+    #   The name of a node attribute on which to limit the count of nodes.
+    #   @return [String]
+    #
+    # @!attribute [rw] aggregators
+    #   Information about aggregators used to refine a node summary.
+    #   @return [Array<Types::NodeAggregator>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/NodeAggregator AWS API Documentation
+    #
+    class NodeAggregator < Struct.new(
+      :aggregator_type,
+      :type_name,
+      :attribute_name,
+      :aggregators)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The filters for the operation.
+    #
+    # @!attribute [rw] key
+    #   The name of the filter.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   A filter value supported by the specified key. For example, for the
+    #   key `PlatformType`, supported values include `Linux` and `Windows`.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] type
+    #   The type of filter operator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/NodeFilter AWS API Documentation
+    #
+    class NodeFilter < Struct.new(
+      :key,
+      :values,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about ownership of a managed node.
+    #
+    # @!attribute [rw] account_id
+    #   The ID of the Amazon Web Services account that owns the managed
+    #   node.
+    #   @return [String]
+    #
+    # @!attribute [rw] organizational_unit_id
+    #   The ID of the organization unit (OU) that the account is part of.
+    #   @return [String]
+    #
+    # @!attribute [rw] organizational_unit_path
+    #   The path for the organizational unit (OU) that owns the managed
+    #   node. The path for the OU is built using the IDs of the
+    #   organization, root, and all OUs in the path down to and including
+    #   the OU. For example:
+    #
+    #   `o-a1b2c3d4e5/r-f6g7h8i9j0example/ou-ghi0-awsccccc/ou-jkl0-awsddddd/`
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/NodeOwnerInfo AWS API Documentation
+    #
+    class NodeOwnerInfo < Struct.new(
+      :account_id,
+      :organizational_unit_id,
+      :organizational_unit_path)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about a managed node's type.
+    #
+    # @note NodeType is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of NodeType corresponding to the set member.
+    #
+    # @!attribute [rw] instance
+    #   Information about a specific managed node.
+    #   @return [Types::InstanceInfo]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/NodeType AWS API Documentation
+    #
+    class NodeType < Struct.new(
+      :instance,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Instance < NodeType; end
+      class Unknown < NodeType; end
+    end
 
     # A summary of resources that aren't compliant. The summary is
     # organized according to resource type.
@@ -14303,7 +14816,7 @@ module Aws::SSM
     #   @return [String]
     #
     # @!attribute [rw] arn
-    #   The (ARN) of the last user to update the parameter.
+    #   The Amazon Resource Name (ARN) of the parameter.
     #   @return [String]
     #
     # @!attribute [rw] type
@@ -16067,15 +16580,19 @@ module Aws::SSM
     #   The Amazon Resource Name (ARN) of the service setting to reset. The
     #   setting ID can be one of the following.
     #
-    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
+    #   * `/ssm/appmanager/appmanager-enabled`
     #
     #   * `/ssm/automation/customer-script-log-destination`
     #
     #   * `/ssm/automation/customer-script-log-group-name`
     #
+    #   * /ssm/automation/enable-adaptive-concurrency
+    #
     #   * `/ssm/documents/console/public-sharing-permission`
     #
     #   * `/ssm/managed-instance/activation-tier`
+    #
+    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
     #
     #   * `/ssm/opsinsights/opscenter`
     #
@@ -17721,6 +18238,44 @@ module Aws::SSM
       include Aws::Structure
     end
 
+    # @!attribute [rw] document_name
+    #   The name of the Automation runbook to run. The result of the
+    #   execution preview indicates what the impact would be of running this
+    #   runbook.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_version
+    #   The version of the Automation runbook to run. The default value is
+    #   `$DEFAULT`.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_inputs
+    #   Information about the inputs that can be specified for the preview
+    #   operation.
+    #   @return [Types::ExecutionInputs]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/StartExecutionPreviewRequest AWS API Documentation
+    #
+    class StartExecutionPreviewRequest < Struct.new(
+      :document_name,
+      :document_version,
+      :execution_inputs)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_preview_id
+    #   The ID of the execution preview generated by the system.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/StartExecutionPreviewResponse AWS API Documentation
+    #
+    class StartExecutionPreviewResponse < Struct.new(
+      :execution_preview_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] target
     #   The managed node to connect to for the session.
     #   @return [String]
@@ -18247,6 +18802,27 @@ module Aws::SSM
       include Aws::Structure
     end
 
+    # Information about the resources that would be included in the actual
+    # runbook execution, if it were to be run.
+    #
+    # @!attribute [rw] count
+    #   The number of resources of a certain type included in an execution
+    #   preview.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] target_type
+    #   A type of resource that was included in the execution preview.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/TargetPreview AWS API Documentation
+    #
+    class TargetPreview < Struct.new(
+      :count,
+      :target_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] session_id
     #   The ID of the session to terminate.
     #   @return [String]
@@ -18431,6 +19007,21 @@ module Aws::SSM
     # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/UnsupportedOperatingSystem AWS API Documentation
     #
     class UnsupportedOperatingSystem < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This operation is not supported for the current account. You must
+    # first enable the Systems Manager integrated experience in your
+    # account.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/UnsupportedOperationException AWS API Documentation
+    #
+    class UnsupportedOperationException < Struct.new(
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -19725,6 +20316,11 @@ module Aws::SSM
     #
     # @!attribute [rw] global_filters
     #   A set of global filters used to include patches in the baseline.
+    #
+    #   The `GlobalFilters` parameter can be configured only by using the
+    #   CLI or an Amazon Web Services SDK. It can't be configured from the
+    #   Patch Manager console, and its value isn't displayed in the
+    #   console.
     #   @return [Types::PatchFilterGroup]
     #
     # @!attribute [rw] approval_rules
@@ -19951,15 +20547,19 @@ module Aws::SSM
     #   `arn:aws:ssm:us-east-1:111122223333:servicesetting/ssm/parameter-store/high-throughput-enabled`.
     #   The setting ID can be one of the following.
     #
-    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
+    #   * `/ssm/appmanager/appmanager-enabled`
     #
     #   * `/ssm/automation/customer-script-log-destination`
     #
     #   * `/ssm/automation/customer-script-log-group-name`
     #
+    #   * /ssm/automation/enable-adaptive-concurrency
+    #
     #   * `/ssm/documents/console/public-sharing-permission`
     #
     #   * `/ssm/managed-instance/activation-tier`
+    #
+    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
     #
     #   * `/ssm/opsinsights/opscenter`
     #
@@ -19980,8 +20580,7 @@ module Aws::SSM
     #   The new value to specify for the service setting. The following list
     #   specifies the available values for each setting.
     #
-    #   * For `/ssm/managed-instance/default-ec2-instance-management-role`,
-    #     enter the name of an IAM role.
+    #   * For `/ssm/appmanager/appmanager-enabled`, enter `True` or `False`.
     #
     #   * For `/ssm/automation/customer-script-log-destination`, enter
     #     `CloudWatch`.
@@ -19994,6 +20593,9 @@ module Aws::SSM
     #
     #   * For `/ssm/managed-instance/activation-tier`, enter `standard` or
     #     `advanced`.
+    #
+    #   * For `/ssm/managed-instance/default-ec2-instance-management-role`,
+    #     enter the name of an IAM role.
     #
     #   * For `/ssm/opsinsights/opscenter`, enter `Enabled` or `Disabled`.
     #
@@ -20018,6 +20620,25 @@ module Aws::SSM
     # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/UpdateServiceSettingResult AWS API Documentation
     #
     class UpdateServiceSettingResult < Aws::EmptyStructure; end
+
+    # The request isn't valid. Verify that you entered valid contents for
+    # the command and try again.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @!attribute [rw] reason_code
+    #   The reason code for the invalid request.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ValidationException AWS API Documentation
+    #
+    class ValidationException < Struct.new(
+      :message,
+      :reason_code)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
   end
 end

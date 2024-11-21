@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.63.0 (2024-11-21)
+------------------
+
+* Feature - General Availability (GA) release of AWS IoT Device Management - Commands, to trigger light-weight remote actions on targeted devices
+
 1.62.0 (2024-10-18)
 ------------------
 

@@ -32,6 +32,8 @@ module Aws::XRay
     BatchGetTracesResult = Shapes::StructureShape.new(name: 'BatchGetTracesResult')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BorrowCount = Shapes::IntegerShape.new(name: 'BorrowCount')
+    CancelTraceRetrievalRequest = Shapes::StructureShape.new(name: 'CancelTraceRetrievalRequest')
+    CancelTraceRetrievalResult = Shapes::StructureShape.new(name: 'CancelTraceRetrievalResult')
     ClientID = Shapes::StringShape.new(name: 'ClientID')
     CreateGroupRequest = Shapes::StructureShape.new(name: 'CreateGroupRequest')
     CreateGroupResult = Shapes::StructureShape.new(name: 'CreateGroupResult')
@@ -79,6 +81,8 @@ module Aws::XRay
     GetGroupsNextToken = Shapes::StringShape.new(name: 'GetGroupsNextToken')
     GetGroupsRequest = Shapes::StructureShape.new(name: 'GetGroupsRequest')
     GetGroupsResult = Shapes::StructureShape.new(name: 'GetGroupsResult')
+    GetIndexingRulesRequest = Shapes::StructureShape.new(name: 'GetIndexingRulesRequest')
+    GetIndexingRulesResult = Shapes::StructureShape.new(name: 'GetIndexingRulesResult')
     GetInsightEventsMaxResults = Shapes::IntegerShape.new(name: 'GetInsightEventsMaxResults')
     GetInsightEventsRequest = Shapes::StructureShape.new(name: 'GetInsightEventsRequest')
     GetInsightEventsResult = Shapes::StructureShape.new(name: 'GetInsightEventsResult')
@@ -89,6 +93,8 @@ module Aws::XRay
     GetInsightSummariesMaxResults = Shapes::IntegerShape.new(name: 'GetInsightSummariesMaxResults')
     GetInsightSummariesRequest = Shapes::StructureShape.new(name: 'GetInsightSummariesRequest')
     GetInsightSummariesResult = Shapes::StructureShape.new(name: 'GetInsightSummariesResult')
+    GetRetrievedTracesGraphRequest = Shapes::StructureShape.new(name: 'GetRetrievedTracesGraphRequest')
+    GetRetrievedTracesGraphResult = Shapes::StructureShape.new(name: 'GetRetrievedTracesGraphResult')
     GetSamplingRulesRequest = Shapes::StructureShape.new(name: 'GetSamplingRulesRequest')
     GetSamplingRulesResult = Shapes::StructureShape.new(name: 'GetSamplingRulesResult')
     GetSamplingStatisticSummariesRequest = Shapes::StructureShape.new(name: 'GetSamplingStatisticSummariesRequest')
@@ -101,8 +107,11 @@ module Aws::XRay
     GetTimeSeriesServiceStatisticsResult = Shapes::StructureShape.new(name: 'GetTimeSeriesServiceStatisticsResult')
     GetTraceGraphRequest = Shapes::StructureShape.new(name: 'GetTraceGraphRequest')
     GetTraceGraphResult = Shapes::StructureShape.new(name: 'GetTraceGraphResult')
+    GetTraceSegmentDestinationRequest = Shapes::StructureShape.new(name: 'GetTraceSegmentDestinationRequest')
+    GetTraceSegmentDestinationResult = Shapes::StructureShape.new(name: 'GetTraceSegmentDestinationResult')
     GetTraceSummariesRequest = Shapes::StructureShape.new(name: 'GetTraceSummariesRequest')
     GetTraceSummariesResult = Shapes::StructureShape.new(name: 'GetTraceSummariesResult')
+    GraphLink = Shapes::StructureShape.new(name: 'GraphLink')
     Group = Shapes::StructureShape.new(name: 'Group')
     GroupARN = Shapes::StringShape.new(name: 'GroupARN')
     GroupName = Shapes::StringShape.new(name: 'GroupName')
@@ -114,6 +123,10 @@ module Aws::XRay
     Host = Shapes::StringShape.new(name: 'Host')
     Hostname = Shapes::StringShape.new(name: 'Hostname')
     Http = Shapes::StructureShape.new(name: 'Http')
+    IndexingRule = Shapes::StructureShape.new(name: 'IndexingRule')
+    IndexingRuleList = Shapes::ListShape.new(name: 'IndexingRuleList')
+    IndexingRuleValue = Shapes::UnionShape.new(name: 'IndexingRuleValue')
+    IndexingRuleValueUpdate = Shapes::UnionShape.new(name: 'IndexingRuleValueUpdate')
     Insight = Shapes::StructureShape.new(name: 'Insight')
     InsightCategory = Shapes::StringShape.new(name: 'InsightCategory')
     InsightCategoryList = Shapes::ListShape.new(name: 'InsightCategoryList')
@@ -134,8 +147,11 @@ module Aws::XRay
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InvalidPolicyRevisionIdException = Shapes::StructureShape.new(name: 'InvalidPolicyRevisionIdException')
     InvalidRequestException = Shapes::StructureShape.new(name: 'InvalidRequestException')
+    LinksList = Shapes::ListShape.new(name: 'LinksList')
     ListResourcePoliciesRequest = Shapes::StructureShape.new(name: 'ListResourcePoliciesRequest')
     ListResourcePoliciesResult = Shapes::StructureShape.new(name: 'ListResourcePoliciesResult')
+    ListRetrievedTracesRequest = Shapes::StructureShape.new(name: 'ListRetrievedTracesRequest')
+    ListRetrievedTracesResult = Shapes::StructureShape.new(name: 'ListRetrievedTracesResult')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     LockoutPreventionException = Shapes::StructureShape.new(name: 'LockoutPreventionException')
@@ -150,6 +166,8 @@ module Aws::XRay
     PolicyRevisionId = Shapes::StringShape.new(name: 'PolicyRevisionId')
     PolicySizeLimitExceededException = Shapes::StructureShape.new(name: 'PolicySizeLimitExceededException')
     Priority = Shapes::IntegerShape.new(name: 'Priority')
+    ProbabilisticRuleValue = Shapes::StructureShape.new(name: 'ProbabilisticRuleValue')
+    ProbabilisticRuleValueUpdate = Shapes::StructureShape.new(name: 'ProbabilisticRuleValueUpdate')
     PutEncryptionConfigRequest = Shapes::StructureShape.new(name: 'PutEncryptionConfigRequest')
     PutEncryptionConfigResult = Shapes::StructureShape.new(name: 'PutEncryptionConfigResult')
     PutResourcePolicyRequest = Shapes::StructureShape.new(name: 'PutResourcePolicyRequest')
@@ -173,6 +191,11 @@ module Aws::XRay
     ResponseTimeRootCauseService = Shapes::StructureShape.new(name: 'ResponseTimeRootCauseService')
     ResponseTimeRootCauseServices = Shapes::ListShape.new(name: 'ResponseTimeRootCauseServices')
     ResponseTimeRootCauses = Shapes::ListShape.new(name: 'ResponseTimeRootCauses')
+    RetrievalStatus = Shapes::StringShape.new(name: 'RetrievalStatus')
+    RetrievalToken = Shapes::StringShape.new(name: 'RetrievalToken')
+    RetrievedService = Shapes::StructureShape.new(name: 'RetrievedService')
+    RetrievedServicesList = Shapes::ListShape.new(name: 'RetrievedServicesList')
+    RetrievedTrace = Shapes::StructureShape.new(name: 'RetrievedTrace')
     RootCauseException = Shapes::StructureShape.new(name: 'RootCauseException')
     RootCauseExceptions = Shapes::ListShape.new(name: 'RootCauseExceptions')
     RuleLimitExceededException = Shapes::StructureShape.new(name: 'RuleLimitExceededException')
@@ -202,6 +225,12 @@ module Aws::XRay
     ServiceNames = Shapes::ListShape.new(name: 'ServiceNames')
     ServiceStatistics = Shapes::StructureShape.new(name: 'ServiceStatistics')
     ServiceType = Shapes::StringShape.new(name: 'ServiceType')
+    Span = Shapes::StructureShape.new(name: 'Span')
+    SpanDocument = Shapes::StringShape.new(name: 'SpanDocument')
+    SpanId = Shapes::StringShape.new(name: 'SpanId')
+    SpanList = Shapes::ListShape.new(name: 'SpanList')
+    StartTraceRetrievalRequest = Shapes::StructureShape.new(name: 'StartTraceRetrievalRequest')
+    StartTraceRetrievalResult = Shapes::StructureShape.new(name: 'StartTraceRetrievalResult')
     String = Shapes::StringShape.new(name: 'String')
     Tag = Shapes::StructureShape.new(name: 'Tag')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
@@ -221,13 +250,18 @@ module Aws::XRay
     TooManyTagsException = Shapes::StructureShape.new(name: 'TooManyTagsException')
     Trace = Shapes::StructureShape.new(name: 'Trace')
     TraceAvailabilityZones = Shapes::ListShape.new(name: 'TraceAvailabilityZones')
+    TraceFormatType = Shapes::StringShape.new(name: 'TraceFormatType')
     TraceId = Shapes::StringShape.new(name: 'TraceId')
     TraceIdList = Shapes::ListShape.new(name: 'TraceIdList')
+    TraceIdListForRetrieval = Shapes::ListShape.new(name: 'TraceIdListForRetrieval')
     TraceInstanceIds = Shapes::ListShape.new(name: 'TraceInstanceIds')
     TraceList = Shapes::ListShape.new(name: 'TraceList')
     TraceResourceARNs = Shapes::ListShape.new(name: 'TraceResourceARNs')
+    TraceSegmentDestination = Shapes::StringShape.new(name: 'TraceSegmentDestination')
+    TraceSegmentDestinationStatus = Shapes::StringShape.new(name: 'TraceSegmentDestinationStatus')
     TraceSegmentDocument = Shapes::StringShape.new(name: 'TraceSegmentDocument')
     TraceSegmentDocumentList = Shapes::ListShape.new(name: 'TraceSegmentDocumentList')
+    TraceSpanList = Shapes::ListShape.new(name: 'TraceSpanList')
     TraceSummary = Shapes::StructureShape.new(name: 'TraceSummary')
     TraceSummaryList = Shapes::ListShape.new(name: 'TraceSummaryList')
     TraceUser = Shapes::StructureShape.new(name: 'TraceUser')
@@ -242,8 +276,12 @@ module Aws::XRay
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
     UpdateGroupRequest = Shapes::StructureShape.new(name: 'UpdateGroupRequest')
     UpdateGroupResult = Shapes::StructureShape.new(name: 'UpdateGroupResult')
+    UpdateIndexingRuleRequest = Shapes::StructureShape.new(name: 'UpdateIndexingRuleRequest')
+    UpdateIndexingRuleResult = Shapes::StructureShape.new(name: 'UpdateIndexingRuleResult')
     UpdateSamplingRuleRequest = Shapes::StructureShape.new(name: 'UpdateSamplingRuleRequest')
     UpdateSamplingRuleResult = Shapes::StructureShape.new(name: 'UpdateSamplingRuleResult')
+    UpdateTraceSegmentDestinationRequest = Shapes::StructureShape.new(name: 'UpdateTraceSegmentDestinationRequest')
+    UpdateTraceSegmentDestinationResult = Shapes::StructureShape.new(name: 'UpdateTraceSegmentDestinationResult')
     ValueWithServiceIds = Shapes::StructureShape.new(name: 'ValueWithServiceIds')
     ValuesWithServiceIds = Shapes::ListShape.new(name: 'ValuesWithServiceIds')
     Version = Shapes::IntegerShape.new(name: 'Version')
@@ -292,6 +330,11 @@ module Aws::XRay
     BatchGetTracesResult.add_member(:unprocessed_trace_ids, Shapes::ShapeRef.new(shape: UnprocessedTraceIdList, location_name: "UnprocessedTraceIds"))
     BatchGetTracesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     BatchGetTracesResult.struct_class = Types::BatchGetTracesResult
+
+    CancelTraceRetrievalRequest.add_member(:retrieval_token, Shapes::ShapeRef.new(shape: RetrievalToken, required: true, location_name: "RetrievalToken"))
+    CancelTraceRetrievalRequest.struct_class = Types::CancelTraceRetrievalRequest
+
+    CancelTraceRetrievalResult.struct_class = Types::CancelTraceRetrievalResult
 
     CreateGroupRequest.add_member(:group_name, Shapes::ShapeRef.new(shape: GroupName, required: true, location_name: "GroupName"))
     CreateGroupRequest.add_member(:filter_expression, Shapes::ShapeRef.new(shape: FilterExpression, location_name: "FilterExpression"))
@@ -430,6 +473,13 @@ module Aws::XRay
     GetGroupsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     GetGroupsResult.struct_class = Types::GetGroupsResult
 
+    GetIndexingRulesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    GetIndexingRulesRequest.struct_class = Types::GetIndexingRulesRequest
+
+    GetIndexingRulesResult.add_member(:indexing_rules, Shapes::ShapeRef.new(shape: IndexingRuleList, location_name: "IndexingRules"))
+    GetIndexingRulesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    GetIndexingRulesResult.struct_class = Types::GetIndexingRulesResult
+
     GetInsightEventsRequest.add_member(:insight_id, Shapes::ShapeRef.new(shape: InsightId, required: true, location_name: "InsightId"))
     GetInsightEventsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: GetInsightEventsMaxResults, location_name: "MaxResults"))
     GetInsightEventsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
@@ -472,6 +522,15 @@ module Aws::XRay
     GetInsightSummariesResult.add_member(:insight_summaries, Shapes::ShapeRef.new(shape: InsightSummaryList, location_name: "InsightSummaries"))
     GetInsightSummariesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
     GetInsightSummariesResult.struct_class = Types::GetInsightSummariesResult
+
+    GetRetrievedTracesGraphRequest.add_member(:retrieval_token, Shapes::ShapeRef.new(shape: RetrievalToken, required: true, location_name: "RetrievalToken"))
+    GetRetrievedTracesGraphRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    GetRetrievedTracesGraphRequest.struct_class = Types::GetRetrievedTracesGraphRequest
+
+    GetRetrievedTracesGraphResult.add_member(:retrieval_status, Shapes::ShapeRef.new(shape: RetrievalStatus, location_name: "RetrievalStatus"))
+    GetRetrievedTracesGraphResult.add_member(:services, Shapes::ShapeRef.new(shape: RetrievedServicesList, location_name: "Services"))
+    GetRetrievedTracesGraphResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    GetRetrievedTracesGraphResult.struct_class = Types::GetRetrievedTracesGraphResult
 
     GetSamplingRulesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     GetSamplingRulesRequest.struct_class = Types::GetSamplingRulesRequest
@@ -532,6 +591,12 @@ module Aws::XRay
     GetTraceGraphResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     GetTraceGraphResult.struct_class = Types::GetTraceGraphResult
 
+    GetTraceSegmentDestinationRequest.struct_class = Types::GetTraceSegmentDestinationRequest
+
+    GetTraceSegmentDestinationResult.add_member(:destination, Shapes::ShapeRef.new(shape: TraceSegmentDestination, location_name: "Destination"))
+    GetTraceSegmentDestinationResult.add_member(:status, Shapes::ShapeRef.new(shape: TraceSegmentDestinationStatus, location_name: "Status"))
+    GetTraceSegmentDestinationResult.struct_class = Types::GetTraceSegmentDestinationResult
+
     GetTraceSummariesRequest.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "StartTime"))
     GetTraceSummariesRequest.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "EndTime"))
     GetTraceSummariesRequest.add_member(:time_range_type, Shapes::ShapeRef.new(shape: TimeRangeType, location_name: "TimeRangeType"))
@@ -546,6 +611,11 @@ module Aws::XRay
     GetTraceSummariesResult.add_member(:traces_processed_count, Shapes::ShapeRef.new(shape: NullableLong, location_name: "TracesProcessedCount"))
     GetTraceSummariesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     GetTraceSummariesResult.struct_class = Types::GetTraceSummariesResult
+
+    GraphLink.add_member(:reference_type, Shapes::ShapeRef.new(shape: String, location_name: "ReferenceType"))
+    GraphLink.add_member(:source_trace_id, Shapes::ShapeRef.new(shape: String, location_name: "SourceTraceId"))
+    GraphLink.add_member(:destination_trace_ids, Shapes::ShapeRef.new(shape: TraceIdList, location_name: "DestinationTraceIds"))
+    GraphLink.struct_class = Types::GraphLink
 
     Group.add_member(:group_name, Shapes::ShapeRef.new(shape: String, location_name: "GroupName"))
     Group.add_member(:group_arn, Shapes::ShapeRef.new(shape: String, location_name: "GroupARN"))
@@ -573,6 +643,25 @@ module Aws::XRay
     Http.add_member(:user_agent, Shapes::ShapeRef.new(shape: String, location_name: "UserAgent"))
     Http.add_member(:client_ip, Shapes::ShapeRef.new(shape: String, location_name: "ClientIp"))
     Http.struct_class = Types::Http
+
+    IndexingRule.add_member(:name, Shapes::ShapeRef.new(shape: RuleName, location_name: "Name"))
+    IndexingRule.add_member(:modified_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "ModifiedAt"))
+    IndexingRule.add_member(:rule, Shapes::ShapeRef.new(shape: IndexingRuleValue, location_name: "Rule"))
+    IndexingRule.struct_class = Types::IndexingRule
+
+    IndexingRuleList.member = Shapes::ShapeRef.new(shape: IndexingRule)
+
+    IndexingRuleValue.add_member(:probabilistic, Shapes::ShapeRef.new(shape: ProbabilisticRuleValue, location_name: "Probabilistic"))
+    IndexingRuleValue.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    IndexingRuleValue.add_member_subclass(:probabilistic, Types::IndexingRuleValue::Probabilistic)
+    IndexingRuleValue.add_member_subclass(:unknown, Types::IndexingRuleValue::Unknown)
+    IndexingRuleValue.struct_class = Types::IndexingRuleValue
+
+    IndexingRuleValueUpdate.add_member(:probabilistic, Shapes::ShapeRef.new(shape: ProbabilisticRuleValueUpdate, location_name: "Probabilistic"))
+    IndexingRuleValueUpdate.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    IndexingRuleValueUpdate.add_member_subclass(:probabilistic, Types::IndexingRuleValueUpdate::Probabilistic)
+    IndexingRuleValueUpdate.add_member_subclass(:unknown, Types::IndexingRuleValueUpdate::Unknown)
+    IndexingRuleValueUpdate.struct_class = Types::IndexingRuleValueUpdate
 
     Insight.add_member(:insight_id, Shapes::ShapeRef.new(shape: InsightId, location_name: "InsightId"))
     Insight.add_member(:group_arn, Shapes::ShapeRef.new(shape: GroupARN, location_name: "GroupARN"))
@@ -646,12 +735,25 @@ module Aws::XRay
     InvalidRequestException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     InvalidRequestException.struct_class = Types::InvalidRequestException
 
+    LinksList.member = Shapes::ShapeRef.new(shape: GraphLink)
+
     ListResourcePoliciesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: ResourcePolicyNextToken, location_name: "NextToken"))
     ListResourcePoliciesRequest.struct_class = Types::ListResourcePoliciesRequest
 
     ListResourcePoliciesResult.add_member(:resource_policies, Shapes::ShapeRef.new(shape: ResourcePolicyList, location_name: "ResourcePolicies"))
     ListResourcePoliciesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: ResourcePolicyNextToken, location_name: "NextToken"))
     ListResourcePoliciesResult.struct_class = Types::ListResourcePoliciesResult
+
+    ListRetrievedTracesRequest.add_member(:retrieval_token, Shapes::ShapeRef.new(shape: RetrievalToken, required: true, location_name: "RetrievalToken"))
+    ListRetrievedTracesRequest.add_member(:trace_format, Shapes::ShapeRef.new(shape: TraceFormatType, location_name: "TraceFormat"))
+    ListRetrievedTracesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    ListRetrievedTracesRequest.struct_class = Types::ListRetrievedTracesRequest
+
+    ListRetrievedTracesResult.add_member(:retrieval_status, Shapes::ShapeRef.new(shape: RetrievalStatus, location_name: "RetrievalStatus"))
+    ListRetrievedTracesResult.add_member(:trace_format, Shapes::ShapeRef.new(shape: TraceFormatType, location_name: "TraceFormat"))
+    ListRetrievedTracesResult.add_member(:traces, Shapes::ShapeRef.new(shape: TraceSpanList, location_name: "Traces"))
+    ListRetrievedTracesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    ListRetrievedTracesResult.struct_class = Types::ListRetrievedTracesResult
 
     ListTagsForResourceRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: AmazonResourceName, required: true, location_name: "ResourceARN"))
     ListTagsForResourceRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
@@ -672,6 +774,13 @@ module Aws::XRay
 
     PolicySizeLimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     PolicySizeLimitExceededException.struct_class = Types::PolicySizeLimitExceededException
+
+    ProbabilisticRuleValue.add_member(:desired_sampling_percentage, Shapes::ShapeRef.new(shape: NullableDouble, required: true, location_name: "DesiredSamplingPercentage"))
+    ProbabilisticRuleValue.add_member(:actual_sampling_percentage, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "ActualSamplingPercentage"))
+    ProbabilisticRuleValue.struct_class = Types::ProbabilisticRuleValue
+
+    ProbabilisticRuleValueUpdate.add_member(:desired_sampling_percentage, Shapes::ShapeRef.new(shape: NullableDouble, required: true, location_name: "DesiredSamplingPercentage"))
+    ProbabilisticRuleValueUpdate.struct_class = Types::ProbabilisticRuleValueUpdate
 
     PutEncryptionConfigRequest.add_member(:key_id, Shapes::ShapeRef.new(shape: EncryptionKeyId, location_name: "KeyId"))
     PutEncryptionConfigRequest.add_member(:type, Shapes::ShapeRef.new(shape: EncryptionType, required: true, location_name: "Type"))
@@ -745,6 +854,17 @@ module Aws::XRay
     ResponseTimeRootCauseServices.member = Shapes::ShapeRef.new(shape: ResponseTimeRootCauseService)
 
     ResponseTimeRootCauses.member = Shapes::ShapeRef.new(shape: ResponseTimeRootCause)
+
+    RetrievedService.add_member(:service, Shapes::ShapeRef.new(shape: Service, location_name: "Service"))
+    RetrievedService.add_member(:links, Shapes::ShapeRef.new(shape: LinksList, location_name: "Links"))
+    RetrievedService.struct_class = Types::RetrievedService
+
+    RetrievedServicesList.member = Shapes::ShapeRef.new(shape: RetrievedService)
+
+    RetrievedTrace.add_member(:id, Shapes::ShapeRef.new(shape: TraceId, location_name: "Id"))
+    RetrievedTrace.add_member(:duration, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "Duration"))
+    RetrievedTrace.add_member(:spans, Shapes::ShapeRef.new(shape: SpanList, location_name: "Spans"))
+    RetrievedTrace.struct_class = Types::RetrievedTrace
 
     RootCauseException.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "Name"))
     RootCauseException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
@@ -863,6 +983,20 @@ module Aws::XRay
     ServiceStatistics.add_member(:total_response_time, Shapes::ShapeRef.new(shape: NullableDouble, location_name: "TotalResponseTime"))
     ServiceStatistics.struct_class = Types::ServiceStatistics
 
+    Span.add_member(:id, Shapes::ShapeRef.new(shape: SpanId, location_name: "Id"))
+    Span.add_member(:document, Shapes::ShapeRef.new(shape: SpanDocument, location_name: "Document"))
+    Span.struct_class = Types::Span
+
+    SpanList.member = Shapes::ShapeRef.new(shape: Span)
+
+    StartTraceRetrievalRequest.add_member(:trace_ids, Shapes::ShapeRef.new(shape: TraceIdListForRetrieval, required: true, location_name: "TraceIds"))
+    StartTraceRetrievalRequest.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "StartTime"))
+    StartTraceRetrievalRequest.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "EndTime"))
+    StartTraceRetrievalRequest.struct_class = Types::StartTraceRetrievalRequest
+
+    StartTraceRetrievalResult.add_member(:retrieval_token, Shapes::ShapeRef.new(shape: RetrievalToken, location_name: "RetrievalToken"))
+    StartTraceRetrievalResult.struct_class = Types::StartTraceRetrievalResult
+
     Tag.add_member(:key, Shapes::ShapeRef.new(shape: TagKey, required: true, location_name: "Key"))
     Tag.add_member(:value, Shapes::ShapeRef.new(shape: TagValue, required: true, location_name: "Value"))
     Tag.struct_class = Types::Tag
@@ -913,6 +1047,8 @@ module Aws::XRay
 
     TraceIdList.member = Shapes::ShapeRef.new(shape: TraceId)
 
+    TraceIdListForRetrieval.member = Shapes::ShapeRef.new(shape: TraceId)
+
     TraceInstanceIds.member = Shapes::ShapeRef.new(shape: InstanceIdDetail)
 
     TraceList.member = Shapes::ShapeRef.new(shape: Trace)
@@ -920,6 +1056,8 @@ module Aws::XRay
     TraceResourceARNs.member = Shapes::ShapeRef.new(shape: ResourceARNDetail)
 
     TraceSegmentDocumentList.member = Shapes::ShapeRef.new(shape: TraceSegmentDocument)
+
+    TraceSpanList.member = Shapes::ShapeRef.new(shape: RetrievedTrace)
 
     TraceSummary.add_member(:id, Shapes::ShapeRef.new(shape: TraceId, location_name: "Id"))
     TraceSummary.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "StartTime"))
@@ -983,11 +1121,25 @@ module Aws::XRay
     UpdateGroupResult.add_member(:group, Shapes::ShapeRef.new(shape: Group, location_name: "Group"))
     UpdateGroupResult.struct_class = Types::UpdateGroupResult
 
+    UpdateIndexingRuleRequest.add_member(:name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Name"))
+    UpdateIndexingRuleRequest.add_member(:rule, Shapes::ShapeRef.new(shape: IndexingRuleValueUpdate, required: true, location_name: "Rule"))
+    UpdateIndexingRuleRequest.struct_class = Types::UpdateIndexingRuleRequest
+
+    UpdateIndexingRuleResult.add_member(:indexing_rule, Shapes::ShapeRef.new(shape: IndexingRule, location_name: "IndexingRule"))
+    UpdateIndexingRuleResult.struct_class = Types::UpdateIndexingRuleResult
+
     UpdateSamplingRuleRequest.add_member(:sampling_rule_update, Shapes::ShapeRef.new(shape: SamplingRuleUpdate, required: true, location_name: "SamplingRuleUpdate"))
     UpdateSamplingRuleRequest.struct_class = Types::UpdateSamplingRuleRequest
 
     UpdateSamplingRuleResult.add_member(:sampling_rule_record, Shapes::ShapeRef.new(shape: SamplingRuleRecord, location_name: "SamplingRuleRecord"))
     UpdateSamplingRuleResult.struct_class = Types::UpdateSamplingRuleResult
+
+    UpdateTraceSegmentDestinationRequest.add_member(:destination, Shapes::ShapeRef.new(shape: TraceSegmentDestination, location_name: "Destination"))
+    UpdateTraceSegmentDestinationRequest.struct_class = Types::UpdateTraceSegmentDestinationRequest
+
+    UpdateTraceSegmentDestinationResult.add_member(:destination, Shapes::ShapeRef.new(shape: TraceSegmentDestination, location_name: "Destination"))
+    UpdateTraceSegmentDestinationResult.add_member(:status, Shapes::ShapeRef.new(shape: TraceSegmentDestinationStatus, location_name: "Status"))
+    UpdateTraceSegmentDestinationResult.struct_class = Types::UpdateTraceSegmentDestinationResult
 
     ValueWithServiceIds.add_member(:annotation_value, Shapes::ShapeRef.new(shape: AnnotationValue, location_name: "AnnotationValue"))
     ValueWithServiceIds.add_member(:service_ids, Shapes::ShapeRef.new(shape: ServiceIds, location_name: "ServiceIds"))
@@ -1026,6 +1178,17 @@ module Aws::XRay
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:cancel_trace_retrieval, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CancelTraceRetrieval"
+        o.http_method = "POST"
+        o.http_request_uri = "/CancelTraceRetrieval"
+        o.input = Shapes::ShapeRef.new(shape: CancelTraceRetrievalRequest)
+        o.output = Shapes::ShapeRef.new(shape: CancelTraceRetrievalResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:create_group, Seahorse::Model::Operation.new.tap do |o|
@@ -1115,6 +1278,16 @@ module Aws::XRay
         )
       end)
 
+      api.add_operation(:get_indexing_rules, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetIndexingRules"
+        o.http_method = "POST"
+        o.http_request_uri = "/GetIndexingRules"
+        o.input = Shapes::ShapeRef.new(shape: GetIndexingRulesRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetIndexingRulesResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+      end)
+
       api.add_operation(:get_insight, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetInsight"
         o.http_method = "POST"
@@ -1165,6 +1338,17 @@ module Aws::XRay
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:get_retrieved_traces_graph, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetRetrievedTracesGraph"
+        o.http_method = "POST"
+        o.http_request_uri = "/GetRetrievedTracesGraph"
+        o.input = Shapes::ShapeRef.new(shape: GetRetrievedTracesGraphRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetRetrievedTracesGraphResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:get_sampling_rules, Seahorse::Model::Operation.new.tap do |o|
@@ -1252,6 +1436,16 @@ module Aws::XRay
         )
       end)
 
+      api.add_operation(:get_trace_segment_destination, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetTraceSegmentDestination"
+        o.http_method = "POST"
+        o.http_request_uri = "/GetTraceSegmentDestination"
+        o.input = Shapes::ShapeRef.new(shape: GetTraceSegmentDestinationRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetTraceSegmentDestinationResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+      end)
+
       api.add_operation(:get_trace_summaries, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetTraceSummaries"
         o.http_method = "POST"
@@ -1280,6 +1474,17 @@ module Aws::XRay
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:list_retrieved_traces, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListRetrievedTraces"
+        o.http_method = "POST"
+        o.http_request_uri = "/ListRetrievedTraces"
+        o.input = Shapes::ShapeRef.new(shape: ListRetrievedTracesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListRetrievedTracesResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:list_tags_for_resource, Seahorse::Model::Operation.new.tap do |o|
@@ -1342,6 +1547,17 @@ module Aws::XRay
         o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
       end)
 
+      api.add_operation(:start_trace_retrieval, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartTraceRetrieval"
+        o.http_method = "POST"
+        o.http_request_uri = "/StartTraceRetrieval"
+        o.input = Shapes::ShapeRef.new(shape: StartTraceRetrievalRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartTraceRetrievalResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:tag_resource, Seahorse::Model::Operation.new.tap do |o|
         o.name = "TagResource"
         o.http_method = "POST"
@@ -1375,12 +1591,33 @@ module Aws::XRay
         o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
       end)
 
+      api.add_operation(:update_indexing_rule, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateIndexingRule"
+        o.http_method = "POST"
+        o.http_request_uri = "/UpdateIndexingRule"
+        o.input = Shapes::ShapeRef.new(shape: UpdateIndexingRuleRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateIndexingRuleResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:update_sampling_rule, Seahorse::Model::Operation.new.tap do |o|
         o.name = "UpdateSamplingRule"
         o.http_method = "POST"
         o.http_request_uri = "/UpdateSamplingRule"
         o.input = Shapes::ShapeRef.new(shape: UpdateSamplingRuleRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateSamplingRuleResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
+      end)
+
+      api.add_operation(:update_trace_segment_destination, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateTraceSegmentDestination"
+        o.http_method = "POST"
+        o.http_request_uri = "/UpdateTraceSegmentDestination"
+        o.input = Shapes::ShapeRef.new(shape: UpdateTraceSegmentDestinationRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateTraceSegmentDestinationResult)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottledException)
       end)

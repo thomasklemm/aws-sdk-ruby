@@ -43,6 +43,11 @@ module Aws::S3
     # Indicates which default minimum object size behavior is applied to the
     # lifecycle configuration.
     #
+    # <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    # supported for directory bucket lifecycle configurations.
+    #
+    #  </note>
+    #
     # * `all_storage_classes_128K` - Objects smaller than 128 KB will not
     #   transition to any storage class by default.
     #
@@ -208,6 +213,11 @@ module Aws::S3
     #   The account ID of the expected bucket owner. If the account ID that
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     # @return [EmptyStructure]
     def delete(options = {})
       options = options.merge(bucket: @bucket_name)
@@ -301,9 +311,19 @@ module Aws::S3
     #   The account ID of the expected bucket owner. If the account ID that
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     # @option options [String] :transition_default_minimum_object_size
     #   Indicates which default minimum object size behavior is applied to the
     #   lifecycle configuration.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #
     #   * `all_storage_classes_128K` - Objects smaller than 128 KB will not
     #     transition to any storage class by default.

@@ -239,6 +239,7 @@ module Aws::S3
     #   multipart_upload.abort({
     #     request_payer: "requester", # accepts requester
     #     expected_bucket_owner: "AccountId",
+    #     if_match_initiated_time: Time.now,
     #   })
     # @param [Hash] options ({})
     # @option options [String] :request_payer
@@ -261,6 +262,17 @@ module Aws::S3
     #   The account ID of the expected bucket owner. If the account ID that
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
+    # @option options [Time,DateTime,Date,Integer,String] :if_match_initiated_time
+    #   If present, this header aborts an in progress multipart upload only if
+    #   it was initiated on the provided timestamp. If the initiated timestamp
+    #   of the multipart upload does not match the provided value, the
+    #   operation returns a `412 Precondition Failed` error. If the initiated
+    #   timestamp matches or if the multipart upload doesn’t exist, the
+    #   operation returns a `204 Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
     # @return [Types::AbortMultipartUploadOutput]
     def abort(options = {})
       options = options.merge(

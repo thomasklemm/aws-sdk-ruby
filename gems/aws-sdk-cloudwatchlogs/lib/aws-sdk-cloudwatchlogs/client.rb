@@ -1109,9 +1109,10 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
-    # Deletes a CloudWatch Logs account policy. This stops the policy from
-    # applying to all log groups or a subset of log groups in the account.
-    # Log-group level policies will still be in effect.
+    # Deletes a CloudWatch Logs account policy. This stops the account-wide
+    # policy from applying to log groups in the account. If you delete a
+    # data protection policy or subscription filter policy, any log-group
+    # level policies of those types remain in effect.
     #
     # To use this operation, you must be signed on with the correct
     # permissions depending on the type of policy that you are deleting.
@@ -1123,6 +1124,16 @@ module Aws::CloudWatchLogs
     # * To delete a subscription filter policy, you must have the
     #   `logs:DeleteSubscriptionFilter` and `logs:DeleteAccountPolicy`
     #   permissions.
+    #
+    # * To delete a transformer policy, you must have the
+    #   `logs:DeleteTransformer` and `logs:DeleteAccountPolicy` permissions.
+    #
+    # * To delete a field index policy, you must have the
+    #   `logs:DeleteIndexPolicy` and `logs:DeleteAccountPolicy` permissions.
+    #
+    # If you delete a field index policy, the indexing of the log events
+    # that happened before you deleted the policy will still be used for up
+    # to 30 days to improve CloudWatch Logs Insights queries.
     #
     # @option params [required, String] :policy_name
     #   The name of the policy to delete.
@@ -1136,7 +1147,7 @@ module Aws::CloudWatchLogs
     #
     #   resp = client.delete_account_policy({
     #     policy_name: "PolicyName", # required
-    #     policy_type: "DATA_PROTECTION_POLICY", # required, accepts DATA_PROTECTION_POLICY, SUBSCRIPTION_FILTER_POLICY
+    #     policy_type: "DATA_PROTECTION_POLICY", # required, accepts DATA_PROTECTION_POLICY, SUBSCRIPTION_FILTER_POLICY, FIELD_INDEX_POLICY, TRANSFORMER_POLICY
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteAccountPolicy AWS API Documentation
@@ -1328,6 +1339,44 @@ module Aws::CloudWatchLogs
     # @param [Hash] params ({})
     def delete_destination(params = {}, options = {})
       req = build_request(:delete_destination, params)
+      req.send_request(options)
+    end
+
+    # Deletes a log-group level field index policy that was applied to a
+    # single log group. The indexing of the log events that happened before
+    # you delete the policy will still be used for as many as 30 days to
+    # improve CloudWatch Logs Insights queries.
+    #
+    # You can't use this operation to delete an account-level index policy.
+    # Instead, use [DeletAccountPolicy][1].
+    #
+    # If you delete a log-group level field index policy and there is an
+    # account-level field index policy, in a few minutes the log group
+    # begins using that account-wide policy to index new incoming log
+    # events.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DeleteAccountPolicy.html
+    #
+    # @option params [required, String] :log_group_identifier
+    #   The log group to delete the index policy for. You can specify either
+    #   the name or the ARN of the log group.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_index_policy({
+    #     log_group_identifier: "LogGroupIdentifier", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteIndexPolicy AWS API Documentation
+    #
+    # @overload delete_index_policy(params = {})
+    # @param [Hash] params ({})
+    def delete_index_policy(params = {}, options = {})
+      req = build_request(:delete_index_policy, params)
       req.send_request(options)
     end
 
@@ -1551,6 +1600,39 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
+    # Deletes the log transformer for the specified log group. As soon as
+    # you do this, the transformation of incoming log events according to
+    # that transformer stops. If this account has an account-level
+    # transformer that applies to this log group, the log group begins using
+    # that account-level transformer when this log-group level transformer
+    # is deleted.
+    #
+    # After you delete a transformer, be sure to edit any metric filters or
+    # subscription filters that relied on the transformed versions of the
+    # log events.
+    #
+    # @option params [required, String] :log_group_identifier
+    #   Specify either the name or ARN of the log group to delete the
+    #   transformer for. If the log group is in a source account and you are
+    #   using a monitoring account, you must use the log group ARN.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_transformer({
+    #     log_group_identifier: "LogGroupIdentifier", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteTransformer AWS API Documentation
+    #
+    # @overload delete_transformer(params = {})
+    # @param [Hash] params ({})
+    def delete_transformer(params = {}, options = {})
+      req = build_request(:delete_transformer, params)
+      req.send_request(options)
+    end
+
     # Returns a list of all CloudWatch Logs account policies in the account.
     #
     # @option params [required, String] :policy_type
@@ -1571,16 +1653,22 @@ module Aws::CloudWatchLogs
     #   If you omit this parameter, only the policy in the current account is
     #   returned.
     #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #
     # @return [Types::DescribeAccountPoliciesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DescribeAccountPoliciesResponse#account_policies #account_policies} => Array&lt;Types::AccountPolicy&gt;
+    #   * {Types::DescribeAccountPoliciesResponse#next_token #next_token} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.describe_account_policies({
-    #     policy_type: "DATA_PROTECTION_POLICY", # required, accepts DATA_PROTECTION_POLICY, SUBSCRIPTION_FILTER_POLICY
+    #     policy_type: "DATA_PROTECTION_POLICY", # required, accepts DATA_PROTECTION_POLICY, SUBSCRIPTION_FILTER_POLICY, FIELD_INDEX_POLICY, TRANSFORMER_POLICY
     #     policy_name: "PolicyName",
     #     account_identifiers: ["AccountId"],
+    #     next_token: "NextToken",
     #   })
     #
     # @example Response structure
@@ -1589,10 +1677,11 @@ module Aws::CloudWatchLogs
     #   resp.account_policies[0].policy_name #=> String
     #   resp.account_policies[0].policy_document #=> String
     #   resp.account_policies[0].last_updated_time #=> Integer
-    #   resp.account_policies[0].policy_type #=> String, one of "DATA_PROTECTION_POLICY", "SUBSCRIPTION_FILTER_POLICY"
+    #   resp.account_policies[0].policy_type #=> String, one of "DATA_PROTECTION_POLICY", "SUBSCRIPTION_FILTER_POLICY", "FIELD_INDEX_POLICY", "TRANSFORMER_POLICY"
     #   resp.account_policies[0].scope #=> String, one of "ALL"
     #   resp.account_policies[0].selection_criteria #=> String
     #   resp.account_policies[0].account_id #=> String
+    #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeAccountPolicies AWS API Documentation
     #
@@ -1958,6 +2047,110 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
+    # Returns a list of field indexes listed in the field index policies of
+    # one or more log groups. For more information about field index
+    # policies, see [PutIndexPolicy][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html
+    #
+    # @option params [required, Array<String>] :log_group_identifiers
+    #   An array containing the names or ARNs of the log groups that you want
+    #   to retrieve field indexes for.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. The token expires after
+    #   24 hours.
+    #
+    # @return [Types::DescribeFieldIndexesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeFieldIndexesResponse#field_indexes #field_indexes} => Array&lt;Types::FieldIndex&gt;
+    #   * {Types::DescribeFieldIndexesResponse#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_field_indexes({
+    #     log_group_identifiers: ["LogGroupIdentifier"], # required
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.field_indexes #=> Array
+    #   resp.field_indexes[0].log_group_identifier #=> String
+    #   resp.field_indexes[0].field_index_name #=> String
+    #   resp.field_indexes[0].last_scan_time #=> Integer
+    #   resp.field_indexes[0].first_event_time #=> Integer
+    #   resp.field_indexes[0].last_event_time #=> Integer
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeFieldIndexes AWS API Documentation
+    #
+    # @overload describe_field_indexes(params = {})
+    # @param [Hash] params ({})
+    def describe_field_indexes(params = {}, options = {})
+      req = build_request(:describe_field_indexes, params)
+      req.send_request(options)
+    end
+
+    # Returns the field index policies of one or more log groups. For more
+    # information about field index policies, see [PutIndexPolicy][1].
+    #
+    # If a specified log group has a log-group level index policy, that
+    # policy is returned by this operation.
+    #
+    # If a specified log group doesn't have a log-group level index policy,
+    # but an account-wide index policy applies to it, that account-wide
+    # policy is returned by this operation.
+    #
+    # To find information about only account-level policies, use
+    # [DescribeAccountPolicies][2] instead.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html
+    # [2]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeAccountPolicies.html
+    #
+    # @option params [required, Array<String>] :log_group_identifiers
+    #   An array containing the name or ARN of the log group that you want to
+    #   retrieve field index policies for.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. The token expires after
+    #   24 hours.
+    #
+    # @return [Types::DescribeIndexPoliciesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeIndexPoliciesResponse#index_policies #index_policies} => Array&lt;Types::IndexPolicy&gt;
+    #   * {Types::DescribeIndexPoliciesResponse#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_index_policies({
+    #     log_group_identifiers: ["LogGroupIdentifier"], # required
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.index_policies #=> Array
+    #   resp.index_policies[0].log_group_identifier #=> String
+    #   resp.index_policies[0].last_update_time #=> Integer
+    #   resp.index_policies[0].policy_document #=> String
+    #   resp.index_policies[0].policy_name #=> String
+    #   resp.index_policies[0].source #=> String, one of "ACCOUNT", "LOG_GROUP"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeIndexPolicies AWS API Documentation
+    #
+    # @overload describe_index_policies(params = {})
+    # @param [Hash] params ({})
+    def describe_index_policies(params = {}, options = {})
+      req = build_request(:describe_index_policies, params)
+      req.send_request(options)
+    end
+
     # Lists the specified log groups. You can list all your log groups or
     # filter the results by prefix. The results are ASCII-sorted by log
     # group name.
@@ -2260,6 +2453,7 @@ module Aws::CloudWatchLogs
     #   resp.metric_filters[0].metric_transformations[0].unit #=> String, one of "Seconds", "Microseconds", "Milliseconds", "Bytes", "Kilobytes", "Megabytes", "Gigabytes", "Terabytes", "Bits", "Kilobits", "Megabits", "Gigabits", "Terabits", "Percent", "Count", "Bytes/Second", "Kilobytes/Second", "Megabytes/Second", "Gigabytes/Second", "Terabytes/Second", "Bits/Second", "Kilobits/Second", "Megabits/Second", "Gigabits/Second", "Terabits/Second", "Count/Second", "None"
     #   resp.metric_filters[0].creation_time #=> Integer
     #   resp.metric_filters[0].log_group_name #=> String
+    #   resp.metric_filters[0].apply_on_transformed_logs #=> Boolean
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeMetricFilters AWS API Documentation
@@ -2461,6 +2655,7 @@ module Aws::CloudWatchLogs
     #   resp.subscription_filters[0].destination_arn #=> String
     #   resp.subscription_filters[0].role_arn #=> String
     #   resp.subscription_filters[0].distribution #=> String, one of "Random", "ByLogStream"
+    #   resp.subscription_filters[0].apply_on_transformed_logs #=> Boolean
     #   resp.subscription_filters[0].creation_time #=> Integer
     #   resp.next_token #=> String
     #
@@ -3255,7 +3450,10 @@ module Aws::CloudWatchLogs
     #   resp.results[0][0].value #=> String
     #   resp.statistics.records_matched #=> Float
     #   resp.statistics.records_scanned #=> Float
+    #   resp.statistics.estimated_records_skipped #=> Float
     #   resp.statistics.bytes_scanned #=> Float
+    #   resp.statistics.estimated_bytes_skipped #=> Float
+    #   resp.statistics.log_groups_scanned #=> Float
     #   resp.status #=> String, one of "Scheduled", "Running", "Complete", "Failed", "Cancelled", "Timeout", "Unknown"
     #   resp.encryption_key #=> String
     #
@@ -3265,6 +3463,120 @@ module Aws::CloudWatchLogs
     # @param [Hash] params ({})
     def get_query_results(params = {}, options = {})
       req = build_request(:get_query_results, params)
+      req.send_request(options)
+    end
+
+    # Returns the information about the log transformer associated with this
+    # log group.
+    #
+    # This operation returns data only for transformers created at the log
+    # group level. To get information for an account-level transformer, use
+    # [DescribeAccountPolicies][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_DescribeAccountPolicies.html
+    #
+    # @option params [required, String] :log_group_identifier
+    #   Specify either the name or ARN of the log group to return transformer
+    #   information for. If the log group is in a source account and you are
+    #   using a monitoring account, you must use the log group ARN.
+    #
+    # @return [Types::GetTransformerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetTransformerResponse#log_group_identifier #log_group_identifier} => String
+    #   * {Types::GetTransformerResponse#creation_time #creation_time} => Integer
+    #   * {Types::GetTransformerResponse#last_modified_time #last_modified_time} => Integer
+    #   * {Types::GetTransformerResponse#transformer_config #transformer_config} => Array&lt;Types::Processor&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_transformer({
+    #     log_group_identifier: "LogGroupIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.log_group_identifier #=> String
+    #   resp.creation_time #=> Integer
+    #   resp.last_modified_time #=> Integer
+    #   resp.transformer_config #=> Array
+    #   resp.transformer_config[0].add_keys.entries #=> Array
+    #   resp.transformer_config[0].add_keys.entries[0].key #=> String
+    #   resp.transformer_config[0].add_keys.entries[0].value #=> String
+    #   resp.transformer_config[0].add_keys.entries[0].overwrite_if_exists #=> Boolean
+    #   resp.transformer_config[0].copy_value.entries #=> Array
+    #   resp.transformer_config[0].copy_value.entries[0].source #=> String
+    #   resp.transformer_config[0].copy_value.entries[0].target #=> String
+    #   resp.transformer_config[0].copy_value.entries[0].overwrite_if_exists #=> Boolean
+    #   resp.transformer_config[0].csv.quote_character #=> String
+    #   resp.transformer_config[0].csv.delimiter #=> String
+    #   resp.transformer_config[0].csv.columns #=> Array
+    #   resp.transformer_config[0].csv.columns[0] #=> String
+    #   resp.transformer_config[0].csv.source #=> String
+    #   resp.transformer_config[0].date_time_converter.source #=> String
+    #   resp.transformer_config[0].date_time_converter.target #=> String
+    #   resp.transformer_config[0].date_time_converter.target_format #=> String
+    #   resp.transformer_config[0].date_time_converter.match_patterns #=> Array
+    #   resp.transformer_config[0].date_time_converter.match_patterns[0] #=> String
+    #   resp.transformer_config[0].date_time_converter.source_timezone #=> String
+    #   resp.transformer_config[0].date_time_converter.target_timezone #=> String
+    #   resp.transformer_config[0].date_time_converter.locale #=> String
+    #   resp.transformer_config[0].delete_keys.with_keys #=> Array
+    #   resp.transformer_config[0].delete_keys.with_keys[0] #=> String
+    #   resp.transformer_config[0].grok.source #=> String
+    #   resp.transformer_config[0].grok.match #=> String
+    #   resp.transformer_config[0].list_to_map.source #=> String
+    #   resp.transformer_config[0].list_to_map.key #=> String
+    #   resp.transformer_config[0].list_to_map.value_key #=> String
+    #   resp.transformer_config[0].list_to_map.target #=> String
+    #   resp.transformer_config[0].list_to_map.flatten #=> Boolean
+    #   resp.transformer_config[0].list_to_map.flattened_element #=> String, one of "first", "last"
+    #   resp.transformer_config[0].lower_case_string.with_keys #=> Array
+    #   resp.transformer_config[0].lower_case_string.with_keys[0] #=> String
+    #   resp.transformer_config[0].move_keys.entries #=> Array
+    #   resp.transformer_config[0].move_keys.entries[0].source #=> String
+    #   resp.transformer_config[0].move_keys.entries[0].target #=> String
+    #   resp.transformer_config[0].move_keys.entries[0].overwrite_if_exists #=> Boolean
+    #   resp.transformer_config[0].parse_cloudfront.source #=> String
+    #   resp.transformer_config[0].parse_json.source #=> String
+    #   resp.transformer_config[0].parse_json.destination #=> String
+    #   resp.transformer_config[0].parse_key_value.source #=> String
+    #   resp.transformer_config[0].parse_key_value.destination #=> String
+    #   resp.transformer_config[0].parse_key_value.field_delimiter #=> String
+    #   resp.transformer_config[0].parse_key_value.key_value_delimiter #=> String
+    #   resp.transformer_config[0].parse_key_value.key_prefix #=> String
+    #   resp.transformer_config[0].parse_key_value.non_match_value #=> String
+    #   resp.transformer_config[0].parse_key_value.overwrite_if_exists #=> Boolean
+    #   resp.transformer_config[0].parse_route_53.source #=> String
+    #   resp.transformer_config[0].parse_postgres.source #=> String
+    #   resp.transformer_config[0].parse_vpc.source #=> String
+    #   resp.transformer_config[0].parse_waf.source #=> String
+    #   resp.transformer_config[0].rename_keys.entries #=> Array
+    #   resp.transformer_config[0].rename_keys.entries[0].key #=> String
+    #   resp.transformer_config[0].rename_keys.entries[0].rename_to #=> String
+    #   resp.transformer_config[0].rename_keys.entries[0].overwrite_if_exists #=> Boolean
+    #   resp.transformer_config[0].split_string.entries #=> Array
+    #   resp.transformer_config[0].split_string.entries[0].source #=> String
+    #   resp.transformer_config[0].split_string.entries[0].delimiter #=> String
+    #   resp.transformer_config[0].substitute_string.entries #=> Array
+    #   resp.transformer_config[0].substitute_string.entries[0].source #=> String
+    #   resp.transformer_config[0].substitute_string.entries[0].from #=> String
+    #   resp.transformer_config[0].substitute_string.entries[0].to #=> String
+    #   resp.transformer_config[0].trim_string.with_keys #=> Array
+    #   resp.transformer_config[0].trim_string.with_keys[0] #=> String
+    #   resp.transformer_config[0].type_converter.entries #=> Array
+    #   resp.transformer_config[0].type_converter.entries[0].key #=> String
+    #   resp.transformer_config[0].type_converter.entries[0].type #=> String, one of "boolean", "integer", "double", "string"
+    #   resp.transformer_config[0].upper_case_string.with_keys #=> Array
+    #   resp.transformer_config[0].upper_case_string.with_keys[0] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/GetTransformer AWS API Documentation
+    #
+    # @overload get_transformer(params = {})
+    # @param [Hash] params ({})
+    def get_transformer(params = {}, options = {})
+      req = build_request(:get_transformer, params)
       req.send_request(options)
     end
 
@@ -3401,6 +3713,63 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
+    # Returns a list of the log groups that were analyzed during a single
+    # CloudWatch Logs Insights query. This can be useful for queries that
+    # use log group name prefixes or the `filterIndex` command, because the
+    # log groups are dynamically selected in these cases.
+    #
+    # For more information about field indexes, see [Create field indexes to
+    # improve query performance and reduce costs][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing.html
+    #
+    # @option params [required, String] :query_id
+    #   The ID of the query to use. This query ID is from the response to your
+    #   [StartQuery][1] operation.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. The token expires after
+    #   24 hours.
+    #
+    # @option params [Integer] :max_results
+    #   Limits the number of returned log groups to the specified number.
+    #
+    # @return [Types::ListLogGroupsForQueryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListLogGroupsForQueryResponse#log_group_identifiers #log_group_identifiers} => Array&lt;String&gt;
+    #   * {Types::ListLogGroupsForQueryResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_log_groups_for_query({
+    #     query_id: "QueryId", # required
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.log_group_identifiers #=> Array
+    #   resp.log_group_identifiers[0] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ListLogGroupsForQuery AWS API Documentation
+    #
+    # @overload list_log_groups_for_query(params = {})
+    # @param [Hash] params ({})
+    def list_log_groups_for_query(params = {}, options = {})
+      req = build_request(:list_log_groups_for_query, params)
+      req.send_request(options)
+    end
+
     # Displays the tags associated with a CloudWatch Logs resource.
     # Currently, log groups and destinations support tagging.
     #
@@ -3480,9 +3849,9 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
-    # Creates an account-level data protection policy or subscription filter
-    # policy that applies to all log groups or a subset of log groups in the
-    # account.
+    # Creates an account-level data protection policy, subscription filter
+    # policy, or field index policy that applies to all log groups or a
+    # subset of log groups in the account.
     #
     # **Data protection policy**
     #
@@ -3555,6 +3924,102 @@ module Aws::CloudWatchLogs
     # subscription filter operation for any destination except a Lambda
     # function, you must also have the `iam:PassRole` permission.
     #
+    # **Transformer policy**
+    #
+    # Creates or updates a *log transformer policy* for your account. You
+    # use log transformers to transform log events into a different format,
+    # making them easier for you to process and analyze. You can also
+    # transform logs from different sources into standardized formats that
+    # contain relevant, source-specific information. After you have created
+    # a transformer, CloudWatch Logs performs this transformation at the
+    # time of log ingestion. You can then refer to the transformed versions
+    # of the logs during operations such as querying with CloudWatch Logs
+    # Insights or creating metric filters or subscription filters.
+    #
+    # You can also use a transformer to copy metadata from metadata keys
+    # into the log events themselves. This metadata can include log group
+    # name, log stream name, account ID and Region.
+    #
+    # A transformer for a log group is a series of processors, where each
+    # processor applies one type of transformation to the log events
+    # ingested into this log group. For more information about the available
+    # processors to use in a transformer, see [ Processors that you can
+    # use][6].
+    #
+    # Having log events in standardized format enables visibility across
+    # your applications for your log analysis, reporting, and alarming
+    # needs. CloudWatch Logs provides transformation for common log types
+    # with out-of-the-box transformation templates for major Amazon Web
+    # Services log sources such as VPC flow logs, Lambda, and Amazon RDS.
+    # You can use pre-built transformation templates or create custom
+    # transformation policies.
+    #
+    # You can create transformers only for the log groups in the Standard
+    # log class.
+    #
+    # You can have one account-level transformer policy that applies to all
+    # log groups in the account. Or you can create as many as 20
+    # account-level transformer policies that are each scoped to a subset of
+    # log groups with the `selectionCriteria` parameter. If you have
+    # multiple account-level transformer policies with selection criteria,
+    # no two of them can use the same or overlapping log group name
+    # prefixes. For example, if you have one policy filtered to log groups
+    # that start with `my-log`, you can't have another field index policy
+    # filtered to `my-logpprod` or `my-logging`.
+    #
+    # You can also set up a transformer at the log-group level. For more
+    # information, see [PutTransformer][7]. If there is both a log-group
+    # level transformer created with `PutTransformer` and an account-level
+    # transformer that could apply to the same log group, the log group uses
+    # only the log-group level transformer. It ignores the account-level
+    # transformer.
+    #
+    # **Field index policy**
+    #
+    # You can use field index policies to create indexes on fields found in
+    # log events in the log group. Creating field indexes can help lower the
+    # scan volume for CloudWatch Logs Insights queries that reference those
+    # fields, because these queries attempt to skip the processing of log
+    # events that are known to not match the indexed field. Good fields to
+    # index are fields that you often need to query for and fields or values
+    # that match only a small fraction of the total log events. Common
+    # examples of indexes include request ID, session ID, user IDs, or
+    # instance IDs. For more information, see [Create field indexes to
+    # improve query performance and reduce costs][8]
+    #
+    # To find the fields that are in your log group events, use the
+    # [GetLogGroupFields][9] operation.
+    #
+    # For example, suppose you have created a field index for `requestId`.
+    # Then, any CloudWatch Logs Insights query on that log group that
+    # includes `requestId = value ` or `requestId in [value, value, ...]`
+    # will attempt to process only the log events where the indexed field
+    # matches the specified value.
+    #
+    # Matches of log events to the names of indexed fields are
+    # case-sensitive. For example, an indexed field of `RequestId` won't
+    # match a log event containing `requestId`.
+    #
+    # You can have one account-level field index policy that applies to all
+    # log groups in the account. Or you can create as many as 20
+    # account-level field index policies that are each scoped to a subset of
+    # log groups with the `selectionCriteria` parameter. If you have
+    # multiple account-level index policies with selection criteria, no two
+    # of them can use the same or overlapping log group name prefixes. For
+    # example, if you have one policy filtered to log groups that start with
+    # `my-log`, you can't have another field index policy filtered to
+    # `my-logpprod` or `my-logging`.
+    #
+    # If you create an account-level field index policy in a monitoring
+    # account in cross-account observability, the policy is applied only to
+    # the monitoring account and not to any source accounts.
+    #
+    # If you want to create a field index policy for a single log group, you
+    # can use [PutIndexPolicy][10] instead of `PutAccountPolicy`. If you do
+    # so, that log group will use only that log-group level policy, and will
+    # ignore the account-level policy that you create with
+    # [PutAccountPolicy][11].
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogEvents.html
@@ -3562,6 +4027,12 @@ module Aws::CloudWatchLogs
     # [3]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data.html
     # [4]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDataProtectionPolicy.html
     # [5]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html
+    # [6]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-Processors
+    # [7]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutTransformer.html
+    # [8]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing.html
+    # [9]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogGroupFields.html
+    # [10]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html
+    # [11]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutAccountPolicy.html
     #
     # @option params [required, String] :policy_name
     #   A name for the policy. This must be unique within the account.
@@ -3643,10 +4114,34 @@ module Aws::CloudWatchLogs
     #     property is only applicable when the destination is an Kinesis Data
     #     Streams data stream.
     #
+    #   **Transformer policy**
+    #
+    #   A transformer policy must include one JSON block with the array of
+    #   processors and their configurations. For more information about
+    #   available processors, see [ Processors that you can use][3].
+    #
+    #   **Field index policy**
+    #
+    #   A field index filter policy can include the following attribute in a
+    #   JSON block:
+    #
+    #   * **Fields** The array of field indexes to create.
+    #
+    #   ^
+    #
+    #   It must contain at least one field index.
+    #
+    #   The following is an example of an index policy document that creates
+    #   two indexes, `RequestId` and `TransactionId`.
+    #
+    #   `"policyDocument": "{ "Fields": [ "RequestId", "TransactionId" ]
+    #   }"`
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data-types.html
     #   [2]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html
+    #   [3]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-Processors
     #
     # @option params [required, String] :policy_type
     #   The type of policy that you're creating or updating.
@@ -3657,17 +4152,25 @@ module Aws::CloudWatchLogs
     #   the account. If you omit this parameter, the default of `ALL` is used.
     #
     # @option params [String] :selection_criteria
-    #   Use this parameter to apply the subscription filter policy to a subset
-    #   of log groups in the account. Currently, the only supported filter is
-    #   `LogGroupName NOT IN []`. The `selectionCriteria` string can be up to
-    #   25KB in length. The length is determined by using its UTF-8 bytes.
+    #   Use this parameter to apply the new policy to a subset of log groups
+    #   in the account.
     #
-    #   Using the `selectionCriteria` parameter is useful to help prevent
-    #   infinite loops. For more information, see [Log recursion
-    #   prevention][1].
+    #   Specifing `selectionCriteria` is valid only when you specify
+    #   `SUBSCRIPTION_FILTER_POLICY`, `FIELD_INDEX_POLICY` or
+    #   `TRANSFORMER_POLICY`for `policyType`.
     #
-    #   Specifing `selectionCriteria` is valid only when you specify `
-    #   SUBSCRIPTION_FILTER_POLICY` for `policyType`.
+    #   If `policyType` is `SUBSCRIPTION_FILTER_POLICY`, the only supported
+    #   `selectionCriteria` filter is `LogGroupName NOT IN []`
+    #
+    #   If `policyType` is `FIELD_INDEX_POLICY` or `TRANSFORMER_POLICY`, the
+    #   only supported `selectionCriteria` filter is `LogGroupNamePrefix`
+    #
+    #   The `selectionCriteria` string can be up to 25KB in length. The length
+    #   is determined by using its UTF-8 bytes.
+    #
+    #   Using the `selectionCriteria` parameter with
+    #   `SUBSCRIPTION_FILTER_POLICY` is useful to help prevent infinite loops.
+    #   For more information, see [Log recursion prevention][1].
     #
     #
     #
@@ -3682,7 +4185,7 @@ module Aws::CloudWatchLogs
     #   resp = client.put_account_policy({
     #     policy_name: "PolicyName", # required
     #     policy_document: "AccountPolicyDocument", # required
-    #     policy_type: "DATA_PROTECTION_POLICY", # required, accepts DATA_PROTECTION_POLICY, SUBSCRIPTION_FILTER_POLICY
+    #     policy_type: "DATA_PROTECTION_POLICY", # required, accepts DATA_PROTECTION_POLICY, SUBSCRIPTION_FILTER_POLICY, FIELD_INDEX_POLICY, TRANSFORMER_POLICY
     #     scope: "ALL", # accepts ALL
     #     selection_criteria: "SelectionCriteria",
     #   })
@@ -3692,7 +4195,7 @@ module Aws::CloudWatchLogs
     #   resp.account_policy.policy_name #=> String
     #   resp.account_policy.policy_document #=> String
     #   resp.account_policy.last_updated_time #=> Integer
-    #   resp.account_policy.policy_type #=> String, one of "DATA_PROTECTION_POLICY", "SUBSCRIPTION_FILTER_POLICY"
+    #   resp.account_policy.policy_type #=> String, one of "DATA_PROTECTION_POLICY", "SUBSCRIPTION_FILTER_POLICY", "FIELD_INDEX_POLICY", "TRANSFORMER_POLICY"
     #   resp.account_policy.scope #=> String, one of "ALL"
     #   resp.account_policy.selection_criteria #=> String
     #   resp.account_policy.account_id #=> String
@@ -4230,6 +4733,104 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
+    # Creates or updates a *field index policy* for the specified log group.
+    # Only log groups in the Standard log class support field index
+    # policies. For more information about log classes, see [Log
+    # classes][1].
+    #
+    # You can use field index policies to create *field indexes* on fields
+    # found in log events in the log group. Creating field indexes speeds up
+    # and lowers the costs for CloudWatch Logs Insights queries that
+    # reference those field indexes, because these queries attempt to skip
+    # the processing of log events that are known to not match the indexed
+    # field. Good fields to index are fields that you often need to query
+    # for and fields or values that match only a small fraction of the total
+    # log events. Common examples of indexes include request ID, session ID,
+    # userID, and instance IDs. For more information, see [Create field
+    # indexes to improve query performance and reduce costs][2].
+    #
+    # To find the fields that are in your log group events, use the
+    # [GetLogGroupFields][3] operation.
+    #
+    # For example, suppose you have created a field index for `requestId`.
+    # Then, any CloudWatch Logs Insights query on that log group that
+    # includes `requestId = value ` or `requestId IN [value, value, ...]`
+    # will process fewer log events to reduce costs, and have improved
+    # performance.
+    #
+    # Each index policy has the following quotas and restrictions:
+    #
+    # * As many as 20 fields can be included in the policy.
+    #
+    # * Each field name can include as many as 100 characters.
+    #
+    # Matches of log events to the names of indexed fields are
+    # case-sensitive. For example, a field index of `RequestId` won't match
+    # a log event containing `requestId`.
+    #
+    # Log group-level field index policies created with `PutIndexPolicy`
+    # override account-level field index policies created with
+    # [PutAccountPolicy][4]. If you use `PutIndexPolicy` to create a field
+    # index policy for a log group, that log group uses only that policy.
+    # The log group ignores any account-wide field index policy that you
+    # might have created.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch_Logs_Log_Classes.html
+    # [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing.html
+    # [3]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetLogGroupFields.html
+    # [4]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutAccountPolicy.html
+    #
+    # @option params [required, String] :log_group_identifier
+    #   Specify either the log group name or log group ARN to apply this field
+    #   index policy to. If you specify an ARN, use the format
+    #   arn:aws:logs:*region*:*account-id*:log-group:*log\_group\_name* Don't
+    #   include an * at the end.
+    #
+    # @option params [required, String] :policy_document
+    #   The index policy document, in JSON format. The following is an example
+    #   of an index policy document that creates two indexes, `RequestId` and
+    #   `TransactionId`.
+    #
+    #   `"policyDocument": "{ "Fields": [ "RequestId", "TransactionId" ] }"`
+    #
+    #   The policy document must include at least one field index. For more
+    #   information about the fields that can be included and other
+    #   restrictions, see [Field index syntax and quotas][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing-Syntax.html
+    #
+    # @return [Types::PutIndexPolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutIndexPolicyResponse#index_policy #index_policy} => Types::IndexPolicy
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_index_policy({
+    #     log_group_identifier: "LogGroupIdentifier", # required
+    #     policy_document: "PolicyDocument", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.index_policy.log_group_identifier #=> String
+    #   resp.index_policy.last_update_time #=> Integer
+    #   resp.index_policy.policy_document #=> String
+    #   resp.index_policy.policy_name #=> String
+    #   resp.index_policy.source #=> String, one of "ACCOUNT", "LOG_GROUP"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutIndexPolicy AWS API Documentation
+    #
+    # @overload put_index_policy(params = {})
+    # @param [Hash] params ({})
+    def put_index_policy(params = {}, options = {})
+      req = build_request(:put_index_policy, params)
+      req.send_request(options)
+    end
+
     # Uploads a batch of log events to the specified log stream.
     #
     # The sequence token is now ignored in `PutLogEvents` actions.
@@ -4293,7 +4894,7 @@ module Aws::CloudWatchLogs
     #   if the sequence token is not valid.
     #
     # @option params [Types::Entity] :entity
-    #   Reserved for internal use.
+    #   The entity associated with the log events.
     #
     # @return [Types::PutLogEventsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4349,12 +4950,12 @@ module Aws::CloudWatchLogs
     # group is 100.
     #
     # Using regular expressions to create metric filters is supported. For
-    # these filters, there is a quotas of quota of two regular expression
-    # patterns within a single filter pattern. There is also a quota of five
-    # regular expression patterns per log group. For more information about
-    # using regular expressions in metric filters, see [ Filter pattern
-    # syntax for metric filters, subscription filters, filter log events,
-    # and Live Tail][2].
+    # these filters, there is a quota of two regular expression patterns
+    # within a single filter pattern. There is also a quota of five regular
+    # expression patterns per log group. For more information about using
+    # regular expressions in metric filters, see [ Filter pattern syntax for
+    # metric filters, subscription filters, filter log events, and Live
+    # Tail][2].
     #
     # When you create a metric filter, you can also optionally assign a unit
     # and dimensions to the metric that is created.
@@ -4392,6 +4993,20 @@ module Aws::CloudWatchLogs
     # @option params [required, Array<Types::MetricTransformation>] :metric_transformations
     #   A collection of information that defines how metric data gets emitted.
     #
+    # @option params [Boolean] :apply_on_transformed_logs
+    #   This parameter is valid only for log groups that have an active log
+    #   transformer. For more information about log transformers, see
+    #   [PutTransformer][1].
+    #
+    #   If the log group uses either a log-group level or account-level
+    #   transformer, and you specify `true`, the metric filter will be applied
+    #   on the transformed version of the log events instead of the original
+    #   ingested log events.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutTransformer.html
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -4412,6 +5027,7 @@ module Aws::CloudWatchLogs
     #         unit: "Seconds", # accepts Seconds, Microseconds, Milliseconds, Bytes, Kilobytes, Megabytes, Gigabytes, Terabytes, Bits, Kilobits, Megabits, Gigabits, Terabits, Percent, Count, Bytes/Second, Kilobytes/Second, Megabytes/Second, Gigabytes/Second, Terabytes/Second, Bits/Second, Kilobits/Second, Megabits/Second, Gigabits/Second, Terabits/Second, Count/Second, None
     #       },
     #     ],
+    #     apply_on_transformed_logs: false,
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutMetricFilter AWS API Documentation
@@ -4740,6 +5356,20 @@ module Aws::CloudWatchLogs
     #   random for a more even distribution. This property is only applicable
     #   when the destination is an Amazon Kinesis data stream.
     #
+    # @option params [Boolean] :apply_on_transformed_logs
+    #   This parameter is valid only for log groups that have an active log
+    #   transformer. For more information about log transformers, see
+    #   [PutTransformer][1].
+    #
+    #   If the log group uses either a log-group level or account-level
+    #   transformer, and you specify `true`, the subscription filter will be
+    #   applied on the transformed version of the log events instead of the
+    #   original ingested log events.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutTransformer.html
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -4751,6 +5381,7 @@ module Aws::CloudWatchLogs
     #     destination_arn: "DestinationArn", # required
     #     role_arn: "RoleArn",
     #     distribution: "Random", # accepts Random, ByLogStream
+    #     apply_on_transformed_logs: false,
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutSubscriptionFilter AWS API Documentation
@@ -4759,6 +5390,211 @@ module Aws::CloudWatchLogs
     # @param [Hash] params ({})
     def put_subscription_filter(params = {}, options = {})
       req = build_request(:put_subscription_filter, params)
+      req.send_request(options)
+    end
+
+    # Creates or updates a *log transformer* for a single log group. You use
+    # log transformers to transform log events into a different format,
+    # making them easier for you to process and analyze. You can also
+    # transform logs from different sources into standardized formats that
+    # contains relevant, source-specific information.
+    #
+    # After you have created a transformer, CloudWatch Logs performs the
+    # transformations at the time of log ingestion. You can then refer to
+    # the transformed versions of the logs during operations such as
+    # querying with CloudWatch Logs Insights or creating metric filters or
+    # subscription filers.
+    #
+    # You can also use a transformer to copy metadata from metadata keys
+    # into the log events themselves. This metadata can include log group
+    # name, log stream name, account ID and Region.
+    #
+    # A transformer for a log group is a series of processors, where each
+    # processor applies one type of transformation to the log events
+    # ingested into this log group. The processors work one after another,
+    # in the order that you list them, like a pipeline. For more information
+    # about the available processors to use in a transformer, see [
+    # Processors that you can use][1].
+    #
+    # Having log events in standardized format enables visibility across
+    # your applications for your log analysis, reporting, and alarming
+    # needs. CloudWatch Logs provides transformation for common log types
+    # with out-of-the-box transformation templates for major Amazon Web
+    # Services log sources such as VPC flow logs, Lambda, and Amazon RDS.
+    # You can use pre-built transformation templates or create custom
+    # transformation policies.
+    #
+    # You can create transformers only for the log groups in the Standard
+    # log class.
+    #
+    # You can also set up a transformer at the account level. For more
+    # information, see [PutAccountPolicy][2]. If there is both a log-group
+    # level transformer created with `PutTransformer` and an account-level
+    # transformer that could apply to the same log group, the log group uses
+    # only the log-group level transformer. It ignores the account-level
+    # transformer.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-Processors
+    # [2]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutAccountPolicy.html
+    #
+    # @option params [required, String] :log_group_identifier
+    #   Specify either the name or ARN of the log group to create the
+    #   transformer for.
+    #
+    # @option params [required, Array<Types::Processor>] :transformer_config
+    #   This structure contains the configuration of this log transformer. A
+    #   log transformer is an array of processors, where each processor
+    #   applies one type of transformation to the log events that are
+    #   ingested.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_transformer({
+    #     log_group_identifier: "LogGroupIdentifier", # required
+    #     transformer_config: [ # required
+    #       {
+    #         add_keys: {
+    #           entries: [ # required
+    #             {
+    #               key: "Key", # required
+    #               value: "AddKeyValue", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         copy_value: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               target: "Target", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         csv: {
+    #           quote_character: "QuoteCharacter",
+    #           delimiter: "Delimiter",
+    #           columns: ["Column"],
+    #           source: "Source",
+    #         },
+    #         date_time_converter: {
+    #           source: "Source", # required
+    #           target: "Target", # required
+    #           target_format: "TargetFormat",
+    #           match_patterns: ["MatchPattern"], # required
+    #           source_timezone: "SourceTimezone",
+    #           target_timezone: "TargetTimezone",
+    #           locale: "Locale",
+    #         },
+    #         delete_keys: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #         grok: {
+    #           source: "Source",
+    #           match: "GrokMatch", # required
+    #         },
+    #         list_to_map: {
+    #           source: "Source", # required
+    #           key: "Key", # required
+    #           value_key: "ValueKey",
+    #           target: "Target",
+    #           flatten: false,
+    #           flattened_element: "first", # accepts first, last
+    #         },
+    #         lower_case_string: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #         move_keys: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               target: "Target", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         parse_cloudfront: {
+    #           source: "Source",
+    #         },
+    #         parse_json: {
+    #           source: "Source",
+    #           destination: "DestinationField",
+    #         },
+    #         parse_key_value: {
+    #           source: "Source",
+    #           destination: "DestinationField",
+    #           field_delimiter: "ParserFieldDelimiter",
+    #           key_value_delimiter: "KeyValueDelimiter",
+    #           key_prefix: "KeyPrefix",
+    #           non_match_value: "NonMatchValue",
+    #           overwrite_if_exists: false,
+    #         },
+    #         parse_route_53: {
+    #           source: "Source",
+    #         },
+    #         parse_postgres: {
+    #           source: "Source",
+    #         },
+    #         parse_vpc: {
+    #           source: "Source",
+    #         },
+    #         parse_waf: {
+    #           source: "Source",
+    #         },
+    #         rename_keys: {
+    #           entries: [ # required
+    #             {
+    #               key: "Key", # required
+    #               rename_to: "RenameTo", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         split_string: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               delimiter: "Delimiter", # required
+    #             },
+    #           ],
+    #         },
+    #         substitute_string: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               from: "FromKey", # required
+    #               to: "ToKey", # required
+    #             },
+    #           ],
+    #         },
+    #         trim_string: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #         type_converter: {
+    #           entries: [ # required
+    #             {
+    #               key: "Key", # required
+    #               type: "boolean", # required, accepts boolean, integer, double, string
+    #             },
+    #           ],
+    #         },
+    #         upper_case_string: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #       },
+    #     ],
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutTransformer AWS API Documentation
+    #
+    # @overload put_transformer(params = {})
+    # @param [Hash] params ({})
+    def put_transformer(params = {}, options = {})
+      req = build_request(:put_transformer, params)
       req.send_request(options)
     end
 
@@ -5049,9 +5885,9 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
-    # Schedules a query of a log group using CloudWatch Logs Insights. You
-    # specify the log group and time range to query and the query string to
-    # use.
+    # Starts a query of one or more log groups using CloudWatch Logs
+    # Insights. You specify the log groups and time range to query and the
+    # query string to use.
     #
     # For more information, see [CloudWatch Logs Insights Query Syntax][1].
     #
@@ -5059,8 +5895,22 @@ module Aws::CloudWatchLogs
     # by CloudWatch Logs. You can use [GetQueryResults][2] to retrieve the
     # results of a query, using the `queryId` that `StartQuery` returns.
     #
+    # <note markdown="1"> To specify the log groups to query, a `StartQuery` operation must
+    # include one of the following:
+    #
+    #  * Either exactly one of the following parameters: `logGroupName`,
+    #   `logGroupNames`, or `logGroupIdentifiers`
+    #
+    # * Or the `queryString` must include a `SOURCE` command to select log
+    #   groups for the query. The `SOURCE` command can select log groups
+    #   based on log group name prefix, account ID, and log class.
+    #
+    #   For more information about the `SOURCE` command, see [SOURCE][3].
+    #
+    #  </note>
+    #
     # If you have associated a KMS key with the query results in this
-    # account, then [StartQuery][3] uses that key to encrypt the results
+    # account, then [StartQuery][4] uses that key to encrypt the results
     # when it stores them. If no key is associated with query results, the
     # query results are encrypted with the default CloudWatch Logs
     # encryption method.
@@ -5072,7 +5922,7 @@ module Aws::CloudWatchLogs
     # If you are using CloudWatch cross-account observability, you can use
     # this operation in a monitoring account to start a query in a linked
     # source account. For more information, see [CloudWatch cross-account
-    # observability][4]. For a cross-account `StartQuery` operation, the
+    # observability][5]. For a cross-account `StartQuery` operation, the
     # query definition must be defined in the monitoring account.
     #
     # You can have up to 30 concurrent CloudWatch Logs insights queries,
@@ -5082,25 +5932,16 @@ module Aws::CloudWatchLogs
     #
     # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax.html
     # [2]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetQueryResults.html
-    # [3]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html
-    # [4]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html
+    # [3]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax-Source.html
+    # [4]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html
+    # [5]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html
     #
     # @option params [String] :log_group_name
     #   The log group on which to perform the query.
     #
-    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
-    #   parameters: `logGroupName`, `logGroupNames`, or `logGroupIdentifiers`.
-    #
-    #    </note>
-    #
     # @option params [Array<String>] :log_group_names
     #   The list of log groups to be queried. You can include up to 50 log
     #   groups.
-    #
-    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
-    #   parameters: `logGroupName`, `logGroupNames`, or `logGroupIdentifiers`.
-    #
-    #    </note>
     #
     # @option params [Array<String>] :log_group_identifiers
     #   The list of log groups to query. You can include up to 50 log groups.
@@ -5110,7 +5951,9 @@ module Aws::CloudWatchLogs
     #   account, you must specify the ARN of the log group here. The query
     #   definition must also be defined in the monitoring account.
     #
-    #   If you specify an ARN, the ARN can't end with an asterisk (*).
+    #   If you specify an ARN, use the format
+    #   arn:aws:logs:*region*:*account-id*:log-group:*log\_group\_name* Don't
+    #   include an * at the end.
     #
     #   A `StartQuery` operation must include exactly one of the following
     #   parameters: `logGroupName`, `logGroupNames`, or `logGroupIdentifiers`.
@@ -5345,6 +6188,179 @@ module Aws::CloudWatchLogs
     # @param [Hash] params ({})
     def test_metric_filter(params = {}, options = {})
       req = build_request(:test_metric_filter, params)
+      req.send_request(options)
+    end
+
+    # Use this operation to test a log transformer. You enter the
+    # transformer configuration and a set of log events to test with. The
+    # operation responds with an array that includes the original log events
+    # and the transformed versions.
+    #
+    # @option params [required, Array<Types::Processor>] :transformer_config
+    #   This structure contains the configuration of this log transformer that
+    #   you want to test. A log transformer is an array of processors, where
+    #   each processor applies one type of transformation to the log events
+    #   that are ingested.
+    #
+    # @option params [required, Array<String>] :log_event_messages
+    #   An array of the raw log events that you want to use to test this
+    #   transformer.
+    #
+    # @return [Types::TestTransformerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::TestTransformerResponse#transformed_logs #transformed_logs} => Array&lt;Types::TransformedLogRecord&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.test_transformer({
+    #     transformer_config: [ # required
+    #       {
+    #         add_keys: {
+    #           entries: [ # required
+    #             {
+    #               key: "Key", # required
+    #               value: "AddKeyValue", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         copy_value: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               target: "Target", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         csv: {
+    #           quote_character: "QuoteCharacter",
+    #           delimiter: "Delimiter",
+    #           columns: ["Column"],
+    #           source: "Source",
+    #         },
+    #         date_time_converter: {
+    #           source: "Source", # required
+    #           target: "Target", # required
+    #           target_format: "TargetFormat",
+    #           match_patterns: ["MatchPattern"], # required
+    #           source_timezone: "SourceTimezone",
+    #           target_timezone: "TargetTimezone",
+    #           locale: "Locale",
+    #         },
+    #         delete_keys: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #         grok: {
+    #           source: "Source",
+    #           match: "GrokMatch", # required
+    #         },
+    #         list_to_map: {
+    #           source: "Source", # required
+    #           key: "Key", # required
+    #           value_key: "ValueKey",
+    #           target: "Target",
+    #           flatten: false,
+    #           flattened_element: "first", # accepts first, last
+    #         },
+    #         lower_case_string: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #         move_keys: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               target: "Target", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         parse_cloudfront: {
+    #           source: "Source",
+    #         },
+    #         parse_json: {
+    #           source: "Source",
+    #           destination: "DestinationField",
+    #         },
+    #         parse_key_value: {
+    #           source: "Source",
+    #           destination: "DestinationField",
+    #           field_delimiter: "ParserFieldDelimiter",
+    #           key_value_delimiter: "KeyValueDelimiter",
+    #           key_prefix: "KeyPrefix",
+    #           non_match_value: "NonMatchValue",
+    #           overwrite_if_exists: false,
+    #         },
+    #         parse_route_53: {
+    #           source: "Source",
+    #         },
+    #         parse_postgres: {
+    #           source: "Source",
+    #         },
+    #         parse_vpc: {
+    #           source: "Source",
+    #         },
+    #         parse_waf: {
+    #           source: "Source",
+    #         },
+    #         rename_keys: {
+    #           entries: [ # required
+    #             {
+    #               key: "Key", # required
+    #               rename_to: "RenameTo", # required
+    #               overwrite_if_exists: false,
+    #             },
+    #           ],
+    #         },
+    #         split_string: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               delimiter: "Delimiter", # required
+    #             },
+    #           ],
+    #         },
+    #         substitute_string: {
+    #           entries: [ # required
+    #             {
+    #               source: "Source", # required
+    #               from: "FromKey", # required
+    #               to: "ToKey", # required
+    #             },
+    #           ],
+    #         },
+    #         trim_string: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #         type_converter: {
+    #           entries: [ # required
+    #             {
+    #               key: "Key", # required
+    #               type: "boolean", # required, accepts boolean, integer, double, string
+    #             },
+    #           ],
+    #         },
+    #         upper_case_string: {
+    #           with_keys: ["WithKey"], # required
+    #         },
+    #       },
+    #     ],
+    #     log_event_messages: ["EventMessage"], # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.transformed_logs #=> Array
+    #   resp.transformed_logs[0].event_number #=> Integer
+    #   resp.transformed_logs[0].event_message #=> String
+    #   resp.transformed_logs[0].transformed_event_message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/TestTransformer AWS API Documentation
+    #
+    # @overload test_transformer(params = {})
+    # @param [Hash] params ({})
+    def test_transformer(params = {}, options = {})
+      req = build_request(:test_transformer, params)
       req.send_request(options)
     end
 
@@ -5626,7 +6642,7 @@ module Aws::CloudWatchLogs
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudwatchlogs'
-      context[:gem_version] = '1.102.0'
+      context[:gem_version] = '1.103.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

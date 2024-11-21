@@ -13,6 +13,23 @@ module Aws::IoTJobsDataPlane
       SENSITIVE: []
     end
 
+    class CommandParameterValue
+      attr_accessor s: ::String
+      attr_accessor b: bool
+      attr_accessor i: ::Integer
+      attr_accessor l: ::Integer
+      attr_accessor d: ::Float
+      attr_accessor bin: ::String
+      attr_accessor ul: ::String
+      SENSITIVE: []
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      SENSITIVE: []
+    end
+
     class DescribeJobExecutionRequest
       attr_accessor job_id: ::String
       attr_accessor thing_name: ::String
@@ -34,6 +51,11 @@ module Aws::IoTJobsDataPlane
     class GetPendingJobExecutionsResponse
       attr_accessor in_progress_jobs: ::Array[Types::JobExecutionSummary]
       attr_accessor queued_jobs: ::Array[Types::JobExecutionSummary]
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
       SENSITIVE: []
     end
 
@@ -84,8 +106,27 @@ module Aws::IoTJobsDataPlane
       SENSITIVE: []
     end
 
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
     class ServiceUnavailableException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class StartCommandExecutionRequest
+      attr_accessor target_arn: ::String
+      attr_accessor command_arn: ::String
+      attr_accessor parameters: ::Hash[::String, Types::CommandParameterValue]
+      attr_accessor execution_timeout_seconds: ::Integer
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class StartCommandExecutionResponse
+      attr_accessor execution_id: ::String
       SENSITIVE: []
     end
 
@@ -128,6 +169,11 @@ module Aws::IoTJobsDataPlane
     class UpdateJobExecutionResponse
       attr_accessor execution_state: Types::JobExecutionState
       attr_accessor job_document: ::String
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
       SENSITIVE: []
     end
   end

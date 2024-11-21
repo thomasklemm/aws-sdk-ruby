@@ -507,6 +507,8 @@ module Aws
             'NetworkFirewall' => 'network-firewall',
             'NetworkManager' => 'networkmanager',
             'NetworkMonitor' => 'networkmonitor',
+            'Notifications' => 'notifications',
+            'NotificationsContacts' => 'notifications-contacts',
             'OAM' => 'oam',
             'OSIS' => 'osis',
             'Omics' => 'omics',

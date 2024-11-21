@@ -68,7 +68,10 @@ module Aws
                     ?mfa: ::String,
                     ?request_payer: ("requester"),
                     ?bypass_governance_retention: bool,
-                    ?expected_bucket_owner: ::String
+                    ?expected_bucket_owner: ::String,
+                    ?if_match: ::String,
+                    ?if_match_last_modified_time: ::Time,
+                    ?if_match_size: ::Integer
                   ) -> Types::DeleteObjectOutput
                 | (?Hash[Symbol, untyped]) -> Types::DeleteObjectOutput
 

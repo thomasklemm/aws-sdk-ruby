@@ -1465,6 +1465,20 @@ module Aws
                         ) -> _GetDocumentResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDocumentResponseSuccess
 
+      interface _GetExecutionPreviewResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetExecutionPreviewResponse]
+        def execution_preview_id: () -> ::String
+        def ended_at: () -> ::Time
+        def status: () -> ("Pending" | "InProgress" | "Success" | "Failed")
+        def status_message: () -> ::String
+        def execution_preview: () -> Types::ExecutionPreview
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSM/Client.html#get_execution_preview-instance_method
+      def get_execution_preview: (
+                                   execution_preview_id: ::String
+                                 ) -> _GetExecutionPreviewResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetExecutionPreviewResponseSuccess
+
       interface _GetInventoryResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetInventoryResult]
         def entities: () -> ::Array[Types::InventoryResultEntity]
@@ -2025,6 +2039,54 @@ module Aws
                                   ) -> _ListInventoryEntriesResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListInventoryEntriesResponseSuccess
 
+      interface _ListNodesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListNodesResult]
+        def nodes: () -> ::Array[Types::Node]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSM/Client.html#list_nodes-instance_method
+      def list_nodes: (
+                        ?sync_name: ::String,
+                        ?filters: Array[
+                          {
+                            key: ("AgentType" | "AgentVersion" | "ComputerName" | "InstanceId" | "InstanceStatus" | "IpAddress" | "ManagedStatus" | "PlatformName" | "PlatformType" | "PlatformVersion" | "ResourceType" | "OrganizationalUnitId" | "OrganizationalUnitPath" | "Region" | "AccountId"),
+                            values: Array[::String],
+                            type: ("Equal" | "NotEqual" | "BeginWith")?
+                          },
+                        ],
+                        ?next_token: ::String,
+                        ?max_results: ::Integer
+                      ) -> _ListNodesResponseSuccess
+                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListNodesResponseSuccess
+
+      interface _ListNodesSummaryResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListNodesSummaryResult]
+        def summary: () -> ::Array[::Hash[::String, ::String]]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSM/Client.html#list_nodes_summary-instance_method
+      def list_nodes_summary: (
+                                ?sync_name: ::String,
+                                ?filters: Array[
+                                  {
+                                    key: ("AgentType" | "AgentVersion" | "ComputerName" | "InstanceId" | "InstanceStatus" | "IpAddress" | "ManagedStatus" | "PlatformName" | "PlatformType" | "PlatformVersion" | "ResourceType" | "OrganizationalUnitId" | "OrganizationalUnitPath" | "Region" | "AccountId"),
+                                    values: Array[::String],
+                                    type: ("Equal" | "NotEqual" | "BeginWith")?
+                                  },
+                                ],
+                                aggregators: Array[
+                                  {
+                                    aggregator_type: ("Count"),
+                                    type_name: ("Instance"),
+                                    attribute_name: ("AgentVersion" | "PlatformName" | "PlatformType" | "PlatformVersion" | "Region" | "ResourceType"),
+                                    aggregators: untyped?
+                                  },
+                                ],
+                                ?next_token: ::String,
+                                ?max_results: ::Integer
+                              ) -> _ListNodesSummaryResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListNodesSummaryResponseSuccess
+
       interface _ListOpsItemEventsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListOpsItemEventsResponse]
         def next_token: () -> ::String
@@ -2583,6 +2645,60 @@ module Aws
                                             ?change_details: ::String
                                           ) -> _StartChangeRequestExecutionResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartChangeRequestExecutionResponseSuccess
+
+      interface _StartExecutionPreviewResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartExecutionPreviewResponse]
+        def execution_preview_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSM/Client.html#start_execution_preview-instance_method
+      def start_execution_preview: (
+                                     document_name: ::String,
+                                     ?document_version: ::String,
+                                     ?execution_inputs: {
+                                       automation: {
+                                         parameters: Hash[::String, Array[::String]]?,
+                                         target_parameter_name: ::String?,
+                                         targets: Array[
+                                           {
+                                             key: ::String?,
+                                             values: Array[::String]?
+                                           },
+                                         ]?,
+                                         target_maps: Array[
+                                           Hash[::String, Array[::String]],
+                                         ]?,
+                                         target_locations: Array[
+                                           {
+                                             accounts: Array[::String]?,
+                                             regions: Array[::String]?,
+                                             target_location_max_concurrency: ::String?,
+                                             target_location_max_errors: ::String?,
+                                             execution_role_name: ::String?,
+                                             target_location_alarm_configuration: {
+                                               ignore_poll_alarm_failure: bool?,
+                                               alarms: Array[
+                                                 {
+                                                   name: ::String
+                                                 },
+                                               ]
+                                             }?,
+                                             include_child_organization_units: bool?,
+                                             exclude_accounts: Array[::String]?,
+                                             targets: Array[
+                                               {
+                                                 key: ::String?,
+                                                 values: Array[::String]?
+                                               },
+                                             ]?,
+                                             targets_max_concurrency: ::String?,
+                                             targets_max_errors: ::String?
+                                           },
+                                         ]?,
+                                         target_locations_url: ::String?
+                                       }?
+                                     }
+                                   ) -> _StartExecutionPreviewResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartExecutionPreviewResponseSuccess
 
       interface _StartSessionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartSessionResponse]

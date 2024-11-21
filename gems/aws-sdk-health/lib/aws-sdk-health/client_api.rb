@@ -92,6 +92,9 @@ module Aws::Health
     dateTimeRangeList = Shapes::ListShape.new(name: 'dateTimeRangeList')
     entityArn = Shapes::StringShape.new(name: 'entityArn')
     entityArnList = Shapes::ListShape.new(name: 'entityArnList')
+    entityMetadata = Shapes::MapShape.new(name: 'entityMetadata')
+    entityMetadataKey = Shapes::StringShape.new(name: 'entityMetadataKey')
+    entityMetadataValue = Shapes::StringShape.new(name: 'entityMetadataValue')
     entityStatusCode = Shapes::StringShape.new(name: 'entityStatusCode')
     entityStatusCodeList = Shapes::ListShape.new(name: 'entityStatusCodeList')
     entityStatuses = Shapes::MapShape.new(name: 'entityStatuses')
@@ -144,6 +147,7 @@ module Aws::Health
     AffectedEntity.add_member(:last_updated_time, Shapes::ShapeRef.new(shape: timestamp, location_name: "lastUpdatedTime"))
     AffectedEntity.add_member(:status_code, Shapes::ShapeRef.new(shape: entityStatusCode, location_name: "statusCode"))
     AffectedEntity.add_member(:tags, Shapes::ShapeRef.new(shape: tagSet, location_name: "tags"))
+    AffectedEntity.add_member(:entity_metadata, Shapes::ShapeRef.new(shape: entityMetadata, location_name: "entityMetadata"))
     AffectedEntity.struct_class = Types::AffectedEntity
 
     ConcurrentModificationException.add_member(:message, Shapes::ShapeRef.new(shape: string, location_name: "message"))
@@ -438,6 +442,9 @@ module Aws::Health
     dateTimeRangeList.member = Shapes::ShapeRef.new(shape: DateTimeRange)
 
     entityArnList.member = Shapes::ShapeRef.new(shape: entityArn)
+
+    entityMetadata.key = Shapes::ShapeRef.new(shape: entityMetadataKey)
+    entityMetadata.value = Shapes::ShapeRef.new(shape: entityMetadataValue)
 
     entityStatusCodeList.member = Shapes::ShapeRef.new(shape: entityStatusCode)
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.119.0 (2024-11-21)
+------------------
+
+* Feature - Added support to modify the engine type for existing ElastiCache Users and User Groups. Customers can now modify the engine type from redis to valkey.
+
 1.118.0 (2024-11-18)
 ------------------
 

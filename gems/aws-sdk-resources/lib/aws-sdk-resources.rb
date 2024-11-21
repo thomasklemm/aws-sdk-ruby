@@ -269,6 +269,8 @@ module Aws
   autoload :NetworkFirewall, 'aws-sdk-networkfirewall'
   autoload :NetworkManager, 'aws-sdk-networkmanager'
   autoload :NetworkMonitor, 'aws-sdk-networkmonitor'
+  autoload :Notifications, 'aws-sdk-notifications'
+  autoload :NotificationsContacts, 'aws-sdk-notificationscontacts'
   autoload :OAM, 'aws-sdk-oam'
   autoload :OSIS, 'aws-sdk-osis'
   autoload :Omics, 'aws-sdk-omics'

@@ -707,9 +707,9 @@ module Aws::SSMQuickSetup
     #       ^
     #     * `RebootOption`
     #
-    #       * Description: (Optional) A boolean value that determines
-    #         whether instances are rebooted after patches are installed.
-    #         The default value is "`false`".
+    #       * Description: (Optional) Determines whether instances are
+    #         rebooted after patches are installed. Valid values are
+    #         `RebootIfNeeded` and `NoReboot`.
     #
     #       ^
     #     * `IsPolicyAttachAllowed`
@@ -904,6 +904,68 @@ module Aws::SSMQuickSetup
       include Aws::Structure
     end
 
+    # Details for a Quick Setup configuration.
+    #
+    # @!attribute [rw] account
+    #   The ID of the Amazon Web Services account where the configuration
+    #   was deployed.
+    #   @return [String]
+    #
+    # @!attribute [rw] configuration_definition_id
+    #   The ID of the configuration definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The datetime stamp when the configuration was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] first_class_parameters
+    #   The common parameters and values for the configuration definition.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] id
+    #   A service generated identifier for the configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] manager_arn
+    #   The ARN of the configuration manager.
+    #   @return [String]
+    #
+    # @!attribute [rw] region
+    #   The Amazon Web Services Region where the configuration was deployed.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_summaries
+    #   A summary of the state of the configuration manager. This includes
+    #   deployment statuses, association statuses, drift statuses, health
+    #   checks, and more.
+    #   @return [Array<Types::StatusSummary>]
+    #
+    # @!attribute [rw] type
+    #   The type of the Quick Setup configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] type_version
+    #   The version of the Quick Setup type used.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-quicksetup-2018-05-10/ConfigurationSummary AWS API Documentation
+    #
+    class ConfigurationSummary < Struct.new(
+      :account,
+      :configuration_definition_id,
+      :created_at,
+      :first_class_parameters,
+      :id,
+      :manager_arn,
+      :region,
+      :status_summaries,
+      :type,
+      :type_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Another request is being processed. Wait a few minutes and try again.
     #
     # @!attribute [rw] message
@@ -988,6 +1050,18 @@ module Aws::SSMQuickSetup
       include Aws::Structure
     end
 
+    # @!attribute [rw] configuration_id
+    #   A service generated identifier for the configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-quicksetup-2018-05-10/GetConfigurationInput AWS API Documentation
+    #
+    class GetConfigurationInput < Struct.new(
+      :configuration_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] manager_arn
     #   The ARN of the configuration manager.
     #   @return [String]
@@ -1047,6 +1121,71 @@ module Aws::SSMQuickSetup
       :status_summaries,
       :tags)
       SENSITIVE = [:tags]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] account
+    #   The ID of the Amazon Web Services account where the configuration
+    #   was deployed.
+    #   @return [String]
+    #
+    # @!attribute [rw] configuration_definition_id
+    #   The ID of the configuration definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The datetime stamp when the configuration manager was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   A service generated identifier for the configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_modified_at
+    #   The datetime stamp when the configuration manager was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] manager_arn
+    #   The ARN of the configuration manager.
+    #   @return [String]
+    #
+    # @!attribute [rw] parameters
+    #   The parameters for the configuration definition type.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] region
+    #   The Amazon Web Services Region where the configuration was deployed.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_summaries
+    #   A summary of the state of the configuration manager. This includes
+    #   deployment statuses, association statuses, drift statuses, health
+    #   checks, and more.
+    #   @return [Array<Types::StatusSummary>]
+    #
+    # @!attribute [rw] type
+    #   The type of the Quick Setup configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] type_version
+    #   The version of the Quick Setup type used.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-quicksetup-2018-05-10/GetConfigurationOutput AWS API Documentation
+    #
+    class GetConfigurationOutput < Struct.new(
+      :account,
+      :configuration_definition_id,
+      :created_at,
+      :id,
+      :last_modified_at,
+      :manager_arn,
+      :parameters,
+      :region,
+      :status_summaries,
+      :type,
+      :type_version)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -1114,6 +1253,58 @@ module Aws::SSMQuickSetup
     #
     class ListConfigurationManagersOutput < Struct.new(
       :configuration_managers_list,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] configuration_definition_id
+    #   The ID of the configuration definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] filters
+    #   Filters the results returned by the request.
+    #   @return [Array<Types::Filter>]
+    #
+    # @!attribute [rw] manager_arn
+    #   The ARN of the configuration manager.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_items
+    #   Specifies the maximum number of configurations that are returned by
+    #   the request.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] starting_token
+    #   The token to use when requesting a specific set of items from a
+    #   list.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-quicksetup-2018-05-10/ListConfigurationsInput AWS API Documentation
+    #
+    class ListConfigurationsInput < Struct.new(
+      :configuration_definition_id,
+      :filters,
+      :manager_arn,
+      :max_items,
+      :starting_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] configurations_list
+    #   An array of configurations.
+    #   @return [Array<Types::ConfigurationSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use when requesting the next set of items. If there are
+    #   no additional items to return, the string is empty.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-quicksetup-2018-05-10/ListConfigurationsOutput AWS API Documentation
+    #
+    class ListConfigurationsOutput < Struct.new(
+      :configurations_list,
       :next_token)
       SENSITIVE = []
       include Aws::Structure

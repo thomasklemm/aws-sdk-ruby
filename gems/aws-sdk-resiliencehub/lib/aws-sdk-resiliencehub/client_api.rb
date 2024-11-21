@@ -70,6 +70,9 @@ module Aws::ResilienceHub
     ComponentCompliancesList = Shapes::ListShape.new(name: 'ComponentCompliancesList')
     ComponentRecommendation = Shapes::StructureShape.new(name: 'ComponentRecommendation')
     ComponentRecommendationList = Shapes::ListShape.new(name: 'ComponentRecommendationList')
+    Condition = Shapes::StructureShape.new(name: 'Condition')
+    ConditionList = Shapes::ListShape.new(name: 'ConditionList')
+    ConditionOperatorType = Shapes::StringShape.new(name: 'ConditionOperatorType')
     ConfigRecommendation = Shapes::StructureShape.new(name: 'ConfigRecommendation')
     ConfigRecommendationList = Shapes::ListShape.new(name: 'ConfigRecommendationList')
     ConfigRecommendationOptimizationType = Shapes::StringShape.new(name: 'ConfigRecommendationOptimizationType')
@@ -119,6 +122,8 @@ module Aws::ResilienceHub
     DescribeAppVersionTemplateResponse = Shapes::StructureShape.new(name: 'DescribeAppVersionTemplateResponse')
     DescribeDraftAppVersionResourcesImportStatusRequest = Shapes::StructureShape.new(name: 'DescribeDraftAppVersionResourcesImportStatusRequest')
     DescribeDraftAppVersionResourcesImportStatusResponse = Shapes::StructureShape.new(name: 'DescribeDraftAppVersionResourcesImportStatusResponse')
+    DescribeMetricsExportRequest = Shapes::StructureShape.new(name: 'DescribeMetricsExportRequest')
+    DescribeMetricsExportResponse = Shapes::StructureShape.new(name: 'DescribeMetricsExportResponse')
     DescribeResiliencyPolicyRequest = Shapes::StructureShape.new(name: 'DescribeResiliencyPolicyRequest')
     DescribeResiliencyPolicyResponse = Shapes::StructureShape.new(name: 'DescribeResiliencyPolicyResponse')
     DescribeResourceGroupingRecommendationTaskRequest = Shapes::StructureShape.new(name: 'DescribeResourceGroupingRecommendationTaskRequest')
@@ -154,6 +159,9 @@ module Aws::ResilienceHub
     FailedGroupingRecommendationEntries = Shapes::ListShape.new(name: 'FailedGroupingRecommendationEntries')
     FailedGroupingRecommendationEntry = Shapes::StructureShape.new(name: 'FailedGroupingRecommendationEntry')
     FailurePolicy = Shapes::StructureShape.new(name: 'FailurePolicy')
+    Field = Shapes::StructureShape.new(name: 'Field')
+    FieldAggregationType = Shapes::StringShape.new(name: 'FieldAggregationType')
+    FieldList = Shapes::ListShape.new(name: 'FieldList')
     GroupingAppComponent = Shapes::StructureShape.new(name: 'GroupingAppComponent')
     GroupingRecommendation = Shapes::StructureShape.new(name: 'GroupingRecommendation')
     GroupingRecommendationConfidenceLevel = Shapes::StringShape.new(name: 'GroupingRecommendationConfidenceLevel')
@@ -195,6 +203,8 @@ module Aws::ResilienceHub
     ListAppVersionsResponse = Shapes::StructureShape.new(name: 'ListAppVersionsResponse')
     ListAppsRequest = Shapes::StructureShape.new(name: 'ListAppsRequest')
     ListAppsResponse = Shapes::StructureShape.new(name: 'ListAppsResponse')
+    ListMetricsRequest = Shapes::StructureShape.new(name: 'ListMetricsRequest')
+    ListMetricsResponse = Shapes::StructureShape.new(name: 'ListMetricsResponse')
     ListRecommendationTemplatesRequest = Shapes::StructureShape.new(name: 'ListRecommendationTemplatesRequest')
     ListRecommendationTemplatesResponse = Shapes::StructureShape.new(name: 'ListRecommendationTemplatesResponse')
     ListResiliencyPoliciesRequest = Shapes::StructureShape.new(name: 'ListResiliencyPoliciesRequest')
@@ -215,6 +225,7 @@ module Aws::ResilienceHub
     Long = Shapes::IntegerShape.new(name: 'Long')
     LongOptional = Shapes::IntegerShape.new(name: 'LongOptional')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
+    MetricsExportStatusType = Shapes::StringShape.new(name: 'MetricsExportStatusType')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     PermissionModel = Shapes::StructureShape.new(name: 'PermissionModel')
     PermissionModelType = Shapes::StringShape.new(name: 'PermissionModelType')
@@ -270,6 +281,8 @@ module Aws::ResilienceHub
     ResourceType = Shapes::StringShape.new(name: 'ResourceType')
     ResourcesGroupingRecGenStatusType = Shapes::StringShape.new(name: 'ResourcesGroupingRecGenStatusType')
     RetryAfterSeconds = Shapes::IntegerShape.new(name: 'RetryAfterSeconds')
+    Row = Shapes::ListShape.new(name: 'Row')
+    RowList = Shapes::ListShape.new(name: 'RowList')
     S3Location = Shapes::StructureShape.new(name: 'S3Location')
     S3Url = Shapes::StringShape.new(name: 'S3Url')
     ScoringComponentResiliencyScore = Shapes::StructureShape.new(name: 'ScoringComponentResiliencyScore')
@@ -279,9 +292,13 @@ module Aws::ResilienceHub
     SopRecommendation = Shapes::StructureShape.new(name: 'SopRecommendation')
     SopRecommendationList = Shapes::ListShape.new(name: 'SopRecommendationList')
     SopServiceType = Shapes::StringShape.new(name: 'SopServiceType')
+    Sort = Shapes::StructureShape.new(name: 'Sort')
+    SortList = Shapes::ListShape.new(name: 'SortList')
     SpecReferenceId = Shapes::StringShape.new(name: 'SpecReferenceId')
     StartAppAssessmentRequest = Shapes::StructureShape.new(name: 'StartAppAssessmentRequest')
     StartAppAssessmentResponse = Shapes::StructureShape.new(name: 'StartAppAssessmentResponse')
+    StartMetricsExportRequest = Shapes::StructureShape.new(name: 'StartMetricsExportRequest')
+    StartMetricsExportResponse = Shapes::StructureShape.new(name: 'StartMetricsExportResponse')
     StartResourceGroupingRecommendationTaskRequest = Shapes::StructureShape.new(name: 'StartResourceGroupingRecommendationTaskRequest')
     StartResourceGroupingRecommendationTaskResponse = Shapes::StructureShape.new(name: 'StartResourceGroupingRecommendationTaskResponse')
     String1024 = Shapes::StringShape.new(name: 'String1024')
@@ -550,6 +567,13 @@ module Aws::ResilienceHub
 
     ComponentRecommendationList.member = Shapes::ShapeRef.new(shape: ComponentRecommendation)
 
+    Condition.add_member(:field, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "field"))
+    Condition.add_member(:operator, Shapes::ShapeRef.new(shape: ConditionOperatorType, required: true, location_name: "operator"))
+    Condition.add_member(:value, Shapes::ShapeRef.new(shape: String255, location_name: "value"))
+    Condition.struct_class = Types::Condition
+
+    ConditionList.member = Shapes::ShapeRef.new(shape: Condition)
+
     ConfigRecommendation.add_member(:app_component_name, Shapes::ShapeRef.new(shape: EntityId, location_name: "appComponentName"))
     ConfigRecommendation.add_member(:compliance, Shapes::ShapeRef.new(shape: AssessmentCompliance, location_name: "compliance"))
     ConfigRecommendation.add_member(:cost, Shapes::ShapeRef.new(shape: Cost, location_name: "cost"))
@@ -786,6 +810,15 @@ module Aws::ResilienceHub
     DescribeDraftAppVersionResourcesImportStatusResponse.add_member(:status_change_time, Shapes::ShapeRef.new(shape: TimeStamp, required: true, location_name: "statusChangeTime"))
     DescribeDraftAppVersionResourcesImportStatusResponse.struct_class = Types::DescribeDraftAppVersionResourcesImportStatusResponse
 
+    DescribeMetricsExportRequest.add_member(:metrics_export_id, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "metricsExportId"))
+    DescribeMetricsExportRequest.struct_class = Types::DescribeMetricsExportRequest
+
+    DescribeMetricsExportResponse.add_member(:error_message, Shapes::ShapeRef.new(shape: String500, location_name: "errorMessage"))
+    DescribeMetricsExportResponse.add_member(:export_location, Shapes::ShapeRef.new(shape: S3Location, location_name: "exportLocation"))
+    DescribeMetricsExportResponse.add_member(:metrics_export_id, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "metricsExportId"))
+    DescribeMetricsExportResponse.add_member(:status, Shapes::ShapeRef.new(shape: MetricsExportStatusType, required: true, location_name: "status"))
+    DescribeMetricsExportResponse.struct_class = Types::DescribeMetricsExportResponse
+
     DescribeResiliencyPolicyRequest.add_member(:policy_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "policyArn"))
     DescribeResiliencyPolicyRequest.struct_class = Types::DescribeResiliencyPolicyRequest
 
@@ -854,6 +887,12 @@ module Aws::ResilienceHub
     FailurePolicy.add_member(:rpo_in_secs, Shapes::ShapeRef.new(shape: Seconds, required: true, location_name: "rpoInSecs"))
     FailurePolicy.add_member(:rto_in_secs, Shapes::ShapeRef.new(shape: Seconds, required: true, location_name: "rtoInSecs"))
     FailurePolicy.struct_class = Types::FailurePolicy
+
+    Field.add_member(:aggregation, Shapes::ShapeRef.new(shape: FieldAggregationType, location_name: "aggregation"))
+    Field.add_member(:name, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "name"))
+    Field.struct_class = Types::Field
+
+    FieldList.member = Shapes::ShapeRef.new(shape: Field)
 
     GroupingAppComponent.add_member(:app_component_id, Shapes::ShapeRef.new(shape: EntityName255, required: true, location_name: "appComponentId"))
     GroupingAppComponent.add_member(:app_component_name, Shapes::ShapeRef.new(shape: EntityName255, required: true, location_name: "appComponentName"))
@@ -1029,6 +1068,18 @@ module Aws::ResilienceHub
     ListAppsResponse.add_member(:app_summaries, Shapes::ShapeRef.new(shape: AppSummaryList, required: true, location_name: "appSummaries"))
     ListAppsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListAppsResponse.struct_class = Types::ListAppsResponse
+
+    ListMetricsRequest.add_member(:conditions, Shapes::ShapeRef.new(shape: ConditionList, location_name: "conditions"))
+    ListMetricsRequest.add_member(:data_source, Shapes::ShapeRef.new(shape: String255, location_name: "dataSource"))
+    ListMetricsRequest.add_member(:fields, Shapes::ShapeRef.new(shape: FieldList, location_name: "fields"))
+    ListMetricsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
+    ListMetricsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListMetricsRequest.add_member(:sorts, Shapes::ShapeRef.new(shape: SortList, location_name: "sorts"))
+    ListMetricsRequest.struct_class = Types::ListMetricsRequest
+
+    ListMetricsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListMetricsResponse.add_member(:rows, Shapes::ShapeRef.new(shape: RowList, required: true, location_name: "rows"))
+    ListMetricsResponse.struct_class = Types::ListMetricsResponse
 
     ListRecommendationTemplatesRequest.add_member(:assessment_arn, Shapes::ShapeRef.new(shape: Arn, location: "querystring", location_name: "assessmentArn"))
     ListRecommendationTemplatesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
@@ -1294,6 +1345,10 @@ module Aws::ResilienceHub
     ResourceNotFoundException.add_member(:resource_type, Shapes::ShapeRef.new(shape: ResourceType, location_name: "resourceType"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
+    Row.member = Shapes::ShapeRef.new(shape: String255)
+
+    RowList.member = Shapes::ShapeRef.new(shape: Row)
+
     S3Location.add_member(:bucket, Shapes::ShapeRef.new(shape: String500, location_name: "bucket"))
     S3Location.add_member(:prefix, Shapes::ShapeRef.new(shape: String500, location_name: "prefix"))
     S3Location.struct_class = Types::S3Location
@@ -1323,6 +1378,12 @@ module Aws::ResilienceHub
 
     SopRecommendationList.member = Shapes::ShapeRef.new(shape: SopRecommendation)
 
+    Sort.add_member(:ascending, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ascending"))
+    Sort.add_member(:field, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "field"))
+    Sort.struct_class = Types::Sort
+
+    SortList.member = Shapes::ShapeRef.new(shape: Sort)
+
     StartAppAssessmentRequest.add_member(:app_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "appArn"))
     StartAppAssessmentRequest.add_member(:app_version, Shapes::ShapeRef.new(shape: EntityVersion, required: true, location_name: "appVersion"))
     StartAppAssessmentRequest.add_member(:assessment_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "assessmentName"))
@@ -1332,6 +1393,14 @@ module Aws::ResilienceHub
 
     StartAppAssessmentResponse.add_member(:assessment, Shapes::ShapeRef.new(shape: AppAssessment, required: true, location_name: "assessment"))
     StartAppAssessmentResponse.struct_class = Types::StartAppAssessmentResponse
+
+    StartMetricsExportRequest.add_member(:bucket_name, Shapes::ShapeRef.new(shape: EntityName, location_name: "bucketName"))
+    StartMetricsExportRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    StartMetricsExportRequest.struct_class = Types::StartMetricsExportRequest
+
+    StartMetricsExportResponse.add_member(:metrics_export_id, Shapes::ShapeRef.new(shape: String255, required: true, location_name: "metricsExportId"))
+    StartMetricsExportResponse.add_member(:status, Shapes::ShapeRef.new(shape: MetricsExportStatusType, required: true, location_name: "status"))
+    StartMetricsExportResponse.struct_class = Types::StartMetricsExportResponse
 
     StartResourceGroupingRecommendationTaskRequest.add_member(:app_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "appArn"))
     StartResourceGroupingRecommendationTaskRequest.struct_class = Types::StartResourceGroupingRecommendationTaskRequest
@@ -1811,6 +1880,19 @@ module Aws::ResilienceHub
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
+      api.add_operation(:describe_metrics_export, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeMetricsExport"
+        o.http_method = "POST"
+        o.http_request_uri = "/describe-metrics-export"
+        o.input = Shapes::ShapeRef.new(shape: DescribeMetricsExportRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeMetricsExportResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
       api.add_operation(:describe_resiliency_policy, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DescribeResiliencyPolicy"
         o.http_method = "POST"
@@ -2078,6 +2160,24 @@ module Aws::ResilienceHub
         )
       end)
 
+      api.add_operation(:list_metrics, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListMetrics"
+        o.http_method = "POST"
+        o.http_request_uri = "/list-metrics"
+        o.input = Shapes::ShapeRef.new(shape: ListMetricsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListMetricsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_recommendation_templates, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListRecommendationTemplates"
         o.http_method = "GET"
@@ -2303,6 +2403,20 @@ module Aws::ResilienceHub
         o.output = Shapes::ShapeRef.new(shape: StartAppAssessmentResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:start_metrics_export, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartMetricsExport"
+        o.http_method = "POST"
+        o.http_request_uri = "/start-metrics-export"
+        o.input = Shapes::ShapeRef.new(shape: StartMetricsExportRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartMetricsExportResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)

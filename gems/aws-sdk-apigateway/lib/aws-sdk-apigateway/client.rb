@@ -671,6 +671,10 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The domain name of the BasePathMapping resource to create.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @option params [String] :base_path
     #   The base path name that callers of the API must provide as part of the
     #   URL after the domain name. This value must be unique for all of the
@@ -695,6 +699,7 @@ module Aws::APIGateway
     #
     #   resp = client.create_base_path_mapping({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #     base_path: "String",
     #     rest_api_id: "String", # required
     #     stage: "String",
@@ -899,12 +904,12 @@ module Aws::APIGateway
     #
     # @option params [String] :certificate_name
     #   The user-friendly name of the certificate that will be used by
-    #   edge-optimized endpoint for this domain name.
+    #   edge-optimized endpoint or private endpoint for this domain name.
     #
     # @option params [String] :certificate_body
     #   \[Deprecated\] The body of the server certificate that will be used by
-    #   edge-optimized endpoint for this domain name provided by your
-    #   certificate authority.
+    #   edge-optimized endpoint or private endpoint for this domain name
+    #   provided by your certificate authority.
     #
     # @option params [String] :certificate_private_key
     #   \[Deprecated\] Your edge-optimized endpoint's domain name
@@ -921,8 +926,8 @@ module Aws::APIGateway
     #
     # @option params [String] :certificate_arn
     #   The reference to an Amazon Web Services-managed certificate that will
-    #   be used by edge-optimized endpoint for this domain name. Certificate
-    #   Manager is the only supported source.
+    #   be used by edge-optimized endpoint or private endpoint for this domain
+    #   name. Certificate Manager is the only supported source.
     #
     # @option params [String] :regional_certificate_name
     #   The user-friendly name of the certificate that will be used by
@@ -958,9 +963,16 @@ module Aws::APIGateway
     #   using an ACM imported or private CA certificate ARN as the
     #   regionalCertificateArn.
     #
+    # @option params [String] :policy
+    #   A stringified JSON policy document that applies to the `execute-api`
+    #   service for this DomainName regardless of the caller and Method
+    #   configuration. Supported only for private custom domain names.
+    #
     # @return [Types::DomainName] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DomainName#domain_name #domain_name} => String
+    #   * {Types::DomainName#domain_name_id #domain_name_id} => String
+    #   * {Types::DomainName#domain_name_arn #domain_name_arn} => String
     #   * {Types::DomainName#certificate_name #certificate_name} => String
     #   * {Types::DomainName#certificate_arn #certificate_arn} => String
     #   * {Types::DomainName#certificate_upload_date #certificate_upload_date} => Time
@@ -977,6 +989,8 @@ module Aws::APIGateway
     #   * {Types::DomainName#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::DomainName#mutual_tls_authentication #mutual_tls_authentication} => Types::MutualTlsAuthentication
     #   * {Types::DomainName#ownership_verification_certificate_arn #ownership_verification_certificate_arn} => String
+    #   * {Types::DomainName#management_policy #management_policy} => String
+    #   * {Types::DomainName#policy #policy} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1002,11 +1016,14 @@ module Aws::APIGateway
     #       truststore_version: "String",
     #     },
     #     ownership_verification_certificate_arn: "String",
+    #     policy: "String",
     #   })
     #
     # @example Response structure
     #
     #   resp.domain_name #=> String
+    #   resp.domain_name_id #=> String
+    #   resp.domain_name_arn #=> String
     #   resp.certificate_name #=> String
     #   resp.certificate_arn #=> String
     #   resp.certificate_upload_date #=> Time
@@ -1030,11 +1047,66 @@ module Aws::APIGateway
     #   resp.mutual_tls_authentication.truststore_warnings #=> Array
     #   resp.mutual_tls_authentication.truststore_warnings[0] #=> String
     #   resp.ownership_verification_certificate_arn #=> String
+    #   resp.management_policy #=> String
+    #   resp.policy #=> String
     #
     # @overload create_domain_name(params = {})
     # @param [Hash] params ({})
     def create_domain_name(params = {}, options = {})
       req = build_request(:create_domain_name, params)
+      req.send_request(options)
+    end
+
+    # Creates a domain name access association resource between an access
+    # association source and a private custom domain name.
+    #
+    # @option params [required, String] :domain_name_arn
+    #   The ARN of the domain name.
+    #
+    # @option params [required, String] :access_association_source_type
+    #   The type of the domain name access association source.
+    #
+    # @option params [required, String] :access_association_source
+    #   The identifier of the domain name access association source. For a
+    #   VPCE, the value is the VPC endpoint ID.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   The key-value map of strings. The valid character set is
+    #   \[a-zA-Z+-=.\_:/\]. The tag key can be up to 128 characters and must
+    #   not start with `aws:`. The tag value can be up to 256 characters.
+    #
+    # @return [Types::DomainNameAccessAssociation] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DomainNameAccessAssociation#domain_name_access_association_arn #domain_name_access_association_arn} => String
+    #   * {Types::DomainNameAccessAssociation#domain_name_arn #domain_name_arn} => String
+    #   * {Types::DomainNameAccessAssociation#access_association_source_type #access_association_source_type} => String
+    #   * {Types::DomainNameAccessAssociation#access_association_source #access_association_source} => String
+    #   * {Types::DomainNameAccessAssociation#tags #tags} => Hash&lt;String,String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_domain_name_access_association({
+    #     domain_name_arn: "String", # required
+    #     access_association_source_type: "VPCE", # required, accepts VPCE
+    #     access_association_source: "String", # required
+    #     tags: {
+    #       "String" => "String",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.domain_name_access_association_arn #=> String
+    #   resp.domain_name_arn #=> String
+    #   resp.access_association_source_type #=> String, one of "VPCE"
+    #   resp.access_association_source #=> String
+    #   resp.tags #=> Hash
+    #   resp.tags["String"] #=> String
+    #
+    # @overload create_domain_name_access_association(params = {})
+    # @param [Hash] params ({})
+    def create_domain_name_access_association(params = {}, options = {})
+      req = build_request(:create_domain_name_access_association, params)
       req.send_request(options)
     end
 
@@ -1724,6 +1796,10 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The domain name of the BasePathMapping resource to delete.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @option params [required, String] :base_path
     #   The base path name of the BasePathMapping resource to delete.
     #
@@ -1735,6 +1811,7 @@ module Aws::APIGateway
     #
     #   resp = client.delete_base_path_mapping({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #     base_path: "String", # required
     #   })
     #
@@ -1843,18 +1920,48 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The name of the DomainName resource to be deleted.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_domain_name({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #   })
     #
     # @overload delete_domain_name(params = {})
     # @param [Hash] params ({})
     def delete_domain_name(params = {}, options = {})
       req = build_request(:delete_domain_name, params)
+      req.send_request(options)
+    end
+
+    # Deletes the DomainNameAccessAssociation resource.
+    #
+    # Only the AWS account that created the DomainNameAccessAssociation
+    # resource can delete it. To stop an access association source in
+    # another AWS account from accessing your private custom domain name,
+    # use the RejectDomainNameAccessAssociation operation.
+    #
+    # @option params [required, String] :domain_name_access_association_arn
+    #   The ARN of the domain name access association resource.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_domain_name_access_association({
+    #     domain_name_access_association_arn: "String", # required
+    #   })
+    #
+    # @overload delete_domain_name_access_association(params = {})
+    # @param [Hash] params ({})
+    def delete_domain_name_access_association(params = {}, options = {})
+      req = build_request(:delete_domain_name_access_association, params)
       req.send_request(options)
     end
 
@@ -2523,6 +2630,10 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The domain name of the BasePathMapping resource to be described.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @option params [required, String] :base_path
     #   The base path name that callers of the API must provide as part of the
     #   URL after the domain name. This value must be unique for all of the
@@ -2539,6 +2650,7 @@ module Aws::APIGateway
     #
     #   resp = client.get_base_path_mapping({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #     base_path: "String", # required
     #   })
     #
@@ -2560,6 +2672,10 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The domain name of a BasePathMapping resource.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @option params [String] :position
     #   The current pagination position in the paged result set.
     #
@@ -2578,6 +2694,7 @@ module Aws::APIGateway
     #
     #   resp = client.get_base_path_mappings({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #     position: "String",
     #     limit: 1,
     #   })
@@ -2956,9 +3073,15 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The name of the DomainName resource.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @return [Types::DomainName] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DomainName#domain_name #domain_name} => String
+    #   * {Types::DomainName#domain_name_id #domain_name_id} => String
+    #   * {Types::DomainName#domain_name_arn #domain_name_arn} => String
     #   * {Types::DomainName#certificate_name #certificate_name} => String
     #   * {Types::DomainName#certificate_arn #certificate_arn} => String
     #   * {Types::DomainName#certificate_upload_date #certificate_upload_date} => Time
@@ -2975,16 +3098,21 @@ module Aws::APIGateway
     #   * {Types::DomainName#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::DomainName#mutual_tls_authentication #mutual_tls_authentication} => Types::MutualTlsAuthentication
     #   * {Types::DomainName#ownership_verification_certificate_arn #ownership_verification_certificate_arn} => String
+    #   * {Types::DomainName#management_policy #management_policy} => String
+    #   * {Types::DomainName#policy #policy} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.get_domain_name({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #   })
     #
     # @example Response structure
     #
     #   resp.domain_name #=> String
+    #   resp.domain_name_id #=> String
+    #   resp.domain_name_arn #=> String
     #   resp.certificate_name #=> String
     #   resp.certificate_arn #=> String
     #   resp.certificate_upload_date #=> Time
@@ -3008,11 +3136,59 @@ module Aws::APIGateway
     #   resp.mutual_tls_authentication.truststore_warnings #=> Array
     #   resp.mutual_tls_authentication.truststore_warnings[0] #=> String
     #   resp.ownership_verification_certificate_arn #=> String
+    #   resp.management_policy #=> String
+    #   resp.policy #=> String
     #
     # @overload get_domain_name(params = {})
     # @param [Hash] params ({})
     def get_domain_name(params = {}, options = {})
       req = build_request(:get_domain_name, params)
+      req.send_request(options)
+    end
+
+    # Represents a collection on DomainNameAccessAssociations resources.
+    #
+    # @option params [String] :position
+    #   The current pagination position in the paged result set.
+    #
+    # @option params [Integer] :limit
+    #   The maximum number of returned results per page. The default value is
+    #   25 and the maximum value is 500.
+    #
+    # @option params [String] :resource_owner
+    #   The owner of the domain name access association. Use `SELF` to only
+    #   list the domain name access associations owned by your own account.
+    #   Use `OTHER_ACCOUNTS` to list the domain name access associations with
+    #   your private custom domain names that are owned by other AWS accounts.
+    #
+    # @return [Types::DomainNameAccessAssociations] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DomainNameAccessAssociations#position #position} => String
+    #   * {Types::DomainNameAccessAssociations#items #items} => Array&lt;Types::DomainNameAccessAssociation&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_domain_name_access_associations({
+    #     position: "String",
+    #     limit: 1,
+    #     resource_owner: "SELF", # accepts SELF, OTHER_ACCOUNTS
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.position #=> String
+    #   resp.items #=> Array
+    #   resp.items[0].domain_name_access_association_arn #=> String
+    #   resp.items[0].domain_name_arn #=> String
+    #   resp.items[0].access_association_source_type #=> String, one of "VPCE"
+    #   resp.items[0].access_association_source #=> String
+    #   resp.items[0].tags #=> Hash
+    #   resp.items[0].tags["String"] #=> String
+    #
+    # @overload get_domain_name_access_associations(params = {})
+    # @param [Hash] params ({})
+    def get_domain_name_access_associations(params = {}, options = {})
+      req = build_request(:get_domain_name_access_associations, params)
       req.send_request(options)
     end
 
@@ -3024,6 +3200,9 @@ module Aws::APIGateway
     # @option params [Integer] :limit
     #   The maximum number of returned results per page. The default value is
     #   25 and the maximum value is 500.
+    #
+    # @option params [String] :resource_owner
+    #   The owner of the domain name access association.
     #
     # @return [Types::DomainNames] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3037,6 +3216,7 @@ module Aws::APIGateway
     #   resp = client.get_domain_names({
     #     position: "String",
     #     limit: 1,
+    #     resource_owner: "SELF", # accepts SELF, OTHER_ACCOUNTS
     #   })
     #
     # @example Response structure
@@ -3044,6 +3224,8 @@ module Aws::APIGateway
     #   resp.position #=> String
     #   resp.items #=> Array
     #   resp.items[0].domain_name #=> String
+    #   resp.items[0].domain_name_id #=> String
+    #   resp.items[0].domain_name_arn #=> String
     #   resp.items[0].certificate_name #=> String
     #   resp.items[0].certificate_arn #=> String
     #   resp.items[0].certificate_upload_date #=> Time
@@ -3067,6 +3249,8 @@ module Aws::APIGateway
     #   resp.items[0].mutual_tls_authentication.truststore_warnings #=> Array
     #   resp.items[0].mutual_tls_authentication.truststore_warnings[0] #=> String
     #   resp.items[0].ownership_verification_certificate_arn #=> String
+    #   resp.items[0].management_policy #=> String
+    #   resp.items[0].policy #=> String
     #
     # @overload get_domain_names(params = {})
     # @param [Hash] params ({})
@@ -5438,6 +5622,36 @@ module Aws::APIGateway
       req.send_request(options)
     end
 
+    # Rejects a domain name access association with a private custom domain
+    # name.
+    #
+    # To reject a domain name access association with an access association
+    # source in another AWS account, use this operation. To remove a domain
+    # name access association with an access association source in your own
+    # account, use the DeleteDomainNameAccessAssociation operation.
+    #
+    # @option params [required, String] :domain_name_access_association_arn
+    #   The ARN of the domain name access association resource.
+    #
+    # @option params [required, String] :domain_name_arn
+    #   The ARN of the domain name.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.reject_domain_name_access_association({
+    #     domain_name_access_association_arn: "String", # required
+    #     domain_name_arn: "String", # required
+    #   })
+    #
+    # @overload reject_domain_name_access_association(params = {})
+    # @param [Hash] params ({})
+    def reject_domain_name_access_association(params = {}, options = {})
+      req = build_request(:reject_domain_name_access_association, params)
+      req.send_request(options)
+    end
+
     # Adds or updates a tag on a given resource.
     #
     # @option params [required, String] :resource_arn
@@ -5837,6 +6051,10 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The domain name of the BasePathMapping resource to change.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @option params [required, String] :base_path
     #   The base path of the BasePathMapping resource to change.
     #
@@ -5860,6 +6078,7 @@ module Aws::APIGateway
     #
     #   resp = client.update_base_path_mapping({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #     base_path: "String", # required
     #     patch_operations: [
     #       {
@@ -6102,6 +6321,10 @@ module Aws::APIGateway
     # @option params [required, String] :domain_name
     #   The name of the DomainName resource to be changed.
     #
+    # @option params [String] :domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #
     # @option params [Array<Types::PatchOperation>] :patch_operations
     #   For more information about supported patch operations, see [Patch
     #   Operations][1].
@@ -6113,6 +6336,8 @@ module Aws::APIGateway
     # @return [Types::DomainName] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DomainName#domain_name #domain_name} => String
+    #   * {Types::DomainName#domain_name_id #domain_name_id} => String
+    #   * {Types::DomainName#domain_name_arn #domain_name_arn} => String
     #   * {Types::DomainName#certificate_name #certificate_name} => String
     #   * {Types::DomainName#certificate_arn #certificate_arn} => String
     #   * {Types::DomainName#certificate_upload_date #certificate_upload_date} => Time
@@ -6129,11 +6354,14 @@ module Aws::APIGateway
     #   * {Types::DomainName#tags #tags} => Hash&lt;String,String&gt;
     #   * {Types::DomainName#mutual_tls_authentication #mutual_tls_authentication} => Types::MutualTlsAuthentication
     #   * {Types::DomainName#ownership_verification_certificate_arn #ownership_verification_certificate_arn} => String
+    #   * {Types::DomainName#management_policy #management_policy} => String
+    #   * {Types::DomainName#policy #policy} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_domain_name({
     #     domain_name: "String", # required
+    #     domain_name_id: "String",
     #     patch_operations: [
     #       {
     #         op: "add", # accepts add, remove, replace, move, copy, test
@@ -6147,6 +6375,8 @@ module Aws::APIGateway
     # @example Response structure
     #
     #   resp.domain_name #=> String
+    #   resp.domain_name_id #=> String
+    #   resp.domain_name_arn #=> String
     #   resp.certificate_name #=> String
     #   resp.certificate_arn #=> String
     #   resp.certificate_upload_date #=> Time
@@ -6170,6 +6400,8 @@ module Aws::APIGateway
     #   resp.mutual_tls_authentication.truststore_warnings #=> Array
     #   resp.mutual_tls_authentication.truststore_warnings[0] #=> String
     #   resp.ownership_verification_certificate_arn #=> String
+    #   resp.management_policy #=> String
+    #   resp.policy #=> String
     #
     # @overload update_domain_name(params = {})
     # @param [Hash] params ({})
@@ -7122,7 +7354,7 @@ module Aws::APIGateway
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-apigateway'
-      context[:gem_version] = '1.109.0'
+      context[:gem_version] = '1.110.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

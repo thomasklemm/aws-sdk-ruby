@@ -32,6 +32,8 @@ module Aws::SSMQuickSetup
     ConfigurationParametersMap = Shapes::MapShape.new(name: 'ConfigurationParametersMap')
     ConfigurationParametersMapKeyString = Shapes::StringShape.new(name: 'ConfigurationParametersMapKeyString')
     ConfigurationParametersMapValueString = Shapes::StringShape.new(name: 'ConfigurationParametersMapValueString')
+    ConfigurationSummary = Shapes::StructureShape.new(name: 'ConfigurationSummary')
+    ConfigurationsList = Shapes::ListShape.new(name: 'ConfigurationsList')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     CreateConfigurationManagerInput = Shapes::StructureShape.new(name: 'CreateConfigurationManagerInput')
     CreateConfigurationManagerInputDescriptionString = Shapes::StringShape.new(name: 'CreateConfigurationManagerInputDescriptionString')
@@ -44,9 +46,12 @@ module Aws::SSMQuickSetup
     FilterValues = Shapes::ListShape.new(name: 'FilterValues')
     FilterValuesMemberString = Shapes::StringShape.new(name: 'FilterValuesMemberString')
     FiltersList = Shapes::ListShape.new(name: 'FiltersList')
+    GetConfigurationInput = Shapes::StructureShape.new(name: 'GetConfigurationInput')
+    GetConfigurationInputConfigurationIdString = Shapes::StringShape.new(name: 'GetConfigurationInputConfigurationIdString')
     GetConfigurationManagerInput = Shapes::StructureShape.new(name: 'GetConfigurationManagerInput')
     GetConfigurationManagerInputManagerArnString = Shapes::StringShape.new(name: 'GetConfigurationManagerInputManagerArnString')
     GetConfigurationManagerOutput = Shapes::StructureShape.new(name: 'GetConfigurationManagerOutput')
+    GetConfigurationOutput = Shapes::StructureShape.new(name: 'GetConfigurationOutput')
     GetServiceSettingsOutput = Shapes::StructureShape.new(name: 'GetServiceSettingsOutput')
     IAMRoleArn = Shapes::StringShape.new(name: 'IAMRoleArn')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
@@ -54,6 +59,12 @@ module Aws::SSMQuickSetup
     ListConfigurationManagersInputMaxItemsInteger = Shapes::IntegerShape.new(name: 'ListConfigurationManagersInputMaxItemsInteger')
     ListConfigurationManagersInputStartingTokenString = Shapes::StringShape.new(name: 'ListConfigurationManagersInputStartingTokenString')
     ListConfigurationManagersOutput = Shapes::StructureShape.new(name: 'ListConfigurationManagersOutput')
+    ListConfigurationsInput = Shapes::StructureShape.new(name: 'ListConfigurationsInput')
+    ListConfigurationsInputConfigurationDefinitionIdString = Shapes::StringShape.new(name: 'ListConfigurationsInputConfigurationDefinitionIdString')
+    ListConfigurationsInputManagerArnString = Shapes::StringShape.new(name: 'ListConfigurationsInputManagerArnString')
+    ListConfigurationsInputMaxItemsInteger = Shapes::IntegerShape.new(name: 'ListConfigurationsInputMaxItemsInteger')
+    ListConfigurationsInputStartingTokenString = Shapes::StringShape.new(name: 'ListConfigurationsInputStartingTokenString')
+    ListConfigurationsOutput = Shapes::StructureShape.new(name: 'ListConfigurationsOutput')
     ListQuickSetupTypesOutput = Shapes::StructureShape.new(name: 'ListQuickSetupTypesOutput')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
@@ -133,6 +144,20 @@ module Aws::SSMQuickSetup
     ConfigurationParametersMap.key = Shapes::ShapeRef.new(shape: ConfigurationParametersMapKeyString)
     ConfigurationParametersMap.value = Shapes::ShapeRef.new(shape: ConfigurationParametersMapValueString)
 
+    ConfigurationSummary.add_member(:account, Shapes::ShapeRef.new(shape: String, location_name: "Account"))
+    ConfigurationSummary.add_member(:configuration_definition_id, Shapes::ShapeRef.new(shape: String, location_name: "ConfigurationDefinitionId"))
+    ConfigurationSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "CreatedAt"))
+    ConfigurationSummary.add_member(:first_class_parameters, Shapes::ShapeRef.new(shape: ConfigurationParametersMap, location_name: "FirstClassParameters"))
+    ConfigurationSummary.add_member(:id, Shapes::ShapeRef.new(shape: String, location_name: "Id"))
+    ConfigurationSummary.add_member(:manager_arn, Shapes::ShapeRef.new(shape: String, location_name: "ManagerArn"))
+    ConfigurationSummary.add_member(:region, Shapes::ShapeRef.new(shape: String, location_name: "Region"))
+    ConfigurationSummary.add_member(:status_summaries, Shapes::ShapeRef.new(shape: StatusSummariesList, location_name: "StatusSummaries"))
+    ConfigurationSummary.add_member(:type, Shapes::ShapeRef.new(shape: String, location_name: "Type"))
+    ConfigurationSummary.add_member(:type_version, Shapes::ShapeRef.new(shape: String, location_name: "TypeVersion"))
+    ConfigurationSummary.struct_class = Types::ConfigurationSummary
+
+    ConfigurationsList.member = Shapes::ShapeRef.new(shape: ConfigurationSummary)
+
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     ConflictException.struct_class = Types::ConflictException
 
@@ -156,6 +181,9 @@ module Aws::SSMQuickSetup
 
     FiltersList.member = Shapes::ShapeRef.new(shape: Filter)
 
+    GetConfigurationInput.add_member(:configuration_id, Shapes::ShapeRef.new(shape: GetConfigurationInputConfigurationIdString, required: true, location: "uri", location_name: "ConfigurationId"))
+    GetConfigurationInput.struct_class = Types::GetConfigurationInput
+
     GetConfigurationManagerInput.add_member(:manager_arn, Shapes::ShapeRef.new(shape: GetConfigurationManagerInputManagerArnString, required: true, location: "uri", location_name: "ManagerArn"))
     GetConfigurationManagerInput.struct_class = Types::GetConfigurationManagerInput
 
@@ -168,6 +196,19 @@ module Aws::SSMQuickSetup
     GetConfigurationManagerOutput.add_member(:status_summaries, Shapes::ShapeRef.new(shape: StatusSummariesList, location_name: "StatusSummaries"))
     GetConfigurationManagerOutput.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "Tags"))
     GetConfigurationManagerOutput.struct_class = Types::GetConfigurationManagerOutput
+
+    GetConfigurationOutput.add_member(:account, Shapes::ShapeRef.new(shape: String, location_name: "Account"))
+    GetConfigurationOutput.add_member(:configuration_definition_id, Shapes::ShapeRef.new(shape: String, location_name: "ConfigurationDefinitionId"))
+    GetConfigurationOutput.add_member(:created_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "CreatedAt"))
+    GetConfigurationOutput.add_member(:id, Shapes::ShapeRef.new(shape: String, location_name: "Id"))
+    GetConfigurationOutput.add_member(:last_modified_at, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "LastModifiedAt"))
+    GetConfigurationOutput.add_member(:manager_arn, Shapes::ShapeRef.new(shape: String, location_name: "ManagerArn"))
+    GetConfigurationOutput.add_member(:parameters, Shapes::ShapeRef.new(shape: ConfigurationParametersMap, location_name: "Parameters"))
+    GetConfigurationOutput.add_member(:region, Shapes::ShapeRef.new(shape: String, location_name: "Region"))
+    GetConfigurationOutput.add_member(:status_summaries, Shapes::ShapeRef.new(shape: StatusSummariesList, location_name: "StatusSummaries"))
+    GetConfigurationOutput.add_member(:type, Shapes::ShapeRef.new(shape: String, location_name: "Type"))
+    GetConfigurationOutput.add_member(:type_version, Shapes::ShapeRef.new(shape: String, location_name: "TypeVersion"))
+    GetConfigurationOutput.struct_class = Types::GetConfigurationOutput
 
     GetServiceSettingsOutput.add_member(:service_settings, Shapes::ShapeRef.new(shape: ServiceSettings, location_name: "ServiceSettings"))
     GetServiceSettingsOutput.struct_class = Types::GetServiceSettingsOutput
@@ -183,6 +224,17 @@ module Aws::SSMQuickSetup
     ListConfigurationManagersOutput.add_member(:configuration_managers_list, Shapes::ShapeRef.new(shape: ConfigurationManagerList, location_name: "ConfigurationManagersList"))
     ListConfigurationManagersOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     ListConfigurationManagersOutput.struct_class = Types::ListConfigurationManagersOutput
+
+    ListConfigurationsInput.add_member(:configuration_definition_id, Shapes::ShapeRef.new(shape: ListConfigurationsInputConfigurationDefinitionIdString, location_name: "ConfigurationDefinitionId"))
+    ListConfigurationsInput.add_member(:filters, Shapes::ShapeRef.new(shape: FiltersList, location_name: "Filters"))
+    ListConfigurationsInput.add_member(:manager_arn, Shapes::ShapeRef.new(shape: ListConfigurationsInputManagerArnString, location_name: "ManagerArn"))
+    ListConfigurationsInput.add_member(:max_items, Shapes::ShapeRef.new(shape: ListConfigurationsInputMaxItemsInteger, location_name: "MaxItems"))
+    ListConfigurationsInput.add_member(:starting_token, Shapes::ShapeRef.new(shape: ListConfigurationsInputStartingTokenString, location_name: "StartingToken"))
+    ListConfigurationsInput.struct_class = Types::ListConfigurationsInput
+
+    ListConfigurationsOutput.add_member(:configurations_list, Shapes::ShapeRef.new(shape: ConfigurationsList, location_name: "ConfigurationsList"))
+    ListConfigurationsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    ListConfigurationsOutput.struct_class = Types::ListConfigurationsOutput
 
     ListQuickSetupTypesOutput.add_member(:quick_setup_type_list, Shapes::ShapeRef.new(shape: QuickSetupTypeList, location_name: "QuickSetupTypeList"))
     ListQuickSetupTypesOutput.struct_class = Types::ListQuickSetupTypesOutput
@@ -305,6 +357,20 @@ module Aws::SSMQuickSetup
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
+      api.add_operation(:get_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetConfiguration"
+        o.http_method = "GET"
+        o.http_request_uri = "/getConfiguration/{ConfigurationId}"
+        o.input = Shapes::ShapeRef.new(shape: GetConfigurationInput)
+        o.output = Shapes::ShapeRef.new(shape: GetConfigurationOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:get_configuration_manager, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetConfigurationManager"
         o.http_method = "GET"
@@ -342,6 +408,25 @@ module Aws::SSMQuickSetup
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_items",
+          tokens: {
+            "next_token" => "starting_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_configurations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListConfigurations"
+        o.http_method = "POST"
+        o.http_request_uri = "/listConfigurations"
+        o.input = Shapes::ShapeRef.new(shape: ListConfigurationsInput)
+        o.output = Shapes::ShapeRef.new(shape: ListConfigurationsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_items",
           tokens: {

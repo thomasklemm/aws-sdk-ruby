@@ -162,7 +162,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#delete_account_policy-instance_method
       def delete_account_policy: (
                                    policy_name: ::String,
-                                   policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY")
+                                   policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY" | "FIELD_INDEX_POLICY" | "TRANSFORMER_POLICY")
                                  ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -201,6 +201,15 @@ module Aws
                                 destination_name: ::String
                               ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _DeleteIndexPolicyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteIndexPolicyResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#delete_index_policy-instance_method
+      def delete_index_policy: (
+                                 log_group_identifier: ::String
+                               ) -> _DeleteIndexPolicyResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteIndexPolicyResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#delete_log_anomaly_detector-instance_method
       def delete_log_anomaly_detector: (
@@ -257,15 +266,23 @@ module Aws
                                       ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#delete_transformer-instance_method
+      def delete_transformer: (
+                                log_group_identifier: ::String
+                              ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       interface _DescribeAccountPoliciesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeAccountPoliciesResponse]
         def account_policies: () -> ::Array[Types::AccountPolicy]
+        def next_token: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#describe_account_policies-instance_method
       def describe_account_policies: (
-                                       policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY"),
+                                       policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY" | "FIELD_INDEX_POLICY" | "TRANSFORMER_POLICY"),
                                        ?policy_name: ::String,
-                                       ?account_identifiers: Array[::String]
+                                       ?account_identifiers: Array[::String],
+                                       ?next_token: ::String
                                      ) -> _DescribeAccountPoliciesResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeAccountPoliciesResponseSuccess
 
@@ -347,6 +364,30 @@ module Aws
                                    ?limit: ::Integer
                                  ) -> _DescribeExportTasksResponseSuccess
                                | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeExportTasksResponseSuccess
+
+      interface _DescribeFieldIndexesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeFieldIndexesResponse]
+        def field_indexes: () -> ::Array[Types::FieldIndex]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#describe_field_indexes-instance_method
+      def describe_field_indexes: (
+                                    log_group_identifiers: Array[::String],
+                                    ?next_token: ::String
+                                  ) -> _DescribeFieldIndexesResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeFieldIndexesResponseSuccess
+
+      interface _DescribeIndexPoliciesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeIndexPoliciesResponse]
+        def index_policies: () -> ::Array[Types::IndexPolicy]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#describe_index_policies-instance_method
+      def describe_index_policies: (
+                                     log_group_identifiers: Array[::String],
+                                     ?next_token: ::String
+                                   ) -> _DescribeIndexPoliciesResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeIndexPoliciesResponseSuccess
 
       interface _DescribeLogGroupsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeLogGroupsResponse]
@@ -606,6 +647,19 @@ module Aws
                              ) -> _GetQueryResultsResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryResultsResponseSuccess
 
+      interface _GetTransformerResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetTransformerResponse]
+        def log_group_identifier: () -> ::String
+        def creation_time: () -> ::Integer
+        def last_modified_time: () -> ::Integer
+        def transformer_config: () -> ::Array[Types::Processor]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#get_transformer-instance_method
+      def get_transformer: (
+                             log_group_identifier: ::String
+                           ) -> _GetTransformerResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTransformerResponseSuccess
+
       interface _ListAnomaliesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListAnomaliesResponse]
         def anomalies: () -> ::Array[Types::Anomaly]
@@ -632,6 +686,19 @@ module Aws
                                         ?next_token: ::String
                                       ) -> _ListLogAnomalyDetectorsResponseSuccess
                                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListLogAnomalyDetectorsResponseSuccess
+
+      interface _ListLogGroupsForQueryResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListLogGroupsForQueryResponse]
+        def log_group_identifiers: () -> ::Array[::String]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#list_log_groups_for_query-instance_method
+      def list_log_groups_for_query: (
+                                       query_id: ::String,
+                                       ?next_token: ::String,
+                                       ?max_results: ::Integer
+                                     ) -> _ListLogGroupsForQueryResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListLogGroupsForQueryResponseSuccess
 
       interface _ListTagsForResourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
@@ -661,7 +728,7 @@ module Aws
       def put_account_policy: (
                                 policy_name: ::String,
                                 policy_document: ::String,
-                                policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY"),
+                                policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY" | "FIELD_INDEX_POLICY" | "TRANSFORMER_POLICY"),
                                 ?scope: ("ALL"),
                                 ?selection_criteria: ::String
                               ) -> _PutAccountPolicyResponseSuccess
@@ -740,6 +807,17 @@ module Aws
                                   ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      interface _PutIndexPolicyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutIndexPolicyResponse]
+        def index_policy: () -> Types::IndexPolicy
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#put_index_policy-instance_method
+      def put_index_policy: (
+                              log_group_identifier: ::String,
+                              policy_document: ::String
+                            ) -> _PutIndexPolicyResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutIndexPolicyResponseSuccess
+
       interface _PutLogEventsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PutLogEventsResponse]
         def next_sequence_token: () -> ::String
@@ -778,7 +856,8 @@ module Aws
                                    dimensions: Hash[::String, ::String]?,
                                    unit: ("Seconds" | "Microseconds" | "Milliseconds" | "Bytes" | "Kilobytes" | "Megabytes" | "Gigabytes" | "Terabytes" | "Bits" | "Kilobits" | "Megabits" | "Gigabits" | "Terabits" | "Percent" | "Count" | "Bytes/Second" | "Kilobytes/Second" | "Megabytes/Second" | "Gigabytes/Second" | "Terabytes/Second" | "Bits/Second" | "Kilobits/Second" | "Megabits/Second" | "Gigabits/Second" | "Terabits/Second" | "Count/Second" | "None")?
                                  },
-                               ]
+                               ],
+                               ?apply_on_transformed_logs: bool
                              ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
@@ -821,9 +900,148 @@ module Aws
                                      filter_pattern: ::String,
                                      destination_arn: ::String,
                                      ?role_arn: ::String,
-                                     ?distribution: ("Random" | "ByLogStream")
+                                     ?distribution: ("Random" | "ByLogStream"),
+                                     ?apply_on_transformed_logs: bool
                                    ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#put_transformer-instance_method
+      def put_transformer: (
+                             log_group_identifier: ::String,
+                             transformer_config: Array[
+                               {
+                                 add_keys: {
+                                   entries: Array[
+                                     {
+                                       key: ::String,
+                                       value: ::String,
+                                       overwrite_if_exists: bool?
+                                     },
+                                   ]
+                                 }?,
+                                 copy_value: {
+                                   entries: Array[
+                                     {
+                                       source: ::String,
+                                       target: ::String,
+                                       overwrite_if_exists: bool?
+                                     },
+                                   ]
+                                 }?,
+                                 csv: {
+                                   quote_character: ::String?,
+                                   delimiter: ::String?,
+                                   columns: Array[::String]?,
+                                   source: ::String?
+                                 }?,
+                                 date_time_converter: {
+                                   source: ::String,
+                                   target: ::String,
+                                   target_format: ::String?,
+                                   match_patterns: Array[::String],
+                                   source_timezone: ::String?,
+                                   target_timezone: ::String?,
+                                   locale: ::String?
+                                 }?,
+                                 delete_keys: {
+                                   with_keys: Array[::String]
+                                 }?,
+                                 grok: {
+                                   source: ::String?,
+                                   match: ::String
+                                 }?,
+                                 list_to_map: {
+                                   source: ::String,
+                                   key: ::String,
+                                   value_key: ::String?,
+                                   target: ::String?,
+                                   flatten: bool?,
+                                   flattened_element: ("first" | "last")?
+                                 }?,
+                                 lower_case_string: {
+                                   with_keys: Array[::String]
+                                 }?,
+                                 move_keys: {
+                                   entries: Array[
+                                     {
+                                       source: ::String,
+                                       target: ::String,
+                                       overwrite_if_exists: bool?
+                                     },
+                                   ]
+                                 }?,
+                                 parse_cloudfront: {
+                                   source: ::String?
+                                 }?,
+                                 parse_json: {
+                                   source: ::String?,
+                                   destination: ::String?
+                                 }?,
+                                 parse_key_value: {
+                                   source: ::String?,
+                                   destination: ::String?,
+                                   field_delimiter: ::String?,
+                                   key_value_delimiter: ::String?,
+                                   key_prefix: ::String?,
+                                   non_match_value: ::String?,
+                                   overwrite_if_exists: bool?
+                                 }?,
+                                 parse_route_53: {
+                                   source: ::String?
+                                 }?,
+                                 parse_postgres: {
+                                   source: ::String?
+                                 }?,
+                                 parse_vpc: {
+                                   source: ::String?
+                                 }?,
+                                 parse_waf: {
+                                   source: ::String?
+                                 }?,
+                                 rename_keys: {
+                                   entries: Array[
+                                     {
+                                       key: ::String,
+                                       rename_to: ::String,
+                                       overwrite_if_exists: bool?
+                                     },
+                                   ]
+                                 }?,
+                                 split_string: {
+                                   entries: Array[
+                                     {
+                                       source: ::String,
+                                       delimiter: ::String
+                                     },
+                                   ]
+                                 }?,
+                                 substitute_string: {
+                                   entries: Array[
+                                     {
+                                       source: ::String,
+                                       from: ::String,
+                                       to: ::String
+                                     },
+                                   ]
+                                 }?,
+                                 trim_string: {
+                                   with_keys: Array[::String]
+                                 }?,
+                                 type_converter: {
+                                   entries: Array[
+                                     {
+                                       key: ::String,
+                                       type: ("boolean" | "integer" | "double" | "string")
+                                     },
+                                   ]
+                                 }?,
+                                 upper_case_string: {
+                                   with_keys: Array[::String]
+                                 }?
+                               },
+                             ]
+                           ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       interface _StartLiveTailResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartLiveTailResponse]
@@ -888,6 +1106,148 @@ module Aws
                                 log_event_messages: Array[::String]
                               ) -> _TestMetricFilterResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TestMetricFilterResponseSuccess
+
+      interface _TestTransformerResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TestTransformerResponse]
+        def transformed_logs: () -> ::Array[Types::TransformedLogRecord]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#test_transformer-instance_method
+      def test_transformer: (
+                              transformer_config: Array[
+                                {
+                                  add_keys: {
+                                    entries: Array[
+                                      {
+                                        key: ::String,
+                                        value: ::String,
+                                        overwrite_if_exists: bool?
+                                      },
+                                    ]
+                                  }?,
+                                  copy_value: {
+                                    entries: Array[
+                                      {
+                                        source: ::String,
+                                        target: ::String,
+                                        overwrite_if_exists: bool?
+                                      },
+                                    ]
+                                  }?,
+                                  csv: {
+                                    quote_character: ::String?,
+                                    delimiter: ::String?,
+                                    columns: Array[::String]?,
+                                    source: ::String?
+                                  }?,
+                                  date_time_converter: {
+                                    source: ::String,
+                                    target: ::String,
+                                    target_format: ::String?,
+                                    match_patterns: Array[::String],
+                                    source_timezone: ::String?,
+                                    target_timezone: ::String?,
+                                    locale: ::String?
+                                  }?,
+                                  delete_keys: {
+                                    with_keys: Array[::String]
+                                  }?,
+                                  grok: {
+                                    source: ::String?,
+                                    match: ::String
+                                  }?,
+                                  list_to_map: {
+                                    source: ::String,
+                                    key: ::String,
+                                    value_key: ::String?,
+                                    target: ::String?,
+                                    flatten: bool?,
+                                    flattened_element: ("first" | "last")?
+                                  }?,
+                                  lower_case_string: {
+                                    with_keys: Array[::String]
+                                  }?,
+                                  move_keys: {
+                                    entries: Array[
+                                      {
+                                        source: ::String,
+                                        target: ::String,
+                                        overwrite_if_exists: bool?
+                                      },
+                                    ]
+                                  }?,
+                                  parse_cloudfront: {
+                                    source: ::String?
+                                  }?,
+                                  parse_json: {
+                                    source: ::String?,
+                                    destination: ::String?
+                                  }?,
+                                  parse_key_value: {
+                                    source: ::String?,
+                                    destination: ::String?,
+                                    field_delimiter: ::String?,
+                                    key_value_delimiter: ::String?,
+                                    key_prefix: ::String?,
+                                    non_match_value: ::String?,
+                                    overwrite_if_exists: bool?
+                                  }?,
+                                  parse_route_53: {
+                                    source: ::String?
+                                  }?,
+                                  parse_postgres: {
+                                    source: ::String?
+                                  }?,
+                                  parse_vpc: {
+                                    source: ::String?
+                                  }?,
+                                  parse_waf: {
+                                    source: ::String?
+                                  }?,
+                                  rename_keys: {
+                                    entries: Array[
+                                      {
+                                        key: ::String,
+                                        rename_to: ::String,
+                                        overwrite_if_exists: bool?
+                                      },
+                                    ]
+                                  }?,
+                                  split_string: {
+                                    entries: Array[
+                                      {
+                                        source: ::String,
+                                        delimiter: ::String
+                                      },
+                                    ]
+                                  }?,
+                                  substitute_string: {
+                                    entries: Array[
+                                      {
+                                        source: ::String,
+                                        from: ::String,
+                                        to: ::String
+                                      },
+                                    ]
+                                  }?,
+                                  trim_string: {
+                                    with_keys: Array[::String]
+                                  }?,
+                                  type_converter: {
+                                    entries: Array[
+                                      {
+                                        key: ::String,
+                                        type: ("boolean" | "integer" | "double" | "string")
+                                      },
+                                    ]
+                                  }?,
+                                  upper_case_string: {
+                                    with_keys: Array[::String]
+                                  }?
+                                },
+                              ],
+                              log_event_messages: Array[::String]
+                            ) -> _TestTransformerResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TestTransformerResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#untag_log_group-instance_method
       def untag_log_group: (

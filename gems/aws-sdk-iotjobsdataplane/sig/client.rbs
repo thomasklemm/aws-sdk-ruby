@@ -99,6 +99,28 @@ module Aws
                                       ) -> _GetPendingJobExecutionsResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetPendingJobExecutionsResponseSuccess
 
+      interface _StartCommandExecutionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartCommandExecutionResponse]
+        def execution_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTJobsDataPlane/Client.html#start_command_execution-instance_method
+      def start_command_execution: (
+                                     target_arn: ::String,
+                                     command_arn: ::String,
+                                     ?parameters: Hash[::String, {
+                                         s: ::String?,
+                                         b: bool?,
+                                         i: ::Integer?,
+                                         l: ::Integer?,
+                                         d: ::Float?,
+                                         bin: ::String?,
+                                         ul: ::String?
+                                       }],
+                                     ?execution_timeout_seconds: ::Integer,
+                                     ?client_token: ::String
+                                   ) -> _StartCommandExecutionResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartCommandExecutionResponseSuccess
+
       interface _StartNextPendingJobExecutionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartNextPendingJobExecutionResponse]
         def execution: () -> Types::JobExecution

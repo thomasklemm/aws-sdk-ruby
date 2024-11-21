@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.9.0 (2024-11-21)
+------------------
+
+* Feature - Add methods that retrieve details about deployed configurations: ListConfigurations, GetConfiguration
+
 1.8.0 (2024-11-18)
 ------------------
 

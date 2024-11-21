@@ -95,11 +95,13 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::CancelQueryResponse]
         def query_id: () -> ::String
         def query_status: () -> ("QUEUED" | "RUNNING" | "FINISHED" | "FAILED" | "CANCELLED" | "TIMED_OUT")
+        def event_data_store_owner_account_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#cancel_query-instance_method
       def cancel_query: (
                           ?event_data_store: ::String,
-                          query_id: ::String
+                          query_id: ::String,
+                          ?event_data_store_owner_account_id: ::String
                         ) -> _CancelQueryResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelQueryResponseSuccess
 
@@ -129,6 +131,44 @@ module Aws
                             ]
                           ) -> _CreateChannelResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateChannelResponseSuccess
+
+      interface _CreateDashboardResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateDashboardResponse]
+        def dashboard_arn: () -> ::String
+        def name: () -> ::String
+        def type: () -> ("MANAGED" | "CUSTOM")
+        def widgets: () -> ::Array[Types::Widget]
+        def tags_list: () -> ::Array[Types::Tag]
+        def refresh_schedule: () -> Types::RefreshSchedule
+        def termination_protection_enabled: () -> bool
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#create_dashboard-instance_method
+      def create_dashboard: (
+                              name: ::String,
+                              ?refresh_schedule: {
+                                frequency: {
+                                  unit: ("HOURS" | "DAYS")?,
+                                  value: ::Integer?
+                                }?,
+                                status: ("ENABLED" | "DISABLED")?,
+                                time_of_day: ::String?
+                              },
+                              ?tags_list: Array[
+                                {
+                                  key: ::String,
+                                  value: ::String?
+                                },
+                              ],
+                              ?termination_protection_enabled: bool,
+                              ?widgets: Array[
+                                {
+                                  query_statement: ::String,
+                                  query_parameters: Array[::String]?,
+                                  view_properties: Hash[::String, ::String]
+                                },
+                              ]
+                            ) -> _CreateDashboardResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDashboardResponseSuccess
 
       interface _CreateEventDataStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateEventDataStoreResponse]
@@ -228,6 +268,15 @@ module Aws
                           ) -> _DeleteChannelResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteChannelResponseSuccess
 
+      interface _DeleteDashboardResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDashboardResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#delete_dashboard-instance_method
+      def delete_dashboard: (
+                              dashboard_id: ::String
+                            ) -> _DeleteDashboardResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteDashboardResponseSuccess
+
       interface _DeleteEventDataStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteEventDataStoreResponse]
       end
@@ -274,12 +323,15 @@ module Aws
         def delivery_s3_uri: () -> ::String
         def delivery_status: () -> ("SUCCESS" | "FAILED" | "FAILED_SIGNING_FILE" | "PENDING" | "RESOURCE_NOT_FOUND" | "ACCESS_DENIED" | "ACCESS_DENIED_SIGNING_FILE" | "CANCELLED" | "UNKNOWN")
         def prompt: () -> ::String
+        def event_data_store_owner_account_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#describe_query-instance_method
       def describe_query: (
                             ?event_data_store: ::String,
                             ?query_id: ::String,
-                            ?query_alias: ::String
+                            ?query_alias: ::String,
+                            ?refresh_id: ::String,
+                            ?event_data_store_owner_account_id: ::String
                           ) -> _DescribeQueryResponseSuccess
                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeQueryResponseSuccess
 
@@ -322,6 +374,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GenerateQueryResponse]
         def query_statement: () -> ::String
         def query_alias: () -> ::String
+        def event_data_store_owner_account_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#generate_query-instance_method
       def generate_query: (
@@ -344,6 +397,25 @@ module Aws
                          channel: ::String
                        ) -> _GetChannelResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetChannelResponseSuccess
+
+      interface _GetDashboardResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetDashboardResponse]
+        def dashboard_arn: () -> ::String
+        def type: () -> ("MANAGED" | "CUSTOM")
+        def status: () -> ("CREATING" | "CREATED" | "UPDATING" | "UPDATED" | "DELETING")
+        def widgets: () -> ::Array[Types::Widget]
+        def refresh_schedule: () -> Types::RefreshSchedule
+        def created_timestamp: () -> ::Time
+        def updated_timestamp: () -> ::Time
+        def last_refresh_id: () -> ::String
+        def last_refresh_failure_reason: () -> ::String
+        def termination_protection_enabled: () -> bool
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#get_dashboard-instance_method
+      def get_dashboard: (
+                           dashboard_id: ::String
+                         ) -> _GetDashboardResponseSuccess
+                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDashboardResponseSuccess
 
       interface _GetEventDataStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetEventDataStoreResponse]
@@ -426,7 +498,8 @@ module Aws
                                ?event_data_store: ::String,
                                query_id: ::String,
                                ?next_token: ::String,
-                               ?max_query_results: ::Integer
+                               ?max_query_results: ::Integer,
+                               ?event_data_store_owner_account_id: ::String
                              ) -> _GetQueryResultsResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryResultsResponseSuccess
 
@@ -434,6 +507,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GetResourcePolicyResponse]
         def resource_arn: () -> ::String
         def resource_policy: () -> ::String
+        def delegated_admin_resource_policy: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#get_resource_policy-instance_method
       def get_resource_policy: (
@@ -488,6 +562,20 @@ module Aws
                            ?next_token: ::String
                          ) -> _ListChannelsResponseSuccess
                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListChannelsResponseSuccess
+
+      interface _ListDashboardsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDashboardsResponse]
+        def dashboards: () -> ::Array[Types::DashboardDetail]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#list_dashboards-instance_method
+      def list_dashboards: (
+                             ?name_prefix: ::String,
+                             ?type: ("MANAGED" | "CUSTOM"),
+                             ?next_token: ::String,
+                             ?max_results: ::Integer
+                           ) -> _ListDashboardsResponseSuccess
+                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDashboardsResponseSuccess
 
       interface _ListEventDataStoresResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListEventDataStoresResponse]
@@ -691,6 +779,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::PutResourcePolicyResponse]
         def resource_arn: () -> ::String
         def resource_policy: () -> ::String
+        def delegated_admin_resource_policy: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#put_resource_policy-instance_method
       def put_resource_policy: (
@@ -744,6 +833,17 @@ module Aws
                                     ) -> _RestoreEventDataStoreResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RestoreEventDataStoreResponseSuccess
 
+      interface _StartDashboardRefreshResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartDashboardRefreshResponse]
+        def refresh_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#start_dashboard_refresh-instance_method
+      def start_dashboard_refresh: (
+                                     dashboard_id: ::String,
+                                     ?query_parameter_values: Hash[::String, ::String]
+                                   ) -> _StartDashboardRefreshResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartDashboardRefreshResponseSuccess
+
       interface _StartEventDataStoreIngestionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartEventDataStoreIngestionResponse]
       end
@@ -792,13 +892,15 @@ module Aws
       interface _StartQueryResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartQueryResponse]
         def query_id: () -> ::String
+        def event_data_store_owner_account_id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#start_query-instance_method
       def start_query: (
                          ?query_statement: ::String,
                          ?delivery_s3_uri: ::String,
                          ?query_alias: ::String,
-                         ?query_parameters: Array[::String]
+                         ?query_parameters: Array[::String],
+                         ?event_data_store_owner_account_id: ::String
                        ) -> _StartQueryResponseSuccess
                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartQueryResponseSuccess
 
@@ -857,6 +959,39 @@ module Aws
                             ?name: ::String
                           ) -> _UpdateChannelResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateChannelResponseSuccess
+
+      interface _UpdateDashboardResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDashboardResponse]
+        def dashboard_arn: () -> ::String
+        def name: () -> ::String
+        def type: () -> ("MANAGED" | "CUSTOM")
+        def widgets: () -> ::Array[Types::Widget]
+        def refresh_schedule: () -> Types::RefreshSchedule
+        def termination_protection_enabled: () -> bool
+        def created_timestamp: () -> ::Time
+        def updated_timestamp: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudTrail/Client.html#update_dashboard-instance_method
+      def update_dashboard: (
+                              dashboard_id: ::String,
+                              ?widgets: Array[
+                                {
+                                  query_statement: ::String,
+                                  query_parameters: Array[::String]?,
+                                  view_properties: Hash[::String, ::String]
+                                },
+                              ],
+                              ?refresh_schedule: {
+                                frequency: {
+                                  unit: ("HOURS" | "DAYS")?,
+                                  value: ::Integer?
+                                }?,
+                                status: ("ENABLED" | "DISABLED")?,
+                                time_of_day: ::String?
+                              },
+                              ?termination_protection_enabled: bool
+                            ) -> _UpdateDashboardResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDashboardResponseSuccess
 
       interface _UpdateEventDataStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateEventDataStoreResponse]

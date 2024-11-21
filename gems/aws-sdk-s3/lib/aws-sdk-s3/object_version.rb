@@ -257,6 +257,9 @@ module Aws::S3
     #     request_payer: "requester", # accepts requester
     #     bypass_governance_retention: false,
     #     expected_bucket_owner: "AccountId",
+    #     if_match: "IfMatch",
+    #     if_match_last_modified_time: Time.now,
+    #     if_match_size: 1,
     #   })
     # @param [Hash] options ({})
     # @option options [String] :mfa
@@ -296,6 +299,46 @@ module Aws::S3
     #   The account ID of the expected bucket owner. If the account ID that
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
+    # @option options [String] :if_match
+    #   The `If-Match` header field makes the request method conditional on
+    #   ETags. If the ETag value does not match, the operation returns a `412
+    #   Precondition Failed` error. If the ETag matches or if the object
+    #   doesn't exist, the operation will return a `204 Success (No Content)
+    #   response`.
+    #
+    #   For more information about conditional requests, see [RFC 7232][1].
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/https:/tools.ietf.org/html/rfc7232
+    # @option options [Time,DateTime,Date,Integer,String] :if_match_last_modified_time
+    #   If present, the object is deleted only if its modification times
+    #   matches the provided `Timestamp`. If the `Timestamp` values do not
+    #   match, the operation returns a `412 Precondition Failed` error. If the
+    #   `Timestamp` matches or if the object doesn’t exist, the operation
+    #   returns a `204 Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    # @option options [Integer] :if_match_size
+    #   If present, the object is deleted only if its size matches the
+    #   provided size in bytes. If the `Size` value does not match, the
+    #   operation returns a `412 Precondition Failed` error. If the `Size`
+    #   matches or if the object doesn’t exist, the operation returns a `204
+    #   Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
+    #   You can use the `If-Match`, `x-amz-if-match-last-modified-time` and
+    #   `x-amz-if-match-size` conditional headers in conjunction with
+    #   each-other or individually.
     # @return [Types::DeleteObjectOutput]
     def delete(options = {})
       options = options.merge(

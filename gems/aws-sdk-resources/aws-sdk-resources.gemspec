@@ -279,6 +279,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency('aws-sdk-networkfirewall', '~> 1')
   spec.add_dependency('aws-sdk-networkmanager', '~> 1')
   spec.add_dependency('aws-sdk-networkmonitor', '~> 1')
+  spec.add_dependency('aws-sdk-notifications', '~> 1')
+  spec.add_dependency('aws-sdk-notificationscontacts', '~> 1')
   spec.add_dependency('aws-sdk-oam', '~> 1')
   spec.add_dependency('aws-sdk-osis', '~> 1')
   spec.add_dependency('aws-sdk-omics', '~> 1')

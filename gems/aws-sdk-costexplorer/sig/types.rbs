@@ -8,6 +8,27 @@
 module Aws::CostExplorer
   module Types
 
+    class AnalysisDetails
+      attr_accessor savings_plans_purchase_analysis_details: Types::SavingsPlansPurchaseAnalysisDetails
+      SENSITIVE: []
+    end
+
+    class AnalysisNotFoundException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class AnalysisSummary
+      attr_accessor estimated_completion_time: ::String
+      attr_accessor analysis_completion_time: ::String
+      attr_accessor analysis_started_time: ::String
+      attr_accessor analysis_status: ("SUCCEEDED" | "PROCESSING" | "FAILED")
+      attr_accessor error_code: ("NO_USAGE_FOUND" | "INTERNAL_FAILURE" | "INVALID_SAVINGS_PLANS_TO_ADD" | "INVALID_SAVINGS_PLANS_TO_EXCLUDE" | "INVALID_ACCOUNT_ID")
+      attr_accessor analysis_id: ::String
+      attr_accessor commitment_purchase_analysis_configuration: Types::CommitmentPurchaseAnalysisConfiguration
+      SENSITIVE: []
+    end
+
     class Anomaly
       attr_accessor anomaly_id: ::String
       attr_accessor anomaly_start_date: ::String
@@ -65,6 +86,11 @@ module Aws::CostExplorer
 
     class BillExpirationException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class CommitmentPurchaseAnalysisConfiguration
+      attr_accessor savings_plans_purchase_analysis_configuration: Types::SavingsPlansPurchaseAnalysisConfiguration
       SENSITIVE: []
     end
 
@@ -479,6 +505,23 @@ module Aws::CostExplorer
       SENSITIVE: []
     end
 
+    class GetCommitmentPurchaseAnalysisRequest
+      attr_accessor analysis_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetCommitmentPurchaseAnalysisResponse
+      attr_accessor estimated_completion_time: ::String
+      attr_accessor analysis_completion_time: ::String
+      attr_accessor analysis_started_time: ::String
+      attr_accessor analysis_id: ::String
+      attr_accessor analysis_status: ("SUCCEEDED" | "PROCESSING" | "FAILED")
+      attr_accessor error_code: ("NO_USAGE_FOUND" | "INTERNAL_FAILURE" | "INVALID_SAVINGS_PLANS_TO_ADD" | "INVALID_SAVINGS_PLANS_TO_EXCLUDE" | "INVALID_ACCOUNT_ID")
+      attr_accessor analysis_details: Types::AnalysisDetails
+      attr_accessor commitment_purchase_analysis_configuration: Types::CommitmentPurchaseAnalysisConfiguration
+      SENSITIVE: []
+    end
+
     class GetCostAndUsageRequest
       attr_accessor time_period: Types::DateInterval
       attr_accessor granularity: ("DAILY" | "MONTHLY" | "HOURLY")
@@ -798,6 +841,20 @@ module Aws::CostExplorer
 
     class LimitExceededException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListCommitmentPurchaseAnalysesRequest
+      attr_accessor analysis_status: ("SUCCEEDED" | "PROCESSING" | "FAILED")
+      attr_accessor next_page_token: ::String
+      attr_accessor page_size: ::Integer
+      attr_accessor analysis_ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class ListCommitmentPurchaseAnalysesResponse
+      attr_accessor analysis_summary_list: ::Array[Types::AnalysisSummary]
+      attr_accessor next_page_token: ::String
       SENSITIVE: []
     end
 
@@ -1137,6 +1194,17 @@ module Aws::CostExplorer
       SENSITIVE: []
     end
 
+    class SavingsPlans
+      attr_accessor payment_option: ("NO_UPFRONT" | "PARTIAL_UPFRONT" | "ALL_UPFRONT" | "LIGHT_UTILIZATION" | "MEDIUM_UTILIZATION" | "HEAVY_UTILIZATION")
+      attr_accessor savings_plans_type: ("COMPUTE_SP" | "EC2_INSTANCE_SP" | "SAGEMAKER_SP")
+      attr_accessor region: ::String
+      attr_accessor instance_family: ::String
+      attr_accessor term_in_years: ("ONE_YEAR" | "THREE_YEARS")
+      attr_accessor savings_plans_commitment: ::Float
+      attr_accessor offering_id: ::String
+      SENSITIVE: []
+    end
+
     class SavingsPlansAmortizedCommitment
       attr_accessor amortized_recurring_commitment: ::String
       attr_accessor amortized_upfront_commitment: ::String
@@ -1163,6 +1231,42 @@ module Aws::CostExplorer
       attr_accessor region: ::String
       attr_accessor instance_family: ::String
       attr_accessor offering_id: ::String
+      SENSITIVE: []
+    end
+
+    class SavingsPlansPurchaseAnalysisConfiguration
+      attr_accessor account_scope: ("PAYER" | "LINKED")
+      attr_accessor account_id: ::String
+      attr_accessor analysis_type: ("MAX_SAVINGS" | "CUSTOM_COMMITMENT")
+      attr_accessor savings_plans_to_add: ::Array[Types::SavingsPlans]
+      attr_accessor savings_plans_to_exclude: ::Array[::String]
+      attr_accessor look_back_time_period: Types::DateInterval
+      SENSITIVE: []
+    end
+
+    class SavingsPlansPurchaseAnalysisDetails
+      attr_accessor currency_code: ::String
+      attr_accessor lookback_period_in_hours: ::String
+      attr_accessor current_average_coverage: ::String
+      attr_accessor current_average_hourly_on_demand_spend: ::String
+      attr_accessor current_maximum_hourly_on_demand_spend: ::String
+      attr_accessor current_minimum_hourly_on_demand_spend: ::String
+      attr_accessor current_on_demand_spend: ::String
+      attr_accessor existing_hourly_commitment: ::String
+      attr_accessor hourly_commitment_to_purchase: ::String
+      attr_accessor estimated_average_coverage: ::String
+      attr_accessor estimated_average_utilization: ::String
+      attr_accessor estimated_monthly_savings_amount: ::String
+      attr_accessor estimated_on_demand_cost: ::String
+      attr_accessor estimated_on_demand_cost_with_current_commitment: ::String
+      attr_accessor estimated_roi: ::String
+      attr_accessor estimated_savings_amount: ::String
+      attr_accessor estimated_savings_percentage: ::String
+      attr_accessor estimated_commitment_cost: ::String
+      attr_accessor latest_usage_timestamp: ::String
+      attr_accessor upfront_cost: ::String
+      attr_accessor additional_metadata: ::String
+      attr_accessor metrics_over_lookback_period: ::Array[Types::RecommendationDetailHourlyMetrics]
       SENSITIVE: []
     end
 
@@ -1271,6 +1375,18 @@ module Aws::CostExplorer
     class SortDefinition
       attr_accessor key: ::String
       attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      SENSITIVE: []
+    end
+
+    class StartCommitmentPurchaseAnalysisRequest
+      attr_accessor commitment_purchase_analysis_configuration: Types::CommitmentPurchaseAnalysisConfiguration
+      SENSITIVE: []
+    end
+
+    class StartCommitmentPurchaseAnalysisResponse
+      attr_accessor analysis_id: ::String
+      attr_accessor analysis_started_time: ::String
+      attr_accessor estimated_completion_time: ::String
       SENSITIVE: []
     end
 

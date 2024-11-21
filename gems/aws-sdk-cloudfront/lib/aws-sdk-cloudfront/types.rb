@@ -9060,13 +9060,17 @@ module Aws::CloudFront
       include Aws::Structure
     end
 
-    # An origin group includes two origins (a primary origin and a second
+    # An origin group includes two origins (a primary origin and a secondary
     # origin to failover to) and a failover criteria that you specify. You
     # create an origin group to support origin failover in CloudFront. When
     # you create or update a distribution, you can specify the origin group
     # instead of a single origin, and CloudFront will failover from the
-    # primary origin to the second origin under the failover conditions that
-    # you've chosen.
+    # primary origin to the secondary origin under the failover conditions
+    # that you've chosen.
+    #
+    # Optionally, you can choose selection criteria for your origin group to
+    # specify how your origins are selected when your distribution routes
+    # viewer requests.
     #
     # @!attribute [rw] id
     #   The origin group's ID.
@@ -9082,12 +9086,23 @@ module Aws::CloudFront
     #   origin group.
     #   @return [Types::OriginGroupMembers]
     #
+    # @!attribute [rw] selection_criteria
+    #   The selection criteria for the origin group. For more information,
+    #   see [Create an origin group][1] in the *Amazon CloudFront Developer
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/high_availability_origin_failover.html#concept_origin_groups.creating
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudfront-2020-05-31/OriginGroup AWS API Documentation
     #
     class OriginGroup < Struct.new(
       :id,
       :failover_criteria,
-      :members)
+      :members,
+      :selection_criteria)
       SENSITIVE = []
       include Aws::Structure
     end

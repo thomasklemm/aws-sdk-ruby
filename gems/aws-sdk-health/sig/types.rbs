@@ -24,6 +24,7 @@ module Aws::Health
       attr_accessor last_updated_time: ::Time
       attr_accessor status_code: ("IMPAIRED" | "UNIMPAIRED" | "UNKNOWN" | "PENDING" | "RESOLVED")
       attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor entity_metadata: ::Hash[::String, ::String]
       SENSITIVE: []
     end
 

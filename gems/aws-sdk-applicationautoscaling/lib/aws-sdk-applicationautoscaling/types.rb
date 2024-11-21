@@ -29,6 +29,28 @@ module Aws::ApplicationAutoScaling
       include Aws::Structure
     end
 
+    # A `GetPredictiveScalingForecast` call returns the capacity forecast
+    # for a predictive scaling policy. This structure includes the data
+    # points for that capacity forecast, along with the timestamps of those
+    # data points.
+    #
+    # @!attribute [rw] timestamps
+    #   The timestamps for the data points, in UTC format.
+    #   @return [Array<Time>]
+    #
+    # @!attribute [rw] values
+    #   The values of the data points.
+    #   @return [Array<Float>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/CapacityForecast AWS API Documentation
+    #
+    class CapacityForecast < Struct.new(
+      :timestamps,
+      :values)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Concurrent updates caused an exception, for example, if you request an
     # update to an Application Auto Scaling resource that already has a
     # pending update.
@@ -1588,6 +1610,71 @@ module Aws::ApplicationAutoScaling
       include Aws::Structure
     end
 
+    # @!attribute [rw] service_namespace
+    #   The namespace of the Amazon Web Services service that provides the
+    #   resource. For a resource provided by your own application or
+    #   service, use `custom-resource` instead.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_id
+    #   The identifier of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] scalable_dimension
+    #   The scalable dimension.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy_name
+    #   The name of the policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The inclusive start time of the time range for the forecast data to
+    #   get. At most, the date and time can be one year before the current
+    #   date and time
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The exclusive end time of the time range for the forecast data to
+    #   get. The maximum time duration between the start and end time is 30
+    #   days.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/GetPredictiveScalingForecastRequest AWS API Documentation
+    #
+    class GetPredictiveScalingForecastRequest < Struct.new(
+      :service_namespace,
+      :resource_id,
+      :scalable_dimension,
+      :policy_name,
+      :start_time,
+      :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] load_forecast
+    #   The load forecast.
+    #   @return [Array<Types::LoadForecast>]
+    #
+    # @!attribute [rw] capacity_forecast
+    #   The capacity forecast.
+    #   @return [Types::CapacityForecast]
+    #
+    # @!attribute [rw] update_time
+    #   The time the forecast was made.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/GetPredictiveScalingForecastResponse AWS API Documentation
+    #
+    class GetPredictiveScalingForecastResponse < Struct.new(
+      :load_forecast,
+      :capacity_forecast,
+      :update_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The service encountered an internal error.
     #
     # @!attribute [rw] message
@@ -1657,6 +1744,33 @@ module Aws::ApplicationAutoScaling
     #
     class ListTagsForResourceResponse < Struct.new(
       :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A `GetPredictiveScalingForecast` call returns the load forecast for a
+    # predictive scaling policy. This structure includes the data points for
+    # that load forecast, along with the timestamps of those data points and
+    # the metric specification.
+    #
+    # @!attribute [rw] timestamps
+    #   The timestamps for the data points, in UTC format.
+    #   @return [Array<Time>]
+    #
+    # @!attribute [rw] values
+    #   The values of the data points.
+    #   @return [Array<Float>]
+    #
+    # @!attribute [rw] metric_specification
+    #   The metric specification for the load forecast.
+    #   @return [Types::PredictiveScalingMetricSpecification]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/LoadForecast AWS API Documentation
+    #
+    class LoadForecast < Struct.new(
+      :timestamps,
+      :values,
+      :metric_specification)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1754,7 +1868,7 @@ module Aws::ApplicationAutoScaling
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/autoscaling/application/userguide/monitor-cloudwatch-metrics.html#predefined-metrics
+    # [1]: https://docs.aws.amazon.com/autoscaling/application/userguide/monitoring-cloudwatch.html#predefined-metrics
     #
     # @!attribute [rw] predefined_metric_type
     #   The metric type. The `ALBRequestCountPerTarget` metric type applies
@@ -1795,6 +1909,354 @@ module Aws::ApplicationAutoScaling
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredefinedMetricSpecification AWS API Documentation
     #
     class PredefinedMetricSpecification < Struct.new(
+      :predefined_metric_type,
+      :resource_label)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a CloudWatch metric of your choosing for a predictive
+    # scaling policy.
+    #
+    # @!attribute [rw] metric_data_queries
+    #   One or more metric data queries to provide data points for a metric
+    #   specification.
+    #   @return [Array<Types::PredictiveScalingMetricDataQuery>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingCustomizedMetricSpecification AWS API Documentation
+    #
+    class PredictiveScalingCustomizedMetricSpecification < Struct.new(
+      :metric_data_queries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the scaling metric.
+    #
+    # @!attribute [rw] dimensions
+    #   Describes the dimensions of the metric.
+    #   @return [Array<Types::PredictiveScalingMetricDimension>]
+    #
+    # @!attribute [rw] metric_name
+    #   The name of the metric.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace of the metric.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingMetric AWS API Documentation
+    #
+    class PredictiveScalingMetric < Struct.new(
+      :dimensions,
+      :metric_name,
+      :namespace)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The metric data to return. Also defines whether this call is returning
+    # data for one metric only, or whether it is performing a math
+    # expression on the values of returned metric statistics to create a new
+    # time series. A time series is a series of data points, each of which
+    # is associated with a timestamp.
+    #
+    # @!attribute [rw] id
+    #   A short name that identifies the object's results in the response.
+    #   This name must be unique among all `MetricDataQuery` objects
+    #   specified for a single scaling policy. If you are performing math
+    #   expressions on this set of data, this name represents that data and
+    #   can serve as a variable in the mathematical expression. The valid
+    #   characters are letters, numbers, and underscores. The first
+    #   character must be a lowercase letter.
+    #   @return [String]
+    #
+    # @!attribute [rw] expression
+    #   The math expression to perform on the returned data, if this object
+    #   is performing a math expression. This expression can use the `Id` of
+    #   the other metrics to refer to those metrics, and can also use the
+    #   `Id` of other expressions to use the result of those expressions.
+    #
+    #   Conditional: Within each `MetricDataQuery` object, you must specify
+    #   either `Expression` or `MetricStat`, but not both.
+    #   @return [String]
+    #
+    # @!attribute [rw] metric_stat
+    #   Information about the metric data to return.
+    #
+    #   Conditional: Within each `MetricDataQuery` object, you must specify
+    #   either `Expression` or `MetricStat`, but not both.
+    #   @return [Types::PredictiveScalingMetricStat]
+    #
+    # @!attribute [rw] label
+    #   A human-readable label for this metric or expression. This is
+    #   especially useful if this is a math expression, so that you know
+    #   what the value represents.
+    #   @return [String]
+    #
+    # @!attribute [rw] return_data
+    #   Indicates whether to return the timestamps and raw data values of
+    #   this metric.
+    #
+    #   If you use any math expressions, specify `true` for this value for
+    #   only the final math expression that the metric specification is
+    #   based on. You must specify `false` for `ReturnData` for all the
+    #   other metrics and expressions used in the metric specification.
+    #
+    #   If you are only retrieving metrics and not performing any math
+    #   expressions, do not specify anything for `ReturnData`. This sets it
+    #   to its default (`true`).
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingMetricDataQuery AWS API Documentation
+    #
+    class PredictiveScalingMetricDataQuery < Struct.new(
+      :id,
+      :expression,
+      :metric_stat,
+      :label,
+      :return_data)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the dimension of a metric.
+    #
+    # @!attribute [rw] name
+    #   The name of the dimension.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the dimension.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingMetricDimension AWS API Documentation
+    #
+    class PredictiveScalingMetricDimension < Struct.new(
+      :name,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure specifies the metrics and target utilization settings
+    # for a predictive scaling policy.
+    #
+    # You must specify either a metric pair, or a load metric and a scaling
+    # metric individually. Specifying a metric pair instead of individual
+    # metrics provides a simpler way to configure metrics for a scaling
+    # policy. You choose the metric pair, and the policy automatically knows
+    # the correct sum and average statistics to use for the load metric and
+    # the scaling metric.
+    #
+    # @!attribute [rw] target_value
+    #   Specifies the target utilization.
+    #   @return [Float]
+    #
+    # @!attribute [rw] predefined_metric_pair_specification
+    #   The predefined metric pair specification that determines the
+    #   appropriate scaling metric and load metric to use.
+    #   @return [Types::PredictiveScalingPredefinedMetricPairSpecification]
+    #
+    # @!attribute [rw] predefined_scaling_metric_specification
+    #   The predefined scaling metric specification.
+    #   @return [Types::PredictiveScalingPredefinedScalingMetricSpecification]
+    #
+    # @!attribute [rw] predefined_load_metric_specification
+    #   The predefined load metric specification.
+    #   @return [Types::PredictiveScalingPredefinedLoadMetricSpecification]
+    #
+    # @!attribute [rw] customized_scaling_metric_specification
+    #   The customized scaling metric specification.
+    #   @return [Types::PredictiveScalingCustomizedMetricSpecification]
+    #
+    # @!attribute [rw] customized_load_metric_specification
+    #   The customized load metric specification.
+    #   @return [Types::PredictiveScalingCustomizedMetricSpecification]
+    #
+    # @!attribute [rw] customized_capacity_metric_specification
+    #   The customized capacity metric specification.
+    #   @return [Types::PredictiveScalingCustomizedMetricSpecification]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingMetricSpecification AWS API Documentation
+    #
+    class PredictiveScalingMetricSpecification < Struct.new(
+      :target_value,
+      :predefined_metric_pair_specification,
+      :predefined_scaling_metric_specification,
+      :predefined_load_metric_specification,
+      :customized_scaling_metric_specification,
+      :customized_load_metric_specification,
+      :customized_capacity_metric_specification)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure defines the CloudWatch metric to return, along with the
+    # statistic and unit.
+    #
+    # @!attribute [rw] metric
+    #   The CloudWatch metric to return, including the metric name,
+    #   namespace, and dimensions. To get the exact metric name, namespace,
+    #   and dimensions, inspect the [Metric][1] object that is returned by a
+    #   call to [ListMetrics][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_Metric.html
+    #   [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_ListMetrics.html
+    #   @return [Types::PredictiveScalingMetric]
+    #
+    # @!attribute [rw] stat
+    #   The statistic to return. It can include any CloudWatch statistic or
+    #   extended statistic. For a list of valid values, see the table in
+    #   [Statistics][1] in the *Amazon CloudWatch User Guide*.
+    #
+    #   The most commonly used metrics for predictive scaling are `Average`
+    #   and `Sum`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html#Statistic
+    #   @return [String]
+    #
+    # @!attribute [rw] unit
+    #   The unit to use for the returned data points. For a complete list of
+    #   the units that CloudWatch supports, see the [MetricDatum][1] data
+    #   type in the *Amazon CloudWatch API Reference*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingMetricStat AWS API Documentation
+    #
+    class PredictiveScalingMetricStat < Struct.new(
+      :metric,
+      :stat,
+      :unit)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a predictive scaling policy configuration.
+    #
+    # @!attribute [rw] metric_specifications
+    #   This structure includes the metrics and target utilization to use
+    #   for predictive scaling.
+    #
+    #   This is an array, but we currently only support a single metric
+    #   specification. That is, you can specify a target value and a single
+    #   metric pair, or a target value and one scaling metric and one load
+    #   metric.
+    #   @return [Array<Types::PredictiveScalingMetricSpecification>]
+    #
+    # @!attribute [rw] mode
+    #   The predictive scaling mode. Defaults to `ForecastOnly` if not
+    #   specified.
+    #   @return [String]
+    #
+    # @!attribute [rw] scheduling_buffer_time
+    #   The amount of time, in seconds, that the start time can be advanced.
+    #
+    #   The value must be less than the forecast interval duration of 3600
+    #   seconds (60 minutes). Defaults to 300 seconds if not specified.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] max_capacity_breach_behavior
+    #   Defines the behavior that should be applied if the forecast capacity
+    #   approaches or exceeds the maximum capacity. Defaults to
+    #   `HonorMaxCapacity` if not specified.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_capacity_buffer
+    #   The size of the capacity buffer to use when the forecast capacity is
+    #   close to or exceeds the maximum capacity. The value is specified as
+    #   a percentage relative to the forecast capacity. For example, if the
+    #   buffer is 10, this means a 10 percent buffer, such that if the
+    #   forecast capacity is 50, and the maximum capacity is 40, then the
+    #   effective maximum capacity is 55.
+    #
+    #   Required if the `MaxCapacityBreachBehavior` property is set to
+    #   `IncreaseMaxCapacity`, and cannot be used otherwise.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingPolicyConfiguration AWS API Documentation
+    #
+    class PredictiveScalingPolicyConfiguration < Struct.new(
+      :metric_specifications,
+      :mode,
+      :scheduling_buffer_time,
+      :max_capacity_breach_behavior,
+      :max_capacity_buffer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a load metric for a predictive scaling policy.
+    #
+    # When returned in the output of `DescribePolicies`, it indicates that a
+    # predictive scaling policy uses individually specified load and scaling
+    # metrics instead of a metric pair.
+    #
+    # @!attribute [rw] predefined_metric_type
+    #   The metric type.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_label
+    #   A label that uniquely identifies a target group.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingPredefinedLoadMetricSpecification AWS API Documentation
+    #
+    class PredictiveScalingPredefinedLoadMetricSpecification < Struct.new(
+      :predefined_metric_type,
+      :resource_label)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a metric pair for a predictive scaling policy.
+    #
+    # @!attribute [rw] predefined_metric_type
+    #   Indicates which metrics to use. There are two different types of
+    #   metrics for each metric type: one is a load metric and one is a
+    #   scaling metric.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_label
+    #   A label that uniquely identifies a specific target group from which
+    #   to determine the total and average request count.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingPredefinedMetricPairSpecification AWS API Documentation
+    #
+    class PredictiveScalingPredefinedMetricPairSpecification < Struct.new(
+      :predefined_metric_type,
+      :resource_label)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a scaling metric for a predictive scaling policy.
+    #
+    # When returned in the output of `DescribePolicies`, it indicates that a
+    # predictive scaling policy uses individually specified load and scaling
+    # metrics instead of a metric pair.
+    #
+    # @!attribute [rw] predefined_metric_type
+    #   The metric type.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_label
+    #   A label that uniquely identifies a specific target group from which
+    #   to determine the average request count.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PredictiveScalingPredefinedScalingMetricSpecification AWS API Documentation
+    #
+    class PredictiveScalingPredefinedScalingMetricSpecification < Struct.new(
       :predefined_metric_type,
       :resource_label)
       SENSITIVE = []
@@ -2013,6 +2475,10 @@ module Aws::ApplicationAutoScaling
     #   policy type is `TargetTrackingScaling`.
     #   @return [Types::TargetTrackingScalingPolicyConfiguration]
     #
+    # @!attribute [rw] predictive_scaling_policy_configuration
+    #   The configuration of the predictive scaling policy.
+    #   @return [Types::PredictiveScalingPolicyConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/application-autoscaling-2016-02-06/PutScalingPolicyRequest AWS API Documentation
     #
     class PutScalingPolicyRequest < Struct.new(
@@ -2022,7 +2488,8 @@ module Aws::ApplicationAutoScaling
       :scalable_dimension,
       :policy_type,
       :step_scaling_policy_configuration,
-      :target_tracking_scaling_policy_configuration)
+      :target_tracking_scaling_policy_configuration,
+      :predictive_scaling_policy_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2821,6 +3288,10 @@ module Aws::ApplicationAutoScaling
     #   The maximum value to scale to in response to a scale-out activity.
     #   @return [Integer]
     #
+    # @!attribute [rw] predicted_capacity
+    #   The predicted capacity of the scalable target.
+    #   @return [Integer]
+    #
     # @!attribute [rw] role_arn
     #   The ARN of an IAM role that allows Application Auto Scaling to
     #   modify the scalable target on your behalf.
@@ -2847,6 +3318,7 @@ module Aws::ApplicationAutoScaling
       :scalable_dimension,
       :min_capacity,
       :max_capacity,
+      :predicted_capacity,
       :role_arn,
       :creation_time,
       :suspended_state,
@@ -3328,6 +3800,10 @@ module Aws::ApplicationAutoScaling
     #   A target tracking scaling policy.
     #   @return [Types::TargetTrackingScalingPolicyConfiguration]
     #
+    # @!attribute [rw] predictive_scaling_policy_configuration
+    #   The predictive scaling policy configuration.
+    #   @return [Types::PredictiveScalingPolicyConfiguration]
+    #
     # @!attribute [rw] alarms
     #   The CloudWatch alarms associated with the scaling policy.
     #   @return [Array<Types::Alarm>]
@@ -3347,6 +3823,7 @@ module Aws::ApplicationAutoScaling
       :policy_type,
       :step_scaling_policy_configuration,
       :target_tracking_scaling_policy_configuration,
+      :predictive_scaling_policy_configuration,
       :alarms,
       :creation_time)
       SENSITIVE = []

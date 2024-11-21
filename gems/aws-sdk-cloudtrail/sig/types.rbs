@@ -52,12 +52,14 @@ module Aws::CloudTrail
     class CancelQueryRequest
       attr_accessor event_data_store: ::String
       attr_accessor query_id: ::String
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
     class CancelQueryResponse
       attr_accessor query_id: ::String
       attr_accessor query_status: ("QUEUED" | "RUNNING" | "FINISHED" | "FAILED" | "CANCELLED" | "TIMED_OUT")
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
@@ -117,6 +119,26 @@ module Aws::CloudTrail
       attr_accessor source: ::String
       attr_accessor destinations: ::Array[Types::Destination]
       attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class CreateDashboardRequest
+      attr_accessor name: ::String
+      attr_accessor refresh_schedule: Types::RefreshSchedule
+      attr_accessor tags_list: ::Array[Types::Tag]
+      attr_accessor termination_protection_enabled: bool
+      attr_accessor widgets: ::Array[Types::RequestWidget]
+      SENSITIVE: []
+    end
+
+    class CreateDashboardResponse
+      attr_accessor dashboard_arn: ::String
+      attr_accessor name: ::String
+      attr_accessor type: ("MANAGED" | "CUSTOM")
+      attr_accessor widgets: ::Array[Types::Widget]
+      attr_accessor tags_list: ::Array[Types::Tag]
+      attr_accessor refresh_schedule: Types::RefreshSchedule
+      attr_accessor termination_protection_enabled: bool
       SENSITIVE: []
     end
 
@@ -184,6 +206,12 @@ module Aws::CloudTrail
       SENSITIVE: []
     end
 
+    class DashboardDetail
+      attr_accessor dashboard_arn: ::String
+      attr_accessor type: ("MANAGED" | "CUSTOM")
+      SENSITIVE: []
+    end
+
     class DataResource
       attr_accessor type: ::String
       attr_accessor values: ::Array[::String]
@@ -199,6 +227,14 @@ module Aws::CloudTrail
     end
 
     class DeleteChannelResponse < Aws::EmptyStructure
+    end
+
+    class DeleteDashboardRequest
+      attr_accessor dashboard_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDashboardResponse < Aws::EmptyStructure
     end
 
     class DeleteEventDataStoreRequest
@@ -237,6 +273,8 @@ module Aws::CloudTrail
       attr_accessor event_data_store: ::String
       attr_accessor query_id: ::String
       attr_accessor query_alias: ::String
+      attr_accessor refresh_id: ::String
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
@@ -249,6 +287,7 @@ module Aws::CloudTrail
       attr_accessor delivery_s3_uri: ::String
       attr_accessor delivery_status: ("SUCCESS" | "FAILED" | "FAILED_SIGNING_FILE" | "PENDING" | "RESOURCE_NOT_FOUND" | "ACCESS_DENIED" | "ACCESS_DENIED_SIGNING_FILE" | "CANCELLED" | "UNKNOWN")
       attr_accessor prompt: ::String
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
@@ -358,6 +397,7 @@ module Aws::CloudTrail
     class GenerateQueryResponse
       attr_accessor query_statement: ::String
       attr_accessor query_alias: ::String
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
@@ -376,6 +416,25 @@ module Aws::CloudTrail
       attr_accessor source_config: Types::SourceConfig
       attr_accessor destinations: ::Array[Types::Destination]
       attr_accessor ingestion_status: Types::IngestionStatus
+      SENSITIVE: []
+    end
+
+    class GetDashboardRequest
+      attr_accessor dashboard_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetDashboardResponse
+      attr_accessor dashboard_arn: ::String
+      attr_accessor type: ("MANAGED" | "CUSTOM")
+      attr_accessor status: ("CREATING" | "CREATED" | "UPDATING" | "UPDATED" | "DELETING")
+      attr_accessor widgets: ::Array[Types::Widget]
+      attr_accessor refresh_schedule: Types::RefreshSchedule
+      attr_accessor created_timestamp: ::Time
+      attr_accessor updated_timestamp: ::Time
+      attr_accessor last_refresh_id: ::String
+      attr_accessor last_refresh_failure_reason: ::String
+      attr_accessor termination_protection_enabled: bool
       SENSITIVE: []
     end
 
@@ -452,6 +511,7 @@ module Aws::CloudTrail
       attr_accessor query_id: ::String
       attr_accessor next_token: ::String
       attr_accessor max_query_results: ::Integer
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
@@ -472,6 +532,7 @@ module Aws::CloudTrail
     class GetResourcePolicyResponse
       attr_accessor resource_arn: ::String
       attr_accessor resource_policy: ::String
+      attr_accessor delegated_admin_resource_policy: ::String
       SENSITIVE: []
     end
 
@@ -676,6 +737,20 @@ module Aws::CloudTrail
 
     class ListChannelsResponse
       attr_accessor channels: ::Array[Types::Channel]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListDashboardsRequest
+      attr_accessor name_prefix: ::String
+      attr_accessor type: ("MANAGED" | "CUSTOM")
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListDashboardsResponse
+      attr_accessor dashboards: ::Array[Types::DashboardDetail]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -895,6 +970,7 @@ module Aws::CloudTrail
     class PutResourcePolicyResponse
       attr_accessor resource_arn: ::String
       attr_accessor resource_policy: ::String
+      attr_accessor delegated_admin_resource_policy: ::String
       SENSITIVE: []
     end
 
@@ -924,6 +1000,19 @@ module Aws::CloudTrail
       SENSITIVE: []
     end
 
+    class RefreshSchedule
+      attr_accessor frequency: Types::RefreshScheduleFrequency
+      attr_accessor status: ("ENABLED" | "DISABLED")
+      attr_accessor time_of_day: ::String
+      SENSITIVE: []
+    end
+
+    class RefreshScheduleFrequency
+      attr_accessor unit: ("HOURS" | "DAYS")
+      attr_accessor value: ::Integer
+      SENSITIVE: []
+    end
+
     class RegisterOrganizationDelegatedAdminRequest
       attr_accessor member_account_id: ::String
       SENSITIVE: []
@@ -939,6 +1028,13 @@ module Aws::CloudTrail
     end
 
     class RemoveTagsResponse < Aws::EmptyStructure
+    end
+
+    class RequestWidget
+      attr_accessor query_statement: ::String
+      attr_accessor query_parameters: ::Array[::String]
+      attr_accessor view_properties: ::Hash[::String, ::String]
+      SENSITIVE: []
     end
 
     class Resource
@@ -999,9 +1095,23 @@ module Aws::CloudTrail
       SENSITIVE: []
     end
 
+    class ServiceQuotaExceededException < Aws::EmptyStructure
+    end
+
     class SourceConfig
       attr_accessor apply_to_all_regions: bool
       attr_accessor advanced_event_selectors: ::Array[Types::AdvancedEventSelector]
+      SENSITIVE: []
+    end
+
+    class StartDashboardRefreshRequest
+      attr_accessor dashboard_id: ::String
+      attr_accessor query_parameter_values: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class StartDashboardRefreshResponse
+      attr_accessor refresh_id: ::String
       SENSITIVE: []
     end
 
@@ -1047,11 +1157,13 @@ module Aws::CloudTrail
       attr_accessor delivery_s3_uri: ::String
       attr_accessor query_alias: ::String
       attr_accessor query_parameters: ::Array[::String]
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
     class StartQueryResponse
       attr_accessor query_id: ::String
+      attr_accessor event_data_store_owner_account_id: ::String
       SENSITIVE: []
     end
 
@@ -1155,6 +1267,26 @@ module Aws::CloudTrail
       SENSITIVE: []
     end
 
+    class UpdateDashboardRequest
+      attr_accessor dashboard_id: ::String
+      attr_accessor widgets: ::Array[Types::RequestWidget]
+      attr_accessor refresh_schedule: Types::RefreshSchedule
+      attr_accessor termination_protection_enabled: bool
+      SENSITIVE: []
+    end
+
+    class UpdateDashboardResponse
+      attr_accessor dashboard_arn: ::String
+      attr_accessor name: ::String
+      attr_accessor type: ("MANAGED" | "CUSTOM")
+      attr_accessor widgets: ::Array[Types::Widget]
+      attr_accessor refresh_schedule: Types::RefreshSchedule
+      attr_accessor termination_protection_enabled: bool
+      attr_accessor created_timestamp: ::Time
+      attr_accessor updated_timestamp: ::Time
+      SENSITIVE: []
+    end
+
     class UpdateEventDataStoreRequest
       attr_accessor event_data_store: ::String
       attr_accessor name: ::String
@@ -1215,6 +1347,14 @@ module Aws::CloudTrail
       attr_accessor cloud_watch_logs_role_arn: ::String
       attr_accessor kms_key_id: ::String
       attr_accessor is_organization_trail: bool
+      SENSITIVE: []
+    end
+
+    class Widget
+      attr_accessor query_alias: ::String
+      attr_accessor query_statement: ::String
+      attr_accessor query_parameters: ::Array[::String]
+      attr_accessor view_properties: ::Hash[::String, ::String]
       SENSITIVE: []
     end
   end

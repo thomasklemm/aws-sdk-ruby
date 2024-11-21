@@ -313,6 +313,16 @@ module Aws::SSM
       SENSITIVE: []
     end
 
+    class AutomationExecutionInputs
+      attr_accessor parameters: ::Hash[::String, ::Array[::String]]
+      attr_accessor target_parameter_name: ::String
+      attr_accessor targets: ::Array[Types::Target]
+      attr_accessor target_maps: ::Array[::Hash[::String, ::Array[::String]]]
+      attr_accessor target_locations: ::Array[Types::TargetLocation]
+      attr_accessor target_locations_url: ::String
+      SENSITIVE: []
+    end
+
     class AutomationExecutionLimitExceededException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -355,6 +365,14 @@ module Aws::SSM
 
     class AutomationExecutionNotFoundException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class AutomationExecutionPreview
+      attr_accessor step_previews: ::Hash[("Mutating" | "NonMutating" | "Undetermined"), ::Integer]
+      attr_accessor regions: ::Array[::String]
+      attr_accessor target_previews: ::Array[Types::TargetPreview]
+      attr_accessor total_accounts: ::Integer
       SENSITIVE: []
     end
 
@@ -1537,6 +1555,28 @@ module Aws::SSM
       SENSITIVE: []
     end
 
+    class ExecutionInputs
+      attr_accessor automation: Types::AutomationExecutionInputs
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Automation < ExecutionInputs
+      end
+      class Unknown < ExecutionInputs
+      end
+    end
+
+    class ExecutionPreview
+      attr_accessor automation: Types::AutomationExecutionPreview
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Automation < ExecutionPreview
+      end
+      class Unknown < ExecutionPreview
+      end
+    end
+
     class FailedCreateAssociation
       attr_accessor entry: Types::CreateAssociationBatchRequestEntry
       attr_accessor message: ::String
@@ -1666,6 +1706,20 @@ module Aws::SSM
       attr_accessor requires: ::Array[Types::DocumentRequires]
       attr_accessor attachments_content: ::Array[Types::AttachmentContent]
       attr_accessor review_status: ("APPROVED" | "NOT_REVIEWED" | "PENDING" | "REJECTED")
+      SENSITIVE: []
+    end
+
+    class GetExecutionPreviewRequest
+      attr_accessor execution_preview_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetExecutionPreviewResponse
+      attr_accessor execution_preview_id: ::String
+      attr_accessor ended_at: ::Time
+      attr_accessor status: ("Pending" | "InProgress" | "Success" | "Failed")
+      attr_accessor status_message: ::String
+      attr_accessor execution_preview: Types::ExecutionPreview
       SENSITIVE: []
     end
 
@@ -2031,6 +2085,20 @@ module Aws::SSM
       attr_accessor output_url: Types::InstanceAssociationOutputUrl
       attr_accessor association_name: ::String
       SENSITIVE: []
+    end
+
+    class InstanceInfo
+      attr_accessor agent_type: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor computer_name: ::String
+      attr_accessor instance_status: ::String
+      attr_accessor ip_address: ::String
+      attr_accessor managed_status: ("All" | "Managed" | "Unmanaged")
+      attr_accessor platform_type: ("Windows" | "Linux" | "MacOS")
+      attr_accessor platform_name: ::String
+      attr_accessor platform_version: ::String
+      attr_accessor resource_type: ("ManagedInstance" | "EC2Instance")
+      SENSITIVE: [:ip_address]
     end
 
     class InstanceInformation
@@ -2649,6 +2717,35 @@ module Aws::SSM
       SENSITIVE: []
     end
 
+    class ListNodesRequest
+      attr_accessor sync_name: ::String
+      attr_accessor filters: ::Array[Types::NodeFilter]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListNodesResult
+      attr_accessor nodes: ::Array[Types::Node]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListNodesSummaryRequest
+      attr_accessor sync_name: ::String
+      attr_accessor filters: ::Array[Types::NodeFilter]
+      attr_accessor aggregators: ::Array[Types::NodeAggregator]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListNodesSummaryResult
+      attr_accessor summary: ::Array[::Hash[::String, ::String]]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListOpsItemEventsRequest
       attr_accessor filters: ::Array[Types::OpsItemEventFilter]
       attr_accessor max_results: ::Integer
@@ -2903,6 +3000,48 @@ module Aws::SSM
     end
 
     class ModifyDocumentPermissionResponse < Aws::EmptyStructure
+    end
+
+    class Node
+      attr_accessor capture_time: ::Time
+      attr_accessor id: ::String
+      attr_accessor owner: Types::NodeOwnerInfo
+      attr_accessor region: ::String
+      attr_accessor node_type: Types::NodeType
+      SENSITIVE: []
+    end
+
+    class NodeAggregator
+      attr_accessor aggregator_type: ("Count")
+      attr_accessor type_name: ("Instance")
+      attr_accessor attribute_name: ("AgentVersion" | "PlatformName" | "PlatformType" | "PlatformVersion" | "Region" | "ResourceType")
+      attr_accessor aggregators: ::Array[Types::NodeAggregator]
+      SENSITIVE: []
+    end
+
+    class NodeFilter
+      attr_accessor key: ("AgentType" | "AgentVersion" | "ComputerName" | "InstanceId" | "InstanceStatus" | "IpAddress" | "ManagedStatus" | "PlatformName" | "PlatformType" | "PlatformVersion" | "ResourceType" | "OrganizationalUnitId" | "OrganizationalUnitPath" | "Region" | "AccountId")
+      attr_accessor values: ::Array[::String]
+      attr_accessor type: ("Equal" | "NotEqual" | "BeginWith")
+      SENSITIVE: []
+    end
+
+    class NodeOwnerInfo
+      attr_accessor account_id: ::String
+      attr_accessor organizational_unit_id: ::String
+      attr_accessor organizational_unit_path: ::String
+      SENSITIVE: []
+    end
+
+    class NodeType
+      attr_accessor instance: Types::InstanceInfo
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Instance < NodeType
+      end
+      class Unknown < NodeType
+      end
     end
 
     class NonCompliantSummary
@@ -3872,6 +4011,18 @@ module Aws::SSM
       SENSITIVE: []
     end
 
+    class StartExecutionPreviewRequest
+      attr_accessor document_name: ::String
+      attr_accessor document_version: ::String
+      attr_accessor execution_inputs: Types::ExecutionInputs
+      SENSITIVE: []
+    end
+
+    class StartExecutionPreviewResponse
+      attr_accessor execution_preview_id: ::String
+      SENSITIVE: []
+    end
+
     class StartSessionRequest
       attr_accessor target: ::String
       attr_accessor document_name: ::String
@@ -3975,6 +4126,12 @@ module Aws::SSM
       SENSITIVE: []
     end
 
+    class TargetPreview
+      attr_accessor count: ::Integer
+      attr_accessor target_type: ::String
+      SENSITIVE: []
+    end
+
     class TerminateSessionRequest
       attr_accessor session_id: ::String
       SENSITIVE: []
@@ -4033,6 +4190,11 @@ module Aws::SSM
     end
 
     class UnsupportedOperatingSystem
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class UnsupportedOperationException
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -4315,6 +4477,12 @@ module Aws::SSM
     end
 
     class UpdateServiceSettingResult < Aws::EmptyStructure
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      attr_accessor reason_code: ::String
+      SENSITIVE: []
     end
   end
 end

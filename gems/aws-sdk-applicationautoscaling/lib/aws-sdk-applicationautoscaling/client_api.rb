@@ -18,6 +18,7 @@ module Aws::ApplicationAutoScaling
     Alarm = Shapes::StructureShape.new(name: 'Alarm')
     Alarms = Shapes::ListShape.new(name: 'Alarms')
     AmazonResourceName = Shapes::StringShape.new(name: 'AmazonResourceName')
+    CapacityForecast = Shapes::StructureShape.new(name: 'CapacityForecast')
     ConcurrentUpdateException = Shapes::StructureShape.new(name: 'ConcurrentUpdateException')
     Cooldown = Shapes::IntegerShape.new(name: 'Cooldown')
     CustomizedMetricSpecification = Shapes::StructureShape.new(name: 'CustomizedMetricSpecification')
@@ -40,6 +41,8 @@ module Aws::ApplicationAutoScaling
     ExceptionMessage = Shapes::StringShape.new(name: 'ExceptionMessage')
     Expression = Shapes::StringShape.new(name: 'Expression')
     FailedResourceAccessException = Shapes::StructureShape.new(name: 'FailedResourceAccessException')
+    GetPredictiveScalingForecastRequest = Shapes::StructureShape.new(name: 'GetPredictiveScalingForecastRequest')
+    GetPredictiveScalingForecastResponse = Shapes::StructureShape.new(name: 'GetPredictiveScalingForecastResponse')
     Id = Shapes::StringShape.new(name: 'Id')
     IncludeNotScaledActivities = Shapes::BooleanShape.new(name: 'IncludeNotScaledActivities')
     InternalServiceException = Shapes::StructureShape.new(name: 'InternalServiceException')
@@ -47,6 +50,8 @@ module Aws::ApplicationAutoScaling
     LimitExceededException = Shapes::StructureShape.new(name: 'LimitExceededException')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
+    LoadForecast = Shapes::StructureShape.new(name: 'LoadForecast')
+    LoadForecasts = Shapes::ListShape.new(name: 'LoadForecasts')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     MetricAggregationType = Shapes::StringShape.new(name: 'MetricAggregationType')
     MetricDimension = Shapes::StructureShape.new(name: 'MetricDimension')
@@ -66,6 +71,31 @@ module Aws::ApplicationAutoScaling
     PolicyName = Shapes::StringShape.new(name: 'PolicyName')
     PolicyType = Shapes::StringShape.new(name: 'PolicyType')
     PredefinedMetricSpecification = Shapes::StructureShape.new(name: 'PredefinedMetricSpecification')
+    PredictiveScalingCustomizedMetricSpecification = Shapes::StructureShape.new(name: 'PredictiveScalingCustomizedMetricSpecification')
+    PredictiveScalingForecastTimestamps = Shapes::ListShape.new(name: 'PredictiveScalingForecastTimestamps')
+    PredictiveScalingForecastValues = Shapes::ListShape.new(name: 'PredictiveScalingForecastValues')
+    PredictiveScalingMaxCapacityBreachBehavior = Shapes::StringShape.new(name: 'PredictiveScalingMaxCapacityBreachBehavior')
+    PredictiveScalingMaxCapacityBuffer = Shapes::IntegerShape.new(name: 'PredictiveScalingMaxCapacityBuffer')
+    PredictiveScalingMetric = Shapes::StructureShape.new(name: 'PredictiveScalingMetric')
+    PredictiveScalingMetricDataQueries = Shapes::ListShape.new(name: 'PredictiveScalingMetricDataQueries')
+    PredictiveScalingMetricDataQuery = Shapes::StructureShape.new(name: 'PredictiveScalingMetricDataQuery')
+    PredictiveScalingMetricDimension = Shapes::StructureShape.new(name: 'PredictiveScalingMetricDimension')
+    PredictiveScalingMetricDimensionName = Shapes::StringShape.new(name: 'PredictiveScalingMetricDimensionName')
+    PredictiveScalingMetricDimensionValue = Shapes::StringShape.new(name: 'PredictiveScalingMetricDimensionValue')
+    PredictiveScalingMetricDimensions = Shapes::ListShape.new(name: 'PredictiveScalingMetricDimensions')
+    PredictiveScalingMetricName = Shapes::StringShape.new(name: 'PredictiveScalingMetricName')
+    PredictiveScalingMetricNamespace = Shapes::StringShape.new(name: 'PredictiveScalingMetricNamespace')
+    PredictiveScalingMetricSpecification = Shapes::StructureShape.new(name: 'PredictiveScalingMetricSpecification')
+    PredictiveScalingMetricSpecifications = Shapes::ListShape.new(name: 'PredictiveScalingMetricSpecifications')
+    PredictiveScalingMetricStat = Shapes::StructureShape.new(name: 'PredictiveScalingMetricStat')
+    PredictiveScalingMetricType = Shapes::StringShape.new(name: 'PredictiveScalingMetricType')
+    PredictiveScalingMetricUnit = Shapes::StringShape.new(name: 'PredictiveScalingMetricUnit')
+    PredictiveScalingMode = Shapes::StringShape.new(name: 'PredictiveScalingMode')
+    PredictiveScalingPolicyConfiguration = Shapes::StructureShape.new(name: 'PredictiveScalingPolicyConfiguration')
+    PredictiveScalingPredefinedLoadMetricSpecification = Shapes::StructureShape.new(name: 'PredictiveScalingPredefinedLoadMetricSpecification')
+    PredictiveScalingPredefinedMetricPairSpecification = Shapes::StructureShape.new(name: 'PredictiveScalingPredefinedMetricPairSpecification')
+    PredictiveScalingPredefinedScalingMetricSpecification = Shapes::StructureShape.new(name: 'PredictiveScalingPredefinedScalingMetricSpecification')
+    PredictiveScalingSchedulingBufferTime = Shapes::IntegerShape.new(name: 'PredictiveScalingSchedulingBufferTime')
     PutScalingPolicyRequest = Shapes::StructureShape.new(name: 'PutScalingPolicyRequest')
     PutScalingPolicyResponse = Shapes::StructureShape.new(name: 'PutScalingPolicyResponse')
     PutScheduledActionRequest = Shapes::StructureShape.new(name: 'PutScheduledActionRequest')
@@ -128,6 +158,10 @@ module Aws::ApplicationAutoScaling
     Alarm.struct_class = Types::Alarm
 
     Alarms.member = Shapes::ShapeRef.new(shape: Alarm)
+
+    CapacityForecast.add_member(:timestamps, Shapes::ShapeRef.new(shape: PredictiveScalingForecastTimestamps, required: true, location_name: "Timestamps"))
+    CapacityForecast.add_member(:values, Shapes::ShapeRef.new(shape: PredictiveScalingForecastValues, required: true, location_name: "Values"))
+    CapacityForecast.struct_class = Types::CapacityForecast
 
     ConcurrentUpdateException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     ConcurrentUpdateException.struct_class = Types::ConcurrentUpdateException
@@ -213,6 +247,19 @@ module Aws::ApplicationAutoScaling
     FailedResourceAccessException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     FailedResourceAccessException.struct_class = Types::FailedResourceAccessException
 
+    GetPredictiveScalingForecastRequest.add_member(:service_namespace, Shapes::ShapeRef.new(shape: ServiceNamespace, required: true, location_name: "ServiceNamespace"))
+    GetPredictiveScalingForecastRequest.add_member(:resource_id, Shapes::ShapeRef.new(shape: ResourceIdMaxLen1600, required: true, location_name: "ResourceId"))
+    GetPredictiveScalingForecastRequest.add_member(:scalable_dimension, Shapes::ShapeRef.new(shape: ScalableDimension, required: true, location_name: "ScalableDimension"))
+    GetPredictiveScalingForecastRequest.add_member(:policy_name, Shapes::ShapeRef.new(shape: PolicyName, required: true, location_name: "PolicyName"))
+    GetPredictiveScalingForecastRequest.add_member(:start_time, Shapes::ShapeRef.new(shape: TimestampType, required: true, location_name: "StartTime"))
+    GetPredictiveScalingForecastRequest.add_member(:end_time, Shapes::ShapeRef.new(shape: TimestampType, required: true, location_name: "EndTime"))
+    GetPredictiveScalingForecastRequest.struct_class = Types::GetPredictiveScalingForecastRequest
+
+    GetPredictiveScalingForecastResponse.add_member(:load_forecast, Shapes::ShapeRef.new(shape: LoadForecasts, location_name: "LoadForecast"))
+    GetPredictiveScalingForecastResponse.add_member(:capacity_forecast, Shapes::ShapeRef.new(shape: CapacityForecast, location_name: "CapacityForecast"))
+    GetPredictiveScalingForecastResponse.add_member(:update_time, Shapes::ShapeRef.new(shape: TimestampType, location_name: "UpdateTime"))
+    GetPredictiveScalingForecastResponse.struct_class = Types::GetPredictiveScalingForecastResponse
+
     InternalServiceException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     InternalServiceException.struct_class = Types::InternalServiceException
 
@@ -227,6 +274,13 @@ module Aws::ApplicationAutoScaling
 
     ListTagsForResourceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
     ListTagsForResourceResponse.struct_class = Types::ListTagsForResourceResponse
+
+    LoadForecast.add_member(:timestamps, Shapes::ShapeRef.new(shape: PredictiveScalingForecastTimestamps, required: true, location_name: "Timestamps"))
+    LoadForecast.add_member(:values, Shapes::ShapeRef.new(shape: PredictiveScalingForecastValues, required: true, location_name: "Values"))
+    LoadForecast.add_member(:metric_specification, Shapes::ShapeRef.new(shape: PredictiveScalingMetricSpecification, required: true, location_name: "MetricSpecification"))
+    LoadForecast.struct_class = Types::LoadForecast
+
+    LoadForecasts.member = Shapes::ShapeRef.new(shape: LoadForecast)
 
     MetricDimension.add_member(:name, Shapes::ShapeRef.new(shape: MetricDimensionName, required: true, location_name: "Name"))
     MetricDimension.add_member(:value, Shapes::ShapeRef.new(shape: MetricDimensionValue, required: true, location_name: "Value"))
@@ -249,6 +303,68 @@ module Aws::ApplicationAutoScaling
     PredefinedMetricSpecification.add_member(:resource_label, Shapes::ShapeRef.new(shape: ResourceLabel, location_name: "ResourceLabel"))
     PredefinedMetricSpecification.struct_class = Types::PredefinedMetricSpecification
 
+    PredictiveScalingCustomizedMetricSpecification.add_member(:metric_data_queries, Shapes::ShapeRef.new(shape: PredictiveScalingMetricDataQueries, required: true, location_name: "MetricDataQueries"))
+    PredictiveScalingCustomizedMetricSpecification.struct_class = Types::PredictiveScalingCustomizedMetricSpecification
+
+    PredictiveScalingForecastTimestamps.member = Shapes::ShapeRef.new(shape: TimestampType)
+
+    PredictiveScalingForecastValues.member = Shapes::ShapeRef.new(shape: MetricScale)
+
+    PredictiveScalingMetric.add_member(:dimensions, Shapes::ShapeRef.new(shape: PredictiveScalingMetricDimensions, location_name: "Dimensions"))
+    PredictiveScalingMetric.add_member(:metric_name, Shapes::ShapeRef.new(shape: PredictiveScalingMetricName, location_name: "MetricName"))
+    PredictiveScalingMetric.add_member(:namespace, Shapes::ShapeRef.new(shape: PredictiveScalingMetricNamespace, location_name: "Namespace"))
+    PredictiveScalingMetric.struct_class = Types::PredictiveScalingMetric
+
+    PredictiveScalingMetricDataQueries.member = Shapes::ShapeRef.new(shape: PredictiveScalingMetricDataQuery)
+
+    PredictiveScalingMetricDataQuery.add_member(:id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "Id"))
+    PredictiveScalingMetricDataQuery.add_member(:expression, Shapes::ShapeRef.new(shape: Expression, location_name: "Expression"))
+    PredictiveScalingMetricDataQuery.add_member(:metric_stat, Shapes::ShapeRef.new(shape: PredictiveScalingMetricStat, location_name: "MetricStat"))
+    PredictiveScalingMetricDataQuery.add_member(:label, Shapes::ShapeRef.new(shape: XmlString, location_name: "Label"))
+    PredictiveScalingMetricDataQuery.add_member(:return_data, Shapes::ShapeRef.new(shape: ReturnData, location_name: "ReturnData"))
+    PredictiveScalingMetricDataQuery.struct_class = Types::PredictiveScalingMetricDataQuery
+
+    PredictiveScalingMetricDimension.add_member(:name, Shapes::ShapeRef.new(shape: PredictiveScalingMetricDimensionName, required: true, location_name: "Name"))
+    PredictiveScalingMetricDimension.add_member(:value, Shapes::ShapeRef.new(shape: PredictiveScalingMetricDimensionValue, required: true, location_name: "Value"))
+    PredictiveScalingMetricDimension.struct_class = Types::PredictiveScalingMetricDimension
+
+    PredictiveScalingMetricDimensions.member = Shapes::ShapeRef.new(shape: PredictiveScalingMetricDimension)
+
+    PredictiveScalingMetricSpecification.add_member(:target_value, Shapes::ShapeRef.new(shape: MetricScale, required: true, location_name: "TargetValue"))
+    PredictiveScalingMetricSpecification.add_member(:predefined_metric_pair_specification, Shapes::ShapeRef.new(shape: PredictiveScalingPredefinedMetricPairSpecification, location_name: "PredefinedMetricPairSpecification"))
+    PredictiveScalingMetricSpecification.add_member(:predefined_scaling_metric_specification, Shapes::ShapeRef.new(shape: PredictiveScalingPredefinedScalingMetricSpecification, location_name: "PredefinedScalingMetricSpecification"))
+    PredictiveScalingMetricSpecification.add_member(:predefined_load_metric_specification, Shapes::ShapeRef.new(shape: PredictiveScalingPredefinedLoadMetricSpecification, location_name: "PredefinedLoadMetricSpecification"))
+    PredictiveScalingMetricSpecification.add_member(:customized_scaling_metric_specification, Shapes::ShapeRef.new(shape: PredictiveScalingCustomizedMetricSpecification, location_name: "CustomizedScalingMetricSpecification"))
+    PredictiveScalingMetricSpecification.add_member(:customized_load_metric_specification, Shapes::ShapeRef.new(shape: PredictiveScalingCustomizedMetricSpecification, location_name: "CustomizedLoadMetricSpecification"))
+    PredictiveScalingMetricSpecification.add_member(:customized_capacity_metric_specification, Shapes::ShapeRef.new(shape: PredictiveScalingCustomizedMetricSpecification, location_name: "CustomizedCapacityMetricSpecification"))
+    PredictiveScalingMetricSpecification.struct_class = Types::PredictiveScalingMetricSpecification
+
+    PredictiveScalingMetricSpecifications.member = Shapes::ShapeRef.new(shape: PredictiveScalingMetricSpecification)
+
+    PredictiveScalingMetricStat.add_member(:metric, Shapes::ShapeRef.new(shape: PredictiveScalingMetric, required: true, location_name: "Metric"))
+    PredictiveScalingMetricStat.add_member(:stat, Shapes::ShapeRef.new(shape: XmlString, required: true, location_name: "Stat"))
+    PredictiveScalingMetricStat.add_member(:unit, Shapes::ShapeRef.new(shape: PredictiveScalingMetricUnit, location_name: "Unit"))
+    PredictiveScalingMetricStat.struct_class = Types::PredictiveScalingMetricStat
+
+    PredictiveScalingPolicyConfiguration.add_member(:metric_specifications, Shapes::ShapeRef.new(shape: PredictiveScalingMetricSpecifications, required: true, location_name: "MetricSpecifications"))
+    PredictiveScalingPolicyConfiguration.add_member(:mode, Shapes::ShapeRef.new(shape: PredictiveScalingMode, location_name: "Mode"))
+    PredictiveScalingPolicyConfiguration.add_member(:scheduling_buffer_time, Shapes::ShapeRef.new(shape: PredictiveScalingSchedulingBufferTime, location_name: "SchedulingBufferTime"))
+    PredictiveScalingPolicyConfiguration.add_member(:max_capacity_breach_behavior, Shapes::ShapeRef.new(shape: PredictiveScalingMaxCapacityBreachBehavior, location_name: "MaxCapacityBreachBehavior"))
+    PredictiveScalingPolicyConfiguration.add_member(:max_capacity_buffer, Shapes::ShapeRef.new(shape: PredictiveScalingMaxCapacityBuffer, location_name: "MaxCapacityBuffer"))
+    PredictiveScalingPolicyConfiguration.struct_class = Types::PredictiveScalingPolicyConfiguration
+
+    PredictiveScalingPredefinedLoadMetricSpecification.add_member(:predefined_metric_type, Shapes::ShapeRef.new(shape: PredictiveScalingMetricType, required: true, location_name: "PredefinedMetricType"))
+    PredictiveScalingPredefinedLoadMetricSpecification.add_member(:resource_label, Shapes::ShapeRef.new(shape: ResourceLabel, location_name: "ResourceLabel"))
+    PredictiveScalingPredefinedLoadMetricSpecification.struct_class = Types::PredictiveScalingPredefinedLoadMetricSpecification
+
+    PredictiveScalingPredefinedMetricPairSpecification.add_member(:predefined_metric_type, Shapes::ShapeRef.new(shape: PredictiveScalingMetricType, required: true, location_name: "PredefinedMetricType"))
+    PredictiveScalingPredefinedMetricPairSpecification.add_member(:resource_label, Shapes::ShapeRef.new(shape: ResourceLabel, location_name: "ResourceLabel"))
+    PredictiveScalingPredefinedMetricPairSpecification.struct_class = Types::PredictiveScalingPredefinedMetricPairSpecification
+
+    PredictiveScalingPredefinedScalingMetricSpecification.add_member(:predefined_metric_type, Shapes::ShapeRef.new(shape: PredictiveScalingMetricType, required: true, location_name: "PredefinedMetricType"))
+    PredictiveScalingPredefinedScalingMetricSpecification.add_member(:resource_label, Shapes::ShapeRef.new(shape: ResourceLabel, location_name: "ResourceLabel"))
+    PredictiveScalingPredefinedScalingMetricSpecification.struct_class = Types::PredictiveScalingPredefinedScalingMetricSpecification
+
     PutScalingPolicyRequest.add_member(:policy_name, Shapes::ShapeRef.new(shape: PolicyName, required: true, location_name: "PolicyName"))
     PutScalingPolicyRequest.add_member(:service_namespace, Shapes::ShapeRef.new(shape: ServiceNamespace, required: true, location_name: "ServiceNamespace"))
     PutScalingPolicyRequest.add_member(:resource_id, Shapes::ShapeRef.new(shape: ResourceIdMaxLen1600, required: true, location_name: "ResourceId"))
@@ -256,6 +372,7 @@ module Aws::ApplicationAutoScaling
     PutScalingPolicyRequest.add_member(:policy_type, Shapes::ShapeRef.new(shape: PolicyType, location_name: "PolicyType"))
     PutScalingPolicyRequest.add_member(:step_scaling_policy_configuration, Shapes::ShapeRef.new(shape: StepScalingPolicyConfiguration, location_name: "StepScalingPolicyConfiguration"))
     PutScalingPolicyRequest.add_member(:target_tracking_scaling_policy_configuration, Shapes::ShapeRef.new(shape: TargetTrackingScalingPolicyConfiguration, location_name: "TargetTrackingScalingPolicyConfiguration"))
+    PutScalingPolicyRequest.add_member(:predictive_scaling_policy_configuration, Shapes::ShapeRef.new(shape: PredictiveScalingPolicyConfiguration, location_name: "PredictiveScalingPolicyConfiguration"))
     PutScalingPolicyRequest.struct_class = Types::PutScalingPolicyRequest
 
     PutScalingPolicyResponse.add_member(:policy_arn, Shapes::ShapeRef.new(shape: ResourceIdMaxLen1600, required: true, location_name: "PolicyARN"))
@@ -299,6 +416,7 @@ module Aws::ApplicationAutoScaling
     ScalableTarget.add_member(:scalable_dimension, Shapes::ShapeRef.new(shape: ScalableDimension, required: true, location_name: "ScalableDimension"))
     ScalableTarget.add_member(:min_capacity, Shapes::ShapeRef.new(shape: ResourceCapacity, required: true, location_name: "MinCapacity"))
     ScalableTarget.add_member(:max_capacity, Shapes::ShapeRef.new(shape: ResourceCapacity, required: true, location_name: "MaxCapacity"))
+    ScalableTarget.add_member(:predicted_capacity, Shapes::ShapeRef.new(shape: ResourceCapacity, location_name: "PredictedCapacity"))
     ScalableTarget.add_member(:role_arn, Shapes::ShapeRef.new(shape: ResourceIdMaxLen1600, required: true, location_name: "RoleARN"))
     ScalableTarget.add_member(:creation_time, Shapes::ShapeRef.new(shape: TimestampType, required: true, location_name: "CreationTime"))
     ScalableTarget.add_member(:suspended_state, Shapes::ShapeRef.new(shape: SuspendedState, location_name: "SuspendedState"))
@@ -337,6 +455,7 @@ module Aws::ApplicationAutoScaling
     ScalingPolicy.add_member(:policy_type, Shapes::ShapeRef.new(shape: PolicyType, required: true, location_name: "PolicyType"))
     ScalingPolicy.add_member(:step_scaling_policy_configuration, Shapes::ShapeRef.new(shape: StepScalingPolicyConfiguration, location_name: "StepScalingPolicyConfiguration"))
     ScalingPolicy.add_member(:target_tracking_scaling_policy_configuration, Shapes::ShapeRef.new(shape: TargetTrackingScalingPolicyConfiguration, location_name: "TargetTrackingScalingPolicyConfiguration"))
+    ScalingPolicy.add_member(:predictive_scaling_policy_configuration, Shapes::ShapeRef.new(shape: PredictiveScalingPolicyConfiguration, location_name: "PredictiveScalingPolicyConfiguration"))
     ScalingPolicy.add_member(:alarms, Shapes::ShapeRef.new(shape: Alarms, location_name: "Alarms"))
     ScalingPolicy.add_member(:creation_time, Shapes::ShapeRef.new(shape: TimestampType, required: true, location_name: "CreationTime"))
     ScalingPolicy.struct_class = Types::ScalingPolicy
@@ -560,6 +679,16 @@ module Aws::ApplicationAutoScaling
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:get_predictive_scaling_forecast, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetPredictiveScalingForecast"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetPredictiveScalingForecastRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetPredictiveScalingForecastResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
       end)
 
       api.add_operation(:list_tags_for_resource, Seahorse::Model::Operation.new.tap do |o|

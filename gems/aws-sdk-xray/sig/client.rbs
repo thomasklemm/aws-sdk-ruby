@@ -88,6 +88,15 @@ module Aws
                             ) -> _BatchGetTracesResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetTracesResponseSuccess
 
+      interface _CancelTraceRetrievalResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CancelTraceRetrievalResult]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#cancel_trace_retrieval-instance_method
+      def cancel_trace_retrieval: (
+                                    retrieval_token: ::String
+                                  ) -> _CancelTraceRetrievalResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelTraceRetrievalResponseSuccess
+
       interface _CreateGroupResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateGroupResult]
         def group: () -> Types::Group
@@ -201,6 +210,17 @@ module Aws
                       ) -> _GetGroupsResponseSuccess
                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetGroupsResponseSuccess
 
+      interface _GetIndexingRulesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetIndexingRulesResult]
+        def indexing_rules: () -> ::Array[Types::IndexingRule]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#get_indexing_rules-instance_method
+      def get_indexing_rules: (
+                                ?next_token: ::String
+                              ) -> _GetIndexingRulesResponseSuccess
+                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetIndexingRulesResponseSuccess
+
       interface _GetInsightResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetInsightResult]
         def insight: () -> Types::Insight
@@ -259,6 +279,19 @@ module Aws
                                    ?next_token: ::String
                                  ) -> _GetInsightSummariesResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetInsightSummariesResponseSuccess
+
+      interface _GetRetrievedTracesGraphResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetRetrievedTracesGraphResult]
+        def retrieval_status: () -> ("SCHEDULED" | "RUNNING" | "COMPLETE" | "FAILED" | "CANCELLED" | "TIMEOUT")
+        def services: () -> ::Array[Types::RetrievedService]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#get_retrieved_traces_graph-instance_method
+      def get_retrieved_traces_graph: (
+                                        retrieval_token: ::String,
+                                        ?next_token: ::String
+                                      ) -> _GetRetrievedTracesGraphResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRetrievedTracesGraphResponseSuccess
 
       interface _GetSamplingRulesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetSamplingRulesResult]
@@ -352,6 +385,16 @@ module Aws
                            ) -> _GetTraceGraphResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTraceGraphResponseSuccess
 
+      interface _GetTraceSegmentDestinationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetTraceSegmentDestinationResult]
+        def destination: () -> ("XRay" | "CloudWatchLogs")
+        def status: () -> ("PENDING" | "ACTIVE")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#get_trace_segment_destination-instance_method
+      def get_trace_segment_destination: (
+                                         ) -> _GetTraceSegmentDestinationResponseSuccess
+                                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetTraceSegmentDestinationResponseSuccess
+
       interface _GetTraceSummariesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTraceSummariesResult]
         def trace_summaries: () -> ::Array[Types::TraceSummary]
@@ -384,6 +427,21 @@ module Aws
                                     ?next_token: ::String
                                   ) -> _ListResourcePoliciesResponseSuccess
                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListResourcePoliciesResponseSuccess
+
+      interface _ListRetrievedTracesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListRetrievedTracesResult]
+        def retrieval_status: () -> ("SCHEDULED" | "RUNNING" | "COMPLETE" | "FAILED" | "CANCELLED" | "TIMEOUT")
+        def trace_format: () -> ("XRAY" | "OTEL")
+        def traces: () -> ::Array[Types::RetrievedTrace]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#list_retrieved_traces-instance_method
+      def list_retrieved_traces: (
+                                   retrieval_token: ::String,
+                                   ?trace_format: ("XRAY" | "OTEL"),
+                                   ?next_token: ::String
+                                 ) -> _ListRetrievedTracesResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRetrievedTracesResponseSuccess
 
       interface _ListTagsForResourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
@@ -459,6 +517,18 @@ module Aws
                               ) -> _PutTraceSegmentsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutTraceSegmentsResponseSuccess
 
+      interface _StartTraceRetrievalResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartTraceRetrievalResult]
+        def retrieval_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#start_trace_retrieval-instance_method
+      def start_trace_retrieval: (
+                                   trace_ids: Array[::String],
+                                   start_time: ::Time,
+                                   end_time: ::Time
+                                 ) -> _StartTraceRetrievalResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartTraceRetrievalResponseSuccess
+
       interface _TagResourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceResponse]
       end
@@ -500,6 +570,21 @@ module Aws
                         ) -> _UpdateGroupResponseSuccess
                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateGroupResponseSuccess
 
+      interface _UpdateIndexingRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateIndexingRuleResult]
+        def indexing_rule: () -> Types::IndexingRule
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#update_indexing_rule-instance_method
+      def update_indexing_rule: (
+                                  name: ::String,
+                                  rule: {
+                                    probabilistic: {
+                                      desired_sampling_percentage: ::Float
+                                    }?
+                                  }
+                                ) -> _UpdateIndexingRuleResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateIndexingRuleResponseSuccess
+
       interface _UpdateSamplingRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateSamplingRuleResult]
         def sampling_rule_record: () -> Types::SamplingRuleRecord
@@ -522,6 +607,17 @@ module Aws
                                   }
                                 ) -> _UpdateSamplingRuleResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateSamplingRuleResponseSuccess
+
+      interface _UpdateTraceSegmentDestinationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateTraceSegmentDestinationResult]
+        def destination: () -> ("XRay" | "CloudWatchLogs")
+        def status: () -> ("PENDING" | "ACTIVE")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/XRay/Client.html#update_trace_segment_destination-instance_method
+      def update_trace_segment_destination: (
+                                              ?destination: ("XRay" | "CloudWatchLogs")
+                                            ) -> _UpdateTraceSegmentDestinationResponseSuccess
+                                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateTraceSegmentDestinationResponseSuccess
     end
   end
 end

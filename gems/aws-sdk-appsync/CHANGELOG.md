@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.94.0 (2024-11-21)
+------------------
+
+* Feature - Add support for the Amazon Bedrock Runtime.
+
 1.93.0 (2024-11-18)
 ------------------
 

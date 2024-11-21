@@ -454,25 +454,28 @@ module Aws::CloudTrail
 
     # @!group API Operations
 
-    # Adds one or more tags to a trail, event data store, or channel, up to
-    # a limit of 50. Overwrites an existing tag's value when a new value is
-    # specified for an existing tag key. Tag key names must be unique; you
-    # cannot have two keys with the same name but different values. If you
-    # specify a key without a value, the tag will be created with the
-    # specified key and a value of null. You can tag a trail or event data
-    # store that applies to all Amazon Web Services Regions only from the
-    # Region in which the trail or event data store was created (also known
-    # as its home Region).
+    # Adds one or more tags to a trail, event data store, dashboard, or
+    # channel, up to a limit of 50. Overwrites an existing tag's value when
+    # a new value is specified for an existing tag key. Tag key names must
+    # be unique; you cannot have two keys with the same name but different
+    # values. If you specify a key without a value, the tag will be created
+    # with the specified key and a value of null. You can tag a trail or
+    # event data store that applies to all Amazon Web Services Regions only
+    # from the Region in which the trail or event data store was created
+    # (also known as its home Region).
     #
     # @option params [required, String] :resource_id
-    #   Specifies the ARN of the trail, event data store, or channel to which
-    #   one or more tags will be added.
+    #   Specifies the ARN of the trail, event data store, dashboard, or
+    #   channel to which one or more tags will be added.
     #
     #   The format of a trail ARN is:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail`
     #
     #   The format of an event data store ARN is:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE`
+    #
+    #   The format of a dashboard ARN is:
+    #   `arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash`
     #
     #   The format of a channel ARN is:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890`
@@ -517,22 +520,28 @@ module Aws::CloudTrail
     #   The ID of the query that you want to cancel. The `QueryId` comes from
     #   the response of a `StartQuery` operation.
     #
+    # @option params [String] :event_data_store_owner_account_id
+    #   The account ID of the event data store owner.
+    #
     # @return [Types::CancelQueryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CancelQueryResponse#query_id #query_id} => String
     #   * {Types::CancelQueryResponse#query_status #query_status} => String
+    #   * {Types::CancelQueryResponse#event_data_store_owner_account_id #event_data_store_owner_account_id} => String
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.cancel_query({
     #     event_data_store: "EventDataStoreArn",
     #     query_id: "UUID", # required
+    #     event_data_store_owner_account_id: "AccountId",
     #   })
     #
     # @example Response structure
     #
     #   resp.query_id #=> String
     #   resp.query_status #=> String, one of "QUEUED", "RUNNING", "FINISHED", "FAILED", "CANCELLED", "TIMED_OUT"
+    #   resp.event_data_store_owner_account_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/CancelQuery AWS API Documentation
     #
@@ -616,6 +625,140 @@ module Aws::CloudTrail
     # @param [Hash] params ({})
     def create_channel(params = {}, options = {})
       req = build_request(:create_channel, params)
+      req.send_request(options)
+    end
+
+    # Creates a custom dashboard or the Highlights dashboard.
+    #
+    # * **Custom dashboards** - Custom dashboards allow you to query events
+    #   in any event data store type. You can add up to 10 widgets to a
+    #   custom dashboard. You can manually refresh a custom dashboard, or
+    #   you can set a refresh schedule.
+    #
+    # * **Highlights dashboard** - You can create the Highlights dashboard
+    #   to see a summary of key user activities and API usage across all
+    #   your event data stores. CloudTrail Lake manages the Highlights
+    #   dashboard and refreshes the dashboard every 6 hours. To create the
+    #   Highlights dashboard, you must set and enable a refresh schedule.
+    #
+    # CloudTrail runs queries to populate the dashboard's widgets during a
+    # manual or scheduled refresh. CloudTrail must be granted permissions to
+    # run the `StartQuery` operation on your behalf. To provide permissions,
+    # run the `PutResourcePolicy` operation to attach a resource-based
+    # policy to each event data store. For more information, see [Example:
+    # Allow CloudTrail to run queries to populate a dashboard][1] in the
+    # *CloudTrail User Guide*.
+    #
+    # To set a refresh schedule, CloudTrail must be granted permissions to
+    # run the `StartDashboardRefresh` operation to refresh the dashboard on
+    # your behalf. To provide permissions, run the `PutResourcePolicy`
+    # operation to attach a resource-based policy to the dashboard. For more
+    # information, see [ Resource-based policy example for a dashboard][2]
+    # in the *CloudTrail User Guide*.
+    #
+    # For more information about dashboards, see [CloudTrail Lake
+    # dashboards][3] in the *CloudTrail User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html#security_iam_resource-based-policy-examples-eds-dashboard
+    # [2]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html#security_iam_resource-based-policy-examples-dashboards
+    # [3]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/lake-dashboard.html
+    #
+    # @option params [required, String] :name
+    #   The name of the dashboard. The name must be unique to your account.
+    #
+    #   To create the Highlights dashboard, the name must be
+    #   `AWSCloudTrail-Highlights`.
+    #
+    # @option params [Types::RefreshSchedule] :refresh_schedule
+    #   The refresh schedule configuration for the dashboard.
+    #
+    #   To create the Highlights dashboard, you must set a refresh schedule
+    #   and set the `Status` to `ENABLED`. The `Unit` for the refresh schedule
+    #   must be `HOURS` and the `Value` must be `6`.
+    #
+    # @option params [Array<Types::Tag>] :tags_list
+    #   A list of tags.
+    #
+    # @option params [Boolean] :termination_protection_enabled
+    #   Specifies whether termination protection is enabled for the dashboard.
+    #   If termination protection is enabled, you cannot delete the dashboard
+    #   until termination protection is disabled.
+    #
+    # @option params [Array<Types::RequestWidget>] :widgets
+    #   An array of widgets for a custom dashboard. A custom dashboard can
+    #   have a maximum of ten widgets.
+    #
+    #   You do not need to specify widgets for the Highlights dashboard.
+    #
+    # @return [Types::CreateDashboardResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateDashboardResponse#dashboard_arn #dashboard_arn} => String
+    #   * {Types::CreateDashboardResponse#name #name} => String
+    #   * {Types::CreateDashboardResponse#type #type} => String
+    #   * {Types::CreateDashboardResponse#widgets #widgets} => Array&lt;Types::Widget&gt;
+    #   * {Types::CreateDashboardResponse#tags_list #tags_list} => Array&lt;Types::Tag&gt;
+    #   * {Types::CreateDashboardResponse#refresh_schedule #refresh_schedule} => Types::RefreshSchedule
+    #   * {Types::CreateDashboardResponse#termination_protection_enabled #termination_protection_enabled} => Boolean
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_dashboard({
+    #     name: "DashboardName", # required
+    #     refresh_schedule: {
+    #       frequency: {
+    #         unit: "HOURS", # accepts HOURS, DAYS
+    #         value: 1,
+    #       },
+    #       status: "ENABLED", # accepts ENABLED, DISABLED
+    #       time_of_day: "TimeOfDay",
+    #     },
+    #     tags_list: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue",
+    #       },
+    #     ],
+    #     termination_protection_enabled: false,
+    #     widgets: [
+    #       {
+    #         query_statement: "QueryStatement", # required
+    #         query_parameters: ["QueryParameter"],
+    #         view_properties: { # required
+    #           "ViewPropertiesKey" => "ViewPropertiesValue",
+    #         },
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.dashboard_arn #=> String
+    #   resp.name #=> String
+    #   resp.type #=> String, one of "MANAGED", "CUSTOM"
+    #   resp.widgets #=> Array
+    #   resp.widgets[0].query_alias #=> String
+    #   resp.widgets[0].query_statement #=> String
+    #   resp.widgets[0].query_parameters #=> Array
+    #   resp.widgets[0].query_parameters[0] #=> String
+    #   resp.widgets[0].view_properties #=> Hash
+    #   resp.widgets[0].view_properties["ViewPropertiesKey"] #=> String
+    #   resp.tags_list #=> Array
+    #   resp.tags_list[0].key #=> String
+    #   resp.tags_list[0].value #=> String
+    #   resp.refresh_schedule.frequency.unit #=> String, one of "HOURS", "DAYS"
+    #   resp.refresh_schedule.frequency.value #=> Integer
+    #   resp.refresh_schedule.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.refresh_schedule.time_of_day #=> String
+    #   resp.termination_protection_enabled #=> Boolean
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/CreateDashboard AWS API Documentation
+    #
+    # @overload create_dashboard(params = {})
+    # @param [Hash] params ({})
+    def create_dashboard(params = {}, options = {})
+      req = build_request(:create_dashboard, params)
       req.send_request(options)
     end
 
@@ -1044,6 +1187,29 @@ module Aws::CloudTrail
       req.send_request(options)
     end
 
+    # Deletes the specified dashboard. You cannot delete a dashboard that
+    # has termination protection enabled.
+    #
+    # @option params [required, String] :dashboard_id
+    #   The name or ARN for the dashboard.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_dashboard({
+    #     dashboard_id: "DashboardArn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/DeleteDashboard AWS API Documentation
+    #
+    # @overload delete_dashboard(params = {})
+    # @param [Hash] params ({})
+    def delete_dashboard(params = {}, options = {})
+      req = build_request(:delete_dashboard, params)
+      req.send_request(options)
+    end
+
     # Disables the event data store specified by `EventDataStore`, which
     # accepts an event data store ARN. After you run `DeleteEventDataStore`,
     # the event data store enters a `PENDING_DELETION` state, and is
@@ -1080,13 +1246,21 @@ module Aws::CloudTrail
       req.send_request(options)
     end
 
-    # Deletes the resource-based policy attached to the CloudTrail channel.
+    # Deletes the resource-based policy attached to the CloudTrail event
+    # data store, dashboard, or channel.
     #
     # @option params [required, String] :resource_arn
-    #   The Amazon Resource Name (ARN) of the CloudTrail channel you're
-    #   deleting the resource-based policy from. The following is the format
-    #   of a resource ARN:
-    #   `arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel`.
+    #   The Amazon Resource Name (ARN) of the CloudTrail event data store,
+    #   dashboard, or channel you're deleting the resource-based policy from.
+    #
+    #   Example event data store ARN format:
+    #   `arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE`
+    #
+    #   Example dashboard ARN format:
+    #   `arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash`
+    #
+    #   Example channel ARN format:
+    #   `arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890`
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1162,9 +1336,11 @@ module Aws::CloudTrail
     # If the query results were delivered to an S3 bucket, the response also
     # provides the S3 URI and the delivery status.
     #
-    # You must specify either a `QueryID` or a `QueryAlias`. Specifying the
+    # You must specify either `QueryId` or `QueryAlias`. Specifying the
     # `QueryAlias` parameter returns information about the last query run
-    # for the alias.
+    # for the alias. You can provide `RefreshId` along with `QueryAlias` to
+    # view the query results of a dashboard query for the specified
+    # `RefreshId`.
     #
     # @option params [String] :event_data_store
     #   The ARN (or the ID suffix of the ARN) of an event data store on which
@@ -1176,6 +1352,12 @@ module Aws::CloudTrail
     # @option params [String] :query_alias
     #   The alias that identifies a query template.
     #
+    # @option params [String] :refresh_id
+    #   The ID of the dashboard refresh.
+    #
+    # @option params [String] :event_data_store_owner_account_id
+    #   The account ID of the event data store owner.
+    #
     # @return [Types::DescribeQueryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DescribeQueryResponse#query_id #query_id} => String
@@ -1186,6 +1368,7 @@ module Aws::CloudTrail
     #   * {Types::DescribeQueryResponse#delivery_s3_uri #delivery_s3_uri} => String
     #   * {Types::DescribeQueryResponse#delivery_status #delivery_status} => String
     #   * {Types::DescribeQueryResponse#prompt #prompt} => String
+    #   * {Types::DescribeQueryResponse#event_data_store_owner_account_id #event_data_store_owner_account_id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1193,6 +1376,8 @@ module Aws::CloudTrail
     #     event_data_store: "EventDataStoreArn",
     #     query_id: "UUID",
     #     query_alias: "QueryAlias",
+    #     refresh_id: "RefreshId",
+    #     event_data_store_owner_account_id: "AccountId",
     #   })
     #
     # @example Response structure
@@ -1209,6 +1394,7 @@ module Aws::CloudTrail
     #   resp.delivery_s3_uri #=> String
     #   resp.delivery_status #=> String, one of "SUCCESS", "FAILED", "FAILED_SIGNING_FILE", "PENDING", "RESOURCE_NOT_FOUND", "ACCESS_DENIED", "ACCESS_DENIED_SIGNING_FILE", "CANCELLED", "UNKNOWN"
     #   resp.prompt #=> String
+    #   resp.event_data_store_owner_account_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/DescribeQuery AWS API Documentation
     #
@@ -1440,6 +1626,7 @@ module Aws::CloudTrail
     #
     #   * {Types::GenerateQueryResponse#query_statement #query_statement} => String
     #   * {Types::GenerateQueryResponse#query_alias #query_alias} => String
+    #   * {Types::GenerateQueryResponse#event_data_store_owner_account_id #event_data_store_owner_account_id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1452,6 +1639,7 @@ module Aws::CloudTrail
     #
     #   resp.query_statement #=> String
     #   resp.query_alias #=> String
+    #   resp.event_data_store_owner_account_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/GenerateQuery AWS API Documentation
     #
@@ -1519,6 +1707,61 @@ module Aws::CloudTrail
     # @param [Hash] params ({})
     def get_channel(params = {}, options = {})
       req = build_request(:get_channel, params)
+      req.send_request(options)
+    end
+
+    # Returns the specified dashboard.
+    #
+    # @option params [required, String] :dashboard_id
+    #   The name or ARN for the dashboard.
+    #
+    # @return [Types::GetDashboardResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetDashboardResponse#dashboard_arn #dashboard_arn} => String
+    #   * {Types::GetDashboardResponse#type #type} => String
+    #   * {Types::GetDashboardResponse#status #status} => String
+    #   * {Types::GetDashboardResponse#widgets #widgets} => Array&lt;Types::Widget&gt;
+    #   * {Types::GetDashboardResponse#refresh_schedule #refresh_schedule} => Types::RefreshSchedule
+    #   * {Types::GetDashboardResponse#created_timestamp #created_timestamp} => Time
+    #   * {Types::GetDashboardResponse#updated_timestamp #updated_timestamp} => Time
+    #   * {Types::GetDashboardResponse#last_refresh_id #last_refresh_id} => String
+    #   * {Types::GetDashboardResponse#last_refresh_failure_reason #last_refresh_failure_reason} => String
+    #   * {Types::GetDashboardResponse#termination_protection_enabled #termination_protection_enabled} => Boolean
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_dashboard({
+    #     dashboard_id: "DashboardArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.dashboard_arn #=> String
+    #   resp.type #=> String, one of "MANAGED", "CUSTOM"
+    #   resp.status #=> String, one of "CREATING", "CREATED", "UPDATING", "UPDATED", "DELETING"
+    #   resp.widgets #=> Array
+    #   resp.widgets[0].query_alias #=> String
+    #   resp.widgets[0].query_statement #=> String
+    #   resp.widgets[0].query_parameters #=> Array
+    #   resp.widgets[0].query_parameters[0] #=> String
+    #   resp.widgets[0].view_properties #=> Hash
+    #   resp.widgets[0].view_properties["ViewPropertiesKey"] #=> String
+    #   resp.refresh_schedule.frequency.unit #=> String, one of "HOURS", "DAYS"
+    #   resp.refresh_schedule.frequency.value #=> Integer
+    #   resp.refresh_schedule.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.refresh_schedule.time_of_day #=> String
+    #   resp.created_timestamp #=> Time
+    #   resp.updated_timestamp #=> Time
+    #   resp.last_refresh_id #=> String
+    #   resp.last_refresh_failure_reason #=> String
+    #   resp.termination_protection_enabled #=> Boolean
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/GetDashboard AWS API Documentation
+    #
+    # @overload get_dashboard(params = {})
+    # @param [Hash] params ({})
+    def get_dashboard(params = {}, options = {})
+      req = build_request(:get_dashboard, params)
       req.send_request(options)
     end
 
@@ -1845,6 +2088,9 @@ module Aws::CloudTrail
     # @option params [Integer] :max_query_results
     #   The maximum number of query results to display on a single page.
     #
+    # @option params [String] :event_data_store_owner_account_id
+    #   The account ID of the event data store owner.
+    #
     # @return [Types::GetQueryResultsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetQueryResultsResponse#query_status #query_status} => String
@@ -1862,6 +2108,7 @@ module Aws::CloudTrail
     #     query_id: "UUID", # required
     #     next_token: "PaginationToken",
     #     max_query_results: 1,
+    #     event_data_store_owner_account_id: "AccountId",
     #   })
     #
     # @example Response structure
@@ -1887,17 +2134,26 @@ module Aws::CloudTrail
     end
 
     # Retrieves the JSON text of the resource-based policy document attached
-    # to the CloudTrail channel.
+    # to the CloudTrail event data store, dashboard, or channel.
     #
     # @option params [required, String] :resource_arn
-    #   The Amazon Resource Name (ARN) of the CloudTrail channel attached to
-    #   the resource-based policy. The following is the format of a resource
-    #   ARN: `arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel`.
+    #   The Amazon Resource Name (ARN) of the CloudTrail event data store,
+    #   dashboard, or channel attached to the resource-based policy.
+    #
+    #   Example event data store ARN format:
+    #   `arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE`
+    #
+    #   Example dashboard ARN format:
+    #   `arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash`
+    #
+    #   Example channel ARN format:
+    #   `arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890`
     #
     # @return [Types::GetResourcePolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetResourcePolicyResponse#resource_arn #resource_arn} => String
     #   * {Types::GetResourcePolicyResponse#resource_policy #resource_policy} => String
+    #   * {Types::GetResourcePolicyResponse#delegated_admin_resource_policy #delegated_admin_resource_policy} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1909,6 +2165,7 @@ module Aws::CloudTrail
     #
     #   resp.resource_arn #=> String
     #   resp.resource_policy #=> String
+    #   resp.delegated_admin_resource_policy #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/GetResourcePolicy AWS API Documentation
     #
@@ -1974,9 +2231,15 @@ module Aws::CloudTrail
     #   Specifies the name or the CloudTrail ARN of the trail for which you
     #   are requesting status. To get the status of a shadow trail (a
     #   replication of the trail in another Region), you must specify its ARN.
-    #   The following is the format of a trail ARN.
     #
+    #   The following is the format of a trail ARN:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail`
+    #
+    #   <note markdown="1"> If the trail is an organization trail and you are a member account in
+    #   the organization in Organizations, you must provide the full ARN of
+    #   that trail, and not just the name.
+    #
+    #    </note>
     #
     # @return [Types::GetTrailStatusResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2072,6 +2335,51 @@ module Aws::CloudTrail
     # @param [Hash] params ({})
     def list_channels(params = {}, options = {})
       req = build_request(:list_channels, params)
+      req.send_request(options)
+    end
+
+    # Returns information about all dashboards in the account, in the
+    # current Region.
+    #
+    # @option params [String] :name_prefix
+    #   Specify a name prefix to filter on.
+    #
+    # @option params [String] :type
+    #   Specify a dashboard type to filter on: `CUSTOM` or `MANAGED`.
+    #
+    # @option params [String] :next_token
+    #   A token you can use to get the next page of dashboard results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of dashboards to display on a single page.
+    #
+    # @return [Types::ListDashboardsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDashboardsResponse#dashboards #dashboards} => Array&lt;Types::DashboardDetail&gt;
+    #   * {Types::ListDashboardsResponse#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_dashboards({
+    #     name_prefix: "DashboardName",
+    #     type: "MANAGED", # accepts MANAGED, CUSTOM
+    #     next_token: "PaginationToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.dashboards #=> Array
+    #   resp.dashboards[0].dashboard_arn #=> String
+    #   resp.dashboards[0].type #=> String, one of "MANAGED", "CUSTOM"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/ListDashboards AWS API Documentation
+    #
+    # @overload list_dashboards(params = {})
+    # @param [Hash] params ({})
+    def list_dashboards(params = {}, options = {})
+      req = build_request(:list_dashboards, params)
       req.send_request(options)
     end
 
@@ -2299,11 +2607,11 @@ module Aws::CloudTrail
     #   error. The default is 3600 seconds.
     #
     # @option params [String] :data_type
-    #   Type of datapoints to return. Valid values are `NonZeroData` and
+    #   Type of data points to return. Valid values are `NonZeroData` and
     #   `FillWithZeros`. The default is `NonZeroData`.
     #
     # @option params [Integer] :max_results
-    #   The maximum number of datapoints to return. Valid values are integers
+    #   The maximum number of data points to return. Valid values are integers
     #   from 1 to 21600. The default value is 21600.
     #
     # @option params [String] :next_token
@@ -2484,18 +2792,21 @@ module Aws::CloudTrail
       req.send_request(options)
     end
 
-    # Lists the tags for the specified trails, event data stores, or
-    # channels in the current Region.
+    # Lists the tags for the specified trails, event data stores,
+    # dashboards, or channels in the current Region.
     #
     # @option params [required, Array<String>] :resource_id_list
-    #   Specifies a list of trail, event data store, or channel ARNs whose
-    #   tags will be listed. The list has a limit of 20 ARNs.
+    #   Specifies a list of trail, event data store, dashboard, or channel
+    #   ARNs whose tags will be listed. The list has a limit of 20 ARNs.
     #
     #   Example trail ARN format:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail`
     #
     #   Example event data store ARN format:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE`
+    #
+    #   Example dashboard ARN format:
+    #   `arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash`
     #
     #   Example channel ARN format:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890`
@@ -3019,39 +3330,44 @@ module Aws::CloudTrail
       req.send_request(options)
     end
 
-    # Attaches a resource-based permission policy to a CloudTrail channel
-    # that is used for an integration with an event source outside of Amazon
-    # Web Services. For more information about resource-based policies, see
-    # [CloudTrail resource-based policy examples][1] in the *CloudTrail User
-    # Guide*.
+    # Attaches a resource-based permission policy to a CloudTrail event data
+    # store, dashboard, or channel. For more information about
+    # resource-based policies, see [CloudTrail resource-based policy
+    # examples][1] in the *CloudTrail User Guide*.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html
     #
     # @option params [required, String] :resource_arn
-    #   The Amazon Resource Name (ARN) of the CloudTrail channel attached to
-    #   the resource-based policy. The following is the format of a resource
-    #   ARN: `arn:aws:cloudtrail:us-east-2:123456789012:channel/MyChannel`.
+    #   The Amazon Resource Name (ARN) of the CloudTrail event data store,
+    #   dashboard, or channel attached to the resource-based policy.
+    #
+    #   Example event data store ARN format:
+    #   `arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE`
+    #
+    #   Example dashboard ARN format:
+    #   `arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash`
+    #
+    #   Example channel ARN format:
+    #   `arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890`
     #
     # @option params [required, String] :resource_policy
     #   A JSON-formatted string for an Amazon Web Services resource-based
     #   policy.
     #
-    #   The following are requirements for the resource policy:
+    #   For example resource-based policies, see [CloudTrail resource-based
+    #   policy examples][1] in the *CloudTrail User Guide*.
     #
-    #   * Contains only one action: cloudtrail-data:PutAuditEvents
     #
-    #   * Contains at least one statement. The policy can have a maximum of 20
-    #     statements.
     #
-    #   * Each statement contains at least one principal. A statement can have
-    #     a maximum of 50 principals.
+    #   [1]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html
     #
     # @return [Types::PutResourcePolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::PutResourcePolicyResponse#resource_arn #resource_arn} => String
     #   * {Types::PutResourcePolicyResponse#resource_policy #resource_policy} => String
+    #   * {Types::PutResourcePolicyResponse#delegated_admin_resource_policy #delegated_admin_resource_policy} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -3064,6 +3380,7 @@ module Aws::CloudTrail
     #
     #   resp.resource_arn #=> String
     #   resp.resource_policy #=> String
+    #   resp.delegated_admin_resource_policy #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/PutResourcePolicy AWS API Documentation
     #
@@ -3102,17 +3419,21 @@ module Aws::CloudTrail
       req.send_request(options)
     end
 
-    # Removes the specified tags from a trail, event data store, or channel.
+    # Removes the specified tags from a trail, event data store, dashboard,
+    # or channel.
     #
     # @option params [required, String] :resource_id
-    #   Specifies the ARN of the trail, event data store, or channel from
-    #   which tags should be removed.
+    #   Specifies the ARN of the trail, event data store, dashboard, or
+    #   channel from which tags should be removed.
     #
     #   Example trail ARN format:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:trail/MyTrail`
     #
     #   Example event data store ARN format:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:eventdatastore/EXAMPLE-f852-4e8f-8bd1-bcf6cEXAMPLE`
+    #
+    #   Example dashboard ARN format:
+    #   `arn:aws:cloudtrail:us-east-1:123456789012:dashboard/exampleDash`
     #
     #   Example channel ARN format:
     #   `arn:aws:cloudtrail:us-east-2:123456789012:channel/01234567890`
@@ -3210,6 +3531,59 @@ module Aws::CloudTrail
     # @param [Hash] params ({})
     def restore_event_data_store(params = {}, options = {})
       req = build_request(:restore_event_data_store, params)
+      req.send_request(options)
+    end
+
+    # Starts a refresh of the specified dashboard.
+    #
+    # Each time a dashboard is refreshed, CloudTrail runs queries to
+    # populate the dashboard's widgets. CloudTrail must be granted
+    # permissions to run the `StartQuery` operation on your behalf. To
+    # provide permissions, run the `PutResourcePolicy` operation to attach a
+    # resource-based policy to each event data store. For more information,
+    # see [Example: Allow CloudTrail to run queries to populate a
+    # dashboard][1] in the *CloudTrail User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html#security_iam_resource-based-policy-examples-eds-dashboard
+    #
+    # @option params [required, String] :dashboard_id
+    #   The name or ARN of the dashboard.
+    #
+    # @option params [Hash<String,String>] :query_parameter_values
+    #   The query parameter values for the dashboard
+    #
+    #   For custom dashboards, the following query parameters are valid:
+    #   `$StartTime$`, `$EndTime$`, and `$Period$`.
+    #
+    #   For managed dashboards, the following query parameters are valid:
+    #   `$StartTime$`, `$EndTime$`, `$Period$`, and `$EventDataStoreId$`. The
+    #   `$EventDataStoreId$` query parameter is required.
+    #
+    # @return [Types::StartDashboardRefreshResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartDashboardRefreshResponse#refresh_id #refresh_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_dashboard_refresh({
+    #     dashboard_id: "DashboardArn", # required
+    #     query_parameter_values: {
+    #       "QueryParameterKey" => "QueryParameterValue",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.refresh_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/StartDashboardRefresh AWS API Documentation
+    #
+    # @overload start_dashboard_refresh(params = {})
+    # @param [Hash] params ({})
+    def start_dashboard_refresh(params = {}, options = {})
+      req = build_request(:start_dashboard_refresh, params)
       req.send_request(options)
     end
 
@@ -3400,9 +3774,13 @@ module Aws::CloudTrail
     # @option params [Array<String>] :query_parameters
     #   The query parameters for the specified `QueryAlias`.
     #
+    # @option params [String] :event_data_store_owner_account_id
+    #   The account ID of the event data store owner.
+    #
     # @return [Types::StartQueryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::StartQueryResponse#query_id #query_id} => String
+    #   * {Types::StartQueryResponse#event_data_store_owner_account_id #event_data_store_owner_account_id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -3411,11 +3789,13 @@ module Aws::CloudTrail
     #     delivery_s3_uri: "DeliveryS3Uri",
     #     query_alias: "QueryAlias",
     #     query_parameters: ["QueryParameter"],
+    #     event_data_store_owner_account_id: "AccountId",
     #   })
     #
     # @example Response structure
     #
     #   resp.query_id #=> String
+    #   resp.event_data_store_owner_account_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/StartQuery AWS API Documentation
     #
@@ -3585,6 +3965,114 @@ module Aws::CloudTrail
     # @param [Hash] params ({})
     def update_channel(params = {}, options = {})
       req = build_request(:update_channel, params)
+      req.send_request(options)
+    end
+
+    # Updates the specified dashboard.
+    #
+    # To set a refresh schedule, CloudTrail must be granted permissions to
+    # run the `StartDashboardRefresh` operation to refresh the dashboard on
+    # your behalf. To provide permissions, run the `PutResourcePolicy`
+    # operation to attach a resource-based policy to the dashboard. For more
+    # information, see [ Resource-based policy example for a dashboard][1]
+    # in the *CloudTrail User Guide*.
+    #
+    # CloudTrail runs queries to populate the dashboard's widgets during a
+    # manual or scheduled refresh. CloudTrail must be granted permissions to
+    # run the `StartQuery` operation on your behalf. To provide permissions,
+    # run the `PutResourcePolicy` operation to attach a resource-based
+    # policy to each event data store. For more information, see [Example:
+    # Allow CloudTrail to run queries to populate a dashboard][2] in the
+    # *CloudTrail User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html#security_iam_resource-based-policy-examples-dashboards
+    # [2]: https://docs.aws.amazon.com/awscloudtrail/latest/userguide/security_iam_resource-based-policy-examples.html#security_iam_resource-based-policy-examples-eds-dashboard
+    #
+    # @option params [required, String] :dashboard_id
+    #   The name or ARN of the dashboard.
+    #
+    # @option params [Array<Types::RequestWidget>] :widgets
+    #   An array of widgets for the dashboard. A custom dashboard can have a
+    #   maximum of 10 widgets.
+    #
+    #   To add new widgets, pass in an array that includes the existing
+    #   widgets along with any new widgets. Run the `GetDashboard` operation
+    #   to get the list of widgets for the dashboard.
+    #
+    #   To remove widgets, pass in an array that includes the existing widgets
+    #   minus the widgets you want removed.
+    #
+    # @option params [Types::RefreshSchedule] :refresh_schedule
+    #   The refresh schedule configuration for the dashboard.
+    #
+    # @option params [Boolean] :termination_protection_enabled
+    #   Specifies whether termination protection is enabled for the dashboard.
+    #   If termination protection is enabled, you cannot delete the dashboard
+    #   until termination protection is disabled.
+    #
+    # @return [Types::UpdateDashboardResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateDashboardResponse#dashboard_arn #dashboard_arn} => String
+    #   * {Types::UpdateDashboardResponse#name #name} => String
+    #   * {Types::UpdateDashboardResponse#type #type} => String
+    #   * {Types::UpdateDashboardResponse#widgets #widgets} => Array&lt;Types::Widget&gt;
+    #   * {Types::UpdateDashboardResponse#refresh_schedule #refresh_schedule} => Types::RefreshSchedule
+    #   * {Types::UpdateDashboardResponse#termination_protection_enabled #termination_protection_enabled} => Boolean
+    #   * {Types::UpdateDashboardResponse#created_timestamp #created_timestamp} => Time
+    #   * {Types::UpdateDashboardResponse#updated_timestamp #updated_timestamp} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_dashboard({
+    #     dashboard_id: "DashboardArn", # required
+    #     widgets: [
+    #       {
+    #         query_statement: "QueryStatement", # required
+    #         query_parameters: ["QueryParameter"],
+    #         view_properties: { # required
+    #           "ViewPropertiesKey" => "ViewPropertiesValue",
+    #         },
+    #       },
+    #     ],
+    #     refresh_schedule: {
+    #       frequency: {
+    #         unit: "HOURS", # accepts HOURS, DAYS
+    #         value: 1,
+    #       },
+    #       status: "ENABLED", # accepts ENABLED, DISABLED
+    #       time_of_day: "TimeOfDay",
+    #     },
+    #     termination_protection_enabled: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.dashboard_arn #=> String
+    #   resp.name #=> String
+    #   resp.type #=> String, one of "MANAGED", "CUSTOM"
+    #   resp.widgets #=> Array
+    #   resp.widgets[0].query_alias #=> String
+    #   resp.widgets[0].query_statement #=> String
+    #   resp.widgets[0].query_parameters #=> Array
+    #   resp.widgets[0].query_parameters[0] #=> String
+    #   resp.widgets[0].view_properties #=> Hash
+    #   resp.widgets[0].view_properties["ViewPropertiesKey"] #=> String
+    #   resp.refresh_schedule.frequency.unit #=> String, one of "HOURS", "DAYS"
+    #   resp.refresh_schedule.frequency.value #=> Integer
+    #   resp.refresh_schedule.status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.refresh_schedule.time_of_day #=> String
+    #   resp.termination_protection_enabled #=> Boolean
+    #   resp.created_timestamp #=> Time
+    #   resp.updated_timestamp #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudtrail-2013-11-01/UpdateDashboard AWS API Documentation
+    #
+    # @overload update_dashboard(params = {})
+    # @param [Hash] params ({})
+    def update_dashboard(params = {}, options = {})
+      req = build_request(:update_dashboard, params)
       req.send_request(options)
     end
 
@@ -4025,7 +4513,7 @@ module Aws::CloudTrail
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudtrail'
-      context[:gem_version] = '1.95.0'
+      context[:gem_version] = '1.96.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

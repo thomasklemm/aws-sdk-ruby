@@ -167,6 +167,8 @@ module Aws
       end
       class S3BucketDoesNotExistException < ::Aws::Errors::ServiceError
       end
+      class ServiceQuotaExceededException < ::Aws::Errors::ServiceError
+      end
       class TagsLimitExceededException < ::Aws::Errors::ServiceError
       end
       class ThrottlingException < ::Aws::Errors::ServiceError

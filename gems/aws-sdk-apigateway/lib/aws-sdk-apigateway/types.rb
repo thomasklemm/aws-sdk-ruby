@@ -631,6 +631,11 @@ module Aws::APIGateway
     #   The domain name of the BasePathMapping resource to create.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
     # @!attribute [rw] base_path
     #   The base path name that callers of the API must provide as part of
     #   the URL after the domain name. This value must be unique for all of
@@ -650,6 +655,7 @@ module Aws::APIGateway
     #
     class CreateBasePathMappingRequest < Struct.new(
       :domain_name,
+      :domain_name_id,
       :base_path,
       :rest_api_id,
       :stage)
@@ -776,6 +782,34 @@ module Aws::APIGateway
       include Aws::Structure
     end
 
+    # @!attribute [rw] domain_name_arn
+    #   The ARN of the domain name.
+    #   @return [String]
+    #
+    # @!attribute [rw] access_association_source_type
+    #   The type of the domain name access association source.
+    #   @return [String]
+    #
+    # @!attribute [rw] access_association_source
+    #   The identifier of the domain name access association source. For a
+    #   VPCE, the value is the VPC endpoint ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The key-value map of strings. The valid character set is
+    #   \[a-zA-Z+-=.\_:/\]. The tag key can be up to 128 characters and must
+    #   not start with `aws:`. The tag value can be up to 256 characters.
+    #   @return [Hash<String,String>]
+    #
+    class CreateDomainNameAccessAssociationRequest < Struct.new(
+      :domain_name_arn,
+      :access_association_source_type,
+      :access_association_source,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A request to create a new domain name.
     #
     # @!attribute [rw] domain_name
@@ -784,13 +818,13 @@ module Aws::APIGateway
     #
     # @!attribute [rw] certificate_name
     #   The user-friendly name of the certificate that will be used by
-    #   edge-optimized endpoint for this domain name.
+    #   edge-optimized endpoint or private endpoint for this domain name.
     #   @return [String]
     #
     # @!attribute [rw] certificate_body
     #   \[Deprecated\] The body of the server certificate that will be used
-    #   by edge-optimized endpoint for this domain name provided by your
-    #   certificate authority.
+    #   by edge-optimized endpoint or private endpoint for this domain name
+    #   provided by your certificate authority.
     #   @return [String]
     #
     # @!attribute [rw] certificate_private_key
@@ -811,8 +845,8 @@ module Aws::APIGateway
     #
     # @!attribute [rw] certificate_arn
     #   The reference to an Amazon Web Services-managed certificate that
-    #   will be used by edge-optimized endpoint for this domain name.
-    #   Certificate Manager is the only supported source.
+    #   will be used by edge-optimized endpoint or private endpoint for this
+    #   domain name. Certificate Manager is the only supported source.
     #   @return [String]
     #
     # @!attribute [rw] regional_certificate_name
@@ -856,6 +890,12 @@ module Aws::APIGateway
     #   as the regionalCertificateArn.
     #   @return [String]
     #
+    # @!attribute [rw] policy
+    #   A stringified JSON policy document that applies to the `execute-api`
+    #   service for this DomainName regardless of the caller and Method
+    #   configuration. Supported only for private custom domain names.
+    #   @return [String]
+    #
     class CreateDomainNameRequest < Struct.new(
       :domain_name,
       :certificate_name,
@@ -869,7 +909,8 @@ module Aws::APIGateway
       :tags,
       :security_policy,
       :mutual_tls_authentication,
-      :ownership_verification_certificate_arn)
+      :ownership_verification_certificate_arn,
+      :policy)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1249,6 +1290,11 @@ module Aws::APIGateway
     #   The domain name of the BasePathMapping resource to delete.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
     # @!attribute [rw] base_path
     #   The base path name of the BasePathMapping resource to delete.
     #
@@ -1257,6 +1303,7 @@ module Aws::APIGateway
     #
     class DeleteBasePathMappingRequest < Struct.new(
       :domain_name,
+      :domain_name_id,
       :base_path)
       SENSITIVE = []
       include Aws::Structure
@@ -1325,14 +1372,30 @@ module Aws::APIGateway
       include Aws::Structure
     end
 
+    # @!attribute [rw] domain_name_access_association_arn
+    #   The ARN of the domain name access association resource.
+    #   @return [String]
+    #
+    class DeleteDomainNameAccessAssociationRequest < Struct.new(
+      :domain_name_access_association_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A request to delete the DomainName resource.
     #
     # @!attribute [rw] domain_name
     #   The name of the DomainName resource to be deleted.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
     class DeleteDomainNameRequest < Struct.new(
-      :domain_name)
+      :domain_name,
+      :domain_name_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1831,21 +1894,30 @@ module Aws::APIGateway
     #   `my-api.example.com`.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain_name_arn
+    #   The ARN of the domain name. Supported only for private custom domain
+    #   names.
+    #   @return [String]
+    #
     # @!attribute [rw] certificate_name
     #   The name of the certificate that will be used by edge-optimized
-    #   endpoint for this domain name.
+    #   endpoint or private endpoint for this domain name.
     #   @return [String]
     #
     # @!attribute [rw] certificate_arn
     #   The reference to an Amazon Web Services-managed certificate that
-    #   will be used by edge-optimized endpoint for this domain name.
-    #   Certificate Manager is the only supported source.
+    #   will be used by edge-optimized endpoint or private endpoint for this
+    #   domain name. Certificate Manager is the only supported source.
     #   @return [String]
     #
     # @!attribute [rw] certificate_upload_date
     #   The timestamp when the certificate that was used by edge-optimized
-    #   endpoint for this domain name was uploaded. API Gateway doesn't
-    #   change this value if you update the certificate.
+    #   endpoint or private endpoint for this domain name was uploaded.
     #   @return [Time]
     #
     # @!attribute [rw] regional_domain_name
@@ -1929,8 +2001,24 @@ module Aws::APIGateway
     #   as the regionalCertificateArn.
     #   @return [String]
     #
+    # @!attribute [rw] management_policy
+    #   A stringified JSON policy document that applies to the API Gateway
+    #   Management service for this DomainName. This policy document
+    #   controls access for access association sources to create domain name
+    #   access associations with this DomainName. Supported only for private
+    #   custom domain names.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy
+    #   A stringified JSON policy document that applies to the `execute-api`
+    #   service for this DomainName regardless of the caller and Method
+    #   configuration. Supported only for private custom domain names.
+    #   @return [String]
+    #
     class DomainName < Struct.new(
       :domain_name,
+      :domain_name_id,
+      :domain_name_arn,
       :certificate_name,
       :certificate_arn,
       :certificate_upload_date,
@@ -1946,7 +2034,60 @@ module Aws::APIGateway
       :security_policy,
       :tags,
       :mutual_tls_authentication,
-      :ownership_verification_certificate_arn)
+      :ownership_verification_certificate_arn,
+      :management_policy,
+      :policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a domain name access association between an access
+    # association source and a private custom domain name. With a domain
+    # name access association, an access association source can invoke a
+    # private custom domain name while isolated from the public internet.
+    #
+    # @!attribute [rw] domain_name_access_association_arn
+    #   The ARN of the domain name access association resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain_name_arn
+    #   The ARN of the domain name.
+    #   @return [String]
+    #
+    # @!attribute [rw] access_association_source_type
+    #   The type of the domain name access association source.
+    #   @return [String]
+    #
+    # @!attribute [rw] access_association_source
+    #   The ARN of the domain name access association source. For a VPCE,
+    #   the ARN must be a VPC endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The collection of tags. Each tag element is associated with a given
+    #   resource.
+    #   @return [Hash<String,String>]
+    #
+    class DomainNameAccessAssociation < Struct.new(
+      :domain_name_access_association_arn,
+      :domain_name_arn,
+      :access_association_source_type,
+      :access_association_source,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] position
+    #   @return [String]
+    #
+    # @!attribute [rw] items
+    #   The current page of elements from this collection.
+    #   @return [Array<Types::DomainNameAccessAssociation>]
+    #
+    class DomainNameAccessAssociations < Struct.new(
+      :position,
+      :items)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2229,6 +2370,11 @@ module Aws::APIGateway
     #   The domain name of the BasePathMapping resource to be described.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
     # @!attribute [rw] base_path
     #   The base path name that callers of the API must provide as part of
     #   the URL after the domain name. This value must be unique for all of
@@ -2238,6 +2384,7 @@ module Aws::APIGateway
     #
     class GetBasePathMappingRequest < Struct.new(
       :domain_name,
+      :domain_name_id,
       :base_path)
       SENSITIVE = []
       include Aws::Structure
@@ -2248,6 +2395,11 @@ module Aws::APIGateway
     #
     # @!attribute [rw] domain_name
     #   The domain name of a BasePathMapping resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
     #   @return [String]
     #
     # @!attribute [rw] position
@@ -2261,6 +2413,7 @@ module Aws::APIGateway
     #
     class GetBasePathMappingsRequest < Struct.new(
       :domain_name,
+      :domain_name_id,
       :position,
       :limit)
       SENSITIVE = []
@@ -2460,14 +2613,45 @@ module Aws::APIGateway
       include Aws::Structure
     end
 
+    # @!attribute [rw] position
+    #   The current pagination position in the paged result set.
+    #   @return [String]
+    #
+    # @!attribute [rw] limit
+    #   The maximum number of returned results per page. The default value
+    #   is 25 and the maximum value is 500.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] resource_owner
+    #   The owner of the domain name access association. Use `SELF` to only
+    #   list the domain name access associations owned by your own account.
+    #   Use `OTHER_ACCOUNTS` to list the domain name access associations
+    #   with your private custom domain names that are owned by other AWS
+    #   accounts.
+    #   @return [String]
+    #
+    class GetDomainNameAccessAssociationsRequest < Struct.new(
+      :position,
+      :limit,
+      :resource_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Request to get the name of a DomainName resource.
     #
     # @!attribute [rw] domain_name
     #   The name of the DomainName resource.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
     class GetDomainNameRequest < Struct.new(
-      :domain_name)
+      :domain_name,
+      :domain_name_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2483,9 +2667,14 @@ module Aws::APIGateway
     #   is 25 and the maximum value is 500.
     #   @return [Integer]
     #
+    # @!attribute [rw] resource_owner
+    #   The owner of the domain name access association.
+    #   @return [String]
+    #
     class GetDomainNamesRequest < Struct.new(
       :position,
-      :limit)
+      :limit,
+      :resource_owner)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4391,6 +4580,21 @@ module Aws::APIGateway
       include Aws::Structure
     end
 
+    # @!attribute [rw] domain_name_access_association_arn
+    #   The ARN of the domain name access association resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain_name_arn
+    #   The ARN of the domain name.
+    #   @return [String]
+    #
+    class RejectDomainNameAccessAssociationRequest < Struct.new(
+      :domain_name_access_association_arn,
+      :domain_name_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A set of validation rules for incoming Method requests.
     #
     # @!attribute [rw] id
@@ -5257,6 +5461,11 @@ module Aws::APIGateway
     #   The domain name of the BasePathMapping resource to change.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
     # @!attribute [rw] base_path
     #   The base path of the BasePathMapping resource to change.
     #
@@ -5274,6 +5483,7 @@ module Aws::APIGateway
     #
     class UpdateBasePathMappingRequest < Struct.new(
       :domain_name,
+      :domain_name_id,
       :base_path,
       :patch_operations)
       SENSITIVE = []
@@ -5391,6 +5601,11 @@ module Aws::APIGateway
     #   The name of the DomainName resource to be changed.
     #   @return [String]
     #
+    # @!attribute [rw] domain_name_id
+    #   The identifier for the domain name resource. Supported only for
+    #   private custom domain names.
+    #   @return [String]
+    #
     # @!attribute [rw] patch_operations
     #   For more information about supported patch operations, see [Patch
     #   Operations][1].
@@ -5402,6 +5617,7 @@ module Aws::APIGateway
     #
     class UpdateDomainNameRequest < Struct.new(
       :domain_name,
+      :domain_name_id,
       :patch_operations)
       SENSITIVE = []
       include Aws::Structure

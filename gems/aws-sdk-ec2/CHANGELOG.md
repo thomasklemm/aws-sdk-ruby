@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.493.0 (2024-11-21)
+------------------
+
+* Feature - Adds support for requesting future-dated Capacity Reservations with a minimum commitment duration, enabling IPAM for organizational units within AWS Organizations, reserving EC2 Capacity Blocks that start in 30 minutes, and extending the end date of existing Capacity Blocks.
+
 1.492.0 (2024-11-20)
 ------------------
 

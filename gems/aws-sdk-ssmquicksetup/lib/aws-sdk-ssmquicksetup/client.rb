@@ -525,6 +525,61 @@ module Aws::SSMQuickSetup
       req.send_request(options)
     end
 
+    # Returns details about the specified configuration.
+    #
+    # @option params [required, String] :configuration_id
+    #   A service generated identifier for the configuration.
+    #
+    # @return [Types::GetConfigurationOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetConfigurationOutput#account #account} => String
+    #   * {Types::GetConfigurationOutput#configuration_definition_id #configuration_definition_id} => String
+    #   * {Types::GetConfigurationOutput#created_at #created_at} => Time
+    #   * {Types::GetConfigurationOutput#id #id} => String
+    #   * {Types::GetConfigurationOutput#last_modified_at #last_modified_at} => Time
+    #   * {Types::GetConfigurationOutput#manager_arn #manager_arn} => String
+    #   * {Types::GetConfigurationOutput#parameters #parameters} => Hash&lt;String,String&gt;
+    #   * {Types::GetConfigurationOutput#region #region} => String
+    #   * {Types::GetConfigurationOutput#status_summaries #status_summaries} => Array&lt;Types::StatusSummary&gt;
+    #   * {Types::GetConfigurationOutput#type #type} => String
+    #   * {Types::GetConfigurationOutput#type_version #type_version} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_configuration({
+    #     configuration_id: "GetConfigurationInputConfigurationIdString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.account #=> String
+    #   resp.configuration_definition_id #=> String
+    #   resp.created_at #=> Time
+    #   resp.id #=> String
+    #   resp.last_modified_at #=> Time
+    #   resp.manager_arn #=> String
+    #   resp.parameters #=> Hash
+    #   resp.parameters["ConfigurationParametersMapKeyString"] #=> String
+    #   resp.region #=> String
+    #   resp.status_summaries #=> Array
+    #   resp.status_summaries[0].last_updated_at #=> Time
+    #   resp.status_summaries[0].status #=> String, one of "INITIALIZING", "DEPLOYING", "SUCCEEDED", "DELETING", "STOPPING", "FAILED", "STOPPED", "DELETE_FAILED", "STOP_FAILED", "NONE"
+    #   resp.status_summaries[0].status_details #=> Hash
+    #   resp.status_summaries[0].status_details["String"] #=> String
+    #   resp.status_summaries[0].status_message #=> String
+    #   resp.status_summaries[0].status_type #=> String, one of "Deployment", "AsyncExecutions"
+    #   resp.type #=> String
+    #   resp.type_version #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-quicksetup-2018-05-10/GetConfiguration AWS API Documentation
+    #
+    # @overload get_configuration(params = {})
+    # @param [Hash] params ({})
+    def get_configuration(params = {}, options = {})
+      req = build_request(:get_configuration, params)
+      req.send_request(options)
+    end
+
     # Returns a configuration manager.
     #
     # @option params [required, String] :manager_arn
@@ -660,6 +715,78 @@ module Aws::SSMQuickSetup
     # @param [Hash] params ({})
     def list_configuration_managers(params = {}, options = {})
       req = build_request(:list_configuration_managers, params)
+      req.send_request(options)
+    end
+
+    # Returns configurations deployed by Quick Setup in the requesting
+    # Amazon Web Services account and Amazon Web Services Region.
+    #
+    # @option params [String] :configuration_definition_id
+    #   The ID of the configuration definition.
+    #
+    # @option params [Array<Types::Filter>] :filters
+    #   Filters the results returned by the request.
+    #
+    # @option params [String] :manager_arn
+    #   The ARN of the configuration manager.
+    #
+    # @option params [Integer] :max_items
+    #   Specifies the maximum number of configurations that are returned by
+    #   the request.
+    #
+    # @option params [String] :starting_token
+    #   The token to use when requesting a specific set of items from a list.
+    #
+    # @return [Types::ListConfigurationsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListConfigurationsOutput#configurations_list #configurations_list} => Array&lt;Types::ConfigurationSummary&gt;
+    #   * {Types::ListConfigurationsOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_configurations({
+    #     configuration_definition_id: "ListConfigurationsInputConfigurationDefinitionIdString",
+    #     filters: [
+    #       {
+    #         key: "FilterKeyString", # required
+    #         values: ["FilterValuesMemberString"], # required
+    #       },
+    #     ],
+    #     manager_arn: "ListConfigurationsInputManagerArnString",
+    #     max_items: 1,
+    #     starting_token: "ListConfigurationsInputStartingTokenString",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.configurations_list #=> Array
+    #   resp.configurations_list[0].account #=> String
+    #   resp.configurations_list[0].configuration_definition_id #=> String
+    #   resp.configurations_list[0].created_at #=> Time
+    #   resp.configurations_list[0].first_class_parameters #=> Hash
+    #   resp.configurations_list[0].first_class_parameters["ConfigurationParametersMapKeyString"] #=> String
+    #   resp.configurations_list[0].id #=> String
+    #   resp.configurations_list[0].manager_arn #=> String
+    #   resp.configurations_list[0].region #=> String
+    #   resp.configurations_list[0].status_summaries #=> Array
+    #   resp.configurations_list[0].status_summaries[0].last_updated_at #=> Time
+    #   resp.configurations_list[0].status_summaries[0].status #=> String, one of "INITIALIZING", "DEPLOYING", "SUCCEEDED", "DELETING", "STOPPING", "FAILED", "STOPPED", "DELETE_FAILED", "STOP_FAILED", "NONE"
+    #   resp.configurations_list[0].status_summaries[0].status_details #=> Hash
+    #   resp.configurations_list[0].status_summaries[0].status_details["String"] #=> String
+    #   resp.configurations_list[0].status_summaries[0].status_message #=> String
+    #   resp.configurations_list[0].status_summaries[0].status_type #=> String, one of "Deployment", "AsyncExecutions"
+    #   resp.configurations_list[0].type #=> String
+    #   resp.configurations_list[0].type_version #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-quicksetup-2018-05-10/ListConfigurations AWS API Documentation
+    #
+    # @overload list_configurations(params = {})
+    # @param [Hash] params ({})
+    def list_configurations(params = {}, options = {})
+      req = build_request(:list_configurations, params)
       req.send_request(options)
     end
 
@@ -884,7 +1011,7 @@ module Aws::SSMQuickSetup
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ssmquicksetup'
-      context[:gem_version] = '1.8.0'
+      context[:gem_version] = '1.9.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

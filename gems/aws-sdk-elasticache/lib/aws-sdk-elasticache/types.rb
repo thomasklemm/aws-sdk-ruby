@@ -369,7 +369,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] engine
@@ -814,7 +814,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #
     # @!attribute [rw] cache_node_id
     #   The cache node identifier. A node ID is a numeric identifier (0001,
@@ -916,7 +916,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Clusters.Rebooting.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Clusters.Rebooting.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/CacheNodeTypeSpecificParameter AWS API Documentation
@@ -1450,7 +1450,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/shard-find-id.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/shard-find-id.html
     #   @return [String]
     #
     # @!attribute [rw] new_replica_count
@@ -1567,8 +1567,8 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-exporting.html#backups-exporting-grant-access
-    #   [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-exporting.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-grant-access
+    #   [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html
     #   @return [String]
     #
     # @!attribute [rw] kms_key_id
@@ -1812,7 +1812,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] engine
@@ -1834,7 +1834,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #   @return [String]
     #
     # @!attribute [rw] cache_parameter_group_name
@@ -1856,7 +1856,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SubnetGroups.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SubnetGroups.html
     #   @return [String]
     #
     # @!attribute [rw] cache_security_group_names
@@ -2239,7 +2239,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Redis-Global-Datastores-CLI.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-CLI.html
     #   @return [String]
     #
     # @!attribute [rw] global_replication_group_description
@@ -2333,7 +2333,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html
     #   @return [Boolean]
     #
     # @!attribute [rw] num_cache_clusters
@@ -2516,7 +2516,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] engine
@@ -2538,7 +2538,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #   @return [String]
     #
     # @!attribute [rw] cache_parameter_group_name
@@ -2567,7 +2567,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SubnetGroups.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SubnetGroups.html
     #   @return [String]
     #
     # @!attribute [rw] cache_security_group_names
@@ -2757,7 +2757,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/data-tiering.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/data-tiering.html
     #   @return [Boolean]
     #
     # @!attribute [rw] network_type
@@ -4218,7 +4218,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] duration
@@ -4399,7 +4399,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] duration
@@ -5478,7 +5478,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/ErrorMessages.html#ErrorMessages.INSUFFICIENT_CACHE_CLUSTER_CAPACITY
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/ErrorMessages.html#ErrorMessages.INSUFFICIENT_CACHE_CLUSTER_CAPACITY
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/InsufficientCacheClusterCapacityFault AWS API Documentation
     #
@@ -5924,7 +5924,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/CacheNodes.SupportedTypes.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html
     #   @return [Array<String>]
     #
     # @!attribute [rw] cache_security_group_names
@@ -6029,7 +6029,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #   @return [String]
     #
     # @!attribute [rw] auto_minor_version_upgrade
@@ -6095,7 +6095,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/auth.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/auth.html
     #   @return [String]
     #
     # @!attribute [rw] log_delivery_configurations
@@ -6442,7 +6442,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #   @return [String]
     #
     # @!attribute [rw] auto_minor_version_upgrade
@@ -6513,7 +6513,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/auth.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/auth.html
     #   @return [String]
     #
     # @!attribute [rw] user_group_ids_to_add
@@ -6808,12 +6808,17 @@ module Aws::ElastiCache
     #   The list of user IDs to remove from the user group.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] engine
+    #   The engine for a user group.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ModifyUserGroupMessage AWS API Documentation
     #
     class ModifyUserGroupMessage < Struct.new(
       :user_group_id,
       :user_ids_to_add,
-      :user_ids_to_remove)
+      :user_ids_to_remove,
+      :engine)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6842,6 +6847,10 @@ module Aws::ElastiCache
     #   Specifies how to authenticate the user.
     #   @return [Types::AuthenticationMode]
     #
+    # @!attribute [rw] engine
+    #   The engine for a specific user.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/ModifyUserMessage AWS API Documentation
     #
     class ModifyUserMessage < Struct.new(
@@ -6850,7 +6859,8 @@ module Aws::ElastiCache
       :append_access_string,
       :passwords,
       :no_password_required,
-      :authentication_mode)
+      :authentication_mode,
+      :engine)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7224,7 +7234,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Clusters.Rebooting.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Clusters.Rebooting.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/Parameter AWS API Documentation
@@ -7647,7 +7657,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html
     #   @return [String]
     #
     # @!attribute [rw] configuration_endpoint
@@ -7757,7 +7767,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/data-tiering.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/data-tiering.html
     #   @return [String]
     #
     # @!attribute [rw] auto_minor_version_upgrade
@@ -8082,7 +8092,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] start_time
@@ -8306,7 +8316,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] duration
@@ -8779,7 +8789,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/elasticache-compliance.html#elasticache-compliance-self-service
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/elasticache-compliance.html#elasticache-compliance-self-service
     #   @return [Time]
     #
     # @!attribute [rw] service_update_status
@@ -9017,7 +9027,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #   @return [String]
     #
     # @!attribute [rw] engine
@@ -9155,7 +9165,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/data-tiering.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/data-tiering.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticache-2015-02-02/Snapshot AWS API Documentation
@@ -9538,7 +9548,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/elasticache-compliance.html#elasticache-compliance-self-service
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/elasticache-compliance.html#elasticache-compliance-self-service
     #   @return [Time]
     #
     # @!attribute [rw] service_update_type

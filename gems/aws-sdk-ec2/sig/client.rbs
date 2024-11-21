@@ -1082,7 +1082,10 @@ module Aws
                                          ],
                                          ?dry_run: bool,
                                          ?outpost_arn: ::String,
-                                         ?placement_group_arn: ::String
+                                         ?placement_group_arn: ::String,
+                                         ?start_date: ::Time,
+                                         ?commitment_duration: ::Integer,
+                                         ?delivery_preference: ("fixed" | "incremental")
                                        ) -> _CreateCapacityReservationResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCapacityReservationResponseSuccess
 
@@ -5164,6 +5167,41 @@ module Aws
                                 ) -> _DescribeByoipCidrsResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeByoipCidrsResponseSuccess
 
+      interface _DescribeCapacityBlockExtensionHistoryResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeCapacityBlockExtensionHistoryResult]
+        def capacity_block_extensions: () -> ::Array[Types::CapacityBlockExtension]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#describe_capacity_block_extension_history-instance_method
+      def describe_capacity_block_extension_history: (
+                                                       ?capacity_reservation_ids: Array[::String],
+                                                       ?next_token: ::String,
+                                                       ?max_results: ::Integer,
+                                                       ?filters: Array[
+                                                         {
+                                                           name: ::String?,
+                                                           values: Array[::String]?
+                                                         },
+                                                       ],
+                                                       ?dry_run: bool
+                                                     ) -> _DescribeCapacityBlockExtensionHistoryResponseSuccess
+                                                   | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeCapacityBlockExtensionHistoryResponseSuccess
+
+      interface _DescribeCapacityBlockExtensionOfferingsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeCapacityBlockExtensionOfferingsResult]
+        def capacity_block_extension_offerings: () -> ::Array[Types::CapacityBlockExtensionOffering]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#describe_capacity_block_extension_offerings-instance_method
+      def describe_capacity_block_extension_offerings: (
+                                                         ?dry_run: bool,
+                                                         capacity_block_extension_duration_hours: ::Integer,
+                                                         capacity_reservation_id: ::String,
+                                                         ?next_token: ::String,
+                                                         ?max_results: ::Integer
+                                                       ) -> _DescribeCapacityBlockExtensionOfferingsResponseSuccess
+                                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeCapacityBlockExtensionOfferingsResponseSuccess
+
       interface _DescribeCapacityBlockOfferingsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeCapacityBlockOfferingsResult]
         def capacity_block_offerings: () -> ::Array[Types::CapacityBlockOffering]
@@ -8837,7 +8875,7 @@ module Aws
         def instance_type: () -> ::String
         def total_instance_count: () -> ::Integer
         def available_instance_count: () -> ::Integer
-        def state: () -> ("active" | "expired" | "cancelled" | "pending" | "failed" | "scheduled" | "payment-pending" | "payment-failed")
+        def state: () -> ("active" | "expired" | "cancelled" | "pending" | "failed" | "scheduled" | "payment-pending" | "payment-failed" | "assessing" | "delayed" | "unsupported")
         def instance_usages: () -> ::Array[Types::InstanceUsage]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#get_capacity_reservation_usage-instance_method
@@ -10587,6 +10625,16 @@ module Aws
                                               {
                                                 region_name: ::String?
                                               },
+                                            ],
+                                            ?add_organizational_unit_exclusions: Array[
+                                              {
+                                                organizations_entity_path: ::String?
+                                              },
+                                            ],
+                                            ?remove_organizational_unit_exclusions: Array[
+                                              {
+                                                organizations_entity_path: ::String?
+                                              },
                                             ]
                                           ) -> _ModifyIpamResourceDiscoveryResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyIpamResourceDiscoveryResponseSuccess
@@ -11628,6 +11676,18 @@ module Aws
                                      instance_platform: ("Linux/UNIX" | "Red Hat Enterprise Linux" | "SUSE Linux" | "Windows" | "Windows with SQL Server" | "Windows with SQL Server Enterprise" | "Windows with SQL Server Standard" | "Windows with SQL Server Web" | "Linux with SQL Server Standard" | "Linux with SQL Server Web" | "Linux with SQL Server Enterprise" | "RHEL with SQL Server Standard" | "RHEL with SQL Server Enterprise" | "RHEL with SQL Server Web" | "RHEL with HA" | "RHEL with HA and SQL Server Standard" | "RHEL with HA and SQL Server Enterprise" | "Ubuntu Pro")
                                    ) -> _PurchaseCapacityBlockResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PurchaseCapacityBlockResponseSuccess
+
+      interface _PurchaseCapacityBlockExtensionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PurchaseCapacityBlockExtensionResult]
+        def capacity_block_extensions: () -> ::Array[Types::CapacityBlockExtension]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#purchase_capacity_block_extension-instance_method
+      def purchase_capacity_block_extension: (
+                                               capacity_block_extension_offering_id: ::String,
+                                               capacity_reservation_id: ::String,
+                                               ?dry_run: bool
+                                             ) -> _PurchaseCapacityBlockExtensionResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PurchaseCapacityBlockExtensionResponseSuccess
 
       interface _PurchaseHostReservationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PurchaseHostReservationResult]

@@ -1,0 +1,347 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws
+  module Notifications
+    class Client < ::Seahorse::Client::Base
+      include ::Aws::ClientStubs
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#initialize-instance_method
+      def self.new: (
+                      ?credentials: untyped,
+                      ?region: String,
+                      ?access_key_id: String,
+                      ?account_id: String,
+                      ?active_endpoint_cache: bool,
+                      ?adaptive_retry_wait_to_fill: bool,
+                      ?client_side_monitoring: bool,
+                      ?client_side_monitoring_client_id: String,
+                      ?client_side_monitoring_host: String,
+                      ?client_side_monitoring_port: Integer,
+                      ?client_side_monitoring_publisher: untyped,
+                      ?convert_params: bool,
+                      ?correct_clock_skew: bool,
+                      ?defaults_mode: String,
+                      ?disable_host_prefix_injection: bool,
+                      ?disable_request_compression: bool,
+                      ?endpoint: String,
+                      ?endpoint_cache_max_entries: Integer,
+                      ?endpoint_cache_max_threads: Integer,
+                      ?endpoint_cache_poll_interval: Integer,
+                      ?endpoint_discovery: bool,
+                      ?ignore_configured_endpoint_urls: bool,
+                      ?log_formatter: untyped,
+                      ?log_level: Symbol,
+                      ?logger: untyped,
+                      ?max_attempts: Integer,
+                      ?profile: String,
+                      ?request_min_compression_size_bytes: Integer,
+                      ?retry_backoff: Proc,
+                      ?retry_base_delay: Float,
+                      ?retry_jitter: (:none | :equal | :full | ^(Integer) -> Integer),
+                      ?retry_limit: Integer,
+                      ?retry_max_delay: Integer,
+                      ?retry_mode: ("legacy" | "standard" | "adaptive"),
+                      ?sdk_ua_app_id: String,
+                      ?secret_access_key: String,
+                      ?session_token: String,
+                      ?sigv4a_signing_region_set: Array[String],
+                      ?stub_responses: untyped,
+                      ?telemetry_provider: Aws::Telemetry::TelemetryProviderBase,
+                      ?token_provider: untyped,
+                      ?use_dualstack_endpoint: bool,
+                      ?use_fips_endpoint: bool,
+                      ?validate_params: bool,
+                      ?endpoint_provider: untyped,
+                      ?http_proxy: String,
+                      ?http_open_timeout: (Float | Integer),
+                      ?http_read_timeout: (Float | Integer),
+                      ?http_idle_timeout: (Float | Integer),
+                      ?http_continue_timeout: (Float | Integer),
+                      ?ssl_timeout: (Float | Integer | nil),
+                      ?http_wire_trace: bool,
+                      ?ssl_verify_peer: bool,
+                      ?ssl_ca_bundle: String,
+                      ?ssl_ca_directory: String,
+                      ?ssl_ca_store: String,
+                      ?on_chunk_received: Proc,
+                      ?on_chunk_sent: Proc,
+                      ?raise_response_errors: bool
+                    ) -> instance
+                  | (?Hash[Symbol, untyped]) -> instance
+
+
+      interface _AssociateChannelResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::AssociateChannelResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#associate_channel-instance_method
+      def associate_channel: (
+                               arn: ::String,
+                               notification_configuration_arn: ::String
+                             ) -> _AssociateChannelResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateChannelResponseSuccess
+
+      interface _CreateEventRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateEventRuleResponse]
+        def arn: () -> ::String
+        def notification_configuration_arn: () -> ::String
+        def status_summary_by_region: () -> ::Hash[::String, Types::EventRuleStatusSummary]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#create_event_rule-instance_method
+      def create_event_rule: (
+                               notification_configuration_arn: ::String,
+                               source: ::String,
+                               event_type: ::String,
+                               ?event_pattern: ::String,
+                               regions: Array[::String]
+                             ) -> _CreateEventRuleResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateEventRuleResponseSuccess
+
+      interface _CreateNotificationConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateNotificationConfigurationResponse]
+        def arn: () -> ::String
+        def status: () -> ("ACTIVE" | "PARTIALLY_ACTIVE" | "INACTIVE" | "DELETING")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#create_notification_configuration-instance_method
+      def create_notification_configuration: (
+                                               name: ::String,
+                                               description: ::String,
+                                               ?aggregation_duration: ("LONG" | "SHORT" | "NONE"),
+                                               ?tags: Hash[::String, ::String]
+                                             ) -> _CreateNotificationConfigurationResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateNotificationConfigurationResponseSuccess
+
+      interface _DeleteEventRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteEventRuleResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#delete_event_rule-instance_method
+      def delete_event_rule: (
+                               arn: ::String
+                             ) -> _DeleteEventRuleResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteEventRuleResponseSuccess
+
+      interface _DeleteNotificationConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteNotificationConfigurationResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#delete_notification_configuration-instance_method
+      def delete_notification_configuration: (
+                                               arn: ::String
+                                             ) -> _DeleteNotificationConfigurationResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteNotificationConfigurationResponseSuccess
+
+      interface _DeregisterNotificationHubResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeregisterNotificationHubResponse]
+        def notification_hub_region: () -> ::String
+        def status_summary: () -> Types::NotificationHubStatusSummary
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#deregister_notification_hub-instance_method
+      def deregister_notification_hub: (
+                                         notification_hub_region: ::String
+                                       ) -> _DeregisterNotificationHubResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeregisterNotificationHubResponseSuccess
+
+      interface _DisassociateChannelResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DisassociateChannelResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#disassociate_channel-instance_method
+      def disassociate_channel: (
+                                  arn: ::String,
+                                  notification_configuration_arn: ::String
+                                ) -> _DisassociateChannelResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateChannelResponseSuccess
+
+      interface _GetEventRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetEventRuleResponse]
+        def arn: () -> ::String
+        def notification_configuration_arn: () -> ::String
+        def creation_time: () -> ::Time
+        def source: () -> ::String
+        def event_type: () -> ::String
+        def event_pattern: () -> ::String
+        def regions: () -> ::Array[::String]
+        def managed_rules: () -> ::Array[::String]
+        def status_summary_by_region: () -> ::Hash[::String, Types::EventRuleStatusSummary]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#get_event_rule-instance_method
+      def get_event_rule: (
+                            arn: ::String
+                          ) -> _GetEventRuleResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetEventRuleResponseSuccess
+
+      interface _GetNotificationConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetNotificationConfigurationResponse]
+        def arn: () -> ::String
+        def name: () -> ::String
+        def description: () -> ::String
+        def status: () -> ("ACTIVE" | "PARTIALLY_ACTIVE" | "INACTIVE" | "DELETING")
+        def creation_time: () -> ::Time
+        def aggregation_duration: () -> ("LONG" | "SHORT" | "NONE")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#get_notification_configuration-instance_method
+      def get_notification_configuration: (
+                                            arn: ::String
+                                          ) -> _GetNotificationConfigurationResponseSuccess
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetNotificationConfigurationResponseSuccess
+
+      interface _GetNotificationEventResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetNotificationEventResponse]
+        def arn: () -> ::String
+        def notification_configuration_arn: () -> ::String
+        def creation_time: () -> ::Time
+        def content: () -> Types::NotificationEvent
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#get_notification_event-instance_method
+      def get_notification_event: (
+                                    arn: ::String,
+                                    ?locale: ("de_DE" | "en_CA" | "en_US" | "en_UK" | "es_ES" | "fr_CA" | "fr_FR" | "id_ID" | "it_IT" | "ja_JP" | "ko_KR" | "pt_BR" | "tr_TR" | "zh_CN" | "zh_TW")
+                                  ) -> _GetNotificationEventResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetNotificationEventResponseSuccess
+
+      interface _ListChannelsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListChannelsResponse]
+        def next_token: () -> ::String
+        def channels: () -> ::Array[::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#list_channels-instance_method
+      def list_channels: (
+                           notification_configuration_arn: ::String,
+                           ?max_results: ::Integer,
+                           ?next_token: ::String
+                         ) -> _ListChannelsResponseSuccess
+                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListChannelsResponseSuccess
+
+      interface _ListEventRulesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListEventRulesResponse]
+        def next_token: () -> ::String
+        def event_rules: () -> ::Array[Types::EventRuleStructure]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#list_event_rules-instance_method
+      def list_event_rules: (
+                              notification_configuration_arn: ::String,
+                              ?max_results: ::Integer,
+                              ?next_token: ::String
+                            ) -> _ListEventRulesResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListEventRulesResponseSuccess
+
+      interface _ListNotificationConfigurationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListNotificationConfigurationsResponse]
+        def next_token: () -> ::String
+        def notification_configurations: () -> ::Array[Types::NotificationConfigurationStructure]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#list_notification_configurations-instance_method
+      def list_notification_configurations: (
+                                              ?event_rule_source: ::String,
+                                              ?channel_arn: ::String,
+                                              ?status: ("ACTIVE" | "PARTIALLY_ACTIVE" | "INACTIVE" | "DELETING"),
+                                              ?max_results: ::Integer,
+                                              ?next_token: ::String
+                                            ) -> _ListNotificationConfigurationsResponseSuccess
+                                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListNotificationConfigurationsResponseSuccess
+
+      interface _ListNotificationEventsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListNotificationEventsResponse]
+        def next_token: () -> ::String
+        def notification_events: () -> ::Array[Types::NotificationEventOverview]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#list_notification_events-instance_method
+      def list_notification_events: (
+                                      ?start_time: ::Time,
+                                      ?end_time: ::Time,
+                                      ?locale: ("de_DE" | "en_CA" | "en_US" | "en_UK" | "es_ES" | "fr_CA" | "fr_FR" | "id_ID" | "it_IT" | "ja_JP" | "ko_KR" | "pt_BR" | "tr_TR" | "zh_CN" | "zh_TW"),
+                                      ?source: ::String,
+                                      ?include_child_events: bool,
+                                      ?aggregate_notification_event_arn: ::String,
+                                      ?max_results: ::Integer,
+                                      ?next_token: ::String
+                                    ) -> _ListNotificationEventsResponseSuccess
+                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListNotificationEventsResponseSuccess
+
+      interface _ListNotificationHubsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListNotificationHubsResponse]
+        def notification_hubs: () -> ::Array[Types::NotificationHubOverview]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#list_notification_hubs-instance_method
+      def list_notification_hubs: (
+                                    ?max_results: ::Integer,
+                                    ?next_token: ::String
+                                  ) -> _ListNotificationHubsResponseSuccess
+                                | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListNotificationHubsResponseSuccess
+
+      interface _ListTagsForResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#list_tags_for_resource-instance_method
+      def list_tags_for_resource: (
+                                    arn: ::String
+                                  ) -> _ListTagsForResourceResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _RegisterNotificationHubResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::RegisterNotificationHubResponse]
+        def notification_hub_region: () -> ::String
+        def status_summary: () -> Types::NotificationHubStatusSummary
+        def creation_time: () -> ::Time
+        def last_activation_time: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#register_notification_hub-instance_method
+      def register_notification_hub: (
+                                       notification_hub_region: ::String
+                                     ) -> _RegisterNotificationHubResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RegisterNotificationHubResponseSuccess
+
+      interface _TagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#tag_resource-instance_method
+      def tag_resource: (
+                          arn: ::String,
+                          tags: Hash[::String, ::String]
+                        ) -> _TagResourceResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
+
+      interface _UntagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#untag_resource-instance_method
+      def untag_resource: (
+                            arn: ::String,
+                            tag_keys: Array[::String]
+                          ) -> _UntagResourceResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateEventRuleResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateEventRuleResponse]
+        def arn: () -> ::String
+        def notification_configuration_arn: () -> ::String
+        def status_summary_by_region: () -> ::Hash[::String, Types::EventRuleStatusSummary]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#update_event_rule-instance_method
+      def update_event_rule: (
+                               arn: ::String,
+                               ?event_pattern: ::String,
+                               ?regions: Array[::String]
+                             ) -> _UpdateEventRuleResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateEventRuleResponseSuccess
+
+      interface _UpdateNotificationConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateNotificationConfigurationResponse]
+        def arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Notifications/Client.html#update_notification_configuration-instance_method
+      def update_notification_configuration: (
+                                               arn: ::String,
+                                               ?name: ::String,
+                                               ?description: ::String,
+                                               ?aggregation_duration: ("LONG" | "SHORT" | "NONE")
+                                             ) -> _UpdateNotificationConfigurationResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateNotificationConfigurationResponseSuccess
+    end
+  end
+end
+

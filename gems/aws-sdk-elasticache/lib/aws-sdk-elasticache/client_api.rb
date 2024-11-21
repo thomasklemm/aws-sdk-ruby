@@ -1426,6 +1426,7 @@ module Aws::ElastiCache
     ModifyUserGroupMessage.add_member(:user_group_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "UserGroupId"))
     ModifyUserGroupMessage.add_member(:user_ids_to_add, Shapes::ShapeRef.new(shape: UserIdListInput, location_name: "UserIdsToAdd"))
     ModifyUserGroupMessage.add_member(:user_ids_to_remove, Shapes::ShapeRef.new(shape: UserIdListInput, location_name: "UserIdsToRemove"))
+    ModifyUserGroupMessage.add_member(:engine, Shapes::ShapeRef.new(shape: EngineType, location_name: "Engine"))
     ModifyUserGroupMessage.struct_class = Types::ModifyUserGroupMessage
 
     ModifyUserMessage.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, required: true, location_name: "UserId"))
@@ -1434,6 +1435,7 @@ module Aws::ElastiCache
     ModifyUserMessage.add_member(:passwords, Shapes::ShapeRef.new(shape: PasswordListInput, location_name: "Passwords"))
     ModifyUserMessage.add_member(:no_password_required, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "NoPasswordRequired"))
     ModifyUserMessage.add_member(:authentication_mode, Shapes::ShapeRef.new(shape: AuthenticationMode, location_name: "AuthenticationMode"))
+    ModifyUserMessage.add_member(:engine, Shapes::ShapeRef.new(shape: EngineType, location_name: "Engine"))
     ModifyUserMessage.struct_class = Types::ModifyUserMessage
 
     NetworkTypeList.member = Shapes::ShapeRef.new(shape: NetworkType)

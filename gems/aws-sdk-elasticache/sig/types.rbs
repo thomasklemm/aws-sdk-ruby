@@ -1293,6 +1293,7 @@ module Aws::ElastiCache
       attr_accessor user_group_id: ::String
       attr_accessor user_ids_to_add: ::Array[::String]
       attr_accessor user_ids_to_remove: ::Array[::String]
+      attr_accessor engine: ::String
       SENSITIVE: []
     end
 
@@ -1303,6 +1304,7 @@ module Aws::ElastiCache
       attr_accessor passwords: ::Array[::String]
       attr_accessor no_password_required: bool
       attr_accessor authentication_mode: Types::AuthenticationMode
+      attr_accessor engine: ::String
       SENSITIVE: []
     end
 

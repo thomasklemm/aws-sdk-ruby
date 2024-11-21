@@ -230,7 +230,7 @@ module Aws
                                 api_id: ::String,
                                 name: ::String,
                                 ?description: ::String,
-                                type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE"),
+                                type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE" | "AMAZON_BEDROCK_RUNTIME"),
                                 ?service_role_arn: ::String,
                                 ?dynamodb_config: {
                                   table_name: ::String,
@@ -1123,7 +1123,7 @@ module Aws
                                 api_id: ::String,
                                 name: ::String,
                                 ?description: ::String,
-                                type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE"),
+                                type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE" | "AMAZON_BEDROCK_RUNTIME"),
                                 ?service_role_arn: ::String,
                                 ?dynamodb_config: {
                                   table_name: ::String,

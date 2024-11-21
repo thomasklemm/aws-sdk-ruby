@@ -604,6 +604,60 @@ module Aws::IoT
       SENSITIVE: []
     end
 
+    class CommandExecutionResult
+      attr_accessor s: ::String
+      attr_accessor b: bool
+      attr_accessor bin: ::String
+      SENSITIVE: []
+    end
+
+    class CommandExecutionSummary
+      attr_accessor command_arn: ::String
+      attr_accessor execution_id: ::String
+      attr_accessor target_arn: ::String
+      attr_accessor status: ("CREATED" | "IN_PROGRESS" | "SUCCEEDED" | "FAILED" | "REJECTED" | "TIMED_OUT")
+      attr_accessor created_at: ::Time
+      attr_accessor started_at: ::Time
+      attr_accessor completed_at: ::Time
+      SENSITIVE: []
+    end
+
+    class CommandParameter
+      attr_accessor name: ::String
+      attr_accessor value: Types::CommandParameterValue
+      attr_accessor default_value: Types::CommandParameterValue
+      attr_accessor description: ::String
+      SENSITIVE: []
+    end
+
+    class CommandParameterValue
+      attr_accessor s: ::String
+      attr_accessor b: bool
+      attr_accessor i: ::Integer
+      attr_accessor l: ::Integer
+      attr_accessor d: ::Float
+      attr_accessor bin: ::String
+      attr_accessor ul: ::String
+      SENSITIVE: []
+    end
+
+    class CommandPayload
+      attr_accessor content: ::String
+      attr_accessor content_type: ::String
+      SENSITIVE: []
+    end
+
+    class CommandSummary
+      attr_accessor command_arn: ::String
+      attr_accessor command_id: ::String
+      attr_accessor display_name: ::String
+      attr_accessor deprecated: bool
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor pending_deletion: bool
+      SENSITIVE: []
+    end
+
     class Configuration
       attr_accessor enabled: bool
       SENSITIVE: []
@@ -698,6 +752,24 @@ module Aws::IoT
     class CreateCertificateProviderResponse
       attr_accessor certificate_provider_name: ::String
       attr_accessor certificate_provider_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CreateCommandRequest
+      attr_accessor command_id: ::String
+      attr_accessor namespace: ("AWS-IoT" | "AWS-IoT-FleetWise")
+      attr_accessor display_name: ::String
+      attr_accessor description: ::String
+      attr_accessor payload: Types::CommandPayload
+      attr_accessor mandatory_parameters: ::Array[Types::CommandParameter]
+      attr_accessor role_arn: ::String
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class CreateCommandResponse
+      attr_accessor command_id: ::String
+      attr_accessor command_arn: ::String
       SENSITIVE: []
     end
 
@@ -1198,6 +1270,25 @@ module Aws::IoT
     class DeleteCertificateRequest
       attr_accessor certificate_id: ::String
       attr_accessor force_delete: bool
+      SENSITIVE: []
+    end
+
+    class DeleteCommandExecutionRequest
+      attr_accessor execution_id: ::String
+      attr_accessor target_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteCommandExecutionResponse < Aws::EmptyStructure
+    end
+
+    class DeleteCommandRequest
+      attr_accessor command_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteCommandResponse
+      attr_accessor status_code: ::Integer
       SENSITIVE: []
     end
 
@@ -2167,6 +2258,51 @@ module Aws::IoT
       SENSITIVE: []
     end
 
+    class GetCommandExecutionRequest
+      attr_accessor execution_id: ::String
+      attr_accessor target_arn: ::String
+      attr_accessor include_result: bool
+      SENSITIVE: []
+    end
+
+    class GetCommandExecutionResponse
+      attr_accessor execution_id: ::String
+      attr_accessor command_arn: ::String
+      attr_accessor target_arn: ::String
+      attr_accessor status: ("CREATED" | "IN_PROGRESS" | "SUCCEEDED" | "FAILED" | "REJECTED" | "TIMED_OUT")
+      attr_accessor status_reason: Types::StatusReason
+      attr_accessor result: ::Hash[::String, Types::CommandExecutionResult]
+      attr_accessor parameters: ::Hash[::String, Types::CommandParameterValue]
+      attr_accessor execution_timeout_seconds: ::Integer
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor started_at: ::Time
+      attr_accessor completed_at: ::Time
+      attr_accessor time_to_live: ::Time
+      SENSITIVE: []
+    end
+
+    class GetCommandRequest
+      attr_accessor command_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetCommandResponse
+      attr_accessor command_id: ::String
+      attr_accessor command_arn: ::String
+      attr_accessor namespace: ("AWS-IoT" | "AWS-IoT-FleetWise")
+      attr_accessor display_name: ::String
+      attr_accessor description: ::String
+      attr_accessor mandatory_parameters: ::Array[Types::CommandParameter]
+      attr_accessor payload: Types::CommandPayload
+      attr_accessor role_arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor deprecated: bool
+      attr_accessor pending_deletion: bool
+      SENSITIVE: []
+    end
+
     class GetEffectivePoliciesRequest
       attr_accessor principal: ::String
       attr_accessor cognito_identity_pool_id: ::String
@@ -2839,6 +2975,40 @@ module Aws::IoT
     class ListCertificatesResponse
       attr_accessor certificates: ::Array[Types::Certificate]
       attr_accessor next_marker: ::String
+      SENSITIVE: []
+    end
+
+    class ListCommandExecutionsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor namespace: ("AWS-IoT" | "AWS-IoT-FleetWise")
+      attr_accessor status: ("CREATED" | "IN_PROGRESS" | "SUCCEEDED" | "FAILED" | "REJECTED" | "TIMED_OUT")
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      attr_accessor started_time_filter: Types::TimeFilter
+      attr_accessor completed_time_filter: Types::TimeFilter
+      attr_accessor target_arn: ::String
+      attr_accessor command_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListCommandExecutionsResponse
+      attr_accessor command_executions: ::Array[Types::CommandExecutionSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListCommandsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor namespace: ("AWS-IoT" | "AWS-IoT-FleetWise")
+      attr_accessor command_parameter_name: ::String
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      SENSITIVE: []
+    end
+
+    class ListCommandsResponse
+      attr_accessor commands: ::Array[Types::CommandSummary]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -4287,6 +4457,12 @@ module Aws::IoT
       SENSITIVE: []
     end
 
+    class StatusReason
+      attr_accessor reason_code: ::String
+      attr_accessor reason_description: ::String
+      SENSITIVE: []
+    end
+
     class StepFunctionsAction
       attr_accessor execution_name_prefix: ::String
       attr_accessor state_machine_name: ::String
@@ -4514,6 +4690,12 @@ module Aws::IoT
       SENSITIVE: []
     end
 
+    class TimeFilter
+      attr_accessor after: ::String
+      attr_accessor before: ::String
+      SENSITIVE: []
+    end
+
     class TimeoutConfig
       attr_accessor in_progress_timeout_in_minutes: ::Integer
       SENSITIVE: []
@@ -4734,6 +4916,23 @@ module Aws::IoT
     class UpdateCertificateRequest
       attr_accessor certificate_id: ::String
       attr_accessor new_status: ("ACTIVE" | "INACTIVE" | "REVOKED" | "PENDING_TRANSFER" | "REGISTER_INACTIVE" | "PENDING_ACTIVATION")
+      SENSITIVE: []
+    end
+
+    class UpdateCommandRequest
+      attr_accessor command_id: ::String
+      attr_accessor display_name: ::String
+      attr_accessor description: ::String
+      attr_accessor deprecated: bool
+      SENSITIVE: []
+    end
+
+    class UpdateCommandResponse
+      attr_accessor command_id: ::String
+      attr_accessor display_name: ::String
+      attr_accessor description: ::String
+      attr_accessor deprecated: bool
+      attr_accessor last_updated_at: ::Time
       SENSITIVE: []
     end
 

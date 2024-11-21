@@ -2207,6 +2207,237 @@ module Aws::IoT
       include Aws::Structure
     end
 
+    # The result value of the command execution. The device can use the
+    # result field to share additional details about the execution such as a
+    # return value of a remote function call.
+    #
+    # <note markdown="1"> This field is not applicable if you use the `AWS-IoT-FleetWise`
+    # namespace.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] s
+    #   An attribute of type String. For example:
+    #
+    #   `"S": "Hello"`
+    #   @return [String]
+    #
+    # @!attribute [rw] b
+    #   An attribute of type Boolean. For example:
+    #
+    #   `"BOOL": true`
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] bin
+    #   An attribute of type Binary.
+    #   @return [String]
+    #
+    class CommandExecutionResult < Struct.new(
+      :s,
+      :b,
+      :bin)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary information about a particular command execution.
+    #
+    # @!attribute [rw] command_arn
+    #   The Amazon Resource Name (ARN) of the command execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_id
+    #   The unique identifier of the command execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The Amazon Resource Name (ARN) of the target device for which the
+    #   command is being executed.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the command executions.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time at which the command execution was created for the
+    #   target device.
+    #   @return [Time]
+    #
+    # @!attribute [rw] started_at
+    #   The date and time at which the command started executing on the
+    #   target device.
+    #   @return [Time]
+    #
+    # @!attribute [rw] completed_at
+    #   The date and time at which the command completed executing on the
+    #   target device.
+    #   @return [Time]
+    #
+    class CommandExecutionSummary < Struct.new(
+      :command_arn,
+      :execution_id,
+      :target_arn,
+      :status,
+      :created_at,
+      :started_at,
+      :completed_at)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A map of key-value pairs that describe the command.
+    #
+    # @!attribute [rw] name
+    #   The name of a specific parameter used in a command and command
+    #   execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value used to describe the command. When you assign a value to a
+    #   parameter, it will override any default value that you had already
+    #   specified.
+    #   @return [Types::CommandParameterValue]
+    #
+    # @!attribute [rw] default_value
+    #   The default value used to describe the command. This is the value
+    #   assumed by the parameter if no other value is assigned to it.
+    #   @return [Types::CommandParameterValue]
+    #
+    # @!attribute [rw] description
+    #   The description of the command parameter.
+    #   @return [String]
+    #
+    class CommandParameter < Struct.new(
+      :name,
+      :value,
+      :default_value,
+      :description)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The range of possible values that's used to describe a specific
+    # command parameter.
+    #
+    # <note markdown="1"> The `commandParameterValue` can only have one of the below fields
+    # listed.
+    #
+    #  </note>
+    #
+    # @!attribute [rw] s
+    #   An attribute of type String. For example:
+    #
+    #   `"S": "Hello"`
+    #   @return [String]
+    #
+    # @!attribute [rw] b
+    #   An attribute of type Boolean. For example:
+    #
+    #   `"BOOL": true`
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] i
+    #   An attribute of type Integer (Thirty-Two Bits).
+    #   @return [Integer]
+    #
+    # @!attribute [rw] l
+    #   An attribute of type Long.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] d
+    #   An attribute of type Double (Sixty-Four Bits).
+    #   @return [Float]
+    #
+    # @!attribute [rw] bin
+    #   An attribute of type Binary. For example:
+    #
+    #   `"B": "dGhpcyB0ZXh0IGlzIGJhc2U2NC1lbmNvZGVk"`
+    #   @return [String]
+    #
+    # @!attribute [rw] ul
+    #   An attribute of type unsigned long.
+    #   @return [String]
+    #
+    class CommandParameterValue < Struct.new(
+      :s,
+      :b,
+      :i,
+      :l,
+      :d,
+      :bin,
+      :ul)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The command payload object that contains the instructions for the
+    # device to process.
+    #
+    # @!attribute [rw] content
+    #   The static payload file for the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_type
+    #   The content type that specifies the format type of the payload file.
+    #   This field must use a type/subtype format, such as
+    #   `application/json`. For information about various content types, see
+    #   [Common MIME types][1].
+    #
+    #
+    #
+    #   [1]: https://developer.mozilla.org/en-US/docs/Web/HTTP/MIME_types/Common_types
+    #   @return [String]
+    #
+    class CommandPayload < Struct.new(
+      :content,
+      :content_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary information about a particular command resource.
+    #
+    # @!attribute [rw] command_arn
+    #   The Amazon Resource Name (ARN) of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] command_id
+    #   The unique identifier of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The display name of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] deprecated
+    #   Indicates whether the command has been deprecated.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp, when the command was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The timestamp, when the command was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] pending_deletion
+    #   Indicates whether the command is pending deletion.
+    #   @return [Boolean]
+    #
+    class CommandSummary < Struct.new(
+      :command_arn,
+      :command_id,
+      :display_name,
+      :deprecated,
+      :created_at,
+      :last_updated_at,
+      :pending_deletion)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Configuration.
     #
     # @!attribute [rw] enabled
@@ -2232,7 +2463,7 @@ module Aws::IoT
 
     class ConfirmTopicRuleDestinationResponse < Aws::EmptyStructure; end
 
-    # A resource with the same name already exists.
+    # The request conflicts with the current state of the resource.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -2518,6 +2749,84 @@ module Aws::IoT
     class CreateCertificateProviderResponse < Struct.new(
       :certificate_provider_name,
       :certificate_provider_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_id
+    #   A unique identifier for the command. We recommend using UUID.
+    #   Alpha-numeric characters, hyphens, and underscores are valid for use
+    #   here.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace of the command. The MQTT reserved topics and
+    #   validations will be used for command executions according to the
+    #   namespace setting.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The user-friendly name in the console for the command. This name
+    #   doesn't have to be unique. You can update the user-friendly name
+    #   after you define it.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A short text decription of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] payload
+    #   The payload object for the command. You must specify this
+    #   information when using the `AWS-IoT` namespace.
+    #
+    #   You can upload a static payload file from your local storage that
+    #   contains the instructions for the device to process. The payload
+    #   file can use any format. To make sure that the device correctly
+    #   interprets the payload, we recommend you to specify the payload
+    #   content type.
+    #   @return [Types::CommandPayload]
+    #
+    # @!attribute [rw] mandatory_parameters
+    #   A list of parameters that are required by the
+    #   `StartCommandExecution` API. These parameters need to be specified
+    #   only when using the `AWS-IoT-FleetWise` namespace. You can either
+    #   specify them here or when running the command using the
+    #   `StartCommandExecution` API.
+    #   @return [Array<Types::CommandParameter>]
+    #
+    # @!attribute [rw] role_arn
+    #   The IAM role that allows access to create the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Name-value pairs that are used as metadata to manage a command.
+    #   @return [Array<Types::Tag>]
+    #
+    class CreateCommandRequest < Struct.new(
+      :command_id,
+      :namespace,
+      :display_name,
+      :description,
+      :payload,
+      :mandatory_parameters,
+      :role_arn,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_id
+    #   The unique identifier for the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] command_arn
+    #   The Amazon Resource Number (ARN) of the command. For example,
+    #   `arn:aws:iot:<region>:<accountid>:command/<commandId>`
+    #   @return [String]
+    #
+    class CreateCommandResponse < Struct.new(
+      :command_id,
+      :command_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2970,9 +3279,9 @@ module Aws::IoT
     end
 
     # @!attribute [rw] job_id
-    #   A job identifier which must be unique for your Amazon Web Services
-    #   account. We recommend using a UUID. Alpha-numeric characters, "-"
-    #   and "\_" are valid for use here.
+    #   A job identifier which must be unique for your account. We recommend
+    #   using a UUID. Alpha-numeric characters, "-" and "\_" are valid
+    #   for use here.
     #   @return [String]
     #
     # @!attribute [rw] targets
@@ -4501,6 +4810,59 @@ module Aws::IoT
       include Aws::Structure
     end
 
+    # @!attribute [rw] execution_id
+    #   The unique identifier of the command execution that you want to
+    #   delete from your account.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The Amazon Resource Number (ARN) of the target device for which you
+    #   want to delete command executions.
+    #   @return [String]
+    #
+    class DeleteCommandExecutionRequest < Struct.new(
+      :execution_id,
+      :target_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    class DeleteCommandExecutionResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] command_id
+    #   The unique identifier of the command to be deleted.
+    #   @return [String]
+    #
+    class DeleteCommandRequest < Struct.new(
+      :command_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] status_code
+    #   The status code for the command deletion request. The status code is
+    #   in the 200 range for a successful request.
+    #
+    #   * If the command hasn't been deprecated, or has been deprecated for
+    #     a duration that is shorter than the maximum time out duration of
+    #     12 hours, when calling the `DeleteCommand` request, the deletion
+    #     will be scheduled and a 202 status code will be returned. While
+    #     the command is being deleted, it will be in a `pendingDeletion`
+    #     state. Once the time out duration has been reached, the command
+    #     will be permanently removed from your account.
+    #
+    #   * If the command has been deprecated for a duration that is longer
+    #     than the maximum time out duration of 12 hours, when calling the
+    #     `DeleteCommand` request, the command will be deleted immediately
+    #     and a 204 status code will be returned.
+    #   @return [Integer]
+    #
+    class DeleteCommandResponse < Struct.new(
+      :status_code)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # You can't delete the resource because it is attached to one or more
     # resources.
     #
@@ -5963,7 +6325,7 @@ module Aws::IoT
     #   @return [String]
     #
     # @!attribute [rw] before_substitution
-    #   A flag that provides a view of the job document before and after the
+    #   Provides a view of the job document before and after the
     #   substitution parameters have been resolved with their exact values.
     #   @return [Boolean]
     #
@@ -7626,6 +7988,201 @@ module Aws::IoT
       include Aws::Structure
     end
 
+    # @!attribute [rw] execution_id
+    #   The unique identifier for the command execution. This information is
+    #   returned as a response of the `StartCommandExecution` API request.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The Amazon Resource Number (ARN) of the device on which the command
+    #   execution is being performed.
+    #   @return [String]
+    #
+    # @!attribute [rw] include_result
+    #   Can be used to specify whether to include the result of the command
+    #   execution in the `GetCommandExecution` API response. Your device can
+    #   use this field to provide additional information about the command
+    #   execution. You only need to specify this field when using the
+    #   `AWS-IoT` namespace.
+    #   @return [Boolean]
+    #
+    class GetCommandExecutionRequest < Struct.new(
+      :execution_id,
+      :target_arn,
+      :include_result)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] execution_id
+    #   The unique identifier of the command execution.
+    #   @return [String]
+    #
+    # @!attribute [rw] command_arn
+    #   The Amazon Resource Number (ARN) of the command. For example,
+    #   ``arn:aws:iot:&lt;region&gt;:&lt;accountid&gt;:command/&lt;commandId&gt;
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The Amazon Resource Number (ARN) of the device on which the command
+    #   execution is being performed.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the command execution. After your devices receive the
+    #   command and start performing the operations specified in the
+    #   command, it can use the `UpdateCommandExecution` MQTT API to update
+    #   the status information.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   Your devices can use this parameter to provide additional context
+    #   about the status of a command execution using a reason code and
+    #   description.
+    #   @return [Types::StatusReason]
+    #
+    # @!attribute [rw] result
+    #   The result value for the current state of the command execution. The
+    #   status provides information about the progress of the command
+    #   execution. The device can use the result field to share additional
+    #   details about the execution such as a return value of a remote
+    #   function call.
+    #
+    #   <note markdown="1"> If you use the `AWS-IoT-FleetWise` namespace, then this field is not
+    #   applicable in the API response.
+    #
+    #    </note>
+    #   @return [Hash<String,Types::CommandExecutionResult>]
+    #
+    # @!attribute [rw] parameters
+    #   The list of parameters that the `StartCommandExecution` API used
+    #   when performing the command on the device.
+    #   @return [Hash<String,Types::CommandParameterValue>]
+    #
+    # @!attribute [rw] execution_timeout_seconds
+    #   Specifies the amount of time in seconds that the device can take to
+    #   finish a command execution. A timer starts when the command
+    #   execution is created. If the command execution status is not set to
+    #   another terminal state before the timer expires, it will
+    #   automatically update to `TIMED_OUT`.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp, when the command execution was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The timestamp, when the command execution was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] started_at
+    #   The timestamp, when the command execution was started.
+    #   @return [Time]
+    #
+    # @!attribute [rw] completed_at
+    #   The timestamp, when the command execution was completed.
+    #   @return [Time]
+    #
+    # @!attribute [rw] time_to_live
+    #   The time to live (TTL) parameter for the `GetCommandExecution` API.
+    #   @return [Time]
+    #
+    class GetCommandExecutionResponse < Struct.new(
+      :execution_id,
+      :command_arn,
+      :target_arn,
+      :status,
+      :status_reason,
+      :result,
+      :parameters,
+      :execution_timeout_seconds,
+      :created_at,
+      :last_updated_at,
+      :started_at,
+      :completed_at,
+      :time_to_live)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_id
+    #   The unique identifier of the command for which you want to retrieve
+    #   information.
+    #   @return [String]
+    #
+    class GetCommandRequest < Struct.new(
+      :command_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_id
+    #   The unique identifier of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] command_arn
+    #   The Amazon Resource Number (ARN) of the command. For example,
+    #   `arn:aws:iot:<region>:<accountid>:command/<commandId>`
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The user-friendly name in the console for the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A short text description of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] mandatory_parameters
+    #   A list of parameters for the command created.
+    #   @return [Array<Types::CommandParameter>]
+    #
+    # @!attribute [rw] payload
+    #   The payload object that you provided for the command.
+    #   @return [Types::CommandPayload]
+    #
+    # @!attribute [rw] role_arn
+    #   The IAM role that allows access to retrieve information about the
+    #   command.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp, when the command was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The timestamp, when the command was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] deprecated
+    #   Indicates whether the command has been deprecated.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] pending_deletion
+    #   Indicates whether the command is being deleted.
+    #   @return [Boolean]
+    #
+    class GetCommandResponse < Struct.new(
+      :command_id,
+      :command_arn,
+      :namespace,
+      :display_name,
+      :description,
+      :mandatory_parameters,
+      :payload,
+      :role_arn,
+      :created_at,
+      :last_updated_at,
+      :deprecated,
+      :pending_deletion)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] principal
     #   The principal. Valid principals are CertificateArn
     #   (arn:aws:iot:*region*:*accountId*:cert/*certificateId*),
@@ -7684,7 +8241,7 @@ module Aws::IoT
     #   @return [String]
     #
     # @!attribute [rw] before_substitution
-    #   A flag that provides a view of the job document before and after the
+    #   Provides a view of the job document before and after the
     #   substitution parameters have been resolved with their exact values.
     #   @return [Boolean]
     #
@@ -9955,6 +10512,146 @@ module Aws::IoT
     class ListCertificatesResponse < Struct.new(
       :certificates,
       :next_marker)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return in this operation.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   To retrieve the next set of results, the `nextToken` value from a
+    #   previous response; otherwise `null` to receive the first set of
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   List all command executions for the device that have a particular
+    #   status. For example, you can filter the list to display only command
+    #   executions that have failed or timed out.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_order
+    #   Specify whether to list the command executions that were created in
+    #   the ascending or descending order. By default, the API returns all
+    #   commands in the descending order based on the start time or
+    #   completion time of the executions, that are determined by the
+    #   `startTimeFilter` and `completeTimeFilter` parameters.
+    #   @return [String]
+    #
+    # @!attribute [rw] started_time_filter
+    #   List all command executions that started any time before or after
+    #   the date and time that you specify. The date and time uses the
+    #   format `yyyy-MM-dd'T'HH:mm`.
+    #   @return [Types::TimeFilter]
+    #
+    # @!attribute [rw] completed_time_filter
+    #   List all command executions that completed any time before or after
+    #   the date and time that you specify. The date and time uses the
+    #   format `yyyy-MM-dd'T'HH:mm`.
+    #   @return [Types::TimeFilter]
+    #
+    # @!attribute [rw] target_arn
+    #   The Amazon Resource Number (ARN) of the target device. You can use
+    #   this information to list all command executions for a particular
+    #   device.
+    #   @return [String]
+    #
+    # @!attribute [rw] command_arn
+    #   The Amazon Resource Number (ARN) of the command. You can use this
+    #   information to list all command executions for a particular command.
+    #   @return [String]
+    #
+    class ListCommandExecutionsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :namespace,
+      :status,
+      :sort_order,
+      :started_time_filter,
+      :completed_time_filter,
+      :target_arn,
+      :command_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_executions
+    #   The list of command executions.
+    #   @return [Array<Types::CommandExecutionSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to get the next set of results, or `null` if there
+    #   are no additional results.
+    #   @return [String]
+    #
+    class ListCommandExecutionsResponse < Struct.new(
+      :command_executions,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return in this operation. By
+    #   default, the API returns up to a maximum of 25 results. You can
+    #   override this default value to return up to a maximum of 100 results
+    #   for this operation.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   To retrieve the next set of results, the `nextToken` value from a
+    #   previous response; otherwise `null` to receive the first set of
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace of the command. By default, the API returns all
+    #   commands that have been created for both `AWS-IoT` and
+    #   `AWS-IoT-FleetWise` namespaces. You can override this default value
+    #   if you want to return all commands that have been created only for a
+    #   specific namespace.
+    #   @return [String]
+    #
+    # @!attribute [rw] command_parameter_name
+    #   A filter that can be used to display the list of commands that have
+    #   a specific command parameter name.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_order
+    #   Specify whether to list the commands that you have created in the
+    #   ascending or descending order. By default, the API returns all
+    #   commands in the descending order based on the time that they were
+    #   created.
+    #   @return [String]
+    #
+    class ListCommandsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :namespace,
+      :command_parameter_name,
+      :sort_order)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] commands
+    #   The list of commands.
+    #   @return [Array<Types::CommandSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to get the next set of results, or `null` if there
+    #   are no additional results.
+    #   @return [String]
+    #
+    class ListCommandsResponse < Struct.new(
+      :commands,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -14309,13 +15006,18 @@ module Aws::IoT
     #   The Amazon Resource Name (ARN) for a Lambda function that acts as a
     #   Request for Comments (RFC) 6960-compliant Online Certificate Status
     #   Protocol (OCSP) responder, supporting basic OCSP responses. The
-    #   Lambda function accepts a JSON string that's Base64-encoded.
-    #   Therefore, you must convert your OCSP response, which is typically
-    #   in the Distinguished Encoding Rules (DER) format, into a JSON string
-    #   that's Base64-encoded. The Lambda function's response is also a
-    #   Base64-encoded JSON string and the response payload must not exceed
-    #   8 kilobytes (KiB) in size. The Lambda function must be in the same
-    #   Amazon Web Services region and account as the domain configuration.
+    #   Lambda function accepts a base64-encoding of the OCSP request in the
+    #   Distinguished Encoding Rules (DER) format. The Lambda function's
+    #   response is also a base64-encoded OCSP response in the DER format.
+    #   The response size must not exceed 4 kilobytes (KiB). The Lambda
+    #   function must be in the same Amazon Web Services account and region
+    #   as the domain configuration. For more information, see [Configuring
+    #   server certificate OCSP for private endpoints in Amazon Web Services
+    #   IoT Core][1] from the Amazon Web Services IoT Core developer guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-endpoints-cert-config.html#iot-custom-endpoints-cert-config-ocsp-private-endpoint.html
     #   @return [String]
     #
     # @!attribute [rw] ocsp_authorized_responder_arn
@@ -14325,8 +15027,8 @@ module Aws::IoT
     #   signature of the received OCSP response. The OCSP responder must
     #   sign responses using either this authorized responder certificate or
     #   the issuing certificate, depending on whether the ARN is provided or
-    #   not. The certificate must be in the same Amazon Web Services region
-    #   and account as the domain configuration.
+    #   not. The certificate must be in the same Amazon Web Services account
+    #   and region as the domain configuration.
     #   @return [String]
     #
     class ServerCertificateConfig < Struct.new(
@@ -14359,7 +15061,7 @@ module Aws::IoT
       include Aws::Structure
     end
 
-    # A limit has been exceeded.
+    # Service quota has been exceeded.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -14846,6 +15548,26 @@ module Aws::IoT
       :sum_of_squares,
       :variance,
       :std_deviation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provide additional context about the status of a command execution
+    # using a reason code and description.
+    #
+    # @!attribute [rw] reason_code
+    #   A code that provides additional context for the command execution
+    #   status.
+    #   @return [String]
+    #
+    # @!attribute [rw] reason_description
+    #   A literal string for devices to optionally provide additional
+    #   information about the reason code for a command execution status.
+    #   @return [String]
+    #
+    class StatusReason < Struct.new(
+      :reason_code,
+      :reason_description)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -15733,6 +16455,26 @@ module Aws::IoT
       include Aws::Structure
     end
 
+    # A filter that can be used to list command executions for a device that
+    # started or completed before or after a particular date and time.
+    #
+    # @!attribute [rw] after
+    #   Filter to display command executions that started or completed only
+    #   after a particular date and time.
+    #   @return [String]
+    #
+    # @!attribute [rw] before
+    #   Filter to display command executions that started or completed only
+    #   before a particular date and time.
+    #   @return [String]
+    #
+    class TimeFilter < Struct.new(
+      :after,
+      :before)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifies the amount of time each device has to finish its execution
     # of the job. A timer is started when the job execution status is set to
     # `IN_PROGRESS`. If the job execution status is not set to another
@@ -16552,6 +17294,64 @@ module Aws::IoT
     class UpdateCertificateRequest < Struct.new(
       :certificate_id,
       :new_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_id
+    #   The unique identifier of the command to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The new user-friendly name to use in the console for the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A short text description of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] deprecated
+    #   A boolean that you can use to specify whether to deprecate a
+    #   command.
+    #   @return [Boolean]
+    #
+    class UpdateCommandRequest < Struct.new(
+      :command_id,
+      :display_name,
+      :description,
+      :deprecated)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] command_id
+    #   The unique identifier of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The updated user-friendly display name in the console for the
+    #   command.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The updated text description of the command.
+    #   @return [String]
+    #
+    # @!attribute [rw] deprecated
+    #   The boolean that indicates whether the command was deprecated.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The date and time (epoch timestamp in seconds) when the command was
+    #   last updated.
+    #   @return [Time]
+    #
+    class UpdateCommandResponse < Struct.new(
+      :command_id,
+      :display_name,
+      :description,
+      :deprecated,
+      :last_updated_at)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -2066,6 +2066,10 @@ module Aws::SSM
     # @option params [Types::PatchFilterGroup] :global_filters
     #   A set of global filters used to include patches in the baseline.
     #
+    #   The `GlobalFilters` parameter can be configured only by using the CLI
+    #   or an Amazon Web Services SDK. It can't be configured from the Patch
+    #   Manager console, and its value isn't displayed in the console.
+    #
     # @option params [Types::PatchRuleGroup] :approval_rules
     #   A set of rules used to include patches in the baseline.
     #
@@ -2238,7 +2242,7 @@ module Aws::SSM
     # You can configure Systems Manager Inventory to use the
     # `SyncToDestination` type to synchronize Inventory data from multiple
     # Amazon Web Services Regions to a single Amazon Simple Storage Service
-    # (Amazon S3) bucket. For more information, see [Creatinga a resource
+    # (Amazon S3) bucket. For more information, see [Creating a resource
     # data sync for Inventory][1] in the *Amazon Web Services Systems
     # Manager User Guide*.
     #
@@ -6277,6 +6281,78 @@ module Aws::SSM
       req.send_request(options)
     end
 
+    # Initiates the process of retrieving an existing preview that shows the
+    # effects that running a specified Automation runbook would have on the
+    # targeted resources.
+    #
+    # @option params [required, String] :execution_preview_id
+    #   The ID of the existing execution preview.
+    #
+    # @return [Types::GetExecutionPreviewResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetExecutionPreviewResponse#execution_preview_id #execution_preview_id} => String
+    #   * {Types::GetExecutionPreviewResponse#ended_at #ended_at} => Time
+    #   * {Types::GetExecutionPreviewResponse#status #status} => String
+    #   * {Types::GetExecutionPreviewResponse#status_message #status_message} => String
+    #   * {Types::GetExecutionPreviewResponse#execution_preview #execution_preview} => Types::ExecutionPreview
+    #
+    #
+    # @example Example: GetExecutionPreview
+    #
+    #   # This example illustrates one usage of GetExecutionPreview
+    #
+    #   resp = client.get_execution_preview({
+    #     execution_preview_id: "2f27d6e5-9676-4708-b8bd-aef0ab47bb26", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     ended_at: Time.parse("2024-11-13T01:50:39.424000+00:00"), 
+    #     execution_preview: {
+    #       automation: {
+    #         regions: [
+    #           "us-east-2", 
+    #         ], 
+    #         step_previews: {
+    #           "Undetermined" => 1, 
+    #         }, 
+    #         total_accounts: 1, 
+    #       }, 
+    #     }, 
+    #     execution_preview_id: "2f27d6e5-9676-4708-b8bd-aef0ab47bb26", 
+    #     status: "Success", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_execution_preview({
+    #     execution_preview_id: "ExecutionPreviewId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.execution_preview_id #=> String
+    #   resp.ended_at #=> Time
+    #   resp.status #=> String, one of "Pending", "InProgress", "Success", "Failed"
+    #   resp.status_message #=> String
+    #   resp.execution_preview.automation.step_previews #=> Hash
+    #   resp.execution_preview.automation.step_previews["ImpactType"] #=> Integer
+    #   resp.execution_preview.automation.regions #=> Array
+    #   resp.execution_preview.automation.regions[0] #=> String
+    #   resp.execution_preview.automation.target_previews #=> Array
+    #   resp.execution_preview.automation.target_previews[0].count #=> Integer
+    #   resp.execution_preview.automation.target_previews[0].target_type #=> String
+    #   resp.execution_preview.automation.total_accounts #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/GetExecutionPreview AWS API Documentation
+    #
+    # @overload get_execution_preview(params = {})
+    # @param [Hash] params ({})
+    def get_execution_preview(params = {}, options = {})
+      req = build_request(:get_execution_preview, params)
+      req.send_request(options)
+    end
+
     # Query inventory information. This includes managed node status, such
     # as `Stopped` or `Terminated`.
     #
@@ -7473,15 +7549,19 @@ module Aws::SSM
     #   The ID of the service setting to get. The setting ID can be one of the
     #   following.
     #
-    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
+    #   * `/ssm/appmanager/appmanager-enabled`
     #
     #   * `/ssm/automation/customer-script-log-destination`
     #
     #   * `/ssm/automation/customer-script-log-group-name`
     #
+    #   * /ssm/automation/enable-adaptive-concurrency
+    #
     #   * `/ssm/documents/console/public-sharing-permission`
     #
     #   * `/ssm/managed-instance/activation-tier`
+    #
+    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
     #
     #   * `/ssm/opsinsights/opscenter`
     #
@@ -8390,6 +8470,246 @@ module Aws::SSM
     # @param [Hash] params ({})
     def list_inventory_entries(params = {}, options = {})
       req = build_request(:list_inventory_entries, params)
+      req.send_request(options)
+    end
+
+    # Takes in filters and returns a list of managed nodes matching the
+    # filter criteria.
+    #
+    # @option params [String] :sync_name
+    #   The name of the resource data sync to retrieve information about.
+    #   Required for cross-account/cross-Region configurations. Optional for
+    #   single account/single-Region configurations.
+    #
+    # @option params [Array<Types::NodeFilter>] :filters
+    #   One or more filters. Use a filter to return a more specific list of
+    #   managed nodes.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #
+    # @return [Types::ListNodesResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListNodesResult#nodes #nodes} => Array&lt;Types::Node&gt;
+    #   * {Types::ListNodesResult#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: ListNodes
+    #
+    #   # This example illustrates one usage of ListNodes
+    #
+    #   resp = client.list_nodes({
+    #     filters: [
+    #       {
+    #         key: "Region", 
+    #         type: "Equal", 
+    #         values: [
+    #           "us-east-2", 
+    #         ], 
+    #       }, 
+    #     ], 
+    #     max_results: 1, 
+    #     sync_name: "AWS-QuickSetup-ManagedNode", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     next_token: "A9lT8CAxj9aDFRi+MNAoFq08IEXAMPLE", 
+    #     nodes: [
+    #       {
+    #         capture_time: Time.parse("2024-11-19T22:01:18"), 
+    #         id: "i-02573cafcfEXAMPLE", 
+    #         node_type: {
+    #           instance: {
+    #             agent_type: "amazon-ssm-agent", 
+    #             agent_version: "3.3.859.0", 
+    #             computer_name: "ip-192.0.2.0.ec2.internal", 
+    #             instance_status: "Active", 
+    #             ip_address: "192.0.2.0", 
+    #             managed_status: "Managed", 
+    #             platform_name: "Amazon Linux", 
+    #             platform_type: "Linux", 
+    #             platform_version: "2023", 
+    #             resource_type: "EC2Instance", 
+    #           }, 
+    #         }, 
+    #         owner: {
+    #           account_id: "111122223333", 
+    #           organizational_unit_id: "ou-b8dn-sasv9tfp", 
+    #           organizational_unit_path: "r-b8dn/ou-b8dn-sasv9tfp", 
+    #         }, 
+    #         region: "us-east-2", 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_nodes({
+    #     sync_name: "ResourceDataSyncName",
+    #     filters: [
+    #       {
+    #         key: "AgentType", # required, accepts AgentType, AgentVersion, ComputerName, InstanceId, InstanceStatus, IpAddress, ManagedStatus, PlatformName, PlatformType, PlatformVersion, ResourceType, OrganizationalUnitId, OrganizationalUnitPath, Region, AccountId
+    #         values: ["NodeFilterValue"], # required
+    #         type: "Equal", # accepts Equal, NotEqual, BeginWith
+    #       },
+    #     ],
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.nodes #=> Array
+    #   resp.nodes[0].capture_time #=> Time
+    #   resp.nodes[0].id #=> String
+    #   resp.nodes[0].owner.account_id #=> String
+    #   resp.nodes[0].owner.organizational_unit_id #=> String
+    #   resp.nodes[0].owner.organizational_unit_path #=> String
+    #   resp.nodes[0].region #=> String
+    #   resp.nodes[0].node_type.instance.agent_type #=> String
+    #   resp.nodes[0].node_type.instance.agent_version #=> String
+    #   resp.nodes[0].node_type.instance.computer_name #=> String
+    #   resp.nodes[0].node_type.instance.instance_status #=> String
+    #   resp.nodes[0].node_type.instance.ip_address #=> String
+    #   resp.nodes[0].node_type.instance.managed_status #=> String, one of "All", "Managed", "Unmanaged"
+    #   resp.nodes[0].node_type.instance.platform_type #=> String, one of "Windows", "Linux", "MacOS"
+    #   resp.nodes[0].node_type.instance.platform_name #=> String
+    #   resp.nodes[0].node_type.instance.platform_version #=> String
+    #   resp.nodes[0].node_type.instance.resource_type #=> String, one of "ManagedInstance", "EC2Instance"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ListNodes AWS API Documentation
+    #
+    # @overload list_nodes(params = {})
+    # @param [Hash] params ({})
+    def list_nodes(params = {}, options = {})
+      req = build_request(:list_nodes, params)
+      req.send_request(options)
+    end
+
+    # Generates a summary of managed instance/node metadata based on the
+    # filters and aggregators you specify. Results are grouped by the input
+    # aggregator you specify.
+    #
+    # @option params [String] :sync_name
+    #   The name of the resource data sync to retrieve information about.
+    #   Required for cross-account/cross-Region configuration. Optional for
+    #   single account/single-Region configurations.
+    #
+    # @option params [Array<Types::NodeFilter>] :filters
+    #   One or more filters. Use a filter to generate a summary that matches
+    #   your specified filter criteria.
+    #
+    # @option params [required, Array<Types::NodeAggregator>] :aggregators
+    #   Specify one or more aggregators to return a count of managed nodes
+    #   that match that expression. For example, a count of managed nodes by
+    #   operating system.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.) The call also returns a token that you
+    #   can specify in a subsequent call to get the next set of results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return for this call. The call also
+    #   returns a token that you can specify in a subsequent call to get the
+    #   next set of results.
+    #
+    # @return [Types::ListNodesSummaryResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListNodesSummaryResult#summary #summary} => Array&lt;Hash&lt;String,String&gt;&gt;
+    #   * {Types::ListNodesSummaryResult#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: ListNodesSummary
+    #
+    #   # This example illustrates one usage of ListNodesSummary
+    #
+    #   resp = client.list_nodes_summary({
+    #     aggregators: [
+    #       {
+    #         aggregator_type: "Count", 
+    #         attribute_name: "Region", 
+    #         type_name: "Instance", 
+    #       }, 
+    #     ], 
+    #     filters: [
+    #       {
+    #         key: "InstanceStatus", 
+    #         type: "Equal", 
+    #         values: [
+    #           "Active", 
+    #         ], 
+    #       }, 
+    #     ], 
+    #     max_results: 2, 
+    #     next_token: "A9lT8CAxj9aDFRi+MNAoFq08I---EXAMPLE", 
+    #     sync_name: "AWS-QuickSetup-ManagedNode", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     summary: [
+    #       {
+    #         "Count" => "26", 
+    #         "Region" => "us-east-1", 
+    #       }, 
+    #       {
+    #         "Count" => "7", 
+    #         "Region" => "us-east-2", 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_nodes_summary({
+    #     sync_name: "ResourceDataSyncName",
+    #     filters: [
+    #       {
+    #         key: "AgentType", # required, accepts AgentType, AgentVersion, ComputerName, InstanceId, InstanceStatus, IpAddress, ManagedStatus, PlatformName, PlatformType, PlatformVersion, ResourceType, OrganizationalUnitId, OrganizationalUnitPath, Region, AccountId
+    #         values: ["NodeFilterValue"], # required
+    #         type: "Equal", # accepts Equal, NotEqual, BeginWith
+    #       },
+    #     ],
+    #     aggregators: [ # required
+    #       {
+    #         aggregator_type: "Count", # required, accepts Count
+    #         type_name: "Instance", # required, accepts Instance
+    #         attribute_name: "AgentVersion", # required, accepts AgentVersion, PlatformName, PlatformType, PlatformVersion, Region, ResourceType
+    #         aggregators: {
+    #           # recursive NodeAggregatorList
+    #         },
+    #       },
+    #     ],
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.summary #=> Array
+    #   resp.summary[0] #=> Hash
+    #   resp.summary[0]["AttributeName"] #=> <Hash,Array,String,Numeric,Boolean,IO,Set,nil>
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/ListNodesSummary AWS API Documentation
+    #
+    # @overload list_nodes_summary(params = {})
+    # @param [Hash] params ({})
+    def list_nodes_summary(params = {}, options = {})
+      req = build_request(:list_nodes_summary, params)
       req.send_request(options)
     end
 
@@ -9916,15 +10236,19 @@ module Aws::SSM
     #   The Amazon Resource Name (ARN) of the service setting to reset. The
     #   setting ID can be one of the following.
     #
-    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
+    #   * `/ssm/appmanager/appmanager-enabled`
     #
     #   * `/ssm/automation/customer-script-log-destination`
     #
     #   * `/ssm/automation/customer-script-log-group-name`
     #
+    #   * /ssm/automation/enable-adaptive-concurrency
+    #
     #   * `/ssm/documents/console/public-sharing-permission`
     #
     #   * `/ssm/managed-instance/activation-tier`
+    #
+    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
     #
     #   * `/ssm/opsinsights/opscenter`
     #
@@ -10696,6 +11020,107 @@ module Aws::SSM
     # @param [Hash] params ({})
     def start_change_request_execution(params = {}, options = {})
       req = build_request(:start_change_request_execution, params)
+      req.send_request(options)
+    end
+
+    # Initiates the process of creating a preview showing the effects that
+    # running a specified Automation runbook would have on the targeted
+    # resources.
+    #
+    # @option params [required, String] :document_name
+    #   The name of the Automation runbook to run. The result of the execution
+    #   preview indicates what the impact would be of running this runbook.
+    #
+    # @option params [String] :document_version
+    #   The version of the Automation runbook to run. The default value is
+    #   `$DEFAULT`.
+    #
+    # @option params [Types::ExecutionInputs] :execution_inputs
+    #   Information about the inputs that can be specified for the preview
+    #   operation.
+    #
+    # @return [Types::StartExecutionPreviewResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartExecutionPreviewResponse#execution_preview_id #execution_preview_id} => String
+    #
+    #
+    # @example Example: StartExecutionPreview
+    #
+    #   # This example illustrates one usage of StartExecutionPreview
+    #
+    #   resp = client.start_execution_preview({
+    #     document_name: "AWS-StartEC2Instance", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     execution_preview_id: "2f27d6e5-9676-4708-b8bd-aef0ab47bb26", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_execution_preview({
+    #     document_name: "DocumentName", # required
+    #     document_version: "DocumentVersion",
+    #     execution_inputs: {
+    #       automation: {
+    #         parameters: {
+    #           "AutomationParameterKey" => ["AutomationParameterValue"],
+    #         },
+    #         target_parameter_name: "AutomationParameterKey",
+    #         targets: [
+    #           {
+    #             key: "TargetKey",
+    #             values: ["TargetValue"],
+    #           },
+    #         ],
+    #         target_maps: [
+    #           {
+    #             "TargetMapKey" => ["TargetMapValue"],
+    #           },
+    #         ],
+    #         target_locations: [
+    #           {
+    #             accounts: ["Account"],
+    #             regions: ["Region"],
+    #             target_location_max_concurrency: "MaxConcurrency",
+    #             target_location_max_errors: "MaxErrors",
+    #             execution_role_name: "ExecutionRoleName",
+    #             target_location_alarm_configuration: {
+    #               ignore_poll_alarm_failure: false,
+    #               alarms: [ # required
+    #                 {
+    #                   name: "AlarmName", # required
+    #                 },
+    #               ],
+    #             },
+    #             include_child_organization_units: false,
+    #             exclude_accounts: ["ExcludeAccount"],
+    #             targets: [
+    #               {
+    #                 key: "TargetKey",
+    #                 values: ["TargetValue"],
+    #               },
+    #             ],
+    #             targets_max_concurrency: "MaxConcurrency",
+    #             targets_max_errors: "MaxErrors",
+    #           },
+    #         ],
+    #         target_locations_url: "TargetLocationsURL",
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.execution_preview_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ssm-2014-11-06/StartExecutionPreview AWS API Documentation
+    #
+    # @overload start_execution_preview(params = {})
+    # @param [Hash] params ({})
+    def start_execution_preview(params = {}, options = {})
+      req = build_request(:start_execution_preview, params)
       req.send_request(options)
     end
 
@@ -12454,6 +12879,10 @@ module Aws::SSM
     # @option params [Types::PatchFilterGroup] :global_filters
     #   A set of global filters used to include patches in the baseline.
     #
+    #   The `GlobalFilters` parameter can be configured only by using the CLI
+    #   or an Amazon Web Services SDK. It can't be configured from the Patch
+    #   Manager console, and its value isn't displayed in the console.
+    #
     # @option params [Types::PatchRuleGroup] :approval_rules
     #   A set of rules used to include patches in the baseline.
     #
@@ -12716,15 +13145,19 @@ module Aws::SSM
     #   `arn:aws:ssm:us-east-1:111122223333:servicesetting/ssm/parameter-store/high-throughput-enabled`.
     #   The setting ID can be one of the following.
     #
-    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
+    #   * `/ssm/appmanager/appmanager-enabled`
     #
     #   * `/ssm/automation/customer-script-log-destination`
     #
     #   * `/ssm/automation/customer-script-log-group-name`
     #
+    #   * /ssm/automation/enable-adaptive-concurrency
+    #
     #   * `/ssm/documents/console/public-sharing-permission`
     #
     #   * `/ssm/managed-instance/activation-tier`
+    #
+    #   * `/ssm/managed-instance/default-ec2-instance-management-role`
     #
     #   * `/ssm/opsinsights/opscenter`
     #
@@ -12744,8 +13177,7 @@ module Aws::SSM
     #   The new value to specify for the service setting. The following list
     #   specifies the available values for each setting.
     #
-    #   * For `/ssm/managed-instance/default-ec2-instance-management-role`,
-    #     enter the name of an IAM role.
+    #   * For `/ssm/appmanager/appmanager-enabled`, enter `True` or `False`.
     #
     #   * For `/ssm/automation/customer-script-log-destination`, enter
     #     `CloudWatch`.
@@ -12758,6 +13190,9 @@ module Aws::SSM
     #
     #   * For `/ssm/managed-instance/activation-tier`, enter `standard` or
     #     `advanced`.
+    #
+    #   * For `/ssm/managed-instance/default-ec2-instance-management-role`,
+    #     enter the name of an IAM role.
     #
     #   * For `/ssm/opsinsights/opscenter`, enter `Enabled` or `Disabled`.
     #
@@ -12803,7 +13238,7 @@ module Aws::SSM
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ssm'
-      context[:gem_version] = '1.185.0'
+      context[:gem_version] = '1.186.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

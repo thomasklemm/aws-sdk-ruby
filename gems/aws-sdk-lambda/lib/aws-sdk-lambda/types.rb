@@ -863,6 +863,15 @@ module Aws::Lambda
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html#filtering-basics
     #   @return [String]
     #
+    # @!attribute [rw] metrics_config
+    #   The metrics configuration for your event source. For more
+    #   information, see [Event source mapping metrics][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
+    #   @return [Types::EventSourceMappingMetricsConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/CreateEventSourceMappingRequest AWS API Documentation
     #
     class CreateEventSourceMappingRequest < Struct.new(
@@ -890,7 +899,8 @@ module Aws::Lambda
       :self_managed_kafka_event_source_config,
       :scaling_config,
       :document_db_event_source_config,
-      :kms_key_arn)
+      :kms_key_arn,
+      :metrics_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2047,6 +2057,15 @@ module Aws::Lambda
     #   The Amazon Resource Name (ARN) of the event source mapping.
     #   @return [String]
     #
+    # @!attribute [rw] metrics_config
+    #   The metrics configuration for your event source. For more
+    #   information, see [Event source mapping metrics][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
+    #   @return [Types::EventSourceMappingMetricsConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/EventSourceMappingConfiguration AWS API Documentation
     #
     class EventSourceMappingConfiguration < Struct.new(
@@ -2079,7 +2098,32 @@ module Aws::Lambda
       :document_db_event_source_config,
       :kms_key_arn,
       :filter_criteria_error,
-      :event_source_mapping_arn)
+      :event_source_mapping_arn,
+      :metrics_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The metrics configuration for your event source. Use this
+    # configuration object to define which metrics you want your event
+    # source mapping to produce.
+    #
+    # @!attribute [rw] metrics
+    #   The metrics you want your event source mapping to produce. Include
+    #   `EventCount` to receive event source mapping metrics related to the
+    #   number of events processed by your event source mapping. For more
+    #   information about these metrics, see [ Event source mapping
+    #   metrics][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/EventSourceMappingMetricsConfig AWS API Documentation
+    #
+    class EventSourceMappingMetricsConfig < Struct.new(
+      :metrics)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2566,9 +2610,16 @@ module Aws::Lambda
     #
     #   * **Queue** - The ARN of a standard SQS queue.
     #
+    #   * **Bucket** - The ARN of an Amazon S3 bucket.
+    #
     #   * **Topic** - The ARN of a standard SNS topic.
     #
     #   * **Event Bus** - The ARN of an Amazon EventBridge event bus.
+    #
+    #   <note markdown="1"> S3 buckets are supported only for on-failure destinations. To retain
+    #   records of successful invocations, use another destination type.
+    #
+    #    </note>
     #   @return [Types::DestinationConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/FunctionEventInvokeConfig AWS API Documentation
@@ -4874,24 +4925,23 @@ module Aws::Lambda
     # @!attribute [rw] destination
     #   The Amazon Resource Name (ARN) of the destination resource.
     #
-    #   To retain records of [asynchronous invocations][1], you can
-    #   configure an Amazon SNS topic, Amazon SQS queue, Lambda function, or
-    #   Amazon EventBridge event bus as the destination.
+    #   To retain records of unsuccessful [asynchronous invocations][1], you
+    #   can configure an Amazon SNS topic, Amazon SQS queue, Amazon S3
+    #   bucket, Lambda function, or Amazon EventBridge event bus as the
+    #   destination.
     #
-    #   To retain records of failed invocations from [Kinesis and DynamoDB
-    #   event sources][2], you can configure an Amazon SNS topic or Amazon
-    #   SQS queue as the destination.
-    #
-    #   To retain records of failed invocations from [self-managed Kafka][3]
-    #   or [Amazon MSK][4], you can configure an Amazon SNS topic, Amazon
-    #   SQS queue, or Amazon S3 bucket as the destination.
+    #   To retain records of failed invocations from [Kinesis][2],
+    #   [DynamoDB][3], [self-managed Kafka][4] or [Amazon MSK][5], you can
+    #   configure an Amazon SNS topic, Amazon SQS queue, or Amazon S3 bucket
+    #   as the destination.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations
-    #   [2]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#event-source-mapping-destinations
-    #   [3]: https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-smaa-onfailure-destination
-    #   [4]: https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-onfailure-destination
+    #   [2]: https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html
+    #   [3]: https://docs.aws.amazon.com/lambda/latest/dg/with-ddb.html
+    #   [4]: https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-smaa-onfailure-destination
+    #   [5]: https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-onfailure-destination
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/OnFailure AWS API Documentation
@@ -4903,6 +4953,14 @@ module Aws::Lambda
     end
 
     # A destination for events that were processed successfully.
+    #
+    # To retain records of successful [asynchronous invocations][1], you can
+    # configure an Amazon SNS topic, Amazon SQS queue, Lambda function, or
+    # Amazon EventBridge event bus as the destination.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations
     #
     # @!attribute [rw] destination
     #   The Amazon Resource Name (ARN) of the destination resource.
@@ -5346,9 +5404,16 @@ module Aws::Lambda
     #
     #   * **Queue** - The ARN of a standard SQS queue.
     #
+    #   * **Bucket** - The ARN of an Amazon S3 bucket.
+    #
     #   * **Topic** - The ARN of a standard SNS topic.
     #
     #   * **Event Bus** - The ARN of an Amazon EventBridge event bus.
+    #
+    #   <note markdown="1"> S3 buckets are supported only for on-failure destinations. To retain
+    #   records of successful invocations, use another destination type.
+    #
+    #    </note>
     #   @return [Types::DestinationConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/PutFunctionEventInvokeConfigRequest AWS API Documentation
@@ -6494,6 +6559,15 @@ module Aws::Lambda
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html#filtering-basics
     #   @return [String]
     #
+    # @!attribute [rw] metrics_config
+    #   The metrics configuration for your event source. For more
+    #   information, see [Event source mapping metrics][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
+    #   @return [Types::EventSourceMappingMetricsConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateEventSourceMappingRequest AWS API Documentation
     #
     class UpdateEventSourceMappingRequest < Struct.new(
@@ -6513,7 +6587,8 @@ module Aws::Lambda
       :function_response_types,
       :scaling_config,
       :document_db_event_source_config,
-      :kms_key_arn)
+      :kms_key_arn,
+      :metrics_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6877,9 +6952,16 @@ module Aws::Lambda
     #
     #   * **Queue** - The ARN of a standard SQS queue.
     #
+    #   * **Bucket** - The ARN of an Amazon S3 bucket.
+    #
     #   * **Topic** - The ARN of a standard SNS topic.
     #
     #   * **Event Bus** - The ARN of an Amazon EventBridge event bus.
+    #
+    #   <note markdown="1"> S3 buckets are supported only for on-failure destinations. To retain
+    #   records of successful invocations, use another destination type.
+    #
+    #    </note>
     #   @return [Types::DestinationConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateFunctionEventInvokeConfigRequest AWS API Documentation

@@ -618,6 +618,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items #=> Array
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution.distribution_config.origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution.distribution_config.default_cache_behavior.target_origin_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -1126,6 +1127,7 @@ module Aws::CloudFront
     #                 },
     #               ],
     #             },
+    #             selection_criteria: "default", # accepts default, media-quality-based
     #           },
     #         ],
     #       },
@@ -1384,6 +1386,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items #=> Array
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution.distribution_config.origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution.distribution_config.default_cache_behavior.target_origin_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -1620,6 +1623,7 @@ module Aws::CloudFront
     #                   },
     #                 ],
     #               },
+    #               selection_criteria: "default", # accepts default, media-quality-based
     #             },
     #           ],
     #         },
@@ -1887,6 +1891,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items #=> Array
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution.distribution_config.origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution.distribution_config.default_cache_behavior.target_origin_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -4441,6 +4446,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items #=> Array
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution.distribution_config.origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution.distribution_config.default_cache_behavior.target_origin_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -4644,6 +4650,7 @@ module Aws::CloudFront
     #   resp.distribution_config.origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution_config.origin_groups.items[0].members.items #=> Array
     #   resp.distribution_config.origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution_config.origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution_config.default_cache_behavior.target_origin_id #=> String
     #   resp.distribution_config.default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution_config.default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -6202,6 +6209,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items #=> Array
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution_list.items[0].origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution_list.items[0].default_cache_behavior.target_origin_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -6414,6 +6422,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items #=> Array
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution_list.items[0].origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution_list.items[0].default_cache_behavior.target_origin_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -6809,6 +6818,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items #=> Array
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution_list.items[0].origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution_list.items[0].default_cache_behavior.target_origin_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -7151,6 +7161,7 @@ module Aws::CloudFront
     #   resp.distribution_list.items[0].origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items #=> Array
     #   resp.distribution_list.items[0].origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution_list.items[0].origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution_list.items[0].default_cache_behavior.target_origin_id #=> String
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution_list.items[0].default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -8719,6 +8730,7 @@ module Aws::CloudFront
     #                 },
     #               ],
     #             },
+    #             selection_criteria: "default", # accepts default, media-quality-based
     #           },
     #         ],
     #       },
@@ -8979,6 +8991,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items #=> Array
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution.distribution_config.origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution.distribution_config.default_cache_behavior.target_origin_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -9233,6 +9246,7 @@ module Aws::CloudFront
     #   resp.distribution.distribution_config.origin_groups.items[0].members.quantity #=> Integer
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items #=> Array
     #   resp.distribution.distribution_config.origin_groups.items[0].members.items[0].origin_id #=> String
+    #   resp.distribution.distribution_config.origin_groups.items[0].selection_criteria #=> String, one of "default", "media-quality-based"
     #   resp.distribution.distribution_config.default_cache_behavior.target_origin_id #=> String
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.enabled #=> Boolean
     #   resp.distribution.distribution_config.default_cache_behavior.trusted_signers.quantity #=> Integer
@@ -10454,7 +10468,7 @@ module Aws::CloudFront
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudfront'
-      context[:gem_version] = '1.106.0'
+      context[:gem_version] = '1.107.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

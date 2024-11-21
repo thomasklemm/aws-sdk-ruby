@@ -466,8 +466,8 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/IAM.ResourceLevelPermissions.html
-    # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Tagging.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.ResourceLevelPermissions.html
+    # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Tagging.html
     #
     # @option params [required, String] :resource_name
     #   The Amazon Resource Name (ARN) of the resource to which the tags are
@@ -622,7 +622,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/applying-updates.html
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/applying-updates.html
     #
     # @option params [Array<String>] :replication_group_ids
     #   The replication group IDs
@@ -674,7 +674,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/stopping-self-service-updates.html
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/stopping-self-service-updates.html
     #
     # @option params [Array<String>] :replication_group_ids
     #   The replication group IDs
@@ -964,10 +964,10 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-exporting.html
-    # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/IAM.html
-    # [3]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-exporting.html#backups-exporting-create-s3-bucket
-    # [4]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-exporting.html#backups-exporting-grant-access
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html
+    # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.html
+    # [3]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-create-s3-bucket
+    # [4]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-grant-access
     #
     # @option params [required, String] :source_snapshot_name
     #   The name of an existing snapshot from which to make a copy.
@@ -991,8 +991,8 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-exporting.html#backups-exporting-grant-access
-    #   [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/backups-exporting.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html#backups-exporting-grant-access
+    #   [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/backups-exporting.html
     #
     # @option params [String] :kms_key_id
     #   The ID of the KMS key used to encrypt the target snapshot.
@@ -1321,7 +1321,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #
     # @option params [String] :engine
     #   The name of the cache engine to be used for this cluster.
@@ -1341,7 +1341,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #
     # @option params [String] :cache_parameter_group_name
     #   The name of the parameter group to associate with this cluster. If
@@ -1361,7 +1361,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SubnetGroups.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SubnetGroups.html
     #
     # @option params [Array<String>] :cache_security_group_names
     #   A list of security group names to associate with this cluster.
@@ -1755,7 +1755,7 @@ module Aws::ElastiCache
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_ModifyCacheParameterGroup.html
-    # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/ParameterGroups.html
+    # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/ParameterGroups.html
     #
     # @option params [required, String] :cache_parameter_group_name
     #   A user-specified name for the cache parameter group.
@@ -2034,7 +2034,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Redis-Global-Datastore.html
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastore.html
     #
     # @option params [required, String] :global_replication_group_id_suffix
     #   The suffix name of a Global datastore. Amazon ElastiCache
@@ -2051,7 +2051,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Redis-Global-Datastores-CLI.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Redis-Global-Datastores-CLI.html
     #
     # @option params [String] :global_replication_group_description
     #   Provides details of the Global datastore
@@ -2148,9 +2148,9 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SubnetGroups.Creating.html
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SubnetGroups.Creating.html
     # [2]: https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html
-    # [3]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Scaling.html
+    # [3]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Scaling.html
     #
     # @option params [required, String] :replication_group_id
     #   The replication group identifier. This parameter is stored as a
@@ -2194,7 +2194,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html
     #
     # @option params [Integer] :num_cache_clusters
     #   The number of clusters this replication group initially has.
@@ -2370,7 +2370,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #
     # @option params [String] :engine
     #   The name of the cache engine to be used for the clusters in this
@@ -2390,7 +2390,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #
     # @option params [String] :cache_parameter_group_name
     #   The name of the parameter group to associate with this replication
@@ -2417,7 +2417,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SubnetGroups.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SubnetGroups.html
     #
     # @option params [Array<String>] :cache_security_group_names
     #   A list of cache security group names to associate with this
@@ -2588,7 +2588,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/data-tiering.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/data-tiering.html
     #
     # @option params [String] :network_type
     #   Must be either `ipv4` \| `ipv6` \| `dual_stack`. IPv6 is supported for
@@ -3332,7 +3332,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Clusters.RBAC.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Clusters.RBAC.html
     #
     # @option params [required, String] :user_id
     #   The ID of the user.
@@ -3423,7 +3423,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Clusters.RBAC.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Clusters.RBAC.html
     #
     # @option params [required, String] :user_group_id
     #   The ID of the user group.
@@ -4451,7 +4451,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Clusters.RBAC.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Clusters.RBAC.html
     #
     # @option params [required, String] :user_id
     #   The ID of the user.
@@ -4504,7 +4504,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/Clusters.RBAC.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/Clusters.RBAC.html
     #
     # @option params [required, String] :user_group_id
     #   The ID of the user group.
@@ -7094,7 +7094,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #
     # @option params [String] :duration
     #   The duration filter value, specified in years or seconds. Use this
@@ -7311,7 +7311,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html#CacheNodes.SupportedTypesByRegion
     #
     # @option params [String] :duration
     #   Duration filter value, specified in years or seconds. Use this
@@ -8807,7 +8807,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/IAM.ResourceLevelPermissions.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.ResourceLevelPermissions.html
     #
     # @option params [required, String] :resource_name
     #   The Amazon Resource Name (ARN) of the resource for which you want the
@@ -9027,7 +9027,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/mem-ug/CacheNodes.SupportedTypes.html
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/CacheNodes.SupportedTypes.html
     #
     # @option params [Array<String>] :cache_security_group_names
     #   A list of cache security group names to authorize on this cluster.
@@ -9121,7 +9121,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #
     # @option params [Boolean] :auto_minor_version_upgrade
     #    If you are running Valkey 7.2 or Redis OSS engine version 6.0 or
@@ -9180,7 +9180,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/auth.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/auth.html
     #
     # @option params [Array<Types::LogDeliveryConfigurationRequest>] :log_delivery_configurations
     #   Specifies the destination, format and type of the logs.
@@ -9636,7 +9636,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/scaling-redis-cluster-mode-enabled.html
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/scaling-redis-cluster-mode-enabled.html
     # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_ModifyReplicationGroupShardConfiguration.html
     #
     # @option params [required, String] :replication_group_id
@@ -9763,7 +9763,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/SelectEngine.html#VersionManagement
+    #   [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/SelectEngine.html#VersionManagement
     #
     # @option params [Boolean] :auto_minor_version_upgrade
     #    If you are running Valkey or Redis OSS engine version 6.0 or later,
@@ -9827,7 +9827,7 @@ module Aws::ElastiCache
     #
     #
     #
-    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/auth.html
+    #   [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/auth.html
     #
     # @option params [Array<String>] :user_group_ids_to_add
     #   The ID of the user group you are associating with the replication
@@ -10385,6 +10385,9 @@ module Aws::ElastiCache
     # @option params [Types::AuthenticationMode] :authentication_mode
     #   Specifies how to authenticate the user.
     #
+    # @option params [String] :engine
+    #   The engine for a specific user.
+    #
     # @return [Types::User] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::User#user_id #user_id} => String
@@ -10409,6 +10412,7 @@ module Aws::ElastiCache
     #       type: "password", # accepts password, no-password-required, iam
     #       passwords: ["String"],
     #     },
+    #     engine: "EngineType",
     #   })
     #
     # @example Response structure
@@ -10445,6 +10449,9 @@ module Aws::ElastiCache
     # @option params [Array<String>] :user_ids_to_remove
     #   The list of user IDs to remove from the user group.
     #
+    # @option params [String] :engine
+    #   The engine for a user group.
+    #
     # @return [Types::UserGroup] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UserGroup#user_group_id #user_group_id} => String
@@ -10463,6 +10470,7 @@ module Aws::ElastiCache
     #     user_group_id: "String", # required
     #     user_ids_to_add: ["UserId"],
     #     user_ids_to_remove: ["UserId"],
+    #     engine: "EngineType",
     #   })
     #
     # @example Response structure
@@ -10498,7 +10506,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/reserved-nodes.html
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/reserved-nodes.html
     #
     # @option params [required, String] :reserved_cache_nodes_offering_id
     #   The ID of the reserved cache node offering to purchase.
@@ -10653,7 +10661,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/nodes.rebooting.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/nodes.rebooting.html
     #
     # @option params [required, String] :cache_cluster_id
     #   The cluster identifier. This parameter is stored as a lowercase
@@ -10813,7 +10821,7 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/IAM.ResourceLevelPermissions.html
+    # [1]: http://docs.aws.amazon.com/AmazonElastiCache/latest/dg/IAM.ResourceLevelPermissions.html
     #
     # @option params [required, String] :resource_name
     #   The Amazon Resource Name (ARN) of the resource from which you want the
@@ -11192,9 +11200,9 @@ module Aws::ElastiCache
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/ECEvents.Viewing.html
+    # [1]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/ECEvents.Viewing.html
     # [2]: https://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_DescribeEvents.html
-    # [3]: https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/AutoFailover.html#auto-failover-test
+    # [3]: https://docs.aws.amazon.com/AmazonElastiCache/latest/dg/AutoFailover.html#auto-failover-test
     #
     # @option params [required, String] :replication_group_id
     #   The name of the replication group (console: cluster) whose automatic
@@ -11435,7 +11443,7 @@ module Aws::ElastiCache
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-elasticache'
-      context[:gem_version] = '1.118.0'
+      context[:gem_version] = '1.119.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

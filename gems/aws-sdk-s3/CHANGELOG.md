@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.173.0 (2024-11-21)
+------------------
+
+* Feature - Add support for conditional deletes for the S3 DeleteObject and DeleteObjects APIs. Add support for write offset bytes option used to append to objects with the S3 PutObject API.
+
 1.172.0 (2024-11-18)
 ------------------
 

@@ -38,8 +38,8 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] entries
-    #   Indicates the list of resource grouping recommendations you want to
-    #   include in your application.
+    #   List of resource grouping recommendations you want to include in
+    #   your application.
     #   @return [Array<Types::AcceptGroupingRecommendationEntry>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/AcceptResourceGroupingRecommendationsRequest AWS API Documentation
@@ -64,8 +64,8 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] failed_entries
-    #   Indicates the list of resource grouping recommendations that could
-    #   not be included in your application.
+    #   List of resource grouping recommendations that could not be included
+    #   in your application.
     #   @return [Array<Types::FailedGroupingRecommendationEntry>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/AcceptResourceGroupingRecommendationsResponse AWS API Documentation
@@ -251,7 +251,7 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] creation_time
-    #   Date and time when the app was created.
+    #   Date and time when the application was created.
     #   @return [Time]
     #
     # @!attribute [rw] description
@@ -1141,6 +1141,31 @@ module Aws::ResilienceHub
       include Aws::Structure
     end
 
+    # Indicates the condition based on which you want to filter the metrics.
+    #
+    # @!attribute [rw] field
+    #   Indicates the field in the metric.
+    #   @return [String]
+    #
+    # @!attribute [rw] operator
+    #   Indicates the type of operator or comparison to be used when
+    #   evaluating a condition against the specified field.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   Indicates the value or data against which a condition is evaluated.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/Condition AWS API Documentation
+    #
+    class Condition < Struct.new(
+      :field,
+      :operator,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Defines a recommendation configuration.
     #
     # @!attribute [rw] app_component_name
@@ -1656,11 +1681,11 @@ module Aws::ResilienceHub
     #   @return [Hash<String,Types::FailurePolicy>]
     #
     # @!attribute [rw] policy_description
-    #   The description for the policy.
+    #   Description of the resiliency policy.
     #   @return [String]
     #
     # @!attribute [rw] policy_name
-    #   The name of the policy
+    #   Name of the resiliency policy.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -2834,6 +2859,46 @@ module Aws::ResilienceHub
       include Aws::Structure
     end
 
+    # @!attribute [rw] metrics_export_id
+    #   Identifier of the metrics export task.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/DescribeMetricsExportRequest AWS API Documentation
+    #
+    class DescribeMetricsExportRequest < Struct.new(
+      :metrics_export_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] error_message
+    #   Explains the error that occurred while exporting the metrics.
+    #   @return [String]
+    #
+    # @!attribute [rw] export_location
+    #   Specifies the name of the Amazon S3 bucket where the exported
+    #   metrics is stored.
+    #   @return [Types::S3Location]
+    #
+    # @!attribute [rw] metrics_export_id
+    #   Identifier for the metrics export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Indicates the status of the metrics export task.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/DescribeMetricsExportResponse AWS API Documentation
+    #
+    class DescribeMetricsExportResponse < Struct.new(
+      :error_message,
+      :export_location,
+      :metrics_export_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] policy_arn
     #   Amazon Resource Name (ARN) of the resiliency policy. The format for
     #   this ARN is:
@@ -2883,7 +2948,7 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] grouping_id
-    #   Indicates the identifier of the grouping recommendation task.
+    #   Identifier of the grouping recommendation task.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/DescribeResourceGroupingRecommendationTaskRequest AWS API Documentation
@@ -2896,12 +2961,11 @@ module Aws::ResilienceHub
     end
 
     # @!attribute [rw] error_message
-    #   Indicates the error that occurred while generating a grouping
-    #   recommendation.
+    #   Error that occurred while generating a grouping recommendation.
     #   @return [String]
     #
     # @!attribute [rw] grouping_id
-    #   Indicates the identifier of the grouping recommendation task.
+    #   Identifier of the grouping recommendation task.
     #   @return [String]
     #
     # @!attribute [rw] status
@@ -3121,6 +3185,28 @@ module Aws::ResilienceHub
     class FailurePolicy < Struct.new(
       :rpo_in_secs,
       :rto_in_secs)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Indicates the field or attribute of a resource or data structure on
+    # which a condition is being applied or evaluated.
+    #
+    # @!attribute [rw] aggregation
+    #   (Optional) Indicates the type of aggregation or summary operation
+    #   (such as Sum, Average, and so on) to be performed on a particular
+    #   field or set of data.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Name of the field.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/Field AWS API Documentation
+    #
+    class Field < Struct.new(
+      :aggregation,
+      :name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3416,7 +3502,7 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] max_results
-    #   Indicates the maximum number of compliance drifts requested.
+    #   Maximum number of compliance drifts requested.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3466,10 +3552,10 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] max_results
-    #   Indicates the maximum number of drift results to include in the
-    #   response. If more results exist than the specified `MaxResults`
-    #   value, a token is included in the response so that the remaining
-    #   results can be retrieved.
+    #   Maximum number of drift results to include in the response. If more
+    #   results exist than the specified `MaxResults` value, a token is
+    #   included in the response so that the remaining results can be
+    #   retrieved.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -4040,8 +4126,8 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] from_last_assessment_time
-    #   Indicates the lower limit of the range that is used to filter
-    #   applications based on their last assessment times.
+    #   Lower limit of the range that is used to filter applications based
+    #   on their last assessment times.
     #   @return [Time]
     #
     # @!attribute [rw] max_results
@@ -4068,8 +4154,8 @@ module Aws::ResilienceHub
     #   @return [Boolean]
     #
     # @!attribute [rw] to_last_assessment_time
-    #   Indicates the upper limit of the range that is used to filter the
-    #   applications based on their last assessment times.
+    #   Upper limit of the range that is used to filter the applications
+    #   based on their last assessment times.
     #   @return [Time]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/ListAppsRequest AWS API Documentation
@@ -4101,6 +4187,68 @@ module Aws::ResilienceHub
     class ListAppsResponse < Struct.new(
       :app_summaries,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] conditions
+    #   Indicates the list of all the conditions that were applied on the
+    #   metrics.
+    #   @return [Array<Types::Condition>]
+    #
+    # @!attribute [rw] data_source
+    #   Indicates the data source of the metrics.
+    #   @return [String]
+    #
+    # @!attribute [rw] fields
+    #   Indicates the list of fields in the data source.
+    #   @return [Array<Types::Field>]
+    #
+    # @!attribute [rw] max_results
+    #   Maximum number of results to include in the response. If more
+    #   results exist than the specified `MaxResults` value, a token is
+    #   included in the response so that the remaining results can be
+    #   retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   Null, or the token from a previous call to get the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] sorts
+    #   (Optional) Indicates the order in which you want to sort the fields
+    #   in the metrics. By default, the fields are sorted in the ascending
+    #   order.
+    #   @return [Array<Types::Sort>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/ListMetricsRequest AWS API Documentation
+    #
+    class ListMetricsRequest < Struct.new(
+      :conditions,
+      :data_source,
+      :fields,
+      :max_results,
+      :next_token,
+      :sorts)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   Token for the next set of results, or null if there are no more
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] rows
+    #   Specifies all the list of metric values for each row of metrics.
+    #   @return [Array<Array<String>>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/ListMetricsResponse AWS API Documentation
+    #
+    class ListMetricsResponse < Struct.new(
+      :next_token,
+      :rows)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4191,7 +4339,7 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] policy_name
-    #   The name of the policy
+    #   Name of the resiliency policy.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/ListResiliencyPoliciesRequest AWS API Documentation
@@ -5336,8 +5484,8 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] entries
-    #   Indicates the list of resource grouping recommendations you have
-    #   selected to exclude from your application.
+    #   List of resource grouping recommendations you have selected to
+    #   exclude from your application.
     #   @return [Array<Types::RejectGroupingRecommendationEntry>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/RejectResourceGroupingRecommendationsRequest AWS API Documentation
@@ -5362,8 +5510,8 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] failed_entries
-    #   Indicates the list of resource grouping recommendations that failed
-    #   to get excluded in your application.
+    #   List of resource grouping recommendations that failed to get
+    #   excluded in your application.
     #   @return [Array<Types::FailedGroupingRecommendationEntry>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/RejectResourceGroupingRecommendationsResponse AWS API Documentation
@@ -5502,7 +5650,7 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] policy_description
-    #   The description for the policy.
+    #   Description of the resiliency policy.
     #   @return [String]
     #
     # @!attribute [rw] policy_name
@@ -5955,6 +6103,28 @@ module Aws::ResilienceHub
       include Aws::Structure
     end
 
+    # Indicates the sorting order of the fields in the metrics.
+    #
+    # @!attribute [rw] ascending
+    #   Indicates the name or identifier of the field or attribute that
+    #   should be used as the basis for sorting the metrics.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] field
+    #   Indicates the order in which you want to sort the metrics. By
+    #   default, the list is sorted in ascending order. To sort the list in
+    #   descending order, set this field to False.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/Sort AWS API Documentation
+    #
+    class Sort < Struct.new(
+      :ascending,
+      :field)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] app_arn
     #   Amazon Resource Name (ARN) of the Resilience Hub application. The
     #   format for this ARN is:
@@ -6014,6 +6184,46 @@ module Aws::ResilienceHub
       include Aws::Structure
     end
 
+    # @!attribute [rw] bucket_name
+    #   (Optional) Specifies the name of the Amazon Simple Storage Service
+    #   bucket where the exported metrics will be stored.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   Used for an idempotency token. A client token is a unique,
+    #   case-sensitive string of up to 64 ASCII characters. You should not
+    #   reuse the same client token for other API requests.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/StartMetricsExportRequest AWS API Documentation
+    #
+    class StartMetricsExportRequest < Struct.new(
+      :bucket_name,
+      :client_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] metrics_export_id
+    #   Identifier of the metrics export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Indicates the status of the metrics export task.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/StartMetricsExportResponse AWS API Documentation
+    #
+    class StartMetricsExportResponse < Struct.new(
+      :metrics_export_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] app_arn
     #   Amazon Resource Name (ARN) of the Resilience Hub application. The
     #   format for this ARN is:
@@ -6047,12 +6257,11 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] error_message
-    #   Indicates the error that occurred while executing a grouping
-    #   recommendation task.
+    #   Error that occurred while executing a grouping recommendation task.
     #   @return [String]
     #
     # @!attribute [rw] grouping_id
-    #   Indicates the identifier of the grouping recommendation task.
+    #   Identifier of the grouping recommendation task.
     #   @return [String]
     #
     # @!attribute [rw] status
@@ -6660,8 +6869,8 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] policy
-    #   The type of resiliency policy to be created, including the recovery
-    #   time objective (RTO) and recovery point objective (RPO) in seconds.
+    #   Resiliency policy to be created, including the recovery time
+    #   objective (RTO) and recovery point objective (RPO) in seconds.
     #   @return [Hash<String,Types::FailurePolicy>]
     #
     # @!attribute [rw] policy_arn
@@ -6677,11 +6886,11 @@ module Aws::ResilienceHub
     #   @return [String]
     #
     # @!attribute [rw] policy_description
-    #   The description for the policy.
+    #   Description of the resiliency policy.
     #   @return [String]
     #
     # @!attribute [rw] policy_name
-    #   The name of the policy
+    #   Name of the resiliency policy.
     #   @return [String]
     #
     # @!attribute [rw] tier
@@ -6703,9 +6912,8 @@ module Aws::ResilienceHub
     end
 
     # @!attribute [rw] policy
-    #   The type of resiliency policy that was updated, including the
-    #   recovery time objective (RTO) and recovery point objective (RPO) in
-    #   seconds.
+    #   The resiliency policy that was updated, including the recovery time
+    #   objective (RTO) and recovery point objective (RPO) in seconds.
     #   @return [Types::ResiliencyPolicy]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/resiliencehub-2020-04-30/UpdateResiliencyPolicyResponse AWS API Documentation

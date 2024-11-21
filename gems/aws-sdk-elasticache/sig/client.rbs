@@ -1274,7 +1274,8 @@ module Aws
                          ?authentication_mode: {
                            type: ("password" | "no-password-required" | "iam")?,
                            passwords: Array[::String]?
-                         }
+                         },
+                         ?engine: ::String
                        ) -> _ModifyUserResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyUserResponseSuccess
 
@@ -1294,7 +1295,8 @@ module Aws
       def modify_user_group: (
                                user_group_id: ::String,
                                ?user_ids_to_add: Array[::String],
-                               ?user_ids_to_remove: Array[::String]
+                               ?user_ids_to_remove: Array[::String],
+                               ?engine: ::String
                              ) -> _ModifyUserGroupResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyUserGroupResponseSuccess
 

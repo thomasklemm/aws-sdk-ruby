@@ -449,6 +449,12 @@ module Aws::IoTJobsDataPlane
 
     # Gets details of a job execution.
     #
+    # Requires permission to access the [DescribeJobExecution][1] action.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions
+    #
     # @option params [required, String] :job_id
     #   The unique identifier assigned to this job when it was created.
     #
@@ -457,8 +463,8 @@ module Aws::IoTJobsDataPlane
     #   on.
     #
     # @option params [Boolean] :include_job_document
-    #   Optional. When set to true, the response contains the job document.
-    #   The default is false.
+    #   Optional. Unless set to false, the response contains the job document.
+    #   The default is true.
     #
     # @option params [Integer] :execution_number
     #   Optional. A number that identifies a particular job execution on a
@@ -503,6 +509,12 @@ module Aws::IoTJobsDataPlane
     # Gets the list of all jobs for a thing that are not in a terminal
     # status.
     #
+    # Requires permission to access the [GetPendingJobExecutions][1] action.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions
+    #
     # @option params [required, String] :thing_name
     #   The name of the thing that is executing the job.
     #
@@ -541,8 +553,84 @@ module Aws::IoTJobsDataPlane
       req.send_request(options)
     end
 
+    # Using the command created with the `CreateCommand` API, start a
+    # command execution on a specific device.
+    #
+    # @option params [required, String] :target_arn
+    #   The Amazon Resource Number (ARN) of the device where the command
+    #   execution is occurring.
+    #
+    # @option params [required, String] :command_arn
+    #   The Amazon Resource Number (ARN) of the command. For example,
+    #   `arn:aws:iot:<region>:<accountid>:command/<commandName>`
+    #
+    # @option params [Hash<String,Types::CommandParameterValue>] :parameters
+    #   A list of parameters that are required by the `StartCommandExecution`
+    #   API when performing the command on a device.
+    #
+    # @option params [Integer] :execution_timeout_seconds
+    #   Specifies the amount of time in second the device has to finish the
+    #   command execution. A timer is started as soon as the command execution
+    #   is created. If the command execution status is not set to another
+    #   terminal state before the timer expires, it will automatically update
+    #   to `TIMED_OUT`.
+    #
+    # @option params [String] :client_token
+    #   The client token is used to implement idempotency. It ensures that the
+    #   request completes no more than one time. If you retry a request with
+    #   the same token and the same parameters, the request will complete
+    #   successfully. However, if you retry the request using the same token
+    #   but different parameters, an HTTP 409 conflict occurs. If you omit
+    #   this value, Amazon Web Services SDKs will automatically generate a
+    #   unique client request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Types::StartCommandExecutionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartCommandExecutionResponse#execution_id #execution_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_command_execution({
+    #     target_arn: "TargetArn", # required
+    #     command_arn: "CommandArn", # required
+    #     parameters: {
+    #       "CommandParameterName" => {
+    #         s: "StringParameterValue",
+    #         b: false,
+    #         i: 1,
+    #         l: 1,
+    #         d: 1.0,
+    #         bin: "data",
+    #         ul: "UnsignedLongParameterValue",
+    #       },
+    #     },
+    #     execution_timeout_seconds: 1,
+    #     client_token: "ClientRequestTokenV2",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.execution_id #=> String
+    #
+    # @overload start_command_execution(params = {})
+    # @param [Hash] params ({})
+    def start_command_execution(params = {}, options = {})
+      req = build_request(:start_command_execution, params)
+      req.send_request(options)
+    end
+
     # Gets and starts the next pending (status IN\_PROGRESS or QUEUED) job
     # execution for a thing.
+    #
+    # Requires permission to access the [StartNextPendingJobExecution][1]
+    # action.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions
     #
     # @option params [required, String] :thing_name
     #   The name of the thing associated with the device.
@@ -551,16 +639,22 @@ module Aws::IoTJobsDataPlane
     #   A collection of name/value pairs that describe the status of the job
     #   execution. If not specified, the statusDetails are unchanged.
     #
+    #   The maximum length of the value in the name/value pair is 1,024
+    #   characters.
+    #
     # @option params [Integer] :step_timeout_in_minutes
     #   Specifies the amount of time this device has to finish execution of
     #   this job. If the job execution status is not set to a terminal state
     #   before this timer expires, or before the timer is reset (by calling
-    #   `UpdateJobExecution`, setting the status to `IN_PROGRESS` and
+    #   `UpdateJobExecution`, setting the status to `IN_PROGRESS`, and
     #   specifying a new timeout value in field `stepTimeoutInMinutes`) the
     #   job execution status will be automatically set to `TIMED_OUT`. Note
-    #   that setting this timeout has no effect on that job execution timeout
-    #   which may have been specified when the job was created (`CreateJob`
+    #   that setting the step timeout has no effect on the in progress timeout
+    #   that may have been specified when the job was created (`CreateJob`
     #   using field `timeoutConfig`).
+    #
+    #   Valid values for this parameter range from 1 to 10080 (1 minute to 7
+    #   days).
     #
     # @return [Types::StartNextPendingJobExecutionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -600,6 +694,12 @@ module Aws::IoTJobsDataPlane
 
     # Updates the status of a job execution.
     #
+    # Requires permission to access the [UpdateJobExecution][1] action.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiotjobsdataplane.html
+    #
     # @option params [required, String] :job_id
     #   The unique identifier assigned to this job when it was created.
     #
@@ -614,16 +714,23 @@ module Aws::IoTJobsDataPlane
     #   Optional. A collection of name/value pairs that describe the status of
     #   the job execution. If not specified, the statusDetails are unchanged.
     #
+    #   The maximum length of the value in the name/value pair is 1,024
+    #   characters.
+    #
     # @option params [Integer] :step_timeout_in_minutes
     #   Specifies the amount of time this device has to finish execution of
     #   this job. If the job execution status is not set to a terminal state
     #   before this timer expires, or before the timer is reset (by again
-    #   calling `UpdateJobExecution`, setting the status to `IN_PROGRESS` and
+    #   calling `UpdateJobExecution`, setting the status to `IN_PROGRESS`, and
     #   specifying a new timeout value in this field) the job execution status
     #   will be automatically set to `TIMED_OUT`. Note that setting or
-    #   resetting this timeout has no effect on that job execution timeout
-    #   which may have been specified when the job was created (`CreateJob`
+    #   resetting the step timeout has no effect on the in progress timeout
+    #   that may have been specified when the job was created (`CreateJob`
     #   using field `timeoutConfig`).
+    #
+    #   Valid values for this parameter range from 1 to 10080 (1 minute to 7
+    #   days). A value of -1 is also valid and will cancel the current step
+    #   timer (created by an earlier use of `UpdateJobExecutionRequest`).
     #
     # @option params [Integer] :expected_version
     #   Optional. The expected current version of the job execution. Each time
@@ -700,7 +807,7 @@ module Aws::IoTJobsDataPlane
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iotjobsdataplane'
-      context[:gem_version] = '1.62.0'
+      context[:gem_version] = '1.63.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

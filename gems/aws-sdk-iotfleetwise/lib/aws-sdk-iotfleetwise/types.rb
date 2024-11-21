@@ -519,6 +519,23 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
+    # Specifies the condition under which a signal fetch occurs.
+    #
+    # @!attribute [rw] condition_expression
+    #   The condition that must be satisfied to trigger a signal fetch.
+    #   @return [String]
+    #
+    # @!attribute [rw] trigger_mode
+    #   Indicates the mode in which the signal fetch is triggered.
+    #   @return [String]
+    #
+    class ConditionBasedSignalFetchConfig < Struct.new(
+      :condition_expression,
+      :trigger_mode)
+      SENSITIVE = [:condition_expression]
+      include Aws::Structure
+    end
+
     # The request has conflicting operations. This can occur if you're
     # trying to perform more than one operation on the same resource at the
     # same time.
@@ -561,39 +578,38 @@ module Aws::IoTFleetWise
     #   @return [String]
     #
     # @!attribute [rw] start_time
-    #   (Optional) The time, in milliseconds, to deliver a campaign after it
-    #   was approved. If it's not specified, `0` is used.
+    #   The time, in milliseconds, to deliver a campaign after it was
+    #   approved. If it's not specified, `0` is used.
     #
     #   Default: `0`
     #   @return [Time]
     #
     # @!attribute [rw] expiry_time
-    #   (Optional) The time the campaign expires, in seconds since epoch
-    #   (January 1, 1970 at midnight UTC time). Vehicle data isn't
-    #   collected after the campaign expires.
+    #   The time the campaign expires, in seconds since epoch (January 1,
+    #   1970 at midnight UTC time). Vehicle data isn't collected after the
+    #   campaign expires.
     #
     #   Default: 253402214400 (December 31, 9999, 00:00:00 UTC)
     #   @return [Time]
     #
     # @!attribute [rw] post_trigger_collection_duration
-    #   (Optional) How long (in milliseconds) to collect raw data after a
-    #   triggering event initiates the collection. If it's not specified,
-    #   `0` is used.
+    #   How long (in milliseconds) to collect raw data after a triggering
+    #   event initiates the collection. If it's not specified, `0` is used.
     #
     #   Default: `0`
     #   @return [Integer]
     #
     # @!attribute [rw] diagnostics_mode
-    #   (Optional) Option for a vehicle to send diagnostic trouble codes to
-    #   Amazon Web Services IoT FleetWise. If you want to send diagnostic
-    #   trouble codes, use `SEND_ACTIVE_DTCS`. If it's not specified, `OFF`
-    #   is used.
+    #   Option for a vehicle to send diagnostic trouble codes to Amazon Web
+    #   Services IoT FleetWise. If you want to send diagnostic trouble
+    #   codes, use `SEND_ACTIVE_DTCS`. If it's not specified, `OFF` is
+    #   used.
     #
     #   Default: `OFF`
     #   @return [String]
     #
     # @!attribute [rw] spooling_mode
-    #   (Optional) Whether to store collected data after a vehicle lost a
+    #   Determines whether to store collected data after a vehicle lost a
     #   connection with the cloud. After a connection is re-established, the
     #   data is automatically forwarded to Amazon Web Services IoT
     #   FleetWise. If you want to store collected data when a vehicle loses
@@ -604,7 +620,7 @@ module Aws::IoTFleetWise
     #   @return [String]
     #
     # @!attribute [rw] compression
-    #   (Optional) Whether to compress signals before transmitting data to
+    #   Determines whether to compress signals before transmitting data to
     #   Amazon Web Services IoT FleetWise. If you don't want to compress
     #   the signals, use `OFF`. If it's not specified, `SNAPPY` is used.
     #
@@ -612,16 +628,22 @@ module Aws::IoTFleetWise
     #   @return [String]
     #
     # @!attribute [rw] priority
-    #   (Optional) A number indicating the priority of one campaign over
-    #   another campaign for a certain vehicle or fleet. A campaign with the
-    #   lowest value is deployed to vehicles before any other campaigns. If
-    #   it's not specified, `0` is used.
+    #   A number indicating the priority of one campaign over another
+    #   campaign for a certain vehicle or fleet. A campaign with the lowest
+    #   value is deployed to vehicles before any other campaigns. If it's
+    #   not specified, `0` is used.
     #
     #   Default: `0`
     #   @return [Integer]
     #
     # @!attribute [rw] signals_to_collect
-    #   (Optional) A list of information about signals to collect.
+    #   A list of information about signals to collect.
+    #
+    #   <note markdown="1"> If you upload a signal as a condition in a data partition for a
+    #   campaign, then those same signals must be included in
+    #   `signalsToCollect`.
+    #
+    #    </note>
     #   @return [Array<Types::SignalInformation>]
     #
     # @!attribute [rw] collection_scheme
@@ -630,8 +652,7 @@ module Aws::IoTFleetWise
     #   @return [Types::CollectionScheme]
     #
     # @!attribute [rw] data_extra_dimensions
-    #   (Optional) A list of vehicle attributes to associate with a
-    #   campaign.
+    #   A list of vehicle attributes to associate with a campaign.
     #
     #   Enrich the data with specified vehicle attributes. For example, add
     #   `make` and `model` to the campaign, and Amazon Web Services IoT
@@ -647,8 +668,11 @@ module Aws::IoTFleetWise
     #   @return [Array<Types::Tag>]
     #
     # @!attribute [rw] data_destination_configs
-    #   The destination where the campaign sends data. You can choose to
-    #   send data to be stored in Amazon S3 or Amazon Timestream.
+    #   The destination where the campaign sends data. You can send data to
+    #   an MQTT topic, or store it in Amazon S3 or Amazon Timestream.
+    #
+    #   MQTT is the publish/subscribe messaging protocol used by Amazon Web
+    #   Services IoT to communicate with your devices.
     #
     #   Amazon S3 optimizes the cost of data storage and provides additional
     #   mechanisms to use vehicle data, such as data lakes, centralized data
@@ -661,6 +685,15 @@ module Aws::IoTFleetWise
     #   data, and Timestream to query vehicle data so that you can identify
     #   trends and patterns.
     #   @return [Array<Types::DataDestinationConfig>]
+    #
+    # @!attribute [rw] data_partitions
+    #   The data partitions associated with the signals collected from the
+    #   vehicle.
+    #   @return [Array<Types::DataPartition>]
+    #
+    # @!attribute [rw] signals_to_fetch
+    #   A list of information about signals to fetch.
+    #   @return [Array<Types::SignalFetchInformation>]
     #
     class CreateCampaignRequest < Struct.new(
       :name,
@@ -678,7 +711,9 @@ module Aws::IoTFleetWise
       :collection_scheme,
       :data_extra_dimensions,
       :tags,
-      :data_destination_configs)
+      :data_destination_configs,
+      :data_partitions,
+      :signals_to_fetch)
       SENSITIVE = [:signals_to_collect, :data_extra_dimensions]
       include Aws::Structure
     end
@@ -719,6 +754,20 @@ module Aws::IoTFleetWise
     #   A list of information about available network interfaces.
     #   @return [Array<Types::NetworkInterface>]
     #
+    # @!attribute [rw] default_for_unmapped_signals
+    #   Use default decoders for all unmapped signals in the model. You
+    #   don't need to provide any detailed decoding information.
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services
+    #   Region and feature availability][1] in the *Amazon Web Services IoT
+    #   FleetWise Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #   @return [String]
+    #
     # @!attribute [rw] tags
     #   Metadata that can be used to manage the decoder manifest.
     #   @return [Array<Types::Tag>]
@@ -729,6 +778,7 @@ module Aws::IoTFleetWise
       :model_manifest_arn,
       :signal_decoders,
       :network_interfaces,
+      :default_for_unmapped_signals,
       :tags)
       SENSITIVE = []
       include Aws::Structure
@@ -875,6 +925,89 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
+    # @!attribute [rw] name
+    #   The name of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A brief description of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] signal_catalog_arn
+    #   The ARN of the signal catalog associated with the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] state_template_properties
+    #   A list of signals from which data is collected. The state template
+    #   properties contain the fully qualified names of the signals.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] data_extra_dimensions
+    #   A list of vehicle attributes to associate with the payload published
+    #   on the state template's MQTT topic. (See [ Processing last known
+    #   state vehicle data using MQTT messaging][1]). For example, if you
+    #   add `Vehicle.Attributes.Make` and `Vehicle.Attributes.Model`
+    #   attributes, Amazon Web Services IoT FleetWise will enrich the
+    #   protobuf encoded payload with those attributes in the
+    #   `extraDimensions` field.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] metadata_extra_dimensions
+    #   A list of vehicle attributes to associate with user properties of
+    #   the messages published on the state template's MQTT topic. (See [
+    #   Processing last known state vehicle data using MQTT messaging][1]).
+    #   For example, if you add `Vehicle.Attributes.Make` and
+    #   `Vehicle.Attributes.Model` attributes, Amazon Web Services IoT
+    #   FleetWise will include these attributes as User Properties with the
+    #   MQTT message.
+    #
+    #   Default: An empty array
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] tags
+    #   Metadata that can be used to manage the state template.
+    #   @return [Array<Types::Tag>]
+    #
+    class CreateStateTemplateRequest < Struct.new(
+      :name,
+      :description,
+      :signal_catalog_arn,
+      :state_template_properties,
+      :data_extra_dimensions,
+      :metadata_extra_dimensions,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   The name of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The unique ID of the state template.
+    #   @return [String]
+    #
+    class CreateStateTemplateResponse < Struct.new(
+      :name,
+      :arn,
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An HTTP error resulting from creating a vehicle.
     #
     # @!attribute [rw] vehicle_name
@@ -913,8 +1046,10 @@ module Aws::IoTFleetWise
     #   Static information about a vehicle in a key-value pair. For example:
     #   `"engineType"` : `"1.3 L R2"`
     #
-    #   A campaign must include the keys (attribute names) in
-    #   `dataExtraDimensions` for them to display in Amazon Timestream.
+    #   To use attributes with Campaigns or State Templates, you must
+    #   include them using the request parameters `dataExtraDimensions`
+    #   and/or `metadataExtraDimensions` (for state templates only) when
+    #   creating your campaign/state template.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] association_behavior
@@ -929,13 +1064,19 @@ module Aws::IoTFleetWise
     #   Metadata that can be used to manage the vehicle.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] state_templates
+    #   Associate state templates with the vehicle. You can monitor the last
+    #   known state of the vehicle in near real time.
+    #   @return [Array<Types::StateTemplateAssociation>]
+    #
     class CreateVehicleRequest < Struct.new(
       :vehicle_name,
       :model_manifest_arn,
       :decoder_manifest_arn,
       :attributes,
       :association_behavior,
-      :tags)
+      :tags,
+      :state_templates)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -970,13 +1111,20 @@ module Aws::IoTFleetWise
     #   Metadata which can be used to manage the vehicle.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] state_templates
+    #   Associate state templates to track the state of the vehicle. State
+    #   templates determine which signal updates the vehicle sends to the
+    #   cloud.
+    #   @return [Array<Types::StateTemplateAssociation>]
+    #
     class CreateVehicleRequestItem < Struct.new(
       :vehicle_name,
       :model_manifest_arn,
       :decoder_manifest_arn,
       :attributes,
       :association_behavior,
-      :tags)
+      :tags,
+      :state_templates)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1019,6 +1167,49 @@ module Aws::IoTFleetWise
       :vehicle_name,
       :arn,
       :thing_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a custom network interface as defined by the customer.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] name
+    #   The name of the interface.
+    #   @return [String]
+    #
+    class CustomDecodingInterface < Struct.new(
+      :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about signals using a custom decoding protocol as defined
+    # by the customer.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] id
+    #   The ID of the signal.
+    #   @return [String]
+    #
+    class CustomDecodingSignal < Struct.new(
+      :id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1102,9 +1293,8 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
-    # The destination where the Amazon Web Services IoT FleetWise campaign
-    # sends data. You can send data to be stored in Amazon S3 or Amazon
-    # Timestream.
+    # The destination where the campaign sends data. You can send data to an
+    # MQTT topic, or store it in Amazon S3 or Amazon Timestream.
     #
     # @note DataDestinationConfig is a union - when making an API calls you must set exactly one of the members.
     #
@@ -1119,9 +1309,24 @@ module Aws::IoTFleetWise
     #   The Amazon Timestream table where the campaign sends data.
     #   @return [Types::TimestreamConfig]
     #
+    # @!attribute [rw] mqtt_topic_config
+    #   The MQTT topic to which the Amazon Web Services IoT FleetWise
+    #   campaign routes data.
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services
+    #   Region and feature availability][1] in the *Amazon Web Services IoT
+    #   FleetWise Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #   @return [Types::MqttTopicConfig]
+    #
     class DataDestinationConfig < Struct.new(
       :s3_config,
       :timestream_config,
+      :mqtt_topic_config,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -1129,7 +1334,111 @@ module Aws::IoTFleetWise
 
       class S3Config < DataDestinationConfig; end
       class TimestreamConfig < DataDestinationConfig; end
+      class MqttTopicConfig < DataDestinationConfig; end
       class Unknown < DataDestinationConfig; end
+    end
+
+    # The configuration for signal data storage and upload options. You can
+    # only specify these options when the campaign's spooling mode is
+    # `TO_DISK`.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] id
+    #   The ID of the data partition. The data partition ID must be unique
+    #   within a campaign. You can establish a data partition as the default
+    #   partition for a campaign by using `default` as the ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] storage_options
+    #   The storage options for a data partition.
+    #   @return [Types::DataPartitionStorageOptions]
+    #
+    # @!attribute [rw] upload_options
+    #   The upload options for the data partition.
+    #   @return [Types::DataPartitionUploadOptions]
+    #
+    class DataPartition < Struct.new(
+      :id,
+      :storage_options,
+      :upload_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Size, time, and location options for the data partition.
+    #
+    # @!attribute [rw] maximum_size
+    #   The maximum storage size of the data stored in the data partition.
+    #
+    #   <note markdown="1"> Newer data overwrites older data when the partition reaches the
+    #   maximum size.
+    #
+    #    </note>
+    #   @return [Types::StorageMaximumSize]
+    #
+    # @!attribute [rw] storage_location
+    #   The folder name for the data partition under the campaign storage
+    #   folder.
+    #   @return [String]
+    #
+    # @!attribute [rw] minimum_time_to_live
+    #   The amount of time that data in this partition will be kept on disk.
+    #
+    #   * After the designated amount of time passes, the data can be
+    #     removed, but it's not guaranteed to be removed.
+    #
+    #   * Before the time expires, data in this partition can still be
+    #     deleted if the partition reaches its configured maximum size.
+    #
+    #   * Newer data will overwrite older data when the partition reaches
+    #     the maximum size.
+    #   @return [Types::StorageMinimumTimeToLive]
+    #
+    class DataPartitionStorageOptions < Struct.new(
+      :maximum_size,
+      :storage_location,
+      :minimum_time_to_live)
+      SENSITIVE = [:storage_location]
+      include Aws::Structure
+    end
+
+    # The upload options for the data partition. If upload options are
+    # specified, you must also specify storage options. See
+    # [DataPartitionStorageOptions][1].
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][2] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/API_DataPartitionStorageOptions.html
+    # [2]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] expression
+    #   The logical expression used to recognize what data to collect. For
+    #   example, `` $variable.`Vehicle.OutsideAirTemperature` >= 105.0 ``.
+    #   @return [String]
+    #
+    # @!attribute [rw] condition_language_version
+    #   The version of the condition language. Defaults to the most recent
+    #   condition language version.
+    #   @return [Integer]
+    #
+    class DataPartitionUploadOptions < Struct.new(
+      :expression,
+      :condition_language_version)
+      SENSITIVE = [:expression]
+      include Aws::Structure
     end
 
     # Information about a created decoder manifest. You can use the API
@@ -1341,6 +1650,36 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
+    # @!attribute [rw] identifier
+    #   A unique, service-generated identifier.
+    #   @return [String]
+    #
+    class DeleteStateTemplateRequest < Struct.new(
+      :identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   The name of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The unique ID of the state template.
+    #   @return [String]
+    #
+    class DeleteStateTemplateResponse < Struct.new(
+      :name,
+      :arn,
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] vehicle_name
     #   The ID of the vehicle to delete.
     #   @return [String]
@@ -1547,8 +1886,11 @@ module Aws::IoTFleetWise
     #   @return [Time]
     #
     # @!attribute [rw] data_destination_configs
-    #   The destination where the campaign sends data. You can choose to
-    #   send data to be stored in Amazon S3 or Amazon Timestream.
+    #   The destination where the campaign sends data. You can send data to
+    #   an MQTT topic, or store it in Amazon S3 or Amazon Timestream.
+    #
+    #   MQTT is the publish/subscribe messaging protocol used by Amazon Web
+    #   Services IoT to communicate with your devices.
     #
     #   Amazon S3 optimizes the cost of data storage and provides additional
     #   mechanisms to use vehicle data, such as data lakes, centralized data
@@ -1558,6 +1900,15 @@ module Aws::IoTFleetWise
     #   data, and Timestream to query vehicle data so that you can identify
     #   trends and patterns.
     #   @return [Array<Types::DataDestinationConfig>]
+    #
+    # @!attribute [rw] data_partitions
+    #   The data partitions associated with the signals collected from the
+    #   vehicle.
+    #   @return [Array<Types::DataPartition>]
+    #
+    # @!attribute [rw] signals_to_fetch
+    #   Information about a list of signals to fetch data from.
+    #   @return [Array<Types::SignalFetchInformation>]
     #
     class GetCampaignResponse < Struct.new(
       :name,
@@ -1578,7 +1929,9 @@ module Aws::IoTFleetWise
       :data_extra_dimensions,
       :creation_time,
       :last_modification_time,
-      :data_destination_configs)
+      :data_destination_configs,
+      :data_partitions,
+      :signals_to_fetch)
       SENSITIVE = [:signals_to_collect, :data_extra_dimensions]
       include Aws::Structure
     end
@@ -1904,6 +2257,80 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
+    # @!attribute [rw] identifier
+    #   A unique, service-generated identifier.
+    #   @return [String]
+    #
+    class GetStateTemplateRequest < Struct.new(
+      :identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   The name of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A brief description of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] signal_catalog_arn
+    #   The ARN of the signal catalog associated with the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] state_template_properties
+    #   A list of signals from which data is collected. The state template
+    #   properties contain the fully qualified names of the signals.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] data_extra_dimensions
+    #   A list of vehicle attributes associated with the payload published
+    #   on the state template's MQTT topic.
+    #
+    #   Default: An empty array
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] metadata_extra_dimensions
+    #   A list of vehicle attributes to associate with user properties of
+    #   the messages published on the state template's MQTT topic.
+    #
+    #   Default: An empty array
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] creation_time
+    #   The time the state template was created in seconds since epoch
+    #   (January 1, 1970 at midnight UTC time).
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modification_time
+    #   The time the state template was last updated in seconds since epoch
+    #   (January 1, 1970 at midnight UTC time).
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The unique ID of the state template.
+    #   @return [String]
+    #
+    class GetStateTemplateResponse < Struct.new(
+      :name,
+      :arn,
+      :description,
+      :signal_catalog_arn,
+      :state_template_properties,
+      :data_extra_dimensions,
+      :metadata_extra_dimensions,
+      :creation_time,
+      :last_modification_time,
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] vehicle_name
     #   The ID of the vehicle to retrieve information about.
     #   @return [String]
@@ -1938,6 +2365,10 @@ module Aws::IoTFleetWise
     #   `"engineType"` : `"1.3 L R2"`
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] state_templates
+    #   State templates associated with the vehicle.
+    #   @return [Array<Types::StateTemplateAssociation>]
+    #
     # @!attribute [rw] creation_time
     #   The time the vehicle was created in seconds since epoch (January 1,
     #   1970 at midnight UTC time).
@@ -1954,6 +2385,7 @@ module Aws::IoTFleetWise
       :model_manifest_arn,
       :decoder_manifest_arn,
       :attributes,
+      :state_templates,
       :creation_time,
       :last_modification_time)
       SENSITIVE = []
@@ -1968,10 +2400,12 @@ module Aws::IoTFleetWise
     #   response. To retrieve the next set of results, reissue the search
     #   request and include the returned token. When all results have been
     #   returned, the response does not contain a pagination token value.
+    #   This parameter is only supported for resources of type `CAMPAIGN`.
     #   @return [String]
     #
     # @!attribute [rw] max_results
     #   The maximum number of items to return, between 1 and 100, inclusive.
+    #   This parameter is only supported for resources of type `CAMPAIGN`.
     #   @return [Integer]
     #
     # @!attribute [rw] vehicle_name
@@ -2273,7 +2707,7 @@ module Aws::IoTFleetWise
     #   @return [Integer]
     #
     # @!attribute [rw] status
-    #   Optional parameter to filter the results by the status of each
+    #   An optional parameter to filter the results by the status of each
     #   created campaign in your account. The status can be one of:
     #   `CREATING`, `WAITING_FOR_APPROVAL`, `RUNNING`, or `SUSPENDED`.
     #   @return [String]
@@ -2677,6 +3111,38 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
+    # @!attribute [rw] next_token
+    #   The token to retrieve the next set of results, or `null` if there
+    #   are no more results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return, between 1 and 100, inclusive.
+    #   @return [Integer]
+    #
+    class ListStateTemplatesRequest < Struct.new(
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] summaries
+    #   A list of information about each state template.
+    #   @return [Array<Types::StateTemplateSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to retrieve the next set of results, or `null` if there
+    #   are no more results.
+    #   @return [String]
+    #
+    class ListStateTemplatesResponse < Struct.new(
+      :summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   The ARN of the resource.
     #   @return [String]
@@ -2746,15 +3212,34 @@ module Aws::IoTFleetWise
     #   @return [String]
     #
     # @!attribute [rw] attribute_names
-    #   The fully qualified names of the attributes. For example, the fully
-    #   qualified name of an attribute might be `Vehicle.Body.Engine.Type`.
+    #   The fully qualified names of the attributes. You can use this
+    #   optional parameter to list the vehicles containing all the
+    #   attributes in the request. For example, `attributeNames` could be
+    #   "`Vehicle.Body.Engine.Type, Vehicle.Color`" and the corresponding
+    #   `attributeValues` could be "`1.3 L R2, Blue`" . In this case, the
+    #   API will filter vehicles with an attribute name
+    #   `Vehicle.Body.Engine.Type` that contains a value of `1.3 L R2` AND
+    #   an attribute name `Vehicle.Color` that contains a value of
+    #   "`Blue`". A request must contain unique values for the
+    #   `attributeNames` filter and the matching number of `attributeValues`
+    #   filters to return the subset of vehicles that match the attributes
+    #   filter condition.
     #   @return [Array<String>]
     #
     # @!attribute [rw] attribute_values
     #   Static information about a vehicle attribute value in string format.
-    #   For example:
-    #
-    #   `"1.3 L R2"`
+    #   You can use this optional parameter in conjunction with
+    #   `attributeNames` to list the vehicles containing all the
+    #   `attributeValues` corresponding to the `attributeNames` filter. For
+    #   example, `attributeValues` could be "`1.3 L R2, Blue`" and the
+    #   corresponding `attributeNames` filter could be
+    #   "`Vehicle.Body.Engine.Type, Vehicle.Color`". In this case, the API
+    #   will filter vehicles with attribute name `Vehicle.Body.Engine.Type`
+    #   that contains a value of `1.3 L R2` AND an attribute name
+    #   `Vehicle.Color` that contains a value of "`Blue`". A request must
+    #   contain unique values for the `attributeNames` filter and the
+    #   matching number of `attributeValues` filter to return the subset of
+    #   vehicles that match the attributes filter condition.
     #   @return [Array<String>]
     #
     # @!attribute [rw] next_token
@@ -2867,6 +3352,36 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
+    # The MQTT topic to which the Amazon Web Services IoT FleetWise campaign
+    # routes data. For more information, see [Device communication
+    # protocols][1] in the *Amazon Web Services IoT Core Developer Guide*.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][2] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot/latest/developerguide/protocols.html
+    # [2]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] mqtt_topic_arn
+    #   The ARN of the MQTT topic.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_role_arn
+    #   The ARN of the role that grants Amazon Web Services IoT FleetWise
+    #   permission to access and act on messages sent to the MQTT topic.
+    #   @return [String]
+    #
+    class MqttTopicConfig < Struct.new(
+      :mqtt_topic_arn,
+      :execution_role_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifications for defining a vehicle network.
     #
     # @note NetworkFileDefinition is a union - when making an API calls you must set exactly one of the members.
@@ -2911,7 +3426,7 @@ module Aws::IoTFleetWise
     #   @return [Types::CanInterface]
     #
     # @!attribute [rw] obd_interface
-    #   Information about a network interface specified by the On-board
+    #   Information about a network interface specified by the on-board
     #   diagnostic (OBD) II protocol.
     #   @return [Types::ObdInterface]
     #
@@ -2920,12 +3435,21 @@ module Aws::IoTFleetWise
     #   Examples of vehicle middleware include `ROS2` and `SOME/IP`.
     #   @return [Types::VehicleMiddleware]
     #
+    # @!attribute [rw] custom_decoding_interface
+    #   Information about a [custom network interface][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/API_CustomDecodingInterface.html
+    #   @return [Types::CustomDecodingInterface]
+    #
     class NetworkInterface < Struct.new(
       :interface_id,
       :type,
       :can_interface,
       :obd_interface,
-      :vehicle_middleware)
+      :vehicle_middleware,
+      :custom_decoding_interface)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3048,7 +3572,7 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
-    # A network interface that specifies the On-board diagnostic (OBD) II
+    # A network interface that specifies the on-board diagnostic (OBD) II
     # network protocol.
     #
     # @!attribute [rw] name
@@ -3143,6 +3667,26 @@ module Aws::IoTFleetWise
       :byte_length,
       :bit_right_shift,
       :bit_mask_length)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Vehicles associated with the state template will stream telemetry data
+    # when there is a change.
+    #
+    # @api private
+    #
+    class OnChangeStateTemplateUpdateStrategy < Aws::EmptyStructure; end
+
+    # Vehicles associated with the state template will stream telemetry data
+    # during a specified time period.
+    #
+    # @!attribute [rw] state_template_update_rate
+    #   The length of time between state template updates.
+    #   @return [Types::TimePeriod]
+    #
+    class PeriodicStateTemplateUpdateStrategy < Struct.new(
+      :state_template_update_rate)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3358,10 +3902,10 @@ module Aws::IoTFleetWise
     #   @return [String]
     #
     # @!attribute [rw] prefix
-    #   (Optional) Enter an S3 bucket prefix. The prefix is the string of
-    #   characters after the bucket name and before the object name. You can
-    #   use the prefix to organize data stored in Amazon S3 buckets. For
-    #   more information, see [Organizing objects using prefixes][1] in the
+    #   Enter an S3 bucket prefix. The prefix is the string of characters
+    #   after the bucket name and before the object name. You can use the
+    #   prefix to organize data stored in Amazon S3 buckets. For more
+    #   information, see [Organizing objects using prefixes][1] in the
     #   *Amazon Simple Storage Service User Guide*.
     #
     #   By default, Amazon Web Services IoT FleetWise sets the prefix
@@ -3508,7 +4052,7 @@ module Aws::IoTFleetWise
     #   @return [Types::CanSignal]
     #
     # @!attribute [rw] obd_signal
-    #   Information about signal decoder using the On-board diagnostic (OBD)
+    #   Information about signal decoder using the on-board diagnostic (OBD)
     #   II protocol.
     #   @return [Types::ObdSignal]
     #
@@ -3517,14 +4061,101 @@ module Aws::IoTFleetWise
     #   higher order data types.
     #   @return [Types::MessageSignal]
     #
+    # @!attribute [rw] custom_decoding_signal
+    #   Information about a [custom signal decoder][1].
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services
+    #   Region and feature availability][2] in the *Amazon Web Services IoT
+    #   FleetWise Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/APIReference/API_CustomDecodingSignal.html
+    #   [2]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #   @return [Types::CustomDecodingSignal]
+    #
     class SignalDecoder < Struct.new(
       :fully_qualified_name,
       :type,
       :interface_id,
       :can_signal,
       :obd_signal,
-      :message_signal)
+      :message_signal,
+      :custom_decoding_signal)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration of the signal fetch operation.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @note SignalFetchConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note SignalFetchConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of SignalFetchConfig corresponding to the set member.
+    #
+    # @!attribute [rw] time_based
+    #   The configuration of a time-based signal fetch operation.
+    #   @return [Types::TimeBasedSignalFetchConfig]
+    #
+    # @!attribute [rw] condition_based
+    #   The configuration of a condition-based signal fetch operation.
+    #   @return [Types::ConditionBasedSignalFetchConfig]
+    #
+    class SignalFetchConfig < Struct.new(
+      :time_based,
+      :condition_based,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class TimeBased < SignalFetchConfig; end
+      class ConditionBased < SignalFetchConfig; end
+      class Unknown < SignalFetchConfig; end
+    end
+
+    # Information about the signal to be fetched.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] fully_qualified_name
+    #   The fully qualified name of the signal to be fetched.
+    #   @return [String]
+    #
+    # @!attribute [rw] signal_fetch_config
+    #   The configuration of the signal fetch operation.
+    #   @return [Types::SignalFetchConfig]
+    #
+    # @!attribute [rw] condition_language_version
+    #   The version of the condition language used.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] actions
+    #   The actions to be performed by the signal fetch.
+    #   @return [Array<String>]
+    #
+    class SignalFetchInformation < Struct.new(
+      :fully_qualified_name,
+      :signal_fetch_config,
+      :condition_language_version,
+      :actions)
+      SENSITIVE = [:actions]
       include Aws::Structure
     end
 
@@ -3548,10 +4179,220 @@ module Aws::IoTFleetWise
     #    </note>
     #   @return [Integer]
     #
+    # @!attribute [rw] data_partition_id
+    #   The ID of the data partition this signal is associated with.
+    #
+    #   The ID must match one of the IDs provided in `dataPartitions`. This
+    #   is accomplished either by specifying a particular data partition ID
+    #   or by using `default` for an established default partition. You can
+    #   establish a default partition in the `DataPartition` data type.
+    #
+    #   <note markdown="1"> If you upload a signal as a condition for a campaign's data
+    #   partition, the same signal must be included in `signalsToCollect`.
+    #
+    #    </note>
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services
+    #   Region and feature availability][1] in the *Amazon Web Services IoT
+    #   FleetWise Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #   @return [String]
+    #
     class SignalInformation < Struct.new(
       :name,
       :max_sample_count,
-      :minimum_sampling_interval_ms)
+      :minimum_sampling_interval_ms,
+      :data_partition_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The state template associated with a vehicle. State templates contain
+    # state properties, which are signals that belong to a signal catalog
+    # that is synchronized between the Amazon Web Services IoT FleetWise
+    # Edge and the Amazon Web Services Cloud.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] identifier
+    #   A unique, service-generated identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] state_template_update_strategy
+    #   The update strategy for the state template. Vehicles associated with
+    #   the state template can stream telemetry data with either an
+    #   `onChange` or `periodic` update strategy.
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services
+    #   Region and feature availability][1] in the *Amazon Web Services IoT
+    #   FleetWise Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #   @return [Types::StateTemplateUpdateStrategy]
+    #
+    class StateTemplateAssociation < Struct.new(
+      :identifier,
+      :state_template_update_strategy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about a state template.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] name
+    #   The name of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] signal_catalog_arn
+    #   The Amazon Resource Name (ARN) of the signal catalog associated with
+    #   the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A brief description of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   The time the state template was created, in seconds since epoch
+    #   (January 1, 1970 at midnight UTC time).
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modification_time
+    #   The time the state template was last updated, in seconds since epoch
+    #   (January 1, 1970 at midnight UTC time).
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The unique ID of the state template.
+    #   @return [String]
+    #
+    class StateTemplateSummary < Struct.new(
+      :name,
+      :arn,
+      :signal_catalog_arn,
+      :description,
+      :creation_time,
+      :last_modification_time,
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The update strategy for the state template. Vehicles associated with
+    # the state template can stream telemetry data with either an `onChange`
+    # or `periodic` update strategy.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @note StateTemplateUpdateStrategy is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note StateTemplateUpdateStrategy is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of StateTemplateUpdateStrategy corresponding to the set member.
+    #
+    # @!attribute [rw] periodic
+    #   Vehicles associated with the state template will stream telemetry
+    #   data during a specified time period.
+    #   @return [Types::PeriodicStateTemplateUpdateStrategy]
+    #
+    # @!attribute [rw] on_change
+    #   Vehicles associated with the state template will stream telemetry
+    #   data when there is a change.
+    #   @return [Types::OnChangeStateTemplateUpdateStrategy]
+    #
+    class StateTemplateUpdateStrategy < Struct.new(
+      :periodic,
+      :on_change,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Periodic < StateTemplateUpdateStrategy; end
+      class OnChange < StateTemplateUpdateStrategy; end
+      class Unknown < StateTemplateUpdateStrategy; end
+    end
+
+    # The maximum storage size for the data partition.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] unit
+    #   The data type of the data to store.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The maximum amount of time to store data.
+    #   @return [Integer]
+    #
+    class StorageMaximumSize < Struct.new(
+      :unit,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about the minimum amount of time that data will be kept.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @!attribute [rw] unit
+    #   The time increment type.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The minimum amount of time to store the data.
+    #   @return [Integer]
+    #
+    class StorageMinimumTimeToLive < Struct.new(
+      :unit,
+      :value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3711,6 +4552,35 @@ module Aws::IoTFleetWise
     #
     class TimeBasedCollectionScheme < Struct.new(
       :period_ms)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Used to configure a frequency-based vehicle signal fetch.
+    #
+    # @!attribute [rw] execution_frequency_ms
+    #   The frequency with which the signal fetch will be executed.
+    #   @return [Integer]
+    #
+    class TimeBasedSignalFetchConfig < Struct.new(
+      :execution_frequency_ms)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The length of time between state template updates.
+    #
+    # @!attribute [rw] unit
+    #   A unit of time.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   A number of time units.
+    #   @return [Integer]
+    #
+    class TimePeriod < Struct.new(
+      :unit,
+      :value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3933,6 +4803,20 @@ module Aws::IoTFleetWise
     #   edit the decoder manifest.
     #   @return [String]
     #
+    # @!attribute [rw] default_for_unmapped_signals
+    #   Use default decoders for all unmapped signals in the model. You
+    #   don't need to provide any detailed decoding information.
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services
+    #   Region and feature availability][1] in the *Amazon Web Services IoT
+    #   FleetWise Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #   @return [String]
+    #
     class UpdateDecoderManifestRequest < Struct.new(
       :name,
       :description,
@@ -3942,7 +4826,8 @@ module Aws::IoTFleetWise
       :network_interfaces_to_add,
       :network_interfaces_to_update,
       :network_interfaces_to_remove,
-      :status)
+      :status,
+      :default_for_unmapped_signals)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4087,6 +4972,85 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
+    # @!attribute [rw] identifier
+    #   A unique, service-generated identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A brief description of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] state_template_properties_to_add
+    #   Add signals from which data is collected as part of the state
+    #   template.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] state_template_properties_to_remove
+    #   Remove signals from which data is collected as part of the state
+    #   template.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] data_extra_dimensions
+    #   A list of vehicle attributes to associate with the payload published
+    #   on the state template's MQTT topic. (See [ Processing last known
+    #   state vehicle data using MQTT messaging][1]). For example, if you
+    #   add `Vehicle.Attributes.Make` and `Vehicle.Attributes.Model`
+    #   attributes, Amazon Web Services IoT FleetWise will enrich the
+    #   protobuf encoded payload with those attributes in the
+    #   `extraDimensions` field.
+    #
+    #   Default: An empty array
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] metadata_extra_dimensions
+    #   A list of vehicle attributes to associate with user properties of
+    #   the messages published on the state template's MQTT topic. (See [
+    #   Processing last known state vehicle data using MQTT messaging][1]).
+    #   For example, if you add `Vehicle.Attributes.Make` and
+    #   `Vehicle.Attributes.Model` attributes, Amazon Web Services IoT
+    #   FleetWise will include these attributes as User Properties with the
+    #   MQTT message.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #   @return [Array<String>]
+    #
+    class UpdateStateTemplateRequest < Struct.new(
+      :identifier,
+      :description,
+      :state_template_properties_to_add,
+      :state_template_properties_to_remove,
+      :data_extra_dimensions,
+      :metadata_extra_dimensions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   The name of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the state template.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The unique ID of the state template.
+    #   @return [String]
+    #
+    class UpdateStateTemplateResponse < Struct.new(
+      :name,
+      :arn,
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An HTTP error resulting from updating the description for a vehicle.
     #
     # @!attribute [rw] vehicle_name
@@ -4137,12 +5101,22 @@ module Aws::IoTFleetWise
     #   This is required if attributes are present in the input.
     #   @return [String]
     #
+    # @!attribute [rw] state_templates_to_add
+    #   Associate state templates with the vehicle.
+    #   @return [Array<Types::StateTemplateAssociation>]
+    #
+    # @!attribute [rw] state_templates_to_remove
+    #   Remove state templates from the vehicle.
+    #   @return [Array<String>]
+    #
     class UpdateVehicleRequest < Struct.new(
       :vehicle_name,
       :model_manifest_arn,
       :decoder_manifest_arn,
       :attributes,
-      :attribute_update_mode)
+      :attribute_update_mode,
+      :state_templates_to_add,
+      :state_templates_to_remove)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4178,12 +5152,24 @@ module Aws::IoTFleetWise
     #   This is required if attributes are present in the input.
     #   @return [String]
     #
+    # @!attribute [rw] state_templates_to_add
+    #   Associate additional state templates to track the state of the
+    #   vehicle. State templates determine which signal updates the vehicle
+    #   sends to the cloud.
+    #   @return [Array<Types::StateTemplateAssociation>]
+    #
+    # @!attribute [rw] state_templates_to_remove
+    #   Remove existing state template associations from the vehicle.
+    #   @return [Array<String>]
+    #
     class UpdateVehicleRequestItem < Struct.new(
       :vehicle_name,
       :model_manifest_arn,
       :decoder_manifest_arn,
       :attributes,
-      :attribute_update_mode)
+      :attribute_update_mode,
+      :state_templates_to_add,
+      :state_templates_to_remove)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4280,8 +5266,7 @@ module Aws::IoTFleetWise
       include Aws::Structure
     end
 
-    # Information about the state of a vehicle and how it relates to the
-    # status of a campaign.
+    # Information about a campaign associated with a vehicle.
     #
     # @!attribute [rw] campaign_name
     #   The name of a campaign.
@@ -4292,20 +5277,20 @@ module Aws::IoTFleetWise
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   The state of a vehicle, which can be one of the following:
+    #   The status of a campaign, which can be one of the following:
     #
-    #   * `CREATED` - Amazon Web Services IoT FleetWise sucessfully created
-    #     the vehicle.
+    #   * `CREATED` - The campaign has been created successfully but has not
+    #     been approved.
     #
-    #   * `READY` - The vehicle is ready to receive a campaign deployment.
+    #   * `READY` - The campaign has been approved but has not been deployed
+    #     to the vehicle.
     #
-    #   * `HEALTHY` - A campaign deployment was delivered to the vehicle.
+    #   * `HEALTHY` - The campaign has been deployed to the vehicle.
     #
-    #   * `SUSPENDED` - A campaign associated with the vehicle was suspended
-    #     and data collection was paused.
+    #   * `SUSPENDED` - The campaign has been suspended and data collection
+    #     is paused.
     #
-    #   * `DELETING` - Amazon Web Services IoT FleetWise is removing a
-    #     campaign from the vehicle.
+    #   * `DELETING` - The campaign is being removed from the vehicle.
     #   @return [String]
     #
     class VehicleStatus < Struct.new(

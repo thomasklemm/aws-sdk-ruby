@@ -102,6 +102,26 @@ module Aws
                                         ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      interface _GetConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetConfigurationOutput]
+        def account: () -> ::String
+        def configuration_definition_id: () -> ::String
+        def created_at: () -> ::Time
+        def id: () -> ::String
+        def last_modified_at: () -> ::Time
+        def manager_arn: () -> ::String
+        def parameters: () -> ::Hash[::String, ::String]
+        def region: () -> ::String
+        def status_summaries: () -> ::Array[Types::StatusSummary]
+        def type: () -> ::String
+        def type_version: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSMQuickSetup/Client.html#get_configuration-instance_method
+      def get_configuration: (
+                               configuration_id: ::String
+                             ) -> _GetConfigurationResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetConfigurationResponseSuccess
+
       interface _GetConfigurationManagerResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetConfigurationManagerOutput]
         def configuration_definitions: () -> ::Array[Types::ConfigurationDefinition]
@@ -144,6 +164,26 @@ module Aws
                                          ?starting_token: ::String
                                        ) -> _ListConfigurationManagersResponseSuccess
                                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListConfigurationManagersResponseSuccess
+
+      interface _ListConfigurationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListConfigurationsOutput]
+        def configurations_list: () -> ::Array[Types::ConfigurationSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SSMQuickSetup/Client.html#list_configurations-instance_method
+      def list_configurations: (
+                                 ?configuration_definition_id: ::String,
+                                 ?filters: Array[
+                                   {
+                                     key: ::String,
+                                     values: Array[::String]
+                                   },
+                                 ],
+                                 ?manager_arn: ::String,
+                                 ?max_items: ::Integer,
+                                 ?starting_token: ::String
+                               ) -> _ListConfigurationsResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListConfigurationsResponseSuccess
 
       interface _ListQuickSetupTypesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListQuickSetupTypesOutput]

@@ -10,6 +10,77 @@
 module Aws::CostExplorer
   module Types
 
+    # Details about the analysis.
+    #
+    # @!attribute [rw] savings_plans_purchase_analysis_details
+    #   Details about the Savings Plans purchase analysis.
+    #   @return [Types::SavingsPlansPurchaseAnalysisDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/AnalysisDetails AWS API Documentation
+    #
+    class AnalysisDetails < Struct.new(
+      :savings_plans_purchase_analysis_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The requested analysis can't be found.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/AnalysisNotFoundException AWS API Documentation
+    #
+    class AnalysisNotFoundException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A summary of the analysis.
+    #
+    # @!attribute [rw] estimated_completion_time
+    #   The estimated time for when the analysis will complete.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_completion_time
+    #   The completion time of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_started_time
+    #   The start time of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_status
+    #   The status of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_code
+    #   The error code used for the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_id
+    #   The analysis ID that's associated with the commitment purchase.
+    #   @return [String]
+    #
+    # @!attribute [rw] commitment_purchase_analysis_configuration
+    #   The analysis configuration for the commitment purchase analysis.
+    #   @return [Types::CommitmentPurchaseAnalysisConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/AnalysisSummary AWS API Documentation
+    #
+    class AnalysisSummary < Struct.new(
+      :estimated_completion_time,
+      :analysis_completion_time,
+      :analysis_started_time,
+      :analysis_status,
+      :error_code,
+      :analysis_id,
+      :commitment_purchase_analysis_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An unusual cost pattern. This consists of the detailed metadata and
     # the current status of the anomaly object.
     #
@@ -26,8 +97,8 @@ module Aws::CostExplorer
     #   @return [String]
     #
     # @!attribute [rw] dimension_value
-    #   The dimension for the anomaly (for example, an Amazon Web
-    #   Servicesservice in a service monitor).
+    #   The dimension for the anomaly (for example, an Amazon Web Services
+    #   service in a service monitor).
     #   @return [String]
     #
     # @!attribute [rw] root_causes
@@ -410,6 +481,20 @@ module Aws::CostExplorer
       include Aws::Structure
     end
 
+    # The configuration for the commitment purchase analysis.
+    #
+    # @!attribute [rw] savings_plans_purchase_analysis_configuration
+    #   The configuration for the Savings Plans purchase analysis.
+    #   @return [Types::SavingsPlansPurchaseAnalysisConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/CommitmentPurchaseAnalysisConfiguration AWS API Documentation
+    #
+    class CommitmentPurchaseAnalysisConfiguration < Struct.new(
+      :savings_plans_purchase_analysis_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The cost allocation tag structure. This includes detailed metadata for
     # the `CostAllocationTag` object.
     #
@@ -681,7 +766,8 @@ module Aws::CostExplorer
     #   An [Expression][1] object used to categorize costs. This supports
     #   dimensions, tags, and nested expressions. Currently the only
     #   dimensions supported are `LINKED_ACCOUNT`, `SERVICE_CODE`,
-    #   `RECORD_TYPE`, `LINKED_ACCOUNT_NAME`, `REGION`, and `USAGE_TYPE`.
+    #   `RECORD_TYPE`, `LINKED_ACCOUNT_NAME`, `REGION`, `USAGE_TYPE`, and
+    #   `BILLING_ENTITY`.
     #
     #   `RECORD_TYPE` is a dimension used for Cost Explorer APIs, and is
     #   also supported for Cost Category expressions. This dimension uses
@@ -2188,6 +2274,67 @@ module Aws::CostExplorer
       include Aws::Structure
     end
 
+    # @!attribute [rw] analysis_id
+    #   The analysis ID that's associated with the commitment purchase
+    #   analysis.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/GetCommitmentPurchaseAnalysisRequest AWS API Documentation
+    #
+    class GetCommitmentPurchaseAnalysisRequest < Struct.new(
+      :analysis_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] estimated_completion_time
+    #   The estimated time for when the analysis will complete.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_completion_time
+    #   The completion time of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_started_time
+    #   The start time of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_id
+    #   The analysis ID that's associated with the commitment purchase
+    #   analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_status
+    #   The status of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_code
+    #   The error code used for the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_details
+    #   Details about the analysis.
+    #   @return [Types::AnalysisDetails]
+    #
+    # @!attribute [rw] commitment_purchase_analysis_configuration
+    #   The configuration for the commitment purchase analysis.
+    #   @return [Types::CommitmentPurchaseAnalysisConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/GetCommitmentPurchaseAnalysisResponse AWS API Documentation
+    #
+    class GetCommitmentPurchaseAnalysisResponse < Struct.new(
+      :estimated_completion_time,
+      :analysis_completion_time,
+      :analysis_started_time,
+      :analysis_id,
+      :analysis_status,
+      :error_code,
+      :analysis_details,
+      :commitment_purchase_analysis_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] time_period
     #   Sets the start date and end date for retrieving Amazon Web Services
     #   costs. The start date is inclusive, but the end date is exclusive.
@@ -2811,10 +2958,10 @@ module Aws::CostExplorer
     #     is with. Possible values are the following:
     #
     #     \- Amazon Web Services(Amazon Web Services): The entity that sells
-    #     Amazon Web Servicesservices.
+    #     Amazon Web Services services.
     #
     #     \- AISPL (Amazon Internet Services Pvt. Ltd.): The local Indian
-    #     entity that's an acting reseller for Amazon Web Servicesservices
+    #     entity that's an acting reseller for Amazon Web Services services
     #     in India.
     #
     #     \- Amazon Web Services Marketplace: The entity that supports the
@@ -3627,6 +3774,15 @@ module Aws::CostExplorer
     #   * REGION
     #
     #   * SERVICE
+    #
+    #     <note markdown="1"> If not specified, the `SERVICE` filter defaults to Amazon Elastic
+    #     Compute Cloud - Compute. Supported values for `SERVICE` are Amazon
+    #     Elastic Compute Cloud - Compute, Amazon Relational Database
+    #     Service, Amazon ElastiCache, Amazon Redshift, and Amazon
+    #     Elasticsearch Service. The value for the `SERVICE` filter should
+    #     not exceed "1".
+    #
+    #      </note>
     #
     #   * SCOPE
     #
@@ -4805,6 +4961,51 @@ module Aws::CostExplorer
     #
     class LimitExceededException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] analysis_status
+    #   The status of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_page_token
+    #   The token to retrieve the next set of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] page_size
+    #   The number of analyses that you want returned in a single response
+    #   object.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] analysis_ids
+    #   The analysis IDs associated with the commitment purchase analyses.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/ListCommitmentPurchaseAnalysesRequest AWS API Documentation
+    #
+    class ListCommitmentPurchaseAnalysesRequest < Struct.new(
+      :analysis_status,
+      :next_page_token,
+      :page_size,
+      :analysis_ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] analysis_summary_list
+    #   The list of analyses.
+    #   @return [Array<Types::AnalysisSummary>]
+    #
+    # @!attribute [rw] next_page_token
+    #   The token to retrieve the next set of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/ListCommitmentPurchaseAnalysesResponse AWS API Documentation
+    #
+    class ListCommitmentPurchaseAnalysesResponse < Struct.new(
+      :analysis_summary_list,
+      :next_page_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6159,14 +6360,14 @@ module Aws::CostExplorer
       include Aws::Structure
     end
 
-    # The combination of Amazon Web Servicesservice, linked account, linked
+    # The combination of Amazon Web Services service, linked account, linked
     # account name, Region, and usage type where a cost anomaly is observed.
     # The linked account name will only be available when the account name
     # can be identified.
     #
     # @!attribute [rw] service
-    #   The Amazon Web Servicesservice name that's associated with the cost
-    #   anomaly.
+    #   The Amazon Web Services service name that's associated with the
+    #   cost anomaly.
     #   @return [String]
     #
     # @!attribute [rw] region
@@ -6195,6 +6396,51 @@ module Aws::CostExplorer
       :linked_account,
       :usage_type,
       :linked_account_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The Savings Plans commitment details.
+    #
+    # @!attribute [rw] payment_option
+    #   The payment option for the Savings Plans commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] savings_plans_type
+    #   The Savings Plans type.
+    #   @return [String]
+    #
+    # @!attribute [rw] region
+    #   The Region associated with the Savings Plans commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_family
+    #   The instance family of the Savings Plans commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] term_in_years
+    #   The term that you want the Savings Plans commitment for.
+    #   @return [String]
+    #
+    # @!attribute [rw] savings_plans_commitment
+    #   The Savings Plans commitment.
+    #   @return [Float]
+    #
+    # @!attribute [rw] offering_id
+    #   The unique ID that's used to distinguish commitments from one
+    #   another.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/SavingsPlans AWS API Documentation
+    #
+    class SavingsPlans < Struct.new(
+      :payment_option,
+      :savings_plans_type,
+      :region,
+      :instance_family,
+      :term_in_years,
+      :savings_plans_commitment,
+      :offering_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6312,6 +6558,176 @@ module Aws::CostExplorer
       :region,
       :instance_family,
       :offering_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration for the Savings Plans purchase analysis.
+    #
+    # @!attribute [rw] account_scope
+    #   The account scope that you want your analysis for.
+    #   @return [String]
+    #
+    # @!attribute [rw] account_id
+    #   The account that the analysis is for.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_type
+    #   The type of analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] savings_plans_to_add
+    #   Savings Plans to include in the analysis.
+    #   @return [Array<Types::SavingsPlans>]
+    #
+    # @!attribute [rw] savings_plans_to_exclude
+    #   Savings Plans to exclude from the analysis.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] look_back_time_period
+    #   The time period associated with the analysis.
+    #   @return [Types::DateInterval]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/SavingsPlansPurchaseAnalysisConfiguration AWS API Documentation
+    #
+    class SavingsPlansPurchaseAnalysisConfiguration < Struct.new(
+      :account_scope,
+      :account_id,
+      :analysis_type,
+      :savings_plans_to_add,
+      :savings_plans_to_exclude,
+      :look_back_time_period)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details about the Savings Plans purchase analysis.
+    #
+    # @!attribute [rw] currency_code
+    #   The currency code used for the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] lookback_period_in_hours
+    #   The lookback period in hours that's used to generate the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_average_coverage
+    #   The average value of hourly coverage over the lookback period.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_average_hourly_on_demand_spend
+    #   The average value of hourly On-Demand spend over the lookback
+    #   period.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_maximum_hourly_on_demand_spend
+    #   The highest value of hourly On-Demand spend over the lookback
+    #   period.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_minimum_hourly_on_demand_spend
+    #   The lowest value of hourly On-Demand spend over the lookback period.
+    #   @return [String]
+    #
+    # @!attribute [rw] current_on_demand_spend
+    #   The current total On-Demand spend over the lookback period.
+    #   @return [String]
+    #
+    # @!attribute [rw] existing_hourly_commitment
+    #   The existing hourly commitment for the Savings Plan type.
+    #   @return [String]
+    #
+    # @!attribute [rw] hourly_commitment_to_purchase
+    #   The recommended or custom hourly commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_average_coverage
+    #   The estimated coverage of the Savings Plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_average_utilization
+    #   The estimated utilization of the Savings Plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_monthly_savings_amount
+    #   The estimated monthly savings amount based on the Savings Plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_on_demand_cost
+    #   The remaining On-Demand cost estimated to not be covered by the
+    #   commitment, over the length of the lookback period.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_on_demand_cost_with_current_commitment
+    #   The estimated On-Demand cost you expect with no additional
+    #   commitment, based on your usage of the selected time period and the
+    #   Savings Plan you own.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_roi
+    #   The estimated return on investment that's based on the purchase
+    #   commitment and estimated savings. This is calculated as
+    #   estimatedSavingsAmount/estimatedSPCost*100.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_savings_amount
+    #   The estimated savings amount that's based on the purchase
+    #   commitment over the length of the lookback period.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_savings_percentage
+    #   The estimated savings percentage relative to the total cost over the
+    #   cost calculation lookback period.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_commitment_cost
+    #   The estimated cost of the purchase commitment over the length of the
+    #   lookback period.
+    #   @return [String]
+    #
+    # @!attribute [rw] latest_usage_timestamp
+    #   The date and time of the last hour that went into the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] upfront_cost
+    #   The upfront cost of the Savings Plan, based on the selected payment
+    #   option.
+    #   @return [String]
+    #
+    # @!attribute [rw] additional_metadata
+    #   Additional metadata that might be applicable to the commitment.
+    #   @return [String]
+    #
+    # @!attribute [rw] metrics_over_lookback_period
+    #   The related hourly cost, coverage, and utilization metrics over the
+    #   lookback period.
+    #   @return [Array<Types::RecommendationDetailHourlyMetrics>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/SavingsPlansPurchaseAnalysisDetails AWS API Documentation
+    #
+    class SavingsPlansPurchaseAnalysisDetails < Struct.new(
+      :currency_code,
+      :lookback_period_in_hours,
+      :current_average_coverage,
+      :current_average_hourly_on_demand_spend,
+      :current_maximum_hourly_on_demand_spend,
+      :current_minimum_hourly_on_demand_spend,
+      :current_on_demand_spend,
+      :existing_hourly_commitment,
+      :hourly_commitment_to_purchase,
+      :estimated_average_coverage,
+      :estimated_average_utilization,
+      :estimated_monthly_savings_amount,
+      :estimated_on_demand_cost,
+      :estimated_on_demand_cost_with_current_commitment,
+      :estimated_roi,
+      :estimated_savings_amount,
+      :estimated_savings_percentage,
+      :estimated_commitment_cost,
+      :latest_usage_timestamp,
+      :upfront_cost,
+      :additional_metadata,
+      :metrics_over_lookback_period)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6786,6 +7202,41 @@ module Aws::CostExplorer
     class SortDefinition < Struct.new(
       :key,
       :sort_order)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] commitment_purchase_analysis_configuration
+    #   The configuration for the commitment purchase analysis.
+    #   @return [Types::CommitmentPurchaseAnalysisConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/StartCommitmentPurchaseAnalysisRequest AWS API Documentation
+    #
+    class StartCommitmentPurchaseAnalysisRequest < Struct.new(
+      :commitment_purchase_analysis_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] analysis_id
+    #   The analysis ID that's associated with the commitment purchase
+    #   analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] analysis_started_time
+    #   The start time of the analysis.
+    #   @return [String]
+    #
+    # @!attribute [rw] estimated_completion_time
+    #   The estimated time for when the analysis will complete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/StartCommitmentPurchaseAnalysisResponse AWS API Documentation
+    #
+    class StartCommitmentPurchaseAnalysisResponse < Struct.new(
+      :analysis_id,
+      :analysis_started_time,
+      :estimated_completion_time)
       SENSITIVE = []
       include Aws::Structure
     end

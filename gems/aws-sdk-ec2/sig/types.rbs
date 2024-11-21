@@ -171,6 +171,11 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class AddIpamOrganizationalUnitExclusion
+      attr_accessor organizations_entity_path: ::String
+      SENSITIVE: []
+    end
+
     class AddPrefixListEntry
       attr_accessor cidr: ::String
       attr_accessor description: ::String
@@ -1152,6 +1157,39 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class CapacityBlockExtension
+      attr_accessor capacity_reservation_id: ::String
+      attr_accessor instance_type: ::String
+      attr_accessor instance_count: ::Integer
+      attr_accessor availability_zone: ::String
+      attr_accessor availability_zone_id: ::String
+      attr_accessor capacity_block_extension_offering_id: ::String
+      attr_accessor capacity_block_extension_duration_hours: ::Integer
+      attr_accessor capacity_block_extension_status: ("payment-pending" | "payment-failed" | "payment-succeeded")
+      attr_accessor capacity_block_extension_purchase_date: ::Time
+      attr_accessor capacity_block_extension_start_date: ::Time
+      attr_accessor capacity_block_extension_end_date: ::Time
+      attr_accessor upfront_fee: ::String
+      attr_accessor currency_code: ::String
+      SENSITIVE: []
+    end
+
+    class CapacityBlockExtensionOffering
+      attr_accessor capacity_block_extension_offering_id: ::String
+      attr_accessor instance_type: ::String
+      attr_accessor instance_count: ::Integer
+      attr_accessor availability_zone: ::String
+      attr_accessor availability_zone_id: ::String
+      attr_accessor start_date: ::Time
+      attr_accessor capacity_block_extension_start_date: ::Time
+      attr_accessor capacity_block_extension_end_date: ::Time
+      attr_accessor capacity_block_extension_duration_hours: ::Integer
+      attr_accessor upfront_fee: ::String
+      attr_accessor currency_code: ::String
+      attr_accessor tenancy: ("default" | "dedicated")
+      SENSITIVE: []
+    end
+
     class CapacityBlockOffering
       attr_accessor capacity_block_offering_id: ::String
       attr_accessor instance_type: ::String
@@ -1163,6 +1201,7 @@ module Aws::EC2
       attr_accessor upfront_fee: ::String
       attr_accessor currency_code: ::String
       attr_accessor tenancy: ("default" | "dedicated")
+      attr_accessor capacity_block_duration_minutes: ::Integer
       SENSITIVE: []
     end
 
@@ -1179,7 +1218,7 @@ module Aws::EC2
       attr_accessor available_instance_count: ::Integer
       attr_accessor ebs_optimized: bool
       attr_accessor ephemeral_storage: bool
-      attr_accessor state: ("active" | "expired" | "cancelled" | "pending" | "failed" | "scheduled" | "payment-pending" | "payment-failed")
+      attr_accessor state: ("active" | "expired" | "cancelled" | "pending" | "failed" | "scheduled" | "payment-pending" | "payment-failed" | "assessing" | "delayed" | "unsupported")
       attr_accessor start_date: ::Time
       attr_accessor end_date: ::Time
       attr_accessor end_date_type: ("unlimited" | "limited")
@@ -1192,6 +1231,8 @@ module Aws::EC2
       attr_accessor capacity_allocations: ::Array[Types::CapacityAllocation]
       attr_accessor reservation_type: ("default" | "capacity-block")
       attr_accessor unused_reservation_billing_owner_id: ::String
+      attr_accessor commitment_info: Types::CapacityReservationCommitmentInfo
+      attr_accessor delivery_preference: ("fixed" | "incremental")
       SENSITIVE: []
     end
 
@@ -1203,6 +1244,12 @@ module Aws::EC2
       attr_accessor status: ("pending" | "accepted" | "rejected" | "cancelled" | "revoked" | "expired")
       attr_accessor status_message: ::String
       attr_accessor capacity_reservation_info: Types::CapacityReservationInfo
+      SENSITIVE: []
+    end
+
+    class CapacityReservationCommitmentInfo
+      attr_accessor committed_instance_count: ::Integer
+      attr_accessor commitment_end_date: ::Time
       SENSITIVE: []
     end
 
@@ -1726,6 +1773,9 @@ module Aws::EC2
       attr_accessor dry_run: bool
       attr_accessor outpost_arn: ::String
       attr_accessor placement_group_arn: ::String
+      attr_accessor start_date: ::Time
+      attr_accessor commitment_duration: ::Integer
+      attr_accessor delivery_preference: ("fixed" | "incremental")
       SENSITIVE: []
     end
 
@@ -4173,6 +4223,36 @@ module Aws::EC2
 
     class DescribeByoipCidrsResult
       attr_accessor byoip_cidrs: ::Array[Types::ByoipCidr]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeCapacityBlockExtensionHistoryRequest
+      attr_accessor capacity_reservation_ids: ::Array[::String]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor filters: ::Array[Types::Filter]
+      attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class DescribeCapacityBlockExtensionHistoryResult
+      attr_accessor capacity_block_extensions: ::Array[Types::CapacityBlockExtension]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeCapacityBlockExtensionOfferingsRequest
+      attr_accessor dry_run: bool
+      attr_accessor capacity_block_extension_duration_hours: ::Integer
+      attr_accessor capacity_reservation_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class DescribeCapacityBlockExtensionOfferingsResult
+      attr_accessor capacity_block_extension_offerings: ::Array[Types::CapacityBlockExtensionOffering]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -7892,7 +7972,7 @@ module Aws::EC2
       attr_accessor instance_type: ::String
       attr_accessor total_instance_count: ::Integer
       attr_accessor available_instance_count: ::Integer
-      attr_accessor state: ("active" | "expired" | "cancelled" | "pending" | "failed" | "scheduled" | "payment-pending" | "payment-failed")
+      attr_accessor state: ("active" | "expired" | "cancelled" | "pending" | "failed" | "scheduled" | "payment-pending" | "payment-failed" | "assessing" | "delayed" | "unsupported")
       attr_accessor instance_usages: ::Array[Types::InstanceUsage]
       SENSITIVE: []
     end
@@ -9647,6 +9727,7 @@ module Aws::EC2
       attr_accessor failure_reason: Types::IpamDiscoveryFailureReason
       attr_accessor last_attempted_discovery_time: ::Time
       attr_accessor last_successful_discovery_time: ::Time
+      attr_accessor organizational_unit_id: ::String
       SENSITIVE: []
     end
 
@@ -9714,6 +9795,11 @@ module Aws::EC2
 
     class IpamOperatingRegion
       attr_accessor region_name: ::String
+      SENSITIVE: []
+    end
+
+    class IpamOrganizationalUnitExclusion
+      attr_accessor organizations_entity_path: ::String
       SENSITIVE: []
     end
 
@@ -9834,6 +9920,7 @@ module Aws::EC2
       attr_accessor is_default: bool
       attr_accessor state: ("create-in-progress" | "create-complete" | "create-failed" | "modify-in-progress" | "modify-complete" | "modify-failed" | "delete-in-progress" | "delete-complete" | "delete-failed" | "isolate-in-progress" | "isolate-complete" | "restore-in-progress")
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor organizational_unit_exclusions: ::Array[Types::IpamOrganizationalUnitExclusion]
       SENSITIVE: []
     end
 
@@ -10991,6 +11078,8 @@ module Aws::EC2
       attr_accessor description: ::String
       attr_accessor add_operating_regions: ::Array[Types::AddIpamOperatingRegion]
       attr_accessor remove_operating_regions: ::Array[Types::RemoveIpamOperatingRegion]
+      attr_accessor add_organizational_unit_exclusions: ::Array[Types::AddIpamOrganizationalUnitExclusion]
+      attr_accessor remove_organizational_unit_exclusions: ::Array[Types::RemoveIpamOrganizationalUnitExclusion]
       SENSITIVE: []
     end
 
@@ -12515,6 +12604,18 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class PurchaseCapacityBlockExtensionRequest
+      attr_accessor capacity_block_extension_offering_id: ::String
+      attr_accessor capacity_reservation_id: ::String
+      attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class PurchaseCapacityBlockExtensionResult
+      attr_accessor capacity_block_extensions: ::Array[Types::CapacityBlockExtension]
+      SENSITIVE: []
+    end
+
     class PurchaseCapacityBlockRequest
       attr_accessor dry_run: bool
       attr_accessor tag_specifications: ::Array[Types::TagSpecification]
@@ -12780,6 +12881,11 @@ module Aws::EC2
 
     class RemoveIpamOperatingRegion
       attr_accessor region_name: ::String
+      SENSITIVE: []
+    end
+
+    class RemoveIpamOrganizationalUnitExclusion
+      attr_accessor organizations_entity_path: ::String
       SENSITIVE: []
     end
 

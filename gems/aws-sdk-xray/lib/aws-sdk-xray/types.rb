@@ -157,6 +157,22 @@ module Aws::XRay
       include Aws::Structure
     end
 
+    # @!attribute [rw] retrieval_token
+    #   Retrieval token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/CancelTraceRetrievalRequest AWS API Documentation
+    #
+    class CancelTraceRetrievalRequest < Struct.new(
+      :retrieval_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/CancelTraceRetrievalResult AWS API Documentation
+    #
+    class CancelTraceRetrievalResult < Aws::EmptyStructure; end
+
     # @!attribute [rw] group_name
     #   The case-sensitive name of the new group. Default is a reserved name
     #   and names must be unique.
@@ -567,7 +583,7 @@ module Aws::XRay
     # code.
     #
     # @!attribute [rw] throttle_count
-    #   The number of requests that failed with a 419 throttling status
+    #   The number of requests that failed with a 429 throttling status
     #   code.
     #   @return [Integer]
     #
@@ -797,6 +813,37 @@ module Aws::XRay
       include Aws::Structure
     end
 
+    # @!attribute [rw] next_token
+    #   Specify the pagination token returned by a previous request to
+    #   retrieve the next page of indexes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/GetIndexingRulesRequest AWS API Documentation
+    #
+    class GetIndexingRulesRequest < Struct.new(
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] indexing_rules
+    #   Retrieves all indexing rules.
+    #   @return [Array<Types::IndexingRule>]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token returned by a previous request to
+    #   retrieve the next page of indexes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/GetIndexingRulesResult AWS API Documentation
+    #
+    class GetIndexingRulesResult < Struct.new(
+      :indexing_rules,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] insight_id
     #   The insight's unique identifier. Use the GetInsightSummaries action
     #   to retrieve an InsightId.
@@ -1001,6 +1048,47 @@ module Aws::XRay
     #
     class GetInsightSummariesResult < Struct.new(
       :insight_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] retrieval_token
+    #   Retrieval token.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token returned by a previous request to
+    #   retrieve the next page of indexes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/GetRetrievedTracesGraphRequest AWS API Documentation
+    #
+    class GetRetrievedTracesGraphRequest < Struct.new(
+      :retrieval_token,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] retrieval_status
+    #   Status of the retrieval.
+    #   @return [String]
+    #
+    # @!attribute [rw] services
+    #   Retrieved services.
+    #   @return [Array<Types::RetrievedService>]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token returned by a previous request to
+    #   retrieve the next page of indexes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/GetRetrievedTracesGraphResult AWS API Documentation
+    #
+    class GetRetrievedTracesGraphResult < Struct.new(
+      :retrieval_status,
+      :services,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -1290,6 +1378,29 @@ module Aws::XRay
       include Aws::Structure
     end
 
+    # @api private
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/GetTraceSegmentDestinationRequest AWS API Documentation
+    #
+    class GetTraceSegmentDestinationRequest < Aws::EmptyStructure; end
+
+    # @!attribute [rw] destination
+    #   Retrieves the current destination.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Status of the retrieval.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/GetTraceSegmentDestinationResult AWS API Documentation
+    #
+    class GetTraceSegmentDestinationResult < Struct.new(
+      :destination,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] start_time
     #   The start of the time frame for which to retrieve traces.
     #   @return [Time]
@@ -1299,8 +1410,8 @@ module Aws::XRay
     #   @return [Time]
     #
     # @!attribute [rw] time_range_type
-    #   A parameter to indicate whether to query trace summaries by TraceId,
-    #   Event (trace update time), or Service (segment end time).
+    #   Query trace summaries by TraceId (trace start time), Event (trace
+    #   update time), or Service (trace segment end time).
     #   @return [String]
     #
     # @!attribute [rw] sampling
@@ -1365,6 +1476,30 @@ module Aws::XRay
       :approximate_time,
       :traces_processed_count,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The relation between two services.
+    #
+    # @!attribute [rw] reference_type
+    #   Relationship of a trace to the corresponding service.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_trace_id
+    #   Source trace of a link relationship.
+    #   @return [String]
+    #
+    # @!attribute [rw] destination_trace_ids
+    #   Destination traces of a link relationship.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/GraphLink AWS API Documentation
+    #
+    class GraphLink < Struct.new(
+      :reference_type,
+      :source_trace_id,
+      :destination_trace_ids)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1494,6 +1629,75 @@ module Aws::XRay
       :client_ip)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Rule used to determine the server-side sampling rate for spans
+    # ingested through the CloudWatchLogs destination and indexed by X-Ray.
+    #
+    # @!attribute [rw] name
+    #   The name of the indexing rule.
+    #   @return [String]
+    #
+    # @!attribute [rw] modified_at
+    #   Displays when the rule was last modified, in Unix time seconds.
+    #   @return [Time]
+    #
+    # @!attribute [rw] rule
+    #   The indexing rule.
+    #   @return [Types::IndexingRuleValue]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/IndexingRule AWS API Documentation
+    #
+    class IndexingRule < Struct.new(
+      :name,
+      :modified_at,
+      :rule)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The indexing rule configuration.
+    #
+    # @note IndexingRuleValue is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of IndexingRuleValue corresponding to the set member.
+    #
+    # @!attribute [rw] probabilistic
+    #   Indexing rule configuration that is used to probabilistically sample
+    #   traceIds.
+    #   @return [Types::ProbabilisticRuleValue]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/IndexingRuleValue AWS API Documentation
+    #
+    class IndexingRuleValue < Struct.new(
+      :probabilistic,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Probabilistic < IndexingRuleValue; end
+      class Unknown < IndexingRuleValue; end
+    end
+
+    # Update to an indexing rule.
+    #
+    # @note IndexingRuleValueUpdate is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] probabilistic
+    #   Indexing rule configuration that is used to probabilistically sample
+    #   traceIds.
+    #   @return [Types::ProbabilisticRuleValueUpdate]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/IndexingRuleValueUpdate AWS API Documentation
+    #
+    class IndexingRuleValueUpdate < Struct.new(
+      :probabilistic,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Probabilistic < IndexingRuleValueUpdate; end
+      class Unknown < IndexingRuleValueUpdate; end
     end
 
     # When fault rates go outside of the expected range, X-Ray creates an
@@ -1858,6 +2062,57 @@ module Aws::XRay
       include Aws::Structure
     end
 
+    # @!attribute [rw] retrieval_token
+    #   Retrieval token.
+    #   @return [String]
+    #
+    # @!attribute [rw] trace_format
+    #   Format of the requested traces.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token returned by a previous request to
+    #   retrieve the next page of indexes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/ListRetrievedTracesRequest AWS API Documentation
+    #
+    class ListRetrievedTracesRequest < Struct.new(
+      :retrieval_token,
+      :trace_format,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] retrieval_status
+    #   Status of the retrieval.
+    #   @return [String]
+    #
+    # @!attribute [rw] trace_format
+    #   Format of the requested traces.
+    #   @return [String]
+    #
+    # @!attribute [rw] traces
+    #   Full traces for the specified requests.
+    #   @return [Array<Types::RetrievedTrace>]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token returned by a previous request to
+    #   retrieve the next page of indexes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/ListRetrievedTracesResult AWS API Documentation
+    #
+    class ListRetrievedTracesResult < Struct.new(
+      :retrieval_status,
+      :trace_format,
+      :traces,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   The Amazon Resource Number (ARN) of an X-Ray group or sampling rule.
     #   @return [String]
@@ -1947,6 +2202,41 @@ module Aws::XRay
     #
     class PolicySizeLimitExceededException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The indexing rule configuration for probabilistic sampling.
+    #
+    # @!attribute [rw] desired_sampling_percentage
+    #   Configured sampling percentage of traceIds. Note that sampling can
+    #   be subject to limits to ensure completeness of data.
+    #   @return [Float]
+    #
+    # @!attribute [rw] actual_sampling_percentage
+    #   Applied sampling percentage of traceIds.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/ProbabilisticRuleValue AWS API Documentation
+    #
+    class ProbabilisticRuleValue < Struct.new(
+      :desired_sampling_percentage,
+      :actual_sampling_percentage)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Update to the indexing rule configuration for probabilistic sampling.
+    #
+    # @!attribute [rw] desired_sampling_percentage
+    #   Configured sampling percentage of traceIds. Note that sampling can
+    #   be subject to limits to ensure completeness of data.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/ProbabilisticRuleValueUpdate AWS API Documentation
+    #
+    class ProbabilisticRuleValueUpdate < Struct.new(
+      :desired_sampling_percentage)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2278,6 +2568,54 @@ module Aws::XRay
       :account_id,
       :entity_path,
       :inferred)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Retrieved information about an application that processed requests,
+    # users that made requests, or downstream services, resources, and
+    # applications that an application used.
+    #
+    # @!attribute [rw] service
+    #   Information about an application that processed requests, users that
+    #   made requests, or downstream services, resources, and applications
+    #   that an application used.
+    #   @return [Types::Service]
+    #
+    # @!attribute [rw] links
+    #   Relation between two 2 services.
+    #   @return [Array<Types::GraphLink>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/RetrievedService AWS API Documentation
+    #
+    class RetrievedService < Struct.new(
+      :service,
+      :links)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Retrieved collection of spans with matching trace IDs.
+    #
+    # @!attribute [rw] id
+    #   The unique identifier for the span.
+    #   @return [String]
+    #
+    # @!attribute [rw] duration
+    #   The length of time in seconds between the start time of the root
+    #   span and the end time of the last span that completed.
+    #   @return [Float]
+    #
+    # @!attribute [rw] spans
+    #   Spans that comprise the trace.
+    #   @return [Array<Types::Span>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/RetrievedTrace AWS API Documentation
+    #
+    class RetrievedTrace < Struct.new(
+      :id,
+      :duration,
+      :spans)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2654,13 +2992,13 @@ module Aws::XRay
     # it.
     #
     # For the full segment document schema, see [Amazon Web Services X-Ray
-    # Segment Documents][2] in the *Amazon Web Services X-Ray Developer
+    # segment documents][2] in the *Amazon Web Services X-Ray Developer
     # Guide*.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/xray/latest/api/API_PutTraceSegments.html
-    # [2]: https://docs.aws.amazon.com/xray/latest/devguide/xray-api-segmentdocuments.html
+    # [2]: https://docs.aws.amazon.com/xray/latest/devguide/aws-xray-interface-api.html#xray-api-segmentdocuments
     #
     # @!attribute [rw] id
     #   The segment's ID.
@@ -2827,6 +3165,66 @@ module Aws::XRay
       :fault_statistics,
       :total_count,
       :total_response_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A span from a trace that has been ingested by the X-Ray service. A
+    # span represents a unit of work or an operation performed by a service.
+    #
+    # @!attribute [rw] id
+    #   The span ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] document
+    #   The span document.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/Span AWS API Documentation
+    #
+    class Span < Struct.new(
+      :id,
+      :document)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] trace_ids
+    #   Specify the trace IDs of the traces to be retrieved.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] start_time
+    #   The start of the time range to retrieve traces. The range is
+    #   inclusive, so the specified start time is included in the query.
+    #   Specified as epoch time, the number of seconds since January 1,
+    #   1970, 00:00:00 UTC.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The end of the time range to retrieve traces. The range is
+    #   inclusive, so the specified end time is included in the query.
+    #   Specified as epoch time, the number of seconds since January 1,
+    #   1970, 00:00:00 UTC.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/StartTraceRetrievalRequest AWS API Documentation
+    #
+    class StartTraceRetrievalRequest < Struct.new(
+      :trace_ids,
+      :start_time,
+      :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] retrieval_token
+    #   Retrieval token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/StartTraceRetrievalResult AWS API Documentation
+    #
+    class StartTraceRetrievalResult < Struct.new(
+      :retrieval_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3322,6 +3720,35 @@ module Aws::XRay
       include Aws::Structure
     end
 
+    # @!attribute [rw] name
+    #   Name of the indexing rule to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] rule
+    #   Rule configuration to be updated.
+    #   @return [Types::IndexingRuleValueUpdate]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/UpdateIndexingRuleRequest AWS API Documentation
+    #
+    class UpdateIndexingRuleRequest < Struct.new(
+      :name,
+      :rule)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] indexing_rule
+    #   Updated indexing rule.
+    #   @return [Types::IndexingRule]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/UpdateIndexingRuleResult AWS API Documentation
+    #
+    class UpdateIndexingRuleResult < Struct.new(
+      :indexing_rule)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] sampling_rule_update
     #   The rule and fields to change.
     #   @return [Types::SamplingRuleUpdate]
@@ -3342,6 +3769,35 @@ module Aws::XRay
     #
     class UpdateSamplingRuleResult < Struct.new(
       :sampling_rule_record)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] destination
+    #   The configured destination of trace segments.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/UpdateTraceSegmentDestinationRequest AWS API Documentation
+    #
+    class UpdateTraceSegmentDestinationRequest < Struct.new(
+      :destination)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] destination
+    #   The destination of the trace segments.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the update.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/xray-2016-04-12/UpdateTraceSegmentDestinationResult AWS API Documentation
+    #
+    class UpdateTraceSegmentDestinationResult < Struct.new(
+      :destination,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end

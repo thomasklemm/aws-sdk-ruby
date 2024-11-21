@@ -188,6 +188,11 @@ module Aws::S3
     #   The account ID of the expected bucket owner. If the account ID that
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     # @return [EmptyStructure]
     def delete(options = {})
       options = options.merge(bucket: @bucket_name)

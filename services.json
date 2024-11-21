@@ -839,6 +839,12 @@
   "NetworkMonitor": {
     "models": "networkmonitor/2023-08-01"
   },
+  "Notifications": {
+    "models": "notifications/2018-05-10"
+  },
+  "NotificationsContacts": {
+    "models": "notificationscontacts/2018-05-10"
+  },
   "OAM": {
     "models": "oam/2022-06-10"
   },

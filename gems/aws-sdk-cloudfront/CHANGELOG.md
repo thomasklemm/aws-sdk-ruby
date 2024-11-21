@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.107.0 (2024-11-21)
+------------------
+
+* Feature - Adds support for Origin Selection between EMPv2 origins based on media quality score.
+
 1.106.0 (2024-11-20)
 ------------------
 

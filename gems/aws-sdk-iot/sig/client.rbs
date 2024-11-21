@@ -363,6 +363,55 @@ module Aws
                                        ) -> _CreateCertificateProviderResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCertificateProviderResponseSuccess
 
+      interface _CreateCommandResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateCommandResponse]
+        def command_id: () -> ::String
+        def command_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#create_command-instance_method
+      def create_command: (
+                            command_id: ::String,
+                            ?namespace: ("AWS-IoT" | "AWS-IoT-FleetWise"),
+                            ?display_name: ::String,
+                            ?description: ::String,
+                            ?payload: {
+                              content: ::String?,
+                              content_type: ::String?
+                            },
+                            ?mandatory_parameters: Array[
+                              {
+                                name: ::String,
+                                value: {
+                                  s: ::String?,
+                                  b: bool?,
+                                  i: ::Integer?,
+                                  l: ::Integer?,
+                                  d: ::Float?,
+                                  bin: ::String?,
+                                  ul: ::String?
+                                }?,
+                                default_value: {
+                                  s: ::String?,
+                                  b: bool?,
+                                  i: ::Integer?,
+                                  l: ::Integer?,
+                                  d: ::Float?,
+                                  bin: ::String?,
+                                  ul: ::String?
+                                }?,
+                                description: ::String?
+                              },
+                            ],
+                            ?role_arn: ::String,
+                            ?tags: Array[
+                              {
+                                key: ::String,
+                                value: ::String?
+                              },
+                            ]
+                          ) -> _CreateCommandResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCommandResponseSuccess
+
       interface _CreateCustomMetricResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateCustomMetricResponse]
         def metric_name: () -> ::String
@@ -1663,6 +1712,26 @@ module Aws
                                        ) -> _DeleteCertificateProviderResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteCertificateProviderResponseSuccess
 
+      interface _DeleteCommandResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteCommandResponse]
+        def status_code: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#delete_command-instance_method
+      def delete_command: (
+                            command_id: ::String
+                          ) -> _DeleteCommandResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteCommandResponseSuccess
+
+      interface _DeleteCommandExecutionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteCommandExecutionResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#delete_command_execution-instance_method
+      def delete_command_execution: (
+                                      execution_id: ::String,
+                                      target_arn: ::String
+                                    ) -> _DeleteCommandExecutionResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteCommandExecutionResponseSuccess
+
       interface _DeleteCustomMetricResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteCustomMetricResponse]
       end
@@ -2525,6 +2594,51 @@ module Aws
                            ) -> _GetCardinalityResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCardinalityResponseSuccess
 
+      interface _GetCommandResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCommandResponse]
+        def command_id: () -> ::String
+        def command_arn: () -> ::String
+        def namespace: () -> ("AWS-IoT" | "AWS-IoT-FleetWise")
+        def display_name: () -> ::String
+        def description: () -> ::String
+        def mandatory_parameters: () -> ::Array[Types::CommandParameter]
+        def payload: () -> Types::CommandPayload
+        def role_arn: () -> ::String
+        def created_at: () -> ::Time
+        def last_updated_at: () -> ::Time
+        def deprecated: () -> bool
+        def pending_deletion: () -> bool
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#get_command-instance_method
+      def get_command: (
+                         command_id: ::String
+                       ) -> _GetCommandResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCommandResponseSuccess
+
+      interface _GetCommandExecutionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCommandExecutionResponse]
+        def execution_id: () -> ::String
+        def command_arn: () -> ::String
+        def target_arn: () -> ::String
+        def status: () -> ("CREATED" | "IN_PROGRESS" | "SUCCEEDED" | "FAILED" | "REJECTED" | "TIMED_OUT")
+        def status_reason: () -> Types::StatusReason
+        def result: () -> ::Hash[::String, Types::CommandExecutionResult]
+        def parameters: () -> ::Hash[::String, Types::CommandParameterValue]
+        def execution_timeout_seconds: () -> ::Integer
+        def created_at: () -> ::Time
+        def last_updated_at: () -> ::Time
+        def started_at: () -> ::Time
+        def completed_at: () -> ::Time
+        def time_to_live: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#get_command_execution-instance_method
+      def get_command_execution: (
+                                   execution_id: ::String,
+                                   target_arn: ::String,
+                                   ?include_result: bool
+                                 ) -> _GetCommandExecutionResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCommandExecutionResponseSuccess
+
       interface _GetEffectivePoliciesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetEffectivePoliciesResponse]
         def effective_policies: () -> ::Array[Types::EffectivePolicy]
@@ -2954,6 +3068,46 @@ module Aws
                                      ?ascending_order: bool
                                    ) -> _ListCertificatesByCAResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCertificatesByCAResponseSuccess
+
+      interface _ListCommandExecutionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCommandExecutionsResponse]
+        def command_executions: () -> ::Array[Types::CommandExecutionSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#list_command_executions-instance_method
+      def list_command_executions: (
+                                     ?max_results: ::Integer,
+                                     ?next_token: ::String,
+                                     ?namespace: ("AWS-IoT" | "AWS-IoT-FleetWise"),
+                                     ?status: ("CREATED" | "IN_PROGRESS" | "SUCCEEDED" | "FAILED" | "REJECTED" | "TIMED_OUT"),
+                                     ?sort_order: ("ASCENDING" | "DESCENDING"),
+                                     ?started_time_filter: {
+                                       after: ::String?,
+                                       before: ::String?
+                                     },
+                                     ?completed_time_filter: {
+                                       after: ::String?,
+                                       before: ::String?
+                                     },
+                                     ?target_arn: ::String,
+                                     ?command_arn: ::String
+                                   ) -> _ListCommandExecutionsResponseSuccess
+                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCommandExecutionsResponseSuccess
+
+      interface _ListCommandsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCommandsResponse]
+        def commands: () -> ::Array[Types::CommandSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#list_commands-instance_method
+      def list_commands: (
+                           ?max_results: ::Integer,
+                           ?next_token: ::String,
+                           ?namespace: ("AWS-IoT" | "AWS-IoT-FleetWise"),
+                           ?command_parameter_name: ::String,
+                           ?sort_order: ("ASCENDING" | "DESCENDING")
+                         ) -> _ListCommandsResponseSuccess
+                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCommandsResponseSuccess
 
       interface _ListCustomMetricsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListCustomMetricsResponse]
@@ -4491,6 +4645,23 @@ module Aws
                                          ?account_default_for_operations: Array[("CreateCertificateFromCsr")]
                                        ) -> _UpdateCertificateProviderResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCertificateProviderResponseSuccess
+
+      interface _UpdateCommandResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateCommandResponse]
+        def command_id: () -> ::String
+        def display_name: () -> ::String
+        def description: () -> ::String
+        def deprecated: () -> bool
+        def last_updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoT/Client.html#update_command-instance_method
+      def update_command: (
+                            command_id: ::String,
+                            ?display_name: ::String,
+                            ?description: ::String,
+                            ?deprecated: bool
+                          ) -> _UpdateCommandResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCommandResponseSuccess
 
       interface _UpdateCustomMetricResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateCustomMetricResponse]

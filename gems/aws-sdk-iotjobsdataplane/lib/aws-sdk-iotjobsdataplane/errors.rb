@@ -28,12 +28,16 @@ module Aws::IoTJobsDataPlane
   #
   # ## Error Classes
   # * {CertificateValidationException}
+  # * {ConflictException}
+  # * {InternalServerException}
   # * {InvalidRequestException}
   # * {InvalidStateTransitionException}
   # * {ResourceNotFoundException}
+  # * {ServiceQuotaExceededException}
   # * {ServiceUnavailableException}
   # * {TerminalStateException}
   # * {ThrottlingException}
+  # * {ValidationException}
   #
   # Additionally, error classes are dynamically generated for service errors based on the error code
   # if they are not defined above.
@@ -46,6 +50,41 @@ module Aws::IoTJobsDataPlane
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::IoTJobsDataPlane::Types::CertificateValidationException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class ConflictException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::IoTJobsDataPlane::Types::ConflictException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+
+      # @return [String]
+      def resource_id
+        @data[:resource_id]
+      end
+    end
+
+    class InternalServerException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::IoTJobsDataPlane::Types::InternalServerException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end
@@ -91,6 +130,21 @@ module Aws::IoTJobsDataPlane
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::IoTJobsDataPlane::Types::ResourceNotFoundException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class ServiceQuotaExceededException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::IoTJobsDataPlane::Types::ServiceQuotaExceededException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end
@@ -148,6 +202,21 @@ module Aws::IoTJobsDataPlane
       # @return [String]
       def payload
         @data[:payload]
+      end
+    end
+
+    class ValidationException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::IoTJobsDataPlane::Types::ValidationException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
       end
     end
 

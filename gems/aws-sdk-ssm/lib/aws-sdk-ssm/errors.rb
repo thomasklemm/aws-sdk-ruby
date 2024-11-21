@@ -158,8 +158,10 @@ module Aws::SSM
   # * {UnsupportedInventoryItemContextException}
   # * {UnsupportedInventorySchemaVersionException}
   # * {UnsupportedOperatingSystem}
+  # * {UnsupportedOperationException}
   # * {UnsupportedParameterType}
   # * {UnsupportedPlatformType}
+  # * {ValidationException}
   #
   # Additionally, error classes are dynamically generated for service errors based on the error code
   # if they are not defined above.
@@ -2142,6 +2144,21 @@ module Aws::SSM
       end
     end
 
+    class UnsupportedOperationException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::SSM::Types::UnsupportedOperationException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
     class UnsupportedParameterType < ServiceError
 
       # @param [Seahorse::Client::RequestContext] context
@@ -2169,6 +2186,26 @@ module Aws::SSM
       # @return [String]
       def message
         @message || @data[:message]
+      end
+    end
+
+    class ValidationException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::SSM::Types::ValidationException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+
+      # @return [String]
+      def reason_code
+        @data[:reason_code]
       end
     end
 

@@ -15,9 +15,15 @@ module Aws
       end
       class BucketAlreadyOwnedByYou < ::Aws::Errors::ServiceError
       end
+      class EncryptionTypeMismatch < ::Aws::Errors::ServiceError
+      end
       class InvalidObjectState < ::Aws::Errors::ServiceError
         def storage_class: () -> ::String
         def access_tier: () -> ::String
+      end
+      class InvalidRequest < ::Aws::Errors::ServiceError
+      end
+      class InvalidWriteOffset < ::Aws::Errors::ServiceError
       end
       class NoSuchBucket < ::Aws::Errors::ServiceError
       end
@@ -28,6 +34,8 @@ module Aws
       class ObjectAlreadyInActiveTierError < ::Aws::Errors::ServiceError
       end
       class ObjectNotInActiveTierError < ::Aws::Errors::ServiceError
+      end
+      class TooManyParts < ::Aws::Errors::ServiceError
       end
     end
   end

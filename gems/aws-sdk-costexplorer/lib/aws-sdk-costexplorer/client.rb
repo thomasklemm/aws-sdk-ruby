@@ -1252,6 +1252,90 @@ module Aws::CostExplorer
       req.send_request(options)
     end
 
+    # Retrieves a commitment purchase analysis result based on the
+    # `AnalysisId`.
+    #
+    # @option params [required, String] :analysis_id
+    #   The analysis ID that's associated with the commitment purchase
+    #   analysis.
+    #
+    # @return [Types::GetCommitmentPurchaseAnalysisResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#estimated_completion_time #estimated_completion_time} => String
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#analysis_completion_time #analysis_completion_time} => String
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#analysis_started_time #analysis_started_time} => String
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#analysis_id #analysis_id} => String
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#analysis_status #analysis_status} => String
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#error_code #error_code} => String
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#analysis_details #analysis_details} => Types::AnalysisDetails
+    #   * {Types::GetCommitmentPurchaseAnalysisResponse#commitment_purchase_analysis_configuration #commitment_purchase_analysis_configuration} => Types::CommitmentPurchaseAnalysisConfiguration
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_commitment_purchase_analysis({
+    #     analysis_id: "AnalysisId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.estimated_completion_time #=> String
+    #   resp.analysis_completion_time #=> String
+    #   resp.analysis_started_time #=> String
+    #   resp.analysis_id #=> String
+    #   resp.analysis_status #=> String, one of "SUCCEEDED", "PROCESSING", "FAILED"
+    #   resp.error_code #=> String, one of "NO_USAGE_FOUND", "INTERNAL_FAILURE", "INVALID_SAVINGS_PLANS_TO_ADD", "INVALID_SAVINGS_PLANS_TO_EXCLUDE", "INVALID_ACCOUNT_ID"
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.currency_code #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.lookback_period_in_hours #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.current_average_coverage #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.current_average_hourly_on_demand_spend #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.current_maximum_hourly_on_demand_spend #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.current_minimum_hourly_on_demand_spend #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.current_on_demand_spend #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.existing_hourly_commitment #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.hourly_commitment_to_purchase #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_average_coverage #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_average_utilization #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_monthly_savings_amount #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_on_demand_cost #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_on_demand_cost_with_current_commitment #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_roi #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_savings_amount #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_savings_percentage #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.estimated_commitment_cost #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.latest_usage_timestamp #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.upfront_cost #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.additional_metadata #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.metrics_over_lookback_period #=> Array
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.metrics_over_lookback_period[0].start_time #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.metrics_over_lookback_period[0].estimated_on_demand_cost #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.metrics_over_lookback_period[0].current_coverage #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.metrics_over_lookback_period[0].estimated_coverage #=> String
+    #   resp.analysis_details.savings_plans_purchase_analysis_details.metrics_over_lookback_period[0].estimated_new_commitment_utilization #=> String
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.account_scope #=> String, one of "PAYER", "LINKED"
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.account_id #=> String
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.analysis_type #=> String, one of "MAX_SAVINGS", "CUSTOM_COMMITMENT"
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add #=> Array
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].payment_option #=> String, one of "NO_UPFRONT", "PARTIAL_UPFRONT", "ALL_UPFRONT", "LIGHT_UTILIZATION", "MEDIUM_UTILIZATION", "HEAVY_UTILIZATION"
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].savings_plans_type #=> String, one of "COMPUTE_SP", "EC2_INSTANCE_SP", "SAGEMAKER_SP"
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].region #=> String
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].instance_family #=> String
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].term_in_years #=> String, one of "ONE_YEAR", "THREE_YEARS"
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].savings_plans_commitment #=> Float
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].offering_id #=> String
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_exclude #=> Array
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_exclude[0] #=> String
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.look_back_time_period.start #=> String
+    #   resp.commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.look_back_time_period.end #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/GetCommitmentPurchaseAnalysis AWS API Documentation
+    #
+    # @overload get_commitment_purchase_analysis(params = {})
+    # @param [Hash] params ({})
+    def get_commitment_purchase_analysis(params = {}, options = {})
+      req = build_request(:get_commitment_purchase_analysis, params)
+      req.send_request(options)
+    end
+
     # Retrieves cost and usage metrics for your account. You can specify
     # which cost and usage-related metric that you want the request to
     # return. For example, you can specify `BlendedCosts` or
@@ -2045,11 +2129,11 @@ module Aws::CostExplorer
     #     is with. Possible values are the following:
     #
     #     \- Amazon Web Services(Amazon Web Services): The entity that sells
-    #     Amazon Web Servicesservices.
+    #     Amazon Web Services services.
     #
     #     \- AISPL (Amazon Internet Services Pvt. Ltd.): The local Indian
-    #     entity that's an acting reseller for Amazon Web Servicesservices in
-    #     India.
+    #     entity that's an acting reseller for Amazon Web Services services
+    #     in India.
     #
     #     \- Amazon Web Services Marketplace: The entity that supports the sale
     #     of solutions that are built on Amazon Web Services by third-party
@@ -2990,6 +3074,14 @@ module Aws::CostExplorer
     #   * REGION
     #
     #   * SERVICE
+    #
+    #     <note markdown="1"> If not specified, the `SERVICE` filter defaults to Amazon Elastic
+    #     Compute Cloud - Compute. Supported values for `SERVICE` are Amazon
+    #     Elastic Compute Cloud - Compute, Amazon Relational Database Service,
+    #     Amazon ElastiCache, Amazon Redshift, and Amazon Elasticsearch
+    #     Service. The value for the `SERVICE` filter should not exceed "1".
+    #
+    #      </note>
     #
     #   * SCOPE
     #
@@ -4527,6 +4619,71 @@ module Aws::CostExplorer
       req.send_request(options)
     end
 
+    # Lists the commitment purchase analyses for your account based on the
+    # last 30 days.
+    #
+    # @option params [String] :analysis_status
+    #   The status of the analysis.
+    #
+    # @option params [String] :next_page_token
+    #   The token to retrieve the next set of results.
+    #
+    # @option params [Integer] :page_size
+    #   The number of analyses that you want returned in a single response
+    #   object.
+    #
+    # @option params [Array<String>] :analysis_ids
+    #   The analysis IDs associated with the commitment purchase analyses.
+    #
+    # @return [Types::ListCommitmentPurchaseAnalysesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListCommitmentPurchaseAnalysesResponse#analysis_summary_list #analysis_summary_list} => Array&lt;Types::AnalysisSummary&gt;
+    #   * {Types::ListCommitmentPurchaseAnalysesResponse#next_page_token #next_page_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_commitment_purchase_analyses({
+    #     analysis_status: "SUCCEEDED", # accepts SUCCEEDED, PROCESSING, FAILED
+    #     next_page_token: "NextPageToken",
+    #     page_size: 1,
+    #     analysis_ids: ["AnalysisId"],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.analysis_summary_list #=> Array
+    #   resp.analysis_summary_list[0].estimated_completion_time #=> String
+    #   resp.analysis_summary_list[0].analysis_completion_time #=> String
+    #   resp.analysis_summary_list[0].analysis_started_time #=> String
+    #   resp.analysis_summary_list[0].analysis_status #=> String, one of "SUCCEEDED", "PROCESSING", "FAILED"
+    #   resp.analysis_summary_list[0].error_code #=> String, one of "NO_USAGE_FOUND", "INTERNAL_FAILURE", "INVALID_SAVINGS_PLANS_TO_ADD", "INVALID_SAVINGS_PLANS_TO_EXCLUDE", "INVALID_ACCOUNT_ID"
+    #   resp.analysis_summary_list[0].analysis_id #=> String
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.account_scope #=> String, one of "PAYER", "LINKED"
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.account_id #=> String
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.analysis_type #=> String, one of "MAX_SAVINGS", "CUSTOM_COMMITMENT"
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add #=> Array
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].payment_option #=> String, one of "NO_UPFRONT", "PARTIAL_UPFRONT", "ALL_UPFRONT", "LIGHT_UTILIZATION", "MEDIUM_UTILIZATION", "HEAVY_UTILIZATION"
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].savings_plans_type #=> String, one of "COMPUTE_SP", "EC2_INSTANCE_SP", "SAGEMAKER_SP"
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].region #=> String
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].instance_family #=> String
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].term_in_years #=> String, one of "ONE_YEAR", "THREE_YEARS"
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].savings_plans_commitment #=> Float
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_add[0].offering_id #=> String
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_exclude #=> Array
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.savings_plans_to_exclude[0] #=> String
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.look_back_time_period.start #=> String
+    #   resp.analysis_summary_list[0].commitment_purchase_analysis_configuration.savings_plans_purchase_analysis_configuration.look_back_time_period.end #=> String
+    #   resp.next_page_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/ListCommitmentPurchaseAnalyses AWS API Documentation
+    #
+    # @overload list_commitment_purchase_analyses(params = {})
+    # @param [Hash] params ({})
+    def list_commitment_purchase_analyses(params = {}, options = {})
+      req = build_request(:list_commitment_purchase_analyses, params)
+      req.send_request(options)
+    end
+
     # Retrieves a list of your historical cost allocation tag backfill
     # requests.
     #
@@ -4811,6 +4968,63 @@ module Aws::CostExplorer
     # @param [Hash] params ({})
     def provide_anomaly_feedback(params = {}, options = {})
       req = build_request(:provide_anomaly_feedback, params)
+      req.send_request(options)
+    end
+
+    # Specifies the parameters of a planned commitment purchase and starts
+    # the generation of the analysis. This enables you to estimate the cost,
+    # coverage, and utilization impact of your planned commitment purchases.
+    # You can request up to 20 analysis runs per day.
+    #
+    # @option params [required, Types::CommitmentPurchaseAnalysisConfiguration] :commitment_purchase_analysis_configuration
+    #   The configuration for the commitment purchase analysis.
+    #
+    # @return [Types::StartCommitmentPurchaseAnalysisResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartCommitmentPurchaseAnalysisResponse#analysis_id #analysis_id} => String
+    #   * {Types::StartCommitmentPurchaseAnalysisResponse#analysis_started_time #analysis_started_time} => String
+    #   * {Types::StartCommitmentPurchaseAnalysisResponse#estimated_completion_time #estimated_completion_time} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_commitment_purchase_analysis({
+    #     commitment_purchase_analysis_configuration: { # required
+    #       savings_plans_purchase_analysis_configuration: {
+    #         account_scope: "PAYER", # accepts PAYER, LINKED
+    #         account_id: "AccountId",
+    #         analysis_type: "MAX_SAVINGS", # required, accepts MAX_SAVINGS, CUSTOM_COMMITMENT
+    #         savings_plans_to_add: [ # required
+    #           {
+    #             payment_option: "NO_UPFRONT", # accepts NO_UPFRONT, PARTIAL_UPFRONT, ALL_UPFRONT, LIGHT_UTILIZATION, MEDIUM_UTILIZATION, HEAVY_UTILIZATION
+    #             savings_plans_type: "COMPUTE_SP", # accepts COMPUTE_SP, EC2_INSTANCE_SP, SAGEMAKER_SP
+    #             region: "GenericString",
+    #             instance_family: "GenericString",
+    #             term_in_years: "ONE_YEAR", # accepts ONE_YEAR, THREE_YEARS
+    #             savings_plans_commitment: 1.0,
+    #             offering_id: "GenericString",
+    #           },
+    #         ],
+    #         savings_plans_to_exclude: ["SavingsPlansId"],
+    #         look_back_time_period: { # required
+    #           start: "YearMonthDay", # required
+    #           end: "YearMonthDay", # required
+    #         },
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.analysis_id #=> String
+    #   resp.analysis_started_time #=> String
+    #   resp.estimated_completion_time #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/StartCommitmentPurchaseAnalysis AWS API Documentation
+    #
+    # @overload start_commitment_purchase_analysis(params = {})
+    # @param [Hash] params ({})
+    def start_commitment_purchase_analysis(params = {}, options = {})
+      req = build_request(:start_commitment_purchase_analysis, params)
       req.send_request(options)
     end
 
@@ -5336,7 +5550,7 @@ module Aws::CostExplorer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-costexplorer'
-      context[:gem_version] = '1.115.0'
+      context[:gem_version] = '1.116.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

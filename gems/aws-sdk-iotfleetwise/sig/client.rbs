@@ -105,6 +105,21 @@ module Aws
                                           key: ::String,
                                           value: ::String
                                         },
+                                      ]?,
+                                      state_templates: Array[
+                                        {
+                                          identifier: ::String,
+                                          state_template_update_strategy: {
+                                            periodic: {
+                                              state_template_update_rate: {
+                                                unit: ("MILLISECOND" | "SECOND" | "MINUTE" | "HOUR"),
+                                                value: ::Integer
+                                              }
+                                            }?,
+                                            on_change: {
+                                            }?
+                                          }
+                                        },
                                       ]?
                                     },
                                   ]
@@ -124,7 +139,23 @@ module Aws
                                       model_manifest_arn: ::String?,
                                       decoder_manifest_arn: ::String?,
                                       attributes: Hash[::String, ::String]?,
-                                      attribute_update_mode: ("Overwrite" | "Merge")?
+                                      attribute_update_mode: ("Overwrite" | "Merge")?,
+                                      state_templates_to_add: Array[
+                                        {
+                                          identifier: ::String,
+                                          state_template_update_strategy: {
+                                            periodic: {
+                                              state_template_update_rate: {
+                                                unit: ("MILLISECOND" | "SECOND" | "MINUTE" | "HOUR"),
+                                                value: ::Integer
+                                              }
+                                            }?,
+                                            on_change: {
+                                            }?
+                                          }
+                                        },
+                                      ]?,
+                                      state_templates_to_remove: Array[::String]?
                                     },
                                   ]
                                 ) -> _BatchUpdateVehicleResponseSuccess
@@ -152,7 +183,8 @@ module Aws
                                {
                                  name: ::String,
                                  max_sample_count: ::Integer?,
-                                 minimum_sampling_interval_ms: ::Integer?
+                                 minimum_sampling_interval_ms: ::Integer?,
+                                 data_partition_id: ::String?
                                },
                              ],
                              collection_scheme: {
@@ -184,7 +216,47 @@ module Aws
                                  timestream_config: {
                                    timestream_table_arn: ::String,
                                    execution_role_arn: ::String
+                                 }?,
+                                 mqtt_topic_config: {
+                                   mqtt_topic_arn: ::String,
+                                   execution_role_arn: ::String
                                  }?
+                               },
+                             ],
+                             ?data_partitions: Array[
+                               {
+                                 id: ::String,
+                                 storage_options: {
+                                   maximum_size: {
+                                     unit: ("MB" | "GB" | "TB"),
+                                     value: ::Integer
+                                   },
+                                   storage_location: ::String,
+                                   minimum_time_to_live: {
+                                     unit: ("HOURS" | "DAYS" | "WEEKS"),
+                                     value: ::Integer
+                                   }
+                                 },
+                                 upload_options: {
+                                   expression: ::String,
+                                   condition_language_version: ::Integer?
+                                 }?
+                               },
+                             ],
+                             ?signals_to_fetch: Array[
+                               {
+                                 fully_qualified_name: ::String,
+                                 signal_fetch_config: {
+                                   time_based: {
+                                     execution_frequency_ms: ::Integer
+                                   }?,
+                                   condition_based: {
+                                     condition_expression: ::String,
+                                     trigger_mode: ("ALWAYS" | "RISING_EDGE")
+                                   }?
+                                 },
+                                 condition_language_version: ::Integer?,
+                                 actions: Array[::String]
                                },
                              ]
                            ) -> _CreateCampaignResponseSuccess
@@ -203,7 +275,7 @@ module Aws
                                      ?signal_decoders: Array[
                                        {
                                          fully_qualified_name: ::String,
-                                         type: ("CAN_SIGNAL" | "OBD_SIGNAL" | "MESSAGE_SIGNAL"),
+                                         type: ("CAN_SIGNAL" | "OBD_SIGNAL" | "MESSAGE_SIGNAL" | "CUSTOM_DECODING_SIGNAL"),
                                          interface_id: ::String,
                                          can_signal: {
                                            message_id: ::Integer,
@@ -250,13 +322,16 @@ module Aws
                                                },
                                              ]?
                                            }
+                                         }?,
+                                         custom_decoding_signal: {
+                                           id: ::String
                                          }?
                                        },
                                      ],
                                      ?network_interfaces: Array[
                                        {
                                          interface_id: ::String,
-                                         type: ("CAN_INTERFACE" | "OBD_INTERFACE" | "VEHICLE_MIDDLEWARE"),
+                                         type: ("CAN_INTERFACE" | "OBD_INTERFACE" | "VEHICLE_MIDDLEWARE" | "CUSTOM_DECODING_INTERFACE"),
                                          can_interface: {
                                            name: ::String,
                                            protocol_name: ::String?,
@@ -274,9 +349,13 @@ module Aws
                                          vehicle_middleware: {
                                            name: ::String,
                                            protocol_name: ("ROS_2")
+                                         }?,
+                                         custom_decoding_interface: {
+                                           name: ::String
                                          }?
                                        },
                                      ],
+                                     ?default_for_unmapped_signals: ("CUSTOM_DECODING"),
                                      ?tags: Array[
                                        {
                                          key: ::String,
@@ -406,6 +485,29 @@ module Aws
                                  ) -> _CreateSignalCatalogResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateSignalCatalogResponseSuccess
 
+      interface _CreateStateTemplateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateStateTemplateResponse]
+        def name: () -> ::String
+        def arn: () -> ::String
+        def id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#create_state_template-instance_method
+      def create_state_template: (
+                                   name: ::String,
+                                   ?description: ::String,
+                                   signal_catalog_arn: ::String,
+                                   state_template_properties: Array[::String],
+                                   ?data_extra_dimensions: Array[::String],
+                                   ?metadata_extra_dimensions: Array[::String],
+                                   ?tags: Array[
+                                     {
+                                       key: ::String,
+                                       value: ::String
+                                     },
+                                   ]
+                                 ) -> _CreateStateTemplateResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateStateTemplateResponseSuccess
+
       interface _CreateVehicleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateVehicleResponse]
         def vehicle_name: () -> ::String
@@ -423,6 +525,21 @@ module Aws
                               {
                                 key: ::String,
                                 value: ::String
+                              },
+                            ],
+                            ?state_templates: Array[
+                              {
+                                identifier: ::String,
+                                state_template_update_strategy: {
+                                  periodic: {
+                                    state_template_update_rate: {
+                                      unit: ("MILLISECOND" | "SECOND" | "MINUTE" | "HOUR"),
+                                      value: ::Integer
+                                    }
+                                  }?,
+                                  on_change: {
+                                  }?
+                                }
                               },
                             ]
                           ) -> _CreateVehicleResponseSuccess
@@ -483,6 +600,18 @@ module Aws
                                  ) -> _DeleteSignalCatalogResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteSignalCatalogResponseSuccess
 
+      interface _DeleteStateTemplateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteStateTemplateResponse]
+        def name: () -> ::String
+        def arn: () -> ::String
+        def id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#delete_state_template-instance_method
+      def delete_state_template: (
+                                   identifier: ::String
+                                 ) -> _DeleteStateTemplateResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteStateTemplateResponseSuccess
+
       interface _DeleteVehicleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteVehicleResponse]
         def vehicle_name: () -> ::String
@@ -525,6 +654,8 @@ module Aws
         def creation_time: () -> ::Time
         def last_modification_time: () -> ::Time
         def data_destination_configs: () -> ::Array[Types::DataDestinationConfig]
+        def data_partitions: () -> ::Array[Types::DataPartition]
+        def signals_to_fetch: () -> ::Array[Types::SignalFetchInformation]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#get_campaign-instance_method
       def get_campaign: (
@@ -632,6 +763,25 @@ module Aws
                               ) -> _GetSignalCatalogResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetSignalCatalogResponseSuccess
 
+      interface _GetStateTemplateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetStateTemplateResponse]
+        def name: () -> ::String
+        def arn: () -> ::String
+        def description: () -> ::String
+        def signal_catalog_arn: () -> ::String
+        def state_template_properties: () -> ::Array[::String]
+        def data_extra_dimensions: () -> ::Array[::String]
+        def metadata_extra_dimensions: () -> ::Array[::String]
+        def creation_time: () -> ::Time
+        def last_modification_time: () -> ::Time
+        def id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#get_state_template-instance_method
+      def get_state_template: (
+                                identifier: ::String
+                              ) -> _GetStateTemplateResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetStateTemplateResponseSuccess
+
       interface _GetVehicleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetVehicleResponse]
         def vehicle_name: () -> ::String
@@ -639,6 +789,7 @@ module Aws
         def model_manifest_arn: () -> ::String
         def decoder_manifest_arn: () -> ::String
         def attributes: () -> ::Hash[::String, ::String]
+        def state_templates: () -> ::Array[Types::StateTemplateAssociation]
         def creation_time: () -> ::Time
         def last_modification_time: () -> ::Time
       end
@@ -831,6 +982,18 @@ module Aws
                                 ) -> _ListSignalCatalogsResponseSuccess
                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSignalCatalogsResponseSuccess
 
+      interface _ListStateTemplatesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListStateTemplatesResponse]
+        def summaries: () -> ::Array[Types::StateTemplateSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#list_state_templates-instance_method
+      def list_state_templates: (
+                                  ?next_token: ::String,
+                                  ?max_results: ::Integer
+                                ) -> _ListStateTemplatesResponseSuccess
+                              | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListStateTemplatesResponseSuccess
+
       interface _ListTagsForResourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
         def tags: () -> ::Array[Types::Tag]
@@ -966,7 +1129,7 @@ module Aws
                                      ?signal_decoders_to_add: Array[
                                        {
                                          fully_qualified_name: ::String,
-                                         type: ("CAN_SIGNAL" | "OBD_SIGNAL" | "MESSAGE_SIGNAL"),
+                                         type: ("CAN_SIGNAL" | "OBD_SIGNAL" | "MESSAGE_SIGNAL" | "CUSTOM_DECODING_SIGNAL"),
                                          interface_id: ::String,
                                          can_signal: {
                                            message_id: ::Integer,
@@ -1013,13 +1176,16 @@ module Aws
                                                },
                                              ]?
                                            }
+                                         }?,
+                                         custom_decoding_signal: {
+                                           id: ::String
                                          }?
                                        },
                                      ],
                                      ?signal_decoders_to_update: Array[
                                        {
                                          fully_qualified_name: ::String,
-                                         type: ("CAN_SIGNAL" | "OBD_SIGNAL" | "MESSAGE_SIGNAL"),
+                                         type: ("CAN_SIGNAL" | "OBD_SIGNAL" | "MESSAGE_SIGNAL" | "CUSTOM_DECODING_SIGNAL"),
                                          interface_id: ::String,
                                          can_signal: {
                                            message_id: ::Integer,
@@ -1066,6 +1232,9 @@ module Aws
                                                },
                                              ]?
                                            }
+                                         }?,
+                                         custom_decoding_signal: {
+                                           id: ::String
                                          }?
                                        },
                                      ],
@@ -1073,7 +1242,7 @@ module Aws
                                      ?network_interfaces_to_add: Array[
                                        {
                                          interface_id: ::String,
-                                         type: ("CAN_INTERFACE" | "OBD_INTERFACE" | "VEHICLE_MIDDLEWARE"),
+                                         type: ("CAN_INTERFACE" | "OBD_INTERFACE" | "VEHICLE_MIDDLEWARE" | "CUSTOM_DECODING_INTERFACE"),
                                          can_interface: {
                                            name: ::String,
                                            protocol_name: ::String?,
@@ -1091,13 +1260,16 @@ module Aws
                                          vehicle_middleware: {
                                            name: ::String,
                                            protocol_name: ("ROS_2")
+                                         }?,
+                                         custom_decoding_interface: {
+                                           name: ::String
                                          }?
                                        },
                                      ],
                                      ?network_interfaces_to_update: Array[
                                        {
                                          interface_id: ::String,
-                                         type: ("CAN_INTERFACE" | "OBD_INTERFACE" | "VEHICLE_MIDDLEWARE"),
+                                         type: ("CAN_INTERFACE" | "OBD_INTERFACE" | "VEHICLE_MIDDLEWARE" | "CUSTOM_DECODING_INTERFACE"),
                                          can_interface: {
                                            name: ::String,
                                            protocol_name: ::String?,
@@ -1115,11 +1287,15 @@ module Aws
                                          vehicle_middleware: {
                                            name: ::String,
                                            protocol_name: ("ROS_2")
+                                         }?,
+                                         custom_decoding_interface: {
+                                           name: ::String
                                          }?
                                        },
                                      ],
                                      ?network_interfaces_to_remove: Array[::String],
-                                     ?status: ("ACTIVE" | "DRAFT" | "INVALID" | "VALIDATING")
+                                     ?status: ("ACTIVE" | "DRAFT" | "INVALID" | "VALIDATING"),
+                                     ?default_for_unmapped_signals: ("CUSTOM_DECODING")
                                    ) -> _UpdateDecoderManifestResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDecoderManifestResponseSuccess
 
@@ -1289,6 +1465,23 @@ module Aws
                                  ) -> _UpdateSignalCatalogResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateSignalCatalogResponseSuccess
 
+      interface _UpdateStateTemplateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateStateTemplateResponse]
+        def name: () -> ::String
+        def arn: () -> ::String
+        def id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/IoTFleetWise/Client.html#update_state_template-instance_method
+      def update_state_template: (
+                                   identifier: ::String,
+                                   ?description: ::String,
+                                   ?state_template_properties_to_add: Array[::String],
+                                   ?state_template_properties_to_remove: Array[::String],
+                                   ?data_extra_dimensions: Array[::String],
+                                   ?metadata_extra_dimensions: Array[::String]
+                                 ) -> _UpdateStateTemplateResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateStateTemplateResponseSuccess
+
       interface _UpdateVehicleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateVehicleResponse]
         def vehicle_name: () -> ::String
@@ -1300,7 +1493,23 @@ module Aws
                             ?model_manifest_arn: ::String,
                             ?decoder_manifest_arn: ::String,
                             ?attributes: Hash[::String, ::String],
-                            ?attribute_update_mode: ("Overwrite" | "Merge")
+                            ?attribute_update_mode: ("Overwrite" | "Merge"),
+                            ?state_templates_to_add: Array[
+                              {
+                                identifier: ::String,
+                                state_template_update_strategy: {
+                                  periodic: {
+                                    state_template_update_rate: {
+                                      unit: ("MILLISECOND" | "SECOND" | "MINUTE" | "HOUR"),
+                                      value: ::Integer
+                                    }
+                                  }?,
+                                  on_change: {
+                                  }?
+                                }
+                              },
+                            ],
+                            ?state_templates_to_remove: Array[::String]
                           ) -> _UpdateVehicleResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateVehicleResponseSuccess
     end

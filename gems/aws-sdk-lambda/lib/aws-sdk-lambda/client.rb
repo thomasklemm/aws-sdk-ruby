@@ -906,14 +906,11 @@ module Aws::Lambda
     #
     # * [ Amazon DocumentDB][7]
     #
-    # The following error handling options are available only for stream
-    # sources (DynamoDB and Kinesis):
+    # The following error handling options are available only for DynamoDB
+    # and Kinesis event sources:
     #
     # * `BisectBatchOnFunctionError` – If the function returns an error,
     #   split the batch in two and retry.
-    #
-    # * `DestinationConfig` – Send discarded records to an Amazon SQS queue
-    #   or Amazon SNS topic.
     #
     # * `MaximumRecordAgeInSeconds` – Discard records older than the
     #   specified age. The default value is infinite (-1). When set to
@@ -925,6 +922,14 @@ module Aws::Lambda
     #
     # * `ParallelizationFactor` – Process multiple batches from each shard
     #   concurrently.
+    #
+    # For stream sources (DynamoDB, Kinesis, Amazon MSK, and self-managed
+    # Apache Kafka), the following option is also available:
+    #
+    # * `DestinationConfig` – Send discarded records to an Amazon SQS queue,
+    #   Amazon SNS topic, or Amazon S3 bucket.
+    #
+    # ^
     #
     # For information about which configuration parameters apply to each
     # event source, see the following topics.
@@ -1144,6 +1149,14 @@ module Aws::Lambda
     #
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html#filtering-basics
     #
+    # @option params [Types::EventSourceMappingMetricsConfig] :metrics_config
+    #   The metrics configuration for your event source. For more information,
+    #   see [Event source mapping metrics][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
+    #
     # @return [Types::EventSourceMappingConfiguration] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::EventSourceMappingConfiguration#uuid #uuid} => String
@@ -1176,6 +1189,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#kms_key_arn #kms_key_arn} => String
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
+    #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
     #
     #
     # @example Example: To create a mapping between an event source and an AWS Lambda function
@@ -1261,6 +1275,9 @@ module Aws::Lambda
     #       full_document: "UpdateLookup", # accepts UpdateLookup, Default
     #     },
     #     kms_key_arn: "KMSKeyArn",
+    #     metrics_config: {
+    #       metrics: ["EventCount"], # accepts EventCount
+    #     },
     #   })
     #
     # @example Response structure
@@ -1307,6 +1324,8 @@ module Aws::Lambda
     #   resp.filter_criteria_error.error_code #=> String
     #   resp.filter_criteria_error.message #=> String
     #   resp.event_source_mapping_arn #=> String
+    #   resp.metrics_config.metrics #=> Array
+    #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/CreateEventSourceMapping AWS API Documentation
     #
@@ -2066,6 +2085,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#kms_key_arn #kms_key_arn} => String
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
+    #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
     #
     #
     # @example Example: To delete a Lambda function event source mapping
@@ -2137,6 +2157,8 @@ module Aws::Lambda
     #   resp.filter_criteria_error.error_code #=> String
     #   resp.filter_criteria_error.message #=> String
     #   resp.event_source_mapping_arn #=> String
+    #   resp.metrics_config.metrics #=> Array
+    #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/DeleteEventSourceMapping AWS API Documentation
     #
@@ -2673,6 +2695,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#kms_key_arn #kms_key_arn} => String
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
+    #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
     #
     #
     # @example Example: To get a Lambda function's event source mapping
@@ -2751,6 +2774,8 @@ module Aws::Lambda
     #   resp.filter_criteria_error.error_code #=> String
     #   resp.filter_criteria_error.message #=> String
     #   resp.event_source_mapping_arn #=> String
+    #   resp.metrics_config.metrics #=> Array
+    #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/GetEventSourceMapping AWS API Documentation
     #
@@ -4595,6 +4620,8 @@ module Aws::Lambda
     #   resp.event_source_mappings[0].filter_criteria_error.error_code #=> String
     #   resp.event_source_mappings[0].filter_criteria_error.message #=> String
     #   resp.event_source_mappings[0].event_source_mapping_arn #=> String
+    #   resp.event_source_mappings[0].metrics_config.metrics #=> Array
+    #   resp.event_source_mappings[0].metrics_config.metrics[0] #=> String, one of "EventCount"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ListEventSourceMappings AWS API Documentation
     #
@@ -6046,11 +6073,16 @@ module Aws::Lambda
     # retain discarded events, configure a dead-letter queue with
     # UpdateFunctionConfiguration.
     #
-    # To send an invocation record to a queue, topic, function, or event
-    # bus, specify a [destination][2]. You can configure separate
+    # To send an invocation record to a queue, topic, S3 bucket, function,
+    # or event bus, specify a [destination][2]. You can configure separate
     # destinations for successful invocations (on-success) and events that
     # fail all processing attempts (on-failure). You can configure
     # destinations in addition to or instead of a dead-letter queue.
+    #
+    # <note markdown="1"> S3 buckets are supported only for on-failure destinations. To retain
+    # records of successful invocations, use another destination type.
+    #
+    #  </note>
     #
     #
     #
@@ -6095,9 +6127,16 @@ module Aws::Lambda
     #
     #   * **Queue** - The ARN of a standard SQS queue.
     #
+    #   * **Bucket** - The ARN of an Amazon S3 bucket.
+    #
     #   * **Topic** - The ARN of a standard SNS topic.
     #
     #   * **Event Bus** - The ARN of an Amazon EventBridge event bus.
+    #
+    #   <note markdown="1"> S3 buckets are supported only for on-failure destinations. To retain
+    #   records of successful invocations, use another destination type.
+    #
+    #    </note>
     #
     # @return [Types::FunctionEventInvokeConfig] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -6819,14 +6858,11 @@ module Aws::Lambda
     #
     # * [ Amazon DocumentDB][7]
     #
-    # The following error handling options are available only for stream
-    # sources (DynamoDB and Kinesis):
+    # The following error handling options are available only for DynamoDB
+    # and Kinesis event sources:
     #
     # * `BisectBatchOnFunctionError` – If the function returns an error,
     #   split the batch in two and retry.
-    #
-    # * `DestinationConfig` – Send discarded records to an Amazon SQS queue
-    #   or Amazon SNS topic.
     #
     # * `MaximumRecordAgeInSeconds` – Discard records older than the
     #   specified age. The default value is infinite (-1). When set to
@@ -6838,6 +6874,14 @@ module Aws::Lambda
     #
     # * `ParallelizationFactor` – Process multiple batches from each shard
     #   concurrently.
+    #
+    # For stream sources (DynamoDB, Kinesis, Amazon MSK, and self-managed
+    # Apache Kafka), the following option is also available:
+    #
+    # * `DestinationConfig` – Send discarded records to an Amazon SQS queue,
+    #   Amazon SNS topic, or Amazon S3 bucket.
+    #
+    # ^
     #
     # For information about which configuration parameters apply to each
     # event source, see the following topics.
@@ -7008,6 +7052,14 @@ module Aws::Lambda
     #
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html#filtering-basics
     #
+    # @option params [Types::EventSourceMappingMetricsConfig] :metrics_config
+    #   The metrics configuration for your event source. For more information,
+    #   see [Event source mapping metrics][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
+    #
     # @return [Types::EventSourceMappingConfiguration] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::EventSourceMappingConfiguration#uuid #uuid} => String
@@ -7040,6 +7092,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#kms_key_arn #kms_key_arn} => String
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
+    #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
     #
     #
     # @example Example: To update a Lambda function event source mapping
@@ -7109,6 +7162,9 @@ module Aws::Lambda
     #       full_document: "UpdateLookup", # accepts UpdateLookup, Default
     #     },
     #     kms_key_arn: "KMSKeyArn",
+    #     metrics_config: {
+    #       metrics: ["EventCount"], # accepts EventCount
+    #     },
     #   })
     #
     # @example Response structure
@@ -7155,6 +7211,8 @@ module Aws::Lambda
     #   resp.filter_criteria_error.error_code #=> String
     #   resp.filter_criteria_error.message #=> String
     #   resp.event_source_mapping_arn #=> String
+    #   resp.metrics_config.metrics #=> Array
+    #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateEventSourceMapping AWS API Documentation
     #
@@ -7864,9 +7922,16 @@ module Aws::Lambda
     #
     #   * **Queue** - The ARN of a standard SQS queue.
     #
+    #   * **Bucket** - The ARN of an Amazon S3 bucket.
+    #
     #   * **Topic** - The ARN of a standard SNS topic.
     #
     #   * **Event Bus** - The ARN of an Amazon EventBridge event bus.
+    #
+    #   <note markdown="1"> S3 buckets are supported only for on-failure destinations. To retain
+    #   records of successful invocations, use another destination type.
+    #
+    #    </note>
     #
     # @return [Types::FunctionEventInvokeConfig] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -8071,7 +8136,7 @@ module Aws::Lambda
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-lambda'
-      context[:gem_version] = '1.142.0'
+      context[:gem_version] = '1.143.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

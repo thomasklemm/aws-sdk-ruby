@@ -27,6 +27,7 @@ module Aws::CostExplorer
   # See {Seahorse::Client::RequestContext} for more information.
   #
   # ## Error Classes
+  # * {AnalysisNotFoundException}
   # * {BackfillLimitExceededException}
   # * {BillExpirationException}
   # * {DataUnavailableException}
@@ -46,6 +47,21 @@ module Aws::CostExplorer
   module Errors
 
     extend Aws::Errors::DynamicErrors
+
+    class AnalysisNotFoundException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::CostExplorer::Types::AnalysisNotFoundException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
 
     class BackfillLimitExceededException < ServiceError
 

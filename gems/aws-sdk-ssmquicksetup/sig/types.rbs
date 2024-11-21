@@ -49,6 +49,20 @@ module Aws::SSMQuickSetup
       SENSITIVE: []
     end
 
+    class ConfigurationSummary
+      attr_accessor account: ::String
+      attr_accessor configuration_definition_id: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor first_class_parameters: ::Hash[::String, ::String]
+      attr_accessor id: ::String
+      attr_accessor manager_arn: ::String
+      attr_accessor region: ::String
+      attr_accessor status_summaries: ::Array[Types::StatusSummary]
+      attr_accessor type: ::String
+      attr_accessor type_version: ::String
+      SENSITIVE: []
+    end
+
     class ConflictException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -78,6 +92,11 @@ module Aws::SSMQuickSetup
       SENSITIVE: []
     end
 
+    class GetConfigurationInput
+      attr_accessor configuration_id: ::String
+      SENSITIVE: []
+    end
+
     class GetConfigurationManagerInput
       attr_accessor manager_arn: ::String
       SENSITIVE: []
@@ -93,6 +112,21 @@ module Aws::SSMQuickSetup
       attr_accessor status_summaries: ::Array[Types::StatusSummary]
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: [:tags]
+    end
+
+    class GetConfigurationOutput
+      attr_accessor account: ::String
+      attr_accessor configuration_definition_id: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor id: ::String
+      attr_accessor last_modified_at: ::Time
+      attr_accessor manager_arn: ::String
+      attr_accessor parameters: ::Hash[::String, ::String]
+      attr_accessor region: ::String
+      attr_accessor status_summaries: ::Array[Types::StatusSummary]
+      attr_accessor type: ::String
+      attr_accessor type_version: ::String
+      SENSITIVE: []
     end
 
     class GetServiceSettingsOutput
@@ -114,6 +148,21 @@ module Aws::SSMQuickSetup
 
     class ListConfigurationManagersOutput
       attr_accessor configuration_managers_list: ::Array[Types::ConfigurationManagerSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListConfigurationsInput
+      attr_accessor configuration_definition_id: ::String
+      attr_accessor filters: ::Array[Types::Filter]
+      attr_accessor manager_arn: ::String
+      attr_accessor max_items: ::Integer
+      attr_accessor starting_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListConfigurationsOutput
+      attr_accessor configurations_list: ::Array[Types::ConfigurationSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end

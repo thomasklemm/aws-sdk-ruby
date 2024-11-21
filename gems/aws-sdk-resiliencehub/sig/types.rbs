@@ -236,6 +236,13 @@ module Aws::ResilienceHub
       SENSITIVE: []
     end
 
+    class Condition
+      attr_accessor field: ::String
+      attr_accessor operator: ("Equals" | "NotEquals" | "GreaterThen" | "GreaterOrEquals" | "LessThen" | "LessOrEquals")
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
     class ConfigRecommendation
       attr_accessor app_component_name: ::String
       attr_accessor compliance: ::Hash[("Software" | "Hardware" | "AZ" | "Region"), Types::DisruptionCompliance]
@@ -556,6 +563,19 @@ module Aws::ResilienceHub
       SENSITIVE: []
     end
 
+    class DescribeMetricsExportRequest
+      attr_accessor metrics_export_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeMetricsExportResponse
+      attr_accessor error_message: ::String
+      attr_accessor export_location: Types::S3Location
+      attr_accessor metrics_export_id: ::String
+      attr_accessor status: ("Pending" | "InProgress" | "Failed" | "Success")
+      SENSITIVE: []
+    end
+
     class DescribeResiliencyPolicyRequest
       attr_accessor policy_arn: ::String
       SENSITIVE: []
@@ -626,6 +646,12 @@ module Aws::ResilienceHub
     class FailurePolicy
       attr_accessor rpo_in_secs: ::Integer
       attr_accessor rto_in_secs: ::Integer
+      SENSITIVE: []
+    end
+
+    class Field
+      attr_accessor aggregation: ("Min" | "Max" | "Sum" | "Avg" | "Count")
+      attr_accessor name: ::String
       SENSITIVE: []
     end
 
@@ -855,6 +881,22 @@ module Aws::ResilienceHub
     class ListAppsResponse
       attr_accessor app_summaries: ::Array[Types::AppSummary]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListMetricsRequest
+      attr_accessor conditions: ::Array[Types::Condition]
+      attr_accessor data_source: ::String
+      attr_accessor fields: ::Array[Types::Field]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor sorts: ::Array[Types::Sort]
+      SENSITIVE: []
+    end
+
+    class ListMetricsResponse
+      attr_accessor next_token: ::String
+      attr_accessor rows: ::Array[::Array[::String]]
       SENSITIVE: []
     end
 
@@ -1213,6 +1255,12 @@ module Aws::ResilienceHub
       SENSITIVE: []
     end
 
+    class Sort
+      attr_accessor ascending: bool
+      attr_accessor field: ::String
+      SENSITIVE: []
+    end
+
     class StartAppAssessmentRequest
       attr_accessor app_arn: ::String
       attr_accessor app_version: ::String
@@ -1224,6 +1272,18 @@ module Aws::ResilienceHub
 
     class StartAppAssessmentResponse
       attr_accessor assessment: Types::AppAssessment
+      SENSITIVE: []
+    end
+
+    class StartMetricsExportRequest
+      attr_accessor bucket_name: ::String
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class StartMetricsExportResponse
+      attr_accessor metrics_export_id: ::String
+      attr_accessor status: ("Pending" | "InProgress" | "Failed" | "Success")
       SENSITIVE: []
     end
 

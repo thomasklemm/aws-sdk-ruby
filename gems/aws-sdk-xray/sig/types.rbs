@@ -55,6 +55,14 @@ module Aws::XRay
       SENSITIVE: []
     end
 
+    class CancelTraceRetrievalRequest
+      attr_accessor retrieval_token: ::String
+      SENSITIVE: []
+    end
+
+    class CancelTraceRetrievalResult < Aws::EmptyStructure
+    end
+
     class CreateGroupRequest
       attr_accessor group_name: ::String
       attr_accessor filter_expression: ::String
@@ -231,6 +239,17 @@ module Aws::XRay
       SENSITIVE: []
     end
 
+    class GetIndexingRulesRequest
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetIndexingRulesResult
+      attr_accessor indexing_rules: ::Array[Types::IndexingRule]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class GetInsightEventsRequest
       attr_accessor insight_id: ::String
       attr_accessor max_results: ::Integer
@@ -286,6 +305,19 @@ module Aws::XRay
 
     class GetInsightSummariesResult
       attr_accessor insight_summaries: ::Array[Types::InsightSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetRetrievedTracesGraphRequest
+      attr_accessor retrieval_token: ::String
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetRetrievedTracesGraphResult
+      attr_accessor retrieval_status: ("SCHEDULED" | "RUNNING" | "COMPLETE" | "FAILED" | "CANCELLED" | "TIMEOUT")
+      attr_accessor services: ::Array[Types::RetrievedService]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -373,6 +405,15 @@ module Aws::XRay
       SENSITIVE: []
     end
 
+    class GetTraceSegmentDestinationRequest < Aws::EmptyStructure
+    end
+
+    class GetTraceSegmentDestinationResult
+      attr_accessor destination: ("XRay" | "CloudWatchLogs")
+      attr_accessor status: ("PENDING" | "ACTIVE")
+      SENSITIVE: []
+    end
+
     class GetTraceSummariesRequest
       attr_accessor start_time: ::Time
       attr_accessor end_time: ::Time
@@ -389,6 +430,13 @@ module Aws::XRay
       attr_accessor approximate_time: ::Time
       attr_accessor traces_processed_count: ::Integer
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GraphLink
+      attr_accessor reference_type: ::String
+      attr_accessor source_trace_id: ::String
+      attr_accessor destination_trace_ids: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -421,6 +469,35 @@ module Aws::XRay
       attr_accessor user_agent: ::String
       attr_accessor client_ip: ::String
       SENSITIVE: []
+    end
+
+    class IndexingRule
+      attr_accessor name: ::String
+      attr_accessor modified_at: ::Time
+      attr_accessor rule: Types::IndexingRuleValue
+      SENSITIVE: []
+    end
+
+    class IndexingRuleValue
+      attr_accessor probabilistic: Types::ProbabilisticRuleValue
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Probabilistic < IndexingRuleValue
+      end
+      class Unknown < IndexingRuleValue
+      end
+    end
+
+    class IndexingRuleValueUpdate
+      attr_accessor probabilistic: Types::ProbabilisticRuleValueUpdate
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Probabilistic < IndexingRuleValueUpdate
+      end
+      class Unknown < IndexingRuleValueUpdate
+      end
     end
 
     class Insight
@@ -512,6 +589,21 @@ module Aws::XRay
       SENSITIVE: []
     end
 
+    class ListRetrievedTracesRequest
+      attr_accessor retrieval_token: ::String
+      attr_accessor trace_format: ("XRAY" | "OTEL")
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListRetrievedTracesResult
+      attr_accessor retrieval_status: ("SCHEDULED" | "RUNNING" | "COMPLETE" | "FAILED" | "CANCELLED" | "TIMEOUT")
+      attr_accessor trace_format: ("XRAY" | "OTEL")
+      attr_accessor traces: ::Array[Types::RetrievedTrace]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListTagsForResourceRequest
       attr_accessor resource_arn: ::String
       attr_accessor next_token: ::String
@@ -541,6 +633,17 @@ module Aws::XRay
 
     class PolicySizeLimitExceededException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ProbabilisticRuleValue
+      attr_accessor desired_sampling_percentage: ::Float
+      attr_accessor actual_sampling_percentage: ::Float
+      SENSITIVE: []
+    end
+
+    class ProbabilisticRuleValueUpdate
+      attr_accessor desired_sampling_percentage: ::Float
       SENSITIVE: []
     end
 
@@ -635,6 +738,19 @@ module Aws::XRay
       attr_accessor account_id: ::String
       attr_accessor entity_path: ::Array[Types::ResponseTimeRootCauseEntity]
       attr_accessor inferred: bool
+      SENSITIVE: []
+    end
+
+    class RetrievedService
+      attr_accessor service: Types::Service
+      attr_accessor links: ::Array[Types::GraphLink]
+      SENSITIVE: []
+    end
+
+    class RetrievedTrace
+      attr_accessor id: ::String
+      attr_accessor duration: ::Float
+      attr_accessor spans: ::Array[Types::Span]
       SENSITIVE: []
     end
 
@@ -763,6 +879,24 @@ module Aws::XRay
       SENSITIVE: []
     end
 
+    class Span
+      attr_accessor id: ::String
+      attr_accessor document: ::String
+      SENSITIVE: []
+    end
+
+    class StartTraceRetrievalRequest
+      attr_accessor trace_ids: ::Array[::String]
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      SENSITIVE: []
+    end
+
+    class StartTraceRetrievalResult
+      attr_accessor retrieval_token: ::String
+      SENSITIVE: []
+    end
+
     class Tag
       attr_accessor key: ::String
       attr_accessor value: ::String
@@ -883,6 +1017,17 @@ module Aws::XRay
       SENSITIVE: []
     end
 
+    class UpdateIndexingRuleRequest
+      attr_accessor name: ::String
+      attr_accessor rule: Types::IndexingRuleValueUpdate
+      SENSITIVE: []
+    end
+
+    class UpdateIndexingRuleResult
+      attr_accessor indexing_rule: Types::IndexingRule
+      SENSITIVE: []
+    end
+
     class UpdateSamplingRuleRequest
       attr_accessor sampling_rule_update: Types::SamplingRuleUpdate
       SENSITIVE: []
@@ -890,6 +1035,17 @@ module Aws::XRay
 
     class UpdateSamplingRuleResult
       attr_accessor sampling_rule_record: Types::SamplingRuleRecord
+      SENSITIVE: []
+    end
+
+    class UpdateTraceSegmentDestinationRequest
+      attr_accessor destination: ("XRay" | "CloudWatchLogs")
+      SENSITIVE: []
+    end
+
+    class UpdateTraceSegmentDestinationResult
+      attr_accessor destination: ("XRay" | "CloudWatchLogs")
+      attr_accessor status: ("PENDING" | "ACTIVE")
       SENSITIVE: []
     end
 

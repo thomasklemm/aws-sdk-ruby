@@ -274,7 +274,7 @@ module Aws::AppSync
       attr_accessor api_id: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
-      attr_accessor type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE")
+      attr_accessor type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE" | "AMAZON_BEDROCK_RUNTIME")
       attr_accessor service_role_arn: ::String
       attr_accessor dynamodb_config: Types::DynamodbDataSourceConfig
       attr_accessor lambda_config: Types::LambdaDataSourceConfig
@@ -389,7 +389,7 @@ module Aws::AppSync
       attr_accessor data_source_arn: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
-      attr_accessor type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE")
+      attr_accessor type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE" | "AMAZON_BEDROCK_RUNTIME")
       attr_accessor service_role_arn: ::String
       attr_accessor dynamodb_config: Types::DynamodbDataSourceConfig
       attr_accessor lambda_config: Types::LambdaDataSourceConfig
@@ -1327,7 +1327,7 @@ module Aws::AppSync
       attr_accessor api_id: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
-      attr_accessor type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE")
+      attr_accessor type: ("AWS_LAMBDA" | "AMAZON_DYNAMODB" | "AMAZON_ELASTICSEARCH" | "NONE" | "HTTP" | "RELATIONAL_DATABASE" | "AMAZON_OPENSEARCH_SERVICE" | "AMAZON_EVENTBRIDGE" | "AMAZON_BEDROCK_RUNTIME")
       attr_accessor service_role_arn: ::String
       attr_accessor dynamodb_config: Types::DynamodbDataSourceConfig
       attr_accessor lambda_config: Types::LambdaDataSourceConfig

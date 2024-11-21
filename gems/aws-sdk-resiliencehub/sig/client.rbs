@@ -473,6 +473,19 @@ module Aws
                                                               ) -> _DescribeDraftAppVersionResourcesImportStatusResponseSuccess
                                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeDraftAppVersionResourcesImportStatusResponseSuccess
 
+      interface _DescribeMetricsExportResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeMetricsExportResponse]
+        def error_message: () -> ::String
+        def export_location: () -> Types::S3Location
+        def metrics_export_id: () -> ::String
+        def status: () -> ("Pending" | "InProgress" | "Failed" | "Success")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ResilienceHub/Client.html#describe_metrics_export-instance_method
+      def describe_metrics_export: (
+                                     metrics_export_id: ::String
+                                   ) -> _DescribeMetricsExportResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeMetricsExportResponseSuccess
+
       interface _DescribeResiliencyPolicyResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeResiliencyPolicyResponse]
         def policy: () -> Types::ResiliencyPolicy
@@ -700,6 +713,38 @@ module Aws
                      ) -> _ListAppsResponseSuccess
                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAppsResponseSuccess
 
+      interface _ListMetricsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListMetricsResponse]
+        def next_token: () -> ::String
+        def rows: () -> ::Array[::Array[::String]]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ResilienceHub/Client.html#list_metrics-instance_method
+      def list_metrics: (
+                          ?conditions: Array[
+                            {
+                              field: ::String,
+                              operator: ("Equals" | "NotEquals" | "GreaterThen" | "GreaterOrEquals" | "LessThen" | "LessOrEquals"),
+                              value: ::String?
+                            },
+                          ],
+                          ?data_source: ::String,
+                          ?fields: Array[
+                            {
+                              aggregation: ("Min" | "Max" | "Sum" | "Avg" | "Count")?,
+                              name: ::String
+                            },
+                          ],
+                          ?max_results: ::Integer,
+                          ?next_token: ::String,
+                          ?sorts: Array[
+                            {
+                              ascending: bool?,
+                              field: ::String
+                            },
+                          ]
+                        ) -> _ListMetricsResponseSuccess
+                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMetricsResponseSuccess
+
       interface _ListRecommendationTemplatesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListRecommendationTemplatesResponse]
         def next_token: () -> ::String
@@ -894,6 +939,18 @@ module Aws
                                   ?tags: Hash[::String, ::String]
                                 ) -> _StartAppAssessmentResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartAppAssessmentResponseSuccess
+
+      interface _StartMetricsExportResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartMetricsExportResponse]
+        def metrics_export_id: () -> ::String
+        def status: () -> ("Pending" | "InProgress" | "Failed" | "Success")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ResilienceHub/Client.html#start_metrics_export-instance_method
+      def start_metrics_export: (
+                                  ?bucket_name: ::String,
+                                  ?client_token: ::String
+                                ) -> _StartMetricsExportResponseSuccess
+                              | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartMetricsExportResponseSuccess
 
       interface _StartResourceGroupingRecommendationTaskResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartResourceGroupingRecommendationTaskResponse]

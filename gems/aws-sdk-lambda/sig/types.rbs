@@ -181,6 +181,7 @@ module Aws::Lambda
       attr_accessor scaling_config: Types::ScalingConfig
       attr_accessor document_db_event_source_config: Types::DocumentDBEventSourceConfig
       attr_accessor kms_key_arn: ::String
+      attr_accessor metrics_config: Types::EventSourceMappingMetricsConfig
       SENSITIVE: []
     end
 
@@ -410,6 +411,12 @@ module Aws::Lambda
       attr_accessor kms_key_arn: ::String
       attr_accessor filter_criteria_error: Types::FilterCriteriaError
       attr_accessor event_source_mapping_arn: ::String
+      attr_accessor metrics_config: Types::EventSourceMappingMetricsConfig
+      SENSITIVE: []
+    end
+
+    class EventSourceMappingMetricsConfig
+      attr_accessor metrics: ::Array[("EventCount")]
       SENSITIVE: []
     end
 
@@ -1401,6 +1408,7 @@ module Aws::Lambda
       attr_accessor scaling_config: Types::ScalingConfig
       attr_accessor document_db_event_source_config: Types::DocumentDBEventSourceConfig
       attr_accessor kms_key_arn: ::String
+      attr_accessor metrics_config: Types::EventSourceMappingMetricsConfig
       SENSITIVE: []
     end
 

@@ -350,6 +350,23 @@ module Aws
                                          ) -> _GetApproximateUsageRecordsResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetApproximateUsageRecordsResponseSuccess
 
+      interface _GetCommitmentPurchaseAnalysisResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCommitmentPurchaseAnalysisResponse]
+        def estimated_completion_time: () -> ::String
+        def analysis_completion_time: () -> ::String
+        def analysis_started_time: () -> ::String
+        def analysis_id: () -> ::String
+        def analysis_status: () -> ("SUCCEEDED" | "PROCESSING" | "FAILED")
+        def error_code: () -> ("NO_USAGE_FOUND" | "INTERNAL_FAILURE" | "INVALID_SAVINGS_PLANS_TO_ADD" | "INVALID_SAVINGS_PLANS_TO_EXCLUDE" | "INVALID_ACCOUNT_ID")
+        def analysis_details: () -> Types::AnalysisDetails
+        def commitment_purchase_analysis_configuration: () -> Types::CommitmentPurchaseAnalysisConfiguration
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CostExplorer/Client.html#get_commitment_purchase_analysis-instance_method
+      def get_commitment_purchase_analysis: (
+                                              analysis_id: ::String
+                                            ) -> _GetCommitmentPurchaseAnalysisResponseSuccess
+                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCommitmentPurchaseAnalysisResponseSuccess
+
       interface _GetCostAndUsageResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetCostAndUsageResponse]
         def next_page_token: () -> ::String
@@ -1074,6 +1091,20 @@ module Aws
                               ) -> _GetUsageForecastResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetUsageForecastResponseSuccess
 
+      interface _ListCommitmentPurchaseAnalysesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCommitmentPurchaseAnalysesResponse]
+        def analysis_summary_list: () -> ::Array[Types::AnalysisSummary]
+        def next_page_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CostExplorer/Client.html#list_commitment_purchase_analyses-instance_method
+      def list_commitment_purchase_analyses: (
+                                               ?analysis_status: ("SUCCEEDED" | "PROCESSING" | "FAILED"),
+                                               ?next_page_token: ::String,
+                                               ?page_size: ::Integer,
+                                               ?analysis_ids: Array[::String]
+                                             ) -> _ListCommitmentPurchaseAnalysesResponseSuccess
+                                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCommitmentPurchaseAnalysesResponseSuccess
+
       interface _ListCostAllocationTagBackfillHistoryResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListCostAllocationTagBackfillHistoryResponse]
         def backfill_requests: () -> ::Array[Types::CostAllocationTagBackfillRequest]
@@ -1148,6 +1179,40 @@ module Aws
                                       feedback: ("YES" | "NO" | "PLANNED_ACTIVITY")
                                     ) -> _ProvideAnomalyFeedbackResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ProvideAnomalyFeedbackResponseSuccess
+
+      interface _StartCommitmentPurchaseAnalysisResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartCommitmentPurchaseAnalysisResponse]
+        def analysis_id: () -> ::String
+        def analysis_started_time: () -> ::String
+        def estimated_completion_time: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CostExplorer/Client.html#start_commitment_purchase_analysis-instance_method
+      def start_commitment_purchase_analysis: (
+                                                commitment_purchase_analysis_configuration: {
+                                                  savings_plans_purchase_analysis_configuration: {
+                                                    account_scope: ("PAYER" | "LINKED")?,
+                                                    account_id: ::String?,
+                                                    analysis_type: ("MAX_SAVINGS" | "CUSTOM_COMMITMENT"),
+                                                    savings_plans_to_add: Array[
+                                                      {
+                                                        payment_option: ("NO_UPFRONT" | "PARTIAL_UPFRONT" | "ALL_UPFRONT" | "LIGHT_UTILIZATION" | "MEDIUM_UTILIZATION" | "HEAVY_UTILIZATION")?,
+                                                        savings_plans_type: ("COMPUTE_SP" | "EC2_INSTANCE_SP" | "SAGEMAKER_SP")?,
+                                                        region: ::String?,
+                                                        instance_family: ::String?,
+                                                        term_in_years: ("ONE_YEAR" | "THREE_YEARS")?,
+                                                        savings_plans_commitment: ::Float?,
+                                                        offering_id: ::String?
+                                                      },
+                                                    ],
+                                                    savings_plans_to_exclude: Array[::String]?,
+                                                    look_back_time_period: {
+                                                      start: ::String,
+                                                      end: ::String
+                                                    }
+                                                  }?
+                                                }
+                                              ) -> _StartCommitmentPurchaseAnalysisResponseSuccess
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartCommitmentPurchaseAnalysisResponseSuccess
 
       interface _StartCostAllocationTagBackfillResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartCostAllocationTagBackfillResponse]

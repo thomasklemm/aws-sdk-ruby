@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+1.1012.0 (2024-11-21)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::NotificationsContacts`.
+
+* Feature - Added support for enumerating regions for  `Aws::Notifications`.
+
 1.1011.0 (2024-11-20)
 ------------------
 

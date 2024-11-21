@@ -58,6 +58,8 @@ module Aws::EC2
     ActivityStatus = Shapes::StringShape.new(name: 'ActivityStatus')
     AddIpamOperatingRegion = Shapes::StructureShape.new(name: 'AddIpamOperatingRegion')
     AddIpamOperatingRegionSet = Shapes::ListShape.new(name: 'AddIpamOperatingRegionSet')
+    AddIpamOrganizationalUnitExclusion = Shapes::StructureShape.new(name: 'AddIpamOrganizationalUnitExclusion')
+    AddIpamOrganizationalUnitExclusionSet = Shapes::ListShape.new(name: 'AddIpamOrganizationalUnitExclusionSet')
     AddPrefixListEntries = Shapes::ListShape.new(name: 'AddPrefixListEntries')
     AddPrefixListEntry = Shapes::StructureShape.new(name: 'AddPrefixListEntry')
     AddedPrincipal = Shapes::StructureShape.new(name: 'AddedPrincipal')
@@ -286,12 +288,20 @@ module Aws::EC2
     CancelledSpotInstanceRequestList = Shapes::ListShape.new(name: 'CancelledSpotInstanceRequestList')
     CapacityAllocation = Shapes::StructureShape.new(name: 'CapacityAllocation')
     CapacityAllocations = Shapes::ListShape.new(name: 'CapacityAllocations')
+    CapacityBlockExtension = Shapes::StructureShape.new(name: 'CapacityBlockExtension')
+    CapacityBlockExtensionOffering = Shapes::StructureShape.new(name: 'CapacityBlockExtensionOffering')
+    CapacityBlockExtensionOfferingSet = Shapes::ListShape.new(name: 'CapacityBlockExtensionOfferingSet')
+    CapacityBlockExtensionSet = Shapes::ListShape.new(name: 'CapacityBlockExtensionSet')
+    CapacityBlockExtensionStatus = Shapes::StringShape.new(name: 'CapacityBlockExtensionStatus')
     CapacityBlockOffering = Shapes::StructureShape.new(name: 'CapacityBlockOffering')
     CapacityBlockOfferingSet = Shapes::ListShape.new(name: 'CapacityBlockOfferingSet')
     CapacityReservation = Shapes::StructureShape.new(name: 'CapacityReservation')
     CapacityReservationBillingRequest = Shapes::StructureShape.new(name: 'CapacityReservationBillingRequest')
     CapacityReservationBillingRequestSet = Shapes::ListShape.new(name: 'CapacityReservationBillingRequestSet')
     CapacityReservationBillingRequestStatus = Shapes::StringShape.new(name: 'CapacityReservationBillingRequestStatus')
+    CapacityReservationCommitmentDuration = Shapes::IntegerShape.new(name: 'CapacityReservationCommitmentDuration')
+    CapacityReservationCommitmentInfo = Shapes::StructureShape.new(name: 'CapacityReservationCommitmentInfo')
+    CapacityReservationDeliveryPreference = Shapes::StringShape.new(name: 'CapacityReservationDeliveryPreference')
     CapacityReservationFleet = Shapes::StructureShape.new(name: 'CapacityReservationFleet')
     CapacityReservationFleetCancellationState = Shapes::StructureShape.new(name: 'CapacityReservationFleetCancellationState')
     CapacityReservationFleetCancellationStateSet = Shapes::ListShape.new(name: 'CapacityReservationFleetCancellationStateSet')
@@ -809,6 +819,11 @@ module Aws::EC2
     DescribeByoipCidrsMaxResults = Shapes::IntegerShape.new(name: 'DescribeByoipCidrsMaxResults')
     DescribeByoipCidrsRequest = Shapes::StructureShape.new(name: 'DescribeByoipCidrsRequest')
     DescribeByoipCidrsResult = Shapes::StructureShape.new(name: 'DescribeByoipCidrsResult')
+    DescribeCapacityBlockExtensionHistoryRequest = Shapes::StructureShape.new(name: 'DescribeCapacityBlockExtensionHistoryRequest')
+    DescribeCapacityBlockExtensionHistoryResult = Shapes::StructureShape.new(name: 'DescribeCapacityBlockExtensionHistoryResult')
+    DescribeCapacityBlockExtensionOfferingsMaxResults = Shapes::IntegerShape.new(name: 'DescribeCapacityBlockExtensionOfferingsMaxResults')
+    DescribeCapacityBlockExtensionOfferingsRequest = Shapes::StructureShape.new(name: 'DescribeCapacityBlockExtensionOfferingsRequest')
+    DescribeCapacityBlockExtensionOfferingsResult = Shapes::StructureShape.new(name: 'DescribeCapacityBlockExtensionOfferingsResult')
     DescribeCapacityBlockOfferingsMaxResults = Shapes::IntegerShape.new(name: 'DescribeCapacityBlockOfferingsMaxResults')
     DescribeCapacityBlockOfferingsRequest = Shapes::StructureShape.new(name: 'DescribeCapacityBlockOfferingsRequest')
     DescribeCapacityBlockOfferingsResult = Shapes::StructureShape.new(name: 'DescribeCapacityBlockOfferingsResult')
@@ -889,6 +904,7 @@ module Aws::EC2
     DescribeFpgaImagesMaxResults = Shapes::IntegerShape.new(name: 'DescribeFpgaImagesMaxResults')
     DescribeFpgaImagesRequest = Shapes::StructureShape.new(name: 'DescribeFpgaImagesRequest')
     DescribeFpgaImagesResult = Shapes::StructureShape.new(name: 'DescribeFpgaImagesResult')
+    DescribeFutureCapacityMaxResults = Shapes::IntegerShape.new(name: 'DescribeFutureCapacityMaxResults')
     DescribeHostReservationOfferingsRequest = Shapes::StructureShape.new(name: 'DescribeHostReservationOfferingsRequest')
     DescribeHostReservationOfferingsResult = Shapes::StructureShape.new(name: 'DescribeHostReservationOfferingsResult')
     DescribeHostReservationsMaxResults = Shapes::IntegerShape.new(name: 'DescribeHostReservationsMaxResults')
@@ -1880,6 +1896,8 @@ module Aws::EC2
     IpamNetworkInterfaceAttachmentStatus = Shapes::StringShape.new(name: 'IpamNetworkInterfaceAttachmentStatus')
     IpamOperatingRegion = Shapes::StructureShape.new(name: 'IpamOperatingRegion')
     IpamOperatingRegionSet = Shapes::ListShape.new(name: 'IpamOperatingRegionSet')
+    IpamOrganizationalUnitExclusion = Shapes::StructureShape.new(name: 'IpamOrganizationalUnitExclusion')
+    IpamOrganizationalUnitExclusionSet = Shapes::ListShape.new(name: 'IpamOrganizationalUnitExclusionSet')
     IpamOverlapStatus = Shapes::StringShape.new(name: 'IpamOverlapStatus')
     IpamPool = Shapes::StructureShape.new(name: 'IpamPool')
     IpamPoolAllocation = Shapes::StructureShape.new(name: 'IpamPoolAllocation')
@@ -2540,6 +2558,8 @@ module Aws::EC2
     PublicIpv4PoolRangeSet = Shapes::ListShape.new(name: 'PublicIpv4PoolRangeSet')
     PublicIpv4PoolSet = Shapes::ListShape.new(name: 'PublicIpv4PoolSet')
     Purchase = Shapes::StructureShape.new(name: 'Purchase')
+    PurchaseCapacityBlockExtensionRequest = Shapes::StructureShape.new(name: 'PurchaseCapacityBlockExtensionRequest')
+    PurchaseCapacityBlockExtensionResult = Shapes::StructureShape.new(name: 'PurchaseCapacityBlockExtensionResult')
     PurchaseCapacityBlockRequest = Shapes::StructureShape.new(name: 'PurchaseCapacityBlockRequest')
     PurchaseCapacityBlockResult = Shapes::StructureShape.new(name: 'PurchaseCapacityBlockResult')
     PurchaseHostReservationRequest = Shapes::StructureShape.new(name: 'PurchaseHostReservationRequest')
@@ -2592,6 +2612,8 @@ module Aws::EC2
     ReleaseIpamPoolAllocationResult = Shapes::StructureShape.new(name: 'ReleaseIpamPoolAllocationResult')
     RemoveIpamOperatingRegion = Shapes::StructureShape.new(name: 'RemoveIpamOperatingRegion')
     RemoveIpamOperatingRegionSet = Shapes::ListShape.new(name: 'RemoveIpamOperatingRegionSet')
+    RemoveIpamOrganizationalUnitExclusion = Shapes::StructureShape.new(name: 'RemoveIpamOrganizationalUnitExclusion')
+    RemoveIpamOrganizationalUnitExclusionSet = Shapes::ListShape.new(name: 'RemoveIpamOrganizationalUnitExclusionSet')
     RemovePrefixListEntries = Shapes::ListShape.new(name: 'RemovePrefixListEntries')
     RemovePrefixListEntry = Shapes::StructureShape.new(name: 'RemovePrefixListEntry')
     ReplaceIamInstanceProfileAssociationRequest = Shapes::StructureShape.new(name: 'ReplaceIamInstanceProfileAssociationRequest')
@@ -3428,6 +3450,11 @@ module Aws::EC2
 
     AddIpamOperatingRegionSet.member = Shapes::ShapeRef.new(shape: AddIpamOperatingRegion)
 
+    AddIpamOrganizationalUnitExclusion.add_member(:organizations_entity_path, Shapes::ShapeRef.new(shape: String, location_name: "OrganizationsEntityPath"))
+    AddIpamOrganizationalUnitExclusion.struct_class = Types::AddIpamOrganizationalUnitExclusion
+
+    AddIpamOrganizationalUnitExclusionSet.member = Shapes::ShapeRef.new(shape: AddIpamOrganizationalUnitExclusion)
+
     AddPrefixListEntries.member = Shapes::ShapeRef.new(shape: AddPrefixListEntry)
 
     AddPrefixListEntry.add_member(:cidr, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Cidr"))
@@ -4219,6 +4246,39 @@ module Aws::EC2
 
     CapacityAllocations.member = Shapes::ShapeRef.new(shape: CapacityAllocation, location_name: "item")
 
+    CapacityBlockExtension.add_member(:capacity_reservation_id, Shapes::ShapeRef.new(shape: CapacityReservationId, location_name: "capacityReservationId"))
+    CapacityBlockExtension.add_member(:instance_type, Shapes::ShapeRef.new(shape: String, location_name: "instanceType"))
+    CapacityBlockExtension.add_member(:instance_count, Shapes::ShapeRef.new(shape: Integer, location_name: "instanceCount"))
+    CapacityBlockExtension.add_member(:availability_zone, Shapes::ShapeRef.new(shape: AvailabilityZoneName, location_name: "availabilityZone"))
+    CapacityBlockExtension.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: AvailabilityZoneId, location_name: "availabilityZoneId"))
+    CapacityBlockExtension.add_member(:capacity_block_extension_offering_id, Shapes::ShapeRef.new(shape: OfferingId, location_name: "capacityBlockExtensionOfferingId"))
+    CapacityBlockExtension.add_member(:capacity_block_extension_duration_hours, Shapes::ShapeRef.new(shape: Integer, location_name: "capacityBlockExtensionDurationHours"))
+    CapacityBlockExtension.add_member(:capacity_block_extension_status, Shapes::ShapeRef.new(shape: CapacityBlockExtensionStatus, location_name: "capacityBlockExtensionStatus"))
+    CapacityBlockExtension.add_member(:capacity_block_extension_purchase_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "capacityBlockExtensionPurchaseDate"))
+    CapacityBlockExtension.add_member(:capacity_block_extension_start_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "capacityBlockExtensionStartDate"))
+    CapacityBlockExtension.add_member(:capacity_block_extension_end_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "capacityBlockExtensionEndDate"))
+    CapacityBlockExtension.add_member(:upfront_fee, Shapes::ShapeRef.new(shape: String, location_name: "upfrontFee"))
+    CapacityBlockExtension.add_member(:currency_code, Shapes::ShapeRef.new(shape: String, location_name: "currencyCode"))
+    CapacityBlockExtension.struct_class = Types::CapacityBlockExtension
+
+    CapacityBlockExtensionOffering.add_member(:capacity_block_extension_offering_id, Shapes::ShapeRef.new(shape: OfferingId, location_name: "capacityBlockExtensionOfferingId"))
+    CapacityBlockExtensionOffering.add_member(:instance_type, Shapes::ShapeRef.new(shape: String, location_name: "instanceType"))
+    CapacityBlockExtensionOffering.add_member(:instance_count, Shapes::ShapeRef.new(shape: Integer, location_name: "instanceCount"))
+    CapacityBlockExtensionOffering.add_member(:availability_zone, Shapes::ShapeRef.new(shape: AvailabilityZoneName, location_name: "availabilityZone"))
+    CapacityBlockExtensionOffering.add_member(:availability_zone_id, Shapes::ShapeRef.new(shape: AvailabilityZoneId, location_name: "availabilityZoneId"))
+    CapacityBlockExtensionOffering.add_member(:start_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "startDate"))
+    CapacityBlockExtensionOffering.add_member(:capacity_block_extension_start_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "capacityBlockExtensionStartDate"))
+    CapacityBlockExtensionOffering.add_member(:capacity_block_extension_end_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "capacityBlockExtensionEndDate"))
+    CapacityBlockExtensionOffering.add_member(:capacity_block_extension_duration_hours, Shapes::ShapeRef.new(shape: Integer, location_name: "capacityBlockExtensionDurationHours"))
+    CapacityBlockExtensionOffering.add_member(:upfront_fee, Shapes::ShapeRef.new(shape: String, location_name: "upfrontFee"))
+    CapacityBlockExtensionOffering.add_member(:currency_code, Shapes::ShapeRef.new(shape: String, location_name: "currencyCode"))
+    CapacityBlockExtensionOffering.add_member(:tenancy, Shapes::ShapeRef.new(shape: CapacityReservationTenancy, location_name: "tenancy"))
+    CapacityBlockExtensionOffering.struct_class = Types::CapacityBlockExtensionOffering
+
+    CapacityBlockExtensionOfferingSet.member = Shapes::ShapeRef.new(shape: CapacityBlockExtensionOffering, location_name: "item")
+
+    CapacityBlockExtensionSet.member = Shapes::ShapeRef.new(shape: CapacityBlockExtension, location_name: "item")
+
     CapacityBlockOffering.add_member(:capacity_block_offering_id, Shapes::ShapeRef.new(shape: OfferingId, location_name: "capacityBlockOfferingId"))
     CapacityBlockOffering.add_member(:instance_type, Shapes::ShapeRef.new(shape: String, location_name: "instanceType"))
     CapacityBlockOffering.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
@@ -4229,6 +4289,7 @@ module Aws::EC2
     CapacityBlockOffering.add_member(:upfront_fee, Shapes::ShapeRef.new(shape: String, location_name: "upfrontFee"))
     CapacityBlockOffering.add_member(:currency_code, Shapes::ShapeRef.new(shape: String, location_name: "currencyCode"))
     CapacityBlockOffering.add_member(:tenancy, Shapes::ShapeRef.new(shape: CapacityReservationTenancy, location_name: "tenancy"))
+    CapacityBlockOffering.add_member(:capacity_block_duration_minutes, Shapes::ShapeRef.new(shape: Integer, location_name: "capacityBlockDurationMinutes"))
     CapacityBlockOffering.struct_class = Types::CapacityBlockOffering
 
     CapacityBlockOfferingSet.member = Shapes::ShapeRef.new(shape: CapacityBlockOffering, location_name: "item")
@@ -4258,6 +4319,8 @@ module Aws::EC2
     CapacityReservation.add_member(:capacity_allocations, Shapes::ShapeRef.new(shape: CapacityAllocations, location_name: "capacityAllocationSet"))
     CapacityReservation.add_member(:reservation_type, Shapes::ShapeRef.new(shape: CapacityReservationType, location_name: "reservationType"))
     CapacityReservation.add_member(:unused_reservation_billing_owner_id, Shapes::ShapeRef.new(shape: AccountID, location_name: "unusedReservationBillingOwnerId"))
+    CapacityReservation.add_member(:commitment_info, Shapes::ShapeRef.new(shape: CapacityReservationCommitmentInfo, location_name: "commitmentInfo"))
+    CapacityReservation.add_member(:delivery_preference, Shapes::ShapeRef.new(shape: CapacityReservationDeliveryPreference, location_name: "deliveryPreference"))
     CapacityReservation.struct_class = Types::CapacityReservation
 
     CapacityReservationBillingRequest.add_member(:capacity_reservation_id, Shapes::ShapeRef.new(shape: String, location_name: "capacityReservationId"))
@@ -4270,6 +4333,10 @@ module Aws::EC2
     CapacityReservationBillingRequest.struct_class = Types::CapacityReservationBillingRequest
 
     CapacityReservationBillingRequestSet.member = Shapes::ShapeRef.new(shape: CapacityReservationBillingRequest, location_name: "item")
+
+    CapacityReservationCommitmentInfo.add_member(:committed_instance_count, Shapes::ShapeRef.new(shape: Integer, location_name: "committedInstanceCount"))
+    CapacityReservationCommitmentInfo.add_member(:commitment_end_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "commitmentEndDate"))
+    CapacityReservationCommitmentInfo.struct_class = Types::CapacityReservationCommitmentInfo
 
     CapacityReservationFleet.add_member(:capacity_reservation_fleet_id, Shapes::ShapeRef.new(shape: CapacityReservationFleetId, location_name: "capacityReservationFleetId"))
     CapacityReservationFleet.add_member(:capacity_reservation_fleet_arn, Shapes::ShapeRef.new(shape: String, location_name: "capacityReservationFleetArn"))
@@ -4714,6 +4781,9 @@ module Aws::EC2
     CreateCapacityReservationRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateCapacityReservationRequest.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: OutpostArn, location_name: "OutpostArn"))
     CreateCapacityReservationRequest.add_member(:placement_group_arn, Shapes::ShapeRef.new(shape: PlacementGroupArn, location_name: "PlacementGroupArn"))
+    CreateCapacityReservationRequest.add_member(:start_date, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "StartDate"))
+    CreateCapacityReservationRequest.add_member(:commitment_duration, Shapes::ShapeRef.new(shape: CapacityReservationCommitmentDuration, location_name: "CommitmentDuration"))
+    CreateCapacityReservationRequest.add_member(:delivery_preference, Shapes::ShapeRef.new(shape: CapacityReservationDeliveryPreference, location_name: "DeliveryPreference"))
     CreateCapacityReservationRequest.struct_class = Types::CreateCapacityReservationRequest
 
     CreateCapacityReservationResult.add_member(:capacity_reservation, Shapes::ShapeRef.new(shape: CapacityReservation, location_name: "capacityReservation"))
@@ -6495,6 +6565,28 @@ module Aws::EC2
     DescribeByoipCidrsResult.add_member(:byoip_cidrs, Shapes::ShapeRef.new(shape: ByoipCidrSet, location_name: "byoipCidrSet"))
     DescribeByoipCidrsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     DescribeByoipCidrsResult.struct_class = Types::DescribeByoipCidrsResult
+
+    DescribeCapacityBlockExtensionHistoryRequest.add_member(:capacity_reservation_ids, Shapes::ShapeRef.new(shape: CapacityReservationIdSet, location_name: "CapacityReservationId"))
+    DescribeCapacityBlockExtensionHistoryRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeCapacityBlockExtensionHistoryRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DescribeFutureCapacityMaxResults, location_name: "MaxResults"))
+    DescribeCapacityBlockExtensionHistoryRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
+    DescribeCapacityBlockExtensionHistoryRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeCapacityBlockExtensionHistoryRequest.struct_class = Types::DescribeCapacityBlockExtensionHistoryRequest
+
+    DescribeCapacityBlockExtensionHistoryResult.add_member(:capacity_block_extensions, Shapes::ShapeRef.new(shape: CapacityBlockExtensionSet, location_name: "capacityBlockExtensionSet"))
+    DescribeCapacityBlockExtensionHistoryResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeCapacityBlockExtensionHistoryResult.struct_class = Types::DescribeCapacityBlockExtensionHistoryResult
+
+    DescribeCapacityBlockExtensionOfferingsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    DescribeCapacityBlockExtensionOfferingsRequest.add_member(:capacity_block_extension_duration_hours, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "CapacityBlockExtensionDurationHours"))
+    DescribeCapacityBlockExtensionOfferingsRequest.add_member(:capacity_reservation_id, Shapes::ShapeRef.new(shape: CapacityReservationId, required: true, location_name: "CapacityReservationId"))
+    DescribeCapacityBlockExtensionOfferingsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeCapacityBlockExtensionOfferingsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DescribeCapacityBlockExtensionOfferingsMaxResults, location_name: "MaxResults"))
+    DescribeCapacityBlockExtensionOfferingsRequest.struct_class = Types::DescribeCapacityBlockExtensionOfferingsRequest
+
+    DescribeCapacityBlockExtensionOfferingsResult.add_member(:capacity_block_extension_offerings, Shapes::ShapeRef.new(shape: CapacityBlockExtensionOfferingSet, location_name: "capacityBlockExtensionOfferingSet"))
+    DescribeCapacityBlockExtensionOfferingsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    DescribeCapacityBlockExtensionOfferingsResult.struct_class = Types::DescribeCapacityBlockExtensionOfferingsResult
 
     DescribeCapacityBlockOfferingsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     DescribeCapacityBlockOfferingsRequest.add_member(:instance_type, Shapes::ShapeRef.new(shape: String, location_name: "InstanceType"))
@@ -10831,6 +10923,7 @@ module Aws::EC2
     IpamDiscoveredAccount.add_member(:failure_reason, Shapes::ShapeRef.new(shape: IpamDiscoveryFailureReason, location_name: "failureReason"))
     IpamDiscoveredAccount.add_member(:last_attempted_discovery_time, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "lastAttemptedDiscoveryTime"))
     IpamDiscoveredAccount.add_member(:last_successful_discovery_time, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "lastSuccessfulDiscoveryTime"))
+    IpamDiscoveredAccount.add_member(:organizational_unit_id, Shapes::ShapeRef.new(shape: String, location_name: "organizationalUnitId"))
     IpamDiscoveredAccount.struct_class = Types::IpamDiscoveredAccount
 
     IpamDiscoveredAccountSet.member = Shapes::ShapeRef.new(shape: IpamDiscoveredAccount, location_name: "item")
@@ -10899,6 +10992,11 @@ module Aws::EC2
     IpamOperatingRegion.struct_class = Types::IpamOperatingRegion
 
     IpamOperatingRegionSet.member = Shapes::ShapeRef.new(shape: IpamOperatingRegion, location_name: "item")
+
+    IpamOrganizationalUnitExclusion.add_member(:organizations_entity_path, Shapes::ShapeRef.new(shape: String, location_name: "organizationsEntityPath"))
+    IpamOrganizationalUnitExclusion.struct_class = Types::IpamOrganizationalUnitExclusion
+
+    IpamOrganizationalUnitExclusionSet.member = Shapes::ShapeRef.new(shape: IpamOrganizationalUnitExclusion, location_name: "item")
 
     IpamPool.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
     IpamPool.add_member(:ipam_pool_id, Shapes::ShapeRef.new(shape: IpamPoolId, location_name: "ipamPoolId"))
@@ -11012,6 +11110,7 @@ module Aws::EC2
     IpamResourceDiscovery.add_member(:is_default, Shapes::ShapeRef.new(shape: Boolean, location_name: "isDefault"))
     IpamResourceDiscovery.add_member(:state, Shapes::ShapeRef.new(shape: IpamResourceDiscoveryState, location_name: "state"))
     IpamResourceDiscovery.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    IpamResourceDiscovery.add_member(:organizational_unit_exclusions, Shapes::ShapeRef.new(shape: IpamOrganizationalUnitExclusionSet, location_name: "organizationalUnitExclusionSet"))
     IpamResourceDiscovery.struct_class = Types::IpamResourceDiscovery
 
     IpamResourceDiscoveryAssociation.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
@@ -12007,6 +12106,8 @@ module Aws::EC2
     ModifyIpamResourceDiscoveryRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     ModifyIpamResourceDiscoveryRequest.add_member(:add_operating_regions, Shapes::ShapeRef.new(shape: AddIpamOperatingRegionSet, location_name: "AddOperatingRegion"))
     ModifyIpamResourceDiscoveryRequest.add_member(:remove_operating_regions, Shapes::ShapeRef.new(shape: RemoveIpamOperatingRegionSet, location_name: "RemoveOperatingRegion"))
+    ModifyIpamResourceDiscoveryRequest.add_member(:add_organizational_unit_exclusions, Shapes::ShapeRef.new(shape: AddIpamOrganizationalUnitExclusionSet, location_name: "AddOrganizationalUnitExclusion"))
+    ModifyIpamResourceDiscoveryRequest.add_member(:remove_organizational_unit_exclusions, Shapes::ShapeRef.new(shape: RemoveIpamOrganizationalUnitExclusionSet, location_name: "RemoveOrganizationalUnitExclusion"))
     ModifyIpamResourceDiscoveryRequest.struct_class = Types::ModifyIpamResourceDiscoveryRequest
 
     ModifyIpamResourceDiscoveryResult.add_member(:ipam_resource_discovery, Shapes::ShapeRef.new(shape: IpamResourceDiscovery, location_name: "ipamResourceDiscovery"))
@@ -13302,6 +13403,14 @@ module Aws::EC2
     Purchase.add_member(:upfront_price, Shapes::ShapeRef.new(shape: String, location_name: "upfrontPrice"))
     Purchase.struct_class = Types::Purchase
 
+    PurchaseCapacityBlockExtensionRequest.add_member(:capacity_block_extension_offering_id, Shapes::ShapeRef.new(shape: OfferingId, required: true, location_name: "CapacityBlockExtensionOfferingId"))
+    PurchaseCapacityBlockExtensionRequest.add_member(:capacity_reservation_id, Shapes::ShapeRef.new(shape: CapacityReservationId, required: true, location_name: "CapacityReservationId"))
+    PurchaseCapacityBlockExtensionRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    PurchaseCapacityBlockExtensionRequest.struct_class = Types::PurchaseCapacityBlockExtensionRequest
+
+    PurchaseCapacityBlockExtensionResult.add_member(:capacity_block_extensions, Shapes::ShapeRef.new(shape: CapacityBlockExtensionSet, location_name: "capacityBlockExtensionSet"))
+    PurchaseCapacityBlockExtensionResult.struct_class = Types::PurchaseCapacityBlockExtensionResult
+
     PurchaseCapacityBlockRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     PurchaseCapacityBlockRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     PurchaseCapacityBlockRequest.add_member(:capacity_block_offering_id, Shapes::ShapeRef.new(shape: OfferingId, required: true, location_name: "CapacityBlockOfferingId"))
@@ -13507,6 +13616,11 @@ module Aws::EC2
     RemoveIpamOperatingRegion.struct_class = Types::RemoveIpamOperatingRegion
 
     RemoveIpamOperatingRegionSet.member = Shapes::ShapeRef.new(shape: RemoveIpamOperatingRegion)
+
+    RemoveIpamOrganizationalUnitExclusion.add_member(:organizations_entity_path, Shapes::ShapeRef.new(shape: String, location_name: "OrganizationsEntityPath"))
+    RemoveIpamOrganizationalUnitExclusion.struct_class = Types::RemoveIpamOrganizationalUnitExclusion
+
+    RemoveIpamOrganizationalUnitExclusionSet.member = Shapes::ShapeRef.new(shape: RemoveIpamOrganizationalUnitExclusion)
 
     RemovePrefixListEntries.member = Shapes::ShapeRef.new(shape: RemovePrefixListEntry)
 
@@ -18139,6 +18253,34 @@ module Aws::EC2
         )
       end)
 
+      api.add_operation(:describe_capacity_block_extension_history, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeCapacityBlockExtensionHistory"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeCapacityBlockExtensionHistoryRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeCapacityBlockExtensionHistoryResult)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:describe_capacity_block_extension_offerings, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeCapacityBlockExtensionOfferings"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeCapacityBlockExtensionOfferingsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeCapacityBlockExtensionOfferingsResult)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:describe_capacity_block_offerings, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DescribeCapacityBlockOfferings"
         o.http_method = "POST"
@@ -21710,6 +21852,14 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: PurchaseCapacityBlockRequest)
         o.output = Shapes::ShapeRef.new(shape: PurchaseCapacityBlockResult)
+      end)
+
+      api.add_operation(:purchase_capacity_block_extension, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PurchaseCapacityBlockExtension"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: PurchaseCapacityBlockExtensionRequest)
+        o.output = Shapes::ShapeRef.new(shape: PurchaseCapacityBlockExtensionResult)
       end)
 
       api.add_operation(:purchase_host_reservation, Seahorse::Model::Operation.new.tap do |o|

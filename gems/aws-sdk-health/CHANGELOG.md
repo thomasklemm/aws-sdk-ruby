@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.75.0 (2024-11-21)
+------------------
+
+* Feature - Adds metadata property to an AffectedEntity.
+
 1.74.0 (2024-10-18)
 ------------------
 

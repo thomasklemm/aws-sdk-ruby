@@ -381,6 +381,9 @@ module Aws::S3
     #         {
     #           key: "ObjectKey", # required
     #           version_id: "ObjectVersionId",
+    #           etag: "ETag",
+    #           last_modified_time: Time.now,
+    #           size: 1,
     #         },
     #       ],
     #       quiet: false,
@@ -511,6 +514,7 @@ module Aws::S3
     #     grant_read_acp: "GrantReadACP",
     #     grant_write_acp: "GrantWriteACP",
     #     key: "ObjectKey", # required
+    #     write_offset_bytes: 1,
     #     metadata: {
     #       "MetadataKey" => "MetadataValue",
     #     },
@@ -782,6 +786,16 @@ module Aws::S3
     #    </note>
     # @option options [required, String] :key
     #   Object key for which the PUT action was initiated.
+    # @option options [Integer] :write_offset_bytes
+    #   Specifies the offset for appending data to existing objects in bytes.
+    #   The offset must be equal to the size of the existing object being
+    #   appended to. If no object exists, setting this header to 0 will create
+    #   a new object.
+    #
+    #   <note markdown="1"> This functionality is only supported for objects in the Amazon S3
+    #   Express One Zone storage class in directory buckets.
+    #
+    #    </note>
     # @option options [Hash<String,String>] :metadata
     #   A map of metadata to store with the object in S3.
     # @option options [String] :server_side_encryption

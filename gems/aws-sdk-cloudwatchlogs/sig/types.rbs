@@ -15,10 +15,22 @@ module Aws::CloudWatchLogs
       attr_accessor policy_name: ::String
       attr_accessor policy_document: ::String
       attr_accessor last_updated_time: ::Integer
-      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY")
+      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY" | "FIELD_INDEX_POLICY" | "TRANSFORMER_POLICY")
       attr_accessor scope: ("ALL")
       attr_accessor selection_criteria: ::String
       attr_accessor account_id: ::String
+      SENSITIVE: []
+    end
+
+    class AddKeyEntry
+      attr_accessor key: ::String
+      attr_accessor value: ::String
+      attr_accessor overwrite_if_exists: bool
+      SENSITIVE: []
+    end
+
+    class AddKeys
+      attr_accessor entries: ::Array[Types::AddKeyEntry]
       SENSITIVE: []
     end
 
@@ -66,6 +78,14 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class CSV
+      attr_accessor quote_character: ::String
+      attr_accessor delimiter: ::String
+      attr_accessor columns: ::Array[::String]
+      attr_accessor source: ::String
+      SENSITIVE: []
+    end
+
     class CancelExportTaskRequest
       attr_accessor task_id: ::String
       SENSITIVE: []
@@ -93,6 +113,18 @@ module Aws::CloudWatchLogs
     end
 
     class ConflictException < Aws::EmptyStructure
+    end
+
+    class CopyValue
+      attr_accessor entries: ::Array[Types::CopyValueEntry]
+      SENSITIVE: []
+    end
+
+    class CopyValueEntry
+      attr_accessor source: ::String
+      attr_accessor target: ::String
+      attr_accessor overwrite_if_exists: bool
+      SENSITIVE: []
     end
 
     class CreateDeliveryRequest
@@ -161,9 +193,20 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class DateTimeConverter
+      attr_accessor source: ::String
+      attr_accessor target: ::String
+      attr_accessor target_format: ::String
+      attr_accessor match_patterns: ::Array[::String]
+      attr_accessor source_timezone: ::String
+      attr_accessor target_timezone: ::String
+      attr_accessor locale: ::String
+      SENSITIVE: []
+    end
+
     class DeleteAccountPolicyRequest
       attr_accessor policy_name: ::String
-      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY")
+      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY" | "FIELD_INDEX_POLICY" | "TRANSFORMER_POLICY")
       SENSITIVE: []
     end
 
@@ -194,6 +237,19 @@ module Aws::CloudWatchLogs
 
     class DeleteDestinationRequest
       attr_accessor destination_name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteIndexPolicyRequest
+      attr_accessor log_group_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteIndexPolicyResponse < Aws::EmptyStructure
+    end
+
+    class DeleteKeys
+      attr_accessor with_keys: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -245,6 +301,11 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class DeleteTransformerRequest
+      attr_accessor log_group_identifier: ::String
+      SENSITIVE: []
+    end
+
     class Delivery
       attr_accessor id: ::String
       attr_accessor arn: ::String
@@ -284,14 +345,16 @@ module Aws::CloudWatchLogs
     end
 
     class DescribeAccountPoliciesRequest
-      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY")
+      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY" | "FIELD_INDEX_POLICY" | "TRANSFORMER_POLICY")
       attr_accessor policy_name: ::String
       attr_accessor account_identifiers: ::Array[::String]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
     class DescribeAccountPoliciesResponse
       attr_accessor account_policies: ::Array[Types::AccountPolicy]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -370,6 +433,30 @@ module Aws::CloudWatchLogs
 
     class DescribeExportTasksResponse
       attr_accessor export_tasks: ::Array[Types::ExportTask]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeFieldIndexesRequest
+      attr_accessor log_group_identifiers: ::Array[::String]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeFieldIndexesResponse
+      attr_accessor field_indexes: ::Array[Types::FieldIndex]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeIndexPoliciesRequest
+      attr_accessor log_group_identifiers: ::Array[::String]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeIndexPoliciesResponse
+      attr_accessor index_policies: ::Array[Types::IndexPolicy]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -521,6 +608,15 @@ module Aws::CloudWatchLogs
     class ExportTaskStatus
       attr_accessor code: ("CANCELLED" | "COMPLETED" | "FAILED" | "PENDING" | "PENDING_CANCEL" | "RUNNING")
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class FieldIndex
+      attr_accessor log_group_identifier: ::String
+      attr_accessor field_index_name: ::String
+      attr_accessor last_scan_time: ::Integer
+      attr_accessor first_event_time: ::Integer
+      attr_accessor last_event_time: ::Integer
       SENSITIVE: []
     end
 
@@ -681,6 +777,34 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class GetTransformerRequest
+      attr_accessor log_group_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetTransformerResponse
+      attr_accessor log_group_identifier: ::String
+      attr_accessor creation_time: ::Integer
+      attr_accessor last_modified_time: ::Integer
+      attr_accessor transformer_config: ::Array[Types::Processor]
+      SENSITIVE: []
+    end
+
+    class Grok
+      attr_accessor source: ::String
+      attr_accessor match: ::String
+      SENSITIVE: []
+    end
+
+    class IndexPolicy
+      attr_accessor log_group_identifier: ::String
+      attr_accessor last_update_time: ::Integer
+      attr_accessor policy_document: ::String
+      attr_accessor policy_name: ::String
+      attr_accessor source: ("ACCOUNT" | "LOG_GROUP")
+      SENSITIVE: []
+    end
+
     class InputLogEvent
       attr_accessor timestamp: ::Integer
       attr_accessor message: ::String
@@ -728,6 +852,19 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class ListLogGroupsForQueryRequest
+      attr_accessor query_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListLogGroupsForQueryResponse
+      attr_accessor log_group_identifiers: ::Array[::String]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListTagsForResourceRequest
       attr_accessor resource_arn: ::String
       SENSITIVE: []
@@ -745,6 +882,16 @@ module Aws::CloudWatchLogs
 
     class ListTagsLogGroupResponse
       attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class ListToMap
+      attr_accessor source: ::String
+      attr_accessor key: ::String
+      attr_accessor value_key: ::String
+      attr_accessor target: ::String
+      attr_accessor flatten: bool
+      attr_accessor flattened_element: ("first" | "last")
       SENSITIVE: []
     end
 
@@ -819,6 +966,11 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class LowerCaseString
+      attr_accessor with_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class MalformedQueryException
       attr_accessor query_compile_error: Types::QueryCompileError
       SENSITIVE: []
@@ -830,6 +982,7 @@ module Aws::CloudWatchLogs
       attr_accessor metric_transformations: ::Array[Types::MetricTransformation]
       attr_accessor creation_time: ::Integer
       attr_accessor log_group_name: ::String
+      attr_accessor apply_on_transformed_logs: bool
       SENSITIVE: []
     end
 
@@ -850,6 +1003,18 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class MoveKeyEntry
+      attr_accessor source: ::String
+      attr_accessor target: ::String
+      attr_accessor overwrite_if_exists: bool
+      SENSITIVE: []
+    end
+
+    class MoveKeys
+      attr_accessor entries: ::Array[Types::MoveKeyEntry]
+      SENSITIVE: []
+    end
+
     class OperationAbortedException < Aws::EmptyStructure
     end
 
@@ -857,6 +1022,48 @@ module Aws::CloudWatchLogs
       attr_accessor timestamp: ::Integer
       attr_accessor message: ::String
       attr_accessor ingestion_time: ::Integer
+      SENSITIVE: []
+    end
+
+    class ParseCloudfront
+      attr_accessor source: ::String
+      SENSITIVE: []
+    end
+
+    class ParseJSON
+      attr_accessor source: ::String
+      attr_accessor destination: ::String
+      SENSITIVE: []
+    end
+
+    class ParseKeyValue
+      attr_accessor source: ::String
+      attr_accessor destination: ::String
+      attr_accessor field_delimiter: ::String
+      attr_accessor key_value_delimiter: ::String
+      attr_accessor key_prefix: ::String
+      attr_accessor non_match_value: ::String
+      attr_accessor overwrite_if_exists: bool
+      SENSITIVE: []
+    end
+
+    class ParsePostgres
+      attr_accessor source: ::String
+      SENSITIVE: []
+    end
+
+    class ParseRoute53
+      attr_accessor source: ::String
+      SENSITIVE: []
+    end
+
+    class ParseVPC
+      attr_accessor source: ::String
+      SENSITIVE: []
+    end
+
+    class ParseWAF
+      attr_accessor source: ::String
       SENSITIVE: []
     end
 
@@ -874,10 +1081,36 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class Processor
+      attr_accessor add_keys: Types::AddKeys
+      attr_accessor copy_value: Types::CopyValue
+      attr_accessor csv: Types::CSV
+      attr_accessor date_time_converter: Types::DateTimeConverter
+      attr_accessor delete_keys: Types::DeleteKeys
+      attr_accessor grok: Types::Grok
+      attr_accessor list_to_map: Types::ListToMap
+      attr_accessor lower_case_string: Types::LowerCaseString
+      attr_accessor move_keys: Types::MoveKeys
+      attr_accessor parse_cloudfront: Types::ParseCloudfront
+      attr_accessor parse_json: Types::ParseJSON
+      attr_accessor parse_key_value: Types::ParseKeyValue
+      attr_accessor parse_route_53: Types::ParseRoute53
+      attr_accessor parse_postgres: Types::ParsePostgres
+      attr_accessor parse_vpc: Types::ParseVPC
+      attr_accessor parse_waf: Types::ParseWAF
+      attr_accessor rename_keys: Types::RenameKeys
+      attr_accessor split_string: Types::SplitString
+      attr_accessor substitute_string: Types::SubstituteString
+      attr_accessor trim_string: Types::TrimString
+      attr_accessor type_converter: Types::TypeConverter
+      attr_accessor upper_case_string: Types::UpperCaseString
+      SENSITIVE: []
+    end
+
     class PutAccountPolicyRequest
       attr_accessor policy_name: ::String
       attr_accessor policy_document: ::String
-      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY")
+      attr_accessor policy_type: ("DATA_PROTECTION_POLICY" | "SUBSCRIPTION_FILTER_POLICY" | "FIELD_INDEX_POLICY" | "TRANSFORMER_POLICY")
       attr_accessor scope: ("ALL")
       attr_accessor selection_criteria: ::String
       SENSITIVE: []
@@ -958,6 +1191,17 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class PutIndexPolicyRequest
+      attr_accessor log_group_identifier: ::String
+      attr_accessor policy_document: ::String
+      SENSITIVE: []
+    end
+
+    class PutIndexPolicyResponse
+      attr_accessor index_policy: Types::IndexPolicy
+      SENSITIVE: []
+    end
+
     class PutLogEventsRequest
       attr_accessor log_group_name: ::String
       attr_accessor log_stream_name: ::String
@@ -979,6 +1223,7 @@ module Aws::CloudWatchLogs
       attr_accessor filter_name: ::String
       attr_accessor filter_pattern: ::String
       attr_accessor metric_transformations: ::Array[Types::MetricTransformation]
+      attr_accessor apply_on_transformed_logs: bool
       SENSITIVE: []
     end
 
@@ -1020,6 +1265,13 @@ module Aws::CloudWatchLogs
       attr_accessor destination_arn: ::String
       attr_accessor role_arn: ::String
       attr_accessor distribution: ("Random" | "ByLogStream")
+      attr_accessor apply_on_transformed_logs: bool
+      SENSITIVE: []
+    end
+
+    class PutTransformerRequest
+      attr_accessor log_group_identifier: ::String
+      attr_accessor transformer_config: ::Array[Types::Processor]
       SENSITIVE: []
     end
 
@@ -1056,7 +1308,10 @@ module Aws::CloudWatchLogs
     class QueryStatistics
       attr_accessor records_matched: ::Float
       attr_accessor records_scanned: ::Float
+      attr_accessor estimated_records_skipped: ::Float
       attr_accessor bytes_scanned: ::Float
+      attr_accessor estimated_bytes_skipped: ::Float
+      attr_accessor log_groups_scanned: ::Float
       SENSITIVE: []
     end
 
@@ -1075,6 +1330,18 @@ module Aws::CloudWatchLogs
       attr_accessor too_new_log_event_start_index: ::Integer
       attr_accessor too_old_log_event_end_index: ::Integer
       attr_accessor expired_log_event_end_index: ::Integer
+      SENSITIVE: []
+    end
+
+    class RenameKeyEntry
+      attr_accessor key: ::String
+      attr_accessor rename_to: ::String
+      attr_accessor overwrite_if_exists: bool
+      SENSITIVE: []
+    end
+
+    class RenameKeys
+      attr_accessor entries: ::Array[Types::RenameKeyEntry]
       SENSITIVE: []
     end
 
@@ -1127,6 +1394,17 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class SplitString
+      attr_accessor entries: ::Array[Types::SplitStringEntry]
+      SENSITIVE: []
+    end
+
+    class SplitStringEntry
+      attr_accessor source: ::String
+      attr_accessor delimiter: ::String
+      SENSITIVE: []
+    end
+
     class StartLiveTailRequest
       attr_accessor log_group_identifiers: ::Array[::String]
       attr_accessor log_stream_names: ::Array[::String]
@@ -1173,7 +1451,20 @@ module Aws::CloudWatchLogs
       attr_accessor destination_arn: ::String
       attr_accessor role_arn: ::String
       attr_accessor distribution: ("Random" | "ByLogStream")
+      attr_accessor apply_on_transformed_logs: bool
       attr_accessor creation_time: ::Integer
+      SENSITIVE: []
+    end
+
+    class SubstituteString
+      attr_accessor entries: ::Array[Types::SubstituteStringEntry]
+      SENSITIVE: []
+    end
+
+    class SubstituteStringEntry
+      attr_accessor source: ::String
+      attr_accessor from: ::String
+      attr_accessor to: ::String
       SENSITIVE: []
     end
 
@@ -1206,12 +1497,46 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class TestTransformerRequest
+      attr_accessor transformer_config: ::Array[Types::Processor]
+      attr_accessor log_event_messages: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class TestTransformerResponse
+      attr_accessor transformed_logs: ::Array[Types::TransformedLogRecord]
+      SENSITIVE: []
+    end
+
     class ThrottlingException < Aws::EmptyStructure
     end
 
     class TooManyTagsException
       attr_accessor message: ::String
       attr_accessor resource_name: ::String
+      SENSITIVE: []
+    end
+
+    class TransformedLogRecord
+      attr_accessor event_number: ::Integer
+      attr_accessor event_message: ::String
+      attr_accessor transformed_event_message: ::String
+      SENSITIVE: []
+    end
+
+    class TrimString
+      attr_accessor with_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class TypeConverter
+      attr_accessor entries: ::Array[Types::TypeConverterEntry]
+      SENSITIVE: []
+    end
+
+    class TypeConverterEntry
+      attr_accessor key: ::String
+      attr_accessor type: ("boolean" | "integer" | "double" | "string")
       SENSITIVE: []
     end
 
@@ -1257,6 +1582,11 @@ module Aws::CloudWatchLogs
       attr_accessor filter_pattern: ::String
       attr_accessor anomaly_visibility_time: ::Integer
       attr_accessor enabled: bool
+      SENSITIVE: []
+    end
+
+    class UpperCaseString
+      attr_accessor with_keys: ::Array[::String]
       SENSITIVE: []
     end
 

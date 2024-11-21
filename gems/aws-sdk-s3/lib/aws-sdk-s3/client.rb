@@ -703,6 +703,18 @@ module Aws::S3
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
     #
+    # @option params [Time,DateTime,Date,Integer,String] :if_match_initiated_time
+    #   If present, this header aborts an in progress multipart upload only if
+    #   it was initiated on the provided timestamp. If the initiated timestamp
+    #   of the multipart upload does not match the provided value, the
+    #   operation returns a `412 Precondition Failed` error. If the initiated
+    #   timestamp matches or if the multipart upload doesn’t exist, the
+    #   operation returns a `204 Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
     # @return [Types::AbortMultipartUploadOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::AbortMultipartUploadOutput#request_charged #request_charged} => String
@@ -730,6 +742,7 @@ module Aws::S3
     #     upload_id: "MultipartUploadId", # required
     #     request_payer: "requester", # accepts requester
     #     expected_bucket_owner: "AccountId",
+    #     if_match_initiated_time: Time.now,
     #   })
     #
     # @example Response structure
@@ -2471,6 +2484,19 @@ module Aws::S3
     #   * {Types::CreateBucketOutput#location #location} => String
     #
     #
+    # @example Example: To create a bucket 
+    #
+    #   # The following example creates a bucket.
+    #
+    #   resp = client.create_bucket({
+    #     bucket: "examplebucket", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     location: "/examplebucket", 
+    #   }
+    #
     # @example Example: To create a bucket in a specific region
     #
     #   # The following example creates a bucket. The request specifies an AWS region where to create the bucket.
@@ -2485,19 +2511,6 @@ module Aws::S3
     #   resp.to_h outputs the following:
     #   {
     #     location: "http://examplebucket.<Region>.s3.amazonaws.com/", 
-    #   }
-    #
-    # @example Example: To create a bucket 
-    #
-    #   # The following example creates a bucket.
-    #
-    #   resp = client.create_bucket({
-    #     bucket: "examplebucket", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     location: "/examplebucket", 
     #   }
     #
     # @example Request syntax with placeholder values
@@ -3876,7 +3889,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -3942,7 +3955,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4106,7 +4119,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4173,7 +4186,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4238,38 +4251,71 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # Deletes the lifecycle configuration from the specified bucket. Amazon
     # S3 removes all the lifecycle configuration rules in the lifecycle
     # subresource associated with the bucket. Your objects never expire, and
     # Amazon S3 no longer automatically deletes any objects on the basis of
     # rules contained in the deleted lifecycle configuration.
     #
-    # To use this operation, you must have permission to perform the
-    # `s3:PutLifecycleConfiguration` action. By default, the bucket owner
-    # has this permission and the bucket owner can grant this permission to
-    # others.
+    # Permissions
+    # : * **General purpose bucket permissions** - By default, all Amazon S3
+    #     resources are private, including buckets, objects, and related
+    #     subresources (for example, lifecycle configuration and website
+    #     configuration). Only the resource owner (that is, the Amazon Web
+    #     Services account that created it) can access the resource. The
+    #     resource owner can optionally grant access permissions to others
+    #     by writing an access policy. For this operation, a user must have
+    #     the `s3:PutLifecycleConfiguration` permission.
     #
-    # There is usually some time lag before lifecycle configuration deletion
-    # is fully propagated to all the Amazon S3 systems.
+    #     For more information about permissions, see [Managing Access
+    #     Permissions to Your Amazon S3 Resources][1].
+    #   ^
+    #
+    #   * **Directory bucket permissions** - You must have the
+    #     `s3express:PutLifecycleConfiguration` permission in an IAM
+    #     identity-based policy to use this operation. Cross-account access
+    #     to this API operation isn't supported. The resource owner can
+    #     optionally grant access permissions to others by creating a role
+    #     or user for them as long as they are within the same account as
+    #     the owner and resource.
+    #
+    #     For more information about directory bucket policies and
+    #     permissions, see [Authorizing Regional endpoint APIs with IAM][2]
+    #     in the *Amazon S3 User Guide*.
+    #
+    #     <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
+    #     requests for this API operation to the Regional endpoint. These
+    #     endpoints support path-style requests in the format
+    #     `https://s3express-control.region_code.amazonaws.com/bucket-name
+    #     `. Virtual-hosted-style requests aren't supported. For more
+    #     information, see [Regional and Zonal endpoints][3] in the *Amazon
+    #     S3 User Guide*.
+    #
+    #      </note>
+    # ^
+    #
+    # HTTP Host header syntax
+    #
+    # : <b>Directory buckets </b> - The HTTP Host header syntax is
+    #   `s3express-control.region.amazonaws.com`.
     #
     # For more information about the object expiration, see [Elements to
-    # Describe Lifecycle Actions][1].
+    # Describe Lifecycle Actions][4].
     #
     # Related actions include:
     #
-    # * [PutBucketLifecycleConfiguration][2]
+    # * [PutBucketLifecycleConfiguration][5]
     #
-    # * [GetBucketLifecycleConfiguration][3]
+    # * [GetBucketLifecycleConfiguration][6]
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html#intro-lifecycle-rules-actions
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html#intro-lifecycle-rules-actions
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
     #
     # @option params [required, String] :bucket
     #   The bucket name of the lifecycle to delete.
@@ -4278,6 +4324,11 @@ module Aws::S3
     #   The account ID of the expected bucket owner. If the account ID that
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -4306,7 +4357,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4376,7 +4427,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4550,7 +4601,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4620,7 +4671,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4676,7 +4727,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -4915,21 +4966,55 @@ module Aws::S3
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
     #
+    # @option params [String] :if_match
+    #   The `If-Match` header field makes the request method conditional on
+    #   ETags. If the ETag value does not match, the operation returns a `412
+    #   Precondition Failed` error. If the ETag matches or if the object
+    #   doesn't exist, the operation will return a `204 Success (No Content)
+    #   response`.
+    #
+    #   For more information about conditional requests, see [RFC 7232][1].
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/https:/tools.ietf.org/html/rfc7232
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :if_match_last_modified_time
+    #   If present, the object is deleted only if its modification times
+    #   matches the provided `Timestamp`. If the `Timestamp` values do not
+    #   match, the operation returns a `412 Precondition Failed` error. If the
+    #   `Timestamp` matches or if the object doesn’t exist, the operation
+    #   returns a `204 Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
+    # @option params [Integer] :if_match_size
+    #   If present, the object is deleted only if its size matches the
+    #   provided size in bytes. If the `Size` value does not match, the
+    #   operation returns a `412 Precondition Failed` error. If the `Size`
+    #   matches or if the object doesn’t exist, the operation returns a `204
+    #   Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
+    #   You can use the `If-Match`, `x-amz-if-match-last-modified-time` and
+    #   `x-amz-if-match-size` conditional headers in conjunction with
+    #   each-other or individually.
+    #
     # @return [Types::DeleteObjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DeleteObjectOutput#delete_marker #delete_marker} => Boolean
     #   * {Types::DeleteObjectOutput#version_id #version_id} => String
     #   * {Types::DeleteObjectOutput#request_charged #request_charged} => String
     #
-    #
-    # @example Example: To delete an object (from a non-versioned bucket)
-    #
-    #   # The following example deletes an object from a non-versioned bucket.
-    #
-    #   resp = client.delete_object({
-    #     bucket: "ExampleBucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
     #
     # @example Example: To delete an object
     #
@@ -4944,6 +5029,15 @@ module Aws::S3
     #   {
     #   }
     #
+    # @example Example: To delete an object (from a non-versioned bucket)
+    #
+    #   # The following example deletes an object from a non-versioned bucket.
+    #
+    #   resp = client.delete_object({
+    #     bucket: "ExampleBucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_object({
@@ -4954,6 +5048,9 @@ module Aws::S3
     #     request_payer: "requester", # accepts requester
     #     bypass_governance_retention: false,
     #     expected_bucket_owner: "AccountId",
+    #     if_match: "IfMatch",
+    #     if_match_last_modified_time: Time.now,
+    #     if_match_size: 1,
     #   })
     #
     # @example Response structure
@@ -4971,7 +5068,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -5352,42 +5449,6 @@ module Aws::S3
     #   * {Types::DeleteObjectsOutput#errors #errors} => Array&lt;Types::Error&gt;
     #
     #
-    # @example Example: To delete multiple objects from a versioned bucket
-    #
-    #   # The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the
-    #   # object version to delete. In this case, all versions remain in the bucket and S3 adds a delete marker.
-    #
-    #   resp = client.delete_objects({
-    #     bucket: "examplebucket", 
-    #     delete: {
-    #       objects: [
-    #         {
-    #           key: "objectkey1", 
-    #         }, 
-    #         {
-    #           key: "objectkey2", 
-    #         }, 
-    #       ], 
-    #       quiet: false, 
-    #     }, 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     deleted: [
-    #       {
-    #         delete_marker: true, 
-    #         delete_marker_version_id: "A._w1z6EFiCF5uhtQMDal9JDkID9tQ7F", 
-    #         key: "objectkey1", 
-    #       }, 
-    #       {
-    #         delete_marker: true, 
-    #         delete_marker_version_id: "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt", 
-    #         key: "objectkey2", 
-    #       }, 
-    #     ], 
-    #   }
-    #
     # @example Example: To delete multiple object versions from a versioned bucket
     #
     #   # The following example deletes objects from a bucket. The request specifies object versions. S3 deletes specific object
@@ -5424,6 +5485,42 @@ module Aws::S3
     #     ], 
     #   }
     #
+    # @example Example: To delete multiple objects from a versioned bucket
+    #
+    #   # The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the
+    #   # object version to delete. In this case, all versions remain in the bucket and S3 adds a delete marker.
+    #
+    #   resp = client.delete_objects({
+    #     bucket: "examplebucket", 
+    #     delete: {
+    #       objects: [
+    #         {
+    #           key: "objectkey1", 
+    #         }, 
+    #         {
+    #           key: "objectkey2", 
+    #         }, 
+    #       ], 
+    #       quiet: false, 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     deleted: [
+    #       {
+    #         delete_marker: true, 
+    #         delete_marker_version_id: "A._w1z6EFiCF5uhtQMDal9JDkID9tQ7F", 
+    #         key: "objectkey1", 
+    #       }, 
+    #       {
+    #         delete_marker: true, 
+    #         delete_marker_version_id: "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt", 
+    #         key: "objectkey2", 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.delete_objects({
@@ -5433,6 +5530,9 @@ module Aws::S3
     #         {
     #           key: "ObjectKey", # required
     #           version_id: "ObjectVersionId",
+    #           etag: "ETag",
+    #           last_modified_time: Time.now,
+    #           size: 1,
     #         },
     #       ],
     #       quiet: false,
@@ -5467,7 +5567,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -5524,7 +5624,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -5620,7 +5720,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -5716,7 +5816,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -5802,7 +5902,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6035,7 +6135,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6119,7 +6219,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6208,7 +6308,7 @@ module Aws::S3
     # version of this topic. This topic is provided for backward
     # compatibility.
     #
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6320,34 +6420,65 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
-    # <note markdown="1"> Bucket lifecycle configuration now supports specifying a lifecycle
-    # rule using an object key name prefix, one or more object tags, object
-    # size, or any combination of these. Accordingly, this section describes
-    # the latest API. The previous version of the API supported filtering
-    # based only on an object key name prefix, which is supported for
-    # backward compatibility. For the related API description, see
-    # [GetBucketLifecycle][1]. Accordingly, this section describes the
-    # latest API. The response describes the new filter element that you can
-    # use to specify a filter to select a subset of objects to which the
-    # rule applies. If you are using a previous version of the lifecycle
-    # configuration, it still works. For the earlier action,
-    #
-    #  </note>
-    #
     # Returns the lifecycle configuration information set on the bucket. For
     # information about lifecycle configuration, see [Object Lifecycle
-    # Management][2].
+    # Management][1].
     #
-    # To use this operation, you must have permission to perform the
-    # `s3:GetLifecycleConfiguration` action. The bucket owner has this
-    # permission, by default. The bucket owner can grant this permission to
-    # others. For more information about permissions, see [Permissions
-    # Related to Bucket Subresource Operations][3] and [Managing Access
-    # Permissions to Your Amazon S3 Resources][4].
+    # Bucket lifecycle configuration now supports specifying a lifecycle
+    # rule using an object key name prefix, one or more object tags, object
+    # size, or any combination of these. Accordingly, this section describes
+    # the latest API, which is compatible with the new functionality. The
+    # previous version of the API supported filtering based only on an
+    # object key name prefix, which is supported for general purpose buckets
+    # for backward compatibility. For the related API description, see
+    # [GetBucketLifecycle][2].
+    #
+    # <note markdown="1"> Lifecyle configurations for directory buckets only support expiring
+    # objects and cancelling multipart uploads. Expiring of versioned
+    # objects, transitions and tag filters are not supported.
+    #
+    #  </note>
+    #
+    # Permissions
+    # : * **General purpose bucket permissions** - By default, all Amazon S3
+    #     resources are private, including buckets, objects, and related
+    #     subresources (for example, lifecycle configuration and website
+    #     configuration). Only the resource owner (that is, the Amazon Web
+    #     Services account that created it) can access the resource. The
+    #     resource owner can optionally grant access permissions to others
+    #     by writing an access policy. For this operation, a user must have
+    #     the `s3:GetLifecycleConfiguration` permission.
+    #
+    #     For more information about permissions, see [Managing Access
+    #     Permissions to Your Amazon S3 Resources][3].
+    #   ^
+    #
+    #   * **Directory bucket permissions** - You must have the
+    #     `s3express:GetLifecycleConfiguration` permission in an IAM
+    #     identity-based policy to use this operation. Cross-account access
+    #     to this API operation isn't supported. The resource owner can
+    #     optionally grant access permissions to others by creating a role
+    #     or user for them as long as they are within the same account as
+    #     the owner and resource.
+    #
+    #     For more information about directory bucket policies and
+    #     permissions, see [Authorizing Regional endpoint APIs with IAM][4]
+    #     in the *Amazon S3 User Guide*.
+    #
+    #     <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
+    #     requests for this API operation to the Regional endpoint. These
+    #     endpoints support path-style requests in the format
+    #     `https://s3express-control.region_code.amazonaws.com/bucket-name
+    #     `. Virtual-hosted-style requests aren't supported. For more
+    #     information, see [Regional and Zonal endpoints][5] in the *Amazon
+    #     S3 User Guide*.
+    #
+    #      </note>
+    #
+    # HTTP Host header syntax
+    #
+    # : <b>Directory buckets </b> - The HTTP Host header syntax is
+    #   `s3express-control.region.amazonaws.com`.
     #
     # `GetBucketLifecycleConfiguration` has the following special error:
     #
@@ -6362,20 +6493,21 @@ module Aws::S3
     # The following operations are related to
     # `GetBucketLifecycleConfiguration`:
     #
-    # * [GetBucketLifecycle][1]
+    # * [GetBucketLifecycle][2]
     #
-    # * [PutBucketLifecycle][5]
+    # * [PutBucketLifecycle][6]
     #
-    # * [DeleteBucketLifecycle][6]
+    # * [DeleteBucketLifecycle][7]
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycle.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket for which to get the lifecycle information.
@@ -6384,6 +6516,11 @@ module Aws::S3
     #   The account ID of the expected bucket owner. If the account ID that
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #
     # @return [Types::GetBucketLifecycleConfigurationOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -6465,7 +6602,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6562,7 +6699,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6621,7 +6758,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6707,7 +6844,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6838,7 +6975,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -6953,7 +7090,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -7170,7 +7307,7 @@ module Aws::S3
       req.send_request(options, &block)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -7235,7 +7372,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -7358,7 +7495,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -7424,7 +7561,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -7510,7 +7647,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -7587,7 +7724,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -8193,28 +8330,6 @@ module Aws::S3
     #   * {Types::GetObjectOutput#object_lock_legal_hold_status #object_lock_legal_hold_status} => String
     #
     #
-    # @example Example: To retrieve an object
-    #
-    #   # The following example retrieves an object for an S3 bucket.
-    #
-    #   resp = client.get_object({
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     accept_ranges: "bytes", 
-    #     content_length: 3191, 
-    #     content_type: "image/jpeg", 
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     last_modified: Time.parse("2016-12-15T01:19:41.000Z"), 
-    #     metadata: {
-    #     }, 
-    #     tag_count: 2, 
-    #     version_id: "null", 
-    #   }
-    #
     # @example Example: To retrieve a byte range of an object 
     #
     #   # The following example retrieves an object for an S3 bucket. The request specifies the range header to retrieve a
@@ -8236,6 +8351,28 @@ module Aws::S3
     #     last_modified: Time.parse("2014-10-09T22:57:28.000Z"), 
     #     metadata: {
     #     }, 
+    #     version_id: "null", 
+    #   }
+    #
+    # @example Example: To retrieve an object
+    #
+    #   # The following example retrieves an object for an S3 bucket.
+    #
+    #   resp = client.get_object({
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     accept_ranges: "bytes", 
+    #     content_length: 3191, 
+    #     content_type: "image/jpeg", 
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     last_modified: Time.parse("2016-12-15T01:19:41.000Z"), 
+    #     metadata: {
+    #     }, 
+    #     tag_count: 2, 
     #     version_id: "null", 
     #   }
     #
@@ -8344,7 +8481,7 @@ module Aws::S3
       req.send_request(options, &block)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -8887,7 +9024,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -8983,7 +9120,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -9053,7 +9190,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -9150,7 +9287,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -9319,7 +9456,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -9420,7 +9557,7 @@ module Aws::S3
       req.send_request(options, &block)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -9782,7 +9919,7 @@ module Aws::S3
     #     a `405 Method Not Allowed` error and the `Last-Modified:
     #     timestamp` response header.
     #
-    #   <note markdown="1"> * **Directory buckets** - Delete marker is not supported by
+    #   <note markdown="1"> * **Directory buckets** - Delete marker is not supported for
     #     directory buckets.
     #
     #   * **Directory buckets** - S3 Versioning isn't enabled and supported
@@ -10193,7 +10330,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -10294,7 +10431,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -10386,7 +10523,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -10488,7 +10625,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -10590,24 +10727,25 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
     # Returns a list of all buckets owned by the authenticated sender of the
-    # request. To use this operation, you must have the
-    # `s3:ListAllMyBuckets` permission.
+    # request. To grant IAM permission to use this operation, you must add
+    # the `s3:ListAllMyBuckets` policy action.
     #
     # For information about Amazon S3 buckets, see [Creating, configuring,
     # and working with Amazon S3 buckets][1].
     #
-    # We strongly recommend using only paginated requests. Unpaginated
-    # requests are only supported for Amazon Web Services accounts set to
-    # the default general purpose bucket quota of 10,000. If you have an
-    # approved general purpose bucket quota above 10,000, you must send
-    # paginated requests to list your account’s buckets. All unpaginated
-    # ListBuckets requests will be rejected for Amazon Web Services accounts
-    # with a general purpose bucket quota greater than 10,000.
+    # We strongly recommend using only paginated `ListBuckets` requests.
+    # Unpaginated `ListBuckets` requests are only supported for Amazon Web
+    # Services accounts set to the default general purpose bucket quota of
+    # 10,000. If you have an approved general purpose bucket quota above
+    # 10,000, you must send paginated `ListBuckets` requests to list your
+    # account’s buckets. All unpaginated `ListBuckets` requests will be
+    # rejected for Amazon Web Services accounts with a general purpose
+    # bucket quota greater than 10,000.
     #
     #
     #
@@ -11105,6 +11243,48 @@ module Aws::S3
     # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
     #
     #
+    # @example Example: To list in-progress multipart uploads on a bucket
+    #
+    #   # The following example lists in-progress multipart uploads on a specific bucket.
+    #
+    #   resp = client.list_multipart_uploads({
+    #     bucket: "examplebucket", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     uploads: [
+    #       {
+    #         initiated: Time.parse("2014-05-01T05:40:58.000Z"), 
+    #         initiator: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         key: "JavaFile", 
+    #         owner: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         storage_class: "STANDARD", 
+    #         upload_id: "examplelUa.CInXklLQtSMJITdUnoZ1Y5GACB5UckOtspm5zbDMCkPF_qkfZzMiFZ6dksmcnqxJyIBvQMG9X9Q--", 
+    #       }, 
+    #       {
+    #         initiated: Time.parse("2014-05-01T05:41:27.000Z"), 
+    #         initiator: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         key: "JavaFile", 
+    #         owner: {
+    #           display_name: "display-name", 
+    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
+    #         }, 
+    #         storage_class: "STANDARD", 
+    #         upload_id: "examplelo91lv1iwvWpvCiJWugw2xXLPAD7Z8cJyX9.WiIRgNrdG6Ldsn.9FtS63TCl1Uf5faTB.1U5Ckcbmdw--", 
+    #       }, 
+    #     ], 
+    #   }
+    #
     # @example Example: List next set of multipart uploads when previous result is truncated
     #
     #   # The following example specifies the upload-id-marker and key-marker from previous truncated response to retrieve next
@@ -11158,48 +11338,6 @@ module Aws::S3
     #     ], 
     #   }
     #
-    # @example Example: To list in-progress multipart uploads on a bucket
-    #
-    #   # The following example lists in-progress multipart uploads on a specific bucket.
-    #
-    #   resp = client.list_multipart_uploads({
-    #     bucket: "examplebucket", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     uploads: [
-    #       {
-    #         initiated: Time.parse("2014-05-01T05:40:58.000Z"), 
-    #         initiator: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         key: "JavaFile", 
-    #         owner: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         storage_class: "STANDARD", 
-    #         upload_id: "examplelUa.CInXklLQtSMJITdUnoZ1Y5GACB5UckOtspm5zbDMCkPF_qkfZzMiFZ6dksmcnqxJyIBvQMG9X9Q--", 
-    #       }, 
-    #       {
-    #         initiated: Time.parse("2014-05-01T05:41:27.000Z"), 
-    #         initiator: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         key: "JavaFile", 
-    #         owner: {
-    #           display_name: "display-name", 
-    #           id: "examplee7a2f25102679df27bb0ae12b3f85be6f290b936c4393484be31bebcc", 
-    #         }, 
-    #         storage_class: "STANDARD", 
-    #         upload_id: "examplelo91lv1iwvWpvCiJWugw2xXLPAD7Z8cJyX9.WiIRgNrdG6Ldsn.9FtS63TCl1Uf5faTB.1U5Ckcbmdw--", 
-    #       }, 
-    #     ], 
-    #   }
-    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_multipart_uploads({
@@ -11249,7 +11387,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -11488,7 +11626,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -12382,7 +12520,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -12481,7 +12619,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -12774,7 +12912,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -12910,7 +13048,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -13317,7 +13455,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -13442,7 +13580,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -13594,14 +13732,14 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # For an updated version of this API, see
     # [PutBucketLifecycleConfiguration][1]. This version has been
     # deprecated. Existing lifecycle configurations will work. For new
     # lifecycle configurations, use the updated API.
+    #
+    # <note markdown="1"> This operation is not supported for directory buckets.
+    #
+    #  </note>
     #
     # Creates a new lifecycle configuration for the bucket or replaces an
     # existing lifecycle configuration. For information about lifecycle
@@ -13745,10 +13883,6 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
-    #
-    #  </note>
-    #
     # Creates a new lifecycle configuration for the bucket or replaces an
     # existing lifecycle configuration. Keep in mind that this will
     # overwrite an existing lifecycle configuration, so if you want to
@@ -13757,6 +13891,8 @@ module Aws::S3
     # configuration, see [Managing your storage lifecycle][1].
     #
     # Rules
+    # Permissions
+    # HTTP Host header syntax
     #
     # : You specify the lifecycle configuration in your request body. The
     #   lifecycle configuration is specified as XML consisting of one or
@@ -13768,8 +13904,14 @@ module Aws::S3
     #   size, or any combination of these. Accordingly, this section
     #   describes the latest API. The previous version of the API supported
     #   filtering based only on an object key name prefix, which is
-    #   supported for backward compatibility. For the related API
-    #   description, see [PutBucketLifecycle][2].
+    #   supported for backward compatibility for general purpose buckets.
+    #   For the related API description, see [PutBucketLifecycle][2].
+    #
+    #   <note markdown="1"> Lifecyle configurations for directory buckets only support expiring
+    #   objects and cancelling multipart uploads. Expiring of versioned
+    #   objects,transitions and tag filters are not supported.
+    #
+    #    </note>
     #
     #   A lifecycle rule consists of the following:
     #
@@ -13789,40 +13931,61 @@ module Aws::S3
     #
     #   For more information, see [Object Lifecycle Management][3] and
     #   [Lifecycle Configuration Elements][4].
+    # : * **General purpose bucket permissions** - By default, all Amazon S3
+    #     resources are private, including buckets, objects, and related
+    #     subresources (for example, lifecycle configuration and website
+    #     configuration). Only the resource owner (that is, the Amazon Web
+    #     Services account that created it) can access the resource. The
+    #     resource owner can optionally grant access permissions to others
+    #     by writing an access policy. For this operation, a user must have
+    #     the `s3:PutLifecycleConfiguration` permission.
     #
-    # Permissions
+    #     You can also explicitly deny permissions. An explicit deny also
+    #     supersedes any other permissions. If you want to block users or
+    #     accounts from removing or deleting objects from your bucket, you
+    #     must deny them permissions for the following actions:
     #
-    # : By default, all Amazon S3 resources are private, including buckets,
-    #   objects, and related subresources (for example, lifecycle
-    #   configuration and website configuration). Only the resource owner
-    #   (that is, the Amazon Web Services account that created it) can
-    #   access the resource. The resource owner can optionally grant access
-    #   permissions to others by writing an access policy. For this
-    #   operation, a user must get the `s3:PutLifecycleConfiguration`
-    #   permission.
+    #     * `s3:DeleteObject`
     #
-    #   You can also explicitly deny permissions. An explicit deny also
-    #   supersedes any other permissions. If you want to block users or
-    #   accounts from removing or deleting objects from your bucket, you
-    #   must deny them permissions for the following actions:
+    #     * `s3:DeleteObjectVersion`
     #
-    #   * `s3:DeleteObject`
+    #     * `s3:PutLifecycleConfiguration`
     #
-    #   * `s3:DeleteObjectVersion`
+    #       For more information about permissions, see [Managing Access
+    #       Permissions to Your Amazon S3 Resources][5].
+    #   ^
     #
-    #   * `s3:PutLifecycleConfiguration`
+    #   * **Directory bucket permissions** - You must have the
+    #     `s3express:PutLifecycleConfiguration` permission in an IAM
+    #     identity-based policy to use this operation. Cross-account access
+    #     to this API operation isn't supported. The resource owner can
+    #     optionally grant access permissions to others by creating a role
+    #     or user for them as long as they are within the same account as
+    #     the owner and resource.
     #
-    #   For more information about permissions, see [Managing Access
-    #   Permissions to Your Amazon S3 Resources][5].
+    #     For more information about directory bucket policies and
+    #     permissions, see [Authorizing Regional endpoint APIs with IAM][6]
+    #     in the *Amazon S3 User Guide*.
     #
-    # The following operations are related to
-    # `PutBucketLifecycleConfiguration`:
+    #     <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
+    #     requests for this API operation to the Regional endpoint. These
+    #     endpoints support path-style requests in the format
+    #     `https://s3express-control.region_code.amazonaws.com/bucket-name
+    #     `. Virtual-hosted-style requests aren't supported. For more
+    #     information, see [Regional and Zonal endpoints][7] in the *Amazon
+    #     S3 User Guide*.
     #
-    # * [Examples of Lifecycle Configuration][6]
+    #      </note>
     #
-    # * [GetBucketLifecycleConfiguration][7]
+    # : <b>Directory buckets </b> - The HTTP Host header syntax is
+    #   `s3express-control.region.amazonaws.com`.
     #
-    # * [DeleteBucketLifecycle][8]
+    #   The following operations are related to
+    #   `PutBucketLifecycleConfiguration`:
+    #
+    #   * [GetBucketLifecycleConfiguration][8]
+    #
+    #   * [DeleteBucketLifecycle][9]
     #
     #
     #
@@ -13831,9 +13994,10 @@ module Aws::S3
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/object-lifecycle-mgmt.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/dev/lifecycle-configuration-examples.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket for which to set the configuration.
@@ -13862,9 +14026,19 @@ module Aws::S3
     #   you provide does not match the actual owner of the bucket, the request
     #   fails with the HTTP status code `403 Forbidden` (access denied).
     #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
+    #
     # @option params [String] :transition_default_minimum_object_size
     #   Indicates which default minimum object size behavior is applied to the
     #   lifecycle configuration.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #
     #   * `all_storage_classes_128K` - Objects smaller than 128 KB will not
     #     transition to any storage class by default.
@@ -13989,7 +14163,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -14172,7 +14346,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -14276,7 +14450,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -14362,7 +14536,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -14546,7 +14720,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -14815,7 +14989,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -15053,7 +15227,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -15150,7 +15324,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -15301,7 +15475,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -15440,7 +15614,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -16058,6 +16232,17 @@ module Aws::S3
     # @option params [required, String] :key
     #   Object key for which the PUT action was initiated.
     #
+    # @option params [Integer] :write_offset_bytes
+    #   Specifies the offset for appending data to existing objects in bytes.
+    #   The offset must be equal to the size of the existing object being
+    #   appended to. If no object exists, setting this header to 0 will create
+    #   a new object.
+    #
+    #   <note markdown="1"> This functionality is only supported for objects in the Amazon S3
+    #   Express One Zone storage class in directory buckets.
+    #
+    #    </note>
+    #
     # @option params [Hash<String,String>] :metadata
     #   A map of metadata to store with the object in S3.
     #
@@ -16360,6 +16545,7 @@ module Aws::S3
     #   * {Types::PutObjectOutput#ssekms_key_id #ssekms_key_id} => String
     #   * {Types::PutObjectOutput#ssekms_encryption_context #ssekms_encryption_context} => String
     #   * {Types::PutObjectOutput#bucket_key_enabled #bucket_key_enabled} => Boolean
+    #   * {Types::PutObjectOutput#size #size} => Integer
     #   * {Types::PutObjectOutput#request_charged #request_charged} => String
     #
     #
@@ -16399,24 +16585,21 @@ module Aws::S3
     #     version_id: "Kirh.unyZwjQ69YxcQLA8z4F5j3kJJKr", 
     #   }
     #
-    # @example Example: To upload an object and specify server-side encryption and object tags
+    # @example Example: To upload an object
     #
-    #   # The following example uploads an object. The request specifies the optional server-side encryption option. The request
-    #   # also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.
+    #   # The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file
+    #   # syntax. S3 returns VersionId of the newly created object.
     #
     #   resp = client.put_object({
-    #     body: "filetoupload", 
+    #     body: "HappyFace.jpg", 
     #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
-    #     server_side_encryption: "AES256", 
-    #     tagging: "key1=value1&key2=value2", 
+    #     key: "HappyFace.jpg", 
     #   })
     #
     #   resp.to_h outputs the following:
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     server_side_encryption: "AES256", 
-    #     version_id: "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt", 
+    #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
     #   }
     #
     # @example Example: To upload object and specify user-defined metadata
@@ -16440,6 +16623,22 @@ module Aws::S3
     #     version_id: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0", 
     #   }
     #
+    # @example Example: To create an object.
+    #
+    #   # The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.
+    #
+    #   resp = client.put_object({
+    #     body: "filetoupload", 
+    #     bucket: "examplebucket", 
+    #     key: "objectkey", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ", 
+    #   }
+    #
     # @example Example: To upload an object (specify optional headers)
     #
     #   # The following example uploads an object. The request specifies optional request headers to directs S3 to use specific
@@ -16460,37 +16659,24 @@ module Aws::S3
     #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
     #   }
     #
-    # @example Example: To create an object.
+    # @example Example: To upload an object and specify server-side encryption and object tags
     #
-    #   # The following example creates an object. If the bucket is versioning enabled, S3 returns version ID in response.
+    #   # The following example uploads an object. The request specifies the optional server-side encryption option. The request
+    #   # also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.
     #
     #   resp = client.put_object({
     #     body: "filetoupload", 
     #     bucket: "examplebucket", 
-    #     key: "objectkey", 
+    #     key: "exampleobject", 
+    #     server_side_encryption: "AES256", 
+    #     tagging: "key1=value1&key2=value2", 
     #   })
     #
     #   resp.to_h outputs the following:
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "Bvq0EDKxOcXLJXNo_Lkz37eM3R4pfzyQ", 
-    #   }
-    #
-    # @example Example: To upload an object
-    #
-    #   # The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file
-    #   # syntax. S3 returns VersionId of the newly created object.
-    #
-    #   resp = client.put_object({
-    #     body: "HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
+    #     server_side_encryption: "AES256", 
+    #     version_id: "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt", 
     #   }
     #
     # @example Streaming a file from disk
@@ -16524,6 +16710,7 @@ module Aws::S3
     #     grant_read_acp: "GrantReadACP",
     #     grant_write_acp: "GrantWriteACP",
     #     key: "ObjectKey", # required
+    #     write_offset_bytes: 1,
     #     metadata: {
     #       "MetadataKey" => "MetadataValue",
     #     },
@@ -16559,6 +16746,7 @@ module Aws::S3
     #   resp.ssekms_key_id #=> String
     #   resp.ssekms_encryption_context #=> String
     #   resp.bucket_key_enabled #=> Boolean
+    #   resp.size #=> Integer
     #   resp.request_charged #=> String, one of "requester"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/PutObject AWS API Documentation
@@ -16570,7 +16758,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -16939,7 +17127,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -17058,7 +17246,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -17177,7 +17365,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -17306,7 +17494,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -17505,7 +17693,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -17613,7 +17801,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -17997,7 +18185,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -19429,7 +19617,7 @@ module Aws::S3
       req.send_request(options)
     end
 
-    # <note markdown="1"> This operation is not supported by directory buckets.
+    # <note markdown="1"> This operation is not supported for directory buckets.
     #
     #  </note>
     #
@@ -19838,7 +20026,7 @@ module Aws::S3
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3'
-      context[:gem_version] = '1.172.0'
+      context[:gem_version] = '1.173.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

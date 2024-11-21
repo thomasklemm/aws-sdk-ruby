@@ -28,6 +28,8 @@ module Aws::SSM
     AddTagsToResourceRequest = Shapes::StructureShape.new(name: 'AddTagsToResourceRequest')
     AddTagsToResourceResult = Shapes::StructureShape.new(name: 'AddTagsToResourceResult')
     AgentErrorCode = Shapes::StringShape.new(name: 'AgentErrorCode')
+    AgentType = Shapes::StringShape.new(name: 'AgentType')
+    AgentVersion = Shapes::StringShape.new(name: 'AgentVersion')
     AggregatorSchemaOnly = Shapes::BooleanShape.new(name: 'AggregatorSchemaOnly')
     Alarm = Shapes::StructureShape.new(name: 'Alarm')
     AlarmConfiguration = Shapes::StructureShape.new(name: 'AlarmConfiguration')
@@ -111,10 +113,12 @@ module Aws::SSM
     AutomationExecutionFilterValue = Shapes::StringShape.new(name: 'AutomationExecutionFilterValue')
     AutomationExecutionFilterValueList = Shapes::ListShape.new(name: 'AutomationExecutionFilterValueList')
     AutomationExecutionId = Shapes::StringShape.new(name: 'AutomationExecutionId')
+    AutomationExecutionInputs = Shapes::StructureShape.new(name: 'AutomationExecutionInputs')
     AutomationExecutionLimitExceededException = Shapes::StructureShape.new(name: 'AutomationExecutionLimitExceededException')
     AutomationExecutionMetadata = Shapes::StructureShape.new(name: 'AutomationExecutionMetadata')
     AutomationExecutionMetadataList = Shapes::ListShape.new(name: 'AutomationExecutionMetadataList')
     AutomationExecutionNotFoundException = Shapes::StructureShape.new(name: 'AutomationExecutionNotFoundException')
+    AutomationExecutionPreview = Shapes::StructureShape.new(name: 'AutomationExecutionPreview')
     AutomationExecutionStatus = Shapes::StringShape.new(name: 'AutomationExecutionStatus')
     AutomationParameterKey = Shapes::StringShape.new(name: 'AutomationParameterKey')
     AutomationParameterMap = Shapes::MapShape.new(name: 'AutomationParameterMap')
@@ -397,7 +401,11 @@ module Aws::SSM
     ErrorCount = Shapes::IntegerShape.new(name: 'ErrorCount')
     ExcludeAccount = Shapes::StringShape.new(name: 'ExcludeAccount')
     ExcludeAccounts = Shapes::ListShape.new(name: 'ExcludeAccounts')
+    ExecutionInputs = Shapes::UnionShape.new(name: 'ExecutionInputs')
     ExecutionMode = Shapes::StringShape.new(name: 'ExecutionMode')
+    ExecutionPreview = Shapes::UnionShape.new(name: 'ExecutionPreview')
+    ExecutionPreviewId = Shapes::StringShape.new(name: 'ExecutionPreviewId')
+    ExecutionPreviewStatus = Shapes::StringShape.new(name: 'ExecutionPreviewStatus')
     ExecutionRoleName = Shapes::StringShape.new(name: 'ExecutionRoleName')
     ExpirationDate = Shapes::TimestampShape.new(name: 'ExpirationDate')
     ExternalAlarmState = Shapes::StringShape.new(name: 'ExternalAlarmState')
@@ -420,6 +428,8 @@ module Aws::SSM
     GetDeployablePatchSnapshotForInstanceResult = Shapes::StructureShape.new(name: 'GetDeployablePatchSnapshotForInstanceResult')
     GetDocumentRequest = Shapes::StructureShape.new(name: 'GetDocumentRequest')
     GetDocumentResult = Shapes::StructureShape.new(name: 'GetDocumentResult')
+    GetExecutionPreviewRequest = Shapes::StructureShape.new(name: 'GetExecutionPreviewRequest')
+    GetExecutionPreviewResponse = Shapes::StructureShape.new(name: 'GetExecutionPreviewResponse')
     GetInventoryRequest = Shapes::StructureShape.new(name: 'GetInventoryRequest')
     GetInventoryResult = Shapes::StructureShape.new(name: 'GetInventoryResult')
     GetInventorySchemaMaxResults = Shapes::IntegerShape.new(name: 'GetInventorySchemaMaxResults')
@@ -468,6 +478,7 @@ module Aws::SSM
     IamRole = Shapes::StringShape.new(name: 'IamRole')
     IdempotencyToken = Shapes::StringShape.new(name: 'IdempotencyToken')
     IdempotentParameterMismatch = Shapes::StructureShape.new(name: 'IdempotentParameterMismatch')
+    ImpactType = Shapes::StringShape.new(name: 'ImpactType')
     IncompatiblePolicyException = Shapes::StructureShape.new(name: 'IncompatiblePolicyException')
     InstallOverrideList = Shapes::StringShape.new(name: 'InstallOverrideList')
     InstanceAggregatedAssociationOverview = Shapes::StructureShape.new(name: 'InstanceAggregatedAssociationOverview')
@@ -482,6 +493,7 @@ module Aws::SSM
     InstanceCount = Shapes::IntegerShape.new(name: 'InstanceCount')
     InstanceId = Shapes::StringShape.new(name: 'InstanceId')
     InstanceIdList = Shapes::ListShape.new(name: 'InstanceIdList')
+    InstanceInfo = Shapes::StructureShape.new(name: 'InstanceInfo')
     InstanceInformation = Shapes::StructureShape.new(name: 'InstanceInformation')
     InstanceInformationFilter = Shapes::StructureShape.new(name: 'InstanceInformationFilter')
     InstanceInformationFilterKey = Shapes::StringShape.new(name: 'InstanceInformationFilterKey')
@@ -515,6 +527,7 @@ module Aws::SSM
     InstancePropertyStringFilterList = Shapes::ListShape.new(name: 'InstancePropertyStringFilterList')
     InstanceRole = Shapes::StringShape.new(name: 'InstanceRole')
     InstanceState = Shapes::StringShape.new(name: 'InstanceState')
+    InstanceStatus = Shapes::StringShape.new(name: 'InstanceStatus')
     InstanceTagName = Shapes::StringShape.new(name: 'InstanceTagName')
     InstanceType = Shapes::StringShape.new(name: 'InstanceType')
     InstancesCount = Shapes::IntegerShape.new(name: 'InstancesCount')
@@ -617,6 +630,7 @@ module Aws::SSM
     InventoryTypeDisplayName = Shapes::StringShape.new(name: 'InventoryTypeDisplayName')
     InvocationDoesNotExist = Shapes::StructureShape.new(name: 'InvocationDoesNotExist')
     InvocationTraceOutput = Shapes::StringShape.new(name: 'InvocationTraceOutput')
+    IpAddress = Shapes::StringShape.new(name: 'IpAddress')
     IsSubTypeSchema = Shapes::BooleanShape.new(name: 'IsSubTypeSchema')
     ItemContentMismatchException = Shapes::StructureShape.new(name: 'ItemContentMismatchException')
     ItemSizeLimitExceededException = Shapes::StructureShape.new(name: 'ItemSizeLimitExceededException')
@@ -648,6 +662,10 @@ module Aws::SSM
     ListDocumentsResult = Shapes::StructureShape.new(name: 'ListDocumentsResult')
     ListInventoryEntriesRequest = Shapes::StructureShape.new(name: 'ListInventoryEntriesRequest')
     ListInventoryEntriesResult = Shapes::StructureShape.new(name: 'ListInventoryEntriesResult')
+    ListNodesRequest = Shapes::StructureShape.new(name: 'ListNodesRequest')
+    ListNodesResult = Shapes::StructureShape.new(name: 'ListNodesResult')
+    ListNodesSummaryRequest = Shapes::StructureShape.new(name: 'ListNodesSummaryRequest')
+    ListNodesSummaryResult = Shapes::StructureShape.new(name: 'ListNodesSummaryResult')
     ListOpsItemEventsRequest = Shapes::StructureShape.new(name: 'ListOpsItemEventsRequest')
     ListOpsItemEventsResponse = Shapes::StructureShape.new(name: 'ListOpsItemEventsResponse')
     ListOpsItemRelatedItemsRequest = Shapes::StructureShape.new(name: 'ListOpsItemRelatedItemsRequest')
@@ -729,6 +747,7 @@ module Aws::SSM
     MaintenanceWindowsForTargetList = Shapes::ListShape.new(name: 'MaintenanceWindowsForTargetList')
     MalformedResourcePolicyDocumentException = Shapes::StructureShape.new(name: 'MalformedResourcePolicyDocumentException')
     ManagedInstanceId = Shapes::StringShape.new(name: 'ManagedInstanceId')
+    ManagedStatus = Shapes::StringShape.new(name: 'ManagedStatus')
     MaxConcurrency = Shapes::StringShape.new(name: 'MaxConcurrency')
     MaxDocumentSizeExceeded = Shapes::StructureShape.new(name: 'MaxDocumentSizeExceeded')
     MaxErrors = Shapes::StringShape.new(name: 'MaxErrors')
@@ -743,6 +762,29 @@ module Aws::SSM
     ModifyDocumentPermissionRequest = Shapes::StructureShape.new(name: 'ModifyDocumentPermissionRequest')
     ModifyDocumentPermissionResponse = Shapes::StructureShape.new(name: 'ModifyDocumentPermissionResponse')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
+    Node = Shapes::StructureShape.new(name: 'Node')
+    NodeAccountId = Shapes::StringShape.new(name: 'NodeAccountId')
+    NodeAggregator = Shapes::StructureShape.new(name: 'NodeAggregator')
+    NodeAggregatorList = Shapes::ListShape.new(name: 'NodeAggregatorList')
+    NodeAggregatorType = Shapes::StringShape.new(name: 'NodeAggregatorType')
+    NodeAttributeName = Shapes::StringShape.new(name: 'NodeAttributeName')
+    NodeCaptureTime = Shapes::TimestampShape.new(name: 'NodeCaptureTime')
+    NodeFilter = Shapes::StructureShape.new(name: 'NodeFilter')
+    NodeFilterKey = Shapes::StringShape.new(name: 'NodeFilterKey')
+    NodeFilterList = Shapes::ListShape.new(name: 'NodeFilterList')
+    NodeFilterOperatorType = Shapes::StringShape.new(name: 'NodeFilterOperatorType')
+    NodeFilterValue = Shapes::StringShape.new(name: 'NodeFilterValue')
+    NodeFilterValueList = Shapes::ListShape.new(name: 'NodeFilterValueList')
+    NodeId = Shapes::StringShape.new(name: 'NodeId')
+    NodeList = Shapes::ListShape.new(name: 'NodeList')
+    NodeOrganizationalUnitId = Shapes::StringShape.new(name: 'NodeOrganizationalUnitId')
+    NodeOrganizationalUnitPath = Shapes::StringShape.new(name: 'NodeOrganizationalUnitPath')
+    NodeOwnerInfo = Shapes::StructureShape.new(name: 'NodeOwnerInfo')
+    NodeRegion = Shapes::StringShape.new(name: 'NodeRegion')
+    NodeSummary = Shapes::MapShape.new(name: 'NodeSummary')
+    NodeSummaryList = Shapes::ListShape.new(name: 'NodeSummaryList')
+    NodeType = Shapes::UnionShape.new(name: 'NodeType')
+    NodeTypeName = Shapes::StringShape.new(name: 'NodeTypeName')
     NonCompliantSummary = Shapes::StructureShape.new(name: 'NonCompliantSummary')
     NormalStringMap = Shapes::MapShape.new(name: 'NormalStringMap')
     NotificationArn = Shapes::StringShape.new(name: 'NotificationArn')
@@ -1003,6 +1045,7 @@ module Aws::SSM
     PutResourcePolicyResponse = Shapes::StructureShape.new(name: 'PutResourcePolicyResponse')
     RebootOption = Shapes::StringShape.new(name: 'RebootOption')
     Region = Shapes::StringShape.new(name: 'Region')
+    RegionList = Shapes::ListShape.new(name: 'RegionList')
     Regions = Shapes::ListShape.new(name: 'Regions')
     RegisterDefaultPatchBaselineRequest = Shapes::StructureShape.new(name: 'RegisterDefaultPatchBaselineRequest')
     RegisterDefaultPatchBaselineResult = Shapes::StructureShape.new(name: 'RegisterDefaultPatchBaselineResult')
@@ -1141,6 +1184,8 @@ module Aws::SSM
     StartAutomationExecutionResult = Shapes::StructureShape.new(name: 'StartAutomationExecutionResult')
     StartChangeRequestExecutionRequest = Shapes::StructureShape.new(name: 'StartChangeRequestExecutionRequest')
     StartChangeRequestExecutionResult = Shapes::StructureShape.new(name: 'StartChangeRequestExecutionResult')
+    StartExecutionPreviewRequest = Shapes::StructureShape.new(name: 'StartExecutionPreviewRequest')
+    StartExecutionPreviewResponse = Shapes::StructureShape.new(name: 'StartExecutionPreviewResponse')
     StartSessionRequest = Shapes::StructureShape.new(name: 'StartSessionRequest')
     StartSessionResponse = Shapes::StructureShape.new(name: 'StartSessionResponse')
     StatusAdditionalInfo = Shapes::StringShape.new(name: 'StatusAdditionalInfo')
@@ -1155,6 +1200,7 @@ module Aws::SSM
     StepExecutionFilterValue = Shapes::StringShape.new(name: 'StepExecutionFilterValue')
     StepExecutionFilterValueList = Shapes::ListShape.new(name: 'StepExecutionFilterValueList')
     StepExecutionList = Shapes::ListShape.new(name: 'StepExecutionList')
+    StepPreviewMap = Shapes::MapShape.new(name: 'StepPreviewMap')
     StopAutomationExecutionRequest = Shapes::StructureShape.new(name: 'StopAutomationExecutionRequest')
     StopAutomationExecutionResult = Shapes::StructureShape.new(name: 'StopAutomationExecutionResult')
     StopType = Shapes::StringShape.new(name: 'StopType')
@@ -1181,6 +1227,8 @@ module Aws::SSM
     TargetMaps = Shapes::ListShape.new(name: 'TargetMaps')
     TargetNotConnected = Shapes::StructureShape.new(name: 'TargetNotConnected')
     TargetParameterList = Shapes::ListShape.new(name: 'TargetParameterList')
+    TargetPreview = Shapes::StructureShape.new(name: 'TargetPreview')
+    TargetPreviewList = Shapes::ListShape.new(name: 'TargetPreviewList')
     TargetType = Shapes::StringShape.new(name: 'TargetType')
     TargetValue = Shapes::StringShape.new(name: 'TargetValue')
     TargetValues = Shapes::ListShape.new(name: 'TargetValues')
@@ -1201,6 +1249,7 @@ module Aws::SSM
     UnsupportedInventoryItemContextException = Shapes::StructureShape.new(name: 'UnsupportedInventoryItemContextException')
     UnsupportedInventorySchemaVersionException = Shapes::StructureShape.new(name: 'UnsupportedInventorySchemaVersionException')
     UnsupportedOperatingSystem = Shapes::StructureShape.new(name: 'UnsupportedOperatingSystem')
+    UnsupportedOperationException = Shapes::StructureShape.new(name: 'UnsupportedOperationException')
     UnsupportedParameterType = Shapes::StructureShape.new(name: 'UnsupportedParameterType')
     UnsupportedPlatformType = Shapes::StructureShape.new(name: 'UnsupportedPlatformType')
     UpdateAssociationRequest = Shapes::StructureShape.new(name: 'UpdateAssociationRequest')
@@ -1234,6 +1283,7 @@ module Aws::SSM
     Url = Shapes::StringShape.new(name: 'Url')
     ValidNextStep = Shapes::StringShape.new(name: 'ValidNextStep')
     ValidNextStepList = Shapes::ListShape.new(name: 'ValidNextStepList')
+    ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     Version = Shapes::StringShape.new(name: 'Version')
 
     AccountIdList.member = Shapes::ShapeRef.new(shape: AccountId)
@@ -1522,6 +1572,14 @@ module Aws::SSM
 
     AutomationExecutionFilterValueList.member = Shapes::ShapeRef.new(shape: AutomationExecutionFilterValue)
 
+    AutomationExecutionInputs.add_member(:parameters, Shapes::ShapeRef.new(shape: AutomationParameterMap, location_name: "Parameters"))
+    AutomationExecutionInputs.add_member(:target_parameter_name, Shapes::ShapeRef.new(shape: AutomationParameterKey, location_name: "TargetParameterName"))
+    AutomationExecutionInputs.add_member(:targets, Shapes::ShapeRef.new(shape: Targets, location_name: "Targets"))
+    AutomationExecutionInputs.add_member(:target_maps, Shapes::ShapeRef.new(shape: TargetMaps, location_name: "TargetMaps"))
+    AutomationExecutionInputs.add_member(:target_locations, Shapes::ShapeRef.new(shape: TargetLocations, location_name: "TargetLocations"))
+    AutomationExecutionInputs.add_member(:target_locations_url, Shapes::ShapeRef.new(shape: TargetLocationsURL, location_name: "TargetLocationsURL"))
+    AutomationExecutionInputs.struct_class = Types::AutomationExecutionInputs
+
     AutomationExecutionLimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     AutomationExecutionLimitExceededException.struct_class = Types::AutomationExecutionLimitExceededException
 
@@ -1562,6 +1620,12 @@ module Aws::SSM
 
     AutomationExecutionNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     AutomationExecutionNotFoundException.struct_class = Types::AutomationExecutionNotFoundException
+
+    AutomationExecutionPreview.add_member(:step_previews, Shapes::ShapeRef.new(shape: StepPreviewMap, location_name: "StepPreviews"))
+    AutomationExecutionPreview.add_member(:regions, Shapes::ShapeRef.new(shape: RegionList, location_name: "Regions"))
+    AutomationExecutionPreview.add_member(:target_previews, Shapes::ShapeRef.new(shape: TargetPreviewList, location_name: "TargetPreviews"))
+    AutomationExecutionPreview.add_member(:total_accounts, Shapes::ShapeRef.new(shape: Integer, location_name: "TotalAccounts"))
+    AutomationExecutionPreview.struct_class = Types::AutomationExecutionPreview
 
     AutomationParameterMap.key = Shapes::ShapeRef.new(shape: AutomationParameterKey)
     AutomationParameterMap.value = Shapes::ShapeRef.new(shape: AutomationParameterValueList)
@@ -2497,6 +2561,18 @@ module Aws::SSM
 
     ExcludeAccounts.member = Shapes::ShapeRef.new(shape: ExcludeAccount)
 
+    ExecutionInputs.add_member(:automation, Shapes::ShapeRef.new(shape: AutomationExecutionInputs, location_name: "Automation"))
+    ExecutionInputs.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ExecutionInputs.add_member_subclass(:automation, Types::ExecutionInputs::Automation)
+    ExecutionInputs.add_member_subclass(:unknown, Types::ExecutionInputs::Unknown)
+    ExecutionInputs.struct_class = Types::ExecutionInputs
+
+    ExecutionPreview.add_member(:automation, Shapes::ShapeRef.new(shape: AutomationExecutionPreview, location_name: "Automation"))
+    ExecutionPreview.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ExecutionPreview.add_member_subclass(:automation, Types::ExecutionPreview::Automation)
+    ExecutionPreview.add_member_subclass(:unknown, Types::ExecutionPreview::Unknown)
+    ExecutionPreview.struct_class = Types::ExecutionPreview
+
     FailedCreateAssociation.add_member(:entry, Shapes::ShapeRef.new(shape: CreateAssociationBatchRequestEntry, location_name: "Entry"))
     FailedCreateAssociation.add_member(:message, Shapes::ShapeRef.new(shape: BatchErrorMessage, location_name: "Message"))
     FailedCreateAssociation.add_member(:fault, Shapes::ShapeRef.new(shape: Fault, location_name: "Fault"))
@@ -2596,6 +2672,16 @@ module Aws::SSM
     GetDocumentResult.add_member(:attachments_content, Shapes::ShapeRef.new(shape: AttachmentContentList, location_name: "AttachmentsContent"))
     GetDocumentResult.add_member(:review_status, Shapes::ShapeRef.new(shape: ReviewStatus, location_name: "ReviewStatus"))
     GetDocumentResult.struct_class = Types::GetDocumentResult
+
+    GetExecutionPreviewRequest.add_member(:execution_preview_id, Shapes::ShapeRef.new(shape: ExecutionPreviewId, required: true, location_name: "ExecutionPreviewId"))
+    GetExecutionPreviewRequest.struct_class = Types::GetExecutionPreviewRequest
+
+    GetExecutionPreviewResponse.add_member(:execution_preview_id, Shapes::ShapeRef.new(shape: ExecutionPreviewId, location_name: "ExecutionPreviewId"))
+    GetExecutionPreviewResponse.add_member(:ended_at, Shapes::ShapeRef.new(shape: DateTime, location_name: "EndedAt"))
+    GetExecutionPreviewResponse.add_member(:status, Shapes::ShapeRef.new(shape: ExecutionPreviewStatus, location_name: "Status"))
+    GetExecutionPreviewResponse.add_member(:status_message, Shapes::ShapeRef.new(shape: String, location_name: "StatusMessage"))
+    GetExecutionPreviewResponse.add_member(:execution_preview, Shapes::ShapeRef.new(shape: ExecutionPreview, location_name: "ExecutionPreview"))
+    GetExecutionPreviewResponse.struct_class = Types::GetExecutionPreviewResponse
 
     GetInventoryRequest.add_member(:filters, Shapes::ShapeRef.new(shape: InventoryFilterList, location_name: "Filters"))
     GetInventoryRequest.add_member(:aggregators, Shapes::ShapeRef.new(shape: InventoryAggregatorList, location_name: "Aggregators"))
@@ -2879,6 +2965,18 @@ module Aws::SSM
     InstanceAssociationStatusInfos.member = Shapes::ShapeRef.new(shape: InstanceAssociationStatusInfo)
 
     InstanceIdList.member = Shapes::ShapeRef.new(shape: InstanceId)
+
+    InstanceInfo.add_member(:agent_type, Shapes::ShapeRef.new(shape: AgentType, location_name: "AgentType"))
+    InstanceInfo.add_member(:agent_version, Shapes::ShapeRef.new(shape: AgentVersion, location_name: "AgentVersion"))
+    InstanceInfo.add_member(:computer_name, Shapes::ShapeRef.new(shape: ComputerName, location_name: "ComputerName"))
+    InstanceInfo.add_member(:instance_status, Shapes::ShapeRef.new(shape: InstanceStatus, location_name: "InstanceStatus"))
+    InstanceInfo.add_member(:ip_address, Shapes::ShapeRef.new(shape: IpAddress, location_name: "IpAddress"))
+    InstanceInfo.add_member(:managed_status, Shapes::ShapeRef.new(shape: ManagedStatus, location_name: "ManagedStatus"))
+    InstanceInfo.add_member(:platform_type, Shapes::ShapeRef.new(shape: PlatformType, location_name: "PlatformType"))
+    InstanceInfo.add_member(:platform_name, Shapes::ShapeRef.new(shape: PlatformName, location_name: "PlatformName"))
+    InstanceInfo.add_member(:platform_version, Shapes::ShapeRef.new(shape: PlatformVersion, location_name: "PlatformVersion"))
+    InstanceInfo.add_member(:resource_type, Shapes::ShapeRef.new(shape: ResourceType, location_name: "ResourceType"))
+    InstanceInfo.struct_class = Types::InstanceInfo
 
     InstanceInformation.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, location_name: "InstanceId"))
     InstanceInformation.add_member(:ping_status, Shapes::ShapeRef.new(shape: PingStatus, location_name: "PingStatus"))
@@ -3371,6 +3469,27 @@ module Aws::SSM
     ListInventoryEntriesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     ListInventoryEntriesResult.struct_class = Types::ListInventoryEntriesResult
 
+    ListNodesRequest.add_member(:sync_name, Shapes::ShapeRef.new(shape: ResourceDataSyncName, location_name: "SyncName"))
+    ListNodesRequest.add_member(:filters, Shapes::ShapeRef.new(shape: NodeFilterList, location_name: "Filters"))
+    ListNodesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListNodesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults", metadata: {"box"=>true}))
+    ListNodesRequest.struct_class = Types::ListNodesRequest
+
+    ListNodesResult.add_member(:nodes, Shapes::ShapeRef.new(shape: NodeList, location_name: "Nodes"))
+    ListNodesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListNodesResult.struct_class = Types::ListNodesResult
+
+    ListNodesSummaryRequest.add_member(:sync_name, Shapes::ShapeRef.new(shape: ResourceDataSyncName, location_name: "SyncName"))
+    ListNodesSummaryRequest.add_member(:filters, Shapes::ShapeRef.new(shape: NodeFilterList, location_name: "Filters"))
+    ListNodesSummaryRequest.add_member(:aggregators, Shapes::ShapeRef.new(shape: NodeAggregatorList, required: true, location_name: "Aggregators"))
+    ListNodesSummaryRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListNodesSummaryRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults", metadata: {"box"=>true}))
+    ListNodesSummaryRequest.struct_class = Types::ListNodesSummaryRequest
+
+    ListNodesSummaryResult.add_member(:summary, Shapes::ShapeRef.new(shape: NodeSummaryList, location_name: "Summary"))
+    ListNodesSummaryResult.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListNodesSummaryResult.struct_class = Types::ListNodesSummaryResult
+
     ListOpsItemEventsRequest.add_member(:filters, Shapes::ShapeRef.new(shape: OpsItemEventFilters, location_name: "Filters"))
     ListOpsItemEventsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: OpsItemEventMaxResults, location_name: "MaxResults"))
     ListOpsItemEventsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
@@ -3595,6 +3714,48 @@ module Aws::SSM
     ModifyDocumentPermissionRequest.struct_class = Types::ModifyDocumentPermissionRequest
 
     ModifyDocumentPermissionResponse.struct_class = Types::ModifyDocumentPermissionResponse
+
+    Node.add_member(:capture_time, Shapes::ShapeRef.new(shape: NodeCaptureTime, location_name: "CaptureTime"))
+    Node.add_member(:id, Shapes::ShapeRef.new(shape: NodeId, location_name: "Id"))
+    Node.add_member(:owner, Shapes::ShapeRef.new(shape: NodeOwnerInfo, location_name: "Owner"))
+    Node.add_member(:region, Shapes::ShapeRef.new(shape: NodeRegion, location_name: "Region"))
+    Node.add_member(:node_type, Shapes::ShapeRef.new(shape: NodeType, location_name: "NodeType"))
+    Node.struct_class = Types::Node
+
+    NodeAggregator.add_member(:aggregator_type, Shapes::ShapeRef.new(shape: NodeAggregatorType, required: true, location_name: "AggregatorType"))
+    NodeAggregator.add_member(:type_name, Shapes::ShapeRef.new(shape: NodeTypeName, required: true, location_name: "TypeName"))
+    NodeAggregator.add_member(:attribute_name, Shapes::ShapeRef.new(shape: NodeAttributeName, required: true, location_name: "AttributeName"))
+    NodeAggregator.add_member(:aggregators, Shapes::ShapeRef.new(shape: NodeAggregatorList, location_name: "Aggregators"))
+    NodeAggregator.struct_class = Types::NodeAggregator
+
+    NodeAggregatorList.member = Shapes::ShapeRef.new(shape: NodeAggregator)
+
+    NodeFilter.add_member(:key, Shapes::ShapeRef.new(shape: NodeFilterKey, required: true, location_name: "Key"))
+    NodeFilter.add_member(:values, Shapes::ShapeRef.new(shape: NodeFilterValueList, required: true, location_name: "Values"))
+    NodeFilter.add_member(:type, Shapes::ShapeRef.new(shape: NodeFilterOperatorType, location_name: "Type"))
+    NodeFilter.struct_class = Types::NodeFilter
+
+    NodeFilterList.member = Shapes::ShapeRef.new(shape: NodeFilter)
+
+    NodeFilterValueList.member = Shapes::ShapeRef.new(shape: NodeFilterValue)
+
+    NodeList.member = Shapes::ShapeRef.new(shape: Node)
+
+    NodeOwnerInfo.add_member(:account_id, Shapes::ShapeRef.new(shape: NodeAccountId, location_name: "AccountId"))
+    NodeOwnerInfo.add_member(:organizational_unit_id, Shapes::ShapeRef.new(shape: NodeOrganizationalUnitId, location_name: "OrganizationalUnitId"))
+    NodeOwnerInfo.add_member(:organizational_unit_path, Shapes::ShapeRef.new(shape: NodeOrganizationalUnitPath, location_name: "OrganizationalUnitPath"))
+    NodeOwnerInfo.struct_class = Types::NodeOwnerInfo
+
+    NodeSummary.key = Shapes::ShapeRef.new(shape: AttributeName)
+    NodeSummary.value = Shapes::ShapeRef.new(shape: AttributeValue)
+
+    NodeSummaryList.member = Shapes::ShapeRef.new(shape: NodeSummary)
+
+    NodeType.add_member(:instance, Shapes::ShapeRef.new(shape: InstanceInfo, location_name: "Instance"))
+    NodeType.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    NodeType.add_member_subclass(:instance, Types::NodeType::Instance)
+    NodeType.add_member_subclass(:unknown, Types::NodeType::Unknown)
+    NodeType.struct_class = Types::NodeType
 
     NonCompliantSummary.add_member(:non_compliant_count, Shapes::ShapeRef.new(shape: ComplianceSummaryCount, location_name: "NonCompliantCount"))
     NonCompliantSummary.add_member(:severity_summary, Shapes::ShapeRef.new(shape: SeveritySummary, location_name: "SeveritySummary"))
@@ -4117,6 +4278,8 @@ module Aws::SSM
     PutResourcePolicyResponse.add_member(:policy_hash, Shapes::ShapeRef.new(shape: PolicyHash, location_name: "PolicyHash"))
     PutResourcePolicyResponse.struct_class = Types::PutResourcePolicyResponse
 
+    RegionList.member = Shapes::ShapeRef.new(shape: Region)
+
     Regions.member = Shapes::ShapeRef.new(shape: Region)
 
     RegisterDefaultPatchBaselineRequest.add_member(:baseline_id, Shapes::ShapeRef.new(shape: BaselineId, required: true, location_name: "BaselineId"))
@@ -4467,6 +4630,14 @@ module Aws::SSM
     StartChangeRequestExecutionResult.add_member(:automation_execution_id, Shapes::ShapeRef.new(shape: AutomationExecutionId, location_name: "AutomationExecutionId"))
     StartChangeRequestExecutionResult.struct_class = Types::StartChangeRequestExecutionResult
 
+    StartExecutionPreviewRequest.add_member(:document_name, Shapes::ShapeRef.new(shape: DocumentName, required: true, location_name: "DocumentName"))
+    StartExecutionPreviewRequest.add_member(:document_version, Shapes::ShapeRef.new(shape: DocumentVersion, location_name: "DocumentVersion"))
+    StartExecutionPreviewRequest.add_member(:execution_inputs, Shapes::ShapeRef.new(shape: ExecutionInputs, location_name: "ExecutionInputs"))
+    StartExecutionPreviewRequest.struct_class = Types::StartExecutionPreviewRequest
+
+    StartExecutionPreviewResponse.add_member(:execution_preview_id, Shapes::ShapeRef.new(shape: ExecutionPreviewId, location_name: "ExecutionPreviewId"))
+    StartExecutionPreviewResponse.struct_class = Types::StartExecutionPreviewResponse
+
     StartSessionRequest.add_member(:target, Shapes::ShapeRef.new(shape: SessionTarget, required: true, location_name: "Target"))
     StartSessionRequest.add_member(:document_name, Shapes::ShapeRef.new(shape: DocumentARN, location_name: "DocumentName"))
     StartSessionRequest.add_member(:reason, Shapes::ShapeRef.new(shape: SessionReason, location_name: "Reason"))
@@ -4515,6 +4686,9 @@ module Aws::SSM
     StepExecutionFilterValueList.member = Shapes::ShapeRef.new(shape: StepExecutionFilterValue)
 
     StepExecutionList.member = Shapes::ShapeRef.new(shape: StepExecution)
+
+    StepPreviewMap.key = Shapes::ShapeRef.new(shape: ImpactType)
+    StepPreviewMap.value = Shapes::ShapeRef.new(shape: Integer)
 
     StopAutomationExecutionRequest.add_member(:automation_execution_id, Shapes::ShapeRef.new(shape: AutomationExecutionId, required: true, location_name: "AutomationExecutionId"))
     StopAutomationExecutionRequest.add_member(:type, Shapes::ShapeRef.new(shape: StopType, location_name: "Type"))
@@ -4567,6 +4741,12 @@ module Aws::SSM
 
     TargetParameterList.member = Shapes::ShapeRef.new(shape: ParameterValue)
 
+    TargetPreview.add_member(:count, Shapes::ShapeRef.new(shape: Integer, location_name: "Count"))
+    TargetPreview.add_member(:target_type, Shapes::ShapeRef.new(shape: String, location_name: "TargetType"))
+    TargetPreview.struct_class = Types::TargetPreview
+
+    TargetPreviewList.member = Shapes::ShapeRef.new(shape: TargetPreview)
+
     TargetValues.member = Shapes::ShapeRef.new(shape: TargetValue)
 
     Targets.member = Shapes::ShapeRef.new(shape: Target)
@@ -4609,6 +4789,9 @@ module Aws::SSM
 
     UnsupportedOperatingSystem.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     UnsupportedOperatingSystem.struct_class = Types::UnsupportedOperatingSystem
+
+    UnsupportedOperationException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
+    UnsupportedOperationException.struct_class = Types::UnsupportedOperationException
 
     UnsupportedParameterType.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))
     UnsupportedParameterType.struct_class = Types::UnsupportedParameterType
@@ -4836,6 +5019,10 @@ module Aws::SSM
     UpdateServiceSettingResult.struct_class = Types::UpdateServiceSettingResult
 
     ValidNextStepList.member = Shapes::ShapeRef.new(shape: ValidNextStep)
+
+    ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
+    ValidationException.add_member(:reason_code, Shapes::ShapeRef.new(shape: String, location_name: "ReasonCode"))
+    ValidationException.struct_class = Types::ValidationException
 
 
     # @api private
@@ -5827,6 +6014,16 @@ module Aws::SSM
         o.errors << Shapes::ShapeRef.new(shape: InvalidDocumentVersion)
       end)
 
+      api.add_operation(:get_execution_preview, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetExecutionPreview"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetExecutionPreviewRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetExecutionPreviewResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:get_inventory, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetInventory"
         o.http_method = "POST"
@@ -6243,6 +6440,45 @@ module Aws::SSM
         o.errors << Shapes::ShapeRef.new(shape: InvalidNextToken)
       end)
 
+      api.add_operation(:list_nodes, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListNodes"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListNodesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListNodesResult)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidFilter)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidNextToken)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceDataSyncNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperationException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_nodes_summary, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListNodesSummary"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListNodesSummaryRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListNodesSummaryResult)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidAggregatorException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidFilter)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidNextToken)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceDataSyncNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnsupportedOperationException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_ops_item_events, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListOpsItemEvents"
         o.http_method = "POST"
@@ -6575,6 +6811,16 @@ module Aws::SSM
         o.errors << Shapes::ShapeRef.new(shape: IdempotentParameterMismatch)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
         o.errors << Shapes::ShapeRef.new(shape: AutomationDefinitionNotApprovedException)
+      end)
+
+      api.add_operation(:start_execution_preview, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartExecutionPreview"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: StartExecutionPreviewRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartExecutionPreviewResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
       end)
 
       api.add_operation(:start_session, Seahorse::Model::Operation.new.tap do |o|

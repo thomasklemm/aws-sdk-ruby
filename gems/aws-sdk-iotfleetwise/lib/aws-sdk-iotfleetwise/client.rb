@@ -519,6 +519,21 @@ module Aws::IoTFleetWise
     #             value: "TagValue", # required
     #           },
     #         ],
+    #         state_templates: [
+    #           {
+    #             identifier: "ResourceIdentifier", # required
+    #             state_template_update_strategy: { # required
+    #               periodic: {
+    #                 state_template_update_rate: { # required
+    #                   unit: "MILLISECOND", # required, accepts MILLISECOND, SECOND, MINUTE, HOUR
+    #                   value: 1, # required
+    #                 },
+    #               },
+    #               on_change: {
+    #               },
+    #             },
+    #           },
+    #         ],
     #       },
     #     ],
     #   })
@@ -576,6 +591,22 @@ module Aws::IoTFleetWise
     #           "attributeName" => "attributeValue",
     #         },
     #         attribute_update_mode: "Overwrite", # accepts Overwrite, Merge
+    #         state_templates_to_add: [
+    #           {
+    #             identifier: "ResourceIdentifier", # required
+    #             state_template_update_strategy: { # required
+    #               periodic: {
+    #                 state_template_update_rate: { # required
+    #                   unit: "MILLISECOND", # required, accepts MILLISECOND, SECOND, MINUTE, HOUR
+    #                   value: 1, # required
+    #                 },
+    #               },
+    #               on_change: {
+    #               },
+    #             },
+    #           },
+    #         ],
+    #         state_templates_to_remove: ["ResourceIdentifier"],
     #       },
     #     ],
     #   })
@@ -608,9 +639,15 @@ module Aws::IoTFleetWise
     # campaigns][1] in the *Amazon Web Services IoT FleetWise Developer
     # Guide*.
     #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][2] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/campaigns.html
+    # [2]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
     #
     # @option params [required, String] :name
     #   The name of the campaign to create.
@@ -626,35 +663,33 @@ module Aws::IoTFleetWise
     #   The ARN of the vehicle or fleet to deploy a campaign to.
     #
     # @option params [Time,DateTime,Date,Integer,String] :start_time
-    #   (Optional) The time, in milliseconds, to deliver a campaign after it
-    #   was approved. If it's not specified, `0` is used.
+    #   The time, in milliseconds, to deliver a campaign after it was
+    #   approved. If it's not specified, `0` is used.
     #
     #   Default: `0`
     #
     # @option params [Time,DateTime,Date,Integer,String] :expiry_time
-    #   (Optional) The time the campaign expires, in seconds since epoch
-    #   (January 1, 1970 at midnight UTC time). Vehicle data isn't collected
-    #   after the campaign expires.
+    #   The time the campaign expires, in seconds since epoch (January 1, 1970
+    #   at midnight UTC time). Vehicle data isn't collected after the
+    #   campaign expires.
     #
     #   Default: 253402214400 (December 31, 9999, 00:00:00 UTC)
     #
     # @option params [Integer] :post_trigger_collection_duration
-    #   (Optional) How long (in milliseconds) to collect raw data after a
-    #   triggering event initiates the collection. If it's not specified, `0`
-    #   is used.
+    #   How long (in milliseconds) to collect raw data after a triggering
+    #   event initiates the collection. If it's not specified, `0` is used.
     #
     #   Default: `0`
     #
     # @option params [String] :diagnostics_mode
-    #   (Optional) Option for a vehicle to send diagnostic trouble codes to
-    #   Amazon Web Services IoT FleetWise. If you want to send diagnostic
-    #   trouble codes, use `SEND_ACTIVE_DTCS`. If it's not specified, `OFF`
-    #   is used.
+    #   Option for a vehicle to send diagnostic trouble codes to Amazon Web
+    #   Services IoT FleetWise. If you want to send diagnostic trouble codes,
+    #   use `SEND_ACTIVE_DTCS`. If it's not specified, `OFF` is used.
     #
     #   Default: `OFF`
     #
     # @option params [String] :spooling_mode
-    #   (Optional) Whether to store collected data after a vehicle lost a
+    #   Determines whether to store collected data after a vehicle lost a
     #   connection with the cloud. After a connection is re-established, the
     #   data is automatically forwarded to Amazon Web Services IoT FleetWise.
     #   If you want to store collected data when a vehicle loses connection
@@ -663,29 +698,35 @@ module Aws::IoTFleetWise
     #   Default: `OFF`
     #
     # @option params [String] :compression
-    #   (Optional) Whether to compress signals before transmitting data to
+    #   Determines whether to compress signals before transmitting data to
     #   Amazon Web Services IoT FleetWise. If you don't want to compress the
     #   signals, use `OFF`. If it's not specified, `SNAPPY` is used.
     #
     #   Default: `SNAPPY`
     #
     # @option params [Integer] :priority
-    #   (Optional) A number indicating the priority of one campaign over
-    #   another campaign for a certain vehicle or fleet. A campaign with the
-    #   lowest value is deployed to vehicles before any other campaigns. If
-    #   it's not specified, `0` is used.
+    #   A number indicating the priority of one campaign over another campaign
+    #   for a certain vehicle or fleet. A campaign with the lowest value is
+    #   deployed to vehicles before any other campaigns. If it's not
+    #   specified, `0` is used.
     #
     #   Default: `0`
     #
     # @option params [Array<Types::SignalInformation>] :signals_to_collect
-    #   (Optional) A list of information about signals to collect.
+    #   A list of information about signals to collect.
+    #
+    #   <note markdown="1"> If you upload a signal as a condition in a data partition for a
+    #   campaign, then those same signals must be included in
+    #   `signalsToCollect`.
+    #
+    #    </note>
     #
     # @option params [required, Types::CollectionScheme] :collection_scheme
     #   The data collection scheme associated with the campaign. You can
     #   specify a scheme that collects data based on time or an event.
     #
     # @option params [Array<String>] :data_extra_dimensions
-    #   (Optional) A list of vehicle attributes to associate with a campaign.
+    #   A list of vehicle attributes to associate with a campaign.
     #
     #   Enrich the data with specified vehicle attributes. For example, add
     #   `make` and `model` to the campaign, and Amazon Web Services IoT
@@ -699,8 +740,11 @@ module Aws::IoTFleetWise
     #   Metadata that can be used to manage the campaign.
     #
     # @option params [Array<Types::DataDestinationConfig>] :data_destination_configs
-    #   The destination where the campaign sends data. You can choose to send
-    #   data to be stored in Amazon S3 or Amazon Timestream.
+    #   The destination where the campaign sends data. You can send data to an
+    #   MQTT topic, or store it in Amazon S3 or Amazon Timestream.
+    #
+    #   MQTT is the publish/subscribe messaging protocol used by Amazon Web
+    #   Services IoT to communicate with your devices.
     #
     #   Amazon S3 optimizes the cost of data storage and provides additional
     #   mechanisms to use vehicle data, such as data lakes, centralized data
@@ -712,6 +756,13 @@ module Aws::IoTFleetWise
     #   You can use Amazon Timestream to access and analyze time series data,
     #   and Timestream to query vehicle data so that you can identify trends
     #   and patterns.
+    #
+    # @option params [Array<Types::DataPartition>] :data_partitions
+    #   The data partitions associated with the signals collected from the
+    #   vehicle.
+    #
+    # @option params [Array<Types::SignalFetchInformation>] :signals_to_fetch
+    #   A list of information about signals to fetch.
     #
     # @return [Types::CreateCampaignResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -737,6 +788,7 @@ module Aws::IoTFleetWise
     #         name: "wildcardSignalName", # required
     #         max_sample_count: 1,
     #         minimum_sampling_interval_ms: 1,
+    #         data_partition_id: "DataPartitionId",
     #       },
     #     ],
     #     collection_scheme: { # required
@@ -769,6 +821,46 @@ module Aws::IoTFleetWise
     #           timestream_table_arn: "TimestreamTableArn", # required
     #           execution_role_arn: "IAMRoleArn", # required
     #         },
+    #         mqtt_topic_config: {
+    #           mqtt_topic_arn: "MqttTopicArn", # required
+    #           execution_role_arn: "IAMRoleArn", # required
+    #         },
+    #       },
+    #     ],
+    #     data_partitions: [
+    #       {
+    #         id: "DataPartitionId", # required
+    #         storage_options: { # required
+    #           maximum_size: { # required
+    #             unit: "MB", # required, accepts MB, GB, TB
+    #             value: 1, # required
+    #           },
+    #           storage_location: "StorageLocation", # required
+    #           minimum_time_to_live: { # required
+    #             unit: "HOURS", # required, accepts HOURS, DAYS, WEEKS
+    #             value: 1, # required
+    #           },
+    #         },
+    #         upload_options: {
+    #           expression: "eventExpression", # required
+    #           condition_language_version: 1,
+    #         },
+    #       },
+    #     ],
+    #     signals_to_fetch: [
+    #       {
+    #         fully_qualified_name: "NodePath", # required
+    #         signal_fetch_config: { # required
+    #           time_based: {
+    #             execution_frequency_ms: 1, # required
+    #           },
+    #           condition_based: {
+    #             condition_expression: "fetchConfigEventExpression", # required
+    #             trigger_mode: "ALWAYS", # required, accepts ALWAYS, RISING_EDGE
+    #           },
+    #         },
+    #         condition_language_version: 1,
+    #         actions: ["actionEventExpression"], # required
     #       },
     #     ],
     #   })
@@ -811,6 +903,19 @@ module Aws::IoTFleetWise
     # @option params [Array<Types::NetworkInterface>] :network_interfaces
     #   A list of information about available network interfaces.
     #
+    # @option params [String] :default_for_unmapped_signals
+    #   Use default decoders for all unmapped signals in the model. You don't
+    #   need to provide any detailed decoding information.
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services Region
+    #   and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
     # @option params [Array<Types::Tag>] :tags
     #   Metadata that can be used to manage the decoder manifest.
     #
@@ -828,7 +933,7 @@ module Aws::IoTFleetWise
     #     signal_decoders: [
     #       {
     #         fully_qualified_name: "FullyQualifiedName", # required
-    #         type: "CAN_SIGNAL", # required, accepts CAN_SIGNAL, OBD_SIGNAL, MESSAGE_SIGNAL
+    #         type: "CAN_SIGNAL", # required, accepts CAN_SIGNAL, OBD_SIGNAL, MESSAGE_SIGNAL, CUSTOM_DECODING_SIGNAL
     #         interface_id: "InterfaceId", # required
     #         can_signal: {
     #           message_id: 1, # required
@@ -880,12 +985,15 @@ module Aws::IoTFleetWise
     #             ],
     #           },
     #         },
+    #         custom_decoding_signal: {
+    #           id: "CustomDecodingId", # required
+    #         },
     #       },
     #     ],
     #     network_interfaces: [
     #       {
     #         interface_id: "InterfaceId", # required
-    #         type: "CAN_INTERFACE", # required, accepts CAN_INTERFACE, OBD_INTERFACE, VEHICLE_MIDDLEWARE
+    #         type: "CAN_INTERFACE", # required, accepts CAN_INTERFACE, OBD_INTERFACE, VEHICLE_MIDDLEWARE, CUSTOM_DECODING_INTERFACE
     #         can_interface: {
     #           name: "CanInterfaceName", # required
     #           protocol_name: "ProtocolName",
@@ -904,8 +1012,12 @@ module Aws::IoTFleetWise
     #           name: "VehicleMiddlewareName", # required
     #           protocol_name: "ROS_2", # required, accepts ROS_2
     #         },
+    #         custom_decoding_interface: {
+    #           name: "CustomDecodingSignalInterfaceName", # required
+    #         },
     #       },
     #     ],
+    #     default_for_unmapped_signals: "CUSTOM_DECODING", # accepts CUSTOM_DECODING
     #     tags: [
     #       {
     #         key: "TagKey", # required
@@ -1149,6 +1261,99 @@ module Aws::IoTFleetWise
       req.send_request(options)
     end
 
+    # Creates a state template. State templates contain state properties,
+    # which are signals that belong to a signal catalog that is synchronized
+    # between the Amazon Web Services IoT FleetWise Edge and the Amazon Web
+    # Services Cloud.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @option params [required, String] :name
+    #   The name of the state template.
+    #
+    # @option params [String] :description
+    #   A brief description of the state template.
+    #
+    # @option params [required, String] :signal_catalog_arn
+    #   The ARN of the signal catalog associated with the state template.
+    #
+    # @option params [required, Array<String>] :state_template_properties
+    #   A list of signals from which data is collected. The state template
+    #   properties contain the fully qualified names of the signals.
+    #
+    # @option params [Array<String>] :data_extra_dimensions
+    #   A list of vehicle attributes to associate with the payload published
+    #   on the state template's MQTT topic. (See [ Processing last known
+    #   state vehicle data using MQTT messaging][1]). For example, if you add
+    #   `Vehicle.Attributes.Make` and `Vehicle.Attributes.Model` attributes,
+    #   Amazon Web Services IoT FleetWise will enrich the protobuf encoded
+    #   payload with those attributes in the `extraDimensions` field.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #
+    # @option params [Array<String>] :metadata_extra_dimensions
+    #   A list of vehicle attributes to associate with user properties of the
+    #   messages published on the state template's MQTT topic. (See [
+    #   Processing last known state vehicle data using MQTT messaging][1]).
+    #   For example, if you add `Vehicle.Attributes.Make` and
+    #   `Vehicle.Attributes.Model` attributes, Amazon Web Services IoT
+    #   FleetWise will include these attributes as User Properties with the
+    #   MQTT message.
+    #
+    #   Default: An empty array
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   Metadata that can be used to manage the state template.
+    #
+    # @return [Types::CreateStateTemplateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateStateTemplateResponse#name #name} => String
+    #   * {Types::CreateStateTemplateResponse#arn #arn} => String
+    #   * {Types::CreateStateTemplateResponse#id #id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_state_template({
+    #     name: "resourceName", # required
+    #     description: "description",
+    #     signal_catalog_arn: "arn", # required
+    #     state_template_properties: ["NodePath"], # required
+    #     data_extra_dimensions: ["NodePath"],
+    #     metadata_extra_dimensions: ["NodePath"],
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.name #=> String
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #
+    # @overload create_state_template(params = {})
+    # @param [Hash] params ({})
+    def create_state_template(params = {}, options = {})
+      req = build_request(:create_state_template, params)
+      req.send_request(options)
+    end
+
     # Creates a vehicle, which is an instance of a vehicle model (model
     # manifest). Vehicles created from the same vehicle model consist of the
     # same signals inherited from the vehicle model.
@@ -1179,8 +1384,10 @@ module Aws::IoTFleetWise
     #   Static information about a vehicle in a key-value pair. For example:
     #   `"engineType"` : `"1.3 L R2"`
     #
-    #   A campaign must include the keys (attribute names) in
-    #   `dataExtraDimensions` for them to display in Amazon Timestream.
+    #   To use attributes with Campaigns or State Templates, you must include
+    #   them using the request parameters `dataExtraDimensions` and/or
+    #   `metadataExtraDimensions` (for state templates only) when creating
+    #   your campaign/state template.
     #
     # @option params [String] :association_behavior
     #   An option to create a new Amazon Web Services IoT thing when creating
@@ -1191,6 +1398,10 @@ module Aws::IoTFleetWise
     #
     # @option params [Array<Types::Tag>] :tags
     #   Metadata that can be used to manage the vehicle.
+    #
+    # @option params [Array<Types::StateTemplateAssociation>] :state_templates
+    #   Associate state templates with the vehicle. You can monitor the last
+    #   known state of the vehicle in near real time.
     #
     # @return [Types::CreateVehicleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1212,6 +1423,21 @@ module Aws::IoTFleetWise
     #       {
     #         key: "TagKey", # required
     #         value: "TagValue", # required
+    #       },
+    #     ],
+    #     state_templates: [
+    #       {
+    #         identifier: "ResourceIdentifier", # required
+    #         state_template_update_strategy: { # required
+    #           periodic: {
+    #             state_template_update_rate: { # required
+    #               unit: "MILLISECOND", # required, accepts MILLISECOND, SECOND, MINUTE, HOUR
+    #               value: 1, # required
+    #             },
+    #           },
+    #           on_change: {
+    #           },
+    #         },
     #       },
     #     ],
     #   })
@@ -1261,11 +1487,6 @@ module Aws::IoTFleetWise
     # Deletes a decoder manifest. You can't delete a decoder manifest if it
     # has vehicles associated with it.
     #
-    # <note markdown="1"> If the decoder manifest is successfully deleted, Amazon Web Services
-    # IoT FleetWise sends back an HTTP 200 response with an empty body.
-    #
-    #  </note>
-    #
     # @option params [required, String] :name
     #   The name of the decoder manifest to delete.
     #
@@ -1296,11 +1517,6 @@ module Aws::IoTFleetWise
     # dissociated from the fleet. For more information, see [Delete a fleet
     # (AWS CLI)][1] in the *Amazon Web Services IoT FleetWise Developer
     # Guide*.
-    #
-    # <note markdown="1"> If the fleet is successfully deleted, Amazon Web Services IoT
-    # FleetWise sends back an HTTP 200 response with an empty body.
-    #
-    #  </note>
     #
     #
     #
@@ -1334,11 +1550,6 @@ module Aws::IoTFleetWise
 
     # Deletes a vehicle model (model manifest).
     #
-    # <note markdown="1"> If the vehicle model is successfully deleted, Amazon Web Services IoT
-    # FleetWise sends back an HTTP 200 response with an empty body.
-    #
-    #  </note>
-    #
     # @option params [required, String] :name
     #   The name of the model manifest to delete.
     #
@@ -1367,11 +1578,6 @@ module Aws::IoTFleetWise
 
     # Deletes a signal catalog.
     #
-    # <note markdown="1"> If the signal catalog is successfully deleted, Amazon Web Services IoT
-    # FleetWise sends back an HTTP 200 response with an empty body.
-    #
-    #  </note>
-    #
     # @option params [required, String] :name
     #   The name of the signal catalog to delete.
     #
@@ -1398,12 +1604,37 @@ module Aws::IoTFleetWise
       req.send_request(options)
     end
 
+    # Deletes a state template.
+    #
+    # @option params [required, String] :identifier
+    #   A unique, service-generated identifier.
+    #
+    # @return [Types::DeleteStateTemplateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteStateTemplateResponse#name #name} => String
+    #   * {Types::DeleteStateTemplateResponse#arn #arn} => String
+    #   * {Types::DeleteStateTemplateResponse#id #id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_state_template({
+    #     identifier: "ResourceIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.name #=> String
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #
+    # @overload delete_state_template(params = {})
+    # @param [Hash] params ({})
+    def delete_state_template(params = {}, options = {})
+      req = build_request(:delete_state_template, params)
+      req.send_request(options)
+    end
+
     # Deletes a vehicle and removes it from any campaigns.
-    #
-    # <note markdown="1"> If the vehicle is successfully deleted, Amazon Web Services IoT
-    # FleetWise sends back an HTTP 200 response with an empty body.
-    #
-    #  </note>
     #
     # @option params [required, String] :vehicle_name
     #   The ID of the vehicle to delete.
@@ -1434,12 +1665,6 @@ module Aws::IoTFleetWise
     # Removes, or disassociates, a vehicle from a fleet. Disassociating a
     # vehicle from a fleet doesn't delete the vehicle.
     #
-    # <note markdown="1"> If the vehicle is successfully dissociated from a fleet, Amazon Web
-    # Services IoT FleetWise sends back an HTTP 200 response with an empty
-    # body.
-    #
-    #  </note>
-    #
     # @option params [required, String] :vehicle_name
     #   The unique ID of the vehicle to disassociate from the fleet.
     #
@@ -1463,6 +1688,15 @@ module Aws::IoTFleetWise
     end
 
     # Retrieves information about a campaign.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
     #
     # @option params [required, String] :name
     #   The name of the campaign to retrieve information about.
@@ -1488,6 +1722,8 @@ module Aws::IoTFleetWise
     #   * {Types::GetCampaignResponse#creation_time #creation_time} => Time
     #   * {Types::GetCampaignResponse#last_modification_time #last_modification_time} => Time
     #   * {Types::GetCampaignResponse#data_destination_configs #data_destination_configs} => Array&lt;Types::DataDestinationConfig&gt;
+    #   * {Types::GetCampaignResponse#data_partitions #data_partitions} => Array&lt;Types::DataPartition&gt;
+    #   * {Types::GetCampaignResponse#signals_to_fetch #signals_to_fetch} => Array&lt;Types::SignalFetchInformation&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -1514,6 +1750,7 @@ module Aws::IoTFleetWise
     #   resp.signals_to_collect[0].name #=> String
     #   resp.signals_to_collect[0].max_sample_count #=> Integer
     #   resp.signals_to_collect[0].minimum_sampling_interval_ms #=> Integer
+    #   resp.signals_to_collect[0].data_partition_id #=> String
     #   resp.collection_scheme.time_based_collection_scheme.period_ms #=> Integer
     #   resp.collection_scheme.condition_based_collection_scheme.expression #=> String
     #   resp.collection_scheme.condition_based_collection_scheme.minimum_trigger_interval_ms #=> Integer
@@ -1530,6 +1767,25 @@ module Aws::IoTFleetWise
     #   resp.data_destination_configs[0].s3_config.prefix #=> String
     #   resp.data_destination_configs[0].timestream_config.timestream_table_arn #=> String
     #   resp.data_destination_configs[0].timestream_config.execution_role_arn #=> String
+    #   resp.data_destination_configs[0].mqtt_topic_config.mqtt_topic_arn #=> String
+    #   resp.data_destination_configs[0].mqtt_topic_config.execution_role_arn #=> String
+    #   resp.data_partitions #=> Array
+    #   resp.data_partitions[0].id #=> String
+    #   resp.data_partitions[0].storage_options.maximum_size.unit #=> String, one of "MB", "GB", "TB"
+    #   resp.data_partitions[0].storage_options.maximum_size.value #=> Integer
+    #   resp.data_partitions[0].storage_options.storage_location #=> String
+    #   resp.data_partitions[0].storage_options.minimum_time_to_live.unit #=> String, one of "HOURS", "DAYS", "WEEKS"
+    #   resp.data_partitions[0].storage_options.minimum_time_to_live.value #=> Integer
+    #   resp.data_partitions[0].upload_options.expression #=> String
+    #   resp.data_partitions[0].upload_options.condition_language_version #=> Integer
+    #   resp.signals_to_fetch #=> Array
+    #   resp.signals_to_fetch[0].fully_qualified_name #=> String
+    #   resp.signals_to_fetch[0].signal_fetch_config.time_based.execution_frequency_ms #=> Integer
+    #   resp.signals_to_fetch[0].signal_fetch_config.condition_based.condition_expression #=> String
+    #   resp.signals_to_fetch[0].signal_fetch_config.condition_based.trigger_mode #=> String, one of "ALWAYS", "RISING_EDGE"
+    #   resp.signals_to_fetch[0].condition_language_version #=> Integer
+    #   resp.signals_to_fetch[0].actions #=> Array
+    #   resp.signals_to_fetch[0].actions[0] #=> String
     #
     # @overload get_campaign(params = {})
     # @param [Hash] params ({})
@@ -1788,6 +2044,62 @@ module Aws::IoTFleetWise
       req.send_request(options)
     end
 
+    # Retrieves information about a state template.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @option params [required, String] :identifier
+    #   A unique, service-generated identifier.
+    #
+    # @return [Types::GetStateTemplateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetStateTemplateResponse#name #name} => String
+    #   * {Types::GetStateTemplateResponse#arn #arn} => String
+    #   * {Types::GetStateTemplateResponse#description #description} => String
+    #   * {Types::GetStateTemplateResponse#signal_catalog_arn #signal_catalog_arn} => String
+    #   * {Types::GetStateTemplateResponse#state_template_properties #state_template_properties} => Array&lt;String&gt;
+    #   * {Types::GetStateTemplateResponse#data_extra_dimensions #data_extra_dimensions} => Array&lt;String&gt;
+    #   * {Types::GetStateTemplateResponse#metadata_extra_dimensions #metadata_extra_dimensions} => Array&lt;String&gt;
+    #   * {Types::GetStateTemplateResponse#creation_time #creation_time} => Time
+    #   * {Types::GetStateTemplateResponse#last_modification_time #last_modification_time} => Time
+    #   * {Types::GetStateTemplateResponse#id #id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_state_template({
+    #     identifier: "ResourceIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.name #=> String
+    #   resp.arn #=> String
+    #   resp.description #=> String
+    #   resp.signal_catalog_arn #=> String
+    #   resp.state_template_properties #=> Array
+    #   resp.state_template_properties[0] #=> String
+    #   resp.data_extra_dimensions #=> Array
+    #   resp.data_extra_dimensions[0] #=> String
+    #   resp.metadata_extra_dimensions #=> Array
+    #   resp.metadata_extra_dimensions[0] #=> String
+    #   resp.creation_time #=> Time
+    #   resp.last_modification_time #=> Time
+    #   resp.id #=> String
+    #
+    # @overload get_state_template(params = {})
+    # @param [Hash] params ({})
+    def get_state_template(params = {}, options = {})
+      req = build_request(:get_state_template, params)
+      req.send_request(options)
+    end
+
     # Retrieves information about a vehicle.
     #
     # @option params [required, String] :vehicle_name
@@ -1800,6 +2112,7 @@ module Aws::IoTFleetWise
     #   * {Types::GetVehicleResponse#model_manifest_arn #model_manifest_arn} => String
     #   * {Types::GetVehicleResponse#decoder_manifest_arn #decoder_manifest_arn} => String
     #   * {Types::GetVehicleResponse#attributes #attributes} => Hash&lt;String,String&gt;
+    #   * {Types::GetVehicleResponse#state_templates #state_templates} => Array&lt;Types::StateTemplateAssociation&gt;
     #   * {Types::GetVehicleResponse#creation_time #creation_time} => Time
     #   * {Types::GetVehicleResponse#last_modification_time #last_modification_time} => Time
     #
@@ -1817,6 +2130,10 @@ module Aws::IoTFleetWise
     #   resp.decoder_manifest_arn #=> String
     #   resp.attributes #=> Hash
     #   resp.attributes["attributeName"] #=> String
+    #   resp.state_templates #=> Array
+    #   resp.state_templates[0].identifier #=> String
+    #   resp.state_templates[0].state_template_update_strategy.periodic.state_template_update_rate.unit #=> String, one of "MILLISECOND", "SECOND", "MINUTE", "HOUR"
+    #   resp.state_templates[0].state_template_update_strategy.periodic.state_template_update_rate.value #=> Integer
     #   resp.creation_time #=> Time
     #   resp.last_modification_time #=> Time
     #
@@ -1827,8 +2144,8 @@ module Aws::IoTFleetWise
       req.send_request(options)
     end
 
-    # Retrieves information about the status of a vehicle with any
-    # associated campaigns.
+    # Retrieves information about the status of campaigns, decoder
+    # manifests, or state templates associated with a vehicle.
     #
     # @option params [String] :next_token
     #   A pagination token for the next set of results.
@@ -1837,10 +2154,12 @@ module Aws::IoTFleetWise
     #   are returned, and a `nextToken` pagination token is returned in the
     #   response. To retrieve the next set of results, reissue the search
     #   request and include the returned token. When all results have been
-    #   returned, the response does not contain a pagination token value.
+    #   returned, the response does not contain a pagination token value. This
+    #   parameter is only supported for resources of type `CAMPAIGN`.
     #
     # @option params [Integer] :max_results
     #   The maximum number of items to return, between 1 and 100, inclusive.
+    #   This parameter is only supported for resources of type `CAMPAIGN`.
     #
     # @option params [required, String] :vehicle_name
     #   The ID of the vehicle to retrieve information about.
@@ -1877,6 +2196,9 @@ module Aws::IoTFleetWise
 
     # Creates a decoder manifest using your existing CAN DBC file from your
     # local device.
+    #
+    # The CAN signal name must be unique and not repeated across CAN message
+    # definitions in a .dbc file.
     #
     # @option params [required, String] :name
     #   The name of the decoder manifest to import.
@@ -1988,9 +2310,9 @@ module Aws::IoTFleetWise
     #   The maximum number of items to return, between 1 and 100, inclusive.
     #
     # @option params [String] :status
-    #   Optional parameter to filter the results by the status of each created
-    #   campaign in your account. The status can be one of: `CREATING`,
-    #   `WAITING_FOR_APPROVAL`, `RUNNING`, or `SUSPENDED`.
+    #   An optional parameter to filter the results by the status of each
+    #   created campaign in your account. The status can be one of:
+    #   `CREATING`, `WAITING_FOR_APPROVAL`, `RUNNING`, or `SUSPENDED`.
     #
     # @return [Types::ListCampaignsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2068,7 +2390,7 @@ module Aws::IoTFleetWise
     #
     #   resp.network_interfaces #=> Array
     #   resp.network_interfaces[0].interface_id #=> String
-    #   resp.network_interfaces[0].type #=> String, one of "CAN_INTERFACE", "OBD_INTERFACE", "VEHICLE_MIDDLEWARE"
+    #   resp.network_interfaces[0].type #=> String, one of "CAN_INTERFACE", "OBD_INTERFACE", "VEHICLE_MIDDLEWARE", "CUSTOM_DECODING_INTERFACE"
     #   resp.network_interfaces[0].can_interface.name #=> String
     #   resp.network_interfaces[0].can_interface.protocol_name #=> String
     #   resp.network_interfaces[0].can_interface.protocol_version #=> String
@@ -2081,6 +2403,7 @@ module Aws::IoTFleetWise
     #   resp.network_interfaces[0].obd_interface.has_transmission_ecu #=> Boolean
     #   resp.network_interfaces[0].vehicle_middleware.name #=> String
     #   resp.network_interfaces[0].vehicle_middleware.protocol_name #=> String, one of "ROS_2"
+    #   resp.network_interfaces[0].custom_decoding_interface.name #=> String
     #   resp.next_token #=> String
     #
     # @overload list_decoder_manifest_network_interfaces(params = {})
@@ -2132,7 +2455,7 @@ module Aws::IoTFleetWise
     #
     #   resp.signal_decoders #=> Array
     #   resp.signal_decoders[0].fully_qualified_name #=> String
-    #   resp.signal_decoders[0].type #=> String, one of "CAN_SIGNAL", "OBD_SIGNAL", "MESSAGE_SIGNAL"
+    #   resp.signal_decoders[0].type #=> String, one of "CAN_SIGNAL", "OBD_SIGNAL", "MESSAGE_SIGNAL", "CUSTOM_DECODING_SIGNAL"
     #   resp.signal_decoders[0].interface_id #=> String
     #   resp.signal_decoders[0].can_signal.message_id #=> Integer
     #   resp.signal_decoders[0].can_signal.is_big_endian #=> Boolean
@@ -2163,6 +2486,7 @@ module Aws::IoTFleetWise
     #   resp.signal_decoders[0].message_signal.structured_message.structured_message_definition #=> Array
     #   resp.signal_decoders[0].message_signal.structured_message.structured_message_definition[0].field_name #=> String
     #   resp.signal_decoders[0].message_signal.structured_message.structured_message_definition[0].data_type #=> Types::StructuredMessage
+    #   resp.signal_decoders[0].custom_decoding_signal.id #=> String
     #   resp.next_token #=> String
     #
     # @overload list_decoder_manifest_signals(params = {})
@@ -2647,6 +2971,57 @@ module Aws::IoTFleetWise
       req.send_request(options)
     end
 
+    # Lists information about created state templates.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @option params [String] :next_token
+    #   The token to retrieve the next set of results, or `null` if there are
+    #   no more results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return, between 1 and 100, inclusive.
+    #
+    # @return [Types::ListStateTemplatesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListStateTemplatesResponse#summaries #summaries} => Array&lt;Types::StateTemplateSummary&gt;
+    #   * {Types::ListStateTemplatesResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_state_templates({
+    #     next_token: "nextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.summaries #=> Array
+    #   resp.summaries[0].name #=> String
+    #   resp.summaries[0].arn #=> String
+    #   resp.summaries[0].signal_catalog_arn #=> String
+    #   resp.summaries[0].description #=> String
+    #   resp.summaries[0].creation_time #=> Time
+    #   resp.summaries[0].last_modification_time #=> Time
+    #   resp.summaries[0].id #=> String
+    #   resp.next_token #=> String
+    #
+    # @overload list_state_templates(params = {})
+    # @param [Hash] params ({})
+    def list_state_templates(params = {}, options = {})
+      req = build_request(:list_state_templates, params)
+      req.send_request(options)
+    end
+
     # Lists the tags (metadata) you have assigned to the resource.
     #
     # @option params [required, String] :resource_arn
@@ -2688,14 +3063,32 @@ module Aws::IoTFleetWise
     #   from a certain vehicle model.
     #
     # @option params [Array<String>] :attribute_names
-    #   The fully qualified names of the attributes. For example, the fully
-    #   qualified name of an attribute might be `Vehicle.Body.Engine.Type`.
+    #   The fully qualified names of the attributes. You can use this optional
+    #   parameter to list the vehicles containing all the attributes in the
+    #   request. For example, `attributeNames` could be
+    #   "`Vehicle.Body.Engine.Type, Vehicle.Color`" and the corresponding
+    #   `attributeValues` could be "`1.3 L R2, Blue`" . In this case, the
+    #   API will filter vehicles with an attribute name
+    #   `Vehicle.Body.Engine.Type` that contains a value of `1.3 L R2` AND an
+    #   attribute name `Vehicle.Color` that contains a value of "`Blue`". A
+    #   request must contain unique values for the `attributeNames` filter and
+    #   the matching number of `attributeValues` filters to return the subset
+    #   of vehicles that match the attributes filter condition.
     #
     # @option params [Array<String>] :attribute_values
     #   Static information about a vehicle attribute value in string format.
-    #   For example:
-    #
-    #   `"1.3 L R2"`
+    #   You can use this optional parameter in conjunction with
+    #   `attributeNames` to list the vehicles containing all the
+    #   `attributeValues` corresponding to the `attributeNames` filter. For
+    #   example, `attributeValues` could be "`1.3 L R2, Blue`" and the
+    #   corresponding `attributeNames` filter could be
+    #   "`Vehicle.Body.Engine.Type, Vehicle.Color`". In this case, the API
+    #   will filter vehicles with attribute name `Vehicle.Body.Engine.Type`
+    #   that contains a value of `1.3 L R2` AND an attribute name
+    #   `Vehicle.Color` that contains a value of "`Blue`". A request must
+    #   contain unique values for the `attributeNames` filter and the matching
+    #   number of `attributeValues` filter to return the subset of vehicles
+    #   that match the attributes filter condition.
     #
     # @option params [String] :next_token
     #   A pagination token for the next set of results.
@@ -3100,6 +3493,19 @@ module Aws::IoTFleetWise
     #   decoder manifest can't be edited. If the status is `DRAFT`, you can
     #   edit the decoder manifest.
     #
+    # @option params [String] :default_for_unmapped_signals
+    #   Use default decoders for all unmapped signals in the model. You don't
+    #   need to provide any detailed decoding information.
+    #
+    #   Access to certain Amazon Web Services IoT FleetWise features is
+    #   currently gated. For more information, see [Amazon Web Services Region
+    #   and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    #   Developer Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
     # @return [Types::UpdateDecoderManifestResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateDecoderManifestResponse#name #name} => String
@@ -3113,7 +3519,7 @@ module Aws::IoTFleetWise
     #     signal_decoders_to_add: [
     #       {
     #         fully_qualified_name: "FullyQualifiedName", # required
-    #         type: "CAN_SIGNAL", # required, accepts CAN_SIGNAL, OBD_SIGNAL, MESSAGE_SIGNAL
+    #         type: "CAN_SIGNAL", # required, accepts CAN_SIGNAL, OBD_SIGNAL, MESSAGE_SIGNAL, CUSTOM_DECODING_SIGNAL
     #         interface_id: "InterfaceId", # required
     #         can_signal: {
     #           message_id: 1, # required
@@ -3164,13 +3570,16 @@ module Aws::IoTFleetWise
     #               },
     #             ],
     #           },
+    #         },
+    #         custom_decoding_signal: {
+    #           id: "CustomDecodingId", # required
     #         },
     #       },
     #     ],
     #     signal_decoders_to_update: [
     #       {
     #         fully_qualified_name: "FullyQualifiedName", # required
-    #         type: "CAN_SIGNAL", # required, accepts CAN_SIGNAL, OBD_SIGNAL, MESSAGE_SIGNAL
+    #         type: "CAN_SIGNAL", # required, accepts CAN_SIGNAL, OBD_SIGNAL, MESSAGE_SIGNAL, CUSTOM_DECODING_SIGNAL
     #         interface_id: "InterfaceId", # required
     #         can_signal: {
     #           message_id: 1, # required
@@ -3221,6 +3630,9 @@ module Aws::IoTFleetWise
     #               },
     #             ],
     #           },
+    #         },
+    #         custom_decoding_signal: {
+    #           id: "CustomDecodingId", # required
     #         },
     #       },
     #     ],
@@ -3228,7 +3640,7 @@ module Aws::IoTFleetWise
     #     network_interfaces_to_add: [
     #       {
     #         interface_id: "InterfaceId", # required
-    #         type: "CAN_INTERFACE", # required, accepts CAN_INTERFACE, OBD_INTERFACE, VEHICLE_MIDDLEWARE
+    #         type: "CAN_INTERFACE", # required, accepts CAN_INTERFACE, OBD_INTERFACE, VEHICLE_MIDDLEWARE, CUSTOM_DECODING_INTERFACE
     #         can_interface: {
     #           name: "CanInterfaceName", # required
     #           protocol_name: "ProtocolName",
@@ -3246,13 +3658,16 @@ module Aws::IoTFleetWise
     #         vehicle_middleware: {
     #           name: "VehicleMiddlewareName", # required
     #           protocol_name: "ROS_2", # required, accepts ROS_2
+    #         },
+    #         custom_decoding_interface: {
+    #           name: "CustomDecodingSignalInterfaceName", # required
     #         },
     #       },
     #     ],
     #     network_interfaces_to_update: [
     #       {
     #         interface_id: "InterfaceId", # required
-    #         type: "CAN_INTERFACE", # required, accepts CAN_INTERFACE, OBD_INTERFACE, VEHICLE_MIDDLEWARE
+    #         type: "CAN_INTERFACE", # required, accepts CAN_INTERFACE, OBD_INTERFACE, VEHICLE_MIDDLEWARE, CUSTOM_DECODING_INTERFACE
     #         can_interface: {
     #           name: "CanInterfaceName", # required
     #           protocol_name: "ProtocolName",
@@ -3271,10 +3686,14 @@ module Aws::IoTFleetWise
     #           name: "VehicleMiddlewareName", # required
     #           protocol_name: "ROS_2", # required, accepts ROS_2
     #         },
+    #         custom_decoding_interface: {
+    #           name: "CustomDecodingSignalInterfaceName", # required
+    #         },
     #       },
     #     ],
     #     network_interfaces_to_remove: ["InterfaceId"],
     #     status: "ACTIVE", # accepts ACTIVE, DRAFT, INVALID, VALIDATING
+    #     default_for_unmapped_signals: "CUSTOM_DECODING", # accepts CUSTOM_DECODING
     #   })
     #
     # @example Response structure
@@ -3290,11 +3709,6 @@ module Aws::IoTFleetWise
     end
 
     # Updates the description of an existing fleet.
-    #
-    # <note markdown="1"> If the fleet is successfully updated, Amazon Web Services IoT
-    # FleetWise sends back an HTTP 200 response with an empty HTTP body.
-    #
-    #  </note>
     #
     # @option params [required, String] :fleet_id
     #   The ID of the fleet to update.
@@ -3544,6 +3958,88 @@ module Aws::IoTFleetWise
       req.send_request(options)
     end
 
+    # Updates a state template.
+    #
+    # Access to certain Amazon Web Services IoT FleetWise features is
+    # currently gated. For more information, see [Amazon Web Services Region
+    # and feature availability][1] in the *Amazon Web Services IoT FleetWise
+    # Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/fleetwise-regions.html
+    #
+    # @option params [required, String] :identifier
+    #   A unique, service-generated identifier.
+    #
+    # @option params [String] :description
+    #   A brief description of the state template.
+    #
+    # @option params [Array<String>] :state_template_properties_to_add
+    #   Add signals from which data is collected as part of the state
+    #   template.
+    #
+    # @option params [Array<String>] :state_template_properties_to_remove
+    #   Remove signals from which data is collected as part of the state
+    #   template.
+    #
+    # @option params [Array<String>] :data_extra_dimensions
+    #   A list of vehicle attributes to associate with the payload published
+    #   on the state template's MQTT topic. (See [ Processing last known
+    #   state vehicle data using MQTT messaging][1]). For example, if you add
+    #   `Vehicle.Attributes.Make` and `Vehicle.Attributes.Model` attributes,
+    #   Amazon Web Services IoT FleetWise will enrich the protobuf encoded
+    #   payload with those attributes in the `extraDimensions` field.
+    #
+    #   Default: An empty array
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #
+    # @option params [Array<String>] :metadata_extra_dimensions
+    #   A list of vehicle attributes to associate with user properties of the
+    #   messages published on the state template's MQTT topic. (See [
+    #   Processing last known state vehicle data using MQTT messaging][1]).
+    #   For example, if you add `Vehicle.Attributes.Make` and
+    #   `Vehicle.Attributes.Model` attributes, Amazon Web Services IoT
+    #   FleetWise will include these attributes as User Properties with the
+    #   MQTT message.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/iot-fleetwise/latest/developerguide/process-visualize-data.html#process-last-known-state-vehicle-data
+    #
+    # @return [Types::UpdateStateTemplateResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateStateTemplateResponse#name #name} => String
+    #   * {Types::UpdateStateTemplateResponse#arn #arn} => String
+    #   * {Types::UpdateStateTemplateResponse#id #id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_state_template({
+    #     identifier: "ResourceIdentifier", # required
+    #     description: "description",
+    #     state_template_properties_to_add: ["NodePath"],
+    #     state_template_properties_to_remove: ["NodePath"],
+    #     data_extra_dimensions: ["NodePath"],
+    #     metadata_extra_dimensions: ["NodePath"],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.name #=> String
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #
+    # @overload update_state_template(params = {})
+    # @param [Hash] params ({})
+    def update_state_template(params = {}, options = {})
+      req = build_request(:update_state_template, params)
+      req.send_request(options)
+    end
+
     # Updates a vehicle.
     #
     # @option params [required, String] :vehicle_name
@@ -3569,6 +4065,12 @@ module Aws::IoTFleetWise
     #
     #   This is required if attributes are present in the input.
     #
+    # @option params [Array<Types::StateTemplateAssociation>] :state_templates_to_add
+    #   Associate state templates with the vehicle.
+    #
+    # @option params [Array<String>] :state_templates_to_remove
+    #   Remove state templates from the vehicle.
+    #
     # @return [Types::UpdateVehicleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateVehicleResponse#vehicle_name #vehicle_name} => String
@@ -3584,6 +4086,22 @@ module Aws::IoTFleetWise
     #       "attributeName" => "attributeValue",
     #     },
     #     attribute_update_mode: "Overwrite", # accepts Overwrite, Merge
+    #     state_templates_to_add: [
+    #       {
+    #         identifier: "ResourceIdentifier", # required
+    #         state_template_update_strategy: { # required
+    #           periodic: {
+    #             state_template_update_rate: { # required
+    #               unit: "MILLISECOND", # required, accepts MILLISECOND, SECOND, MINUTE, HOUR
+    #               value: 1, # required
+    #             },
+    #           },
+    #           on_change: {
+    #           },
+    #         },
+    #       },
+    #     ],
+    #     state_templates_to_remove: ["ResourceIdentifier"],
     #   })
     #
     # @example Response structure
@@ -3616,7 +4134,7 @@ module Aws::IoTFleetWise
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-iotfleetwise'
-      context[:gem_version] = '1.37.0'
+      context[:gem_version] = '1.38.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

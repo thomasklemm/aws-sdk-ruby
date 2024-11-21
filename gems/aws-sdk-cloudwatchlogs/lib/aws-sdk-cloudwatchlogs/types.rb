@@ -43,8 +43,7 @@ module Aws::CloudWatchLogs
     #   @return [String]
     #
     # @!attribute [rw] selection_criteria
-    #   The log group selection criteria for this subscription filter
-    #   policy.
+    #   The log group selection criteria that is used for this policy.
     #   @return [String]
     #
     # @!attribute [rw] account_id
@@ -61,6 +60,58 @@ module Aws::CloudWatchLogs
       :scope,
       :selection_criteria,
       :account_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This object defines one key that will be added with the [ addKeys][1]
+    # processor.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-addKey
+    #
+    # @!attribute [rw] key
+    #   The key of the new entry to be added to the log event
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the new entry to be added to the log event
+    #   @return [String]
+    #
+    # @!attribute [rw] overwrite_if_exists
+    #   Specifies whether to overwrite the value if the key already exists
+    #   in the log event. If you omit this, the default is `false`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/AddKeyEntry AWS API Documentation
+    #
+    class AddKeyEntry < Struct.new(
+      :key,
+      :value,
+      :overwrite_if_exists)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor adds new key-value pairs to the log event.
+    #
+    # For more information about this processor including examples, see [
+    # addKeys][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-addKeys
+    #
+    # @!attribute [rw] entries
+    #   An array of objects, where each object contains the information
+    #   about one key to add to the log event.
+    #   @return [Array<Types::AddKeyEntry>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/AddKeys AWS API Documentation
+    #
+    class AddKeys < Struct.new(
+      :entries)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -339,6 +390,53 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # The `CSV` processor parses comma-separated values (CSV) from the log
+    # events into columns.
+    #
+    # For more information about this processor including examples, see [
+    # csv][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-csv
+    #
+    # @!attribute [rw] quote_character
+    #   The character used used as a text qualifier for a single column of
+    #   data. If you omit this, the double quotation mark `"` character is
+    #   used.
+    #   @return [String]
+    #
+    # @!attribute [rw] delimiter
+    #   The character used to separate each column in the original
+    #   comma-separated value log event. If you omit this, the processor
+    #   looks for the comma `,` character as the delimiter.
+    #   @return [String]
+    #
+    # @!attribute [rw] columns
+    #   An array of names to use for the columns in the transformed log
+    #   event.
+    #
+    #   If you omit this, default column names (`[column_1, column_2 ...]`)
+    #   are used.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] source
+    #   The path to the field in the log event that has the comma separated
+    #   values to be parsed. If you omit this value, the whole log message
+    #   is processed.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/CSV AWS API Documentation
+    #
+    class CSV < Struct.new(
+      :quote_character,
+      :delimiter,
+      :columns,
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] task_id
     #   The ID of the export task.
     #   @return [String]
@@ -497,6 +595,61 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ConflictException AWS API Documentation
     #
     class ConflictException < Aws::EmptyStructure; end
+
+    # This processor copies values within a log event. You can also use this
+    # processor to add metadata to log events by copying the values of the
+    # following metadata keys into the log events: `@logGroupName`,
+    # `@logGroupStream`, `@accountId`, `@regionName`.
+    #
+    # For more information about this processor including examples, see [
+    # copyValue][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-copyValue
+    #
+    # @!attribute [rw] entries
+    #   An array of `CopyValueEntry` objects, where each object contains the
+    #   information about one field value to copy.
+    #   @return [Array<Types::CopyValueEntry>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/CopyValue AWS API Documentation
+    #
+    class CopyValue < Struct.new(
+      :entries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This object defines one value to be copied with the [ copyValue][1]
+    # processor.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-copoyValue
+    #
+    # @!attribute [rw] source
+    #   The key to copy.
+    #   @return [String]
+    #
+    # @!attribute [rw] target
+    #   The key of the field to copy the value to.
+    #   @return [String]
+    #
+    # @!attribute [rw] overwrite_if_exists
+    #   Specifies whether to overwrite the value if the destination key
+    #   already exists. If you omit this, the default is `false`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/CopyValueEntry AWS API Documentation
+    #
+    class CopyValueEntry < Struct.new(
+      :source,
+      :target,
+      :overwrite_if_exists)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] delivery_source_name
     #   The name of the delivery source to use for this delivery.
@@ -815,6 +968,65 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # This processor converts a datetime string into a format that you
+    # specify.
+    #
+    # For more information about this processor including examples, see [
+    # datetimeConverter][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-datetimeConverter
+    #
+    # @!attribute [rw] source
+    #   The key to apply the date conversion to.
+    #   @return [String]
+    #
+    # @!attribute [rw] target
+    #   The JSON field to store the result in.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_format
+    #   The datetime format to use for the converted data in the target
+    #   field.
+    #
+    #   If you omit this, the default of ` yyyy-MM-dd'T'HH:mm:ss.SSS'Z` is
+    #   used.
+    #   @return [String]
+    #
+    # @!attribute [rw] match_patterns
+    #   A list of patterns to match against the `source` field.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] source_timezone
+    #   The time zone of the source field. If you omit this, the default
+    #   used is the UTC zone.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_timezone
+    #   The time zone of the target field. If you omit this, the default
+    #   used is the UTC zone.
+    #   @return [String]
+    #
+    # @!attribute [rw] locale
+    #   The locale of the source field. If you omit this, the default of
+    #   `locale.ROOT` is used.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DateTimeConverter AWS API Documentation
+    #
+    class DateTimeConverter < Struct.new(
+      :source,
+      :target,
+      :target_format,
+      :match_patterns,
+      :source_timezone,
+      :target_timezone,
+      :locale)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] policy_name
     #   The name of the policy to delete.
     #   @return [String]
@@ -913,6 +1125,45 @@ module Aws::CloudWatchLogs
     #
     class DeleteDestinationRequest < Struct.new(
       :destination_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] log_group_identifier
+    #   The log group to delete the index policy for. You can specify either
+    #   the name or the ARN of the log group.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteIndexPolicyRequest AWS API Documentation
+    #
+    class DeleteIndexPolicyRequest < Struct.new(
+      :log_group_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteIndexPolicyResponse AWS API Documentation
+    #
+    class DeleteIndexPolicyResponse < Aws::EmptyStructure; end
+
+    # This processor deletes entries from a log event. These entries are
+    # key-value pairs.
+    #
+    # For more information about this processor including examples, see [
+    # deleteKeys][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-deleteKeys
+    #
+    # @!attribute [rw] with_keys
+    #   The list of keys to delete.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteKeys AWS API Documentation
+    #
+    class DeleteKeys < Struct.new(
+      :with_keys)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1049,6 +1300,20 @@ module Aws::CloudWatchLogs
     class DeleteSubscriptionFilterRequest < Struct.new(
       :log_group_name,
       :filter_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] log_group_identifier
+    #   Specify either the name or ARN of the log group to delete the
+    #   transformer for. If the log group is in a source account and you are
+    #   using a monitoring account, you must use the log group ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteTransformerRequest AWS API Documentation
+    #
+    class DeleteTransformerRequest < Struct.new(
+      :log_group_identifier)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1325,12 +1590,18 @@ module Aws::CloudWatchLogs
     #   is returned.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. (You received this
+    #   token from a previous call.)
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeAccountPoliciesRequest AWS API Documentation
     #
     class DescribeAccountPoliciesRequest < Struct.new(
       :policy_type,
       :policy_name,
-      :account_identifiers)
+      :account_identifiers,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1340,10 +1611,16 @@ module Aws::CloudWatchLogs
     #   Logs account policies that match the specified filters.
     #   @return [Array<Types::AccountPolicy>]
     #
+    # @!attribute [rw] next_token
+    #   The token to use when requesting the next set of items. The token
+    #   expires after 24 hours.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeAccountPoliciesResponse AWS API Documentation
     #
     class DescribeAccountPoliciesResponse < Struct.new(
-      :account_policies)
+      :account_policies,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1615,6 +1892,80 @@ module Aws::CloudWatchLogs
     #
     class DescribeExportTasksResponse < Struct.new(
       :export_tasks,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] log_group_identifiers
+    #   An array containing the names or ARNs of the log groups that you
+    #   want to retrieve field indexes for.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. The token expires
+    #   after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeFieldIndexesRequest AWS API Documentation
+    #
+    class DescribeFieldIndexesRequest < Struct.new(
+      :log_group_identifiers,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] field_indexes
+    #   An array containing the field index information.
+    #   @return [Array<Types::FieldIndex>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. The token expires
+    #   after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeFieldIndexesResponse AWS API Documentation
+    #
+    class DescribeFieldIndexesResponse < Struct.new(
+      :field_indexes,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] log_group_identifiers
+    #   An array containing the name or ARN of the log group that you want
+    #   to retrieve field index policies for.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. The token expires
+    #   after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeIndexPoliciesRequest AWS API Documentation
+    #
+    class DescribeIndexPoliciesRequest < Struct.new(
+      :log_group_identifiers,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] index_policies
+    #   An array containing the field index policies.
+    #   @return [Array<Types::IndexPolicy>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. The token expires
+    #   after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeIndexPoliciesResponse AWS API Documentation
+    #
+    class DescribeIndexPoliciesResponse < Struct.new(
+      :index_policies,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -2145,14 +2496,34 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
-    # Reserved for internal use.
+    # The entity associated with the log events in a `PutLogEvents` call.
     #
     # @!attribute [rw] key_attributes
-    #   Reserved for internal use.
+    #   The attributes of the entity which identify the specific entity, as
+    #   a list of key-value pairs. Entities with the same `keyAttributes`
+    #   are considered to be the same entity.
+    #
+    #   There are five allowed attributes (key names): `Type`,
+    #   `ResourceType`, `Identifier` `Name`, and `Environment`.
+    #
+    #   For details about how to use the key attributes, see [How to add
+    #   related information to telemetry][1] in the *CloudWatch User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/adding-your-own-related-telemetry.html
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] attributes
-    #   Reserved for internal use.
+    #   Additional attributes of the entity that are not used to specify the
+    #   identity of the entity. A list of key-value pairs.
+    #
+    #   For details about how to use the attributes, see [How to add related
+    #   information to telemetry][1] in the *CloudWatch User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/adding-your-own-related-telemetry.html
     #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/Entity AWS API Documentation
@@ -2259,6 +2630,46 @@ module Aws::CloudWatchLogs
     class ExportTaskStatus < Struct.new(
       :code,
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure describes one log event field that is used as an index
+    # in at least one index policy in this account.
+    #
+    # @!attribute [rw] log_group_identifier
+    #   If this field index appears in an index policy that applies only to
+    #   a single log group, the ARN of that log group is displayed here.
+    #   @return [String]
+    #
+    # @!attribute [rw] field_index_name
+    #   The string that this field index matches.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_scan_time
+    #   The most recent time that CloudWatch Logs scanned ingested log
+    #   events to search for this field index to improve the speed of future
+    #   CloudWatch Logs Insights queries that search for this field index.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] first_event_time
+    #   The time and date of the earliest log event that matches this field
+    #   index, after the index policy that contains it was created.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] last_event_time
+    #   The time and date of the most recent log event that matches this
+    #   field index.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/FieldIndex AWS API Documentation
+    #
+    class FieldIndex < Struct.new(
+      :log_group_identifier,
+      :field_index_name,
+      :last_scan_time,
+      :first_event_time,
+      :last_event_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2913,6 +3324,124 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] log_group_identifier
+    #   Specify either the name or ARN of the log group to return
+    #   transformer information for. If the log group is in a source account
+    #   and you are using a monitoring account, you must use the log group
+    #   ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/GetTransformerRequest AWS API Documentation
+    #
+    class GetTransformerRequest < Struct.new(
+      :log_group_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] log_group_identifier
+    #   The ARN of the log group that you specified in your request.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   The creation time of the transformer, expressed as the number of
+    #   milliseconds after Jan 1, 1970 00:00:00 UTC.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] last_modified_time
+    #   The date and time when this transformer was most recently modified,
+    #   expressed as the number of milliseconds after Jan 1, 1970 00:00:00
+    #   UTC.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] transformer_config
+    #   This sructure contains the configuration of the requested
+    #   transformer.
+    #   @return [Array<Types::Processor>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/GetTransformerResponse AWS API Documentation
+    #
+    class GetTransformerResponse < Struct.new(
+      :log_group_identifier,
+      :creation_time,
+      :last_modified_time,
+      :transformer_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor uses pattern matching to parse and structure
+    # unstructured data. This processor can also extract fields from log
+    # messages.
+    #
+    # For more information about this processor including examples, see [
+    # grok][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-Grok
+    #
+    # @!attribute [rw] source
+    #   The path to the field in the log event that you want to parse. If
+    #   you omit this value, the whole log message is parsed.
+    #   @return [String]
+    #
+    # @!attribute [rw] match
+    #   The grok pattern to match against the log event. For a list of
+    #   supported grok patterns, see [Supported grok patterns][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#Grok-Patterns
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/Grok AWS API Documentation
+    #
+    class Grok < Struct.new(
+      :source,
+      :match)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about one field index policy in
+    # this account.
+    #
+    # @!attribute [rw] log_group_identifier
+    #   The ARN of the log group that this index policy applies to.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_update_time
+    #   The date and time that this index policy was most recently updated.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] policy_document
+    #   The policy document for this index policy, in JSON format.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy_name
+    #   The name of this policy. Responses about log group-level field index
+    #   policies don't have this field, because those policies don't have
+    #   names.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   This field indicates whether this is an account-level index policy
+    #   or an index policy that applies only to a single log group.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/IndexPolicy AWS API Documentation
+    #
+    class IndexPolicy < Struct.new(
+      :log_group_identifier,
+      :last_update_time,
+      :policy_document,
+      :policy_name,
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents a log event, which is a record of activity that was
     # recorded by the application or resource being monitored.
     #
@@ -3066,6 +3595,53 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] query_id
+    #   The ID of the query to use. This query ID is from the response to
+    #   your [StartQuery][1] operation.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. The token expires
+    #   after 24 hours.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   Limits the number of returned log groups to the specified number.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ListLogGroupsForQueryRequest AWS API Documentation
+    #
+    class ListLogGroupsForQueryRequest < Struct.new(
+      :query_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] log_group_identifiers
+    #   An array of the names and ARNs of the log groups that were processed
+    #   in the query.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of items to return. The token expires
+    #   after 24 hours.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ListLogGroupsForQueryResponse AWS API Documentation
+    #
+    class ListLogGroupsForQueryResponse < Struct.new(
+      :log_group_identifiers,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   The ARN of the resource that you want to view tags for.
     #
@@ -3123,6 +3699,62 @@ module Aws::CloudWatchLogs
     #
     class ListTagsLogGroupResponse < Struct.new(
       :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor takes a list of objects that contain key fields, and
+    # converts them into a map of target keys.
+    #
+    # For more information about this processor including examples, see [
+    # listToMap][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-listToMap
+    #
+    # @!attribute [rw] source
+    #   The key in the log event that has a list of objects that will be
+    #   converted to a map.
+    #   @return [String]
+    #
+    # @!attribute [rw] key
+    #   The key of the field to be extracted as keys in the generated map
+    #   @return [String]
+    #
+    # @!attribute [rw] value_key
+    #   If this is specified, the values that you specify in this parameter
+    #   will be extracted from the `source` objects and put into the values
+    #   of the generated map. Otherwise, original objects in the source list
+    #   will be put into the values of the generated map.
+    #   @return [String]
+    #
+    # @!attribute [rw] target
+    #   The key of the field that will hold the generated map
+    #   @return [String]
+    #
+    # @!attribute [rw] flatten
+    #   A Boolean value to indicate whether the list will be flattened into
+    #   single items. Specify `true` to flatten the list. The default is
+    #   `false`
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] flattened_element
+    #   If you set `flatten` to `true`, use `flattenedElement` to specify
+    #   which element, `first` or `last`, to keep.
+    #
+    #   You must specify this parameter if `flatten` is `true`
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ListToMap AWS API Documentation
+    #
+    class ListToMap < Struct.new(
+      :source,
+      :key,
+      :value_key,
+      :target,
+      :flatten,
+      :flattened_element)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3510,6 +4142,28 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # This processor converts a string to lowercase.
+    #
+    # For more information about this processor including examples, see [
+    # lowerCaseString][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-lowerCaseString
+    #
+    # @!attribute [rw] with_keys
+    #   The array caontaining the keys of the fields to convert to
+    #   lowercase.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/LowerCaseString AWS API Documentation
+    #
+    class LowerCaseString < Struct.new(
+      :with_keys)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The query string is not valid. Details about this error are displayed
     # in a `QueryCompileError` object. For more information, see
     # [QueryCompileError][1].
@@ -3562,6 +4216,20 @@ module Aws::CloudWatchLogs
     #   The name of the log group.
     #   @return [String]
     #
+    # @!attribute [rw] apply_on_transformed_logs
+    #   This parameter is valid only for log groups that have an active log
+    #   transformer. For more information about log transformers, see
+    #   [PutTransformer][1].
+    #
+    #   If this value is `true`, the metric filter is applied on the
+    #   transformed version of the log events instead of the original
+    #   ingested log events.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutTransformer.html
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/MetricFilter AWS API Documentation
     #
     class MetricFilter < Struct.new(
@@ -3569,7 +4237,8 @@ module Aws::CloudWatchLogs
       :filter_pattern,
       :metric_transformations,
       :creation_time,
-      :log_group_name)
+      :log_group_name,
+      :apply_on_transformed_logs)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3668,6 +4337,59 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # This object defines one key that will be moved with the [ moveKey][1]
+    # processor.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-moveKey
+    #
+    # @!attribute [rw] source
+    #   The key to move.
+    #   @return [String]
+    #
+    # @!attribute [rw] target
+    #   The key to move to.
+    #   @return [String]
+    #
+    # @!attribute [rw] overwrite_if_exists
+    #   Specifies whether to overwrite the value if the destination key
+    #   already exists. If you omit this, the default is `false`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/MoveKeyEntry AWS API Documentation
+    #
+    class MoveKeyEntry < Struct.new(
+      :source,
+      :target,
+      :overwrite_if_exists)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor moves a key from one field to another. The original key
+    # is deleted.
+    #
+    # For more information about this processor including examples, see [
+    # moveKeys][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-moveKeys
+    #
+    # @!attribute [rw] entries
+    #   An array of objects, where each object contains the information
+    #   about one key to move.
+    #   @return [Array<Types::MoveKeyEntry>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/MoveKeys AWS API Documentation
+    #
+    class MoveKeys < Struct.new(
+      :entries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Multiple concurrent requests to update the same resource were in
     # conflict.
     #
@@ -3697,6 +4419,250 @@ module Aws::CloudWatchLogs
       :timestamp,
       :message,
       :ingestion_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor parses CloudFront vended logs, extract fields, and
+    # convert them into JSON format. Encoded field values are decoded.
+    # Values that are integers and doubles are treated as such. For more
+    # information about this processor including examples, see [
+    # parseCloudfront][1]
+    #
+    # For more information about CloudFront log format, see [ Configure and
+    # use standard logs (access logs)][2].
+    #
+    # If you use this processor, it must be the first processor in your
+    # transformer.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseCloudfront
+    # [2]: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/AccessLogs.html
+    #
+    # @!attribute [rw] source
+    #   Omit this parameter and the whole log message will be processed by
+    #   this processor. No other value than `@message` is allowed for
+    #   `source`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ParseCloudfront AWS API Documentation
+    #
+    class ParseCloudfront < Struct.new(
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor parses log events that are in JSON format. It can
+    # extract JSON key-value pairs and place them under a destination that
+    # you specify.
+    #
+    # Additionally, because you must have at least one parse-type processor
+    # in a transformer, you can use `ParseJSON` as that processor for
+    # JSON-format logs, so that you can also apply other processors, such as
+    # mutate processors, to these logs.
+    #
+    # For more information about this processor including examples, see [
+    # parseJSON][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseJSON
+    #
+    # @!attribute [rw] source
+    #   Path to the field in the log event that will be parsed. Use dot
+    #   notation to access child fields. For example, `store.book`
+    #   @return [String]
+    #
+    # @!attribute [rw] destination
+    #   The location to put the parsed key value pair into. If you omit this
+    #   parameter, it is placed under the root node.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ParseJSON AWS API Documentation
+    #
+    class ParseJSON < Struct.new(
+      :source,
+      :destination)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor parses a specified field in the original log event into
+    # key-value pairs.
+    #
+    # For more information about this processor including examples, see [
+    # parseKeyValue][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseKeyValue
+    #
+    # @!attribute [rw] source
+    #   Path to the field in the log event that will be parsed. Use dot
+    #   notation to access child fields. For example, `store.book`
+    #   @return [String]
+    #
+    # @!attribute [rw] destination
+    #   The destination field to put the extracted key-value pairs into
+    #   @return [String]
+    #
+    # @!attribute [rw] field_delimiter
+    #   The field delimiter string that is used between key-value pairs in
+    #   the original log events. If you omit this, the ampersand `&`
+    #   character is used.
+    #   @return [String]
+    #
+    # @!attribute [rw] key_value_delimiter
+    #   The delimiter string to use between the key and value in each pair
+    #   in the transformed log event.
+    #
+    #   If you omit this, the equal `=` character is used.
+    #   @return [String]
+    #
+    # @!attribute [rw] key_prefix
+    #   If you want to add a prefix to all transformed keys, specify it
+    #   here.
+    #   @return [String]
+    #
+    # @!attribute [rw] non_match_value
+    #   A value to insert into the value field in the result, when a
+    #   key-value pair is not successfully split.
+    #   @return [String]
+    #
+    # @!attribute [rw] overwrite_if_exists
+    #   Specifies whether to overwrite the value if the destination key
+    #   already exists. If you omit this, the default is `false`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ParseKeyValue AWS API Documentation
+    #
+    class ParseKeyValue < Struct.new(
+      :source,
+      :destination,
+      :field_delimiter,
+      :key_value_delimiter,
+      :key_prefix,
+      :non_match_value,
+      :overwrite_if_exists)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use this processor to parse RDS for PostgreSQL vended logs, extract
+    # fields, and and convert them into a JSON format. This processor always
+    # processes the entire log event message. For more information about
+    # this processor including examples, see [ parsePostGres][1].
+    #
+    # For more information about RDS for PostgreSQL log format, see [ RDS
+    # for PostgreSQL database log filesTCP flag sequence][2].
+    #
+    # If you use this processor, it must be the first processor in your
+    # transformer.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parsePostGres
+    # [2]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_LogAccess.Concepts.PostgreSQL.html#USER_LogAccess.Concepts.PostgreSQL.Log_Format.log-line-prefix
+    #
+    # @!attribute [rw] source
+    #   Omit this parameter and the whole log message will be processed by
+    #   this processor. No other value than `@message` is allowed for
+    #   `source`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ParsePostgres AWS API Documentation
+    #
+    class ParsePostgres < Struct.new(
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use this processor to parse Route 53 vended logs, extract fields, and
+    # and convert them into a JSON format. This processor always processes
+    # the entire log event message. For more information about this
+    # processor including examples, see [ parseRoute53][1].
+    #
+    # If you use this processor, it must be the first processor in your
+    # transformer.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseRoute53
+    #
+    # @!attribute [rw] source
+    #   Omit this parameter and the whole log message will be processed by
+    #   this processor. No other value than `@message` is allowed for
+    #   `source`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ParseRoute53 AWS API Documentation
+    #
+    class ParseRoute53 < Struct.new(
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use this processor to parse Amazon VPC vended logs, extract fields,
+    # and and convert them into a JSON format. This processor always
+    # processes the entire log event message.
+    #
+    # This processor doesn't support custom log formats, such as NAT
+    # gateway logs. For more information about custom log formats in Amazon
+    # VPC, see [ parseVPC][1] For more information about this processor
+    # including examples, see [ parseVPC][2].
+    #
+    # If you use this processor, it must be the first processor in your
+    # transformer.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/userguide/flow-logs-records-examples.html#flow-log-example-tcp-flag
+    # [2]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseVPC
+    #
+    # @!attribute [rw] source
+    #   Omit this parameter and the whole log message will be processed by
+    #   this processor. No other value than `@message` is allowed for
+    #   `source`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ParseVPC AWS API Documentation
+    #
+    class ParseVPC < Struct.new(
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use this processor to parse WAF vended logs, extract fields, and and
+    # convert them into a JSON format. This processor always processes the
+    # entire log event message. For more information about this processor
+    # including examples, see [ parseWAF][1].
+    #
+    # For more information about WAF log format, see [ Log examples for web
+    # ACL traffic][2].
+    #
+    # If you use this processor, it must be the first processor in your
+    # transformer.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parsePostGres
+    # [2]: https://docs.aws.amazon.com/waf/latest/developerguide/logging-examples.html
+    #
+    # @!attribute [rw] source
+    #   Omit this parameter and the whole log message will be processed by
+    #   this processor. No other value than `@message` is allowed for
+    #   `source`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ParseWAF AWS API Documentation
+    #
+    class ParseWAF < Struct.new(
+      :source)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3769,6 +4735,251 @@ module Aws::CloudWatchLogs
     #
     class Policy < Struct.new(
       :delivery_destination_policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains the information about one processor in a log
+    # transformer.
+    #
+    # @!attribute [rw] add_keys
+    #   Use this parameter to include the [ addKeys][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-addKeys
+    #   @return [Types::AddKeys]
+    #
+    # @!attribute [rw] copy_value
+    #   Use this parameter to include the [ copyValue][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-copyValue
+    #   @return [Types::CopyValue]
+    #
+    # @!attribute [rw] csv
+    #   Use this parameter to include the [ CSV][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-CSV
+    #   @return [Types::CSV]
+    #
+    # @!attribute [rw] date_time_converter
+    #   Use this parameter to include the [ datetimeConverter][1] processor
+    #   in your transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-datetimeConverter
+    #   @return [Types::DateTimeConverter]
+    #
+    # @!attribute [rw] delete_keys
+    #   Use this parameter to include the [ deleteKeys][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-deleteKeys
+    #   @return [Types::DeleteKeys]
+    #
+    # @!attribute [rw] grok
+    #   Use this parameter to include the [ grok][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-grok
+    #   @return [Types::Grok]
+    #
+    # @!attribute [rw] list_to_map
+    #   Use this parameter to include the [ listToMap][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-listToMap
+    #   @return [Types::ListToMap]
+    #
+    # @!attribute [rw] lower_case_string
+    #   Use this parameter to include the [ lowerCaseString][1] processor in
+    #   your transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-lowerCaseString
+    #   @return [Types::LowerCaseString]
+    #
+    # @!attribute [rw] move_keys
+    #   Use this parameter to include the [ moveKeys][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-moveKeys
+    #   @return [Types::MoveKeys]
+    #
+    # @!attribute [rw] parse_cloudfront
+    #   Use this parameter to include the [ parseCloudfront][1] processor in
+    #   your transformer.
+    #
+    #   If you use this processor, it must be the first processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseCloudfront
+    #   @return [Types::ParseCloudfront]
+    #
+    # @!attribute [rw] parse_json
+    #   Use this parameter to include the [ parseJSON][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseJSON
+    #   @return [Types::ParseJSON]
+    #
+    # @!attribute [rw] parse_key_value
+    #   Use this parameter to include the [ parseKeyValue][1] processor in
+    #   your transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseKeyValue
+    #   @return [Types::ParseKeyValue]
+    #
+    # @!attribute [rw] parse_route_53
+    #   Use this parameter to include the [ parseRoute53][1] processor in
+    #   your transformer.
+    #
+    #   If you use this processor, it must be the first processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseRoute53
+    #   @return [Types::ParseRoute53]
+    #
+    # @!attribute [rw] parse_postgres
+    #   Use this parameter to include the [ parsePostGres][1] processor in
+    #   your transformer.
+    #
+    #   If you use this processor, it must be the first processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parsePostGres
+    #   @return [Types::ParsePostgres]
+    #
+    # @!attribute [rw] parse_vpc
+    #   Use this parameter to include the [ parseVPC][1] processor in your
+    #   transformer.
+    #
+    #   If you use this processor, it must be the first processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseVPC
+    #   @return [Types::ParseVPC]
+    #
+    # @!attribute [rw] parse_waf
+    #   Use this parameter to include the [ parseWAF][1] processor in your
+    #   transformer.
+    #
+    #   If you use this processor, it must be the first processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-parseWAF
+    #   @return [Types::ParseWAF]
+    #
+    # @!attribute [rw] rename_keys
+    #   Use this parameter to include the [ renameKeys][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-renameKeys
+    #   @return [Types::RenameKeys]
+    #
+    # @!attribute [rw] split_string
+    #   Use this parameter to include the [ splitString][1] processor in
+    #   your transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-splitString
+    #   @return [Types::SplitString]
+    #
+    # @!attribute [rw] substitute_string
+    #   Use this parameter to include the [ substituteString][1] processor
+    #   in your transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-substituteString
+    #   @return [Types::SubstituteString]
+    #
+    # @!attribute [rw] trim_string
+    #   Use this parameter to include the [ trimString][1] processor in your
+    #   transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-trimString
+    #   @return [Types::TrimString]
+    #
+    # @!attribute [rw] type_converter
+    #   Use this parameter to include the [ typeConverter][1] processor in
+    #   your transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-typeConverter
+    #   @return [Types::TypeConverter]
+    #
+    # @!attribute [rw] upper_case_string
+    #   Use this parameter to include the [ upperCaseString][1] processor in
+    #   your transformer.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-upperCaseString
+    #   @return [Types::UpperCaseString]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/Processor AWS API Documentation
+    #
+    class Processor < Struct.new(
+      :add_keys,
+      :copy_value,
+      :csv,
+      :date_time_converter,
+      :delete_keys,
+      :grok,
+      :list_to_map,
+      :lower_case_string,
+      :move_keys,
+      :parse_cloudfront,
+      :parse_json,
+      :parse_key_value,
+      :parse_route_53,
+      :parse_postgres,
+      :parse_vpc,
+      :parse_waf,
+      :rename_keys,
+      :split_string,
+      :substitute_string,
+      :trim_string,
+      :type_converter,
+      :upper_case_string)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3854,10 +5065,34 @@ module Aws::CloudWatchLogs
     #     This property is only applicable when the destination is an
     #     Kinesis Data Streams data stream.
     #
+    #   **Transformer policy**
+    #
+    #   A transformer policy must include one JSON block with the array of
+    #   processors and their configurations. For more information about
+    #   available processors, see [ Processors that you can use][3].
+    #
+    #   **Field index policy**
+    #
+    #   A field index filter policy can include the following attribute in a
+    #   JSON block:
+    #
+    #   * **Fields** The array of field indexes to create.
+    #
+    #   ^
+    #
+    #   It must contain at least one field index.
+    #
+    #   The following is an example of an index policy document that creates
+    #   two indexes, `RequestId` and `TransactionId`.
+    #
+    #   `"policyDocument": "{ "Fields": [ "RequestId", "TransactionId"
+    #   ] }"`
+    #
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/mask-sensitive-log-data-types.html
     #   [2]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutDestination.html
+    #   [3]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-Processors
     #   @return [String]
     #
     # @!attribute [rw] policy_type
@@ -3872,18 +5107,25 @@ module Aws::CloudWatchLogs
     #   @return [String]
     #
     # @!attribute [rw] selection_criteria
-    #   Use this parameter to apply the subscription filter policy to a
-    #   subset of log groups in the account. Currently, the only supported
-    #   filter is `LogGroupName NOT IN []`. The `selectionCriteria` string
-    #   can be up to 25KB in length. The length is determined by using its
-    #   UTF-8 bytes.
+    #   Use this parameter to apply the new policy to a subset of log groups
+    #   in the account.
     #
-    #   Using the `selectionCriteria` parameter is useful to help prevent
-    #   infinite loops. For more information, see [Log recursion
-    #   prevention][1].
+    #   Specifing `selectionCriteria` is valid only when you specify
+    #   `SUBSCRIPTION_FILTER_POLICY`, `FIELD_INDEX_POLICY` or
+    #   `TRANSFORMER_POLICY`for `policyType`.
     #
-    #   Specifing `selectionCriteria` is valid only when you specify `
-    #   SUBSCRIPTION_FILTER_POLICY` for `policyType`.
+    #   If `policyType` is `SUBSCRIPTION_FILTER_POLICY`, the only supported
+    #   `selectionCriteria` filter is `LogGroupName NOT IN []`
+    #
+    #   If `policyType` is `FIELD_INDEX_POLICY` or `TRANSFORMER_POLICY`, the
+    #   only supported `selectionCriteria` filter is `LogGroupNamePrefix`
+    #
+    #   The `selectionCriteria` string can be up to 25KB in length. The
+    #   length is determined by using its UTF-8 bytes.
+    #
+    #   Using the `selectionCriteria` parameter with
+    #   `SUBSCRIPTION_FILTER_POLICY` is useful to help prevent infinite
+    #   loops. For more information, see [Log recursion prevention][1].
     #
     #
     #
@@ -4220,6 +5462,50 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] log_group_identifier
+    #   Specify either the log group name or log group ARN to apply this
+    #   field index policy to. If you specify an ARN, use the format
+    #   arn:aws:logs:*region*:*account-id*:log-group:*log\_group\_name*
+    #   Don't include an * at the end.
+    #   @return [String]
+    #
+    # @!attribute [rw] policy_document
+    #   The index policy document, in JSON format. The following is an
+    #   example of an index policy document that creates two indexes,
+    #   `RequestId` and `TransactionId`.
+    #
+    #   `"policyDocument": "{ "Fields": [ "RequestId", "TransactionId" ] }"`
+    #
+    #   The policy document must include at least one field index. For more
+    #   information about the fields that can be included and other
+    #   restrictions, see [Field index syntax and quotas][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing-Syntax.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutIndexPolicyRequest AWS API Documentation
+    #
+    class PutIndexPolicyRequest < Struct.new(
+      :log_group_identifier,
+      :policy_document)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] index_policy
+    #   The index policy that you just created or updated.
+    #   @return [Types::IndexPolicy]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutIndexPolicyResponse AWS API Documentation
+    #
+    class PutIndexPolicyResponse < Struct.new(
+      :index_policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] log_group_name
     #   The name of the log group.
     #   @return [String]
@@ -4243,7 +5529,7 @@ module Aws::CloudWatchLogs
     #   @return [String]
     #
     # @!attribute [rw] entity
-    #   Reserved for internal use.
+    #   The entity associated with the log events.
     #   @return [Types::Entity]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutLogEventsRequest AWS API Documentation
@@ -4276,7 +5562,12 @@ module Aws::CloudWatchLogs
     #   @return [Types::RejectedLogEventsInfo]
     #
     # @!attribute [rw] rejected_entity_info
-    #   Reserved for internal use.
+    #   Information about why the entity is rejected when calling
+    #   `PutLogEvents`. Only returned when the entity is rejected.
+    #
+    #   <note markdown="1"> When the entity is rejected, the events may still be accepted.
+    #
+    #    </note>
     #   @return [Types::RejectedEntityInfo]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutLogEventsResponse AWS API Documentation
@@ -4307,13 +5598,29 @@ module Aws::CloudWatchLogs
     #   emitted.
     #   @return [Array<Types::MetricTransformation>]
     #
+    # @!attribute [rw] apply_on_transformed_logs
+    #   This parameter is valid only for log groups that have an active log
+    #   transformer. For more information about log transformers, see
+    #   [PutTransformer][1].
+    #
+    #   If the log group uses either a log-group level or account-level
+    #   transformer, and you specify `true`, the metric filter will be
+    #   applied on the transformed version of the log events instead of the
+    #   original ingested log events.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutTransformer.html
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutMetricFilterRequest AWS API Documentation
     #
     class PutMetricFilterRequest < Struct.new(
       :log_group_name,
       :filter_name,
       :filter_pattern,
-      :metric_transformations)
+      :metric_transformations,
+      :apply_on_transformed_logs)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4538,6 +5845,21 @@ module Aws::CloudWatchLogs
     #   applicable when the destination is an Amazon Kinesis data stream.
     #   @return [String]
     #
+    # @!attribute [rw] apply_on_transformed_logs
+    #   This parameter is valid only for log groups that have an active log
+    #   transformer. For more information about log transformers, see
+    #   [PutTransformer][1].
+    #
+    #   If the log group uses either a log-group level or account-level
+    #   transformer, and you specify `true`, the subscription filter will be
+    #   applied on the transformed version of the log events instead of the
+    #   original ingested log events.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutTransformer.html
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutSubscriptionFilterRequest AWS API Documentation
     #
     class PutSubscriptionFilterRequest < Struct.new(
@@ -4546,7 +5868,29 @@ module Aws::CloudWatchLogs
       :filter_pattern,
       :destination_arn,
       :role_arn,
-      :distribution)
+      :distribution,
+      :apply_on_transformed_logs)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] log_group_identifier
+    #   Specify either the name or ARN of the log group to create the
+    #   transformer for.
+    #   @return [String]
+    #
+    # @!attribute [rw] transformer_config
+    #   This structure contains the configuration of this log transformer. A
+    #   log transformer is an array of processors, where each processor
+    #   applies one type of transformation to the log events that are
+    #   ingested.
+    #   @return [Array<Types::Processor>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutTransformerRequest AWS API Documentation
+    #
+    class PutTransformerRequest < Struct.new(
+      :log_group_identifier,
+      :transformer_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4670,6 +6014,17 @@ module Aws::CloudWatchLogs
     # log events that matched the query criteria, and the total number of
     # bytes in the log events that were scanned.
     #
+    # If the query involved log groups that have field index policies, the
+    # estimated number of skipped log events and the total bytes of those
+    # skipped log events are included. Using field indexes to skip log
+    # events in queries reduces scan volume and improves performance. For
+    # more information, see [Create field indexes to improve query
+    # performance and reduce scan volume][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-Field-Indexing.html
+    #
     # @!attribute [rw] records_matched
     #   The number of log events that matched the query string.
     #   @return [Float]
@@ -4678,9 +6033,37 @@ module Aws::CloudWatchLogs
     #   The total number of log events scanned during the query.
     #   @return [Float]
     #
+    # @!attribute [rw] estimated_records_skipped
+    #   An estimate of the number of log events that were skipped when
+    #   processing this query, because the query contained an indexed field.
+    #   Skipping these entries lowers query costs and improves the query
+    #   performance time. For more information about field indexes, see
+    #   [PutIndexPolicy][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html
+    #   @return [Float]
+    #
     # @!attribute [rw] bytes_scanned
     #   The total number of bytes in the log events scanned during the
     #   query.
+    #   @return [Float]
+    #
+    # @!attribute [rw] estimated_bytes_skipped
+    #   An estimate of the number of bytes in the log events that were
+    #   skipped when processing this query, because the query contained an
+    #   indexed field. Skipping these entries lowers query costs and
+    #   improves the query performance time. For more information about
+    #   field indexes, see [PutIndexPolicy][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutIndexPolicy.html
+    #   @return [Float]
+    #
+    # @!attribute [rw] log_groups_scanned
+    #   The number of log groups that were scanned by this query.
     #   @return [Float]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/QueryStatistics AWS API Documentation
@@ -4688,7 +6071,10 @@ module Aws::CloudWatchLogs
     class QueryStatistics < Struct.new(
       :records_matched,
       :records_scanned,
-      :bytes_scanned)
+      :estimated_records_skipped,
+      :bytes_scanned,
+      :estimated_bytes_skipped,
+      :log_groups_scanned)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4726,10 +6112,12 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
-    # Reserved for internal use.
+    # If an entity is rejected when a `PutLogEvents` request was made, this
+    # includes details about the reason for the rejection.
     #
     # @!attribute [rw] error_type
-    #   Reserved for internal use.
+    #   The type of error that caused the rejection of the entity when
+    #   calling `PutLogEvents`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/RejectedEntityInfo AWS API Documentation
@@ -4762,6 +6150,58 @@ module Aws::CloudWatchLogs
       :too_new_log_event_start_index,
       :too_old_log_event_end_index,
       :expired_log_event_end_index)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This object defines one key that will be renamed with the [
+    # renameKey][1] processor.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-renameKey
+    #
+    # @!attribute [rw] key
+    #   The key to rename
+    #   @return [String]
+    #
+    # @!attribute [rw] rename_to
+    #   The string to use for the new key name
+    #   @return [String]
+    #
+    # @!attribute [rw] overwrite_if_exists
+    #   Specifies whether to overwrite the existing value if the destination
+    #   key already exists. The default is `false`
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/RenameKeyEntry AWS API Documentation
+    #
+    class RenameKeyEntry < Struct.new(
+      :key,
+      :rename_to,
+      :overwrite_if_exists)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use this processor to rename keys in a log event.
+    #
+    # For more information about this processor including examples, see [
+    # renameKeys][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-renameKeys
+    #
+    # @!attribute [rw] entries
+    #   An array of `RenameKeyEntry` objects, where each object contains the
+    #   information about a single key to rename.
+    #   @return [Array<Types::RenameKeyEntry>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/RenameKeys AWS API Documentation
+    #
+    class RenameKeys < Struct.new(
+      :entries)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4917,6 +6357,53 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # Use this processor to split a field into an array of strings using a
+    # delimiting character.
+    #
+    # For more information about this processor including examples, see [
+    # splitString][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-splitString
+    #
+    # @!attribute [rw] entries
+    #   An array of `SplitStringEntry` objects, where each object contains
+    #   the information about one field to split.
+    #   @return [Array<Types::SplitStringEntry>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/SplitString AWS API Documentation
+    #
+    class SplitString < Struct.new(
+      :entries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This object defines one log field that will be split with the [
+    # splitString][1] processor.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-splitString
+    #
+    # @!attribute [rw] source
+    #   The key of the field to split.
+    #   @return [String]
+    #
+    # @!attribute [rw] delimiter
+    #   The separator characters to split the string entry on.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/SplitStringEntry AWS API Documentation
+    #
+    class SplitStringEntry < Struct.new(
+      :source,
+      :delimiter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] log_group_identifiers
     #   An array where each item in the array is a log group to include in
     #   the Live Tail session.
@@ -4999,23 +6486,11 @@ module Aws::CloudWatchLogs
 
     # @!attribute [rw] log_group_name
     #   The log group on which to perform the query.
-    #
-    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
-    #   parameters: `logGroupName`, `logGroupNames`, or
-    #   `logGroupIdentifiers`.
-    #
-    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] log_group_names
     #   The list of log groups to be queried. You can include up to 50 log
     #   groups.
-    #
-    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
-    #   parameters: `logGroupName`, `logGroupNames`, or
-    #   `logGroupIdentifiers`.
-    #
-    #    </note>
     #   @return [Array<String>]
     #
     # @!attribute [rw] log_group_identifiers
@@ -5027,7 +6502,9 @@ module Aws::CloudWatchLogs
     #   monitoring account, you must specify the ARN of the log group here.
     #   The query definition must also be defined in the monitoring account.
     #
-    #   If you specify an ARN, the ARN can't end with an asterisk (*).
+    #   If you specify an ARN, use the format
+    #   arn:aws:logs:*region*:*account-id*:log-group:*log\_group\_name*
+    #   Don't include an * at the end.
     #
     #   A `StartQuery` operation must include exactly one of the following
     #   parameters: `logGroupName`, `logGroupNames`, or
@@ -5142,6 +6619,20 @@ module Aws::CloudWatchLogs
     #   be either random or grouped by log stream.
     #   @return [String]
     #
+    # @!attribute [rw] apply_on_transformed_logs
+    #   This parameter is valid only for log groups that have an active log
+    #   transformer. For more information about log transformers, see
+    #   [PutTransformer][1].
+    #
+    #   If this value is `true`, the subscription filter is applied on the
+    #   transformed version of the log events instead of the original
+    #   ingested log events.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_PutTransformer.html
+    #   @return [Boolean]
+    #
     # @!attribute [rw] creation_time
     #   The creation time of the subscription filter, expressed as the
     #   number of milliseconds after `Jan 1, 1970 00:00:00 UTC`.
@@ -5156,7 +6647,67 @@ module Aws::CloudWatchLogs
       :destination_arn,
       :role_arn,
       :distribution,
+      :apply_on_transformed_logs,
       :creation_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor matches a key’s value against a regular expression and
+    # replaces all matches with a replacement string.
+    #
+    # For more information about this processor including examples, see [
+    # substituteString][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-substituteString
+    #
+    # @!attribute [rw] entries
+    #   An array of objects, where each object contains the information
+    #   about one key to match and replace.
+    #   @return [Array<Types::SubstituteStringEntry>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/SubstituteString AWS API Documentation
+    #
+    class SubstituteString < Struct.new(
+      :entries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This object defines one log field key that will be replaced using the
+    # [ substituteString][1] processor.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-substituteString
+    #
+    # @!attribute [rw] source
+    #   The key to modify
+    #   @return [String]
+    #
+    # @!attribute [rw] from
+    #   The regular expression string to be replaced. Special regex
+    #   characters such as \[ and \] must be escaped using \\\\ when using
+    #   double quotes and with \\ when using single quotes. For more
+    #   information, see [ Class Pattern][1] on the Oracle web site.
+    #
+    #
+    #
+    #   [1]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html
+    #   @return [String]
+    #
+    # @!attribute [rw] to
+    #   The string to be substituted for each match of `from`
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/SubstituteStringEntry AWS API Documentation
+    #
+    class SubstituteStringEntry < Struct.new(
+      :source,
+      :from,
+      :to)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5262,6 +6813,41 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] transformer_config
+    #   This structure contains the configuration of this log transformer
+    #   that you want to test. A log transformer is an array of processors,
+    #   where each processor applies one type of transformation to the log
+    #   events that are ingested.
+    #   @return [Array<Types::Processor>]
+    #
+    # @!attribute [rw] log_event_messages
+    #   An array of the raw log events that you want to use to test this
+    #   transformer.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/TestTransformerRequest AWS API Documentation
+    #
+    class TestTransformerRequest < Struct.new(
+      :transformer_config,
+      :log_event_messages)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] transformed_logs
+    #   An array where each member of the array includes both the original
+    #   version and the transformed version of one of the log events that
+    #   you input.
+    #   @return [Array<Types::TransformedLogRecord>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/TestTransformerResponse AWS API Documentation
+    #
+    class TestTransformerResponse < Struct.new(
+      :transformed_logs)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The request was throttled because of quota limits.
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ThrottlingException AWS API Documentation
@@ -5282,6 +6868,103 @@ module Aws::CloudWatchLogs
     class TooManyTagsException < Struct.new(
       :message,
       :resource_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information for one log event that has been
+    # processed by a log transformer.
+    #
+    # @!attribute [rw] event_number
+    #   The event number.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] event_message
+    #   The original log event message before it was transformed.
+    #   @return [String]
+    #
+    # @!attribute [rw] transformed_event_message
+    #   The log event message after being transformed.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/TransformedLogRecord AWS API Documentation
+    #
+    class TransformedLogRecord < Struct.new(
+      :event_number,
+      :event_message,
+      :transformed_event_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use this processor to remove leading and trailing whitespace.
+    #
+    # For more information about this processor including examples, see [
+    # trimString][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-trimString
+    #
+    # @!attribute [rw] with_keys
+    #   The array containing the keys of the fields to trim.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/TrimString AWS API Documentation
+    #
+    class TrimString < Struct.new(
+      :with_keys)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Use this processor to convert a value type associated with the
+    # specified key to the specified type. It's a casting processor that
+    # changes the types of the specified fields. Values can be converted
+    # into one of the following datatypes: `integer`, `double`, `string` and
+    # `boolean`.
+    #
+    # For more information about this processor including examples, see [
+    # trimString][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-trimString
+    #
+    # @!attribute [rw] entries
+    #   An array of `TypeConverterEntry` objects, where each object contains
+    #   the information about one field to change the type of.
+    #   @return [Array<Types::TypeConverterEntry>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/TypeConverter AWS API Documentation
+    #
+    class TypeConverter < Struct.new(
+      :entries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This object defines one value type that will be converted using the [
+    # typeConverter][1] processor.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-typeConverter
+    #
+    # @!attribute [rw] key
+    #   The key with the value that is to be converted to a different type.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type to convert the field value to. Valid values are `integer`,
+    #   `double`, `string` and `boolean`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/TypeConverterEntry AWS API Documentation
+    #
+    class TypeConverterEntry < Struct.new(
+      :key,
+      :type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5475,6 +7158,28 @@ module Aws::CloudWatchLogs
       :filter_pattern,
       :anomaly_visibility_time,
       :enabled)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This processor converts a string field to uppercase.
+    #
+    # For more information about this processor including examples, see [
+    # upperCaseString][1] in the *CloudWatch Logs User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatch-Logs-Transformation.html#CloudWatch-Logs-Transformation-upperCaseString
+    #
+    # @!attribute [rw] with_keys
+    #   The array of containing the keys of the field to convert to
+    #   uppercase.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/UpperCaseString AWS API Documentation
+    #
+    class UpperCaseString < Struct.new(
+      :with_keys)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -174,6 +174,23 @@ module Aws
                                       ) -> _DescribeScheduledActionsResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeScheduledActionsResponseSuccess
 
+      interface _GetPredictiveScalingForecastResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetPredictiveScalingForecastResponse]
+        def load_forecast: () -> ::Array[Types::LoadForecast]
+        def capacity_forecast: () -> Types::CapacityForecast
+        def update_time: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ApplicationAutoScaling/Client.html#get_predictive_scaling_forecast-instance_method
+      def get_predictive_scaling_forecast: (
+                                             service_namespace: ("ecs" | "elasticmapreduce" | "ec2" | "appstream" | "dynamodb" | "rds" | "sagemaker" | "custom-resource" | "comprehend" | "lambda" | "cassandra" | "kafka" | "elasticache" | "neptune" | "workspaces"),
+                                             resource_id: ::String,
+                                             scalable_dimension: ("ecs:service:DesiredCount" | "ec2:spot-fleet-request:TargetCapacity" | "elasticmapreduce:instancegroup:InstanceCount" | "appstream:fleet:DesiredCapacity" | "dynamodb:table:ReadCapacityUnits" | "dynamodb:table:WriteCapacityUnits" | "dynamodb:index:ReadCapacityUnits" | "dynamodb:index:WriteCapacityUnits" | "rds:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredInstanceCount" | "custom-resource:ResourceType:Property" | "comprehend:document-classifier-endpoint:DesiredInferenceUnits" | "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits" | "lambda:function:ProvisionedConcurrency" | "cassandra:table:ReadCapacityUnits" | "cassandra:table:WriteCapacityUnits" | "kafka:broker-storage:VolumeSize" | "elasticache:replication-group:NodeGroups" | "elasticache:replication-group:Replicas" | "neptune:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredProvisionedConcurrency" | "sagemaker:inference-component:DesiredCopyCount" | "workspaces:workspacespool:DesiredUserSessions"),
+                                             policy_name: ::String,
+                                             start_time: ::Time,
+                                             end_time: ::Time
+                                           ) -> _GetPredictiveScalingForecastResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetPredictiveScalingForecastResponseSuccess
+
       interface _ListTagsForResourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
         def tags: () -> ::Hash[::String, ::String]
@@ -195,7 +212,7 @@ module Aws
                                 service_namespace: ("ecs" | "elasticmapreduce" | "ec2" | "appstream" | "dynamodb" | "rds" | "sagemaker" | "custom-resource" | "comprehend" | "lambda" | "cassandra" | "kafka" | "elasticache" | "neptune" | "workspaces"),
                                 resource_id: ::String,
                                 scalable_dimension: ("ecs:service:DesiredCount" | "ec2:spot-fleet-request:TargetCapacity" | "elasticmapreduce:instancegroup:InstanceCount" | "appstream:fleet:DesiredCapacity" | "dynamodb:table:ReadCapacityUnits" | "dynamodb:table:WriteCapacityUnits" | "dynamodb:index:ReadCapacityUnits" | "dynamodb:index:WriteCapacityUnits" | "rds:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredInstanceCount" | "custom-resource:ResourceType:Property" | "comprehend:document-classifier-endpoint:DesiredInferenceUnits" | "comprehend:entity-recognizer-endpoint:DesiredInferenceUnits" | "lambda:function:ProvisionedConcurrency" | "cassandra:table:ReadCapacityUnits" | "cassandra:table:WriteCapacityUnits" | "kafka:broker-storage:VolumeSize" | "elasticache:replication-group:NodeGroups" | "elasticache:replication-group:Replicas" | "neptune:cluster:ReadReplicaCount" | "sagemaker:variant:DesiredProvisionedConcurrency" | "sagemaker:inference-component:DesiredCopyCount" | "workspaces:workspacespool:DesiredUserSessions"),
-                                ?policy_type: ("StepScaling" | "TargetTrackingScaling"),
+                                ?policy_type: ("StepScaling" | "TargetTrackingScaling" | "PredictiveScaling"),
                                 ?step_scaling_policy_configuration: {
                                   adjustment_type: ("ChangeInCapacity" | "PercentChangeInCapacity" | "ExactCapacity")?,
                                   step_adjustments: Array[
@@ -252,6 +269,101 @@ module Aws
                                   scale_out_cooldown: ::Integer?,
                                   scale_in_cooldown: ::Integer?,
                                   disable_scale_in: bool?
+                                },
+                                ?predictive_scaling_policy_configuration: {
+                                  metric_specifications: Array[
+                                    {
+                                      target_value: ::Float,
+                                      predefined_metric_pair_specification: {
+                                        predefined_metric_type: ::String,
+                                        resource_label: ::String?
+                                      }?,
+                                      predefined_scaling_metric_specification: {
+                                        predefined_metric_type: ::String,
+                                        resource_label: ::String?
+                                      }?,
+                                      predefined_load_metric_specification: {
+                                        predefined_metric_type: ::String,
+                                        resource_label: ::String?
+                                      }?,
+                                      customized_scaling_metric_specification: {
+                                        metric_data_queries: Array[
+                                          {
+                                            id: ::String,
+                                            expression: ::String?,
+                                            metric_stat: {
+                                              metric: {
+                                                dimensions: Array[
+                                                  {
+                                                    name: ::String,
+                                                    value: ::String
+                                                  },
+                                                ]?,
+                                                metric_name: ::String?,
+                                                namespace: ::String?
+                                              },
+                                              stat: ::String,
+                                              unit: ::String?
+                                            }?,
+                                            label: ::String?,
+                                            return_data: bool?
+                                          },
+                                        ]
+                                      }?,
+                                      customized_load_metric_specification: {
+                                        metric_data_queries: Array[
+                                          {
+                                            id: ::String,
+                                            expression: ::String?,
+                                            metric_stat: {
+                                              metric: {
+                                                dimensions: Array[
+                                                  {
+                                                    name: ::String,
+                                                    value: ::String
+                                                  },
+                                                ]?,
+                                                metric_name: ::String?,
+                                                namespace: ::String?
+                                              },
+                                              stat: ::String,
+                                              unit: ::String?
+                                            }?,
+                                            label: ::String?,
+                                            return_data: bool?
+                                          },
+                                        ]
+                                      }?,
+                                      customized_capacity_metric_specification: {
+                                        metric_data_queries: Array[
+                                          {
+                                            id: ::String,
+                                            expression: ::String?,
+                                            metric_stat: {
+                                              metric: {
+                                                dimensions: Array[
+                                                  {
+                                                    name: ::String,
+                                                    value: ::String
+                                                  },
+                                                ]?,
+                                                metric_name: ::String?,
+                                                namespace: ::String?
+                                              },
+                                              stat: ::String,
+                                              unit: ::String?
+                                            }?,
+                                            label: ::String?,
+                                            return_data: bool?
+                                          },
+                                        ]
+                                      }?
+                                    },
+                                  ],
+                                  mode: ("ForecastOnly" | "ForecastAndScale")?,
+                                  scheduling_buffer_time: ::Integer?,
+                                  max_capacity_breach_behavior: ("HonorMaxCapacity" | "IncreaseMaxCapacity")?,
+                                  max_capacity_buffer: ::Integer?
                                 }
                               ) -> _PutScalingPolicyResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutScalingPolicyResponseSuccess

@@ -128,6 +128,19 @@ module Aws::S3
     #   denied).
     #   @return [String]
     #
+    # @!attribute [rw] if_match_initiated_time
+    #   If present, this header aborts an in progress multipart upload only
+    #   if it was initiated on the provided timestamp. If the initiated
+    #   timestamp of the multipart upload does not match the provided value,
+    #   the operation returns a `412 Precondition Failed` error. If the
+    #   initiated timestamp matches or if the multipart upload doesn’t
+    #   exist, the operation returns a `204 Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/AbortMultipartUploadRequest AWS API Documentation
     #
     class AbortMultipartUploadRequest < Struct.new(
@@ -135,7 +148,8 @@ module Aws::S3
       :key,
       :upload_id,
       :request_payer,
-      :expected_bucket_owner)
+      :expected_bucket_owner,
+      :if_match_initiated_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3782,6 +3796,11 @@ module Aws::S3
     #   you provide does not match the actual owner of the bucket, the
     #   request fails with the HTTP status code `403 Forbidden` (access
     #   denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/DeleteBucketLifecycleRequest AWS API Documentation
@@ -4199,6 +4218,52 @@ module Aws::S3
     #   denied).
     #   @return [String]
     #
+    # @!attribute [rw] if_match
+    #   The `If-Match` header field makes the request method conditional on
+    #   ETags. If the ETag value does not match, the operation returns a
+    #   `412 Precondition Failed` error. If the ETag matches or if the
+    #   object doesn't exist, the operation will return a `204 Success (No
+    #   Content) response`.
+    #
+    #   For more information about conditional requests, see [RFC 7232][1].
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/https:/tools.ietf.org/html/rfc7232
+    #   @return [String]
+    #
+    # @!attribute [rw] if_match_last_modified_time
+    #   If present, the object is deleted only if its modification times
+    #   matches the provided `Timestamp`. If the `Timestamp` values do not
+    #   match, the operation returns a `412 Precondition Failed` error. If
+    #   the `Timestamp` matches or if the object doesn’t exist, the
+    #   operation returns a `204 Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #   @return [Time]
+    #
+    # @!attribute [rw] if_match_size
+    #   If present, the object is deleted only if its size matches the
+    #   provided size in bytes. If the `Size` value does not match, the
+    #   operation returns a `412 Precondition Failed` error. If the `Size`
+    #   matches or if the object doesn’t exist, the operation returns a `204
+    #   Success (No Content)` response.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #
+    #   You can use the `If-Match`, `x-amz-if-match-last-modified-time` and
+    #   `x-amz-if-match-size` conditional headers in conjunction with
+    #   each-other or individually.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/DeleteObjectRequest AWS API Documentation
     #
     class DeleteObjectRequest < Struct.new(
@@ -4208,7 +4273,10 @@ module Aws::S3
       :version_id,
       :request_payer,
       :bypass_governance_retention,
-      :expected_bucket_owner)
+      :expected_bucket_owner,
+      :if_match,
+      :if_match_last_modified_time,
+      :if_match_size)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4683,6 +4751,14 @@ module Aws::S3
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # The existing object was created with a different encryption type.
+    # Subsequent write requests must include the appropriate encryption
+    # parameters in the request or while creating the session.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/EncryptionTypeMismatch AWS API Documentation
+    #
+    class EncryptionTypeMismatch < Aws::EmptyStructure; end
 
     # A message that indicates the request is complete and no more messages
     # will be sent. You should not assume that the request is complete until
@@ -5867,6 +5943,11 @@ module Aws::S3
     #   Indicates which default minimum object size behavior is applied to
     #   the lifecycle configuration.
     #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
+    #
     #   * `all_storage_classes_128K` - Objects smaller than 128 KB will not
     #     transition to any storage class by default.
     #
@@ -5899,6 +5980,11 @@ module Aws::S3
     #   you provide does not match the actual owner of the bucket, the
     #   request fails with the HTTP status code `403 Forbidden` (access
     #   denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/GetBucketLifecycleConfigurationRequest AWS API Documentation
@@ -6540,7 +6626,7 @@ module Aws::S3
     #   @return [Boolean]
     #
     # @!attribute [rw] last_modified
-    #   The creation date of the object.
+    #   Date and time when the object was last modified.
     #   @return [Time]
     #
     # @!attribute [rw] version_id
@@ -9018,6 +9104,28 @@ module Aws::S3
       include Aws::Structure
     end
 
+    # You may receive this error in multiple cases. Depending on the reason
+    # for the error, you may receive one of the messages below:
+    #
+    # * Cannot specify both a write offset value and user-defined object
+    #   metadata for existing objects.
+    #
+    # * Checksum Type mismatch occurred, expected checksum Type: sha1,
+    #   actual checksum Type: crc32c.
+    #
+    # * Request body cannot be empty when 'write offset' is specified.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/InvalidRequest AWS API Documentation
+    #
+    class InvalidRequest < Aws::EmptyStructure; end
+
+    # The write offset value that you specified does not match the current
+    # object size.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/InvalidWriteOffset AWS API Documentation
+    #
+    class InvalidWriteOffset < Aws::EmptyStructure; end
+
     # Specifies the inventory configuration for an Amazon S3 bucket. For
     # more information, see [GET Bucket inventory][1] in the *Amazon S3 API
     # Reference*.
@@ -9292,6 +9400,11 @@ module Aws::S3
     #   Indicates at what date the object is to be moved or deleted. The
     #   date value must conform to the ISO 8601 format. The time is always
     #   midnight UTC.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [Time]
     #
     # @!attribute [rw] days
@@ -9304,6 +9417,11 @@ module Aws::S3
     #   noncurrent versions. If set to true, the delete marker will be
     #   expired; if set to false the policy takes no action. This cannot be
     #   specified with Days or Date in a Lifecycle Expiration Policy.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/LifecycleExpiration AWS API Documentation
@@ -9353,6 +9471,10 @@ module Aws::S3
     #   applies to. A `Filter` must have exactly one of `Prefix`, `Tag`, or
     #   `And` specified. `Filter` is required if the `LifecycleRule` does
     #   not contain a `Prefix` element.
+    #
+    #   <note markdown="1"> `Tag` filters are not supported for directory buckets.
+    #
+    #    </note>
     #   @return [Types::LifecycleRuleFilter]
     #
     # @!attribute [rw] status
@@ -9363,6 +9485,11 @@ module Aws::S3
     # @!attribute [rw] transitions
     #   Specifies when an Amazon S3 object transitions to a specified
     #   storage class.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [Array<Types::Transition>]
     #
     # @!attribute [rw] noncurrent_version_transitions
@@ -9372,6 +9499,11 @@ module Aws::S3
     #   can set this action to request that Amazon S3 transition noncurrent
     #   object versions to a specific storage class at a set period in the
     #   object's lifetime.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [Array<Types::NoncurrentVersionTransition>]
     #
     # @!attribute [rw] noncurrent_version_expiration
@@ -9381,6 +9513,11 @@ module Aws::S3
     #   versioning enabled (or suspended) to request that Amazon S3 delete
     #   noncurrent object versions at a specific period in the object's
     #   lifetime.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [Types::NoncurrentVersionExpiration]
     #
     # @!attribute [rw] abort_incomplete_multipart_upload
@@ -9464,6 +9601,11 @@ module Aws::S3
     # @!attribute [rw] tag
     #   This tag must exist in the object's tag set in order for the rule
     #   to apply.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [Types::Tag]
     #
     # @!attribute [rw] object_size_greater_than
@@ -11559,12 +11701,22 @@ module Aws::S3
     # enabled (or suspended) to request that Amazon S3 delete noncurrent
     # object versions at a specific period in the object's lifetime.
     #
+    # <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    # supported for directory bucket lifecycle configurations.
+    #
+    #  </note>
+    #
     # @!attribute [rw] noncurrent_days
     #   Specifies the number of days an object is noncurrent before Amazon
     #   S3 can perform the associated action. The value must be a non-zero
     #   positive integer. For information about the noncurrent days
     #   calculations, see [How Amazon S3 Calculates When an Object Became
     #   Noncurrent][1] in the *Amazon S3 User Guide*.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #
     #
     #
@@ -11578,6 +11730,11 @@ module Aws::S3
     #   specified number to retain. For more information about noncurrent
     #   versions, see [Lifecycle configuration elements][1] in the *Amazon
     #   S3 User Guide*.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #
     #
     #
@@ -11849,11 +12006,43 @@ module Aws::S3
     #    </note>
     #   @return [String]
     #
+    # @!attribute [rw] etag
+    #   An entity tag (ETag) is an identifier assigned by a web server to a
+    #   specific version of a resource found at a URL. This header field
+    #   makes the request method conditional on `ETags`.
+    #
+    #   <note markdown="1"> Entity tags (ETags) for S3 Express One Zone are random alphanumeric
+    #   strings unique to the object.
+    #
+    #    </note>
+    #   @return [String]
+    #
+    # @!attribute [rw] last_modified_time
+    #   If present, the objects are deleted only if its modification times
+    #   matches the provided `Timestamp`.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #   @return [Time]
+    #
+    # @!attribute [rw] size
+    #   If present, the objects are deleted only if its size matches the
+    #   provided size in bytes.
+    #
+    #   <note markdown="1"> This functionality is only supported for directory buckets.
+    #
+    #    </note>
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/ObjectIdentifier AWS API Documentation
     #
     class ObjectIdentifier < Struct.new(
       :key,
-      :version_id)
+      :version_id,
+      :etag,
+      :last_modified_time,
+      :size)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12849,6 +13038,11 @@ module Aws::S3
     #   Indicates which default minimum object size behavior is applied to
     #   the lifecycle configuration.
     #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
+    #
     #   * `all_storage_classes_128K` - Objects smaller than 128 KB will not
     #     transition to any storage class by default.
     #
@@ -12901,11 +13095,21 @@ module Aws::S3
     #   you provide does not match the actual owner of the bucket, the
     #   request fails with the HTTP status code `403 Forbidden` (access
     #   denied).
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] transition_default_minimum_object_size
     #   Indicates which default minimum object size behavior is applied to
     #   the lifecycle configuration.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #
     #   * `all_storage_classes_128K` - Objects smaller than 128 KB will not
     #     transition to any storage class by default.
@@ -14157,6 +14361,16 @@ module Aws::S3
     #   (SSE-KMS).
     #   @return [Boolean]
     #
+    # @!attribute [rw] size
+    #   The size of the object in bytes. This will only be present if you
+    #   append to an object.
+    #
+    #   <note markdown="1"> This functionality is only supported for objects in the Amazon S3
+    #   Express One Zone storage class in directory buckets.
+    #
+    #    </note>
+    #   @return [Integer]
+    #
     # @!attribute [rw] request_charged
     #   If present, indicates that the requester was successfully charged
     #   for the request.
@@ -14182,6 +14396,7 @@ module Aws::S3
       :ssekms_key_id,
       :ssekms_encryption_context,
       :bucket_key_enabled,
+      :size,
       :request_charged)
       SENSITIVE = [:ssekms_key_id, :ssekms_encryption_context]
       include Aws::Structure
@@ -14529,6 +14744,18 @@ module Aws::S3
     #   Object key for which the PUT action was initiated.
     #   @return [String]
     #
+    # @!attribute [rw] write_offset_bytes
+    #   Specifies the offset for appending data to existing objects in
+    #   bytes. The offset must be equal to the size of the existing object
+    #   being appended to. If no object exists, setting this header to 0
+    #   will create a new object.
+    #
+    #   <note markdown="1"> This functionality is only supported for objects in the Amazon S3
+    #   Express One Zone storage class in directory buckets.
+    #
+    #    </note>
+    #   @return [Integer]
+    #
     # @!attribute [rw] metadata
     #   A map of metadata to store with the object in S3.
     #   @return [Hash<String,String>]
@@ -14861,6 +15088,7 @@ module Aws::S3
       :grant_read_acp,
       :grant_write_acp,
       :key,
+      :write_offset_bytes,
       :metadata,
       :server_side_encryption,
       :storage_class,
@@ -16002,6 +16230,11 @@ module Aws::S3
     #   versioning enabled (or suspended) to request that Amazon S3 delete
     #   noncurrent object versions at a specific period in the object's
     #   lifetime.
+    #
+    #   <note markdown="1"> This parameter applies to general purpose buckets only. It is not
+    #   supported for directory bucket lifecycle configurations.
+    #
+    #    </note>
     #   @return [Types::NoncurrentVersionExpiration]
     #
     # @!attribute [rw] abort_incomplete_multipart_upload
@@ -16796,6 +17029,15 @@ module Aws::S3
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # You have attempted to add more parts than the maximum of 10000 that
+    # are allowed for this object. You can use the CopyObject operation to
+    # copy this object to another and then add more data to the newly copied
+    # object.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/TooManyParts AWS API Documentation
+    #
+    class TooManyParts < Aws::EmptyStructure; end
 
     # A container for specifying the configuration for publication of
     # messages to an Amazon Simple Notification Service (Amazon SNS) topic

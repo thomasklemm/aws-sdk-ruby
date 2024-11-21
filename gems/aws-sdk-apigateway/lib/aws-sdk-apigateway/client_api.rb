@@ -14,6 +14,7 @@ module Aws::APIGateway
 
     include Seahorse::Model
 
+    AccessAssociationSourceType = Shapes::StringShape.new(name: 'AccessAssociationSourceType')
     AccessLogSettings = Shapes::StructureShape.new(name: 'AccessLogSettings')
     Account = Shapes::StructureShape.new(name: 'Account')
     ApiKey = Shapes::StructureShape.new(name: 'ApiKey')
@@ -44,6 +45,7 @@ module Aws::APIGateway
     CreateDeploymentRequest = Shapes::StructureShape.new(name: 'CreateDeploymentRequest')
     CreateDocumentationPartRequest = Shapes::StructureShape.new(name: 'CreateDocumentationPartRequest')
     CreateDocumentationVersionRequest = Shapes::StructureShape.new(name: 'CreateDocumentationVersionRequest')
+    CreateDomainNameAccessAssociationRequest = Shapes::StructureShape.new(name: 'CreateDomainNameAccessAssociationRequest')
     CreateDomainNameRequest = Shapes::StructureShape.new(name: 'CreateDomainNameRequest')
     CreateModelRequest = Shapes::StructureShape.new(name: 'CreateModelRequest')
     CreateRequestValidatorRequest = Shapes::StructureShape.new(name: 'CreateRequestValidatorRequest')
@@ -60,6 +62,7 @@ module Aws::APIGateway
     DeleteDeploymentRequest = Shapes::StructureShape.new(name: 'DeleteDeploymentRequest')
     DeleteDocumentationPartRequest = Shapes::StructureShape.new(name: 'DeleteDocumentationPartRequest')
     DeleteDocumentationVersionRequest = Shapes::StructureShape.new(name: 'DeleteDocumentationVersionRequest')
+    DeleteDomainNameAccessAssociationRequest = Shapes::StructureShape.new(name: 'DeleteDomainNameAccessAssociationRequest')
     DeleteDomainNameRequest = Shapes::StructureShape.new(name: 'DeleteDomainNameRequest')
     DeleteGatewayResponseRequest = Shapes::StructureShape.new(name: 'DeleteGatewayResponseRequest')
     DeleteIntegrationRequest = Shapes::StructureShape.new(name: 'DeleteIntegrationRequest')
@@ -86,6 +89,8 @@ module Aws::APIGateway
     DocumentationVersion = Shapes::StructureShape.new(name: 'DocumentationVersion')
     DocumentationVersions = Shapes::StructureShape.new(name: 'DocumentationVersions')
     DomainName = Shapes::StructureShape.new(name: 'DomainName')
+    DomainNameAccessAssociation = Shapes::StructureShape.new(name: 'DomainNameAccessAssociation')
+    DomainNameAccessAssociations = Shapes::StructureShape.new(name: 'DomainNameAccessAssociations')
     DomainNameStatus = Shapes::StringShape.new(name: 'DomainNameStatus')
     DomainNames = Shapes::StructureShape.new(name: 'DomainNames')
     Double = Shapes::FloatShape.new(name: 'Double')
@@ -113,6 +118,7 @@ module Aws::APIGateway
     GetDocumentationPartsRequest = Shapes::StructureShape.new(name: 'GetDocumentationPartsRequest')
     GetDocumentationVersionRequest = Shapes::StructureShape.new(name: 'GetDocumentationVersionRequest')
     GetDocumentationVersionsRequest = Shapes::StructureShape.new(name: 'GetDocumentationVersionsRequest')
+    GetDomainNameAccessAssociationsRequest = Shapes::StructureShape.new(name: 'GetDomainNameAccessAssociationsRequest')
     GetDomainNameRequest = Shapes::StructureShape.new(name: 'GetDomainNameRequest')
     GetDomainNamesRequest = Shapes::StructureShape.new(name: 'GetDomainNamesRequest')
     GetExportRequest = Shapes::StructureShape.new(name: 'GetExportRequest')
@@ -162,6 +168,7 @@ module Aws::APIGateway
     ListOfDocumentationPart = Shapes::ListShape.new(name: 'ListOfDocumentationPart')
     ListOfDocumentationVersion = Shapes::ListShape.new(name: 'ListOfDocumentationVersion')
     ListOfDomainName = Shapes::ListShape.new(name: 'ListOfDomainName')
+    ListOfDomainNameAccessAssociation = Shapes::ListShape.new(name: 'ListOfDomainNameAccessAssociation')
     ListOfEndpointType = Shapes::ListShape.new(name: 'ListOfEndpointType')
     ListOfGatewayResponse = Shapes::ListShape.new(name: 'ListOfGatewayResponse')
     ListOfLong = Shapes::ListShape.new(name: 'ListOfLong')
@@ -215,9 +222,11 @@ module Aws::APIGateway
     PutRestApiRequest = Shapes::StructureShape.new(name: 'PutRestApiRequest')
     QuotaPeriodType = Shapes::StringShape.new(name: 'QuotaPeriodType')
     QuotaSettings = Shapes::StructureShape.new(name: 'QuotaSettings')
+    RejectDomainNameAccessAssociationRequest = Shapes::StructureShape.new(name: 'RejectDomainNameAccessAssociationRequest')
     RequestValidator = Shapes::StructureShape.new(name: 'RequestValidator')
     RequestValidators = Shapes::StructureShape.new(name: 'RequestValidators')
     Resource = Shapes::StructureShape.new(name: 'Resource')
+    ResourceOwner = Shapes::StringShape.new(name: 'ResourceOwner')
     Resources = Shapes::StructureShape.new(name: 'Resources')
     RestApi = Shapes::StructureShape.new(name: 'RestApi')
     RestApis = Shapes::StructureShape.new(name: 'RestApis')
@@ -385,6 +394,7 @@ module Aws::APIGateway
     CreateAuthorizerRequest.struct_class = Types::CreateAuthorizerRequest
 
     CreateBasePathMappingRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    CreateBasePathMappingRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     CreateBasePathMappingRequest.add_member(:base_path, Shapes::ShapeRef.new(shape: String, location_name: "basePath"))
     CreateBasePathMappingRequest.add_member(:rest_api_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "restApiId"))
     CreateBasePathMappingRequest.add_member(:stage, Shapes::ShapeRef.new(shape: String, location_name: "stage"))
@@ -412,6 +422,12 @@ module Aws::APIGateway
     CreateDocumentationVersionRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "description"))
     CreateDocumentationVersionRequest.struct_class = Types::CreateDocumentationVersionRequest
 
+    CreateDomainNameAccessAssociationRequest.add_member(:domain_name_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "domainNameArn"))
+    CreateDomainNameAccessAssociationRequest.add_member(:access_association_source_type, Shapes::ShapeRef.new(shape: AccessAssociationSourceType, required: true, location_name: "accessAssociationSourceType"))
+    CreateDomainNameAccessAssociationRequest.add_member(:access_association_source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "accessAssociationSource"))
+    CreateDomainNameAccessAssociationRequest.add_member(:tags, Shapes::ShapeRef.new(shape: MapOfStringToString, location_name: "tags"))
+    CreateDomainNameAccessAssociationRequest.struct_class = Types::CreateDomainNameAccessAssociationRequest
+
     CreateDomainNameRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "domainName"))
     CreateDomainNameRequest.add_member(:certificate_name, Shapes::ShapeRef.new(shape: String, location_name: "certificateName"))
     CreateDomainNameRequest.add_member(:certificate_body, Shapes::ShapeRef.new(shape: String, location_name: "certificateBody"))
@@ -425,6 +441,7 @@ module Aws::APIGateway
     CreateDomainNameRequest.add_member(:security_policy, Shapes::ShapeRef.new(shape: SecurityPolicy, location_name: "securityPolicy"))
     CreateDomainNameRequest.add_member(:mutual_tls_authentication, Shapes::ShapeRef.new(shape: MutualTlsAuthenticationInput, location_name: "mutualTlsAuthentication"))
     CreateDomainNameRequest.add_member(:ownership_verification_certificate_arn, Shapes::ShapeRef.new(shape: String, location_name: "ownershipVerificationCertificateArn"))
+    CreateDomainNameRequest.add_member(:policy, Shapes::ShapeRef.new(shape: String, location_name: "policy"))
     CreateDomainNameRequest.struct_class = Types::CreateDomainNameRequest
 
     CreateModelRequest.add_member(:rest_api_id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "restapi_id"))
@@ -498,6 +515,7 @@ module Aws::APIGateway
     DeleteAuthorizerRequest.struct_class = Types::DeleteAuthorizerRequest
 
     DeleteBasePathMappingRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    DeleteBasePathMappingRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     DeleteBasePathMappingRequest.add_member(:base_path, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "base_path"))
     DeleteBasePathMappingRequest.struct_class = Types::DeleteBasePathMappingRequest
 
@@ -516,7 +534,11 @@ module Aws::APIGateway
     DeleteDocumentationVersionRequest.add_member(:documentation_version, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "doc_version"))
     DeleteDocumentationVersionRequest.struct_class = Types::DeleteDocumentationVersionRequest
 
+    DeleteDomainNameAccessAssociationRequest.add_member(:domain_name_access_association_arn, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name_access_association_arn"))
+    DeleteDomainNameAccessAssociationRequest.struct_class = Types::DeleteDomainNameAccessAssociationRequest
+
     DeleteDomainNameRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    DeleteDomainNameRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     DeleteDomainNameRequest.struct_class = Types::DeleteDomainNameRequest
 
     DeleteGatewayResponseRequest.add_member(:rest_api_id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "restapi_id"))
@@ -619,6 +641,8 @@ module Aws::APIGateway
     DocumentationVersions.struct_class = Types::DocumentationVersions
 
     DomainName.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, location_name: "domainName"))
+    DomainName.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location_name: "domainNameId"))
+    DomainName.add_member(:domain_name_arn, Shapes::ShapeRef.new(shape: String, location_name: "domainNameArn"))
     DomainName.add_member(:certificate_name, Shapes::ShapeRef.new(shape: String, location_name: "certificateName"))
     DomainName.add_member(:certificate_arn, Shapes::ShapeRef.new(shape: String, location_name: "certificateArn"))
     DomainName.add_member(:certificate_upload_date, Shapes::ShapeRef.new(shape: Timestamp, location_name: "certificateUploadDate"))
@@ -635,7 +659,20 @@ module Aws::APIGateway
     DomainName.add_member(:tags, Shapes::ShapeRef.new(shape: MapOfStringToString, location_name: "tags"))
     DomainName.add_member(:mutual_tls_authentication, Shapes::ShapeRef.new(shape: MutualTlsAuthentication, location_name: "mutualTlsAuthentication"))
     DomainName.add_member(:ownership_verification_certificate_arn, Shapes::ShapeRef.new(shape: String, location_name: "ownershipVerificationCertificateArn"))
+    DomainName.add_member(:management_policy, Shapes::ShapeRef.new(shape: String, location_name: "managementPolicy"))
+    DomainName.add_member(:policy, Shapes::ShapeRef.new(shape: String, location_name: "policy"))
     DomainName.struct_class = Types::DomainName
+
+    DomainNameAccessAssociation.add_member(:domain_name_access_association_arn, Shapes::ShapeRef.new(shape: String, location_name: "domainNameAccessAssociationArn"))
+    DomainNameAccessAssociation.add_member(:domain_name_arn, Shapes::ShapeRef.new(shape: String, location_name: "domainNameArn"))
+    DomainNameAccessAssociation.add_member(:access_association_source_type, Shapes::ShapeRef.new(shape: AccessAssociationSourceType, location_name: "accessAssociationSourceType"))
+    DomainNameAccessAssociation.add_member(:access_association_source, Shapes::ShapeRef.new(shape: String, location_name: "accessAssociationSource"))
+    DomainNameAccessAssociation.add_member(:tags, Shapes::ShapeRef.new(shape: MapOfStringToString, location_name: "tags"))
+    DomainNameAccessAssociation.struct_class = Types::DomainNameAccessAssociation
+
+    DomainNameAccessAssociations.add_member(:position, Shapes::ShapeRef.new(shape: String, location_name: "position"))
+    DomainNameAccessAssociations.add_member(:items, Shapes::ShapeRef.new(shape: ListOfDomainNameAccessAssociation, location_name: "item"))
+    DomainNameAccessAssociations.struct_class = Types::DomainNameAccessAssociations
 
     DomainNames.add_member(:position, Shapes::ShapeRef.new(shape: String, location_name: "position"))
     DomainNames.add_member(:items, Shapes::ShapeRef.new(shape: ListOfDomainName, location_name: "item"))
@@ -698,10 +735,12 @@ module Aws::APIGateway
     GetAuthorizersRequest.struct_class = Types::GetAuthorizersRequest
 
     GetBasePathMappingRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    GetBasePathMappingRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     GetBasePathMappingRequest.add_member(:base_path, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "base_path"))
     GetBasePathMappingRequest.struct_class = Types::GetBasePathMappingRequest
 
     GetBasePathMappingsRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    GetBasePathMappingsRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     GetBasePathMappingsRequest.add_member(:position, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "position"))
     GetBasePathMappingsRequest.add_member(:limit, Shapes::ShapeRef.new(shape: NullableInteger, location: "querystring", location_name: "limit"))
     GetBasePathMappingsRequest.struct_class = Types::GetBasePathMappingsRequest
@@ -745,11 +784,18 @@ module Aws::APIGateway
     GetDocumentationVersionsRequest.add_member(:limit, Shapes::ShapeRef.new(shape: NullableInteger, location: "querystring", location_name: "limit"))
     GetDocumentationVersionsRequest.struct_class = Types::GetDocumentationVersionsRequest
 
+    GetDomainNameAccessAssociationsRequest.add_member(:position, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "position"))
+    GetDomainNameAccessAssociationsRequest.add_member(:limit, Shapes::ShapeRef.new(shape: NullableInteger, location: "querystring", location_name: "limit"))
+    GetDomainNameAccessAssociationsRequest.add_member(:resource_owner, Shapes::ShapeRef.new(shape: ResourceOwner, location: "querystring", location_name: "resourceOwner"))
+    GetDomainNameAccessAssociationsRequest.struct_class = Types::GetDomainNameAccessAssociationsRequest
+
     GetDomainNameRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    GetDomainNameRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     GetDomainNameRequest.struct_class = Types::GetDomainNameRequest
 
     GetDomainNamesRequest.add_member(:position, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "position"))
     GetDomainNamesRequest.add_member(:limit, Shapes::ShapeRef.new(shape: NullableInteger, location: "querystring", location_name: "limit"))
+    GetDomainNamesRequest.add_member(:resource_owner, Shapes::ShapeRef.new(shape: ResourceOwner, location: "querystring", location_name: "resourceOwner"))
     GetDomainNamesRequest.struct_class = Types::GetDomainNamesRequest
 
     GetExportRequest.add_member(:rest_api_id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "restapi_id"))
@@ -960,6 +1006,8 @@ module Aws::APIGateway
 
     ListOfDomainName.member = Shapes::ShapeRef.new(shape: DomainName)
 
+    ListOfDomainNameAccessAssociation.member = Shapes::ShapeRef.new(shape: DomainNameAccessAssociation)
+
     ListOfEndpointType.member = Shapes::ShapeRef.new(shape: EndpointType)
 
     ListOfGatewayResponse.member = Shapes::ShapeRef.new(shape: GatewayResponse)
@@ -1161,6 +1209,10 @@ module Aws::APIGateway
     QuotaSettings.add_member(:period, Shapes::ShapeRef.new(shape: QuotaPeriodType, location_name: "period"))
     QuotaSettings.struct_class = Types::QuotaSettings
 
+    RejectDomainNameAccessAssociationRequest.add_member(:domain_name_access_association_arn, Shapes::ShapeRef.new(shape: String, required: true, location: "querystring", location_name: "domainNameAccessAssociationArn"))
+    RejectDomainNameAccessAssociationRequest.add_member(:domain_name_arn, Shapes::ShapeRef.new(shape: String, required: true, location: "querystring", location_name: "domainNameArn"))
+    RejectDomainNameAccessAssociationRequest.struct_class = Types::RejectDomainNameAccessAssociationRequest
+
     RequestValidator.add_member(:id, Shapes::ShapeRef.new(shape: String, location_name: "id"))
     RequestValidator.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "name"))
     RequestValidator.add_member(:validate_request_body, Shapes::ShapeRef.new(shape: Boolean, location_name: "validateRequestBody"))
@@ -1335,6 +1387,7 @@ module Aws::APIGateway
     UpdateAuthorizerRequest.struct_class = Types::UpdateAuthorizerRequest
 
     UpdateBasePathMappingRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    UpdateBasePathMappingRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     UpdateBasePathMappingRequest.add_member(:base_path, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "base_path"))
     UpdateBasePathMappingRequest.add_member(:patch_operations, Shapes::ShapeRef.new(shape: ListOfPatchOperation, location_name: "patchOperations"))
     UpdateBasePathMappingRequest.struct_class = Types::UpdateBasePathMappingRequest
@@ -1359,6 +1412,7 @@ module Aws::APIGateway
     UpdateDocumentationVersionRequest.struct_class = Types::UpdateDocumentationVersionRequest
 
     UpdateDomainNameRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "domain_name"))
+    UpdateDomainNameRequest.add_member(:domain_name_id, Shapes::ShapeRef.new(shape: String, location: "querystring", location_name: "domainNameId"))
     UpdateDomainNameRequest.add_member(:patch_operations, Shapes::ShapeRef.new(shape: ListOfPatchOperation, location_name: "patchOperations"))
     UpdateDomainNameRequest.struct_class = Types::UpdateDomainNameRequest
 
@@ -1590,6 +1644,19 @@ module Aws::APIGateway
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
       end)
 
+      api.add_operation(:create_domain_name_access_association, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateDomainNameAccessAssociation"
+        o.http_method = "POST"
+        o.http_request_uri = "/domainnameaccessassociations"
+        o.input = Shapes::ShapeRef.new(shape: CreateDomainNameAccessAssociationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DomainNameAccessAssociation)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+      end)
+
       api.add_operation(:create_model, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateModel"
         o.http_method = "POST"
@@ -1797,6 +1864,19 @@ module Aws::APIGateway
         o.http_method = "DELETE"
         o.http_request_uri = "/domainnames/{domain_name}"
         o.input = Shapes::ShapeRef.new(shape: DeleteDomainNameRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+      end)
+
+      api.add_operation(:delete_domain_name_access_association, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteDomainNameAccessAssociation"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/domainnameaccessassociations/{domain_name_access_association_arn}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteDomainNameAccessAssociationRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
@@ -2226,6 +2306,18 @@ module Aws::APIGateway
         o.http_request_uri = "/domainnames/{domain_name}"
         o.input = Shapes::ShapeRef.new(shape: GetDomainNameRequest)
         o.output = Shapes::ShapeRef.new(shape: DomainName)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+      end)
+
+      api.add_operation(:get_domain_name_access_associations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetDomainNameAccessAssociations"
+        o.http_method = "GET"
+        o.http_request_uri = "/domainnameaccessassociations"
+        o.input = Shapes::ShapeRef.new(shape: GetDomainNameAccessAssociationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DomainNameAccessAssociations)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
@@ -2766,6 +2858,19 @@ module Aws::APIGateway
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+      end)
+
+      api.add_operation(:reject_domain_name_access_association, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "RejectDomainNameAccessAssociation"
+        o.http_method = "POST"
+        o.http_request_uri = "/rejectdomainnameaccessassociations"
+        o.input = Shapes::ShapeRef.new(shape: RejectDomainNameAccessAssociationRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)

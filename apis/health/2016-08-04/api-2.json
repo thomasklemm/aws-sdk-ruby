@@ -212,7 +212,8 @@
         "awsAccountId":{"shape":"accountId"},
         "lastUpdatedTime":{"shape":"timestamp"},
         "statusCode":{"shape":"entityStatusCode"},
-        "tags":{"shape":"tagSet"}
+        "tags":{"shape":"tagSet"},
+        "entityMetadata":{"shape":"entityMetadata"}
       }
     },
     "ConcurrentModificationException":{
@@ -748,6 +749,19 @@
       "member":{"shape":"entityArn"},
       "max":99,
       "min":1
+    },
+    "entityMetadata":{
+      "type":"map",
+      "key":{"shape":"entityMetadataKey"},
+      "value":{"shape":"entityMetadataValue"}
+    },
+    "entityMetadataKey":{
+      "type":"string",
+      "max":1024
+    },
+    "entityMetadataValue":{
+      "type":"string",
+      "max":1024
     },
     "entityStatusCode":{
       "type":"string",

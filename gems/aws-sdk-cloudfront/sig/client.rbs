@@ -284,7 +284,8 @@ module Aws
                                                origin_id: ::String
                                              },
                                            ]
-                                         }
+                                         },
+                                         selection_criteria: ("default" | "media-quality-based")?
                                        },
                                      ]?
                                    }?,
@@ -561,7 +562,8 @@ module Aws
                                                            origin_id: ::String
                                                          },
                                                        ]
-                                                     }
+                                                     },
+                                                     selection_criteria: ("default" | "media-quality-based")?
                                                    },
                                                  ]?
                                                }?,
@@ -2245,7 +2247,8 @@ module Aws
                                                origin_id: ::String
                                              },
                                            ]
-                                         }
+                                         },
+                                         selection_criteria: ("default" | "media-quality-based")?
                                        },
                                      ]?
                                    }?,

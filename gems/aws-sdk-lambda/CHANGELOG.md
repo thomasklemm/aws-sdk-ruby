@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.143.0 (2024-11-21)
+------------------
+
+* Feature - Adds support for metrics for event source mappings for AWS Lambda
+
 1.142.0 (2024-11-20)
 ------------------
 
