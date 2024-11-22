@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.276.0 (2024-11-22)
+------------------
+
+* Feature - This release adds APIs for new features for SageMaker endpoint to scale down to zero instances, native support for multi-adapter inference, and endpoint scaling improvements.
+
 1.275.0 (2024-11-18)
 ------------------
 

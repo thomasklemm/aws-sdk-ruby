@@ -1,0 +1,1006 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::BCMPricingCalculator
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class AddReservedInstanceAction
+      attr_accessor reserved_instances_offering_id: ::String
+      attr_accessor instance_count: ::Integer
+      SENSITIVE: []
+    end
+
+    class AddSavingsPlanAction
+      attr_accessor savings_plan_offering_id: ::String
+      attr_accessor commitment: ::Float
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioCommitmentModificationEntry
+      attr_accessor key: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor commitment_action: Types::BillScenarioCommitmentModificationAction
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioCommitmentModificationError
+      attr_accessor key: ::String
+      attr_accessor error_message: ::String
+      attr_accessor error_code: ("CONFLICT" | "INTERNAL_SERVER_ERROR" | "INVALID_ACCOUNT")
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioCommitmentModificationItem
+      attr_accessor key: ::String
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor commitment_action: Types::BillScenarioCommitmentModificationAction
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioCommitmentModificationRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor commitment_modifications: ::Array[Types::BatchCreateBillScenarioCommitmentModificationEntry]
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioCommitmentModificationResponse
+      attr_accessor items: ::Array[Types::BatchCreateBillScenarioCommitmentModificationItem]
+      attr_accessor errors: ::Array[Types::BatchCreateBillScenarioCommitmentModificationError]
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioUsageModificationEntry
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor availability_zone: ::String
+      attr_accessor key: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor amounts: ::Array[Types::UsageAmount]
+      attr_accessor historical_usage: Types::HistoricalUsageEntity
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioUsageModificationError
+      attr_accessor key: ::String
+      attr_accessor error_message: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "NOT_FOUND" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioUsageModificationItem
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor location: ::String
+      attr_accessor availability_zone: ::String
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor quantities: ::Array[Types::UsageQuantity]
+      attr_accessor historical_usage: Types::HistoricalUsageEntity
+      attr_accessor key: ::String
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioUsageModificationRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor usage_modifications: ::Array[Types::BatchCreateBillScenarioUsageModificationEntry]
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class BatchCreateBillScenarioUsageModificationResponse
+      attr_accessor items: ::Array[Types::BatchCreateBillScenarioUsageModificationItem]
+      attr_accessor errors: ::Array[Types::BatchCreateBillScenarioUsageModificationError]
+      SENSITIVE: []
+    end
+
+    class BatchCreateWorkloadEstimateUsageEntry
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor key: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor amount: ::Float
+      attr_accessor historical_usage: Types::HistoricalUsageEntity
+      SENSITIVE: []
+    end
+
+    class BatchCreateWorkloadEstimateUsageError
+      attr_accessor key: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "NOT_FOUND" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      attr_accessor error_message: ::String
+      SENSITIVE: []
+    end
+
+    class BatchCreateWorkloadEstimateUsageItem
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor location: ::String
+      attr_accessor id: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor group: ::String
+      attr_accessor quantity: Types::WorkloadEstimateUsageQuantity
+      attr_accessor cost: ::Float
+      attr_accessor currency: ("USD")
+      attr_accessor status: ("VALID" | "INVALID" | "STALE")
+      attr_accessor historical_usage: Types::HistoricalUsageEntity
+      attr_accessor key: ::String
+      SENSITIVE: []
+    end
+
+    class BatchCreateWorkloadEstimateUsageRequest
+      attr_accessor workload_estimate_id: ::String
+      attr_accessor usage: ::Array[Types::BatchCreateWorkloadEstimateUsageEntry]
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class BatchCreateWorkloadEstimateUsageResponse
+      attr_accessor items: ::Array[Types::BatchCreateWorkloadEstimateUsageItem]
+      attr_accessor errors: ::Array[Types::BatchCreateWorkloadEstimateUsageError]
+      SENSITIVE: []
+    end
+
+    class BatchDeleteBillScenarioCommitmentModificationError
+      attr_accessor id: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      attr_accessor error_message: ::String
+      SENSITIVE: []
+    end
+
+    class BatchDeleteBillScenarioCommitmentModificationRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchDeleteBillScenarioCommitmentModificationResponse
+      attr_accessor errors: ::Array[Types::BatchDeleteBillScenarioCommitmentModificationError]
+      SENSITIVE: []
+    end
+
+    class BatchDeleteBillScenarioUsageModificationError
+      attr_accessor id: ::String
+      attr_accessor error_message: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      SENSITIVE: []
+    end
+
+    class BatchDeleteBillScenarioUsageModificationRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchDeleteBillScenarioUsageModificationResponse
+      attr_accessor errors: ::Array[Types::BatchDeleteBillScenarioUsageModificationError]
+      SENSITIVE: []
+    end
+
+    class BatchDeleteWorkloadEstimateUsageError
+      attr_accessor id: ::String
+      attr_accessor error_message: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "NOT_FOUND" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      SENSITIVE: []
+    end
+
+    class BatchDeleteWorkloadEstimateUsageRequest
+      attr_accessor workload_estimate_id: ::String
+      attr_accessor ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchDeleteWorkloadEstimateUsageResponse
+      attr_accessor errors: ::Array[Types::BatchDeleteWorkloadEstimateUsageError]
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioCommitmentModificationEntry
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioCommitmentModificationError
+      attr_accessor id: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "NOT_FOUND" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      attr_accessor error_message: ::String
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioCommitmentModificationRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor commitment_modifications: ::Array[Types::BatchUpdateBillScenarioCommitmentModificationEntry]
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioCommitmentModificationResponse
+      attr_accessor items: ::Array[Types::BillScenarioCommitmentModificationItem]
+      attr_accessor errors: ::Array[Types::BatchUpdateBillScenarioCommitmentModificationError]
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioUsageModificationEntry
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      attr_accessor amounts: ::Array[Types::UsageAmount]
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioUsageModificationError
+      attr_accessor id: ::String
+      attr_accessor error_message: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "NOT_FOUND" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioUsageModificationRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor usage_modifications: ::Array[Types::BatchUpdateBillScenarioUsageModificationEntry]
+      SENSITIVE: []
+    end
+
+    class BatchUpdateBillScenarioUsageModificationResponse
+      attr_accessor items: ::Array[Types::BillScenarioUsageModificationItem]
+      attr_accessor errors: ::Array[Types::BatchUpdateBillScenarioUsageModificationError]
+      SENSITIVE: []
+    end
+
+    class BatchUpdateWorkloadEstimateUsageEntry
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      attr_accessor amount: ::Float
+      SENSITIVE: []
+    end
+
+    class BatchUpdateWorkloadEstimateUsageError
+      attr_accessor id: ::String
+      attr_accessor error_message: ::String
+      attr_accessor error_code: ("BAD_REQUEST" | "NOT_FOUND" | "CONFLICT" | "INTERNAL_SERVER_ERROR")
+      SENSITIVE: []
+    end
+
+    class BatchUpdateWorkloadEstimateUsageRequest
+      attr_accessor workload_estimate_id: ::String
+      attr_accessor usage: ::Array[Types::BatchUpdateWorkloadEstimateUsageEntry]
+      SENSITIVE: []
+    end
+
+    class BatchUpdateWorkloadEstimateUsageResponse
+      attr_accessor items: ::Array[Types::WorkloadEstimateUsageItem]
+      attr_accessor errors: ::Array[Types::BatchUpdateWorkloadEstimateUsageError]
+      SENSITIVE: []
+    end
+
+    class BillEstimateCommitmentSummary
+      attr_accessor id: ::String
+      attr_accessor purchase_agreement_type: ("SAVINGS_PLANS" | "RESERVED_INSTANCE")
+      attr_accessor offering_id: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor region: ::String
+      attr_accessor term_length: ::String
+      attr_accessor payment_option: ::String
+      attr_accessor upfront_payment: Types::CostAmount
+      attr_accessor monthly_payment: Types::CostAmount
+      SENSITIVE: []
+    end
+
+    class BillEstimateCostSummary
+      attr_accessor total_cost_difference: Types::CostDifference
+      attr_accessor service_cost_differences: ::Hash[::String, Types::CostDifference]
+      SENSITIVE: []
+    end
+
+    class BillEstimateInputCommitmentModificationSummary
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor commitment_action: Types::BillScenarioCommitmentModificationAction
+      SENSITIVE: []
+    end
+
+    class BillEstimateInputUsageModificationSummary
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor location: ::String
+      attr_accessor availability_zone: ::String
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor quantities: ::Array[Types::UsageQuantity]
+      attr_accessor historical_usage: Types::HistoricalUsageEntity
+      SENSITIVE: []
+    end
+
+    class BillEstimateLineItemSummary
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor location: ::String
+      attr_accessor availability_zone: ::String
+      attr_accessor id: ::String
+      attr_accessor line_item_id: ::String
+      attr_accessor line_item_type: ::String
+      attr_accessor payer_account_id: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor estimated_usage_quantity: Types::UsageQuantityResult
+      attr_accessor estimated_cost: Types::CostAmount
+      attr_accessor historical_usage_quantity: Types::UsageQuantityResult
+      attr_accessor historical_cost: Types::CostAmount
+      attr_accessor savings_plan_arns: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BillEstimateSummary
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      SENSITIVE: []
+    end
+
+    class BillInterval
+      attr_accessor start: ::Time
+      attr_accessor end: ::Time
+      SENSITIVE: []
+    end
+
+    class BillScenarioCommitmentModificationAction
+      attr_accessor add_reserved_instance_action: Types::AddReservedInstanceAction
+      attr_accessor add_savings_plan_action: Types::AddSavingsPlanAction
+      attr_accessor negate_reserved_instance_action: Types::NegateReservedInstanceAction
+      attr_accessor negate_savings_plan_action: Types::NegateSavingsPlanAction
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AddReservedInstanceAction < BillScenarioCommitmentModificationAction
+      end
+      class AddSavingsPlanAction < BillScenarioCommitmentModificationAction
+      end
+      class NegateReservedInstanceAction < BillScenarioCommitmentModificationAction
+      end
+      class NegateSavingsPlanAction < BillScenarioCommitmentModificationAction
+      end
+      class Unknown < BillScenarioCommitmentModificationAction
+      end
+    end
+
+    class BillScenarioCommitmentModificationItem
+      attr_accessor id: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor group: ::String
+      attr_accessor commitment_action: Types::BillScenarioCommitmentModificationAction
+      SENSITIVE: []
+    end
+
+    class BillScenarioSummary
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor status: ("READY" | "LOCKED" | "FAILED")
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class BillScenarioUsageModificationItem
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor location: ::String
+      attr_accessor availability_zone: ::String
+      attr_accessor id: ::String
+      attr_accessor group: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor quantities: ::Array[Types::UsageQuantity]
+      attr_accessor historical_usage: Types::HistoricalUsageEntity
+      SENSITIVE: []
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
+    class CostAmount
+      attr_accessor amount: ::Float
+      attr_accessor currency: ("USD")
+      SENSITIVE: []
+    end
+
+    class CostDifference
+      attr_accessor historical_cost: Types::CostAmount
+      attr_accessor estimated_cost: Types::CostAmount
+      SENSITIVE: []
+    end
+
+    class CreateBillEstimateRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor name: ::String
+      attr_accessor client_token: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateBillEstimateResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+      attr_accessor failure_message: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor cost_summary: Types::BillEstimateCostSummary
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      SENSITIVE: []
+    end
+
+    class CreateBillScenarioRequest
+      attr_accessor name: ::String
+      attr_accessor client_token: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateBillScenarioResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor status: ("READY" | "LOCKED" | "FAILED")
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class CreateWorkloadEstimateRequest
+      attr_accessor name: ::String
+      attr_accessor client_token: ::String
+      attr_accessor rate_type: ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateWorkloadEstimateResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor rate_type: ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+      attr_accessor rate_timestamp: ::Time
+      attr_accessor status: ("UPDATING" | "VALID" | "INVALID" | "ACTION_NEEDED")
+      attr_accessor total_cost: ::Float
+      attr_accessor cost_currency: ("USD")
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class DataUnavailableException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteBillEstimateRequest
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteBillEstimateResponse < Aws::EmptyStructure
+    end
+
+    class DeleteBillScenarioRequest
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteBillScenarioResponse < Aws::EmptyStructure
+    end
+
+    class DeleteWorkloadEstimateRequest
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteWorkloadEstimateResponse < Aws::EmptyStructure
+    end
+
+    class Expression
+      attr_accessor and: ::Array[Types::Expression]
+      attr_accessor or: ::Array[Types::Expression]
+      attr_accessor not: Types::Expression
+      attr_accessor cost_categories: Types::ExpressionFilter
+      attr_accessor dimensions: Types::ExpressionFilter
+      attr_accessor tags: Types::ExpressionFilter
+      SENSITIVE: []
+    end
+
+    class ExpressionFilter
+      attr_accessor key: ::String
+      attr_accessor match_options: ::Array[::String]
+      attr_accessor values: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class FilterTimestamp
+      attr_accessor after_timestamp: ::Time
+      attr_accessor before_timestamp: ::Time
+      SENSITIVE: []
+    end
+
+    class GetBillEstimateRequest
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetBillEstimateResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+      attr_accessor failure_message: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor cost_summary: Types::BillEstimateCostSummary
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      SENSITIVE: []
+    end
+
+    class GetBillScenarioRequest
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetBillScenarioResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor status: ("READY" | "LOCKED" | "FAILED")
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class GetPreferencesRequest < Aws::EmptyStructure
+    end
+
+    class GetPreferencesResponse
+      attr_accessor management_account_rate_type_selections: ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      attr_accessor member_account_rate_type_selections: ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      SENSITIVE: []
+    end
+
+    class GetWorkloadEstimateRequest
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetWorkloadEstimateResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor rate_type: ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+      attr_accessor rate_timestamp: ::Time
+      attr_accessor status: ("UPDATING" | "VALID" | "INVALID" | "ACTION_NEEDED")
+      attr_accessor total_cost: ::Float
+      attr_accessor cost_currency: ("USD")
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class HistoricalUsageEntity
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor location: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor filter_expression: Types::Expression
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateCommitmentsRequest
+      attr_accessor bill_estimate_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateCommitmentsResponse
+      attr_accessor items: ::Array[Types::BillEstimateCommitmentSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateInputCommitmentModificationsRequest
+      attr_accessor bill_estimate_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateInputCommitmentModificationsResponse
+      attr_accessor items: ::Array[Types::BillEstimateInputCommitmentModificationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateInputUsageModificationsRequest
+      attr_accessor bill_estimate_id: ::String
+      attr_accessor filters: ::Array[Types::ListUsageFilter]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateInputUsageModificationsResponse
+      attr_accessor items: ::Array[Types::BillEstimateInputUsageModificationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateLineItemsFilter
+      attr_accessor name: ("USAGE_ACCOUNT_ID" | "SERVICE_CODE" | "USAGE_TYPE" | "OPERATION" | "LOCATION" | "LINE_ITEM_TYPE")
+      attr_accessor values: ::Array[::String]
+      attr_accessor match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateLineItemsRequest
+      attr_accessor bill_estimate_id: ::String
+      attr_accessor filters: ::Array[Types::ListBillEstimateLineItemsFilter]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillEstimateLineItemsResponse
+      attr_accessor items: ::Array[Types::BillEstimateLineItemSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListBillEstimatesFilter
+      attr_accessor name: ("STATUS" | "NAME")
+      attr_accessor values: ::Array[::String]
+      attr_accessor match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")
+      SENSITIVE: []
+    end
+
+    class ListBillEstimatesRequest
+      attr_accessor filters: ::Array[Types::ListBillEstimatesFilter]
+      attr_accessor created_at_filter: Types::FilterTimestamp
+      attr_accessor expires_at_filter: Types::FilterTimestamp
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillEstimatesResponse
+      attr_accessor items: ::Array[Types::BillEstimateSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListBillScenarioCommitmentModificationsRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillScenarioCommitmentModificationsResponse
+      attr_accessor items: ::Array[Types::BillScenarioCommitmentModificationItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListBillScenarioUsageModificationsRequest
+      attr_accessor bill_scenario_id: ::String
+      attr_accessor filters: ::Array[Types::ListUsageFilter]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillScenarioUsageModificationsResponse
+      attr_accessor items: ::Array[Types::BillScenarioUsageModificationItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListBillScenariosFilter
+      attr_accessor name: ("STATUS" | "NAME")
+      attr_accessor values: ::Array[::String]
+      attr_accessor match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")
+      SENSITIVE: []
+    end
+
+    class ListBillScenariosRequest
+      attr_accessor filters: ::Array[Types::ListBillScenariosFilter]
+      attr_accessor created_at_filter: Types::FilterTimestamp
+      attr_accessor expires_at_filter: Types::FilterTimestamp
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListBillScenariosResponse
+      attr_accessor items: ::Array[Types::BillScenarioSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceRequest
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceResponse
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class ListUsageFilter
+      attr_accessor name: ("USAGE_ACCOUNT_ID" | "SERVICE_CODE" | "USAGE_TYPE" | "OPERATION" | "LOCATION" | "USAGE_GROUP" | "HISTORICAL_USAGE_ACCOUNT_ID" | "HISTORICAL_SERVICE_CODE" | "HISTORICAL_USAGE_TYPE" | "HISTORICAL_OPERATION" | "HISTORICAL_LOCATION")
+      attr_accessor values: ::Array[::String]
+      attr_accessor match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")
+      SENSITIVE: []
+    end
+
+    class ListWorkloadEstimateUsageRequest
+      attr_accessor workload_estimate_id: ::String
+      attr_accessor filters: ::Array[Types::ListUsageFilter]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListWorkloadEstimateUsageResponse
+      attr_accessor items: ::Array[Types::WorkloadEstimateUsageItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListWorkloadEstimatesFilter
+      attr_accessor name: ("STATUS" | "NAME")
+      attr_accessor values: ::Array[::String]
+      attr_accessor match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")
+      SENSITIVE: []
+    end
+
+    class ListWorkloadEstimatesRequest
+      attr_accessor created_at_filter: Types::FilterTimestamp
+      attr_accessor expires_at_filter: Types::FilterTimestamp
+      attr_accessor filters: ::Array[Types::ListWorkloadEstimatesFilter]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListWorkloadEstimatesResponse
+      attr_accessor items: ::Array[Types::WorkloadEstimateSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class NegateReservedInstanceAction
+      attr_accessor reserved_instances_id: ::String
+      SENSITIVE: []
+    end
+
+    class NegateSavingsPlanAction
+      attr_accessor savings_plan_id: ::String
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      SENSITIVE: []
+    end
+
+    class TagResourceRequest
+      attr_accessor arn: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class UntagResourceRequest
+      attr_accessor arn: ::String
+      attr_accessor tag_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UntagResourceResponse < Aws::EmptyStructure
+    end
+
+    class UpdateBillEstimateRequest
+      attr_accessor identifier: ::String
+      attr_accessor name: ::String
+      attr_accessor expires_at: ::Time
+      SENSITIVE: []
+    end
+
+    class UpdateBillEstimateResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+      attr_accessor failure_message: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor cost_summary: Types::BillEstimateCostSummary
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      SENSITIVE: []
+    end
+
+    class UpdateBillScenarioRequest
+      attr_accessor identifier: ::String
+      attr_accessor name: ::String
+      attr_accessor expires_at: ::Time
+      SENSITIVE: []
+    end
+
+    class UpdateBillScenarioResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor bill_interval: Types::BillInterval
+      attr_accessor status: ("READY" | "LOCKED" | "FAILED")
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class UpdatePreferencesRequest
+      attr_accessor management_account_rate_type_selections: ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      attr_accessor member_account_rate_type_selections: ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      SENSITIVE: []
+    end
+
+    class UpdatePreferencesResponse
+      attr_accessor management_account_rate_type_selections: ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      attr_accessor member_account_rate_type_selections: ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      SENSITIVE: []
+    end
+
+    class UpdateWorkloadEstimateRequest
+      attr_accessor identifier: ::String
+      attr_accessor name: ::String
+      attr_accessor expires_at: ::Time
+      SENSITIVE: []
+    end
+
+    class UpdateWorkloadEstimateResponse
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor rate_type: ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+      attr_accessor rate_timestamp: ::Time
+      attr_accessor status: ("UPDATING" | "VALID" | "INVALID" | "ACTION_NEEDED")
+      attr_accessor total_cost: ::Float
+      attr_accessor cost_currency: ("USD")
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class UsageAmount
+      attr_accessor start_hour: ::Time
+      attr_accessor amount: ::Float
+      SENSITIVE: []
+    end
+
+    class UsageQuantity
+      attr_accessor start_hour: ::Time
+      attr_accessor unit: ::String
+      attr_accessor amount: ::Float
+      SENSITIVE: []
+    end
+
+    class UsageQuantityResult
+      attr_accessor amount: ::Float
+      attr_accessor unit: ::String
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      attr_accessor reason: ("unknownOperation" | "cannotParse" | "fieldValidationFailed" | "invalidRequestFromMember" | "disallowedRate" | "other")
+      attr_accessor field_list: ::Array[Types::ValidationExceptionField]
+      SENSITIVE: []
+    end
+
+    class ValidationExceptionField
+      attr_accessor name: ::String
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WorkloadEstimateSummary
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor expires_at: ::Time
+      attr_accessor rate_type: ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+      attr_accessor rate_timestamp: ::Time
+      attr_accessor status: ("UPDATING" | "VALID" | "INVALID" | "ACTION_NEEDED")
+      attr_accessor total_cost: ::Float
+      attr_accessor cost_currency: ("USD")
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class WorkloadEstimateUsageItem
+      attr_accessor service_code: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor operation: ::String
+      attr_accessor location: ::String
+      attr_accessor id: ::String
+      attr_accessor usage_account_id: ::String
+      attr_accessor group: ::String
+      attr_accessor quantity: Types::WorkloadEstimateUsageQuantity
+      attr_accessor cost: ::Float
+      attr_accessor currency: ("USD")
+      attr_accessor status: ("VALID" | "INVALID" | "STALE")
+      attr_accessor historical_usage: Types::HistoricalUsageEntity
+      SENSITIVE: []
+    end
+
+    class WorkloadEstimateUsageQuantity
+      attr_accessor unit: ::String
+      attr_accessor amount: ::Float
+      SENSITIVE: []
+    end
+  end
+end

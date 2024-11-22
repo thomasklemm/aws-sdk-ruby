@@ -449,15 +449,18 @@ module Aws::Inspector2
 
     # Associates an Amazon Web Services account with an Amazon Inspector
     # delegated administrator. An HTTP 200 response indicates the
-    # association was successfully started, but doesn’t indicate whether it
-    # was completed. You can check if the association completed by using
-    # [ListMembers][1] for multiple accounts or [GetMembers][2] for a single
-    # account.
+    # association was started but doesn’t indicate whether it completed. You
+    # can check if the association completed using [ListMembers][1] for
+    # multiple accounts or [GetMembers][2] for a single account. An HTTP 402
+    # response indicates the association failed because the organization
+    # size exceeded its limit. For information on limits, see [Amazon
+    # Inspector quotas][3].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/inspector/v2/APIReference/API_ListMembers.html
     # [2]: https://docs.aws.amazon.com/inspector/v2/APIReference/API_GetMember.html
+    # [3]: https://docs.aws.amazon.com/inspector/latest/user/quotas.html
     #
     # @option params [required, String] :account_id
     #   The Amazon Web Services account ID of the member account to be
@@ -5371,7 +5374,7 @@ module Aws::Inspector2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-inspector2'
-      context[:gem_version] = '1.44.0'
+      context[:gem_version] = '1.45.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

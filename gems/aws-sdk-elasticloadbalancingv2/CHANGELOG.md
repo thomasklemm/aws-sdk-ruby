@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.125.0 (2024-11-22)
+------------------
+
+* Feature - This release adds support for advertising trusted CA certificate names in associated trust stores.
+
 1.124.0 (2024-11-21)
 ------------------
 

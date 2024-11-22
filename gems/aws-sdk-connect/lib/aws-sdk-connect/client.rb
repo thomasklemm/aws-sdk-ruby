@@ -697,7 +697,7 @@ module Aws::Connect
     #     instance_id: "InstanceId", # required
     #     resource_id: "ARN", # required
     #     flow_id: "ARN", # required
-    #     resource_type: "SMS_PHONE_NUMBER", # required, accepts SMS_PHONE_NUMBER
+    #     resource_type: "SMS_PHONE_NUMBER", # required, accepts SMS_PHONE_NUMBER, INBOUND_EMAIL, OUTBOUND_EMAIL
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AssociateFlow AWS API Documentation
@@ -764,7 +764,7 @@ module Aws::Connect
     #
     #   resp = client.associate_instance_storage_config({
     #     instance_id: "InstanceId", # required
-    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS
+    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS, EMAIL_MESSAGES
     #     storage_config: { # required
     #       association_id: "AssociationId",
     #       storage_type: "S3", # required, accepts S3, KINESIS_VIDEO_STREAM, KINESIS_STREAM, KINESIS_FIREHOSE
@@ -993,7 +993,7 @@ module Aws::Connect
     #       {
     #         queue_reference: { # required
     #           queue_id: "QueueId", # required
-    #           channel: "VOICE", # required, accepts VOICE, CHAT, TASK
+    #           channel: "VOICE", # required, accepts VOICE, CHAT, TASK, EMAIL
     #         },
     #         priority: 1, # required
     #         delay: 1, # required
@@ -1277,7 +1277,7 @@ module Aws::Connect
     #   resp.files[0].file_status #=> String, one of "APPROVED", "REJECTED", "PROCESSING", "FAILED"
     #   resp.files[0].created_by.connect_user_arn #=> String
     #   resp.files[0].created_by.aws_identity_arn #=> String
-    #   resp.files[0].file_use_case_type #=> String, one of "ATTACHMENT"
+    #   resp.files[0].file_use_case_type #=> String, one of "EMAIL_MESSAGE", "ATTACHMENT"
     #   resp.files[0].associated_resource_arn #=> String
     #   resp.files[0].tags #=> Hash
     #   resp.files[0].tags["TagKey"] #=> String
@@ -1320,7 +1320,7 @@ module Aws::Connect
     #   resp = client.batch_get_flow_association({
     #     instance_id: "InstanceId", # required
     #     resource_ids: ["ARN"], # required
-    #     resource_type: "VOICE_PHONE_NUMBER", # accepts VOICE_PHONE_NUMBER
+    #     resource_type: "VOICE_PHONE_NUMBER", # accepts VOICE_PHONE_NUMBER, INBOUND_EMAIL, OUTBOUND_EMAIL
     #   })
     #
     # @example Response structure
@@ -1328,7 +1328,7 @@ module Aws::Connect
     #   resp.flow_association_summary_list #=> Array
     #   resp.flow_association_summary_list[0].resource_id #=> String
     #   resp.flow_association_summary_list[0].flow_id #=> String
-    #   resp.flow_association_summary_list[0].resource_type #=> String, one of "VOICE_PHONE_NUMBER"
+    #   resp.flow_association_summary_list[0].resource_type #=> String, one of "VOICE_PHONE_NUMBER", "INBOUND_EMAIL", "OUTBOUND_EMAIL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/BatchGetFlowAssociation AWS API Documentation
     #
@@ -1393,11 +1393,11 @@ module Aws::Connect
     #     contact_data_request_list: [ # required
     #       {
     #         system_endpoint: {
-    #           type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN
+    #           type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN, EMAIL_ADDRESS
     #           address: "EndpointAddress",
     #         },
     #         customer_endpoint: {
-    #           type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN
+    #           type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN, EMAIL_ADDRESS
     #           address: "EndpointAddress",
     #         },
     #         request_identifier: "RequestIdentifier",
@@ -1648,6 +1648,87 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # @option params [required, String] :instance_id
+    #
+    # @option params [String] :client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [String] :related_contact_id
+    #
+    # @option params [Hash<String,String>] :attributes
+    #
+    # @option params [Hash<String,Types::Reference>] :references
+    #
+    # @option params [required, String] :channel
+    #
+    # @option params [required, String] :initiation_method
+    #
+    # @option params [Integer] :expiry_duration_in_minutes
+    #
+    # @option params [Types::UserInfo] :user_info
+    #
+    # @option params [String] :initiate_as
+    #
+    # @option params [String] :name
+    #
+    # @option params [String] :description
+    #
+    # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #
+    # @return [Types::CreateContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateContactResponse#contact_id #contact_id} => String
+    #   * {Types::CreateContactResponse#contact_arn #contact_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_contact({
+    #     instance_id: "InstanceId", # required
+    #     client_token: "ClientToken",
+    #     related_contact_id: "ContactId",
+    #     attributes: {
+    #       "AttributeName" => "AttributeValue",
+    #     },
+    #     references: {
+    #       "ReferenceKey" => {
+    #         value: "ReferenceValue",
+    #         type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #         status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #         arn: "ReferenceArn",
+    #         status_reason: "ReferenceStatusReason",
+    #       },
+    #     },
+    #     channel: "VOICE", # required, accepts VOICE, CHAT, TASK, EMAIL
+    #     initiation_method: "INBOUND", # required, accepts INBOUND, OUTBOUND, TRANSFER, QUEUE_TRANSFER, CALLBACK, API, DISCONNECT, MONITOR, EXTERNAL_OUTBOUND, WEBRTC_API, AGENT_REPLY, FLOW
+    #     expiry_duration_in_minutes: 1,
+    #     user_info: {
+    #       user_id: "AgentResourceId",
+    #     },
+    #     initiate_as: "CONNECTED_TO_USER", # accepts CONNECTED_TO_USER
+    #     name: "Name",
+    #     description: "Description",
+    #     segment_attributes: {
+    #       "SegmentAttributeName" => {
+    #         value_string: "SegmentAttributeValueString",
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.contact_id #=> String
+    #   resp.contact_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContact AWS API Documentation
+    #
+    # @overload create_contact(params = {})
+    # @param [Hash] params ({})
+    def create_contact(params = {}, options = {})
+      req = build_request(:create_contact, params)
+      req.send_request(options)
+    end
+
     # Creates a flow for the specified Amazon Connect instance.
     #
     # You can also create and update flows using the [Amazon Connect Flow
@@ -1857,6 +1938,50 @@ module Aws::Connect
     # @param [Hash] params ({})
     def create_contact_flow_version(params = {}, options = {})
       req = build_request(:create_contact_flow_version, params)
+      req.send_request(options)
+    end
+
+    # @option params [String] :description
+    #
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, String] :email_address
+    #
+    # @option params [String] :display_name
+    #
+    # @option params [Hash<String,String>] :tags
+    #
+    # @option params [String] :client_token
+    #
+    # @return [Types::CreateEmailAddressResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateEmailAddressResponse#email_address_id #email_address_id} => String
+    #   * {Types::CreateEmailAddressResponse#email_address_arn #email_address_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_email_address({
+    #     description: "Description",
+    #     instance_id: "InstanceId", # required
+    #     email_address: "EmailAddress", # required
+    #     display_name: "EmailAddressDisplayName",
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #     client_token: "ClientToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.email_address_id #=> String
+    #   resp.email_address_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateEmailAddress AWS API Documentation
+    #
+    # @overload create_email_address(params = {})
+    # @param [Hash] params ({})
+    def create_email_address(params = {}, options = {})
+      req = build_request(:create_email_address, params)
       req.send_request(options)
     end
 
@@ -2195,7 +2320,7 @@ module Aws::Connect
     #
     #   resp = client.create_integration_association({
     #     instance_id: "InstanceId", # required
-    #     integration_type: "EVENT", # required, accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER
+    #     integration_type: "EVENT", # required, accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER, SES_IDENTITY
     #     integration_arn: "ARN", # required
     #     source_application_url: "URI",
     #     source_application_name: "SourceApplicationName",
@@ -2570,6 +2695,8 @@ module Aws::Connect
     # @option params [Types::OutboundCallerConfig] :outbound_caller_config
     #   The outbound caller ID name, number, and outbound whisper flow.
     #
+    # @option params [Types::OutboundEmailConfig] :outbound_email_config
+    #
     # @option params [required, String] :hours_of_operation_id
     #   The identifier for the hours of operation.
     #
@@ -2600,6 +2727,9 @@ module Aws::Connect
     #       outbound_caller_id_name: "OutboundCallerIdName",
     #       outbound_caller_id_number_id: "PhoneNumberId",
     #       outbound_flow_id: "ContactFlowId",
+    #     },
+    #     outbound_email_config: {
+    #       outbound_email_address_id: "EmailAddressId",
     #     },
     #     hours_of_operation_id: "HoursOfOperationId", # required
     #     max_contacts: 1,
@@ -2755,7 +2885,7 @@ module Aws::Connect
     #       {
     #         queue_reference: { # required
     #           queue_id: "QueueId", # required
-    #           channel: "VOICE", # required, accepts VOICE, CHAT, TASK
+    #           channel: "VOICE", # required, accepts VOICE, CHAT, TASK, EMAIL
     #         },
     #         priority: 1, # required
     #         delay: 1, # required
@@ -2763,7 +2893,7 @@ module Aws::Connect
     #     ],
     #     media_concurrencies: [ # required
     #       {
-    #         channel: "VOICE", # required, accepts VOICE, CHAT, TASK
+    #         channel: "VOICE", # required, accepts VOICE, CHAT, TASK, EMAIL
     #         concurrency: 1, # required
     #         cross_channel_behavior: {
     #           behavior_type: "ROUTE_CURRENT_CHANNEL_ONLY", # required, accepts ROUTE_CURRENT_CHANNEL_ONLY, ROUTE_ANY_CHANNEL
@@ -2858,8 +2988,11 @@ module Aws::Connect
     #           contact_flow_id: "ContactFlowId", # required
     #           references: {
     #             "ReferenceKey" => {
-    #               value: "ReferenceValue", # required
-    #               type: "URL", # required, accepts URL, ATTACHMENT, NUMBER, STRING, DATE, EMAIL
+    #               value: "ReferenceValue",
+    #               type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #               status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #               arn: "ReferenceArn",
+    #               status_reason: "ReferenceStatusReason",
     #             },
     #           },
     #         },
@@ -3058,6 +3191,8 @@ module Aws::Connect
     #   The identifier of the flow that runs by default when a task is created
     #   by referencing this template.
     #
+    # @option params [String] :self_assign_flow_id
+    #
     # @option params [Types::TaskTemplateConstraints] :constraints
     #   Constraints that are applicable to the fields listed.
     #
@@ -3099,6 +3234,7 @@ module Aws::Connect
     #     name: "TaskTemplateName", # required
     #     description: "TaskTemplateDescription",
     #     contact_flow_id: "ContactFlowId",
+    #     self_assign_flow_id: "ContactFlowId",
     #     constraints: {
     #       required_fields: [
     #         {
@@ -3139,7 +3275,7 @@ module Aws::Connect
     #           name: "TaskTemplateFieldName",
     #         },
     #         description: "TaskTemplateFieldDescription",
-    #         type: "NAME", # accepts NAME, DESCRIPTION, SCHEDULED_TIME, QUICK_CONNECT, URL, NUMBER, TEXT, TEXT_AREA, DATE_TIME, BOOLEAN, SINGLE_SELECT, EMAIL
+    #         type: "NAME", # accepts NAME, DESCRIPTION, SCHEDULED_TIME, QUICK_CONNECT, URL, NUMBER, TEXT, TEXT_AREA, DATE_TIME, BOOLEAN, SINGLE_SELECT, EMAIL, SELF_ASSIGN, EXPIRY_DURATION
     #         single_select_options: ["TaskTemplateSingleSelectOption"],
     #       },
     #     ],
@@ -3894,6 +4030,28 @@ module Aws::Connect
     # @param [Hash] params ({})
     def delete_contact_flow_module(params = {}, options = {})
       req = build_request(:delete_contact_flow_module, params)
+      req.send_request(options)
+    end
+
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, String] :email_address_id
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_email_address({
+    #     instance_id: "InstanceId", # required
+    #     email_address_id: "EmailAddressId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteEmailAddress AWS API Documentation
+    #
+    # @overload delete_email_address(params = {})
+    # @param [Hash] params ({})
+    def delete_email_address(params = {}, options = {})
+      req = build_request(:delete_email_address, params)
       req.send_request(options)
     end
 
@@ -4706,10 +4864,11 @@ module Aws::Connect
     #   resp.contact.id #=> String
     #   resp.contact.initial_contact_id #=> String
     #   resp.contact.previous_contact_id #=> String
-    #   resp.contact.initiation_method #=> String, one of "INBOUND", "OUTBOUND", "TRANSFER", "QUEUE_TRANSFER", "CALLBACK", "API", "DISCONNECT", "MONITOR", "EXTERNAL_OUTBOUND"
+    #   resp.contact.contact_association_id #=> String
+    #   resp.contact.initiation_method #=> String, one of "INBOUND", "OUTBOUND", "TRANSFER", "QUEUE_TRANSFER", "CALLBACK", "API", "DISCONNECT", "MONITOR", "EXTERNAL_OUTBOUND", "WEBRTC_API", "AGENT_REPLY", "FLOW"
     #   resp.contact.name #=> String
     #   resp.contact.description #=> String
-    #   resp.contact.channel #=> String, one of "VOICE", "CHAT", "TASK"
+    #   resp.contact.channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
     #   resp.contact.queue_info.id #=> String
     #   resp.contact.queue_info.enqueue_timestamp #=> Time
     #   resp.contact.agent_info.id #=> String
@@ -4735,6 +4894,12 @@ module Aws::Connect
     #   resp.contact.scheduled_timestamp #=> Time
     #   resp.contact.related_contact_id #=> String
     #   resp.contact.wisdom_info.session_arn #=> String
+    #   resp.contact.customer_endpoint.type #=> String, one of "TELEPHONE_NUMBER", "VOIP", "CONTACT_FLOW", "CONNECT_PHONENUMBER_ARN", "EMAIL_ADDRESS"
+    #   resp.contact.customer_endpoint.address #=> String
+    #   resp.contact.customer_endpoint.display_name #=> String
+    #   resp.contact.system_endpoint.type #=> String, one of "TELEPHONE_NUMBER", "VOIP", "CONTACT_FLOW", "CONNECT_PHONENUMBER_ARN", "EMAIL_ADDRESS"
+    #   resp.contact.system_endpoint.address #=> String
+    #   resp.contact.system_endpoint.display_name #=> String
     #   resp.contact.queue_time_adjustment_seconds #=> Integer
     #   resp.contact.queue_priority #=> Integer
     #   resp.contact.tags #=> Hash
@@ -4772,6 +4937,12 @@ module Aws::Connect
     #   resp.contact.quality_metrics.customer.audio.potential_quality_issues #=> Array
     #   resp.contact.quality_metrics.customer.audio.potential_quality_issues[0] #=> String
     #   resp.contact.disconnect_details.potential_disconnect_issue #=> String
+    #   resp.contact.additional_email_recipients.to_list #=> Array
+    #   resp.contact.additional_email_recipients.to_list[0].address #=> String
+    #   resp.contact.additional_email_recipients.to_list[0].display_name #=> String
+    #   resp.contact.additional_email_recipients.cc_list #=> Array
+    #   resp.contact.additional_email_recipients.cc_list[0].address #=> String
+    #   resp.contact.additional_email_recipients.cc_list[0].display_name #=> String
     #   resp.contact.segment_attributes #=> Hash
     #   resp.contact.segment_attributes["SegmentAttributeName"].value_string #=> String
     #
@@ -4997,6 +5168,49 @@ module Aws::Connect
     # @param [Hash] params ({})
     def describe_contact_flow_module(params = {}, options = {})
       req = build_request(:describe_contact_flow_module, params)
+      req.send_request(options)
+    end
+
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, String] :email_address_id
+    #
+    # @return [Types::DescribeEmailAddressResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeEmailAddressResponse#email_address_id #email_address_id} => String
+    #   * {Types::DescribeEmailAddressResponse#email_address_arn #email_address_arn} => String
+    #   * {Types::DescribeEmailAddressResponse#email_address #email_address} => String
+    #   * {Types::DescribeEmailAddressResponse#display_name #display_name} => String
+    #   * {Types::DescribeEmailAddressResponse#description #description} => String
+    #   * {Types::DescribeEmailAddressResponse#create_timestamp #create_timestamp} => String
+    #   * {Types::DescribeEmailAddressResponse#modified_timestamp #modified_timestamp} => String
+    #   * {Types::DescribeEmailAddressResponse#tags #tags} => Hash&lt;String,String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_email_address({
+    #     instance_id: "InstanceId", # required
+    #     email_address_id: "EmailAddressId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.email_address_id #=> String
+    #   resp.email_address_arn #=> String
+    #   resp.email_address #=> String
+    #   resp.display_name #=> String
+    #   resp.description #=> String
+    #   resp.create_timestamp #=> String
+    #   resp.modified_timestamp #=> String
+    #   resp.tags #=> Hash
+    #   resp.tags["TagKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeEmailAddress AWS API Documentation
+    #
+    # @overload describe_email_address(params = {})
+    # @param [Hash] params ({})
+    def describe_email_address(params = {}, options = {})
+      req = build_request(:describe_email_address, params)
       req.send_request(options)
     end
 
@@ -5275,7 +5489,7 @@ module Aws::Connect
     #   resp = client.describe_instance_storage_config({
     #     instance_id: "InstanceId", # required
     #     association_id: "AssociationId", # required
-    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS
+    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS, EMAIL_MESSAGES
     #   })
     #
     # @example Response structure
@@ -5478,6 +5692,7 @@ module Aws::Connect
     #   resp.queue.outbound_caller_config.outbound_caller_id_name #=> String
     #   resp.queue.outbound_caller_config.outbound_caller_id_number_id #=> String
     #   resp.queue.outbound_caller_config.outbound_flow_id #=> String
+    #   resp.queue.outbound_email_config.outbound_email_address_id #=> String
     #   resp.queue.hours_of_operation_id #=> String
     #   resp.queue.max_contacts #=> Integer
     #   resp.queue.status #=> String, one of "ENABLED", "DISABLED"
@@ -5577,7 +5792,7 @@ module Aws::Connect
     #   resp.routing_profile.routing_profile_id #=> String
     #   resp.routing_profile.description #=> String
     #   resp.routing_profile.media_concurrencies #=> Array
-    #   resp.routing_profile.media_concurrencies[0].channel #=> String, one of "VOICE", "CHAT", "TASK"
+    #   resp.routing_profile.media_concurrencies[0].channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
     #   resp.routing_profile.media_concurrencies[0].concurrency #=> Integer
     #   resp.routing_profile.media_concurrencies[0].cross_channel_behavior.behavior_type #=> String, one of "ROUTE_CURRENT_CHANNEL_ONLY", "ROUTE_ANY_CHANNEL"
     #   resp.routing_profile.default_outbound_queue_id #=> String
@@ -5640,7 +5855,10 @@ module Aws::Connect
     #   resp.rule.actions[0].task_action.contact_flow_id #=> String
     #   resp.rule.actions[0].task_action.references #=> Hash
     #   resp.rule.actions[0].task_action.references["ReferenceKey"].value #=> String
-    #   resp.rule.actions[0].task_action.references["ReferenceKey"].type #=> String, one of "URL", "ATTACHMENT", "NUMBER", "STRING", "DATE", "EMAIL"
+    #   resp.rule.actions[0].task_action.references["ReferenceKey"].type #=> String, one of "URL", "ATTACHMENT", "CONTACT_ANALYSIS", "NUMBER", "STRING", "DATE", "EMAIL", "EMAIL_MESSAGE"
+    #   resp.rule.actions[0].task_action.references["ReferenceKey"].status #=> String, one of "AVAILABLE", "DELETED", "APPROVED", "REJECTED", "PROCESSING", "FAILED"
+    #   resp.rule.actions[0].task_action.references["ReferenceKey"].arn #=> String
+    #   resp.rule.actions[0].task_action.references["ReferenceKey"].status_reason #=> String
     #   resp.rule.actions[0].event_bridge_action.name #=> String
     #   resp.rule.actions[0].send_notification_action.delivery_method #=> String, one of "EMAIL"
     #   resp.rule.actions[0].send_notification_action.subject #=> String
@@ -6218,7 +6436,7 @@ module Aws::Connect
     #   resp = client.disassociate_flow({
     #     instance_id: "InstanceId", # required
     #     resource_id: "ARN", # required
-    #     resource_type: "SMS_PHONE_NUMBER", # required, accepts SMS_PHONE_NUMBER
+    #     resource_type: "SMS_PHONE_NUMBER", # required, accepts SMS_PHONE_NUMBER, INBOUND_EMAIL, OUTBOUND_EMAIL
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DisassociateFlow AWS API Documentation
@@ -6258,7 +6476,7 @@ module Aws::Connect
     #   resp = client.disassociate_instance_storage_config({
     #     instance_id: "InstanceId", # required
     #     association_id: "AssociationId", # required
-    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS
+    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS, EMAIL_MESSAGES
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DisassociateInstanceStorageConfig AWS API Documentation
@@ -6453,7 +6671,7 @@ module Aws::Connect
     #     queue_references: [ # required
     #       {
     #         queue_id: "QueueId", # required
-    #         channel: "VOICE", # required, accepts VOICE, CHAT, TASK
+    #         channel: "VOICE", # required, accepts VOICE, CHAT, TASK, EMAIL
     #       },
     #     ],
     #   })
@@ -6673,7 +6891,7 @@ module Aws::Connect
     #   resp.file_name #=> String
     #   resp.file_size_in_bytes #=> Integer
     #   resp.associated_resource_arn #=> String
-    #   resp.file_use_case_type #=> String, one of "ATTACHMENT"
+    #   resp.file_use_case_type #=> String, one of "EMAIL_MESSAGE", "ATTACHMENT"
     #   resp.created_by.connect_user_arn #=> String
     #   resp.created_by.aws_identity_arn #=> String
     #   resp.download_url_metadata.url #=> String
@@ -6942,7 +7160,7 @@ module Aws::Connect
     #     instance_id: "InstanceId", # required
     #     filters: { # required
     #       queues: ["QueueId"],
-    #       channels: ["VOICE"], # accepts VOICE, CHAT, TASK
+    #       channels: ["VOICE"], # accepts VOICE, CHAT, TASK, EMAIL
     #       routing_profiles: ["RoutingProfileId"],
     #       routing_step_expressions: ["RoutingExpression"],
     #     },
@@ -6969,7 +7187,7 @@ module Aws::Connect
     #   resp.metric_results #=> Array
     #   resp.metric_results[0].dimensions.queue.id #=> String
     #   resp.metric_results[0].dimensions.queue.arn #=> String
-    #   resp.metric_results[0].dimensions.channel #=> String, one of "VOICE", "CHAT", "TASK"
+    #   resp.metric_results[0].dimensions.channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
     #   resp.metric_results[0].dimensions.routing_profile.id #=> String
     #   resp.metric_results[0].dimensions.routing_profile.arn #=> String
     #   resp.metric_results[0].dimensions.routing_step_expression #=> String
@@ -7083,8 +7301,8 @@ module Aws::Connect
     #   resp.user_data_list[0].active_slots_by_channel["Channel"] #=> Integer
     #   resp.user_data_list[0].contacts #=> Array
     #   resp.user_data_list[0].contacts[0].contact_id #=> String
-    #   resp.user_data_list[0].contacts[0].channel #=> String, one of "VOICE", "CHAT", "TASK"
-    #   resp.user_data_list[0].contacts[0].initiation_method #=> String, one of "INBOUND", "OUTBOUND", "TRANSFER", "QUEUE_TRANSFER", "CALLBACK", "API", "DISCONNECT", "MONITOR", "EXTERNAL_OUTBOUND"
+    #   resp.user_data_list[0].contacts[0].channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
+    #   resp.user_data_list[0].contacts[0].initiation_method #=> String, one of "INBOUND", "OUTBOUND", "TRANSFER", "QUEUE_TRANSFER", "CALLBACK", "API", "DISCONNECT", "MONITOR", "EXTERNAL_OUTBOUND", "WEBRTC_API", "AGENT_REPLY", "FLOW"
     #   resp.user_data_list[0].contacts[0].agent_contact_state #=> String, one of "INCOMING", "PENDING", "CONNECTING", "CONNECTED", "CONNECTED_ONHOLD", "MISSED", "ERROR", "ENDED", "REJECTED"
     #   resp.user_data_list[0].contacts[0].state_start_timestamp #=> Time
     #   resp.user_data_list[0].contacts[0].connected_to_agent_timestamp #=> Time
@@ -7190,14 +7408,14 @@ module Aws::Connect
     #   resp = client.get_flow_association({
     #     instance_id: "InstanceId", # required
     #     resource_id: "ARN", # required
-    #     resource_type: "SMS_PHONE_NUMBER", # required, accepts SMS_PHONE_NUMBER
+    #     resource_type: "SMS_PHONE_NUMBER", # required, accepts SMS_PHONE_NUMBER, INBOUND_EMAIL, OUTBOUND_EMAIL
     #   })
     #
     # @example Response structure
     #
     #   resp.resource_id #=> String
     #   resp.flow_id #=> String
-    #   resp.resource_type #=> String, one of "SMS_PHONE_NUMBER"
+    #   resp.resource_type #=> String, one of "SMS_PHONE_NUMBER", "INBOUND_EMAIL", "OUTBOUND_EMAIL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/GetFlowAssociation AWS API Documentation
     #
@@ -7477,7 +7695,7 @@ module Aws::Connect
     #     end_time: Time.now, # required
     #     filters: { # required
     #       queues: ["QueueId"],
-    #       channels: ["VOICE"], # accepts VOICE, CHAT, TASK
+    #       channels: ["VOICE"], # accepts VOICE, CHAT, TASK, EMAIL
     #       routing_profiles: ["RoutingProfileId"],
     #       routing_step_expressions: ["RoutingExpression"],
     #     },
@@ -7503,7 +7721,7 @@ module Aws::Connect
     #   resp.metric_results #=> Array
     #   resp.metric_results[0].dimensions.queue.id #=> String
     #   resp.metric_results[0].dimensions.queue.arn #=> String
-    #   resp.metric_results[0].dimensions.channel #=> String, one of "VOICE", "CHAT", "TASK"
+    #   resp.metric_results[0].dimensions.channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
     #   resp.metric_results[0].dimensions.routing_profile.id #=> String
     #   resp.metric_results[0].dimensions.routing_profile.arn #=> String
     #   resp.metric_results[0].dimensions.routing_step_expression #=> String
@@ -9059,6 +9277,7 @@ module Aws::Connect
     #   * {Types::GetTaskTemplateResponse#name #name} => String
     #   * {Types::GetTaskTemplateResponse#description #description} => String
     #   * {Types::GetTaskTemplateResponse#contact_flow_id #contact_flow_id} => String
+    #   * {Types::GetTaskTemplateResponse#self_assign_flow_id #self_assign_flow_id} => String
     #   * {Types::GetTaskTemplateResponse#constraints #constraints} => Types::TaskTemplateConstraints
     #   * {Types::GetTaskTemplateResponse#defaults #defaults} => Types::TaskTemplateDefaults
     #   * {Types::GetTaskTemplateResponse#fields #fields} => Array&lt;Types::TaskTemplateField&gt;
@@ -9083,6 +9302,7 @@ module Aws::Connect
     #   resp.name #=> String
     #   resp.description #=> String
     #   resp.contact_flow_id #=> String
+    #   resp.self_assign_flow_id #=> String
     #   resp.constraints.required_fields #=> Array
     #   resp.constraints.required_fields[0].id.name #=> String
     #   resp.constraints.read_only_fields #=> Array
@@ -9095,7 +9315,7 @@ module Aws::Connect
     #   resp.fields #=> Array
     #   resp.fields[0].id.name #=> String
     #   resp.fields[0].description #=> String
-    #   resp.fields[0].type #=> String, one of "NAME", "DESCRIPTION", "SCHEDULED_TIME", "QUICK_CONNECT", "URL", "NUMBER", "TEXT", "TEXT_AREA", "DATE_TIME", "BOOLEAN", "SINGLE_SELECT", "EMAIL"
+    #   resp.fields[0].type #=> String, one of "NAME", "DESCRIPTION", "SCHEDULED_TIME", "QUICK_CONNECT", "URL", "NUMBER", "TEXT", "TEXT_AREA", "DATE_TIME", "BOOLEAN", "SINGLE_SELECT", "EMAIL", "SELF_ASSIGN", "EXPIRY_DURATION"
     #   resp.fields[0].single_select_options #=> Array
     #   resp.fields[0].single_select_options[0] #=> String
     #   resp.status #=> String, one of "ACTIVE", "INACTIVE"
@@ -9418,6 +9638,51 @@ module Aws::Connect
     # @param [Hash] params ({})
     def list_approved_origins(params = {}, options = {})
       req = build_request(:list_approved_origins, params)
+      req.send_request(options)
+    end
+
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, String] :contact_id
+    #
+    # @option params [Integer] :max_results
+    #
+    # @option params [String] :next_token
+    #
+    # @return [Types::ListAssociatedContactsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAssociatedContactsResponse#contact_summary_list #contact_summary_list} => Array&lt;Types::AssociatedContactSummary&gt;
+    #   * {Types::ListAssociatedContactsResponse#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_associated_contacts({
+    #     instance_id: "InstanceId", # required
+    #     contact_id: "ContactId", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.contact_summary_list #=> Array
+    #   resp.contact_summary_list[0].contact_id #=> String
+    #   resp.contact_summary_list[0].contact_arn #=> String
+    #   resp.contact_summary_list[0].initiation_timestamp #=> Time
+    #   resp.contact_summary_list[0].disconnect_timestamp #=> Time
+    #   resp.contact_summary_list[0].initial_contact_id #=> String
+    #   resp.contact_summary_list[0].previous_contact_id #=> String
+    #   resp.contact_summary_list[0].related_contact_id #=> String
+    #   resp.contact_summary_list[0].initiation_method #=> String, one of "INBOUND", "OUTBOUND", "TRANSFER", "QUEUE_TRANSFER", "CALLBACK", "API", "DISCONNECT", "MONITOR", "EXTERNAL_OUTBOUND", "WEBRTC_API", "AGENT_REPLY", "FLOW"
+    #   resp.contact_summary_list[0].channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListAssociatedContacts AWS API Documentation
+    #
+    # @overload list_associated_contacts(params = {})
+    # @param [Hash] params ({})
+    def list_associated_contacts(params = {}, options = {})
+      req = build_request(:list_associated_contacts, params)
       req.send_request(options)
     end
 
@@ -9817,7 +10082,7 @@ module Aws::Connect
     #   resp = client.list_contact_references({
     #     instance_id: "InstanceId", # required
     #     contact_id: "ContactId", # required
-    #     reference_types: ["URL"], # required, accepts URL, ATTACHMENT, NUMBER, STRING, DATE, EMAIL
+    #     reference_types: ["URL"], # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
     #     next_token: "NextToken",
     #   })
     #
@@ -9828,7 +10093,10 @@ module Aws::Connect
     #   resp.reference_summary_list[0].url.value #=> String
     #   resp.reference_summary_list[0].attachment.name #=> String
     #   resp.reference_summary_list[0].attachment.value #=> String
-    #   resp.reference_summary_list[0].attachment.status #=> String, one of "APPROVED", "REJECTED"
+    #   resp.reference_summary_list[0].attachment.status #=> String, one of "AVAILABLE", "DELETED", "APPROVED", "REJECTED", "PROCESSING", "FAILED"
+    #   resp.reference_summary_list[0].attachment.arn #=> String
+    #   resp.reference_summary_list[0].email_message.name #=> String
+    #   resp.reference_summary_list[0].email_message.arn #=> String
     #   resp.reference_summary_list[0].string.name #=> String
     #   resp.reference_summary_list[0].string.value #=> String
     #   resp.reference_summary_list[0].number.name #=> String
@@ -10061,7 +10329,7 @@ module Aws::Connect
     #
     #   resp = client.list_flow_associations({
     #     instance_id: "InstanceId", # required
-    #     resource_type: "VOICE_PHONE_NUMBER", # accepts VOICE_PHONE_NUMBER
+    #     resource_type: "VOICE_PHONE_NUMBER", # accepts VOICE_PHONE_NUMBER, INBOUND_EMAIL, OUTBOUND_EMAIL
     #     next_token: "NextToken",
     #     max_results: 1,
     #   })
@@ -10071,7 +10339,7 @@ module Aws::Connect
     #   resp.flow_association_summary_list #=> Array
     #   resp.flow_association_summary_list[0].resource_id #=> String
     #   resp.flow_association_summary_list[0].flow_id #=> String
-    #   resp.flow_association_summary_list[0].resource_type #=> String, one of "VOICE_PHONE_NUMBER"
+    #   resp.flow_association_summary_list[0].resource_type #=> String, one of "VOICE_PHONE_NUMBER", "INBOUND_EMAIL", "OUTBOUND_EMAIL"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListFlowAssociations AWS API Documentation
@@ -10233,7 +10501,7 @@ module Aws::Connect
     #
     #   resp = client.list_instance_storage_configs({
     #     instance_id: "InstanceId", # required
-    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS
+    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS, EMAIL_MESSAGES
     #     next_token: "NextToken",
     #     max_results: 1,
     #   })
@@ -10354,7 +10622,7 @@ module Aws::Connect
     #
     #   resp = client.list_integration_associations({
     #     instance_id: "InstanceId", # required
-    #     integration_type: "EVENT", # accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER
+    #     integration_type: "EVENT", # accepts EVENT, VOICE_ID, PINPOINT_APP, WISDOM_ASSISTANT, WISDOM_KNOWLEDGE_BASE, WISDOM_QUICK_RESPONSES, Q_MESSAGE_TEMPLATES, CASES_DOMAIN, APPLICATION, FILE_SCANNER, SES_IDENTITY
     #     next_token: "NextToken",
     #     max_results: 1,
     #     integration_arn: "ARN",
@@ -10366,7 +10634,7 @@ module Aws::Connect
     #   resp.integration_association_summary_list[0].integration_association_id #=> String
     #   resp.integration_association_summary_list[0].integration_association_arn #=> String
     #   resp.integration_association_summary_list[0].instance_id #=> String
-    #   resp.integration_association_summary_list[0].integration_type #=> String, one of "EVENT", "VOICE_ID", "PINPOINT_APP", "WISDOM_ASSISTANT", "WISDOM_KNOWLEDGE_BASE", "WISDOM_QUICK_RESPONSES", "Q_MESSAGE_TEMPLATES", "CASES_DOMAIN", "APPLICATION", "FILE_SCANNER"
+    #   resp.integration_association_summary_list[0].integration_type #=> String, one of "EVENT", "VOICE_ID", "PINPOINT_APP", "WISDOM_ASSISTANT", "WISDOM_KNOWLEDGE_BASE", "WISDOM_QUICK_RESPONSES", "Q_MESSAGE_TEMPLATES", "CASES_DOMAIN", "APPLICATION", "FILE_SCANNER", "SES_IDENTITY"
     #   resp.integration_association_summary_list[0].integration_arn #=> String
     #   resp.integration_association_summary_list[0].source_application_url #=> String
     #   resp.integration_association_summary_list[0].source_application_name #=> String
@@ -11148,7 +11416,7 @@ module Aws::Connect
     #   resp.routing_profile_queue_config_summary_list[0].queue_name #=> String
     #   resp.routing_profile_queue_config_summary_list[0].priority #=> Integer
     #   resp.routing_profile_queue_config_summary_list[0].delay #=> Integer
-    #   resp.routing_profile_queue_config_summary_list[0].channel #=> String, one of "VOICE", "CHAT", "TASK"
+    #   resp.routing_profile_queue_config_summary_list[0].channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
     #   resp.last_modified_time #=> Time
     #   resp.last_modified_region #=> String
     #
@@ -12879,7 +13147,7 @@ module Aws::Connect
     #         l4_ids: ["HierarchyGroupId"],
     #         l5_ids: ["HierarchyGroupId"],
     #       },
-    #       channels: ["VOICE"], # accepts VOICE, CHAT, TASK
+    #       channels: ["VOICE"], # accepts VOICE, CHAT, TASK, EMAIL
     #       contact_analysis: {
     #         transcript: {
     #           criteria: [ # required
@@ -12892,13 +13160,22 @@ module Aws::Connect
     #           match_type: "MATCH_ALL", # accepts MATCH_ALL, MATCH_ANY
     #         },
     #       },
-    #       initiation_methods: ["INBOUND"], # accepts INBOUND, OUTBOUND, TRANSFER, QUEUE_TRANSFER, CALLBACK, API, DISCONNECT, MONITOR, EXTERNAL_OUTBOUND
+    #       initiation_methods: ["INBOUND"], # accepts INBOUND, OUTBOUND, TRANSFER, QUEUE_TRANSFER, CALLBACK, API, DISCONNECT, MONITOR, EXTERNAL_OUTBOUND, WEBRTC_API, AGENT_REPLY, FLOW
     #       queue_ids: ["QueueId"],
     #       searchable_contact_attributes: {
     #         criteria: [ # required
     #           {
     #             key: "SearchableContactAttributeKey", # required
     #             values: ["SearchableContactAttributeValue"], # required
+    #           },
+    #         ],
+    #         match_type: "MATCH_ALL", # accepts MATCH_ALL, MATCH_ANY
+    #       },
+    #       searchable_segment_attributes: {
+    #         criteria: [ # required
+    #           {
+    #             key: "SearchableSegmentAttributeKey", # required
+    #             values: ["SearchableSegmentAttributeValue"], # required
     #           },
     #         ],
     #         match_type: "MATCH_ALL", # accepts MATCH_ALL, MATCH_ANY
@@ -12919,8 +13196,8 @@ module Aws::Connect
     #   resp.contacts[0].id #=> String
     #   resp.contacts[0].initial_contact_id #=> String
     #   resp.contacts[0].previous_contact_id #=> String
-    #   resp.contacts[0].initiation_method #=> String, one of "INBOUND", "OUTBOUND", "TRANSFER", "QUEUE_TRANSFER", "CALLBACK", "API", "DISCONNECT", "MONITOR", "EXTERNAL_OUTBOUND"
-    #   resp.contacts[0].channel #=> String, one of "VOICE", "CHAT", "TASK"
+    #   resp.contacts[0].initiation_method #=> String, one of "INBOUND", "OUTBOUND", "TRANSFER", "QUEUE_TRANSFER", "CALLBACK", "API", "DISCONNECT", "MONITOR", "EXTERNAL_OUTBOUND", "WEBRTC_API", "AGENT_REPLY", "FLOW"
+    #   resp.contacts[0].channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
     #   resp.contacts[0].queue_info.id #=> String
     #   resp.contacts[0].queue_info.enqueue_timestamp #=> Time
     #   resp.contacts[0].agent_info.id #=> String
@@ -12928,6 +13205,8 @@ module Aws::Connect
     #   resp.contacts[0].initiation_timestamp #=> Time
     #   resp.contacts[0].disconnect_timestamp #=> Time
     #   resp.contacts[0].scheduled_timestamp #=> Time
+    #   resp.contacts[0].segment_attributes #=> Hash
+    #   resp.contacts[0].segment_attributes["SegmentAttributeName"].value_string #=> String
     #   resp.next_token #=> String
     #   resp.total_count #=> Integer
     #
@@ -12937,6 +13216,89 @@ module Aws::Connect
     # @param [Hash] params ({})
     def search_contacts(params = {}, options = {})
       req = build_request(:search_contacts, params)
+      req.send_request(options)
+    end
+
+    # @option params [required, String] :instance_id
+    #
+    # @option params [Integer] :max_results
+    #
+    # @option params [String] :next_token
+    #
+    # @option params [Types::EmailAddressSearchCriteria] :search_criteria
+    #
+    # @option params [Types::EmailAddressSearchFilter] :search_filter
+    #
+    # @return [Types::SearchEmailAddressesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::SearchEmailAddressesResponse#next_token #next_token} => String
+    #   * {Types::SearchEmailAddressesResponse#email_addresses #email_addresses} => Array&lt;Types::EmailAddressMetadata&gt;
+    #   * {Types::SearchEmailAddressesResponse#approximate_total_count #approximate_total_count} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.search_email_addresses({
+    #     instance_id: "InstanceId", # required
+    #     max_results: 1,
+    #     next_token: "NextToken2500",
+    #     search_criteria: {
+    #       or_conditions: [
+    #         {
+    #           # recursive EmailAddressSearchCriteria
+    #         },
+    #       ],
+    #       and_conditions: [
+    #         {
+    #           # recursive EmailAddressSearchCriteria
+    #         },
+    #       ],
+    #       string_condition: {
+    #         field_name: "String",
+    #         value: "String",
+    #         comparison_type: "STARTS_WITH", # accepts STARTS_WITH, CONTAINS, EXACT
+    #       },
+    #     },
+    #     search_filter: {
+    #       tag_filter: {
+    #         or_conditions: [
+    #           [
+    #             {
+    #               tag_key: "String",
+    #               tag_value: "String",
+    #             },
+    #           ],
+    #         ],
+    #         and_conditions: [
+    #           {
+    #             tag_key: "String",
+    #             tag_value: "String",
+    #           },
+    #         ],
+    #         tag_condition: {
+    #           tag_key: "String",
+    #           tag_value: "String",
+    #         },
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.email_addresses #=> Array
+    #   resp.email_addresses[0].email_address_id #=> String
+    #   resp.email_addresses[0].email_address_arn #=> String
+    #   resp.email_addresses[0].email_address #=> String
+    #   resp.email_addresses[0].description #=> String
+    #   resp.email_addresses[0].display_name #=> String
+    #   resp.approximate_total_count #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchEmailAddresses AWS API Documentation
+    #
+    # @overload search_email_addresses(params = {})
+    # @param [Hash] params ({})
+    def search_email_addresses(params = {}, options = {})
+      req = build_request(:search_email_addresses, params)
       req.send_request(options)
     end
 
@@ -13329,6 +13691,7 @@ module Aws::Connect
     #   resp.queues[0].outbound_caller_config.outbound_caller_id_name #=> String
     #   resp.queues[0].outbound_caller_config.outbound_caller_id_number_id #=> String
     #   resp.queues[0].outbound_caller_config.outbound_flow_id #=> String
+    #   resp.queues[0].outbound_email_config.outbound_email_address_id #=> String
     #   resp.queues[0].hours_of_operation_id #=> String
     #   resp.queues[0].max_contacts #=> Integer
     #   resp.queues[0].status #=> String, one of "ENABLED", "DISABLED"
@@ -13634,7 +13997,7 @@ module Aws::Connect
     #   resp.routing_profiles[0].routing_profile_id #=> String
     #   resp.routing_profiles[0].description #=> String
     #   resp.routing_profiles[0].media_concurrencies #=> Array
-    #   resp.routing_profiles[0].media_concurrencies[0].channel #=> String, one of "VOICE", "CHAT", "TASK"
+    #   resp.routing_profiles[0].media_concurrencies[0].channel #=> String, one of "VOICE", "CHAT", "TASK", "EMAIL"
     #   resp.routing_profiles[0].media_concurrencies[0].concurrency #=> Integer
     #   resp.routing_profiles[0].media_concurrencies[0].cross_channel_behavior.behavior_type #=> String, one of "ROUTE_CURRENT_CHANNEL_ONLY", "ROUTE_ANY_CHANNEL"
     #   resp.routing_profiles[0].default_outbound_queue_id #=> String
@@ -14255,6 +14618,81 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, Types::EmailAddressInfo] :from_email_address
+    #
+    # @option params [required, Types::EmailAddressInfo] :destination_email_address
+    #
+    # @option params [Types::OutboundAdditionalRecipients] :additional_recipients
+    #
+    # @option params [required, Types::OutboundEmailContent] :email_message
+    #
+    # @option params [required, String] :traffic_type
+    #
+    # @option params [Types::SourceCampaign] :source_campaign
+    #
+    # @option params [String] :client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.send_outbound_email({
+    #     instance_id: "InstanceId", # required
+    #     from_email_address: { # required
+    #       email_address: "EmailAddress", # required
+    #       display_name: "EmailAddressDisplayName",
+    #     },
+    #     destination_email_address: { # required
+    #       email_address: "EmailAddress", # required
+    #       display_name: "EmailAddressDisplayName",
+    #     },
+    #     additional_recipients: {
+    #       cc_email_addresses: [
+    #         {
+    #           email_address: "EmailAddress", # required
+    #           display_name: "EmailAddressDisplayName",
+    #         },
+    #       ],
+    #     },
+    #     email_message: { # required
+    #       message_source_type: "TEMPLATE", # required, accepts TEMPLATE, RAW
+    #       templated_message_config: {
+    #         knowledge_base_id: "MessageTemplateKnowledgeBaseId", # required
+    #         message_template_id: "MessageTemplateId", # required
+    #         template_attributes: { # required
+    #           custom_attributes: {
+    #             "AttributeName" => "AttributeValue",
+    #           },
+    #           customer_profile_attributes: "CustomerProfileAttributesSerialized",
+    #         },
+    #       },
+    #       raw_message: {
+    #         subject: "OutboundSubject", # required
+    #         body: "Body", # required
+    #         content_type: "EmailMessageContentType", # required
+    #       },
+    #     },
+    #     traffic_type: "GENERAL", # required, accepts GENERAL, CAMPAIGN
+    #     source_campaign: {
+    #       campaign_id: "CampaignId",
+    #       outbound_request_id: "OutboundRequestId",
+    #     },
+    #     client_token: "ClientToken",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SendOutboundEmail AWS API Documentation
+    #
+    # @overload send_outbound_email(params = {})
+    # @param [Hash] params ({})
+    def send_outbound_email(params = {}, options = {})
+      req = build_request(:send_outbound_email, params)
+      req.send_request(options)
+    end
+
     # Provides a pre-signed Amazon S3 URL in response for uploading your
     # content.
     #
@@ -14330,7 +14768,7 @@ module Aws::Connect
     #     file_name: "FileName", # required
     #     file_size_in_bytes: 1, # required
     #     url_expiry_in_seconds: 1,
-    #     file_use_case_type: "ATTACHMENT", # required, accepts ATTACHMENT
+    #     file_use_case_type: "EMAIL_MESSAGE", # required, accepts EMAIL_MESSAGE, ATTACHMENT
     #     associated_resource_arn: "ARN", # required
     #     created_by: {
     #       connect_user_arn: "ARN",
@@ -14773,6 +15211,117 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, Types::EmailAddressInfo] :from_email_address
+    #
+    # @option params [required, String] :destination_email_address
+    #
+    # @option params [String] :description
+    #
+    # @option params [Hash<String,Types::Reference>] :references
+    #
+    # @option params [String] :name
+    #
+    # @option params [required, Types::InboundEmailContent] :email_message
+    #
+    # @option params [Types::InboundAdditionalRecipients] :additional_recipients
+    #
+    # @option params [Array<Types::EmailAttachment>] :attachments
+    #
+    # @option params [String] :contact_flow_id
+    #
+    # @option params [String] :related_contact_id
+    #
+    # @option params [Hash<String,String>] :attributes
+    #
+    # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #
+    # @option params [String] :client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Types::StartEmailContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartEmailContactResponse#contact_id #contact_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_email_contact({
+    #     instance_id: "InstanceId", # required
+    #     from_email_address: { # required
+    #       email_address: "EmailAddress", # required
+    #       display_name: "EmailAddressDisplayName",
+    #     },
+    #     destination_email_address: "EmailAddress", # required
+    #     description: "Description",
+    #     references: {
+    #       "ReferenceKey" => {
+    #         value: "ReferenceValue",
+    #         type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #         status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #         arn: "ReferenceArn",
+    #         status_reason: "ReferenceStatusReason",
+    #       },
+    #     },
+    #     name: "Name",
+    #     email_message: { # required
+    #       message_source_type: "RAW", # required, accepts RAW
+    #       raw_message: {
+    #         subject: "InboundSubject", # required
+    #         body: "Body", # required
+    #         content_type: "EmailMessageContentType", # required
+    #         headers: {
+    #           "REFERENCES" => "EmailHeaderValue",
+    #         },
+    #       },
+    #     },
+    #     additional_recipients: {
+    #       to_addresses: [
+    #         {
+    #           email_address: "EmailAddress", # required
+    #           display_name: "EmailAddressDisplayName",
+    #         },
+    #       ],
+    #       cc_addresses: [
+    #         {
+    #           email_address: "EmailAddress", # required
+    #           display_name: "EmailAddressDisplayName",
+    #         },
+    #       ],
+    #     },
+    #     attachments: [
+    #       {
+    #         file_name: "FileName", # required
+    #         s3_url: "PreSignedAttachmentUrl", # required
+    #       },
+    #     ],
+    #     contact_flow_id: "ContactFlowId",
+    #     related_contact_id: "ContactId",
+    #     attributes: {
+    #       "AttributeName" => "AttributeValue",
+    #     },
+    #     segment_attributes: {
+    #       "SegmentAttributeName" => {
+    #         value_string: "SegmentAttributeValueString",
+    #       },
+    #     },
+    #     client_token: "ClientToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.contact_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartEmailContact AWS API Documentation
+    #
+    # @overload start_email_contact(params = {})
+    # @param [Hash] params ({})
+    def start_email_contact(params = {}, options = {})
+      req = build_request(:start_email_contact, params)
+      req.send_request(options)
+    end
+
     # Initiates a new outbound SMS contact to a customer. Response of this
     # API provides the ContactId of the outbound SMS contact created.
     #
@@ -14898,11 +15447,11 @@ module Aws::Connect
     #
     #   resp = client.start_outbound_chat_contact({
     #     source_endpoint: { # required
-    #       type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN
+    #       type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN, EMAIL_ADDRESS
     #       address: "EndpointAddress",
     #     },
     #     destination_endpoint: { # required
-    #       type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN
+    #       type: "TELEPHONE_NUMBER", # accepts TELEPHONE_NUMBER, VOIP, CONTACT_FLOW, CONNECT_PHONENUMBER_ARN, EMAIL_ADDRESS
     #       address: "EndpointAddress",
     #     },
     #     instance_id: "InstanceId", # required
@@ -14938,6 +15487,81 @@ module Aws::Connect
     # @param [Hash] params ({})
     def start_outbound_chat_contact(params = {}, options = {})
       req = build_request(:start_outbound_chat_contact, params)
+      req.send_request(options)
+    end
+
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, String] :contact_id
+    #
+    # @option params [Types::EmailAddressInfo] :from_email_address
+    #
+    # @option params [required, Types::EmailAddressInfo] :destination_email_address
+    #
+    # @option params [Types::OutboundAdditionalRecipients] :additional_recipients
+    #
+    # @option params [required, Types::OutboundEmailContent] :email_message
+    #
+    # @option params [String] :client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Types::StartOutboundEmailContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartOutboundEmailContactResponse#contact_id #contact_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_outbound_email_contact({
+    #     instance_id: "InstanceId", # required
+    #     contact_id: "ContactId", # required
+    #     from_email_address: {
+    #       email_address: "EmailAddress", # required
+    #       display_name: "EmailAddressDisplayName",
+    #     },
+    #     destination_email_address: { # required
+    #       email_address: "EmailAddress", # required
+    #       display_name: "EmailAddressDisplayName",
+    #     },
+    #     additional_recipients: {
+    #       cc_email_addresses: [
+    #         {
+    #           email_address: "EmailAddress", # required
+    #           display_name: "EmailAddressDisplayName",
+    #         },
+    #       ],
+    #     },
+    #     email_message: { # required
+    #       message_source_type: "TEMPLATE", # required, accepts TEMPLATE, RAW
+    #       templated_message_config: {
+    #         knowledge_base_id: "MessageTemplateKnowledgeBaseId", # required
+    #         message_template_id: "MessageTemplateId", # required
+    #         template_attributes: { # required
+    #           custom_attributes: {
+    #             "AttributeName" => "AttributeValue",
+    #           },
+    #           customer_profile_attributes: "CustomerProfileAttributesSerialized",
+    #         },
+    #       },
+    #       raw_message: {
+    #         subject: "OutboundSubject", # required
+    #         body: "Body", # required
+    #         content_type: "EmailMessageContentType", # required
+    #       },
+    #     },
+    #     client_token: "ClientToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.contact_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartOutboundEmailContact AWS API Documentation
+    #
+    # @overload start_outbound_email_contact(params = {})
+    # @param [Hash] params ({})
+    def start_outbound_email_contact(params = {}, options = {})
+      req = build_request(:start_outbound_email_contact, params)
       req.send_request(options)
     end
 
@@ -15074,8 +15698,11 @@ module Aws::Connect
     #     description: "Description",
     #     references: {
     #       "ReferenceKey" => {
-    #         value: "ReferenceValue", # required
-    #         type: "URL", # required, accepts URL, ATTACHMENT, NUMBER, STRING, DATE, EMAIL
+    #         value: "ReferenceValue",
+    #         type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #         status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #         arn: "ReferenceArn",
+    #         status_reason: "ReferenceStatusReason",
     #       },
     #     },
     #     related_contact_id: "ContactId",
@@ -15303,6 +15930,8 @@ module Aws::Connect
     #
     #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/tasks.html#linked-tasks
     #
+    # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #
     # @return [Types::StartTaskContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::StartTaskContactResponse#contact_id #contact_id} => String
@@ -15319,8 +15948,11 @@ module Aws::Connect
     #     name: "Name", # required
     #     references: {
     #       "ReferenceKey" => {
-    #         value: "ReferenceValue", # required
-    #         type: "URL", # required, accepts URL, ATTACHMENT, NUMBER, STRING, DATE, EMAIL
+    #         value: "ReferenceValue",
+    #         type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #         status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #         arn: "ReferenceArn",
+    #         status_reason: "ReferenceStatusReason",
     #       },
     #     },
     #     description: "Description",
@@ -15329,6 +15961,11 @@ module Aws::Connect
     #     task_template_id: "TaskTemplateId",
     #     quick_connect_id: "QuickConnectId",
     #     related_contact_id: "ContactId",
+    #     segment_attributes: {
+    #       "SegmentAttributeName" => {
+    #         value_string: "SegmentAttributeValueString",
+    #       },
+    #     },
     #   })
     #
     # @example Response structure
@@ -15444,8 +16081,11 @@ module Aws::Connect
     #     related_contact_id: "ContactId",
     #     references: {
     #       "ReferenceKey" => {
-    #         value: "ReferenceValue", # required
-    #         type: "URL", # required, accepts URL, ATTACHMENT, NUMBER, STRING, DATE, EMAIL
+    #         value: "ReferenceValue",
+    #         type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #         status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #         arn: "ReferenceArn",
+    #         status_reason: "ReferenceStatusReason",
     #       },
     #     },
     #     description: "Description",
@@ -16134,6 +16774,8 @@ module Aws::Connect
     #   Well-formed data on contact, shown to agents on Contact Control Panel
     #   (CCP).
     #
+    # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -16145,8 +16787,16 @@ module Aws::Connect
     #     description: "Description",
     #     references: {
     #       "ReferenceKey" => {
-    #         value: "ReferenceValue", # required
-    #         type: "URL", # required, accepts URL, ATTACHMENT, NUMBER, STRING, DATE, EMAIL
+    #         value: "ReferenceValue",
+    #         type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #         status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #         arn: "ReferenceArn",
+    #         status_reason: "ReferenceStatusReason",
+    #       },
+    #     },
+    #     segment_attributes: {
+    #       "SegmentAttributeName" => {
+    #         value_string: "SegmentAttributeValueString",
     #       },
     #     },
     #   })
@@ -16664,6 +17314,45 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, String] :email_address_id
+    #
+    # @option params [String] :description
+    #
+    # @option params [String] :display_name
+    #
+    # @option params [String] :client_token
+    #
+    # @return [Types::UpdateEmailAddressMetadataResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateEmailAddressMetadataResponse#email_address_id #email_address_id} => String
+    #   * {Types::UpdateEmailAddressMetadataResponse#email_address_arn #email_address_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_email_address_metadata({
+    #     instance_id: "InstanceId", # required
+    #     email_address_id: "EmailAddressId", # required
+    #     description: "Description",
+    #     display_name: "EmailAddressDisplayName",
+    #     client_token: "ClientToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.email_address_id #=> String
+    #   resp.email_address_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateEmailAddressMetadata AWS API Documentation
+    #
+    # @overload update_email_address_metadata(params = {})
+    # @param [Hash] params ({})
+    def update_email_address_metadata(params = {}, options = {})
+      req = build_request(:update_email_address_metadata, params)
+      req.send_request(options)
+    end
+
     # Updates details about a specific evaluation form version in the
     # specified Amazon Connect instance. Question and section identifiers
     # cannot be duplicated within the same evaluation form.
@@ -16952,7 +17641,7 @@ module Aws::Connect
     #   resp = client.update_instance_storage_config({
     #     instance_id: "InstanceId", # required
     #     association_id: "AssociationId", # required
-    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS
+    #     resource_type: "CHAT_TRANSCRIPTS", # required, accepts CHAT_TRANSCRIPTS, CALL_RECORDINGS, SCHEDULED_REPORTS, MEDIA_STREAMS, CONTACT_TRACE_RECORDS, AGENT_EVENTS, REAL_TIME_CONTACT_ANALYSIS_SEGMENTS, ATTACHMENTS, CONTACT_EVALUATIONS, SCREEN_RECORDINGS, REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS, REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS, EMAIL_MESSAGES
     #     storage_config: { # required
     #       association_id: "AssociationId",
     #       storage_type: "S3", # required, accepts S3, KINESIS_VIDEO_STREAM, KINESIS_STREAM, KINESIS_FIREHOSE
@@ -17469,6 +18158,33 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # @option params [required, String] :instance_id
+    #
+    # @option params [required, String] :queue_id
+    #
+    # @option params [required, Types::OutboundEmailConfig] :outbound_email_config
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_queue_outbound_email_config({
+    #     instance_id: "InstanceId", # required
+    #     queue_id: "QueueId", # required
+    #     outbound_email_config: { # required
+    #       outbound_email_address_id: "EmailAddressId",
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateQueueOutboundEmailConfig AWS API Documentation
+    #
+    # @overload update_queue_outbound_email_config(params = {})
+    # @param [Hash] params ({})
+    def update_queue_outbound_email_config(params = {}, options = {})
+      req = build_request(:update_queue_outbound_email_config, params)
+      req.send_request(options)
+    end
+
     # This API is in preview release for Amazon Connect and is subject to
     # change.
     #
@@ -17662,7 +18378,7 @@ module Aws::Connect
     #     routing_profile_id: "RoutingProfileId", # required
     #     media_concurrencies: [ # required
     #       {
-    #         channel: "VOICE", # required, accepts VOICE, CHAT, TASK
+    #         channel: "VOICE", # required, accepts VOICE, CHAT, TASK, EMAIL
     #         concurrency: 1, # required
     #         cross_channel_behavior: {
     #           behavior_type: "ROUTE_CURRENT_CHANNEL_ONLY", # required, accepts ROUTE_CURRENT_CHANNEL_ONLY, ROUTE_ANY_CHANNEL
@@ -17787,7 +18503,7 @@ module Aws::Connect
     #       {
     #         queue_reference: { # required
     #           queue_id: "QueueId", # required
-    #           channel: "VOICE", # required, accepts VOICE, CHAT, TASK
+    #           channel: "VOICE", # required, accepts VOICE, CHAT, TASK, EMAIL
     #         },
     #         priority: 1, # required
     #         delay: 1, # required
@@ -17856,8 +18572,11 @@ module Aws::Connect
     #           contact_flow_id: "ContactFlowId", # required
     #           references: {
     #             "ReferenceKey" => {
-    #               value: "ReferenceValue", # required
-    #               type: "URL", # required, accepts URL, ATTACHMENT, NUMBER, STRING, DATE, EMAIL
+    #               value: "ReferenceValue",
+    #               type: "URL", # required, accepts URL, ATTACHMENT, CONTACT_ANALYSIS, NUMBER, STRING, DATE, EMAIL, EMAIL_MESSAGE
+    #               status: "AVAILABLE", # accepts AVAILABLE, DELETED, APPROVED, REJECTED, PROCESSING, FAILED
+    #               arn: "ReferenceArn",
+    #               status_reason: "ReferenceStatusReason",
     #             },
     #           },
     #         },
@@ -18037,6 +18756,8 @@ module Aws::Connect
     #   The identifier of the flow that runs by default when a task is created
     #   by referencing this template.
     #
+    # @option params [String] :self_assign_flow_id
+    #
     # @option params [Types::TaskTemplateConstraints] :constraints
     #   Constraints that are applicable to the fields listed.
     #
@@ -18061,6 +18782,7 @@ module Aws::Connect
     #   * {Types::UpdateTaskTemplateResponse#name #name} => String
     #   * {Types::UpdateTaskTemplateResponse#description #description} => String
     #   * {Types::UpdateTaskTemplateResponse#contact_flow_id #contact_flow_id} => String
+    #   * {Types::UpdateTaskTemplateResponse#self_assign_flow_id #self_assign_flow_id} => String
     #   * {Types::UpdateTaskTemplateResponse#constraints #constraints} => Types::TaskTemplateConstraints
     #   * {Types::UpdateTaskTemplateResponse#defaults #defaults} => Types::TaskTemplateDefaults
     #   * {Types::UpdateTaskTemplateResponse#fields #fields} => Array&lt;Types::TaskTemplateField&gt;
@@ -18076,6 +18798,7 @@ module Aws::Connect
     #     name: "TaskTemplateName",
     #     description: "TaskTemplateDescription",
     #     contact_flow_id: "ContactFlowId",
+    #     self_assign_flow_id: "ContactFlowId",
     #     constraints: {
     #       required_fields: [
     #         {
@@ -18116,7 +18839,7 @@ module Aws::Connect
     #           name: "TaskTemplateFieldName",
     #         },
     #         description: "TaskTemplateFieldDescription",
-    #         type: "NAME", # accepts NAME, DESCRIPTION, SCHEDULED_TIME, QUICK_CONNECT, URL, NUMBER, TEXT, TEXT_AREA, DATE_TIME, BOOLEAN, SINGLE_SELECT, EMAIL
+    #         type: "NAME", # accepts NAME, DESCRIPTION, SCHEDULED_TIME, QUICK_CONNECT, URL, NUMBER, TEXT, TEXT_AREA, DATE_TIME, BOOLEAN, SINGLE_SELECT, EMAIL, SELF_ASSIGN, EXPIRY_DURATION
     #         single_select_options: ["TaskTemplateSingleSelectOption"],
     #       },
     #     ],
@@ -18130,6 +18853,7 @@ module Aws::Connect
     #   resp.name #=> String
     #   resp.description #=> String
     #   resp.contact_flow_id #=> String
+    #   resp.self_assign_flow_id #=> String
     #   resp.constraints.required_fields #=> Array
     #   resp.constraints.required_fields[0].id.name #=> String
     #   resp.constraints.read_only_fields #=> Array
@@ -18142,7 +18866,7 @@ module Aws::Connect
     #   resp.fields #=> Array
     #   resp.fields[0].id.name #=> String
     #   resp.fields[0].description #=> String
-    #   resp.fields[0].type #=> String, one of "NAME", "DESCRIPTION", "SCHEDULED_TIME", "QUICK_CONNECT", "URL", "NUMBER", "TEXT", "TEXT_AREA", "DATE_TIME", "BOOLEAN", "SINGLE_SELECT", "EMAIL"
+    #   resp.fields[0].type #=> String, one of "NAME", "DESCRIPTION", "SCHEDULED_TIME", "QUICK_CONNECT", "URL", "NUMBER", "TEXT", "TEXT_AREA", "DATE_TIME", "BOOLEAN", "SINGLE_SELECT", "EMAIL", "SELF_ASSIGN", "EXPIRY_DURATION"
     #   resp.fields[0].single_select_options #=> Array
     #   resp.fields[0].single_select_options[0] #=> String
     #   resp.status #=> String, one of "ACTIVE", "INACTIVE"
@@ -18682,7 +19406,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.185.0'
+      context[:gem_version] = '1.186.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

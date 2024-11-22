@@ -60,11 +60,12 @@ module Aws::CostExplorer
     #   @return [String]
     #
     # @!attribute [rw] analysis_id
-    #   The analysis ID that's associated with the commitment purchase.
+    #   The analysis ID that's associated with the commitment purchase
+    #   analysis.
     #   @return [String]
     #
     # @!attribute [rw] commitment_purchase_analysis_configuration
-    #   The analysis configuration for the commitment purchase analysis.
+    #   The configuration for the commitment purchase analysis.
     #   @return [Types::CommitmentPurchaseAnalysisConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/AnalysisSummary AWS API Documentation
@@ -766,8 +767,7 @@ module Aws::CostExplorer
     #   An [Expression][1] object used to categorize costs. This supports
     #   dimensions, tags, and nested expressions. Currently the only
     #   dimensions supported are `LINKED_ACCOUNT`, `SERVICE_CODE`,
-    #   `RECORD_TYPE`, `LINKED_ACCOUNT_NAME`, `REGION`, `USAGE_TYPE`, and
-    #   `BILLING_ENTITY`.
+    #   `RECORD_TYPE`, `LINKED_ACCOUNT_NAME`, `REGION`, and `USAGE_TYPE`.
     #
     #   `RECORD_TYPE` is a dimension used for Cost Explorer APIs, and is
     #   also supported for Cost Category expressions. This dimension uses
@@ -2019,7 +2019,8 @@ module Aws::CostExplorer
       include Aws::Structure
     end
 
-    # A request to generate a recommendation is already in progress.
+    # A request to generate a recommendation or analysis is already in
+    # progress.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -5920,18 +5921,18 @@ module Aws::CostExplorer
     #   @return [String]
     #
     # @!attribute [rw] average_utilization
-    #   The average utilization of your recommendations. Amazon Web Services
-    #   uses this to calculate your recommended reservation purchases.
+    #   The average utilization of your instances. Amazon Web Services uses
+    #   this to calculate your recommended reservation purchases.
     #   @return [String]
     #
     # @!attribute [rw] estimated_break_even_in_months
     #   How long Amazon Web Services estimates that it takes for this
-    #   recommendation to start saving you money, in months.
+    #   instance to start saving you money, in months.
     #   @return [String]
     #
     # @!attribute [rw] currency_code
     #   The currency code that Amazon Web Services used to calculate the
-    #   costs for this recommendation.
+    #   costs for this instance.
     #   @return [String]
     #
     # @!attribute [rw] estimated_monthly_savings_amount
@@ -5957,12 +5958,11 @@ module Aws::CostExplorer
     #   @return [String]
     #
     # @!attribute [rw] upfront_cost
-    #   How much purchasing this recommendation costs you upfront.
+    #   How much purchasing this instance costs you upfront.
     #   @return [String]
     #
     # @!attribute [rw] recurring_standard_monthly_cost
-    #   How much purchasing this recommendation costs you on a monthly
-    #   basis.
+    #   How much purchasing this instance costs you on a monthly basis.
     #   @return [String]
     #
     # @!attribute [rw] reserved_capacity_details
@@ -6361,9 +6361,10 @@ module Aws::CostExplorer
     end
 
     # The combination of Amazon Web Services service, linked account, linked
-    # account name, Region, and usage type where a cost anomaly is observed.
-    # The linked account name will only be available when the account name
-    # can be identified.
+    # account name, Region, and usage type where a cost anomaly is observed,
+    # along with the dollar and percentage amount of the anomaly impact. The
+    # linked account name will only be available when the account name can
+    # be identified.
     #
     # @!attribute [rw] service
     #   The Amazon Web Services service name that's associated with the
@@ -6379,14 +6380,18 @@ module Aws::CostExplorer
     #   The member account value that's associated with the cost anomaly.
     #   @return [String]
     #
-    # @!attribute [rw] usage_type
-    #   The `UsageType` value that's associated with the cost anomaly.
-    #   @return [String]
-    #
     # @!attribute [rw] linked_account_name
     #   The member account name value that's associated with the cost
     #   anomaly.
     #   @return [String]
+    #
+    # @!attribute [rw] usage_type
+    #   The `UsageType` value that's associated with the cost anomaly.
+    #   @return [String]
+    #
+    # @!attribute [rw] impact
+    #   The dollar impact for the root cause.
+    #   @return [Types::RootCauseImpact]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/RootCause AWS API Documentation
     #
@@ -6394,8 +6399,24 @@ module Aws::CostExplorer
       :service,
       :region,
       :linked_account,
+      :linked_account_name,
       :usage_type,
-      :linked_account_name)
+      :impact)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The dollar value of the root cause.
+    #
+    # @!attribute [rw] contribution
+    #   The dollar amount that this root cause contributed to the anomaly's
+    #   TotalImpact.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/RootCauseImpact AWS API Documentation
+    #
+    class RootCauseImpact < Struct.new(
+      :contribution)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6427,8 +6448,8 @@ module Aws::CostExplorer
     #   @return [Float]
     #
     # @!attribute [rw] offering_id
-    #   The unique ID that's used to distinguish commitments from one
-    #   another.
+    #   The unique ID that's used to distinguish Savings Plans commitments
+    #   from one another.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ce-2017-10-25/SavingsPlans AWS API Documentation
@@ -6655,24 +6676,24 @@ module Aws::CostExplorer
     #
     # @!attribute [rw] estimated_on_demand_cost
     #   The remaining On-Demand cost estimated to not be covered by the
-    #   commitment, over the length of the lookback period.
+    #   Savings Plan over the length of the lookback period.
     #   @return [String]
     #
     # @!attribute [rw] estimated_on_demand_cost_with_current_commitment
     #   The estimated On-Demand cost you expect with no additional
-    #   commitment, based on your usage of the selected time period and the
+    #   commitment based on your usage of the selected time period and the
     #   Savings Plan you own.
     #   @return [String]
     #
     # @!attribute [rw] estimated_roi
-    #   The estimated return on investment that's based on the purchase
-    #   commitment and estimated savings. This is calculated as
+    #   The estimated return on investment that's based on the Savings Plan
+    #   and estimated savings. This is calculated as
     #   estimatedSavingsAmount/estimatedSPCost*100.
     #   @return [String]
     #
     # @!attribute [rw] estimated_savings_amount
-    #   The estimated savings amount that's based on the purchase
-    #   commitment over the length of the lookback period.
+    #   The estimated savings amount that's based on the Savings Plan over
+    #   the length of the lookback period.
     #   @return [String]
     #
     # @!attribute [rw] estimated_savings_percentage
@@ -6681,7 +6702,7 @@ module Aws::CostExplorer
     #   @return [String]
     #
     # @!attribute [rw] estimated_commitment_cost
-    #   The estimated cost of the purchase commitment over the length of the
+    #   The estimated cost of the Savings Plan over the length of the
     #   lookback period.
     #   @return [String]
     #
@@ -6690,7 +6711,7 @@ module Aws::CostExplorer
     #   @return [String]
     #
     # @!attribute [rw] upfront_cost
-    #   The upfront cost of the Savings Plan, based on the selected payment
+    #   The upfront cost of the Savings Plan based on the selected payment
     #   option.
     #   @return [String]
     #

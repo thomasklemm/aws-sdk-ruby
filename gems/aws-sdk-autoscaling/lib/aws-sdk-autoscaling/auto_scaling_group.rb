@@ -712,6 +712,7 @@ module Aws::AutoScaling
     #         ],
     #         statistic: "Average", # accepts Average, Minimum, Maximum, SampleCount, Sum
     #         unit: "MetricUnit",
+    #         period: 1,
     #         metrics: [
     #           {
     #             id: "XmlStringMaxLen64", # required
@@ -729,8 +730,10 @@ module Aws::AutoScaling
     #               },
     #               stat: "XmlStringMetricStat", # required
     #               unit: "MetricUnit",
+    #               period: 1,
     #             },
     #             label: "XmlStringMetricLabel",
+    #             period: 1,
     #             return_data: false,
     #           },
     #         ],

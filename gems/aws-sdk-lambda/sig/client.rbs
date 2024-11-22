@@ -186,6 +186,7 @@ module Aws
         def filter_criteria_error: () -> Types::FilterCriteriaError
         def event_source_mapping_arn: () -> ::String
         def metrics_config: () -> Types::EventSourceMappingMetricsConfig
+        def provisioned_poller_config: () -> Types::ProvisionedPollerConfig
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Lambda/Client.html#create_event_source_mapping-instance_method
       def create_event_source_mapping: (
@@ -246,6 +247,10 @@ module Aws
                                          ?kms_key_arn: ::String,
                                          ?metrics_config: {
                                            metrics: Array[("EventCount")]?
+                                         },
+                                         ?provisioned_poller_config: {
+                                           minimum_pollers: ::Integer?,
+                                           maximum_pollers: ::Integer?
                                          }
                                        ) -> _CreateEventSourceMappingResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateEventSourceMappingResponseSuccess
@@ -428,6 +433,7 @@ module Aws
         def filter_criteria_error: () -> Types::FilterCriteriaError
         def event_source_mapping_arn: () -> ::String
         def metrics_config: () -> Types::EventSourceMappingMetricsConfig
+        def provisioned_poller_config: () -> Types::ProvisionedPollerConfig
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Lambda/Client.html#delete_event_source_mapping-instance_method
       def delete_event_source_mapping: (
@@ -551,6 +557,7 @@ module Aws
         def filter_criteria_error: () -> Types::FilterCriteriaError
         def event_source_mapping_arn: () -> ::String
         def metrics_config: () -> Types::EventSourceMappingMetricsConfig
+        def provisioned_poller_config: () -> Types::ProvisionedPollerConfig
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Lambda/Client.html#get_event_source_mapping-instance_method
       def get_event_source_mapping: (
@@ -1249,6 +1256,7 @@ module Aws
         def filter_criteria_error: () -> Types::FilterCriteriaError
         def event_source_mapping_arn: () -> ::String
         def metrics_config: () -> Types::EventSourceMappingMetricsConfig
+        def provisioned_poller_config: () -> Types::ProvisionedPollerConfig
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Lambda/Client.html#update_event_source_mapping-instance_method
       def update_event_source_mapping: (
@@ -1295,6 +1303,10 @@ module Aws
                                          ?kms_key_arn: ::String,
                                          ?metrics_config: {
                                            metrics: Array[("EventCount")]?
+                                         },
+                                         ?provisioned_poller_config: {
+                                           minimum_pollers: ::Integer?,
+                                           maximum_pollers: ::Integer?
                                          }
                                        ) -> _UpdateEventSourceMappingResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateEventSourceMappingResponseSuccess

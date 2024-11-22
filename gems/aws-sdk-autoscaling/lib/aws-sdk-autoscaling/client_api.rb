@@ -254,6 +254,7 @@ module Aws::AutoScaling
     MetricDimensionName = Shapes::StringShape.new(name: 'MetricDimensionName')
     MetricDimensionValue = Shapes::StringShape.new(name: 'MetricDimensionValue')
     MetricDimensions = Shapes::ListShape.new(name: 'MetricDimensions')
+    MetricGranularityInSeconds = Shapes::IntegerShape.new(name: 'MetricGranularityInSeconds')
     MetricGranularityType = Shapes::StructureShape.new(name: 'MetricGranularityType')
     MetricGranularityTypes = Shapes::ListShape.new(name: 'MetricGranularityTypes')
     MetricName = Shapes::StringShape.new(name: 'MetricName')
@@ -715,6 +716,7 @@ module Aws::AutoScaling
     CustomizedMetricSpecification.add_member(:dimensions, Shapes::ShapeRef.new(shape: MetricDimensions, location_name: "Dimensions"))
     CustomizedMetricSpecification.add_member(:statistic, Shapes::ShapeRef.new(shape: MetricStatistic, location_name: "Statistic"))
     CustomizedMetricSpecification.add_member(:unit, Shapes::ShapeRef.new(shape: MetricUnit, location_name: "Unit"))
+    CustomizedMetricSpecification.add_member(:period, Shapes::ShapeRef.new(shape: MetricGranularityInSeconds, location_name: "Period"))
     CustomizedMetricSpecification.add_member(:metrics, Shapes::ShapeRef.new(shape: TargetTrackingMetricDataQueries, location_name: "Metrics"))
     CustomizedMetricSpecification.struct_class = Types::CustomizedMetricSpecification
 
@@ -1554,12 +1556,14 @@ module Aws::AutoScaling
     TargetTrackingMetricDataQuery.add_member(:expression, Shapes::ShapeRef.new(shape: XmlStringMaxLen2047, location_name: "Expression"))
     TargetTrackingMetricDataQuery.add_member(:metric_stat, Shapes::ShapeRef.new(shape: TargetTrackingMetricStat, location_name: "MetricStat"))
     TargetTrackingMetricDataQuery.add_member(:label, Shapes::ShapeRef.new(shape: XmlStringMetricLabel, location_name: "Label"))
+    TargetTrackingMetricDataQuery.add_member(:period, Shapes::ShapeRef.new(shape: MetricGranularityInSeconds, location_name: "Period"))
     TargetTrackingMetricDataQuery.add_member(:return_data, Shapes::ShapeRef.new(shape: ReturnData, location_name: "ReturnData"))
     TargetTrackingMetricDataQuery.struct_class = Types::TargetTrackingMetricDataQuery
 
     TargetTrackingMetricStat.add_member(:metric, Shapes::ShapeRef.new(shape: Metric, required: true, location_name: "Metric"))
     TargetTrackingMetricStat.add_member(:stat, Shapes::ShapeRef.new(shape: XmlStringMetricStat, required: true, location_name: "Stat"))
     TargetTrackingMetricStat.add_member(:unit, Shapes::ShapeRef.new(shape: MetricUnit, location_name: "Unit"))
+    TargetTrackingMetricStat.add_member(:period, Shapes::ShapeRef.new(shape: MetricGranularityInSeconds, location_name: "Period"))
     TargetTrackingMetricStat.struct_class = Types::TargetTrackingMetricStat
 
     TerminateInstanceInAutoScalingGroupType.add_member(:instance_id, Shapes::ShapeRef.new(shape: XmlStringMaxLen19, required: true, location_name: "InstanceId"))

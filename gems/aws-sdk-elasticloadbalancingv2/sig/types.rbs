@@ -808,6 +808,7 @@ module Aws::ElasticLoadBalancingV2
       attr_accessor trust_store_arn: ::String
       attr_accessor ignore_client_certificate_expiry: bool
       attr_accessor trust_store_association_status: ("active" | "removed")
+      attr_accessor advertise_trust_store_ca_names: ("on" | "off")
       SENSITIVE: []
     end
 

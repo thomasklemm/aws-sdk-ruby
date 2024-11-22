@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.138.0 (2024-11-22)
+------------------
+
+* Feature - This release includes: Update APIs to support Image, Layer Map, font customization, and Plugin Visual. Add Identity center related information in ListNamsespace API. Update API for restrictedFolder support in topics and add API for SearchTopics, Describe/Update DashboardsQA Configration.
+
 1.137.0 (2024-11-18)
 ------------------
 

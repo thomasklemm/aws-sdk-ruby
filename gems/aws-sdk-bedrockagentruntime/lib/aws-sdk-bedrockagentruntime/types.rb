@@ -10,6 +10,43 @@
 module Aws::BedrockAgentRuntime
   module Types
 
+    # Contains details about the OpenAPI schema for the action group. For
+    # more information, see [Action group OpenAPI schemas][1]. You can
+    # either include the schema directly in the payload field or you can
+    # upload it to an S3 bucket and specify the S3 bucket location in the s3
+    # field.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html
+    #
+    # @note APISchema is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] payload
+    #   The JSON or YAML-formatted payload defining the OpenAPI schema for
+    #   the action group.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3
+    #   Contains details about the S3 object containing the OpenAPI schema
+    #   for the action group.
+    #   @return [Types::S3Identifier]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/APISchema AWS API Documentation
+    #
+    class APISchema < Struct.new(
+      :payload,
+      :s3,
+      :unknown)
+      SENSITIVE = [:payload]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Payload < APISchema; end
+      class S3 < APISchema; end
+      class Unknown < APISchema; end
+    end
+
     # The request is denied because of missing access permissions. Check
     # your permissions and retry your request.
     #
@@ -23,6 +60,37 @@ module Aws::BedrockAgentRuntime
       :event_type)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Contains details about the Lambda function containing the business
+    # logic that is carried out upon invoking the action or the custom
+    # control method for handling the information elicited from the user.
+    #
+    # @note ActionGroupExecutor is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] custom_control
+    #   To return the action group invocation results directly in the
+    #   `InvokeInlineAgent` response, specify `RETURN_CONTROL`.
+    #   @return [String]
+    #
+    # @!attribute [rw] lambda
+    #   The Amazon Resource Name (ARN) of the Lambda function containing the
+    #   business logic that is carried out upon invoking the action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ActionGroupExecutor AWS API Documentation
+    #
+    class ActionGroupExecutor < Struct.new(
+      :custom_control,
+      :lambda,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class CustomControl < ActionGroupExecutor; end
+      class Lambda < ActionGroupExecutor; end
+      class Unknown < ActionGroupExecutor; end
     end
 
     # Contains information about the action group being invoked. For more
@@ -100,6 +168,75 @@ module Aws::BedrockAgentRuntime
     class ActionGroupInvocationOutput < Struct.new(
       :text)
       SENSITIVE = [:text]
+      include Aws::Structure
+    end
+
+    # Contains details of the inline agent's action group.
+    #
+    # @!attribute [rw] action_group_executor
+    #   The Amazon Resource Name (ARN) of the Lambda function containing the
+    #   business logic that is carried out upon invoking the action or the
+    #   custom control method for handling the information elicited from the
+    #   user.
+    #   @return [Types::ActionGroupExecutor]
+    #
+    # @!attribute [rw] action_group_name
+    #   The name of the action group.
+    #   @return [String]
+    #
+    # @!attribute [rw] api_schema
+    #   Contains either details about the S3 object containing the OpenAPI
+    #   schema for the action group or the JSON or YAML-formatted payload
+    #   defining the schema. For more information, see [Action group OpenAPI
+    #   schemas][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-api-schema.html
+    #   @return [Types::APISchema]
+    #
+    # @!attribute [rw] description
+    #   A description of the action group.
+    #   @return [String]
+    #
+    # @!attribute [rw] function_schema
+    #   Contains details about the function schema for the action group or
+    #   the JSON or YAML-formatted payload defining the schema.
+    #   @return [Types::FunctionSchema]
+    #
+    # @!attribute [rw] parent_action_group_signature
+    #   To allow your agent to request the user for additional information
+    #   when trying to complete a task, set this field to
+    #   `AMAZON.UserInput`. You must leave the `description`, `apiSchema`,
+    #   and `actionGroupExecutor` fields blank for this action group.
+    #
+    #   To allow your agent to generate, run, and troubleshoot code when
+    #   trying to complete a task, set this field to
+    #   `AMAZON.CodeInterpreter`. You must leave the `description`,
+    #   `apiSchema`, and `actionGroupExecutor` fields blank for this action
+    #   group.
+    #
+    #   During orchestration, if your agent determines that it needs to
+    #   invoke an API in an action group, but doesn't have enough
+    #   information to complete the API request, it will invoke this action
+    #   group instead and return an [Observation][1] reprompting the user
+    #   for more information.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/https:/docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Observation.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AgentActionGroup AWS API Documentation
+    #
+    class AgentActionGroup < Struct.new(
+      :action_group_executor,
+      :action_group_name,
+      :api_schema,
+      :description,
+      :function_schema,
+      :parent_action_group_signature)
+      SENSITIVE = [:action_group_name, :description]
       include Aws::Structure
     end
 
@@ -1127,6 +1264,38 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Defines parameters that the agent needs to invoke from the user to
+    # complete the function. Corresponds to an action in an action group.
+    #
+    # @!attribute [rw] description
+    #   A description of the function and its purpose.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   A name for the function.
+    #   @return [String]
+    #
+    # @!attribute [rw] parameters
+    #   The parameters that the agent elicits from the user to fulfill the
+    #   function.
+    #   @return [Hash<String,Types::ParameterDetail>]
+    #
+    # @!attribute [rw] require_confirmation
+    #   Contains information if user confirmation is required to invoke the
+    #   function.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FunctionDefinition AWS API Documentation
+    #
+    class FunctionDefinition < Struct.new(
+      :description,
+      :name,
+      :parameters,
+      :require_confirmation)
+      SENSITIVE = [:name]
+      include Aws::Structure
+    end
+
     # Contains information about the function that the agent predicts should
     # be called.
     #
@@ -1253,6 +1422,28 @@ module Aws::BedrockAgentRuntime
       :response_state)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Contains details about the function schema for the action group or the
+    # JSON or YAML-formatted payload defining the schema.
+    #
+    # @note FunctionSchema is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] functions
+    #   A list of functions that each define an action in the action group.
+    #   @return [Array<Types::FunctionDefinition>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FunctionSchema AWS API Documentation
+    #
+    class FunctionSchema < Struct.new(
+      :functions,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Functions < FunctionSchema; end
+      class Unknown < FunctionSchema; end
     end
 
     # Contains metadata about a part of the generated response that is
@@ -1439,6 +1630,25 @@ module Aws::BedrockAgentRuntime
     #
     class GuardrailConfiguration < Struct.new(
       :guardrail_id,
+      :guardrail_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration details for the guardrail.
+    #
+    # @!attribute [rw] guardrail_identifier
+    #   The unique identifier for the guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] guardrail_version
+    #   The version of the guardrail.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GuardrailConfigurationWithArn AWS API Documentation
+    #
+    class GuardrailConfigurationWithArn < Struct.new(
+      :guardrail_identifier,
       :guardrail_version)
       SENSITIVE = []
       include Aws::Structure
@@ -1762,6 +1972,173 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains intermediate response for code interpreter if any files have
+    # been generated.
+    #
+    # @!attribute [rw] files
+    #   Files containing intermediate response for the user.
+    #   @return [Array<Types::OutputFile>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineAgentFilePart AWS API Documentation
+    #
+    class InlineAgentFilePart < Struct.new(
+      :files,
+      :event_type)
+      SENSITIVE = [:files]
+      include Aws::Structure
+    end
+
+    # Contains a part of an agent response and citations for it.
+    #
+    # @!attribute [rw] attribution
+    #   Contains citations for a part of an agent response.
+    #   @return [Types::Attribution]
+    #
+    # @!attribute [rw] bytes
+    #   A part of the agent response in bytes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineAgentPayloadPart AWS API Documentation
+    #
+    class InlineAgentPayloadPart < Struct.new(
+      :attribution,
+      :bytes,
+      :event_type)
+      SENSITIVE = [:bytes]
+      include Aws::Structure
+    end
+
+    # Contains information to return from the action group that the agent
+    # has predicted to invoke.
+    #
+    # This data type is used in the [InvokeAgent response][1] API operation.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax
+    #
+    # @!attribute [rw] invocation_id
+    #   The identifier of the action group invocation.
+    #   @return [String]
+    #
+    # @!attribute [rw] invocation_inputs
+    #   A list of objects that contain information about the parameters and
+    #   inputs that need to be sent into the API operation or function,
+    #   based on what the agent determines from its session with the user.
+    #   @return [Array<Types::InvocationInputMember>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineAgentReturnControlPayload AWS API Documentation
+    #
+    class InlineAgentReturnControlPayload < Struct.new(
+      :invocation_id,
+      :invocation_inputs,
+      :event_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the agent and session, alongside the
+    # agent's reasoning process and results from calling API actions and
+    # querying knowledge bases and metadata about the trace. You can use the
+    # trace to understand how the agent arrived at the response it provided
+    # the customer. For more information, see [Trace enablement][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the session with the agent.
+    #   @return [String]
+    #
+    # @!attribute [rw] trace
+    #   Contains one part of the agent's reasoning process and results from
+    #   calling API actions and querying knowledge bases. You can use the
+    #   trace to understand how the agent arrived at the response it
+    #   provided the customer. For more information, see [Trace
+    #   enablement][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement
+    #   @return [Types::Trace]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineAgentTracePart AWS API Documentation
+    #
+    class InlineAgentTracePart < Struct.new(
+      :session_id,
+      :trace,
+      :event_type)
+      SENSITIVE = [:trace]
+      include Aws::Structure
+    end
+
+    # Contains parameters that specify various attributes that persist
+    # across a session or prompt. You can define session state attributes as
+    # key-value pairs when writing a [Lambda function][1] for an action
+    # group or pass them when making an `InvokeInlineAgent` request. Use
+    # session state attributes to control and provide conversational context
+    # for your inline agent and to help customize your agent's behavior.
+    # For more information, see [Control session context][2]
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
+    #
+    # @!attribute [rw] files
+    #   Contains information about the files used by code interpreter.
+    #   @return [Array<Types::InputFile>]
+    #
+    # @!attribute [rw] invocation_id
+    #   The identifier of the invocation of an action. This value must match
+    #   the `invocationId` returned in the `InvokeInlineAgent` response for
+    #   the action whose results are provided in the
+    #   `returnControlInvocationResults` field. For more information, see
+    #   [Return control to the agent developer][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html
+    #   @return [String]
+    #
+    # @!attribute [rw] prompt_session_attributes
+    #   Contains attributes that persist across a session and the values of
+    #   those attributes.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] return_control_invocation_results
+    #   Contains information about the results from the action group
+    #   invocation. For more information, see [Return control to the agent
+    #   developer][1].
+    #
+    #   <note markdown="1"> If you include this field in the `sessionState` field, the
+    #   `inputText` field will be ignored.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html
+    #   @return [Array<Types::InvocationResultMember>]
+    #
+    # @!attribute [rw] session_attributes
+    #   Contains attributes that persist across a session and the values of
+    #   those attributes.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineSessionState AWS API Documentation
+    #
+    class InlineSessionState < Struct.new(
+      :files,
+      :invocation_id,
+      :prompt_session_attributes,
+      :return_control_invocation_results,
+      :session_attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains details of the source files.
     #
     # @!attribute [rw] name
@@ -2080,6 +2457,176 @@ module Aws::BedrockAgentRuntime
     class InvokeFlowResponse < Struct.new(
       :response_stream)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] action_groups
+    #   A list of action groups with each action group defining the action
+    #   the inline agent needs to carry out.
+    #   @return [Array<Types::AgentActionGroup>]
+    #
+    # @!attribute [rw] customer_encryption_key_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to
+    #   use to encrypt your inline agent.
+    #   @return [String]
+    #
+    # @!attribute [rw] enable_trace
+    #   Specifies whether to turn on the trace or not to track the agent's
+    #   reasoning process. For more information, see [Using trace][1].
+    #   </p>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] end_session
+    #   Specifies whether to end the session with the inline agent or not.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] foundation_model
+    #   The [model identifier (ID)][1] of the model to use for orchestration
+    #   by the inline agent. For example, `meta.llama3-1-70b-instruct-v1:0`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns
+    #   @return [String]
+    #
+    # @!attribute [rw] guardrail_configuration
+    #   The [guardrails][1] to assign to the inline agent.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html
+    #   @return [Types::GuardrailConfigurationWithArn]
+    #
+    # @!attribute [rw] idle_session_ttl_in_seconds
+    #   The number of seconds for which the inline agent should maintain
+    #   session information. After this time expires, the subsequent
+    #   `InvokeInlineAgent` request begins a new session.
+    #
+    #   A user interaction remains active for the amount of time specified.
+    #   If no conversation occurs during this time, the session expires and
+    #   the data provided before the timeout is deleted.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] inline_session_state
+    #   Parameters that specify the various attributes of a sessions. You
+    #   can include attributes for the session or prompt or, if you
+    #   configured an action group to return control, results from
+    #   invocation of the action group. For more information, see [Control
+    #   session context][1].
+    #
+    #   <note markdown="1"> If you include `returnControlInvocationResults` in the
+    #   `sessionState` field, the `inputText` field will be ignored.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
+    #   @return [Types::InlineSessionState]
+    #
+    # @!attribute [rw] input_text
+    #   The prompt text to send to the agent.
+    #
+    #   <note markdown="1"> If you include `returnControlInvocationResults` in the
+    #   `sessionState` field, the `inputText` field will be ignored.
+    #
+    #    </note>
+    #   @return [String]
+    #
+    # @!attribute [rw] instruction
+    #   The instructions that tell the inline agent what it should do and
+    #   how it should interact with users.
+    #   @return [String]
+    #
+    # @!attribute [rw] knowledge_bases
+    #   Contains information of the knowledge bases to associate with.
+    #   @return [Array<Types::KnowledgeBase>]
+    #
+    # @!attribute [rw] prompt_override_configuration
+    #   Configurations for advanced prompts used to override the default
+    #   prompts to enhance the accuracy of the inline agent.
+    #   @return [Types::PromptOverrideConfiguration]
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the session. Use the same value across
+    #   requests to continue the same conversation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InvokeInlineAgentRequest AWS API Documentation
+    #
+    class InvokeInlineAgentRequest < Struct.new(
+      :action_groups,
+      :customer_encryption_key_arn,
+      :enable_trace,
+      :end_session,
+      :foundation_model,
+      :guardrail_configuration,
+      :idle_session_ttl_in_seconds,
+      :inline_session_state,
+      :input_text,
+      :instruction,
+      :knowledge_bases,
+      :prompt_override_configuration,
+      :session_id)
+      SENSITIVE = [:input_text, :instruction, :prompt_override_configuration]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] completion
+    #   </p>
+    #   @return [Types::InlineAgentResponseStream]
+    #
+    # @!attribute [rw] content_type
+    #   The MIME type of the input data in the request. The default value is
+    #   application/json.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the session with the agent.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InvokeInlineAgentResponse AWS API Documentation
+    #
+    class InvokeInlineAgentResponse < Struct.new(
+      :completion,
+      :content_type,
+      :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details of the knowledge base associated withe inline agent.
+    #
+    # @!attribute [rw] description
+    #   The description of the knowledge base associated with the inline
+    #   agent.
+    #   @return [String]
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The unique identifier for a knowledge base associated with the
+    #   inline agent.
+    #   @return [String]
+    #
+    # @!attribute [rw] retrieval_configuration
+    #   The configurations to apply to the knowledge base during query. For
+    #   more information, see [Query configurations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html
+    #   @return [Types::KnowledgeBaseRetrievalConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/KnowledgeBase AWS API Documentation
+    #
+    class KnowledgeBase < Struct.new(
+      :description,
+      :knowledge_base_id,
+      :retrieval_configuration)
+      SENSITIVE = [:description]
       include Aws::Structure
     end
 
@@ -2813,6 +3360,32 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains details about a parameter in a function for an action group.
+    #
+    # @!attribute [rw] description
+    #   A description of the parameter. Helps the foundation model determine
+    #   how to elicit the parameters from the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] required
+    #   Whether the parameter is required for the agent to complete the
+    #   function for action group invocation.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] type
+    #   The data type of the parameter.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ParameterDetail AWS API Documentation
+    #
+    class ParameterDetail < Struct.new(
+      :description,
+      :required,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains a part of an agent response and citations for it.
     #
     # @!attribute [rw] attribution
@@ -3011,6 +3584,128 @@ module Aws::BedrockAgentRuntime
       class ModelInvocationInput < PreProcessingTrace; end
       class ModelInvocationOutput < PreProcessingTrace; end
       class Unknown < PreProcessingTrace; end
+    end
+
+    # Contains configurations to override a prompt template in one part of
+    # an agent sequence. For more information, see [Advanced prompts][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html
+    #
+    # @!attribute [rw] base_prompt_template
+    #   Defines the prompt template with which to replace the default prompt
+    #   template. You can use placeholder variables in the base prompt
+    #   template to customize the prompt. For more information, see [Prompt
+    #   template placeholder variables][1]. For more information, see
+    #   [Configure the prompt templates][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts-configure.html
+    #   @return [String]
+    #
+    # @!attribute [rw] inference_configuration
+    #   Contains inference parameters to use when the agent invokes a
+    #   foundation model in the part of the agent sequence defined by the
+    #   `promptType`. For more information, see [Inference parameters for
+    #   foundation models][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html
+    #   @return [Types::InferenceConfiguration]
+    #
+    # @!attribute [rw] parser_mode
+    #   Specifies whether to override the default parser Lambda function
+    #   when parsing the raw foundation model output in the part of the
+    #   agent sequence defined by the `promptType`. If you set the field as
+    #   `OVERRIDEN`, the `overrideLambda` field in the
+    #   [PromptOverrideConfiguration][1] must be specified with the ARN of a
+    #   Lambda function.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html
+    #   @return [String]
+    #
+    # @!attribute [rw] prompt_creation_mode
+    #   Specifies whether to override the default prompt template for this
+    #   `promptType`. Set this value to `OVERRIDDEN` to use the prompt that
+    #   you provide in the `basePromptTemplate`. If you leave it as
+    #   `DEFAULT`, the agent uses a default prompt template.
+    #   @return [String]
+    #
+    # @!attribute [rw] prompt_state
+    #   Specifies whether to allow the inline agent to carry out the step
+    #   specified in the `promptType`. If you set this value to `DISABLED`,
+    #   the agent skips that step. The default state for each `promptType`
+    #   is as follows.
+    #
+    #   * `PRE_PROCESSING` – `ENABLED`
+    #
+    #   * `ORCHESTRATION` – `ENABLED`
+    #
+    #   * `KNOWLEDGE_BASE_RESPONSE_GENERATION` – `ENABLED`
+    #
+    #   * `POST_PROCESSING` – `DISABLED`
+    #   @return [String]
+    #
+    # @!attribute [rw] prompt_type
+    #   The step in the agent sequence that this prompt configuration
+    #   applies to.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/PromptConfiguration AWS API Documentation
+    #
+    class PromptConfiguration < Struct.new(
+      :base_prompt_template,
+      :inference_configuration,
+      :parser_mode,
+      :prompt_creation_mode,
+      :prompt_state,
+      :prompt_type)
+      SENSITIVE = [:base_prompt_template]
+      include Aws::Structure
+    end
+
+    # Contains configurations to override prompts in different parts of an
+    # agent sequence. For more information, see [Advanced prompts][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html
+    #
+    # @!attribute [rw] override_lambda
+    #   The ARN of the Lambda function to use when parsing the raw
+    #   foundation model output in parts of the agent sequence. If you
+    #   specify this field, at least one of the `promptConfigurations` must
+    #   contain a `parserMode` value that is set to `OVERRIDDEN`. For more
+    #   information, see [Parser Lambda function in Amazon Bedrock
+    #   Agents][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/lambda-parser.html
+    #   @return [String]
+    #
+    # @!attribute [rw] prompt_configurations
+    #   Contains configurations to override a prompt template in one part of
+    #   an agent sequence. For more information, see [Advanced prompts][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html
+    #   @return [Array<Types::PromptConfiguration>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/PromptOverrideConfiguration AWS API Documentation
+    #
+    class PromptOverrideConfiguration < Struct.new(
+      :override_lambda,
+      :prompt_configurations)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # Contains the template for the prompt that's sent to the model for
@@ -3842,6 +4537,25 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # The identifier information for an Amazon S3 bucket.
+    #
+    # @!attribute [rw] s3_bucket_name
+    #   The name of the S3 bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_object_key
+    #   The S3 object key for the S3 resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/S3Identifier AWS API Documentation
+    #
+    class S3Identifier < Struct.new(
+      :s3_bucket_name,
+      :s3_object_key)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The unique wrapper object of the document from the S3 location.
     #
     # @!attribute [rw] uri
@@ -4279,6 +4993,36 @@ module Aws::BedrockAgentRuntime
           :resource_not_found_exception,
           :service_quota_exceeded_exception,
           :throttling_exception,
+          :validation_exception
+        ]
+      end
+
+    end
+
+    # The response from invoking the agent and associated citations and
+    # trace information.
+    #
+    # EventStream is an Enumerator of Events.
+    #  #event_types #=> Array, returns all modeled event types in the stream
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InlineAgentResponseStream AWS API Documentation
+    #
+    class InlineAgentResponseStream < Enumerator
+
+      def event_types
+        [
+          :access_denied_exception,
+          :bad_gateway_exception,
+          :chunk,
+          :conflict_exception,
+          :dependency_failed_exception,
+          :files,
+          :internal_server_exception,
+          :resource_not_found_exception,
+          :return_control,
+          :service_quota_exceeded_exception,
+          :throttling_exception,
+          :trace,
           :validation_exception
         ]
       end

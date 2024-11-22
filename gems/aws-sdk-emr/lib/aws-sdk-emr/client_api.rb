@@ -277,6 +277,7 @@ module Aws::EMR
     ScalingConstraints = Shapes::StructureShape.new(name: 'ScalingConstraints')
     ScalingRule = Shapes::StructureShape.new(name: 'ScalingRule')
     ScalingRuleList = Shapes::ListShape.new(name: 'ScalingRuleList')
+    ScalingStrategy = Shapes::StringShape.new(name: 'ScalingStrategy')
     ScalingTrigger = Shapes::StructureShape.new(name: 'ScalingTrigger')
     ScriptBootstrapActionConfig = Shapes::StructureShape.new(name: 'ScriptBootstrapActionConfig')
     SecurityConfigurationList = Shapes::ListShape.new(name: 'SecurityConfigurationList')
@@ -339,6 +340,7 @@ module Aws::EMR
     UpdateStudioSessionMappingInput = Shapes::StructureShape.new(name: 'UpdateStudioSessionMappingInput')
     UriString = Shapes::StringShape.new(name: 'UriString')
     UsernamePassword = Shapes::StructureShape.new(name: 'UsernamePassword')
+    UtilizationPerformanceIndexInteger = Shapes::IntegerShape.new(name: 'UtilizationPerformanceIndexInteger')
     VolumeSpecification = Shapes::StructureShape.new(name: 'VolumeSpecification')
     WholeNumber = Shapes::IntegerShape.new(name: 'WholeNumber')
     XmlString = Shapes::StringShape.new(name: 'XmlString')
@@ -1155,6 +1157,8 @@ module Aws::EMR
     ListSupportedInstanceTypesOutput.struct_class = Types::ListSupportedInstanceTypesOutput
 
     ManagedScalingPolicy.add_member(:compute_limits, Shapes::ShapeRef.new(shape: ComputeLimits, location_name: "ComputeLimits"))
+    ManagedScalingPolicy.add_member(:utilization_performance_index, Shapes::ShapeRef.new(shape: UtilizationPerformanceIndexInteger, location_name: "UtilizationPerformanceIndex"))
+    ManagedScalingPolicy.add_member(:scaling_strategy, Shapes::ShapeRef.new(shape: ScalingStrategy, location_name: "ScalingStrategy"))
     ManagedScalingPolicy.struct_class = Types::ManagedScalingPolicy
 
     MetricDimension.add_member(:key, Shapes::ShapeRef.new(shape: String, location_name: "Key"))

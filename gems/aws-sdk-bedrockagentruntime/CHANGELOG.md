@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.33.0 (2024-11-22)
+------------------
+
+* Feature - InvokeInlineAgent API release to help invoke runtime agents without any dependency on preconfigured agents.
+
 1.32.0 (2024-11-20)
 ------------------
 

@@ -288,6 +288,7 @@ module Aws::CostExplorer
     RightsizingRecommendationSummary = Shapes::StructureShape.new(name: 'RightsizingRecommendationSummary')
     RightsizingType = Shapes::StringShape.new(name: 'RightsizingType')
     RootCause = Shapes::StructureShape.new(name: 'RootCause')
+    RootCauseImpact = Shapes::StructureShape.new(name: 'RootCauseImpact')
     RootCauses = Shapes::ListShape.new(name: 'RootCauses')
     SavingsPlanArn = Shapes::StringShape.new(name: 'SavingsPlanArn')
     SavingsPlans = Shapes::StructureShape.new(name: 'SavingsPlans')
@@ -1360,9 +1361,13 @@ module Aws::CostExplorer
     RootCause.add_member(:service, Shapes::ShapeRef.new(shape: GenericString, location_name: "Service"))
     RootCause.add_member(:region, Shapes::ShapeRef.new(shape: GenericString, location_name: "Region"))
     RootCause.add_member(:linked_account, Shapes::ShapeRef.new(shape: GenericString, location_name: "LinkedAccount"))
-    RootCause.add_member(:usage_type, Shapes::ShapeRef.new(shape: GenericString, location_name: "UsageType"))
     RootCause.add_member(:linked_account_name, Shapes::ShapeRef.new(shape: GenericString, location_name: "LinkedAccountName"))
+    RootCause.add_member(:usage_type, Shapes::ShapeRef.new(shape: GenericString, location_name: "UsageType"))
+    RootCause.add_member(:impact, Shapes::ShapeRef.new(shape: RootCauseImpact, location_name: "Impact"))
     RootCause.struct_class = Types::RootCause
+
+    RootCauseImpact.add_member(:contribution, Shapes::ShapeRef.new(shape: GenericDouble, required: true, location_name: "Contribution"))
+    RootCauseImpact.struct_class = Types::RootCauseImpact
 
     RootCauses.member = Shapes::ShapeRef.new(shape: RootCause)
 

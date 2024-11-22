@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:neptunegraph)
 # structure.
 #
 #     neptune_graph = Aws::NeptuneGraph::Client.new
-#     resp = neptune_graph.cancel_import_task(params)
+#     resp = neptune_graph.cancel_export_task(params)
 #
 # See {Client} for more information.
 #
@@ -55,7 +55,7 @@ module Aws::NeptuneGraph
   autoload :EndpointProvider, 'aws-sdk-neptunegraph/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-neptunegraph/endpoints'
 
-  GEM_VERSION = '1.24.0'
+  GEM_VERSION = '1.25.0'
 
 end
 

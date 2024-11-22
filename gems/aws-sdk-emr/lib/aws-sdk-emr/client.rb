@@ -1803,6 +1803,8 @@ module Aws::EMR
     #   resp.managed_scaling_policy.compute_limits.maximum_capacity_units #=> Integer
     #   resp.managed_scaling_policy.compute_limits.maximum_on_demand_capacity_units #=> Integer
     #   resp.managed_scaling_policy.compute_limits.maximum_core_capacity_units #=> Integer
+    #   resp.managed_scaling_policy.utilization_performance_index #=> Integer
+    #   resp.managed_scaling_policy.scaling_strategy #=> String, one of "DEFAULT", "ADVANCED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/GetManagedScalingPolicy AWS API Documentation
     #
@@ -3083,6 +3085,8 @@ module Aws::EMR
     #         maximum_on_demand_capacity_units: 1,
     #         maximum_core_capacity_units: 1,
     #       },
+    #       utilization_performance_index: 1,
+    #       scaling_strategy: "DEFAULT", # accepts DEFAULT, ADVANCED
     #     },
     #   })
     #
@@ -3763,6 +3767,8 @@ module Aws::EMR
     #         maximum_on_demand_capacity_units: 1,
     #         maximum_core_capacity_units: 1,
     #       },
+    #       utilization_performance_index: 1,
+    #       scaling_strategy: "DEFAULT", # accepts DEFAULT, ADVANCED
     #     },
     #     placement_group_configs: [
     #       {
@@ -4276,7 +4282,7 @@ module Aws::EMR
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-emr'
-      context[:gem_version] = '1.102.0'
+      context[:gem_version] = '1.103.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

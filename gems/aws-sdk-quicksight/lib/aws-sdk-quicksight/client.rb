@@ -3813,6 +3813,9 @@ module Aws::QuickSight
     #   Contains a map of the key-value pairs for the resource tag or tags
     #   that are assigned to the dataset.
     #
+    # @option params [Array<String>] :folder_arns
+    #   The Folder ARN of the folder that you want the topic to reside in.
+    #
     # @return [Types::CreateTopicResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateTopicResponse#arn #arn} => String
@@ -4055,6 +4058,7 @@ module Aws::QuickSight
     #         value: "TagValue", # required
     #       },
     #     ],
+    #     folder_arns: ["Arn"],
     #   })
     #
     # @example Response structure
@@ -5703,6 +5707,39 @@ module Aws::QuickSight
     #   resp.analysis.sheets #=> Array
     #   resp.analysis.sheets[0].sheet_id #=> String
     #   resp.analysis.sheets[0].name #=> String
+    #   resp.analysis.sheets[0].images #=> Array
+    #   resp.analysis.sheets[0].images[0].sheet_image_id #=> String
+    #   resp.analysis.sheets[0].images[0].source.sheet_image_static_file_source.static_file_id #=> String
+    #   resp.analysis.sheets[0].images[0].scaling.scaling_type #=> String, one of "SCALE_TO_WIDTH", "SCALE_TO_HEIGHT", "SCALE_TO_CONTAINER", "SCALE_NONE"
+    #   resp.analysis.sheets[0].images[0].tooltip.tooltip_text.plain_text #=> String
+    #   resp.analysis.sheets[0].images[0].tooltip.visibility #=> String, one of "HIDDEN", "VISIBLE"
+    #   resp.analysis.sheets[0].images[0].image_content_alt_text #=> String
+    #   resp.analysis.sheets[0].images[0].interactions.image_menu_option.availability_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.analysis.sheets[0].images[0].actions #=> Array
+    #   resp.analysis.sheets[0].images[0].actions[0].custom_action_id #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].name #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.analysis.sheets[0].images[0].actions[0].trigger #=> String, one of "CLICK", "MENU"
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations #=> Array
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].navigation_operation.local_navigation_configuration.target_sheet_id #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].url_operation.url_template #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].url_operation.url_target #=> String, one of "NEW_TAB", "NEW_WINDOW", "SAME_TAB"
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations #=> Array
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].destination_parameter_name #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.include_null_value #=> Boolean
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.string_values #=> Array
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.string_values[0] #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.integer_values #=> Array
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.integer_values[0] #=> Integer
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.decimal_values #=> Array
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.decimal_values[0] #=> Float
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.date_time_values #=> Array
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.date_time_values[0] #=> Time
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.select_all_value_options #=> String, one of "ALL_VALUES"
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_parameter_name #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_field #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_column.data_set_identifier #=> String
+    #   resp.analysis.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_column.column_name #=> String
     #   resp.status #=> Integer
     #   resp.request_id #=> String
     #
@@ -6535,6 +6572,39 @@ module Aws::QuickSight
     #   resp.dashboard.version.sheets #=> Array
     #   resp.dashboard.version.sheets[0].sheet_id #=> String
     #   resp.dashboard.version.sheets[0].name #=> String
+    #   resp.dashboard.version.sheets[0].images #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].sheet_image_id #=> String
+    #   resp.dashboard.version.sheets[0].images[0].source.sheet_image_static_file_source.static_file_id #=> String
+    #   resp.dashboard.version.sheets[0].images[0].scaling.scaling_type #=> String, one of "SCALE_TO_WIDTH", "SCALE_TO_HEIGHT", "SCALE_TO_CONTAINER", "SCALE_NONE"
+    #   resp.dashboard.version.sheets[0].images[0].tooltip.tooltip_text.plain_text #=> String
+    #   resp.dashboard.version.sheets[0].images[0].tooltip.visibility #=> String, one of "HIDDEN", "VISIBLE"
+    #   resp.dashboard.version.sheets[0].images[0].image_content_alt_text #=> String
+    #   resp.dashboard.version.sheets[0].images[0].interactions.image_menu_option.availability_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.dashboard.version.sheets[0].images[0].actions #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].custom_action_id #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].name #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].trigger #=> String, one of "CLICK", "MENU"
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].navigation_operation.local_navigation_configuration.target_sheet_id #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].url_operation.url_template #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].url_operation.url_target #=> String, one of "NEW_TAB", "NEW_WINDOW", "SAME_TAB"
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].destination_parameter_name #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.include_null_value #=> Boolean
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.string_values #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.string_values[0] #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.integer_values #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.integer_values[0] #=> Integer
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.decimal_values #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.decimal_values[0] #=> Float
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.date_time_values #=> Array
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.date_time_values[0] #=> Time
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.select_all_value_options #=> String, one of "ALL_VALUES"
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_parameter_name #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_field #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_column.data_set_identifier #=> String
+    #   resp.dashboard.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_column.column_name #=> String
     #   resp.dashboard.created_time #=> Time
     #   resp.dashboard.last_published_time #=> Time
     #   resp.dashboard.last_updated_time #=> Time
@@ -6822,6 +6892,39 @@ module Aws::QuickSight
     # @param [Hash] params ({})
     def describe_dashboard_snapshot_job_result(params = {}, options = {})
       req = build_request(:describe_dashboard_snapshot_job_result, params)
+      req.send_request(options)
+    end
+
+    # Describes an existing dashboard QA configuration.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services account that contains the dashboard
+    #   QA configuration that you want described.
+    #
+    # @return [Types::DescribeDashboardsQAConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeDashboardsQAConfigurationResponse#dashboards_qa_status #dashboards_qa_status} => String
+    #   * {Types::DescribeDashboardsQAConfigurationResponse#request_id #request_id} => String
+    #   * {Types::DescribeDashboardsQAConfigurationResponse#status #status} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_dashboards_qa_configuration({
+    #     aws_account_id: "AwsAccountId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.dashboards_qa_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDashboardsQAConfiguration AWS API Documentation
+    #
+    # @overload describe_dashboards_qa_configuration(params = {})
+    # @param [Hash] params ({})
+    def describe_dashboards_qa_configuration(params = {}, options = {})
+      req = build_request(:describe_dashboards_qa_configuration, params)
       req.send_request(options)
     end
 
@@ -7813,6 +7916,8 @@ module Aws::QuickSight
     #   resp.namespace.identity_store #=> String, one of "QUICKSIGHT"
     #   resp.namespace.namespace_error.type #=> String, one of "PERMISSION_DENIED", "INTERNAL_SERVICE_ERROR"
     #   resp.namespace.namespace_error.message #=> String
+    #   resp.namespace.iam_identity_center_application_arn #=> String
+    #   resp.namespace.iam_identity_center_instance_arn #=> String
     #   resp.request_id #=> String
     #   resp.status #=> Integer
     #
@@ -8015,6 +8120,39 @@ module Aws::QuickSight
     #   resp.template.version.sheets #=> Array
     #   resp.template.version.sheets[0].sheet_id #=> String
     #   resp.template.version.sheets[0].name #=> String
+    #   resp.template.version.sheets[0].images #=> Array
+    #   resp.template.version.sheets[0].images[0].sheet_image_id #=> String
+    #   resp.template.version.sheets[0].images[0].source.sheet_image_static_file_source.static_file_id #=> String
+    #   resp.template.version.sheets[0].images[0].scaling.scaling_type #=> String, one of "SCALE_TO_WIDTH", "SCALE_TO_HEIGHT", "SCALE_TO_CONTAINER", "SCALE_NONE"
+    #   resp.template.version.sheets[0].images[0].tooltip.tooltip_text.plain_text #=> String
+    #   resp.template.version.sheets[0].images[0].tooltip.visibility #=> String, one of "HIDDEN", "VISIBLE"
+    #   resp.template.version.sheets[0].images[0].image_content_alt_text #=> String
+    #   resp.template.version.sheets[0].images[0].interactions.image_menu_option.availability_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.template.version.sheets[0].images[0].actions #=> Array
+    #   resp.template.version.sheets[0].images[0].actions[0].custom_action_id #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].name #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.template.version.sheets[0].images[0].actions[0].trigger #=> String, one of "CLICK", "MENU"
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations #=> Array
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].navigation_operation.local_navigation_configuration.target_sheet_id #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].url_operation.url_template #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].url_operation.url_target #=> String, one of "NEW_TAB", "NEW_WINDOW", "SAME_TAB"
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations #=> Array
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].destination_parameter_name #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.include_null_value #=> Boolean
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.string_values #=> Array
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.string_values[0] #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.integer_values #=> Array
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.integer_values[0] #=> Integer
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.decimal_values #=> Array
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.decimal_values[0] #=> Float
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.date_time_values #=> Array
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.custom_values_configuration.custom_values.date_time_values[0] #=> Time
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.select_all_value_options #=> String, one of "ALL_VALUES"
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_parameter_name #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_field #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_column.data_set_identifier #=> String
+    #   resp.template.version.sheets[0].images[0].actions[0].action_operations[0].set_parameters_operation.parameter_value_configurations[0].value.source_column.column_name #=> String
     #   resp.template.template_id #=> String
     #   resp.template.last_updated_time #=> Time
     #   resp.template.created_time #=> Time
@@ -10534,6 +10672,8 @@ module Aws::QuickSight
     #   resp.namespaces[0].identity_store #=> String, one of "QUICKSIGHT"
     #   resp.namespaces[0].namespace_error.type #=> String, one of "PERMISSION_DENIED", "INTERNAL_SERVICE_ERROR"
     #   resp.namespaces[0].namespace_error.message #=> String
+    #   resp.namespaces[0].iam_identity_center_application_arn #=> String
+    #   resp.namespaces[0].iam_identity_center_instance_arn #=> String
     #   resp.next_token #=> String
     #   resp.request_id #=> String
     #   resp.status #=> Integer
@@ -12473,6 +12613,66 @@ module Aws::QuickSight
       req.send_request(options)
     end
 
+    # Searches for any Q topic that exists in an Amazon QuickSight account.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services account that contains the topic that
+    #   you want to find.
+    #
+    # @option params [required, Array<Types::TopicSearchFilter>] :filters
+    #   The filters that you want to use to search for the topic.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results, or null if there are no more
+    #   results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to be returned per request.
+    #
+    # @return [Types::SearchTopicsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::SearchTopicsResponse#topic_summary_list #topic_summary_list} => Array&lt;Types::TopicSummary&gt;
+    #   * {Types::SearchTopicsResponse#next_token #next_token} => String
+    #   * {Types::SearchTopicsResponse#status #status} => Integer
+    #   * {Types::SearchTopicsResponse#request_id #request_id} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.search_topics({
+    #     aws_account_id: "AwsAccountId", # required
+    #     filters: [ # required
+    #       {
+    #         operator: "StringEquals", # required, accepts StringEquals, StringLike
+    #         name: "QUICKSIGHT_USER", # required, accepts QUICKSIGHT_USER, QUICKSIGHT_VIEWER_OR_OWNER, DIRECT_QUICKSIGHT_VIEWER_OR_OWNER, QUICKSIGHT_OWNER, DIRECT_QUICKSIGHT_OWNER, DIRECT_QUICKSIGHT_SOLE_OWNER, TOPIC_NAME
+    #         value: "String", # required
+    #       },
+    #     ],
+    #     next_token: "String",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.topic_summary_list #=> Array
+    #   resp.topic_summary_list[0].arn #=> String
+    #   resp.topic_summary_list[0].topic_id #=> String
+    #   resp.topic_summary_list[0].name #=> String
+    #   resp.topic_summary_list[0].user_experience_version #=> String, one of "LEGACY", "NEW_READER_EXPERIENCE"
+    #   resp.next_token #=> String
+    #   resp.status #=> Integer
+    #   resp.request_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SearchTopics AWS API Documentation
+    #
+    # @overload search_topics(params = {})
+    # @param [Hash] params ({})
+    def search_topics(params = {}, options = {})
+      req = build_request(:search_topics, params)
+      req.send_request(options)
+    end
+
     # Starts an Asset Bundle export job.
     #
     # An Asset Bundle export job exports specified Amazon QuickSight assets.
@@ -14298,6 +14498,43 @@ module Aws::QuickSight
     # @param [Hash] params ({})
     def update_dashboard_published_version(params = {}, options = {})
       req = build_request(:update_dashboard_published_version, params)
+      req.send_request(options)
+    end
+
+    # Updates a Dashboard QA configuration.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services account that contains the dashboard
+    #   QA configuration that you want to update.
+    #
+    # @option params [required, String] :dashboards_qa_status
+    #   The status of dashboards QA configuration that you want to update.
+    #
+    # @return [Types::UpdateDashboardsQAConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateDashboardsQAConfigurationResponse#dashboards_qa_status #dashboards_qa_status} => String
+    #   * {Types::UpdateDashboardsQAConfigurationResponse#request_id #request_id} => String
+    #   * {Types::UpdateDashboardsQAConfigurationResponse#status #status} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_dashboards_qa_configuration({
+    #     aws_account_id: "AwsAccountId", # required
+    #     dashboards_qa_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.dashboards_qa_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDashboardsQAConfiguration AWS API Documentation
+    #
+    # @overload update_dashboards_qa_configuration(params = {})
+    # @param [Hash] params ({})
+    def update_dashboards_qa_configuration(params = {}, options = {})
+      req = build_request(:update_dashboards_qa_configuration, params)
       req.send_request(options)
     end
 
@@ -16826,7 +17063,7 @@ module Aws::QuickSight
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-quicksight'
-      context[:gem_version] = '1.137.0'
+      context[:gem_version] = '1.138.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

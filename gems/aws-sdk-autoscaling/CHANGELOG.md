@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.128.0 (2024-11-22)
+------------------
+
+* Feature - Now, Amazon EC2 Auto Scaling customers can enable target tracking policies to take quicker scaling decisions, enhancing their application performance and EC2 utilization. To get started, specify target tracking to monitor a metric that is available on Amazon CloudWatch at seconds-level interval.
+
 1.127.0 (2024-11-20)
 ------------------
 

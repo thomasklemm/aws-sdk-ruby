@@ -280,6 +280,7 @@ module Aws
             'AutoScalingPlans' => 'autoscaling-plans',
             'B2bi' => 'b2bi',
             'BCMDataExports' => 'bcm-data-exports',
+            'BCMPricingCalculator' => 'bcm-pricing-calculator',
             'Backup' => 'backup',
             'BackupGateway' => 'backup-gateway',
             'Batch' => 'batch',

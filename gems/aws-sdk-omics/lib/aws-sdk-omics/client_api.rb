@@ -20,6 +20,7 @@ module Aws::Omics
     AcceptShareRequest = Shapes::StructureShape.new(name: 'AcceptShareRequest')
     AcceptShareResponse = Shapes::StructureShape.new(name: 'AcceptShareResponse')
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
+    AccessLogLocation = Shapes::StringShape.new(name: 'AccessLogLocation')
     ActivateReadSetFilter = Shapes::StructureShape.new(name: 'ActivateReadSetFilter')
     ActivateReadSetJobItem = Shapes::StructureShape.new(name: 'ActivateReadSetJobItem')
     ActivateReadSetJobList = Shapes::ListShape.new(name: 'ActivateReadSetJobList')
@@ -102,6 +103,8 @@ module Aws::Omics
     DeleteRunCacheRequest = Shapes::StructureShape.new(name: 'DeleteRunCacheRequest')
     DeleteRunGroupRequest = Shapes::StructureShape.new(name: 'DeleteRunGroupRequest')
     DeleteRunRequest = Shapes::StructureShape.new(name: 'DeleteRunRequest')
+    DeleteS3AccessPolicyRequest = Shapes::StructureShape.new(name: 'DeleteS3AccessPolicyRequest')
+    DeleteS3AccessPolicyResponse = Shapes::StructureShape.new(name: 'DeleteS3AccessPolicyResponse')
     DeleteSequenceStoreRequest = Shapes::StructureShape.new(name: 'DeleteSequenceStoreRequest')
     DeleteSequenceStoreResponse = Shapes::StructureShape.new(name: 'DeleteSequenceStoreResponse')
     DeleteShareRequest = Shapes::StructureShape.new(name: 'DeleteShareRequest')
@@ -180,6 +183,8 @@ module Aws::Omics
     GetRunTaskResponseCpusInteger = Shapes::IntegerShape.new(name: 'GetRunTaskResponseCpusInteger')
     GetRunTaskResponseGpusInteger = Shapes::IntegerShape.new(name: 'GetRunTaskResponseGpusInteger')
     GetRunTaskResponseMemoryInteger = Shapes::IntegerShape.new(name: 'GetRunTaskResponseMemoryInteger')
+    GetS3AccessPolicyRequest = Shapes::StructureShape.new(name: 'GetS3AccessPolicyRequest')
+    GetS3AccessPolicyResponse = Shapes::StructureShape.new(name: 'GetS3AccessPolicyResponse')
     GetSequenceStoreRequest = Shapes::StructureShape.new(name: 'GetSequenceStoreRequest')
     GetSequenceStoreResponse = Shapes::StructureShape.new(name: 'GetSequenceStoreResponse')
     GetShareRequest = Shapes::StructureShape.new(name: 'GetShareRequest')
@@ -296,6 +301,9 @@ module Aws::Omics
     NotSupportedOperationException = Shapes::StructureShape.new(name: 'NotSupportedOperationException')
     NumericIdInArn = Shapes::StringShape.new(name: 'NumericIdInArn')
     PrimitiveBoolean = Shapes::BooleanShape.new(name: 'PrimitiveBoolean')
+    PropagatedSetLevelTags = Shapes::ListShape.new(name: 'PropagatedSetLevelTags')
+    PutS3AccessPolicyRequest = Shapes::StructureShape.new(name: 'PutS3AccessPolicyRequest')
+    PutS3AccessPolicyResponse = Shapes::StructureShape.new(name: 'PutS3AccessPolicyResponse')
     Quote = Shapes::StringShape.new(name: 'Quote')
     QuoteAll = Shapes::BooleanShape.new(name: 'QuoteAll')
     Range = Shapes::StringShape.new(name: 'Range')
@@ -406,7 +414,9 @@ module Aws::Omics
     RunStatusMessage = Shapes::StringShape.new(name: 'RunStatusMessage')
     RunTimestamp = Shapes::TimestampShape.new(name: 'RunTimestamp', timestampFormat: "iso8601")
     RunUuid = Shapes::StringShape.new(name: 'RunUuid')
+    S3AccessConfig = Shapes::StructureShape.new(name: 'S3AccessConfig')
     S3AccessPointArn = Shapes::StringShape.new(name: 'S3AccessPointArn')
+    S3AccessPolicy = Shapes::StringShape.new(name: 'S3AccessPolicy')
     S3Destination = Shapes::StringShape.new(name: 'S3Destination')
     S3Uri = Shapes::StringShape.new(name: 'S3Uri')
     S3UriForBucketOrObject = Shapes::StringShape.new(name: 'S3UriForBucketOrObject')
@@ -424,6 +434,8 @@ module Aws::Omics
     SequenceStoreId = Shapes::StringShape.new(name: 'SequenceStoreId')
     SequenceStoreName = Shapes::StringShape.new(name: 'SequenceStoreName')
     SequenceStoreS3Access = Shapes::StructureShape.new(name: 'SequenceStoreS3Access')
+    SequenceStoreStatus = Shapes::StringShape.new(name: 'SequenceStoreStatus')
+    SequenceStoreStatusMessage = Shapes::StringShape.new(name: 'SequenceStoreStatusMessage')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
     ShareDetails = Shapes::StructureShape.new(name: 'ShareDetails')
     ShareDetailsList = Shapes::ListShape.new(name: 'ShareDetailsList')
@@ -460,9 +472,11 @@ module Aws::Omics
     StatusMessage = Shapes::StringShape.new(name: 'StatusMessage')
     StorageType = Shapes::StringShape.new(name: 'StorageType')
     StoreFormat = Shapes::StringShape.new(name: 'StoreFormat')
+    StoreId = Shapes::StringShape.new(name: 'StoreId')
     StoreName = Shapes::StringShape.new(name: 'StoreName')
     StoreOptions = Shapes::UnionShape.new(name: 'StoreOptions')
     StoreStatus = Shapes::StringShape.new(name: 'StoreStatus')
+    StoreType = Shapes::StringShape.new(name: 'StoreType')
     String = Shapes::StringShape.new(name: 'String')
     SubjectId = Shapes::StringShape.new(name: 'SubjectId')
     SyntheticTimestamp_date_time = Shapes::TimestampShape.new(name: 'SyntheticTimestamp_date_time', timestampFormat: "iso8601")
@@ -507,6 +521,8 @@ module Aws::Omics
     UpdateRunGroupRequestMaxDurationInteger = Shapes::IntegerShape.new(name: 'UpdateRunGroupRequestMaxDurationInteger')
     UpdateRunGroupRequestMaxGpusInteger = Shapes::IntegerShape.new(name: 'UpdateRunGroupRequestMaxGpusInteger')
     UpdateRunGroupRequestMaxRunsInteger = Shapes::IntegerShape.new(name: 'UpdateRunGroupRequestMaxRunsInteger')
+    UpdateSequenceStoreRequest = Shapes::StructureShape.new(name: 'UpdateSequenceStoreRequest')
+    UpdateSequenceStoreResponse = Shapes::StructureShape.new(name: 'UpdateSequenceStoreResponse')
     UpdateTime = Shapes::TimestampShape.new(name: 'UpdateTime', timestampFormat: "iso8601")
     UpdateVariantStoreRequest = Shapes::StructureShape.new(name: 'UpdateVariantStoreRequest')
     UpdateVariantStoreResponse = Shapes::StructureShape.new(name: 'UpdateVariantStoreResponse')
@@ -804,9 +820,11 @@ module Aws::Omics
     CreateSequenceStoreRequest.add_member(:description, Shapes::ShapeRef.new(shape: SequenceStoreDescription, location_name: "description"))
     CreateSequenceStoreRequest.add_member(:sse_config, Shapes::ShapeRef.new(shape: SseConfig, location_name: "sseConfig"))
     CreateSequenceStoreRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
-    CreateSequenceStoreRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken"))
+    CreateSequenceStoreRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateSequenceStoreRequest.add_member(:fallback_location, Shapes::ShapeRef.new(shape: S3Destination, location_name: "fallbackLocation"))
     CreateSequenceStoreRequest.add_member(:e_tag_algorithm_family, Shapes::ShapeRef.new(shape: ETagAlgorithmFamily, location_name: "eTagAlgorithmFamily"))
+    CreateSequenceStoreRequest.add_member(:propagated_set_level_tags, Shapes::ShapeRef.new(shape: PropagatedSetLevelTags, location_name: "propagatedSetLevelTags"))
+    CreateSequenceStoreRequest.add_member(:s3_access_config, Shapes::ShapeRef.new(shape: S3AccessConfig, location_name: "s3AccessConfig"))
     CreateSequenceStoreRequest.struct_class = Types::CreateSequenceStoreRequest
 
     CreateSequenceStoreResponse.add_member(:id, Shapes::ShapeRef.new(shape: SequenceStoreId, required: true, location_name: "id"))
@@ -817,6 +835,10 @@ module Aws::Omics
     CreateSequenceStoreResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "creationTime"))
     CreateSequenceStoreResponse.add_member(:fallback_location, Shapes::ShapeRef.new(shape: S3Destination, location_name: "fallbackLocation"))
     CreateSequenceStoreResponse.add_member(:e_tag_algorithm_family, Shapes::ShapeRef.new(shape: ETagAlgorithmFamily, location_name: "eTagAlgorithmFamily"))
+    CreateSequenceStoreResponse.add_member(:status, Shapes::ShapeRef.new(shape: SequenceStoreStatus, location_name: "status"))
+    CreateSequenceStoreResponse.add_member(:status_message, Shapes::ShapeRef.new(shape: SequenceStoreStatusMessage, location_name: "statusMessage"))
+    CreateSequenceStoreResponse.add_member(:propagated_set_level_tags, Shapes::ShapeRef.new(shape: PropagatedSetLevelTags, location_name: "propagatedSetLevelTags"))
+    CreateSequenceStoreResponse.add_member(:s3_access, Shapes::ShapeRef.new(shape: SequenceStoreS3Access, location_name: "s3Access"))
     CreateSequenceStoreResponse.struct_class = Types::CreateSequenceStoreResponse
 
     CreateShareRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceArn"))
@@ -896,6 +918,11 @@ module Aws::Omics
 
     DeleteRunRequest.add_member(:id, Shapes::ShapeRef.new(shape: RunId, required: true, location: "uri", location_name: "id"))
     DeleteRunRequest.struct_class = Types::DeleteRunRequest
+
+    DeleteS3AccessPolicyRequest.add_member(:s3_access_point_arn, Shapes::ShapeRef.new(shape: S3AccessPointArn, required: true, location: "uri", location_name: "s3AccessPointArn"))
+    DeleteS3AccessPolicyRequest.struct_class = Types::DeleteS3AccessPolicyRequest
+
+    DeleteS3AccessPolicyResponse.struct_class = Types::DeleteS3AccessPolicyResponse
 
     DeleteSequenceStoreRequest.add_member(:id, Shapes::ShapeRef.new(shape: SequenceStoreId, required: true, location: "uri", location_name: "id"))
     DeleteSequenceStoreRequest.struct_class = Types::DeleteSequenceStoreRequest
@@ -1247,6 +1274,16 @@ module Aws::Omics
     GetRunTaskResponse.add_member(:failure_reason, Shapes::ShapeRef.new(shape: TaskFailureReason, location_name: "failureReason"))
     GetRunTaskResponse.struct_class = Types::GetRunTaskResponse
 
+    GetS3AccessPolicyRequest.add_member(:s3_access_point_arn, Shapes::ShapeRef.new(shape: S3AccessPointArn, required: true, location: "uri", location_name: "s3AccessPointArn"))
+    GetS3AccessPolicyRequest.struct_class = Types::GetS3AccessPolicyRequest
+
+    GetS3AccessPolicyResponse.add_member(:s3_access_point_arn, Shapes::ShapeRef.new(shape: S3AccessPointArn, location_name: "s3AccessPointArn"))
+    GetS3AccessPolicyResponse.add_member(:store_id, Shapes::ShapeRef.new(shape: StoreId, location_name: "storeId"))
+    GetS3AccessPolicyResponse.add_member(:store_type, Shapes::ShapeRef.new(shape: StoreType, location_name: "storeType"))
+    GetS3AccessPolicyResponse.add_member(:update_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "updateTime"))
+    GetS3AccessPolicyResponse.add_member(:s3_access_policy, Shapes::ShapeRef.new(shape: S3AccessPolicy, required: true, location_name: "s3AccessPolicy", metadata: {"jsonvalue"=>true}))
+    GetS3AccessPolicyResponse.struct_class = Types::GetS3AccessPolicyResponse
+
     GetSequenceStoreRequest.add_member(:id, Shapes::ShapeRef.new(shape: SequenceStoreId, required: true, location: "uri", location_name: "id"))
     GetSequenceStoreRequest.struct_class = Types::GetSequenceStoreRequest
 
@@ -1259,6 +1296,10 @@ module Aws::Omics
     GetSequenceStoreResponse.add_member(:fallback_location, Shapes::ShapeRef.new(shape: S3Destination, location_name: "fallbackLocation"))
     GetSequenceStoreResponse.add_member(:s3_access, Shapes::ShapeRef.new(shape: SequenceStoreS3Access, location_name: "s3Access"))
     GetSequenceStoreResponse.add_member(:e_tag_algorithm_family, Shapes::ShapeRef.new(shape: ETagAlgorithmFamily, location_name: "eTagAlgorithmFamily"))
+    GetSequenceStoreResponse.add_member(:status, Shapes::ShapeRef.new(shape: SequenceStoreStatus, location_name: "status"))
+    GetSequenceStoreResponse.add_member(:status_message, Shapes::ShapeRef.new(shape: SequenceStoreStatusMessage, location_name: "statusMessage"))
+    GetSequenceStoreResponse.add_member(:propagated_set_level_tags, Shapes::ShapeRef.new(shape: PropagatedSetLevelTags, location_name: "propagatedSetLevelTags"))
+    GetSequenceStoreResponse.add_member(:update_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "updateTime"))
     GetSequenceStoreResponse.struct_class = Types::GetSequenceStoreResponse
 
     GetShareRequest.add_member(:share_id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "shareId"))
@@ -1641,6 +1682,17 @@ module Aws::Omics
     NotSupportedOperationException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     NotSupportedOperationException.struct_class = Types::NotSupportedOperationException
 
+    PropagatedSetLevelTags.member = Shapes::ShapeRef.new(shape: TagKey)
+
+    PutS3AccessPolicyRequest.add_member(:s3_access_point_arn, Shapes::ShapeRef.new(shape: S3AccessPointArn, required: true, location: "uri", location_name: "s3AccessPointArn"))
+    PutS3AccessPolicyRequest.add_member(:s3_access_policy, Shapes::ShapeRef.new(shape: S3AccessPolicy, required: true, location_name: "s3AccessPolicy", metadata: {"jsonvalue"=>true}))
+    PutS3AccessPolicyRequest.struct_class = Types::PutS3AccessPolicyRequest
+
+    PutS3AccessPolicyResponse.add_member(:s3_access_point_arn, Shapes::ShapeRef.new(shape: S3AccessPointArn, location_name: "s3AccessPointArn"))
+    PutS3AccessPolicyResponse.add_member(:store_id, Shapes::ShapeRef.new(shape: StoreId, location_name: "storeId"))
+    PutS3AccessPolicyResponse.add_member(:store_type, Shapes::ShapeRef.new(shape: StoreType, location_name: "storeType"))
+    PutS3AccessPolicyResponse.struct_class = Types::PutS3AccessPolicyResponse
+
     RangeNotSatisfiableException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     RangeNotSatisfiableException.struct_class = Types::RangeNotSatisfiableException
 
@@ -1813,6 +1865,9 @@ module Aws::Omics
     RunResourceDigests.key = Shapes::ShapeRef.new(shape: RunResourceDigestKey)
     RunResourceDigests.value = Shapes::ShapeRef.new(shape: RunResourceDigest)
 
+    S3AccessConfig.add_member(:access_log_location, Shapes::ShapeRef.new(shape: AccessLogLocation, location_name: "accessLogLocation"))
+    S3AccessConfig.struct_class = Types::S3AccessConfig
+
     SchemaItem.key = Shapes::ShapeRef.new(shape: SchemaItemKeyString)
     SchemaItem.value = Shapes::ShapeRef.new(shape: SchemaValueType)
 
@@ -1830,6 +1885,9 @@ module Aws::Omics
     SequenceStoreDetail.add_member(:creation_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "creationTime"))
     SequenceStoreDetail.add_member(:fallback_location, Shapes::ShapeRef.new(shape: S3Destination, location_name: "fallbackLocation"))
     SequenceStoreDetail.add_member(:e_tag_algorithm_family, Shapes::ShapeRef.new(shape: ETagAlgorithmFamily, location_name: "eTagAlgorithmFamily"))
+    SequenceStoreDetail.add_member(:status, Shapes::ShapeRef.new(shape: SequenceStoreStatus, location_name: "status"))
+    SequenceStoreDetail.add_member(:status_message, Shapes::ShapeRef.new(shape: SequenceStoreStatusMessage, location_name: "statusMessage"))
+    SequenceStoreDetail.add_member(:update_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "updateTime"))
     SequenceStoreDetail.struct_class = Types::SequenceStoreDetail
 
     SequenceStoreDetailList.member = Shapes::ShapeRef.new(shape: SequenceStoreDetail)
@@ -1837,10 +1895,14 @@ module Aws::Omics
     SequenceStoreFilter.add_member(:name, Shapes::ShapeRef.new(shape: SequenceStoreName, location_name: "name"))
     SequenceStoreFilter.add_member(:created_after, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "createdAfter"))
     SequenceStoreFilter.add_member(:created_before, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "createdBefore"))
+    SequenceStoreFilter.add_member(:status, Shapes::ShapeRef.new(shape: SequenceStoreStatus, location_name: "status"))
+    SequenceStoreFilter.add_member(:updated_after, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "updatedAfter"))
+    SequenceStoreFilter.add_member(:updated_before, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "updatedBefore"))
     SequenceStoreFilter.struct_class = Types::SequenceStoreFilter
 
     SequenceStoreS3Access.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, location_name: "s3Uri"))
     SequenceStoreS3Access.add_member(:s3_access_point_arn, Shapes::ShapeRef.new(shape: S3AccessPointArn, location_name: "s3AccessPointArn"))
+    SequenceStoreS3Access.add_member(:access_log_location, Shapes::ShapeRef.new(shape: AccessLogLocation, location_name: "accessLogLocation"))
     SequenceStoreS3Access.struct_class = Types::SequenceStoreS3Access
 
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
@@ -2106,6 +2168,30 @@ module Aws::Omics
     UpdateRunGroupRequest.add_member(:max_duration, Shapes::ShapeRef.new(shape: UpdateRunGroupRequestMaxDurationInteger, location_name: "maxDuration"))
     UpdateRunGroupRequest.add_member(:max_gpus, Shapes::ShapeRef.new(shape: UpdateRunGroupRequestMaxGpusInteger, location_name: "maxGpus"))
     UpdateRunGroupRequest.struct_class = Types::UpdateRunGroupRequest
+
+    UpdateSequenceStoreRequest.add_member(:id, Shapes::ShapeRef.new(shape: SequenceStoreId, required: true, location: "uri", location_name: "id"))
+    UpdateSequenceStoreRequest.add_member(:name, Shapes::ShapeRef.new(shape: SequenceStoreName, location_name: "name"))
+    UpdateSequenceStoreRequest.add_member(:description, Shapes::ShapeRef.new(shape: SequenceStoreDescription, location_name: "description"))
+    UpdateSequenceStoreRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    UpdateSequenceStoreRequest.add_member(:fallback_location, Shapes::ShapeRef.new(shape: S3Destination, location_name: "fallbackLocation"))
+    UpdateSequenceStoreRequest.add_member(:propagated_set_level_tags, Shapes::ShapeRef.new(shape: PropagatedSetLevelTags, location_name: "propagatedSetLevelTags"))
+    UpdateSequenceStoreRequest.add_member(:s3_access_config, Shapes::ShapeRef.new(shape: S3AccessConfig, location_name: "s3AccessConfig"))
+    UpdateSequenceStoreRequest.struct_class = Types::UpdateSequenceStoreRequest
+
+    UpdateSequenceStoreResponse.add_member(:id, Shapes::ShapeRef.new(shape: SequenceStoreId, required: true, location_name: "id"))
+    UpdateSequenceStoreResponse.add_member(:arn, Shapes::ShapeRef.new(shape: SequenceStoreArn, required: true, location_name: "arn"))
+    UpdateSequenceStoreResponse.add_member(:name, Shapes::ShapeRef.new(shape: SequenceStoreName, location_name: "name"))
+    UpdateSequenceStoreResponse.add_member(:description, Shapes::ShapeRef.new(shape: SequenceStoreDescription, location_name: "description"))
+    UpdateSequenceStoreResponse.add_member(:sse_config, Shapes::ShapeRef.new(shape: SseConfig, location_name: "sseConfig"))
+    UpdateSequenceStoreResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, required: true, location_name: "creationTime"))
+    UpdateSequenceStoreResponse.add_member(:update_time, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "updateTime"))
+    UpdateSequenceStoreResponse.add_member(:propagated_set_level_tags, Shapes::ShapeRef.new(shape: PropagatedSetLevelTags, location_name: "propagatedSetLevelTags"))
+    UpdateSequenceStoreResponse.add_member(:status, Shapes::ShapeRef.new(shape: SequenceStoreStatus, location_name: "status"))
+    UpdateSequenceStoreResponse.add_member(:status_message, Shapes::ShapeRef.new(shape: SequenceStoreStatusMessage, location_name: "statusMessage"))
+    UpdateSequenceStoreResponse.add_member(:fallback_location, Shapes::ShapeRef.new(shape: S3Destination, location_name: "fallbackLocation"))
+    UpdateSequenceStoreResponse.add_member(:s3_access, Shapes::ShapeRef.new(shape: SequenceStoreS3Access, location_name: "s3Access"))
+    UpdateSequenceStoreResponse.add_member(:e_tag_algorithm_family, Shapes::ShapeRef.new(shape: ETagAlgorithmFamily, location_name: "eTagAlgorithmFamily"))
+    UpdateSequenceStoreResponse.struct_class = Types::UpdateSequenceStoreResponse
 
     UpdateVariantStoreRequest.add_member(:name, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "name"))
     UpdateVariantStoreRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -2674,6 +2760,24 @@ module Aws::Omics
         o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
       end)
 
+      api.add_operation(:delete_s3_access_policy, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteS3AccessPolicy"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/s3accesspolicy/{s3AccessPointArn}"
+        o.endpoint_pattern = {
+          "hostPrefix" => "control-storage-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: DeleteS3AccessPolicyRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteS3AccessPolicyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: NotSupportedOperationException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+      end)
+
       api.add_operation(:delete_sequence_store, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteSequenceStore"
         o.http_method = "DELETE"
@@ -3021,6 +3125,25 @@ module Aws::Omics
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+      end)
+
+      api.add_operation(:get_s3_access_policy, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetS3AccessPolicy"
+        o.http_method = "GET"
+        o.http_request_uri = "/s3accesspolicy/{s3AccessPointArn}"
+        o.endpoint_pattern = {
+          "hostPrefix" => "control-storage-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: GetS3AccessPolicyRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetS3AccessPolicyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: NotSupportedOperationException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
@@ -3622,6 +3745,24 @@ module Aws::Omics
         )
       end)
 
+      api.add_operation(:put_s3_access_policy, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutS3AccessPolicy"
+        o.http_method = "PUT"
+        o.http_request_uri = "/s3accesspolicy/{s3AccessPointArn}"
+        o.endpoint_pattern = {
+          "hostPrefix" => "control-storage-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: PutS3AccessPolicyRequest)
+        o.output = Shapes::ShapeRef.new(shape: PutS3AccessPolicyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: NotSupportedOperationException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+      end)
+
       api.add_operation(:start_annotation_import_job, Seahorse::Model::Operation.new.tap do |o|
         o.name = "StartAnnotationImportJob"
         o.http_method = "POST"
@@ -3847,6 +3988,24 @@ module Aws::Omics
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: RequestTimeoutException)
+      end)
+
+      api.add_operation(:update_sequence_store, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateSequenceStore"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/sequencestore/{id}"
+        o.endpoint_pattern = {
+          "hostPrefix" => "control-storage-",
+        }
+        o.input = Shapes::ShapeRef.new(shape: UpdateSequenceStoreRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateSequenceStoreResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)

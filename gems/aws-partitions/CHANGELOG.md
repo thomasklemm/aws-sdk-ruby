@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1013.0 (2024-11-22)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::BCMPricingCalculator`.
+
 1.1012.0 (2024-11-21)
 ------------------
 

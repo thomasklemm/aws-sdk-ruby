@@ -88,6 +88,21 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] to_list
+    #   @return [Array<Types::EmailRecipient>]
+    #
+    # @!attribute [rw] cc_list
+    #   @return [Array<Types::EmailRecipient>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AdditionalEmailRecipients AWS API Documentation
+    #
+    class AdditionalEmailRecipients < Struct.new(
+      :to_list,
+      :cc_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The distribution of agents between the instance and its replica(s).
     #
     # @!attribute [rw] distributions
@@ -1047,6 +1062,49 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] contact_arn
+    #   @return [String]
+    #
+    # @!attribute [rw] initiation_timestamp
+    #   @return [Time]
+    #
+    # @!attribute [rw] disconnect_timestamp
+    #   @return [Time]
+    #
+    # @!attribute [rw] initial_contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] previous_contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] related_contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] initiation_method
+    #   @return [String]
+    #
+    # @!attribute [rw] channel
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AssociatedContactSummary AWS API Documentation
+    #
+    class AssociatedContactSummary < Struct.new(
+      :contact_id,
+      :contact_arn,
+      :initiation_timestamp,
+      :disconnect_timestamp,
+      :initial_contact_id,
+      :previous_contact_id,
+      :related_contact_id,
+      :initiation_method,
+      :channel)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Information about the attached file.
     #
     # @!attribute [rw] creation_time
@@ -1159,12 +1217,16 @@ module Aws::Connect
     #   Status of the attachment reference type.
     #   @return [String]
     #
+    # @!attribute [rw] arn
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AttachmentReference AWS API Documentation
     #
     class AttachmentReference < Struct.new(
       :name,
       :value,
-      :status)
+      :status,
+      :arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2135,6 +2197,17 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ConditionalOperationFailedException AWS API Documentation
+    #
+    class ConditionalOperationFailedException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Operation cannot be performed at this time as there is a conflict with
     # another operation or contact state.
     #
@@ -2186,6 +2259,9 @@ module Aws::Connect
     # @!attribute [rw] previous_contact_id
     #   If this contact is not the first contact, this is the ID of the
     #   previous contact.
+    #   @return [String]
+    #
+    # @!attribute [rw] contact_association_id
     #   @return [String]
     #
     # @!attribute [rw] initiation_method
@@ -2266,6 +2342,12 @@ module Aws::Connect
     #   Information about Amazon Connect Wisdom.
     #   @return [Types::WisdomInfo]
     #
+    # @!attribute [rw] customer_endpoint
+    #   @return [Types::EndpointInfo]
+    #
+    # @!attribute [rw] system_endpoint
+    #   @return [Types::EndpointInfo]
+    #
     # @!attribute [rw] queue_time_adjustment_seconds
     #   An integer that represents the queue time adjust to be applied to
     #   the contact, in seconds (longer / larger queue time are routed
@@ -2324,6 +2406,9 @@ module Aws::Connect
     #   Information about the call disconnect experience.
     #   @return [Types::DisconnectDetails]
     #
+    # @!attribute [rw] additional_email_recipients
+    #   @return [Types::AdditionalEmailRecipients]
+    #
     # @!attribute [rw] segment_attributes
     #   A set of system defined key-value pairs stored on individual contact
     #   segments using an attribute map. The attributes are standard Amazon
@@ -2340,6 +2425,7 @@ module Aws::Connect
       :id,
       :initial_contact_id,
       :previous_contact_id,
+      :contact_association_id,
       :initiation_method,
       :name,
       :description,
@@ -2356,6 +2442,8 @@ module Aws::Connect
       :scheduled_timestamp,
       :related_contact_id,
       :wisdom_info,
+      :customer_endpoint,
+      :system_endpoint,
       :queue_time_adjustment_seconds,
       :queue_priority,
       :tags,
@@ -2367,6 +2455,7 @@ module Aws::Connect
       :customer_voice_activity,
       :quality_metrics,
       :disconnect_details,
+      :additional_email_recipients,
       :segment_attributes)
       SENSITIVE = [:name, :description]
       include Aws::Structure
@@ -2905,6 +2994,9 @@ module Aws::Connect
     #   the inbound flow.
     #   @return [Time]
     #
+    # @!attribute [rw] segment_attributes
+    #   @return [Hash<String,Types::ContactSearchSummarySegmentAttributeValue>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactSearchSummary AWS API Documentation
     #
     class ContactSearchSummary < Struct.new(
@@ -2918,7 +3010,8 @@ module Aws::Connect
       :agent_info,
       :initiation_timestamp,
       :disconnect_timestamp,
-      :scheduled_timestamp)
+      :scheduled_timestamp,
+      :segment_attributes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2957,6 +3050,17 @@ module Aws::Connect
     class ContactSearchSummaryQueueInfo < Struct.new(
       :id,
       :enqueue_timestamp)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] value_string
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactSearchSummarySegmentAttributeValue AWS API Documentation
+    #
+    class ContactSearchSummarySegmentAttributeValue < Struct.new(
+      :value_string)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3367,6 +3471,128 @@ module Aws::Connect
     class CreateContactFlowVersionResponse < Struct.new(
       :contact_flow_arn,
       :version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] related_contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] attributes
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] references
+    #   @return [Hash<String,Types::Reference>]
+    #
+    # @!attribute [rw] channel
+    #   @return [String]
+    #
+    # @!attribute [rw] initiation_method
+    #   @return [String]
+    #
+    # @!attribute [rw] expiry_duration_in_minutes
+    #   @return [Integer]
+    #
+    # @!attribute [rw] user_info
+    #   @return [Types::UserInfo]
+    #
+    # @!attribute [rw] initiate_as
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   @return [String]
+    #
+    # @!attribute [rw] segment_attributes
+    #   @return [Hash<String,Types::SegmentAttributeValue>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContactRequest AWS API Documentation
+    #
+    class CreateContactRequest < Struct.new(
+      :instance_id,
+      :client_token,
+      :related_contact_id,
+      :attributes,
+      :references,
+      :channel,
+      :initiation_method,
+      :expiry_duration_in_minutes,
+      :user_info,
+      :initiate_as,
+      :name,
+      :description,
+      :segment_attributes)
+      SENSITIVE = [:name, :description]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] contact_arn
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContactResponse AWS API Documentation
+    #
+    class CreateContactResponse < Struct.new(
+      :contact_id,
+      :contact_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] description
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] client_token
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateEmailAddressRequest AWS API Documentation
+    #
+    class CreateEmailAddressRequest < Struct.new(
+      :description,
+      :instance_id,
+      :email_address,
+      :display_name,
+      :tags,
+      :client_token)
+      SENSITIVE = [:description, :email_address, :display_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] email_address_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address_arn
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateEmailAddressResponse AWS API Documentation
+    #
+    class CreateEmailAddressResponse < Struct.new(
+      :email_address_id,
+      :email_address_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3932,6 +4158,9 @@ module Aws::Connect
     #   The outbound caller ID name, number, and outbound whisper flow.
     #   @return [Types::OutboundCallerConfig]
     #
+    # @!attribute [rw] outbound_email_config
+    #   @return [Types::OutboundEmailConfig]
+    #
     # @!attribute [rw] hours_of_operation_id
     #   The identifier for the hours of operation.
     #   @return [String]
@@ -3958,6 +4187,7 @@ module Aws::Connect
       :name,
       :description,
       :outbound_caller_config,
+      :outbound_email_config,
       :hours_of_operation_id,
       :max_contacts,
       :quick_connect_ids,
@@ -4316,6 +4546,9 @@ module Aws::Connect
     #   created by referencing this template.
     #   @return [String]
     #
+    # @!attribute [rw] self_assign_flow_id
+    #   @return [String]
+    #
     # @!attribute [rw] constraints
     #   Constraints that are applicable to the fields listed.
     #   @return [Types::TaskTemplateConstraints]
@@ -4357,6 +4590,7 @@ module Aws::Connect
       :name,
       :description,
       :contact_flow_id,
+      :self_assign_flow_id,
       :constraints,
       :defaults,
       :status,
@@ -5311,6 +5545,25 @@ module Aws::Connect
     class DeleteContactFlowResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteEmailAddressRequest AWS API Documentation
+    #
+    class DeleteEmailAddressRequest < Struct.new(
+      :instance_id,
+      :email_address_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteEmailAddressResponse AWS API Documentation
+    #
+    class DeleteEmailAddressResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
     #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
     #
@@ -5957,6 +6210,60 @@ module Aws::Connect
     class DescribeContactResponse < Struct.new(
       :contact)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeEmailAddressRequest AWS API Documentation
+    #
+    class DescribeEmailAddressRequest < Struct.new(
+      :instance_id,
+      :email_address_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] email_address_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address_arn
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   @return [String]
+    #
+    # @!attribute [rw] create_timestamp
+    #   @return [String]
+    #
+    # @!attribute [rw] modified_timestamp
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeEmailAddressResponse AWS API Documentation
+    #
+    class DescribeEmailAddressResponse < Struct.new(
+      :email_address_id,
+      :email_address_arn,
+      :email_address,
+      :display_name,
+      :description,
+      :create_timestamp,
+      :modified_timestamp,
+      :tags)
+      SENSITIVE = [:email_address, :display_name, :description]
       include Aws::Structure
     end
 
@@ -7124,6 +7431,134 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] email_address
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAddressInfo AWS API Documentation
+    #
+    class EmailAddressInfo < Struct.new(
+      :email_address,
+      :display_name)
+      SENSITIVE = [:email_address, :display_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] email_address_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address_arn
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAddressMetadata AWS API Documentation
+    #
+    class EmailAddressMetadata < Struct.new(
+      :email_address_id,
+      :email_address_arn,
+      :email_address,
+      :description,
+      :display_name)
+      SENSITIVE = [:email_address, :description, :display_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] or_conditions
+    #   @return [Array<Types::EmailAddressSearchCriteria>]
+    #
+    # @!attribute [rw] and_conditions
+    #   @return [Array<Types::EmailAddressSearchCriteria>]
+    #
+    # @!attribute [rw] string_condition
+    #   A leaf node condition which can be used to specify a string
+    #   condition.
+    #   @return [Types::StringCondition]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAddressSearchCriteria AWS API Documentation
+    #
+    class EmailAddressSearchCriteria < Struct.new(
+      :or_conditions,
+      :and_conditions,
+      :string_condition)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] tag_filter
+    #   An object that can be used to specify Tag conditions inside the
+    #   `SearchFilter`. This accepts an `OR` of `AND` (List of List) input
+    #   where:
+    #
+    #   * Top level list specifies conditions that need to be applied with
+    #     `OR` operator
+    #
+    #   * Inner list specifies conditions that need to be applied with `AND`
+    #     operator.
+    #   @return [Types::ControlPlaneTagFilter]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAddressSearchFilter AWS API Documentation
+    #
+    class EmailAddressSearchFilter < Struct.new(
+      :tag_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] file_name
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_url
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAttachment AWS API Documentation
+    #
+    class EmailAttachment < Struct.new(
+      :file_name,
+      :s3_url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailMessageReference AWS API Documentation
+    #
+    class EmailMessageReference < Struct.new(
+      :name,
+      :arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] address
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailRecipient AWS API Documentation
+    #
+    class EmailRecipient < Struct.new(
+      :address,
+      :display_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Information about a reference when the `referenceType` is `EMAIL`.
     # Otherwise, null.
     #
@@ -7206,6 +7641,25 @@ module Aws::Connect
     class Endpoint < Struct.new(
       :type,
       :address)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] type
+    #   @return [String]
+    #
+    # @!attribute [rw] address
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EndpointInfo AWS API Documentation
+    #
+    class EndpointInfo < Struct.new(
+      :type,
+      :address,
+      :display_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -10687,6 +11141,9 @@ module Aws::Connect
     #   created by referencing this template.
     #   @return [String]
     #
+    # @!attribute [rw] self_assign_flow_id
+    #   @return [String]
+    #
     # @!attribute [rw] constraints
     #   Constraints that are applicable to the fields listed.
     #   @return [Types::TaskTemplateConstraints]
@@ -10730,6 +11187,7 @@ module Aws::Connect
       :name,
       :description,
       :contact_flow_id,
+      :self_assign_flow_id,
       :constraints,
       :defaults,
       :fields,
@@ -11485,6 +11943,59 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] to_addresses
+    #   @return [Array<Types::EmailAddressInfo>]
+    #
+    # @!attribute [rw] cc_addresses
+    #   @return [Array<Types::EmailAddressInfo>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/InboundAdditionalRecipients AWS API Documentation
+    #
+    class InboundAdditionalRecipients < Struct.new(
+      :to_addresses,
+      :cc_addresses)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] message_source_type
+    #   @return [String]
+    #
+    # @!attribute [rw] raw_message
+    #   @return [Types::InboundRawMessage]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/InboundEmailContent AWS API Documentation
+    #
+    class InboundEmailContent < Struct.new(
+      :message_source_type,
+      :raw_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] subject
+    #   @return [String]
+    #
+    # @!attribute [rw] body
+    #   @return [String]
+    #
+    # @!attribute [rw] content_type
+    #   @return [String]
+    #
+    # @!attribute [rw] headers
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/InboundRawMessage AWS API Documentation
+    #
+    class InboundRawMessage < Struct.new(
+      :subject,
+      :body,
+      :content_type,
+      :headers)
+      SENSITIVE = [:subject, :body]
+      include Aws::Structure
+    end
+
     # The Amazon Connect instance.
     #
     # @!attribute [rw] id
@@ -12155,6 +12666,44 @@ module Aws::Connect
     #
     class ListApprovedOriginsResponse < Struct.new(
       :origins,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListAssociatedContactsRequest AWS API Documentation
+    #
+    class ListAssociatedContactsRequest < Struct.new(
+      :instance_id,
+      :contact_id,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] contact_summary_list
+    #   @return [Array<Types::AssociatedContactSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListAssociatedContactsResponse AWS API Documentation
+    #
+    class ListAssociatedContactsResponse < Struct.new(
+      :contact_summary_list,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -15054,6 +15603,17 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] cc_email_addresses
+    #   @return [Array<Types::EmailAddressInfo>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundAdditionalRecipients AWS API Documentation
+    #
+    class OutboundAdditionalRecipients < Struct.new(
+      :cc_email_addresses)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The outbound caller ID name, number, and outbound whisper flow.
     #
     # @!attribute [rw] outbound_caller_id_name
@@ -15089,6 +15649,55 @@ module Aws::Connect
     class OutboundContactNotPermittedException < Struct.new(
       :message)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] outbound_email_address_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundEmailConfig AWS API Documentation
+    #
+    class OutboundEmailConfig < Struct.new(
+      :outbound_email_address_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] message_source_type
+    #   @return [String]
+    #
+    # @!attribute [rw] templated_message_config
+    #   @return [Types::TemplatedMessageConfig]
+    #
+    # @!attribute [rw] raw_message
+    #   @return [Types::OutboundRawMessage]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundEmailContent AWS API Documentation
+    #
+    class OutboundEmailContent < Struct.new(
+      :message_source_type,
+      :templated_message_config,
+      :raw_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] subject
+    #   @return [String]
+    #
+    # @!attribute [rw] body
+    #   @return [String]
+    #
+    # @!attribute [rw] content_type
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundRawMessage AWS API Documentation
+    #
+    class OutboundRawMessage < Struct.new(
+      :subject,
+      :body,
+      :content_type)
+      SENSITIVE = [:subject, :body]
       include Aws::Structure
     end
 
@@ -15796,6 +16405,9 @@ module Aws::Connect
     #   The outbound caller ID name, number, and outbound whisper flow.
     #   @return [Types::OutboundCallerConfig]
     #
+    # @!attribute [rw] outbound_email_config
+    #   @return [Types::OutboundEmailConfig]
+    #
     # @!attribute [rw] hours_of_operation_id
     #   The identifier for the hours of operation.
     #   @return [String]
@@ -15832,6 +16444,7 @@ module Aws::Connect
       :queue_id,
       :description,
       :outbound_caller_config,
+      :outbound_email_config,
       :hours_of_operation_id,
       :max_contacts,
       :status,
@@ -16684,11 +17297,23 @@ module Aws::Connect
     #   The type of the reference. `DATE` must be of type Epoch timestamp.
     #   @return [String]
     #
+    # @!attribute [rw] status
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/Reference AWS API Documentation
     #
     class Reference < Struct.new(
       :value,
-      :type)
+      :type,
+      :status,
+      :arn,
+      :status_reason)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16708,6 +17333,9 @@ module Aws::Connect
     #   Information about the reference when the `referenceType` is
     #   `ATTACHMENT`. Otherwise, null.
     #   @return [Types::AttachmentReference]
+    #
+    # @!attribute [rw] email_message
+    #   @return [Types::EmailMessageReference]
     #
     # @!attribute [rw] string
     #   Information about a reference when the `referenceType` is `STRING`.
@@ -16734,6 +17362,7 @@ module Aws::Connect
     class ReferenceSummary < Struct.new(
       :url,
       :attachment,
+      :email_message,
       :string,
       :number,
       :date,
@@ -16745,6 +17374,7 @@ module Aws::Connect
 
       class Url < ReferenceSummary; end
       class Attachment < ReferenceSummary; end
+      class EmailMessage < ReferenceSummary; end
       class String < ReferenceSummary; end
       class Number < ReferenceSummary; end
       class Date < ReferenceSummary; end
@@ -18126,6 +18756,9 @@ module Aws::Connect
     #   [2]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonconnect.html#amazonconnect-actions-as-permissions
     #   @return [Types::SearchableContactAttributes]
     #
+    # @!attribute [rw] searchable_segment_attributes
+    #   @return [Types::SearchableSegmentAttributes]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchCriteria AWS API Documentation
     #
     class SearchCriteria < Struct.new(
@@ -18135,7 +18768,54 @@ module Aws::Connect
       :contact_analysis,
       :initiation_methods,
       :queue_ids,
-      :searchable_contact_attributes)
+      :searchable_contact_attributes,
+      :searchable_segment_attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   @return [String]
+    #
+    # @!attribute [rw] search_criteria
+    #   @return [Types::EmailAddressSearchCriteria]
+    #
+    # @!attribute [rw] search_filter
+    #   @return [Types::EmailAddressSearchFilter]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchEmailAddressesRequest AWS API Documentation
+    #
+    class SearchEmailAddressesRequest < Struct.new(
+      :instance_id,
+      :max_results,
+      :next_token,
+      :search_criteria,
+      :search_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   @return [String]
+    #
+    # @!attribute [rw] email_addresses
+    #   @return [Array<Types::EmailAddressMetadata>]
+    #
+    # @!attribute [rw] approximate_total_count
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchEmailAddressesResponse AWS API Documentation
+    #
+    class SearchEmailAddressesResponse < Struct.new(
+      :next_token,
+      :email_addresses,
+      :approximate_total_count)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -18911,6 +19591,36 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] criteria
+    #   @return [Array<Types::SearchableSegmentAttributesCriteria>]
+    #
+    # @!attribute [rw] match_type
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchableSegmentAttributes AWS API Documentation
+    #
+    class SearchableSegmentAttributes < Struct.new(
+      :criteria,
+      :match_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] key
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchableSegmentAttributesCriteria AWS API Documentation
+    #
+    class SearchableSegmentAttributesCriteria < Struct.new(
+      :key,
+      :values)
+      SENSITIVE = [:key, :values]
+      include Aws::Structure
+    end
+
     # Configuration information of the security key.
     #
     # @!attribute [rw] association_id
@@ -19267,17 +19977,82 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] from_email_address
+    #   @return [Types::EmailAddressInfo]
+    #
+    # @!attribute [rw] destination_email_address
+    #   @return [Types::EmailAddressInfo]
+    #
+    # @!attribute [rw] additional_recipients
+    #   @return [Types::OutboundAdditionalRecipients]
+    #
+    # @!attribute [rw] email_message
+    #   @return [Types::OutboundEmailContent]
+    #
+    # @!attribute [rw] traffic_type
+    #   @return [String]
+    #
+    # @!attribute [rw] source_campaign
+    #   @return [Types::SourceCampaign]
+    #
+    # @!attribute [rw] client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SendOutboundEmailRequest AWS API Documentation
+    #
+    class SendOutboundEmailRequest < Struct.new(
+      :instance_id,
+      :from_email_address,
+      :destination_email_address,
+      :additional_recipients,
+      :email_message,
+      :traffic_type,
+      :source_campaign,
+      :client_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SendOutboundEmailResponse AWS API Documentation
+    #
+    class SendOutboundEmailResponse < Aws::EmptyStructure; end
+
     # The service quota has been exceeded.
     #
     # @!attribute [rw] message
     #   @return [String]
     #
+    # @!attribute [rw] reason
+    #   @return [Types::ServiceQuotaExceededExceptionReason]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ServiceQuotaExceededException AWS API Documentation
     #
     class ServiceQuotaExceededException < Struct.new(
-      :message)
+      :message,
+      :reason)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # @!attribute [rw] attached_file_service_quota_exceeded_exception_reason
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ServiceQuotaExceededExceptionReason AWS API Documentation
+    #
+    class ServiceQuotaExceededExceptionReason < Struct.new(
+      :attached_file_service_quota_exceeded_exception_reason,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class AttachedFileServiceQuotaExceededExceptionReason < ServiceQuotaExceededExceptionReason; end
+      class Unknown < ServiceQuotaExceededExceptionReason; end
     end
 
     # The distribution that determines which Amazon Web Services Regions
@@ -19360,6 +20135,21 @@ module Aws::Connect
     class Sort < Struct.new(
       :field_name,
       :order)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] campaign_id
+    #   @return [String]
+    #
+    # @!attribute [rw] outbound_request_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SourceCampaign AWS API Documentation
+    #
+    class SourceCampaign < Struct.new(
+      :campaign_id,
+      :outbound_request_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19807,6 +20597,82 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] from_email_address
+    #   @return [Types::EmailAddressInfo]
+    #
+    # @!attribute [rw] destination_email_address
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   @return [String]
+    #
+    # @!attribute [rw] references
+    #   @return [Hash<String,Types::Reference>]
+    #
+    # @!attribute [rw] name
+    #   @return [String]
+    #
+    # @!attribute [rw] email_message
+    #   @return [Types::InboundEmailContent]
+    #
+    # @!attribute [rw] additional_recipients
+    #   @return [Types::InboundAdditionalRecipients]
+    #
+    # @!attribute [rw] attachments
+    #   @return [Array<Types::EmailAttachment>]
+    #
+    # @!attribute [rw] contact_flow_id
+    #   @return [String]
+    #
+    # @!attribute [rw] related_contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] attributes
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] segment_attributes
+    #   @return [Hash<String,Types::SegmentAttributeValue>]
+    #
+    # @!attribute [rw] client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartEmailContactRequest AWS API Documentation
+    #
+    class StartEmailContactRequest < Struct.new(
+      :instance_id,
+      :from_email_address,
+      :destination_email_address,
+      :description,
+      :references,
+      :name,
+      :email_message,
+      :additional_recipients,
+      :attachments,
+      :contact_flow_id,
+      :related_contact_id,
+      :attributes,
+      :segment_attributes,
+      :client_token)
+      SENSITIVE = [:destination_email_address, :description, :name, :attachments]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] contact_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartEmailContactResponse AWS API Documentation
+    #
+    class StartEmailContactResponse < Struct.new(
+      :contact_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] source_endpoint
     #   Information about the endpoint.
     #   @return [Types::Endpoint]
@@ -19936,6 +20802,54 @@ module Aws::Connect
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartOutboundChatContactResponse AWS API Documentation
     #
     class StartOutboundChatContactResponse < Struct.new(
+      :contact_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] contact_id
+    #   @return [String]
+    #
+    # @!attribute [rw] from_email_address
+    #   @return [Types::EmailAddressInfo]
+    #
+    # @!attribute [rw] destination_email_address
+    #   @return [Types::EmailAddressInfo]
+    #
+    # @!attribute [rw] additional_recipients
+    #   @return [Types::OutboundAdditionalRecipients]
+    #
+    # @!attribute [rw] email_message
+    #   @return [Types::OutboundEmailContent]
+    #
+    # @!attribute [rw] client_token
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartOutboundEmailContactRequest AWS API Documentation
+    #
+    class StartOutboundEmailContactRequest < Struct.new(
+      :instance_id,
+      :contact_id,
+      :from_email_address,
+      :destination_email_address,
+      :additional_recipients,
+      :email_message,
+      :client_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] contact_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartOutboundEmailContactResponse AWS API Documentation
+    #
+    class StartOutboundEmailContactResponse < Struct.new(
       :contact_id)
       SENSITIVE = []
       include Aws::Structure
@@ -20231,6 +21145,9 @@ module Aws::Connect
     #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/tasks.html#linked-tasks
     #   @return [String]
     #
+    # @!attribute [rw] segment_attributes
+    #   @return [Hash<String,Types::SegmentAttributeValue>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartTaskContactRequest AWS API Documentation
     #
     class StartTaskContactRequest < Struct.new(
@@ -20245,7 +21162,8 @@ module Aws::Connect
       :scheduled_time,
       :task_template_id,
       :quick_connect_id,
-      :related_contact_id)
+      :related_contact_id,
+      :segment_attributes)
       SENSITIVE = [:name, :description]
       include Aws::Structure
     end
@@ -20991,6 +21909,40 @@ module Aws::Connect
     #
     class TelephonyConfig < Struct.new(
       :distributions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] custom_attributes
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] customer_profile_attributes
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/TemplateAttributes AWS API Documentation
+    #
+    class TemplateAttributes < Struct.new(
+      :custom_attributes,
+      :customer_profile_attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] knowledge_base_id
+    #   @return [String]
+    #
+    # @!attribute [rw] message_template_id
+    #   @return [String]
+    #
+    # @!attribute [rw] template_attributes
+    #   @return [Types::TemplateAttributes]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/TemplatedMessageConfig AWS API Documentation
+    #
+    class TemplatedMessageConfig < Struct.new(
+      :knowledge_base_id,
+      :message_template_id,
+      :template_attributes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -21859,6 +22811,9 @@ module Aws::Connect
     #   Panel (CCP).
     #   @return [Hash<String,Types::Reference>]
     #
+    # @!attribute [rw] segment_attributes
+    #   @return [Hash<String,Types::SegmentAttributeValue>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateContactRequest AWS API Documentation
     #
     class UpdateContactRequest < Struct.new(
@@ -21866,7 +22821,8 @@ module Aws::Connect
       :contact_id,
       :name,
       :description,
-      :references)
+      :references,
+      :segment_attributes)
       SENSITIVE = [:name, :description]
       include Aws::Structure
     end
@@ -21955,6 +22911,48 @@ module Aws::Connect
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateContactScheduleResponse AWS API Documentation
     #
     class UpdateContactScheduleResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address_id
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateEmailAddressMetadataRequest AWS API Documentation
+    #
+    class UpdateEmailAddressMetadataRequest < Struct.new(
+      :instance_id,
+      :email_address_id,
+      :description,
+      :display_name,
+      :client_token)
+      SENSITIVE = [:description, :display_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] email_address_id
+    #   @return [String]
+    #
+    # @!attribute [rw] email_address_arn
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateEmailAddressMetadataResponse AWS API Documentation
+    #
+    class UpdateEmailAddressMetadataResponse < Struct.new(
+      :email_address_id,
+      :email_address_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
@@ -22500,6 +23498,25 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   @return [String]
+    #
+    # @!attribute [rw] queue_id
+    #   @return [String]
+    #
+    # @!attribute [rw] outbound_email_config
+    #   @return [Types::OutboundEmailConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateQueueOutboundEmailConfigRequest AWS API Documentation
+    #
+    class UpdateQueueOutboundEmailConfigRequest < Struct.new(
+      :instance_id,
+      :queue_id,
+      :outbound_email_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
     #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
     #
@@ -22870,6 +23887,9 @@ module Aws::Connect
     #   created by referencing this template.
     #   @return [String]
     #
+    # @!attribute [rw] self_assign_flow_id
+    #   @return [String]
+    #
     # @!attribute [rw] constraints
     #   Constraints that are applicable to the fields listed.
     #   @return [Types::TaskTemplateConstraints]
@@ -22898,6 +23918,7 @@ module Aws::Connect
       :name,
       :description,
       :contact_flow_id,
+      :self_assign_flow_id,
       :constraints,
       :defaults,
       :status,
@@ -22934,6 +23955,9 @@ module Aws::Connect
     # @!attribute [rw] contact_flow_id
     #   The identifier of the flow that runs by default when a task is
     #   created by referencing this template.
+    #   @return [String]
+    #
+    # @!attribute [rw] self_assign_flow_id
     #   @return [String]
     #
     # @!attribute [rw] constraints
@@ -22973,6 +23997,7 @@ module Aws::Connect
       :name,
       :description,
       :contact_flow_id,
+      :self_assign_flow_id,
       :constraints,
       :defaults,
       :fields,
@@ -23678,6 +24703,17 @@ module Aws::Connect
       :first_name,
       :last_name)
       SENSITIVE = [:first_name, :last_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] user_id
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UserInfo AWS API Documentation
+    #
+    class UserInfo < Struct.new(
+      :user_id)
+      SENSITIVE = []
       include Aws::Structure
     end
 

@@ -28,6 +28,8 @@ module Aws::States
     ActivityWorkerLimitExceeded = Shapes::StructureShape.new(name: 'ActivityWorkerLimitExceeded')
     AliasDescription = Shapes::StringShape.new(name: 'AliasDescription')
     Arn = Shapes::StringShape.new(name: 'Arn')
+    AssignedVariables = Shapes::MapShape.new(name: 'AssignedVariables')
+    AssignedVariablesDetails = Shapes::StructureShape.new(name: 'AssignedVariablesDetails')
     BilledDuration = Shapes::IntegerShape.new(name: 'BilledDuration')
     BilledMemoryUsed = Shapes::IntegerShape.new(name: 'BilledMemoryUsed')
     BillingDetails = Shapes::StructureShape.new(name: 'BillingDetails')
@@ -68,6 +70,8 @@ module Aws::States
     EncryptionConfiguration = Shapes::StructureShape.new(name: 'EncryptionConfiguration')
     EncryptionType = Shapes::StringShape.new(name: 'EncryptionType')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
+    EvaluationFailedEventDetails = Shapes::StructureShape.new(name: 'EvaluationFailedEventDetails')
+    EvaluationFailureLocation = Shapes::StringShape.new(name: 'EvaluationFailureLocation')
     EventId = Shapes::IntegerShape.new(name: 'EventId')
     ExecutionAbortedEventDetails = Shapes::StructureShape.new(name: 'ExecutionAbortedEventDetails')
     ExecutionAlreadyExists = Shapes::StructureShape.new(name: 'ExecutionAlreadyExists')
@@ -263,6 +267,10 @@ module Aws::States
     ValidateStateMachineDefinitionTruncated = Shapes::BooleanShape.new(name: 'ValidateStateMachineDefinitionTruncated')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValidationExceptionReason = Shapes::StringShape.new(name: 'ValidationExceptionReason')
+    VariableName = Shapes::StringShape.new(name: 'VariableName')
+    VariableNameList = Shapes::ListShape.new(name: 'VariableNameList')
+    VariableReferences = Shapes::MapShape.new(name: 'VariableReferences')
+    VariableValue = Shapes::StringShape.new(name: 'VariableValue')
     VersionDescription = Shapes::StringShape.new(name: 'VersionDescription')
     VersionWeight = Shapes::IntegerShape.new(name: 'VersionWeight')
     includedDetails = Shapes::BooleanShape.new(name: 'includedDetails')
@@ -312,6 +320,12 @@ module Aws::States
 
     ActivityWorkerLimitExceeded.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     ActivityWorkerLimitExceeded.struct_class = Types::ActivityWorkerLimitExceeded
+
+    AssignedVariables.key = Shapes::ShapeRef.new(shape: VariableName)
+    AssignedVariables.value = Shapes::ShapeRef.new(shape: VariableValue)
+
+    AssignedVariablesDetails.add_member(:truncated, Shapes::ShapeRef.new(shape: truncated, location_name: "truncated"))
+    AssignedVariablesDetails.struct_class = Types::AssignedVariablesDetails
 
     BillingDetails.add_member(:billed_memory_used_in_mb, Shapes::ShapeRef.new(shape: BilledMemoryUsed, location_name: "billedMemoryUsedInMB"))
     BillingDetails.add_member(:billed_duration_in_milliseconds, Shapes::ShapeRef.new(shape: BilledDuration, location_name: "billedDurationInMilliseconds"))
@@ -459,6 +473,7 @@ module Aws::States
     DescribeStateMachineForExecutionOutput.add_member(:label, Shapes::ShapeRef.new(shape: MapRunLabel, location_name: "label"))
     DescribeStateMachineForExecutionOutput.add_member(:revision_id, Shapes::ShapeRef.new(shape: RevisionId, location_name: "revisionId"))
     DescribeStateMachineForExecutionOutput.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "encryptionConfiguration"))
+    DescribeStateMachineForExecutionOutput.add_member(:variable_references, Shapes::ShapeRef.new(shape: VariableReferences, location_name: "variableReferences"))
     DescribeStateMachineForExecutionOutput.struct_class = Types::DescribeStateMachineForExecutionOutput
 
     DescribeStateMachineInput.add_member(:state_machine_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "stateMachineArn"))
@@ -478,12 +493,19 @@ module Aws::States
     DescribeStateMachineOutput.add_member(:revision_id, Shapes::ShapeRef.new(shape: RevisionId, location_name: "revisionId"))
     DescribeStateMachineOutput.add_member(:description, Shapes::ShapeRef.new(shape: VersionDescription, location_name: "description"))
     DescribeStateMachineOutput.add_member(:encryption_configuration, Shapes::ShapeRef.new(shape: EncryptionConfiguration, location_name: "encryptionConfiguration"))
+    DescribeStateMachineOutput.add_member(:variable_references, Shapes::ShapeRef.new(shape: VariableReferences, location_name: "variableReferences"))
     DescribeStateMachineOutput.struct_class = Types::DescribeStateMachineOutput
 
     EncryptionConfiguration.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsKeyId"))
     EncryptionConfiguration.add_member(:kms_data_key_reuse_period_seconds, Shapes::ShapeRef.new(shape: KmsDataKeyReusePeriodSeconds, location_name: "kmsDataKeyReusePeriodSeconds", metadata: {"box"=>true}))
     EncryptionConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: EncryptionType, required: true, location_name: "type"))
     EncryptionConfiguration.struct_class = Types::EncryptionConfiguration
+
+    EvaluationFailedEventDetails.add_member(:error, Shapes::ShapeRef.new(shape: SensitiveError, location_name: "error"))
+    EvaluationFailedEventDetails.add_member(:cause, Shapes::ShapeRef.new(shape: SensitiveCause, location_name: "cause"))
+    EvaluationFailedEventDetails.add_member(:location, Shapes::ShapeRef.new(shape: EvaluationFailureLocation, location_name: "location"))
+    EvaluationFailedEventDetails.add_member(:state, Shapes::ShapeRef.new(shape: StateName, required: true, location_name: "state"))
+    EvaluationFailedEventDetails.struct_class = Types::EvaluationFailedEventDetails
 
     ExecutionAbortedEventDetails.add_member(:error, Shapes::ShapeRef.new(shape: SensitiveError, location_name: "error"))
     ExecutionAbortedEventDetails.add_member(:cause, Shapes::ShapeRef.new(shape: SensitiveCause, location_name: "cause"))
@@ -598,6 +620,7 @@ module Aws::States
     HistoryEvent.add_member(:map_run_started_event_details, Shapes::ShapeRef.new(shape: MapRunStartedEventDetails, location_name: "mapRunStartedEventDetails"))
     HistoryEvent.add_member(:map_run_failed_event_details, Shapes::ShapeRef.new(shape: MapRunFailedEventDetails, location_name: "mapRunFailedEventDetails"))
     HistoryEvent.add_member(:map_run_redriven_event_details, Shapes::ShapeRef.new(shape: MapRunRedrivenEventDetails, location_name: "mapRunRedrivenEventDetails"))
+    HistoryEvent.add_member(:evaluation_failed_event_details, Shapes::ShapeRef.new(shape: EvaluationFailedEventDetails, location_name: "evaluationFailedEventDetails"))
     HistoryEvent.struct_class = Types::HistoryEvent
 
     HistoryEventExecutionDataDetails.add_member(:truncated, Shapes::ShapeRef.new(shape: truncated, location_name: "truncated"))
@@ -606,6 +629,7 @@ module Aws::States
     HistoryEventList.member = Shapes::ShapeRef.new(shape: HistoryEvent)
 
     InspectionData.add_member(:input, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "input"))
+    InspectionData.add_member(:after_arguments, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "afterArguments"))
     InspectionData.add_member(:after_input_path, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "afterInputPath"))
     InspectionData.add_member(:after_parameters, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "afterParameters"))
     InspectionData.add_member(:result, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "result"))
@@ -613,6 +637,7 @@ module Aws::States
     InspectionData.add_member(:after_result_path, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "afterResultPath"))
     InspectionData.add_member(:request, Shapes::ShapeRef.new(shape: InspectionDataRequest, location_name: "request"))
     InspectionData.add_member(:response, Shapes::ShapeRef.new(shape: InspectionDataResponse, location_name: "response"))
+    InspectionData.add_member(:variables, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "variables"))
     InspectionData.struct_class = Types::InspectionData
 
     InspectionDataRequest.add_member(:protocol, Shapes::ShapeRef.new(shape: HTTPProtocol, location_name: "protocol"))
@@ -906,6 +931,8 @@ module Aws::States
     StateExitedEventDetails.add_member(:name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "name"))
     StateExitedEventDetails.add_member(:output, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "output"))
     StateExitedEventDetails.add_member(:output_details, Shapes::ShapeRef.new(shape: HistoryEventExecutionDataDetails, location_name: "outputDetails"))
+    StateExitedEventDetails.add_member(:assigned_variables, Shapes::ShapeRef.new(shape: AssignedVariables, location_name: "assignedVariables"))
+    StateExitedEventDetails.add_member(:assigned_variables_details, Shapes::ShapeRef.new(shape: AssignedVariablesDetails, location_name: "assignedVariablesDetails"))
     StateExitedEventDetails.struct_class = Types::StateExitedEventDetails
 
     StateMachineAliasList.member = Shapes::ShapeRef.new(shape: StateMachineAliasListItem)
@@ -1024,10 +1051,11 @@ module Aws::States
     TaskTimedOutEventDetails.struct_class = Types::TaskTimedOutEventDetails
 
     TestStateInput.add_member(:definition, Shapes::ShapeRef.new(shape: Definition, required: true, location_name: "definition"))
-    TestStateInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "roleArn"))
+    TestStateInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "roleArn"))
     TestStateInput.add_member(:input, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "input"))
     TestStateInput.add_member(:inspection_level, Shapes::ShapeRef.new(shape: InspectionLevel, location_name: "inspectionLevel"))
     TestStateInput.add_member(:reveal_secrets, Shapes::ShapeRef.new(shape: RevealSecrets, location_name: "revealSecrets"))
+    TestStateInput.add_member(:variables, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "variables"))
     TestStateInput.struct_class = Types::TestStateInput
 
     TestStateOutput.add_member(:output, Shapes::ShapeRef.new(shape: SensitiveData, location_name: "output"))
@@ -1104,6 +1132,11 @@ module Aws::States
     ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     ValidationException.add_member(:reason, Shapes::ShapeRef.new(shape: ValidationExceptionReason, location_name: "reason"))
     ValidationException.struct_class = Types::ValidationException
+
+    VariableNameList.member = Shapes::ShapeRef.new(shape: VariableName)
+
+    VariableReferences.key = Shapes::ShapeRef.new(shape: StateName)
+    VariableReferences.value = Shapes::ShapeRef.new(shape: VariableNameList)
 
 
     # @api private

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.144.0 (2024-11-22)
+------------------
+
+* Feature - Add ProvisionedPollerConfig to Lambda event-source-mapping API.
+
 1.143.0 (2024-11-21)
 ------------------
 

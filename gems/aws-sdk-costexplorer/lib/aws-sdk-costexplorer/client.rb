@@ -1036,8 +1036,9 @@ module Aws::CostExplorer
     #   resp.anomalies[0].root_causes[0].service #=> String
     #   resp.anomalies[0].root_causes[0].region #=> String
     #   resp.anomalies[0].root_causes[0].linked_account #=> String
-    #   resp.anomalies[0].root_causes[0].usage_type #=> String
     #   resp.anomalies[0].root_causes[0].linked_account_name #=> String
+    #   resp.anomalies[0].root_causes[0].usage_type #=> String
+    #   resp.anomalies[0].root_causes[0].impact.contribution #=> Float
     #   resp.anomalies[0].anomaly_score.max_score #=> Float
     #   resp.anomalies[0].anomaly_score.current_score #=> Float
     #   resp.anomalies[0].impact.max_impact #=> Float
@@ -4619,8 +4620,7 @@ module Aws::CostExplorer
       req.send_request(options)
     end
 
-    # Lists the commitment purchase analyses for your account based on the
-    # last 30 days.
+    # Lists the commitment purchase analyses for your account.
     #
     # @option params [String] :analysis_status
     #   The status of the analysis.
@@ -4974,7 +4974,6 @@ module Aws::CostExplorer
     # Specifies the parameters of a planned commitment purchase and starts
     # the generation of the analysis. This enables you to estimate the cost,
     # coverage, and utilization impact of your planned commitment purchases.
-    # You can request up to 20 analysis runs per day.
     #
     # @option params [required, Types::CommitmentPurchaseAnalysisConfiguration] :commitment_purchase_analysis_configuration
     #   The configuration for the commitment purchase analysis.
@@ -5550,7 +5549,7 @@ module Aws::CostExplorer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-costexplorer'
-      context[:gem_version] = '1.116.0'
+      context[:gem_version] = '1.117.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

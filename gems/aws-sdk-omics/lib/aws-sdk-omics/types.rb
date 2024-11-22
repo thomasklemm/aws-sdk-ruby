@@ -1083,6 +1083,9 @@ module Aws::Omics
     # @!attribute [rw] client_token
     #   To ensure that requests don't run multiple times, specify a unique
     #   token for each request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
     #   @return [String]
     #
     # @!attribute [rw] fallback_location
@@ -1094,6 +1097,15 @@ module Aws::Omics
     #   The ETag algorithm family to use for ingested read sets.
     #   @return [String]
     #
+    # @!attribute [rw] propagated_set_level_tags
+    #   The tags keys to propagate to the S3 objects associated with read
+    #   sets in the sequence store.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] s3_access_config
+    #   S3 access configuration parameters
+    #   @return [Types::S3AccessConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateSequenceStoreRequest AWS API Documentation
     #
     class CreateSequenceStoreRequest < Struct.new(
@@ -1103,7 +1115,9 @@ module Aws::Omics
       :tags,
       :client_token,
       :fallback_location,
-      :e_tag_algorithm_family)
+      :e_tag_algorithm_family,
+      :propagated_set_level_tags,
+      :s3_access_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1141,6 +1155,23 @@ module Aws::Omics
     #   The algorithm family of the ETag.
     #   @return [String]
     #
+    # @!attribute [rw] status
+    #   The status of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   The status message of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] propagated_set_level_tags
+    #   The tags keys to propagate to the S3 objects associated with read
+    #   sets in the sequence store.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] s3_access
+    #   The S3 access metadata of the sequence store.
+    #   @return [Types::SequenceStoreS3Access]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateSequenceStoreResponse AWS API Documentation
     #
     class CreateSequenceStoreResponse < Struct.new(
@@ -1151,7 +1182,11 @@ module Aws::Omics
       :sse_config,
       :creation_time,
       :fallback_location,
-      :e_tag_algorithm_family)
+      :e_tag_algorithm_family,
+      :status,
+      :status_message,
+      :propagated_set_level_tags,
+      :s3_access)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1496,6 +1531,22 @@ module Aws::Omics
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # @!attribute [rw] s3_access_point_arn
+    #   The S3 access point ARN that has the access policy.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteS3AccessPolicyRequest AWS API Documentation
+    #
+    class DeleteS3AccessPolicyRequest < Struct.new(
+      :s3_access_point_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteS3AccessPolicyResponse AWS API Documentation
+    #
+    class DeleteS3AccessPolicyResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] id
     #   The sequence store's ID.
@@ -3068,6 +3119,50 @@ module Aws::Omics
       include Aws::Structure
     end
 
+    # @!attribute [rw] s3_access_point_arn
+    #   The S3 access point ARN that has the access policy.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetS3AccessPolicyRequest AWS API Documentation
+    #
+    class GetS3AccessPolicyRequest < Struct.new(
+      :s3_access_point_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] s3_access_point_arn
+    #   The S3 access point ARN that has the access policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] store_id
+    #   The AWS-generated Sequence Store or Reference Store ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] store_type
+    #   The type of store associated with the access point.
+    #   @return [String]
+    #
+    # @!attribute [rw] update_time
+    #   The time when the policy was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] s3_access_policy
+    #   The current resource policy that controls S3 access on the store.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetS3AccessPolicyResponse AWS API Documentation
+    #
+    class GetS3AccessPolicyResponse < Struct.new(
+      :s3_access_point_arn,
+      :store_id,
+      :store_type,
+      :update_time,
+      :s3_access_policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] id
     #   The store's ID.
     #   @return [String]
@@ -3118,6 +3213,23 @@ module Aws::Omics
     #   The algorithm family of the ETag.
     #   @return [String]
     #
+    # @!attribute [rw] status
+    #   The status of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   The status message of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] propagated_set_level_tags
+    #   The tags keys to propagate to the S3 objects associated with read
+    #   sets in the sequence store.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] update_time
+    #   The last-updated time of the sequence store.
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetSequenceStoreResponse AWS API Documentation
     #
     class GetSequenceStoreResponse < Struct.new(
@@ -3129,7 +3241,11 @@ module Aws::Omics
       :creation_time,
       :fallback_location,
       :s3_access,
-      :e_tag_algorithm_family)
+      :e_tag_algorithm_family,
+      :status,
+      :status_message,
+      :propagated_set_level_tags,
+      :update_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4812,6 +4928,45 @@ module Aws::Omics
       include Aws::Structure
     end
 
+    # @!attribute [rw] s3_access_point_arn
+    #   The S3 access point ARN where you want to put the access policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_access_policy
+    #   The resource policy that controls S3 access to the store.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/PutS3AccessPolicyRequest AWS API Documentation
+    #
+    class PutS3AccessPolicyRequest < Struct.new(
+      :s3_access_point_arn,
+      :s3_access_policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] s3_access_point_arn
+    #   The S3 access point ARN that now has the access policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] store_id
+    #   The AWS-generated Sequence Store or Reference Store ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] store_type
+    #   The type of store associated with the access point.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/PutS3AccessPolicyResponse AWS API Documentation
+    #
+    class PutS3AccessPolicyResponse < Struct.new(
+      :s3_access_point_arn,
+      :store_id,
+      :store_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The ranges specified in the request are not valid.
     #
     # @!attribute [rw] message
@@ -5536,6 +5691,20 @@ module Aws::Omics
       include Aws::Structure
     end
 
+    # S3 access configuration parameters.
+    #
+    # @!attribute [rw] access_log_location
+    #   Location of the access logs.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/S3AccessConfig AWS API Documentation
+    #
+    class S3AccessConfig < Struct.new(
+      :access_log_location)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Details about a sequence.
     #
     # @!attribute [rw] total_read_count
@@ -5600,6 +5769,18 @@ module Aws::Omics
     #   The algorithm family of the ETag.
     #   @return [String]
     #
+    # @!attribute [rw] status
+    #   Status of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   The status message of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] update_time
+    #   The last-updated time of the Sequence Store.
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/SequenceStoreDetail AWS API Documentation
     #
     class SequenceStoreDetail < Struct.new(
@@ -5610,7 +5791,10 @@ module Aws::Omics
       :sse_config,
       :creation_time,
       :fallback_location,
-      :e_tag_algorithm_family)
+      :e_tag_algorithm_family,
+      :status,
+      :status_message,
+      :update_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5629,12 +5813,27 @@ module Aws::Omics
     #   The filter's end date.
     #   @return [Time]
     #
+    # @!attribute [rw] status
+    #   Filter results based on status.
+    #   @return [String]
+    #
+    # @!attribute [rw] updated_after
+    #   Filter results based on stores updated after the specified time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_before
+    #   Filter results based on stores updated before the specified time.
+    #   @return [Time]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/SequenceStoreFilter AWS API Documentation
     #
     class SequenceStoreFilter < Struct.new(
       :name,
       :created_after,
-      :created_before)
+      :created_before,
+      :status,
+      :updated_after,
+      :updated_before)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5650,11 +5849,16 @@ module Aws::Omics
     #   storing read sets.
     #   @return [String]
     #
+    # @!attribute [rw] access_log_location
+    #   Location of the access logs.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/SequenceStoreS3Access AWS API Documentation
     #
     class SequenceStoreS3Access < Struct.new(
       :s3_uri,
-      :s3_access_point_arn)
+      :s3_access_point_arn,
+      :access_log_location)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6777,6 +6981,128 @@ module Aws::Omics
       :max_runs,
       :max_duration,
       :max_gpus)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
+    #   The ID of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   A name for the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description for the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   To ensure that requests don't run multiple times, specify a unique
+    #   token for each request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] fallback_location
+    #   The S3 URI of a bucket and folder to store Read Sets that fail to
+    #   upload.
+    #   @return [String]
+    #
+    # @!attribute [rw] propagated_set_level_tags
+    #   The tags keys to propagate to the S3 objects associated with read
+    #   sets in the sequence store.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] s3_access_config
+    #   S3 access configuration parameters.
+    #   @return [Types::S3AccessConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateSequenceStoreRequest AWS API Documentation
+    #
+    class UpdateSequenceStoreRequest < Struct.new(
+      :id,
+      :name,
+      :description,
+      :client_token,
+      :fallback_location,
+      :propagated_set_level_tags,
+      :s3_access_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] id
+    #   The ID of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The ARN of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] sse_config
+    #   Server-side encryption (SSE) settings for a store.
+    #   @return [Types::SseConfig]
+    #
+    # @!attribute [rw] creation_time
+    #   The time when the store was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] update_time
+    #   The last-updated time of the Sequence Store.
+    #   @return [Time]
+    #
+    # @!attribute [rw] propagated_set_level_tags
+    #   The tags keys to propagate to the S3 objects associated with read
+    #   sets in the sequence store.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] status
+    #   The status of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   The status message of the sequence store.
+    #   @return [String]
+    #
+    # @!attribute [rw] fallback_location
+    #   The S3 URI of a bucket and folder to store Read Sets that fail to
+    #   upload.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_access
+    #   The S3 access metadata of the sequence store.
+    #   @return [Types::SequenceStoreS3Access]
+    #
+    # @!attribute [rw] e_tag_algorithm_family
+    #   The ETag algorithm family to use on ingested read sets.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateSequenceStoreResponse AWS API Documentation
+    #
+    class UpdateSequenceStoreResponse < Struct.new(
+      :id,
+      :arn,
+      :name,
+      :description,
+      :sse_config,
+      :creation_time,
+      :update_time,
+      :propagated_set_level_tags,
+      :status,
+      :status_message,
+      :fallback_location,
+      :s3_access,
+      :e_tag_algorithm_family)
       SENSITIVE = []
       include Aws::Structure
     end

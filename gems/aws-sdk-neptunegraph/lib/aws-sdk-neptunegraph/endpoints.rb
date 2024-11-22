@@ -12,6 +12,15 @@ module Aws::NeptuneGraph
   # @api private
   module Endpoints
 
+    class CancelExportTask
+      def self.build(context)
+        Aws::NeptuneGraph::EndpointParameters.create(
+          context.config,
+          api_type: "ControlPlane",
+        )
+      end
+    end
+
     class CancelImportTask
       def self.build(context)
         Aws::NeptuneGraph::EndpointParameters.create(
@@ -102,6 +111,15 @@ module Aws::NeptuneGraph
       end
     end
 
+    class GetExportTask
+      def self.build(context)
+        Aws::NeptuneGraph::EndpointParameters.create(
+          context.config,
+          api_type: "ControlPlane",
+        )
+      end
+    end
+
     class GetGraph
       def self.build(context)
         Aws::NeptuneGraph::EndpointParameters.create(
@@ -152,6 +170,15 @@ module Aws::NeptuneGraph
         Aws::NeptuneGraph::EndpointParameters.create(
           context.config,
           api_type: "DataPlane",
+        )
+      end
+    end
+
+    class ListExportTasks
+      def self.build(context)
+        Aws::NeptuneGraph::EndpointParameters.create(
+          context.config,
+          api_type: "ControlPlane",
         )
       end
     end
@@ -228,6 +255,15 @@ module Aws::NeptuneGraph
       end
     end
 
+    class StartExportTask
+      def self.build(context)
+        Aws::NeptuneGraph::EndpointParameters.create(
+          context.config,
+          api_type: "ControlPlane",
+        )
+      end
+    end
+
     class StartImportTask
       def self.build(context)
         Aws::NeptuneGraph::EndpointParameters.create(
@@ -267,6 +303,8 @@ module Aws::NeptuneGraph
 
     def self.parameters_for_operation(context)
       case context.operation_name
+      when :cancel_export_task
+        CancelExportTask.build(context)
       when :cancel_import_task
         CancelImportTask.build(context)
       when :cancel_query
@@ -287,6 +325,8 @@ module Aws::NeptuneGraph
         DeletePrivateGraphEndpoint.build(context)
       when :execute_query
         ExecuteQuery.build(context)
+      when :get_export_task
+        GetExportTask.build(context)
       when :get_graph
         GetGraph.build(context)
       when :get_graph_snapshot
@@ -299,6 +339,8 @@ module Aws::NeptuneGraph
         GetPrivateGraphEndpoint.build(context)
       when :get_query
         GetQuery.build(context)
+      when :list_export_tasks
+        ListExportTasks.build(context)
       when :list_graph_snapshots
         ListGraphSnapshots.build(context)
       when :list_graphs
@@ -315,6 +357,8 @@ module Aws::NeptuneGraph
         ResetGraph.build(context)
       when :restore_graph_from_snapshot
         RestoreGraphFromSnapshot.build(context)
+      when :start_export_task
+        StartExportTask.build(context)
       when :start_import_task
         StartImportTask.build(context)
       when :tag_resource

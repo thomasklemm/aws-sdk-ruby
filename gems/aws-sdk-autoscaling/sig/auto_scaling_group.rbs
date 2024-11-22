@@ -217,6 +217,7 @@ module Aws
                                     ]?,
                                     statistic: ("Average" | "Minimum" | "Maximum" | "SampleCount" | "Sum")?,
                                     unit: ::String?,
+                                    period: ::Integer?,
                                     metrics: Array[
                                       {
                                         id: ::String,
@@ -233,9 +234,11 @@ module Aws
                                             ]?
                                           },
                                           stat: ::String,
-                                          unit: ::String?
+                                          unit: ::String?,
+                                          period: ::Integer?
                                         }?,
                                         label: ::String?,
+                                        period: ::Integer?,
                                         return_data: bool?
                                       },
                                     ]?

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.92.0 (2024-11-22)
+------------------
+
+* Feature - ArchivePolicy attribute added to Archive and Replay feature
+
 1.91.0 (2024-11-18)
 ------------------
 

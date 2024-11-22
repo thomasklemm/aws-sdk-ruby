@@ -3143,13 +3143,18 @@ module Aws::ElasticLoadBalancingV2
     #   Indicates a shared trust stores association status.
     #   @return [String]
     #
+    # @!attribute [rw] advertise_trust_store_ca_names
+    #   Indicates whether trust store CA certificate names are advertised.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/MutualAuthenticationAttributes AWS API Documentation
     #
     class MutualAuthenticationAttributes < Struct.new(
       :mode,
       :trust_store_arn,
       :ignore_client_certificate_expiry,
-      :trust_store_association_status)
+      :trust_store_association_status,
+      :advertise_trust_store_ca_names)
       SENSITIVE = []
       include Aws::Structure
     end

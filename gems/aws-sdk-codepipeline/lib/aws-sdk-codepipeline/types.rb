@@ -379,6 +379,11 @@ module Aws::CodePipeline
     #   Services.
     #   @return [Types::ErrorDetails]
     #
+    # @!attribute [rw] log_stream_arn
+    #   The Amazon Resource Name (ARN) of the log stream for the action
+    #   compute.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/ActionExecution AWS API Documentation
     #
     class ActionExecution < Struct.new(
@@ -391,7 +396,8 @@ module Aws::CodePipeline
       :external_execution_id,
       :external_execution_url,
       :percent_complete,
-      :error_details)
+      :error_details,
+      :log_stream_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -584,13 +590,19 @@ module Aws::CodePipeline
     #   Represents information about an error in CodePipeline.
     #   @return [Types::ErrorDetails]
     #
+    # @!attribute [rw] log_stream_arn
+    #   The Amazon Resource Name (ARN) of the log stream for the action
+    #   compute.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/ActionExecutionResult AWS API Documentation
     #
     class ActionExecutionResult < Struct.new(
       :external_execution_id,
       :external_execution_summary,
       :external_execution_url,
-      :error_details)
+      :error_details,
+      :log_stream_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3918,6 +3930,11 @@ module Aws::CodePipeline
     #   request. The token for each open approval request can be obtained
     #   using the GetPipelineState action. It is used to validate that the
     #   approval request corresponding to this token is still valid.
+    #
+    #   For a pipeline where the execution mode is set to PARALLEL, the
+    #   token required to approve/reject approval request as detailed above
+    #   is not available. Instead, use the `externalExecutionId` from the
+    #   `GetPipelineState` action as the token in the approval request.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/PutApprovalResultInput AWS API Documentation

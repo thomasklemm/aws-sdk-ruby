@@ -227,6 +227,7 @@ module Aws::CodePipeline
     ListWebhookItem = Shapes::StructureShape.new(name: 'ListWebhookItem')
     ListWebhooksInput = Shapes::StructureShape.new(name: 'ListWebhooksInput')
     ListWebhooksOutput = Shapes::StructureShape.new(name: 'ListWebhooksOutput')
+    LogStreamARN = Shapes::StringShape.new(name: 'LogStreamARN')
     MatchEquals = Shapes::StringShape.new(name: 'MatchEquals')
     MaxBatchSize = Shapes::IntegerShape.new(name: 'MaxBatchSize')
     MaxPipelines = Shapes::IntegerShape.new(name: 'MaxPipelines')
@@ -503,6 +504,7 @@ module Aws::CodePipeline
     ActionExecution.add_member(:external_execution_url, Shapes::ShapeRef.new(shape: Url, location_name: "externalExecutionUrl"))
     ActionExecution.add_member(:percent_complete, Shapes::ShapeRef.new(shape: Percentage, location_name: "percentComplete"))
     ActionExecution.add_member(:error_details, Shapes::ShapeRef.new(shape: ErrorDetails, location_name: "errorDetails"))
+    ActionExecution.add_member(:log_stream_arn, Shapes::ShapeRef.new(shape: LogStreamARN, location_name: "logStreamARN"))
     ActionExecution.struct_class = Types::ActionExecution
 
     ActionExecutionDetail.add_member(:pipeline_execution_id, Shapes::ShapeRef.new(shape: PipelineExecutionId, location_name: "pipelineExecutionId"))
@@ -542,6 +544,7 @@ module Aws::CodePipeline
     ActionExecutionResult.add_member(:external_execution_summary, Shapes::ShapeRef.new(shape: ExternalExecutionSummary, location_name: "externalExecutionSummary"))
     ActionExecutionResult.add_member(:external_execution_url, Shapes::ShapeRef.new(shape: Url, location_name: "externalExecutionUrl"))
     ActionExecutionResult.add_member(:error_details, Shapes::ShapeRef.new(shape: ErrorDetails, location_name: "errorDetails"))
+    ActionExecutionResult.add_member(:log_stream_arn, Shapes::ShapeRef.new(shape: LogStreamARN, location_name: "logStreamARN"))
     ActionExecutionResult.struct_class = Types::ActionExecutionResult
 
     ActionNotFoundException.struct_class = Types::ActionNotFoundException

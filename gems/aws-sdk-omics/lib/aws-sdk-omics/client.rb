@@ -1156,12 +1156,22 @@ module Aws::Omics
     #   To ensure that requests don't run multiple times, specify a unique
     #   token for each request.
     #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
     # @option params [String] :fallback_location
     #   An S3 location that is used to store files that have failed a direct
     #   upload.
     #
     # @option params [String] :e_tag_algorithm_family
     #   The ETag algorithm family to use for ingested read sets.
+    #
+    # @option params [Array<String>] :propagated_set_level_tags
+    #   The tags keys to propagate to the S3 objects associated with read sets
+    #   in the sequence store.
+    #
+    # @option params [Types::S3AccessConfig] :s3_access_config
+    #   S3 access configuration parameters
     #
     # @return [Types::CreateSequenceStoreResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1173,6 +1183,10 @@ module Aws::Omics
     #   * {Types::CreateSequenceStoreResponse#creation_time #creation_time} => Time
     #   * {Types::CreateSequenceStoreResponse#fallback_location #fallback_location} => String
     #   * {Types::CreateSequenceStoreResponse#e_tag_algorithm_family #e_tag_algorithm_family} => String
+    #   * {Types::CreateSequenceStoreResponse#status #status} => String
+    #   * {Types::CreateSequenceStoreResponse#status_message #status_message} => String
+    #   * {Types::CreateSequenceStoreResponse#propagated_set_level_tags #propagated_set_level_tags} => Array&lt;String&gt;
+    #   * {Types::CreateSequenceStoreResponse#s3_access #s3_access} => Types::SequenceStoreS3Access
     #
     # @example Request syntax with placeholder values
     #
@@ -1189,6 +1203,10 @@ module Aws::Omics
     #     client_token: "ClientToken",
     #     fallback_location: "S3Destination",
     #     e_tag_algorithm_family: "MD5up", # accepts MD5up, SHA256up, SHA512up
+    #     propagated_set_level_tags: ["TagKey"],
+    #     s3_access_config: {
+    #       access_log_location: "AccessLogLocation",
+    #     },
     #   })
     #
     # @example Response structure
@@ -1202,6 +1220,13 @@ module Aws::Omics
     #   resp.creation_time #=> Time
     #   resp.fallback_location #=> String
     #   resp.e_tag_algorithm_family #=> String, one of "MD5up", "SHA256up", "SHA512up"
+    #   resp.status #=> String, one of "CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED"
+    #   resp.status_message #=> String
+    #   resp.propagated_set_level_tags #=> Array
+    #   resp.propagated_set_level_tags[0] #=> String
+    #   resp.s3_access.s3_uri #=> String
+    #   resp.s3_access.s3_access_point_arn #=> String
+    #   resp.s3_access.access_log_location #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateSequenceStore AWS API Documentation
     #
@@ -1602,6 +1627,28 @@ module Aws::Omics
     # @param [Hash] params ({})
     def delete_run_group(params = {}, options = {})
       req = build_request(:delete_run_group, params)
+      req.send_request(options)
+    end
+
+    # Deletes an access policy for the specified store.
+    #
+    # @option params [required, String] :s3_access_point_arn
+    #   The S3 access point ARN that has the access policy.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_s3_access_policy({
+    #     s3_access_point_arn: "S3AccessPointArn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteS3AccessPolicy AWS API Documentation
+    #
+    # @overload delete_s3_access_policy(params = {})
+    # @param [Hash] params ({})
+    def delete_s3_access_policy(params = {}, options = {})
+      req = build_request(:delete_s3_access_policy, params)
       req.send_request(options)
     end
 
@@ -2698,6 +2745,42 @@ module Aws::Omics
       req.send_request(options)
     end
 
+    # Retrieves details about an access policy on a given store.
+    #
+    # @option params [required, String] :s3_access_point_arn
+    #   The S3 access point ARN that has the access policy.
+    #
+    # @return [Types::GetS3AccessPolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetS3AccessPolicyResponse#s3_access_point_arn #s3_access_point_arn} => String
+    #   * {Types::GetS3AccessPolicyResponse#store_id #store_id} => String
+    #   * {Types::GetS3AccessPolicyResponse#store_type #store_type} => String
+    #   * {Types::GetS3AccessPolicyResponse#update_time #update_time} => Time
+    #   * {Types::GetS3AccessPolicyResponse#s3_access_policy #s3_access_policy} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_s3_access_policy({
+    #     s3_access_point_arn: "S3AccessPointArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.s3_access_point_arn #=> String
+    #   resp.store_id #=> String
+    #   resp.store_type #=> String, one of "SEQUENCE_STORE", "REFERENCE_STORE"
+    #   resp.update_time #=> Time
+    #   resp.s3_access_policy #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetS3AccessPolicy AWS API Documentation
+    #
+    # @overload get_s3_access_policy(params = {})
+    # @param [Hash] params ({})
+    def get_s3_access_policy(params = {}, options = {})
+      req = build_request(:get_s3_access_policy, params)
+      req.send_request(options)
+    end
+
     # Gets information about a sequence store.
     #
     # @option params [required, String] :id
@@ -2714,6 +2797,10 @@ module Aws::Omics
     #   * {Types::GetSequenceStoreResponse#fallback_location #fallback_location} => String
     #   * {Types::GetSequenceStoreResponse#s3_access #s3_access} => Types::SequenceStoreS3Access
     #   * {Types::GetSequenceStoreResponse#e_tag_algorithm_family #e_tag_algorithm_family} => String
+    #   * {Types::GetSequenceStoreResponse#status #status} => String
+    #   * {Types::GetSequenceStoreResponse#status_message #status_message} => String
+    #   * {Types::GetSequenceStoreResponse#propagated_set_level_tags #propagated_set_level_tags} => Array&lt;String&gt;
+    #   * {Types::GetSequenceStoreResponse#update_time #update_time} => Time
     #
     # @example Request syntax with placeholder values
     #
@@ -2733,7 +2820,13 @@ module Aws::Omics
     #   resp.fallback_location #=> String
     #   resp.s3_access.s3_uri #=> String
     #   resp.s3_access.s3_access_point_arn #=> String
+    #   resp.s3_access.access_log_location #=> String
     #   resp.e_tag_algorithm_family #=> String, one of "MD5up", "SHA256up", "SHA512up"
+    #   resp.status #=> String, one of "CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED"
+    #   resp.status_message #=> String
+    #   resp.propagated_set_level_tags #=> Array
+    #   resp.propagated_set_level_tags[0] #=> String
+    #   resp.update_time #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetSequenceStore AWS API Documentation
     #
@@ -3932,6 +4025,9 @@ module Aws::Omics
     #       name: "SequenceStoreName",
     #       created_after: Time.now,
     #       created_before: Time.now,
+    #       status: "CREATING", # accepts CREATING, ACTIVE, UPDATING, DELETING, FAILED
+    #       updated_after: Time.now,
+    #       updated_before: Time.now,
     #     },
     #   })
     #
@@ -3948,6 +4044,9 @@ module Aws::Omics
     #   resp.sequence_stores[0].creation_time #=> Time
     #   resp.sequence_stores[0].fallback_location #=> String
     #   resp.sequence_stores[0].e_tag_algorithm_family #=> String, one of "MD5up", "SHA256up", "SHA512up"
+    #   resp.sequence_stores[0].status #=> String, one of "CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED"
+    #   resp.sequence_stores[0].status_message #=> String
+    #   resp.sequence_stores[0].update_time #=> Time
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListSequenceStores AWS API Documentation
     #
@@ -4217,6 +4316,46 @@ module Aws::Omics
     # @param [Hash] params ({})
     def list_workflows(params = {}, options = {})
       req = build_request(:list_workflows, params)
+      req.send_request(options)
+    end
+
+    # Adds an access policy to the specified store.
+    #
+    # @option params [required, String] :s3_access_point_arn
+    #   The S3 access point ARN where you want to put the access policy.
+    #
+    # @option params [required, String] :s3_access_policy
+    #   The resource policy that controls S3 access to the store.
+    #
+    #   **SDK automatically handles json encoding and base64 encoding for you
+    #   when the required value (Hash, Array, etc.) is provided according to
+    #   the description.**
+    #
+    # @return [Types::PutS3AccessPolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutS3AccessPolicyResponse#s3_access_point_arn #s3_access_point_arn} => String
+    #   * {Types::PutS3AccessPolicyResponse#store_id #store_id} => String
+    #   * {Types::PutS3AccessPolicyResponse#store_type #store_type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_s3_access_policy({
+    #     s3_access_point_arn: "S3AccessPointArn", # required
+    #     s3_access_policy: "S3AccessPolicy", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.s3_access_point_arn #=> String
+    #   resp.store_id #=> String
+    #   resp.store_type #=> String, one of "SEQUENCE_STORE", "REFERENCE_STORE"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/PutS3AccessPolicy AWS API Documentation
+    #
+    # @overload put_s3_access_policy(params = {})
+    # @param [Hash] params ({})
+    def put_s3_access_policy(params = {}, options = {})
+      req = build_request(:put_s3_access_policy, params)
       req.send_request(options)
     end
 
@@ -4976,6 +5115,94 @@ module Aws::Omics
       req.send_request(options)
     end
 
+    # Update one or more parameters for the sequence store.
+    #
+    # @option params [required, String] :id
+    #   The ID of the sequence store.
+    #
+    # @option params [String] :name
+    #   A name for the sequence store.
+    #
+    # @option params [String] :description
+    #   A description for the sequence store.
+    #
+    # @option params [String] :client_token
+    #   To ensure that requests don't run multiple times, specify a unique
+    #   token for each request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [String] :fallback_location
+    #   The S3 URI of a bucket and folder to store Read Sets that fail to
+    #   upload.
+    #
+    # @option params [Array<String>] :propagated_set_level_tags
+    #   The tags keys to propagate to the S3 objects associated with read sets
+    #   in the sequence store.
+    #
+    # @option params [Types::S3AccessConfig] :s3_access_config
+    #   S3 access configuration parameters.
+    #
+    # @return [Types::UpdateSequenceStoreResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateSequenceStoreResponse#id #id} => String
+    #   * {Types::UpdateSequenceStoreResponse#arn #arn} => String
+    #   * {Types::UpdateSequenceStoreResponse#name #name} => String
+    #   * {Types::UpdateSequenceStoreResponse#description #description} => String
+    #   * {Types::UpdateSequenceStoreResponse#sse_config #sse_config} => Types::SseConfig
+    #   * {Types::UpdateSequenceStoreResponse#creation_time #creation_time} => Time
+    #   * {Types::UpdateSequenceStoreResponse#update_time #update_time} => Time
+    #   * {Types::UpdateSequenceStoreResponse#propagated_set_level_tags #propagated_set_level_tags} => Array&lt;String&gt;
+    #   * {Types::UpdateSequenceStoreResponse#status #status} => String
+    #   * {Types::UpdateSequenceStoreResponse#status_message #status_message} => String
+    #   * {Types::UpdateSequenceStoreResponse#fallback_location #fallback_location} => String
+    #   * {Types::UpdateSequenceStoreResponse#s3_access #s3_access} => Types::SequenceStoreS3Access
+    #   * {Types::UpdateSequenceStoreResponse#e_tag_algorithm_family #e_tag_algorithm_family} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_sequence_store({
+    #     id: "SequenceStoreId", # required
+    #     name: "SequenceStoreName",
+    #     description: "SequenceStoreDescription",
+    #     client_token: "ClientToken",
+    #     fallback_location: "S3Destination",
+    #     propagated_set_level_tags: ["TagKey"],
+    #     s3_access_config: {
+    #       access_log_location: "AccessLogLocation",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.id #=> String
+    #   resp.arn #=> String
+    #   resp.name #=> String
+    #   resp.description #=> String
+    #   resp.sse_config.type #=> String, one of "KMS"
+    #   resp.sse_config.key_arn #=> String
+    #   resp.creation_time #=> Time
+    #   resp.update_time #=> Time
+    #   resp.propagated_set_level_tags #=> Array
+    #   resp.propagated_set_level_tags[0] #=> String
+    #   resp.status #=> String, one of "CREATING", "ACTIVE", "UPDATING", "DELETING", "FAILED"
+    #   resp.status_message #=> String
+    #   resp.fallback_location #=> String
+    #   resp.s3_access.s3_uri #=> String
+    #   resp.s3_access.s3_access_point_arn #=> String
+    #   resp.s3_access.access_log_location #=> String
+    #   resp.e_tag_algorithm_family #=> String, one of "MD5up", "SHA256up", "SHA512up"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateSequenceStore AWS API Documentation
+    #
+    # @overload update_sequence_store(params = {})
+    # @param [Hash] params ({})
+    def update_sequence_store(params = {}, options = {})
+      req = build_request(:update_sequence_store, params)
+      req.send_request(options)
+    end
+
     # Updates a variant store.
     #
     # @option params [required, String] :name
@@ -5114,7 +5341,7 @@ module Aws::Omics
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-omics'
-      context[:gem_version] = '1.40.0'
+      context[:gem_version] = '1.41.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

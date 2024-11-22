@@ -32,6 +32,9 @@ module Aws
       class ExpiredCodeException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class FeatureUnavailableInTierException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class ForbiddenException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
@@ -52,6 +55,7 @@ module Aws
       end
       class InvalidParameterException < ::Aws::Errors::ServiceError
         def message: () -> ::String
+        def reason_code: () -> ::String
       end
       class InvalidPasswordException < ::Aws::Errors::ServiceError
         def message: () -> ::String
@@ -69,6 +73,9 @@ module Aws
         def message: () -> ::String
       end
       class MFAMethodNotFoundException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class ManagedLoginBrandingExistsException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
       class NotAuthorizedException < ::Aws::Errors::ServiceError
@@ -90,6 +97,9 @@ module Aws
         def message: () -> ::String
       end
       class SoftwareTokenMFANotFoundException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class TierChangeNotAllowedException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
       class TooManyFailedAttemptsException < ::Aws::Errors::ServiceError
@@ -135,6 +145,27 @@ module Aws
         def message: () -> ::String
       end
       class UsernameExistsException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class WebAuthnChallengeNotFoundException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class WebAuthnClientMismatchException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class WebAuthnConfigurationMissingException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class WebAuthnCredentialNotSupportedException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class WebAuthnNotEnabledException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class WebAuthnOriginNotAllowedException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class WebAuthnRelyingPartyMismatchException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
     end

@@ -1615,12 +1615,12 @@
                     "foo": {
                         "shape": "String",
                         "location": "header",
-                        "locationName": "X-Foo"
+                        "locationName": "x-foo"
                     },
                     "fooMap": {
                         "shape": "StringMap",
                         "location": "headers",
-                        "locationName": "X-Foo-"
+                        "locationName": "x-foo-"
                     }
                 }
             },
@@ -1656,8 +1656,8 @@
                 "params": {
                     "foo": "Foo",
                     "fooMap": {
-                        "Abc": "Abc value",
-                        "Def": "Def value"
+                        "abc": "Abc value",
+                        "def": "Def value"
                     }
                 },
                 "serialized": {
@@ -1665,9 +1665,9 @@
                     "uri": "/HttpPrefixHeaders",
                     "body": "",
                     "headers": {
-                        "X-Foo": "Foo",
-                        "X-Foo-Abc": "Abc value",
-                        "X-Foo-Def": "Def value"
+                        "x-foo": "Foo",
+                        "x-foo-abc": "Abc value",
+                        "x-foo-def": "Def value"
                     }
                 }
             },
@@ -1695,7 +1695,7 @@
                     "uri": "/HttpPrefixHeaders",
                     "body": "",
                     "headers": {
-                        "X-Foo": "Foo"
+                        "x-foo": "Foo"
                     }
                 }
             },
@@ -1716,7 +1716,7 @@
                 "description": "Serialize prefix headers were the value is present but empty",
                 "params": {
                     "fooMap": {
-                        "Abc": ""
+                        "abc": ""
                     }
                 },
                 "serialized": {
@@ -1724,7 +1724,7 @@
                     "uri": "/HttpPrefixHeaders",
                     "body": "",
                     "headers": {
-                        "X-Foo-Abc": ""
+                        "x-foo-abc": ""
                     }
                 }
             }
@@ -4389,7 +4389,7 @@
                     "input": {
                         "shape": "NullAndEmptyHeadersIO"
                     },
-                    "documentation": "<p>Null and empty headers are not sent over the wire.</p>"
+                    "documentation": "<p>Null headers are not sent over the wire, empty headers are serialized to &quot;&quot;</p>"
                 },
                 "description": "Do not send null values, but do send empty strings and empty lists over the wire in headers",
                 "params": {

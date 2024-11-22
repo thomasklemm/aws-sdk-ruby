@@ -538,6 +538,45 @@ module Aws::SES
       include Aws::Structure
     end
 
+    # When included in a receipt rule, this action parses the received
+    # message and starts an email contact in Amazon Connect on your behalf.
+    #
+    # <note markdown="1"> When you receive emails, the maximum email size (including headers) is
+    # 40 MB. Additionally, emails may only have up to 10 attachments. Emails
+    # larger than 40 MB or with more than 10 attachments will be bounced.
+    #
+    #  </note>
+    #
+    # We recommend that you configure this action via Amazon Connect.
+    #
+    # @!attribute [rw] instance_arn
+    #   The Amazon Resource Name (ARN) for the Amazon Connect instance that
+    #   Amazon SES integrates with for starting email contacts.
+    #
+    #   For more information about Amazon Connect instances, see the [Amazon
+    #   Connect Administrator Guide][1]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/amazon-connect-instances.html
+    #   @return [String]
+    #
+    # @!attribute [rw] iam_role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role to be used by Amazon
+    #   Simple Email Service while starting email contacts to the Amazon
+    #   Connect instance. This role should have permission to invoke
+    #   `connect:StartEmailContact` for the given Amazon Connect instance.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/ConnectAction AWS API Documentation
+    #
+    class ConnectAction < Struct.new(
+      :instance_arn,
+      :iam_role_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents textual data, plus an optional character set specification.
     #
     # By default, the text must be 7-bit ASCII, due to the constraints of
@@ -3080,6 +3119,11 @@ module Aws::SES
     #   Publishes the email content within a notification to Amazon SNS.
     #   @return [Types::SNSAction]
     #
+    # @!attribute [rw] connect_action
+    #   Parses the received message and starts an email contact in Amazon
+    #   Connect on your behalf.
+    #   @return [Types::ConnectAction]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/ReceiptAction AWS API Documentation
     #
     class ReceiptAction < Struct.new(
@@ -3089,7 +3133,8 @@ module Aws::SES
       :lambda_action,
       :stop_action,
       :add_header_action,
-      :sns_action)
+      :sns_action,
+      :connect_action)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3527,27 +3572,29 @@ module Aws::SES
     # @!attribute [rw] kms_key_arn
     #   The customer managed key that Amazon SES should use to encrypt your
     #   emails before saving them to the Amazon S3 bucket. You can use the
-    #   default managed key or a custom managed key that you created in
-    #   Amazon Web Services KMS as follows:
+    #   Amazon Web Services managed key or a customer managed key that you
+    #   created in Amazon Web Services KMS as follows:
     #
-    #   * To use the default managed key, provide an ARN in the form of
+    #   * To use the Amazon Web Services managed key, provide an ARN in the
+    #     form of
     #     `arn:aws:kms:REGION:ACCOUNT-ID-WITHOUT-HYPHENS:alias/aws/ses`. For
     #     example, if your Amazon Web Services account ID is 123456789012
-    #     and you want to use the default managed key in the US West
-    #     (Oregon) Region, the ARN of the default master key would be
-    #     `arn:aws:kms:us-west-2:123456789012:alias/aws/ses`. If you use the
-    #     default managed key, you don't need to perform any extra steps to
-    #     give Amazon SES permission to use the key.
+    #     and you want to use the Amazon Web Services managed key in the US
+    #     West (Oregon) Region, the ARN of the Amazon Web Services managed
+    #     key would be `arn:aws:kms:us-west-2:123456789012:alias/aws/ses`.
+    #     If you use the Amazon Web Services managed key, you don't need to
+    #     perform any extra steps to give Amazon SES permission to use the
+    #     key.
     #
-    #   * To use a custom managed key that you created in Amazon Web
-    #     Services KMS, provide the ARN of the managed key and ensure that
-    #     you add a statement to your key's policy to give Amazon SES
-    #     permission to use it. For more information about giving
+    #   * To use a customer managed key that you created in Amazon Web
+    #     Services KMS, provide the ARN of the customer managed key and
+    #     ensure that you add a statement to your key's policy to give
+    #     Amazon SES permission to use it. For more information about giving
     #     permissions, see the [Amazon SES Developer Guide][1].
     #
     #   For more information about key policies, see the [Amazon Web
-    #   Services KMS Developer Guide][2]. If you do not specify a managed
-    #   key, Amazon SES does not encrypt your emails.
+    #   Services KMS Developer Guide][2]. If you do not specify an Amazon
+    #   Web Services KMS key, Amazon SES does not encrypt your emails.
     #
     #   Your mail is encrypted by Amazon SES using the Amazon S3 encryption
     #   client before the mail is submitted to Amazon S3 for storage. It is

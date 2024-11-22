@@ -40,6 +40,42 @@ module Aws::Chatbot
       include Aws::Structure
     end
 
+    # @!attribute [rw] resource
+    #   The resource Amazon Resource Name (ARN) to link.
+    #   @return [String]
+    #
+    # @!attribute [rw] chat_configuration
+    #   The channel configuration to associate with the resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/AssociateToConfigurationRequest AWS API Documentation
+    #
+    class AssociateToConfigurationRequest < Struct.new(
+      :resource,
+      :chat_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/AssociateToConfigurationResult AWS API Documentation
+    #
+    class AssociateToConfigurationResult < Aws::EmptyStructure; end
+
+    # A listing of an association with a channel configuration.
+    #
+    # @!attribute [rw] resource
+    #   The Amazon Resource Name (ARN) of the resource (for example, a
+    #   custom action).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/AssociationListing AWS API Documentation
+    #
+    class AssociationListing < Struct.new(
+      :resource)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An AWS Chatbot configuration for Amazon Chime.
     #
     # @!attribute [rw] webhook_description
@@ -55,7 +91,7 @@ module Aws::Chatbot
     #   @return [String]
     #
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the ChimeWebhookConfiguration.
+    #   The Amazon Resource Name (ARN) of the ChimeWebhookConfiguration.
     #   @return [String]
     #
     # @!attribute [rw] iam_role_arn
@@ -257,6 +293,71 @@ module Aws::Chatbot
     #
     class CreateChimeWebhookConfigurationResult < Struct.new(
       :webhook_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] definition
+    #   The definition of the command to run when invoked as an alias or as
+    #   an action button.
+    #   @return [Types::CustomActionDefinition]
+    #
+    # @!attribute [rw] alias_name
+    #   The name used to invoke this action in a chat channel. For example,
+    #   `@aws run my-alias`.
+    #   @return [String]
+    #
+    # @!attribute [rw] attachments
+    #   Defines when this custom action button should be attached to a
+    #   notification.
+    #   @return [Array<Types::CustomActionAttachment>]
+    #
+    # @!attribute [rw] tags
+    #   A map of tags assigned to a resource. A tag is a string-to-string
+    #   map of key-value pairs.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. Idempotency ensures that an API request
+    #   completes only once. With an idempotent request, if the original
+    #   request completes successfully, subsequent retries with the same
+    #   client token returns the result from the original successful
+    #   request.
+    #
+    #   If you do not specify a client token, one is automatically generated
+    #   by the SDK.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] action_name
+    #   The name of the custom action. This name is included in the Amazon
+    #   Resource Name (ARN).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/CreateCustomActionRequest AWS API Documentation
+    #
+    class CreateCustomActionRequest < Struct.new(
+      :definition,
+      :alias_name,
+      :attachments,
+      :tags,
+      :client_token,
+      :action_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] custom_action_arn
+    #   The fully defined ARN of the custom action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/CreateCustomActionResult AWS API Documentation
+    #
+    class CreateCustomActionResult < Struct.new(
+      :custom_action_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -476,6 +577,118 @@ module Aws::Chatbot
       include Aws::Structure
     end
 
+    # Represents a parameterized command that can be invoked as an alias or
+    # as a notification button in the chat client.
+    #
+    # @!attribute [rw] custom_action_arn
+    #   The fully defined Amazon Resource Name (ARN) of the custom action.
+    #   @return [String]
+    #
+    # @!attribute [rw] definition
+    #   The definition of the command to run when invoked an alias or as an
+    #   action button.
+    #   @return [Types::CustomActionDefinition]
+    #
+    # @!attribute [rw] alias_name
+    #   The name used to invoke this action in the chat channel. For
+    #   example, `@aws run my-alias`.
+    #   @return [String]
+    #
+    # @!attribute [rw] attachments
+    #   Defines when this custom action button should be attached to a
+    #   notification.
+    #   @return [Array<Types::CustomActionAttachment>]
+    #
+    # @!attribute [rw] action_name
+    #   The name of the custom action that is included in the ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/CustomAction AWS API Documentation
+    #
+    class CustomAction < Struct.new(
+      :custom_action_arn,
+      :definition,
+      :alias_name,
+      :attachments,
+      :action_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Defines when a custom action button should be attached to a
+    # notification.
+    #
+    # @!attribute [rw] notification_type
+    #   The type of notification that the custom action should be attached
+    #   to.
+    #   @return [String]
+    #
+    # @!attribute [rw] button_text
+    #   The text of the button that appears on the notification.
+    #   @return [String]
+    #
+    # @!attribute [rw] criteria
+    #   The criteria for when a button should be shown based on values in
+    #   the notification.
+    #   @return [Array<Types::CustomActionAttachmentCriteria>]
+    #
+    # @!attribute [rw] variables
+    #   The variables to extract from the notification.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/CustomActionAttachment AWS API Documentation
+    #
+    class CustomActionAttachment < Struct.new(
+      :notification_type,
+      :button_text,
+      :criteria,
+      :variables)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A criteria for when a button should be shown based on values in the
+    # notification
+    #
+    # @!attribute [rw] operator
+    #   The operation to perform on the named variable.
+    #   @return [String]
+    #
+    # @!attribute [rw] variable_name
+    #   The name of the variable to operate on.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   A value that is compared with the actual value of the variable based
+    #   on the behavior of the operator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/CustomActionAttachmentCriteria AWS API Documentation
+    #
+    class CustomActionAttachmentCriteria < Struct.new(
+      :operator,
+      :variable_name,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The definition of the command to run when invoked as an alias or as an
+    # action button.
+    #
+    # @!attribute [rw] command_text
+    #   The command string to run which may include variables by prefixing
+    #   with a dollar sign ($).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/CustomActionDefinition AWS API Documentation
+    #
+    class CustomActionDefinition < Struct.new(
+      :command_text)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # We can’t process your request right now because of a server issue. Try
     # again later.
     #
@@ -506,6 +719,22 @@ module Aws::Chatbot
     # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/DeleteChimeWebhookConfigurationResult AWS API Documentation
     #
     class DeleteChimeWebhookConfigurationResult < Aws::EmptyStructure; end
+
+    # @!attribute [rw] custom_action_arn
+    #   The fully defined ARN of the custom action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/DeleteCustomActionRequest AWS API Documentation
+    #
+    class DeleteCustomActionRequest < Struct.new(
+      :custom_action_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/DeleteCustomActionResult AWS API Documentation
+    #
+    class DeleteCustomActionResult < Aws::EmptyStructure; end
 
     # We can’t process your request right now because of a server issue. Try
     # again later.
@@ -745,7 +974,7 @@ module Aws::Chatbot
     #   @return [String]
     #
     # @!attribute [rw] chat_configuration_arn
-    #   An optional Amazon Resource Number (ARN) of a
+    #   An optional Amazon Resource Name (ARN) of a
     #   ChimeWebhookConfiguration to describe.
     #   @return [String]
     #
@@ -808,7 +1037,7 @@ module Aws::Chatbot
     #   @return [String]
     #
     # @!attribute [rw] chat_configuration_arn
-    #   An optional Amazon Resource Number (ARN) of a
+    #   An optional Amazon Resource Name (ARN) of a
     #   SlackChannelConfiguration to describe.
     #   @return [String]
     #
@@ -857,7 +1086,7 @@ module Aws::Chatbot
     end
 
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the SlackChannelConfiguration
+    #   The Amazon Resource Name (ARN) of the SlackChannelConfiguration
     #   associated with the user identities to describe.
     #   @return [String]
     #
@@ -962,6 +1191,28 @@ module Aws::Chatbot
       include Aws::Structure
     end
 
+    # @!attribute [rw] resource
+    #   The resource (for example, a custom action) Amazon Resource Name
+    #   (ARN) to unlink.
+    #   @return [String]
+    #
+    # @!attribute [rw] chat_configuration
+    #   The channel configuration the resource is being disassociated from.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/DisassociateFromConfigurationRequest AWS API Documentation
+    #
+    class DisassociateFromConfigurationRequest < Struct.new(
+      :resource,
+      :chat_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/DisassociateFromConfigurationResult AWS API Documentation
+    #
+    class DisassociateFromConfigurationResult < Aws::EmptyStructure; end
+
     # We can’t process your request right now because of a server issue. Try
     # again later.
     #
@@ -995,6 +1246,31 @@ module Aws::Chatbot
       include Aws::Structure
     end
 
+    # @!attribute [rw] custom_action_arn
+    #   Returns the fully defined Amazon Resource Name (ARN) of the custom
+    #   action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/GetCustomActionRequest AWS API Documentation
+    #
+    class GetCustomActionRequest < Struct.new(
+      :custom_action_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] custom_action
+    #   Returns the custom action.
+    #   @return [Types::CustomAction]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/GetCustomActionResult AWS API Documentation
+    #
+    class GetCustomActionResult < Struct.new(
+      :custom_action)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # We can’t process your request right now because of a server issue. Try
     # again later.
     #
@@ -1010,7 +1286,7 @@ module Aws::Chatbot
     end
 
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the
+    #   The Amazon Resource Name (ARN) of the
     #   MicrosoftTeamsChannelConfiguration to retrieve.
     #   @return [String]
     #
@@ -1089,6 +1365,97 @@ module Aws::Chatbot
       include Aws::Structure
     end
 
+    # @!attribute [rw] chat_configuration
+    #   The channel configuration to list associations for.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the specified MaxResults value, a token is
+    #   included in the response so that the remaining results can be
+    #   retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   An optional token returned from a prior request. Use this token for
+    #   pagination of results from this action. If this parameter is
+    #   specified, the response includes only results beyond the token, up
+    #   to the value specified by MaxResults.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/ListAssociationsRequest AWS API Documentation
+    #
+    class ListAssociationsRequest < Struct.new(
+      :chat_configuration,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] associations
+    #   The resources associated with this channel configuration.
+    #   @return [Array<Types::AssociationListing>]
+    #
+    # @!attribute [rw] next_token
+    #   An optional token returned from a prior request. Use this token for
+    #   pagination of results from this action. If this parameter is
+    #   specified, the response includes only results beyond the token, up
+    #   to the value specified by MaxResults.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/ListAssociationsResult AWS API Documentation
+    #
+    class ListAssociationsResult < Struct.new(
+      :associations,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the specified MaxResults value, a token is
+    #   included in the response so that the remaining results can be
+    #   retrieved.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   An optional token returned from a prior request. Use this token for
+    #   pagination of results from this action. If this parameter is
+    #   specified, the response includes only results beyond the token, up
+    #   to the value specified by MaxResults.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/ListCustomActionsRequest AWS API Documentation
+    #
+    class ListCustomActionsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] custom_actions
+    #   A list of custom actions.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] next_token
+    #   An optional token returned from a prior request. Use this token for
+    #   pagination of results from this action. If this parameter is
+    #   specified, the response includes only results beyond the token, up
+    #   to the value specified by MaxResults.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/ListCustomActionsResult AWS API Documentation
+    #
+    class ListCustomActionsResult < Struct.new(
+      :custom_actions,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # We can’t process your request right now because of a server issue. Try
     # again later.
     #
@@ -1162,7 +1529,7 @@ module Aws::Chatbot
     end
 
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the
+    #   The Amazon Resource Name (ARN) of the
     #   MicrosoftTeamsChannelConfiguration associated with the user
     #   identities to list.
     #   @return [String]
@@ -1212,7 +1579,7 @@ module Aws::Chatbot
     end
 
     # @!attribute [rw] resource_arn
-    #   The ARN you specified to list the tags of.
+    #   The ARN of the resource to list tags for.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/ListTagsForResourceRequest AWS API Documentation
@@ -1359,7 +1726,7 @@ module Aws::Chatbot
     #   @return [String]
     #
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the SlackChannelConfiguration.
+    #   The Amazon Resource Name (ARN) of the SlackChannelConfiguration.
     #   @return [String]
     #
     # @!attribute [rw] iam_role_arn
@@ -1449,7 +1816,7 @@ module Aws::Chatbot
     #   @return [String]
     #
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the SlackChannelConfiguration
+    #   The Amazon Resource Name (ARN) of the SlackChannelConfiguration
     #   associated with the user identity to delete.
     #   @return [String]
     #
@@ -1750,6 +2117,20 @@ module Aws::Chatbot
       include Aws::Structure
     end
 
+    # The request was rejected because it doesn't have valid credentials
+    # for the target resource.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/UnauthorizedException AWS API Documentation
+    #
+    class UnauthorizedException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   The value of the resource that will have the tag removed. An Amazon
     #   Resource Name (ARN) is an identifier for a specific AWS resource,
@@ -1844,7 +2225,7 @@ module Aws::Chatbot
     end
 
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the ChimeWebhookConfiguration to
+    #   The Amazon Resource Name (ARN) of the ChimeWebhookConfiguration to
     #   update.
     #   @return [String]
     #
@@ -1910,6 +2291,48 @@ module Aws::Chatbot
       include Aws::Structure
     end
 
+    # @!attribute [rw] custom_action_arn
+    #   The fully defined Amazon Resource Name (ARN) of the custom action.
+    #   @return [String]
+    #
+    # @!attribute [rw] definition
+    #   The definition of the command to run when invoked as an alias or as
+    #   an action button.
+    #   @return [Types::CustomActionDefinition]
+    #
+    # @!attribute [rw] alias_name
+    #   The name used to invoke this action in the chat channel. For
+    #   example, `@aws run my-alias`.
+    #   @return [String]
+    #
+    # @!attribute [rw] attachments
+    #   Defines when this custom action button should be attached to a
+    #   notification.
+    #   @return [Array<Types::CustomActionAttachment>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/UpdateCustomActionRequest AWS API Documentation
+    #
+    class UpdateCustomActionRequest < Struct.new(
+      :custom_action_arn,
+      :definition,
+      :alias_name,
+      :attachments)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] custom_action_arn
+    #   The fully defined ARN of the custom action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/UpdateCustomActionResult AWS API Documentation
+    #
+    class UpdateCustomActionResult < Struct.new(
+      :custom_action_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # We can’t process your request right now because of a server issue. Try
     # again later.
     #
@@ -1925,7 +2348,7 @@ module Aws::Chatbot
     end
 
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the SlackChannelConfiguration to
+    #   The Amazon Resource Name (ARN) of the SlackChannelConfiguration to
     #   update.
     #   @return [String]
     #
@@ -2014,7 +2437,7 @@ module Aws::Chatbot
     end
 
     # @!attribute [rw] chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the TeamsChannelConfiguration to
+    #   The Amazon Resource Name (ARN) of the TeamsChannelConfiguration to
     #   update.
     #   @return [String]
     #

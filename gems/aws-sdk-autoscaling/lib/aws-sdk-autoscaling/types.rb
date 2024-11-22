@@ -1863,6 +1863,18 @@ module Aws::AutoScaling
     #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html
     #   @return [String]
     #
+    # @!attribute [rw] period
+    #   The period of the metric in seconds. The default value is 60.
+    #   Accepted values are 10, 30, and 60. For high resolution metric, set
+    #   the value to less than 60. For more information, see [Create a
+    #   target tracking policy using high-resolution metrics for faster
+    #   response][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/policy-creating-high-resolution-metrics.html
+    #   @return [Integer]
+    #
     # @!attribute [rw] metrics
     #   The metrics to include in the target tracking scaling policy, as a
     #   metric data query. This can include both raw metric and metric math
@@ -1877,6 +1889,7 @@ module Aws::AutoScaling
       :dimensions,
       :statistic,
       :unit,
+      :period,
       :metrics)
       SENSITIVE = []
       include Aws::Structure
@@ -7703,6 +7716,18 @@ module Aws::AutoScaling
     #   what the value represents.
     #   @return [String]
     #
+    # @!attribute [rw] period
+    #   The period of the metric in seconds. The default value is 60.
+    #   Accepted values are 10, 30, and 60. For high resolution metric, set
+    #   the value to less than 60. For more information, see [Create a
+    #   target tracking policy using high-resolution metrics for faster
+    #   response][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/policy-creating-high-resolution-metrics.html
+    #   @return [Integer]
+    #
     # @!attribute [rw] return_data
     #   Indicates whether to return the timestamps and raw data values of
     #   this metric.
@@ -7724,6 +7749,7 @@ module Aws::AutoScaling
       :expression,
       :metric_stat,
       :label,
+      :period,
       :return_data)
       SENSITIVE = []
       include Aws::Structure
@@ -7765,12 +7791,25 @@ module Aws::AutoScaling
     #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html
     #   @return [String]
     #
+    # @!attribute [rw] period
+    #   The period of the metric in seconds. The default value is 60.
+    #   Accepted values are 10, 30, and 60. For high resolution metric, set
+    #   the value to less than 60. For more information, see [Create a
+    #   target tracking policy using high-resolution metrics for faster
+    #   response][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/autoscaling/ec2/userguide/policy-creating-high-resolution-metrics.html
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/autoscaling-2011-01-01/TargetTrackingMetricStat AWS API Documentation
     #
     class TargetTrackingMetricStat < Struct.new(
       :metric,
       :stat,
-      :unit)
+      :unit,
+      :period)
       SENSITIVE = []
       include Aws::Structure
     end

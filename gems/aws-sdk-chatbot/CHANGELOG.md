@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.19.0 (2024-11-22)
+------------------
+
+* Feature - Adds support for programmatic management of custom actions and aliases which can be associated with channel configurations.
+
 1.18.0 (2024-10-18)
 ------------------
 

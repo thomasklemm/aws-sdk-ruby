@@ -167,16 +167,17 @@ module Aws::CognitoIdentityProvider
     class AdminInitiateAuthRequest
       attr_accessor user_pool_id: ::String
       attr_accessor client_id: ::String
-      attr_accessor auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH")
+      attr_accessor auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH" | "USER_AUTH")
       attr_accessor auth_parameters: ::Hash[::String, ::String]
       attr_accessor client_metadata: ::Hash[::String, ::String]
       attr_accessor analytics_metadata: Types::AnalyticsMetadataType
       attr_accessor context_data: Types::ContextDataType
-      SENSITIVE: [:client_id, :auth_parameters]
+      attr_accessor session: ::String
+      SENSITIVE: [:client_id, :auth_parameters, :session]
     end
 
     class AdminInitiateAuthResponse
-      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
       attr_accessor session: ::String
       attr_accessor challenge_parameters: ::Hash[::String, ::String]
       attr_accessor authentication_result: Types::AuthenticationResultType
@@ -255,7 +256,7 @@ module Aws::CognitoIdentityProvider
     class AdminRespondToAuthChallengeRequest
       attr_accessor user_pool_id: ::String
       attr_accessor client_id: ::String
-      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
       attr_accessor challenge_responses: ::Hash[::String, ::String]
       attr_accessor session: ::String
       attr_accessor analytics_metadata: Types::AnalyticsMetadataType
@@ -265,7 +266,7 @@ module Aws::CognitoIdentityProvider
     end
 
     class AdminRespondToAuthChallengeResponse
-      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
       attr_accessor session: ::String
       attr_accessor challenge_parameters: ::Hash[::String, ::String]
       attr_accessor authentication_result: Types::AuthenticationResultType
@@ -371,6 +372,15 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class AssetType
+      attr_accessor category: ("FAVICON_ICO" | "FAVICON_SVG" | "EMAIL_GRAPHIC" | "SMS_GRAPHIC" | "AUTH_APP_GRAPHIC" | "PASSWORD_GRAPHIC" | "PASSKEY_GRAPHIC" | "PAGE_HEADER_LOGO" | "PAGE_HEADER_BACKGROUND" | "PAGE_FOOTER_LOGO" | "PAGE_FOOTER_BACKGROUND" | "PAGE_BACKGROUND" | "FORM_BACKGROUND" | "FORM_LOGO" | "IDP_BUTTON_ICON")
+      attr_accessor color_mode: ("LIGHT" | "DARK" | "DYNAMIC")
+      attr_accessor extension: ("ICO" | "JPEG" | "PNG" | "SVG" | "WEBP")
+      attr_accessor bytes: ::String
+      attr_accessor resource_id: ::String
+      SENSITIVE: []
+    end
+
     class AssociateSoftwareTokenRequest
       attr_accessor access_token: ::String
       attr_accessor session: ::String
@@ -449,6 +459,15 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class CompleteWebAuthnRegistrationRequest
+      attr_accessor access_token: ::String
+      attr_accessor credential: untyped
+      SENSITIVE: [:access_token]
+    end
+
+    class CompleteWebAuthnRegistrationResponse < Aws::EmptyStructure
+    end
+
     class CompromisedCredentialsActionsType
       attr_accessor event_action: ("BLOCK" | "NO_ACTION")
       SENSITIVE: []
@@ -502,10 +521,13 @@ module Aws::CognitoIdentityProvider
       attr_accessor analytics_metadata: Types::AnalyticsMetadataType
       attr_accessor user_context_data: Types::UserContextDataType
       attr_accessor client_metadata: ::Hash[::String, ::String]
-      SENSITIVE: [:client_id, :secret_hash, :username, :user_context_data]
+      attr_accessor session: ::String
+      SENSITIVE: [:client_id, :secret_hash, :username, :user_context_data, :session]
     end
 
-    class ConfirmSignUpResponse < Aws::EmptyStructure
+    class ConfirmSignUpResponse
+      attr_accessor session: ::String
+      SENSITIVE: [:session]
     end
 
     class ContextDataType
@@ -546,6 +568,20 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class CreateManagedLoginBrandingRequest
+      attr_accessor user_pool_id: ::String
+      attr_accessor client_id: ::String
+      attr_accessor use_cognito_provided_values: bool
+      attr_accessor settings: untyped
+      attr_accessor assets: ::Array[Types::AssetType]
+      SENSITIVE: [:client_id]
+    end
+
+    class CreateManagedLoginBrandingResponse
+      attr_accessor managed_login_branding: Types::ManagedLoginBrandingType
+      SENSITIVE: []
+    end
+
     class CreateResourceServerRequest
       attr_accessor user_pool_id: ::String
       attr_accessor identifier: ::String
@@ -581,7 +617,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor token_validity_units: Types::TokenValidityUnitsType
       attr_accessor read_attributes: ::Array[::String]
       attr_accessor write_attributes: ::Array[::String]
-      attr_accessor explicit_auth_flows: ::Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH")]
+      attr_accessor explicit_auth_flows: ::Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH" | "ALLOW_USER_AUTH")]
       attr_accessor supported_identity_providers: ::Array[::String]
       attr_accessor callback_urls: ::Array[::String]
       attr_accessor logout_urls: ::Array[::String]
@@ -605,11 +641,13 @@ module Aws::CognitoIdentityProvider
     class CreateUserPoolDomainRequest
       attr_accessor domain: ::String
       attr_accessor user_pool_id: ::String
+      attr_accessor managed_login_version: ::Integer
       attr_accessor custom_domain_config: Types::CustomDomainConfigType
       SENSITIVE: []
     end
 
     class CreateUserPoolDomainResponse
+      attr_accessor managed_login_version: ::Integer
       attr_accessor cloud_front_domain: ::String
       SENSITIVE: []
     end
@@ -638,6 +676,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor user_pool_add_ons: Types::UserPoolAddOnsType
       attr_accessor username_configuration: Types::UsernameConfigurationType
       attr_accessor account_recovery_setting: Types::AccountRecoverySettingType
+      attr_accessor user_pool_tier: ("LITE" | "ESSENTIALS" | "PLUS")
       SENSITIVE: []
     end
 
@@ -672,6 +711,12 @@ module Aws::CognitoIdentityProvider
     class DeleteIdentityProviderRequest
       attr_accessor user_pool_id: ::String
       attr_accessor provider_name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteManagedLoginBrandingRequest
+      attr_accessor managed_login_branding_id: ::String
+      attr_accessor user_pool_id: ::String
       SENSITIVE: []
     end
 
@@ -715,6 +760,15 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: [:access_token]
     end
 
+    class DeleteWebAuthnCredentialRequest
+      attr_accessor access_token: ::String
+      attr_accessor credential_id: ::String
+      SENSITIVE: [:access_token]
+    end
+
+    class DeleteWebAuthnCredentialResponse < Aws::EmptyStructure
+    end
+
     class DescribeIdentityProviderRequest
       attr_accessor user_pool_id: ::String
       attr_accessor provider_name: ::String
@@ -723,6 +777,30 @@ module Aws::CognitoIdentityProvider
 
     class DescribeIdentityProviderResponse
       attr_accessor identity_provider: Types::IdentityProviderType
+      SENSITIVE: []
+    end
+
+    class DescribeManagedLoginBrandingByClientRequest
+      attr_accessor user_pool_id: ::String
+      attr_accessor client_id: ::String
+      attr_accessor return_merged_resources: bool
+      SENSITIVE: [:client_id]
+    end
+
+    class DescribeManagedLoginBrandingByClientResponse
+      attr_accessor managed_login_branding: Types::ManagedLoginBrandingType
+      SENSITIVE: []
+    end
+
+    class DescribeManagedLoginBrandingRequest
+      attr_accessor user_pool_id: ::String
+      attr_accessor managed_login_branding_id: ::String
+      attr_accessor return_merged_resources: bool
+      SENSITIVE: []
+    end
+
+    class DescribeManagedLoginBrandingResponse
+      attr_accessor managed_login_branding: Types::ManagedLoginBrandingType
       SENSITIVE: []
     end
 
@@ -820,6 +898,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor version: ::String
       attr_accessor status: ("CREATING" | "DELETING" | "UPDATING" | "ACTIVE" | "FAILED")
       attr_accessor custom_domain_config: Types::CustomDomainConfigType
+      attr_accessor managed_login_version: ::Integer
       SENSITIVE: []
     end
 
@@ -878,6 +957,11 @@ module Aws::CognitoIdentityProvider
     end
 
     class ExpiredCodeException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class FeatureUnavailableInTierException
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -1000,6 +1084,19 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class GetUserAuthFactorsRequest
+      attr_accessor access_token: ::String
+      SENSITIVE: [:access_token]
+    end
+
+    class GetUserAuthFactorsResponse
+      attr_accessor username: ::String
+      attr_accessor preferred_mfa_setting: ::String
+      attr_accessor user_mfa_setting_list: ::Array[::String]
+      attr_accessor configured_user_auth_factors: ::Array[("PASSWORD" | "EMAIL_OTP" | "SMS_OTP" | "WEB_AUTHN")]
+      SENSITIVE: [:username]
+    end
+
     class GetUserPoolMfaConfigRequest
       attr_accessor user_pool_id: ::String
       SENSITIVE: []
@@ -1010,6 +1107,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor software_token_mfa_configuration: Types::SoftwareTokenMfaConfigType
       attr_accessor email_mfa_configuration: Types::EmailMfaConfigType
       attr_accessor mfa_configuration: ("OFF" | "ON" | "OPTIONAL")
+      attr_accessor web_authn_configuration: Types::WebAuthnConfigurationType
       SENSITIVE: []
     end
 
@@ -1070,20 +1168,22 @@ module Aws::CognitoIdentityProvider
     end
 
     class InitiateAuthRequest
-      attr_accessor auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH")
+      attr_accessor auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH" | "USER_AUTH")
       attr_accessor auth_parameters: ::Hash[::String, ::String]
       attr_accessor client_metadata: ::Hash[::String, ::String]
       attr_accessor client_id: ::String
       attr_accessor analytics_metadata: Types::AnalyticsMetadataType
       attr_accessor user_context_data: Types::UserContextDataType
-      SENSITIVE: [:auth_parameters, :client_id, :user_context_data]
+      attr_accessor session: ::String
+      SENSITIVE: [:auth_parameters, :client_id, :user_context_data, :session]
     end
 
     class InitiateAuthResponse
-      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
       attr_accessor session: ::String
       attr_accessor challenge_parameters: ::Hash[::String, ::String]
       attr_accessor authentication_result: Types::AuthenticationResultType
+      attr_accessor available_challenges: ::Array[("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")]
       SENSITIVE: [:session]
     end
 
@@ -1109,6 +1209,7 @@ module Aws::CognitoIdentityProvider
 
     class InvalidParameterException
       attr_accessor message: ::String
+      attr_accessor reason_code: ::String
       SENSITIVE: []
     end
 
@@ -1284,6 +1385,19 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class ListWebAuthnCredentialsRequest
+      attr_accessor access_token: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: [:access_token]
+    end
+
+    class ListWebAuthnCredentialsResponse
+      attr_accessor credentials: ::Array[Types::WebAuthnCredentialDescription]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class LogConfigurationType
       attr_accessor log_level: ("ERROR" | "INFO")
       attr_accessor event_source: ("userNotification" | "userAuthEvents")
@@ -1307,6 +1421,22 @@ module Aws::CognitoIdentityProvider
     class MFAOptionType
       attr_accessor delivery_medium: ("SMS" | "EMAIL")
       attr_accessor attribute_name: ::String
+      SENSITIVE: []
+    end
+
+    class ManagedLoginBrandingExistsException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ManagedLoginBrandingType
+      attr_accessor managed_login_branding_id: ::String
+      attr_accessor user_pool_id: ::String
+      attr_accessor use_cognito_provided_values: bool
+      attr_accessor settings: untyped
+      attr_accessor assets: ::Array[Types::AssetType]
+      attr_accessor creation_date: ::Time
+      attr_accessor last_modified_date: ::Time
       SENSITIVE: []
     end
 
@@ -1440,7 +1570,7 @@ module Aws::CognitoIdentityProvider
 
     class RespondToAuthChallengeRequest
       attr_accessor client_id: ::String
-      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
       attr_accessor session: ::String
       attr_accessor challenge_responses: ::Hash[::String, ::String]
       attr_accessor analytics_metadata: Types::AnalyticsMetadataType
@@ -1450,7 +1580,7 @@ module Aws::CognitoIdentityProvider
     end
 
     class RespondToAuthChallengeResponse
-      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+      attr_accessor challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
       attr_accessor session: ::String
       attr_accessor challenge_parameters: ::Hash[::String, ::String]
       attr_accessor authentication_result: Types::AuthenticationResultType
@@ -1565,6 +1695,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor software_token_mfa_configuration: Types::SoftwareTokenMfaConfigType
       attr_accessor email_mfa_configuration: Types::EmailMfaConfigType
       attr_accessor mfa_configuration: ("OFF" | "ON" | "OPTIONAL")
+      attr_accessor web_authn_configuration: Types::WebAuthnConfigurationType
       SENSITIVE: []
     end
 
@@ -1573,6 +1704,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor software_token_mfa_configuration: Types::SoftwareTokenMfaConfigType
       attr_accessor email_mfa_configuration: Types::EmailMfaConfigType
       attr_accessor mfa_configuration: ("OFF" | "ON" | "OPTIONAL")
+      attr_accessor web_authn_configuration: Types::WebAuthnConfigurationType
       SENSITIVE: []
     end
 
@@ -1583,6 +1715,11 @@ module Aws::CognitoIdentityProvider
     end
 
     class SetUserSettingsResponse < Aws::EmptyStructure
+    end
+
+    class SignInPolicyType
+      attr_accessor allowed_first_auth_factors: ::Array[("PASSWORD" | "EMAIL_OTP" | "SMS_OTP" | "WEB_AUTHN")]
+      SENSITIVE: []
     end
 
     class SignUpRequest
@@ -1602,7 +1739,8 @@ module Aws::CognitoIdentityProvider
       attr_accessor user_confirmed: bool
       attr_accessor code_delivery_details: Types::CodeDeliveryDetailsType
       attr_accessor user_sub: ::String
-      SENSITIVE: []
+      attr_accessor session: ::String
+      SENSITIVE: [:session]
     end
 
     class SmsConfigurationType
@@ -1645,6 +1783,16 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class StartWebAuthnRegistrationRequest
+      attr_accessor access_token: ::String
+      SENSITIVE: [:access_token]
+    end
+
+    class StartWebAuthnRegistrationResponse
+      attr_accessor credential_creation_options: untyped
+      SENSITIVE: []
+    end
+
     class StopUserImportJobRequest
       attr_accessor user_pool_id: ::String
       attr_accessor job_id: ::String
@@ -1669,6 +1817,11 @@ module Aws::CognitoIdentityProvider
     end
 
     class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class TierChangeNotAllowedException
+      attr_accessor message: ::String
+      SENSITIVE: []
     end
 
     class TokenValidityUnitsType
@@ -1788,6 +1941,20 @@ module Aws::CognitoIdentityProvider
       SENSITIVE: []
     end
 
+    class UpdateManagedLoginBrandingRequest
+      attr_accessor user_pool_id: ::String
+      attr_accessor managed_login_branding_id: ::String
+      attr_accessor use_cognito_provided_values: bool
+      attr_accessor settings: untyped
+      attr_accessor assets: ::Array[Types::AssetType]
+      SENSITIVE: []
+    end
+
+    class UpdateManagedLoginBrandingResponse
+      attr_accessor managed_login_branding: Types::ManagedLoginBrandingType
+      SENSITIVE: []
+    end
+
     class UpdateResourceServerRequest
       attr_accessor user_pool_id: ::String
       attr_accessor identifier: ::String
@@ -1823,7 +1990,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor token_validity_units: Types::TokenValidityUnitsType
       attr_accessor read_attributes: ::Array[::String]
       attr_accessor write_attributes: ::Array[::String]
-      attr_accessor explicit_auth_flows: ::Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH")]
+      attr_accessor explicit_auth_flows: ::Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH" | "ALLOW_USER_AUTH")]
       attr_accessor supported_identity_providers: ::Array[::String]
       attr_accessor callback_urls: ::Array[::String]
       attr_accessor logout_urls: ::Array[::String]
@@ -1847,11 +2014,13 @@ module Aws::CognitoIdentityProvider
     class UpdateUserPoolDomainRequest
       attr_accessor domain: ::String
       attr_accessor user_pool_id: ::String
+      attr_accessor managed_login_version: ::Integer
       attr_accessor custom_domain_config: Types::CustomDomainConfigType
       SENSITIVE: []
     end
 
     class UpdateUserPoolDomainResponse
+      attr_accessor managed_login_version: ::Integer
       attr_accessor cloud_front_domain: ::String
       SENSITIVE: []
     end
@@ -1876,6 +2045,8 @@ module Aws::CognitoIdentityProvider
       attr_accessor admin_create_user_config: Types::AdminCreateUserConfigType
       attr_accessor user_pool_add_ons: Types::UserPoolAddOnsType
       attr_accessor account_recovery_setting: Types::AccountRecoverySettingType
+      attr_accessor pool_name: ::String
+      attr_accessor user_pool_tier: ("LITE" | "ESSENTIALS" | "PLUS")
       SENSITIVE: []
     end
 
@@ -1961,7 +2132,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor token_validity_units: Types::TokenValidityUnitsType
       attr_accessor read_attributes: ::Array[::String]
       attr_accessor write_attributes: ::Array[::String]
-      attr_accessor explicit_auth_flows: ::Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH")]
+      attr_accessor explicit_auth_flows: ::Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH" | "ALLOW_USER_AUTH")]
       attr_accessor supported_identity_providers: ::Array[::String]
       attr_accessor callback_urls: ::Array[::String]
       attr_accessor logout_urls: ::Array[::String]
@@ -1989,6 +2160,7 @@ module Aws::CognitoIdentityProvider
 
     class UserPoolPolicyType
       attr_accessor password_policy: Types::PasswordPolicyType
+      attr_accessor sign_in_policy: Types::SignInPolicyType
       SENSITIVE: []
     end
 
@@ -2031,6 +2203,7 @@ module Aws::CognitoIdentityProvider
       attr_accessor username_configuration: Types::UsernameConfigurationType
       attr_accessor arn: ::String
       attr_accessor account_recovery_setting: Types::AccountRecoverySettingType
+      attr_accessor user_pool_tier: ("LITE" | "ESSENTIALS" | "PLUS")
       SENSITIVE: []
     end
 
@@ -2087,6 +2260,57 @@ module Aws::CognitoIdentityProvider
     end
 
     class VerifyUserAttributeResponse < Aws::EmptyStructure
+    end
+
+    class WebAuthnChallengeNotFoundException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WebAuthnClientMismatchException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WebAuthnConfigurationMissingException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WebAuthnConfigurationType
+      attr_accessor relying_party_id: ::String
+      attr_accessor user_verification: ("required" | "preferred")
+      SENSITIVE: []
+    end
+
+    class WebAuthnCredentialDescription
+      attr_accessor credential_id: ::String
+      attr_accessor friendly_credential_name: ::String
+      attr_accessor relying_party_id: ::String
+      attr_accessor authenticator_attachment: ::String
+      attr_accessor authenticator_transports: ::Array[::String]
+      attr_accessor created_at: ::Time
+      SENSITIVE: []
+    end
+
+    class WebAuthnCredentialNotSupportedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WebAuthnNotEnabledException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WebAuthnOriginNotAllowedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WebAuthnRelyingPartyMismatchException
+      attr_accessor message: ::String
+      SENSITIVE: []
     end
   end
 end

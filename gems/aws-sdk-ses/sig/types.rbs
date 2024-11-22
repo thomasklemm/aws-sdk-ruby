@@ -105,6 +105,12 @@ module Aws::SES
       SENSITIVE: []
     end
 
+    class ConnectAction
+      attr_accessor instance_arn: ::String
+      attr_accessor iam_role_arn: ::String
+      SENSITIVE: []
+    end
+
     class Content
       attr_accessor data: ::String
       attr_accessor charset: ::String
@@ -722,6 +728,7 @@ module Aws::SES
       attr_accessor stop_action: Types::StopAction
       attr_accessor add_header_action: Types::AddHeaderAction
       attr_accessor sns_action: Types::SNSAction
+      attr_accessor connect_action: Types::ConnectAction
       SENSITIVE: []
     end
 

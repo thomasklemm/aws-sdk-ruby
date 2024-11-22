@@ -497,6 +497,10 @@ module Aws::QuickSight
     #   A structure that describes the query execution options.
     #   @return [Types::QueryExecutionOptions]
     #
+    # @!attribute [rw] static_files
+    #   The static files for the definition.
+    #   @return [Array<Types::StaticFile>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/AnalysisDefinition AWS API Documentation
     #
     class AnalysisDefinition < Struct.new(
@@ -508,7 +512,8 @@ module Aws::QuickSight
       :column_configurations,
       :analysis_defaults,
       :options,
-      :query_execution_options)
+      :query_execution_options,
+      :static_files)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2198,7 +2203,9 @@ module Aws::QuickSight
     #
     # @!attribute [rw] body
     #   The bytes of the base64 encoded asset bundle import zip file. This
-    #   file can't exceed 20 MB.
+    #   file can't exceed 20 MB. If the size of the file that you want to
+    #   upload is more than 20 MB, add the file to your Amazon S3 bucket and
+    #   use `S3Uri` of the file for this operation.
     #
     #   If you are calling the API operations from the Amazon Web Services
     #   SDK for Java, JavaScript, Python, or PHP, the SDK encodes base64
@@ -2210,7 +2217,7 @@ module Aws::QuickSight
     # @!attribute [rw] s3_uri
     #   The Amazon S3 URI for an asset bundle import file that exists in an
     #   Amazon S3 bucket that the caller has read access to. The file must
-    #   be a zip format file and can't exceed 20 MB.
+    #   be a zip format file and can't exceed 1 GB.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/AssetBundleImportSource AWS API Documentation
@@ -2917,6 +2924,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/BarChartVisual AWS API Documentation
     #
     class BarChartVisual < Struct.new(
@@ -2925,7 +2936,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3510,6 +3522,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/BoxPlotVisual AWS API Documentation
     #
     class BoxPlotVisual < Struct.new(
@@ -3518,7 +3534,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4829,6 +4846,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ComboChartVisual AWS API Documentation
     #
     class ComboChartVisual < Struct.new(
@@ -4837,7 +4858,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7207,13 +7229,18 @@ module Aws::QuickSight
     #   that are assigned to the dataset.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] folder_arns
+    #   The Folder ARN of the folder that you want the topic to reside in.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateTopicRequest AWS API Documentation
     #
     class CreateTopicRequest < Struct.new(
       :aws_account_id,
       :topic_id,
       :topic,
-      :tags)
+      :tags,
+      :folder_arns)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7639,6 +7666,10 @@ module Aws::QuickSight
     #   can't create a visual without a dataset.
     #   @return [String]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CustomContentVisual AWS API Documentation
     #
     class CustomContentVisual < Struct.new(
@@ -7647,7 +7678,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :data_set_identifier)
+      :data_set_identifier,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8289,6 +8321,10 @@ module Aws::QuickSight
     #   An array of option definitions for a dashboard.
     #   @return [Types::AssetOptions]
     #
+    # @!attribute [rw] static_files
+    #   The static files for the definition.
+    #   @return [Array<Types::StaticFile>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DashboardVersionDefinition AWS API Documentation
     #
     class DashboardVersionDefinition < Struct.new(
@@ -8299,7 +8335,8 @@ module Aws::QuickSight
       :filter_groups,
       :column_configurations,
       :analysis_defaults,
-      :options)
+      :options,
+      :static_files)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13044,6 +13081,41 @@ module Aws::QuickSight
     end
 
     # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services account that contains the
+    #   dashboard QA configuration that you want described.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDashboardsQAConfigurationRequest AWS API Documentation
+    #
+    class DescribeDashboardsQAConfigurationRequest < Struct.new(
+      :aws_account_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dashboards_qa_status
+    #   The status of dashboards QA configuration that you want described.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDashboardsQAConfigurationResponse AWS API Documentation
+    #
+    class DescribeDashboardsQAConfigurationResponse < Struct.new(
+      :dashboards_qa_status,
+      :request_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
     #   The Amazon Web Services account ID.
     #   @return [String]
     #
@@ -15463,6 +15535,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/FilledMapVisual AWS API Documentation
     #
     class FilledMapVisual < Struct.new(
@@ -15472,7 +15548,8 @@ module Aws::QuickSight
       :chart_configuration,
       :conditional_formatting,
       :column_hierarchies,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16400,6 +16477,10 @@ module Aws::QuickSight
     #   family.
     #   @return [String]
     #
+    # @!attribute [rw] font_family
+    #   The font family that you want to use.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/FontConfiguration AWS API Documentation
     #
     class FontConfiguration < Struct.new(
@@ -16407,7 +16488,8 @@ module Aws::QuickSight
       :font_decoration,
       :font_color,
       :font_weight,
-      :font_style)
+      :font_style,
+      :font_family)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16419,10 +16501,15 @@ module Aws::QuickSight
     #   context.
     #   @return [String]
     #
+    # @!attribute [rw] absolute
+    #   The font size that you want to use in px.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/FontSize AWS API Documentation
     #
     class FontSize < Struct.new(
-      :relative)
+      :relative,
+      :absolute)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16938,6 +17025,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/FunnelChartVisual AWS API Documentation
     #
     class FunnelChartVisual < Struct.new(
@@ -16946,7 +17037,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -17174,6 +17266,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GaugeChartVisual AWS API Documentation
     #
     class GaugeChartVisual < Struct.new(
@@ -17182,7 +17278,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :conditional_formatting,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -17385,6 +17482,122 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # The definition for a categorical color.
+    #
+    # @!attribute [rw] category_data_colors
+    #   A list of categorical data colors for each category.
+    #   @return [Array<Types::GeospatialCategoricalDataColor>]
+    #
+    # @!attribute [rw] null_data_visibility
+    #   The state of visibility for null data.
+    #   @return [String]
+    #
+    # @!attribute [rw] null_data_settings
+    #   The null data visualization settings.
+    #   @return [Types::GeospatialNullDataSettings]
+    #
+    # @!attribute [rw] default_opacity
+    #   The default opacity of a categorical color.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialCategoricalColor AWS API Documentation
+    #
+    class GeospatialCategoricalColor < Struct.new(
+      :category_data_colors,
+      :null_data_visibility,
+      :null_data_settings,
+      :default_opacity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The categorical data color for a single category.
+    #
+    # @!attribute [rw] color
+    #   The color and opacity values for the category data color.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_value
+    #   The data value for the category data color.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialCategoricalDataColor AWS API Documentation
+    #
+    class GeospatialCategoricalDataColor < Struct.new(
+      :color,
+      :data_value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The geospatial radius for a circle.
+    #
+    # @!attribute [rw] radius
+    #   The positive value for the radius of a circle.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialCircleRadius AWS API Documentation
+    #
+    class GeospatialCircleRadius < Struct.new(
+      :radius)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The properties for a circle symbol style.
+    #
+    # @!attribute [rw] fill_color
+    #   The color and opacity values for the fill color.
+    #   @return [Types::GeospatialColor]
+    #
+    # @!attribute [rw] stroke_color
+    #   The color and opacity values for the stroke color.
+    #   @return [Types::GeospatialColor]
+    #
+    # @!attribute [rw] stroke_width
+    #   The width of the stroke (border).
+    #   @return [Types::GeospatialLineWidth]
+    #
+    # @!attribute [rw] circle_radius
+    #   The radius of the circle.
+    #   @return [Types::GeospatialCircleRadius]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialCircleSymbolStyle AWS API Documentation
+    #
+    class GeospatialCircleSymbolStyle < Struct.new(
+      :fill_color,
+      :stroke_color,
+      :stroke_width,
+      :circle_radius)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The visualization properties for solid, gradient, and categorical
+    # colors.
+    #
+    # @!attribute [rw] solid
+    #   The visualization properties for the solid color.
+    #   @return [Types::GeospatialSolidColor]
+    #
+    # @!attribute [rw] gradient
+    #   The visualization properties for the gradient color.
+    #   @return [Types::GeospatialGradientColor]
+    #
+    # @!attribute [rw] categorical
+    #   The visualization properties for the categorical color.
+    #   @return [Types::GeospatialCategoricalColor]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialColor AWS API Documentation
+    #
+    class GeospatialColor < Struct.new(
+      :solid,
+      :gradient,
+      :categorical)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The bound options (north, south, west, east) of the geospatial window
     # options.
     #
@@ -17411,6 +17624,68 @@ module Aws::QuickSight
       :south,
       :west,
       :east)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The data source properties for the geospatial data.
+    #
+    # @!attribute [rw] static_file_data_source
+    #   The static file data source properties for the geospatial data.
+    #   @return [Types::GeospatialStaticFileSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialDataSourceItem AWS API Documentation
+    #
+    class GeospatialDataSourceItem < Struct.new(
+      :static_file_data_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The definition for a gradient color.
+    #
+    # @!attribute [rw] step_colors
+    #   A list of gradient step colors for the gradient.
+    #   @return [Array<Types::GeospatialGradientStepColor>]
+    #
+    # @!attribute [rw] null_data_visibility
+    #   The state of visibility for null data.
+    #   @return [String]
+    #
+    # @!attribute [rw] null_data_settings
+    #   The null data visualization settings.
+    #   @return [Types::GeospatialNullDataSettings]
+    #
+    # @!attribute [rw] default_opacity
+    #   The default opacity for the gradient color.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialGradientColor AWS API Documentation
+    #
+    class GeospatialGradientColor < Struct.new(
+      :step_colors,
+      :null_data_visibility,
+      :null_data_settings,
+      :default_opacity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The gradient step color for a single step.
+    #
+    # @!attribute [rw] color
+    #   The color and opacity values for the gradient step color.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_value
+    #   The data value for the gradient step color.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialGradientStepColor AWS API Documentation
+    #
+    class GeospatialGradientStepColor < Struct.new(
+      :color,
+      :data_value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -17453,6 +17728,223 @@ module Aws::QuickSight
     #
     class GeospatialHeatmapDataColor < Struct.new(
       :color)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The color field that defines a gradient or categorical style.
+    #
+    # @!attribute [rw] color_dimensions_fields
+    #   A list of color dimension fields.
+    #   @return [Array<Types::DimensionField>]
+    #
+    # @!attribute [rw] color_values_fields
+    #   A list of color measure fields.
+    #   @return [Array<Types::MeasureField>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLayerColorField AWS API Documentation
+    #
+    class GeospatialLayerColorField < Struct.new(
+      :color_dimensions_fields,
+      :color_values_fields)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The definition properties for a geospatial layer.
+    #
+    # @!attribute [rw] point_layer
+    #   The definition for a point layer.
+    #   @return [Types::GeospatialPointLayer]
+    #
+    # @!attribute [rw] line_layer
+    #   The definition for a line layer.
+    #   @return [Types::GeospatialLineLayer]
+    #
+    # @!attribute [rw] polygon_layer
+    #   The definition for a polygon layer.
+    #   @return [Types::GeospatialPolygonLayer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLayerDefinition AWS API Documentation
+    #
+    class GeospatialLayerDefinition < Struct.new(
+      :point_layer,
+      :line_layer,
+      :polygon_layer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The properties for a single geospatial layer.
+    #
+    # @!attribute [rw] layer_id
+    #   The ID of the layer.
+    #   @return [String]
+    #
+    # @!attribute [rw] layer_type
+    #   The layer type.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source
+    #   The data source for the layer.
+    #   @return [Types::GeospatialDataSourceItem]
+    #
+    # @!attribute [rw] label
+    #   The label that is displayed for the layer.
+    #   @return [String]
+    #
+    # @!attribute [rw] visibility
+    #   The state of visibility for the layer.
+    #   @return [String]
+    #
+    # @!attribute [rw] layer_definition
+    #   The definition properties for a layer.
+    #   @return [Types::GeospatialLayerDefinition]
+    #
+    # @!attribute [rw] tooltip
+    #   The display options for the visual tooltip.
+    #   @return [Types::TooltipOptions]
+    #
+    # @!attribute [rw] join_definition
+    #   The join definition properties for a layer.
+    #   @return [Types::GeospatialLayerJoinDefinition]
+    #
+    # @!attribute [rw] actions
+    #   A list of custom actions for a layer.
+    #   @return [Array<Types::LayerCustomAction>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLayerItem AWS API Documentation
+    #
+    class GeospatialLayerItem < Struct.new(
+      :layer_id,
+      :layer_type,
+      :data_source,
+      :label,
+      :visibility,
+      :layer_definition,
+      :tooltip,
+      :join_definition,
+      :actions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The custom actions for a layer.
+    #
+    # @!attribute [rw] shape_key_field
+    #   The name of the field or property in the geospatial data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] dataset_key_field
+    #   The unaggregated field for a table.
+    #   @return [Types::UnaggregatedField]
+    #
+    # @!attribute [rw] color_field
+    #   The geospatial color field for the join definition.
+    #   @return [Types::GeospatialLayerColorField]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLayerJoinDefinition AWS API Documentation
+    #
+    class GeospatialLayerJoinDefinition < Struct.new(
+      :shape_key_field,
+      :dataset_key_field,
+      :color_field)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The map definition that defines map state, map style, and geospatial
+    # layers.
+    #
+    # @!attribute [rw] legend
+    #   The options for the legend setup of a visual.
+    #   @return [Types::LegendOptions]
+    #
+    # @!attribute [rw] map_layers
+    #   The geospatial layers to visualize on the map.
+    #   @return [Array<Types::GeospatialLayerItem>]
+    #
+    # @!attribute [rw] map_state
+    #   The map state properties for the map.
+    #   @return [Types::GeospatialMapState]
+    #
+    # @!attribute [rw] map_style
+    #   The map style properties for the map.
+    #   @return [Types::GeospatialMapStyle]
+    #
+    # @!attribute [rw] interactions
+    #   The general visual interactions setup for visual publish options
+    #   @return [Types::VisualInteractionOptions]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLayerMapConfiguration AWS API Documentation
+    #
+    class GeospatialLayerMapConfiguration < Struct.new(
+      :legend,
+      :map_layers,
+      :map_state,
+      :map_style,
+      :interactions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The geospatial Line layer.
+    #
+    # @!attribute [rw] style
+    #   The visualization style for a line layer.
+    #   @return [Types::GeospatialLineStyle]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLineLayer AWS API Documentation
+    #
+    class GeospatialLineLayer < Struct.new(
+      :style)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The visualization style for a line layer.
+    #
+    # @!attribute [rw] line_symbol_style
+    #   The symbol style for a line style.
+    #   @return [Types::GeospatialLineSymbolStyle]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLineStyle AWS API Documentation
+    #
+    class GeospatialLineStyle < Struct.new(
+      :line_symbol_style)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The symbol style for a line layer.
+    #
+    # @!attribute [rw] fill_color
+    #   The color and opacity values for the fill color.
+    #   @return [Types::GeospatialColor]
+    #
+    # @!attribute [rw] line_width
+    #   The width value for a line.
+    #   @return [Types::GeospatialLineWidth]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLineSymbolStyle AWS API Documentation
+    #
+    class GeospatialLineSymbolStyle < Struct.new(
+      :fill_color,
+      :line_width)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The width properties for a line.
+    #
+    # @!attribute [rw] line_width
+    #   The positive value for the width of a line.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialLineWidth AWS API Documentation
+    #
+    class GeospatialLineWidth < Struct.new(
+      :line_width)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -17549,6 +18041,50 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # The map state properties for a map.
+    #
+    # @!attribute [rw] bounds
+    #   The bound options (north, south, west, east) of the geospatial
+    #   window options.
+    #   @return [Types::GeospatialCoordinateBounds]
+    #
+    # @!attribute [rw] map_navigation
+    #   Enables or disables map navigation for a map.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialMapState AWS API Documentation
+    #
+    class GeospatialMapState < Struct.new(
+      :bounds,
+      :map_navigation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The map style properties for a map.
+    #
+    # @!attribute [rw] base_map_style
+    #   The selected base map style.
+    #   @return [String]
+    #
+    # @!attribute [rw] background_color
+    #   The background color and opacity values for a map.
+    #   @return [String]
+    #
+    # @!attribute [rw] base_map_visibility
+    #   The state of visibility for the base map.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialMapStyle AWS API Documentation
+    #
+    class GeospatialMapStyle < Struct.new(
+      :base_map_style,
+      :background_color,
+      :base_map_visibility)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The map style options of the geospatial map.
     #
     # @!attribute [rw] base_map_style
@@ -17599,6 +18135,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialMapVisual AWS API Documentation
     #
     class GeospatialMapVisual < Struct.new(
@@ -17607,7 +18147,74 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :column_hierarchies,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The properties for the visualization of null data.
+    #
+    # @!attribute [rw] symbol_style
+    #   The symbol style for null data.
+    #   @return [Types::GeospatialNullSymbolStyle]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialNullDataSettings AWS API Documentation
+    #
+    class GeospatialNullDataSettings < Struct.new(
+      :symbol_style)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The symbol style for null data.
+    #
+    # @!attribute [rw] fill_color
+    #   The color and opacity values for the fill color.
+    #   @return [String]
+    #
+    # @!attribute [rw] stroke_color
+    #   The color and opacity values for the stroke color.
+    #   @return [String]
+    #
+    # @!attribute [rw] stroke_width
+    #   The width of the border stroke.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialNullSymbolStyle AWS API Documentation
+    #
+    class GeospatialNullSymbolStyle < Struct.new(
+      :fill_color,
+      :stroke_color,
+      :stroke_width)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The geospatial Point layer.
+    #
+    # @!attribute [rw] style
+    #   The visualization style for a point layer.
+    #   @return [Types::GeospatialPointStyle]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialPointLayer AWS API Documentation
+    #
+    class GeospatialPointLayer < Struct.new(
+      :style)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The point style for a point layer.
+    #
+    # @!attribute [rw] circle_symbol_style
+    #   The circle symbol style for a point layer.
+    #   @return [Types::GeospatialCircleSymbolStyle]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialPointStyle AWS API Documentation
+    #
+    class GeospatialPointStyle < Struct.new(
+      :circle_symbol_style)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -17632,6 +18239,91 @@ module Aws::QuickSight
       :selected_point_style,
       :cluster_marker_configuration,
       :heatmap_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The geospatial polygon layer.
+    #
+    # @!attribute [rw] style
+    #   The visualization style for a polygon layer.
+    #   @return [Types::GeospatialPolygonStyle]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialPolygonLayer AWS API Documentation
+    #
+    class GeospatialPolygonLayer < Struct.new(
+      :style)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The polygon style for a polygon layer.
+    #
+    # @!attribute [rw] polygon_symbol_style
+    #   The polygon symbol style for a polygon layer.
+    #   @return [Types::GeospatialPolygonSymbolStyle]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialPolygonStyle AWS API Documentation
+    #
+    class GeospatialPolygonStyle < Struct.new(
+      :polygon_symbol_style)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The polygon symbol style for a polygon layer.
+    #
+    # @!attribute [rw] fill_color
+    #   The color and opacity values for the fill color.
+    #   @return [Types::GeospatialColor]
+    #
+    # @!attribute [rw] stroke_color
+    #   The color and opacity values for the stroke color.
+    #   @return [Types::GeospatialColor]
+    #
+    # @!attribute [rw] stroke_width
+    #   The width of the border stroke.
+    #   @return [Types::GeospatialLineWidth]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialPolygonSymbolStyle AWS API Documentation
+    #
+    class GeospatialPolygonSymbolStyle < Struct.new(
+      :fill_color,
+      :stroke_color,
+      :stroke_width)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The definition for a solid color.
+    #
+    # @!attribute [rw] color
+    #   The color and opacity values for the color.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   Enables and disables the view state of the color.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialSolidColor AWS API Documentation
+    #
+    class GeospatialSolidColor < Struct.new(
+      :color,
+      :state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The source properties for a geospatial static file.
+    #
+    # @!attribute [rw] static_file_id
+    #   The ID of the static file.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeospatialStaticFileSource AWS API Documentation
+    #
+    class GeospatialStaticFileSource < Struct.new(
+      :static_file_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -18336,6 +19028,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/HeatMapVisual AWS API Documentation
     #
     class HeatMapVisual < Struct.new(
@@ -18344,7 +19040,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :column_hierarchies,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -18493,6 +19190,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/HistogramVisual AWS API Documentation
     #
     class HistogramVisual < Struct.new(
@@ -18500,7 +19201,8 @@ module Aws::QuickSight
       :title,
       :subtitle,
       :chart_configuration,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -18644,6 +19346,112 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # A custom action defined on an image.
+    #
+    # @!attribute [rw] custom_action_id
+    #   The ID of the custom action.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the custom action.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the custom action.
+    #   @return [String]
+    #
+    # @!attribute [rw] trigger
+    #   The trigger of the `VisualCustomAction`.
+    #
+    #   Valid values are defined as follows:
+    #
+    #   * `CLICK`: Initiates a custom action by a left pointer click on a
+    #     data point.
+    #
+    #   * `MENU`: Initiates a custom action by right pointer click from the
+    #     menu.
+    #   @return [String]
+    #
+    # @!attribute [rw] action_operations
+    #   A list of `ImageCustomActionOperations`.
+    #
+    #   This is a union type structure. For this structure to be valid, only
+    #   one of the attributes can be defined.
+    #   @return [Array<Types::ImageCustomActionOperation>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ImageCustomAction AWS API Documentation
+    #
+    class ImageCustomAction < Struct.new(
+      :custom_action_id,
+      :name,
+      :status,
+      :trigger,
+      :action_operations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The operation that is defined by the custom action.
+    #
+    # This is a union type structure. For this structure to be valid, only
+    # one of the attributes can be defined.
+    #
+    # @!attribute [rw] navigation_operation
+    #   The navigation operation that navigates between different sheets in
+    #   the same analysis.
+    #
+    #   This is a union type structure. For this structure to be valid, only
+    #   one of the attributes can be defined.
+    #   @return [Types::CustomActionNavigationOperation]
+    #
+    # @!attribute [rw] url_operation
+    #   The URL operation that opens a link to another webpage.
+    #   @return [Types::CustomActionURLOperation]
+    #
+    # @!attribute [rw] set_parameters_operation
+    #   The set parameter operation that sets parameters in custom action.
+    #   @return [Types::CustomActionSetParametersOperation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ImageCustomActionOperation AWS API Documentation
+    #
+    class ImageCustomActionOperation < Struct.new(
+      :navigation_operation,
+      :url_operation,
+      :set_parameters_operation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The general image interactions setup for image publish options.
+    #
+    # @!attribute [rw] image_menu_option
+    #   The menu options for the image.
+    #   @return [Types::ImageMenuOption]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ImageInteractionOptions AWS API Documentation
+    #
+    class ImageInteractionOptions < Struct.new(
+      :image_menu_option)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The menu options for the interactions of an image.
+    #
+    # @!attribute [rw] availability_status
+    #   The availability status of the image menu. If the value of this
+    #   property is set to `ENABLED`, dashboard readers can interact with
+    #   the image menu.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ImageMenuOption AWS API Documentation
+    #
+    class ImageMenuOption < Struct.new(
+      :availability_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The image set.
     #
     # @!attribute [rw] original
@@ -18709,6 +19517,25 @@ module Aws::QuickSight
       class PublicUrl < ImageSource; end
       class S3Uri < ImageSource; end
       class Unknown < ImageSource; end
+    end
+
+    # A static file that contains an image.
+    #
+    # @!attribute [rw] static_file_id
+    #   The ID of the static file that contains an image.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   The source of the image static file.
+    #   @return [Types::StaticFileSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ImageStaticFile AWS API Documentation
+    #
+    class ImageStaticFile < Struct.new(
+      :static_file_id,
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # The incremental refresh configuration for a dataset.
@@ -18890,6 +19717,10 @@ module Aws::QuickSight
     #   The dataset that is used in the insight visual.
     #   @return [String]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/InsightVisual AWS API Documentation
     #
     class InsightVisual < Struct.new(
@@ -18898,7 +19729,8 @@ module Aws::QuickSight
       :subtitle,
       :insight_configuration,
       :actions,
-      :data_set_identifier)
+      :data_set_identifier,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19561,6 +20393,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/KPIVisual AWS API Documentation
     #
     class KPIVisual < Struct.new(
@@ -19570,7 +20406,8 @@ module Aws::QuickSight
       :chart_configuration,
       :conditional_formatting,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19623,6 +20460,128 @@ module Aws::QuickSight
       :visibility,
       :font_configuration,
       :custom_label)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A layer custom action.
+    #
+    # @!attribute [rw] custom_action_id
+    #   The ID of the custom action.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the custom action.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the `LayerCustomAction`.
+    #   @return [String]
+    #
+    # @!attribute [rw] trigger
+    #   The trigger of the `LayerCustomAction`.
+    #
+    #   Valid values are defined as follows:
+    #
+    #   * `DATA_POINT_CLICK`: Initiates a custom action by a left pointer
+    #     click on a data point.
+    #
+    #   * `DATA_POINT_MENU`: Initiates a custom action by right pointer
+    #     click from the menu.
+    #   @return [String]
+    #
+    # @!attribute [rw] action_operations
+    #   A list of `LayerCustomActionOperations`.
+    #
+    #   This is a union type structure. For this structure to be valid, only
+    #   one of the attributes can be defined.
+    #   @return [Array<Types::LayerCustomActionOperation>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/LayerCustomAction AWS API Documentation
+    #
+    class LayerCustomAction < Struct.new(
+      :custom_action_id,
+      :name,
+      :status,
+      :trigger,
+      :action_operations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The operation that is defined by the custom action.
+    #
+    # This is a union type structure. For this structure to be valid, only
+    # one of the attributes can be defined.
+    #
+    # @!attribute [rw] filter_operation
+    #   The filter operation that filters data included in a visual or in an
+    #   entire sheet.
+    #   @return [Types::CustomActionFilterOperation]
+    #
+    # @!attribute [rw] navigation_operation
+    #   The navigation operation that navigates between different sheets in
+    #   the same analysis.
+    #
+    #   This is a union type structure. For this structure to be valid, only
+    #   one of the attributes can be defined.
+    #   @return [Types::CustomActionNavigationOperation]
+    #
+    # @!attribute [rw] url_operation
+    #   The URL operation that opens a link to another webpage.
+    #   @return [Types::CustomActionURLOperation]
+    #
+    # @!attribute [rw] set_parameters_operation
+    #   The set parameter operation that sets parameters in custom action.
+    #   @return [Types::CustomActionSetParametersOperation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/LayerCustomActionOperation AWS API Documentation
+    #
+    class LayerCustomActionOperation < Struct.new(
+      :filter_operation,
+      :navigation_operation,
+      :url_operation,
+      :set_parameters_operation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A layer map visual.
+    #
+    # @!attribute [rw] visual_id
+    #   The ID of the visual.
+    #   @return [String]
+    #
+    # @!attribute [rw] title
+    #   The title label options for a visual.
+    #   @return [Types::VisualTitleLabelOptions]
+    #
+    # @!attribute [rw] subtitle
+    #   The subtitle label options for a visual.
+    #   @return [Types::VisualSubtitleLabelOptions]
+    #
+    # @!attribute [rw] chart_configuration
+    #   The configuration settings of the visual.
+    #   @return [Types::GeospatialLayerMapConfiguration]
+    #
+    # @!attribute [rw] data_set_identifier
+    #   The dataset that is used to create the layer map visual. You can't
+    #   create a visual without a dataset.
+    #   @return [String]
+    #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/LayerMapVisual AWS API Documentation
+    #
+    class LayerMapVisual < Struct.new(
+      :visual_id,
+      :title,
+      :subtitle,
+      :chart_configuration,
+      :data_set_identifier,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19719,6 +20678,10 @@ module Aws::QuickSight
     #   is used when rendering.
     #   @return [String]
     #
+    # @!attribute [rw] value_font_configuration
+    #   Configures the display properties of the given text.
+    #   @return [Types::FontConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/LegendOptions AWS API Documentation
     #
     class LegendOptions < Struct.new(
@@ -19726,7 +20689,8 @@ module Aws::QuickSight
       :title,
       :position,
       :width,
-      :height)
+      :height,
+      :value_font_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -20115,6 +21079,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/LineChartVisual AWS API Documentation
     #
     class LineChartVisual < Struct.new(
@@ -20123,7 +21091,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -22683,6 +23652,15 @@ module Aws::QuickSight
     #   An error that occurred when the namespace was created.
     #   @return [Types::NamespaceError]
     #
+    # @!attribute [rw] iam_identity_center_application_arn
+    #   The Amazon Resource Name (ARN) for the IAM Identity Center
+    #   application.
+    #   @return [String]
+    #
+    # @!attribute [rw] iam_identity_center_instance_arn
+    #   The Amazon Resource Name (ARN) for the IAM Identity Center instance.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/NamespaceInfoV2 AWS API Documentation
     #
     class NamespaceInfoV2 < Struct.new(
@@ -22691,7 +23669,9 @@ module Aws::QuickSight
       :capacity_region,
       :creation_status,
       :identity_store,
-      :namespace_error)
+      :namespace_error,
+      :iam_identity_center_application_arn,
+      :iam_identity_center_instance_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -24239,6 +25219,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PieChartVisual AWS API Documentation
     #
     class PieChartVisual < Struct.new(
@@ -24247,7 +25231,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -24790,6 +25775,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PivotTableVisual AWS API Documentation
     #
     class PivotTableVisual < Struct.new(
@@ -24798,7 +25787,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :conditional_formatting,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -24848,6 +25838,181 @@ module Aws::QuickSight
       :value_cell_style,
       :metric_header_cell_style,
       :total_aggregation_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A flexible visualization type that allows engineers to create new
+    # custom charts in Amazon QuickSight.
+    #
+    # @!attribute [rw] visual_id
+    #   The ID of the visual that you want to use.
+    #   @return [String]
+    #
+    # @!attribute [rw] plugin_arn
+    #   The Amazon Resource Name (ARN) that reflects the plugin and version.
+    #   @return [String]
+    #
+    # @!attribute [rw] title
+    #   The title label options for a visual.
+    #   @return [Types::VisualTitleLabelOptions]
+    #
+    # @!attribute [rw] subtitle
+    #   The subtitle label options for a visual.
+    #   @return [Types::VisualSubtitleLabelOptions]
+    #
+    # @!attribute [rw] chart_configuration
+    #   A description of the plugin field wells and their persisted
+    #   properties.
+    #   @return [Types::PluginVisualConfiguration]
+    #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisual AWS API Documentation
+    #
+    class PluginVisual < Struct.new(
+      :visual_id,
+      :plugin_arn,
+      :title,
+      :subtitle,
+      :chart_configuration,
+      :visual_content_alt_text)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The plugin visual configuration. This includes the field wells,
+    # sorting options, and persisted options of the plugin visual.
+    #
+    # @!attribute [rw] field_wells
+    #   The field wells configuration of the plugin visual.
+    #   @return [Array<Types::PluginVisualFieldWell>]
+    #
+    # @!attribute [rw] visual_options
+    #   The persisted properties of the plugin visual.
+    #   @return [Types::PluginVisualOptions]
+    #
+    # @!attribute [rw] sort_configuration
+    #   The sort configuration of the plugin visual.
+    #   @return [Types::PluginVisualSortConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisualConfiguration AWS API Documentation
+    #
+    class PluginVisualConfiguration < Struct.new(
+      :field_wells,
+      :visual_options,
+      :sort_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A collection of field wells for a plugin visual.
+    #
+    # @!attribute [rw] axis_name
+    #   The semantic axis name for the field well.
+    #   @return [String]
+    #
+    # @!attribute [rw] dimensions
+    #   A list of dimensions for the field well.
+    #   @return [Array<Types::DimensionField>]
+    #
+    # @!attribute [rw] measures
+    #   A list of measures that exist in the field well.
+    #   @return [Array<Types::MeasureField>]
+    #
+    # @!attribute [rw] unaggregated
+    #   A list of unaggregated fields that exist in the field well.
+    #   @return [Array<Types::UnaggregatedField>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisualFieldWell AWS API Documentation
+    #
+    class PluginVisualFieldWell < Struct.new(
+      :axis_name,
+      :dimensions,
+      :measures,
+      :unaggregated)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A query limits configuration.
+    #
+    # @!attribute [rw] items_limit
+    #   Determines how many values are be fetched at once.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisualItemsLimitConfiguration AWS API Documentation
+    #
+    class PluginVisualItemsLimitConfiguration < Struct.new(
+      :items_limit)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The options and persisted properties for the plugin visual.
+    #
+    # @!attribute [rw] visual_properties
+    #   The persisted properties and their values.
+    #   @return [Array<Types::PluginVisualProperty>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisualOptions AWS API Documentation
+    #
+    class PluginVisualOptions < Struct.new(
+      :visual_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The key value pair of the persisted property.
+    #
+    # @!attribute [rw] name
+    #   The name of the plugin visual property.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the plugin visual property.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisualProperty AWS API Documentation
+    #
+    class PluginVisualProperty < Struct.new(
+      :name,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Determines how the plugin visual sorts the data during query.
+    #
+    # @!attribute [rw] plugin_visual_table_query_sort
+    #   The table query sorting options for the plugin visual.
+    #   @return [Types::PluginVisualTableQuerySort]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisualSortConfiguration AWS API Documentation
+    #
+    class PluginVisualSortConfiguration < Struct.new(
+      :plugin_visual_table_query_sort)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The table query sorting options for the plugin visual.
+    #
+    # @!attribute [rw] row_sort
+    #   Determines how data is sorted in the response.
+    #   @return [Array<Types::FieldSortOptions>]
+    #
+    # @!attribute [rw] items_limit_configuration
+    #   The maximum amount of data to be returned by a query.
+    #   @return [Types::PluginVisualItemsLimitConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PluginVisualTableQuerySort AWS API Documentation
+    #
+    class PluginVisualTableQuerySort < Struct.new(
+      :row_sort,
+      :items_limit_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -25284,6 +26449,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/RadarChartVisual AWS API Documentation
     #
     class RadarChartVisual < Struct.new(
@@ -25292,7 +26461,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -27041,6 +28211,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SankeyDiagramVisual AWS API Documentation
     #
     class SankeyDiagramVisual < Struct.new(
@@ -27048,7 +28222,8 @@ module Aws::QuickSight
       :title,
       :subtitle,
       :chart_configuration,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -27272,6 +28447,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ScatterPlotVisual AWS API Documentation
     #
     class ScatterPlotVisual < Struct.new(
@@ -27280,7 +28459,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -27673,6 +28853,64 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services account that contains the topic
+    #   that you want to find.
+    #   @return [String]
+    #
+    # @!attribute [rw] filters
+    #   The filters that you want to use to search for the topic.
+    #   @return [Array<Types::TopicSearchFilter>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results, or null if there are no more
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to be returned per request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SearchTopicsRequest AWS API Documentation
+    #
+    class SearchTopicsRequest < Struct.new(
+      :aws_account_id,
+      :filters,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] topic_summary_list
+    #   A list of topic summaries that is returned by the search topic
+    #   request.
+    #   @return [Array<Types::TopicSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results, or null if there are no more
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SearchTopicsResponse AWS API Documentation
+    #
+    class SearchTopicsResponse < Struct.new(
+      :topic_summary_list,
+      :next_token,
+      :status,
+      :request_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The options that determine the presentation of the secondary value of
     # a KPI visual.
     #
@@ -28059,11 +29297,16 @@ module Aws::QuickSight
     #   the Amazon QuickSight console.
     #   @return [String]
     #
+    # @!attribute [rw] images
+    #   A list of images on a sheet.
+    #   @return [Array<Types::SheetImage>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/Sheet AWS API Documentation
     #
     class Sheet < Struct.new(
       :sheet_id,
-      :name)
+      :name,
+      :images)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -28184,6 +29427,10 @@ module Aws::QuickSight
     #   The text boxes that are on a sheet.
     #   @return [Array<Types::SheetTextBox>]
     #
+    # @!attribute [rw] images
+    #   A list of images on a sheet.
+    #   @return [Array<Types::SheetImage>]
+    #
     # @!attribute [rw] layouts
     #   Layouts define how the components of a sheet are arranged.
     #
@@ -28219,6 +29466,7 @@ module Aws::QuickSight
       :filter_controls,
       :visuals,
       :text_boxes,
+      :images,
       :layouts,
       :sheet_control_layouts,
       :content_type)
@@ -28261,6 +29509,140 @@ module Aws::QuickSight
       :expression,
       :configuration_overrides)
       SENSITIVE = [:expression]
+      include Aws::Structure
+    end
+
+    # An image that is located on a sheet.
+    #
+    # @!attribute [rw] sheet_image_id
+    #   The ID of the sheet image.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   The source of the image.
+    #   @return [Types::SheetImageSource]
+    #
+    # @!attribute [rw] scaling
+    #   Determines how the image is scaled.
+    #   @return [Types::SheetImageScalingConfiguration]
+    #
+    # @!attribute [rw] tooltip
+    #   The tooltip to be shown when hovering over the image.
+    #   @return [Types::SheetImageTooltipConfiguration]
+    #
+    # @!attribute [rw] image_content_alt_text
+    #   The alt text for the image.
+    #   @return [String]
+    #
+    # @!attribute [rw] interactions
+    #   The general image interactions setup for an image.
+    #   @return [Types::ImageInteractionOptions]
+    #
+    # @!attribute [rw] actions
+    #   A list of custom actions that are configured for an image.
+    #   @return [Array<Types::ImageCustomAction>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SheetImage AWS API Documentation
+    #
+    class SheetImage < Struct.new(
+      :sheet_image_id,
+      :source,
+      :scaling,
+      :tooltip,
+      :image_content_alt_text,
+      :interactions,
+      :actions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Determines how the image is scaled
+    #
+    # @!attribute [rw] scaling_type
+    #   The scaling option to use when fitting the image inside the
+    #   container.
+    #
+    #   Valid values are defined as follows:
+    #
+    #   * `SCALE_TO_WIDTH`: The image takes up the entire width of the
+    #     container. The image aspect ratio is preserved.
+    #
+    #   * `SCALE_TO_HEIGHT`: The image takes up the entire height of the
+    #     container. The image aspect ratio is preserved.
+    #
+    #   * `SCALE_TO_CONTAINER`: The image takes up the entire width and
+    #     height of the container. The image aspect ratio is not preserved.
+    #
+    #   * `SCALE_NONE`: The image is displayed in its original size and is
+    #     not scaled to the container.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SheetImageScalingConfiguration AWS API Documentation
+    #
+    class SheetImageScalingConfiguration < Struct.new(
+      :scaling_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The source of the image.
+    #
+    # @!attribute [rw] sheet_image_static_file_source
+    #   The source of the static file that contains the image.
+    #   @return [Types::SheetImageStaticFileSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SheetImageSource AWS API Documentation
+    #
+    class SheetImageSource < Struct.new(
+      :sheet_image_static_file_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The source of the static file that contains the image.
+    #
+    # @!attribute [rw] static_file_id
+    #   The ID of the static file that contains the image.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SheetImageStaticFileSource AWS API Documentation
+    #
+    class SheetImageStaticFileSource < Struct.new(
+      :static_file_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The tooltip configuration for a sheet image.
+    #
+    # @!attribute [rw] tooltip_text
+    #   The text that appears in the tooltip.
+    #   @return [Types::SheetImageTooltipText]
+    #
+    # @!attribute [rw] visibility
+    #   The visibility of the tooltip.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SheetImageTooltipConfiguration AWS API Documentation
+    #
+    class SheetImageTooltipConfiguration < Struct.new(
+      :tooltip_text,
+      :visibility)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The text that appears in the sheet image tooltip.
+    #
+    # @!attribute [rw] plain_text
+    #   The plain text format.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SheetImageTooltipText AWS API Documentation
+    #
+    class SheetImageTooltipText < Struct.new(
+      :plain_text)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -28950,6 +30332,25 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # A static file that contains the geospatial data.
+    #
+    # @!attribute [rw] static_file_id
+    #   The ID of the spatial static file.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   The source of the spatial static file.
+    #   @return [Types::StaticFileSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/SpatialStaticFile AWS API Documentation
+    #
+    class SpatialStaticFile < Struct.new(
+      :static_file_id,
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The parameters for SQL Server.
     #
     # @!attribute [rw] host
@@ -29380,6 +30781,85 @@ module Aws::QuickSight
     #
     class StatePersistenceConfigurations < Struct.new(
       :enabled)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The static file.
+    #
+    # @!attribute [rw] image_static_file
+    #   The image static file.
+    #   @return [Types::ImageStaticFile]
+    #
+    # @!attribute [rw] spatial_static_file
+    #   The spacial static file.
+    #   @return [Types::SpatialStaticFile]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/StaticFile AWS API Documentation
+    #
+    class StaticFile < Struct.new(
+      :image_static_file,
+      :spatial_static_file)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The structure that contains the Amazon S3 location to download the
+    # static file from.
+    #
+    # @!attribute [rw] bucket_name
+    #   The name of the Amazon S3 bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] object_key
+    #   The identifier of the static file in the Amazon S3 bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] region
+    #   The Region of the Amazon S3 account that contains the bucket.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/StaticFileS3SourceOptions AWS API Documentation
+    #
+    class StaticFileS3SourceOptions < Struct.new(
+      :bucket_name,
+      :object_key,
+      :region)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The source of the static file.
+    #
+    # @!attribute [rw] url_options
+    #   The structure that contains the URL to download the static file
+    #   from.
+    #   @return [Types::StaticFileUrlSourceOptions]
+    #
+    # @!attribute [rw] s3_options
+    #   The structure that contains the Amazon S3 location to download the
+    #   static file from.
+    #   @return [Types::StaticFileS3SourceOptions]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/StaticFileSource AWS API Documentation
+    #
+    class StaticFileSource < Struct.new(
+      :url_options,
+      :s3_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The structure that contains the URL to download the static file from.
+    #
+    # @!attribute [rw] url
+    #   The URL to download the static file from.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/StaticFileUrlSourceOptions AWS API Documentation
+    #
+    class StaticFileUrlSourceOptions < Struct.new(
+      :url)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -30262,6 +31742,10 @@ module Aws::QuickSight
     #   The list of custom actions that are configured for a visual.
     #   @return [Array<Types::VisualCustomAction>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TableVisual AWS API Documentation
     #
     class TableVisual < Struct.new(
@@ -30270,7 +31754,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :conditional_formatting,
-      :actions)
+      :actions,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -30677,6 +32162,10 @@ module Aws::QuickSight
     #   A structure that describes the query execution options.
     #   @return [Types::QueryExecutionOptions]
     #
+    # @!attribute [rw] static_files
+    #   The static files for the definition.
+    #   @return [Array<Types::StaticFile>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TemplateVersionDefinition AWS API Documentation
     #
     class TemplateVersionDefinition < Struct.new(
@@ -30688,7 +32177,8 @@ module Aws::QuickSight
       :column_configurations,
       :analysis_defaults,
       :options,
-      :query_execution_options)
+      :query_execution_options,
+      :static_files)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -32589,6 +34079,30 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # The filter that is used to search for a topic.
+    #
+    # @!attribute [rw] operator
+    #   The operator like equals or like.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the topic search filter.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the topic search filter.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TopicSearchFilter AWS API Documentation
+    #
+    class TopicSearchFilter < Struct.new(
+      :operator,
+      :name,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A structure that represents a singular filter constant, used in
     # filters to specify a single value to match against.
     #
@@ -33020,6 +34534,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/TreeMapVisual AWS API Documentation
     #
     class TreeMapVisual < Struct.new(
@@ -33028,7 +34546,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -34115,6 +35634,47 @@ module Aws::QuickSight
       :creation_status,
       :status,
       :request_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services account that contains the
+    #   dashboard QA configuration that you want to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] dashboards_qa_status
+    #   The status of dashboards QA configuration that you want to update.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDashboardsQAConfigurationRequest AWS API Documentation
+    #
+    class UpdateDashboardsQAConfigurationRequest < Struct.new(
+      :aws_account_id,
+      :dashboards_qa_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dashboards_qa_status
+    #   A value that indicates whether the dashboard QA configuration is
+    #   enabled or not.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDashboardsQAConfigurationResponse AWS API Documentation
+    #
+    class UpdateDashboardsQAConfigurationResponse < Struct.new(
+      :dashboards_qa_status,
+      :request_id,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -36384,6 +37944,10 @@ module Aws::QuickSight
     #   [1]: https://docs.aws.amazon.com/quicksight/latest/user/filled-maps.html
     #   @return [Types::FilledMapVisual]
     #
+    # @!attribute [rw] layer_map_visual
+    #   The properties for a layer map visual
+    #   @return [Types::LayerMapVisual]
+    #
     # @!attribute [rw] funnel_chart_visual
     #   A funnel chart.
     #
@@ -36509,6 +38073,10 @@ module Aws::QuickSight
     #   [1]: https://docs.aws.amazon.com/quicksight/latest/user/radar-chart.html
     #   @return [Types::RadarChartVisual]
     #
+    # @!attribute [rw] plugin_visual
+    #   The custom plugin visual type.
+    #   @return [Types::PluginVisual]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/Visual AWS API Documentation
     #
     class Visual < Struct.new(
@@ -36523,6 +38091,7 @@ module Aws::QuickSight
       :tree_map_visual,
       :geospatial_map_visual,
       :filled_map_visual,
+      :layer_map_visual,
       :funnel_chart_visual,
       :scatter_plot_visual,
       :combo_chart_visual,
@@ -36534,7 +38103,8 @@ module Aws::QuickSight
       :sankey_diagram_visual,
       :custom_content_visual,
       :empty_visual,
-      :radar_chart_visual)
+      :radar_chart_visual,
+      :plugin_visual)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -36969,6 +38539,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/WaterfallVisual AWS API Documentation
     #
     class WaterfallVisual < Struct.new(
@@ -36977,7 +38551,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -37199,6 +38774,10 @@ module Aws::QuickSight
     #   The column hierarchy that is used during drill-downs and drill-ups.
     #   @return [Array<Types::ColumnHierarchy>]
     #
+    # @!attribute [rw] visual_content_alt_text
+    #   The alt text for the visual.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/WordCloudVisual AWS API Documentation
     #
     class WordCloudVisual < Struct.new(
@@ -37207,7 +38786,8 @@ module Aws::QuickSight
       :subtitle,
       :chart_configuration,
       :actions,
-      :column_hierarchies)
+      :column_hierarchies,
+      :visual_content_alt_text)
       SENSITIVE = []
       include Aws::Structure
     end

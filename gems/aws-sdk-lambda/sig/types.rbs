@@ -182,6 +182,7 @@ module Aws::Lambda
       attr_accessor document_db_event_source_config: Types::DocumentDBEventSourceConfig
       attr_accessor kms_key_arn: ::String
       attr_accessor metrics_config: Types::EventSourceMappingMetricsConfig
+      attr_accessor provisioned_poller_config: Types::ProvisionedPollerConfig
       SENSITIVE: []
     end
 
@@ -412,6 +413,7 @@ module Aws::Lambda
       attr_accessor filter_criteria_error: Types::FilterCriteriaError
       attr_accessor event_source_mapping_arn: ::String
       attr_accessor metrics_config: Types::EventSourceMappingMetricsConfig
+      attr_accessor provisioned_poller_config: Types::ProvisionedPollerConfig
       SENSITIVE: []
     end
 
@@ -1098,6 +1100,12 @@ module Aws::Lambda
       SENSITIVE: []
     end
 
+    class ProvisionedPollerConfig
+      attr_accessor minimum_pollers: ::Integer
+      attr_accessor maximum_pollers: ::Integer
+      SENSITIVE: []
+    end
+
     class PublishLayerVersionRequest
       attr_accessor layer_name: ::String
       attr_accessor description: ::String
@@ -1409,6 +1417,7 @@ module Aws::Lambda
       attr_accessor document_db_event_source_config: Types::DocumentDBEventSourceConfig
       attr_accessor kms_key_arn: ::String
       attr_accessor metrics_config: Types::EventSourceMappingMetricsConfig
+      attr_accessor provisioned_poller_config: Types::ProvisionedPollerConfig
       SENSITIVE: []
     end
 

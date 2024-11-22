@@ -69,6 +69,8 @@ module Aws::NeptuneGraph
   #
   # | waiter_name                      | params                              | :delay   | :max_attempts |
   # | -------------------------------- | ----------------------------------- | -------- | ------------- |
+  # | export_task_cancelled            | {Client#get_export_task}            | 60       | 60            |
+  # | export_task_successful           | {Client#get_export_task}            | 60       | 480           |
   # | graph_available                  | {Client#get_graph}                  | 60       | 480           |
   # | graph_deleted                    | {Client#get_graph}                  | 60       | 60            |
   # | graph_snapshot_available         | {Client#get_graph_snapshot}         | 60       | 120           |
@@ -79,6 +81,108 @@ module Aws::NeptuneGraph
   # | private_graph_endpoint_deleted   | {Client#get_private_graph_endpoint} | 10       | 180           |
   #
   module Waiters
+
+    # Wait until Export Task is Cancelled
+    class ExportTaskCancelled
+
+      # @param [Hash] options
+      # @option options [required, Client] :client
+      # @option options [Integer] :max_attempts (60)
+      # @option options [Integer] :delay (60)
+      # @option options [Proc] :before_attempt
+      # @option options [Proc] :before_wait
+      def initialize(options)
+        @client = options.fetch(:client)
+        @waiter = Aws::Waiters::Waiter.new({
+          max_attempts: 60,
+          delay: 60,
+          poller: Aws::Waiters::Poller.new(
+            operation_name: :get_export_task,
+            acceptors: [
+              {
+                "matcher" => "path",
+                "argument" => "status != 'CANCELLING' && status != 'CANCELLED'",
+                "state" => "failure",
+                "expected" => true
+              },
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "success",
+                "expected" => "CANCELLED"
+              }
+            ]
+          )
+        }.merge(options))
+      end
+
+      # @option (see Client#get_export_task)
+      # @return (see Client#get_export_task)
+      def wait(params = {})
+        @waiter.wait(client: @client, params: params)
+      end
+
+      # @api private
+      attr_reader :waiter
+
+    end
+
+    # Wait until Export Task is Successful
+    class ExportTaskSuccessful
+
+      # @param [Hash] options
+      # @option options [required, Client] :client
+      # @option options [Integer] :max_attempts (480)
+      # @option options [Integer] :delay (60)
+      # @option options [Proc] :before_attempt
+      # @option options [Proc] :before_wait
+      def initialize(options)
+        @client = options.fetch(:client)
+        @waiter = Aws::Waiters::Waiter.new({
+          max_attempts: 480,
+          delay: 60,
+          poller: Aws::Waiters::Poller.new(
+            operation_name: :get_export_task,
+            acceptors: [
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "failure",
+                "expected" => "CANCELLING"
+              },
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "failure",
+                "expected" => "CANCELLED"
+              },
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "failure",
+                "expected" => "FAILED"
+              },
+              {
+                "matcher" => "path",
+                "argument" => "status",
+                "state" => "success",
+                "expected" => "SUCCEEDED"
+              }
+            ]
+          )
+        }.merge(options))
+      end
+
+      # @option (see Client#get_export_task)
+      # @return (see Client#get_export_task)
+      def wait(params = {})
+        @waiter.wait(client: @client, params: params)
+      end
+
+      # @api private
+      attr_reader :waiter
+
+    end
 
     # Wait until Graph is Available
     class GraphAvailable

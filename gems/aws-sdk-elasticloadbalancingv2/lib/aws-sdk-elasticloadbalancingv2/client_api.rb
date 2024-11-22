@@ -26,6 +26,7 @@ module Aws::ElasticLoadBalancingV2
     AddTrustStoreRevocationsInput = Shapes::StructureShape.new(name: 'AddTrustStoreRevocationsInput')
     AddTrustStoreRevocationsOutput = Shapes::StructureShape.new(name: 'AddTrustStoreRevocationsOutput')
     AdministrativeOverride = Shapes::StructureShape.new(name: 'AdministrativeOverride')
+    AdvertiseTrustStoreCaNamesEnum = Shapes::StringShape.new(name: 'AdvertiseTrustStoreCaNamesEnum')
     AllocationId = Shapes::StringShape.new(name: 'AllocationId')
     AllocationIdNotFoundException = Shapes::StructureShape.new(name: 'AllocationIdNotFoundException', error: {"code"=>"AllocationIdNotFound", "httpStatusCode"=>400, "senderFault"=>true})
     AlpnPolicyName = Shapes::ListShape.new(name: 'AlpnPolicyName')
@@ -1009,6 +1010,7 @@ module Aws::ElasticLoadBalancingV2
     MutualAuthenticationAttributes.add_member(:trust_store_arn, Shapes::ShapeRef.new(shape: TrustStoreArn, location_name: "TrustStoreArn"))
     MutualAuthenticationAttributes.add_member(:ignore_client_certificate_expiry, Shapes::ShapeRef.new(shape: IgnoreClientCertificateExpiry, location_name: "IgnoreClientCertificateExpiry"))
     MutualAuthenticationAttributes.add_member(:trust_store_association_status, Shapes::ShapeRef.new(shape: TrustStoreAssociationStatusEnum, location_name: "TrustStoreAssociationStatus"))
+    MutualAuthenticationAttributes.add_member(:advertise_trust_store_ca_names, Shapes::ShapeRef.new(shape: AdvertiseTrustStoreCaNamesEnum, location_name: "AdvertiseTrustStoreCaNames"))
     MutualAuthenticationAttributes.struct_class = Types::MutualAuthenticationAttributes
 
     OperationNotPermittedException.struct_class = Types::OperationNotPermittedException

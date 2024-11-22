@@ -311,6 +311,10 @@ module Aws
         def creation_time: () -> ::Time
         def fallback_location: () -> ::String
         def e_tag_algorithm_family: () -> ("MD5up" | "SHA256up" | "SHA512up")
+        def status: () -> ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+        def status_message: () -> ::String
+        def propagated_set_level_tags: () -> ::Array[::String]
+        def s3_access: () -> Types::SequenceStoreS3Access
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#create_sequence_store-instance_method
       def create_sequence_store: (
@@ -323,7 +327,11 @@ module Aws
                                    ?tags: Hash[::String, ::String],
                                    ?client_token: ::String,
                                    ?fallback_location: ::String,
-                                   ?e_tag_algorithm_family: ("MD5up" | "SHA256up" | "SHA512up")
+                                   ?e_tag_algorithm_family: ("MD5up" | "SHA256up" | "SHA512up"),
+                                   ?propagated_set_level_tags: Array[::String],
+                                   ?s3_access_config: {
+                                     access_log_location: ::String?
+                                   }
                                  ) -> _CreateSequenceStoreResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateSequenceStoreResponseSuccess
 
@@ -449,6 +457,15 @@ module Aws
                               id: ::String
                             ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _DeleteS3AccessPolicyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteS3AccessPolicyResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#delete_s3_access_policy-instance_method
+      def delete_s3_access_policy: (
+                                     s3_access_point_arn: ::String
+                                   ) -> _DeleteS3AccessPolicyResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteS3AccessPolicyResponseSuccess
 
       interface _DeleteSequenceStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteSequenceStoreResponse]
@@ -823,6 +840,20 @@ module Aws
                         ) -> _GetRunTaskResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetRunTaskResponseSuccess
 
+      interface _GetS3AccessPolicyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetS3AccessPolicyResponse]
+        def s3_access_point_arn: () -> ::String
+        def store_id: () -> ::String
+        def store_type: () -> ("SEQUENCE_STORE" | "REFERENCE_STORE")
+        def update_time: () -> ::Time
+        def s3_access_policy: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#get_s3_access_policy-instance_method
+      def get_s3_access_policy: (
+                                  s3_access_point_arn: ::String
+                                ) -> _GetS3AccessPolicyResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetS3AccessPolicyResponseSuccess
+
       interface _GetSequenceStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetSequenceStoreResponse]
         def id: () -> ::String
@@ -834,6 +865,10 @@ module Aws
         def fallback_location: () -> ::String
         def s3_access: () -> Types::SequenceStoreS3Access
         def e_tag_algorithm_family: () -> ("MD5up" | "SHA256up" | "SHA512up")
+        def status: () -> ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+        def status_message: () -> ::String
+        def propagated_set_level_tags: () -> ::Array[::String]
+        def update_time: () -> ::Time
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#get_sequence_store-instance_method
       def get_sequence_store: (
@@ -1200,7 +1235,10 @@ module Aws
                                   ?filter: {
                                     name: ::String?,
                                     created_after: ::Time?,
-                                    created_before: ::Time?
+                                    created_before: ::Time?,
+                                    status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")?,
+                                    updated_after: ::Time?,
+                                    updated_before: ::Time?
                                   }
                                 ) -> _ListSequenceStoresResponseSuccess
                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSequenceStoresResponseSuccess
@@ -1279,6 +1317,19 @@ module Aws
                             ?max_results: ::Integer
                           ) -> _ListWorkflowsResponseSuccess
                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListWorkflowsResponseSuccess
+
+      interface _PutS3AccessPolicyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutS3AccessPolicyResponse]
+        def s3_access_point_arn: () -> ::String
+        def store_id: () -> ::String
+        def store_type: () -> ("SEQUENCE_STORE" | "REFERENCE_STORE")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#put_s3_access_policy-instance_method
+      def put_s3_access_policy: (
+                                  s3_access_point_arn: ::String,
+                                  s3_access_policy: ::String
+                                ) -> _PutS3AccessPolicyResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutS3AccessPolicyResponseSuccess
 
       interface _StartAnnotationImportJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartAnnotationImportResponse]
@@ -1543,6 +1594,36 @@ module Aws
                               ?max_gpus: ::Integer
                             ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _UpdateSequenceStoreResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateSequenceStoreResponse]
+        def id: () -> ::String
+        def arn: () -> ::String
+        def name: () -> ::String
+        def description: () -> ::String
+        def sse_config: () -> Types::SseConfig
+        def creation_time: () -> ::Time
+        def update_time: () -> ::Time
+        def propagated_set_level_tags: () -> ::Array[::String]
+        def status: () -> ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+        def status_message: () -> ::String
+        def fallback_location: () -> ::String
+        def s3_access: () -> Types::SequenceStoreS3Access
+        def e_tag_algorithm_family: () -> ("MD5up" | "SHA256up" | "SHA512up")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Omics/Client.html#update_sequence_store-instance_method
+      def update_sequence_store: (
+                                   id: ::String,
+                                   ?name: ::String,
+                                   ?description: ::String,
+                                   ?client_token: ::String,
+                                   ?fallback_location: ::String,
+                                   ?propagated_set_level_tags: Array[::String],
+                                   ?s3_access_config: {
+                                     access_log_location: ::String?
+                                   }
+                                 ) -> _UpdateSequenceStoreResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateSequenceStoreResponseSuccess
 
       interface _UpdateVariantStoreResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateVariantStoreResponse]

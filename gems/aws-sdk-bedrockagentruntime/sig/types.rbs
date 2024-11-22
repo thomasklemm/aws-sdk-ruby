@@ -8,10 +8,38 @@
 module Aws::BedrockAgentRuntime
   module Types
 
+    class APISchema
+      attr_accessor payload: ::String
+      attr_accessor s3: Types::S3Identifier
+      attr_accessor unknown: untyped
+      SENSITIVE: [:payload]
+
+      class Payload < APISchema
+      end
+      class S3 < APISchema
+      end
+      class Unknown < APISchema
+      end
+    end
+
     class AccessDeniedException
       attr_accessor message: ::String
       attr_accessor event_type: untyped
       SENSITIVE: []
+    end
+
+    class ActionGroupExecutor
+      attr_accessor custom_control: ("RETURN_CONTROL")
+      attr_accessor lambda: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class CustomControl < ActionGroupExecutor
+      end
+      class Lambda < ActionGroupExecutor
+      end
+      class Unknown < ActionGroupExecutor
+      end
     end
 
     class ActionGroupInvocationInput
@@ -29,6 +57,16 @@ module Aws::BedrockAgentRuntime
     class ActionGroupInvocationOutput
       attr_accessor text: ::String
       SENSITIVE: [:text]
+    end
+
+    class AgentActionGroup
+      attr_accessor action_group_executor: Types::ActionGroupExecutor
+      attr_accessor action_group_name: ::String
+      attr_accessor api_schema: Types::APISchema
+      attr_accessor description: ::String
+      attr_accessor function_schema: Types::FunctionSchema
+      attr_accessor parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")
+      SENSITIVE: [:action_group_name, :description]
     end
 
     class AnalyzePromptEvent
@@ -321,6 +359,14 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class FunctionDefinition
+      attr_accessor description: ::String
+      attr_accessor name: ::String
+      attr_accessor parameters: ::Hash[::String, Types::ParameterDetail]
+      attr_accessor require_confirmation: ("ENABLED" | "DISABLED")
+      SENSITIVE: [:name]
+    end
+
     class FunctionInvocationInput
       attr_accessor action_group: ::String
       attr_accessor action_invocation_type: ("RESULT" | "USER_CONFIRMATION" | "USER_CONFIRMATION_AND_RESULT")
@@ -343,6 +389,17 @@ module Aws::BedrockAgentRuntime
       attr_accessor response_body: ::Hash[::String, Types::ContentBody]
       attr_accessor response_state: ("FAILURE" | "REPROMPT")
       SENSITIVE: []
+    end
+
+    class FunctionSchema
+      attr_accessor functions: ::Array[Types::FunctionDefinition]
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Functions < FunctionSchema
+      end
+      class Unknown < FunctionSchema
+      end
     end
 
     class GeneratedResponsePart
@@ -384,6 +441,12 @@ module Aws::BedrockAgentRuntime
 
     class GuardrailConfiguration
       attr_accessor guardrail_id: ::String
+      attr_accessor guardrail_version: ::String
+      SENSITIVE: []
+    end
+
+    class GuardrailConfigurationWithArn
+      attr_accessor guardrail_identifier: ::String
       attr_accessor guardrail_version: ::String
       SENSITIVE: []
     end
@@ -471,6 +534,42 @@ module Aws::BedrockAgentRuntime
       attr_accessor temperature: ::Float
       attr_accessor top_k: ::Integer
       attr_accessor top_p: ::Float
+      SENSITIVE: []
+    end
+
+    class InlineAgentFilePart
+      attr_accessor files: ::Array[Types::OutputFile]
+      attr_accessor event_type: untyped
+      SENSITIVE: []
+    end
+
+    class InlineAgentPayloadPart
+      attr_accessor attribution: Types::Attribution
+      attr_accessor bytes: ::String
+      attr_accessor event_type: untyped
+      SENSITIVE: [:bytes]
+    end
+
+    class InlineAgentReturnControlPayload
+      attr_accessor invocation_id: ::String
+      attr_accessor invocation_inputs: ::Array[Types::InvocationInputMember]
+      attr_accessor event_type: untyped
+      SENSITIVE: []
+    end
+
+    class InlineAgentTracePart
+      attr_accessor session_id: ::String
+      attr_accessor trace: Types::Trace
+      attr_accessor event_type: untyped
+      SENSITIVE: [:trace]
+    end
+
+    class InlineSessionState
+      attr_accessor files: ::Array[Types::InputFile]
+      attr_accessor invocation_id: ::String
+      attr_accessor prompt_session_attributes: ::Hash[::String, ::String]
+      attr_accessor return_control_invocation_results: ::Array[Types::InvocationResultMember]
+      attr_accessor session_attributes: ::Hash[::String, ::String]
       SENSITIVE: []
     end
 
@@ -568,6 +667,37 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class InvokeInlineAgentRequest
+      attr_accessor action_groups: ::Array[Types::AgentActionGroup]
+      attr_accessor customer_encryption_key_arn: ::String
+      attr_accessor enable_trace: bool
+      attr_accessor end_session: bool
+      attr_accessor foundation_model: ::String
+      attr_accessor guardrail_configuration: Types::GuardrailConfigurationWithArn
+      attr_accessor idle_session_ttl_in_seconds: ::Integer
+      attr_accessor inline_session_state: Types::InlineSessionState
+      attr_accessor input_text: ::String
+      attr_accessor instruction: ::String
+      attr_accessor knowledge_bases: ::Array[Types::KnowledgeBase]
+      attr_accessor prompt_override_configuration: Types::PromptOverrideConfiguration
+      attr_accessor session_id: ::String
+      SENSITIVE: [:input_text, :instruction, :prompt_override_configuration]
+    end
+
+    class InvokeInlineAgentResponse
+      attr_accessor completion: Types::InlineAgentResponseStream
+      attr_accessor content_type: ::String
+      attr_accessor session_id: ::String
+      SENSITIVE: []
+    end
+
+    class KnowledgeBase
+      attr_accessor description: ::String
+      attr_accessor knowledge_base_id: ::String
+      attr_accessor retrieval_configuration: Types::KnowledgeBaseRetrievalConfiguration
+      SENSITIVE: [:description]
+    end
+
     class KnowledgeBaseConfiguration
       attr_accessor knowledge_base_id: ::String
       attr_accessor retrieval_configuration: Types::KnowledgeBaseRetrievalConfiguration
@@ -651,7 +781,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")
       attr_accessor text: ::String
       attr_accessor trace_id: ::String
-      attr_accessor type: ("PRE_PROCESSING" | "ORCHESTRATION" | "KNOWLEDGE_BASE_RESPONSE_GENERATION" | "POST_PROCESSING")
+      attr_accessor type: ("PRE_PROCESSING" | "ORCHESTRATION" | "KNOWLEDGE_BASE_RESPONSE_GENERATION" | "POST_PROCESSING" | "ROUTING_CLASSIFIER")
       SENSITIVE: [:text]
     end
 
@@ -746,6 +876,13 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class ParameterDetail
+      attr_accessor description: ::String
+      attr_accessor required: bool
+      attr_accessor type: ("string" | "number" | "integer" | "boolean" | "array")
+      SENSITIVE: []
+    end
+
     class PayloadPart
       attr_accessor attribution: Types::Attribution
       attr_accessor bytes: ::String
@@ -806,6 +943,22 @@ module Aws::BedrockAgentRuntime
       end
       class Unknown < PreProcessingTrace
       end
+    end
+
+    class PromptConfiguration
+      attr_accessor base_prompt_template: ::String
+      attr_accessor inference_configuration: Types::InferenceConfiguration
+      attr_accessor parser_mode: ("DEFAULT" | "OVERRIDDEN")
+      attr_accessor prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")
+      attr_accessor prompt_state: ("ENABLED" | "DISABLED")
+      attr_accessor prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "KNOWLEDGE_BASE_RESPONSE_GENERATION" | "POST_PROCESSING" | "ROUTING_CLASSIFIER")
+      SENSITIVE: [:base_prompt_template]
+    end
+
+    class PromptOverrideConfiguration
+      attr_accessor override_lambda: ::String
+      attr_accessor prompt_configurations: ::Array[Types::PromptConfiguration]
+      SENSITIVE: []
     end
 
     class PromptTemplate
@@ -1004,6 +1157,12 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class S3Identifier
+      attr_accessor s3_bucket_name: ::String
+      attr_accessor s3_object_key: ::String
+      SENSITIVE: []
+    end
+
     class S3ObjectDoc
       attr_accessor uri: ::String
       SENSITIVE: []
@@ -1108,6 +1267,10 @@ module Aws::BedrockAgentRuntime
 
     class FlowResponseStream < Enumerator[untyped, untyped]
       def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :conflict_exception, :dependency_failed_exception, :flow_completion_event, :flow_output_event, :flow_trace_event, :internal_server_exception, :resource_not_found_exception, :service_quota_exceeded_exception, :throttling_exception, :validation_exception]
+    end
+
+    class InlineAgentResponseStream < Enumerator[untyped, untyped]
+      def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :chunk, :conflict_exception, :dependency_failed_exception, :files, :internal_server_exception, :resource_not_found_exception, :return_control, :service_quota_exceeded_exception, :throttling_exception, :trace, :validation_exception]
     end
 
     class OptimizedPromptStream < Enumerator[untyped, untyped]

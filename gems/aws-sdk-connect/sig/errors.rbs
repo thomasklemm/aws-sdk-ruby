@@ -14,6 +14,9 @@ module Aws
       class AccessDeniedException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class ConditionalOperationFailedException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class ConflictException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
@@ -80,6 +83,7 @@ module Aws
       end
       class ServiceQuotaExceededException < ::Aws::Errors::ServiceError
         def message: () -> ::String
+        def reason: () -> ::String
       end
       class ThrottlingException < ::Aws::Errors::ServiceError
         def message: () -> ::String

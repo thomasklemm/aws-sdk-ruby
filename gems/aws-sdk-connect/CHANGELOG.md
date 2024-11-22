@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.186.0 (2024-11-22)
+------------------
+
+* Feature - Amazon Connect Service Feature: Add APIs for Amazon Connect Email Channel
+
 1.185.0 (2024-11-18)
 ------------------
 

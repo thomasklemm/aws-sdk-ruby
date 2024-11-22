@@ -9,6 +9,26 @@ module Aws
   module NeptuneGraph
     module Waiters
 
+      class ExportTaskCancelled
+        def initialize: (?client: Client, ?max_attempts: Integer, ?delay: Integer, ?before_attempt: Proc, ?before_wait: Proc) -> void
+                      | (?Hash[Symbol, untyped]) -> void
+
+        def wait: (
+                    task_identifier: ::String
+                  ) -> Client::_GetExportTaskResponseSuccess
+                | (Hash[Symbol, untyped]) -> Client::_GetExportTaskResponseSuccess
+      end
+
+      class ExportTaskSuccessful
+        def initialize: (?client: Client, ?max_attempts: Integer, ?delay: Integer, ?before_attempt: Proc, ?before_wait: Proc) -> void
+                      | (?Hash[Symbol, untyped]) -> void
+
+        def wait: (
+                    task_identifier: ::String
+                  ) -> Client::_GetExportTaskResponseSuccess
+                | (Hash[Symbol, untyped]) -> Client::_GetExportTaskResponseSuccess
+      end
+
       class GraphAvailable
         def initialize: (?client: Client, ?max_attempts: Integer, ?delay: Integer, ?before_attempt: Proc, ?before_wait: Proc) -> void
                       | (?Hash[Symbol, untyped]) -> void

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.103.0 (2024-11-22)
+------------------
+
+* Feature - Advanced Scaling in Amazon EMR Managed Scaling
+
 1.102.0 (2024-11-06)
 ------------------
 

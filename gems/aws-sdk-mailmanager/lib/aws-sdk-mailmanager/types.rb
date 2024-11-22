@@ -875,6 +875,44 @@ module Aws::MailManager
       include Aws::Structure
     end
 
+    # The action to deliver incoming emails to an Amazon Q Business
+    # application for indexing.
+    #
+    # @!attribute [rw] action_failure_policy
+    #   A policy that states what to do in the case of failure. The action
+    #   will fail if there are configuration errors. For example, the
+    #   specified application has been deleted or the role lacks necessary
+    #   permissions to call the qbusiness:BatchPutDocument API.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Amazon Q Business application instance
+    #   where the email content will be delivered.
+    #   @return [String]
+    #
+    # @!attribute [rw] index_id
+    #   The identifier of the knowledge base index within the Amazon Q
+    #   Business application where the email content will be stored and
+    #   indexed.
+    #   @return [String]
+    #
+    # @!attribute [rw] role_arn
+    #   The Amazon Resource Name (ARN) of the IAM Role to use while
+    #   delivering to Amazon Q Business. This role must have access to the
+    #   qbusiness:BatchPutDocument API for the given application and index.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mailmanager-2023-10-17/DeliverToQBusinessAction AWS API Documentation
+    #
+    class DeliverToQBusinessAction < Struct.new(
+      :action_failure_policy,
+      :application_id,
+      :index_id,
+      :role_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # This action causes processing to stop and the email to be dropped. If
     # the action applies only to certain recipients, only those recipients
     # are dropped, and processing continues for other recipients.
@@ -2737,6 +2775,11 @@ module Aws::MailManager
     #   This action delivers an email to a WorkMail mailbox.
     #   @return [Types::DeliverToMailboxAction]
     #
+    # @!attribute [rw] deliver_to_q_business
+    #   This action delivers an email to an Amazon Q Business application
+    #   for ingestion into its knowledge base.
+    #   @return [Types::DeliverToQBusinessAction]
+    #
     # @!attribute [rw] drop
     #   This action terminates the evaluation of rules in the rule set.
     #   @return [Types::DropAction]
@@ -2764,6 +2807,7 @@ module Aws::MailManager
       :add_header,
       :archive,
       :deliver_to_mailbox,
+      :deliver_to_q_business,
       :drop,
       :relay,
       :replace_recipient,
@@ -2777,6 +2821,7 @@ module Aws::MailManager
       class AddHeader < RuleAction; end
       class Archive < RuleAction; end
       class DeliverToMailbox < RuleAction; end
+      class DeliverToQBusiness < RuleAction; end
       class Drop < RuleAction; end
       class Relay < RuleAction; end
       class ReplaceRecipient < RuleAction; end

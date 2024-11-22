@@ -265,6 +265,200 @@ module Aws
                        ) ?{ (*untyped) -> void } -> _InvokeFlowResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _InvokeFlowResponseSuccess
 
+      interface _InvokeInlineAgentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::InvokeInlineAgentResponse]
+        def completion: () -> Types::InlineAgentResponseStream
+        def content_type: () -> ::String
+        def session_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgentRuntime/Client.html#invoke_inline_agent-instance_method
+      def invoke_inline_agent: (
+                                 ?action_groups: Array[
+                                   {
+                                     action_group_executor: {
+                                       custom_control: ("RETURN_CONTROL")?,
+                                       lambda: ::String?
+                                     }?,
+                                     action_group_name: ::String,
+                                     api_schema: {
+                                       payload: ::String?,
+                                       s3: {
+                                         s3_bucket_name: ::String?,
+                                         s3_object_key: ::String?
+                                       }?
+                                     }?,
+                                     description: ::String?,
+                                     function_schema: {
+                                       functions: Array[
+                                         {
+                                           description: ::String?,
+                                           name: ::String,
+                                           parameters: Hash[::String, {
+                                               description: ::String?,
+                                               required: bool?,
+                                               type: ("string" | "number" | "integer" | "boolean" | "array")
+                                             }]?,
+                                           require_confirmation: ("ENABLED" | "DISABLED")?
+                                         },
+                                       ]?
+                                     }?,
+                                     parent_action_group_signature: ("AMAZON.UserInput" | "AMAZON.CodeInterpreter")?
+                                   },
+                                 ],
+                                 ?customer_encryption_key_arn: ::String,
+                                 ?enable_trace: bool,
+                                 ?end_session: bool,
+                                 foundation_model: ::String,
+                                 ?guardrail_configuration: {
+                                   guardrail_identifier: ::String,
+                                   guardrail_version: ::String
+                                 },
+                                 ?idle_session_ttl_in_seconds: ::Integer,
+                                 ?inline_session_state: {
+                                   files: Array[
+                                     {
+                                       name: ::String,
+                                       source: {
+                                         byte_content: {
+                                           data: ::String,
+                                           media_type: ::String
+                                         }?,
+                                         s3_location: {
+                                           uri: ::String
+                                         }?,
+                                         source_type: ("S3" | "BYTE_CONTENT")
+                                       },
+                                       use_case: ("CODE_INTERPRETER" | "CHAT")
+                                     },
+                                   ]?,
+                                   invocation_id: ::String?,
+                                   prompt_session_attributes: Hash[::String, ::String]?,
+                                   return_control_invocation_results: Array[
+                                     {
+                                       api_result: {
+                                         action_group: ::String,
+                                         api_path: ::String?,
+                                         confirmation_state: ("CONFIRM" | "DENY")?,
+                                         http_method: ::String?,
+                                         http_status_code: ::Integer?,
+                                         response_body: Hash[::String, {
+                                             body: ::String?
+                                           }]?,
+                                         response_state: ("FAILURE" | "REPROMPT")?
+                                       }?,
+                                       function_result: {
+                                         action_group: ::String,
+                                         confirmation_state: ("CONFIRM" | "DENY")?,
+                                         function: ::String?,
+                                         response_body: Hash[::String, {
+                                             body: ::String?
+                                           }]?,
+                                         response_state: ("FAILURE" | "REPROMPT")?
+                                       }?
+                                     },
+                                   ]?,
+                                   session_attributes: Hash[::String, ::String]?
+                                 },
+                                 ?input_text: ::String,
+                                 instruction: ::String,
+                                 ?knowledge_bases: Array[
+                                   {
+                                     description: ::String,
+                                     knowledge_base_id: ::String,
+                                     retrieval_configuration: {
+                                       vector_search_configuration: {
+                                         filter: {
+                                           and_all: Array[
+                                             untyped,
+                                           ]?,
+                                           equals: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           greater_than: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           greater_than_or_equals: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           in: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           less_than: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           less_than_or_equals: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           list_contains: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           not_equals: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           not_in: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           or_all: Array[
+                                             untyped,
+                                           ]?,
+                                           starts_with: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?,
+                                           string_contains: {
+                                             key: ::String,
+                                             value: {
+                                             }
+                                           }?
+                                         }?,
+                                         number_of_results: ::Integer?,
+                                         override_search_type: ("HYBRID" | "SEMANTIC")?
+                                       }
+                                     }?
+                                   },
+                                 ],
+                                 ?prompt_override_configuration: {
+                                   override_lambda: ::String?,
+                                   prompt_configurations: Array[
+                                     {
+                                       base_prompt_template: ::String?,
+                                       inference_configuration: {
+                                         maximum_length: ::Integer?,
+                                         stop_sequences: Array[::String]?,
+                                         temperature: ::Float?,
+                                         top_k: ::Integer?,
+                                         top_p: ::Float?
+                                       }?,
+                                       parser_mode: ("DEFAULT" | "OVERRIDDEN")?,
+                                       prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")?,
+                                       prompt_state: ("ENABLED" | "DISABLED")?,
+                                       prompt_type: ("PRE_PROCESSING" | "ORCHESTRATION" | "KNOWLEDGE_BASE_RESPONSE_GENERATION" | "POST_PROCESSING" | "ROUTING_CLASSIFIER")?
+                                     },
+                                   ]
+                                 },
+                                 session_id: ::String
+                               ) ?{ (*untyped) -> void } -> _InvokeInlineAgentResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _InvokeInlineAgentResponseSuccess
+
       interface _OptimizePromptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::OptimizePromptResponse]
         def optimized_prompt: () -> Types::OptimizedPromptStream

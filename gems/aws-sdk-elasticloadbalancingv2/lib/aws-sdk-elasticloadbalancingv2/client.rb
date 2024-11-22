@@ -860,6 +860,7 @@ module Aws::ElasticLoadBalancingV2
     #       trust_store_arn: "TrustStoreArn",
     #       ignore_client_certificate_expiry: false,
     #       trust_store_association_status: "active", # accepts active, removed
+    #       advertise_trust_store_ca_names: "on", # accepts on, off
     #     },
     #   })
     #
@@ -920,6 +921,7 @@ module Aws::ElasticLoadBalancingV2
     #   resp.listeners[0].mutual_authentication.trust_store_arn #=> String
     #   resp.listeners[0].mutual_authentication.ignore_client_certificate_expiry #=> Boolean
     #   resp.listeners[0].mutual_authentication.trust_store_association_status #=> String, one of "active", "removed"
+    #   resp.listeners[0].mutual_authentication.advertise_trust_store_ca_names #=> String, one of "on", "off"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/CreateListener AWS API Documentation
     #
@@ -2373,6 +2375,7 @@ module Aws::ElasticLoadBalancingV2
     #   resp.listeners[0].mutual_authentication.trust_store_arn #=> String
     #   resp.listeners[0].mutual_authentication.ignore_client_certificate_expiry #=> Boolean
     #   resp.listeners[0].mutual_authentication.trust_store_association_status #=> String, one of "active", "removed"
+    #   resp.listeners[0].mutual_authentication.advertise_trust_store_ca_names #=> String, one of "on", "off"
     #   resp.next_marker #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/DescribeListeners AWS API Documentation
@@ -3798,6 +3801,7 @@ module Aws::ElasticLoadBalancingV2
     #       trust_store_arn: "TrustStoreArn",
     #       ignore_client_certificate_expiry: false,
     #       trust_store_association_status: "active", # accepts active, removed
+    #       advertise_trust_store_ca_names: "on", # accepts on, off
     #     },
     #   })
     #
@@ -3858,6 +3862,7 @@ module Aws::ElasticLoadBalancingV2
     #   resp.listeners[0].mutual_authentication.trust_store_arn #=> String
     #   resp.listeners[0].mutual_authentication.ignore_client_certificate_expiry #=> Boolean
     #   resp.listeners[0].mutual_authentication.trust_store_association_status #=> String, one of "active", "removed"
+    #   resp.listeners[0].mutual_authentication.advertise_trust_store_ca_names #=> String, one of "on", "off"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticloadbalancingv2-2015-12-01/ModifyListener AWS API Documentation
     #
@@ -5186,7 +5191,7 @@ module Aws::ElasticLoadBalancingV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-elasticloadbalancingv2'
-      context[:gem_version] = '1.124.0'
+      context[:gem_version] = '1.125.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

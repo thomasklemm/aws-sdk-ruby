@@ -122,6 +122,7 @@ module Aws::QuickSight
       attr_accessor analysis_defaults: Types::AnalysisDefaults
       attr_accessor options: Types::AssetOptions
       attr_accessor query_execution_options: Types::QueryExecutionOptions
+      attr_accessor static_files: ::Array[Types::StaticFile]
       SENSITIVE: []
     end
 
@@ -738,6 +739,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::BarChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -900,6 +902,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::BoxPlotChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -1245,6 +1248,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::ComboChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -1803,6 +1807,7 @@ module Aws::QuickSight
       attr_accessor topic_id: ::String
       attr_accessor topic: Types::TopicDetails
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor folder_arns: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -1910,6 +1915,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::CustomContentConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor data_set_identifier: ::String
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -2056,6 +2062,7 @@ module Aws::QuickSight
       attr_accessor column_configurations: ::Array[Types::ColumnConfiguration]
       attr_accessor analysis_defaults: Types::AnalysisDefaults
       attr_accessor options: Types::AssetOptions
+      attr_accessor static_files: ::Array[Types::StaticFile]
       SENSITIVE: []
     end
 
@@ -3297,6 +3304,18 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class DescribeDashboardsQAConfigurationRequest
+      attr_accessor aws_account_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeDashboardsQAConfigurationResponse
+      attr_accessor dashboards_qa_status: ("ENABLED" | "DISABLED")
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
     class DescribeDataSetPermissionsRequest
       attr_accessor aws_account_id: ::String
       attr_accessor data_set_id: ::String
@@ -3982,6 +4001,7 @@ module Aws::QuickSight
       attr_accessor conditional_formatting: Types::FilledMapConditionalFormatting
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -4186,11 +4206,13 @@ module Aws::QuickSight
       attr_accessor font_color: ::String
       attr_accessor font_weight: Types::FontWeight
       attr_accessor font_style: ("NORMAL" | "ITALIC")
+      attr_accessor font_family: ::String
       SENSITIVE: []
     end
 
     class FontSize
       attr_accessor relative: ("EXTRA_SMALL" | "SMALL" | "MEDIUM" | "LARGE" | "EXTRA_LARGE")
+      attr_accessor absolute: ::String
       SENSITIVE: []
     end
 
@@ -4246,7 +4268,7 @@ module Aws::QuickSight
 
     class FreeFormLayoutElement
       attr_accessor element_id: ::String
-      attr_accessor element_type: ("VISUAL" | "FILTER_CONTROL" | "PARAMETER_CONTROL" | "TEXT_BOX")
+      attr_accessor element_type: ("VISUAL" | "FILTER_CONTROL" | "PARAMETER_CONTROL" | "TEXT_BOX" | "IMAGE")
       attr_accessor x_axis_location: ::String
       attr_accessor y_axis_location: ::String
       attr_accessor width: ::String
@@ -4329,6 +4351,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::FunnelChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -4393,6 +4416,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::GaugeChartConfiguration
       attr_accessor conditional_formatting: Types::GaugeChartConditionalFormatting
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -4438,11 +4462,64 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class GeospatialCategoricalColor
+      attr_accessor category_data_colors: ::Array[Types::GeospatialCategoricalDataColor]
+      attr_accessor null_data_visibility: ("HIDDEN" | "VISIBLE")
+      attr_accessor null_data_settings: Types::GeospatialNullDataSettings
+      attr_accessor default_opacity: ::Float
+      SENSITIVE: []
+    end
+
+    class GeospatialCategoricalDataColor
+      attr_accessor color: ::String
+      attr_accessor data_value: ::String
+      SENSITIVE: []
+    end
+
+    class GeospatialCircleRadius
+      attr_accessor radius: ::Float
+      SENSITIVE: []
+    end
+
+    class GeospatialCircleSymbolStyle
+      attr_accessor fill_color: Types::GeospatialColor
+      attr_accessor stroke_color: Types::GeospatialColor
+      attr_accessor stroke_width: Types::GeospatialLineWidth
+      attr_accessor circle_radius: Types::GeospatialCircleRadius
+      SENSITIVE: []
+    end
+
+    class GeospatialColor
+      attr_accessor solid: Types::GeospatialSolidColor
+      attr_accessor gradient: Types::GeospatialGradientColor
+      attr_accessor categorical: Types::GeospatialCategoricalColor
+      SENSITIVE: []
+    end
+
     class GeospatialCoordinateBounds
       attr_accessor north: ::Float
       attr_accessor south: ::Float
       attr_accessor west: ::Float
       attr_accessor east: ::Float
+      SENSITIVE: []
+    end
+
+    class GeospatialDataSourceItem
+      attr_accessor static_file_data_source: Types::GeospatialStaticFileSource
+      SENSITIVE: []
+    end
+
+    class GeospatialGradientColor
+      attr_accessor step_colors: ::Array[Types::GeospatialGradientStepColor]
+      attr_accessor null_data_visibility: ("HIDDEN" | "VISIBLE")
+      attr_accessor null_data_settings: Types::GeospatialNullDataSettings
+      attr_accessor default_opacity: ::Float
+      SENSITIVE: []
+    end
+
+    class GeospatialGradientStepColor
+      attr_accessor color: ::String
+      attr_accessor data_value: ::Float
       SENSITIVE: []
     end
 
@@ -4458,6 +4535,69 @@ module Aws::QuickSight
 
     class GeospatialHeatmapDataColor
       attr_accessor color: ::String
+      SENSITIVE: []
+    end
+
+    class GeospatialLayerColorField
+      attr_accessor color_dimensions_fields: ::Array[Types::DimensionField]
+      attr_accessor color_values_fields: ::Array[Types::MeasureField]
+      SENSITIVE: []
+    end
+
+    class GeospatialLayerDefinition
+      attr_accessor point_layer: Types::GeospatialPointLayer
+      attr_accessor line_layer: Types::GeospatialLineLayer
+      attr_accessor polygon_layer: Types::GeospatialPolygonLayer
+      SENSITIVE: []
+    end
+
+    class GeospatialLayerItem
+      attr_accessor layer_id: ::String
+      attr_accessor layer_type: ("POINT" | "LINE" | "POLYGON")
+      attr_accessor data_source: Types::GeospatialDataSourceItem
+      attr_accessor label: ::String
+      attr_accessor visibility: ("HIDDEN" | "VISIBLE")
+      attr_accessor layer_definition: Types::GeospatialLayerDefinition
+      attr_accessor tooltip: Types::TooltipOptions
+      attr_accessor join_definition: Types::GeospatialLayerJoinDefinition
+      attr_accessor actions: ::Array[Types::LayerCustomAction]
+      SENSITIVE: []
+    end
+
+    class GeospatialLayerJoinDefinition
+      attr_accessor shape_key_field: ::String
+      attr_accessor dataset_key_field: Types::UnaggregatedField
+      attr_accessor color_field: Types::GeospatialLayerColorField
+      SENSITIVE: []
+    end
+
+    class GeospatialLayerMapConfiguration
+      attr_accessor legend: Types::LegendOptions
+      attr_accessor map_layers: ::Array[Types::GeospatialLayerItem]
+      attr_accessor map_state: Types::GeospatialMapState
+      attr_accessor map_style: Types::GeospatialMapStyle
+      attr_accessor interactions: Types::VisualInteractionOptions
+      SENSITIVE: []
+    end
+
+    class GeospatialLineLayer
+      attr_accessor style: Types::GeospatialLineStyle
+      SENSITIVE: []
+    end
+
+    class GeospatialLineStyle
+      attr_accessor line_symbol_style: Types::GeospatialLineSymbolStyle
+      SENSITIVE: []
+    end
+
+    class GeospatialLineSymbolStyle
+      attr_accessor fill_color: Types::GeospatialColor
+      attr_accessor line_width: Types::GeospatialLineWidth
+      SENSITIVE: []
+    end
+
+    class GeospatialLineWidth
+      attr_accessor line_width: ::Float
       SENSITIVE: []
     end
 
@@ -4485,6 +4625,19 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class GeospatialMapState
+      attr_accessor bounds: Types::GeospatialCoordinateBounds
+      attr_accessor map_navigation: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class GeospatialMapStyle
+      attr_accessor base_map_style: ("LIGHT_GRAY" | "DARK_GRAY" | "STREET" | "IMAGERY")
+      attr_accessor background_color: ::String
+      attr_accessor base_map_visibility: ("HIDDEN" | "VISIBLE")
+      SENSITIVE: []
+    end
+
     class GeospatialMapStyleOptions
       attr_accessor base_map_style: ("LIGHT_GRAY" | "DARK_GRAY" | "STREET" | "IMAGERY")
       SENSITIVE: []
@@ -4497,6 +4650,29 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::GeospatialMapConfiguration
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
+      SENSITIVE: []
+    end
+
+    class GeospatialNullDataSettings
+      attr_accessor symbol_style: Types::GeospatialNullSymbolStyle
+      SENSITIVE: []
+    end
+
+    class GeospatialNullSymbolStyle
+      attr_accessor fill_color: ::String
+      attr_accessor stroke_color: ::String
+      attr_accessor stroke_width: ::Float
+      SENSITIVE: []
+    end
+
+    class GeospatialPointLayer
+      attr_accessor style: Types::GeospatialPointStyle
+      SENSITIVE: []
+    end
+
+    class GeospatialPointStyle
+      attr_accessor circle_symbol_style: Types::GeospatialCircleSymbolStyle
       SENSITIVE: []
     end
 
@@ -4504,6 +4680,34 @@ module Aws::QuickSight
       attr_accessor selected_point_style: ("POINT" | "CLUSTER" | "HEATMAP")
       attr_accessor cluster_marker_configuration: Types::ClusterMarkerConfiguration
       attr_accessor heatmap_configuration: Types::GeospatialHeatmapConfiguration
+      SENSITIVE: []
+    end
+
+    class GeospatialPolygonLayer
+      attr_accessor style: Types::GeospatialPolygonStyle
+      SENSITIVE: []
+    end
+
+    class GeospatialPolygonStyle
+      attr_accessor polygon_symbol_style: Types::GeospatialPolygonSymbolStyle
+      SENSITIVE: []
+    end
+
+    class GeospatialPolygonSymbolStyle
+      attr_accessor fill_color: Types::GeospatialColor
+      attr_accessor stroke_color: Types::GeospatialColor
+      attr_accessor stroke_width: Types::GeospatialLineWidth
+      SENSITIVE: []
+    end
+
+    class GeospatialSolidColor
+      attr_accessor color: ::String
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class GeospatialStaticFileSource
+      attr_accessor static_file_id: ::String
       SENSITIVE: []
     end
 
@@ -4580,7 +4784,7 @@ module Aws::QuickSight
 
     class GridLayoutElement
       attr_accessor element_id: ::String
-      attr_accessor element_type: ("VISUAL" | "FILTER_CONTROL" | "PARAMETER_CONTROL" | "TEXT_BOX")
+      attr_accessor element_type: ("VISUAL" | "FILTER_CONTROL" | "PARAMETER_CONTROL" | "TEXT_BOX" | "IMAGE")
       attr_accessor column_index: ::Integer
       attr_accessor column_span: ::Integer
       attr_accessor row_index: ::Integer
@@ -4676,6 +4880,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::HeatMapConfiguration
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -4716,6 +4921,7 @@ module Aws::QuickSight
       attr_accessor subtitle: Types::VisualSubtitleLabelOptions
       attr_accessor chart_configuration: Types::HistogramConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -4762,6 +4968,32 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class ImageCustomAction
+      attr_accessor custom_action_id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
+      attr_accessor trigger: ("CLICK" | "MENU")
+      attr_accessor action_operations: ::Array[Types::ImageCustomActionOperation]
+      SENSITIVE: []
+    end
+
+    class ImageCustomActionOperation
+      attr_accessor navigation_operation: Types::CustomActionNavigationOperation
+      attr_accessor url_operation: Types::CustomActionURLOperation
+      attr_accessor set_parameters_operation: Types::CustomActionSetParametersOperation
+      SENSITIVE: []
+    end
+
+    class ImageInteractionOptions
+      attr_accessor image_menu_option: Types::ImageMenuOption
+      SENSITIVE: []
+    end
+
+    class ImageMenuOption
+      attr_accessor availability_status: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
     class ImageSet
       attr_accessor original: Types::Image
       attr_accessor height_64: Types::Image
@@ -4786,6 +5018,12 @@ module Aws::QuickSight
       end
       class Unknown < ImageSource
       end
+    end
+
+    class ImageStaticFile
+      attr_accessor static_file_id: ::String
+      attr_accessor source: Types::StaticFileSource
+      SENSITIVE: []
     end
 
     class IncrementalRefresh
@@ -4834,6 +5072,7 @@ module Aws::QuickSight
       attr_accessor insight_configuration: Types::InsightConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor data_set_identifier: ::String
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -5023,6 +5262,7 @@ module Aws::QuickSight
       attr_accessor conditional_formatting: Types::KPIConditionalFormatting
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -5040,6 +5280,33 @@ module Aws::QuickSight
       attr_accessor visibility: ("HIDDEN" | "VISIBLE")
       attr_accessor font_configuration: Types::FontConfiguration
       attr_accessor custom_label: ::String
+      SENSITIVE: []
+    end
+
+    class LayerCustomAction
+      attr_accessor custom_action_id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
+      attr_accessor trigger: ("DATA_POINT_CLICK" | "DATA_POINT_MENU")
+      attr_accessor action_operations: ::Array[Types::LayerCustomActionOperation]
+      SENSITIVE: []
+    end
+
+    class LayerCustomActionOperation
+      attr_accessor filter_operation: Types::CustomActionFilterOperation
+      attr_accessor navigation_operation: Types::CustomActionNavigationOperation
+      attr_accessor url_operation: Types::CustomActionURLOperation
+      attr_accessor set_parameters_operation: Types::CustomActionSetParametersOperation
+      SENSITIVE: []
+    end
+
+    class LayerMapVisual
+      attr_accessor visual_id: ::String
+      attr_accessor title: Types::VisualTitleLabelOptions
+      attr_accessor subtitle: Types::VisualSubtitleLabelOptions
+      attr_accessor chart_configuration: Types::GeospatialLayerMapConfiguration
+      attr_accessor data_set_identifier: ::String
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -5061,6 +5328,7 @@ module Aws::QuickSight
       attr_accessor position: ("AUTO" | "RIGHT" | "BOTTOM" | "TOP")
       attr_accessor width: ::String
       attr_accessor height: ::String
+      attr_accessor value_font_configuration: Types::FontConfiguration
       SENSITIVE: []
     end
 
@@ -5154,6 +5422,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::LineChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -5882,6 +6151,8 @@ module Aws::QuickSight
       attr_accessor creation_status: ("CREATED" | "CREATING" | "DELETING" | "RETRYABLE_FAILURE" | "NON_RETRYABLE_FAILURE")
       attr_accessor identity_store: ("QUICKSIGHT")
       attr_accessor namespace_error: Types::NamespaceError
+      attr_accessor iam_identity_center_application_arn: ::String
+      attr_accessor iam_identity_center_instance_arn: ::String
       SENSITIVE: []
     end
 
@@ -6269,6 +6540,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::PieChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -6417,6 +6689,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::PivotTableConfiguration
       attr_accessor conditional_formatting: Types::PivotTableConditionalFormatting
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -6429,6 +6702,58 @@ module Aws::QuickSight
       attr_accessor value_cell_style: Types::TableCellStyle
       attr_accessor metric_header_cell_style: Types::TableCellStyle
       attr_accessor total_aggregation_options: ::Array[Types::TotalAggregationOption]
+      SENSITIVE: []
+    end
+
+    class PluginVisual
+      attr_accessor visual_id: ::String
+      attr_accessor plugin_arn: ::String
+      attr_accessor title: Types::VisualTitleLabelOptions
+      attr_accessor subtitle: Types::VisualSubtitleLabelOptions
+      attr_accessor chart_configuration: Types::PluginVisualConfiguration
+      attr_accessor visual_content_alt_text: ::String
+      SENSITIVE: []
+    end
+
+    class PluginVisualConfiguration
+      attr_accessor field_wells: ::Array[Types::PluginVisualFieldWell]
+      attr_accessor visual_options: Types::PluginVisualOptions
+      attr_accessor sort_configuration: Types::PluginVisualSortConfiguration
+      SENSITIVE: []
+    end
+
+    class PluginVisualFieldWell
+      attr_accessor axis_name: ("GROUP_BY" | "VALUE")
+      attr_accessor dimensions: ::Array[Types::DimensionField]
+      attr_accessor measures: ::Array[Types::MeasureField]
+      attr_accessor unaggregated: ::Array[Types::UnaggregatedField]
+      SENSITIVE: []
+    end
+
+    class PluginVisualItemsLimitConfiguration
+      attr_accessor items_limit: ::Integer
+      SENSITIVE: []
+    end
+
+    class PluginVisualOptions
+      attr_accessor visual_properties: ::Array[Types::PluginVisualProperty]
+      SENSITIVE: []
+    end
+
+    class PluginVisualProperty
+      attr_accessor name: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class PluginVisualSortConfiguration
+      attr_accessor plugin_visual_table_query_sort: Types::PluginVisualTableQuerySort
+      SENSITIVE: []
+    end
+
+    class PluginVisualTableQuerySort
+      attr_accessor row_sort: ::Array[Types::FieldSortOptions]
+      attr_accessor items_limit_configuration: Types::PluginVisualItemsLimitConfiguration
       SENSITIVE: []
     end
 
@@ -6556,6 +6881,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::RadarChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -6934,6 +7260,7 @@ module Aws::QuickSight
       attr_accessor subtitle: Types::VisualSubtitleLabelOptions
       attr_accessor chart_configuration: Types::SankeyDiagramChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -6988,6 +7315,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::ScatterPlotConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -7097,6 +7425,22 @@ module Aws::QuickSight
       attr_accessor next_token: ::String
       attr_accessor request_id: ::String
       attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
+    class SearchTopicsRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor filters: ::Array[Types::TopicSearchFilter]
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class SearchTopicsResponse
+      attr_accessor topic_summary_list: ::Array[Types::TopicSummary]
+      attr_accessor next_token: ::String
+      attr_accessor status: ::Integer
+      attr_accessor request_id: ::String
       SENSITIVE: []
     end
 
@@ -7211,6 +7555,7 @@ module Aws::QuickSight
     class Sheet
       attr_accessor sheet_id: ::String
       attr_accessor name: ::String
+      attr_accessor images: ::Array[Types::SheetImage]
       SENSITIVE: []
     end
 
@@ -7244,6 +7589,7 @@ module Aws::QuickSight
       attr_accessor filter_controls: ::Array[Types::FilterControl]
       attr_accessor visuals: ::Array[Types::Visual]
       attr_accessor text_boxes: ::Array[Types::SheetTextBox]
+      attr_accessor images: ::Array[Types::SheetImage]
       attr_accessor layouts: ::Array[Types::Layout]
       attr_accessor sheet_control_layouts: ::Array[Types::SheetControlLayout]
       attr_accessor content_type: ("PAGINATED" | "INTERACTIVE")
@@ -7259,6 +7605,43 @@ module Aws::QuickSight
       attr_accessor expression: ::String
       attr_accessor configuration_overrides: Types::SheetElementConfigurationOverrides
       SENSITIVE: [:expression]
+    end
+
+    class SheetImage
+      attr_accessor sheet_image_id: ::String
+      attr_accessor source: Types::SheetImageSource
+      attr_accessor scaling: Types::SheetImageScalingConfiguration
+      attr_accessor tooltip: Types::SheetImageTooltipConfiguration
+      attr_accessor image_content_alt_text: ::String
+      attr_accessor interactions: Types::ImageInteractionOptions
+      attr_accessor actions: ::Array[Types::ImageCustomAction]
+      SENSITIVE: []
+    end
+
+    class SheetImageScalingConfiguration
+      attr_accessor scaling_type: ("SCALE_TO_WIDTH" | "SCALE_TO_HEIGHT" | "SCALE_TO_CONTAINER" | "SCALE_NONE")
+      SENSITIVE: []
+    end
+
+    class SheetImageSource
+      attr_accessor sheet_image_static_file_source: Types::SheetImageStaticFileSource
+      SENSITIVE: []
+    end
+
+    class SheetImageStaticFileSource
+      attr_accessor static_file_id: ::String
+      SENSITIVE: []
+    end
+
+    class SheetImageTooltipConfiguration
+      attr_accessor tooltip_text: Types::SheetImageTooltipText
+      attr_accessor visibility: ("HIDDEN" | "VISIBLE")
+      SENSITIVE: []
+    end
+
+    class SheetImageTooltipText
+      attr_accessor plain_text: ::String
+      SENSITIVE: []
     end
 
     class SheetLayoutElementMaximizationOption
@@ -7445,6 +7828,12 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class SpatialStaticFile
+      attr_accessor static_file_id: ::String
+      attr_accessor source: Types::StaticFileSource
+      SENSITIVE: []
+    end
+
     class SqlServerParameters
       attr_accessor host: ::String
       attr_accessor port: ::Integer
@@ -7543,6 +7932,30 @@ module Aws::QuickSight
 
     class StatePersistenceConfigurations
       attr_accessor enabled: bool
+      SENSITIVE: []
+    end
+
+    class StaticFile
+      attr_accessor image_static_file: Types::ImageStaticFile
+      attr_accessor spatial_static_file: Types::SpatialStaticFile
+      SENSITIVE: []
+    end
+
+    class StaticFileS3SourceOptions
+      attr_accessor bucket_name: ::String
+      attr_accessor object_key: ::String
+      attr_accessor region: ::String
+      SENSITIVE: []
+    end
+
+    class StaticFileSource
+      attr_accessor url_options: Types::StaticFileUrlSourceOptions
+      attr_accessor s3_options: Types::StaticFileS3SourceOptions
+      SENSITIVE: []
+    end
+
+    class StaticFileUrlSourceOptions
+      attr_accessor url: ::String
       SENSITIVE: []
     end
 
@@ -7793,6 +8206,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::TableConfiguration
       attr_accessor conditional_formatting: Types::TableConditionalFormatting
       attr_accessor actions: ::Array[Types::VisualCustomAction]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -7894,6 +8308,7 @@ module Aws::QuickSight
       attr_accessor analysis_defaults: Types::AnalysisDefaults
       attr_accessor options: Types::AssetOptions
       attr_accessor query_execution_options: Types::QueryExecutionOptions
+      attr_accessor static_files: ::Array[Types::StaticFile]
       SENSITIVE: []
     end
 
@@ -8363,6 +8778,13 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class TopicSearchFilter
+      attr_accessor operator: ("StringEquals" | "StringLike")
+      attr_accessor name: ("QUICKSIGHT_USER" | "QUICKSIGHT_VIEWER_OR_OWNER" | "DIRECT_QUICKSIGHT_VIEWER_OR_OWNER" | "QUICKSIGHT_OWNER" | "DIRECT_QUICKSIGHT_OWNER" | "DIRECT_QUICKSIGHT_SOLE_OWNER" | "TOPIC_NAME")
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
     class TopicSingularFilterConstant
       attr_accessor constant_type: ("SINGULAR" | "RANGE" | "COLLECTIVE")
       attr_accessor singular_constant: ::String
@@ -8476,6 +8898,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::TreeMapConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -8759,6 +9182,19 @@ module Aws::QuickSight
       attr_accessor creation_status: ("CREATION_IN_PROGRESS" | "CREATION_SUCCESSFUL" | "CREATION_FAILED" | "UPDATE_IN_PROGRESS" | "UPDATE_SUCCESSFUL" | "UPDATE_FAILED" | "DELETED")
       attr_accessor status: ::Integer
       attr_accessor request_id: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateDashboardsQAConfigurationRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor dashboards_qa_status: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class UpdateDashboardsQAConfigurationResponse
+      attr_accessor dashboards_qa_status: ("ENABLED" | "DISABLED")
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
       SENSITIVE: []
     end
 
@@ -9306,6 +9742,7 @@ module Aws::QuickSight
       attr_accessor tree_map_visual: Types::TreeMapVisual
       attr_accessor geospatial_map_visual: Types::GeospatialMapVisual
       attr_accessor filled_map_visual: Types::FilledMapVisual
+      attr_accessor layer_map_visual: Types::LayerMapVisual
       attr_accessor funnel_chart_visual: Types::FunnelChartVisual
       attr_accessor scatter_plot_visual: Types::ScatterPlotVisual
       attr_accessor combo_chart_visual: Types::ComboChartVisual
@@ -9318,6 +9755,7 @@ module Aws::QuickSight
       attr_accessor custom_content_visual: Types::CustomContentVisual
       attr_accessor empty_visual: Types::EmptyVisual
       attr_accessor radar_chart_visual: Types::RadarChartVisual
+      attr_accessor plugin_visual: Types::PluginVisual
       SENSITIVE: []
     end
 
@@ -9440,6 +9878,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::WaterfallChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 
@@ -9499,6 +9938,7 @@ module Aws::QuickSight
       attr_accessor chart_configuration: Types::WordCloudChartConfiguration
       attr_accessor actions: ::Array[Types::VisualCustomAction]
       attr_accessor column_hierarchies: ::Array[Types::ColumnHierarchy]
+      attr_accessor visual_content_alt_text: ::String
       SENSITIVE: []
     end
 

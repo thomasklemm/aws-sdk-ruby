@@ -212,6 +212,10 @@ module Aws
                                        sns_action: {
                                          topic_arn: ::String,
                                          encoding: ("UTF-8" | "Base64")?
+                                       }?,
+                                       connect_action: {
+                                         instance_arn: ::String,
+                                         iam_role_arn: ::String
                                        }?
                                      },
                                    ]?,
@@ -1003,6 +1007,10 @@ module Aws
                                        sns_action: {
                                          topic_arn: ::String,
                                          encoding: ("UTF-8" | "Base64")?
+                                       }?,
+                                       connect_action: {
+                                         instance_arn: ::String,
+                                         iam_role_arn: ::String
                                        }?
                                      },
                                    ]?,

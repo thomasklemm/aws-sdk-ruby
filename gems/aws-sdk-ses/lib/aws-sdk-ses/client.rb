@@ -860,6 +860,10 @@ module Aws::SES
     #             topic_arn: "AmazonResourceName", # required
     #             encoding: "UTF-8", # accepts UTF-8, Base64
     #           },
+    #           connect_action: {
+    #             instance_arn: "ConnectInstanceArn", # required
+    #             iam_role_arn: "IAMRoleARN", # required
+    #           },
     #         },
     #       ],
     #       scan_enabled: false,
@@ -1458,6 +1462,8 @@ module Aws::SES
     #   resp.rules[0].actions[0].add_header_action.header_value #=> String
     #   resp.rules[0].actions[0].sns_action.topic_arn #=> String
     #   resp.rules[0].actions[0].sns_action.encoding #=> String, one of "UTF-8", "Base64"
+    #   resp.rules[0].actions[0].connect_action.instance_arn #=> String
+    #   resp.rules[0].actions[0].connect_action.iam_role_arn #=> String
     #   resp.rules[0].scan_enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/DescribeActiveReceiptRuleSet AWS API Documentation
@@ -1615,6 +1621,8 @@ module Aws::SES
     #   resp.rule.actions[0].add_header_action.header_value #=> String
     #   resp.rule.actions[0].sns_action.topic_arn #=> String
     #   resp.rule.actions[0].sns_action.encoding #=> String, one of "UTF-8", "Base64"
+    #   resp.rule.actions[0].connect_action.instance_arn #=> String
+    #   resp.rule.actions[0].connect_action.iam_role_arn #=> String
     #   resp.rule.scan_enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/DescribeReceiptRule AWS API Documentation
@@ -1716,6 +1724,8 @@ module Aws::SES
     #   resp.rules[0].actions[0].add_header_action.header_value #=> String
     #   resp.rules[0].actions[0].sns_action.topic_arn #=> String
     #   resp.rules[0].actions[0].sns_action.encoding #=> String, one of "UTF-8", "Base64"
+    #   resp.rules[0].actions[0].connect_action.instance_arn #=> String
+    #   resp.rules[0].actions[0].connect_action.iam_role_arn #=> String
     #   resp.rules[0].scan_enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/email-2010-12-01/DescribeReceiptRuleSet AWS API Documentation
@@ -4910,6 +4920,10 @@ module Aws::SES
     #             topic_arn: "AmazonResourceName", # required
     #             encoding: "UTF-8", # accepts UTF-8, Base64
     #           },
+    #           connect_action: {
+    #             instance_arn: "ConnectInstanceArn", # required
+    #             iam_role_arn: "IAMRoleARN", # required
+    #           },
     #         },
     #       ],
     #       scan_enabled: false,
@@ -5182,7 +5196,7 @@ module Aws::SES
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ses'
-      context[:gem_version] = '1.77.0'
+      context[:gem_version] = '1.78.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

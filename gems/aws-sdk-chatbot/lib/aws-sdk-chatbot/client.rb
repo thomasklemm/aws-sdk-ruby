@@ -447,6 +447,47 @@ module Aws::Chatbot
 
     # @!group API Operations
 
+    # Links a resource (for example, a custom action) to a channel
+    # configuration.
+    #
+    # @option params [required, String] :resource
+    #   The resource Amazon Resource Name (ARN) to link.
+    #
+    # @option params [required, String] :chat_configuration
+    #   The channel configuration to associate with the resource.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: Associate a custom action to a configuration
+    #
+    #   # Associate a custom action to a channel configuration, allowing it to be used in that channel
+    #
+    #   resp = client.associate_to_configuration({
+    #     chat_configuration: "arn:aws:chatbot::1234567890:chat-configuration/slack-channel/my-channel", 
+    #     resource: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.associate_to_configuration({
+    #     resource: "ResourceIdentifier", # required
+    #     chat_configuration: "ChatConfigurationArn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/AssociateToConfiguration AWS API Documentation
+    #
+    # @overload associate_to_configuration(params = {})
+    # @param [Hash] params ({})
+    def associate_to_configuration(params = {}, options = {})
+      req = build_request(:associate_to_configuration, params)
+      req.send_request(options)
+    end
+
     # Creates an AWS Chatbot configuration for Amazon Chime.
     #
     # @option params [required, String] :webhook_description
@@ -530,6 +571,133 @@ module Aws::Chatbot
     # @param [Hash] params ({})
     def create_chime_webhook_configuration(params = {}, options = {})
       req = build_request(:create_chime_webhook_configuration, params)
+      req.send_request(options)
+    end
+
+    # Creates a custom action that can be invoked as an alias or as a button
+    # on a notification.
+    #
+    # @option params [required, Types::CustomActionDefinition] :definition
+    #   The definition of the command to run when invoked as an alias or as an
+    #   action button.
+    #
+    # @option params [String] :alias_name
+    #   The name used to invoke this action in a chat channel. For example,
+    #   `@aws run my-alias`.
+    #
+    # @option params [Array<Types::CustomActionAttachment>] :attachments
+    #   Defines when this custom action button should be attached to a
+    #   notification.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   A map of tags assigned to a resource. A tag is a string-to-string map
+    #   of key-value pairs.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. Idempotency ensures that an API request
+    #   completes only once. With an idempotent request, if the original
+    #   request completes successfully, subsequent retries with the same
+    #   client token returns the result from the original successful request.
+    #
+    #   If you do not specify a client token, one is automatically generated
+    #   by the SDK.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :action_name
+    #   The name of the custom action. This name is included in the Amazon
+    #   Resource Name (ARN).
+    #
+    # @return [Types::CreateCustomActionResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateCustomActionResult#custom_action_arn #custom_action_arn} => String
+    #
+    #
+    # @example Example: Create an alias that invokes a Lambda function
+    #
+    #   # Creates an alias that invokes a Lambda function from chat channels. You can use this alias by entering 'run invoke',
+    #   # after which you're prompted for the function name.
+    #
+    #   resp = client.create_custom_action({
+    #     action_name: "my-custom-action", 
+    #     alias_name: "invoke", 
+    #     definition: {
+    #       command_text: "lambda invoke $functionName", 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     custom_action_arn: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #   }
+    #
+    # @example Example: Create a custom action to list alarms
+    #
+    #   # Creates a button on all Cloudwatch notifications that lists alarms in the ‘ALARM’ state.
+    #
+    #   resp = client.create_custom_action({
+    #     action_name: "describe-alarms", 
+    #     attachments: [
+    #       {
+    #         button_text: "List alarms", 
+    #         notification_type: "CloudWatch", 
+    #       }, 
+    #     ], 
+    #     definition: {
+    #       command_text: "cloudwatch describe-alarms --state-value ALARM", 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     custom_action_arn: "arn:aws:chatbot::1234567890:custom-action/describe-alarms", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_custom_action({
+    #     definition: { # required
+    #       command_text: "CustomActionDefinitionCommandTextString", # required
+    #     },
+    #     alias_name: "CustomActionAliasName",
+    #     attachments: [
+    #       {
+    #         notification_type: "CustomActionAttachmentNotificationType",
+    #         button_text: "CustomActionButtonText",
+    #         criteria: [
+    #           {
+    #             operator: "HAS_VALUE", # required, accepts HAS_VALUE, EQUALS
+    #             variable_name: "CustomActionAttachmentCriteriaVariableNameString", # required
+    #             value: "CustomActionAttachmentCriteriaValueString",
+    #           },
+    #         ],
+    #         variables: {
+    #           "CustomActionAttachmentVariablesKeyString" => "CustomActionAttachmentVariablesValueString",
+    #         },
+    #       },
+    #     ],
+    #     tags: [
+    #       {
+    #         tag_key: "TagKey", # required
+    #         tag_value: "TagValue", # required
+    #       },
+    #     ],
+    #     client_token: "ClientToken",
+    #     action_name: "CustomActionName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.custom_action_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/CreateCustomAction AWS API Documentation
+    #
+    # @overload create_custom_action(params = {})
+    # @param [Hash] params ({})
+    def create_custom_action(params = {}, options = {})
+      req = build_request(:create_custom_action, params)
       req.send_request(options)
     end
 
@@ -775,6 +943,39 @@ module Aws::Chatbot
       req.send_request(options)
     end
 
+    # Deletes a custom action.
+    #
+    # @option params [required, String] :custom_action_arn
+    #   The fully defined ARN of the custom action.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: Delete a custom action
+    #
+    #   resp = client.delete_custom_action({
+    #     custom_action_arn: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_custom_action({
+    #     custom_action_arn: "CustomActionArn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/DeleteCustomAction AWS API Documentation
+    #
+    # @overload delete_custom_action(params = {})
+    # @param [Hash] params ({})
+    def delete_custom_action(params = {}, options = {})
+      req = build_request(:delete_custom_action, params)
+      req.send_request(options)
+    end
+
     # Deletes a Microsoft Teams channel configuration for AWS Chatbot
     #
     # @option params [required, String] :chat_configuration_arn
@@ -953,8 +1154,8 @@ module Aws::Chatbot
     #   the value specified by MaxResults.
     #
     # @option params [String] :chat_configuration_arn
-    #   An optional Amazon Resource Number (ARN) of a
-    #   ChimeWebhookConfiguration to describe.
+    #   An optional Amazon Resource Name (ARN) of a ChimeWebhookConfiguration
+    #   to describe.
     #
     # @return [Types::DescribeChimeWebhookConfigurationsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1012,8 +1213,8 @@ module Aws::Chatbot
     #   the value specified by MaxResults.
     #
     # @option params [String] :chat_configuration_arn
-    #   An optional Amazon Resource Number (ARN) of a
-    #   SlackChannelConfiguration to describe.
+    #   An optional Amazon Resource Name (ARN) of a SlackChannelConfiguration
+    #   to describe.
     #
     # @return [Types::DescribeSlackChannelConfigurationsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1065,7 +1266,7 @@ module Aws::Chatbot
     # Lists all Slack user identities with a mapped role.
     #
     # @option params [String] :chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the SlackChannelConfiguration
+    #   The Amazon Resource Name (ARN) of the SlackChannelConfiguration
     #   associated with the user identities to describe.
     #
     # @option params [String] :next_token
@@ -1159,6 +1360,46 @@ module Aws::Chatbot
       req.send_request(options)
     end
 
+    # Unlink a resource, for example a custom action, from a channel
+    # configuration.
+    #
+    # @option params [required, String] :resource
+    #   The resource (for example, a custom action) Amazon Resource Name (ARN)
+    #   to unlink.
+    #
+    # @option params [required, String] :chat_configuration
+    #   The channel configuration the resource is being disassociated from.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: Disassociate a custom action from a configuration
+    #
+    #   resp = client.disassociate_from_configuration({
+    #     chat_configuration: "arn:aws:chatbot::1234567890:chat-configuration/slack-channel/my-channel", 
+    #     resource: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.disassociate_from_configuration({
+    #     resource: "ResourceIdentifier", # required
+    #     chat_configuration: "ChatConfigurationArn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/DisassociateFromConfiguration AWS API Documentation
+    #
+    # @overload disassociate_from_configuration(params = {})
+    # @param [Hash] params ({})
+    def disassociate_from_configuration(params = {}, options = {})
+      req = build_request(:disassociate_from_configuration, params)
+      req.send_request(options)
+    end
+
     # Returns AWS Chatbot account preferences.
     #
     # @return [Types::GetAccountPreferencesResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
@@ -1179,10 +1420,69 @@ module Aws::Chatbot
       req.send_request(options)
     end
 
+    # Returns a custom action.
+    #
+    # @option params [required, String] :custom_action_arn
+    #   Returns the fully defined Amazon Resource Name (ARN) of the custom
+    #   action.
+    #
+    # @return [Types::GetCustomActionResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetCustomActionResult#custom_action #custom_action} => Types::CustomAction
+    #
+    #
+    # @example Example: Get a custom action
+    #
+    #   resp = client.get_custom_action({
+    #     custom_action_arn: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     custom_action: {
+    #       action_name: "my-custom-action", 
+    #       custom_action_arn: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #       definition: {
+    #         command_text: "lambda invoke $functionName", 
+    #       }, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_custom_action({
+    #     custom_action_arn: "CustomActionArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.custom_action.custom_action_arn #=> String
+    #   resp.custom_action.definition.command_text #=> String
+    #   resp.custom_action.alias_name #=> String
+    #   resp.custom_action.attachments #=> Array
+    #   resp.custom_action.attachments[0].notification_type #=> String
+    #   resp.custom_action.attachments[0].button_text #=> String
+    #   resp.custom_action.attachments[0].criteria #=> Array
+    #   resp.custom_action.attachments[0].criteria[0].operator #=> String, one of "HAS_VALUE", "EQUALS"
+    #   resp.custom_action.attachments[0].criteria[0].variable_name #=> String
+    #   resp.custom_action.attachments[0].criteria[0].value #=> String
+    #   resp.custom_action.attachments[0].variables #=> Hash
+    #   resp.custom_action.attachments[0].variables["CustomActionAttachmentVariablesKeyString"] #=> String
+    #   resp.custom_action.action_name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/GetCustomAction AWS API Documentation
+    #
+    # @overload get_custom_action(params = {})
+    # @param [Hash] params ({})
+    def get_custom_action(params = {}, options = {})
+      req = build_request(:get_custom_action, params)
+      req.send_request(options)
+    end
+
     # Returns a Microsoft Teams channel configuration in an AWS account.
     #
     # @option params [required, String] :chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the
+    #   The Amazon Resource Name (ARN) of the
     #   MicrosoftTeamsChannelConfiguration to retrieve.
     #
     # @return [Types::GetTeamsChannelConfigurationResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
@@ -1223,6 +1523,123 @@ module Aws::Chatbot
     # @param [Hash] params ({})
     def get_microsoft_teams_channel_configuration(params = {}, options = {})
       req = build_request(:get_microsoft_teams_channel_configuration, params)
+      req.send_request(options)
+    end
+
+    # Lists resources associated with a channel configuration.
+    #
+    # @option params [required, String] :chat_configuration
+    #   The channel configuration to list associations for.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the specified MaxResults value, a token is included
+    #   in the response so that the remaining results can be retrieved.
+    #
+    # @option params [String] :next_token
+    #   An optional token returned from a prior request. Use this token for
+    #   pagination of results from this action. If this parameter is
+    #   specified, the response includes only results beyond the token, up to
+    #   the value specified by MaxResults.
+    #
+    # @return [Types::ListAssociationsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAssociationsResult#associations #associations} => Array&lt;Types::AssociationListing&gt;
+    #   * {Types::ListAssociationsResult#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: List custom actions associated with a configuration
+    #
+    #   resp = client.list_associations({
+    #     chat_configuration: "arn:aws:chatbot::1234567890:chat-configuration/slack-channel/my-channel", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     associations: [
+    #       {
+    #         resource: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_associations({
+    #     chat_configuration: "ChatConfigurationArn", # required
+    #     max_results: 1,
+    #     next_token: "ListAssociationsRequestNextTokenString",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.associations #=> Array
+    #   resp.associations[0].resource #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/ListAssociations AWS API Documentation
+    #
+    # @overload list_associations(params = {})
+    # @param [Hash] params ({})
+    def list_associations(params = {}, options = {})
+      req = build_request(:list_associations, params)
+      req.send_request(options)
+    end
+
+    # Lists custom actions defined in this account.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the specified MaxResults value, a token is included
+    #   in the response so that the remaining results can be retrieved.
+    #
+    # @option params [String] :next_token
+    #   An optional token returned from a prior request. Use this token for
+    #   pagination of results from this action. If this parameter is
+    #   specified, the response includes only results beyond the token, up to
+    #   the value specified by MaxResults.
+    #
+    # @return [Types::ListCustomActionsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListCustomActionsResult#custom_actions #custom_actions} => Array&lt;String&gt;
+    #   * {Types::ListCustomActionsResult#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: List custom actions
+    #
+    #   resp = client.list_custom_actions({
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     custom_actions: [
+    #       "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #     ], 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_custom_actions({
+    #     max_results: 1,
+    #     next_token: "ListCustomActionsRequestNextTokenString",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.custom_actions #=> Array
+    #   resp.custom_actions[0] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/ListCustomActions AWS API Documentation
+    #
+    # @overload list_custom_actions(params = {})
+    # @param [Hash] params ({})
+    def list_custom_actions(params = {}, options = {})
+      req = build_request(:list_custom_actions, params)
       req.send_request(options)
     end
 
@@ -1350,7 +1767,7 @@ module Aws::Chatbot
     # A list all Microsoft Teams user identities with a mapped role.
     #
     # @option params [String] :chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the
+    #   The Amazon Resource Name (ARN) of the
     #   MicrosoftTeamsChannelConfiguration associated with the user identities
     #   to list.
     #
@@ -1405,7 +1822,7 @@ module Aws::Chatbot
     # that you specify. The resource can be a user, server, or role.
     #
     # @option params [required, String] :resource_arn
-    #   The ARN you specified to list the tags of.
+    #   The ARN of the resource to list tags for.
     #
     # @return [Types::ListTagsForResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1543,7 +1960,7 @@ module Aws::Chatbot
     # Updates a Amazon Chime webhook configuration.
     #
     # @option params [required, String] :chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the ChimeWebhookConfiguration to
+    #   The Amazon Resource Name (ARN) of the ChimeWebhookConfiguration to
     #   update.
     #
     # @option params [String] :webhook_description
@@ -1616,10 +2033,87 @@ module Aws::Chatbot
       req.send_request(options)
     end
 
+    # Updates a custom action.
+    #
+    # @option params [required, String] :custom_action_arn
+    #   The fully defined Amazon Resource Name (ARN) of the custom action.
+    #
+    # @option params [required, Types::CustomActionDefinition] :definition
+    #   The definition of the command to run when invoked as an alias or as an
+    #   action button.
+    #
+    # @option params [String] :alias_name
+    #   The name used to invoke this action in the chat channel. For example,
+    #   `@aws run my-alias`.
+    #
+    # @option params [Array<Types::CustomActionAttachment>] :attachments
+    #   Defines when this custom action button should be attached to a
+    #   notification.
+    #
+    # @return [Types::UpdateCustomActionResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateCustomActionResult#custom_action_arn #custom_action_arn} => String
+    #
+    #
+    # @example Example: Update the command definition of an existing action
+    #
+    #   # Updates the command text of a custom action without altering the existing alias name or attachment criteria
+    #
+    #   resp = client.update_custom_action({
+    #     custom_action_arn: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #     definition: {
+    #       command_text: "lambda invoke MyNewFunction", 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     custom_action_arn: "arn:aws:chatbot::1234567890:custom-action/my-custom-action", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_custom_action({
+    #     custom_action_arn: "CustomActionArn", # required
+    #     definition: { # required
+    #       command_text: "CustomActionDefinitionCommandTextString", # required
+    #     },
+    #     alias_name: "CustomActionAliasName",
+    #     attachments: [
+    #       {
+    #         notification_type: "CustomActionAttachmentNotificationType",
+    #         button_text: "CustomActionButtonText",
+    #         criteria: [
+    #           {
+    #             operator: "HAS_VALUE", # required, accepts HAS_VALUE, EQUALS
+    #             variable_name: "CustomActionAttachmentCriteriaVariableNameString", # required
+    #             value: "CustomActionAttachmentCriteriaValueString",
+    #           },
+    #         ],
+    #         variables: {
+    #           "CustomActionAttachmentVariablesKeyString" => "CustomActionAttachmentVariablesValueString",
+    #         },
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.custom_action_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chatbot-2017-10-11/UpdateCustomAction AWS API Documentation
+    #
+    # @overload update_custom_action(params = {})
+    # @param [Hash] params ({})
+    def update_custom_action(params = {}, options = {})
+      req = build_request(:update_custom_action, params)
+      req.send_request(options)
+    end
+
     # Updates an Microsoft Teams channel configuration.
     #
     # @option params [required, String] :chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the TeamsChannelConfiguration to
+    #   The Amazon Resource Name (ARN) of the TeamsChannelConfiguration to
     #   update.
     #
     # @option params [required, String] :channel_id
@@ -1705,7 +2199,7 @@ module Aws::Chatbot
     # Updates a Slack channel configuration.
     #
     # @option params [required, String] :chat_configuration_arn
-    #   The Amazon Resource Number (ARN) of the SlackChannelConfiguration to
+    #   The Amazon Resource Name (ARN) of the SlackChannelConfiguration to
     #   update.
     #
     # @option params [required, String] :slack_channel_id
@@ -1809,7 +2303,7 @@ module Aws::Chatbot
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-chatbot'
-      context[:gem_version] = '1.18.0'
+      context[:gem_version] = '1.19.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

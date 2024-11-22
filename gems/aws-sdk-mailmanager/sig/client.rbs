@@ -204,6 +204,12 @@ module Aws
                                        mailbox_arn: ::String,
                                        role_arn: ::String
                                      }?,
+                                     deliver_to_q_business: {
+                                       action_failure_policy: ("CONTINUE" | "DROP")?,
+                                       application_id: ::String,
+                                       index_id: ::String,
+                                       role_arn: ::String
+                                     }?,
                                      drop: {
                                      }?,
                                      relay: {
@@ -964,6 +970,12 @@ module Aws
                                      deliver_to_mailbox: {
                                        action_failure_policy: ("CONTINUE" | "DROP")?,
                                        mailbox_arn: ::String,
+                                       role_arn: ::String
+                                     }?,
+                                     deliver_to_q_business: {
+                                       action_failure_policy: ("CONTINUE" | "DROP")?,
+                                       application_id: ::String,
+                                       index_id: ::String,
                                        role_arn: ::String
                                      }?,
                                      drop: {

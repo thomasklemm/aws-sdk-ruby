@@ -872,6 +872,16 @@ module Aws::Lambda
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
     #   @return [Types::EventSourceMappingMetricsConfig]
     #
+    # @!attribute [rw] provisioned_poller_config
+    #   (Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode
+    #   configuration for the event source. For more information, see
+    #   [Provisioned Mode][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode
+    #   @return [Types::ProvisionedPollerConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/CreateEventSourceMappingRequest AWS API Documentation
     #
     class CreateEventSourceMappingRequest < Struct.new(
@@ -900,7 +910,8 @@ module Aws::Lambda
       :scaling_config,
       :document_db_event_source_config,
       :kms_key_arn,
-      :metrics_config)
+      :metrics_config,
+      :provisioned_poller_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2066,6 +2077,16 @@ module Aws::Lambda
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
     #   @return [Types::EventSourceMappingMetricsConfig]
     #
+    # @!attribute [rw] provisioned_poller_config
+    #   (Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode
+    #   configuration for the event source. For more information, see
+    #   [Provisioned Mode][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode
+    #   @return [Types::ProvisionedPollerConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/EventSourceMappingConfiguration AWS API Documentation
     #
     class EventSourceMappingConfiguration < Struct.new(
@@ -2099,7 +2120,8 @@ module Aws::Lambda
       :kms_key_arn,
       :filter_criteria_error,
       :event_source_mapping_arn,
-      :metrics_config)
+      :metrics_config,
+      :provisioned_poller_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5093,6 +5115,34 @@ module Aws::Lambda
       include Aws::Structure
     end
 
+    # The [ Provisioned Mode][1] configuration for the event source. Use
+    # Provisioned Mode to customize the minimum and maximum number of event
+    # pollers for your event source. An event poller is a compute unit that
+    # provides approximately 5 MBps of throughput.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode
+    #
+    # @!attribute [rw] minimum_pollers
+    #   The minimum number of event pollers this event source can scale down
+    #   to.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] maximum_pollers
+    #   The maximum number of event pollers this event source can scale up
+    #   to.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ProvisionedPollerConfig AWS API Documentation
+    #
+    class ProvisionedPollerConfig < Struct.new(
+      :minimum_pollers,
+      :maximum_pollers)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] layer_name
     #   The name or Amazon Resource Name (ARN) of the layer.
     #   @return [String]
@@ -6568,6 +6618,16 @@ module Aws::Lambda
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
     #   @return [Types::EventSourceMappingMetricsConfig]
     #
+    # @!attribute [rw] provisioned_poller_config
+    #   (Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode
+    #   configuration for the event source. For more information, see
+    #   [Provisioned Mode][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode
+    #   @return [Types::ProvisionedPollerConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateEventSourceMappingRequest AWS API Documentation
     #
     class UpdateEventSourceMappingRequest < Struct.new(
@@ -6588,7 +6648,8 @@ module Aws::Lambda
       :scaling_config,
       :document_db_event_source_config,
       :kms_key_arn,
-      :metrics_config)
+      :metrics_config,
+      :provisioned_poller_config)
       SENSITIVE = []
       include Aws::Structure
     end

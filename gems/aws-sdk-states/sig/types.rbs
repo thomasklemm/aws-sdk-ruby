@@ -73,6 +73,11 @@ module Aws::States
       SENSITIVE: []
     end
 
+    class AssignedVariablesDetails
+      attr_accessor truncated: bool
+      SENSITIVE: []
+    end
+
     class BillingDetails
       attr_accessor billed_memory_used_in_mb: ::Integer
       attr_accessor billed_duration_in_milliseconds: ::Integer
@@ -270,7 +275,8 @@ module Aws::States
       attr_accessor label: ::String
       attr_accessor revision_id: ::String
       attr_accessor encryption_configuration: Types::EncryptionConfiguration
-      SENSITIVE: [:definition]
+      attr_accessor variable_references: ::Hash[::String, ::Array[::String]]
+      SENSITIVE: [:definition, :variable_references]
     end
 
     class DescribeStateMachineInput
@@ -293,7 +299,8 @@ module Aws::States
       attr_accessor revision_id: ::String
       attr_accessor description: ::String
       attr_accessor encryption_configuration: Types::EncryptionConfiguration
-      SENSITIVE: [:definition, :description]
+      attr_accessor variable_references: ::Hash[::String, ::Array[::String]]
+      SENSITIVE: [:definition, :description, :variable_references]
     end
 
     class EncryptionConfiguration
@@ -301,6 +308,14 @@ module Aws::States
       attr_accessor kms_data_key_reuse_period_seconds: ::Integer
       attr_accessor type: ("AWS_OWNED_KEY" | "CUSTOMER_MANAGED_KMS_KEY")
       SENSITIVE: []
+    end
+
+    class EvaluationFailedEventDetails
+      attr_accessor error: ::String
+      attr_accessor cause: ::String
+      attr_accessor location: ::String
+      attr_accessor state: ::String
+      SENSITIVE: [:error, :cause, :location]
     end
 
     class ExecutionAbortedEventDetails
@@ -406,7 +421,7 @@ module Aws::States
 
     class HistoryEvent
       attr_accessor timestamp: ::Time
-      attr_accessor type: ("ActivityFailed" | "ActivityScheduled" | "ActivityScheduleFailed" | "ActivityStarted" | "ActivitySucceeded" | "ActivityTimedOut" | "ChoiceStateEntered" | "ChoiceStateExited" | "ExecutionAborted" | "ExecutionFailed" | "ExecutionStarted" | "ExecutionSucceeded" | "ExecutionTimedOut" | "FailStateEntered" | "LambdaFunctionFailed" | "LambdaFunctionScheduled" | "LambdaFunctionScheduleFailed" | "LambdaFunctionStarted" | "LambdaFunctionStartFailed" | "LambdaFunctionSucceeded" | "LambdaFunctionTimedOut" | "MapIterationAborted" | "MapIterationFailed" | "MapIterationStarted" | "MapIterationSucceeded" | "MapStateAborted" | "MapStateEntered" | "MapStateExited" | "MapStateFailed" | "MapStateStarted" | "MapStateSucceeded" | "ParallelStateAborted" | "ParallelStateEntered" | "ParallelStateExited" | "ParallelStateFailed" | "ParallelStateStarted" | "ParallelStateSucceeded" | "PassStateEntered" | "PassStateExited" | "SucceedStateEntered" | "SucceedStateExited" | "TaskFailed" | "TaskScheduled" | "TaskStarted" | "TaskStartFailed" | "TaskStateAborted" | "TaskStateEntered" | "TaskStateExited" | "TaskSubmitFailed" | "TaskSubmitted" | "TaskSucceeded" | "TaskTimedOut" | "WaitStateAborted" | "WaitStateEntered" | "WaitStateExited" | "MapRunAborted" | "MapRunFailed" | "MapRunStarted" | "MapRunSucceeded" | "ExecutionRedriven" | "MapRunRedriven")
+      attr_accessor type: ("ActivityFailed" | "ActivityScheduled" | "ActivityScheduleFailed" | "ActivityStarted" | "ActivitySucceeded" | "ActivityTimedOut" | "ChoiceStateEntered" | "ChoiceStateExited" | "ExecutionAborted" | "ExecutionFailed" | "ExecutionStarted" | "ExecutionSucceeded" | "ExecutionTimedOut" | "FailStateEntered" | "LambdaFunctionFailed" | "LambdaFunctionScheduled" | "LambdaFunctionScheduleFailed" | "LambdaFunctionStarted" | "LambdaFunctionStartFailed" | "LambdaFunctionSucceeded" | "LambdaFunctionTimedOut" | "MapIterationAborted" | "MapIterationFailed" | "MapIterationStarted" | "MapIterationSucceeded" | "MapStateAborted" | "MapStateEntered" | "MapStateExited" | "MapStateFailed" | "MapStateStarted" | "MapStateSucceeded" | "ParallelStateAborted" | "ParallelStateEntered" | "ParallelStateExited" | "ParallelStateFailed" | "ParallelStateStarted" | "ParallelStateSucceeded" | "PassStateEntered" | "PassStateExited" | "SucceedStateEntered" | "SucceedStateExited" | "TaskFailed" | "TaskScheduled" | "TaskStarted" | "TaskStartFailed" | "TaskStateAborted" | "TaskStateEntered" | "TaskStateExited" | "TaskSubmitFailed" | "TaskSubmitted" | "TaskSucceeded" | "TaskTimedOut" | "WaitStateAborted" | "WaitStateEntered" | "WaitStateExited" | "MapRunAborted" | "MapRunFailed" | "MapRunStarted" | "MapRunSucceeded" | "ExecutionRedriven" | "MapRunRedriven" | "EvaluationFailed")
       attr_accessor id: ::Integer
       attr_accessor previous_event_id: ::Integer
       attr_accessor activity_failed_event_details: Types::ActivityFailedEventDetails
@@ -445,6 +460,7 @@ module Aws::States
       attr_accessor map_run_started_event_details: Types::MapRunStartedEventDetails
       attr_accessor map_run_failed_event_details: Types::MapRunFailedEventDetails
       attr_accessor map_run_redriven_event_details: Types::MapRunRedrivenEventDetails
+      attr_accessor evaluation_failed_event_details: Types::EvaluationFailedEventDetails
       SENSITIVE: []
     end
 
@@ -455,6 +471,7 @@ module Aws::States
 
     class InspectionData
       attr_accessor input: ::String
+      attr_accessor after_arguments: ::String
       attr_accessor after_input_path: ::String
       attr_accessor after_parameters: ::String
       attr_accessor result: ::String
@@ -462,7 +479,8 @@ module Aws::States
       attr_accessor after_result_path: ::String
       attr_accessor request: Types::InspectionDataRequest
       attr_accessor response: Types::InspectionDataResponse
-      SENSITIVE: [:input, :after_input_path, :after_parameters, :result, :after_result_selector, :after_result_path]
+      attr_accessor variables: ::String
+      SENSITIVE: [:input, :after_arguments, :after_input_path, :after_parameters, :result, :after_result_selector, :after_result_path, :variables]
     end
 
     class InspectionDataRequest
@@ -874,6 +892,8 @@ module Aws::States
       attr_accessor name: ::String
       attr_accessor output: ::String
       attr_accessor output_details: Types::HistoryEventExecutionDataDetails
+      attr_accessor assigned_variables: ::Hash[::String, ::String]
+      attr_accessor assigned_variables_details: Types::AssignedVariablesDetails
       SENSITIVE: [:output]
     end
 
@@ -1035,7 +1055,8 @@ module Aws::States
       attr_accessor input: ::String
       attr_accessor inspection_level: ("INFO" | "DEBUG" | "TRACE")
       attr_accessor reveal_secrets: bool
-      SENSITIVE: [:definition, :input]
+      attr_accessor variables: ::String
+      SENSITIVE: [:definition, :input, :variables]
     end
 
     class TestStateOutput
@@ -1115,7 +1136,7 @@ module Aws::States
       attr_accessor code: ::String
       attr_accessor message: ::String
       attr_accessor location: ::String
-      SENSITIVE: []
+      SENSITIVE: [:code, :message, :location]
     end
 
     class ValidateStateMachineDefinitionInput

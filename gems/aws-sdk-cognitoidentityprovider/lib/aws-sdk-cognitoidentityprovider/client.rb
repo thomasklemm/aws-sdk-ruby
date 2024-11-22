@@ -680,7 +680,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -699,8 +699,14 @@ module Aws::CognitoIdentityProvider
     # Alternatively, you can call `AdminCreateUser` with `SUPPRESS` for the
     # `MessageAction` parameter, and Amazon Cognito won't send any email.
     #
-    # In either case, the user will be in the `FORCE_CHANGE_PASSWORD` state
-    # until they sign in and change their password.
+    # In either case, if the user has a password, they will be in the
+    # `FORCE_CHANGE_PASSWORD` state until they sign in and set their
+    # password. Your invitation message template must have the `{####}`
+    # password placeholder if your users have passwords. If your template
+    # doesn't have this placeholder, Amazon Cognito doesn't deliver the
+    # invitation message. In this case, you must update your message
+    # template and resend the password with a new `AdminCreateUser` request
+    # with a `MessageAction` value of `RESEND`.
     #
     # <note markdown="1"> Amazon Cognito evaluates Identity and Access Management (IAM) policies
     # in requests for this API operation. For this operation, you must use
@@ -761,6 +767,11 @@ module Aws::CognitoIdentityProvider
     #   AdminCreateUser or in the **Users** tab of the Amazon Cognito console
     #   for managing your user pools.
     #
+    #   You must also provide an email address or phone number when you expect
+    #   the user to do passwordless sign-in with an email or SMS OTP. These
+    #   attributes must be provided when passwordless options are the only
+    #   available, or when you don't submit a `TemporaryPassword`.
+    #
     #   In your call to `AdminCreateUser`, you can set the `email_verified`
     #   attribute to `True`, and you can set the `phone_number_verified`
     #   attribute to `True`. You can also do this by calling
@@ -804,18 +815,31 @@ module Aws::CognitoIdentityProvider
     #   The user's temporary password. This password must conform to the
     #   password policy that you specified when you created the user pool.
     #
+    #   The exception to the requirement for a password is when your user pool
+    #   supports passwordless sign-in with email or SMS OTPs. To create a user
+    #   with no password, omit this parameter or submit a blank value. You can
+    #   only create a passwordless user when passwordless sign-in is
+    #   available. See [the SignInPolicyType][1] property of
+    #   [CreateUserPool][2] and [UpdateUserPool][3].
+    #
     #   The temporary password is valid only once. To complete the Admin
     #   Create User flow, the user must enter the temporary password in the
     #   sign-in page, along with a new password to be used in all future
     #   sign-ins.
     #
-    #   This parameter isn't required. If you don't specify a value, Amazon
-    #   Cognito generates one for you.
+    #   If you don't specify a value, Amazon Cognito generates one for you
+    #   unless you have passwordless options active for your user pool.
     #
     #   The temporary password can only be used until the user account
     #   expiration limit that you set for your user pool. To reset the account
     #   after that time limit, you must call `AdminCreateUser` again and
     #   specify `RESEND` for the `MessageAction` parameter.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SignInPolicyType.html
+    #   [2]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateUserPool.html
+    #   [3]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UpdateUserPool.html
     #
     # @option params [Boolean] :force_alias_creation
     #   This parameter is used only if the `phone_number_verified` or
@@ -1390,7 +1414,8 @@ module Aws::CognitoIdentityProvider
     end
 
     # Gets the specified user by user name in a user pool as an
-    # administrator. Works on any user.
+    # administrator. Works on any user. This operation contributes to your
+    # monthly active user (MAU) count for the purpose of billing.
     #
     # <note markdown="1"> Amazon Cognito evaluates Identity and Access Management (IAM) policies
     # in requests for this API operation. For this operation, you must use
@@ -1478,7 +1503,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -1516,43 +1541,75 @@ module Aws::CognitoIdentityProvider
     #   The app client ID.
     #
     # @option params [required, String] :auth_flow
-    #   The authentication flow for this call to run. The API action will
-    #   depend on this value. For example:
+    #   The authentication flow that you want to initiate. The
+    #   `AuthParameters` that you must submit are linked to the flow that you
+    #   submit. For example:
     #
-    #   * `REFRESH_TOKEN_AUTH` will take in a valid refresh token and return
-    #     new tokens.
+    #   * `USER_AUTH`: Request a preferred authentication type or review
+    #     available authentication types. From the offered authentication
+    #     types, select one in a challenge response and then authenticate with
+    #     that method in an additional challenge response.
     #
-    #   * `USER_SRP_AUTH` will take in `USERNAME` and `SRP_A` and return the
-    #     Secure Remote Password (SRP) protocol variables to be used for next
-    #     challenge execution.
+    #   * `REFRESH_TOKEN_AUTH`: Receive new ID and access tokens when you pass
+    #     a `REFRESH_TOKEN` parameter with a valid refresh token as the value.
     #
-    #   * `ADMIN_USER_PASSWORD_AUTH` will take in `USERNAME` and `PASSWORD`
-    #     and return the next challenge or tokens.
+    #   * `USER_SRP_AUTH`: Receive secure remote password (SRP) variables for
+    #     the next challenge, `PASSWORD_VERIFIER`, when you pass `USERNAME`
+    #     and `SRP_A` parameters..
     #
-    #   Valid values include:
+    #   * `ADMIN_USER_PASSWORD_AUTH`: Receive new tokens or the next
+    #     challenge, for example `SOFTWARE_TOKEN_MFA`, when you pass
+    #     `USERNAME` and `PASSWORD` parameters.
     #
-    #   * `USER_SRP_AUTH`: Authentication flow for the Secure Remote Password
-    #     (SRP) protocol.
+    #   Valid values include the following:
     #
-    #   * `REFRESH_TOKEN_AUTH`/`REFRESH_TOKEN`: Authentication flow for
-    #     refreshing the access token and ID token by supplying a valid
-    #     refresh token.
+    #   USER\_AUTH
     #
-    #   * `CUSTOM_AUTH`: Custom authentication flow.
+    #   : The entry point for sign-in with passwords, one-time passwords,
+    #     biometric devices, and security keys.
     #
-    #   * `ADMIN_NO_SRP_AUTH`: Non-SRP authentication flow; you can pass in
-    #     the USERNAME and PASSWORD directly if the flow is enabled for
-    #     calling the app client.
+    #   USER\_SRP\_AUTH
     #
-    #   * `ADMIN_USER_PASSWORD_AUTH`: Admin-based user password
-    #     authentication. This replaces the `ADMIN_NO_SRP_AUTH` authentication
-    #     flow. In this flow, Amazon Cognito receives the password in the
-    #     request instead of using the SRP process to verify passwords.
+    #   : Username-password authentication with the Secure Remote Password
+    #     (SRP) protocol. For more information, see [Use SRP password
+    #     verification in custom authentication flow][1].
+    #
+    #   REFRESH\_TOKEN\_AUTH and REFRESH\_TOKEN
+    #
+    #   : Provide a valid refresh token and receive new ID and access tokens.
+    #     For more information, see [Using the refresh token][2].
+    #
+    #   CUSTOM\_AUTH
+    #
+    #   : Custom authentication with Lambda triggers. For more information,
+    #     see [Custom authentication challenge Lambda triggers][3].
+    #
+    #   ADMIN\_USER\_PASSWORD\_AUTH
+    #
+    #   : Username-password authentication with the password sent directly in
+    #     the request. For more information, see [Admin authentication
+    #     flow][4].
+    #
+    #   `USER_PASSWORD_AUTH` is a flow type of [InitiateAuth][5] and isn't
+    #   valid for AdminInitiateAuth.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-authentication-flow.html#Using-SRP-password-verification-in-custom-authentication-flow
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-the-refresh-token.html
+    #   [3]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-challenge.html
+    #   [4]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-authentication-flow.html#Built-in-authentication-flow-and-challenges
+    #   [5]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html
     #
     # @option params [Hash<String,String>] :auth_parameters
     #   The authentication parameters. These are inputs corresponding to the
     #   `AuthFlow` that you're invoking. The required values depend on the
     #   value of `AuthFlow`:
+    #
+    #   * For `USER_AUTH`: `USERNAME` (required), `PREFERRED_CHALLENGE`. If
+    #     you don't provide a value for `PREFERRED_CHALLENGE`, Amazon Cognito
+    #     responds with the `AvailableChallenges` parameter that specifies the
+    #     available sign-in methods.
     #
     #   * For `USER_SRP_AUTH`: `USERNAME` (required), `SRP_A` (required),
     #     `SECRET_HASH` (required if the app client is configured with a
@@ -1618,6 +1675,10 @@ module Aws::CognitoIdentityProvider
     #
     #   * Define auth challenge
     #
+    #   * Custom email sender
+    #
+    #   * Custom SMS sender
+    #
     #   For more information, see [ Customizing user pool Workflows with
     #   Lambda Triggers][1] in the *Amazon Cognito Developer Guide*.
     #
@@ -1651,6 +1712,11 @@ module Aws::CognitoIdentityProvider
     #   that your app generates and passes to Amazon Cognito when it makes API
     #   requests.
     #
+    # @option params [String] :session
+    #   The optional session ID from a `ConfirmSignUp` API request. You can
+    #   sign in a user directly from the sign-up process with the `USER_AUTH`
+    #   authentication flow.
+    #
     # @return [Types::AdminInitiateAuthResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::AdminInitiateAuthResponse#challenge_name #challenge_name} => String
@@ -1663,7 +1729,7 @@ module Aws::CognitoIdentityProvider
     #   resp = client.admin_initiate_auth({
     #     user_pool_id: "UserPoolIdType", # required
     #     client_id: "ClientIdType", # required
-    #     auth_flow: "USER_SRP_AUTH", # required, accepts USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN, CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH, ADMIN_USER_PASSWORD_AUTH
+    #     auth_flow: "USER_SRP_AUTH", # required, accepts USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN, CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH, ADMIN_USER_PASSWORD_AUTH, USER_AUTH
     #     auth_parameters: {
     #       "StringType" => "StringType",
     #     },
@@ -1685,11 +1751,12 @@ module Aws::CognitoIdentityProvider
     #       ],
     #       encoded_data: "StringType",
     #     },
+    #     session: "SessionType",
     #   })
     #
     # @example Response structure
     #
-    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED"
+    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "SELECT_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED", "SMS_OTP", "PASSWORD", "WEB_AUTHN", "PASSWORD_SRP"
     #   resp.session #=> String
     #   resp.challenge_parameters #=> Hash
     #   resp.challenge_parameters["StringType"] #=> String
@@ -1787,23 +1854,22 @@ module Aws::CognitoIdentityProvider
     #   `ProviderAttributeValue` for the user must be the same value as the
     #   `id`, `sub`, or `user_id` value found in the social IdP token.
     #
-    #
-    #
-    #   For OIDC, the `ProviderAttributeName` can be any value that matches a
+    #   For OIDC, the `ProviderAttributeName` can be any mapped value from a
     #   claim in the ID token, or that your app retrieves from the `userInfo`
-    #   endpoint. You must map the claim to a user pool attribute in your IdP
-    #   configuration, and set the user pool attribute name as the value of
-    #   `ProviderAttributeName` in your `AdminLinkProviderForUser` request.
+    #   endpoint. For SAML, the `ProviderAttributeName` can be any mapped
+    #   value from a claim in the SAML assertion.
     #
-    #   For SAML, the `ProviderAttributeName` can be any value that matches a
-    #   claim in the SAML assertion. To link SAML users based on the subject
-    #   of the SAML assertion, map the subject to a claim through the SAML IdP
-    #   and set that claim name as the value of `ProviderAttributeName` in
-    #   your `AdminLinkProviderForUser` request.
+    #   The following additional considerations apply to `SourceUser` for OIDC
+    #   and SAML providers.
     #
-    #   For both OIDC and SAML users, when you set `ProviderAttributeName` to
-    #   `Cognito_Subject`, Amazon Cognito will automatically parse the default
-    #   unique identifier found in the subject from the IdP token.
+    #   * You must map the claim to a user pool attribute in your IdP
+    #     configuration, and set the user pool attribute name as the value of
+    #     `ProviderAttributeName` in your `AdminLinkProviderForUser` request.
+    #     For example, `email`.
+    #
+    #   * When you set `ProviderAttributeName` to `Cognito_Subject`, Amazon
+    #     Cognito will automatically parse the default unique identifier found
+    #     in the subject from the IdP token.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1832,7 +1898,7 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
-    # Lists devices, as an administrator.
+    # Lists a user's registered devices.
     #
     # <note markdown="1"> Amazon Cognito evaluates Identity and Access Management (IAM) policies
     # in requests for this API operation. For this operation, you must use
@@ -2139,7 +2205,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -2270,7 +2336,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -2322,17 +2388,58 @@ module Aws::CognitoIdentityProvider
     #   challenge-response parameters.
     #
     #   You must provide a SECRET\_HASH parameter in all challenge responses
-    #   to an app client that has a client secret.
+    #   to an app client that has a client secret. Include a `DEVICE_KEY` for
+    #   device authentication.
     #
-    #   SMS\_MFA
+    #   SELECT\_CHALLENGE
     #
-    #   : `"ChallengeName": "SMS_MFA", "ChallengeResponses": {"SMS_MFA_CODE":
+    #   : `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #     "USERNAME": "[username]", "ANSWER": "[Challenge name]"}`
+    #
+    #     Available challenges are `PASSWORD`, `PASSWORD_SRP`, `EMAIL_OTP`,
+    #     `SMS_OTP`, and `WEB_AUTHN`.
+    #
+    #     Complete authentication in the `SELECT_CHALLENGE` response for
+    #     `PASSWORD`, `PASSWORD_SRP`, and `WEB_AUTHN`:
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "WEB_AUTHN", "USERNAME": "[username]", "CREDENTIAL":
+    #       "[AuthenticationResponseJSON]"}`
+    #
+    #       See [ AuthenticationResponseJSON][1].
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "PASSWORD", "USERNAME": "[username]", "PASSWORD":
+    #       "[password]"}`
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "PASSWORD_SRP", "USERNAME": "[username]", "SRP_A":
+    #       "[SRP_A]"}`
+    #
+    #     For `SMS_OTP` and `EMAIL_OTP`, respond with the username and answer.
+    #     Your user pool will send a code for the user to submit in the next
+    #     challenge response.
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "SMS_OTP", "USERNAME": "[username]"}`
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "EMAIL_OTP", "USERNAME": "[username]"}`
+    #
+    #   SMS\_OTP
+    #
+    #   : `"ChallengeName": "SMS_OTP", "ChallengeResponses": {"SMS_OTP_CODE":
     #     "[code]", "USERNAME": "[username]"}`
     #
     #   EMAIL\_OTP
     #
     #   : `"ChallengeName": "EMAIL_OTP", "ChallengeResponses":
     #     {"EMAIL_OTP_CODE": "[code]", "USERNAME": "[username]"}`
+    #
+    #   SMS\_MFA
+    #
+    #   : `"ChallengeName": "SMS_MFA", "ChallengeResponses": {"SMS_MFA_CODE":
+    #     "[code]", "USERNAME": "[username]"}`
     #
     #   PASSWORD\_VERIFIER
     #
@@ -2407,13 +2514,14 @@ module Aws::CognitoIdentityProvider
     #     SOFTWARE_TOKEN_MFA]"}`
     #
     #   For more information about `SECRET_HASH`, see [Computing secret hash
-    #   values][1]. For information about `DEVICE_KEY`, see [Working with user
-    #   devices in your user pool][2].
+    #   values][2]. For information about `DEVICE_KEY`, see [Working with user
+    #   devices in your user pool][3].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash
-    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html
+    #   [1]: https://www.w3.org/TR/webauthn-3/#dictdef-authenticationresponsejson
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash
+    #   [3]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html
     #
     # @option params [String] :session
     #   The session that should be passed both ways in challenge-response
@@ -2500,7 +2608,7 @@ module Aws::CognitoIdentityProvider
     #   resp = client.admin_respond_to_auth_challenge({
     #     user_pool_id: "UserPoolIdType", # required
     #     client_id: "ClientIdType", # required
-    #     challenge_name: "SMS_MFA", # required, accepts SMS_MFA, EMAIL_OTP, SOFTWARE_TOKEN_MFA, SELECT_MFA_TYPE, MFA_SETUP, PASSWORD_VERIFIER, CUSTOM_CHALLENGE, DEVICE_SRP_AUTH, DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
+    #     challenge_name: "SMS_MFA", # required, accepts SMS_MFA, EMAIL_OTP, SOFTWARE_TOKEN_MFA, SELECT_MFA_TYPE, MFA_SETUP, PASSWORD_VERIFIER, CUSTOM_CHALLENGE, SELECT_CHALLENGE, DEVICE_SRP_AUTH, DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED, SMS_OTP, PASSWORD, WEB_AUTHN, PASSWORD_SRP
     #     challenge_responses: {
     #       "StringType" => "StringType",
     #     },
@@ -2527,7 +2635,7 @@ module Aws::CognitoIdentityProvider
     #
     # @example Response structure
     #
-    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED"
+    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "SELECT_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED", "SMS_OTP", "PASSWORD", "WEB_AUTHN", "PASSWORD_SRP"
     #   resp.session #=> String
     #   resp.challenge_parameters #=> Hash
     #   resp.challenge_parameters["StringType"] #=> String
@@ -2909,7 +3017,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -2976,12 +3084,13 @@ module Aws::CognitoIdentityProvider
     #   in and receive messages with the original attribute value until they
     #   verify the new value.
     #
-    #   To update the value of an attribute that requires verification in the
-    #   same API request, include the `email_verified` or
-    #   `phone_number_verified` attribute, with a value of `true`. If you set
-    #   the `email_verified` or `phone_number_verified` value for an `email`
-    #   or `phone_number` attribute that requires verification to `true`,
-    #   Amazon Cognito doesn’t send a verification message to your user.
+    #   To skip the verification message and update the value of an attribute
+    #   that requires verification in the same API request, include the
+    #   `email_verified` or `phone_number_verified` attribute, with a value of
+    #   `true`. If you set the `email_verified` or `phone_number_verified`
+    #   value for an `email` or `phone_number` attribute that requires
+    #   verification to `true`, Amazon Cognito doesn’t send a verification
+    #   message to your user.
     #
     # @option params [Hash<String,String>] :client_metadata
     #   A map of custom key-value pairs that you can provide as input for any
@@ -3209,8 +3318,10 @@ module Aws::CognitoIdentityProvider
     #
     # [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html
     #
-    # @option params [required, String] :previous_password
-    #   The old password.
+    # @option params [String] :previous_password
+    #   The user's previous password. Required if the user has a password. If
+    #   the user has no password and only signs in with passwordless
+    #   authentication options, you can omit this parameter.
     #
     # @option params [required, String] :proposed_password
     #   The new password.
@@ -3224,7 +3335,7 @@ module Aws::CognitoIdentityProvider
     # @example Request syntax with placeholder values
     #
     #   resp = client.change_password({
-    #     previous_password: "PasswordType", # required
+    #     previous_password: "PasswordType",
     #     proposed_password: "PasswordType", # required
     #     access_token: "TokenModelType", # required
     #   })
@@ -3235,6 +3346,54 @@ module Aws::CognitoIdentityProvider
     # @param [Hash] params ({})
     def change_password(params = {}, options = {})
       req = build_request(:change_password, params)
+      req.send_request(options)
+    end
+
+    # Completes registration of a passkey authenticator for the current
+    # user. Your application provides data from a successful registration
+    # request with the data from the output of a [
+    # StartWebAuthnRegistration][1].
+    #
+    # Authorize this action with a signed-in user's access token. It must
+    # include the scope `aws.cognito.signin.user.admin`.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_StartWebAuthnRegistration.html
+    #
+    # @option params [required, String] :access_token
+    #   A valid access token that Amazon Cognito issued to the user whose
+    #   passkey registration you want to verify.
+    #
+    # @option params [required, Hash,Array,String,Numeric,Boolean] :credential
+    #   A [RegistrationResponseJSON][1] public-key credential response from
+    #   the user's passkey provider.
+    #
+    #   Document type used to carry open content
+    #   (Hash,Array,String,Numeric,Boolean). A document type value is
+    #   serialized using the same format as its surroundings and requires no
+    #   additional encoding or escaping.
+    #
+    #
+    #
+    #   [1]: https://www.w3.org/TR/webauthn-3/#dictdef-registrationresponsejson
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.complete_web_authn_registration({
+    #     access_token: "TokenModelType", # required
+    #     credential: { # required
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/CompleteWebAuthnRegistration AWS API Documentation
+    #
+    # @overload complete_web_authn_registration(params = {})
+    # @param [Hash] params ({})
+    def complete_web_authn_registration(params = {}, options = {})
+      req = build_request(:complete_web_authn_registration, params)
       req.send_request(options)
     end
 
@@ -3534,7 +3693,14 @@ module Aws::CognitoIdentityProvider
     #
     #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html
     #
-    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    # @option params [String] :session
+    #   The optional session ID from a `SignUp` API request. You can sign in a
+    #   user directly from the sign-up process with the `USER_AUTH`
+    #   authentication flow.
+    #
+    # @return [Types::ConfirmSignUpResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ConfirmSignUpResponse#session #session} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -3554,7 +3720,12 @@ module Aws::CognitoIdentityProvider
     #     client_metadata: {
     #       "StringType" => "StringType",
     #     },
+    #     session: "SessionType",
     #   })
+    #
+    # @example Response structure
+    #
+    #   resp.session #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/ConfirmSignUp AWS API Documentation
     #
@@ -3847,6 +4018,126 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
+    # Creates a new set of branding settings for a user pool style and
+    # associates it with an app client. This operation is the programmatic
+    # option for the creation of a new style in the branding designer.
+    #
+    # Provides values for UI customization in a `Settings` JSON object and
+    # image files in an `Assets` array. To send the JSON object `Document`
+    # type parameter in `Settings`, you might need to update to the most
+    # recent version of your Amazon Web Services SDK.
+    #
+    # This operation has a 2-megabyte request-size limit and include the CSS
+    # settings and image assets for your app client. Your branding settings
+    # might exceed 2MB in size. Amazon Cognito doesn't require that you
+    # pass all parameters in one request and preserves existing style
+    # settings that you don't specify. If your request is larger than 2MB,
+    # separate it into multiple requests, each with a size smaller than the
+    # limit.
+    #
+    # For more information, see [API and SDK operations for managed login
+    # branding][1]
+    #
+    # <note markdown="1"> Amazon Cognito evaluates Identity and Access Management (IAM) policies
+    # in requests for this API operation. For this operation, you must use
+    # IAM credentials to authorize requests, and you must grant yourself the
+    # corresponding IAM permission in a policy.
+    #
+    #  **Learn more**
+    #
+    #  * [Signing Amazon Web Services API Requests][2]
+    #
+    # * [Using the Amazon Cognito user pools API and user pool endpoints][3]
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/managed-login-brandingdesigner.html#branding-designer-api
+    # [2]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html
+    # [3]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html
+    #
+    # @option params [required, String] :user_pool_id
+    #   The ID of the user pool where you want to create a new branding style.
+    #
+    # @option params [required, String] :client_id
+    #   The app client that you want to create the branding style for. Each
+    #   style is permanently linked to an app client. To change the style for
+    #   an app client, delete the existing style with
+    #   [DeleteManagedLoginBranding][1] and create a new one.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_DeleteManagedLoginBranding.html
+    #
+    # @option params [Boolean] :use_cognito_provided_values
+    #   When true, applies the default branding style options. This option
+    #   reverts to default style options that are managed by Amazon Cognito.
+    #   You can modify them later in the branding designer.
+    #
+    #   When you specify `true` for this option, you must also omit values for
+    #   `Settings` and `Assets` in the request.
+    #
+    # @option params [Hash,Array,String,Numeric,Boolean] :settings
+    #   A JSON file, encoded as a `Document` type, with the the settings that
+    #   you want to apply to your style.
+    #
+    #   Document type used to carry open content
+    #   (Hash,Array,String,Numeric,Boolean). A document type value is
+    #   serialized using the same format as its surroundings and requires no
+    #   additional encoding or escaping.
+    #
+    # @option params [Array<Types::AssetType>] :assets
+    #   An array of image files that you want to apply to roles like
+    #   backgrounds, logos, and icons. Each object must also indicate whether
+    #   it is for dark mode, light mode, or browser-adaptive mode.
+    #
+    # @return [Types::CreateManagedLoginBrandingResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateManagedLoginBrandingResponse#managed_login_branding #managed_login_branding} => Types::ManagedLoginBrandingType
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_managed_login_branding({
+    #     user_pool_id: "UserPoolIdType", # required
+    #     client_id: "ClientIdType", # required
+    #     use_cognito_provided_values: false,
+    #     settings: {
+    #     },
+    #     assets: [
+    #       {
+    #         category: "FAVICON_ICO", # required, accepts FAVICON_ICO, FAVICON_SVG, EMAIL_GRAPHIC, SMS_GRAPHIC, AUTH_APP_GRAPHIC, PASSWORD_GRAPHIC, PASSKEY_GRAPHIC, PAGE_HEADER_LOGO, PAGE_HEADER_BACKGROUND, PAGE_FOOTER_LOGO, PAGE_FOOTER_BACKGROUND, PAGE_BACKGROUND, FORM_BACKGROUND, FORM_LOGO, IDP_BUTTON_ICON
+    #         color_mode: "LIGHT", # required, accepts LIGHT, DARK, DYNAMIC
+    #         extension: "ICO", # required, accepts ICO, JPEG, PNG, SVG, WEBP
+    #         bytes: "data",
+    #         resource_id: "ResourceIdType",
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.managed_login_branding.managed_login_branding_id #=> String
+    #   resp.managed_login_branding.user_pool_id #=> String
+    #   resp.managed_login_branding.use_cognito_provided_values #=> Boolean
+    #   resp.managed_login_branding.assets #=> Array
+    #   resp.managed_login_branding.assets[0].category #=> String, one of "FAVICON_ICO", "FAVICON_SVG", "EMAIL_GRAPHIC", "SMS_GRAPHIC", "AUTH_APP_GRAPHIC", "PASSWORD_GRAPHIC", "PASSKEY_GRAPHIC", "PAGE_HEADER_LOGO", "PAGE_HEADER_BACKGROUND", "PAGE_FOOTER_LOGO", "PAGE_FOOTER_BACKGROUND", "PAGE_BACKGROUND", "FORM_BACKGROUND", "FORM_LOGO", "IDP_BUTTON_ICON"
+    #   resp.managed_login_branding.assets[0].color_mode #=> String, one of "LIGHT", "DARK", "DYNAMIC"
+    #   resp.managed_login_branding.assets[0].extension #=> String, one of "ICO", "JPEG", "PNG", "SVG", "WEBP"
+    #   resp.managed_login_branding.assets[0].bytes #=> String
+    #   resp.managed_login_branding.assets[0].resource_id #=> String
+    #   resp.managed_login_branding.creation_date #=> Time
+    #   resp.managed_login_branding.last_modified_date #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/CreateManagedLoginBranding AWS API Documentation
+    #
+    # @overload create_managed_login_branding(params = {})
+    # @param [Hash] params ({})
+    def create_managed_login_branding(params = {}, options = {})
+      req = build_request(:create_managed_login_branding, params)
+      req.send_request(options)
+    end
+
     # Creates a new OAuth2.0 resource server and defines custom scopes
     # within it.
     #
@@ -4002,7 +4293,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -4057,26 +4348,9 @@ module Aws::CognitoIdentityProvider
     #   request.
     #
     # @option params [Types::LambdaConfigType] :lambda_config
-    #   The Lambda trigger configuration information for the new user pool.
-    #
-    #   <note markdown="1"> In a push model, event sources (such as Amazon S3 and custom
-    #   applications) need permission to invoke a function. So you must make
-    #   an extra call to add permission for these event sources to invoke your
-    #   Lambda function.
-    #
-    #
-    #
-    #    For more information on using the Lambda API to add permission, see[
-    #   AddPermission ][1].
-    #
-    #    For adding permission using the CLI, see[ add-permission ][2].
-    #
-    #    </note>
-    #
-    #
-    #
-    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html
-    #   [2]: https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html
+    #   A collection of user pool Lambda triggers. Amazon Cognito invokes
+    #   triggers at several possible stages of authentication operations.
+    #   Triggers can modify the outcome of the operations that invoked them.
     #
     # @option params [Array<String>] :auto_verified_attributes
     #   The attributes to be auto-verified. Possible values: **email**,
@@ -4115,8 +4389,15 @@ module Aws::CognitoIdentityProvider
     #   [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_VerificationMessageTemplateType.html
     #
     # @option params [Types::VerificationMessageTemplateType] :verification_message_template
-    #   The template for the verification message that the user sees when the
-    #   app requests permission to access the user's information.
+    #   The template for the verification message that your user pool delivers
+    #   to users who set an email address or phone number attribute.
+    #
+    #   Set the email message type that corresponds to your
+    #   `DefaultEmailOption` selection. For `CONFIRM_WITH_LINK`, specify an
+    #   `EmailMessageByLink` and leave `EmailMessage` blank. For
+    #   `CONFIRM_WITH_CODE`, specify an `EmailMessage` and leave
+    #   `EmailMessageByLink` blank. When you supply both parameters with
+    #   either choice, Amazon Cognito returns an error.
     #
     # @option params [String] :sms_authentication_message
     #   A string representing the SMS authentication message.
@@ -4212,6 +4493,16 @@ module Aws::CognitoIdentityProvider
     #   activated. In the absence of this setting, Amazon Cognito uses the
     #   legacy behavior to determine the recovery method where SMS is
     #   preferred through email.
+    #
+    # @option params [String] :user_pool_tier
+    #   The user pool [feature plan][1], or tier. This parameter determines
+    #   the eligibility of the user pool for features like managed login,
+    #   access-token customization, and threat protection. Defaults to
+    #   `ESSENTIALS`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html
     #
     # @return [Types::CreateUserPoolResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4687,6 +4978,9 @@ module Aws::CognitoIdentityProvider
     #         password_history_size: 1,
     #         temporary_password_validity_days: 1,
     #       },
+    #       sign_in_policy: {
+    #         allowed_first_auth_factors: ["PASSWORD"], # accepts PASSWORD, EMAIL_OTP, SMS_OTP, WEB_AUTHN
+    #       },
     #     },
     #     deletion_protection: "ACTIVE", # accepts ACTIVE, INACTIVE
     #     lambda_config: {
@@ -4756,8 +5050,8 @@ module Aws::CognitoIdentityProvider
     #       allow_admin_create_user_only: false,
     #       unused_account_validity_days: 1,
     #       invite_message_template: {
-    #         sms_message: "SmsVerificationMessageType",
-    #         email_message: "EmailVerificationMessageType",
+    #         sms_message: "SmsInviteMessageType",
+    #         email_message: "EmailInviteMessageType",
     #         email_subject: "EmailVerificationSubjectType",
     #       },
     #     },
@@ -4795,6 +5089,7 @@ module Aws::CognitoIdentityProvider
     #         },
     #       ],
     #     },
+    #     user_pool_tier: "LITE", # accepts LITE, ESSENTIALS, PLUS
     #   })
     #
     # @example Response structure
@@ -4808,6 +5103,8 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool.policies.password_policy.require_symbols #=> Boolean
     #   resp.user_pool.policies.password_policy.password_history_size #=> Integer
     #   resp.user_pool.policies.password_policy.temporary_password_validity_days #=> Integer
+    #   resp.user_pool.policies.sign_in_policy.allowed_first_auth_factors #=> Array
+    #   resp.user_pool.policies.sign_in_policy.allowed_first_auth_factors[0] #=> String, one of "PASSWORD", "EMAIL_OTP", "SMS_OTP", "WEB_AUTHN"
     #   resp.user_pool.deletion_protection #=> String, one of "ACTIVE", "INACTIVE"
     #   resp.user_pool.lambda_config.pre_sign_up #=> String
     #   resp.user_pool.lambda_config.custom_message #=> String
@@ -4887,6 +5184,7 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool.account_recovery_setting.recovery_mechanisms #=> Array
     #   resp.user_pool.account_recovery_setting.recovery_mechanisms[0].priority #=> Integer
     #   resp.user_pool.account_recovery_setting.recovery_mechanisms[0].name #=> String, one of "verified_email", "verified_phone_number", "admin_only"
+    #   resp.user_pool.user_pool_tier #=> String, one of "LITE", "ESSENTIALS", "PLUS"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/CreateUserPool AWS API Documentation
     #
@@ -5057,6 +5355,15 @@ module Aws::CognitoIdentityProvider
     #
     #   Valid values include:
     #
+    #   * `ALLOW_USER_AUTH`: Enable selection-based sign-in with `USER_AUTH`.
+    #     This setting covers username-password, secure remote password (SRP),
+    #     passwordless, and passkey authentication. This authentiation flow
+    #     can do username-password and SRP authentication without other
+    #     `ExplicitAuthFlows` permitting them. For example users can complete
+    #     an SRP challenge through `USER_AUTH` without the flow
+    #     `USER_SRP_AUTH` being active for the app client. This flow doesn't
+    #     include `CUSTOM_AUTH`.
+    #
     #   * `ALLOW_ADMIN_USER_PASSWORD_AUTH`: Enable admin based user password
     #     authentication flow `ADMIN_USER_PASSWORD_AUTH`. This setting
     #     replaces the `ADMIN_NO_SRP_AUTH` setting. With this authentication
@@ -5087,6 +5394,18 @@ module Aws::CognitoIdentityProvider
     #   `Facebook`, `Google`, `SignInWithApple`, and `LoginWithAmazon`. You
     #   can also specify the names that you configured for the SAML and OIDC
     #   IdPs in your user pool, for example `MySAMLIdP` or `MyOIDCIdP`.
+    #
+    #   This setting applies to providers that you can access with the [hosted
+    #   UI and OAuth 2.0 authorization server][1]. The removal of `COGNITO`
+    #   from this list doesn't prevent authentication operations for local
+    #   users with the user pools API in an Amazon Web Services SDK. The only
+    #   way to prevent API-based authentication is to block access with a [WAF
+    #   rule][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-app-integration.html
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-waf.html
     #
     # @option params [Array<String>] :callback_urls
     #   A list of allowed redirect (callback) URLs for the IdPs.
@@ -5241,7 +5560,7 @@ module Aws::CognitoIdentityProvider
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-advanced-security.html
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-threat-protection.html
     #
     # @option params [Integer] :auth_session_validity
     #   Amazon Cognito creates a session token for each API request in an
@@ -5397,7 +5716,7 @@ module Aws::CognitoIdentityProvider
     #     },
     #     read_attributes: ["ClientPermissionType"],
     #     write_attributes: ["ClientPermissionType"],
-    #     explicit_auth_flows: ["ADMIN_NO_SRP_AUTH"], # accepts ADMIN_NO_SRP_AUTH, CUSTOM_AUTH_FLOW_ONLY, USER_PASSWORD_AUTH, ALLOW_ADMIN_USER_PASSWORD_AUTH, ALLOW_CUSTOM_AUTH, ALLOW_USER_PASSWORD_AUTH, ALLOW_USER_SRP_AUTH, ALLOW_REFRESH_TOKEN_AUTH
+    #     explicit_auth_flows: ["ADMIN_NO_SRP_AUTH"], # accepts ADMIN_NO_SRP_AUTH, CUSTOM_AUTH_FLOW_ONLY, USER_PASSWORD_AUTH, ALLOW_ADMIN_USER_PASSWORD_AUTH, ALLOW_CUSTOM_AUTH, ALLOW_USER_PASSWORD_AUTH, ALLOW_USER_SRP_AUTH, ALLOW_REFRESH_TOKEN_AUTH, ALLOW_USER_AUTH
     #     supported_identity_providers: ["ProviderNameType"],
     #     callback_urls: ["RedirectUrlType"],
     #     logout_urls: ["RedirectUrlType"],
@@ -5437,7 +5756,7 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool_client.write_attributes #=> Array
     #   resp.user_pool_client.write_attributes[0] #=> String
     #   resp.user_pool_client.explicit_auth_flows #=> Array
-    #   resp.user_pool_client.explicit_auth_flows[0] #=> String, one of "ADMIN_NO_SRP_AUTH", "CUSTOM_AUTH_FLOW_ONLY", "USER_PASSWORD_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_CUSTOM_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"
+    #   resp.user_pool_client.explicit_auth_flows[0] #=> String, one of "ADMIN_NO_SRP_AUTH", "CUSTOM_AUTH_FLOW_ONLY", "USER_PASSWORD_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_CUSTOM_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_AUTH"
     #   resp.user_pool_client.supported_identity_providers #=> Array
     #   resp.user_pool_client.supported_identity_providers[0] #=> String
     #   resp.user_pool_client.callback_urls #=> Array
@@ -5469,7 +5788,9 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
-    # Creates a new domain for a user pool.
+    # Creates a new domain for a user pool. The domain hosts user pool
+    # domain services like managed login, the hosted UI (classic), and the
+    # user pool authorization server.
     #
     # <note markdown="1"> Amazon Cognito evaluates Identity and Access Management (IAM) policies
     # in requests for this API operation. For this operation, you must use
@@ -5495,7 +5816,19 @@ module Aws::CognitoIdentityProvider
     #   domains, this is the prefix alone, such as `auth`.
     #
     # @option params [required, String] :user_pool_id
-    #   The user pool ID.
+    #   The ID of the user pool where you want to add a domain.
+    #
+    # @option params [Integer] :managed_login_version
+    #   The version of managed login branding that you want to apply to your
+    #   domain. A value of `1` indicates hosted UI (classic) branding and a
+    #   version of `2` indicates managed login branding.
+    #
+    #   Managed login requires that your user pool be configured for any
+    #   [feature plan][1] other than `Lite`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html
     #
     # @option params [Types::CustomDomainConfigType] :custom_domain_config
     #   The configuration for a custom domain that hosts the sign-up and
@@ -5514,6 +5847,7 @@ module Aws::CognitoIdentityProvider
     #
     # @return [Types::CreateUserPoolDomainResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
+    #   * {Types::CreateUserPoolDomainResponse#managed_login_version #managed_login_version} => Integer
     #   * {Types::CreateUserPoolDomainResponse#cloud_front_domain #cloud_front_domain} => String
     #
     # @example Request syntax with placeholder values
@@ -5521,6 +5855,7 @@ module Aws::CognitoIdentityProvider
     #   resp = client.create_user_pool_domain({
     #     domain: "DomainType", # required
     #     user_pool_id: "UserPoolIdType", # required
+    #     managed_login_version: 1,
     #     custom_domain_config: {
     #       certificate_arn: "ArnType", # required
     #     },
@@ -5528,6 +5863,7 @@ module Aws::CognitoIdentityProvider
     #
     # @example Response structure
     #
+    #   resp.managed_login_version #=> Integer
     #   resp.cloud_front_domain #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/CreateUserPoolDomain AWS API Documentation
@@ -5590,6 +5926,53 @@ module Aws::CognitoIdentityProvider
     # @param [Hash] params ({})
     def delete_identity_provider(params = {}, options = {})
       req = build_request(:delete_identity_provider, params)
+      req.send_request(options)
+    end
+
+    # Deletes a managed login branding style. When you delete a style, you
+    # delete the branding association for an app client and restore it to
+    # default settings.
+    #
+    # <note markdown="1"> Amazon Cognito evaluates Identity and Access Management (IAM) policies
+    # in requests for this API operation. For this operation, you must use
+    # IAM credentials to authorize requests, and you must grant yourself the
+    # corresponding IAM permission in a policy.
+    #
+    #  **Learn more**
+    #
+    #  * [Signing Amazon Web Services API Requests][1]
+    #
+    # * [Using the Amazon Cognito user pools API and user pool endpoints][2]
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html
+    # [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html
+    #
+    # @option params [required, String] :managed_login_branding_id
+    #   The ID of the managed login branding style that you want to delete.
+    #
+    # @option params [required, String] :user_pool_id
+    #   The ID of the user pool that contains the managed login branding style
+    #   that you want to delete.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_managed_login_branding({
+    #     managed_login_branding_id: "ManagedLoginBrandingIdType", # required
+    #     user_pool_id: "UserPoolIdType", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DeleteManagedLoginBranding AWS API Documentation
+    #
+    # @overload delete_managed_login_branding(params = {})
+    # @param [Hash] params ({})
+    def delete_managed_login_branding(params = {}, options = {})
+      req = build_request(:delete_managed_login_branding, params)
       req.send_request(options)
     end
 
@@ -5782,6 +6165,42 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
+    # Deletes a registered passkey, or webauthN, device for the currently
+    # signed-in user.
+    #
+    # Authorize this action with a signed-in user's access token. It must
+    # include the scope `aws.cognito.signin.user.admin`.
+    #
+    # @option params [required, String] :access_token
+    #   A valid access token that Amazon Cognito issued to the user whose
+    #   passkey you want to delete.
+    #
+    # @option params [required, String] :credential_id
+    #   The unique identifier of the passkey that you want to delete. Look up
+    #   registered devices with [ ListWebAuthnCredentials][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_ListWebAuthnCredentials.html
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_web_authn_credential({
+    #     access_token: "TokenModelType", # required
+    #     credential_id: "StringType", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DeleteWebAuthnCredential AWS API Documentation
+    #
+    # @overload delete_web_authn_credential(params = {})
+    # @param [Hash] params ({})
+    def delete_web_authn_credential(params = {}, options = {})
+      req = build_request(:delete_web_authn_credential, params)
+      req.send_request(options)
+    end
+
     # Gets information about a specific IdP.
     #
     # @option params [required, String] :user_pool_id
@@ -5821,6 +6240,110 @@ module Aws::CognitoIdentityProvider
     # @param [Hash] params ({})
     def describe_identity_provider(params = {}, options = {})
       req = build_request(:describe_identity_provider, params)
+      req.send_request(options)
+    end
+
+    # When given the ID of a managed login branding style, returns detailed
+    # information about the style.
+    #
+    # @option params [required, String] :user_pool_id
+    #   The ID of the user pool that contains the managed login branding style
+    #   that you want to get information about.
+    #
+    # @option params [required, String] :managed_login_branding_id
+    #   The ID of the managed login branding style that you want to get more
+    #   information about.
+    #
+    # @option params [Boolean] :return_merged_resources
+    #   When `true`, returns values for branding options that are unchanged
+    #   from Amazon Cognito defaults. When `false` or when you omit this
+    #   parameter, returns only values that you customized in your branding
+    #   style.
+    #
+    # @return [Types::DescribeManagedLoginBrandingResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeManagedLoginBrandingResponse#managed_login_branding #managed_login_branding} => Types::ManagedLoginBrandingType
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_managed_login_branding({
+    #     user_pool_id: "UserPoolIdType", # required
+    #     managed_login_branding_id: "ManagedLoginBrandingIdType", # required
+    #     return_merged_resources: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.managed_login_branding.managed_login_branding_id #=> String
+    #   resp.managed_login_branding.user_pool_id #=> String
+    #   resp.managed_login_branding.use_cognito_provided_values #=> Boolean
+    #   resp.managed_login_branding.assets #=> Array
+    #   resp.managed_login_branding.assets[0].category #=> String, one of "FAVICON_ICO", "FAVICON_SVG", "EMAIL_GRAPHIC", "SMS_GRAPHIC", "AUTH_APP_GRAPHIC", "PASSWORD_GRAPHIC", "PASSKEY_GRAPHIC", "PAGE_HEADER_LOGO", "PAGE_HEADER_BACKGROUND", "PAGE_FOOTER_LOGO", "PAGE_FOOTER_BACKGROUND", "PAGE_BACKGROUND", "FORM_BACKGROUND", "FORM_LOGO", "IDP_BUTTON_ICON"
+    #   resp.managed_login_branding.assets[0].color_mode #=> String, one of "LIGHT", "DARK", "DYNAMIC"
+    #   resp.managed_login_branding.assets[0].extension #=> String, one of "ICO", "JPEG", "PNG", "SVG", "WEBP"
+    #   resp.managed_login_branding.assets[0].bytes #=> String
+    #   resp.managed_login_branding.assets[0].resource_id #=> String
+    #   resp.managed_login_branding.creation_date #=> Time
+    #   resp.managed_login_branding.last_modified_date #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DescribeManagedLoginBranding AWS API Documentation
+    #
+    # @overload describe_managed_login_branding(params = {})
+    # @param [Hash] params ({})
+    def describe_managed_login_branding(params = {}, options = {})
+      req = build_request(:describe_managed_login_branding, params)
+      req.send_request(options)
+    end
+
+    # When given the ID of a user pool app client, returns detailed
+    # information about the style assigned to the app client.
+    #
+    # @option params [required, String] :user_pool_id
+    #   The ID of the user pool that contains the app client where you want
+    #   more information about the managed login branding style.
+    #
+    # @option params [required, String] :client_id
+    #   The app client that's assigned to the branding style that you want
+    #   more information about.
+    #
+    # @option params [Boolean] :return_merged_resources
+    #   When `true`, returns values for branding options that are unchanged
+    #   from Amazon Cognito defaults. When `false` or when you omit this
+    #   parameter, returns only values that you customized in your branding
+    #   style.
+    #
+    # @return [Types::DescribeManagedLoginBrandingByClientResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeManagedLoginBrandingByClientResponse#managed_login_branding #managed_login_branding} => Types::ManagedLoginBrandingType
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_managed_login_branding_by_client({
+    #     user_pool_id: "UserPoolIdType", # required
+    #     client_id: "ClientIdType", # required
+    #     return_merged_resources: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.managed_login_branding.managed_login_branding_id #=> String
+    #   resp.managed_login_branding.user_pool_id #=> String
+    #   resp.managed_login_branding.use_cognito_provided_values #=> Boolean
+    #   resp.managed_login_branding.assets #=> Array
+    #   resp.managed_login_branding.assets[0].category #=> String, one of "FAVICON_ICO", "FAVICON_SVG", "EMAIL_GRAPHIC", "SMS_GRAPHIC", "AUTH_APP_GRAPHIC", "PASSWORD_GRAPHIC", "PASSKEY_GRAPHIC", "PAGE_HEADER_LOGO", "PAGE_HEADER_BACKGROUND", "PAGE_FOOTER_LOGO", "PAGE_FOOTER_BACKGROUND", "PAGE_BACKGROUND", "FORM_BACKGROUND", "FORM_LOGO", "IDP_BUTTON_ICON"
+    #   resp.managed_login_branding.assets[0].color_mode #=> String, one of "LIGHT", "DARK", "DYNAMIC"
+    #   resp.managed_login_branding.assets[0].extension #=> String, one of "ICO", "JPEG", "PNG", "SVG", "WEBP"
+    #   resp.managed_login_branding.assets[0].bytes #=> String
+    #   resp.managed_login_branding.assets[0].resource_id #=> String
+    #   resp.managed_login_branding.creation_date #=> Time
+    #   resp.managed_login_branding.last_modified_date #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DescribeManagedLoginBrandingByClient AWS API Documentation
+    #
+    # @overload describe_managed_login_branding_by_client(params = {})
+    # @param [Hash] params ({})
+    def describe_managed_login_branding_by_client(params = {}, options = {})
+      req = build_request(:describe_managed_login_branding_by_client, params)
       req.send_request(options)
     end
 
@@ -6017,6 +6540,8 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool.policies.password_policy.require_symbols #=> Boolean
     #   resp.user_pool.policies.password_policy.password_history_size #=> Integer
     #   resp.user_pool.policies.password_policy.temporary_password_validity_days #=> Integer
+    #   resp.user_pool.policies.sign_in_policy.allowed_first_auth_factors #=> Array
+    #   resp.user_pool.policies.sign_in_policy.allowed_first_auth_factors[0] #=> String, one of "PASSWORD", "EMAIL_OTP", "SMS_OTP", "WEB_AUTHN"
     #   resp.user_pool.deletion_protection #=> String, one of "ACTIVE", "INACTIVE"
     #   resp.user_pool.lambda_config.pre_sign_up #=> String
     #   resp.user_pool.lambda_config.custom_message #=> String
@@ -6096,6 +6621,7 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool.account_recovery_setting.recovery_mechanisms #=> Array
     #   resp.user_pool.account_recovery_setting.recovery_mechanisms[0].priority #=> Integer
     #   resp.user_pool.account_recovery_setting.recovery_mechanisms[0].name #=> String, one of "verified_email", "verified_phone_number", "admin_only"
+    #   resp.user_pool.user_pool_tier #=> String, one of "LITE", "ESSENTIALS", "PLUS"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DescribeUserPool AWS API Documentation
     #
@@ -6163,7 +6689,7 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool_client.write_attributes #=> Array
     #   resp.user_pool_client.write_attributes[0] #=> String
     #   resp.user_pool_client.explicit_auth_flows #=> Array
-    #   resp.user_pool_client.explicit_auth_flows[0] #=> String, one of "ADMIN_NO_SRP_AUTH", "CUSTOM_AUTH_FLOW_ONLY", "USER_PASSWORD_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_CUSTOM_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"
+    #   resp.user_pool_client.explicit_auth_flows[0] #=> String, one of "ADMIN_NO_SRP_AUTH", "CUSTOM_AUTH_FLOW_ONLY", "USER_PASSWORD_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_CUSTOM_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_AUTH"
     #   resp.user_pool_client.supported_identity_providers #=> Array
     #   resp.user_pool_client.supported_identity_providers[0] #=> String
     #   resp.user_pool_client.callback_urls #=> Array
@@ -6222,6 +6748,7 @@ module Aws::CognitoIdentityProvider
     #   resp.domain_description.version #=> String
     #   resp.domain_description.status #=> String, one of "CREATING", "DELETING", "UPDATING", "ACTIVE", "FAILED"
     #   resp.domain_description.custom_domain_config.certificate_arn #=> String
+    #   resp.domain_description.managed_login_version #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/DescribeUserPoolDomain AWS API Documentation
     #
@@ -6314,7 +6841,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -6802,7 +7329,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -6893,6 +7420,50 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
+    # Lists the authentication options for the currently signed-in user.
+    # Returns the following:
+    #
+    # 1.  The user's multi-factor authentication (MFA) preferences.
+    #
+    # 2.  The user's options in the `USER_AUTH` flow that they can select
+    #     in a `SELECT_CHALLENGE` response or request in a
+    #     `PREFERRED_CHALLENGE`request.
+    #
+    # @option params [required, String] :access_token
+    #   A valid access token that Amazon Cognito issued to the user whose
+    #   authentication factors you want to view.
+    #
+    # @return [Types::GetUserAuthFactorsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetUserAuthFactorsResponse#username #username} => String
+    #   * {Types::GetUserAuthFactorsResponse#preferred_mfa_setting #preferred_mfa_setting} => String
+    #   * {Types::GetUserAuthFactorsResponse#user_mfa_setting_list #user_mfa_setting_list} => Array&lt;String&gt;
+    #   * {Types::GetUserAuthFactorsResponse#configured_user_auth_factors #configured_user_auth_factors} => Array&lt;String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_user_auth_factors({
+    #     access_token: "TokenModelType", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.username #=> String
+    #   resp.preferred_mfa_setting #=> String
+    #   resp.user_mfa_setting_list #=> Array
+    #   resp.user_mfa_setting_list[0] #=> String
+    #   resp.configured_user_auth_factors #=> Array
+    #   resp.configured_user_auth_factors[0] #=> String, one of "PASSWORD", "EMAIL_OTP", "SMS_OTP", "WEB_AUTHN"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/GetUserAuthFactors AWS API Documentation
+    #
+    # @overload get_user_auth_factors(params = {})
+    # @param [Hash] params ({})
+    def get_user_auth_factors(params = {}, options = {})
+      req = build_request(:get_user_auth_factors, params)
+      req.send_request(options)
+    end
+
     # Gets the user pool multi-factor authentication (MFA) configuration.
     #
     # @option params [required, String] :user_pool_id
@@ -6904,6 +7475,7 @@ module Aws::CognitoIdentityProvider
     #   * {Types::GetUserPoolMfaConfigResponse#software_token_mfa_configuration #software_token_mfa_configuration} => Types::SoftwareTokenMfaConfigType
     #   * {Types::GetUserPoolMfaConfigResponse#email_mfa_configuration #email_mfa_configuration} => Types::EmailMfaConfigType
     #   * {Types::GetUserPoolMfaConfigResponse#mfa_configuration #mfa_configuration} => String
+    #   * {Types::GetUserPoolMfaConfigResponse#web_authn_configuration #web_authn_configuration} => Types::WebAuthnConfigurationType
     #
     # @example Request syntax with placeholder values
     #
@@ -6921,6 +7493,8 @@ module Aws::CognitoIdentityProvider
     #   resp.email_mfa_configuration.message #=> String
     #   resp.email_mfa_configuration.subject #=> String
     #   resp.mfa_configuration #=> String, one of "OFF", "ON", "OPTIONAL"
+    #   resp.web_authn_configuration.relying_party_id #=> String
+    #   resp.web_authn_configuration.user_verification #=> String, one of "required", "preferred"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/GetUserPoolMfaConfig AWS API Documentation
     #
@@ -7018,7 +7592,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -7037,40 +7611,76 @@ module Aws::CognitoIdentityProvider
     # [4]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html
     #
     # @option params [required, String] :auth_flow
-    #   The authentication flow for this call to run. The API action will
-    #   depend on this value. For example:
+    #   The authentication flow that you want to initiate. The
+    #   `AuthParameters` that you must submit are linked to the flow that you
+    #   submit. For example:
     #
-    #   * `REFRESH_TOKEN_AUTH` takes in a valid refresh token and returns new
-    #     tokens.
+    #   * `USER_AUTH`: Request a preferred authentication type or review
+    #     available authentication types. From the offered authentication
+    #     types, select one in a challenge response and then authenticate with
+    #     that method in an additional challenge response.
     #
-    #   * `USER_SRP_AUTH` takes in `USERNAME` and `SRP_A` and returns the SRP
-    #     variables to be used for next challenge execution.
+    #   * `REFRESH_TOKEN_AUTH`: Receive new ID and access tokens when you pass
+    #     a `REFRESH_TOKEN` parameter with a valid refresh token as the value.
     #
-    #   * `USER_PASSWORD_AUTH` takes in `USERNAME` and `PASSWORD` and returns
-    #     the next challenge or tokens.
+    #   * `USER_SRP_AUTH`: Receive secure remote password (SRP) variables for
+    #     the next challenge, `PASSWORD_VERIFIER`, when you pass `USERNAME`
+    #     and `SRP_A` parameters.
     #
-    #   Valid values include:
+    #   * `USER_PASSWORD_AUTH`: Receive new tokens or the next challenge, for
+    #     example `SOFTWARE_TOKEN_MFA`, when you pass `USERNAME` and
+    #     `PASSWORD` parameters.
     #
-    #   * `USER_SRP_AUTH`: Authentication flow for the Secure Remote Password
-    #     (SRP) protocol.
+    #   Valid values include the following:
     #
-    #   * `REFRESH_TOKEN_AUTH`/`REFRESH_TOKEN`: Authentication flow for
-    #     refreshing the access token and ID token by supplying a valid
-    #     refresh token.
+    #   USER\_AUTH
     #
-    #   * `CUSTOM_AUTH`: Custom authentication flow.
+    #   : The entry point for sign-in with passwords, one-time passwords,
+    #     biometric devices, and security keys.
     #
-    #   * `USER_PASSWORD_AUTH`: Non-SRP authentication flow; user name and
-    #     password are passed directly. If a user migration Lambda trigger is
-    #     set, this flow will invoke the user migration Lambda if it doesn't
-    #     find the user name in the user pool.
+    #   USER\_SRP\_AUTH
     #
-    #   `ADMIN_NO_SRP_AUTH` isn't a valid value.
+    #   : Username-password authentication with the Secure Remote Password
+    #     (SRP) protocol. For more information, see [Use SRP password
+    #     verification in custom authentication flow][1].
+    #
+    #   REFRESH\_TOKEN\_AUTH and REFRESH\_TOKEN
+    #
+    #   : Provide a valid refresh token and receive new ID and access tokens.
+    #     For more information, see [Using the refresh token][2].
+    #
+    #   CUSTOM\_AUTH
+    #
+    #   : Custom authentication with Lambda triggers. For more information,
+    #     see [Custom authentication challenge Lambda triggers][3].
+    #
+    #   USER\_PASSWORD\_AUTH
+    #
+    #   : Username-password authentication with the password sent directly in
+    #     the request. For more information, see [Admin authentication
+    #     flow][4].
+    #
+    #   `ADMIN_USER_PASSWORD_AUTH` is a flow type of [AdminInitiateAuth][5]
+    #   and isn't valid for InitiateAuth. `ADMIN_NO_SRP_AUTH` is a legacy
+    #   server-side username-password flow and isn't valid for InitiateAuth.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-authentication-flow.html#Using-SRP-password-verification-in-custom-authentication-flow
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-the-refresh-token.html
+    #   [3]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-lambda-challenge.html
+    #   [4]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-authentication-flow.html#Built-in-authentication-flow-and-challenges
+    #   [5]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html
     #
     # @option params [Hash<String,String>] :auth_parameters
     #   The authentication parameters. These are inputs corresponding to the
     #   `AuthFlow` that you're invoking. The required values depend on the
     #   value of `AuthFlow`:
+    #
+    #   * For `USER_AUTH`: `USERNAME` (required), `PREFERRED_CHALLENGE`. If
+    #     you don't provide a value for `PREFERRED_CHALLENGE`, Amazon Cognito
+    #     responds with the `AvailableChallenges` parameter that specifies the
+    #     available sign-in methods.
     #
     #   * For `USER_SRP_AUTH`: `USERNAME` (required), `SRP_A` (required),
     #     `SECRET_HASH` (required if the app client is configured with a
@@ -7136,6 +7746,10 @@ module Aws::CognitoIdentityProvider
     #
     #   * Define auth challenge
     #
+    #   * Custom email sender
+    #
+    #   * Custom SMS sender
+    #
     #   For more information, see [ Customizing user pool Workflows with
     #   Lambda Triggers][1] in the *Amazon Cognito Developer Guide*.
     #
@@ -7172,12 +7786,18 @@ module Aws::CognitoIdentityProvider
     #   that your app generates and passes to Amazon Cognito when it makes API
     #   requests.
     #
+    # @option params [String] :session
+    #   The optional session ID from a `ConfirmSignUp` API request. You can
+    #   sign in a user directly from the sign-up process with the `USER_AUTH`
+    #   authentication flow.
+    #
     # @return [Types::InitiateAuthResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::InitiateAuthResponse#challenge_name #challenge_name} => String
     #   * {Types::InitiateAuthResponse#session #session} => String
     #   * {Types::InitiateAuthResponse#challenge_parameters #challenge_parameters} => Hash&lt;String,String&gt;
     #   * {Types::InitiateAuthResponse#authentication_result #authentication_result} => Types::AuthenticationResultType
+    #   * {Types::InitiateAuthResponse#available_challenges #available_challenges} => Array&lt;String&gt;
     #
     #
     # @example Example: Example username and password sign-in for a user who has TOTP MFA
@@ -7218,7 +7838,7 @@ module Aws::CognitoIdentityProvider
     # @example Request syntax with placeholder values
     #
     #   resp = client.initiate_auth({
-    #     auth_flow: "USER_SRP_AUTH", # required, accepts USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN, CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH, ADMIN_USER_PASSWORD_AUTH
+    #     auth_flow: "USER_SRP_AUTH", # required, accepts USER_SRP_AUTH, REFRESH_TOKEN_AUTH, REFRESH_TOKEN, CUSTOM_AUTH, ADMIN_NO_SRP_AUTH, USER_PASSWORD_AUTH, ADMIN_USER_PASSWORD_AUTH, USER_AUTH
     #     auth_parameters: {
     #       "StringType" => "StringType",
     #     },
@@ -7233,11 +7853,12 @@ module Aws::CognitoIdentityProvider
     #       ip_address: "StringType",
     #       encoded_data: "StringType",
     #     },
+    #     session: "SessionType",
     #   })
     #
     # @example Response structure
     #
-    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED"
+    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "SELECT_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED", "SMS_OTP", "PASSWORD", "WEB_AUTHN", "PASSWORD_SRP"
     #   resp.session #=> String
     #   resp.challenge_parameters #=> Hash
     #   resp.challenge_parameters["StringType"] #=> String
@@ -7248,6 +7869,8 @@ module Aws::CognitoIdentityProvider
     #   resp.authentication_result.id_token #=> String
     #   resp.authentication_result.new_device_metadata.device_key #=> String
     #   resp.authentication_result.new_device_metadata.device_group_key #=> String
+    #   resp.available_challenges #=> Array
+    #   resp.available_challenges[0] #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "SELECT_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED", "SMS_OTP", "PASSWORD", "WEB_AUTHN", "PASSWORD_SRP"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/InitiateAuth AWS API Documentation
     #
@@ -7825,9 +8448,9 @@ module Aws::CognitoIdentityProvider
     #   this token, you can paginate through the full list of items.
     #
     # @option params [String] :filter
-    #   A filter string of the form "*AttributeName* *Filter-Type*
-    #   "*AttributeValue*"". Quotation marks within the filter string must
-    #   be escaped using the backslash (``) character. For example,
+    #   A filter string of the form `"AttributeName Filter-Type
+    #   "AttributeValue"`. Quotation marks within the filter string must be
+    #   escaped using the backslash (``) character. For example,
     #   `"family_name = "Reddy""`.
     #
     #   * *AttributeName*: The name of the attribute to search for. You can
@@ -8086,6 +8709,56 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
+    # Generates a list of the current user's registered passkey, or
+    # webauthN, credentials.
+    #
+    # @option params [required, String] :access_token
+    #   A valid access token that Amazon Cognito issued to the user whose
+    #   registered passkeys you want to list.
+    #
+    # @option params [String] :next_token
+    #   An identifier that was returned from the previous call to this
+    #   operation, which can be used to return the next set of items in the
+    #   list.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of the user's passkey credentials that you want to
+    #   return.
+    #
+    # @return [Types::ListWebAuthnCredentialsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListWebAuthnCredentialsResponse#credentials #credentials} => Array&lt;Types::WebAuthnCredentialDescription&gt;
+    #   * {Types::ListWebAuthnCredentialsResponse#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_web_authn_credentials({
+    #     access_token: "TokenModelType", # required
+    #     next_token: "PaginationKey",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.credentials #=> Array
+    #   resp.credentials[0].credential_id #=> String
+    #   resp.credentials[0].friendly_credential_name #=> String
+    #   resp.credentials[0].relying_party_id #=> String
+    #   resp.credentials[0].authenticator_attachment #=> String
+    #   resp.credentials[0].authenticator_transports #=> Array
+    #   resp.credentials[0].authenticator_transports[0] #=> String
+    #   resp.credentials[0].created_at #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/ListWebAuthnCredentials AWS API Documentation
+    #
+    # @overload list_web_authn_credentials(params = {})
+    # @param [Hash] params ({})
+    def list_web_authn_credentials(params = {}, options = {})
+      req = build_request(:list_web_authn_credentials, params)
+      req.send_request(options)
+    end
+
     # Resends the confirmation (for confirmation of registration) to a
     # specific user in the user pool.
     #
@@ -8108,7 +8781,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -8254,7 +8927,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -8298,17 +8971,58 @@ module Aws::CognitoIdentityProvider
     #   challenge-response parameters.
     #
     #   You must provide a SECRET\_HASH parameter in all challenge responses
-    #   to an app client that has a client secret.
+    #   to an app client that has a client secret. Include a `DEVICE_KEY` for
+    #   device authentication.
     #
-    #   SMS\_MFA
+    #   SELECT\_CHALLENGE
     #
-    #   : `"ChallengeName": "SMS_MFA", "ChallengeResponses": {"SMS_MFA_CODE":
+    #   : `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #     "USERNAME": "[username]", "ANSWER": "[Challenge name]"}`
+    #
+    #     Available challenges are `PASSWORD`, `PASSWORD_SRP`, `EMAIL_OTP`,
+    #     `SMS_OTP`, and `WEB_AUTHN`.
+    #
+    #     Complete authentication in the `SELECT_CHALLENGE` response for
+    #     `PASSWORD`, `PASSWORD_SRP`, and `WEB_AUTHN`:
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "WEB_AUTHN", "USERNAME": "[username]", "CREDENTIAL":
+    #       "[AuthenticationResponseJSON]"}`
+    #
+    #       See [ AuthenticationResponseJSON][1].
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "PASSWORD", "USERNAME": "[username]", "PASSWORD":
+    #       "[password]"}`
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "PASSWORD_SRP", "USERNAME": "[username]", "SRP_A":
+    #       "[SRP_A]"}`
+    #
+    #     For `SMS_OTP` and `EMAIL_OTP`, respond with the username and answer.
+    #     Your user pool will send a code for the user to submit in the next
+    #     challenge response.
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "SMS_OTP", "USERNAME": "[username]"}`
+    #
+    #     * `"ChallengeName": "SELECT_CHALLENGE", "ChallengeResponses": {
+    #       "ANSWER": "EMAIL_OTP", "USERNAME": "[username]"}`
+    #
+    #   SMS\_OTP
+    #
+    #   : `"ChallengeName": "SMS_OTP", "ChallengeResponses": {"SMS_OTP_CODE":
     #     "[code]", "USERNAME": "[username]"}`
     #
     #   EMAIL\_OTP
     #
     #   : `"ChallengeName": "EMAIL_OTP", "ChallengeResponses":
     #     {"EMAIL_OTP_CODE": "[code]", "USERNAME": "[username]"}`
+    #
+    #   SMS\_MFA
+    #
+    #   : `"ChallengeName": "SMS_MFA", "ChallengeResponses": {"SMS_MFA_CODE":
+    #     "[code]", "USERNAME": "[username]"}`
     #
     #   PASSWORD\_VERIFIER
     #
@@ -8383,13 +9097,14 @@ module Aws::CognitoIdentityProvider
     #     SOFTWARE_TOKEN_MFA]"}`
     #
     #   For more information about `SECRET_HASH`, see [Computing secret hash
-    #   values][1]. For information about `DEVICE_KEY`, see [Working with user
-    #   devices in your user pool][2].
+    #   values][2]. For information about `DEVICE_KEY`, see [Working with user
+    #   devices in your user pool][3].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash
-    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html
+    #   [1]: https://www.w3.org/TR/webauthn-3/#dictdef-authenticationresponsejson
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/signing-up-users-in-your-app.html#cognito-user-pools-computing-secret-hash
+    #   [3]: https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html
     #
     # @option params [Types::AnalyticsMetadataType] :analytics_metadata
     #   The Amazon Pinpoint analytics metadata that contributes to your
@@ -8452,7 +9167,7 @@ module Aws::CognitoIdentityProvider
     #
     #   resp = client.respond_to_auth_challenge({
     #     client_id: "ClientIdType", # required
-    #     challenge_name: "SMS_MFA", # required, accepts SMS_MFA, EMAIL_OTP, SOFTWARE_TOKEN_MFA, SELECT_MFA_TYPE, MFA_SETUP, PASSWORD_VERIFIER, CUSTOM_CHALLENGE, DEVICE_SRP_AUTH, DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED
+    #     challenge_name: "SMS_MFA", # required, accepts SMS_MFA, EMAIL_OTP, SOFTWARE_TOKEN_MFA, SELECT_MFA_TYPE, MFA_SETUP, PASSWORD_VERIFIER, CUSTOM_CHALLENGE, SELECT_CHALLENGE, DEVICE_SRP_AUTH, DEVICE_PASSWORD_VERIFIER, ADMIN_NO_SRP_AUTH, NEW_PASSWORD_REQUIRED, SMS_OTP, PASSWORD, WEB_AUTHN, PASSWORD_SRP
     #     session: "SessionType",
     #     challenge_responses: {
     #       "StringType" => "StringType",
@@ -8471,7 +9186,7 @@ module Aws::CognitoIdentityProvider
     #
     # @example Response structure
     #
-    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED"
+    #   resp.challenge_name #=> String, one of "SMS_MFA", "EMAIL_OTP", "SOFTWARE_TOKEN_MFA", "SELECT_MFA_TYPE", "MFA_SETUP", "PASSWORD_VERIFIER", "CUSTOM_CHALLENGE", "SELECT_CHALLENGE", "DEVICE_SRP_AUTH", "DEVICE_PASSWORD_VERIFIER", "ADMIN_NO_SRP_AUTH", "NEW_PASSWORD_REQUIRED", "SMS_OTP", "PASSWORD", "WEB_AUTHN", "PASSWORD_SRP"
     #   resp.session #=> String
     #   resp.challenge_parameters #=> Hash
     #   resp.challenge_parameters["StringType"] #=> String
@@ -8859,7 +9574,8 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
-    # Sets the user pool multi-factor authentication (MFA) configuration.
+    # Sets the user pool multi-factor authentication (MFA) and passkey
+    # configuration.
     #
     # <note markdown="1"> This action might generate an SMS text message. Starting June 1, 2021,
     # US telecom carriers require you to register an origination phone
@@ -8871,7 +9587,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -8925,12 +9641,18 @@ module Aws::CognitoIdentityProvider
     #
     #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-mfa.html
     #
+    # @option params [Types::WebAuthnConfigurationType] :web_authn_configuration
+    #   The configuration of your user pool for passkey, or webauthN,
+    #   authentication and registration. You can set this configuration
+    #   independent of the MFA configuration options in this operation.
+    #
     # @return [Types::SetUserPoolMfaConfigResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::SetUserPoolMfaConfigResponse#sms_mfa_configuration #sms_mfa_configuration} => Types::SmsMfaConfigType
     #   * {Types::SetUserPoolMfaConfigResponse#software_token_mfa_configuration #software_token_mfa_configuration} => Types::SoftwareTokenMfaConfigType
     #   * {Types::SetUserPoolMfaConfigResponse#email_mfa_configuration #email_mfa_configuration} => Types::EmailMfaConfigType
     #   * {Types::SetUserPoolMfaConfigResponse#mfa_configuration #mfa_configuration} => String
+    #   * {Types::SetUserPoolMfaConfigResponse#web_authn_configuration #web_authn_configuration} => Types::WebAuthnConfigurationType
     #
     # @example Request syntax with placeholder values
     #
@@ -8952,6 +9674,10 @@ module Aws::CognitoIdentityProvider
     #       subject: "EmailMfaSubjectType",
     #     },
     #     mfa_configuration: "OFF", # accepts OFF, ON, OPTIONAL
+    #     web_authn_configuration: {
+    #       relying_party_id: "RelyingPartyIdType",
+    #       user_verification: "required", # accepts required, preferred
+    #     },
     #   })
     #
     # @example Response structure
@@ -8964,6 +9690,8 @@ module Aws::CognitoIdentityProvider
     #   resp.email_mfa_configuration.message #=> String
     #   resp.email_mfa_configuration.subject #=> String
     #   resp.mfa_configuration #=> String, one of "OFF", "ON", "OPTIONAL"
+    #   resp.web_authn_configuration.relying_party_id #=> String
+    #   resp.web_authn_configuration.user_verification #=> String, one of "required", "preferred"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/SetUserPoolMfaConfig AWS API Documentation
     #
@@ -9049,7 +9777,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -9060,11 +9788,21 @@ module Aws::CognitoIdentityProvider
     #
     #  </note>
     #
+    # You might receive a `LimitExceeded` exception in response to this
+    # request if you have exceeded a rate quota for email or SMS messages,
+    # and if your user pool automatically verifies email addresses or phone
+    # numbers. When you get this exception in the response, the user is
+    # successfully created and is in an `UNCONFIRMED` state. You can send a
+    # new code with the [ ResendConfirmationCode][4] request, or confirm the
+    # user as an administrator with an [ AdminConfirmSignUp][5] request.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html
     # [2]: https://console.aws.amazon.com/pinpoint/home/
     # [3]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-sms-settings.html
+    # [4]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_ResendConfirmationCode.html
+    # [5]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminConfirmSignUp.html
     #
     # @option params [required, String] :client_id
     #   The ID of the client associated with the user pool.
@@ -9079,8 +9817,21 @@ module Aws::CognitoIdentityProvider
     #   parameter is typically a username, but can be any alias attribute in
     #   your user pool.
     #
-    # @option params [required, String] :password
+    # @option params [String] :password
     #   The password of the user you want to register.
+    #
+    #   Users can sign up without a password when your user pool supports
+    #   passwordless sign-in with email or SMS OTPs. To create a user with no
+    #   password, omit this parameter or submit a blank value. You can only
+    #   create a passwordless user when passwordless sign-in is available. See
+    #   [the SignInPolicyType][1] property of [CreateUserPool][2] and
+    #   [UpdateUserPool][3].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SignInPolicyType.html
+    #   [2]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateUserPool.html
+    #   [3]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UpdateUserPool.html
     #
     # @option params [Array<Types::AttributeType>] :user_attributes
     #   An array of name-value pairs representing user attributes.
@@ -9161,6 +9912,7 @@ module Aws::CognitoIdentityProvider
     #   * {Types::SignUpResponse#user_confirmed #user_confirmed} => Boolean
     #   * {Types::SignUpResponse#code_delivery_details #code_delivery_details} => Types::CodeDeliveryDetailsType
     #   * {Types::SignUpResponse#user_sub #user_sub} => String
+    #   * {Types::SignUpResponse#session #session} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -9168,7 +9920,7 @@ module Aws::CognitoIdentityProvider
     #     client_id: "ClientIdType", # required
     #     secret_hash: "SecretHashType",
     #     username: "UsernameType", # required
-    #     password: "PasswordType", # required
+    #     password: "PasswordType",
     #     user_attributes: [
     #       {
     #         name: "AttributeNameType", # required
@@ -9200,6 +9952,7 @@ module Aws::CognitoIdentityProvider
     #   resp.code_delivery_details.delivery_medium #=> String, one of "SMS", "EMAIL"
     #   resp.code_delivery_details.attribute_name #=> String
     #   resp.user_sub #=> String
+    #   resp.session #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/SignUp AWS API Documentation
     #
@@ -9252,6 +10005,50 @@ module Aws::CognitoIdentityProvider
     # @param [Hash] params ({})
     def start_user_import_job(params = {}, options = {})
       req = build_request(:start_user_import_job, params)
+      req.send_request(options)
+    end
+
+    # Requests credential creation options from your user pool for
+    # registration of a passkey authenticator. Returns information about the
+    # user pool, the user profile, and authentication requirements. Users
+    # must provide this information in their request to enroll your
+    # application with their passkey provider.
+    #
+    # After users present this data and register with their passkey
+    # provider, return the response to your user pool in a [
+    # CompleteWebAuthnRegistration][1] API request.
+    #
+    # Authorize this action with a signed-in user's access token. It must
+    # include the scope `aws.cognito.signin.user.admin`.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CompleteWebAuthnRegistration.html
+    #
+    # @option params [required, String] :access_token
+    #   A valid access token that Amazon Cognito issued to the user whose
+    #   passkey metadata you want to generate.
+    #
+    # @return [Types::StartWebAuthnRegistrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartWebAuthnRegistrationResponse#credential_creation_options #credential_creation_options} => Hash,Array,String,Numeric,Boolean
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_web_authn_registration({
+    #     access_token: "TokenModelType", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/StartWebAuthnRegistration AWS API Documentation
+    #
+    # @overload start_web_authn_registration(params = {})
+    # @param [Hash] params ({})
+    def start_web_authn_registration(params = {}, options = {})
+      req = build_request(:start_web_authn_registration, params)
       req.send_request(options)
     end
 
@@ -9752,6 +10549,118 @@ module Aws::CognitoIdentityProvider
       req.send_request(options)
     end
 
+    # Configures the branding settings for a user pool style. This operation
+    # is the programmatic option for the configuration of a style in the
+    # branding designer.
+    #
+    # Provides values for UI customization in a `Settings` JSON object and
+    # image files in an `Assets` array.
+    #
+    # This operation has a 2-megabyte request-size limit and include the CSS
+    # settings and image assets for your app client. Your branding settings
+    # might exceed 2MB in size. Amazon Cognito doesn't require that you
+    # pass all parameters in one request and preserves existing style
+    # settings that you don't specify. If your request is larger than 2MB,
+    # separate it into multiple requests, each with a size smaller than the
+    # limit.
+    #
+    # For more information, see [API and SDK operations for managed login
+    # branding][1].
+    #
+    # <note markdown="1"> Amazon Cognito evaluates Identity and Access Management (IAM) policies
+    # in requests for this API operation. For this operation, you must use
+    # IAM credentials to authorize requests, and you must grant yourself the
+    # corresponding IAM permission in a policy.
+    #
+    #  **Learn more**
+    #
+    #  * [Signing Amazon Web Services API Requests][2]
+    #
+    # * [Using the Amazon Cognito user pools API and user pool endpoints][3]
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/managed-login-brandingdesigner.html#branding-designer-api
+    # [2]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_aws-signing.html
+    # [3]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html
+    #
+    # @option params [String] :user_pool_id
+    #   The ID of the user pool that contains the managed login branding style
+    #   that you want to update.
+    #
+    # @option params [String] :managed_login_branding_id
+    #   The ID of the managed login branding style that you want to update.
+    #
+    # @option params [Boolean] :use_cognito_provided_values
+    #   When true, applies the default branding style options. This option
+    #   reverts to default style options that are managed by Amazon Cognito.
+    #   You can modify them later in the branding designer.
+    #
+    #   When you specify `true` for this option, you must also omit values for
+    #   `Settings` and `Assets` in the request.
+    #
+    # @option params [Hash,Array,String,Numeric,Boolean] :settings
+    #   A JSON file, encoded as a `Document` type, with the the settings that
+    #   you want to apply to your style.
+    #
+    #   Document type used to carry open content
+    #   (Hash,Array,String,Numeric,Boolean). A document type value is
+    #   serialized using the same format as its surroundings and requires no
+    #   additional encoding or escaping.
+    #
+    # @option params [Array<Types::AssetType>] :assets
+    #   An array of image files that you want to apply to roles like
+    #   backgrounds, logos, and icons. Each object must also indicate whether
+    #   it is for dark mode, light mode, or browser-adaptive mode.
+    #
+    # @return [Types::UpdateManagedLoginBrandingResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateManagedLoginBrandingResponse#managed_login_branding #managed_login_branding} => Types::ManagedLoginBrandingType
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_managed_login_branding({
+    #     user_pool_id: "UserPoolIdType",
+    #     managed_login_branding_id: "ManagedLoginBrandingIdType",
+    #     use_cognito_provided_values: false,
+    #     settings: {
+    #     },
+    #     assets: [
+    #       {
+    #         category: "FAVICON_ICO", # required, accepts FAVICON_ICO, FAVICON_SVG, EMAIL_GRAPHIC, SMS_GRAPHIC, AUTH_APP_GRAPHIC, PASSWORD_GRAPHIC, PASSKEY_GRAPHIC, PAGE_HEADER_LOGO, PAGE_HEADER_BACKGROUND, PAGE_FOOTER_LOGO, PAGE_FOOTER_BACKGROUND, PAGE_BACKGROUND, FORM_BACKGROUND, FORM_LOGO, IDP_BUTTON_ICON
+    #         color_mode: "LIGHT", # required, accepts LIGHT, DARK, DYNAMIC
+    #         extension: "ICO", # required, accepts ICO, JPEG, PNG, SVG, WEBP
+    #         bytes: "data",
+    #         resource_id: "ResourceIdType",
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.managed_login_branding.managed_login_branding_id #=> String
+    #   resp.managed_login_branding.user_pool_id #=> String
+    #   resp.managed_login_branding.use_cognito_provided_values #=> Boolean
+    #   resp.managed_login_branding.assets #=> Array
+    #   resp.managed_login_branding.assets[0].category #=> String, one of "FAVICON_ICO", "FAVICON_SVG", "EMAIL_GRAPHIC", "SMS_GRAPHIC", "AUTH_APP_GRAPHIC", "PASSWORD_GRAPHIC", "PASSKEY_GRAPHIC", "PAGE_HEADER_LOGO", "PAGE_HEADER_BACKGROUND", "PAGE_FOOTER_LOGO", "PAGE_FOOTER_BACKGROUND", "PAGE_BACKGROUND", "FORM_BACKGROUND", "FORM_LOGO", "IDP_BUTTON_ICON"
+    #   resp.managed_login_branding.assets[0].color_mode #=> String, one of "LIGHT", "DARK", "DYNAMIC"
+    #   resp.managed_login_branding.assets[0].extension #=> String, one of "ICO", "JPEG", "PNG", "SVG", "WEBP"
+    #   resp.managed_login_branding.assets[0].bytes #=> String
+    #   resp.managed_login_branding.assets[0].resource_id #=> String
+    #   resp.managed_login_branding.creation_date #=> Time
+    #   resp.managed_login_branding.last_modified_date #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/UpdateManagedLoginBranding AWS API Documentation
+    #
+    # @overload update_managed_login_branding(params = {})
+    # @param [Hash] params ({})
+    def update_managed_login_branding(params = {}, options = {})
+      req = build_request(:update_managed_login_branding, params)
+      req.send_request(options)
+    end
+
     # Updates the name and scopes of resource server. All other fields are
     # read-only.
     #
@@ -9859,7 +10768,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -9974,7 +10883,7 @@ module Aws::CognitoIdentityProvider
     # sign in.
     #
     #  If you have never used SMS text messages with Amazon Cognito or any
-    # other Amazon Web Servicesservice, Amazon Simple Notification Service
+    # other Amazon Web Services service, Amazon Simple Notification Service
     # might place your account in the SMS sandbox. In <i> <a
     # href="https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html">sandbox
     # mode</a> </i>, you can send messages only to verified phone numbers.
@@ -10153,6 +11062,19 @@ module Aws::CognitoIdentityProvider
     #   legacy behavior to determine the recovery method where SMS is
     #   preferred through email.
     #
+    # @option params [String] :pool_name
+    #   The updated name of your user pool.
+    #
+    # @option params [String] :user_pool_tier
+    #   The user pool [feature plan][1], or tier. This parameter determines
+    #   the eligibility of the user pool for features like managed login,
+    #   access-token customization, and threat protection. Defaults to
+    #   `ESSENTIALS`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-sign-in-feature-plans.html
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -10168,6 +11090,9 @@ module Aws::CognitoIdentityProvider
     #         require_symbols: false,
     #         password_history_size: 1,
     #         temporary_password_validity_days: 1,
+    #       },
+    #       sign_in_policy: {
+    #         allowed_first_auth_factors: ["PASSWORD"], # accepts PASSWORD, EMAIL_OTP, SMS_OTP, WEB_AUTHN
     #       },
     #     },
     #     deletion_protection: "ACTIVE", # accepts ACTIVE, INACTIVE
@@ -10236,8 +11161,8 @@ module Aws::CognitoIdentityProvider
     #       allow_admin_create_user_only: false,
     #       unused_account_validity_days: 1,
     #       invite_message_template: {
-    #         sms_message: "SmsVerificationMessageType",
-    #         email_message: "EmailVerificationMessageType",
+    #         sms_message: "SmsInviteMessageType",
+    #         email_message: "EmailInviteMessageType",
     #         email_subject: "EmailVerificationSubjectType",
     #       },
     #     },
@@ -10255,6 +11180,8 @@ module Aws::CognitoIdentityProvider
     #         },
     #       ],
     #     },
+    #     pool_name: "UserPoolNameType",
+    #     user_pool_tier: "LITE", # accepts LITE, ESSENTIALS, PLUS
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/UpdateUserPool AWS API Documentation
@@ -10428,6 +11355,15 @@ module Aws::CognitoIdentityProvider
     #
     #   Valid values include:
     #
+    #   * `ALLOW_USER_AUTH`: Enable selection-based sign-in with `USER_AUTH`.
+    #     This setting covers username-password, secure remote password (SRP),
+    #     passwordless, and passkey authentication. This authentiation flow
+    #     can do username-password and SRP authentication without other
+    #     `ExplicitAuthFlows` permitting them. For example users can complete
+    #     an SRP challenge through `USER_AUTH` without the flow
+    #     `USER_SRP_AUTH` being active for the app client. This flow doesn't
+    #     include `CUSTOM_AUTH`.
+    #
     #   * `ALLOW_ADMIN_USER_PASSWORD_AUTH`: Enable admin based user password
     #     authentication flow `ADMIN_USER_PASSWORD_AUTH`. This setting
     #     replaces the `ADMIN_NO_SRP_AUTH` setting. With this authentication
@@ -10453,10 +11389,23 @@ module Aws::CognitoIdentityProvider
     #   `ALLOW_USER_SRP_AUTH`.
     #
     # @option params [Array<String>] :supported_identity_providers
-    #   A list of provider names for the IdPs that this client supports. The
-    #   following are supported: `COGNITO`, `Facebook`, `Google`,
-    #   `SignInWithApple`, `LoginWithAmazon`, and the names of your own SAML
-    #   and OIDC providers.
+    #   A list of provider names for the identity providers (IdPs) that are
+    #   supported on this client. The following are supported: `COGNITO`,
+    #   `Facebook`, `Google`, `SignInWithApple`, and `LoginWithAmazon`. You
+    #   can also specify the names that you configured for the SAML and OIDC
+    #   IdPs in your user pool, for example `MySAMLIdP` or `MyOIDCIdP`.
+    #
+    #   This setting applies to providers that you can access with the [hosted
+    #   UI and OAuth 2.0 authorization server][1]. The removal of `COGNITO`
+    #   from this list doesn't prevent authentication operations for local
+    #   users with the user pools API in an Amazon Web Services SDK. The only
+    #   way to prevent API-based authentication is to block access with a [WAF
+    #   rule][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-app-integration.html
+    #   [2]: https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-waf.html
     #
     # @option params [Array<String>] :callback_urls
     #   A list of allowed redirect (callback) URLs for the IdPs.
@@ -10604,7 +11553,7 @@ module Aws::CognitoIdentityProvider
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-advanced-security.html
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-threat-protection.html
     #
     # @option params [Integer] :auth_session_validity
     #   Amazon Cognito creates a session token for each API request in an
@@ -10632,7 +11581,7 @@ module Aws::CognitoIdentityProvider
     #     },
     #     read_attributes: ["ClientPermissionType"],
     #     write_attributes: ["ClientPermissionType"],
-    #     explicit_auth_flows: ["ADMIN_NO_SRP_AUTH"], # accepts ADMIN_NO_SRP_AUTH, CUSTOM_AUTH_FLOW_ONLY, USER_PASSWORD_AUTH, ALLOW_ADMIN_USER_PASSWORD_AUTH, ALLOW_CUSTOM_AUTH, ALLOW_USER_PASSWORD_AUTH, ALLOW_USER_SRP_AUTH, ALLOW_REFRESH_TOKEN_AUTH
+    #     explicit_auth_flows: ["ADMIN_NO_SRP_AUTH"], # accepts ADMIN_NO_SRP_AUTH, CUSTOM_AUTH_FLOW_ONLY, USER_PASSWORD_AUTH, ALLOW_ADMIN_USER_PASSWORD_AUTH, ALLOW_CUSTOM_AUTH, ALLOW_USER_PASSWORD_AUTH, ALLOW_USER_SRP_AUTH, ALLOW_REFRESH_TOKEN_AUTH, ALLOW_USER_AUTH
     #     supported_identity_providers: ["ProviderNameType"],
     #     callback_urls: ["RedirectUrlType"],
     #     logout_urls: ["RedirectUrlType"],
@@ -10672,7 +11621,7 @@ module Aws::CognitoIdentityProvider
     #   resp.user_pool_client.write_attributes #=> Array
     #   resp.user_pool_client.write_attributes[0] #=> String
     #   resp.user_pool_client.explicit_auth_flows #=> Array
-    #   resp.user_pool_client.explicit_auth_flows[0] #=> String, one of "ADMIN_NO_SRP_AUTH", "CUSTOM_AUTH_FLOW_ONLY", "USER_PASSWORD_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_CUSTOM_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"
+    #   resp.user_pool_client.explicit_auth_flows[0] #=> String, one of "ADMIN_NO_SRP_AUTH", "CUSTOM_AUTH_FLOW_ONLY", "USER_PASSWORD_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_CUSTOM_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_USER_AUTH"
     #   resp.user_pool_client.supported_identity_providers #=> Array
     #   resp.user_pool_client.supported_identity_providers[0] #=> String
     #   resp.user_pool_client.callback_urls #=> Array
@@ -10767,13 +11716,35 @@ module Aws::CognitoIdentityProvider
     #   The ID of the user pool that is associated with the custom domain
     #   whose certificate you're updating.
     #
+    # @option params [Integer] :managed_login_version
+    #   A version number that indicates the state of managed login for your
+    #   domain. Version `1` is hosted UI (classic). Version `2` is the newer
+    #   managed login with the branding designer. For more information, see
+    #   [Managed login][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-managed-login.html
+    #
     # @option params [required, Types::CustomDomainConfigType] :custom_domain_config
     #   The configuration for a custom domain that hosts the sign-up and
     #   sign-in pages for your application. Use this object to specify an SSL
     #   certificate that is managed by ACM.
     #
+    #   When you create a custom domain, the passkey RP ID defaults to the
+    #   custom domain. If you had a prefix domain active, this will cause
+    #   passkey integration for your prefix domain to stop working due to a
+    #   mismatch in RP ID. To keep the prefix domain passkey integration
+    #   working, you can explicitly set RP ID to the prefix domain. Update the
+    #   RP ID in a [SetUserPoolMfaConfig][1] request.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SetUserPoolMfaConfig.html
+    #
     # @return [Types::UpdateUserPoolDomainResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
+    #   * {Types::UpdateUserPoolDomainResponse#managed_login_version #managed_login_version} => Integer
     #   * {Types::UpdateUserPoolDomainResponse#cloud_front_domain #cloud_front_domain} => String
     #
     # @example Request syntax with placeholder values
@@ -10781,6 +11752,7 @@ module Aws::CognitoIdentityProvider
     #   resp = client.update_user_pool_domain({
     #     domain: "DomainType", # required
     #     user_pool_id: "UserPoolIdType", # required
+    #     managed_login_version: 1,
     #     custom_domain_config: { # required
     #       certificate_arn: "ArnType", # required
     #     },
@@ -10788,6 +11760,7 @@ module Aws::CognitoIdentityProvider
     #
     # @example Response structure
     #
+    #   resp.managed_login_version #=> Integer
     #   resp.cloud_front_domain #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/UpdateUserPoolDomain AWS API Documentation
@@ -10935,7 +11908,7 @@ module Aws::CognitoIdentityProvider
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cognitoidentityprovider'
-      context[:gem_version] = '1.109.0'
+      context[:gem_version] = '1.110.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

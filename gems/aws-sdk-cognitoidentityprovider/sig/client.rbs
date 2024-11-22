@@ -242,7 +242,7 @@ module Aws
 
       interface _AdminInitiateAuthResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::AdminInitiateAuthResponse]
-        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
         def session: () -> ::String
         def challenge_parameters: () -> ::Hash[::String, ::String]
         def authentication_result: () -> Types::AuthenticationResultType
@@ -251,7 +251,7 @@ module Aws
       def admin_initiate_auth: (
                                  user_pool_id: ::String,
                                  client_id: ::String,
-                                 auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH"),
+                                 auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH" | "USER_AUTH"),
                                  ?auth_parameters: Hash[::String, ::String],
                                  ?client_metadata: Hash[::String, ::String],
                                  ?analytics_metadata: {
@@ -268,7 +268,8 @@ module Aws
                                      },
                                    ],
                                    encoded_data: ::String?
-                                 }
+                                 },
+                                 ?session: ::String
                                ) -> _AdminInitiateAuthResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AdminInitiateAuthResponseSuccess
 
@@ -354,7 +355,7 @@ module Aws
 
       interface _AdminRespondToAuthChallengeResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::AdminRespondToAuthChallengeResponse]
-        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
         def session: () -> ::String
         def challenge_parameters: () -> ::Hash[::String, ::String]
         def authentication_result: () -> Types::AuthenticationResultType
@@ -363,7 +364,7 @@ module Aws
       def admin_respond_to_auth_challenge: (
                                              user_pool_id: ::String,
                                              client_id: ::String,
-                                             challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED"),
+                                             challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP"),
                                              ?challenge_responses: Hash[::String, ::String],
                                              ?session: ::String,
                                              ?analytics_metadata: {
@@ -503,11 +504,22 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#change_password-instance_method
       def change_password: (
-                             previous_password: ::String,
+                             ?previous_password: ::String,
                              proposed_password: ::String,
                              access_token: ::String
                            ) -> _ChangePasswordResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ChangePasswordResponseSuccess
+
+      interface _CompleteWebAuthnRegistrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CompleteWebAuthnRegistrationResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#complete_web_authn_registration-instance_method
+      def complete_web_authn_registration: (
+                                             access_token: ::String,
+                                             credential: {
+                                             }
+                                           ) -> _CompleteWebAuthnRegistrationResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CompleteWebAuthnRegistrationResponseSuccess
 
       interface _ConfirmDeviceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ConfirmDeviceResponse]
@@ -548,6 +560,7 @@ module Aws
 
       interface _ConfirmSignUpResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ConfirmSignUpResponse]
+        def session: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#confirm_sign_up-instance_method
       def confirm_sign_up: (
@@ -563,7 +576,8 @@ module Aws
                                ip_address: ::String?,
                                encoded_data: ::String?
                              },
-                             ?client_metadata: Hash[::String, ::String]
+                             ?client_metadata: Hash[::String, ::String],
+                             ?session: ::String
                            ) -> _ConfirmSignUpResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ConfirmSignUpResponseSuccess
 
@@ -595,6 +609,29 @@ module Aws
                                       ?idp_identifiers: Array[::String]
                                     ) -> _CreateIdentityProviderResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateIdentityProviderResponseSuccess
+
+      interface _CreateManagedLoginBrandingResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateManagedLoginBrandingResponse]
+        def managed_login_branding: () -> Types::ManagedLoginBrandingType
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#create_managed_login_branding-instance_method
+      def create_managed_login_branding: (
+                                           user_pool_id: ::String,
+                                           client_id: ::String,
+                                           ?use_cognito_provided_values: bool,
+                                           ?settings: {
+                                           },
+                                           ?assets: Array[
+                                             {
+                                               category: ("FAVICON_ICO" | "FAVICON_SVG" | "EMAIL_GRAPHIC" | "SMS_GRAPHIC" | "AUTH_APP_GRAPHIC" | "PASSWORD_GRAPHIC" | "PASSKEY_GRAPHIC" | "PAGE_HEADER_LOGO" | "PAGE_HEADER_BACKGROUND" | "PAGE_FOOTER_LOGO" | "PAGE_FOOTER_BACKGROUND" | "PAGE_BACKGROUND" | "FORM_BACKGROUND" | "FORM_LOGO" | "IDP_BUTTON_ICON"),
+                                               color_mode: ("LIGHT" | "DARK" | "DYNAMIC"),
+                                               extension: ("ICO" | "JPEG" | "PNG" | "SVG" | "WEBP"),
+                                               bytes: ::String?,
+                                               resource_id: ::String?
+                                             },
+                                           ]
+                                         ) -> _CreateManagedLoginBrandingResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateManagedLoginBrandingResponseSuccess
 
       interface _CreateResourceServerResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateResourceServerResponse]
@@ -642,6 +679,9 @@ module Aws
                                   require_symbols: bool?,
                                   password_history_size: ::Integer?,
                                   temporary_password_validity_days: ::Integer?
+                                }?,
+                                sign_in_policy: {
+                                  allowed_first_auth_factors: Array[("PASSWORD" | "EMAIL_OTP" | "SMS_OTP" | "WEB_AUTHN")]?
                                 }?
                               },
                               ?deletion_protection: ("ACTIVE" | "INACTIVE"),
@@ -748,7 +788,8 @@ module Aws
                                     name: ("verified_email" | "verified_phone_number" | "admin_only")
                                   },
                                 ]?
-                              }
+                              },
+                              ?user_pool_tier: ("LITE" | "ESSENTIALS" | "PLUS")
                             ) -> _CreateUserPoolResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateUserPoolResponseSuccess
 
@@ -771,7 +812,7 @@ module Aws
                                      },
                                      ?read_attributes: Array[::String],
                                      ?write_attributes: Array[::String],
-                                     ?explicit_auth_flows: Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH")],
+                                     ?explicit_auth_flows: Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH" | "ALLOW_USER_AUTH")],
                                      ?supported_identity_providers: Array[::String],
                                      ?callback_urls: Array[::String],
                                      ?logout_urls: Array[::String],
@@ -795,12 +836,14 @@ module Aws
 
       interface _CreateUserPoolDomainResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateUserPoolDomainResponse]
+        def managed_login_version: () -> ::Integer
         def cloud_front_domain: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#create_user_pool_domain-instance_method
       def create_user_pool_domain: (
                                      domain: ::String,
                                      user_pool_id: ::String,
+                                     ?managed_login_version: ::Integer,
                                      ?custom_domain_config: {
                                        certificate_arn: ::String
                                      }
@@ -820,6 +863,13 @@ module Aws
                                       provider_name: ::String
                                     ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#delete_managed_login_branding-instance_method
+      def delete_managed_login_branding: (
+                                           managed_login_branding_id: ::String,
+                                           user_pool_id: ::String
+                                         ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#delete_resource_server-instance_method
       def delete_resource_server: (
@@ -867,6 +917,16 @@ module Aws
                                    ) -> _DeleteUserPoolDomainResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteUserPoolDomainResponseSuccess
 
+      interface _DeleteWebAuthnCredentialResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteWebAuthnCredentialResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#delete_web_authn_credential-instance_method
+      def delete_web_authn_credential: (
+                                         access_token: ::String,
+                                         credential_id: ::String
+                                       ) -> _DeleteWebAuthnCredentialResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteWebAuthnCredentialResponseSuccess
+
       interface _DescribeIdentityProviderResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeIdentityProviderResponse]
         def identity_provider: () -> Types::IdentityProviderType
@@ -877,6 +937,30 @@ module Aws
                                         provider_name: ::String
                                       ) -> _DescribeIdentityProviderResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeIdentityProviderResponseSuccess
+
+      interface _DescribeManagedLoginBrandingResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeManagedLoginBrandingResponse]
+        def managed_login_branding: () -> Types::ManagedLoginBrandingType
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#describe_managed_login_branding-instance_method
+      def describe_managed_login_branding: (
+                                             user_pool_id: ::String,
+                                             managed_login_branding_id: ::String,
+                                             ?return_merged_resources: bool
+                                           ) -> _DescribeManagedLoginBrandingResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeManagedLoginBrandingResponseSuccess
+
+      interface _DescribeManagedLoginBrandingByClientResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeManagedLoginBrandingByClientResponse]
+        def managed_login_branding: () -> Types::ManagedLoginBrandingType
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#describe_managed_login_branding_by_client-instance_method
+      def describe_managed_login_branding_by_client: (
+                                                       user_pool_id: ::String,
+                                                       client_id: ::String,
+                                                       ?return_merged_resources: bool
+                                                     ) -> _DescribeManagedLoginBrandingByClientResponseSuccess
+                                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeManagedLoginBrandingByClientResponseSuccess
 
       interface _DescribeResourceServerResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeResourceServerResponse]
@@ -1070,12 +1154,26 @@ module Aws
                                                 ) -> _GetUserAttributeVerificationCodeResponseSuccess
                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetUserAttributeVerificationCodeResponseSuccess
 
+      interface _GetUserAuthFactorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetUserAuthFactorsResponse]
+        def username: () -> ::String
+        def preferred_mfa_setting: () -> ::String
+        def user_mfa_setting_list: () -> ::Array[::String]
+        def configured_user_auth_factors: () -> ::Array[("PASSWORD" | "EMAIL_OTP" | "SMS_OTP" | "WEB_AUTHN")]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#get_user_auth_factors-instance_method
+      def get_user_auth_factors: (
+                                   access_token: ::String
+                                 ) -> _GetUserAuthFactorsResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetUserAuthFactorsResponseSuccess
+
       interface _GetUserPoolMfaConfigResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetUserPoolMfaConfigResponse]
         def sms_mfa_configuration: () -> Types::SmsMfaConfigType
         def software_token_mfa_configuration: () -> Types::SoftwareTokenMfaConfigType
         def email_mfa_configuration: () -> Types::EmailMfaConfigType
         def mfa_configuration: () -> ("OFF" | "ON" | "OPTIONAL")
+        def web_authn_configuration: () -> Types::WebAuthnConfigurationType
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#get_user_pool_mfa_config-instance_method
       def get_user_pool_mfa_config: (
@@ -1094,14 +1192,15 @@ module Aws
 
       interface _InitiateAuthResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::InitiateAuthResponse]
-        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
         def session: () -> ::String
         def challenge_parameters: () -> ::Hash[::String, ::String]
         def authentication_result: () -> Types::AuthenticationResultType
+        def available_challenges: () -> ::Array[("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#initiate_auth-instance_method
       def initiate_auth: (
-                           auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH"),
+                           auth_flow: ("USER_SRP_AUTH" | "REFRESH_TOKEN_AUTH" | "REFRESH_TOKEN" | "CUSTOM_AUTH" | "ADMIN_NO_SRP_AUTH" | "USER_PASSWORD_AUTH" | "ADMIN_USER_PASSWORD_AUTH" | "USER_AUTH"),
                            ?auth_parameters: Hash[::String, ::String],
                            ?client_metadata: Hash[::String, ::String],
                            client_id: ::String,
@@ -1111,7 +1210,8 @@ module Aws
                            ?user_context_data: {
                              ip_address: ::String?,
                              encoded_data: ::String?
-                           }
+                           },
+                           ?session: ::String
                          ) -> _InitiateAuthResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _InitiateAuthResponseSuccess
 
@@ -1244,6 +1344,19 @@ module Aws
                                ) -> _ListUsersInGroupResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListUsersInGroupResponseSuccess
 
+      interface _ListWebAuthnCredentialsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListWebAuthnCredentialsResponse]
+        def credentials: () -> ::Array[Types::WebAuthnCredentialDescription]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#list_web_authn_credentials-instance_method
+      def list_web_authn_credentials: (
+                                        access_token: ::String,
+                                        ?next_token: ::String,
+                                        ?max_results: ::Integer
+                                      ) -> _ListWebAuthnCredentialsResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListWebAuthnCredentialsResponseSuccess
+
       interface _ResendConfirmationCodeResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ResendConfirmationCodeResponse]
         def code_delivery_details: () -> Types::CodeDeliveryDetailsType
@@ -1266,7 +1379,7 @@ module Aws
 
       interface _RespondToAuthChallengeResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::RespondToAuthChallengeResponse]
-        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED")
+        def challenge_name: () -> ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP")
         def session: () -> ::String
         def challenge_parameters: () -> ::Hash[::String, ::String]
         def authentication_result: () -> Types::AuthenticationResultType
@@ -1274,7 +1387,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#respond_to_auth_challenge-instance_method
       def respond_to_auth_challenge: (
                                        client_id: ::String,
-                                       challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED"),
+                                       challenge_name: ("SMS_MFA" | "EMAIL_OTP" | "SOFTWARE_TOKEN_MFA" | "SELECT_MFA_TYPE" | "MFA_SETUP" | "PASSWORD_VERIFIER" | "CUSTOM_CHALLENGE" | "SELECT_CHALLENGE" | "DEVICE_SRP_AUTH" | "DEVICE_PASSWORD_VERIFIER" | "ADMIN_NO_SRP_AUTH" | "NEW_PASSWORD_REQUIRED" | "SMS_OTP" | "PASSWORD" | "WEB_AUTHN" | "PASSWORD_SRP"),
                                        ?session: ::String,
                                        ?challenge_responses: Hash[::String, ::String],
                                        ?analytics_metadata: {
@@ -1421,6 +1534,7 @@ module Aws
         def software_token_mfa_configuration: () -> Types::SoftwareTokenMfaConfigType
         def email_mfa_configuration: () -> Types::EmailMfaConfigType
         def mfa_configuration: () -> ("OFF" | "ON" | "OPTIONAL")
+        def web_authn_configuration: () -> Types::WebAuthnConfigurationType
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#set_user_pool_mfa_config-instance_method
       def set_user_pool_mfa_config: (
@@ -1440,7 +1554,11 @@ module Aws
                                         message: ::String?,
                                         subject: ::String?
                                       },
-                                      ?mfa_configuration: ("OFF" | "ON" | "OPTIONAL")
+                                      ?mfa_configuration: ("OFF" | "ON" | "OPTIONAL"),
+                                      ?web_authn_configuration: {
+                                        relying_party_id: ::String?,
+                                        user_verification: ("required" | "preferred")?
+                                      }
                                     ) -> _SetUserPoolMfaConfigResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SetUserPoolMfaConfigResponseSuccess
 
@@ -1464,13 +1582,14 @@ module Aws
         def user_confirmed: () -> bool
         def code_delivery_details: () -> Types::CodeDeliveryDetailsType
         def user_sub: () -> ::String
+        def session: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#sign_up-instance_method
       def sign_up: (
                      client_id: ::String,
                      ?secret_hash: ::String,
                      username: ::String,
-                     password: ::String,
+                     ?password: ::String,
                      ?user_attributes: Array[
                        {
                          name: ::String,
@@ -1504,6 +1623,16 @@ module Aws
                                    job_id: ::String
                                  ) -> _StartUserImportJobResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartUserImportJobResponseSuccess
+
+      interface _StartWebAuthnRegistrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartWebAuthnRegistrationResponse]
+        def credential_creation_options: () -> untyped
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#start_web_authn_registration-instance_method
+      def start_web_authn_registration: (
+                                          access_token: ::String
+                                        ) -> _StartWebAuthnRegistrationResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartWebAuthnRegistrationResponseSuccess
 
       interface _StopUserImportJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StopUserImportJobResponse]
@@ -1588,6 +1717,29 @@ module Aws
                                     ) -> _UpdateIdentityProviderResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateIdentityProviderResponseSuccess
 
+      interface _UpdateManagedLoginBrandingResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateManagedLoginBrandingResponse]
+        def managed_login_branding: () -> Types::ManagedLoginBrandingType
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#update_managed_login_branding-instance_method
+      def update_managed_login_branding: (
+                                           ?user_pool_id: ::String,
+                                           ?managed_login_branding_id: ::String,
+                                           ?use_cognito_provided_values: bool,
+                                           ?settings: {
+                                           },
+                                           ?assets: Array[
+                                             {
+                                               category: ("FAVICON_ICO" | "FAVICON_SVG" | "EMAIL_GRAPHIC" | "SMS_GRAPHIC" | "AUTH_APP_GRAPHIC" | "PASSWORD_GRAPHIC" | "PASSKEY_GRAPHIC" | "PAGE_HEADER_LOGO" | "PAGE_HEADER_BACKGROUND" | "PAGE_FOOTER_LOGO" | "PAGE_FOOTER_BACKGROUND" | "PAGE_BACKGROUND" | "FORM_BACKGROUND" | "FORM_LOGO" | "IDP_BUTTON_ICON"),
+                                               color_mode: ("LIGHT" | "DARK" | "DYNAMIC"),
+                                               extension: ("ICO" | "JPEG" | "PNG" | "SVG" | "WEBP"),
+                                               bytes: ::String?,
+                                               resource_id: ::String?
+                                             },
+                                           ]
+                                         ) -> _UpdateManagedLoginBrandingResponseSuccess
+                                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateManagedLoginBrandingResponseSuccess
+
       interface _UpdateResourceServerResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateResourceServerResponse]
         def resource_server: () -> Types::ResourceServerType
@@ -1638,6 +1790,9 @@ module Aws
                                   require_symbols: bool?,
                                   password_history_size: ::Integer?,
                                   temporary_password_validity_days: ::Integer?
+                                }?,
+                                sign_in_policy: {
+                                  allowed_first_auth_factors: Array[("PASSWORD" | "EMAIL_OTP" | "SMS_OTP" | "WEB_AUTHN")]?
                                 }?
                               },
                               ?deletion_protection: ("ACTIVE" | "INACTIVE"),
@@ -1722,7 +1877,9 @@ module Aws
                                     name: ("verified_email" | "verified_phone_number" | "admin_only")
                                   },
                                 ]?
-                              }
+                              },
+                              ?pool_name: ::String,
+                              ?user_pool_tier: ("LITE" | "ESSENTIALS" | "PLUS")
                             ) -> _UpdateUserPoolResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateUserPoolResponseSuccess
 
@@ -1745,7 +1902,7 @@ module Aws
                                      },
                                      ?read_attributes: Array[::String],
                                      ?write_attributes: Array[::String],
-                                     ?explicit_auth_flows: Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH")],
+                                     ?explicit_auth_flows: Array[("ADMIN_NO_SRP_AUTH" | "CUSTOM_AUTH_FLOW_ONLY" | "USER_PASSWORD_AUTH" | "ALLOW_ADMIN_USER_PASSWORD_AUTH" | "ALLOW_CUSTOM_AUTH" | "ALLOW_USER_PASSWORD_AUTH" | "ALLOW_USER_SRP_AUTH" | "ALLOW_REFRESH_TOKEN_AUTH" | "ALLOW_USER_AUTH")],
                                      ?supported_identity_providers: Array[::String],
                                      ?callback_urls: Array[::String],
                                      ?logout_urls: Array[::String],
@@ -1769,12 +1926,14 @@ module Aws
 
       interface _UpdateUserPoolDomainResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateUserPoolDomainResponse]
+        def managed_login_version: () -> ::Integer
         def cloud_front_domain: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#update_user_pool_domain-instance_method
       def update_user_pool_domain: (
                                      domain: ::String,
                                      user_pool_id: ::String,
+                                     ?managed_login_version: ::Integer,
                                      custom_domain_config: {
                                        certificate_arn: ::String
                                      }

@@ -1,0 +1,778 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws
+  module BCMPricingCalculator
+    class Client < ::Seahorse::Client::Base
+      include ::Aws::ClientStubs
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#initialize-instance_method
+      def self.new: (
+                      ?credentials: untyped,
+                      ?region: String,
+                      ?access_key_id: String,
+                      ?account_id: String,
+                      ?active_endpoint_cache: bool,
+                      ?adaptive_retry_wait_to_fill: bool,
+                      ?client_side_monitoring: bool,
+                      ?client_side_monitoring_client_id: String,
+                      ?client_side_monitoring_host: String,
+                      ?client_side_monitoring_port: Integer,
+                      ?client_side_monitoring_publisher: untyped,
+                      ?convert_params: bool,
+                      ?correct_clock_skew: bool,
+                      ?defaults_mode: String,
+                      ?disable_host_prefix_injection: bool,
+                      ?disable_request_compression: bool,
+                      ?endpoint: String,
+                      ?endpoint_cache_max_entries: Integer,
+                      ?endpoint_cache_max_threads: Integer,
+                      ?endpoint_cache_poll_interval: Integer,
+                      ?endpoint_discovery: bool,
+                      ?ignore_configured_endpoint_urls: bool,
+                      ?log_formatter: untyped,
+                      ?log_level: Symbol,
+                      ?logger: untyped,
+                      ?max_attempts: Integer,
+                      ?profile: String,
+                      ?request_min_compression_size_bytes: Integer,
+                      ?retry_backoff: Proc,
+                      ?retry_base_delay: Float,
+                      ?retry_jitter: (:none | :equal | :full | ^(Integer) -> Integer),
+                      ?retry_limit: Integer,
+                      ?retry_max_delay: Integer,
+                      ?retry_mode: ("legacy" | "standard" | "adaptive"),
+                      ?sdk_ua_app_id: String,
+                      ?secret_access_key: String,
+                      ?session_token: String,
+                      ?sigv4a_signing_region_set: Array[String],
+                      ?simple_json: bool,
+                      ?stub_responses: untyped,
+                      ?telemetry_provider: Aws::Telemetry::TelemetryProviderBase,
+                      ?token_provider: untyped,
+                      ?use_dualstack_endpoint: bool,
+                      ?use_fips_endpoint: bool,
+                      ?validate_params: bool,
+                      ?endpoint_provider: untyped,
+                      ?http_proxy: String,
+                      ?http_open_timeout: (Float | Integer),
+                      ?http_read_timeout: (Float | Integer),
+                      ?http_idle_timeout: (Float | Integer),
+                      ?http_continue_timeout: (Float | Integer),
+                      ?ssl_timeout: (Float | Integer | nil),
+                      ?http_wire_trace: bool,
+                      ?ssl_verify_peer: bool,
+                      ?ssl_ca_bundle: String,
+                      ?ssl_ca_directory: String,
+                      ?ssl_ca_store: String,
+                      ?on_chunk_received: Proc,
+                      ?on_chunk_sent: Proc,
+                      ?raise_response_errors: bool
+                    ) -> instance
+                  | (?Hash[Symbol, untyped]) -> instance
+
+
+      interface _BatchCreateBillScenarioCommitmentModificationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchCreateBillScenarioCommitmentModificationResponse]
+        def items: () -> ::Array[Types::BatchCreateBillScenarioCommitmentModificationItem]
+        def errors: () -> ::Array[Types::BatchCreateBillScenarioCommitmentModificationError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_create_bill_scenario_commitment_modification-instance_method
+      def batch_create_bill_scenario_commitment_modification: (
+                                                                bill_scenario_id: ::String,
+                                                                commitment_modifications: Array[
+                                                                  {
+                                                                    key: ::String,
+                                                                    group: ::String?,
+                                                                    usage_account_id: ::String,
+                                                                    commitment_action: {
+                                                                      add_reserved_instance_action: {
+                                                                        reserved_instances_offering_id: ::String?,
+                                                                        instance_count: ::Integer?
+                                                                      }?,
+                                                                      add_savings_plan_action: {
+                                                                        savings_plan_offering_id: ::String?,
+                                                                        commitment: ::Float?
+                                                                      }?,
+                                                                      negate_reserved_instance_action: {
+                                                                        reserved_instances_id: ::String?
+                                                                      }?,
+                                                                      negate_savings_plan_action: {
+                                                                        savings_plan_id: ::String?
+                                                                      }?
+                                                                    }
+                                                                  },
+                                                                ],
+                                                                ?client_token: ::String
+                                                              ) -> _BatchCreateBillScenarioCommitmentModificationResponseSuccess
+                                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchCreateBillScenarioCommitmentModificationResponseSuccess
+
+      interface _BatchCreateBillScenarioUsageModificationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchCreateBillScenarioUsageModificationResponse]
+        def items: () -> ::Array[Types::BatchCreateBillScenarioUsageModificationItem]
+        def errors: () -> ::Array[Types::BatchCreateBillScenarioUsageModificationError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_create_bill_scenario_usage_modification-instance_method
+      def batch_create_bill_scenario_usage_modification: (
+                                                           bill_scenario_id: ::String,
+                                                           usage_modifications: Array[
+                                                             {
+                                                               service_code: ::String,
+                                                               usage_type: ::String,
+                                                               operation: ::String,
+                                                               availability_zone: ::String?,
+                                                               key: ::String,
+                                                               group: ::String?,
+                                                               usage_account_id: ::String,
+                                                               amounts: Array[
+                                                                 {
+                                                                   start_hour: ::Time,
+                                                                   amount: ::Float
+                                                                 },
+                                                               ]?,
+                                                               historical_usage: {
+                                                                 service_code: ::String,
+                                                                 usage_type: ::String,
+                                                                 operation: ::String,
+                                                                 location: ::String?,
+                                                                 usage_account_id: ::String,
+                                                                 bill_interval: {
+                                                                   start: ::Time?,
+                                                                   end: ::Time?
+                                                                 },
+                                                                 filter_expression: {
+                                                                   and: Array[
+                                                                     untyped,
+                                                                   ]?,
+                                                                   or: Array[
+                                                                     untyped,
+                                                                   ]?,
+                                                                   not: untyped?,
+                                                                   cost_categories: {
+                                                                     key: ::String?,
+                                                                     match_options: Array[::String]?,
+                                                                     values: Array[::String]?
+                                                                   }?,
+                                                                   dimensions: {
+                                                                     key: ::String?,
+                                                                     match_options: Array[::String]?,
+                                                                     values: Array[::String]?
+                                                                   }?,
+                                                                   tags: {
+                                                                     key: ::String?,
+                                                                     match_options: Array[::String]?,
+                                                                     values: Array[::String]?
+                                                                   }?
+                                                                 }
+                                                               }?
+                                                             },
+                                                           ],
+                                                           ?client_token: ::String
+                                                         ) -> _BatchCreateBillScenarioUsageModificationResponseSuccess
+                                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchCreateBillScenarioUsageModificationResponseSuccess
+
+      interface _BatchCreateWorkloadEstimateUsageResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchCreateWorkloadEstimateUsageResponse]
+        def items: () -> ::Array[Types::BatchCreateWorkloadEstimateUsageItem]
+        def errors: () -> ::Array[Types::BatchCreateWorkloadEstimateUsageError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_create_workload_estimate_usage-instance_method
+      def batch_create_workload_estimate_usage: (
+                                                  workload_estimate_id: ::String,
+                                                  usage: Array[
+                                                    {
+                                                      service_code: ::String,
+                                                      usage_type: ::String,
+                                                      operation: ::String,
+                                                      key: ::String,
+                                                      group: ::String?,
+                                                      usage_account_id: ::String,
+                                                      amount: ::Float,
+                                                      historical_usage: {
+                                                        service_code: ::String,
+                                                        usage_type: ::String,
+                                                        operation: ::String,
+                                                        location: ::String?,
+                                                        usage_account_id: ::String,
+                                                        bill_interval: {
+                                                          start: ::Time?,
+                                                          end: ::Time?
+                                                        },
+                                                        filter_expression: {
+                                                          and: Array[
+                                                            untyped,
+                                                          ]?,
+                                                          or: Array[
+                                                            untyped,
+                                                          ]?,
+                                                          not: untyped?,
+                                                          cost_categories: {
+                                                            key: ::String?,
+                                                            match_options: Array[::String]?,
+                                                            values: Array[::String]?
+                                                          }?,
+                                                          dimensions: {
+                                                            key: ::String?,
+                                                            match_options: Array[::String]?,
+                                                            values: Array[::String]?
+                                                          }?,
+                                                          tags: {
+                                                            key: ::String?,
+                                                            match_options: Array[::String]?,
+                                                            values: Array[::String]?
+                                                          }?
+                                                        }
+                                                      }?
+                                                    },
+                                                  ],
+                                                  ?client_token: ::String
+                                                ) -> _BatchCreateWorkloadEstimateUsageResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchCreateWorkloadEstimateUsageResponseSuccess
+
+      interface _BatchDeleteBillScenarioCommitmentModificationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchDeleteBillScenarioCommitmentModificationResponse]
+        def errors: () -> ::Array[Types::BatchDeleteBillScenarioCommitmentModificationError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_delete_bill_scenario_commitment_modification-instance_method
+      def batch_delete_bill_scenario_commitment_modification: (
+                                                                bill_scenario_id: ::String,
+                                                                ids: Array[::String]
+                                                              ) -> _BatchDeleteBillScenarioCommitmentModificationResponseSuccess
+                                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchDeleteBillScenarioCommitmentModificationResponseSuccess
+
+      interface _BatchDeleteBillScenarioUsageModificationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchDeleteBillScenarioUsageModificationResponse]
+        def errors: () -> ::Array[Types::BatchDeleteBillScenarioUsageModificationError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_delete_bill_scenario_usage_modification-instance_method
+      def batch_delete_bill_scenario_usage_modification: (
+                                                           bill_scenario_id: ::String,
+                                                           ids: Array[::String]
+                                                         ) -> _BatchDeleteBillScenarioUsageModificationResponseSuccess
+                                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchDeleteBillScenarioUsageModificationResponseSuccess
+
+      interface _BatchDeleteWorkloadEstimateUsageResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchDeleteWorkloadEstimateUsageResponse]
+        def errors: () -> ::Array[Types::BatchDeleteWorkloadEstimateUsageError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_delete_workload_estimate_usage-instance_method
+      def batch_delete_workload_estimate_usage: (
+                                                  workload_estimate_id: ::String,
+                                                  ids: Array[::String]
+                                                ) -> _BatchDeleteWorkloadEstimateUsageResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchDeleteWorkloadEstimateUsageResponseSuccess
+
+      interface _BatchUpdateBillScenarioCommitmentModificationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchUpdateBillScenarioCommitmentModificationResponse]
+        def items: () -> ::Array[Types::BillScenarioCommitmentModificationItem]
+        def errors: () -> ::Array[Types::BatchUpdateBillScenarioCommitmentModificationError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_update_bill_scenario_commitment_modification-instance_method
+      def batch_update_bill_scenario_commitment_modification: (
+                                                                bill_scenario_id: ::String,
+                                                                commitment_modifications: Array[
+                                                                  {
+                                                                    id: ::String,
+                                                                    group: ::String?
+                                                                  },
+                                                                ]
+                                                              ) -> _BatchUpdateBillScenarioCommitmentModificationResponseSuccess
+                                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchUpdateBillScenarioCommitmentModificationResponseSuccess
+
+      interface _BatchUpdateBillScenarioUsageModificationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchUpdateBillScenarioUsageModificationResponse]
+        def items: () -> ::Array[Types::BillScenarioUsageModificationItem]
+        def errors: () -> ::Array[Types::BatchUpdateBillScenarioUsageModificationError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_update_bill_scenario_usage_modification-instance_method
+      def batch_update_bill_scenario_usage_modification: (
+                                                           bill_scenario_id: ::String,
+                                                           usage_modifications: Array[
+                                                             {
+                                                               id: ::String,
+                                                               group: ::String?,
+                                                               amounts: Array[
+                                                                 {
+                                                                   start_hour: ::Time,
+                                                                   amount: ::Float
+                                                                 },
+                                                               ]?
+                                                             },
+                                                           ]
+                                                         ) -> _BatchUpdateBillScenarioUsageModificationResponseSuccess
+                                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchUpdateBillScenarioUsageModificationResponseSuccess
+
+      interface _BatchUpdateWorkloadEstimateUsageResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchUpdateWorkloadEstimateUsageResponse]
+        def items: () -> ::Array[Types::WorkloadEstimateUsageItem]
+        def errors: () -> ::Array[Types::BatchUpdateWorkloadEstimateUsageError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#batch_update_workload_estimate_usage-instance_method
+      def batch_update_workload_estimate_usage: (
+                                                  workload_estimate_id: ::String,
+                                                  usage: Array[
+                                                    {
+                                                      id: ::String,
+                                                      group: ::String?,
+                                                      amount: ::Float?
+                                                    },
+                                                  ]
+                                                ) -> _BatchUpdateWorkloadEstimateUsageResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchUpdateWorkloadEstimateUsageResponseSuccess
+
+      interface _CreateBillEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateBillEstimateResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def status: () -> ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+        def failure_message: () -> ::String
+        def bill_interval: () -> Types::BillInterval
+        def cost_summary: () -> Types::BillEstimateCostSummary
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#create_bill_estimate-instance_method
+      def create_bill_estimate: (
+                                  bill_scenario_id: ::String,
+                                  name: ::String,
+                                  ?client_token: ::String,
+                                  ?tags: Hash[::String, ::String]
+                                ) -> _CreateBillEstimateResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBillEstimateResponseSuccess
+
+      interface _CreateBillScenarioResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateBillScenarioResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def bill_interval: () -> Types::BillInterval
+        def status: () -> ("READY" | "LOCKED" | "FAILED")
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+        def failure_message: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#create_bill_scenario-instance_method
+      def create_bill_scenario: (
+                                  name: ::String,
+                                  ?client_token: ::String,
+                                  ?tags: Hash[::String, ::String]
+                                ) -> _CreateBillScenarioResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBillScenarioResponseSuccess
+
+      interface _CreateWorkloadEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateWorkloadEstimateResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+        def rate_type: () -> ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+        def rate_timestamp: () -> ::Time
+        def status: () -> ("UPDATING" | "VALID" | "INVALID" | "ACTION_NEEDED")
+        def total_cost: () -> ::Float
+        def cost_currency: () -> ("USD")
+        def failure_message: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#create_workload_estimate-instance_method
+      def create_workload_estimate: (
+                                      name: ::String,
+                                      ?client_token: ::String,
+                                      ?rate_type: ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS"),
+                                      ?tags: Hash[::String, ::String]
+                                    ) -> _CreateWorkloadEstimateResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWorkloadEstimateResponseSuccess
+
+      interface _DeleteBillEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteBillEstimateResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#delete_bill_estimate-instance_method
+      def delete_bill_estimate: (
+                                  identifier: ::String
+                                ) -> _DeleteBillEstimateResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteBillEstimateResponseSuccess
+
+      interface _DeleteBillScenarioResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteBillScenarioResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#delete_bill_scenario-instance_method
+      def delete_bill_scenario: (
+                                  identifier: ::String
+                                ) -> _DeleteBillScenarioResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteBillScenarioResponseSuccess
+
+      interface _DeleteWorkloadEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteWorkloadEstimateResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#delete_workload_estimate-instance_method
+      def delete_workload_estimate: (
+                                      identifier: ::String
+                                    ) -> _DeleteWorkloadEstimateResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteWorkloadEstimateResponseSuccess
+
+      interface _GetBillEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetBillEstimateResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def status: () -> ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+        def failure_message: () -> ::String
+        def bill_interval: () -> Types::BillInterval
+        def cost_summary: () -> Types::BillEstimateCostSummary
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#get_bill_estimate-instance_method
+      def get_bill_estimate: (
+                               identifier: ::String
+                             ) -> _GetBillEstimateResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBillEstimateResponseSuccess
+
+      interface _GetBillScenarioResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetBillScenarioResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def bill_interval: () -> Types::BillInterval
+        def status: () -> ("READY" | "LOCKED" | "FAILED")
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+        def failure_message: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#get_bill_scenario-instance_method
+      def get_bill_scenario: (
+                               identifier: ::String
+                             ) -> _GetBillScenarioResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBillScenarioResponseSuccess
+
+      interface _GetPreferencesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetPreferencesResponse]
+        def management_account_rate_type_selections: () -> ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+        def member_account_rate_type_selections: () -> ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#get_preferences-instance_method
+      def get_preferences: (
+                           ) -> _GetPreferencesResponseSuccess
+                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetPreferencesResponseSuccess
+
+      interface _GetWorkloadEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetWorkloadEstimateResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+        def rate_type: () -> ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+        def rate_timestamp: () -> ::Time
+        def status: () -> ("UPDATING" | "VALID" | "INVALID" | "ACTION_NEEDED")
+        def total_cost: () -> ::Float
+        def cost_currency: () -> ("USD")
+        def failure_message: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#get_workload_estimate-instance_method
+      def get_workload_estimate: (
+                                   identifier: ::String
+                                 ) -> _GetWorkloadEstimateResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetWorkloadEstimateResponseSuccess
+
+      interface _ListBillEstimateCommitmentsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillEstimateCommitmentsResponse]
+        def items: () -> ::Array[Types::BillEstimateCommitmentSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_estimate_commitments-instance_method
+      def list_bill_estimate_commitments: (
+                                            bill_estimate_id: ::String,
+                                            ?next_token: ::String,
+                                            ?max_results: ::Integer
+                                          ) -> _ListBillEstimateCommitmentsResponseSuccess
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillEstimateCommitmentsResponseSuccess
+
+      interface _ListBillEstimateInputCommitmentModificationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillEstimateInputCommitmentModificationsResponse]
+        def items: () -> ::Array[Types::BillEstimateInputCommitmentModificationSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_estimate_input_commitment_modifications-instance_method
+      def list_bill_estimate_input_commitment_modifications: (
+                                                               bill_estimate_id: ::String,
+                                                               ?next_token: ::String,
+                                                               ?max_results: ::Integer
+                                                             ) -> _ListBillEstimateInputCommitmentModificationsResponseSuccess
+                                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillEstimateInputCommitmentModificationsResponseSuccess
+
+      interface _ListBillEstimateInputUsageModificationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillEstimateInputUsageModificationsResponse]
+        def items: () -> ::Array[Types::BillEstimateInputUsageModificationSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_estimate_input_usage_modifications-instance_method
+      def list_bill_estimate_input_usage_modifications: (
+                                                          bill_estimate_id: ::String,
+                                                          ?filters: Array[
+                                                            {
+                                                              name: ("USAGE_ACCOUNT_ID" | "SERVICE_CODE" | "USAGE_TYPE" | "OPERATION" | "LOCATION" | "USAGE_GROUP" | "HISTORICAL_USAGE_ACCOUNT_ID" | "HISTORICAL_SERVICE_CODE" | "HISTORICAL_USAGE_TYPE" | "HISTORICAL_OPERATION" | "HISTORICAL_LOCATION"),
+                                                              values: Array[::String],
+                                                              match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")?
+                                                            },
+                                                          ],
+                                                          ?next_token: ::String,
+                                                          ?max_results: ::Integer
+                                                        ) -> _ListBillEstimateInputUsageModificationsResponseSuccess
+                                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillEstimateInputUsageModificationsResponseSuccess
+
+      interface _ListBillEstimateLineItemsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillEstimateLineItemsResponse]
+        def items: () -> ::Array[Types::BillEstimateLineItemSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_estimate_line_items-instance_method
+      def list_bill_estimate_line_items: (
+                                           bill_estimate_id: ::String,
+                                           ?filters: Array[
+                                             {
+                                               name: ("USAGE_ACCOUNT_ID" | "SERVICE_CODE" | "USAGE_TYPE" | "OPERATION" | "LOCATION" | "LINE_ITEM_TYPE"),
+                                               values: Array[::String],
+                                               match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")?
+                                             },
+                                           ],
+                                           ?next_token: ::String,
+                                           ?max_results: ::Integer
+                                         ) -> _ListBillEstimateLineItemsResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillEstimateLineItemsResponseSuccess
+
+      interface _ListBillEstimatesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillEstimatesResponse]
+        def items: () -> ::Array[Types::BillEstimateSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_estimates-instance_method
+      def list_bill_estimates: (
+                                 ?filters: Array[
+                                   {
+                                     name: ("STATUS" | "NAME"),
+                                     values: Array[::String],
+                                     match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")?
+                                   },
+                                 ],
+                                 ?created_at_filter: {
+                                   after_timestamp: ::Time?,
+                                   before_timestamp: ::Time?
+                                 },
+                                 ?expires_at_filter: {
+                                   after_timestamp: ::Time?,
+                                   before_timestamp: ::Time?
+                                 },
+                                 ?next_token: ::String,
+                                 ?max_results: ::Integer
+                               ) -> _ListBillEstimatesResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillEstimatesResponseSuccess
+
+      interface _ListBillScenarioCommitmentModificationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillScenarioCommitmentModificationsResponse]
+        def items: () -> ::Array[Types::BillScenarioCommitmentModificationItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_scenario_commitment_modifications-instance_method
+      def list_bill_scenario_commitment_modifications: (
+                                                         bill_scenario_id: ::String,
+                                                         ?next_token: ::String,
+                                                         ?max_results: ::Integer
+                                                       ) -> _ListBillScenarioCommitmentModificationsResponseSuccess
+                                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillScenarioCommitmentModificationsResponseSuccess
+
+      interface _ListBillScenarioUsageModificationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillScenarioUsageModificationsResponse]
+        def items: () -> ::Array[Types::BillScenarioUsageModificationItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_scenario_usage_modifications-instance_method
+      def list_bill_scenario_usage_modifications: (
+                                                    bill_scenario_id: ::String,
+                                                    ?filters: Array[
+                                                      {
+                                                        name: ("USAGE_ACCOUNT_ID" | "SERVICE_CODE" | "USAGE_TYPE" | "OPERATION" | "LOCATION" | "USAGE_GROUP" | "HISTORICAL_USAGE_ACCOUNT_ID" | "HISTORICAL_SERVICE_CODE" | "HISTORICAL_USAGE_TYPE" | "HISTORICAL_OPERATION" | "HISTORICAL_LOCATION"),
+                                                        values: Array[::String],
+                                                        match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")?
+                                                      },
+                                                    ],
+                                                    ?next_token: ::String,
+                                                    ?max_results: ::Integer
+                                                  ) -> _ListBillScenarioUsageModificationsResponseSuccess
+                                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillScenarioUsageModificationsResponseSuccess
+
+      interface _ListBillScenariosResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListBillScenariosResponse]
+        def items: () -> ::Array[Types::BillScenarioSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_bill_scenarios-instance_method
+      def list_bill_scenarios: (
+                                 ?filters: Array[
+                                   {
+                                     name: ("STATUS" | "NAME"),
+                                     values: Array[::String],
+                                     match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")?
+                                   },
+                                 ],
+                                 ?created_at_filter: {
+                                   after_timestamp: ::Time?,
+                                   before_timestamp: ::Time?
+                                 },
+                                 ?expires_at_filter: {
+                                   after_timestamp: ::Time?,
+                                   before_timestamp: ::Time?
+                                 },
+                                 ?next_token: ::String,
+                                 ?max_results: ::Integer
+                               ) -> _ListBillScenariosResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListBillScenariosResponseSuccess
+
+      interface _ListTagsForResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_tags_for_resource-instance_method
+      def list_tags_for_resource: (
+                                    arn: ::String
+                                  ) -> _ListTagsForResourceResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _ListWorkloadEstimateUsageResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListWorkloadEstimateUsageResponse]
+        def items: () -> ::Array[Types::WorkloadEstimateUsageItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_workload_estimate_usage-instance_method
+      def list_workload_estimate_usage: (
+                                          workload_estimate_id: ::String,
+                                          ?filters: Array[
+                                            {
+                                              name: ("USAGE_ACCOUNT_ID" | "SERVICE_CODE" | "USAGE_TYPE" | "OPERATION" | "LOCATION" | "USAGE_GROUP" | "HISTORICAL_USAGE_ACCOUNT_ID" | "HISTORICAL_SERVICE_CODE" | "HISTORICAL_USAGE_TYPE" | "HISTORICAL_OPERATION" | "HISTORICAL_LOCATION"),
+                                              values: Array[::String],
+                                              match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")?
+                                            },
+                                          ],
+                                          ?next_token: ::String,
+                                          ?max_results: ::Integer
+                                        ) -> _ListWorkloadEstimateUsageResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListWorkloadEstimateUsageResponseSuccess
+
+      interface _ListWorkloadEstimatesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListWorkloadEstimatesResponse]
+        def items: () -> ::Array[Types::WorkloadEstimateSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#list_workload_estimates-instance_method
+      def list_workload_estimates: (
+                                     ?created_at_filter: {
+                                       after_timestamp: ::Time?,
+                                       before_timestamp: ::Time?
+                                     },
+                                     ?expires_at_filter: {
+                                       after_timestamp: ::Time?,
+                                       before_timestamp: ::Time?
+                                     },
+                                     ?filters: Array[
+                                       {
+                                         name: ("STATUS" | "NAME"),
+                                         values: Array[::String],
+                                         match_option: ("EQUALS" | "STARTS_WITH" | "CONTAINS")?
+                                       },
+                                     ],
+                                     ?next_token: ::String,
+                                     ?max_results: ::Integer
+                                   ) -> _ListWorkloadEstimatesResponseSuccess
+                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListWorkloadEstimatesResponseSuccess
+
+      interface _TagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#tag_resource-instance_method
+      def tag_resource: (
+                          arn: ::String,
+                          tags: Hash[::String, ::String]
+                        ) -> _TagResourceResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
+
+      interface _UntagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#untag_resource-instance_method
+      def untag_resource: (
+                            arn: ::String,
+                            tag_keys: Array[::String]
+                          ) -> _UntagResourceResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateBillEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateBillEstimateResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def status: () -> ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+        def failure_message: () -> ::String
+        def bill_interval: () -> Types::BillInterval
+        def cost_summary: () -> Types::BillEstimateCostSummary
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#update_bill_estimate-instance_method
+      def update_bill_estimate: (
+                                  identifier: ::String,
+                                  ?name: ::String,
+                                  ?expires_at: ::Time
+                                ) -> _UpdateBillEstimateResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBillEstimateResponseSuccess
+
+      interface _UpdateBillScenarioResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateBillScenarioResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def bill_interval: () -> Types::BillInterval
+        def status: () -> ("READY" | "LOCKED" | "FAILED")
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+        def failure_message: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#update_bill_scenario-instance_method
+      def update_bill_scenario: (
+                                  identifier: ::String,
+                                  ?name: ::String,
+                                  ?expires_at: ::Time
+                                ) -> _UpdateBillScenarioResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBillScenarioResponseSuccess
+
+      interface _UpdatePreferencesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdatePreferencesResponse]
+        def management_account_rate_type_selections: () -> ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+        def member_account_rate_type_selections: () -> ::Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#update_preferences-instance_method
+      def update_preferences: (
+                                ?management_account_rate_type_selections: Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")],
+                                ?member_account_rate_type_selections: Array[("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")]
+                              ) -> _UpdatePreferencesResponseSuccess
+                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdatePreferencesResponseSuccess
+
+      interface _UpdateWorkloadEstimateResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateWorkloadEstimateResponse]
+        def id: () -> ::String
+        def name: () -> ::String
+        def created_at: () -> ::Time
+        def expires_at: () -> ::Time
+        def rate_type: () -> ("BEFORE_DISCOUNTS" | "AFTER_DISCOUNTS")
+        def rate_timestamp: () -> ::Time
+        def status: () -> ("UPDATING" | "VALID" | "INVALID" | "ACTION_NEEDED")
+        def total_cost: () -> ::Float
+        def cost_currency: () -> ("USD")
+        def failure_message: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BCMPricingCalculator/Client.html#update_workload_estimate-instance_method
+      def update_workload_estimate: (
+                                      identifier: ::String,
+                                      ?name: ::String,
+                                      ?expires_at: ::Time
+                                    ) -> _UpdateWorkloadEstimateResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateWorkloadEstimateResponseSuccess
+    end
+  end
+end
+

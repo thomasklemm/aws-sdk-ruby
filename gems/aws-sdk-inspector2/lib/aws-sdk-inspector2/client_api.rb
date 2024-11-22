@@ -2367,6 +2367,7 @@ module Aws::Inspector2
         o.http_request_uri = "/members/associate"
         o.input = Shapes::ShapeRef.new(shape: AssociateMemberRequest)
         o.output = Shapes::ShapeRef.new(shape: AssociateMemberResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)

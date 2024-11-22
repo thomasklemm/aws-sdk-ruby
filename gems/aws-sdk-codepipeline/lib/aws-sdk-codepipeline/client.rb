@@ -1643,6 +1643,7 @@ module Aws::CodePipeline
     #   resp.stage_states[0].action_states[0].latest_execution.percent_complete #=> Integer
     #   resp.stage_states[0].action_states[0].latest_execution.error_details.code #=> String
     #   resp.stage_states[0].action_states[0].latest_execution.error_details.message #=> String
+    #   resp.stage_states[0].action_states[0].latest_execution.log_stream_arn #=> String
     #   resp.stage_states[0].action_states[0].entity_url #=> String
     #   resp.stage_states[0].action_states[0].revision_url #=> String
     #   resp.stage_states[0].latest_execution.pipeline_execution_id #=> String
@@ -1882,6 +1883,7 @@ module Aws::CodePipeline
     #   resp.action_execution_details[0].output.execution_result.external_execution_url #=> String
     #   resp.action_execution_details[0].output.execution_result.error_details.code #=> String
     #   resp.action_execution_details[0].output.execution_result.error_details.message #=> String
+    #   resp.action_execution_details[0].output.execution_result.log_stream_arn #=> String
     #   resp.action_execution_details[0].output.output_variables #=> Hash
     #   resp.action_execution_details[0].output.output_variables["OutputVariablesKey"] #=> String
     #   resp.next_token #=> String
@@ -2561,6 +2563,11 @@ module Aws::CodePipeline
     #   The token for each open approval request can be obtained using the
     #   GetPipelineState action. It is used to validate that the approval
     #   request corresponding to this token is still valid.
+    #
+    #   For a pipeline where the execution mode is set to PARALLEL, the token
+    #   required to approve/reject approval request as detailed above is not
+    #   available. Instead, use the `externalExecutionId` from the
+    #   `GetPipelineState` action as the token in the approval request.
     #
     # @return [Types::PutApprovalResultOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3600,7 +3607,7 @@ module Aws::CodePipeline
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-codepipeline'
-      context[:gem_version] = '1.90.0'
+      context[:gem_version] = '1.91.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

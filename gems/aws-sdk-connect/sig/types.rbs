@@ -32,6 +32,12 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class AdditionalEmailRecipients
+      attr_accessor to_list: ::Array[Types::EmailRecipient]
+      attr_accessor cc_list: ::Array[Types::EmailRecipient]
+      SENSITIVE: []
+    end
+
     class AgentConfig
       attr_accessor distributions: ::Array[Types::Distribution]
       SENSITIVE: []
@@ -39,8 +45,8 @@ module Aws::Connect
 
     class AgentContactReference
       attr_accessor contact_id: ::String
-      attr_accessor channel: ("VOICE" | "CHAT" | "TASK")
-      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
+      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND" | "WEBRTC_API" | "AGENT_REPLY" | "FLOW")
       attr_accessor agent_contact_state: ("INCOMING" | "PENDING" | "CONNECTING" | "CONNECTED" | "CONNECTED_ONHOLD" | "MISSED" | "ERROR" | "ENDED" | "REJECTED")
       attr_accessor state_start_timestamp: ::Time
       attr_accessor connected_to_agent_timestamp: ::Time
@@ -196,7 +202,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor resource_id: ::String
       attr_accessor flow_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
       SENSITIVE: []
     end
 
@@ -205,7 +211,7 @@ module Aws::Connect
 
     class AssociateInstanceStorageConfigRequest
       attr_accessor instance_id: ::String
-      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS")
+      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       attr_accessor storage_config: Types::InstanceStorageConfig
       SENSITIVE: []
     end
@@ -276,6 +282,19 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class AssociatedContactSummary
+      attr_accessor contact_id: ::String
+      attr_accessor contact_arn: ::String
+      attr_accessor initiation_timestamp: ::Time
+      attr_accessor disconnect_timestamp: ::Time
+      attr_accessor initial_contact_id: ::String
+      attr_accessor previous_contact_id: ::String
+      attr_accessor related_contact_id: ::String
+      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND" | "WEBRTC_API" | "AGENT_REPLY" | "FLOW")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
+      SENSITIVE: []
+    end
+
     class AttachedFile
       attr_accessor creation_time: ::String
       attr_accessor file_arn: ::String
@@ -284,7 +303,7 @@ module Aws::Connect
       attr_accessor file_size_in_bytes: ::Integer
       attr_accessor file_status: ("APPROVED" | "REJECTED" | "PROCESSING" | "FAILED")
       attr_accessor created_by: Types::CreatedByInfo
-      attr_accessor file_use_case_type: ("ATTACHMENT")
+      attr_accessor file_use_case_type: ("EMAIL_MESSAGE" | "ATTACHMENT")
       attr_accessor associated_resource_arn: ::String
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
@@ -300,7 +319,8 @@ module Aws::Connect
     class AttachmentReference
       attr_accessor name: ::String
       attr_accessor value: ::String
-      attr_accessor status: ("APPROVED" | "REJECTED")
+      attr_accessor status: ("AVAILABLE" | "DELETED" | "APPROVED" | "REJECTED" | "PROCESSING" | "FAILED")
+      attr_accessor arn: ::String
       SENSITIVE: []
     end
 
@@ -417,7 +437,7 @@ module Aws::Connect
     class BatchGetFlowAssociationRequest
       attr_accessor instance_id: ::String
       attr_accessor resource_ids: ::Array[::String]
-      attr_accessor resource_type: ("VOICE_PHONE_NUMBER")
+      attr_accessor resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
       SENSITIVE: []
     end
 
@@ -519,6 +539,11 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class ConditionalOperationFailedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
     class ConflictException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -535,10 +560,11 @@ module Aws::Connect
       attr_accessor id: ::String
       attr_accessor initial_contact_id: ::String
       attr_accessor previous_contact_id: ::String
-      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND")
+      attr_accessor contact_association_id: ::String
+      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND" | "WEBRTC_API" | "AGENT_REPLY" | "FLOW")
       attr_accessor name: ::String
       attr_accessor description: ::String
-      attr_accessor channel: ("VOICE" | "CHAT" | "TASK")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
       attr_accessor queue_info: Types::QueueInfo
       attr_accessor agent_info: Types::AgentInfo
       attr_accessor initiation_timestamp: ::Time
@@ -551,6 +577,8 @@ module Aws::Connect
       attr_accessor scheduled_timestamp: ::Time
       attr_accessor related_contact_id: ::String
       attr_accessor wisdom_info: Types::WisdomInfo
+      attr_accessor customer_endpoint: Types::EndpointInfo
+      attr_accessor system_endpoint: Types::EndpointInfo
       attr_accessor queue_time_adjustment_seconds: ::Integer
       attr_accessor queue_priority: ::Integer
       attr_accessor tags: ::Hash[::String, ::String]
@@ -562,6 +590,7 @@ module Aws::Connect
       attr_accessor customer_voice_activity: Types::CustomerVoiceActivity
       attr_accessor quality_metrics: Types::QualityMetrics
       attr_accessor disconnect_details: Types::DisconnectDetails
+      attr_accessor additional_email_recipients: Types::AdditionalEmailRecipients
       attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
       SENSITIVE: [:name, :description]
     end
@@ -684,13 +713,14 @@ module Aws::Connect
       attr_accessor id: ::String
       attr_accessor initial_contact_id: ::String
       attr_accessor previous_contact_id: ::String
-      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND")
-      attr_accessor channel: ("VOICE" | "CHAT" | "TASK")
+      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND" | "WEBRTC_API" | "AGENT_REPLY" | "FLOW")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
       attr_accessor queue_info: Types::ContactSearchSummaryQueueInfo
       attr_accessor agent_info: Types::ContactSearchSummaryAgentInfo
       attr_accessor initiation_timestamp: ::Time
       attr_accessor disconnect_timestamp: ::Time
       attr_accessor scheduled_timestamp: ::Time
+      attr_accessor segment_attributes: ::Hash[::String, Types::ContactSearchSummarySegmentAttributeValue]
       SENSITIVE: []
     end
 
@@ -703,6 +733,11 @@ module Aws::Connect
     class ContactSearchSummaryQueueInfo
       attr_accessor id: ::String
       attr_accessor enqueue_timestamp: ::Time
+      SENSITIVE: []
+    end
+
+    class ContactSearchSummarySegmentAttributeValue
+      attr_accessor value_string: ::String
       SENSITIVE: []
     end
 
@@ -800,6 +835,45 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class CreateContactRequest
+      attr_accessor instance_id: ::String
+      attr_accessor client_token: ::String
+      attr_accessor related_contact_id: ::String
+      attr_accessor attributes: ::Hash[::String, ::String]
+      attr_accessor references: ::Hash[::String, Types::Reference]
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
+      attr_accessor initiation_method: ("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND" | "WEBRTC_API" | "AGENT_REPLY" | "FLOW")
+      attr_accessor expiry_duration_in_minutes: ::Integer
+      attr_accessor user_info: Types::UserInfo
+      attr_accessor initiate_as: ("CONNECTED_TO_USER")
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
+      SENSITIVE: [:name, :description]
+    end
+
+    class CreateContactResponse
+      attr_accessor contact_id: ::String
+      attr_accessor contact_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CreateEmailAddressRequest
+      attr_accessor description: ::String
+      attr_accessor instance_id: ::String
+      attr_accessor email_address: ::String
+      attr_accessor display_name: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor client_token: ::String
+      SENSITIVE: [:description, :email_address, :display_name]
+    end
+
+    class CreateEmailAddressResponse
+      attr_accessor email_address_id: ::String
+      attr_accessor email_address_arn: ::String
+      SENSITIVE: []
+    end
+
     class CreateEvaluationFormRequest
       attr_accessor instance_id: ::String
       attr_accessor title: ::String
@@ -851,7 +925,7 @@ module Aws::Connect
 
     class CreateIntegrationAssociationRequest
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY")
       attr_accessor integration_arn: ::String
       attr_accessor source_application_url: ::String
       attr_accessor source_application_name: ::String
@@ -921,6 +995,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor outbound_caller_config: Types::OutboundCallerConfig
+      attr_accessor outbound_email_config: Types::OutboundEmailConfig
       attr_accessor hours_of_operation_id: ::String
       attr_accessor max_contacts: ::Integer
       attr_accessor quick_connect_ids: ::Array[::String]
@@ -1009,6 +1084,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor contact_flow_id: ::String
+      attr_accessor self_assign_flow_id: ::String
       attr_accessor constraints: Types::TaskTemplateConstraints
       attr_accessor defaults: Types::TaskTemplateDefaults
       attr_accessor status: ("ACTIVE" | "INACTIVE")
@@ -1262,6 +1338,15 @@ module Aws::Connect
     class DeleteContactFlowResponse < Aws::EmptyStructure
     end
 
+    class DeleteEmailAddressRequest
+      attr_accessor instance_id: ::String
+      attr_accessor email_address_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteEmailAddressResponse < Aws::EmptyStructure
+    end
+
     class DeleteEvaluationFormRequest
       attr_accessor instance_id: ::String
       attr_accessor evaluation_form_id: ::String
@@ -1463,6 +1548,24 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class DescribeEmailAddressRequest
+      attr_accessor instance_id: ::String
+      attr_accessor email_address_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeEmailAddressResponse
+      attr_accessor email_address_id: ::String
+      attr_accessor email_address_arn: ::String
+      attr_accessor email_address: ::String
+      attr_accessor display_name: ::String
+      attr_accessor description: ::String
+      attr_accessor create_timestamp: ::String
+      attr_accessor modified_timestamp: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:email_address, :display_name, :description]
+    end
+
     class DescribeEvaluationFormRequest
       attr_accessor instance_id: ::String
       attr_accessor evaluation_form_id: ::String
@@ -1511,7 +1614,7 @@ module Aws::Connect
     class DescribeInstanceStorageConfigRequest
       attr_accessor instance_id: ::String
       attr_accessor association_id: ::String
-      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS")
+      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       SENSITIVE: []
     end
 
@@ -1685,7 +1788,7 @@ module Aws::Connect
 
     class Dimensions
       attr_accessor queue: Types::QueueReference
-      attr_accessor channel: ("VOICE" | "CHAT" | "TASK")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
       attr_accessor routing_profile: Types::RoutingProfileReference
       attr_accessor routing_step_expression: ::String
       SENSITIVE: []
@@ -1714,7 +1817,7 @@ module Aws::Connect
     class DisassociateFlowRequest
       attr_accessor instance_id: ::String
       attr_accessor resource_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
       SENSITIVE: []
     end
 
@@ -1724,7 +1827,7 @@ module Aws::Connect
     class DisassociateInstanceStorageConfigRequest
       attr_accessor instance_id: ::String
       attr_accessor association_id: ::String
-      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS")
+      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       SENSITIVE: []
     end
 
@@ -1821,6 +1924,51 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class EmailAddressInfo
+      attr_accessor email_address: ::String
+      attr_accessor display_name: ::String
+      SENSITIVE: [:email_address, :display_name]
+    end
+
+    class EmailAddressMetadata
+      attr_accessor email_address_id: ::String
+      attr_accessor email_address_arn: ::String
+      attr_accessor email_address: ::String
+      attr_accessor description: ::String
+      attr_accessor display_name: ::String
+      SENSITIVE: [:email_address, :description, :display_name]
+    end
+
+    class EmailAddressSearchCriteria
+      attr_accessor or_conditions: ::Array[Types::EmailAddressSearchCriteria]
+      attr_accessor and_conditions: ::Array[Types::EmailAddressSearchCriteria]
+      attr_accessor string_condition: Types::StringCondition
+      SENSITIVE: []
+    end
+
+    class EmailAddressSearchFilter
+      attr_accessor tag_filter: Types::ControlPlaneTagFilter
+      SENSITIVE: []
+    end
+
+    class EmailAttachment
+      attr_accessor file_name: ::String
+      attr_accessor s3_url: ::String
+      SENSITIVE: []
+    end
+
+    class EmailMessageReference
+      attr_accessor name: ::String
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class EmailRecipient
+      attr_accessor address: ::String
+      attr_accessor display_name: ::String
+      SENSITIVE: []
+    end
+
     class EmailReference
       attr_accessor name: ::String
       attr_accessor value: ::String
@@ -1840,8 +1988,15 @@ module Aws::Connect
     end
 
     class Endpoint
-      attr_accessor type: ("TELEPHONE_NUMBER" | "VOIP" | "CONTACT_FLOW" | "CONNECT_PHONENUMBER_ARN")
+      attr_accessor type: ("TELEPHONE_NUMBER" | "VOIP" | "CONTACT_FLOW" | "CONNECT_PHONENUMBER_ARN" | "EMAIL_ADDRESS")
       attr_accessor address: ::String
+      SENSITIVE: []
+    end
+
+    class EndpointInfo
+      attr_accessor type: ("TELEPHONE_NUMBER" | "VOIP" | "CONTACT_FLOW" | "CONNECT_PHONENUMBER_ARN" | "EMAIL_ADDRESS")
+      attr_accessor address: ::String
+      attr_accessor display_name: ::String
       SENSITIVE: []
     end
 
@@ -2143,7 +2298,7 @@ module Aws::Connect
 
     class Filters
       attr_accessor queues: ::Array[::String]
-      attr_accessor channels: ::Array[("VOICE" | "CHAT" | "TASK")]
+      attr_accessor channels: ::Array[("VOICE" | "CHAT" | "TASK" | "EMAIL")]
       attr_accessor routing_profiles: ::Array[::String]
       attr_accessor routing_step_expressions: ::Array[::String]
       SENSITIVE: []
@@ -2152,7 +2307,7 @@ module Aws::Connect
     class FlowAssociationSummary
       attr_accessor resource_id: ::String
       attr_accessor flow_id: ::String
-      attr_accessor resource_type: ("VOICE_PHONE_NUMBER")
+      attr_accessor resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
       SENSITIVE: []
     end
 
@@ -2172,7 +2327,7 @@ module Aws::Connect
       attr_accessor file_name: ::String
       attr_accessor file_size_in_bytes: ::Integer
       attr_accessor associated_resource_arn: ::String
-      attr_accessor file_use_case_type: ("ATTACHMENT")
+      attr_accessor file_use_case_type: ("EMAIL_MESSAGE" | "ATTACHMENT")
       attr_accessor created_by: Types::CreatedByInfo
       attr_accessor download_url_metadata: Types::DownloadUrlMetadata
       attr_accessor tags: ::Hash[::String, ::String]
@@ -2240,14 +2395,14 @@ module Aws::Connect
     class GetFlowAssociationRequest
       attr_accessor instance_id: ::String
       attr_accessor resource_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
       SENSITIVE: []
     end
 
     class GetFlowAssociationResponse
       attr_accessor resource_id: ::String
       attr_accessor flow_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
       SENSITIVE: []
     end
 
@@ -2315,6 +2470,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor contact_flow_id: ::String
+      attr_accessor self_assign_flow_id: ::String
       attr_accessor constraints: Types::TaskTemplateConstraints
       attr_accessor defaults: Types::TaskTemplateDefaults
       attr_accessor fields: ::Array[Types::TaskTemplateField]
@@ -2518,6 +2674,26 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class InboundAdditionalRecipients
+      attr_accessor to_addresses: ::Array[Types::EmailAddressInfo]
+      attr_accessor cc_addresses: ::Array[Types::EmailAddressInfo]
+      SENSITIVE: []
+    end
+
+    class InboundEmailContent
+      attr_accessor message_source_type: ("RAW")
+      attr_accessor raw_message: Types::InboundRawMessage
+      SENSITIVE: []
+    end
+
+    class InboundRawMessage
+      attr_accessor subject: ::String
+      attr_accessor body: ::String
+      attr_accessor content_type: ::String
+      attr_accessor headers: ::Hash[("REFERENCES" | "MESSAGE_ID" | "IN_REPLY_TO" | "X_SES_SPAM_VERDICT" | "X_SES_VIRUS_VERDICT"), ::String]
+      SENSITIVE: [:subject, :body]
+    end
+
     class Instance
       attr_accessor id: ::String
       attr_accessor arn: ::String
@@ -2567,7 +2743,7 @@ module Aws::Connect
       attr_accessor integration_association_id: ::String
       attr_accessor integration_association_arn: ::String
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY")
       attr_accessor integration_arn: ::String
       attr_accessor source_application_url: ::String
       attr_accessor source_application_name: ::String
@@ -2703,6 +2879,20 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class ListAssociatedContactsRequest
+      attr_accessor instance_id: ::String
+      attr_accessor contact_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAssociatedContactsResponse
+      attr_accessor contact_summary_list: ::Array[Types::AssociatedContactSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListAuthenticationProfilesRequest
       attr_accessor instance_id: ::String
       attr_accessor max_results: ::Integer
@@ -2794,7 +2984,7 @@ module Aws::Connect
     class ListContactReferencesRequest
       attr_accessor instance_id: ::String
       attr_accessor contact_id: ::String
-      attr_accessor reference_types: ::Array[("URL" | "ATTACHMENT" | "NUMBER" | "STRING" | "DATE" | "EMAIL")]
+      attr_accessor reference_types: ::Array[("URL" | "ATTACHMENT" | "CONTACT_ANALYSIS" | "NUMBER" | "STRING" | "DATE" | "EMAIL" | "EMAIL_MESSAGE")]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -2848,7 +3038,7 @@ module Aws::Connect
 
     class ListFlowAssociationsRequest
       attr_accessor instance_id: ::String
-      attr_accessor resource_type: ("VOICE_PHONE_NUMBER")
+      attr_accessor resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       SENSITIVE: []
@@ -2888,7 +3078,7 @@ module Aws::Connect
 
     class ListInstanceStorageConfigsRequest
       attr_accessor instance_id: ::String
-      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS")
+      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       SENSITIVE: []
@@ -2914,7 +3104,7 @@ module Aws::Connect
 
     class ListIntegrationAssociationsRequest
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY")
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       attr_accessor integration_arn: ::String
@@ -3334,7 +3524,7 @@ module Aws::Connect
     end
 
     class MediaConcurrency
-      attr_accessor channel: ("VOICE" | "CHAT" | "TASK")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
       attr_accessor concurrency: ::Integer
       attr_accessor cross_channel_behavior: Types::CrossChannelBehavior
       SENSITIVE: []
@@ -3444,6 +3634,11 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class OutboundAdditionalRecipients
+      attr_accessor cc_email_addresses: ::Array[Types::EmailAddressInfo]
+      SENSITIVE: []
+    end
+
     class OutboundCallerConfig
       attr_accessor outbound_caller_id_name: ::String
       attr_accessor outbound_caller_id_number_id: ::String
@@ -3454,6 +3649,25 @@ module Aws::Connect
     class OutboundContactNotPermittedException
       attr_accessor message: ::String
       SENSITIVE: []
+    end
+
+    class OutboundEmailConfig
+      attr_accessor outbound_email_address_id: ::String
+      SENSITIVE: []
+    end
+
+    class OutboundEmailContent
+      attr_accessor message_source_type: ("TEMPLATE" | "RAW")
+      attr_accessor templated_message_config: Types::TemplatedMessageConfig
+      attr_accessor raw_message: Types::OutboundRawMessage
+      SENSITIVE: []
+    end
+
+    class OutboundRawMessage
+      attr_accessor subject: ::String
+      attr_accessor body: ::String
+      attr_accessor content_type: ::String
+      SENSITIVE: [:subject, :body]
     end
 
     class OutputTypeNotFoundException
@@ -3646,6 +3860,7 @@ module Aws::Connect
       attr_accessor queue_id: ::String
       attr_accessor description: ::String
       attr_accessor outbound_caller_config: Types::OutboundCallerConfig
+      attr_accessor outbound_email_config: Types::OutboundEmailConfig
       attr_accessor hours_of_operation_id: ::String
       attr_accessor max_contacts: ::Integer
       attr_accessor status: ("ENABLED" | "DISABLED")
@@ -3879,13 +4094,17 @@ module Aws::Connect
 
     class Reference
       attr_accessor value: ::String
-      attr_accessor type: ("URL" | "ATTACHMENT" | "NUMBER" | "STRING" | "DATE" | "EMAIL")
+      attr_accessor type: ("URL" | "ATTACHMENT" | "CONTACT_ANALYSIS" | "NUMBER" | "STRING" | "DATE" | "EMAIL" | "EMAIL_MESSAGE")
+      attr_accessor status: ("AVAILABLE" | "DELETED" | "APPROVED" | "REJECTED" | "PROCESSING" | "FAILED")
+      attr_accessor arn: ::String
+      attr_accessor status_reason: ::String
       SENSITIVE: []
     end
 
     class ReferenceSummary
       attr_accessor url: Types::UrlReference
       attr_accessor attachment: Types::AttachmentReference
+      attr_accessor email_message: Types::EmailMessageReference
       attr_accessor string: Types::StringReference
       attr_accessor number: Types::NumberReference
       attr_accessor date: Types::DateReference
@@ -3896,6 +4115,8 @@ module Aws::Connect
       class Url < ReferenceSummary
       end
       class Attachment < ReferenceSummary
+      end
+      class EmailMessage < ReferenceSummary
       end
       class String < ReferenceSummary
       end
@@ -4050,13 +4271,13 @@ module Aws::Connect
       attr_accessor queue_name: ::String
       attr_accessor priority: ::Integer
       attr_accessor delay: ::Integer
-      attr_accessor channel: ("VOICE" | "CHAT" | "TASK")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
       SENSITIVE: []
     end
 
     class RoutingProfileQueueReference
       attr_accessor queue_id: ::String
-      attr_accessor channel: ("VOICE" | "CHAT" | "TASK")
+      attr_accessor channel: ("VOICE" | "CHAT" | "TASK" | "EMAIL")
       SENSITIVE: []
     end
 
@@ -4232,11 +4453,28 @@ module Aws::Connect
     class SearchCriteria
       attr_accessor agent_ids: ::Array[::String]
       attr_accessor agent_hierarchy_groups: Types::AgentHierarchyGroups
-      attr_accessor channels: ::Array[("VOICE" | "CHAT" | "TASK")]
+      attr_accessor channels: ::Array[("VOICE" | "CHAT" | "TASK" | "EMAIL")]
       attr_accessor contact_analysis: Types::ContactAnalysis
-      attr_accessor initiation_methods: ::Array[("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND")]
+      attr_accessor initiation_methods: ::Array[("INBOUND" | "OUTBOUND" | "TRANSFER" | "QUEUE_TRANSFER" | "CALLBACK" | "API" | "DISCONNECT" | "MONITOR" | "EXTERNAL_OUTBOUND" | "WEBRTC_API" | "AGENT_REPLY" | "FLOW")]
       attr_accessor queue_ids: ::Array[::String]
       attr_accessor searchable_contact_attributes: Types::SearchableContactAttributes
+      attr_accessor searchable_segment_attributes: Types::SearchableSegmentAttributes
+      SENSITIVE: []
+    end
+
+    class SearchEmailAddressesRequest
+      attr_accessor instance_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor search_criteria: Types::EmailAddressSearchCriteria
+      attr_accessor search_filter: Types::EmailAddressSearchFilter
+      SENSITIVE: []
+    end
+
+    class SearchEmailAddressesResponse
+      attr_accessor next_token: ::String
+      attr_accessor email_addresses: ::Array[Types::EmailAddressMetadata]
+      attr_accessor approximate_total_count: ::Integer
       SENSITIVE: []
     end
 
@@ -4426,6 +4664,18 @@ module Aws::Connect
       SENSITIVE: [:key]
     end
 
+    class SearchableSegmentAttributes
+      attr_accessor criteria: ::Array[Types::SearchableSegmentAttributesCriteria]
+      attr_accessor match_type: ("MATCH_ALL" | "MATCH_ANY")
+      SENSITIVE: []
+    end
+
+    class SearchableSegmentAttributesCriteria
+      attr_accessor key: ::String
+      attr_accessor values: ::Array[::String]
+      SENSITIVE: [:key, :values]
+    end
+
     class SecurityKey
       attr_accessor association_id: ::String
       attr_accessor key: ::String
@@ -4509,9 +4759,36 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class SendOutboundEmailRequest
+      attr_accessor instance_id: ::String
+      attr_accessor from_email_address: Types::EmailAddressInfo
+      attr_accessor destination_email_address: Types::EmailAddressInfo
+      attr_accessor additional_recipients: Types::OutboundAdditionalRecipients
+      attr_accessor email_message: Types::OutboundEmailContent
+      attr_accessor traffic_type: ("GENERAL" | "CAMPAIGN")
+      attr_accessor source_campaign: Types::SourceCampaign
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class SendOutboundEmailResponse < Aws::EmptyStructure
+    end
+
     class ServiceQuotaExceededException
       attr_accessor message: ::String
+      attr_accessor reason: Types::ServiceQuotaExceededExceptionReason
       SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededExceptionReason
+      attr_accessor attached_file_service_quota_exceeded_exception_reason: ("TOTAL_FILE_SIZE_EXCEEDED" | "TOTAL_FILE_COUNT_EXCEEDED")
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AttachedFileServiceQuotaExceededExceptionReason < ServiceQuotaExceededExceptionReason
+      end
+      class Unknown < ServiceQuotaExceededExceptionReason
+      end
     end
 
     class SignInConfig
@@ -4538,13 +4815,19 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class SourceCampaign
+      attr_accessor campaign_id: ::String
+      attr_accessor outbound_request_id: ::String
+      SENSITIVE: []
+    end
+
     class StartAttachedFileUploadRequest
       attr_accessor client_token: ::String
       attr_accessor instance_id: ::String
       attr_accessor file_name: ::String
       attr_accessor file_size_in_bytes: ::Integer
       attr_accessor url_expiry_in_seconds: ::Integer
-      attr_accessor file_use_case_type: ("ATTACHMENT")
+      attr_accessor file_use_case_type: ("EMAIL_MESSAGE" | "ATTACHMENT")
       attr_accessor associated_resource_arn: ::String
       attr_accessor created_by: Types::CreatedByInfo
       attr_accessor tags: ::Hash[::String, ::String]
@@ -4622,6 +4905,29 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class StartEmailContactRequest
+      attr_accessor instance_id: ::String
+      attr_accessor from_email_address: Types::EmailAddressInfo
+      attr_accessor destination_email_address: ::String
+      attr_accessor description: ::String
+      attr_accessor references: ::Hash[::String, Types::Reference]
+      attr_accessor name: ::String
+      attr_accessor email_message: Types::InboundEmailContent
+      attr_accessor additional_recipients: Types::InboundAdditionalRecipients
+      attr_accessor attachments: ::Array[Types::EmailAttachment]
+      attr_accessor contact_flow_id: ::String
+      attr_accessor related_contact_id: ::String
+      attr_accessor attributes: ::Hash[::String, ::String]
+      attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
+      attr_accessor client_token: ::String
+      SENSITIVE: [:destination_email_address, :description, :name, :attachments]
+    end
+
+    class StartEmailContactResponse
+      attr_accessor contact_id: ::String
+      SENSITIVE: []
+    end
+
     class StartOutboundChatContactRequest
       attr_accessor source_endpoint: Types::Endpoint
       attr_accessor destination_endpoint: Types::Endpoint
@@ -4639,6 +4945,22 @@ module Aws::Connect
     end
 
     class StartOutboundChatContactResponse
+      attr_accessor contact_id: ::String
+      SENSITIVE: []
+    end
+
+    class StartOutboundEmailContactRequest
+      attr_accessor instance_id: ::String
+      attr_accessor contact_id: ::String
+      attr_accessor from_email_address: Types::EmailAddressInfo
+      attr_accessor destination_email_address: Types::EmailAddressInfo
+      attr_accessor additional_recipients: Types::OutboundAdditionalRecipients
+      attr_accessor email_message: Types::OutboundEmailContent
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class StartOutboundEmailContactResponse
       attr_accessor contact_id: ::String
       SENSITIVE: []
     end
@@ -4689,6 +5011,7 @@ module Aws::Connect
       attr_accessor task_template_id: ::String
       attr_accessor quick_connect_id: ::String
       attr_accessor related_contact_id: ::String
+      attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
       SENSITIVE: [:name, :description]
     end
 
@@ -4868,7 +5191,7 @@ module Aws::Connect
     class TaskTemplateField
       attr_accessor id: Types::TaskTemplateFieldIdentifier
       attr_accessor description: ::String
-      attr_accessor type: ("NAME" | "DESCRIPTION" | "SCHEDULED_TIME" | "QUICK_CONNECT" | "URL" | "NUMBER" | "TEXT" | "TEXT_AREA" | "DATE_TIME" | "BOOLEAN" | "SINGLE_SELECT" | "EMAIL")
+      attr_accessor type: ("NAME" | "DESCRIPTION" | "SCHEDULED_TIME" | "QUICK_CONNECT" | "URL" | "NUMBER" | "TEXT" | "TEXT_AREA" | "DATE_TIME" | "BOOLEAN" | "SINGLE_SELECT" | "EMAIL" | "SELF_ASSIGN" | "EXPIRY_DURATION")
       attr_accessor single_select_options: ::Array[::String]
       SENSITIVE: []
     end
@@ -4891,6 +5214,19 @@ module Aws::Connect
 
     class TelephonyConfig
       attr_accessor distributions: ::Array[Types::Distribution]
+      SENSITIVE: []
+    end
+
+    class TemplateAttributes
+      attr_accessor custom_attributes: ::Hash[::String, ::String]
+      attr_accessor customer_profile_attributes: ::String
+      SENSITIVE: []
+    end
+
+    class TemplatedMessageConfig
+      attr_accessor knowledge_base_id: ::String
+      attr_accessor message_template_id: ::String
+      attr_accessor template_attributes: Types::TemplateAttributes
       SENSITIVE: []
     end
 
@@ -5100,6 +5436,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor references: ::Hash[::String, Types::Reference]
+      attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
       SENSITIVE: [:name, :description]
     end
 
@@ -5126,6 +5463,21 @@ module Aws::Connect
     end
 
     class UpdateContactScheduleResponse < Aws::EmptyStructure
+    end
+
+    class UpdateEmailAddressMetadataRequest
+      attr_accessor instance_id: ::String
+      attr_accessor email_address_id: ::String
+      attr_accessor description: ::String
+      attr_accessor display_name: ::String
+      attr_accessor client_token: ::String
+      SENSITIVE: [:description, :display_name]
+    end
+
+    class UpdateEmailAddressMetadataResponse
+      attr_accessor email_address_id: ::String
+      attr_accessor email_address_arn: ::String
+      SENSITIVE: []
     end
 
     class UpdateEvaluationFormRequest
@@ -5168,7 +5520,7 @@ module Aws::Connect
     class UpdateInstanceStorageConfigRequest
       attr_accessor instance_id: ::String
       attr_accessor association_id: ::String
-      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS")
+      attr_accessor resource_type: ("CHAT_TRANSCRIPTS" | "CALL_RECORDINGS" | "SCHEDULED_REPORTS" | "MEDIA_STREAMS" | "CONTACT_TRACE_RECORDS" | "AGENT_EVENTS" | "REAL_TIME_CONTACT_ANALYSIS_SEGMENTS" | "ATTACHMENTS" | "CONTACT_EVALUATIONS" | "SCREEN_RECORDINGS" | "REAL_TIME_CONTACT_ANALYSIS_CHAT_SEGMENTS" | "REAL_TIME_CONTACT_ANALYSIS_VOICE_SEGMENTS" | "EMAIL_MESSAGES")
       attr_accessor storage_config: Types::InstanceStorageConfig
       SENSITIVE: []
     end
@@ -5266,6 +5618,13 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class UpdateQueueOutboundEmailConfigRequest
+      attr_accessor instance_id: ::String
+      attr_accessor queue_id: ::String
+      attr_accessor outbound_email_config: Types::OutboundEmailConfig
+      SENSITIVE: []
+    end
+
     class UpdateQueueStatusRequest
       attr_accessor instance_id: ::String
       attr_accessor queue_id: ::String
@@ -5353,6 +5712,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor contact_flow_id: ::String
+      attr_accessor self_assign_flow_id: ::String
       attr_accessor constraints: Types::TaskTemplateConstraints
       attr_accessor defaults: Types::TaskTemplateDefaults
       attr_accessor status: ("ACTIVE" | "INACTIVE")
@@ -5367,6 +5727,7 @@ module Aws::Connect
       attr_accessor name: ::String
       attr_accessor description: ::String
       attr_accessor contact_flow_id: ::String
+      attr_accessor self_assign_flow_id: ::String
       attr_accessor constraints: Types::TaskTemplateConstraints
       attr_accessor defaults: Types::TaskTemplateDefaults
       attr_accessor fields: ::Array[Types::TaskTemplateField]
@@ -5507,9 +5868,9 @@ module Aws::Connect
       attr_accessor routing_profile: Types::RoutingProfileReference
       attr_accessor hierarchy_path: Types::HierarchyPathReference
       attr_accessor status: Types::AgentStatusReference
-      attr_accessor available_slots_by_channel: ::Hash[("VOICE" | "CHAT" | "TASK"), ::Integer]
-      attr_accessor max_slots_by_channel: ::Hash[("VOICE" | "CHAT" | "TASK"), ::Integer]
-      attr_accessor active_slots_by_channel: ::Hash[("VOICE" | "CHAT" | "TASK"), ::Integer]
+      attr_accessor available_slots_by_channel: ::Hash[("VOICE" | "CHAT" | "TASK" | "EMAIL"), ::Integer]
+      attr_accessor max_slots_by_channel: ::Hash[("VOICE" | "CHAT" | "TASK" | "EMAIL"), ::Integer]
+      attr_accessor active_slots_by_channel: ::Hash[("VOICE" | "CHAT" | "TASK" | "EMAIL"), ::Integer]
       attr_accessor contacts: ::Array[Types::AgentContactReference]
       attr_accessor next_status: ::String
       SENSITIVE: []
@@ -5549,6 +5910,11 @@ module Aws::Connect
       attr_accessor first_name: ::String
       attr_accessor last_name: ::String
       SENSITIVE: [:first_name, :last_name]
+    end
+
+    class UserInfo
+      attr_accessor user_id: ::String
+      SENSITIVE: []
     end
 
     class UserNotFoundException

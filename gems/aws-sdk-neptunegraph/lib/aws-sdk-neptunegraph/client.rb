@@ -447,6 +447,50 @@ module Aws::NeptuneGraph
 
     # @!group API Operations
 
+    # Cancel the specified export task.
+    #
+    # @option params [required, String] :task_identifier
+    #   The unique identifier of the export task.
+    #
+    # @return [Types::CancelExportTaskOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CancelExportTaskOutput#graph_id #graph_id} => String
+    #   * {Types::CancelExportTaskOutput#role_arn #role_arn} => String
+    #   * {Types::CancelExportTaskOutput#task_id #task_id} => String
+    #   * {Types::CancelExportTaskOutput#status #status} => String
+    #   * {Types::CancelExportTaskOutput#format #format} => String
+    #   * {Types::CancelExportTaskOutput#destination #destination} => String
+    #   * {Types::CancelExportTaskOutput#kms_key_identifier #kms_key_identifier} => String
+    #   * {Types::CancelExportTaskOutput#parquet_type #parquet_type} => String
+    #   * {Types::CancelExportTaskOutput#status_reason #status_reason} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.cancel_export_task({
+    #     task_identifier: "ExportTaskId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.graph_id #=> String
+    #   resp.role_arn #=> String
+    #   resp.task_id #=> String
+    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
+    #   resp.format #=> String, one of "PARQUET", "CSV"
+    #   resp.destination #=> String
+    #   resp.kms_key_identifier #=> String
+    #   resp.parquet_type #=> String, one of "COLUMNAR"
+    #   resp.status_reason #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/CancelExportTask AWS API Documentation
+    #
+    # @overload cancel_export_task(params = {})
+    # @param [Hash] params ({})
+    def cancel_export_task(params = {}, options = {})
+      req = build_request(:cancel_export_task, params)
+      req.send_request(options)
+    end
+
     # Deletes the specified import task.
     #
     # @option params [required, String] :task_identifier
@@ -458,6 +502,7 @@ module Aws::NeptuneGraph
     #   * {Types::CancelImportTaskOutput#task_id #task_id} => String
     #   * {Types::CancelImportTaskOutput#source #source} => String
     #   * {Types::CancelImportTaskOutput#format #format} => String
+    #   * {Types::CancelImportTaskOutput#parquet_type #parquet_type} => String
     #   * {Types::CancelImportTaskOutput#role_arn #role_arn} => String
     #   * {Types::CancelImportTaskOutput#status #status} => String
     #
@@ -472,9 +517,10 @@ module Aws::NeptuneGraph
     #   resp.graph_id #=> String
     #   resp.task_id #=> String
     #   resp.source #=> String
-    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "NTRIPLES"
+    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "PARQUET", "NTRIPLES"
+    #   resp.parquet_type #=> String, one of "COLUMNAR"
     #   resp.role_arn #=> String
-    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED"
+    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/CancelImportTask AWS API Documentation
     #
@@ -763,6 +809,9 @@ module Aws::NeptuneGraph
     #   [2]: https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html
     #   [3]: https://docs.aws.amazon.com/neptune-analytics/latest/userguide/using-rdf-data.html
     #
+    # @option params [String] :parquet_type
+    #   The parquet type of the import task.
+    #
     # @option params [String] :blank_node_handling
     #   The method to handle blank nodes in the dataset. Currently, only
     #   `convertToIri` is supported, meaning blank nodes are converted to
@@ -783,6 +832,7 @@ module Aws::NeptuneGraph
     #   * {Types::CreateGraphUsingImportTaskOutput#task_id #task_id} => String
     #   * {Types::CreateGraphUsingImportTaskOutput#source #source} => String
     #   * {Types::CreateGraphUsingImportTaskOutput#format #format} => String
+    #   * {Types::CreateGraphUsingImportTaskOutput#parquet_type #parquet_type} => String
     #   * {Types::CreateGraphUsingImportTaskOutput#role_arn #role_arn} => String
     #   * {Types::CreateGraphUsingImportTaskOutput#status #status} => String
     #   * {Types::CreateGraphUsingImportTaskOutput#import_options #import_options} => Types::ImportOptions
@@ -813,7 +863,8 @@ module Aws::NeptuneGraph
     #     min_provisioned_memory: 1,
     #     fail_on_error: false,
     #     source: "String", # required
-    #     format: "CSV", # accepts CSV, OPEN_CYPHER, NTRIPLES
+    #     format: "CSV", # accepts CSV, OPEN_CYPHER, PARQUET, NTRIPLES
+    #     parquet_type: "COLUMNAR", # accepts COLUMNAR
     #     blank_node_handling: "convertToIri", # accepts convertToIri
     #     role_arn: "RoleArn", # required
     #   })
@@ -823,9 +874,10 @@ module Aws::NeptuneGraph
     #   resp.graph_id #=> String
     #   resp.task_id #=> String
     #   resp.source #=> String
-    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "NTRIPLES"
+    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "PARQUET", "NTRIPLES"
+    #   resp.parquet_type #=> String, one of "COLUMNAR"
     #   resp.role_arn #=> String
-    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED"
+    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
     #   resp.import_options.neptune.s3_export_path #=> String
     #   resp.import_options.neptune.s3_export_kms_key_id #=> String
     #   resp.import_options.neptune.preserve_default_vertex_labels #=> Boolean
@@ -1110,6 +1162,73 @@ module Aws::NeptuneGraph
       req.send_request(options, &block)
     end
 
+    # Retrieves a specified export task.
+    #
+    # @option params [required, String] :task_identifier
+    #   The unique identifier of the export task.
+    #
+    # @return [Types::GetExportTaskOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetExportTaskOutput#graph_id #graph_id} => String
+    #   * {Types::GetExportTaskOutput#role_arn #role_arn} => String
+    #   * {Types::GetExportTaskOutput#task_id #task_id} => String
+    #   * {Types::GetExportTaskOutput#status #status} => String
+    #   * {Types::GetExportTaskOutput#format #format} => String
+    #   * {Types::GetExportTaskOutput#destination #destination} => String
+    #   * {Types::GetExportTaskOutput#kms_key_identifier #kms_key_identifier} => String
+    #   * {Types::GetExportTaskOutput#parquet_type #parquet_type} => String
+    #   * {Types::GetExportTaskOutput#status_reason #status_reason} => String
+    #   * {Types::GetExportTaskOutput#export_task_details #export_task_details} => Types::ExportTaskDetails
+    #   * {Types::GetExportTaskOutput#export_filter #export_filter} => Types::ExportFilter
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_export_task({
+    #     task_identifier: "ExportTaskId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.graph_id #=> String
+    #   resp.role_arn #=> String
+    #   resp.task_id #=> String
+    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
+    #   resp.format #=> String, one of "PARQUET", "CSV"
+    #   resp.destination #=> String
+    #   resp.kms_key_identifier #=> String
+    #   resp.parquet_type #=> String, one of "COLUMNAR"
+    #   resp.status_reason #=> String
+    #   resp.export_task_details.start_time #=> Time
+    #   resp.export_task_details.time_elapsed_seconds #=> Integer
+    #   resp.export_task_details.progress_percentage #=> Integer
+    #   resp.export_task_details.num_vertices_written #=> Integer
+    #   resp.export_task_details.num_edges_written #=> Integer
+    #   resp.export_filter.vertex_filter #=> Hash
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties #=> Hash
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].output_type #=> String
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].source_property_name #=> String
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].multi_value_handling #=> String, one of "TO_LIST", "PICK_FIRST"
+    #   resp.export_filter.edge_filter #=> Hash
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties #=> Hash
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].output_type #=> String
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].source_property_name #=> String
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].multi_value_handling #=> String, one of "TO_LIST", "PICK_FIRST"
+    #
+    #
+    # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
+    #
+    #   * export_task_cancelled
+    #   * export_task_successful
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/GetExportTask AWS API Documentation
+    #
+    # @overload get_export_task(params = {})
+    # @param [Hash] params ({})
+    def get_export_task(params = {}, options = {})
+      req = build_request(:get_export_task, params)
+      req.send_request(options)
+    end
+
     # Gets information about a specified graph.
     #
     # @option params [required, String] :graph_identifier
@@ -1293,6 +1412,7 @@ module Aws::NeptuneGraph
     #   * {Types::GetImportTaskOutput#task_id #task_id} => String
     #   * {Types::GetImportTaskOutput#source #source} => String
     #   * {Types::GetImportTaskOutput#format #format} => String
+    #   * {Types::GetImportTaskOutput#parquet_type #parquet_type} => String
     #   * {Types::GetImportTaskOutput#role_arn #role_arn} => String
     #   * {Types::GetImportTaskOutput#status #status} => String
     #   * {Types::GetImportTaskOutput#import_options #import_options} => Types::ImportOptions
@@ -1311,9 +1431,10 @@ module Aws::NeptuneGraph
     #   resp.graph_id #=> String
     #   resp.task_id #=> String
     #   resp.source #=> String
-    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "NTRIPLES"
+    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "PARQUET", "NTRIPLES"
+    #   resp.parquet_type #=> String, one of "COLUMNAR"
     #   resp.role_arn #=> String
-    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED"
+    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
     #   resp.import_options.neptune.s3_export_path #=> String
     #   resp.import_options.neptune.s3_export_kms_key_id #=> String
     #   resp.import_options.neptune.preserve_default_vertex_labels #=> Boolean
@@ -1432,6 +1553,51 @@ module Aws::NeptuneGraph
     # @param [Hash] params ({})
     def get_query(params = {}, options = {})
       req = build_request(:get_query, params)
+      req.send_request(options)
+    end
+
+    # Retrieves a list of export tasks.
+    #
+    # @option params [String] :next_token
+    #   Pagination token used to paginate input.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of export tasks to return.
+    #
+    # @return [Types::ListExportTasksOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListExportTasksOutput#tasks #tasks} => Array&lt;Types::ExportTaskSummary&gt;
+    #   * {Types::ListExportTasksOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_export_tasks({
+    #     next_token: "PaginationToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.tasks #=> Array
+    #   resp.tasks[0].graph_id #=> String
+    #   resp.tasks[0].role_arn #=> String
+    #   resp.tasks[0].task_id #=> String
+    #   resp.tasks[0].status #=> String, one of "INITIALIZING", "EXPORTING", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
+    #   resp.tasks[0].format #=> String, one of "PARQUET", "CSV"
+    #   resp.tasks[0].destination #=> String
+    #   resp.tasks[0].kms_key_identifier #=> String
+    #   resp.tasks[0].parquet_type #=> String, one of "COLUMNAR"
+    #   resp.tasks[0].status_reason #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ListExportTasks AWS API Documentation
+    #
+    # @overload list_export_tasks(params = {})
+    # @param [Hash] params ({})
+    def list_export_tasks(params = {}, options = {})
+      req = build_request(:list_export_tasks, params)
       req.send_request(options)
     end
 
@@ -1586,9 +1752,10 @@ module Aws::NeptuneGraph
     #   resp.tasks[0].graph_id #=> String
     #   resp.tasks[0].task_id #=> String
     #   resp.tasks[0].source #=> String
-    #   resp.tasks[0].format #=> String, one of "CSV", "OPEN_CYPHER", "NTRIPLES"
+    #   resp.tasks[0].format #=> String, one of "CSV", "OPEN_CYPHER", "PARQUET", "NTRIPLES"
+    #   resp.tasks[0].parquet_type #=> String, one of "COLUMNAR"
     #   resp.tasks[0].role_arn #=> String
-    #   resp.tasks[0].status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED"
+    #   resp.tasks[0].status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ListImportTasks AWS API Documentation
@@ -1887,6 +2054,116 @@ module Aws::NeptuneGraph
       req.send_request(options)
     end
 
+    # Export data from an existing Neptune Analytics graph to Amazon S3. The
+    # graph state should be `AVAILABLE`.
+    #
+    # @option params [required, String] :graph_identifier
+    #   The source graph identifier of the export task.
+    #
+    # @option params [required, String] :role_arn
+    #   The ARN of the IAM role that will allow data to be exported to the
+    #   destination.
+    #
+    # @option params [required, String] :format
+    #   The format of the export task.
+    #
+    # @option params [required, String] :destination
+    #   The Amazon S3 URI where data will be exported to.
+    #
+    # @option params [required, String] :kms_key_identifier
+    #   The KMS key identifier of the export task.
+    #
+    # @option params [String] :parquet_type
+    #   The parquet type of the export task.
+    #
+    # @option params [Types::ExportFilter] :export_filter
+    #   The export filter of the export task.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   Tags to be applied to the export task.
+    #
+    # @return [Types::StartExportTaskOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartExportTaskOutput#graph_id #graph_id} => String
+    #   * {Types::StartExportTaskOutput#role_arn #role_arn} => String
+    #   * {Types::StartExportTaskOutput#task_id #task_id} => String
+    #   * {Types::StartExportTaskOutput#status #status} => String
+    #   * {Types::StartExportTaskOutput#format #format} => String
+    #   * {Types::StartExportTaskOutput#destination #destination} => String
+    #   * {Types::StartExportTaskOutput#kms_key_identifier #kms_key_identifier} => String
+    #   * {Types::StartExportTaskOutput#parquet_type #parquet_type} => String
+    #   * {Types::StartExportTaskOutput#status_reason #status_reason} => String
+    #   * {Types::StartExportTaskOutput#export_filter #export_filter} => Types::ExportFilter
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_export_task({
+    #     graph_identifier: "GraphIdentifier", # required
+    #     role_arn: "RoleArn", # required
+    #     format: "PARQUET", # required, accepts PARQUET, CSV
+    #     destination: "StartExportTaskInputDestinationString", # required
+    #     kms_key_identifier: "KmsKeyArn", # required
+    #     parquet_type: "COLUMNAR", # accepts COLUMNAR
+    #     export_filter: {
+    #       vertex_filter: {
+    #         "ExportFilterLabel" => {
+    #           properties: {
+    #             "ExportFilterOutputPropertyName" => {
+    #               output_type: "ExportFilterOutputDataType",
+    #               source_property_name: "ExportFilterSourcePropertyName",
+    #               multi_value_handling: "TO_LIST", # accepts TO_LIST, PICK_FIRST
+    #             },
+    #           },
+    #         },
+    #       },
+    #       edge_filter: {
+    #         "ExportFilterLabel" => {
+    #           properties: {
+    #             "ExportFilterOutputPropertyName" => {
+    #               output_type: "ExportFilterOutputDataType",
+    #               source_property_name: "ExportFilterSourcePropertyName",
+    #               multi_value_handling: "TO_LIST", # accepts TO_LIST, PICK_FIRST
+    #             },
+    #           },
+    #         },
+    #       },
+    #     },
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.graph_id #=> String
+    #   resp.role_arn #=> String
+    #   resp.task_id #=> String
+    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
+    #   resp.format #=> String, one of "PARQUET", "CSV"
+    #   resp.destination #=> String
+    #   resp.kms_key_identifier #=> String
+    #   resp.parquet_type #=> String, one of "COLUMNAR"
+    #   resp.status_reason #=> String
+    #   resp.export_filter.vertex_filter #=> Hash
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties #=> Hash
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].output_type #=> String
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].source_property_name #=> String
+    #   resp.export_filter.vertex_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].multi_value_handling #=> String, one of "TO_LIST", "PICK_FIRST"
+    #   resp.export_filter.edge_filter #=> Hash
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties #=> Hash
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].output_type #=> String
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].source_property_name #=> String
+    #   resp.export_filter.edge_filter["ExportFilterLabel"].properties["ExportFilterOutputPropertyName"].multi_value_handling #=> String, one of "TO_LIST", "PICK_FIRST"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/StartExportTask AWS API Documentation
+    #
+    # @overload start_export_task(params = {})
+    # @param [Hash] params ({})
+    def start_export_task(params = {}, options = {})
+      req = build_request(:start_export_task, params)
+      req.send_request(options)
+    end
+
     # Import data into existing Neptune Analytics graph from Amazon Simple
     # Storage Service (S3). The graph needs to be empty and in the AVAILABLE
     # state.
@@ -1908,6 +2185,9 @@ module Aws::NeptuneGraph
     #   Specifies the format of Amazon S3 data to be imported. Valid values
     #   are CSV, which identifies the Gremlin CSV format or OPENCYPHER, which
     #   identies the openCypher load format.
+    #
+    # @option params [String] :parquet_type
+    #   The parquet type of the import task.
     #
     # @option params [String] :blank_node_handling
     #   The method to handle blank nodes in the dataset. Currently, only
@@ -1932,6 +2212,7 @@ module Aws::NeptuneGraph
     #   * {Types::StartImportTaskOutput#task_id #task_id} => String
     #   * {Types::StartImportTaskOutput#source #source} => String
     #   * {Types::StartImportTaskOutput#format #format} => String
+    #   * {Types::StartImportTaskOutput#parquet_type #parquet_type} => String
     #   * {Types::StartImportTaskOutput#role_arn #role_arn} => String
     #   * {Types::StartImportTaskOutput#status #status} => String
     #   * {Types::StartImportTaskOutput#import_options #import_options} => Types::ImportOptions
@@ -1949,7 +2230,8 @@ module Aws::NeptuneGraph
     #     },
     #     fail_on_error: false,
     #     source: "String", # required
-    #     format: "CSV", # accepts CSV, OPEN_CYPHER, NTRIPLES
+    #     format: "CSV", # accepts CSV, OPEN_CYPHER, PARQUET, NTRIPLES
+    #     parquet_type: "COLUMNAR", # accepts COLUMNAR
     #     blank_node_handling: "convertToIri", # accepts convertToIri
     #     graph_identifier: "GraphIdentifier", # required
     #     role_arn: "RoleArn", # required
@@ -1960,9 +2242,10 @@ module Aws::NeptuneGraph
     #   resp.graph_id #=> String
     #   resp.task_id #=> String
     #   resp.source #=> String
-    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "NTRIPLES"
+    #   resp.format #=> String, one of "CSV", "OPEN_CYPHER", "PARQUET", "NTRIPLES"
+    #   resp.parquet_type #=> String, one of "COLUMNAR"
     #   resp.role_arn #=> String
-    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED"
+    #   resp.status #=> String, one of "INITIALIZING", "EXPORTING", "ANALYZING_DATA", "IMPORTING", "REPROVISIONING", "ROLLING_BACK", "SUCCEEDED", "FAILED", "CANCELLING", "CANCELLED", "DELETED"
     #   resp.import_options.neptune.s3_export_path #=> String
     #   resp.import_options.neptune.s3_export_kms_key_id #=> String
     #   resp.import_options.neptune.preserve_default_vertex_labels #=> Boolean
@@ -2138,7 +2421,7 @@ module Aws::NeptuneGraph
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-neptunegraph'
-      context[:gem_version] = '1.24.0'
+      context[:gem_version] = '1.25.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
@@ -2206,6 +2489,8 @@ module Aws::NeptuneGraph
     #
     # | waiter_name                      | params                              | :delay   | :max_attempts |
     # | -------------------------------- | ----------------------------------- | -------- | ------------- |
+    # | export_task_cancelled            | {Client#get_export_task}            | 60       | 60            |
+    # | export_task_successful           | {Client#get_export_task}            | 60       | 480           |
     # | graph_available                  | {Client#get_graph}                  | 60       | 480           |
     # | graph_deleted                    | {Client#get_graph}                  | 60       | 60            |
     # | graph_snapshot_available         | {Client#get_graph_snapshot}         | 60       | 120           |
@@ -2264,6 +2549,8 @@ module Aws::NeptuneGraph
 
     def waiters
       {
+        export_task_cancelled: Waiters::ExportTaskCancelled,
+        export_task_successful: Waiters::ExportTaskSuccessful,
         graph_available: Waiters::GraphAvailable,
         graph_deleted: Waiters::GraphDeleted,
         graph_snapshot_available: Waiters::GraphSnapshotAvailable,

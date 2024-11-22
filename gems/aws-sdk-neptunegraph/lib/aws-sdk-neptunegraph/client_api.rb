@@ -18,6 +18,9 @@ module Aws::NeptuneGraph
     Arn = Shapes::StringShape.new(name: 'Arn')
     BlankNodeHandling = Shapes::StringShape.new(name: 'BlankNodeHandling')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
+    CancelExportTaskInput = Shapes::StructureShape.new(name: 'CancelExportTaskInput')
+    CancelExportTaskOutput = Shapes::StructureShape.new(name: 'CancelExportTaskOutput')
+    CancelExportTaskOutputDestinationString = Shapes::StringShape.new(name: 'CancelExportTaskOutputDestinationString')
     CancelImportTaskInput = Shapes::StructureShape.new(name: 'CancelImportTaskInput')
     CancelImportTaskOutput = Shapes::StructureShape.new(name: 'CancelImportTaskOutput')
     CancelQueryInput = Shapes::StructureShape.new(name: 'CancelQueryInput')
@@ -46,7 +49,26 @@ module Aws::NeptuneGraph
     ExecuteQueryInput = Shapes::StructureShape.new(name: 'ExecuteQueryInput')
     ExecuteQueryOutput = Shapes::StructureShape.new(name: 'ExecuteQueryOutput')
     ExplainMode = Shapes::StringShape.new(name: 'ExplainMode')
+    ExportFilter = Shapes::StructureShape.new(name: 'ExportFilter')
+    ExportFilterElement = Shapes::StructureShape.new(name: 'ExportFilterElement')
+    ExportFilterLabel = Shapes::StringShape.new(name: 'ExportFilterLabel')
+    ExportFilterOutputDataType = Shapes::StringShape.new(name: 'ExportFilterOutputDataType')
+    ExportFilterOutputPropertyName = Shapes::StringShape.new(name: 'ExportFilterOutputPropertyName')
+    ExportFilterPerLabelMap = Shapes::MapShape.new(name: 'ExportFilterPerLabelMap')
+    ExportFilterPropertyAttributes = Shapes::StructureShape.new(name: 'ExportFilterPropertyAttributes')
+    ExportFilterPropertyMap = Shapes::MapShape.new(name: 'ExportFilterPropertyMap')
+    ExportFilterSourcePropertyName = Shapes::StringShape.new(name: 'ExportFilterSourcePropertyName')
+    ExportFormat = Shapes::StringShape.new(name: 'ExportFormat')
+    ExportTaskDetails = Shapes::StructureShape.new(name: 'ExportTaskDetails')
+    ExportTaskId = Shapes::StringShape.new(name: 'ExportTaskId')
+    ExportTaskStatus = Shapes::StringShape.new(name: 'ExportTaskStatus')
+    ExportTaskSummary = Shapes::StructureShape.new(name: 'ExportTaskSummary')
+    ExportTaskSummaryDestinationString = Shapes::StringShape.new(name: 'ExportTaskSummaryDestinationString')
+    ExportTaskSummaryList = Shapes::ListShape.new(name: 'ExportTaskSummaryList')
     Format = Shapes::StringShape.new(name: 'Format')
+    GetExportTaskInput = Shapes::StructureShape.new(name: 'GetExportTaskInput')
+    GetExportTaskOutput = Shapes::StructureShape.new(name: 'GetExportTaskOutput')
+    GetExportTaskOutputDestinationString = Shapes::StringShape.new(name: 'GetExportTaskOutputDestinationString')
     GetGraphInput = Shapes::StructureShape.new(name: 'GetGraphInput')
     GetGraphOutput = Shapes::StructureShape.new(name: 'GetGraphOutput')
     GetGraphSnapshotInput = Shapes::StructureShape.new(name: 'GetGraphSnapshotInput')
@@ -77,6 +99,8 @@ module Aws::NeptuneGraph
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     KmsKeyArn = Shapes::StringShape.new(name: 'KmsKeyArn')
+    ListExportTasksInput = Shapes::StructureShape.new(name: 'ListExportTasksInput')
+    ListExportTasksOutput = Shapes::StructureShape.new(name: 'ListExportTasksOutput')
     ListGraphSnapshotsInput = Shapes::StructureShape.new(name: 'ListGraphSnapshotsInput')
     ListGraphSnapshotsOutput = Shapes::StructureShape.new(name: 'ListGraphSnapshotsOutput')
     ListGraphsInput = Shapes::StructureShape.new(name: 'ListGraphsInput')
@@ -93,6 +117,7 @@ module Aws::NeptuneGraph
     LongValuedMap = Shapes::MapShape.new(name: 'LongValuedMap')
     LongValuedMapList = Shapes::ListShape.new(name: 'LongValuedMapList')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
+    MultiValueHandlingType = Shapes::StringShape.new(name: 'MultiValueHandlingType')
     NeptuneImportOptions = Shapes::StructureShape.new(name: 'NeptuneImportOptions')
     NeptuneImportOptionsS3ExportKmsKeyIdString = Shapes::StringShape.new(name: 'NeptuneImportOptionsS3ExportKmsKeyIdString')
     NeptuneImportOptionsS3ExportPathString = Shapes::StringShape.new(name: 'NeptuneImportOptionsS3ExportPathString')
@@ -102,6 +127,7 @@ module Aws::NeptuneGraph
     NodeStructures = Shapes::ListShape.new(name: 'NodeStructures')
     OutgoingEdgeLabels = Shapes::ListShape.new(name: 'OutgoingEdgeLabels')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
+    ParquetType = Shapes::StringShape.new(name: 'ParquetType')
     PlanCacheType = Shapes::StringShape.new(name: 'PlanCacheType')
     PrivateGraphEndpointStatus = Shapes::StringShape.new(name: 'PrivateGraphEndpointStatus')
     PrivateGraphEndpointSummary = Shapes::StructureShape.new(name: 'PrivateGraphEndpointSummary')
@@ -127,6 +153,10 @@ module Aws::NeptuneGraph
     SnapshotIdentifier = Shapes::StringShape.new(name: 'SnapshotIdentifier')
     SnapshotName = Shapes::StringShape.new(name: 'SnapshotName')
     SnapshotStatus = Shapes::StringShape.new(name: 'SnapshotStatus')
+    StartExportTaskInput = Shapes::StructureShape.new(name: 'StartExportTaskInput')
+    StartExportTaskInputDestinationString = Shapes::StringShape.new(name: 'StartExportTaskInputDestinationString')
+    StartExportTaskOutput = Shapes::StructureShape.new(name: 'StartExportTaskOutput')
+    StartExportTaskOutputDestinationString = Shapes::StringShape.new(name: 'StartExportTaskOutputDestinationString')
     StartImportTaskInput = Shapes::StructureShape.new(name: 'StartImportTaskInput')
     StartImportTaskOutput = Shapes::StructureShape.new(name: 'StartImportTaskOutput')
     String = Shapes::StringShape.new(name: 'String')
@@ -158,6 +188,20 @@ module Aws::NeptuneGraph
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
 
+    CancelExportTaskInput.add_member(:task_identifier, Shapes::ShapeRef.new(shape: ExportTaskId, required: true, location: "uri", location_name: "taskIdentifier"))
+    CancelExportTaskInput.struct_class = Types::CancelExportTaskInput
+
+    CancelExportTaskOutput.add_member(:graph_id, Shapes::ShapeRef.new(shape: GraphId, required: true, location_name: "graphId"))
+    CancelExportTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    CancelExportTaskOutput.add_member(:task_id, Shapes::ShapeRef.new(shape: ExportTaskId, required: true, location_name: "taskId"))
+    CancelExportTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: ExportTaskStatus, required: true, location_name: "status"))
+    CancelExportTaskOutput.add_member(:format, Shapes::ShapeRef.new(shape: ExportFormat, required: true, location_name: "format"))
+    CancelExportTaskOutput.add_member(:destination, Shapes::ShapeRef.new(shape: CancelExportTaskOutputDestinationString, required: true, location_name: "destination"))
+    CancelExportTaskOutput.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyArn, required: true, location_name: "kmsKeyIdentifier"))
+    CancelExportTaskOutput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
+    CancelExportTaskOutput.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    CancelExportTaskOutput.struct_class = Types::CancelExportTaskOutput
+
     CancelImportTaskInput.add_member(:task_identifier, Shapes::ShapeRef.new(shape: TaskId, required: true, location: "uri", location_name: "taskIdentifier"))
     CancelImportTaskInput.struct_class = Types::CancelImportTaskInput
 
@@ -165,6 +209,7 @@ module Aws::NeptuneGraph
     CancelImportTaskOutput.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
     CancelImportTaskOutput.add_member(:source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "source"))
     CancelImportTaskOutput.add_member(:format, Shapes::ShapeRef.new(shape: Format, location_name: "format"))
+    CancelImportTaskOutput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
     CancelImportTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     CancelImportTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: ImportTaskStatus, required: true, location_name: "status"))
     CancelImportTaskOutput.struct_class = Types::CancelImportTaskOutput
@@ -231,6 +276,7 @@ module Aws::NeptuneGraph
     CreateGraphUsingImportTaskInput.add_member(:fail_on_error, Shapes::ShapeRef.new(shape: Boolean, location_name: "failOnError"))
     CreateGraphUsingImportTaskInput.add_member(:source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "source"))
     CreateGraphUsingImportTaskInput.add_member(:format, Shapes::ShapeRef.new(shape: Format, location_name: "format"))
+    CreateGraphUsingImportTaskInput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
     CreateGraphUsingImportTaskInput.add_member(:blank_node_handling, Shapes::ShapeRef.new(shape: BlankNodeHandling, location_name: "blankNodeHandling"))
     CreateGraphUsingImportTaskInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     CreateGraphUsingImportTaskInput.struct_class = Types::CreateGraphUsingImportTaskInput
@@ -239,6 +285,7 @@ module Aws::NeptuneGraph
     CreateGraphUsingImportTaskOutput.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
     CreateGraphUsingImportTaskOutput.add_member(:source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "source"))
     CreateGraphUsingImportTaskOutput.add_member(:format, Shapes::ShapeRef.new(shape: Format, location_name: "format"))
+    CreateGraphUsingImportTaskOutput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
     CreateGraphUsingImportTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     CreateGraphUsingImportTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: ImportTaskStatus, required: true, location_name: "status"))
     CreateGraphUsingImportTaskOutput.add_member(:import_options, Shapes::ShapeRef.new(shape: ImportOptions, location_name: "importOptions"))
@@ -326,6 +373,60 @@ module Aws::NeptuneGraph
     ExecuteQueryOutput[:payload] = :payload
     ExecuteQueryOutput[:payload_member] = ExecuteQueryOutput.member(:payload)
 
+    ExportFilter.add_member(:vertex_filter, Shapes::ShapeRef.new(shape: ExportFilterPerLabelMap, location_name: "vertexFilter"))
+    ExportFilter.add_member(:edge_filter, Shapes::ShapeRef.new(shape: ExportFilterPerLabelMap, location_name: "edgeFilter"))
+    ExportFilter.struct_class = Types::ExportFilter
+
+    ExportFilterElement.add_member(:properties, Shapes::ShapeRef.new(shape: ExportFilterPropertyMap, location_name: "properties"))
+    ExportFilterElement.struct_class = Types::ExportFilterElement
+
+    ExportFilterPerLabelMap.key = Shapes::ShapeRef.new(shape: ExportFilterLabel)
+    ExportFilterPerLabelMap.value = Shapes::ShapeRef.new(shape: ExportFilterElement)
+
+    ExportFilterPropertyAttributes.add_member(:output_type, Shapes::ShapeRef.new(shape: ExportFilterOutputDataType, location_name: "outputType"))
+    ExportFilterPropertyAttributes.add_member(:source_property_name, Shapes::ShapeRef.new(shape: ExportFilterSourcePropertyName, location_name: "sourcePropertyName"))
+    ExportFilterPropertyAttributes.add_member(:multi_value_handling, Shapes::ShapeRef.new(shape: MultiValueHandlingType, location_name: "multiValueHandling"))
+    ExportFilterPropertyAttributes.struct_class = Types::ExportFilterPropertyAttributes
+
+    ExportFilterPropertyMap.key = Shapes::ShapeRef.new(shape: ExportFilterOutputPropertyName)
+    ExportFilterPropertyMap.value = Shapes::ShapeRef.new(shape: ExportFilterPropertyAttributes)
+
+    ExportTaskDetails.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "startTime"))
+    ExportTaskDetails.add_member(:time_elapsed_seconds, Shapes::ShapeRef.new(shape: Long, required: true, location_name: "timeElapsedSeconds"))
+    ExportTaskDetails.add_member(:progress_percentage, Shapes::ShapeRef.new(shape: Integer, required: true, location_name: "progressPercentage"))
+    ExportTaskDetails.add_member(:num_vertices_written, Shapes::ShapeRef.new(shape: Long, location_name: "numVerticesWritten"))
+    ExportTaskDetails.add_member(:num_edges_written, Shapes::ShapeRef.new(shape: Long, location_name: "numEdgesWritten"))
+    ExportTaskDetails.struct_class = Types::ExportTaskDetails
+
+    ExportTaskSummary.add_member(:graph_id, Shapes::ShapeRef.new(shape: GraphId, required: true, location_name: "graphId"))
+    ExportTaskSummary.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    ExportTaskSummary.add_member(:task_id, Shapes::ShapeRef.new(shape: ExportTaskId, required: true, location_name: "taskId"))
+    ExportTaskSummary.add_member(:status, Shapes::ShapeRef.new(shape: ExportTaskStatus, required: true, location_name: "status"))
+    ExportTaskSummary.add_member(:format, Shapes::ShapeRef.new(shape: ExportFormat, required: true, location_name: "format"))
+    ExportTaskSummary.add_member(:destination, Shapes::ShapeRef.new(shape: ExportTaskSummaryDestinationString, required: true, location_name: "destination"))
+    ExportTaskSummary.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyArn, required: true, location_name: "kmsKeyIdentifier"))
+    ExportTaskSummary.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
+    ExportTaskSummary.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    ExportTaskSummary.struct_class = Types::ExportTaskSummary
+
+    ExportTaskSummaryList.member = Shapes::ShapeRef.new(shape: ExportTaskSummary)
+
+    GetExportTaskInput.add_member(:task_identifier, Shapes::ShapeRef.new(shape: ExportTaskId, required: true, location: "uri", location_name: "taskIdentifier"))
+    GetExportTaskInput.struct_class = Types::GetExportTaskInput
+
+    GetExportTaskOutput.add_member(:graph_id, Shapes::ShapeRef.new(shape: GraphId, required: true, location_name: "graphId"))
+    GetExportTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    GetExportTaskOutput.add_member(:task_id, Shapes::ShapeRef.new(shape: ExportTaskId, required: true, location_name: "taskId"))
+    GetExportTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: ExportTaskStatus, required: true, location_name: "status"))
+    GetExportTaskOutput.add_member(:format, Shapes::ShapeRef.new(shape: ExportFormat, required: true, location_name: "format"))
+    GetExportTaskOutput.add_member(:destination, Shapes::ShapeRef.new(shape: GetExportTaskOutputDestinationString, required: true, location_name: "destination"))
+    GetExportTaskOutput.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyArn, required: true, location_name: "kmsKeyIdentifier"))
+    GetExportTaskOutput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
+    GetExportTaskOutput.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    GetExportTaskOutput.add_member(:export_task_details, Shapes::ShapeRef.new(shape: ExportTaskDetails, location_name: "exportTaskDetails"))
+    GetExportTaskOutput.add_member(:export_filter, Shapes::ShapeRef.new(shape: ExportFilter, location_name: "exportFilter"))
+    GetExportTaskOutput.struct_class = Types::GetExportTaskOutput
+
     GetGraphInput.add_member(:graph_identifier, Shapes::ShapeRef.new(shape: GraphIdentifier, required: true, location: "uri", location_name: "graphIdentifier"))
     GetGraphInput.struct_class = Types::GetGraphInput
 
@@ -374,6 +475,7 @@ module Aws::NeptuneGraph
     GetImportTaskOutput.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
     GetImportTaskOutput.add_member(:source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "source"))
     GetImportTaskOutput.add_member(:format, Shapes::ShapeRef.new(shape: Format, location_name: "format"))
+    GetImportTaskOutput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
     GetImportTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     GetImportTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: ImportTaskStatus, required: true, location_name: "status"))
     GetImportTaskOutput.add_member(:import_options, Shapes::ShapeRef.new(shape: ImportOptions, location_name: "importOptions"))
@@ -464,6 +566,7 @@ module Aws::NeptuneGraph
     ImportTaskSummary.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
     ImportTaskSummary.add_member(:source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "source"))
     ImportTaskSummary.add_member(:format, Shapes::ShapeRef.new(shape: Format, location_name: "format"))
+    ImportTaskSummary.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
     ImportTaskSummary.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     ImportTaskSummary.add_member(:status, Shapes::ShapeRef.new(shape: ImportTaskStatus, required: true, location_name: "status"))
     ImportTaskSummary.struct_class = Types::ImportTaskSummary
@@ -472,6 +575,14 @@ module Aws::NeptuneGraph
 
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     InternalServerException.struct_class = Types::InternalServerException
+
+    ListExportTasksInput.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
+    ListExportTasksInput.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListExportTasksInput.struct_class = Types::ListExportTasksInput
+
+    ListExportTasksOutput.add_member(:tasks, Shapes::ShapeRef.new(shape: ExportTaskSummaryList, required: true, location_name: "tasks"))
+    ListExportTasksOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListExportTasksOutput.struct_class = Types::ListExportTasksOutput
 
     ListGraphSnapshotsInput.add_member(:graph_identifier, Shapes::ShapeRef.new(shape: GraphIdentifier, location: "querystring", location_name: "graphIdentifier"))
     ListGraphSnapshotsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
@@ -621,10 +732,33 @@ module Aws::NeptuneGraph
     ServiceQuotaExceededException.add_member(:quota_code, Shapes::ShapeRef.new(shape: String, location_name: "quotaCode"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
 
+    StartExportTaskInput.add_member(:graph_identifier, Shapes::ShapeRef.new(shape: GraphIdentifier, required: true, location_name: "graphIdentifier"))
+    StartExportTaskInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    StartExportTaskInput.add_member(:format, Shapes::ShapeRef.new(shape: ExportFormat, required: true, location_name: "format"))
+    StartExportTaskInput.add_member(:destination, Shapes::ShapeRef.new(shape: StartExportTaskInputDestinationString, required: true, location_name: "destination"))
+    StartExportTaskInput.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyArn, required: true, location_name: "kmsKeyIdentifier"))
+    StartExportTaskInput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
+    StartExportTaskInput.add_member(:export_filter, Shapes::ShapeRef.new(shape: ExportFilter, location_name: "exportFilter"))
+    StartExportTaskInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    StartExportTaskInput.struct_class = Types::StartExportTaskInput
+
+    StartExportTaskOutput.add_member(:graph_id, Shapes::ShapeRef.new(shape: GraphId, required: true, location_name: "graphId"))
+    StartExportTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    StartExportTaskOutput.add_member(:task_id, Shapes::ShapeRef.new(shape: ExportTaskId, required: true, location_name: "taskId"))
+    StartExportTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: ExportTaskStatus, required: true, location_name: "status"))
+    StartExportTaskOutput.add_member(:format, Shapes::ShapeRef.new(shape: ExportFormat, required: true, location_name: "format"))
+    StartExportTaskOutput.add_member(:destination, Shapes::ShapeRef.new(shape: StartExportTaskOutputDestinationString, required: true, location_name: "destination"))
+    StartExportTaskOutput.add_member(:kms_key_identifier, Shapes::ShapeRef.new(shape: KmsKeyArn, required: true, location_name: "kmsKeyIdentifier"))
+    StartExportTaskOutput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
+    StartExportTaskOutput.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    StartExportTaskOutput.add_member(:export_filter, Shapes::ShapeRef.new(shape: ExportFilter, location_name: "exportFilter"))
+    StartExportTaskOutput.struct_class = Types::StartExportTaskOutput
+
     StartImportTaskInput.add_member(:import_options, Shapes::ShapeRef.new(shape: ImportOptions, location_name: "importOptions"))
     StartImportTaskInput.add_member(:fail_on_error, Shapes::ShapeRef.new(shape: Boolean, location_name: "failOnError"))
     StartImportTaskInput.add_member(:source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "source"))
     StartImportTaskInput.add_member(:format, Shapes::ShapeRef.new(shape: Format, location_name: "format"))
+    StartImportTaskInput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
     StartImportTaskInput.add_member(:blank_node_handling, Shapes::ShapeRef.new(shape: BlankNodeHandling, location_name: "blankNodeHandling"))
     StartImportTaskInput.add_member(:graph_identifier, Shapes::ShapeRef.new(shape: GraphIdentifier, required: true, location: "uri", location_name: "graphIdentifier"))
     StartImportTaskInput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
@@ -634,6 +768,7 @@ module Aws::NeptuneGraph
     StartImportTaskOutput.add_member(:task_id, Shapes::ShapeRef.new(shape: TaskId, required: true, location_name: "taskId"))
     StartImportTaskOutput.add_member(:source, Shapes::ShapeRef.new(shape: String, required: true, location_name: "source"))
     StartImportTaskOutput.add_member(:format, Shapes::ShapeRef.new(shape: Format, location_name: "format"))
+    StartImportTaskOutput.add_member(:parquet_type, Shapes::ShapeRef.new(shape: ParquetType, location_name: "parquetType"))
     StartImportTaskOutput.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     StartImportTaskOutput.add_member(:status, Shapes::ShapeRef.new(shape: ImportTaskStatus, required: true, location_name: "status"))
     StartImportTaskOutput.add_member(:import_options, Shapes::ShapeRef.new(shape: ImportOptions, location_name: "importOptions"))
@@ -714,6 +849,19 @@ module Aws::NeptuneGraph
         "signingName" => "neptune-graph",
         "uid" => "neptune-graph-2023-11-29",
       }
+
+      api.add_operation(:cancel_export_task, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CancelExportTask"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/exporttasks/{taskIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: CancelExportTaskInput)
+        o.output = Shapes::ShapeRef.new(shape: CancelExportTaskOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
 
       api.add_operation(:cancel_import_task, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CancelImportTask"
@@ -854,6 +1002,18 @@ module Aws::NeptuneGraph
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:get_export_task, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetExportTask"
+        o.http_method = "GET"
+        o.http_request_uri = "/exporttasks/{taskIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: GetExportTaskInput)
+        o.output = Shapes::ShapeRef.new(shape: GetExportTaskOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:get_graph, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetGraph"
         o.http_method = "GET"
@@ -932,6 +1092,24 @@ module Aws::NeptuneGraph
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:list_export_tasks, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListExportTasks"
+        o.http_method = "GET"
+        o.http_request_uri = "/exporttasks"
+        o.input = Shapes::ShapeRef.new(shape: ListExportTasksInput)
+        o.output = Shapes::ShapeRef.new(shape: ListExportTasksOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
       end)
 
       api.add_operation(:list_graph_snapshots, Seahorse::Model::Operation.new.tap do |o|
@@ -1052,6 +1230,19 @@ module Aws::NeptuneGraph
         o.input = Shapes::ShapeRef.new(shape: RestoreGraphFromSnapshotInput)
         o.output = Shapes::ShapeRef.new(shape: RestoreGraphFromSnapshotOutput)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:start_export_task, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartExportTask"
+        o.http_method = "POST"
+        o.http_request_uri = "/exporttasks"
+        o.input = Shapes::ShapeRef.new(shape: StartExportTaskInput)
+        o.output = Shapes::ShapeRef.new(shape: StartExportTaskOutput)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)

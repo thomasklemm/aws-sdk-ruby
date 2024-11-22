@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.78.0 (2024-11-22)
+------------------
+
+* Feature - This release adds support for starting email contacts in your Amazon Connect instance as an email receiving action.
+
 1.77.0 (2024-11-18)
 ------------------
 

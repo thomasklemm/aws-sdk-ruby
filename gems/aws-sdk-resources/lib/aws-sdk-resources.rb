@@ -40,6 +40,7 @@ module Aws
   autoload :AutoScalingPlans, 'aws-sdk-autoscalingplans'
   autoload :B2bi, 'aws-sdk-b2bi'
   autoload :BCMDataExports, 'aws-sdk-bcmdataexports'
+  autoload :BCMPricingCalculator, 'aws-sdk-bcmpricingcalculator'
   autoload :Backup, 'aws-sdk-backup'
   autoload :BackupGateway, 'aws-sdk-backupgateway'
   autoload :Batch, 'aws-sdk-batch'

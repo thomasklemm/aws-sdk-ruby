@@ -13,6 +13,24 @@ module Aws::NeptuneGraph
       SENSITIVE: []
     end
 
+    class CancelExportTaskInput
+      attr_accessor task_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class CancelExportTaskOutput
+      attr_accessor graph_id: ::String
+      attr_accessor role_arn: ::String
+      attr_accessor task_id: ::String
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
+      attr_accessor format: ("PARQUET" | "CSV")
+      attr_accessor destination: ::String
+      attr_accessor kms_key_identifier: ::String
+      attr_accessor parquet_type: ("COLUMNAR")
+      attr_accessor status_reason: ::String
+      SENSITIVE: []
+    end
+
     class CancelImportTaskInput
       attr_accessor task_identifier: ::String
       SENSITIVE: []
@@ -22,9 +40,10 @@ module Aws::NeptuneGraph
       attr_accessor graph_id: ::String
       attr_accessor task_id: ::String
       attr_accessor source: ::String
-      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+      attr_accessor parquet_type: ("COLUMNAR")
       attr_accessor role_arn: ::String
-      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
       SENSITIVE: []
     end
 
@@ -102,7 +121,8 @@ module Aws::NeptuneGraph
       attr_accessor min_provisioned_memory: ::Integer
       attr_accessor fail_on_error: bool
       attr_accessor source: ::String
-      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+      attr_accessor parquet_type: ("COLUMNAR")
       attr_accessor blank_node_handling: ("convertToIri")
       attr_accessor role_arn: ::String
       SENSITIVE: []
@@ -112,9 +132,10 @@ module Aws::NeptuneGraph
       attr_accessor graph_id: ::String
       attr_accessor task_id: ::String
       attr_accessor source: ::String
-      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+      attr_accessor parquet_type: ("COLUMNAR")
       attr_accessor role_arn: ::String
-      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
       attr_accessor import_options: Types::ImportOptions
       SENSITIVE: []
     end
@@ -212,6 +233,66 @@ module Aws::NeptuneGraph
       SENSITIVE: []
     end
 
+    class ExportFilter
+      attr_accessor vertex_filter: ::Hash[::String, Types::ExportFilterElement]
+      attr_accessor edge_filter: ::Hash[::String, Types::ExportFilterElement]
+      SENSITIVE: []
+    end
+
+    class ExportFilterElement
+      attr_accessor properties: ::Hash[::String, Types::ExportFilterPropertyAttributes]
+      SENSITIVE: []
+    end
+
+    class ExportFilterPropertyAttributes
+      attr_accessor output_type: ::String
+      attr_accessor source_property_name: ::String
+      attr_accessor multi_value_handling: ("TO_LIST" | "PICK_FIRST")
+      SENSITIVE: []
+    end
+
+    class ExportTaskDetails
+      attr_accessor start_time: ::Time
+      attr_accessor time_elapsed_seconds: ::Integer
+      attr_accessor progress_percentage: ::Integer
+      attr_accessor num_vertices_written: ::Integer
+      attr_accessor num_edges_written: ::Integer
+      SENSITIVE: []
+    end
+
+    class ExportTaskSummary
+      attr_accessor graph_id: ::String
+      attr_accessor role_arn: ::String
+      attr_accessor task_id: ::String
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
+      attr_accessor format: ("PARQUET" | "CSV")
+      attr_accessor destination: ::String
+      attr_accessor kms_key_identifier: ::String
+      attr_accessor parquet_type: ("COLUMNAR")
+      attr_accessor status_reason: ::String
+      SENSITIVE: []
+    end
+
+    class GetExportTaskInput
+      attr_accessor task_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetExportTaskOutput
+      attr_accessor graph_id: ::String
+      attr_accessor role_arn: ::String
+      attr_accessor task_id: ::String
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
+      attr_accessor format: ("PARQUET" | "CSV")
+      attr_accessor destination: ::String
+      attr_accessor kms_key_identifier: ::String
+      attr_accessor parquet_type: ("COLUMNAR")
+      attr_accessor status_reason: ::String
+      attr_accessor export_task_details: Types::ExportTaskDetails
+      attr_accessor export_filter: Types::ExportFilter
+      SENSITIVE: []
+    end
+
     class GetGraphInput
       attr_accessor graph_identifier: ::String
       SENSITIVE: []
@@ -274,9 +355,10 @@ module Aws::NeptuneGraph
       attr_accessor graph_id: ::String
       attr_accessor task_id: ::String
       attr_accessor source: ::String
-      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+      attr_accessor parquet_type: ("COLUMNAR")
       attr_accessor role_arn: ::String
-      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
       attr_accessor import_options: Types::ImportOptions
       attr_accessor import_task_details: Types::ImportTaskDetails
       attr_accessor attempt_number: ::Integer
@@ -383,14 +465,27 @@ module Aws::NeptuneGraph
       attr_accessor graph_id: ::String
       attr_accessor task_id: ::String
       attr_accessor source: ::String
-      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+      attr_accessor parquet_type: ("COLUMNAR")
       attr_accessor role_arn: ::String
-      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
       SENSITIVE: []
     end
 
     class InternalServerException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListExportTasksInput
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListExportTasksOutput
+      attr_accessor tasks: ::Array[Types::ExportTaskSummary]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -567,11 +662,38 @@ module Aws::NeptuneGraph
       SENSITIVE: []
     end
 
+    class StartExportTaskInput
+      attr_accessor graph_identifier: ::String
+      attr_accessor role_arn: ::String
+      attr_accessor format: ("PARQUET" | "CSV")
+      attr_accessor destination: ::String
+      attr_accessor kms_key_identifier: ::String
+      attr_accessor parquet_type: ("COLUMNAR")
+      attr_accessor export_filter: Types::ExportFilter
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class StartExportTaskOutput
+      attr_accessor graph_id: ::String
+      attr_accessor role_arn: ::String
+      attr_accessor task_id: ::String
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
+      attr_accessor format: ("PARQUET" | "CSV")
+      attr_accessor destination: ::String
+      attr_accessor kms_key_identifier: ::String
+      attr_accessor parquet_type: ("COLUMNAR")
+      attr_accessor status_reason: ::String
+      attr_accessor export_filter: Types::ExportFilter
+      SENSITIVE: []
+    end
+
     class StartImportTaskInput
       attr_accessor import_options: Types::ImportOptions
       attr_accessor fail_on_error: bool
       attr_accessor source: ::String
-      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+      attr_accessor parquet_type: ("COLUMNAR")
       attr_accessor blank_node_handling: ("convertToIri")
       attr_accessor graph_identifier: ::String
       attr_accessor role_arn: ::String
@@ -582,9 +704,10 @@ module Aws::NeptuneGraph
       attr_accessor graph_id: ::String
       attr_accessor task_id: ::String
       attr_accessor source: ::String
-      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+      attr_accessor format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+      attr_accessor parquet_type: ("COLUMNAR")
       attr_accessor role_arn: ::String
-      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+      attr_accessor status: ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
       attr_accessor import_options: Types::ImportOptions
       SENSITIVE: []
     end

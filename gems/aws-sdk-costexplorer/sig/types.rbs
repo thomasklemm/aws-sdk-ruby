@@ -1189,8 +1189,14 @@ module Aws::CostExplorer
       attr_accessor service: ::String
       attr_accessor region: ::String
       attr_accessor linked_account: ::String
-      attr_accessor usage_type: ::String
       attr_accessor linked_account_name: ::String
+      attr_accessor usage_type: ::String
+      attr_accessor impact: Types::RootCauseImpact
+      SENSITIVE: []
+    end
+
+    class RootCauseImpact
+      attr_accessor contribution: ::Float
       SENSITIVE: []
     end
 

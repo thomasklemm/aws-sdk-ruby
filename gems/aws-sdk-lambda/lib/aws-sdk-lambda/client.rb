@@ -1157,6 +1157,15 @@ module Aws::Lambda
     #
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
     #
+    # @option params [Types::ProvisionedPollerConfig] :provisioned_poller_config
+    #   (Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode
+    #   configuration for the event source. For more information, see
+    #   [Provisioned Mode][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode
+    #
     # @return [Types::EventSourceMappingConfiguration] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::EventSourceMappingConfiguration#uuid #uuid} => String
@@ -1190,6 +1199,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
     #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
+    #   * {Types::EventSourceMappingConfiguration#provisioned_poller_config #provisioned_poller_config} => Types::ProvisionedPollerConfig
     #
     #
     # @example Example: To create a mapping between an event source and an AWS Lambda function
@@ -1278,6 +1288,10 @@ module Aws::Lambda
     #     metrics_config: {
     #       metrics: ["EventCount"], # accepts EventCount
     #     },
+    #     provisioned_poller_config: {
+    #       minimum_pollers: 1,
+    #       maximum_pollers: 1,
+    #     },
     #   })
     #
     # @example Response structure
@@ -1326,6 +1340,8 @@ module Aws::Lambda
     #   resp.event_source_mapping_arn #=> String
     #   resp.metrics_config.metrics #=> Array
     #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
+    #   resp.provisioned_poller_config.minimum_pollers #=> Integer
+    #   resp.provisioned_poller_config.maximum_pollers #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/CreateEventSourceMapping AWS API Documentation
     #
@@ -2086,6 +2102,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
     #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
+    #   * {Types::EventSourceMappingConfiguration#provisioned_poller_config #provisioned_poller_config} => Types::ProvisionedPollerConfig
     #
     #
     # @example Example: To delete a Lambda function event source mapping
@@ -2159,6 +2176,8 @@ module Aws::Lambda
     #   resp.event_source_mapping_arn #=> String
     #   resp.metrics_config.metrics #=> Array
     #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
+    #   resp.provisioned_poller_config.minimum_pollers #=> Integer
+    #   resp.provisioned_poller_config.maximum_pollers #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/DeleteEventSourceMapping AWS API Documentation
     #
@@ -2696,6 +2715,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
     #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
+    #   * {Types::EventSourceMappingConfiguration#provisioned_poller_config #provisioned_poller_config} => Types::ProvisionedPollerConfig
     #
     #
     # @example Example: To get a Lambda function's event source mapping
@@ -2776,6 +2796,8 @@ module Aws::Lambda
     #   resp.event_source_mapping_arn #=> String
     #   resp.metrics_config.metrics #=> Array
     #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
+    #   resp.provisioned_poller_config.minimum_pollers #=> Integer
+    #   resp.provisioned_poller_config.maximum_pollers #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/GetEventSourceMapping AWS API Documentation
     #
@@ -4622,6 +4644,8 @@ module Aws::Lambda
     #   resp.event_source_mappings[0].event_source_mapping_arn #=> String
     #   resp.event_source_mappings[0].metrics_config.metrics #=> Array
     #   resp.event_source_mappings[0].metrics_config.metrics[0] #=> String, one of "EventCount"
+    #   resp.event_source_mappings[0].provisioned_poller_config.minimum_pollers #=> Integer
+    #   resp.event_source_mappings[0].provisioned_poller_config.maximum_pollers #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/ListEventSourceMappings AWS API Documentation
     #
@@ -7060,6 +7084,15 @@ module Aws::Lambda
     #
     #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/monitoring-metrics-types.html#event-source-mapping-metrics
     #
+    # @option params [Types::ProvisionedPollerConfig] :provisioned_poller_config
+    #   (Amazon MSK and self-managed Apache Kafka only) The Provisioned Mode
+    #   configuration for the event source. For more information, see
+    #   [Provisioned Mode][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#invocation-eventsourcemapping-provisioned-mode
+    #
     # @return [Types::EventSourceMappingConfiguration] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::EventSourceMappingConfiguration#uuid #uuid} => String
@@ -7093,6 +7126,7 @@ module Aws::Lambda
     #   * {Types::EventSourceMappingConfiguration#filter_criteria_error #filter_criteria_error} => Types::FilterCriteriaError
     #   * {Types::EventSourceMappingConfiguration#event_source_mapping_arn #event_source_mapping_arn} => String
     #   * {Types::EventSourceMappingConfiguration#metrics_config #metrics_config} => Types::EventSourceMappingMetricsConfig
+    #   * {Types::EventSourceMappingConfiguration#provisioned_poller_config #provisioned_poller_config} => Types::ProvisionedPollerConfig
     #
     #
     # @example Example: To update a Lambda function event source mapping
@@ -7165,6 +7199,10 @@ module Aws::Lambda
     #     metrics_config: {
     #       metrics: ["EventCount"], # accepts EventCount
     #     },
+    #     provisioned_poller_config: {
+    #       minimum_pollers: 1,
+    #       maximum_pollers: 1,
+    #     },
     #   })
     #
     # @example Response structure
@@ -7213,6 +7251,8 @@ module Aws::Lambda
     #   resp.event_source_mapping_arn #=> String
     #   resp.metrics_config.metrics #=> Array
     #   resp.metrics_config.metrics[0] #=> String, one of "EventCount"
+    #   resp.provisioned_poller_config.minimum_pollers #=> Integer
+    #   resp.provisioned_poller_config.maximum_pollers #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lambda-2015-03-31/UpdateEventSourceMapping AWS API Documentation
     #
@@ -8136,7 +8176,7 @@ module Aws::Lambda
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-lambda'
-      context[:gem_version] = '1.143.0'
+      context[:gem_version] = '1.144.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

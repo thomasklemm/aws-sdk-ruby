@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.16.0 (2024-11-22)
+------------------
+
+* Feature - Added new "DeliverToQBusiness" rule action to MailManager RulesSet for ingesting email data into Amazon Q Business customer applications
+
 1.15.0 (2024-11-06)
 ------------------
 

@@ -4227,6 +4227,18 @@ module Aws::SageMaker
     #   when the cluster instance group is created or updated.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] override_vpc_config
+    #   Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker
+    #   jobs, hosted models, and compute resources have access to. You can
+    #   control access to and from your resources by configuring a VPC. For
+    #   more information, see [Give SageMaker Access to Resources in your
+    #   Amazon VPC][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html
+    #   @return [Types::VpcConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterInstanceGroupDetails AWS API Documentation
     #
     class ClusterInstanceGroupDetails < Struct.new(
@@ -4238,7 +4250,8 @@ module Aws::SageMaker
       :execution_role,
       :threads_per_core,
       :instance_storage_configs,
-      :on_start_deep_health_checks)
+      :on_start_deep_health_checks,
+      :override_vpc_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4290,6 +4303,18 @@ module Aws::SageMaker
     #   when the cluster instance group is created or updated.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] override_vpc_config
+    #   Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker
+    #   jobs, hosted models, and compute resources have access to. You can
+    #   control access to and from your resources by configuring a VPC. For
+    #   more information, see [Give SageMaker Access to Resources in your
+    #   Amazon VPC][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html
+    #   @return [Types::VpcConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterInstanceGroupSpecification AWS API Documentation
     #
     class ClusterInstanceGroupSpecification < Struct.new(
@@ -4300,7 +4325,8 @@ module Aws::SageMaker
       :execution_role,
       :threads_per_core,
       :instance_storage_configs,
-      :on_start_deep_health_checks)
+      :on_start_deep_health_checks,
+      :override_vpc_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4437,6 +4463,18 @@ module Aws::SageMaker
     #   The LifeCycle configuration applied to the instance.
     #   @return [Types::ClusterLifeCycleConfig]
     #
+    # @!attribute [rw] override_vpc_config
+    #   Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker
+    #   jobs, hosted models, and compute resources have access to. You can
+    #   control access to and from your resources by configuring a VPC. For
+    #   more information, see [Give SageMaker Access to Resources in your
+    #   Amazon VPC][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/sagemaker/latest/dg/infrastructure-give-access.html
+    #   @return [Types::VpcConfig]
+    #
     # @!attribute [rw] threads_per_core
     #   The number of threads per CPU core you specified under
     #   `CreateCluster`.
@@ -4469,6 +4507,7 @@ module Aws::SageMaker
       :instance_type,
       :launch_time,
       :life_cycle_config,
+      :override_vpc_config,
       :threads_per_core,
       :instance_storage_configs,
       :private_primary_ip,
@@ -24194,9 +24233,9 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
-    # Defines the compute resources to allocate to run a model that you
-    # assign to an inference component. These resources include CPU cores,
-    # accelerators, and memory.
+    # Defines the compute resources to allocate to run a model, plus any
+    # adapter models, that you assign to an inference component. These
+    # resources include CPU cores, accelerators, and memory.
     #
     # @!attribute [rw] number_of_cpu_cores_required
     #   The number of CPU cores to allocate to run a model that you assign
@@ -24355,9 +24394,36 @@ module Aws::SageMaker
     #   @return [Types::InferenceComponentStartupParameters]
     #
     # @!attribute [rw] compute_resource_requirements
-    #   The compute resources allocated to run the model assigned to the
-    #   inference component.
+    #   The compute resources allocated to run the model, plus any adapter
+    #   models, that you assign to the inference component.
+    #
+    #   Omit this parameter if your request is meant to create an adapter
+    #   inference component. An adapter inference component is loaded by a
+    #   base inference component, and it uses the compute resources of the
+    #   base inference component.
     #   @return [Types::InferenceComponentComputeResourceRequirements]
+    #
+    # @!attribute [rw] base_inference_component_name
+    #   The name of an existing inference component that is to contain the
+    #   inference component that you're creating with your request.
+    #
+    #   Specify this parameter only if your request is meant to create an
+    #   adapter inference component. An adapter inference component contains
+    #   the path to an adapter model. The purpose of the adapter model is to
+    #   tailor the inference output of a base foundation model, which is
+    #   hosted by the base inference component. The adapter inference
+    #   component uses the compute resources that you assigned to the base
+    #   inference component.
+    #
+    #   When you create an adapter inference component, use the `Container`
+    #   parameter to specify the location of the adapter artifacts. In the
+    #   parameter value, use the `ArtifactUrl` parameter of the
+    #   `InferenceComponentContainerSpecification` data type.
+    #
+    #   Before you can create an adapter inference component, you must have
+    #   an existing inference component that contains the foundation model
+    #   that you want to adapt.
+    #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/InferenceComponentSpecification AWS API Documentation
     #
@@ -24365,7 +24431,8 @@ module Aws::SageMaker
       :model_name,
       :container,
       :startup_parameters,
-      :compute_resource_requirements)
+      :compute_resource_requirements,
+      :base_inference_component_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -24388,9 +24455,14 @@ module Aws::SageMaker
     #   @return [Types::InferenceComponentStartupParameters]
     #
     # @!attribute [rw] compute_resource_requirements
-    #   The compute resources allocated to run the model assigned to the
-    #   inference component.
+    #   The compute resources allocated to run the model, plus any adapter
+    #   models, that you assign to the inference component.
     #   @return [Types::InferenceComponentComputeResourceRequirements]
+    #
+    # @!attribute [rw] base_inference_component_name
+    #   The name of the base inference component that contains this
+    #   inference component.
+    #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/InferenceComponentSpecificationSummary AWS API Documentation
     #
@@ -24398,7 +24470,8 @@ module Aws::SageMaker
       :model_name,
       :container,
       :startup_parameters,
-      :compute_resource_requirements)
+      :compute_resource_requirements,
+      :base_inference_component_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -33836,6 +33909,28 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Settings for the model sharding technique that's applied by a model
+    # optimization job.
+    #
+    # @!attribute [rw] image
+    #   The URI of an LMI DLC in Amazon ECR. SageMaker uses this image to
+    #   run the optimization.
+    #   @return [String]
+    #
+    # @!attribute [rw] override_environment
+    #   Environment variables that override the default ones in the model
+    #   container.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ModelShardingConfig AWS API Documentation
+    #
+    class ModelShardingConfig < Struct.new(
+      :image,
+      :override_environment)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Metadata for Model steps.
     #
     # @!attribute [rw] arn
@@ -35415,11 +35510,17 @@ module Aws::SageMaker
     #   model optimization job.
     #   @return [Types::ModelCompilationConfig]
     #
+    # @!attribute [rw] model_sharding_config
+    #   Settings for the model sharding technique that's applied by a model
+    #   optimization job.
+    #   @return [Types::ModelShardingConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/OptimizationConfig AWS API Documentation
     #
     class OptimizationConfig < Struct.new(
       :model_quantization_config,
       :model_compilation_config,
+      :model_sharding_config,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -35427,6 +35528,7 @@ module Aws::SageMaker
 
       class ModelQuantizationConfig < OptimizationConfig; end
       class ModelCompilationConfig < OptimizationConfig; end
+      class ModelShardingConfig < OptimizationConfig; end
       class Unknown < OptimizationConfig; end
     end
 

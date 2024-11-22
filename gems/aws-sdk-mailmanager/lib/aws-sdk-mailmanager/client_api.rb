@@ -81,6 +81,7 @@ module Aws::MailManager
     DeleteTrafficPolicyRequest = Shapes::StructureShape.new(name: 'DeleteTrafficPolicyRequest')
     DeleteTrafficPolicyResponse = Shapes::StructureShape.new(name: 'DeleteTrafficPolicyResponse')
     DeliverToMailboxAction = Shapes::StructureShape.new(name: 'DeliverToMailboxAction')
+    DeliverToQBusinessAction = Shapes::StructureShape.new(name: 'DeliverToQBusinessAction')
     Double = Shapes::FloatShape.new(name: 'Double')
     DropAction = Shapes::StructureShape.new(name: 'DropAction')
     EmailAddress = Shapes::StringShape.new(name: 'EmailAddress')
@@ -190,6 +191,8 @@ module Aws::MailManager
     PolicyConditions = Shapes::ListShape.new(name: 'PolicyConditions')
     PolicyStatement = Shapes::StructureShape.new(name: 'PolicyStatement')
     PolicyStatementList = Shapes::ListShape.new(name: 'PolicyStatementList')
+    QBusinessApplicationId = Shapes::StringShape.new(name: 'QBusinessApplicationId')
+    QBusinessIndexId = Shapes::StringShape.new(name: 'QBusinessIndexId')
     Recipients = Shapes::ListShape.new(name: 'Recipients')
     Relay = Shapes::StructureShape.new(name: 'Relay')
     RelayAction = Shapes::StructureShape.new(name: 'RelayAction')
@@ -498,6 +501,12 @@ module Aws::MailManager
     DeliverToMailboxAction.add_member(:mailbox_arn, Shapes::ShapeRef.new(shape: NameOrArn, required: true, location_name: "MailboxArn"))
     DeliverToMailboxAction.add_member(:role_arn, Shapes::ShapeRef.new(shape: IamRoleArn, required: true, location_name: "RoleArn"))
     DeliverToMailboxAction.struct_class = Types::DeliverToMailboxAction
+
+    DeliverToQBusinessAction.add_member(:action_failure_policy, Shapes::ShapeRef.new(shape: ActionFailurePolicy, location_name: "ActionFailurePolicy"))
+    DeliverToQBusinessAction.add_member(:application_id, Shapes::ShapeRef.new(shape: QBusinessApplicationId, required: true, location_name: "ApplicationId"))
+    DeliverToQBusinessAction.add_member(:index_id, Shapes::ShapeRef.new(shape: QBusinessIndexId, required: true, location_name: "IndexId"))
+    DeliverToQBusinessAction.add_member(:role_arn, Shapes::ShapeRef.new(shape: IamRoleArn, required: true, location_name: "RoleArn"))
+    DeliverToQBusinessAction.struct_class = Types::DeliverToQBusinessAction
 
     DropAction.struct_class = Types::DropAction
 
@@ -903,6 +912,7 @@ module Aws::MailManager
     RuleAction.add_member(:add_header, Shapes::ShapeRef.new(shape: AddHeaderAction, location_name: "AddHeader"))
     RuleAction.add_member(:archive, Shapes::ShapeRef.new(shape: ArchiveAction, location_name: "Archive"))
     RuleAction.add_member(:deliver_to_mailbox, Shapes::ShapeRef.new(shape: DeliverToMailboxAction, location_name: "DeliverToMailbox"))
+    RuleAction.add_member(:deliver_to_q_business, Shapes::ShapeRef.new(shape: DeliverToQBusinessAction, location_name: "DeliverToQBusiness"))
     RuleAction.add_member(:drop, Shapes::ShapeRef.new(shape: DropAction, location_name: "Drop"))
     RuleAction.add_member(:relay, Shapes::ShapeRef.new(shape: RelayAction, location_name: "Relay"))
     RuleAction.add_member(:replace_recipient, Shapes::ShapeRef.new(shape: ReplaceRecipientAction, location_name: "ReplaceRecipient"))
@@ -912,6 +922,7 @@ module Aws::MailManager
     RuleAction.add_member_subclass(:add_header, Types::RuleAction::AddHeader)
     RuleAction.add_member_subclass(:archive, Types::RuleAction::Archive)
     RuleAction.add_member_subclass(:deliver_to_mailbox, Types::RuleAction::DeliverToMailbox)
+    RuleAction.add_member_subclass(:deliver_to_q_business, Types::RuleAction::DeliverToQBusiness)
     RuleAction.add_member_subclass(:drop, Types::RuleAction::Drop)
     RuleAction.add_member_subclass(:relay, Types::RuleAction::Relay)
     RuleAction.add_member_subclass(:replace_recipient, Types::RuleAction::ReplaceRecipient)

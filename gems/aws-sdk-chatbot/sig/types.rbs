@@ -14,6 +14,20 @@ module Aws::Chatbot
       SENSITIVE: []
     end
 
+    class AssociateToConfigurationRequest
+      attr_accessor resource: ::String
+      attr_accessor chat_configuration: ::String
+      SENSITIVE: []
+    end
+
+    class AssociateToConfigurationResult < Aws::EmptyStructure
+    end
+
+    class AssociationListing
+      attr_accessor resource: ::String
+      SENSITIVE: []
+    end
+
     class ChimeWebhookConfiguration
       attr_accessor webhook_description: ::String
       attr_accessor chat_configuration_arn: ::String
@@ -59,6 +73,21 @@ module Aws::Chatbot
 
     class CreateChimeWebhookConfigurationResult
       attr_accessor webhook_configuration: Types::ChimeWebhookConfiguration
+      SENSITIVE: []
+    end
+
+    class CreateCustomActionRequest
+      attr_accessor definition: Types::CustomActionDefinition
+      attr_accessor alias_name: ::String
+      attr_accessor attachments: ::Array[Types::CustomActionAttachment]
+      attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor client_token: ::String
+      attr_accessor action_name: ::String
+      SENSITIVE: []
+    end
+
+    class CreateCustomActionResult
+      attr_accessor custom_action_arn: ::String
       SENSITIVE: []
     end
 
@@ -112,6 +141,35 @@ module Aws::Chatbot
       SENSITIVE: []
     end
 
+    class CustomAction
+      attr_accessor custom_action_arn: ::String
+      attr_accessor definition: Types::CustomActionDefinition
+      attr_accessor alias_name: ::String
+      attr_accessor attachments: ::Array[Types::CustomActionAttachment]
+      attr_accessor action_name: ::String
+      SENSITIVE: []
+    end
+
+    class CustomActionAttachment
+      attr_accessor notification_type: ::String
+      attr_accessor button_text: ::String
+      attr_accessor criteria: ::Array[Types::CustomActionAttachmentCriteria]
+      attr_accessor variables: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CustomActionAttachmentCriteria
+      attr_accessor operator: ("HAS_VALUE" | "EQUALS")
+      attr_accessor variable_name: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class CustomActionDefinition
+      attr_accessor command_text: ::String
+      SENSITIVE: []
+    end
+
     class DeleteChimeWebhookConfigurationException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -123,6 +181,14 @@ module Aws::Chatbot
     end
 
     class DeleteChimeWebhookConfigurationResult < Aws::EmptyStructure
+    end
+
+    class DeleteCustomActionRequest
+      attr_accessor custom_action_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteCustomActionResult < Aws::EmptyStructure
     end
 
     class DeleteMicrosoftTeamsUserIdentityException
@@ -277,6 +343,15 @@ module Aws::Chatbot
       SENSITIVE: []
     end
 
+    class DisassociateFromConfigurationRequest
+      attr_accessor resource: ::String
+      attr_accessor chat_configuration: ::String
+      SENSITIVE: []
+    end
+
+    class DisassociateFromConfigurationResult < Aws::EmptyStructure
+    end
+
     class GetAccountPreferencesException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -287,6 +362,16 @@ module Aws::Chatbot
 
     class GetAccountPreferencesResult
       attr_accessor account_preferences: Types::AccountPreferences
+      SENSITIVE: []
+    end
+
+    class GetCustomActionRequest
+      attr_accessor custom_action_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetCustomActionResult
+      attr_accessor custom_action: Types::CustomAction
       SENSITIVE: []
     end
 
@@ -322,6 +407,31 @@ module Aws::Chatbot
 
     class LimitExceededException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListAssociationsRequest
+      attr_accessor chat_configuration: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAssociationsResult
+      attr_accessor associations: ::Array[Types::AssociationListing]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListCustomActionsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListCustomActionsResult
+      attr_accessor custom_actions: ::Array[::String]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -483,6 +593,11 @@ module Aws::Chatbot
       SENSITIVE: []
     end
 
+    class UnauthorizedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
     class UntagResourceRequest
       attr_accessor resource_arn: ::String
       attr_accessor tag_keys: ::Array[::String]
@@ -525,6 +640,19 @@ module Aws::Chatbot
 
     class UpdateChimeWebhookConfigurationResult
       attr_accessor webhook_configuration: Types::ChimeWebhookConfiguration
+      SENSITIVE: []
+    end
+
+    class UpdateCustomActionRequest
+      attr_accessor custom_action_arn: ::String
+      attr_accessor definition: Types::CustomActionDefinition
+      attr_accessor alias_name: ::String
+      attr_accessor attachments: ::Array[Types::CustomActionAttachment]
+      SENSITIVE: []
+    end
+
+    class UpdateCustomActionResult
+      attr_accessor custom_action_arn: ::String
       SENSITIVE: []
     end
 

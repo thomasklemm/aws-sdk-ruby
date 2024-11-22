@@ -75,6 +75,16 @@ module Aws
                   | (?Hash[Symbol, untyped]) -> instance
 
 
+      interface _AssociateToConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::AssociateToConfigurationResult]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#associate_to_configuration-instance_method
+      def associate_to_configuration: (
+                                        resource: ::String,
+                                        chat_configuration: ::String
+                                      ) -> _AssociateToConfigurationResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateToConfigurationResponseSuccess
+
       interface _CreateChimeWebhookConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateChimeWebhookConfigurationResult]
         def webhook_configuration: () -> Types::ChimeWebhookConfiguration
@@ -95,6 +105,41 @@ module Aws
                                                 ]
                                               ) -> _CreateChimeWebhookConfigurationResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateChimeWebhookConfigurationResponseSuccess
+
+      interface _CreateCustomActionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateCustomActionResult]
+        def custom_action_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#create_custom_action-instance_method
+      def create_custom_action: (
+                                  definition: {
+                                    command_text: ::String
+                                  },
+                                  ?alias_name: ::String,
+                                  ?attachments: Array[
+                                    {
+                                      notification_type: ::String?,
+                                      button_text: ::String?,
+                                      criteria: Array[
+                                        {
+                                          operator: ("HAS_VALUE" | "EQUALS"),
+                                          variable_name: ::String,
+                                          value: ::String?
+                                        },
+                                      ]?,
+                                      variables: Hash[::String, ::String]?
+                                    },
+                                  ],
+                                  ?tags: Array[
+                                    {
+                                      tag_key: ::String,
+                                      tag_value: ::String
+                                    },
+                                  ],
+                                  ?client_token: ::String,
+                                  action_name: ::String
+                                ) -> _CreateCustomActionResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCustomActionResponseSuccess
 
       interface _CreateMicrosoftTeamsChannelConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateTeamsChannelConfigurationResult]
@@ -154,6 +199,15 @@ module Aws
                                                 chat_configuration_arn: ::String
                                               ) -> _DeleteChimeWebhookConfigurationResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteChimeWebhookConfigurationResponseSuccess
+
+      interface _DeleteCustomActionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteCustomActionResult]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#delete_custom_action-instance_method
+      def delete_custom_action: (
+                                  custom_action_arn: ::String
+                                ) -> _DeleteCustomActionResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteCustomActionResponseSuccess
 
       interface _DeleteMicrosoftTeamsChannelConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteTeamsChannelConfigurationResult]
@@ -263,6 +317,16 @@ module Aws
                                      ) -> _DescribeSlackWorkspacesResponseSuccess
                                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeSlackWorkspacesResponseSuccess
 
+      interface _DisassociateFromConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DisassociateFromConfigurationResult]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#disassociate_from_configuration-instance_method
+      def disassociate_from_configuration: (
+                                             resource: ::String,
+                                             chat_configuration: ::String
+                                           ) -> _DisassociateFromConfigurationResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateFromConfigurationResponseSuccess
+
       interface _GetAccountPreferencesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetAccountPreferencesResult]
         def account_preferences: () -> Types::AccountPreferences
@@ -271,6 +335,16 @@ module Aws
       def get_account_preferences: (
                                    ) -> _GetAccountPreferencesResponseSuccess
                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAccountPreferencesResponseSuccess
+
+      interface _GetCustomActionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCustomActionResult]
+        def custom_action: () -> Types::CustomAction
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#get_custom_action-instance_method
+      def get_custom_action: (
+                               custom_action_arn: ::String
+                             ) -> _GetCustomActionResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCustomActionResponseSuccess
 
       interface _GetMicrosoftTeamsChannelConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetTeamsChannelConfigurationResult]
@@ -281,6 +355,31 @@ module Aws
                                                        chat_configuration_arn: ::String
                                                      ) -> _GetMicrosoftTeamsChannelConfigurationResponseSuccess
                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMicrosoftTeamsChannelConfigurationResponseSuccess
+
+      interface _ListAssociationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAssociationsResult]
+        def associations: () -> ::Array[Types::AssociationListing]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#list_associations-instance_method
+      def list_associations: (
+                               chat_configuration: ::String,
+                               ?max_results: ::Integer,
+                               ?next_token: ::String
+                             ) -> _ListAssociationsResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAssociationsResponseSuccess
+
+      interface _ListCustomActionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCustomActionsResult]
+        def custom_actions: () -> ::Array[::String]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#list_custom_actions-instance_method
+      def list_custom_actions: (
+                                 ?max_results: ::Integer,
+                                 ?next_token: ::String
+                               ) -> _ListCustomActionsResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCustomActionsResponseSuccess
 
       interface _ListMicrosoftTeamsChannelConfigurationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListTeamsChannelConfigurationsResult]
@@ -380,6 +479,34 @@ module Aws
                                                 ?logging_level: ::String
                                               ) -> _UpdateChimeWebhookConfigurationResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateChimeWebhookConfigurationResponseSuccess
+
+      interface _UpdateCustomActionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateCustomActionResult]
+        def custom_action_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Chatbot/Client.html#update_custom_action-instance_method
+      def update_custom_action: (
+                                  custom_action_arn: ::String,
+                                  definition: {
+                                    command_text: ::String
+                                  },
+                                  ?alias_name: ::String,
+                                  ?attachments: Array[
+                                    {
+                                      notification_type: ::String?,
+                                      button_text: ::String?,
+                                      criteria: Array[
+                                        {
+                                          operator: ("HAS_VALUE" | "EQUALS"),
+                                          variable_name: ::String,
+                                          value: ::String?
+                                        },
+                                      ]?,
+                                      variables: Hash[::String, ::String]?
+                                    },
+                                  ]
+                                ) -> _UpdateCustomActionResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCustomActionResponseSuccess
 
       interface _UpdateMicrosoftTeamsChannelConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateTeamsChannelConfigurationResult]

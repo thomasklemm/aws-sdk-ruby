@@ -272,6 +272,7 @@ module Aws
         def revision_id: () -> ::String
         def description: () -> ::String
         def encryption_configuration: () -> Types::EncryptionConfiguration
+        def variable_references: () -> ::Hash[::String, ::Array[::String]]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/States/Client.html#describe_state_machine-instance_method
       def describe_state_machine: (
@@ -308,6 +309,7 @@ module Aws
         def label: () -> ::String
         def revision_id: () -> ::String
         def encryption_configuration: () -> Types::EncryptionConfiguration
+        def variable_references: () -> ::Hash[::String, ::Array[::String]]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/States/Client.html#describe_state_machine_for_execution-instance_method
       def describe_state_machine_for_execution: (
@@ -564,10 +566,11 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/States/Client.html#test_state-instance_method
       def test_state: (
                         definition: ::String,
-                        role_arn: ::String,
+                        ?role_arn: ::String,
                         ?input: ::String,
                         ?inspection_level: ("INFO" | "DEBUG" | "TRACE"),
-                        ?reveal_secrets: bool
+                        ?reveal_secrets: bool,
+                        ?variables: ::String
                       ) -> _TestStateResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TestStateResponseSuccess
 

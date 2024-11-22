@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.126.0 (2024-11-22)
+------------------
+
+* Feature - While integrating WSP-DCV rebrand, a few mentions were erroneously renamed from WSP to DCV. This release reverts those mentions back to WSP.
+
 1.125.0 (2024-11-20)
 ------------------
 

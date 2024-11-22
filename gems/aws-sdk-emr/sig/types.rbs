@@ -1012,6 +1012,8 @@ module Aws::EMR
 
     class ManagedScalingPolicy
       attr_accessor compute_limits: Types::ComputeLimits
+      attr_accessor utilization_performance_index: ::Integer
+      attr_accessor scaling_strategy: ("DEFAULT" | "ADVANCED")
       SENSITIVE: []
     end
 

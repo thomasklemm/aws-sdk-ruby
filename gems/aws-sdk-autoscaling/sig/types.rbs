@@ -350,6 +350,7 @@ module Aws::AutoScaling
       attr_accessor dimensions: ::Array[Types::MetricDimension]
       attr_accessor statistic: ("Average" | "Minimum" | "Maximum" | "SampleCount" | "Sum")
       attr_accessor unit: ::String
+      attr_accessor period: ::Integer
       attr_accessor metrics: ::Array[Types::TargetTrackingMetricDataQuery]
       SENSITIVE: []
     end
@@ -1378,6 +1379,7 @@ module Aws::AutoScaling
       attr_accessor expression: ::String
       attr_accessor metric_stat: Types::TargetTrackingMetricStat
       attr_accessor label: ::String
+      attr_accessor period: ::Integer
       attr_accessor return_data: bool
       SENSITIVE: []
     end
@@ -1386,6 +1388,7 @@ module Aws::AutoScaling
       attr_accessor metric: Types::Metric
       attr_accessor stat: ::String
       attr_accessor unit: ::String
+      attr_accessor period: ::Integer
       SENSITIVE: []
     end
 

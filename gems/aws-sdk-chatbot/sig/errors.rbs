@@ -92,6 +92,9 @@ module Aws
       class TooManyTagsException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class UnauthorizedException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class UpdateAccountPreferencesException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end

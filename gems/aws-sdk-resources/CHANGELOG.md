@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.216.0 (2024-11-22)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-bcmpricingcalculator` gem.
+
 3.215.0 (2024-11-21)
 ------------------
 

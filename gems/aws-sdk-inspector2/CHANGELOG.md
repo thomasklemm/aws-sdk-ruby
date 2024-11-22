@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.45.0 (2024-11-22)
+------------------
+
+* Feature - Extend inspector2 service model to include ServiceQuotaExceededException.
+
 1.44.0 (2024-11-11)
 ------------------
 

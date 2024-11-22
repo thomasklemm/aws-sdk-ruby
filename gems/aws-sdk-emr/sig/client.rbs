@@ -860,7 +860,9 @@ module Aws
                                             maximum_capacity_units: ::Integer,
                                             maximum_on_demand_capacity_units: ::Integer?,
                                             maximum_core_capacity_units: ::Integer?
-                                          }?
+                                          }?,
+                                          utilization_performance_index: ::Integer?,
+                                          scaling_strategy: ("DEFAULT" | "ADVANCED")?
                                         }
                                       ) -> _PutManagedScalingPolicyResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutManagedScalingPolicyResponseSuccess
@@ -1156,7 +1158,9 @@ module Aws
                               maximum_capacity_units: ::Integer,
                               maximum_on_demand_capacity_units: ::Integer?,
                               maximum_core_capacity_units: ::Integer?
-                            }?
+                            }?,
+                            utilization_performance_index: ::Integer?,
+                            scaling_strategy: ("DEFAULT" | "ADVANCED")?
                           },
                           ?placement_group_configs: Array[
                             {

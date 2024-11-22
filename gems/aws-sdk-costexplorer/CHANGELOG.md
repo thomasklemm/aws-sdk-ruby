@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.117.0 (2024-11-22)
+------------------
+
+* Feature - This release adds the Impact field(contains Contribution field) to the GetAnomalies API response under RootCause
+
 1.116.0 (2024-11-21)
 ------------------
 

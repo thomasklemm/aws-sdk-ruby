@@ -793,6 +793,12 @@ module Aws::MailManager
     #               mailbox_arn: "NameOrArn", # required
     #               role_arn: "IamRoleArn", # required
     #             },
+    #             deliver_to_q_business: {
+    #               action_failure_policy: "CONTINUE", # accepts CONTINUE, DROP
+    #               application_id: "QBusinessApplicationId", # required
+    #               index_id: "QBusinessIndexId", # required
+    #               role_arn: "IamRoleArn", # required
+    #             },
     #             drop: {
     #             },
     #             relay: {
@@ -1668,6 +1674,10 @@ module Aws::MailManager
     #   resp.rules[0].actions[0].deliver_to_mailbox.action_failure_policy #=> String, one of "CONTINUE", "DROP"
     #   resp.rules[0].actions[0].deliver_to_mailbox.mailbox_arn #=> String
     #   resp.rules[0].actions[0].deliver_to_mailbox.role_arn #=> String
+    #   resp.rules[0].actions[0].deliver_to_q_business.action_failure_policy #=> String, one of "CONTINUE", "DROP"
+    #   resp.rules[0].actions[0].deliver_to_q_business.application_id #=> String
+    #   resp.rules[0].actions[0].deliver_to_q_business.index_id #=> String
+    #   resp.rules[0].actions[0].deliver_to_q_business.role_arn #=> String
     #   resp.rules[0].actions[0].relay.action_failure_policy #=> String, one of "CONTINUE", "DROP"
     #   resp.rules[0].actions[0].relay.mail_from #=> String, one of "REPLACE", "PRESERVE"
     #   resp.rules[0].actions[0].relay.relay #=> String
@@ -2655,6 +2665,12 @@ module Aws::MailManager
     #               mailbox_arn: "NameOrArn", # required
     #               role_arn: "IamRoleArn", # required
     #             },
+    #             deliver_to_q_business: {
+    #               action_failure_policy: "CONTINUE", # accepts CONTINUE, DROP
+    #               application_id: "QBusinessApplicationId", # required
+    #               index_id: "QBusinessIndexId", # required
+    #               role_arn: "IamRoleArn", # required
+    #             },
     #             drop: {
     #             },
     #             relay: {
@@ -2883,7 +2899,7 @@ module Aws::MailManager
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mailmanager'
-      context[:gem_version] = '1.15.0'
+      context[:gem_version] = '1.16.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

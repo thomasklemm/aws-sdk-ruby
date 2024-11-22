@@ -25,6 +25,73 @@ module Aws::NeptuneGraph
     end
 
     # @!attribute [rw] task_identifier
+    #   The unique identifier of the export task.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/CancelExportTaskInput AWS API Documentation
+    #
+    class CancelExportTaskInput < Struct.new(
+      :task_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] graph_id
+    #   The source graph identifier of the cancelled export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] role_arn
+    #   The ARN of the IAM role that will allow the exporting of data to the
+    #   destination.
+    #   @return [String]
+    #
+    # @!attribute [rw] task_id
+    #   The unique identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the export task. The status is `CANCELLING`
+    #   when the export task is cancelled.
+    #   @return [String]
+    #
+    # @!attribute [rw] format
+    #   The format of the cancelled export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] destination
+    #   The Amazon S3 URI of the cancelled export task where data will be
+    #   exported to.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_identifier
+    #   The KMS key identifier of the cancelled export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the cancelled export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   The reason that the export task has this status value.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/CancelExportTaskOutput AWS API Documentation
+    #
+    class CancelExportTaskOutput < Struct.new(
+      :graph_id,
+      :role_arn,
+      :task_id,
+      :status,
+      :format,
+      :destination,
+      :kms_key_identifier,
+      :parquet_type,
+      :status_reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] task_identifier
     #   The unique identifier of the import task.
     #   @return [String]
     #
@@ -61,6 +128,10 @@ module Aws::NeptuneGraph
     #   [2]: https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html
     #   @return [String]
     #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the cancelled import task.
+    #   @return [String]
+    #
     # @!attribute [rw] role_arn
     #   The ARN of the IAM role that will allow access to the data that is
     #   to be imported.
@@ -78,6 +149,7 @@ module Aws::NeptuneGraph
       :task_id,
       :source,
       :format,
+      :parquet_type,
       :role_arn,
       :status)
       SENSITIVE = []
@@ -447,6 +519,10 @@ module Aws::NeptuneGraph
     #   [3]: https://docs.aws.amazon.com/neptune-analytics/latest/userguide/using-rdf-data.html
     #   @return [String]
     #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the import task.
+    #   @return [String]
+    #
     # @!attribute [rw] blank_node_handling
     #   The method to handle blank nodes in the dataset. Currently, only
     #   `convertToIri` is supported, meaning blank nodes are converted to
@@ -479,6 +555,7 @@ module Aws::NeptuneGraph
       :fail_on_error,
       :source,
       :format,
+      :parquet_type,
       :blank_node_handling,
       :role_arn)
       SENSITIVE = []
@@ -512,6 +589,10 @@ module Aws::NeptuneGraph
     #   [3]: https://docs.aws.amazon.com/neptune-analytics/latest/userguide/using-rdf-data.html
     #   @return [String]
     #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the import task.
+    #   @return [String]
+    #
     # @!attribute [rw] role_arn
     #   The ARN of the IAM role that will allow access to the data that is
     #   to be imported.
@@ -536,6 +617,7 @@ module Aws::NeptuneGraph
       :task_id,
       :source,
       :format,
+      :parquet_type,
       :role_arn,
       :status,
       :import_options)
@@ -886,6 +968,250 @@ module Aws::NeptuneGraph
       include Aws::Structure
     end
 
+    # This is the top-level field for specifying vertex or edge filters. If
+    # the ExportFilter is not provided, then all properties for all labels
+    # will be exported. If the ExportFilter is provided but is an empty
+    # object, then no data will be exported.
+    #
+    # @!attribute [rw] vertex_filter
+    #   Used to specify filters on a per-label basis for vertices. This
+    #   allows you to control which vertex labels and properties are
+    #   included in the export.
+    #   @return [Hash<String,Types::ExportFilterElement>]
+    #
+    # @!attribute [rw] edge_filter
+    #   Used to specify filters on a per-label basis for edges. This allows
+    #   you to control which edge labels and properties are included in the
+    #   export.
+    #   @return [Hash<String,Types::ExportFilterElement>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ExportFilter AWS API Documentation
+    #
+    class ExportFilter < Struct.new(
+      :vertex_filter,
+      :edge_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies whihc properties of that label should be included in the
+    # export.
+    #
+    # @!attribute [rw] properties
+    #   Each property is defined by a key-value pair, where the key is the
+    #   desired output property name (e.g. "name"), and the value is an
+    #   object.
+    #   @return [Hash<String,Types::ExportFilterPropertyAttributes>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ExportFilterElement AWS API Documentation
+    #
+    class ExportFilterElement < Struct.new(
+      :properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A structure representing a property's attributes. It is a map object
+    # of outputType, sourcePropertyName and multiValueHandling.
+    #
+    # @!attribute [rw] output_type
+    #   Specifies the data type to use for the property in the exported data
+    #   (e.g. "String", "Int", "Float"). If a type is not provided,
+    #   the export process will determine the type. If a given property is
+    #   present as multiple types (e.g. one vertex has "height" stored as
+    #   a double, and another edge has it stored as a string), the type will
+    #   be of Any type, otherwise, it will be the type of the property as
+    #   present in vertices.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_property_name
+    #   The name of the property as it exists in the original graph data. If
+    #   not provided, it is assumed that the key matches the desired
+    #   sourcePropertyName.
+    #   @return [String]
+    #
+    # @!attribute [rw] multi_value_handling
+    #   Specifies how to handle properties that have multiple values. Can be
+    #   either `TO_LIST` to export all values as a list, or `PICK_FIRST` to
+    #   export the first value encountered. If not specified, the default
+    #   value is `PICK_FIRST`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ExportFilterPropertyAttributes AWS API Documentation
+    #
+    class ExportFilterPropertyAttributes < Struct.new(
+      :output_type,
+      :source_property_name,
+      :multi_value_handling)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains details about the specified export task.
+    #
+    # @!attribute [rw] start_time
+    #   The start time of the export task.
+    #   @return [Time]
+    #
+    # @!attribute [rw] time_elapsed_seconds
+    #   The time elapsed, in seconds, since the start time of the export
+    #   task.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] progress_percentage
+    #   The number of progress percentage of the export task.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] num_vertices_written
+    #   The number of exported vertices.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] num_edges_written
+    #   The number of exported edges.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ExportTaskDetails AWS API Documentation
+    #
+    class ExportTaskDetails < Struct.new(
+      :start_time,
+      :time_elapsed_seconds,
+      :progress_percentage,
+      :num_vertices_written,
+      :num_edges_written)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provides details about an export task.
+    #
+    # @!attribute [rw] graph_id
+    #   The source graph identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] role_arn
+    #   The ARN of the IAM role that will allow the data to be exported to
+    #   the destination.
+    #   @return [String]
+    #
+    # @!attribute [rw] task_id
+    #   The unique identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] format
+    #   The format of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] destination
+    #   The Amazon S3 URI of the export task where data will be exported to.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_identifier
+    #   The KMS key identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   The reason that the export task has this status value.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ExportTaskSummary AWS API Documentation
+    #
+    class ExportTaskSummary < Struct.new(
+      :graph_id,
+      :role_arn,
+      :task_id,
+      :status,
+      :format,
+      :destination,
+      :kms_key_identifier,
+      :parquet_type,
+      :status_reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] task_identifier
+    #   The unique identifier of the export task.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/GetExportTaskInput AWS API Documentation
+    #
+    class GetExportTaskInput < Struct.new(
+      :task_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] graph_id
+    #   The source graph identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] role_arn
+    #   The ARN of the IAM role that will allow data to be exported to the
+    #   destination.
+    #   @return [String]
+    #
+    # @!attribute [rw] task_id
+    #   The unique identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] format
+    #   The format of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] destination
+    #   The Amazon S3 URI of the export task where data will be exported.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_identifier
+    #   The KMS key identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   The reason that the export task has this status value.
+    #   @return [String]
+    #
+    # @!attribute [rw] export_task_details
+    #   The details of the export task.
+    #   @return [Types::ExportTaskDetails]
+    #
+    # @!attribute [rw] export_filter
+    #   The export filter of the export task.
+    #   @return [Types::ExportFilter]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/GetExportTaskOutput AWS API Documentation
+    #
+    class GetExportTaskOutput < Struct.new(
+      :graph_id,
+      :role_arn,
+      :task_id,
+      :status,
+      :format,
+      :destination,
+      :kms_key_identifier,
+      :parquet_type,
+      :status_reason,
+      :export_task_details,
+      :export_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] graph_identifier
     #   The unique identifier of the Neptune Analytics graph.
     #   @return [String]
@@ -1120,6 +1446,10 @@ module Aws::NeptuneGraph
     #   [2]: https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html
     #   @return [String]
     #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the import task.
+    #   @return [String]
+    #
     # @!attribute [rw] role_arn
     #   The ARN of the IAM role that will allow access to the data that is
     #   to be imported.
@@ -1173,7 +1503,7 @@ module Aws::NeptuneGraph
     #   @return [Types::ImportTaskDetails]
     #
     # @!attribute [rw] attempt_number
-    #   The number of the current attempt to execute the import task.
+    #   The number of the current attempts to execute the import task.
     #   @return [Integer]
     #
     # @!attribute [rw] status_reason
@@ -1187,6 +1517,7 @@ module Aws::NeptuneGraph
       :task_id,
       :source,
       :format,
+      :parquet_type,
       :role_arn,
       :status,
       :import_options,
@@ -1581,6 +1912,10 @@ module Aws::NeptuneGraph
     #   [2]: https://docs.aws.amazon.com/neptune/latest/userguide/bulk-load-tutorial-format-opencypher.html
     #   @return [String]
     #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the import task.
+    #   @return [String]
+    #
     # @!attribute [rw] role_arn
     #   The ARN of the IAM role that will allow access to the data that is
     #   to be imported.
@@ -1597,6 +1932,7 @@ module Aws::NeptuneGraph
       :task_id,
       :source,
       :format,
+      :parquet_type,
       :role_arn,
       :status)
       SENSITIVE = []
@@ -1613,6 +1949,40 @@ module Aws::NeptuneGraph
     #
     class InternalServerException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   Pagination token used to paginate input.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of export tasks to return.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ListExportTasksInput AWS API Documentation
+    #
+    class ListExportTasksInput < Struct.new(
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] tasks
+    #   The requested list of export tasks.
+    #   @return [Array<Types::ExportTaskSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   Pagination token used to paginate output.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/ListExportTasksOutput AWS API Documentation
+    #
+    class ListExportTasksOutput < Struct.new(
+      :tasks,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2309,6 +2679,112 @@ module Aws::NeptuneGraph
       include Aws::Structure
     end
 
+    # @!attribute [rw] graph_identifier
+    #   The source graph identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] role_arn
+    #   The ARN of the IAM role that will allow data to be exported to the
+    #   destination.
+    #   @return [String]
+    #
+    # @!attribute [rw] format
+    #   The format of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] destination
+    #   The Amazon S3 URI where data will be exported to.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_identifier
+    #   The KMS key identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] export_filter
+    #   The export filter of the export task.
+    #   @return [Types::ExportFilter]
+    #
+    # @!attribute [rw] tags
+    #   Tags to be applied to the export task.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/StartExportTaskInput AWS API Documentation
+    #
+    class StartExportTaskInput < Struct.new(
+      :graph_identifier,
+      :role_arn,
+      :format,
+      :destination,
+      :kms_key_identifier,
+      :parquet_type,
+      :export_filter,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] graph_id
+    #   The source graph identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] role_arn
+    #   The ARN of the IAM role that will allow data to be exported to the
+    #   destination.
+    #   @return [String]
+    #
+    # @!attribute [rw] task_id
+    #   The unique identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] format
+    #   The format of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] destination
+    #   The Amazon S3 URI of the export task where data will be exported to.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_identifier
+    #   The KMS key identifier of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the export task.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   The reason that the export task has this status value.
+    #   @return [String]
+    #
+    # @!attribute [rw] export_filter
+    #   The export filter of the export task.
+    #   @return [Types::ExportFilter]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/neptune-graph-2023-11-29/StartExportTaskOutput AWS API Documentation
+    #
+    class StartExportTaskOutput < Struct.new(
+      :graph_id,
+      :role_arn,
+      :task_id,
+      :status,
+      :format,
+      :destination,
+      :kms_key_identifier,
+      :parquet_type,
+      :status_reason,
+      :export_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] import_options
     #   Options for how to perform an import.
     #   @return [Types::ImportOptions]
@@ -2329,6 +2805,10 @@ module Aws::NeptuneGraph
     #   Specifies the format of Amazon S3 data to be imported. Valid values
     #   are CSV, which identifies the Gremlin CSV format or OPENCYPHER,
     #   which identies the openCypher load format.
+    #   @return [String]
+    #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the import task.
     #   @return [String]
     #
     # @!attribute [rw] blank_node_handling
@@ -2358,6 +2838,7 @@ module Aws::NeptuneGraph
       :fail_on_error,
       :source,
       :format,
+      :parquet_type,
       :blank_node_handling,
       :graph_identifier,
       :role_arn)
@@ -2385,6 +2866,10 @@ module Aws::NeptuneGraph
     #   which identies the openCypher load format.
     #   @return [String]
     #
+    # @!attribute [rw] parquet_type
+    #   The parquet type of the import task.
+    #   @return [String]
+    #
     # @!attribute [rw] role_arn
     #   The ARN of the IAM role that will allow access to the data that is
     #   to be imported.
@@ -2405,6 +2890,7 @@ module Aws::NeptuneGraph
       :task_id,
       :source,
       :format,
+      :parquet_type,
       :role_arn,
       :status,
       :import_options)

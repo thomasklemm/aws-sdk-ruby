@@ -17,6 +17,10 @@ module Aws::Chatbot
     AccountPreferences = Shapes::StructureShape.new(name: 'AccountPreferences')
     AmazonResourceName = Shapes::StringShape.new(name: 'AmazonResourceName')
     Arn = Shapes::StringShape.new(name: 'Arn')
+    AssociateToConfigurationRequest = Shapes::StructureShape.new(name: 'AssociateToConfigurationRequest')
+    AssociateToConfigurationResult = Shapes::StructureShape.new(name: 'AssociateToConfigurationResult')
+    AssociationList = Shapes::ListShape.new(name: 'AssociationList')
+    AssociationListing = Shapes::StructureShape.new(name: 'AssociationListing')
     AwsUserIdentity = Shapes::StringShape.new(name: 'AwsUserIdentity')
     BooleanAccountPreference = Shapes::BooleanShape.new(name: 'BooleanAccountPreference')
     ChatConfigurationArn = Shapes::StringShape.new(name: 'ChatConfigurationArn')
@@ -24,6 +28,7 @@ module Aws::Chatbot
     ChimeWebhookConfigurationList = Shapes::ListShape.new(name: 'ChimeWebhookConfigurationList')
     ChimeWebhookDescription = Shapes::StringShape.new(name: 'ChimeWebhookDescription')
     ChimeWebhookUrl = Shapes::StringShape.new(name: 'ChimeWebhookUrl')
+    ClientToken = Shapes::StringShape.new(name: 'ClientToken')
     ConfigurationName = Shapes::StringShape.new(name: 'ConfigurationName')
     ConfiguredTeam = Shapes::StructureShape.new(name: 'ConfiguredTeam')
     ConfiguredTeamsList = Shapes::ListShape.new(name: 'ConfiguredTeamsList')
@@ -31,16 +36,39 @@ module Aws::Chatbot
     CreateChimeWebhookConfigurationException = Shapes::StructureShape.new(name: 'CreateChimeWebhookConfigurationException')
     CreateChimeWebhookConfigurationRequest = Shapes::StructureShape.new(name: 'CreateChimeWebhookConfigurationRequest')
     CreateChimeWebhookConfigurationResult = Shapes::StructureShape.new(name: 'CreateChimeWebhookConfigurationResult')
+    CreateCustomActionRequest = Shapes::StructureShape.new(name: 'CreateCustomActionRequest')
+    CreateCustomActionResult = Shapes::StructureShape.new(name: 'CreateCustomActionResult')
     CreateSlackChannelConfigurationException = Shapes::StructureShape.new(name: 'CreateSlackChannelConfigurationException')
     CreateSlackChannelConfigurationRequest = Shapes::StructureShape.new(name: 'CreateSlackChannelConfigurationRequest')
     CreateSlackChannelConfigurationResult = Shapes::StructureShape.new(name: 'CreateSlackChannelConfigurationResult')
     CreateTeamsChannelConfigurationException = Shapes::StructureShape.new(name: 'CreateTeamsChannelConfigurationException')
     CreateTeamsChannelConfigurationRequest = Shapes::StructureShape.new(name: 'CreateTeamsChannelConfigurationRequest')
     CreateTeamsChannelConfigurationResult = Shapes::StructureShape.new(name: 'CreateTeamsChannelConfigurationResult')
+    CustomAction = Shapes::StructureShape.new(name: 'CustomAction')
+    CustomActionAliasName = Shapes::StringShape.new(name: 'CustomActionAliasName')
+    CustomActionArn = Shapes::StringShape.new(name: 'CustomActionArn')
+    CustomActionArnList = Shapes::ListShape.new(name: 'CustomActionArnList')
+    CustomActionAttachment = Shapes::StructureShape.new(name: 'CustomActionAttachment')
+    CustomActionAttachmentCriteria = Shapes::StructureShape.new(name: 'CustomActionAttachmentCriteria')
+    CustomActionAttachmentCriteriaList = Shapes::ListShape.new(name: 'CustomActionAttachmentCriteriaList')
+    CustomActionAttachmentCriteriaOperator = Shapes::StringShape.new(name: 'CustomActionAttachmentCriteriaOperator')
+    CustomActionAttachmentCriteriaValueString = Shapes::StringShape.new(name: 'CustomActionAttachmentCriteriaValueString')
+    CustomActionAttachmentCriteriaVariableNameString = Shapes::StringShape.new(name: 'CustomActionAttachmentCriteriaVariableNameString')
+    CustomActionAttachmentList = Shapes::ListShape.new(name: 'CustomActionAttachmentList')
+    CustomActionAttachmentNotificationType = Shapes::StringShape.new(name: 'CustomActionAttachmentNotificationType')
+    CustomActionAttachmentVariables = Shapes::MapShape.new(name: 'CustomActionAttachmentVariables')
+    CustomActionAttachmentVariablesKeyString = Shapes::StringShape.new(name: 'CustomActionAttachmentVariablesKeyString')
+    CustomActionAttachmentVariablesValueString = Shapes::StringShape.new(name: 'CustomActionAttachmentVariablesValueString')
+    CustomActionButtonText = Shapes::StringShape.new(name: 'CustomActionButtonText')
+    CustomActionDefinition = Shapes::StructureShape.new(name: 'CustomActionDefinition')
+    CustomActionDefinitionCommandTextString = Shapes::StringShape.new(name: 'CustomActionDefinitionCommandTextString')
+    CustomActionName = Shapes::StringShape.new(name: 'CustomActionName')
     CustomerCwLogLevel = Shapes::StringShape.new(name: 'CustomerCwLogLevel')
     DeleteChimeWebhookConfigurationException = Shapes::StructureShape.new(name: 'DeleteChimeWebhookConfigurationException')
     DeleteChimeWebhookConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteChimeWebhookConfigurationRequest')
     DeleteChimeWebhookConfigurationResult = Shapes::StructureShape.new(name: 'DeleteChimeWebhookConfigurationResult')
+    DeleteCustomActionRequest = Shapes::StructureShape.new(name: 'DeleteCustomActionRequest')
+    DeleteCustomActionResult = Shapes::StructureShape.new(name: 'DeleteCustomActionResult')
     DeleteMicrosoftTeamsUserIdentityException = Shapes::StructureShape.new(name: 'DeleteMicrosoftTeamsUserIdentityException')
     DeleteMicrosoftTeamsUserIdentityRequest = Shapes::StructureShape.new(name: 'DeleteMicrosoftTeamsUserIdentityRequest')
     DeleteMicrosoftTeamsUserIdentityResult = Shapes::StructureShape.new(name: 'DeleteMicrosoftTeamsUserIdentityResult')
@@ -71,10 +99,14 @@ module Aws::Chatbot
     DescribeSlackWorkspacesException = Shapes::StructureShape.new(name: 'DescribeSlackWorkspacesException')
     DescribeSlackWorkspacesRequest = Shapes::StructureShape.new(name: 'DescribeSlackWorkspacesRequest')
     DescribeSlackWorkspacesResult = Shapes::StructureShape.new(name: 'DescribeSlackWorkspacesResult')
+    DisassociateFromConfigurationRequest = Shapes::StructureShape.new(name: 'DisassociateFromConfigurationRequest')
+    DisassociateFromConfigurationResult = Shapes::StructureShape.new(name: 'DisassociateFromConfigurationResult')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     GetAccountPreferencesException = Shapes::StructureShape.new(name: 'GetAccountPreferencesException')
     GetAccountPreferencesRequest = Shapes::StructureShape.new(name: 'GetAccountPreferencesRequest')
     GetAccountPreferencesResult = Shapes::StructureShape.new(name: 'GetAccountPreferencesResult')
+    GetCustomActionRequest = Shapes::StructureShape.new(name: 'GetCustomActionRequest')
+    GetCustomActionResult = Shapes::StructureShape.new(name: 'GetCustomActionResult')
     GetTeamsChannelConfigurationException = Shapes::StructureShape.new(name: 'GetTeamsChannelConfigurationException')
     GetTeamsChannelConfigurationRequest = Shapes::StructureShape.new(name: 'GetTeamsChannelConfigurationRequest')
     GetTeamsChannelConfigurationResult = Shapes::StructureShape.new(name: 'GetTeamsChannelConfigurationResult')
@@ -84,6 +116,16 @@ module Aws::Chatbot
     InvalidParameterException = Shapes::StructureShape.new(name: 'InvalidParameterException')
     InvalidRequestException = Shapes::StructureShape.new(name: 'InvalidRequestException')
     LimitExceededException = Shapes::StructureShape.new(name: 'LimitExceededException')
+    ListAssociationsRequest = Shapes::StructureShape.new(name: 'ListAssociationsRequest')
+    ListAssociationsRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListAssociationsRequestMaxResultsInteger')
+    ListAssociationsRequestNextTokenString = Shapes::StringShape.new(name: 'ListAssociationsRequestNextTokenString')
+    ListAssociationsResult = Shapes::StructureShape.new(name: 'ListAssociationsResult')
+    ListAssociationsResultNextTokenString = Shapes::StringShape.new(name: 'ListAssociationsResultNextTokenString')
+    ListCustomActionsRequest = Shapes::StructureShape.new(name: 'ListCustomActionsRequest')
+    ListCustomActionsRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListCustomActionsRequestMaxResultsInteger')
+    ListCustomActionsRequestNextTokenString = Shapes::StringShape.new(name: 'ListCustomActionsRequestNextTokenString')
+    ListCustomActionsResult = Shapes::StructureShape.new(name: 'ListCustomActionsResult')
+    ListCustomActionsResultNextTokenString = Shapes::StringShape.new(name: 'ListCustomActionsResultNextTokenString')
     ListMicrosoftTeamsConfiguredTeamsException = Shapes::StructureShape.new(name: 'ListMicrosoftTeamsConfiguredTeamsException')
     ListMicrosoftTeamsConfiguredTeamsRequest = Shapes::StructureShape.new(name: 'ListMicrosoftTeamsConfiguredTeamsRequest')
     ListMicrosoftTeamsConfiguredTeamsResult = Shapes::StructureShape.new(name: 'ListMicrosoftTeamsConfiguredTeamsResult')
@@ -97,6 +139,7 @@ module Aws::Chatbot
     ListTeamsChannelConfigurationsResult = Shapes::StructureShape.new(name: 'ListTeamsChannelConfigurationsResult')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
+    ResourceIdentifier = Shapes::StringShape.new(name: 'ResourceIdentifier')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourceState = Shapes::StringShape.new(name: 'ResourceState')
     ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
@@ -130,6 +173,7 @@ module Aws::Chatbot
     TeamsUserIdentity = Shapes::StructureShape.new(name: 'TeamsUserIdentity')
     TooManyTagsException = Shapes::StructureShape.new(name: 'TooManyTagsException')
     UUID = Shapes::StringShape.new(name: 'UUID')
+    UnauthorizedException = Shapes::StructureShape.new(name: 'UnauthorizedException')
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
     UpdateAccountPreferencesException = Shapes::StructureShape.new(name: 'UpdateAccountPreferencesException')
@@ -138,6 +182,8 @@ module Aws::Chatbot
     UpdateChimeWebhookConfigurationException = Shapes::StructureShape.new(name: 'UpdateChimeWebhookConfigurationException')
     UpdateChimeWebhookConfigurationRequest = Shapes::StructureShape.new(name: 'UpdateChimeWebhookConfigurationRequest')
     UpdateChimeWebhookConfigurationResult = Shapes::StructureShape.new(name: 'UpdateChimeWebhookConfigurationResult')
+    UpdateCustomActionRequest = Shapes::StructureShape.new(name: 'UpdateCustomActionRequest')
+    UpdateCustomActionResult = Shapes::StructureShape.new(name: 'UpdateCustomActionResult')
     UpdateSlackChannelConfigurationException = Shapes::StructureShape.new(name: 'UpdateSlackChannelConfigurationException')
     UpdateSlackChannelConfigurationRequest = Shapes::StructureShape.new(name: 'UpdateSlackChannelConfigurationRequest')
     UpdateSlackChannelConfigurationResult = Shapes::StructureShape.new(name: 'UpdateSlackChannelConfigurationResult')
@@ -148,6 +194,17 @@ module Aws::Chatbot
     AccountPreferences.add_member(:user_authorization_required, Shapes::ShapeRef.new(shape: BooleanAccountPreference, location_name: "UserAuthorizationRequired"))
     AccountPreferences.add_member(:training_data_collection_enabled, Shapes::ShapeRef.new(shape: BooleanAccountPreference, location_name: "TrainingDataCollectionEnabled"))
     AccountPreferences.struct_class = Types::AccountPreferences
+
+    AssociateToConfigurationRequest.add_member(:resource, Shapes::ShapeRef.new(shape: ResourceIdentifier, required: true, location_name: "Resource"))
+    AssociateToConfigurationRequest.add_member(:chat_configuration, Shapes::ShapeRef.new(shape: ChatConfigurationArn, required: true, location_name: "ChatConfiguration"))
+    AssociateToConfigurationRequest.struct_class = Types::AssociateToConfigurationRequest
+
+    AssociateToConfigurationResult.struct_class = Types::AssociateToConfigurationResult
+
+    AssociationList.member = Shapes::ShapeRef.new(shape: AssociationListing)
+
+    AssociationListing.add_member(:resource, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Resource"))
+    AssociationListing.struct_class = Types::AssociationListing
 
     ChimeWebhookConfiguration.add_member(:webhook_description, Shapes::ShapeRef.new(shape: ChimeWebhookDescription, required: true, location_name: "WebhookDescription"))
     ChimeWebhookConfiguration.add_member(:chat_configuration_arn, Shapes::ShapeRef.new(shape: ChatConfigurationArn, required: true, location_name: "ChatConfigurationArn"))
@@ -189,6 +246,17 @@ module Aws::Chatbot
     CreateChimeWebhookConfigurationResult.add_member(:webhook_configuration, Shapes::ShapeRef.new(shape: ChimeWebhookConfiguration, location_name: "WebhookConfiguration"))
     CreateChimeWebhookConfigurationResult.struct_class = Types::CreateChimeWebhookConfigurationResult
 
+    CreateCustomActionRequest.add_member(:definition, Shapes::ShapeRef.new(shape: CustomActionDefinition, required: true, location_name: "Definition"))
+    CreateCustomActionRequest.add_member(:alias_name, Shapes::ShapeRef.new(shape: CustomActionAliasName, location_name: "AliasName"))
+    CreateCustomActionRequest.add_member(:attachments, Shapes::ShapeRef.new(shape: CustomActionAttachmentList, location_name: "Attachments"))
+    CreateCustomActionRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
+    CreateCustomActionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateCustomActionRequest.add_member(:action_name, Shapes::ShapeRef.new(shape: CustomActionName, required: true, location_name: "ActionName"))
+    CreateCustomActionRequest.struct_class = Types::CreateCustomActionRequest
+
+    CreateCustomActionResult.add_member(:custom_action_arn, Shapes::ShapeRef.new(shape: CustomActionArn, required: true, location_name: "CustomActionArn"))
+    CreateCustomActionResult.struct_class = Types::CreateCustomActionResult
+
     CreateSlackChannelConfigurationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     CreateSlackChannelConfigurationException.struct_class = Types::CreateSlackChannelConfigurationException
 
@@ -227,6 +295,36 @@ module Aws::Chatbot
     CreateTeamsChannelConfigurationResult.add_member(:channel_configuration, Shapes::ShapeRef.new(shape: TeamsChannelConfiguration, location_name: "ChannelConfiguration"))
     CreateTeamsChannelConfigurationResult.struct_class = Types::CreateTeamsChannelConfigurationResult
 
+    CustomAction.add_member(:custom_action_arn, Shapes::ShapeRef.new(shape: CustomActionArn, required: true, location_name: "CustomActionArn"))
+    CustomAction.add_member(:definition, Shapes::ShapeRef.new(shape: CustomActionDefinition, required: true, location_name: "Definition"))
+    CustomAction.add_member(:alias_name, Shapes::ShapeRef.new(shape: CustomActionAliasName, location_name: "AliasName"))
+    CustomAction.add_member(:attachments, Shapes::ShapeRef.new(shape: CustomActionAttachmentList, location_name: "Attachments"))
+    CustomAction.add_member(:action_name, Shapes::ShapeRef.new(shape: CustomActionName, location_name: "ActionName"))
+    CustomAction.struct_class = Types::CustomAction
+
+    CustomActionArnList.member = Shapes::ShapeRef.new(shape: CustomActionArn)
+
+    CustomActionAttachment.add_member(:notification_type, Shapes::ShapeRef.new(shape: CustomActionAttachmentNotificationType, location_name: "NotificationType"))
+    CustomActionAttachment.add_member(:button_text, Shapes::ShapeRef.new(shape: CustomActionButtonText, location_name: "ButtonText"))
+    CustomActionAttachment.add_member(:criteria, Shapes::ShapeRef.new(shape: CustomActionAttachmentCriteriaList, location_name: "Criteria"))
+    CustomActionAttachment.add_member(:variables, Shapes::ShapeRef.new(shape: CustomActionAttachmentVariables, location_name: "Variables"))
+    CustomActionAttachment.struct_class = Types::CustomActionAttachment
+
+    CustomActionAttachmentCriteria.add_member(:operator, Shapes::ShapeRef.new(shape: CustomActionAttachmentCriteriaOperator, required: true, location_name: "Operator"))
+    CustomActionAttachmentCriteria.add_member(:variable_name, Shapes::ShapeRef.new(shape: CustomActionAttachmentCriteriaVariableNameString, required: true, location_name: "VariableName"))
+    CustomActionAttachmentCriteria.add_member(:value, Shapes::ShapeRef.new(shape: CustomActionAttachmentCriteriaValueString, location_name: "Value"))
+    CustomActionAttachmentCriteria.struct_class = Types::CustomActionAttachmentCriteria
+
+    CustomActionAttachmentCriteriaList.member = Shapes::ShapeRef.new(shape: CustomActionAttachmentCriteria)
+
+    CustomActionAttachmentList.member = Shapes::ShapeRef.new(shape: CustomActionAttachment)
+
+    CustomActionAttachmentVariables.key = Shapes::ShapeRef.new(shape: CustomActionAttachmentVariablesKeyString)
+    CustomActionAttachmentVariables.value = Shapes::ShapeRef.new(shape: CustomActionAttachmentVariablesValueString)
+
+    CustomActionDefinition.add_member(:command_text, Shapes::ShapeRef.new(shape: CustomActionDefinitionCommandTextString, required: true, location_name: "CommandText"))
+    CustomActionDefinition.struct_class = Types::CustomActionDefinition
+
     DeleteChimeWebhookConfigurationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     DeleteChimeWebhookConfigurationException.struct_class = Types::DeleteChimeWebhookConfigurationException
 
@@ -234,6 +332,11 @@ module Aws::Chatbot
     DeleteChimeWebhookConfigurationRequest.struct_class = Types::DeleteChimeWebhookConfigurationRequest
 
     DeleteChimeWebhookConfigurationResult.struct_class = Types::DeleteChimeWebhookConfigurationResult
+
+    DeleteCustomActionRequest.add_member(:custom_action_arn, Shapes::ShapeRef.new(shape: CustomActionArn, required: true, location_name: "CustomActionArn"))
+    DeleteCustomActionRequest.struct_class = Types::DeleteCustomActionRequest
+
+    DeleteCustomActionResult.struct_class = Types::DeleteCustomActionResult
 
     DeleteMicrosoftTeamsUserIdentityException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     DeleteMicrosoftTeamsUserIdentityException.struct_class = Types::DeleteMicrosoftTeamsUserIdentityException
@@ -333,6 +436,12 @@ module Aws::Chatbot
     DescribeSlackWorkspacesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "NextToken"))
     DescribeSlackWorkspacesResult.struct_class = Types::DescribeSlackWorkspacesResult
 
+    DisassociateFromConfigurationRequest.add_member(:resource, Shapes::ShapeRef.new(shape: ResourceIdentifier, required: true, location_name: "Resource"))
+    DisassociateFromConfigurationRequest.add_member(:chat_configuration, Shapes::ShapeRef.new(shape: ChatConfigurationArn, required: true, location_name: "ChatConfiguration"))
+    DisassociateFromConfigurationRequest.struct_class = Types::DisassociateFromConfigurationRequest
+
+    DisassociateFromConfigurationResult.struct_class = Types::DisassociateFromConfigurationResult
+
     GetAccountPreferencesException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     GetAccountPreferencesException.struct_class = Types::GetAccountPreferencesException
 
@@ -340,6 +449,12 @@ module Aws::Chatbot
 
     GetAccountPreferencesResult.add_member(:account_preferences, Shapes::ShapeRef.new(shape: AccountPreferences, location_name: "AccountPreferences"))
     GetAccountPreferencesResult.struct_class = Types::GetAccountPreferencesResult
+
+    GetCustomActionRequest.add_member(:custom_action_arn, Shapes::ShapeRef.new(shape: CustomActionArn, required: true, location_name: "CustomActionArn"))
+    GetCustomActionRequest.struct_class = Types::GetCustomActionRequest
+
+    GetCustomActionResult.add_member(:custom_action, Shapes::ShapeRef.new(shape: CustomAction, location_name: "CustomAction"))
+    GetCustomActionResult.struct_class = Types::GetCustomActionResult
 
     GetTeamsChannelConfigurationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     GetTeamsChannelConfigurationException.struct_class = Types::GetTeamsChannelConfigurationException
@@ -363,6 +478,23 @@ module Aws::Chatbot
 
     LimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     LimitExceededException.struct_class = Types::LimitExceededException
+
+    ListAssociationsRequest.add_member(:chat_configuration, Shapes::ShapeRef.new(shape: ChatConfigurationArn, required: true, location_name: "ChatConfiguration"))
+    ListAssociationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListAssociationsRequestMaxResultsInteger, location_name: "MaxResults"))
+    ListAssociationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: ListAssociationsRequestNextTokenString, location_name: "NextToken"))
+    ListAssociationsRequest.struct_class = Types::ListAssociationsRequest
+
+    ListAssociationsResult.add_member(:associations, Shapes::ShapeRef.new(shape: AssociationList, required: true, location_name: "Associations"))
+    ListAssociationsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: ListAssociationsResultNextTokenString, location_name: "NextToken"))
+    ListAssociationsResult.struct_class = Types::ListAssociationsResult
+
+    ListCustomActionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListCustomActionsRequestMaxResultsInteger, location_name: "MaxResults"))
+    ListCustomActionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: ListCustomActionsRequestNextTokenString, location_name: "NextToken"))
+    ListCustomActionsRequest.struct_class = Types::ListCustomActionsRequest
+
+    ListCustomActionsResult.add_member(:custom_actions, Shapes::ShapeRef.new(shape: CustomActionArnList, required: true, location_name: "CustomActions"))
+    ListCustomActionsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: ListCustomActionsResultNextTokenString, location_name: "NextToken"))
+    ListCustomActionsResult.struct_class = Types::ListCustomActionsResult
 
     ListMicrosoftTeamsConfiguredTeamsException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     ListMicrosoftTeamsConfiguredTeamsException.struct_class = Types::ListMicrosoftTeamsConfiguredTeamsException
@@ -497,6 +629,9 @@ module Aws::Chatbot
     TooManyTagsException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
     TooManyTagsException.struct_class = Types::TooManyTagsException
 
+    UnauthorizedException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
+    UnauthorizedException.struct_class = Types::UnauthorizedException
+
     UntagResourceRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: AmazonResourceName, required: true, location_name: "ResourceARN"))
     UntagResourceRequest.add_member(:tag_keys, Shapes::ShapeRef.new(shape: TagKeyList, required: true, location_name: "TagKeys"))
     UntagResourceRequest.struct_class = Types::UntagResourceRequest
@@ -526,6 +661,15 @@ module Aws::Chatbot
 
     UpdateChimeWebhookConfigurationResult.add_member(:webhook_configuration, Shapes::ShapeRef.new(shape: ChimeWebhookConfiguration, location_name: "WebhookConfiguration"))
     UpdateChimeWebhookConfigurationResult.struct_class = Types::UpdateChimeWebhookConfigurationResult
+
+    UpdateCustomActionRequest.add_member(:custom_action_arn, Shapes::ShapeRef.new(shape: CustomActionArn, required: true, location_name: "CustomActionArn"))
+    UpdateCustomActionRequest.add_member(:definition, Shapes::ShapeRef.new(shape: CustomActionDefinition, required: true, location_name: "Definition"))
+    UpdateCustomActionRequest.add_member(:alias_name, Shapes::ShapeRef.new(shape: CustomActionAliasName, location_name: "AliasName"))
+    UpdateCustomActionRequest.add_member(:attachments, Shapes::ShapeRef.new(shape: CustomActionAttachmentList, location_name: "Attachments"))
+    UpdateCustomActionRequest.struct_class = Types::UpdateCustomActionRequest
+
+    UpdateCustomActionResult.add_member(:custom_action_arn, Shapes::ShapeRef.new(shape: CustomActionArn, required: true, location_name: "CustomActionArn"))
+    UpdateCustomActionResult.struct_class = Types::UpdateCustomActionResult
 
     UpdateSlackChannelConfigurationException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     UpdateSlackChannelConfigurationException.struct_class = Types::UpdateSlackChannelConfigurationException
@@ -578,6 +722,17 @@ module Aws::Chatbot
         "uid" => "chatbot-2017-10-11",
       }
 
+      api.add_operation(:associate_to_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "AssociateToConfiguration"
+        o.http_method = "POST"
+        o.http_request_uri = "/associate-to-configuration"
+        o.input = Shapes::ShapeRef.new(shape: AssociateToConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: AssociateToConfigurationResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+      end)
+
       api.add_operation(:create_chime_webhook_configuration, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateChimeWebhookConfiguration"
         o.http_method = "POST"
@@ -589,6 +744,19 @@ module Aws::Chatbot
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: CreateChimeWebhookConfigurationException)
+      end)
+
+      api.add_operation(:create_custom_action, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateCustomAction"
+        o.http_method = "POST"
+        o.http_request_uri = "/create-custom-action"
+        o.input = Shapes::ShapeRef.new(shape: CreateCustomActionRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateCustomActionResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
       end)
 
       api.add_operation(:create_microsoft_teams_channel_configuration, Seahorse::Model::Operation.new.tap do |o|
@@ -627,6 +795,18 @@ module Aws::Chatbot
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: DeleteChimeWebhookConfigurationException)
+      end)
+
+      api.add_operation(:delete_custom_action, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteCustomAction"
+        o.http_method = "POST"
+        o.http_request_uri = "/delete-custom-action"
+        o.input = Shapes::ShapeRef.new(shape: DeleteCustomActionRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteCustomActionResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
       end)
 
       api.add_operation(:delete_microsoft_teams_channel_configuration, Seahorse::Model::Operation.new.tap do |o|
@@ -763,6 +943,17 @@ module Aws::Chatbot
         )
       end)
 
+      api.add_operation(:disassociate_from_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DisassociateFromConfiguration"
+        o.http_method = "POST"
+        o.http_request_uri = "/disassociate-from-configuration"
+        o.input = Shapes::ShapeRef.new(shape: DisassociateFromConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DisassociateFromConfigurationResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+      end)
+
       api.add_operation(:get_account_preferences, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetAccountPreferences"
         o.http_method = "POST"
@@ -771,6 +962,18 @@ module Aws::Chatbot
         o.output = Shapes::ShapeRef.new(shape: GetAccountPreferencesResult)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: GetAccountPreferencesException)
+      end)
+
+      api.add_operation(:get_custom_action, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetCustomAction"
+        o.http_method = "POST"
+        o.http_request_uri = "/get-custom-action"
+        o.input = Shapes::ShapeRef.new(shape: GetCustomActionRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetCustomActionResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
       end)
 
       api.add_operation(:get_microsoft_teams_channel_configuration, Seahorse::Model::Operation.new.tap do |o|
@@ -782,6 +985,37 @@ module Aws::Chatbot
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: GetTeamsChannelConfigurationException)
+      end)
+
+      api.add_operation(:list_associations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAssociations"
+        o.http_method = "POST"
+        o.http_request_uri = "/list-associations"
+        o.input = Shapes::ShapeRef.new(shape: ListAssociationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAssociationsResult)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_custom_actions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListCustomActions"
+        o.http_method = "POST"
+        o.http_request_uri = "/list-custom-actions"
+        o.input = Shapes::ShapeRef.new(shape: ListCustomActionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListCustomActionsResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
       end)
 
       api.add_operation(:list_microsoft_teams_channel_configurations, Seahorse::Model::Operation.new.tap do |o|
@@ -890,6 +1124,18 @@ module Aws::Chatbot
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: UpdateChimeWebhookConfigurationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:update_custom_action, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateCustomAction"
+        o.http_method = "POST"
+        o.http_request_uri = "/update-custom-action"
+        o.input = Shapes::ShapeRef.new(shape: UpdateCustomActionRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateCustomActionResult)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
       end)
 
       api.add_operation(:update_microsoft_teams_channel_configuration, Seahorse::Model::Operation.new.tap do |o|

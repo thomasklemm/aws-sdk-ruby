@@ -75,14 +75,33 @@ module Aws
                   | (?Hash[Symbol, untyped]) -> instance
 
 
+      interface _CancelExportTaskResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CancelExportTaskOutput]
+        def graph_id: () -> ::String
+        def role_arn: () -> ::String
+        def task_id: () -> ::String
+        def status: () -> ("INITIALIZING" | "EXPORTING" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
+        def format: () -> ("PARQUET" | "CSV")
+        def destination: () -> ::String
+        def kms_key_identifier: () -> ::String
+        def parquet_type: () -> ("COLUMNAR")
+        def status_reason: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#cancel_export_task-instance_method
+      def cancel_export_task: (
+                                task_identifier: ::String
+                              ) -> _CancelExportTaskResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelExportTaskResponseSuccess
+
       interface _CancelImportTaskResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CancelImportTaskOutput]
         def graph_id: () -> ::String
         def task_id: () -> ::String
         def source: () -> ::String
-        def format: () -> ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+        def format: () -> ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+        def parquet_type: () -> ("COLUMNAR")
         def role_arn: () -> ::String
-        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#cancel_import_task-instance_method
       def cancel_import_task: (
@@ -153,9 +172,10 @@ module Aws
         def graph_id: () -> ::String
         def task_id: () -> ::String
         def source: () -> ::String
-        def format: () -> ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+        def format: () -> ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+        def parquet_type: () -> ("COLUMNAR")
         def role_arn: () -> ::String
-        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
         def import_options: () -> Types::ImportOptions
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#create_graph_using_import_task-instance_method
@@ -181,7 +201,8 @@ module Aws
                                             ?min_provisioned_memory: ::Integer,
                                             ?fail_on_error: bool,
                                             source: ::String,
-                                            ?format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES"),
+                                            ?format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES"),
+                                            ?parquet_type: ("COLUMNAR"),
                                             ?blank_node_handling: ("convertToIri"),
                                             role_arn: ::String
                                           ) -> _CreateGraphUsingImportTaskResponseSuccess
@@ -275,6 +296,26 @@ module Aws
                          ) ?{ (*untyped) -> void } -> _ExecuteQueryResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _ExecuteQueryResponseSuccess
 
+      interface _GetExportTaskResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetExportTaskOutput]
+        def graph_id: () -> ::String
+        def role_arn: () -> ::String
+        def task_id: () -> ::String
+        def status: () -> ("INITIALIZING" | "EXPORTING" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
+        def format: () -> ("PARQUET" | "CSV")
+        def destination: () -> ::String
+        def kms_key_identifier: () -> ::String
+        def parquet_type: () -> ("COLUMNAR")
+        def status_reason: () -> ::String
+        def export_task_details: () -> Types::ExportTaskDetails
+        def export_filter: () -> Types::ExportFilter
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#get_export_task-instance_method
+      def get_export_task: (
+                             task_identifier: ::String
+                           ) -> _GetExportTaskResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetExportTaskResponseSuccess
+
       interface _GetGraphResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetGraphOutput]
         def id: () -> ::String
@@ -333,9 +374,10 @@ module Aws
         def graph_id: () -> ::String
         def task_id: () -> ::String
         def source: () -> ::String
-        def format: () -> ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+        def format: () -> ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+        def parquet_type: () -> ("COLUMNAR")
         def role_arn: () -> ::String
-        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
         def import_options: () -> Types::ImportOptions
         def import_task_details: () -> Types::ImportTaskDetails
         def attempt_number: () -> ::Integer
@@ -375,6 +417,18 @@ module Aws
                        query_id: ::String
                      ) -> _GetQueryResponseSuccess
                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryResponseSuccess
+
+      interface _ListExportTasksResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListExportTasksOutput]
+        def tasks: () -> ::Array[Types::ExportTaskSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#list_export_tasks-instance_method
+      def list_export_tasks: (
+                               ?next_token: ::String,
+                               ?max_results: ::Integer
+                             ) -> _ListExportTasksResponseSuccess
+                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListExportTasksResponseSuccess
 
       interface _ListGraphSnapshotsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListGraphSnapshotsOutput]
@@ -503,14 +557,56 @@ module Aws
                                        ) -> _RestoreGraphFromSnapshotResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RestoreGraphFromSnapshotResponseSuccess
 
+      interface _StartExportTaskResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartExportTaskOutput]
+        def graph_id: () -> ::String
+        def role_arn: () -> ::String
+        def task_id: () -> ::String
+        def status: () -> ("INITIALIZING" | "EXPORTING" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
+        def format: () -> ("PARQUET" | "CSV")
+        def destination: () -> ::String
+        def kms_key_identifier: () -> ::String
+        def parquet_type: () -> ("COLUMNAR")
+        def status_reason: () -> ::String
+        def export_filter: () -> Types::ExportFilter
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#start_export_task-instance_method
+      def start_export_task: (
+                               graph_identifier: ::String,
+                               role_arn: ::String,
+                               format: ("PARQUET" | "CSV"),
+                               destination: ::String,
+                               kms_key_identifier: ::String,
+                               ?parquet_type: ("COLUMNAR"),
+                               ?export_filter: {
+                                 vertex_filter: Hash[::String, {
+                                     properties: Hash[::String, {
+                                         output_type: ::String?,
+                                         source_property_name: ::String?,
+                                         multi_value_handling: ("TO_LIST" | "PICK_FIRST")?
+                                       }]?
+                                   }]?,
+                                 edge_filter: Hash[::String, {
+                                     properties: Hash[::String, {
+                                         output_type: ::String?,
+                                         source_property_name: ::String?,
+                                         multi_value_handling: ("TO_LIST" | "PICK_FIRST")?
+                                       }]?
+                                   }]?
+                               },
+                               ?tags: Hash[::String, ::String]
+                             ) -> _StartExportTaskResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartExportTaskResponseSuccess
+
       interface _StartImportTaskResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartImportTaskOutput]
         def graph_id: () -> ::String
         def task_id: () -> ::String
         def source: () -> ::String
-        def format: () -> ("CSV" | "OPEN_CYPHER" | "NTRIPLES")
+        def format: () -> ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES")
+        def parquet_type: () -> ("COLUMNAR")
         def role_arn: () -> ::String
-        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED")
+        def status: () -> ("INITIALIZING" | "EXPORTING" | "ANALYZING_DATA" | "IMPORTING" | "REPROVISIONING" | "ROLLING_BACK" | "SUCCEEDED" | "FAILED" | "CANCELLING" | "CANCELLED" | "DELETED")
         def import_options: () -> Types::ImportOptions
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#start_import_task-instance_method
@@ -525,7 +621,8 @@ module Aws
                                },
                                ?fail_on_error: bool,
                                source: ::String,
-                               ?format: ("CSV" | "OPEN_CYPHER" | "NTRIPLES"),
+                               ?format: ("CSV" | "OPEN_CYPHER" | "PARQUET" | "NTRIPLES"),
+                               ?parquet_type: ("COLUMNAR"),
                                ?blank_node_handling: ("convertToIri"),
                                graph_identifier: ::String,
                                role_arn: ::String
@@ -580,7 +677,15 @@ module Aws
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateGraphResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NeptuneGraph/Client.html#wait_until-instance_method
-      def wait_until: (:graph_available waiter_name, 
+      def wait_until: (:export_task_cancelled waiter_name, 
+                    task_identifier: ::String
+                  ) -> Client::_GetExportTaskResponseSuccess
+                    | (:export_task_cancelled waiter_name, Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> Client::_GetExportTaskResponseSuccess
+                    | (:export_task_successful waiter_name, 
+                    task_identifier: ::String
+                  ) -> Client::_GetExportTaskResponseSuccess
+                    | (:export_task_successful waiter_name, Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> Client::_GetExportTaskResponseSuccess
+                    | (:graph_available waiter_name, 
                     graph_identifier: ::String
                   ) -> Client::_GetGraphResponseSuccess
                     | (:graph_available waiter_name, Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> Client::_GetGraphResponseSuccess

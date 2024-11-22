@@ -28,6 +28,7 @@ module Aws::Connect
   #
   # ## Error Classes
   # * {AccessDeniedException}
+  # * {ConditionalOperationFailedException}
   # * {ConflictException}
   # * {ContactFlowNotPublishedException}
   # * {ContactNotFoundException}
@@ -64,6 +65,21 @@ module Aws::Connect
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::Connect::Types::AccessDeniedException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class ConditionalOperationFailedException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Connect::Types::ConditionalOperationFailedException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end
@@ -406,6 +422,11 @@ module Aws::Connect
       # @return [String]
       def message
         @message || @data[:message]
+      end
+
+      # @return [String]
+      def reason
+        @data[:reason]
       end
     end
 

@@ -51,6 +51,8 @@ module Aws::SES
     ConfigurationSetName = Shapes::StringShape.new(name: 'ConfigurationSetName')
     ConfigurationSetSendingPausedException = Shapes::StructureShape.new(name: 'ConfigurationSetSendingPausedException', error: {"code"=>"ConfigurationSetSendingPausedException", "httpStatusCode"=>400, "senderFault"=>true})
     ConfigurationSets = Shapes::ListShape.new(name: 'ConfigurationSets')
+    ConnectAction = Shapes::StructureShape.new(name: 'ConnectAction')
+    ConnectInstanceArn = Shapes::StringShape.new(name: 'ConnectInstanceArn')
     Content = Shapes::StructureShape.new(name: 'Content')
     Counter = Shapes::IntegerShape.new(name: 'Counter')
     CreateConfigurationSetEventDestinationRequest = Shapes::StructureShape.new(name: 'CreateConfigurationSetEventDestinationRequest')
@@ -407,6 +409,10 @@ module Aws::SES
     ConfigurationSetSendingPausedException.struct_class = Types::ConfigurationSetSendingPausedException
 
     ConfigurationSets.member = Shapes::ShapeRef.new(shape: ConfigurationSet)
+
+    ConnectAction.add_member(:instance_arn, Shapes::ShapeRef.new(shape: ConnectInstanceArn, required: true, location_name: "InstanceARN"))
+    ConnectAction.add_member(:iam_role_arn, Shapes::ShapeRef.new(shape: IAMRoleARN, required: true, location_name: "IAMRoleARN"))
+    ConnectAction.struct_class = Types::ConnectAction
 
     Content.add_member(:data, Shapes::ShapeRef.new(shape: MessageData, required: true, location_name: "Data"))
     Content.add_member(:charset, Shapes::ShapeRef.new(shape: Charset, location_name: "Charset"))
@@ -843,6 +849,7 @@ module Aws::SES
     ReceiptAction.add_member(:stop_action, Shapes::ShapeRef.new(shape: StopAction, location_name: "StopAction"))
     ReceiptAction.add_member(:add_header_action, Shapes::ShapeRef.new(shape: AddHeaderAction, location_name: "AddHeaderAction"))
     ReceiptAction.add_member(:sns_action, Shapes::ShapeRef.new(shape: SNSAction, location_name: "SNSAction"))
+    ReceiptAction.add_member(:connect_action, Shapes::ShapeRef.new(shape: ConnectAction, location_name: "ConnectAction"))
     ReceiptAction.struct_class = Types::ReceiptAction
 
     ReceiptActionsList.member = Shapes::ShapeRef.new(shape: ReceiptAction)

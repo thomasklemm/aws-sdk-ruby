@@ -1148,7 +1148,7 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   event.trace.orchestration_trace.model_invocation_input.text #=> String
     #   event.trace.orchestration_trace.model_invocation_input.trace_id #=> String
-    #   event.trace.orchestration_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING"
+    #   event.trace.orchestration_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
     #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
     #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
     #   event.trace.orchestration_trace.model_invocation_output.raw_response.content #=> String
@@ -1186,7 +1186,7 @@ module Aws::BedrockAgentRuntime
     #   event.trace.post_processing_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   event.trace.post_processing_trace.model_invocation_input.text #=> String
     #   event.trace.post_processing_trace.model_invocation_input.trace_id #=> String
-    #   event.trace.post_processing_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING"
+    #   event.trace.post_processing_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
     #   event.trace.post_processing_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
     #   event.trace.post_processing_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
     #   event.trace.post_processing_trace.model_invocation_output.parsed_response.text #=> String
@@ -1203,7 +1203,7 @@ module Aws::BedrockAgentRuntime
     #   event.trace.pre_processing_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
     #   event.trace.pre_processing_trace.model_invocation_input.text #=> String
     #   event.trace.pre_processing_trace.model_invocation_input.trace_id #=> String
-    #   event.trace.pre_processing_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING"
+    #   event.trace.pre_processing_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
     #   event.trace.pre_processing_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
     #   event.trace.pre_processing_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
     #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.is_valid #=> Boolean
@@ -1560,6 +1560,779 @@ module Aws::BedrockAgentRuntime
       yield(event_stream_handler) if block_given?
 
       req = build_request(:invoke_flow, params)
+
+      req.context[:event_stream_handler] = event_stream_handler
+      req.handlers.add(Aws::Binary::DecodeHandler, priority: 95)
+
+      req.send_request(options, &block)
+    end
+
+    # Invokes an inline Amazon Bedrock agent using the configurations you
+    # provide with the request.
+    #
+    # * Specify the following fields for security purposes.
+    #
+    #   * (Optional) `customerEncryptionKeyArn` – The Amazon Resource Name
+    #     (ARN) of a KMS key to encrypt the creation of the agent.
+    #
+    #   * (Optional) `idleSessionTTLinSeconds` – Specify the number of
+    #     seconds for which the agent should maintain session information.
+    #     After this time expires, the subsequent `InvokeInlineAgent`
+    #     request begins a new session.
+    # * To override the default prompt behavior for agent orchestration and
+    #   to use advanced prompts, include a `promptOverrideConfiguration`
+    #   object. For more information, see [Advanced prompts][1].
+    #
+    # * The agent instructions will not be honored if your agent has only
+    #   one knowledge base, uses default prompts, has no action group, and
+    #   user input is disabled.
+    #
+    # <note markdown="1"> The CLI doesn't support streaming operations in Amazon Bedrock,
+    # including `InvokeInlineAgent`.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html
+    #
+    # @option params [Array<Types::AgentActionGroup>] :action_groups
+    #   A list of action groups with each action group defining the action the
+    #   inline agent needs to carry out.
+    #
+    # @option params [String] :customer_encryption_key_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services KMS key to
+    #   use to encrypt your inline agent.
+    #
+    # @option params [Boolean] :enable_trace
+    #   Specifies whether to turn on the trace or not to track the agent's
+    #   reasoning process. For more information, see [Using trace][1].
+    #   </p>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/trace-events.html
+    #
+    # @option params [Boolean] :end_session
+    #   Specifies whether to end the session with the inline agent or not.
+    #
+    # @option params [required, String] :foundation_model
+    #   The [model identifier (ID)][1] of the model to use for orchestration
+    #   by the inline agent. For example, `meta.llama3-1-70b-instruct-v1:0`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns
+    #
+    # @option params [Types::GuardrailConfigurationWithArn] :guardrail_configuration
+    #   The [guardrails][1] to assign to the inline agent.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html
+    #
+    # @option params [Integer] :idle_session_ttl_in_seconds
+    #   The number of seconds for which the inline agent should maintain
+    #   session information. After this time expires, the subsequent
+    #   `InvokeInlineAgent` request begins a new session.
+    #
+    #   A user interaction remains active for the amount of time specified. If
+    #   no conversation occurs during this time, the session expires and the
+    #   data provided before the timeout is deleted.
+    #
+    # @option params [Types::InlineSessionState] :inline_session_state
+    #   Parameters that specify the various attributes of a sessions. You can
+    #   include attributes for the session or prompt or, if you configured an
+    #   action group to return control, results from invocation of the action
+    #   group. For more information, see [Control session context][1].
+    #
+    #   <note markdown="1"> If you include `returnControlInvocationResults` in the `sessionState`
+    #   field, the `inputText` field will be ignored.
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
+    #
+    # @option params [String] :input_text
+    #   The prompt text to send to the agent.
+    #
+    #   <note markdown="1"> If you include `returnControlInvocationResults` in the `sessionState`
+    #   field, the `inputText` field will be ignored.
+    #
+    #    </note>
+    #
+    # @option params [required, String] :instruction
+    #   The instructions that tell the inline agent what it should do and how
+    #   it should interact with users.
+    #
+    # @option params [Array<Types::KnowledgeBase>] :knowledge_bases
+    #   Contains information of the knowledge bases to associate with.
+    #
+    # @option params [Types::PromptOverrideConfiguration] :prompt_override_configuration
+    #   Configurations for advanced prompts used to override the default
+    #   prompts to enhance the accuracy of the inline agent.
+    #
+    # @option params [required, String] :session_id
+    #   The unique identifier of the session. Use the same value across
+    #   requests to continue the same conversation.
+    #
+    # @return [Types::InvokeInlineAgentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::InvokeInlineAgentResponse#completion #completion} => Types::InlineAgentResponseStream
+    #   * {Types::InvokeInlineAgentResponse#content_type #content_type} => String
+    #   * {Types::InvokeInlineAgentResponse#session_id #session_id} => String
+    #
+    # @example EventStream Operation Example
+    #
+    #   You can process the event once it arrives immediately, or wait until the
+    #   full response is complete and iterate through the eventstream enumerator.
+    #
+    #   To interact with event immediately, you need to register #invoke_inline_agent
+    #   with callbacks. Callbacks can be registered for specific events or for all
+    #   events, including error events.
+    #
+    #   Callbacks can be passed into the `:event_stream_handler` option or within a
+    #   block statement attached to the #invoke_inline_agent call directly. Hybrid
+    #   pattern of both is also supported.
+    #
+    #   `:event_stream_handler` option takes in either a Proc object or
+    #   Aws::BedrockAgentRuntime::EventStreams::InlineAgentResponseStream object.
+    #
+    #   Usage pattern a): Callbacks with a block attached to #invoke_inline_agent
+    #     Example for registering callbacks for all event types and an error event
+    #
+    #     client.invoke_inline_agent( # params input# ) do |stream|
+    #       stream.on_error_event do |event|
+    #         # catch unmodeled error event in the stream
+    #         raise event
+    #         # => Aws::Errors::EventError
+    #         # event.event_type => :error
+    #         # event.error_code => String
+    #         # event.error_message => String
+    #       end
+    #
+    #       stream.on_event do |event|
+    #         # process all events arrive
+    #         puts event.event_type
+    #         ...
+    #       end
+    #
+    #     end
+    #
+    #   Usage pattern b): Pass in `:event_stream_handler` for #invoke_inline_agent
+    #
+    #     1) Create a Aws::BedrockAgentRuntime::EventStreams::InlineAgentResponseStream object
+    #     Example for registering callbacks with specific events
+    #
+    #       handler = Aws::BedrockAgentRuntime::EventStreams::InlineAgentResponseStream.new
+    #       handler.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       handler.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       handler.on_chunk_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::chunk
+    #       end
+    #       handler.on_conflict_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::conflictException
+    #       end
+    #       handler.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       handler.on_files_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::files
+    #       end
+    #       handler.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       handler.on_resource_not_found_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
+    #       end
+    #       handler.on_return_control_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::returnControl
+    #       end
+    #       handler.on_service_quota_exceeded_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::serviceQuotaExceededException
+    #       end
+    #       handler.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       handler.on_trace_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::trace
+    #       end
+    #       handler.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #
+    #     client.invoke_inline_agent( # params input #, event_stream_handler: handler)
+    #
+    #     2) Use a Ruby Proc object
+    #     Example for registering callbacks with specific events
+    #
+    #     handler = Proc.new do |stream|
+    #       stream.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       stream.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       stream.on_chunk_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::chunk
+    #       end
+    #       stream.on_conflict_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::conflictException
+    #       end
+    #       stream.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       stream.on_files_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::files
+    #       end
+    #       stream.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       stream.on_resource_not_found_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
+    #       end
+    #       stream.on_return_control_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::returnControl
+    #       end
+    #       stream.on_service_quota_exceeded_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::serviceQuotaExceededException
+    #       end
+    #       stream.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       stream.on_trace_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::trace
+    #       end
+    #       stream.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #     end
+    #
+    #     client.invoke_inline_agent( # params input #, event_stream_handler: handler)
+    #
+    #   Usage pattern c): Hybrid pattern of a) and b)
+    #
+    #       handler = Aws::BedrockAgentRuntime::EventStreams::InlineAgentResponseStream.new
+    #       handler.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       handler.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       handler.on_chunk_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::chunk
+    #       end
+    #       handler.on_conflict_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::conflictException
+    #       end
+    #       handler.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       handler.on_files_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::files
+    #       end
+    #       handler.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       handler.on_resource_not_found_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
+    #       end
+    #       handler.on_return_control_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::returnControl
+    #       end
+    #       handler.on_service_quota_exceeded_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::serviceQuotaExceededException
+    #       end
+    #       handler.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       handler.on_trace_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::trace
+    #       end
+    #       handler.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #
+    #     client.invoke_inline_agent( # params input #, event_stream_handler: handler) do |stream|
+    #       stream.on_error_event do |event|
+    #         # catch unmodeled error event in the stream
+    #         raise event
+    #         # => Aws::Errors::EventError
+    #         # event.event_type => :error
+    #         # event.error_code => String
+    #         # event.error_message => String
+    #       end
+    #     end
+    #
+    #   You can also iterate through events after the response complete.
+    #
+    #   Events are available at resp.completion # => Enumerator
+    #   For parameter input example, please refer to following request syntax
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.invoke_inline_agent({
+    #     action_groups: [
+    #       {
+    #         action_group_executor: {
+    #           custom_control: "RETURN_CONTROL", # accepts RETURN_CONTROL
+    #           lambda: "LambdaResourceArn",
+    #         },
+    #         action_group_name: "ResourceName", # required
+    #         api_schema: {
+    #           payload: "Payload",
+    #           s3: {
+    #             s3_bucket_name: "S3BucketName",
+    #             s3_object_key: "S3ObjectKey",
+    #           },
+    #         },
+    #         description: "ResourceDescription",
+    #         function_schema: {
+    #           functions: [
+    #             {
+    #               description: "FunctionDescription",
+    #               name: "ResourceName", # required
+    #               parameters: {
+    #                 "ParameterName" => {
+    #                   description: "ParameterDescription",
+    #                   required: false,
+    #                   type: "string", # required, accepts string, number, integer, boolean, array
+    #                 },
+    #               },
+    #               require_confirmation: "ENABLED", # accepts ENABLED, DISABLED
+    #             },
+    #           ],
+    #         },
+    #         parent_action_group_signature: "AMAZON.UserInput", # accepts AMAZON.UserInput, AMAZON.CodeInterpreter
+    #       },
+    #     ],
+    #     customer_encryption_key_arn: "KmsKeyArn",
+    #     enable_trace: false,
+    #     end_session: false,
+    #     foundation_model: "ModelIdentifier", # required
+    #     guardrail_configuration: {
+    #       guardrail_identifier: "GuardrailIdentifierWithArn", # required
+    #       guardrail_version: "GuardrailVersion", # required
+    #     },
+    #     idle_session_ttl_in_seconds: 1,
+    #     inline_session_state: {
+    #       files: [
+    #         {
+    #           name: "String", # required
+    #           source: { # required
+    #             byte_content: {
+    #               data: "data", # required
+    #               media_type: "MimeType", # required
+    #             },
+    #             s3_location: {
+    #               uri: "S3Uri", # required
+    #             },
+    #             source_type: "S3", # required, accepts S3, BYTE_CONTENT
+    #           },
+    #           use_case: "CODE_INTERPRETER", # required, accepts CODE_INTERPRETER, CHAT
+    #         },
+    #       ],
+    #       invocation_id: "String",
+    #       prompt_session_attributes: {
+    #         "String" => "String",
+    #       },
+    #       return_control_invocation_results: [
+    #         {
+    #           api_result: {
+    #             action_group: "String", # required
+    #             api_path: "ApiPath",
+    #             confirmation_state: "CONFIRM", # accepts CONFIRM, DENY
+    #             http_method: "String",
+    #             http_status_code: 1,
+    #             response_body: {
+    #               "String" => {
+    #                 body: "String",
+    #               },
+    #             },
+    #             response_state: "FAILURE", # accepts FAILURE, REPROMPT
+    #           },
+    #           function_result: {
+    #             action_group: "String", # required
+    #             confirmation_state: "CONFIRM", # accepts CONFIRM, DENY
+    #             function: "String",
+    #             response_body: {
+    #               "String" => {
+    #                 body: "String",
+    #               },
+    #             },
+    #             response_state: "FAILURE", # accepts FAILURE, REPROMPT
+    #           },
+    #         },
+    #       ],
+    #       session_attributes: {
+    #         "String" => "String",
+    #       },
+    #     },
+    #     input_text: "InputText",
+    #     instruction: "Instruction", # required
+    #     knowledge_bases: [
+    #       {
+    #         description: "ResourceDescription", # required
+    #         knowledge_base_id: "KnowledgeBaseId", # required
+    #         retrieval_configuration: {
+    #           vector_search_configuration: { # required
+    #             filter: {
+    #               and_all: [
+    #                 {
+    #                   # recursive RetrievalFilter
+    #                 },
+    #               ],
+    #               equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               greater_than: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               greater_than_or_equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               in: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               less_than: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               less_than_or_equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               list_contains: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               not_equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               not_in: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               or_all: [
+    #                 {
+    #                   # recursive RetrievalFilter
+    #                 },
+    #               ],
+    #               starts_with: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               string_contains: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #             },
+    #             number_of_results: 1,
+    #             override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #           },
+    #         },
+    #       },
+    #     ],
+    #     prompt_override_configuration: {
+    #       override_lambda: "LambdaResourceArn",
+    #       prompt_configurations: [ # required
+    #         {
+    #           base_prompt_template: "BasePromptTemplate",
+    #           inference_configuration: {
+    #             maximum_length: 1,
+    #             stop_sequences: ["String"],
+    #             temperature: 1.0,
+    #             top_k: 1,
+    #             top_p: 1.0,
+    #           },
+    #           parser_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
+    #           prompt_creation_mode: "DEFAULT", # accepts DEFAULT, OVERRIDDEN
+    #           prompt_state: "ENABLED", # accepts ENABLED, DISABLED
+    #           prompt_type: "PRE_PROCESSING", # accepts PRE_PROCESSING, ORCHESTRATION, KNOWLEDGE_BASE_RESPONSE_GENERATION, POST_PROCESSING, ROUTING_CLASSIFIER
+    #         },
+    #       ],
+    #     },
+    #     session_id: "SessionId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   All events are available at resp.completion:
+    #   resp.completion #=> Enumerator
+    #   resp.completion.event_types #=> [:access_denied_exception, :bad_gateway_exception, :chunk, :conflict_exception, :dependency_failed_exception, :files, :internal_server_exception, :resource_not_found_exception, :return_control, :service_quota_exceeded_exception, :throttling_exception, :trace, :validation_exception]
+    #
+    #   For :access_denied_exception event available at #on_access_denied_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :bad_gateway_exception event available at #on_bad_gateway_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #   event.resource_name #=> String
+    #
+    #   For :chunk event available at #on_chunk_event callback and response eventstream enumerator:
+    #   event.attribution.citations #=> Array
+    #   event.attribution.citations[0].generated_response_part.text_response_part.span.end #=> Integer
+    #   event.attribution.citations[0].generated_response_part.text_response_part.span.start #=> Integer
+    #   event.attribution.citations[0].generated_response_part.text_response_part.text #=> String
+    #   event.attribution.citations[0].retrieved_references #=> Array
+    #   event.attribution.citations[0].retrieved_references[0].content.text #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.confluence_location.url #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.s3_location.uri #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.salesforce_location.url #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.share_point_location.url #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   event.attribution.citations[0].retrieved_references[0].location.web_location.url #=> String
+    #   event.attribution.citations[0].retrieved_references[0].metadata #=> Hash
+    #   event.bytes #=> String
+    #
+    #   For :conflict_exception event available at #on_conflict_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :dependency_failed_exception event available at #on_dependency_failed_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #   event.resource_name #=> String
+    #
+    #   For :files event available at #on_files_event callback and response eventstream enumerator:
+    #   event.files #=> Array
+    #   event.files[0].bytes #=> String
+    #   event.files[0].name #=> String
+    #   event.files[0].type #=> String
+    #
+    #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :resource_not_found_exception event available at #on_resource_not_found_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :return_control event available at #on_return_control_event callback and response eventstream enumerator:
+    #   event.invocation_id #=> String
+    #   event.invocation_inputs #=> Array
+    #   event.invocation_inputs[0].api_invocation_input.action_group #=> String
+    #   event.invocation_inputs[0].api_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.invocation_inputs[0].api_invocation_input.api_path #=> String
+    #   event.invocation_inputs[0].api_invocation_input.http_method #=> String
+    #   event.invocation_inputs[0].api_invocation_input.parameters #=> Array
+    #   event.invocation_inputs[0].api_invocation_input.parameters[0].name #=> String
+    #   event.invocation_inputs[0].api_invocation_input.parameters[0].type #=> String
+    #   event.invocation_inputs[0].api_invocation_input.parameters[0].value #=> String
+    #   event.invocation_inputs[0].api_invocation_input.request_body.content #=> Hash
+    #   event.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties #=> Array
+    #   event.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].name #=> String
+    #   event.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].type #=> String
+    #   event.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].value #=> String
+    #   event.invocation_inputs[0].function_invocation_input.action_group #=> String
+    #   event.invocation_inputs[0].function_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.invocation_inputs[0].function_invocation_input.function #=> String
+    #   event.invocation_inputs[0].function_invocation_input.parameters #=> Array
+    #   event.invocation_inputs[0].function_invocation_input.parameters[0].name #=> String
+    #   event.invocation_inputs[0].function_invocation_input.parameters[0].type #=> String
+    #   event.invocation_inputs[0].function_invocation_input.parameters[0].value #=> String
+    #
+    #   For :service_quota_exceeded_exception event available at #on_service_quota_exceeded_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :throttling_exception event available at #on_throttling_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :trace event available at #on_trace_event callback and response eventstream enumerator:
+    #   event.session_id #=> String
+    #   event.trace.failure_trace.failure_reason #=> String
+    #   event.trace.failure_trace.trace_id #=> String
+    #   event.trace.guardrail_trace.action #=> String, one of "INTERVENED", "NONE"
+    #   event.trace.guardrail_trace.input_assessments #=> Array
+    #   event.trace.guardrail_trace.input_assessments[0].content_policy.filters #=> Array
+    #   event.trace.guardrail_trace.input_assessments[0].content_policy.filters[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.input_assessments[0].content_policy.filters[0].confidence #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   event.trace.guardrail_trace.input_assessments[0].content_policy.filters[0].type #=> String, one of "INSULTS", "HATE", "SEXUAL", "VIOLENCE", "MISCONDUCT", "PROMPT_ATTACK"
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.pii_entities #=> Array
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.pii_entities[0].action #=> String, one of "BLOCKED", "ANONYMIZED"
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.pii_entities[0].match #=> String
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.regexes #=> Array
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.regexes[0].action #=> String, one of "BLOCKED", "ANONYMIZED"
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.regexes[0].match #=> String
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.regexes[0].name #=> String
+    #   event.trace.guardrail_trace.input_assessments[0].sensitive_information_policy.regexes[0].regex #=> String
+    #   event.trace.guardrail_trace.input_assessments[0].topic_policy.topics #=> Array
+    #   event.trace.guardrail_trace.input_assessments[0].topic_policy.topics[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.input_assessments[0].topic_policy.topics[0].name #=> String
+    #   event.trace.guardrail_trace.input_assessments[0].topic_policy.topics[0].type #=> String, one of "DENY"
+    #   event.trace.guardrail_trace.input_assessments[0].word_policy.custom_words #=> Array
+    #   event.trace.guardrail_trace.input_assessments[0].word_policy.custom_words[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.input_assessments[0].word_policy.custom_words[0].match #=> String
+    #   event.trace.guardrail_trace.input_assessments[0].word_policy.managed_word_lists #=> Array
+    #   event.trace.guardrail_trace.input_assessments[0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.input_assessments[0].word_policy.managed_word_lists[0].match #=> String
+    #   event.trace.guardrail_trace.input_assessments[0].word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
+    #   event.trace.guardrail_trace.output_assessments #=> Array
+    #   event.trace.guardrail_trace.output_assessments[0].content_policy.filters #=> Array
+    #   event.trace.guardrail_trace.output_assessments[0].content_policy.filters[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.output_assessments[0].content_policy.filters[0].confidence #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   event.trace.guardrail_trace.output_assessments[0].content_policy.filters[0].type #=> String, one of "INSULTS", "HATE", "SEXUAL", "VIOLENCE", "MISCONDUCT", "PROMPT_ATTACK"
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.pii_entities #=> Array
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.pii_entities[0].action #=> String, one of "BLOCKED", "ANONYMIZED"
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.pii_entities[0].match #=> String
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.pii_entities[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.regexes #=> Array
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.regexes[0].action #=> String, one of "BLOCKED", "ANONYMIZED"
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.regexes[0].match #=> String
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.regexes[0].name #=> String
+    #   event.trace.guardrail_trace.output_assessments[0].sensitive_information_policy.regexes[0].regex #=> String
+    #   event.trace.guardrail_trace.output_assessments[0].topic_policy.topics #=> Array
+    #   event.trace.guardrail_trace.output_assessments[0].topic_policy.topics[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.output_assessments[0].topic_policy.topics[0].name #=> String
+    #   event.trace.guardrail_trace.output_assessments[0].topic_policy.topics[0].type #=> String, one of "DENY"
+    #   event.trace.guardrail_trace.output_assessments[0].word_policy.custom_words #=> Array
+    #   event.trace.guardrail_trace.output_assessments[0].word_policy.custom_words[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.output_assessments[0].word_policy.custom_words[0].match #=> String
+    #   event.trace.guardrail_trace.output_assessments[0].word_policy.managed_word_lists #=> Array
+    #   event.trace.guardrail_trace.output_assessments[0].word_policy.managed_word_lists[0].action #=> String, one of "BLOCKED"
+    #   event.trace.guardrail_trace.output_assessments[0].word_policy.managed_word_lists[0].match #=> String
+    #   event.trace.guardrail_trace.output_assessments[0].word_policy.managed_word_lists[0].type #=> String, one of "PROFANITY"
+    #   event.trace.guardrail_trace.trace_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.action_group_name #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.api_path #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.execution_type #=> String, one of "LAMBDA", "RETURN_CONTROL"
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.function #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.invocation_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.parameters #=> Array
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.parameters[0].name #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.parameters[0].type #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.parameters[0].value #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content #=> Hash
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"] #=> Array
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].name #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].type #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].value #=> String
+    #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.verb #=> String
+    #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.code #=> String
+    #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.files #=> Array
+    #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.files[0] #=> String
+    #   event.trace.orchestration_trace.invocation_input.invocation_type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ACTION_GROUP_CODE_INTERPRETER"
+    #   event.trace.orchestration_trace.invocation_input.knowledge_base_lookup_input.knowledge_base_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.knowledge_base_lookup_input.text #=> String
+    #   event.trace.orchestration_trace.invocation_input.trace_id #=> String
+    #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
+    #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
+    #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
+    #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.temperature #=> Float
+    #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.top_k #=> Integer
+    #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.top_p #=> Float
+    #   event.trace.orchestration_trace.model_invocation_input.override_lambda #=> String
+    #   event.trace.orchestration_trace.model_invocation_input.parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.orchestration_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.orchestration_trace.model_invocation_input.text #=> String
+    #   event.trace.orchestration_trace.model_invocation_input.trace_id #=> String
+    #   event.trace.orchestration_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
+    #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
+    #   event.trace.orchestration_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
+    #   event.trace.orchestration_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.orchestration_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.orchestration_trace.observation.action_group_invocation_output.text #=> String
+    #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_error #=> String
+    #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_output #=> String
+    #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_timeout #=> Boolean
+    #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.files #=> Array
+    #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.files[0] #=> String
+    #   event.trace.orchestration_trace.observation.final_response.text #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
+    #   event.trace.orchestration_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
+    #   event.trace.orchestration_trace.observation.reprompt_response.text #=> String
+    #   event.trace.orchestration_trace.observation.trace_id #=> String
+    #   event.trace.orchestration_trace.observation.type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ASK_USER", "REPROMPT"
+    #   event.trace.orchestration_trace.rationale.text #=> String
+    #   event.trace.orchestration_trace.rationale.trace_id #=> String
+    #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
+    #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
+    #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
+    #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.temperature #=> Float
+    #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.top_k #=> Integer
+    #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.top_p #=> Float
+    #   event.trace.post_processing_trace.model_invocation_input.override_lambda #=> String
+    #   event.trace.post_processing_trace.model_invocation_input.parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.post_processing_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.post_processing_trace.model_invocation_input.text #=> String
+    #   event.trace.post_processing_trace.model_invocation_input.trace_id #=> String
+    #   event.trace.post_processing_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
+    #   event.trace.post_processing_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
+    #   event.trace.post_processing_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
+    #   event.trace.post_processing_trace.model_invocation_output.parsed_response.text #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.post_processing_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
+    #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
+    #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
+    #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.temperature #=> Float
+    #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.top_k #=> Integer
+    #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.top_p #=> Float
+    #   event.trace.pre_processing_trace.model_invocation_input.override_lambda #=> String
+    #   event.trace.pre_processing_trace.model_invocation_input.parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.pre_processing_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.pre_processing_trace.model_invocation_input.text #=> String
+    #   event.trace.pre_processing_trace.model_invocation_input.trace_id #=> String
+    #   event.trace.pre_processing_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
+    #   event.trace.pre_processing_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
+    #   event.trace.pre_processing_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
+    #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.is_valid #=> Boolean
+    #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.rationale #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.pre_processing_trace.model_invocation_output.trace_id #=> String
+    #
+    #   For :validation_exception event available at #on_validation_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   resp.content_type #=> String
+    #   resp.session_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InvokeInlineAgent AWS API Documentation
+    #
+    # @overload invoke_inline_agent(params = {})
+    # @param [Hash] params ({})
+    def invoke_inline_agent(params = {}, options = {}, &block)
+      params = params.dup
+      event_stream_handler = case handler = params.delete(:event_stream_handler)
+        when EventStreams::InlineAgentResponseStream then handler
+        when Proc then EventStreams::InlineAgentResponseStream.new.tap(&handler)
+        when nil then EventStreams::InlineAgentResponseStream.new
+        else
+          msg = "expected :event_stream_handler to be a block or "\
+                "instance of Aws::BedrockAgentRuntime::EventStreams::InlineAgentResponseStream"\
+                ", got `#{handler.inspect}` instead"
+          raise ArgumentError, msg
+        end
+
+      yield(event_stream_handler) if block_given?
+
+      req = build_request(:invoke_inline_agent, params)
 
       req.context[:event_stream_handler] = event_stream_handler
       req.handlers.add(Aws::Binary::DecodeHandler, priority: 95)
@@ -2191,7 +2964,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.32.0'
+      context[:gem_version] = '1.33.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

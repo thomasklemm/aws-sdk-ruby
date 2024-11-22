@@ -304,6 +304,8 @@ module Aws::Omics
       attr_accessor client_token: ::String
       attr_accessor fallback_location: ::String
       attr_accessor e_tag_algorithm_family: ("MD5up" | "SHA256up" | "SHA512up")
+      attr_accessor propagated_set_level_tags: ::Array[::String]
+      attr_accessor s3_access_config: Types::S3AccessConfig
       SENSITIVE: []
     end
 
@@ -316,6 +318,10 @@ module Aws::Omics
       attr_accessor creation_time: ::Time
       attr_accessor fallback_location: ::String
       attr_accessor e_tag_algorithm_family: ("MD5up" | "SHA256up" | "SHA512up")
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+      attr_accessor status_message: ::String
+      attr_accessor propagated_set_level_tags: ::Array[::String]
+      attr_accessor s3_access: Types::SequenceStoreS3Access
       SENSITIVE: []
     end
 
@@ -427,6 +433,14 @@ module Aws::Omics
     class DeleteRunRequest
       attr_accessor id: ::String
       SENSITIVE: []
+    end
+
+    class DeleteS3AccessPolicyRequest
+      attr_accessor s3_access_point_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteS3AccessPolicyResponse < Aws::EmptyStructure
     end
 
     class DeleteSequenceStoreRequest
@@ -865,6 +879,20 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class GetS3AccessPolicyRequest
+      attr_accessor s3_access_point_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetS3AccessPolicyResponse
+      attr_accessor s3_access_point_arn: ::String
+      attr_accessor store_id: ::String
+      attr_accessor store_type: ("SEQUENCE_STORE" | "REFERENCE_STORE")
+      attr_accessor update_time: ::Time
+      attr_accessor s3_access_policy: ::String
+      SENSITIVE: []
+    end
+
     class GetSequenceStoreRequest
       attr_accessor id: ::String
       SENSITIVE: []
@@ -880,6 +908,10 @@ module Aws::Omics
       attr_accessor fallback_location: ::String
       attr_accessor s3_access: Types::SequenceStoreS3Access
       attr_accessor e_tag_algorithm_family: ("MD5up" | "SHA256up" | "SHA512up")
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+      attr_accessor status_message: ::String
+      attr_accessor propagated_set_level_tags: ::Array[::String]
+      attr_accessor update_time: ::Time
       SENSITIVE: []
     end
 
@@ -1377,6 +1409,19 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class PutS3AccessPolicyRequest
+      attr_accessor s3_access_point_arn: ::String
+      attr_accessor s3_access_policy: ::String
+      SENSITIVE: []
+    end
+
+    class PutS3AccessPolicyResponse
+      attr_accessor s3_access_point_arn: ::String
+      attr_accessor store_id: ::String
+      attr_accessor store_type: ("SEQUENCE_STORE" | "REFERENCE_STORE")
+      SENSITIVE: []
+    end
+
     class RangeNotSatisfiableException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -1571,6 +1616,11 @@ module Aws::Omics
       SENSITIVE: []
     end
 
+    class S3AccessConfig
+      attr_accessor access_log_location: ::String
+      SENSITIVE: []
+    end
+
     class SequenceInformation
       attr_accessor total_read_count: ::Integer
       attr_accessor total_base_count: ::Integer
@@ -1588,6 +1638,9 @@ module Aws::Omics
       attr_accessor creation_time: ::Time
       attr_accessor fallback_location: ::String
       attr_accessor e_tag_algorithm_family: ("MD5up" | "SHA256up" | "SHA512up")
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+      attr_accessor status_message: ::String
+      attr_accessor update_time: ::Time
       SENSITIVE: []
     end
 
@@ -1595,12 +1648,16 @@ module Aws::Omics
       attr_accessor name: ::String
       attr_accessor created_after: ::Time
       attr_accessor created_before: ::Time
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+      attr_accessor updated_after: ::Time
+      attr_accessor updated_before: ::Time
       SENSITIVE: []
     end
 
     class SequenceStoreS3Access
       attr_accessor s3_uri: ::String
       attr_accessor s3_access_point_arn: ::String
+      attr_accessor access_log_location: ::String
       SENSITIVE: []
     end
 
@@ -1912,6 +1969,34 @@ module Aws::Omics
       attr_accessor max_runs: ::Integer
       attr_accessor max_duration: ::Integer
       attr_accessor max_gpus: ::Integer
+      SENSITIVE: []
+    end
+
+    class UpdateSequenceStoreRequest
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor client_token: ::String
+      attr_accessor fallback_location: ::String
+      attr_accessor propagated_set_level_tags: ::Array[::String]
+      attr_accessor s3_access_config: Types::S3AccessConfig
+      SENSITIVE: []
+    end
+
+    class UpdateSequenceStoreResponse
+      attr_accessor id: ::String
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor sse_config: Types::SseConfig
+      attr_accessor creation_time: ::Time
+      attr_accessor update_time: ::Time
+      attr_accessor propagated_set_level_tags: ::Array[::String]
+      attr_accessor status: ("CREATING" | "ACTIVE" | "UPDATING" | "DELETING" | "FAILED")
+      attr_accessor status_message: ::String
+      attr_accessor fallback_location: ::String
+      attr_accessor s3_access: Types::SequenceStoreS3Access
+      attr_accessor e_tag_algorithm_family: ("MD5up" | "SHA256up" | "SHA512up")
       SENSITIVE: []
     end
 

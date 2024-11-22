@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:chatbot)
 # structure.
 #
 #     chatbot = Aws::Chatbot::Client.new
-#     resp = chatbot.create_chime_webhook_configuration(params)
+#     resp = chatbot.associate_to_configuration(params)
 #
 # See {Client} for more information.
 #
@@ -54,7 +54,7 @@ module Aws::Chatbot
   autoload :EndpointProvider, 'aws-sdk-chatbot/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-chatbot/endpoints'
 
-  GEM_VERSION = '1.18.0'
+  GEM_VERSION = '1.19.0'
 
 end
 

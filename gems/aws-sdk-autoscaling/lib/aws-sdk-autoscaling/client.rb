@@ -3804,6 +3804,7 @@ module Aws::AutoScaling
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.dimensions[0].value #=> String
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.statistic #=> String, one of "Average", "Minimum", "Maximum", "SampleCount", "Sum"
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.unit #=> String
+    #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.period #=> Integer
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics #=> Array
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].id #=> String
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].expression #=> String
@@ -3814,7 +3815,9 @@ module Aws::AutoScaling
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].metric_stat.metric.dimensions[0].value #=> String
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].metric_stat.stat #=> String
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].metric_stat.unit #=> String
+    #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].metric_stat.period #=> Integer
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].label #=> String
+    #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].period #=> Integer
     #   resp.scaling_policies[0].target_tracking_configuration.customized_metric_specification.metrics[0].return_data #=> Boolean
     #   resp.scaling_policies[0].target_tracking_configuration.target_value #=> Float
     #   resp.scaling_policies[0].target_tracking_configuration.disable_scale_in #=> Boolean
@@ -5797,6 +5800,7 @@ module Aws::AutoScaling
     #         ],
     #         statistic: "Average", # accepts Average, Minimum, Maximum, SampleCount, Sum
     #         unit: "MetricUnit",
+    #         period: 1,
     #         metrics: [
     #           {
     #             id: "XmlStringMaxLen64", # required
@@ -5814,8 +5818,10 @@ module Aws::AutoScaling
     #               },
     #               stat: "XmlStringMetricStat", # required
     #               unit: "MetricUnit",
+    #               period: 1,
     #             },
     #             label: "XmlStringMetricLabel",
+    #             period: 1,
     #             return_data: false,
     #           },
     #         ],
@@ -7436,7 +7442,7 @@ module Aws::AutoScaling
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-autoscaling'
-      context[:gem_version] = '1.127.0'
+      context[:gem_version] = '1.128.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

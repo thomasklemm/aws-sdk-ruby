@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.41.0 (2024-11-22)
+------------------
+
+* Feature - This release adds support for resource policy based cross account S3 access to sequence store read sets.
+
 1.40.0 (2024-11-20)
 ------------------
 

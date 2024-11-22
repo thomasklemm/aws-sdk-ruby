@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.91.0 (2024-11-22)
+------------------
+
+* Feature - AWS CodePipeline V2 type pipelines now support ECRBuildAndPublish and InspectorScan actions.
+
 1.90.0 (2024-11-06)
 ------------------
 

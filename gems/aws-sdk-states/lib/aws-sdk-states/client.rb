@@ -1287,6 +1287,7 @@ module Aws::States
     #   * {Types::DescribeStateMachineOutput#revision_id #revision_id} => String
     #   * {Types::DescribeStateMachineOutput#description #description} => String
     #   * {Types::DescribeStateMachineOutput#encryption_configuration #encryption_configuration} => Types::EncryptionConfiguration
+    #   * {Types::DescribeStateMachineOutput#variable_references #variable_references} => Hash&lt;String,Array&lt;String&gt;&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -1315,6 +1316,9 @@ module Aws::States
     #   resp.encryption_configuration.kms_key_id #=> String
     #   resp.encryption_configuration.kms_data_key_reuse_period_seconds #=> Integer
     #   resp.encryption_configuration.type #=> String, one of "AWS_OWNED_KEY", "CUSTOMER_MANAGED_KMS_KEY"
+    #   resp.variable_references #=> Hash
+    #   resp.variable_references["StateName"] #=> Array
+    #   resp.variable_references["StateName"][0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/DescribeStateMachine AWS API Documentation
     #
@@ -1416,6 +1420,7 @@ module Aws::States
     #   * {Types::DescribeStateMachineForExecutionOutput#label #label} => String
     #   * {Types::DescribeStateMachineForExecutionOutput#revision_id #revision_id} => String
     #   * {Types::DescribeStateMachineForExecutionOutput#encryption_configuration #encryption_configuration} => Types::EncryptionConfiguration
+    #   * {Types::DescribeStateMachineForExecutionOutput#variable_references #variable_references} => Hash&lt;String,Array&lt;String&gt;&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -1442,6 +1447,9 @@ module Aws::States
     #   resp.encryption_configuration.kms_key_id #=> String
     #   resp.encryption_configuration.kms_data_key_reuse_period_seconds #=> Integer
     #   resp.encryption_configuration.type #=> String, one of "AWS_OWNED_KEY", "CUSTOMER_MANAGED_KMS_KEY"
+    #   resp.variable_references #=> Hash
+    #   resp.variable_references["StateName"] #=> Array
+    #   resp.variable_references["StateName"][0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/DescribeStateMachineForExecution AWS API Documentation
     #
@@ -1573,7 +1581,7 @@ module Aws::States
     #
     #   resp.events #=> Array
     #   resp.events[0].timestamp #=> Time
-    #   resp.events[0].type #=> String, one of "ActivityFailed", "ActivityScheduled", "ActivityScheduleFailed", "ActivityStarted", "ActivitySucceeded", "ActivityTimedOut", "ChoiceStateEntered", "ChoiceStateExited", "ExecutionAborted", "ExecutionFailed", "ExecutionStarted", "ExecutionSucceeded", "ExecutionTimedOut", "FailStateEntered", "LambdaFunctionFailed", "LambdaFunctionScheduled", "LambdaFunctionScheduleFailed", "LambdaFunctionStarted", "LambdaFunctionStartFailed", "LambdaFunctionSucceeded", "LambdaFunctionTimedOut", "MapIterationAborted", "MapIterationFailed", "MapIterationStarted", "MapIterationSucceeded", "MapStateAborted", "MapStateEntered", "MapStateExited", "MapStateFailed", "MapStateStarted", "MapStateSucceeded", "ParallelStateAborted", "ParallelStateEntered", "ParallelStateExited", "ParallelStateFailed", "ParallelStateStarted", "ParallelStateSucceeded", "PassStateEntered", "PassStateExited", "SucceedStateEntered", "SucceedStateExited", "TaskFailed", "TaskScheduled", "TaskStarted", "TaskStartFailed", "TaskStateAborted", "TaskStateEntered", "TaskStateExited", "TaskSubmitFailed", "TaskSubmitted", "TaskSucceeded", "TaskTimedOut", "WaitStateAborted", "WaitStateEntered", "WaitStateExited", "MapRunAborted", "MapRunFailed", "MapRunStarted", "MapRunSucceeded", "ExecutionRedriven", "MapRunRedriven"
+    #   resp.events[0].type #=> String, one of "ActivityFailed", "ActivityScheduled", "ActivityScheduleFailed", "ActivityStarted", "ActivitySucceeded", "ActivityTimedOut", "ChoiceStateEntered", "ChoiceStateExited", "ExecutionAborted", "ExecutionFailed", "ExecutionStarted", "ExecutionSucceeded", "ExecutionTimedOut", "FailStateEntered", "LambdaFunctionFailed", "LambdaFunctionScheduled", "LambdaFunctionScheduleFailed", "LambdaFunctionStarted", "LambdaFunctionStartFailed", "LambdaFunctionSucceeded", "LambdaFunctionTimedOut", "MapIterationAborted", "MapIterationFailed", "MapIterationStarted", "MapIterationSucceeded", "MapStateAborted", "MapStateEntered", "MapStateExited", "MapStateFailed", "MapStateStarted", "MapStateSucceeded", "ParallelStateAborted", "ParallelStateEntered", "ParallelStateExited", "ParallelStateFailed", "ParallelStateStarted", "ParallelStateSucceeded", "PassStateEntered", "PassStateExited", "SucceedStateEntered", "SucceedStateExited", "TaskFailed", "TaskScheduled", "TaskStarted", "TaskStartFailed", "TaskStateAborted", "TaskStateEntered", "TaskStateExited", "TaskSubmitFailed", "TaskSubmitted", "TaskSucceeded", "TaskTimedOut", "WaitStateAborted", "WaitStateEntered", "WaitStateExited", "MapRunAborted", "MapRunFailed", "MapRunStarted", "MapRunSucceeded", "ExecutionRedriven", "MapRunRedriven", "EvaluationFailed"
     #   resp.events[0].id #=> Integer
     #   resp.events[0].previous_event_id #=> Integer
     #   resp.events[0].activity_failed_event_details.error #=> String
@@ -1667,11 +1675,18 @@ module Aws::States
     #   resp.events[0].state_exited_event_details.name #=> String
     #   resp.events[0].state_exited_event_details.output #=> String
     #   resp.events[0].state_exited_event_details.output_details.truncated #=> Boolean
+    #   resp.events[0].state_exited_event_details.assigned_variables #=> Hash
+    #   resp.events[0].state_exited_event_details.assigned_variables["VariableName"] #=> String
+    #   resp.events[0].state_exited_event_details.assigned_variables_details.truncated #=> Boolean
     #   resp.events[0].map_run_started_event_details.map_run_arn #=> String
     #   resp.events[0].map_run_failed_event_details.error #=> String
     #   resp.events[0].map_run_failed_event_details.cause #=> String
     #   resp.events[0].map_run_redriven_event_details.map_run_arn #=> String
     #   resp.events[0].map_run_redriven_event_details.redrive_count #=> Integer
+    #   resp.events[0].evaluation_failed_event_details.error #=> String
+    #   resp.events[0].evaluation_failed_event_details.cause #=> String
+    #   resp.events[0].evaluation_failed_event_details.location #=> String
+    #   resp.events[0].evaluation_failed_event_details.state #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/GetExecutionHistory AWS API Documentation
@@ -2932,7 +2947,7 @@ module Aws::States
     #
     #   [1]: https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html
     #
-    # @option params [required, String] :role_arn
+    # @option params [String] :role_arn
     #   The Amazon Resource Name (ARN) of the execution role with the required
     #   IAM permissions for the state.
     #
@@ -2976,6 +2991,10 @@ module Aws::States
     #
     #   [1]: https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions
     #
+    # @option params [String] :variables
+    #   JSON object literal that sets variables used in the state under test.
+    #   Object keys are the variable names and values are the variable values.
+    #
     # @return [Types::TestStateOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::TestStateOutput#output #output} => String
@@ -2989,10 +3008,11 @@ module Aws::States
     #
     #   resp = client.test_state({
     #     definition: "Definition", # required
-    #     role_arn: "Arn", # required
+    #     role_arn: "Arn",
     #     input: "SensitiveData",
     #     inspection_level: "INFO", # accepts INFO, DEBUG, TRACE
     #     reveal_secrets: false,
+    #     variables: "SensitiveData",
     #   })
     #
     # @example Response structure
@@ -3001,6 +3021,7 @@ module Aws::States
     #   resp.error #=> String
     #   resp.cause #=> String
     #   resp.inspection_data.input #=> String
+    #   resp.inspection_data.after_arguments #=> String
     #   resp.inspection_data.after_input_path #=> String
     #   resp.inspection_data.after_parameters #=> String
     #   resp.inspection_data.result #=> String
@@ -3016,6 +3037,7 @@ module Aws::States
     #   resp.inspection_data.response.status_message #=> String
     #   resp.inspection_data.response.headers #=> String
     #   resp.inspection_data.response.body #=> String
+    #   resp.inspection_data.variables #=> String
     #   resp.next_state #=> String
     #   resp.status #=> String, one of "SUCCEEDED", "FAILED", "RETRIABLE", "CAUGHT_ERROR"
     #
@@ -3319,34 +3341,46 @@ module Aws::States
       req.send_request(options)
     end
 
-    # Validates the syntax of a state machine definition.
+    # Validates the syntax of a state machine definition specified in
+    # [Amazon States Language][1] (ASL), a JSON-based, structured language.
     #
     # You can validate that a state machine definition is correct without
-    # creating a state machine resource. Step Functions will implicitly
-    # perform the same syntax check when you invoke `CreateStateMachine` and
-    # `UpdateStateMachine`. State machine definitions are specified using a
-    # JSON-based, structured language. For more information on Amazon States
-    # Language see [Amazon States Language][1] (ASL).
+    # creating a state machine resource.
     #
     # Suggested uses for `ValidateStateMachineDefinition`:
     #
     # * Integrate automated checks into your code review or Continuous
-    #   Integration (CI) process to validate state machine definitions
-    #   before starting deployments.
+    #   Integration (CI) process to check state machine definitions before
+    #   starting deployments.
     #
-    # * Run the validation from a Git pre-commit hook to check your state
-    #   machine definitions before committing them to your source
-    #   repository.
+    # * Run validation from a Git pre-commit hook to verify the definition
+    #   before committing to your source repository.
     #
-    # <note markdown="1"> Errors found in the state machine definition will be returned in the
-    # response as a list of **diagnostic elements**, rather than raise an
-    # exception.
+    # Validation will look for problems in your state machine definition and
+    # return a **result** and a list of **diagnostic elements**.
+    #
+    # The **result** value will be `OK` when your workflow definition can be
+    # successfully created or updated. Note the result can be `OK` even when
+    # diagnostic warnings are present in the response. The **result** value
+    # will be `FAIL` when the workflow definition contains errors that would
+    # prevent you from creating or updating your state machine.
+    #
+    # The list of [ValidateStateMachineDefinitionDiagnostic][2] data
+    # elements can contain zero or more **WARNING** and/or **ERROR**
+    # elements.
+    #
+    # <note markdown="1"> The **ValidateStateMachineDefinition API** might add new diagnostics
+    # in the future, adjust diagnostic codes, or change the message wording.
+    # Your automated processes should only rely on the value of the
+    # **result** field value (OK, FAIL). Do **not** rely on the exact order,
+    # count, or wording of diagnostic messages.
     #
     #  </note>
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html
+    # [2]: https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinitionDiagnostic.html
     #
     # @option params [required, String] :definition
     #   The Amazon States Language definition of the state machine. For more
@@ -3426,7 +3460,7 @@ module Aws::States
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-states'
-      context[:gem_version] = '1.83.0'
+      context[:gem_version] = '1.84.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

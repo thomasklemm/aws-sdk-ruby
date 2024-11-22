@@ -4474,10 +4474,25 @@ module Aws::EMR
     #   master node cannot be scaled after initial configuration.
     #   @return [Types::ComputeLimits]
     #
+    # @!attribute [rw] utilization_performance_index
+    #   An integer value that represents an advanced scaling strategy.
+    #   Setting a higher value optimizes for performance. Setting a lower
+    #   value optimizes for resource conservation. Setting the value to 50
+    #   balances performance and resource conservation. Possible values are
+    #   1, 25, 50, 75, and 100.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] scaling_strategy
+    #   Determines whether a custom scaling utilization performance index
+    #   can be set. Possible values include *ADVANCED* or *DEFAULT*.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/ManagedScalingPolicy AWS API Documentation
     #
     class ManagedScalingPolicy < Struct.new(
-      :compute_limits)
+      :compute_limits,
+      :utilization_performance_index,
+      :scaling_strategy)
       SENSITIVE = []
       include Aws::Structure
     end

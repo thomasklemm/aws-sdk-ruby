@@ -234,6 +234,23 @@ module Aws::States
       include Aws::Structure
     end
 
+    # Provides details about assigned variables in an execution history
+    # event.
+    #
+    # @!attribute [rw] truncated
+    #   Indicates whether assigned variables were truncated in the response.
+    #   Always `false` for API calls. In CloudWatch logs, the value will be
+    #   true if the data is truncated due to size limits.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/AssignedVariablesDetails AWS API Documentation
+    #
+    class AssignedVariablesDetails < Struct.new(
+      :truncated)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An object that describes workflow billing details.
     #
     # @!attribute [rw] billed_memory_used_in_mb
@@ -1116,6 +1133,12 @@ module Aws::States
     #   Settings to configure server-side encryption.
     #   @return [Types::EncryptionConfiguration]
     #
+    # @!attribute [rw] variable_references
+    #   A map of **state name** to a list of variables referenced by that
+    #   state. States that do not use variable references will not be shown
+    #   in the response.
+    #   @return [Hash<String,Array<String>>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/DescribeStateMachineForExecutionOutput AWS API Documentation
     #
     class DescribeStateMachineForExecutionOutput < Struct.new(
@@ -1129,8 +1152,9 @@ module Aws::States
       :map_run_arn,
       :label,
       :revision_id,
-      :encryption_configuration)
-      SENSITIVE = [:definition]
+      :encryption_configuration,
+      :variable_references)
+      SENSITIVE = [:definition, :variable_references]
       include Aws::Structure
     end
 
@@ -1261,6 +1285,12 @@ module Aws::States
     #   Settings to configure server-side encryption.
     #   @return [Types::EncryptionConfiguration]
     #
+    # @!attribute [rw] variable_references
+    #   A map of **state name** to a list of variables referenced by that
+    #   state. States that do not use variable references will not be shown
+    #   in the response.
+    #   @return [Hash<String,Array<String>>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/DescribeStateMachineOutput AWS API Documentation
     #
     class DescribeStateMachineOutput < Struct.new(
@@ -1276,8 +1306,9 @@ module Aws::States
       :label,
       :revision_id,
       :description,
-      :encryption_configuration)
-      SENSITIVE = [:definition, :description]
+      :encryption_configuration,
+      :variable_references)
+      SENSITIVE = [:definition, :description, :variable_references]
       include Aws::Structure
     end
 
@@ -1329,6 +1360,39 @@ module Aws::States
       :kms_data_key_reuse_period_seconds,
       :type)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains details about an evaluation failure that occurred while
+    # processing a state, for example, when a JSONata expression throws an
+    # error. This event will only be present in state machines that have <b>
+    # QueryLanguage</b> set to JSONata, or individual states set to JSONata.
+    #
+    # @!attribute [rw] error
+    #   The error code of the failure.
+    #   @return [String]
+    #
+    # @!attribute [rw] cause
+    #   A more detailed explanation of the cause of the failure.
+    #   @return [String]
+    #
+    # @!attribute [rw] location
+    #   The location of the field in the state in which the evaluation error
+    #   occurred.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The name of the state in which the evaluation error occurred.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/EvaluationFailedEventDetails AWS API Documentation
+    #
+    class EvaluationFailedEventDetails < Struct.new(
+      :error,
+      :cause,
+      :location,
+      :state)
+      SENSITIVE = [:error, :cause, :location]
       include Aws::Structure
     end
 
@@ -1913,6 +1977,11 @@ module Aws::States
     #   Contains details about the redrive attempt of a Map Run.
     #   @return [Types::MapRunRedrivenEventDetails]
     #
+    # @!attribute [rw] evaluation_failed_event_details
+    #   Contains details about an evaluation failure that occurred while
+    #   processing a state.
+    #   @return [Types::EvaluationFailedEventDetails]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/HistoryEvent AWS API Documentation
     #
     class HistoryEvent < Struct.new(
@@ -1955,7 +2024,8 @@ module Aws::States
       :state_exited_event_details,
       :map_run_started_event_details,
       :map_run_failed_event_details,
-      :map_run_redriven_event_details)
+      :map_run_redriven_event_details,
+      :evaluation_failed_event_details)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1964,7 +2034,8 @@ module Aws::States
     #
     # @!attribute [rw] truncated
     #   Indicates whether input or output was truncated in the response.
-    #   Always `false` for API calls.
+    #   Always `false` for API calls. In CloudWatch logs, the value will be
+    #   true if the data is truncated due to size limits.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/HistoryEventExecutionDataDetails AWS API Documentation
@@ -1983,8 +2054,20 @@ module Aws::States
     #   The raw state input.
     #   @return [String]
     #
+    # @!attribute [rw] after_arguments
+    #   The input after Step Functions applies an Arguments filter. This
+    #   event will only be present when QueryLanguage for the state machine
+    #   or individual states is set to JSONata. For more info, see
+    #   [Transforming data with Step Functions][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/step-functions/latest/dg/data-transform.html
+    #   @return [String]
+    #
     # @!attribute [rw] after_input_path
     #   The input after Step Functions applies the [InputPath][1] filter.
+    #   Not populated when QueryLanguage is JSONata.
     #
     #
     #
@@ -1993,7 +2076,7 @@ module Aws::States
     #
     # @!attribute [rw] after_parameters
     #   The effective input after Step Functions applies the [Parameters][1]
-    #   filter.
+    #   filter. Not populated when QueryLanguage is JSONata.
     #
     #
     #
@@ -2006,7 +2089,8 @@ module Aws::States
     #
     # @!attribute [rw] after_result_selector
     #   The effective result after Step Functions applies the
-    #   [ResultSelector][1] filter.
+    #   [ResultSelector][1] filter. Not populated when QueryLanguage is
+    #   JSONata.
     #
     #
     #
@@ -2015,7 +2099,8 @@ module Aws::States
     #
     # @!attribute [rw] after_result_path
     #   The effective result combined with the raw state input after Step
-    #   Functions applies the [ResultPath][1] filter.
+    #   Functions applies the [ResultPath][1] filter. Not populated when
+    #   QueryLanguage is JSONata.
     #
     #
     #
@@ -2030,18 +2115,26 @@ module Aws::States
     #   The raw HTTP response that is returned when you test an HTTP Task.
     #   @return [Types::InspectionDataResponse]
     #
+    # @!attribute [rw] variables
+    #   JSON string that contains the set of workflow variables after
+    #   execution of the state. The set will include variables assigned in
+    #   the state and variables set up as test state input.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/InspectionData AWS API Documentation
     #
     class InspectionData < Struct.new(
       :input,
+      :after_arguments,
       :after_input_path,
       :after_parameters,
       :result,
       :after_result_selector,
       :after_result_path,
       :request,
-      :response)
-      SENSITIVE = [:input, :after_input_path, :after_parameters, :result, :after_result_selector, :after_result_path]
+      :response,
+      :variables)
+      SENSITIVE = [:input, :after_arguments, :after_input_path, :after_parameters, :result, :after_result_selector, :after_result_path, :variables]
       include Aws::Structure
     end
 
@@ -3712,13 +3805,24 @@ module Aws::States
     #   Contains details about the output of an execution history event.
     #   @return [Types::HistoryEventExecutionDataDetails]
     #
+    # @!attribute [rw] assigned_variables
+    #   Map of variable name and value as a serialized JSON representation.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] assigned_variables_details
+    #   Provides details about input or output in an execution history
+    #   event.
+    #   @return [Types::AssignedVariablesDetails]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/StateExitedEventDetails AWS API Documentation
     #
     class StateExitedEventDetails < Struct.new(
       :name,
       :output,
-      :output_details)
-      SENSITIVE = [:output]
+      :output_details,
+      :assigned_variables,
+      :assigned_variables_details)
+      SENSITIVE = [:output, :assigned_variables]
       include Aws::Structure
     end
 
@@ -4313,6 +4417,12 @@ module Aws::States
     #   [1]: https://docs.aws.amazon.com/step-functions/latest/dg/test-state-isolation.html#test-state-permissions
     #   @return [Boolean]
     #
+    # @!attribute [rw] variables
+    #   JSON object literal that sets variables used in the state under
+    #   test. Object keys are the variable names and values are the variable
+    #   values.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/states-2016-11-23/TestStateInput AWS API Documentation
     #
     class TestStateInput < Struct.new(
@@ -4320,8 +4430,9 @@ module Aws::States
       :role_arn,
       :input,
       :inspection_level,
-      :reveal_secrets)
-      SENSITIVE = [:definition, :input]
+      :reveal_secrets,
+      :variables)
+      SENSITIVE = [:definition, :input, :variables]
       include Aws::Structure
     end
 
@@ -4581,13 +4692,106 @@ module Aws::States
       include Aws::Structure
     end
 
-    # Describes an error found during validation. Validation errors found in
-    # the definition return in the response as **diagnostic elements**,
-    # rather than raise an exception.
+    # Describes potential issues found during state machine validation.
+    # Rather than raise an exception, validation will return a list of
+    # **diagnostic elements** containing diagnostic information.
+    #
+    # <note markdown="1"> The [ValidateStateMachineDefinitionlAPI][1] might add new diagnostics
+    # in the future, adjust diagnostic codes, or change the message wording.
+    # Your automated processes should only rely on the value of the
+    # **result** field value (OK, FAIL). Do **not** rely on the exact order,
+    # count, or wording of diagnostic messages.
+    #
+    #  </note>
+    #
+    # **List of warning codes**
+    #
+    # NO\_DOLLAR
+    #
+    # : No `.$` on a field that appears to be a JSONPath or Intrinsic
+    #   Function.
+    #
+    # NO\_PATH
+    #
+    # : Field value looks like a path, but field name does not end with
+    #   'Path'.
+    #
+    # PASS\_RESULT\_IS\_STATIC
+    #
+    # : Attempt to use a path in the result of a pass state.
+    #
+    # **List of error codes**
+    #
+    # INVALID\_JSON\_DESCRIPTION
+    #
+    # : JSON syntax problem found.
+    #
+    # MISSING\_DESCRIPTION
+    #
+    # : Received a null or empty workflow input.
+    #
+    # SCHEMA\_VALIDATION\_FAILED
+    #
+    # : Schema validation reported errors.
+    #
+    # INVALID\_RESOURCE
+    #
+    # : The value of a Task-state resource field is invalid.
+    #
+    # MISSING\_END\_STATE
+    #
+    # : The workflow does not have a terminal state.
+    #
+    # DUPLICATE\_STATE\_NAME
+    #
+    # : The same state name appears more than once.
+    #
+    # INVALID\_STATE\_NAME
+    #
+    # : The state name does not follow the naming convention.
+    #
+    # STATE\_MACHINE\_NAME\_EMPTY
+    #
+    # : The state machine name has not been specified.
+    #
+    # STATE\_MACHINE\_NAME\_INVALID
+    #
+    # : The state machine name does not follow the naming convention.
+    #
+    # STATE\_MACHINE\_NAME\_TOO\_LONG
+    #
+    # : The state name exceeds the allowed length.
+    #
+    # STATE\_MACHINE\_NAME\_ALREADY\_EXISTS
+    #
+    # : The state name already exists.
+    #
+    # DUPLICATE\_LABEL\_NAME
+    #
+    # : A label name appears more than once.
+    #
+    # INVALID\_LABEL\_NAME
+    #
+    # : You have provided an invalid label name.
+    #
+    # MISSING\_TRANSITION\_TARGET
+    #
+    # : The value of "Next" field doesn't match a known state name.
+    #
+    # TOO\_DEEPLY\_NESTED
+    #
+    # : The states are too deeply nested.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/step-functions/latest/apireference/API_ValidateStateMachineDefinition.html
     #
     # @!attribute [rw] severity
     #   A value of `ERROR` means that you cannot create or update a state
     #   machine with this definition.
+    #
+    #   `WARNING` level diagnostics alert you to potential issues, but they
+    #   will not prevent you from creating or updating your state machine.
     #   @return [String]
     #
     # @!attribute [rw] code
@@ -4613,7 +4817,7 @@ module Aws::States
       :code,
       :message,
       :location)
-      SENSITIVE = []
+      SENSITIVE = [:code, :message, :location]
       include Aws::Structure
     end
 
@@ -4664,9 +4868,10 @@ module Aws::States
     #   @return [String]
     #
     # @!attribute [rw] diagnostics
-    #   If the result is `OK`, this field will be empty. When there are
-    #   errors, this field will contain an array of **Diagnostic** objects
-    #   to help you troubleshoot.
+    #   An array of diagnostic errors and warnings found during validation
+    #   of the state machine definition. Since **warnings** do not prevent
+    #   deploying your workflow definition, the **result** value could be
+    #   `OK` even when warning diagnostics are present in the response.
     #   @return [Array<Types::ValidateStateMachineDefinitionDiagnostic>]
     #
     # @!attribute [rw] truncated

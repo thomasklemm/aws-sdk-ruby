@@ -108,6 +108,9 @@
   "BCMDataExports": {
     "models": "bcm-data-exports/2023-11-26"
   },
+  "BCMPricingCalculator": {
+    "models": "bcm-pricing-calculator/2024-06-19"
+  },
   "Backup": {
     "models": "backup/2018-11-15"
   },
