@@ -508,6 +508,9 @@ module Aws::DirectConnect
     #   resp.direct_connect_gateway_association.association_id #=> String
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway #=> Array
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway[0].cidr #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.id #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.owner_account #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.attachment_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_region #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_owner_account #=> String
@@ -1997,6 +2000,9 @@ module Aws::DirectConnect
     #   resp.direct_connect_gateway_association.association_id #=> String
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway #=> Array
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway[0].cidr #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.id #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.owner_account #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.attachment_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_region #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_owner_account #=> String
@@ -2970,6 +2976,9 @@ module Aws::DirectConnect
     #   resp.direct_connect_gateway_association.association_id #=> String
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway #=> Array
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway[0].cidr #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.id #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.owner_account #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.attachment_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_region #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_owner_account #=> String
@@ -3533,6 +3542,9 @@ module Aws::DirectConnect
     #   resp.direct_connect_gateway_associations[0].association_id #=> String
     #   resp.direct_connect_gateway_associations[0].allowed_prefixes_to_direct_connect_gateway #=> Array
     #   resp.direct_connect_gateway_associations[0].allowed_prefixes_to_direct_connect_gateway[0].cidr #=> String
+    #   resp.direct_connect_gateway_associations[0].associated_core_network.id #=> String
+    #   resp.direct_connect_gateway_associations[0].associated_core_network.owner_account #=> String
+    #   resp.direct_connect_gateway_associations[0].associated_core_network.attachment_id #=> String
     #   resp.direct_connect_gateway_associations[0].virtual_gateway_id #=> String
     #   resp.direct_connect_gateway_associations[0].virtual_gateway_region #=> String
     #   resp.direct_connect_gateway_associations[0].virtual_gateway_owner_account #=> String
@@ -4726,6 +4738,9 @@ module Aws::DirectConnect
     #   resp.direct_connect_gateway_association.association_id #=> String
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway #=> Array
     #   resp.direct_connect_gateway_association.allowed_prefixes_to_direct_connect_gateway[0].cidr #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.id #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.owner_account #=> String
+    #   resp.direct_connect_gateway_association.associated_core_network.attachment_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_id #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_region #=> String
     #   resp.direct_connect_gateway_association.virtual_gateway_owner_account #=> String
@@ -5009,7 +5024,7 @@ module Aws::DirectConnect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-directconnect'
-      context[:gem_version] = '1.84.0'
+      context[:gem_version] = '1.85.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

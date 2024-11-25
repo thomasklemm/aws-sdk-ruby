@@ -2018,6 +2018,7 @@ module Aws::S3
     #     checksum_sha1: "ChecksumSHA1",
     #     checksum_sha256: "ChecksumSHA256",
     #     expires: Time.now,
+    #     if_match: "IfMatch",
     #     if_none_match: "IfNoneMatch",
     #     grant_full_control: "GrantFullControl",
     #     grant_read: "GrantRead",
@@ -2242,6 +2243,25 @@ module Aws::S3
     #
     #
     #   [1]: https://www.rfc-editor.org/rfc/rfc7234#section-5.3
+    # @option options [String] :if_match
+    #   Uploads the object only if the ETag (entity tag) value provided during
+    #   the WRITE operation matches the ETag of the object in S3. If the ETag
+    #   values do not match, the operation returns a `412 Precondition Failed`
+    #   error.
+    #
+    #   If a conflicting operation occurs during the upload S3 returns a `409
+    #   ConditionalRequestConflict` response. On a 409 failure you should
+    #   fetch the object's ETag and retry the upload.
+    #
+    #   Expects the ETag value as a string.
+    #
+    #   For more information about conditional requests, see [RFC 7232][1], or
+    #   [Conditional requests][2] in the *Amazon S3 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://tools.ietf.org/html/rfc7232
+    #   [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html
     # @option options [String] :if_none_match
     #   Uploads the object only if the object key name does not already exist
     #   in the bucket specified. Otherwise, Amazon S3 returns a `412

@@ -471,9 +471,11 @@ module Aws::NetworkManager
     #   resp.attachment.core_network_arn #=> String
     #   resp.attachment.attachment_id #=> String
     #   resp.attachment.owner_account_id #=> String
-    #   resp.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.attachment.edge_location #=> String
+    #   resp.attachment.edge_locations #=> Array
+    #   resp.attachment.edge_locations[0] #=> String
     #   resp.attachment.resource_arn #=> String
     #   resp.attachment.attachment_policy_rule_number #=> Integer
     #   resp.attachment.segment_name #=> String
@@ -494,7 +496,7 @@ module Aws::NetworkManager
     #   resp.attachment.created_at #=> Time
     #   resp.attachment.updated_at #=> Time
     #   resp.attachment.last_modification_errors #=> Array
-    #   resp.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.attachment.last_modification_errors[0].message #=> String
     #   resp.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.attachment.last_modification_errors[0].request_id #=> String
@@ -770,9 +772,11 @@ module Aws::NetworkManager
     #   resp.connect_attachment.attachment.core_network_arn #=> String
     #   resp.connect_attachment.attachment.attachment_id #=> String
     #   resp.connect_attachment.attachment.owner_account_id #=> String
-    #   resp.connect_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.connect_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.connect_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.connect_attachment.attachment.edge_location #=> String
+    #   resp.connect_attachment.attachment.edge_locations #=> Array
+    #   resp.connect_attachment.attachment.edge_locations[0] #=> String
     #   resp.connect_attachment.attachment.resource_arn #=> String
     #   resp.connect_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.connect_attachment.attachment.segment_name #=> String
@@ -793,7 +797,7 @@ module Aws::NetworkManager
     #   resp.connect_attachment.attachment.created_at #=> Time
     #   resp.connect_attachment.attachment.updated_at #=> Time
     #   resp.connect_attachment.attachment.last_modification_errors #=> Array
-    #   resp.connect_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.connect_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.connect_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.connect_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.connect_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -1164,6 +1168,94 @@ module Aws::NetworkManager
       req.send_request(options)
     end
 
+    # Creates an Amazon Web Services Direct Connect gateway attachment
+    #
+    # @option params [required, String] :core_network_id
+    #   The ID of the Cloud WAN core network that the Direct Connect gateway
+    #   attachment should be attached to.
+    #
+    # @option params [required, String] :direct_connect_gateway_arn
+    #   The ARN of the Direct Connect gateway attachment.
+    #
+    # @option params [required, Array<String>] :edge_locations
+    #   One or more core network edge locations that the Direct Connect
+    #   gateway attachment is associated with.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   The key value tags to apply to the Direct Connect gateway attachment
+    #   during creation.
+    #
+    # @option params [String] :client_token
+    #   client token
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Types::CreateDirectConnectGatewayAttachmentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateDirectConnectGatewayAttachmentResponse#direct_connect_gateway_attachment #direct_connect_gateway_attachment} => Types::DirectConnectGatewayAttachment
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_direct_connect_gateway_attachment({
+    #     core_network_id: "CoreNetworkId", # required
+    #     direct_connect_gateway_arn: "DirectConnectGatewayArn", # required
+    #     edge_locations: ["ExternalRegionCode"], # required
+    #     tags: [
+    #       {
+    #         key: "TagKey",
+    #         value: "TagValue",
+    #       },
+    #     ],
+    #     client_token: "ClientToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.direct_connect_gateway_attachment.attachment.core_network_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.core_network_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.owner_account_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.direct_connect_gateway_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
+    #   resp.direct_connect_gateway_attachment.attachment.edge_location #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.edge_locations #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.edge_locations[0] #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.resource_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.segment_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.network_function_group_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.segment_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.network_function_group_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.created_at #=> Time
+    #   resp.direct_connect_gateway_attachment.attachment.updated_at #=> Time
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].message #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].resource_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].request_id #=> String
+    #   resp.direct_connect_gateway_attachment.direct_connect_gateway_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/CreateDirectConnectGatewayAttachment AWS API Documentation
+    #
+    # @overload create_direct_connect_gateway_attachment(params = {})
+    # @param [Hash] params ({})
+    def create_direct_connect_gateway_attachment(params = {}, options = {})
+      req = build_request(:create_direct_connect_gateway_attachment, params)
+      req.send_request(options)
+    end
+
     # Creates a new, empty global network.
     #
     # @option params [String] :description
@@ -1404,9 +1496,11 @@ module Aws::NetworkManager
     #   resp.site_to_site_vpn_attachment.attachment.core_network_arn #=> String
     #   resp.site_to_site_vpn_attachment.attachment.attachment_id #=> String
     #   resp.site_to_site_vpn_attachment.attachment.owner_account_id #=> String
-    #   resp.site_to_site_vpn_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.site_to_site_vpn_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.site_to_site_vpn_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.site_to_site_vpn_attachment.attachment.edge_location #=> String
+    #   resp.site_to_site_vpn_attachment.attachment.edge_locations #=> Array
+    #   resp.site_to_site_vpn_attachment.attachment.edge_locations[0] #=> String
     #   resp.site_to_site_vpn_attachment.attachment.resource_arn #=> String
     #   resp.site_to_site_vpn_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.site_to_site_vpn_attachment.attachment.segment_name #=> String
@@ -1427,7 +1521,7 @@ module Aws::NetworkManager
     #   resp.site_to_site_vpn_attachment.attachment.created_at #=> Time
     #   resp.site_to_site_vpn_attachment.attachment.updated_at #=> Time
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors #=> Array
-    #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -1552,9 +1646,11 @@ module Aws::NetworkManager
     #   resp.transit_gateway_route_table_attachment.attachment.core_network_arn #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.attachment_id #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.owner_account_id #=> String
-    #   resp.transit_gateway_route_table_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.transit_gateway_route_table_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.transit_gateway_route_table_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.transit_gateway_route_table_attachment.attachment.edge_location #=> String
+    #   resp.transit_gateway_route_table_attachment.attachment.edge_locations #=> Array
+    #   resp.transit_gateway_route_table_attachment.attachment.edge_locations[0] #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.resource_arn #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.transit_gateway_route_table_attachment.attachment.segment_name #=> String
@@ -1575,7 +1671,7 @@ module Aws::NetworkManager
     #   resp.transit_gateway_route_table_attachment.attachment.created_at #=> Time
     #   resp.transit_gateway_route_table_attachment.attachment.updated_at #=> Time
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors #=> Array
-    #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -1643,9 +1739,11 @@ module Aws::NetworkManager
     #   resp.vpc_attachment.attachment.core_network_arn #=> String
     #   resp.vpc_attachment.attachment.attachment_id #=> String
     #   resp.vpc_attachment.attachment.owner_account_id #=> String
-    #   resp.vpc_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.vpc_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.vpc_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.vpc_attachment.attachment.edge_location #=> String
+    #   resp.vpc_attachment.attachment.edge_locations #=> Array
+    #   resp.vpc_attachment.attachment.edge_locations[0] #=> String
     #   resp.vpc_attachment.attachment.resource_arn #=> String
     #   resp.vpc_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.vpc_attachment.attachment.segment_name #=> String
@@ -1666,7 +1764,7 @@ module Aws::NetworkManager
     #   resp.vpc_attachment.attachment.created_at #=> Time
     #   resp.vpc_attachment.attachment.updated_at #=> Time
     #   resp.vpc_attachment.attachment.last_modification_errors #=> Array
-    #   resp.vpc_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.vpc_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.vpc_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.vpc_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.vpc_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -1705,9 +1803,11 @@ module Aws::NetworkManager
     #   resp.attachment.core_network_arn #=> String
     #   resp.attachment.attachment_id #=> String
     #   resp.attachment.owner_account_id #=> String
-    #   resp.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.attachment.edge_location #=> String
+    #   resp.attachment.edge_locations #=> Array
+    #   resp.attachment.edge_locations[0] #=> String
     #   resp.attachment.resource_arn #=> String
     #   resp.attachment.attachment_policy_rule_number #=> Integer
     #   resp.attachment.segment_name #=> String
@@ -1728,7 +1828,7 @@ module Aws::NetworkManager
     #   resp.attachment.created_at #=> Time
     #   resp.attachment.updated_at #=> Time
     #   resp.attachment.last_modification_errors #=> Array
-    #   resp.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.attachment.last_modification_errors[0].message #=> String
     #   resp.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.attachment.last_modification_errors[0].request_id #=> String
@@ -2468,9 +2568,11 @@ module Aws::NetworkManager
     #   resp.connect_attachment.attachment.core_network_arn #=> String
     #   resp.connect_attachment.attachment.attachment_id #=> String
     #   resp.connect_attachment.attachment.owner_account_id #=> String
-    #   resp.connect_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.connect_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.connect_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.connect_attachment.attachment.edge_location #=> String
+    #   resp.connect_attachment.attachment.edge_locations #=> Array
+    #   resp.connect_attachment.attachment.edge_locations[0] #=> String
     #   resp.connect_attachment.attachment.resource_arn #=> String
     #   resp.connect_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.connect_attachment.attachment.segment_name #=> String
@@ -2491,7 +2593,7 @@ module Aws::NetworkManager
     #   resp.connect_attachment.attachment.created_at #=> Time
     #   resp.connect_attachment.attachment.updated_at #=> Time
     #   resp.connect_attachment.attachment.last_modification_errors #=> Array
-    #   resp.connect_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.connect_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.connect_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.connect_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.connect_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -3037,6 +3139,69 @@ module Aws::NetworkManager
     # @param [Hash] params ({})
     def get_devices(params = {}, options = {})
       req = build_request(:get_devices, params)
+      req.send_request(options)
+    end
+
+    # Returns information about a specific Amazon Web Services Direct
+    # Connect gateway attachment.
+    #
+    # @option params [required, String] :attachment_id
+    #   The ID of the Direct Connect gateway attachment that you want to see
+    #   details about.
+    #
+    # @return [Types::GetDirectConnectGatewayAttachmentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetDirectConnectGatewayAttachmentResponse#direct_connect_gateway_attachment #direct_connect_gateway_attachment} => Types::DirectConnectGatewayAttachment
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_direct_connect_gateway_attachment({
+    #     attachment_id: "AttachmentId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.direct_connect_gateway_attachment.attachment.core_network_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.core_network_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.owner_account_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.direct_connect_gateway_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
+    #   resp.direct_connect_gateway_attachment.attachment.edge_location #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.edge_locations #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.edge_locations[0] #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.resource_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.segment_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.network_function_group_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.segment_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.network_function_group_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.created_at #=> Time
+    #   resp.direct_connect_gateway_attachment.attachment.updated_at #=> Time
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].message #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].resource_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].request_id #=> String
+    #   resp.direct_connect_gateway_attachment.direct_connect_gateway_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/GetDirectConnectGatewayAttachment AWS API Documentation
+    #
+    # @overload get_direct_connect_gateway_attachment(params = {})
+    # @param [Hash] params ({})
+    def get_direct_connect_gateway_attachment(params = {}, options = {})
+      req = build_request(:get_direct_connect_gateway_attachment, params)
       req.send_request(options)
     end
 
@@ -3787,9 +3952,11 @@ module Aws::NetworkManager
     #   resp.site_to_site_vpn_attachment.attachment.core_network_arn #=> String
     #   resp.site_to_site_vpn_attachment.attachment.attachment_id #=> String
     #   resp.site_to_site_vpn_attachment.attachment.owner_account_id #=> String
-    #   resp.site_to_site_vpn_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.site_to_site_vpn_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.site_to_site_vpn_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.site_to_site_vpn_attachment.attachment.edge_location #=> String
+    #   resp.site_to_site_vpn_attachment.attachment.edge_locations #=> Array
+    #   resp.site_to_site_vpn_attachment.attachment.edge_locations[0] #=> String
     #   resp.site_to_site_vpn_attachment.attachment.resource_arn #=> String
     #   resp.site_to_site_vpn_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.site_to_site_vpn_attachment.attachment.segment_name #=> String
@@ -3810,7 +3977,7 @@ module Aws::NetworkManager
     #   resp.site_to_site_vpn_attachment.attachment.created_at #=> Time
     #   resp.site_to_site_vpn_attachment.attachment.updated_at #=> Time
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors #=> Array
-    #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.site_to_site_vpn_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -4049,9 +4216,11 @@ module Aws::NetworkManager
     #   resp.transit_gateway_route_table_attachment.attachment.core_network_arn #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.attachment_id #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.owner_account_id #=> String
-    #   resp.transit_gateway_route_table_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.transit_gateway_route_table_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.transit_gateway_route_table_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.transit_gateway_route_table_attachment.attachment.edge_location #=> String
+    #   resp.transit_gateway_route_table_attachment.attachment.edge_locations #=> Array
+    #   resp.transit_gateway_route_table_attachment.attachment.edge_locations[0] #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.resource_arn #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.transit_gateway_route_table_attachment.attachment.segment_name #=> String
@@ -4072,7 +4241,7 @@ module Aws::NetworkManager
     #   resp.transit_gateway_route_table_attachment.attachment.created_at #=> Time
     #   resp.transit_gateway_route_table_attachment.attachment.updated_at #=> Time
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors #=> Array
-    #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.transit_gateway_route_table_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -4109,9 +4278,11 @@ module Aws::NetworkManager
     #   resp.vpc_attachment.attachment.core_network_arn #=> String
     #   resp.vpc_attachment.attachment.attachment_id #=> String
     #   resp.vpc_attachment.attachment.owner_account_id #=> String
-    #   resp.vpc_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.vpc_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.vpc_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.vpc_attachment.attachment.edge_location #=> String
+    #   resp.vpc_attachment.attachment.edge_locations #=> Array
+    #   resp.vpc_attachment.attachment.edge_locations[0] #=> String
     #   resp.vpc_attachment.attachment.resource_arn #=> String
     #   resp.vpc_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.vpc_attachment.attachment.segment_name #=> String
@@ -4132,7 +4303,7 @@ module Aws::NetworkManager
     #   resp.vpc_attachment.attachment.created_at #=> Time
     #   resp.vpc_attachment.attachment.updated_at #=> Time
     #   resp.vpc_attachment.attachment.last_modification_errors #=> Array
-    #   resp.vpc_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.vpc_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.vpc_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.vpc_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.vpc_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -4181,7 +4352,7 @@ module Aws::NetworkManager
     #
     #   resp = client.list_attachments({
     #     core_network_id: "CoreNetworkId",
-    #     attachment_type: "CONNECT", # accepts CONNECT, SITE_TO_SITE_VPN, VPC, TRANSIT_GATEWAY_ROUTE_TABLE
+    #     attachment_type: "CONNECT", # accepts CONNECT, SITE_TO_SITE_VPN, VPC, DIRECT_CONNECT_GATEWAY, TRANSIT_GATEWAY_ROUTE_TABLE
     #     edge_location: "ExternalRegionCode",
     #     state: "REJECTED", # accepts REJECTED, PENDING_ATTACHMENT_ACCEPTANCE, CREATING, FAILED, AVAILABLE, UPDATING, PENDING_NETWORK_UPDATE, PENDING_TAG_ACCEPTANCE, DELETING
     #     max_results: 1,
@@ -4195,9 +4366,11 @@ module Aws::NetworkManager
     #   resp.attachments[0].core_network_arn #=> String
     #   resp.attachments[0].attachment_id #=> String
     #   resp.attachments[0].owner_account_id #=> String
-    #   resp.attachments[0].attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.attachments[0].attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.attachments[0].state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.attachments[0].edge_location #=> String
+    #   resp.attachments[0].edge_locations #=> Array
+    #   resp.attachments[0].edge_locations[0] #=> String
     #   resp.attachments[0].resource_arn #=> String
     #   resp.attachments[0].attachment_policy_rule_number #=> Integer
     #   resp.attachments[0].segment_name #=> String
@@ -4218,7 +4391,7 @@ module Aws::NetworkManager
     #   resp.attachments[0].created_at #=> Time
     #   resp.attachments[0].updated_at #=> Time
     #   resp.attachments[0].last_modification_errors #=> Array
-    #   resp.attachments[0].last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.attachments[0].last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.attachments[0].last_modification_errors[0].message #=> String
     #   resp.attachments[0].last_modification_errors[0].resource_arn #=> String
     #   resp.attachments[0].last_modification_errors[0].request_id #=> String
@@ -4678,9 +4851,11 @@ module Aws::NetworkManager
     #   resp.attachment.core_network_arn #=> String
     #   resp.attachment.attachment_id #=> String
     #   resp.attachment.owner_account_id #=> String
-    #   resp.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.attachment.edge_location #=> String
+    #   resp.attachment.edge_locations #=> Array
+    #   resp.attachment.edge_locations[0] #=> String
     #   resp.attachment.resource_arn #=> String
     #   resp.attachment.attachment_policy_rule_number #=> Integer
     #   resp.attachment.segment_name #=> String
@@ -4701,7 +4876,7 @@ module Aws::NetworkManager
     #   resp.attachment.created_at #=> Time
     #   resp.attachment.updated_at #=> Time
     #   resp.attachment.last_modification_errors #=> Array
-    #   resp.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.attachment.last_modification_errors[0].message #=> String
     #   resp.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.attachment.last_modification_errors[0].request_id #=> String
@@ -5163,6 +5338,76 @@ module Aws::NetworkManager
       req.send_request(options)
     end
 
+    # Updates the edge locations associated with an Amazon Web Services
+    # Direct Connect gateway attachment.
+    #
+    # @option params [required, String] :attachment_id
+    #   The ID of the Direct Connect gateway attachment for the updated edge
+    #   locations.
+    #
+    # @option params [Array<String>] :edge_locations
+    #   One or more edge locations to update for the Direct Connect gateway
+    #   attachment. The updated array of edge locations overwrites the
+    #   previous array of locations. `EdgeLocations` is only used for Direct
+    #   Connect gateway attachments. Do
+    #
+    # @return [Types::UpdateDirectConnectGatewayAttachmentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateDirectConnectGatewayAttachmentResponse#direct_connect_gateway_attachment #direct_connect_gateway_attachment} => Types::DirectConnectGatewayAttachment
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_direct_connect_gateway_attachment({
+    #     attachment_id: "AttachmentId", # required
+    #     edge_locations: ["ExternalRegionCode"],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.direct_connect_gateway_attachment.attachment.core_network_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.core_network_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.owner_account_id #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.direct_connect_gateway_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
+    #   resp.direct_connect_gateway_attachment.attachment.edge_location #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.edge_locations #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.edge_locations[0] #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.resource_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.segment_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.network_function_group_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_segment_change.segment_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags[0].key #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.tags[0].value #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.attachment_policy_rule_number #=> Integer
+    #   resp.direct_connect_gateway_attachment.attachment.proposed_network_function_group_change.network_function_group_name #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.created_at #=> Time
+    #   resp.direct_connect_gateway_attachment.attachment.updated_at #=> Time
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors #=> Array
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].message #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].resource_arn #=> String
+    #   resp.direct_connect_gateway_attachment.attachment.last_modification_errors[0].request_id #=> String
+    #   resp.direct_connect_gateway_attachment.direct_connect_gateway_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/UpdateDirectConnectGatewayAttachment AWS API Documentation
+    #
+    # @overload update_direct_connect_gateway_attachment(params = {})
+    # @param [Hash] params ({})
+    def update_direct_connect_gateway_attachment(params = {}, options = {})
+      req = build_request(:update_direct_connect_gateway_attachment, params)
+      req.send_request(options)
+    end
+
     # Updates an existing global network. To remove information for any of
     # the parameters, specify an empty string.
     #
@@ -5417,9 +5662,11 @@ module Aws::NetworkManager
     #   resp.vpc_attachment.attachment.core_network_arn #=> String
     #   resp.vpc_attachment.attachment.attachment_id #=> String
     #   resp.vpc_attachment.attachment.owner_account_id #=> String
-    #   resp.vpc_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "TRANSIT_GATEWAY_ROUTE_TABLE"
+    #   resp.vpc_attachment.attachment.attachment_type #=> String, one of "CONNECT", "SITE_TO_SITE_VPN", "VPC", "DIRECT_CONNECT_GATEWAY", "TRANSIT_GATEWAY_ROUTE_TABLE"
     #   resp.vpc_attachment.attachment.state #=> String, one of "REJECTED", "PENDING_ATTACHMENT_ACCEPTANCE", "CREATING", "FAILED", "AVAILABLE", "UPDATING", "PENDING_NETWORK_UPDATE", "PENDING_TAG_ACCEPTANCE", "DELETING"
     #   resp.vpc_attachment.attachment.edge_location #=> String
+    #   resp.vpc_attachment.attachment.edge_locations #=> Array
+    #   resp.vpc_attachment.attachment.edge_locations[0] #=> String
     #   resp.vpc_attachment.attachment.resource_arn #=> String
     #   resp.vpc_attachment.attachment.attachment_policy_rule_number #=> Integer
     #   resp.vpc_attachment.attachment.segment_name #=> String
@@ -5440,7 +5687,7 @@ module Aws::NetworkManager
     #   resp.vpc_attachment.attachment.created_at #=> Time
     #   resp.vpc_attachment.attachment.updated_at #=> Time
     #   resp.vpc_attachment.attachment.last_modification_errors #=> Array
-    #   resp.vpc_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+    #   resp.vpc_attachment.attachment.last_modification_errors[0].code #=> String, one of "VPC_NOT_FOUND", "SUBNET_NOT_FOUND", "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE", "SUBNET_NO_FREE_ADDRESSES", "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE", "SUBNET_NO_IPV6_CIDRS", "VPN_CONNECTION_NOT_FOUND", "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED", "DIRECT_CONNECT_GATEWAY_NOT_FOUND", "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS", "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF"
     #   resp.vpc_attachment.attachment.last_modification_errors[0].message #=> String
     #   resp.vpc_attachment.attachment.last_modification_errors[0].resource_arn #=> String
     #   resp.vpc_attachment.attachment.last_modification_errors[0].request_id #=> String
@@ -5476,7 +5723,7 @@ module Aws::NetworkManager
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-networkmanager'
-      context[:gem_version] = '1.55.0'
+      context[:gem_version] = '1.56.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

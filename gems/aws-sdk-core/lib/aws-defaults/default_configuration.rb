@@ -128,8 +128,7 @@ module Aws
             "override" => 3100
           }
         },
-        "in-region" => {
-        },
+        "in-region" => {},
         "cross-region" => {
           "connectTimeoutInMillis" => {
             "override" => 3100

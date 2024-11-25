@@ -1068,6 +1068,28 @@ module Aws::S3
     #   denied).
     #   @return [String]
     #
+    # @!attribute [rw] if_match
+    #   Uploads the object only if the ETag (entity tag) value provided
+    #   during the WRITE operation matches the ETag of the object in S3. If
+    #   the ETag values do not match, the operation returns a `412
+    #   Precondition Failed` error.
+    #
+    #   If a conflicting operation occurs during the upload S3 returns a
+    #   `409 ConditionalRequestConflict` response. On a 409 failure you
+    #   should fetch the object's ETag, re-initiate the multipart upload
+    #   with `CreateMultipartUpload`, and re-upload each part.
+    #
+    #   Expects the ETag value as a string.
+    #
+    #   For more information about conditional requests, see [RFC 7232][1],
+    #   or [Conditional requests][2] in the *Amazon S3 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://tools.ietf.org/html/rfc7232
+    #   [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html
+    #   @return [String]
+    #
     # @!attribute [rw] if_none_match
     #   Uploads the object only if the object key name does not already
     #   exist in the bucket specified. Otherwise, Amazon S3 returns a `412
@@ -1148,6 +1170,7 @@ module Aws::S3
       :checksum_sha256,
       :request_payer,
       :expected_bucket_owner,
+      :if_match,
       :if_none_match,
       :sse_customer_algorithm,
       :sse_customer_key,
@@ -14679,6 +14702,27 @@ module Aws::S3
     #   [1]: https://www.rfc-editor.org/rfc/rfc7234#section-5.3
     #   @return [Time]
     #
+    # @!attribute [rw] if_match
+    #   Uploads the object only if the ETag (entity tag) value provided
+    #   during the WRITE operation matches the ETag of the object in S3. If
+    #   the ETag values do not match, the operation returns a `412
+    #   Precondition Failed` error.
+    #
+    #   If a conflicting operation occurs during the upload S3 returns a
+    #   `409 ConditionalRequestConflict` response. On a 409 failure you
+    #   should fetch the object's ETag and retry the upload.
+    #
+    #   Expects the ETag value as a string.
+    #
+    #   For more information about conditional requests, see [RFC 7232][1],
+    #   or [Conditional requests][2] in the *Amazon S3 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://tools.ietf.org/html/rfc7232
+    #   [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/conditional-requests.html
+    #   @return [String]
+    #
     # @!attribute [rw] if_none_match
     #   Uploads the object only if the object key name does not already
     #   exist in the bucket specified. Otherwise, Amazon S3 returns a `412
@@ -15082,6 +15126,7 @@ module Aws::S3
       :checksum_sha1,
       :checksum_sha256,
       :expires,
+      :if_match,
       :if_none_match,
       :grant_full_control,
       :grant_read,

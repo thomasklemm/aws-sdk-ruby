@@ -347,6 +347,31 @@ module Aws::DirectConnect
       include Aws::Structure
     end
 
+    # The Amazon Web Services Cloud WAN core network that the Direct Connect
+    # attachment is associated with.
+    #
+    # @!attribute [rw] id
+    #   The ID of the Cloud WAN core network.
+    #   @return [String]
+    #
+    # @!attribute [rw] owner_account
+    #   The account owner of the Cloud WAN core network.
+    #   @return [String]
+    #
+    # @!attribute [rw] attachment_id
+    #   the ID of the Direct Connect attachment
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/directconnect-2012-10-25/AssociatedCoreNetwork AWS API Documentation
+    #
+    class AssociatedCoreNetwork < Struct.new(
+      :id,
+      :owner_account,
+      :attachment_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Information about the associated gateway.
     #
     # @!attribute [rw] id
@@ -2134,6 +2159,11 @@ module Aws::DirectConnect
     #   The Amazon VPC prefixes to advertise to the Direct Connect gateway.
     #   @return [Array<Types::RouteFilterPrefix>]
     #
+    # @!attribute [rw] associated_core_network
+    #   The ID of the Cloud WAN core network associated with the Direct
+    #   Connect attachment.
+    #   @return [Types::AssociatedCoreNetwork]
+    #
     # @!attribute [rw] virtual_gateway_id
     #   The ID of the virtual private gateway. Applies only to private
     #   virtual interfaces.
@@ -2159,6 +2189,7 @@ module Aws::DirectConnect
       :associated_gateway,
       :association_id,
       :allowed_prefixes_to_direct_connect_gateway,
+      :associated_core_network,
       :virtual_gateway_id,
       :virtual_gateway_region,
       :virtual_gateway_owner_account)

@@ -91,9 +91,10 @@ module Aws::NetworkManager
       attr_accessor core_network_arn: ::String
       attr_accessor attachment_id: ::String
       attr_accessor owner_account_id: ::String
-      attr_accessor attachment_type: ("CONNECT" | "SITE_TO_SITE_VPN" | "VPC" | "TRANSIT_GATEWAY_ROUTE_TABLE")
+      attr_accessor attachment_type: ("CONNECT" | "SITE_TO_SITE_VPN" | "VPC" | "DIRECT_CONNECT_GATEWAY" | "TRANSIT_GATEWAY_ROUTE_TABLE")
       attr_accessor state: ("REJECTED" | "PENDING_ATTACHMENT_ACCEPTANCE" | "CREATING" | "FAILED" | "AVAILABLE" | "UPDATING" | "PENDING_NETWORK_UPDATE" | "PENDING_TAG_ACCEPTANCE" | "DELETING")
       attr_accessor edge_location: ::String
+      attr_accessor edge_locations: ::Array[::String]
       attr_accessor resource_arn: ::String
       attr_accessor attachment_policy_rule_number: ::Integer
       attr_accessor segment_name: ::String
@@ -108,7 +109,7 @@ module Aws::NetworkManager
     end
 
     class AttachmentError
-      attr_accessor code: ("VPC_NOT_FOUND" | "SUBNET_NOT_FOUND" | "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE" | "SUBNET_NO_FREE_ADDRESSES" | "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE" | "SUBNET_NO_IPV6_CIDRS" | "VPN_CONNECTION_NOT_FOUND" | "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED")
+      attr_accessor code: ("VPC_NOT_FOUND" | "SUBNET_NOT_FOUND" | "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE" | "SUBNET_NO_FREE_ADDRESSES" | "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE" | "SUBNET_NO_IPV6_CIDRS" | "VPN_CONNECTION_NOT_FOUND" | "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED" | "DIRECT_CONNECT_GATEWAY_NOT_FOUND" | "DIRECT_CONNECT_GATEWAY_EXISTING_ATTACHMENTS" | "DIRECT_CONNECT_GATEWAY_NO_PRIVATE_VIF")
       attr_accessor message: ::String
       attr_accessor resource_arn: ::String
       attr_accessor request_id: ::String
@@ -445,6 +446,20 @@ module Aws::NetworkManager
       SENSITIVE: []
     end
 
+    class CreateDirectConnectGatewayAttachmentRequest
+      attr_accessor core_network_id: ::String
+      attr_accessor direct_connect_gateway_arn: ::String
+      attr_accessor edge_locations: ::Array[::String]
+      attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class CreateDirectConnectGatewayAttachmentResponse
+      attr_accessor direct_connect_gateway_attachment: Types::DirectConnectGatewayAttachment
+      SENSITIVE: []
+    end
+
     class CreateGlobalNetworkRequest
       attr_accessor description: ::String
       attr_accessor tags: ::Array[Types::Tag]
@@ -703,6 +718,12 @@ module Aws::NetworkManager
       SENSITIVE: [:location]
     end
 
+    class DirectConnectGatewayAttachment
+      attr_accessor attachment: Types::Attachment
+      attr_accessor direct_connect_gateway_arn: ::String
+      SENSITIVE: []
+    end
+
     class DisassociateConnectPeerRequest
       attr_accessor global_network_id: ::String
       attr_accessor connect_peer_id: ::String
@@ -888,6 +909,16 @@ module Aws::NetworkManager
     class GetDevicesResponse
       attr_accessor devices: ::Array[Types::Device]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetDirectConnectGatewayAttachmentRequest
+      attr_accessor attachment_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetDirectConnectGatewayAttachmentResponse
+      attr_accessor direct_connect_gateway_attachment: Types::DirectConnectGatewayAttachment
       SENSITIVE: []
     end
 
@@ -1161,7 +1192,7 @@ module Aws::NetworkManager
 
     class ListAttachmentsRequest
       attr_accessor core_network_id: ::String
-      attr_accessor attachment_type: ("CONNECT" | "SITE_TO_SITE_VPN" | "VPC" | "TRANSIT_GATEWAY_ROUTE_TABLE")
+      attr_accessor attachment_type: ("CONNECT" | "SITE_TO_SITE_VPN" | "VPC" | "DIRECT_CONNECT_GATEWAY" | "TRANSIT_GATEWAY_ROUTE_TABLE")
       attr_accessor edge_location: ::String
       attr_accessor state: ("REJECTED" | "PENDING_ATTACHMENT_ACCEPTANCE" | "CREATING" | "FAILED" | "AVAILABLE" | "UPDATING" | "PENDING_NETWORK_UPDATE" | "PENDING_TAG_ACCEPTANCE" | "DELETING")
       attr_accessor max_results: ::Integer
@@ -1675,6 +1706,17 @@ module Aws::NetworkManager
 
     class UpdateDeviceResponse
       attr_accessor device: Types::Device
+      SENSITIVE: []
+    end
+
+    class UpdateDirectConnectGatewayAttachmentRequest
+      attr_accessor attachment_id: ::String
+      attr_accessor edge_locations: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UpdateDirectConnectGatewayAttachmentResponse
+      attr_accessor direct_connect_gateway_attachment: Types::DirectConnectGatewayAttachment
       SENSITIVE: []
     end
 

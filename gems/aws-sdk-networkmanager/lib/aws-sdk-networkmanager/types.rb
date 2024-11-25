@@ -266,8 +266,16 @@ module Aws::NetworkManager
     #   @return [String]
     #
     # @!attribute [rw] edge_location
-    #   The Region where the edge is located.
+    #   The Region where the edge is located. This is returned for all
+    #   attachment types except a Direct Connect gateway attachment, which
+    #   instead returns `EdgeLocations`.
     #   @return [String]
+    #
+    # @!attribute [rw] edge_locations
+    #   The edge locations that the Direct Connect gateway is associated
+    #   with. This is returned only for Direct Connect gateway attachments.
+    #   All other attachment types retrun `EdgeLocation`.
+    #   @return [Array<String>]
     #
     # @!attribute [rw] resource_arn
     #   The attachment resource ARN.
@@ -320,6 +328,7 @@ module Aws::NetworkManager
       :attachment_type,
       :state,
       :edge_location,
+      :edge_locations,
       :resource_arn,
       :attachment_policy_rule_number,
       :segment_name,
@@ -1609,6 +1618,57 @@ module Aws::NetworkManager
       include Aws::Structure
     end
 
+    # @!attribute [rw] core_network_id
+    #   The ID of the Cloud WAN core network that the Direct Connect gateway
+    #   attachment should be attached to.
+    #   @return [String]
+    #
+    # @!attribute [rw] direct_connect_gateway_arn
+    #   The ARN of the Direct Connect gateway attachment.
+    #   @return [String]
+    #
+    # @!attribute [rw] edge_locations
+    #   One or more core network edge locations that the Direct Connect
+    #   gateway attachment is associated with.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] tags
+    #   The key value tags to apply to the Direct Connect gateway attachment
+    #   during creation.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] client_token
+    #   client token
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/CreateDirectConnectGatewayAttachmentRequest AWS API Documentation
+    #
+    class CreateDirectConnectGatewayAttachmentRequest < Struct.new(
+      :core_network_id,
+      :direct_connect_gateway_arn,
+      :edge_locations,
+      :tags,
+      :client_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] direct_connect_gateway_attachment
+    #   Describes the details of a `CreateDirectConnectGatewayAttachment`
+    #   request.
+    #   @return [Types::DirectConnectGatewayAttachment]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/CreateDirectConnectGatewayAttachmentResponse AWS API Documentation
+    #
+    class CreateDirectConnectGatewayAttachmentResponse < Struct.new(
+      :direct_connect_gateway_attachment)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] description
     #   A description of the global network.
     #
@@ -2397,6 +2457,25 @@ module Aws::NetworkManager
       include Aws::Structure
     end
 
+    # Describes a Direct Connect gateway attachment.
+    #
+    # @!attribute [rw] attachment
+    #   Describes a core network attachment.
+    #   @return [Types::Attachment]
+    #
+    # @!attribute [rw] direct_connect_gateway_arn
+    #   The Direct Connect gateway attachment ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/DirectConnectGatewayAttachment AWS API Documentation
+    #
+    class DirectConnectGatewayAttachment < Struct.new(
+      :attachment,
+      :direct_connect_gateway_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] global_network_id
     #   The ID of the global network.
     #   @return [String]
@@ -2935,6 +3014,31 @@ module Aws::NetworkManager
     class GetDevicesResponse < Struct.new(
       :devices,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] attachment_id
+    #   The ID of the Direct Connect gateway attachment that you want to see
+    #   details about.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/GetDirectConnectGatewayAttachmentRequest AWS API Documentation
+    #
+    class GetDirectConnectGatewayAttachmentRequest < Struct.new(
+      :attachment_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] direct_connect_gateway_attachment
+    #   Shows details about the Direct Connect gateway attachment.
+    #   @return [Types::DirectConnectGatewayAttachment]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/GetDirectConnectGatewayAttachmentResponse AWS API Documentation
+    #
+    class GetDirectConnectGatewayAttachmentResponse < Struct.new(
+      :direct_connect_gateway_attachment)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5792,6 +5896,40 @@ module Aws::NetworkManager
     #
     class UpdateDeviceResponse < Struct.new(
       :device)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] attachment_id
+    #   The ID of the Direct Connect gateway attachment for the updated edge
+    #   locations.
+    #   @return [String]
+    #
+    # @!attribute [rw] edge_locations
+    #   One or more edge locations to update for the Direct Connect gateway
+    #   attachment. The updated array of edge locations overwrites the
+    #   previous array of locations. `EdgeLocations` is only used for Direct
+    #   Connect gateway attachments. Do
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/UpdateDirectConnectGatewayAttachmentRequest AWS API Documentation
+    #
+    class UpdateDirectConnectGatewayAttachmentRequest < Struct.new(
+      :attachment_id,
+      :edge_locations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] direct_connect_gateway_attachment
+    #   Returns details of the Direct Connect gateway attachment with the
+    #   updated edge locations.
+    #   @return [Types::DirectConnectGatewayAttachment]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/UpdateDirectConnectGatewayAttachmentResponse AWS API Documentation
+    #
+    class UpdateDirectConnectGatewayAttachmentResponse < Struct.new(
+      :direct_connect_gateway_attachment)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.174.0 (2024-11-25)
+------------------
+
+* Feature - Amazon Simple Storage Service / Features: Add support for ETag based conditional writes in PutObject and CompleteMultiPartUpload APIs to prevent unintended object modifications.
+
 1.173.0 (2024-11-21)
 ------------------
 

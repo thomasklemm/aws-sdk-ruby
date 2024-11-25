@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.214.0 (2024-11-25)
+------------------
+
+* Feature - Updated configuration values for `defaults_mode`.
+
 3.213.0 (2024-11-14)
 ------------------
 

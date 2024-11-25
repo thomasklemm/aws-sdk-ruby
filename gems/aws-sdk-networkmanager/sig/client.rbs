@@ -253,6 +253,25 @@ module Aws
                          ) -> _CreateDeviceResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDeviceResponseSuccess
 
+      interface _CreateDirectConnectGatewayAttachmentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateDirectConnectGatewayAttachmentResponse]
+        def direct_connect_gateway_attachment: () -> Types::DirectConnectGatewayAttachment
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkManager/Client.html#create_direct_connect_gateway_attachment-instance_method
+      def create_direct_connect_gateway_attachment: (
+                                                      core_network_id: ::String,
+                                                      direct_connect_gateway_arn: ::String,
+                                                      edge_locations: Array[::String],
+                                                      ?tags: Array[
+                                                        {
+                                                          key: ::String?,
+                                                          value: ::String?
+                                                        },
+                                                      ],
+                                                      ?client_token: ::String
+                                                    ) -> _CreateDirectConnectGatewayAttachmentResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDirectConnectGatewayAttachmentResponseSuccess
+
       interface _CreateGlobalNetworkResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateGlobalNetworkResponse]
         def global_network: () -> Types::GlobalNetwork
@@ -713,6 +732,16 @@ module Aws
                        ) -> _GetDevicesResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDevicesResponseSuccess
 
+      interface _GetDirectConnectGatewayAttachmentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetDirectConnectGatewayAttachmentResponse]
+        def direct_connect_gateway_attachment: () -> Types::DirectConnectGatewayAttachment
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkManager/Client.html#get_direct_connect_gateway_attachment-instance_method
+      def get_direct_connect_gateway_attachment: (
+                                                   attachment_id: ::String
+                                                 ) -> _GetDirectConnectGatewayAttachmentResponseSuccess
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDirectConnectGatewayAttachmentResponseSuccess
+
       interface _GetLinkAssociationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetLinkAssociationsResponse]
         def link_associations: () -> ::Array[Types::LinkAssociation]
@@ -962,7 +991,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkManager/Client.html#list_attachments-instance_method
       def list_attachments: (
                               ?core_network_id: ::String,
-                              ?attachment_type: ("CONNECT" | "SITE_TO_SITE_VPN" | "VPC" | "TRANSIT_GATEWAY_ROUTE_TABLE"),
+                              ?attachment_type: ("CONNECT" | "SITE_TO_SITE_VPN" | "VPC" | "DIRECT_CONNECT_GATEWAY" | "TRANSIT_GATEWAY_ROUTE_TABLE"),
                               ?edge_location: ::String,
                               ?state: ("REJECTED" | "PENDING_ATTACHMENT_ACCEPTANCE" | "CREATING" | "FAILED" | "AVAILABLE" | "UPDATING" | "PENDING_NETWORK_UPDATE" | "PENDING_TAG_ACCEPTANCE" | "DELETING"),
                               ?max_results: ::Integer,
@@ -1208,6 +1237,17 @@ module Aws
                            ?site_id: ::String
                          ) -> _UpdateDeviceResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDeviceResponseSuccess
+
+      interface _UpdateDirectConnectGatewayAttachmentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDirectConnectGatewayAttachmentResponse]
+        def direct_connect_gateway_attachment: () -> Types::DirectConnectGatewayAttachment
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkManager/Client.html#update_direct_connect_gateway_attachment-instance_method
+      def update_direct_connect_gateway_attachment: (
+                                                      attachment_id: ::String,
+                                                      ?edge_locations: Array[::String]
+                                                    ) -> _UpdateDirectConnectGatewayAttachmentResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDirectConnectGatewayAttachmentResponseSuccess
 
       interface _UpdateGlobalNetworkResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateGlobalNetworkResponse]

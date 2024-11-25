@@ -114,6 +114,8 @@ module Aws::NetworkManager
     CreateCoreNetworkResponse = Shapes::StructureShape.new(name: 'CreateCoreNetworkResponse')
     CreateDeviceRequest = Shapes::StructureShape.new(name: 'CreateDeviceRequest')
     CreateDeviceResponse = Shapes::StructureShape.new(name: 'CreateDeviceResponse')
+    CreateDirectConnectGatewayAttachmentRequest = Shapes::StructureShape.new(name: 'CreateDirectConnectGatewayAttachmentRequest')
+    CreateDirectConnectGatewayAttachmentResponse = Shapes::StructureShape.new(name: 'CreateDirectConnectGatewayAttachmentResponse')
     CreateGlobalNetworkRequest = Shapes::StructureShape.new(name: 'CreateGlobalNetworkRequest')
     CreateGlobalNetworkResponse = Shapes::StructureShape.new(name: 'CreateGlobalNetworkResponse')
     CreateLinkRequest = Shapes::StructureShape.new(name: 'CreateLinkRequest')
@@ -166,6 +168,8 @@ module Aws::NetworkManager
     DeviceIdList = Shapes::ListShape.new(name: 'DeviceIdList')
     DeviceList = Shapes::ListShape.new(name: 'DeviceList')
     DeviceState = Shapes::StringShape.new(name: 'DeviceState')
+    DirectConnectGatewayArn = Shapes::StringShape.new(name: 'DirectConnectGatewayArn')
+    DirectConnectGatewayAttachment = Shapes::StructureShape.new(name: 'DirectConnectGatewayAttachment')
     DisassociateConnectPeerRequest = Shapes::StructureShape.new(name: 'DisassociateConnectPeerRequest')
     DisassociateConnectPeerResponse = Shapes::StructureShape.new(name: 'DisassociateConnectPeerResponse')
     DisassociateCustomerGatewayRequest = Shapes::StructureShape.new(name: 'DisassociateCustomerGatewayRequest')
@@ -208,6 +212,8 @@ module Aws::NetworkManager
     GetCustomerGatewayAssociationsResponse = Shapes::StructureShape.new(name: 'GetCustomerGatewayAssociationsResponse')
     GetDevicesRequest = Shapes::StructureShape.new(name: 'GetDevicesRequest')
     GetDevicesResponse = Shapes::StructureShape.new(name: 'GetDevicesResponse')
+    GetDirectConnectGatewayAttachmentRequest = Shapes::StructureShape.new(name: 'GetDirectConnectGatewayAttachmentRequest')
+    GetDirectConnectGatewayAttachmentResponse = Shapes::StructureShape.new(name: 'GetDirectConnectGatewayAttachmentResponse')
     GetLinkAssociationsRequest = Shapes::StructureShape.new(name: 'GetLinkAssociationsRequest')
     GetLinkAssociationsResponse = Shapes::StructureShape.new(name: 'GetLinkAssociationsResponse')
     GetLinksRequest = Shapes::StructureShape.new(name: 'GetLinksRequest')
@@ -395,6 +401,8 @@ module Aws::NetworkManager
     UpdateCoreNetworkResponse = Shapes::StructureShape.new(name: 'UpdateCoreNetworkResponse')
     UpdateDeviceRequest = Shapes::StructureShape.new(name: 'UpdateDeviceRequest')
     UpdateDeviceResponse = Shapes::StructureShape.new(name: 'UpdateDeviceResponse')
+    UpdateDirectConnectGatewayAttachmentRequest = Shapes::StructureShape.new(name: 'UpdateDirectConnectGatewayAttachmentRequest')
+    UpdateDirectConnectGatewayAttachmentResponse = Shapes::StructureShape.new(name: 'UpdateDirectConnectGatewayAttachmentResponse')
     UpdateGlobalNetworkRequest = Shapes::StructureShape.new(name: 'UpdateGlobalNetworkRequest')
     UpdateGlobalNetworkResponse = Shapes::StructureShape.new(name: 'UpdateGlobalNetworkResponse')
     UpdateLinkRequest = Shapes::StructureShape.new(name: 'UpdateLinkRequest')
@@ -479,6 +487,7 @@ module Aws::NetworkManager
     Attachment.add_member(:attachment_type, Shapes::ShapeRef.new(shape: AttachmentType, location_name: "AttachmentType"))
     Attachment.add_member(:state, Shapes::ShapeRef.new(shape: AttachmentState, location_name: "State"))
     Attachment.add_member(:edge_location, Shapes::ShapeRef.new(shape: ExternalRegionCode, location_name: "EdgeLocation"))
+    Attachment.add_member(:edge_locations, Shapes::ShapeRef.new(shape: ExternalRegionCodeList, location_name: "EdgeLocations"))
     Attachment.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, location_name: "ResourceArn"))
     Attachment.add_member(:attachment_policy_rule_number, Shapes::ShapeRef.new(shape: Integer, location_name: "AttachmentPolicyRuleNumber"))
     Attachment.add_member(:segment_name, Shapes::ShapeRef.new(shape: ConstrainedString, location_name: "SegmentName"))
@@ -787,6 +796,16 @@ module Aws::NetworkManager
     CreateDeviceResponse.add_member(:device, Shapes::ShapeRef.new(shape: Device, location_name: "Device"))
     CreateDeviceResponse.struct_class = Types::CreateDeviceResponse
 
+    CreateDirectConnectGatewayAttachmentRequest.add_member(:core_network_id, Shapes::ShapeRef.new(shape: CoreNetworkId, required: true, location_name: "CoreNetworkId"))
+    CreateDirectConnectGatewayAttachmentRequest.add_member(:direct_connect_gateway_arn, Shapes::ShapeRef.new(shape: DirectConnectGatewayArn, required: true, location_name: "DirectConnectGatewayArn"))
+    CreateDirectConnectGatewayAttachmentRequest.add_member(:edge_locations, Shapes::ShapeRef.new(shape: ExternalRegionCodeList, required: true, location_name: "EdgeLocations"))
+    CreateDirectConnectGatewayAttachmentRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
+    CreateDirectConnectGatewayAttachmentRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreateDirectConnectGatewayAttachmentRequest.struct_class = Types::CreateDirectConnectGatewayAttachmentRequest
+
+    CreateDirectConnectGatewayAttachmentResponse.add_member(:direct_connect_gateway_attachment, Shapes::ShapeRef.new(shape: DirectConnectGatewayAttachment, location_name: "DirectConnectGatewayAttachment"))
+    CreateDirectConnectGatewayAttachmentResponse.struct_class = Types::CreateDirectConnectGatewayAttachmentResponse
+
     CreateGlobalNetworkRequest.add_member(:description, Shapes::ShapeRef.new(shape: ConstrainedString, location_name: "Description"))
     CreateGlobalNetworkRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
     CreateGlobalNetworkRequest.struct_class = Types::CreateGlobalNetworkRequest
@@ -970,6 +989,10 @@ module Aws::NetworkManager
 
     DeviceList.member = Shapes::ShapeRef.new(shape: Device)
 
+    DirectConnectGatewayAttachment.add_member(:attachment, Shapes::ShapeRef.new(shape: Attachment, location_name: "Attachment"))
+    DirectConnectGatewayAttachment.add_member(:direct_connect_gateway_arn, Shapes::ShapeRef.new(shape: DirectConnectGatewayArn, location_name: "DirectConnectGatewayArn"))
+    DirectConnectGatewayAttachment.struct_class = Types::DirectConnectGatewayAttachment
+
     DisassociateConnectPeerRequest.add_member(:global_network_id, Shapes::ShapeRef.new(shape: GlobalNetworkId, required: true, location: "uri", location_name: "globalNetworkId"))
     DisassociateConnectPeerRequest.add_member(:connect_peer_id, Shapes::ShapeRef.new(shape: ConnectPeerId, required: true, location: "uri", location_name: "connectPeerId"))
     DisassociateConnectPeerRequest.struct_class = Types::DisassociateConnectPeerRequest
@@ -1110,6 +1133,12 @@ module Aws::NetworkManager
     GetDevicesResponse.add_member(:devices, Shapes::ShapeRef.new(shape: DeviceList, location_name: "Devices"))
     GetDevicesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     GetDevicesResponse.struct_class = Types::GetDevicesResponse
+
+    GetDirectConnectGatewayAttachmentRequest.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, required: true, location: "uri", location_name: "attachmentId"))
+    GetDirectConnectGatewayAttachmentRequest.struct_class = Types::GetDirectConnectGatewayAttachmentRequest
+
+    GetDirectConnectGatewayAttachmentResponse.add_member(:direct_connect_gateway_attachment, Shapes::ShapeRef.new(shape: DirectConnectGatewayAttachment, location_name: "DirectConnectGatewayAttachment"))
+    GetDirectConnectGatewayAttachmentResponse.struct_class = Types::GetDirectConnectGatewayAttachmentResponse
 
     GetLinkAssociationsRequest.add_member(:global_network_id, Shapes::ShapeRef.new(shape: GlobalNetworkId, required: true, location: "uri", location_name: "globalNetworkId"))
     GetLinkAssociationsRequest.add_member(:device_id, Shapes::ShapeRef.new(shape: DeviceId, location: "querystring", location_name: "deviceId"))
@@ -1743,6 +1772,13 @@ module Aws::NetworkManager
     UpdateDeviceResponse.add_member(:device, Shapes::ShapeRef.new(shape: Device, location_name: "Device"))
     UpdateDeviceResponse.struct_class = Types::UpdateDeviceResponse
 
+    UpdateDirectConnectGatewayAttachmentRequest.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, required: true, location: "uri", location_name: "attachmentId"))
+    UpdateDirectConnectGatewayAttachmentRequest.add_member(:edge_locations, Shapes::ShapeRef.new(shape: ExternalRegionCodeList, location_name: "EdgeLocations"))
+    UpdateDirectConnectGatewayAttachmentRequest.struct_class = Types::UpdateDirectConnectGatewayAttachmentRequest
+
+    UpdateDirectConnectGatewayAttachmentResponse.add_member(:direct_connect_gateway_attachment, Shapes::ShapeRef.new(shape: DirectConnectGatewayAttachment, location_name: "DirectConnectGatewayAttachment"))
+    UpdateDirectConnectGatewayAttachmentResponse.struct_class = Types::UpdateDirectConnectGatewayAttachmentResponse
+
     UpdateGlobalNetworkRequest.add_member(:global_network_id, Shapes::ShapeRef.new(shape: GlobalNetworkId, required: true, location: "uri", location_name: "globalNetworkId"))
     UpdateGlobalNetworkRequest.add_member(:description, Shapes::ShapeRef.new(shape: ConstrainedString, location_name: "Description"))
     UpdateGlobalNetworkRequest.struct_class = Types::UpdateGlobalNetworkRequest
@@ -1979,6 +2015,20 @@ module Aws::NetworkManager
         o.output = Shapes::ShapeRef.new(shape: CreateDeviceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:create_direct_connect_gateway_attachment, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateDirectConnectGatewayAttachment"
+        o.http_method = "POST"
+        o.http_request_uri = "/direct-connect-gateway-attachments"
+        o.input = Shapes::ShapeRef.new(shape: CreateDirectConnectGatewayAttachmentRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateDirectConnectGatewayAttachmentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
@@ -2508,6 +2558,19 @@ module Aws::NetworkManager
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:get_direct_connect_gateway_attachment, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetDirectConnectGatewayAttachment"
+        o.http_method = "GET"
+        o.http_request_uri = "/direct-connect-gateway-attachments/{attachmentId}"
+        o.input = Shapes::ShapeRef.new(shape: GetDirectConnectGatewayAttachmentRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetDirectConnectGatewayAttachmentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
       api.add_operation(:get_link_associations, Seahorse::Model::Operation.new.tap do |o|
@@ -3045,6 +3108,20 @@ module Aws::NetworkManager
         o.http_request_uri = "/global-networks/{globalNetworkId}/devices/{deviceId}"
         o.input = Shapes::ShapeRef.new(shape: UpdateDeviceRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateDeviceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:update_direct_connect_gateway_attachment, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateDirectConnectGatewayAttachment"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/direct-connect-gateway-attachments/{attachmentId}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateDirectConnectGatewayAttachmentRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateDirectConnectGatewayAttachmentResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)

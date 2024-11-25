@@ -98,6 +98,13 @@ module Aws::DirectConnect
       SENSITIVE: []
     end
 
+    class AssociatedCoreNetwork
+      attr_accessor id: ::String
+      attr_accessor owner_account: ::String
+      attr_accessor attachment_id: ::String
+      SENSITIVE: []
+    end
+
     class AssociatedGateway
       attr_accessor id: ::String
       attr_accessor type: ("virtualPrivateGateway" | "transitGateway")
@@ -564,6 +571,7 @@ module Aws::DirectConnect
       attr_accessor associated_gateway: Types::AssociatedGateway
       attr_accessor association_id: ::String
       attr_accessor allowed_prefixes_to_direct_connect_gateway: ::Array[Types::RouteFilterPrefix]
+      attr_accessor associated_core_network: Types::AssociatedCoreNetwork
       attr_accessor virtual_gateway_id: ::String
       attr_accessor virtual_gateway_region: ::String
       attr_accessor virtual_gateway_owner_account: ::String

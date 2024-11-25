@@ -32,6 +32,7 @@ module Aws::DirectConnect
     AssociateMacSecKeyRequest = Shapes::StructureShape.new(name: 'AssociateMacSecKeyRequest')
     AssociateMacSecKeyResponse = Shapes::StructureShape.new(name: 'AssociateMacSecKeyResponse')
     AssociateVirtualInterfaceRequest = Shapes::StructureShape.new(name: 'AssociateVirtualInterfaceRequest')
+    AssociatedCoreNetwork = Shapes::StructureShape.new(name: 'AssociatedCoreNetwork')
     AssociatedGateway = Shapes::StructureShape.new(name: 'AssociatedGateway')
     AssociatedGatewayId = Shapes::StringShape.new(name: 'AssociatedGatewayId')
     AvailableMacSecPortSpeeds = Shapes::ListShape.new(name: 'AvailableMacSecPortSpeeds')
@@ -67,6 +68,8 @@ module Aws::DirectConnect
     ConnectionName = Shapes::StringShape.new(name: 'ConnectionName')
     ConnectionState = Shapes::StringShape.new(name: 'ConnectionState')
     Connections = Shapes::StructureShape.new(name: 'Connections')
+    CoreNetworkAttachmentId = Shapes::StringShape.new(name: 'CoreNetworkAttachmentId')
+    CoreNetworkIdentifier = Shapes::StringShape.new(name: 'CoreNetworkIdentifier')
     Count = Shapes::IntegerShape.new(name: 'Count')
     CreateBGPPeerRequest = Shapes::StructureShape.new(name: 'CreateBGPPeerRequest')
     CreateBGPPeerResponse = Shapes::StructureShape.new(name: 'CreateBGPPeerResponse')
@@ -329,6 +332,11 @@ module Aws::DirectConnect
     AssociateVirtualInterfaceRequest.add_member(:virtual_interface_id, Shapes::ShapeRef.new(shape: VirtualInterfaceId, required: true, location_name: "virtualInterfaceId"))
     AssociateVirtualInterfaceRequest.add_member(:connection_id, Shapes::ShapeRef.new(shape: ConnectionId, required: true, location_name: "connectionId"))
     AssociateVirtualInterfaceRequest.struct_class = Types::AssociateVirtualInterfaceRequest
+
+    AssociatedCoreNetwork.add_member(:id, Shapes::ShapeRef.new(shape: CoreNetworkIdentifier, location_name: "id"))
+    AssociatedCoreNetwork.add_member(:owner_account, Shapes::ShapeRef.new(shape: OwnerAccount, location_name: "ownerAccount"))
+    AssociatedCoreNetwork.add_member(:attachment_id, Shapes::ShapeRef.new(shape: CoreNetworkAttachmentId, location_name: "attachmentId"))
+    AssociatedCoreNetwork.struct_class = Types::AssociatedCoreNetwork
 
     AssociatedGateway.add_member(:id, Shapes::ShapeRef.new(shape: GatewayIdentifier, location_name: "id"))
     AssociatedGateway.add_member(:type, Shapes::ShapeRef.new(shape: GatewayType, location_name: "type"))
@@ -665,6 +673,7 @@ module Aws::DirectConnect
     DirectConnectGatewayAssociation.add_member(:associated_gateway, Shapes::ShapeRef.new(shape: AssociatedGateway, location_name: "associatedGateway"))
     DirectConnectGatewayAssociation.add_member(:association_id, Shapes::ShapeRef.new(shape: DirectConnectGatewayAssociationId, location_name: "associationId"))
     DirectConnectGatewayAssociation.add_member(:allowed_prefixes_to_direct_connect_gateway, Shapes::ShapeRef.new(shape: RouteFilterPrefixList, location_name: "allowedPrefixesToDirectConnectGateway"))
+    DirectConnectGatewayAssociation.add_member(:associated_core_network, Shapes::ShapeRef.new(shape: AssociatedCoreNetwork, location_name: "associatedCoreNetwork"))
     DirectConnectGatewayAssociation.add_member(:virtual_gateway_id, Shapes::ShapeRef.new(shape: VirtualGatewayId, location_name: "virtualGatewayId"))
     DirectConnectGatewayAssociation.add_member(:virtual_gateway_region, Shapes::ShapeRef.new(shape: VirtualGatewayRegion, deprecated: true, location_name: "virtualGatewayRegion"))
     DirectConnectGatewayAssociation.add_member(:virtual_gateway_owner_account, Shapes::ShapeRef.new(shape: OwnerAccount, location_name: "virtualGatewayOwnerAccount"))
