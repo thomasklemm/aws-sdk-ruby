@@ -58,6 +58,8 @@ module Aws::BedrockAgentRuntime
     ContentType = Shapes::StringShape.new(name: 'ContentType')
     CreationMode = Shapes::StringShape.new(name: 'CreationMode')
     CustomControlMethod = Shapes::StringShape.new(name: 'CustomControlMethod')
+    CustomOrchestrationTrace = Shapes::StructureShape.new(name: 'CustomOrchestrationTrace')
+    CustomOrchestrationTraceEvent = Shapes::StructureShape.new(name: 'CustomOrchestrationTraceEvent')
     DateTimestamp = Shapes::TimestampShape.new(name: 'DateTimestamp', timestampFormat: "iso8601")
     DeleteAgentMemoryRequest = Shapes::StructureShape.new(name: 'DeleteAgentMemoryRequest')
     DeleteAgentMemoryResponse = Shapes::StructureShape.new(name: 'DeleteAgentMemoryResponse')
@@ -318,6 +320,8 @@ module Aws::BedrockAgentRuntime
     SpanEndInteger = Shapes::IntegerShape.new(name: 'SpanEndInteger')
     SpanStartInteger = Shapes::IntegerShape.new(name: 'SpanStartInteger')
     StopSequences = Shapes::ListShape.new(name: 'StopSequences')
+    StreamingConfigurations = Shapes::StructureShape.new(name: 'StreamingConfigurations')
+    StreamingConfigurationsApplyGuardrailIntervalInteger = Shapes::IntegerShape.new(name: 'StreamingConfigurationsApplyGuardrailIntervalInteger')
     String = Shapes::StringShape.new(name: 'String')
     SummaryText = Shapes::StringShape.new(name: 'SummaryText')
     Temperature = Shapes::FloatShape.new(name: 'Temperature')
@@ -456,6 +460,13 @@ module Aws::BedrockAgentRuntime
 
     ContentMap.key = Shapes::ShapeRef.new(shape: String)
     ContentMap.value = Shapes::ShapeRef.new(shape: Parameters)
+
+    CustomOrchestrationTrace.add_member(:event, Shapes::ShapeRef.new(shape: CustomOrchestrationTraceEvent, location_name: "event"))
+    CustomOrchestrationTrace.add_member(:trace_id, Shapes::ShapeRef.new(shape: TraceId, location_name: "traceId"))
+    CustomOrchestrationTrace.struct_class = Types::CustomOrchestrationTrace
+
+    CustomOrchestrationTraceEvent.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))
+    CustomOrchestrationTraceEvent.struct_class = Types::CustomOrchestrationTraceEvent
 
     DeleteAgentMemoryRequest.add_member(:agent_alias_id, Shapes::ShapeRef.new(shape: AgentAliasId, required: true, location: "uri", location_name: "agentAliasId"))
     DeleteAgentMemoryRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: AgentId, required: true, location: "uri", location_name: "agentId"))
@@ -834,6 +845,7 @@ module Aws::BedrockAgentRuntime
     InvokeAgentRequest.add_member(:memory_id, Shapes::ShapeRef.new(shape: MemoryId, location_name: "memoryId"))
     InvokeAgentRequest.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, required: true, location: "uri", location_name: "sessionId"))
     InvokeAgentRequest.add_member(:session_state, Shapes::ShapeRef.new(shape: SessionState, location_name: "sessionState"))
+    InvokeAgentRequest.add_member(:streaming_configurations, Shapes::ShapeRef.new(shape: StreamingConfigurations, location_name: "streamingConfigurations"))
     InvokeAgentRequest.struct_class = Types::InvokeAgentRequest
 
     InvokeAgentResponse.add_member(:completion, Shapes::ShapeRef.new(shape: ResponseStream, required: true, eventstream: true, location_name: "completion"))
@@ -1278,6 +1290,10 @@ module Aws::BedrockAgentRuntime
 
     StopSequences.member = Shapes::ShapeRef.new(shape: String)
 
+    StreamingConfigurations.add_member(:apply_guardrail_interval, Shapes::ShapeRef.new(shape: StreamingConfigurationsApplyGuardrailIntervalInteger, location_name: "applyGuardrailInterval"))
+    StreamingConfigurations.add_member(:stream_final_response, Shapes::ShapeRef.new(shape: Boolean, location_name: "streamFinalResponse"))
+    StreamingConfigurations.struct_class = Types::StreamingConfigurations
+
     TextInferenceConfig.add_member(:max_tokens, Shapes::ShapeRef.new(shape: MaxTokens, location_name: "maxTokens"))
     TextInferenceConfig.add_member(:stop_sequences, Shapes::ShapeRef.new(shape: RAGStopSequences, location_name: "stopSequences"))
     TextInferenceConfig.add_member(:temperature, Shapes::ShapeRef.new(shape: Temperature, location_name: "temperature"))
@@ -1294,12 +1310,14 @@ module Aws::BedrockAgentRuntime
     ThrottlingException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ThrottlingException.struct_class = Types::ThrottlingException
 
+    Trace.add_member(:custom_orchestration_trace, Shapes::ShapeRef.new(shape: CustomOrchestrationTrace, location_name: "customOrchestrationTrace"))
     Trace.add_member(:failure_trace, Shapes::ShapeRef.new(shape: FailureTrace, location_name: "failureTrace"))
     Trace.add_member(:guardrail_trace, Shapes::ShapeRef.new(shape: GuardrailTrace, location_name: "guardrailTrace"))
     Trace.add_member(:orchestration_trace, Shapes::ShapeRef.new(shape: OrchestrationTrace, location_name: "orchestrationTrace"))
     Trace.add_member(:post_processing_trace, Shapes::ShapeRef.new(shape: PostProcessingTrace, location_name: "postProcessingTrace"))
     Trace.add_member(:pre_processing_trace, Shapes::ShapeRef.new(shape: PreProcessingTrace, location_name: "preProcessingTrace"))
     Trace.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    Trace.add_member_subclass(:custom_orchestration_trace, Types::Trace::CustomOrchestrationTrace)
     Trace.add_member_subclass(:failure_trace, Types::Trace::FailureTrace)
     Trace.add_member_subclass(:guardrail_trace, Types::Trace::GuardrailTrace)
     Trace.add_member_subclass(:orchestration_trace, Types::Trace::OrchestrationTrace)

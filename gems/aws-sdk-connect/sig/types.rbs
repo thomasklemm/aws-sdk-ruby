@@ -625,7 +625,6 @@ module Aws::Connect
       attr_accessor description: ::String
       attr_accessor content: ::String
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor is_default: bool
       attr_accessor flow_content_sha_256: ::String
       attr_accessor version: ::Integer
       attr_accessor version_description: ::String
@@ -4732,6 +4731,8 @@ module Aws::Connect
 
     class SegmentAttributeValue
       attr_accessor value_string: ::String
+      attr_accessor value_map: ::Hash[::String, Types::SegmentAttributeValue]
+      attr_accessor value_integer: ::Integer
       SENSITIVE: []
     end
 

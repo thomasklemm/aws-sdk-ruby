@@ -1161,6 +1161,8 @@ module Aws::Connect
     SecurityToken = Shapes::StringShape.new(name: 'SecurityToken')
     SegmentAttributeName = Shapes::StringShape.new(name: 'SegmentAttributeName')
     SegmentAttributeValue = Shapes::StructureShape.new(name: 'SegmentAttributeValue')
+    SegmentAttributeValueInteger = Shapes::IntegerShape.new(name: 'SegmentAttributeValueInteger')
+    SegmentAttributeValueMap = Shapes::MapShape.new(name: 'SegmentAttributeValueMap')
     SegmentAttributeValueString = Shapes::StringShape.new(name: 'SegmentAttributeValueString')
     SegmentAttributes = Shapes::MapShape.new(name: 'SegmentAttributes')
     SendChatIntegrationEventRequest = Shapes::StructureShape.new(name: 'SendChatIntegrationEventRequest')
@@ -1980,7 +1982,6 @@ module Aws::Connect
     ContactFlow.add_member(:description, Shapes::ShapeRef.new(shape: ContactFlowDescription, location_name: "Description"))
     ContactFlow.add_member(:content, Shapes::ShapeRef.new(shape: ContactFlowContent, location_name: "Content"))
     ContactFlow.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
-    ContactFlow.add_member(:is_default, Shapes::ShapeRef.new(shape: Boolean, location_name: "IsDefault"))
     ContactFlow.add_member(:flow_content_sha_256, Shapes::ShapeRef.new(shape: FlowContentSha256, location_name: "FlowContentSha256"))
     ContactFlow.add_member(:version, Shapes::ShapeRef.new(shape: ResourceVersion, location_name: "Version"))
     ContactFlow.add_member(:version_description, Shapes::ShapeRef.new(shape: ContactFlowDescription, location_name: "VersionDescription"))
@@ -5203,7 +5204,12 @@ module Aws::Connect
     SecurityProfilesSearchSummaryList.member = Shapes::ShapeRef.new(shape: SecurityProfileSearchSummary)
 
     SegmentAttributeValue.add_member(:value_string, Shapes::ShapeRef.new(shape: SegmentAttributeValueString, location_name: "ValueString"))
+    SegmentAttributeValue.add_member(:value_map, Shapes::ShapeRef.new(shape: SegmentAttributeValueMap, location_name: "ValueMap"))
+    SegmentAttributeValue.add_member(:value_integer, Shapes::ShapeRef.new(shape: SegmentAttributeValueInteger, location_name: "ValueInteger"))
     SegmentAttributeValue.struct_class = Types::SegmentAttributeValue
+
+    SegmentAttributeValueMap.key = Shapes::ShapeRef.new(shape: SegmentAttributeName)
+    SegmentAttributeValueMap.value = Shapes::ShapeRef.new(shape: SegmentAttributeValue)
 
     SegmentAttributes.key = Shapes::ShapeRef.new(shape: SegmentAttributeName)
     SegmentAttributes.value = Shapes::ShapeRef.new(shape: SegmentAttributeValue)

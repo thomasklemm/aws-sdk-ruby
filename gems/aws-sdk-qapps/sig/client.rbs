@@ -142,6 +142,25 @@ module Aws
                                ) -> _CreateLibraryItemResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateLibraryItemResponseSuccess
 
+      interface _CreatePresignedUrlResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreatePresignedUrlOutput]
+        def file_id: () -> ::String
+        def presigned_url: () -> ::String
+        def presigned_url_fields: () -> ::Hash[::String, ::String]
+        def presigned_url_expiration: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#create_presigned_url-instance_method
+      def create_presigned_url: (
+                                  instance_id: ::String,
+                                  card_id: ::String,
+                                  app_id: ::String,
+                                  file_contents_sha_256: ::String,
+                                  file_name: ::String,
+                                  scope: ("APPLICATION" | "SESSION"),
+                                  ?session_id: ::String
+                                ) -> _CreatePresignedUrlResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreatePresignedUrlResponseSuccess
+
       interface _CreateQAppResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateQAppOutput]
         def app_id: () -> ::String
@@ -168,14 +187,14 @@ module Aws
                                 text_input: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   placeholder: ::String?,
                                   default_value: ::String?
                                 }?,
                                 q_query: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   prompt: ::String,
                                   output_source: ("approved-sources" | "llm")?,
                                   attribute_filter: {
@@ -254,17 +273,27 @@ module Aws
                                 q_plugin: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   prompt: ::String,
                                   plugin_id: ::String
                                 }?,
                                 file_upload: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   filename: ::String?,
                                   file_id: ::String?,
                                   allow_override: bool?
+                                }?,
+                                form_input: {
+                                  title: ::String,
+                                  id: ::String,
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
+                                  metadata: {
+                                    schema: {
+                                    }
+                                  },
+                                  compute_mode: ("append" | "replace")?
                                 }?
                               },
                             ],
@@ -288,6 +317,19 @@ module Aws
                         ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      interface _DescribeQAppPermissionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeQAppPermissionsOutput]
+        def resource_arn: () -> ::String
+        def app_id: () -> ::String
+        def permissions: () -> ::Array[Types::PermissionOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#describe_q_app_permissions-instance_method
+      def describe_q_app_permissions: (
+                                        instance_id: ::String,
+                                        app_id: ::String
+                                      ) -> _DescribeQAppPermissionsResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeQAppPermissionsResponseSuccess
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#disassociate_library_item_review-instance_method
       def disassociate_library_item_review: (
                                               instance_id: ::String,
@@ -301,6 +343,19 @@ module Aws
                                           app_id: ::String
                                         ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _ExportQAppSessionDataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ExportQAppSessionDataOutput]
+        def csv_file_link: () -> ::String
+        def expires_at: () -> ::Time
+        def session_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#export_q_app_session_data-instance_method
+      def export_q_app_session_data: (
+                                       instance_id: ::String,
+                                       session_id: ::String
+                                     ) -> _ExportQAppSessionDataResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ExportQAppSessionDataResponseSuccess
 
       interface _GetLibraryItemResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetLibraryItemOutput]
@@ -345,7 +400,8 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#get_q_app-instance_method
       def get_q_app: (
                        instance_id: ::String,
-                       app_id: ::String
+                       app_id: ::String,
+                       ?app_version: ::Integer
                      ) -> _GetQAppResponseSuccess
                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQAppResponseSuccess
 
@@ -353,8 +409,12 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GetQAppSessionOutput]
         def session_id: () -> ::String
         def session_arn: () -> ::String
-        def status: () -> ("IN_PROGRESS" | "WAITING" | "COMPLETED")
+        def session_name: () -> ::String
+        def app_version: () -> ::Integer
+        def latest_published_app_version: () -> ::Integer
+        def status: () -> ("IN_PROGRESS" | "WAITING" | "COMPLETED" | "ERROR")
         def card_status: () -> ::Hash[::String, Types::CardStatus]
+        def user_is_host: () -> bool
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#get_q_app_session-instance_method
       def get_q_app_session: (
@@ -362,6 +422,21 @@ module Aws
                                session_id: ::String
                              ) -> _GetQAppSessionResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQAppSessionResponseSuccess
+
+      interface _GetQAppSessionMetadataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetQAppSessionMetadataOutput]
+        def session_id: () -> ::String
+        def session_arn: () -> ::String
+        def session_name: () -> ::String
+        def sharing_configuration: () -> Types::SessionSharingConfiguration
+        def session_owner: () -> bool
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#get_q_app_session_metadata-instance_method
+      def get_q_app_session_metadata: (
+                                        instance_id: ::String,
+                                        session_id: ::String
+                                      ) -> _GetQAppSessionMetadataResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQAppSessionMetadataResponseSuccess
 
       interface _ImportDocumentResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ImportDocumentOutput]
@@ -402,6 +477,20 @@ module Aws
                                 ?category_id: ::String
                               ) -> _ListLibraryItemsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListLibraryItemsResponseSuccess
+
+      interface _ListQAppSessionDataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListQAppSessionDataOutput]
+        def session_id: () -> ::String
+        def session_arn: () -> ::String
+        def session_data: () -> ::Array[Types::QAppSessionData]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#list_q_app_session_data-instance_method
+      def list_q_app_session_data: (
+                                     instance_id: ::String,
+                                     session_id: ::String
+                                   ) -> _ListQAppSessionDataResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListQAppSessionDataResponseSuccess
 
       interface _ListQAppsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListQAppsOutput]
@@ -459,9 +548,14 @@ module Aws
                                  ?initial_values: Array[
                                    {
                                      card_id: ::String,
-                                     value: ::String
+                                     value: ::String,
+                                     submission_mutation: {
+                                       submission_id: ::String,
+                                       mutation_type: ("edit" | "delete" | "add")
+                                     }?
                                    },
                                  ],
+                                 ?session_id: ::String,
                                  ?tags: Hash[::String, ::String]
                                ) -> _StartQAppSessionResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartQAppSessionResponseSuccess
@@ -553,14 +647,14 @@ module Aws
                                 text_input: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   placeholder: ::String?,
                                   default_value: ::String?
                                 }?,
                                 q_query: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   prompt: ::String,
                                   output_source: ("approved-sources" | "llm")?,
                                   attribute_filter: {
@@ -639,17 +733,27 @@ module Aws
                                 q_plugin: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   prompt: ::String,
                                   plugin_id: ::String
                                 }?,
                                 file_upload: {
                                   title: ::String,
                                   id: ::String,
-                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin"),
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   filename: ::String?,
                                   file_id: ::String?,
                                   allow_override: bool?
+                                }?,
+                                form_input: {
+                                  title: ::String,
+                                  id: ::String,
+                                  type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
+                                  metadata: {
+                                    schema: {
+                                    }
+                                  },
+                                  compute_mode: ("append" | "replace")?
                                 }?
                               },
                             ],
@@ -657,6 +761,31 @@ module Aws
                           }
                         ) -> _UpdateQAppResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateQAppResponseSuccess
+
+      interface _UpdateQAppPermissionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateQAppPermissionsOutput]
+        def resource_arn: () -> ::String
+        def app_id: () -> ::String
+        def permissions: () -> ::Array[Types::PermissionOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#update_q_app_permissions-instance_method
+      def update_q_app_permissions: (
+                                      instance_id: ::String,
+                                      app_id: ::String,
+                                      ?grant_permissions: Array[
+                                        {
+                                          action: ("read" | "write"),
+                                          principal: ::String
+                                        },
+                                      ],
+                                      ?revoke_permissions: Array[
+                                        {
+                                          action: ("read" | "write"),
+                                          principal: ::String
+                                        },
+                                      ]
+                                    ) -> _UpdateQAppPermissionsResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateQAppPermissionsResponseSuccess
 
       interface _UpdateQAppSessionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateQAppSessionOutput]
@@ -670,11 +799,35 @@ module Aws
                                   ?values: Array[
                                     {
                                       card_id: ::String,
-                                      value: ::String
+                                      value: ::String,
+                                      submission_mutation: {
+                                        submission_id: ::String,
+                                        mutation_type: ("edit" | "delete" | "add")
+                                      }?
                                     },
                                   ]
                                 ) -> _UpdateQAppSessionResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateQAppSessionResponseSuccess
+
+      interface _UpdateQAppSessionMetadataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateQAppSessionMetadataOutput]
+        def session_id: () -> ::String
+        def session_arn: () -> ::String
+        def session_name: () -> ::String
+        def sharing_configuration: () -> Types::SessionSharingConfiguration
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QApps/Client.html#update_q_app_session_metadata-instance_method
+      def update_q_app_session_metadata: (
+                                           instance_id: ::String,
+                                           session_id: ::String,
+                                           ?session_name: ::String,
+                                           sharing_configuration: {
+                                             enabled: bool,
+                                             accept_responses: bool?,
+                                             reveal_cards: bool?
+                                           }
+                                         ) -> _UpdateQAppSessionMetadataResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateQAppSessionMetadataResponseSuccess
     end
   end
 end

@@ -762,6 +762,123 @@ module Aws::QApps
       req.send_request(options)
     end
 
+    # Creates a presigned URL for an S3 POST operation to upload a file. You
+    # can use this URL to set a default file for a `FileUploadCard` in a Q
+    # App definition or to provide a file for a single Q App run. The
+    # `scope` parameter determines how the file will be used, either at the
+    # app definition level or the app session level.
+    #
+    # @option params [required, String] :instance_id
+    #   The unique identifier of the Amazon Q Business application environment
+    #   instance.
+    #
+    # @option params [required, String] :card_id
+    #   The unique identifier of the card the file is associated with.
+    #
+    # @option params [required, String] :app_id
+    #   The unique identifier of the Q App the file is associated with.
+    #
+    # @option params [required, String] :file_contents_sha_256
+    #   The Base64-encoded SHA-256 digest of the contents of the file to be
+    #   uploaded.
+    #
+    # @option params [required, String] :file_name
+    #   The name of the file to be uploaded.
+    #
+    # @option params [required, String] :scope
+    #   Whether the file is associated with a Q App definition or a specific Q
+    #   App session.
+    #
+    # @option params [String] :session_id
+    #   The unique identifier of the Q App session the file is associated
+    #   with, if applicable.
+    #
+    # @return [Types::CreatePresignedUrlOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreatePresignedUrlOutput#file_id #file_id} => String
+    #   * {Types::CreatePresignedUrlOutput#presigned_url #presigned_url} => String
+    #   * {Types::CreatePresignedUrlOutput#presigned_url_fields #presigned_url_fields} => Hash&lt;String,String&gt;
+    #   * {Types::CreatePresignedUrlOutput#presigned_url_expiration #presigned_url_expiration} => Time
+    #
+    #
+    # @example Example: Upload a file to a specific session
+    #
+    #   resp = client.create_presigned_url({
+    #     app_id: "4263767c-d889-4cb2-a8f6-8b649bc66af0", 
+    #     card_id: "82f69028-22a9-4bea-8727-0eabf58e9fed", 
+    #     file_contents_sha_256: "myMXwslBoXkTDQ0olhq1QsiHRWWL4yj1V0IuoK+PYOg=", 
+    #     file_name: "myFile.txt", 
+    #     instance_id: "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f", 
+    #     scope: "SESSION", 
+    #     session_id: "4f0e5b87-9d38-41cd-9eb4-ebce2f2917cc", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     file_id: "412aa1b4-341c-45af-936d-da52f8a1a3b4", 
+    #     presigned_url: "https://presign-test-omg-6f98533b-3f9f-4e8a-8183-63793b9ffef0.s3.us-west-2.amazonaws.com/", 
+    #     presigned_url_expiration: Time.parse("2024-09-14T00:11:54.232Z"), 
+    #     presigned_url_fields: {
+    #       "x-amz-checksum-sha256" => "fmHCdgdPjOGub9TVZ4NIOpAYP4UlIOaPRUwHw8nihR4=", 
+    #       "x-amz-server-side-encryption" => "aws:kms", 
+    #       "x-amz-server-side-encryption-aws-kms-key-id" => "0a6a474b-f2ca-46ea-9e72-deea9077d92f", 
+    #       "x-amz-server-side-encryption-context" => "eyJzb21ldGhpbmciOiJ0aGVyZSJ9", 
+    #     }, 
+    #   }
+    #
+    # @example Example: Upload a file into a application
+    #
+    #   resp = client.create_presigned_url({
+    #     app_id: "4263767c-d889-4cb2-a8f6-8b649bc66af0", 
+    #     card_id: "7a11f34b-42d4-4bc8-b668-ae4a788dae1e", 
+    #     file_contents_sha_256: "myMXwslBoXkTDQ0olhq1QsiHRWWL4yj1V0IuoK+PYOg=", 
+    #     file_name: "anApplicationFile.txt", 
+    #     instance_id: "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f", 
+    #     scope: "APPLICATION", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     file_id: "412aa1b4-341c-45af-936d-da52f8a1a3b4", 
+    #     presigned_url: "https://presign-test-omg-6f98533b-3f9f-4e8a-8183-63793b9ffef0.s3.us-west-2.amazonaws.com/", 
+    #     presigned_url_expiration: Time.parse("2024-09-14T00:11:54.232Z"), 
+    #     presigned_url_fields: {
+    #       "x-amz-checksum-sha256" => "fmHCdgdPjOGub9TVZ4NIOpAYP4UlIOaPRUwHw8nihR4=", 
+    #       "x-amz-server-side-encryption" => "aws:kms", 
+    #       "x-amz-server-side-encryption-aws-kms-key-id" => "0a6a474b-f2ca-46ea-9e72-deea9077d92f", 
+    #       "x-amz-server-side-encryption-context" => "eyJzb21ldGhpbmciOiJ0aGVyZSJ9", 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_presigned_url({
+    #     instance_id: "InstanceId", # required
+    #     card_id: "UUID", # required
+    #     app_id: "UUID", # required
+    #     file_contents_sha_256: "CreatePresignedUrlInputFileContentsSha256String", # required
+    #     file_name: "Filename", # required
+    #     scope: "APPLICATION", # required, accepts APPLICATION, SESSION
+    #     session_id: "UUID",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.file_id #=> String
+    #   resp.presigned_url #=> String
+    #   resp.presigned_url_fields #=> Hash
+    #   resp.presigned_url_fields["String"] #=> String
+    #   resp.presigned_url_expiration #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/CreatePresignedUrl AWS API Documentation
+    #
+    # @overload create_presigned_url(params = {})
+    # @param [Hash] params ({})
+    def create_presigned_url(params = {}, options = {})
+      req = build_request(:create_presigned_url, params)
+      req.send_request(options)
+    end
+
     # Creates a new Amazon Q App based on the provided definition. The Q App
     # definition specifies the cards and flow of the Q App. This operation
     # also calculates the dependencies between the cards by inspecting the
@@ -855,14 +972,14 @@ module Aws::QApps
     #           text_input: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             placeholder: "Placeholder",
     #             default_value: "Default",
     #           },
     #           q_query: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             prompt: "Prompt", # required
     #             output_source: "approved-sources", # accepts approved-sources, llm
     #             attribute_filter: {
@@ -947,17 +1064,27 @@ module Aws::QApps
     #           q_plugin: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             prompt: "Prompt", # required
     #             plugin_id: "PluginId", # required
     #           },
     #           file_upload: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             filename: "Filename",
     #             file_id: "UUID",
     #             allow_override: false,
+    #           },
+    #           form_input: {
+    #             title: "Title", # required
+    #             id: "UUID", # required
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
+    #             metadata: { # required
+    #               schema: { # required
+    #               },
+    #             },
+    #             compute_mode: "append", # accepts append, replace
     #           },
     #         },
     #       ],
@@ -1065,6 +1192,79 @@ module Aws::QApps
       req.send_request(options)
     end
 
+    # Describes read permissions for a Amazon Q App in Amazon Q Business
+    # application environment instance.
+    #
+    # @option params [required, String] :instance_id
+    #   The unique identifier of the Amazon Q Business application environment
+    #   instance.
+    #
+    # @option params [required, String] :app_id
+    #   The unique identifier of the Amazon Q App for which to retrieve
+    #   permissions.
+    #
+    # @return [Types::DescribeQAppPermissionsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeQAppPermissionsOutput#resource_arn #resource_arn} => String
+    #   * {Types::DescribeQAppPermissionsOutput#app_id #app_id} => String
+    #   * {Types::DescribeQAppPermissionsOutput#permissions #permissions} => Array&lt;Types::PermissionOutput&gt;
+    #
+    #
+    # @example Example: Describe permissions for the app
+    #
+    #   resp = client.describe_q_app_permissions({
+    #     app_id: "fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #     instance_id: "01793661-ad73-4c7d-8eaa-1c95a10151c2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     app_id: "fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #     permissions: [
+    #       {
+    #         action: "write", 
+    #         principal: {
+    #           email: "user1@example.com", 
+    #           user_id: "f8f15330-b091-708b-d46e-adb0d914b699", 
+    #         }, 
+    #       }, 
+    #       {
+    #         action: "read", 
+    #         principal: {
+    #           email: "user2@example.com", 
+    #           user_id: "c81133d0-10d1-70eb-aaa3-d427ea6fc0f3", 
+    #         }, 
+    #       }, 
+    #     ], 
+    #     resource_arn: "arn:aws:qapps:us-west-2:111111111111:application/01793661-ad73-4c7d-8eaa-1c95a10151c2/qapp/fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_q_app_permissions({
+    #     instance_id: "InstanceId", # required
+    #     app_id: "UUID", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.app_id #=> String
+    #   resp.permissions #=> Array
+    #   resp.permissions[0].action #=> String, one of "read", "write"
+    #   resp.permissions[0].principal.user_id #=> String
+    #   resp.permissions[0].principal.user_type #=> String, one of "owner", "user"
+    #   resp.permissions[0].principal.email #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/DescribeQAppPermissions AWS API Documentation
+    #
+    # @overload describe_q_app_permissions(params = {})
+    # @param [Hash] params ({})
+    def describe_q_app_permissions(params = {}, options = {})
+      req = build_request(:describe_q_app_permissions, params)
+      req.send_request(options)
+    end
+
     # Removes a rating or review previously submitted by the user for a
     # library item.
     #
@@ -1134,6 +1334,43 @@ module Aws::QApps
     # @param [Hash] params ({})
     def disassociate_q_app_from_user(params = {}, options = {})
       req = build_request(:disassociate_q_app_from_user, params)
+      req.send_request(options)
+    end
+
+    # Exports the collected data of a Q App data collection session.
+    #
+    # @option params [required, String] :instance_id
+    #   The unique identifier of the Amazon Q Business application environment
+    #   instance.
+    #
+    # @option params [required, String] :session_id
+    #   The unique identifier of the Q App data collection session.
+    #
+    # @return [Types::ExportQAppSessionDataOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ExportQAppSessionDataOutput#csv_file_link #csv_file_link} => String
+    #   * {Types::ExportQAppSessionDataOutput#expires_at #expires_at} => Time
+    #   * {Types::ExportQAppSessionDataOutput#session_arn #session_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.export_q_app_session_data({
+    #     instance_id: "InstanceId", # required
+    #     session_id: "UUID", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.csv_file_link #=> String
+    #   resp.expires_at #=> Time
+    #   resp.session_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/ExportQAppSessionData AWS API Documentation
+    #
+    # @overload export_q_app_session_data(params = {})
+    # @param [Hash] params ({})
+    def export_q_app_session_data(params = {}, options = {})
+      req = build_request(:export_q_app_session_data, params)
       req.send_request(options)
     end
 
@@ -1252,6 +1489,9 @@ module Aws::QApps
     # @option params [required, String] :app_id
     #   The unique identifier of the Q App to retrieve.
     #
+    # @option params [Integer] :app_version
+    #   The version of the Q App.
+    #
     # @return [Types::GetQAppOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetQAppOutput#app_id #app_id} => String
@@ -1320,6 +1560,7 @@ module Aws::QApps
     #   resp = client.get_q_app({
     #     instance_id: "InstanceId", # required
     #     app_id: "UUID", # required
+    #     app_version: 1,
     #   })
     #
     # @example Response structure
@@ -1343,14 +1584,14 @@ module Aws::QApps
     #   resp.app_definition.cards[0].text_input.title #=> String
     #   resp.app_definition.cards[0].text_input.dependencies #=> Array
     #   resp.app_definition.cards[0].text_input.dependencies[0] #=> String
-    #   resp.app_definition.cards[0].text_input.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app_definition.cards[0].text_input.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app_definition.cards[0].text_input.placeholder #=> String
     #   resp.app_definition.cards[0].text_input.default_value #=> String
     #   resp.app_definition.cards[0].q_query.id #=> String
     #   resp.app_definition.cards[0].q_query.title #=> String
     #   resp.app_definition.cards[0].q_query.dependencies #=> Array
     #   resp.app_definition.cards[0].q_query.dependencies[0] #=> String
-    #   resp.app_definition.cards[0].q_query.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app_definition.cards[0].q_query.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app_definition.cards[0].q_query.prompt #=> String
     #   resp.app_definition.cards[0].q_query.output_source #=> String, one of "approved-sources", "llm"
     #   resp.app_definition.cards[0].q_query.attribute_filter.and_all_filters #=> Array
@@ -1400,11 +1641,13 @@ module Aws::QApps
     #   resp.app_definition.cards[0].q_query.attribute_filter.less_than_or_equals.value.string_list_value[0] #=> String
     #   resp.app_definition.cards[0].q_query.attribute_filter.less_than_or_equals.value.long_value #=> Integer
     #   resp.app_definition.cards[0].q_query.attribute_filter.less_than_or_equals.value.date_value #=> Time
+    #   resp.app_definition.cards[0].q_query.memory_references #=> Array
+    #   resp.app_definition.cards[0].q_query.memory_references[0] #=> String
     #   resp.app_definition.cards[0].q_plugin.id #=> String
     #   resp.app_definition.cards[0].q_plugin.title #=> String
     #   resp.app_definition.cards[0].q_plugin.dependencies #=> Array
     #   resp.app_definition.cards[0].q_plugin.dependencies[0] #=> String
-    #   resp.app_definition.cards[0].q_plugin.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app_definition.cards[0].q_plugin.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app_definition.cards[0].q_plugin.prompt #=> String
     #   resp.app_definition.cards[0].q_plugin.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
     #   resp.app_definition.cards[0].q_plugin.plugin_id #=> String
@@ -1412,10 +1655,16 @@ module Aws::QApps
     #   resp.app_definition.cards[0].file_upload.title #=> String
     #   resp.app_definition.cards[0].file_upload.dependencies #=> Array
     #   resp.app_definition.cards[0].file_upload.dependencies[0] #=> String
-    #   resp.app_definition.cards[0].file_upload.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app_definition.cards[0].file_upload.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app_definition.cards[0].file_upload.filename #=> String
     #   resp.app_definition.cards[0].file_upload.file_id #=> String
     #   resp.app_definition.cards[0].file_upload.allow_override #=> Boolean
+    #   resp.app_definition.cards[0].form_input.id #=> String
+    #   resp.app_definition.cards[0].form_input.title #=> String
+    #   resp.app_definition.cards[0].form_input.dependencies #=> Array
+    #   resp.app_definition.cards[0].form_input.dependencies[0] #=> String
+    #   resp.app_definition.cards[0].form_input.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
+    #   resp.app_definition.cards[0].form_input.compute_mode #=> String, one of "append", "replace"
     #   resp.app_definition.can_edit #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/GetQApp AWS API Documentation
@@ -1441,33 +1690,12 @@ module Aws::QApps
     #
     #   * {Types::GetQAppSessionOutput#session_id #session_id} => String
     #   * {Types::GetQAppSessionOutput#session_arn #session_arn} => String
+    #   * {Types::GetQAppSessionOutput#session_name #session_name} => String
+    #   * {Types::GetQAppSessionOutput#app_version #app_version} => Integer
+    #   * {Types::GetQAppSessionOutput#latest_published_app_version #latest_published_app_version} => Integer
     #   * {Types::GetQAppSessionOutput#status #status} => String
     #   * {Types::GetQAppSessionOutput#card_status #card_status} => Hash&lt;String,Types::CardStatus&gt;
-    #
-    #
-    # @example Example: Retrieves an existing session for an Amazon Q App
-    #
-    #   resp = client.get_q_app_session({
-    #     instance_id: "288ae830-1df2-4871-b6c0-4314d74dadef", 
-    #     session_id: "1fca878e-64c5-4dc4-b1d9-c93effed4e82", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     card_status: {
-    #       "1e6caeac-b481-45ff-a082-8b9a4a0b72e8" => {
-    #         current_state: "COMPLETED", 
-    #         current_value: "Based on the responses, the most popular color is red, with 1 vote from the user \"user1\".", 
-    #       }, 
-    #       "6fb5b404-3b7b-48a4-8a8b-56406922a606" => {
-    #         current_state: "COMPLETED", 
-    #         current_value: "", 
-    #       }, 
-    #     }, 
-    #     session_arn: "arn:aws:qapps:us-west-2:0123456789012:application/a929ecd6-5765-4ec7-bd3e-2ca90098b18e/qapp/65e7dce7-226a-47f9-b689-22850becef89/session/1fca878e-64c5-4dc4-b1d9-c93effed4e82", 
-    #     session_id: "1fca878e-64c5-4dc4-b1d9-c93effed4e82", 
-    #     status: "COMPLETED", 
-    #   }
+    #   * {Types::GetQAppSessionOutput#user_is_host #user_is_host} => Boolean
     #
     # @example Request syntax with placeholder values
     #
@@ -1480,10 +1708,17 @@ module Aws::QApps
     #
     #   resp.session_id #=> String
     #   resp.session_arn #=> String
-    #   resp.status #=> String, one of "IN_PROGRESS", "WAITING", "COMPLETED"
+    #   resp.session_name #=> String
+    #   resp.app_version #=> Integer
+    #   resp.latest_published_app_version #=> Integer
+    #   resp.status #=> String, one of "IN_PROGRESS", "WAITING", "COMPLETED", "ERROR"
     #   resp.card_status #=> Hash
-    #   resp.card_status["UUID"].current_state #=> String, one of "IN_PROGRESS", "WAITING", "COMPLETED"
+    #   resp.card_status["UUID"].current_state #=> String, one of "IN_PROGRESS", "WAITING", "COMPLETED", "ERROR"
     #   resp.card_status["UUID"].current_value #=> String
+    #   resp.card_status["UUID"].submissions #=> Array
+    #   resp.card_status["UUID"].submissions[0].submission_id #=> String
+    #   resp.card_status["UUID"].submissions[0].timestamp #=> Time
+    #   resp.user_is_host #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/GetQAppSession AWS API Documentation
     #
@@ -1491,6 +1726,70 @@ module Aws::QApps
     # @param [Hash] params ({})
     def get_q_app_session(params = {}, options = {})
       req = build_request(:get_q_app_session, params)
+      req.send_request(options)
+    end
+
+    # Retrieves the current configuration of a Q App session.
+    #
+    # @option params [required, String] :instance_id
+    #   The unique identifier of the Amazon Q Business application environment
+    #   instance.
+    #
+    # @option params [required, String] :session_id
+    #   The unique identifier of the Q App session.
+    #
+    # @return [Types::GetQAppSessionMetadataOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetQAppSessionMetadataOutput#session_id #session_id} => String
+    #   * {Types::GetQAppSessionMetadataOutput#session_arn #session_arn} => String
+    #   * {Types::GetQAppSessionMetadataOutput#session_name #session_name} => String
+    #   * {Types::GetQAppSessionMetadataOutput#sharing_configuration #sharing_configuration} => Types::SessionSharingConfiguration
+    #   * {Types::GetQAppSessionMetadataOutput#session_owner #session_owner} => Boolean
+    #
+    #
+    # @example Example: Retrieves an existing session metadata for an Amazon Q App
+    #
+    #   resp = client.get_q_app_session_metadata({
+    #     instance_id: "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f", 
+    #     session_id: "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     session_arn: "arn:aws:qapps:us-west-2:0123456789012:application/cbea8329-41c0-4566-a112-19250921a220/qapp/387ccac9-4717-489f-841f-729b7d7de355/session/56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb", 
+    #     session_id: "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb", 
+    #     session_name: "Trip itinerary collection session", 
+    #     session_owner: true, 
+    #     sharing_configuration: {
+    #       accept_responses: true, 
+    #       enabled: true, 
+    #       reveal_cards: false, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_q_app_session_metadata({
+    #     instance_id: "InstanceId", # required
+    #     session_id: "UUID", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.session_id #=> String
+    #   resp.session_arn #=> String
+    #   resp.session_name #=> String
+    #   resp.sharing_configuration.enabled #=> Boolean
+    #   resp.sharing_configuration.accept_responses #=> Boolean
+    #   resp.sharing_configuration.reveal_cards #=> Boolean
+    #   resp.session_owner #=> Boolean
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/GetQAppSessionMetadata AWS API Documentation
+    #
+    # @overload get_q_app_session_metadata(params = {})
+    # @param [Hash] params ({})
+    def get_q_app_session_metadata(params = {}, options = {})
+      req = build_request(:get_q_app_session_metadata, params)
       req.send_request(options)
     end
 
@@ -1505,8 +1804,7 @@ module Aws::QApps
     #   instance.
     #
     # @option params [required, String] :card_id
-    #   The unique identifier of the card the file is associated with, if
-    #   applicable.
+    #   The unique identifier of the card the file is associated with.
     #
     # @option params [required, String] :app_id
     #   The unique identifier of the Q App the file is associated with.
@@ -1518,8 +1816,8 @@ module Aws::QApps
     #   The name of the file being uploaded.
     #
     # @option params [required, String] :scope
-    #   Whether the file is associated with an Q App definition or a specific
-    #   Q App session.
+    #   Whether the file is associated with a Q App definition or a specific Q
+    #   App session.
     #
     # @option params [String] :session_id
     #   The unique identifier of the Q App session the file is associated
@@ -1794,6 +2092,49 @@ module Aws::QApps
       req.send_request(options)
     end
 
+    # Lists the collected data of a Q App data collection session.
+    #
+    # @option params [required, String] :instance_id
+    #   The unique identifier of the Amazon Q Business application environment
+    #   instance.
+    #
+    # @option params [required, String] :session_id
+    #   The unique identifier of the Q App data collection session.
+    #
+    # @return [Types::ListQAppSessionDataOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListQAppSessionDataOutput#session_id #session_id} => String
+    #   * {Types::ListQAppSessionDataOutput#session_arn #session_arn} => String
+    #   * {Types::ListQAppSessionDataOutput#session_data #session_data} => Array&lt;Types::QAppSessionData&gt;
+    #   * {Types::ListQAppSessionDataOutput#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_q_app_session_data({
+    #     instance_id: "InstanceId", # required
+    #     session_id: "UUID", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.session_id #=> String
+    #   resp.session_arn #=> String
+    #   resp.session_data #=> Array
+    #   resp.session_data[0].card_id #=> String
+    #   resp.session_data[0].user.user_id #=> String
+    #   resp.session_data[0].submission_id #=> String
+    #   resp.session_data[0].timestamp #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/ListQAppSessionData AWS API Documentation
+    #
+    # @overload list_q_app_session_data(params = {})
+    # @param [Hash] params ({})
+    def list_q_app_session_data(params = {}, options = {})
+      req = build_request(:list_q_app_session_data, params)
+      req.send_request(options)
+    end
+
     # Lists the Amazon Q Apps owned by or associated with the user either
     # because they created it or because they used it from the library in
     # the past. The user identity is extracted from the credentials used to
@@ -2014,12 +2355,12 @@ module Aws::QApps
     #   resp.app.app_definition.cards #=> Array
     #   resp.app.app_definition.cards[0].text_input.title #=> String
     #   resp.app.app_definition.cards[0].text_input.id #=> String
-    #   resp.app.app_definition.cards[0].text_input.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app.app_definition.cards[0].text_input.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app.app_definition.cards[0].text_input.placeholder #=> String
     #   resp.app.app_definition.cards[0].text_input.default_value #=> String
     #   resp.app.app_definition.cards[0].q_query.title #=> String
     #   resp.app.app_definition.cards[0].q_query.id #=> String
-    #   resp.app.app_definition.cards[0].q_query.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app.app_definition.cards[0].q_query.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app.app_definition.cards[0].q_query.prompt #=> String
     #   resp.app.app_definition.cards[0].q_query.output_source #=> String, one of "approved-sources", "llm"
     #   resp.app.app_definition.cards[0].q_query.attribute_filter.and_all_filters #=> Array
@@ -2071,15 +2412,19 @@ module Aws::QApps
     #   resp.app.app_definition.cards[0].q_query.attribute_filter.less_than_or_equals.value.date_value #=> Time
     #   resp.app.app_definition.cards[0].q_plugin.title #=> String
     #   resp.app.app_definition.cards[0].q_plugin.id #=> String
-    #   resp.app.app_definition.cards[0].q_plugin.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app.app_definition.cards[0].q_plugin.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app.app_definition.cards[0].q_plugin.prompt #=> String
     #   resp.app.app_definition.cards[0].q_plugin.plugin_id #=> String
     #   resp.app.app_definition.cards[0].file_upload.title #=> String
     #   resp.app.app_definition.cards[0].file_upload.id #=> String
-    #   resp.app.app_definition.cards[0].file_upload.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin"
+    #   resp.app.app_definition.cards[0].file_upload.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app.app_definition.cards[0].file_upload.filename #=> String
     #   resp.app.app_definition.cards[0].file_upload.file_id #=> String
     #   resp.app.app_definition.cards[0].file_upload.allow_override #=> Boolean
+    #   resp.app.app_definition.cards[0].form_input.title #=> String
+    #   resp.app.app_definition.cards[0].form_input.id #=> String
+    #   resp.app.app_definition.cards[0].form_input.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
+    #   resp.app.app_definition.cards[0].form_input.compute_mode #=> String, one of "append", "replace"
     #   resp.app.app_definition.initial_prompt #=> String
     #   resp.problem_statement #=> String
     #
@@ -2112,6 +2457,9 @@ module Aws::QApps
     #
     # @option params [Array<Types::CardValue>] :initial_values
     #   Optional initial input values to provide for the Q App session.
+    #
+    # @option params [String] :session_id
+    #   The unique identifier of the a Q App session.
     #
     # @option params [Hash<String,String>] :tags
     #   Optional tags to associate with the new Q App session.
@@ -2152,8 +2500,13 @@ module Aws::QApps
     #       {
     #         card_id: "UUID", # required
     #         value: "CardValueValueString", # required
+    #         submission_mutation: {
+    #           submission_id: "UUID", # required
+    #           mutation_type: "edit", # required, accepts edit, delete, add
+    #         },
     #       },
     #     ],
+    #     session_id: "String",
     #     tags: {
     #       "String" => "String",
     #     },
@@ -2531,14 +2884,14 @@ module Aws::QApps
     #           text_input: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             placeholder: "Placeholder",
     #             default_value: "Default",
     #           },
     #           q_query: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             prompt: "Prompt", # required
     #             output_source: "approved-sources", # accepts approved-sources, llm
     #             attribute_filter: {
@@ -2623,17 +2976,27 @@ module Aws::QApps
     #           q_plugin: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             prompt: "Prompt", # required
     #             plugin_id: "PluginId", # required
     #           },
     #           file_upload: {
     #             title: "Title", # required
     #             id: "UUID", # required
-    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             filename: "Filename",
     #             file_id: "UUID",
     #             allow_override: false,
+    #           },
+    #           form_input: {
+    #             title: "Title", # required
+    #             id: "UUID", # required
+    #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
+    #             metadata: { # required
+    #               schema: { # required
+    #               },
+    #             },
+    #             compute_mode: "append", # accepts append, replace
     #           },
     #         },
     #       ],
@@ -2663,6 +3026,131 @@ module Aws::QApps
     # @param [Hash] params ({})
     def update_q_app(params = {}, options = {})
       req = build_request(:update_q_app, params)
+      req.send_request(options)
+    end
+
+    # Updates read permissions for a Amazon Q App in Amazon Q Business
+    # application environment instance.
+    #
+    # @option params [required, String] :instance_id
+    #   The unique identifier of the Amazon Q Business application environment
+    #   instance.
+    #
+    # @option params [required, String] :app_id
+    #   The unique identifier of the Amazon Q App for which permissions are
+    #   being updated.
+    #
+    # @option params [Array<Types::PermissionInput>] :grant_permissions
+    #   The list of permissions to grant for the Amazon Q App.
+    #
+    # @option params [Array<Types::PermissionInput>] :revoke_permissions
+    #   The list of permissions to revoke for the Amazon Q App.
+    #
+    # @return [Types::UpdateQAppPermissionsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateQAppPermissionsOutput#resource_arn #resource_arn} => String
+    #   * {Types::UpdateQAppPermissionsOutput#app_id #app_id} => String
+    #   * {Types::UpdateQAppPermissionsOutput#permissions #permissions} => Array&lt;Types::PermissionOutput&gt;
+    #
+    #
+    # @example Example: Grant permissions for the app
+    #
+    #   resp = client.update_q_app_permissions({
+    #     app_id: "fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #     grant_permissions: [
+    #       {
+    #         action: "read", 
+    #         principal: "user2@example.com", 
+    #       }, 
+    #     ], 
+    #     instance_id: "01793661-ad73-4c7d-8eaa-1c95a10151c2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     app_id: "fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #     permissions: [
+    #       {
+    #         action: "write", 
+    #         principal: {
+    #           email: "user1@example.com", 
+    #           user_id: "f8f15330-b091-708b-d46e-adb0d914b699", 
+    #         }, 
+    #       }, 
+    #       {
+    #         action: "read", 
+    #         principal: {
+    #           email: "user2@example.com", 
+    #           user_id: "c81133d0-10d1-70eb-aaa3-d427ea6fc0f3", 
+    #         }, 
+    #       }, 
+    #     ], 
+    #     resource_arn: "arn:aws:qapps:us-west-2:111111111111:application/01793661-ad73-4c7d-8eaa-1c95a10151c2/qapp/fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #   }
+    #
+    # @example Example: Revoke permissions for the app
+    #
+    #   resp = client.update_q_app_permissions({
+    #     app_id: "fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #     instance_id: "01793661-ad73-4c7d-8eaa-1c95a10151c2", 
+    #     revoke_permissions: [
+    #       {
+    #         action: "read", 
+    #         principal: "user2@example.com", 
+    #       }, 
+    #     ], 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     app_id: "fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #     permissions: [
+    #       {
+    #         action: "write", 
+    #         principal: {
+    #           email: "user1@example.com", 
+    #           user_id: "f8f15330-b091-708b-d46e-adb0d914b699", 
+    #         }, 
+    #       }, 
+    #     ], 
+    #     resource_arn: "arn:aws:qapps:us-west-2:111111111111:application/01793661-ad73-4c7d-8eaa-1c95a10151c2/qapp/fe0acf86-49e5-4def-a0c2-40ce0cafee14", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_q_app_permissions({
+    #     instance_id: "InstanceId", # required
+    #     app_id: "UUID", # required
+    #     grant_permissions: [
+    #       {
+    #         action: "read", # required, accepts read, write
+    #         principal: "PermissionInputPrincipalString", # required
+    #       },
+    #     ],
+    #     revoke_permissions: [
+    #       {
+    #         action: "read", # required, accepts read, write
+    #         principal: "PermissionInputPrincipalString", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.app_id #=> String
+    #   resp.permissions #=> Array
+    #   resp.permissions[0].action #=> String, one of "read", "write"
+    #   resp.permissions[0].principal.user_id #=> String
+    #   resp.permissions[0].principal.user_type #=> String, one of "owner", "user"
+    #   resp.permissions[0].principal.email #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/UpdateQAppPermissions AWS API Documentation
+    #
+    # @overload update_q_app_permissions(params = {})
+    # @param [Hash] params ({})
+    def update_q_app_permissions(params = {}, options = {})
+      req = build_request(:update_q_app_permissions, params)
       req.send_request(options)
     end
 
@@ -2697,6 +3185,10 @@ module Aws::QApps
     #       {
     #         card_id: "UUID", # required
     #         value: "CardValueValueString", # required
+    #         submission_mutation: {
+    #           submission_id: "UUID", # required
+    #           mutation_type: "edit", # required, accepts edit, delete, add
+    #         },
     #       },
     #     ],
     #   })
@@ -2712,6 +3204,87 @@ module Aws::QApps
     # @param [Hash] params ({})
     def update_q_app_session(params = {}, options = {})
       req = build_request(:update_q_app_session, params)
+      req.send_request(options)
+    end
+
+    # Updates the configuration metadata of a session for a given Q App
+    # `sessionId`.
+    #
+    # @option params [required, String] :instance_id
+    #   The unique identifier of the Amazon Q Business application environment
+    #   instance.
+    #
+    # @option params [required, String] :session_id
+    #   The unique identifier of the Q App session to update configuration
+    #   for.
+    #
+    # @option params [String] :session_name
+    #   The new name for the Q App session.
+    #
+    # @option params [required, Types::SessionSharingConfiguration] :sharing_configuration
+    #   The new sharing configuration for the Q App data collection session.
+    #
+    # @return [Types::UpdateQAppSessionMetadataOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateQAppSessionMetadataOutput#session_id #session_id} => String
+    #   * {Types::UpdateQAppSessionMetadataOutput#session_arn #session_arn} => String
+    #   * {Types::UpdateQAppSessionMetadataOutput#session_name #session_name} => String
+    #   * {Types::UpdateQAppSessionMetadataOutput#sharing_configuration #sharing_configuration} => Types::SessionSharingConfiguration
+    #
+    #
+    # @example Example: Updates an existing session metadata for an Amazon Q App
+    #
+    #   resp = client.update_q_app_session_metadata({
+    #     instance_id: "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f", 
+    #     session_id: "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb", 
+    #     session_name: "Trip itinerary collection session", 
+    #     sharing_configuration: {
+    #       accept_responses: true, 
+    #       enabled: true, 
+    #       reveal_cards: false, 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     session_arn: "arn:aws:qapps:us-west-2:0123456789012:application/cbea8329-41c0-4566-a112-19250921a220/qapp/387ccac9-4717-489f-841f-729b7d7de355/session/56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb", 
+    #     session_id: "56ae47c3-10bc-4c2c-8b27-9b9fe23b3edb", 
+    #     session_name: "Trip itinerary collection session", 
+    #     sharing_configuration: {
+    #       accept_responses: true, 
+    #       enabled: true, 
+    #       reveal_cards: false, 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_q_app_session_metadata({
+    #     instance_id: "InstanceId", # required
+    #     session_id: "UUID", # required
+    #     session_name: "SessionName",
+    #     sharing_configuration: { # required
+    #       enabled: false, # required
+    #       accept_responses: false,
+    #       reveal_cards: false,
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.session_id #=> String
+    #   resp.session_arn #=> String
+    #   resp.session_name #=> String
+    #   resp.sharing_configuration.enabled #=> Boolean
+    #   resp.sharing_configuration.accept_responses #=> Boolean
+    #   resp.sharing_configuration.reveal_cards #=> Boolean
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/UpdateQAppSessionMetadata AWS API Documentation
+    #
+    # @overload update_q_app_session_metadata(params = {})
+    # @param [Hash] params ({})
+    def update_q_app_session_metadata(params = {}, options = {})
+      req = build_request(:update_q_app_session_metadata, params)
       req.send_request(options)
     end
 
@@ -2733,7 +3306,7 @@ module Aws::QApps
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qapps'
-      context[:gem_version] = '1.9.0'
+      context[:gem_version] = '1.10.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

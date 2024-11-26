@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.34.0 (2024-11-26)
+------------------
+
+* Feature - Custom Orchestration and Streaming configurations API release for AWSBedrockAgents.
+
 1.33.0 (2024-11-22)
 ------------------
 

@@ -239,6 +239,10 @@ module Aws
                               },
                             ]?,
                             session_attributes: Hash[::String, ::String]?
+                          },
+                          ?streaming_configurations: {
+                            apply_guardrail_interval: ::Integer?,
+                            stream_final_response: bool?
                           }
                         ) ?{ (*untyped) -> void } -> _InvokeAgentResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _InvokeAgentResponseSuccess

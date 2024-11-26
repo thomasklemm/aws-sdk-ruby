@@ -1591,6 +1591,7 @@ module Aws::EC2
       attr_accessor connection_notification_arn: ::String
       attr_accessor connection_events: ::Array[::String]
       attr_accessor connection_notification_state: ("Enabled" | "Disabled")
+      attr_accessor service_region: ::String
       SENSITIVE: []
     end
 
@@ -1678,6 +1679,7 @@ module Aws::EC2
       attr_accessor source_region: ::String
       attr_accessor source_snapshot_id: ::String
       attr_accessor tag_specifications: ::Array[Types::TagSpecification]
+      attr_accessor completion_duration_minutes: ::Integer
       attr_accessor dry_run: bool
       SENSITIVE: [:presigned_url]
     end
@@ -3058,6 +3060,7 @@ module Aws::EC2
       attr_accessor private_dns_enabled: bool
       attr_accessor tag_specifications: ::Array[Types::TagSpecification]
       attr_accessor subnet_configurations: ::Array[Types::SubnetConfiguration]
+      attr_accessor service_region: ::String
       SENSITIVE: []
     end
 
@@ -3074,6 +3077,7 @@ module Aws::EC2
       attr_accessor network_load_balancer_arns: ::Array[::String]
       attr_accessor gateway_load_balancer_arns: ::Array[::String]
       attr_accessor supported_ip_address_types: ::Array[::String]
+      attr_accessor supported_regions: ::Array[::String]
       attr_accessor client_token: ::String
       attr_accessor tag_specifications: ::Array[Types::TagSpecification]
       SENSITIVE: []
@@ -6408,6 +6412,7 @@ module Aws::EC2
       attr_accessor filters: ::Array[Types::Filter]
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
+      attr_accessor service_regions: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -11609,6 +11614,8 @@ module Aws::EC2
       attr_accessor remove_gateway_load_balancer_arns: ::Array[::String]
       attr_accessor add_supported_ip_address_types: ::Array[::String]
       attr_accessor remove_supported_ip_address_types: ::Array[::String]
+      attr_accessor add_supported_regions: ::Array[::String]
+      attr_accessor remove_supported_regions: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -13938,6 +13945,8 @@ module Aws::EC2
       attr_accessor private_dns_name_configuration: Types::PrivateDnsNameConfiguration
       attr_accessor payer_responsibility: ("ServiceOwner")
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor supported_regions: ::Array[Types::SupportedRegionDetail]
+      attr_accessor remote_access_enabled: bool
       SENSITIVE: []
     end
 
@@ -13945,6 +13954,7 @@ module Aws::EC2
       attr_accessor service_name: ::String
       attr_accessor service_id: ::String
       attr_accessor service_type: ::Array[Types::ServiceTypeDetail]
+      attr_accessor service_region: ::String
       attr_accessor availability_zones: ::Array[::String]
       attr_accessor owner: ::String
       attr_accessor base_endpoint_dns_names: ::Array[::String]
@@ -13984,6 +13994,9 @@ module Aws::EC2
       attr_accessor storage_tier: ("archive" | "standard")
       attr_accessor restore_expiry_time: ::Time
       attr_accessor sse_type: ("sse-ebs" | "sse-kms" | "none")
+      attr_accessor transfer_type: ("time-based" | "standard")
+      attr_accessor completion_duration_minutes: ::Integer
+      attr_accessor completion_time: ::Time
       attr_accessor snapshot_id: ::String
       attr_accessor volume_id: ::String
       attr_accessor state: ("pending" | "completed" | "error" | "recoverable" | "recovering")
@@ -14456,6 +14469,12 @@ module Aws::EC2
 
     class SuccessfulQueuedPurchaseDeletion
       attr_accessor reserved_instances_id: ::String
+      SENSITIVE: []
+    end
+
+    class SupportedRegionDetail
+      attr_accessor region: ::String
+      attr_accessor service_state: ::String
       SENSITIVE: []
     end
 
@@ -15621,6 +15640,7 @@ module Aws::EC2
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor owner_id: ::String
       attr_accessor last_error: Types::LastError
+      attr_accessor service_region: ::String
       SENSITIVE: []
     end
 
@@ -15636,6 +15656,7 @@ module Aws::EC2
       attr_accessor ip_address_type: ("ipv4" | "dualstack" | "ipv6")
       attr_accessor vpc_endpoint_connection_id: ::String
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor vpc_endpoint_region: ::String
       SENSITIVE: []
     end
 

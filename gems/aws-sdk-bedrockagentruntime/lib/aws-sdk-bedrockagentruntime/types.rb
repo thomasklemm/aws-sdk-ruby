@@ -636,6 +636,39 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # The trace behavior for the custom orchestration.
+    #
+    # @!attribute [rw] event
+    #   The trace event details used with the custom orchestration.
+    #   @return [Types::CustomOrchestrationTraceEvent]
+    #
+    # @!attribute [rw] trace_id
+    #   The unique identifier of the trace.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/CustomOrchestrationTrace AWS API Documentation
+    #
+    class CustomOrchestrationTrace < Struct.new(
+      :event,
+      :trace_id)
+      SENSITIVE = [:event]
+      include Aws::Structure
+    end
+
+    # The event in the custom orchestration sequence.
+    #
+    # @!attribute [rw] text
+    #   The text that prompted the event at this step.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/CustomOrchestrationTraceEvent AWS API Documentation
+    #
+    class CustomOrchestrationTraceEvent < Struct.new(
+      :text)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] agent_alias_id
     #   The unique identifier of an alias of an agent.
     #   @return [String]
@@ -2369,6 +2402,10 @@ module Aws::BedrockAgentRuntime
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
     #   @return [Types::SessionState]
     #
+    # @!attribute [rw] streaming_configurations
+    #   Specifies the configurations for streaming.
+    #   @return [Types::StreamingConfigurations]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InvokeAgentRequest AWS API Documentation
     #
     class InvokeAgentRequest < Struct.new(
@@ -2379,7 +2416,8 @@ module Aws::BedrockAgentRuntime
       :input_text,
       :memory_id,
       :session_id,
-      :session_state)
+      :session_state,
+      :streaming_configurations)
       SENSITIVE = [:input_text]
       include Aws::Structure
     end
@@ -4712,6 +4750,26 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Configurations for streaming.
+    #
+    # @!attribute [rw] apply_guardrail_interval
+    #   The guardrail interval to apply as response is generated.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] stream_final_response
+    #   Specifies whether to enable streaming for the final response. This
+    #   is set to `false` by default.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/StreamingConfigurations AWS API Documentation
+    #
+    class StreamingConfigurations < Struct.new(
+      :apply_guardrail_interval,
+      :stream_final_response)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Configuration settings for text generation using a language model via
     # the RetrieveAndGenerate operation. Includes parameters like
     # temperature, top-p, maximum token count, and stop sequences.
@@ -4839,6 +4897,11 @@ module Aws::BedrockAgentRuntime
     #
     # @note Trace is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of Trace corresponding to the set member.
     #
+    # @!attribute [rw] custom_orchestration_trace
+    #   Details about the custom orchestration step in which the agent
+    #   determines the order in which actions are executed.
+    #   @return [Types::CustomOrchestrationTrace]
+    #
     # @!attribute [rw] failure_trace
     #   Contains information about the failure of the interaction.
     #   @return [Types::FailureTrace]
@@ -4866,16 +4929,18 @@ module Aws::BedrockAgentRuntime
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/Trace AWS API Documentation
     #
     class Trace < Struct.new(
+      :custom_orchestration_trace,
       :failure_trace,
       :guardrail_trace,
       :orchestration_trace,
       :post_processing_trace,
       :pre_processing_trace,
       :unknown)
-      SENSITIVE = [:failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace]
+      SENSITIVE = [:custom_orchestration_trace, :failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace]
       include Aws::Structure
       include Aws::Structure::Union
 
+      class CustomOrchestrationTrace < Trace; end
       class FailureTrace < Trace; end
       class GuardrailTrace < Trace; end
       class OrchestrationTrace < Trace; end

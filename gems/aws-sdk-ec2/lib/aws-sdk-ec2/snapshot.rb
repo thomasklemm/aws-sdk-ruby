@@ -84,6 +84,44 @@ module Aws::EC2
       data[:sse_type]
     end
 
+    # <note markdown="1"> Only for snapshot copies.
+    #
+    #  </note>
+    #
+    # Indicates whether the snapshot copy was created with a standard or
+    # time-based snapshot copy operation. Time-based snapshot copy
+    # operations complete within the completion duration specified in the
+    # request. Standard snapshot copy operations are completed on a
+    # best-effort basis.
+    #
+    # * `standard` - The snapshot copy was created with a standard snapshot
+    #   copy operation.
+    #
+    # * `time-based` - The snapshot copy was created with a time-based
+    #   snapshot copy operation.
+    # @return [String]
+    def transfer_type
+      data[:transfer_type]
+    end
+
+    # <note markdown="1"> Only for snapshot copies created with time-based snapshot copy
+    # operations.
+    #
+    #  </note>
+    #
+    # The completion duration requested for the time-based snapshot copy
+    # operation.
+    # @return [Integer]
+    def completion_duration_minutes
+      data[:completion_duration_minutes]
+    end
+
+    # The time stamp when the snapshot was completed.
+    # @return [Time]
+    def completion_time
+      data[:completion_time]
+    end
+
     # The ID of the volume that was used to create the snapshot. Snapshots
     # created by the CopySnapshot action have an arbitrary volume ID that
     # should not be used for any purpose.
@@ -342,6 +380,7 @@ module Aws::EC2
     #         ],
     #       },
     #     ],
+    #     completion_duration_minutes: 1,
     #     dry_run: false,
     #   })
     # @param [Hash] options ({})
@@ -426,6 +465,18 @@ module Aws::EC2
     #   The ID of the Region that contains the snapshot to be copied.
     # @option options [Array<Types::TagSpecification>] :tag_specifications
     #   The tags to apply to the new snapshot.
+    # @option options [Integer] :completion_duration_minutes
+    #   Specify a completion duration, in 15 minute increments, to initiate a
+    #   time-based snapshot copy. Time-based snapshot copy operations complete
+    #   within the specified duration. For more information, see [ Time-based
+    #   copies][1].
+    #
+    #   If you do not specify a value, the snapshot copy operation is
+    #   completed on a best-effort basis.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html
     # @option options [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.

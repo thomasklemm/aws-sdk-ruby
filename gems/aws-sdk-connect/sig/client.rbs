@@ -422,7 +422,9 @@ module Aws
                             ?name: ::String,
                             ?description: ::String,
                             ?segment_attributes: Hash[::String, {
-                                value_string: ::String?
+                                value_string: ::String?,
+                                value_map: Hash[::String, untyped]?,
+                                value_integer: ::Integer?
                               }]
                           ) -> _CreateContactResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateContactResponseSuccess
@@ -3643,7 +3645,9 @@ module Aws
                                 },
                                 ?related_contact_id: ::String,
                                 ?segment_attributes: Hash[::String, {
-                                    value_string: ::String?
+                                    value_string: ::String?,
+                                    value_map: Hash[::String, untyped]?,
+                                    value_integer: ::Integer?
                                   }]
                               ) -> _StartChatContactResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartChatContactResponseSuccess
@@ -3745,7 +3749,9 @@ module Aws
                                  ?related_contact_id: ::String,
                                  ?attributes: Hash[::String, ::String],
                                  ?segment_attributes: Hash[::String, {
-                                     value_string: ::String?
+                                     value_string: ::String?,
+                                     value_map: Hash[::String, untyped]?,
+                                     value_integer: ::Integer?
                                    }],
                                  ?client_token: ::String
                                ) -> _StartEmailContactResponseSuccess
@@ -3767,7 +3773,9 @@ module Aws
                                          },
                                          instance_id: ::String,
                                          segment_attributes: Hash[::String, {
-                                             value_string: ::String?
+                                             value_string: ::String?,
+                                             value_map: Hash[::String, untyped]?,
+                                             value_integer: ::Integer?
                                            }],
                                          ?attributes: Hash[::String, ::String],
                                          contact_flow_id: ::String,
@@ -3897,7 +3905,9 @@ module Aws
                                 ?quick_connect_id: ::String,
                                 ?related_contact_id: ::String,
                                 ?segment_attributes: Hash[::String, {
-                                    value_string: ::String?
+                                    value_string: ::String?,
+                                    value_map: Hash[::String, untyped]?,
+                                    value_integer: ::Integer?
                                   }]
                               ) -> _StartTaskContactResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartTaskContactResponseSuccess
@@ -4101,7 +4111,9 @@ module Aws
                                 status_reason: ::String?
                               }],
                             ?segment_attributes: Hash[::String, {
-                                value_string: ::String?
+                                value_string: ::String?,
+                                value_map: Hash[::String, untyped]?,
+                                value_integer: ::Integer?
                               }]
                           ) -> _UpdateContactResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateContactResponseSuccess

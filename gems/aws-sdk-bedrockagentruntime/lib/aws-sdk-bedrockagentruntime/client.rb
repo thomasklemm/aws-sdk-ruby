@@ -637,6 +637,9 @@ module Aws::BedrockAgentRuntime
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
     #
+    # @option params [Types::StreamingConfigurations] :streaming_configurations
+    #   Specifies the configurations for streaming.
+    #
     # @return [Types::InvokeAgentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::InvokeAgentResponse#completion #completion} => Types::ResponseStream
@@ -976,6 +979,10 @@ module Aws::BedrockAgentRuntime
     #         "String" => "String",
     #       },
     #     },
+    #     streaming_configurations: {
+    #       apply_guardrail_interval: 1,
+    #       stream_final_response: false,
+    #     },
     #   })
     #
     # @example Response structure
@@ -1061,6 +1068,8 @@ module Aws::BedrockAgentRuntime
     #   event.agent_id #=> String
     #   event.agent_version #=> String
     #   event.session_id #=> String
+    #   event.trace.custom_orchestration_trace.event.text #=> String
+    #   event.trace.custom_orchestration_trace.trace_id #=> String
     #   event.trace.failure_trace.failure_reason #=> String
     #   event.trace.failure_trace.trace_id #=> String
     #   event.trace.guardrail_trace.action #=> String, one of "INTERVENED", "NONE"
@@ -2157,6 +2166,8 @@ module Aws::BedrockAgentRuntime
     #
     #   For :trace event available at #on_trace_event callback and response eventstream enumerator:
     #   event.session_id #=> String
+    #   event.trace.custom_orchestration_trace.event.text #=> String
+    #   event.trace.custom_orchestration_trace.trace_id #=> String
     #   event.trace.failure_trace.failure_reason #=> String
     #   event.trace.failure_trace.trace_id #=> String
     #   event.trace.guardrail_trace.action #=> String, one of "INTERVENED", "NONE"
@@ -2964,7 +2975,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

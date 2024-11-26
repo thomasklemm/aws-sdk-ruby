@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.10.0 (2024-11-26)
+------------------
+
+* Feature - Private sharing, file upload and data collection feature support for Q Apps
+
 1.9.0 (2024-11-06)
 ------------------
 

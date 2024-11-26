@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.187.0 (2024-11-26)
+------------------
+
+* Feature - Enables access to ValueMap and ValueInteger types for SegmentAttributes and fixes deserialization bug for DescribeContactFlow in AmazonConnect Public API
+
 1.186.0 (2024-11-22)
 ------------------
 

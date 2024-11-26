@@ -2718,6 +2718,13 @@ module Aws::EC2
     #   * `network-interface.network-interface-id` - The ID of the network
     #     interface.
     #
+    #   * `network-interface.operator.managed` - A Boolean that indicates
+    #     whether the instance has a managed network interface.
+    #
+    #   * `network-interface.operator.principal` - The principal that manages
+    #     the network interface. Only valid for instances with managed network
+    #     interfaces, where `managed` is `true`.
+    #
     #   * `network-interface.outpost-arn` - The ARN of the Outpost.
     #
     #   * `network-interface.owner-id` - The ID of the owner of the network
@@ -2756,6 +2763,12 @@ module Aws::EC2
     #
     #   * `network-interface.vpc-id` - The ID of the VPC for the network
     #     interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed instance.
+    #
+    #   * `operator.principal` - The principal that manages the instance. Only
+    #     valid for managed instances, where `managed` is `true`.
     #
     #   * `outpost-arn` - The Amazon Resource Name (ARN) of the Outpost.
     #
@@ -3336,6 +3349,13 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed network interface.
+    #
+    #   * `operator.principal` - The principal that manages the network
+    #     interface. Only valid for managed network interfaces, where
+    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -4057,12 +4077,18 @@ module Aws::EC2
     #   * `encrypted` - Indicates whether the volume is encrypted (`true` \|
     #     `false`)
     #
-    #   * `multi-attach-enabled` - Indicates whether the volume is enabled for
-    #     Multi-Attach (`true` \| `false`)
-    #
     #   * `fast-restored` - Indicates whether the volume was created from a
     #     snapshot that is enabled for fast snapshot restore (`true` \|
     #     `false`).
+    #
+    #   * `multi-attach-enabled` - Indicates whether the volume is enabled for
+    #     Multi-Attach (`true` \| `false`)
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed volume.
+    #
+    #   * `operator.principal` - The principal that manages the volume. Only
+    #     valid for managed volumes, where `managed` is `true`.
     #
     #   * `size` - The size of the volume, in GiB.
     #

@@ -201,6 +201,10 @@ module Aws::BedrockAgent
     #   The time at which the agent was created.
     #   @return [Time]
     #
+    # @!attribute [rw] custom_orchestration
+    #   Contains custom orchestration configurations for the agent.
+    #   @return [Types::CustomOrchestration]
+    #
     # @!attribute [rw] customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the KMS key that encrypts the
     #   agent.
@@ -240,6 +244,10 @@ module Aws::BedrockAgent
     #   Contains memory configuration for the agent.
     #   @return [Types::MemoryConfiguration]
     #
+    # @!attribute [rw] orchestration_type
+    #   Specifies the orchestration strategy for the agent.
+    #   @return [String]
+    #
     # @!attribute [rw] prepared_at
     #   The time at which the agent was last prepared.
     #   @return [Time]
@@ -274,6 +282,7 @@ module Aws::BedrockAgent
       :agent_version,
       :client_token,
       :created_at,
+      :custom_orchestration,
       :customer_encryption_key_arn,
       :description,
       :failure_reasons,
@@ -282,6 +291,7 @@ module Aws::BedrockAgent
       :idle_session_ttl_in_seconds,
       :instruction,
       :memory_configuration,
+      :orchestration_type,
       :prepared_at,
       :prompt_override_configuration,
       :recommended_actions,
@@ -1494,6 +1504,11 @@ module Aws::BedrockAgent
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
     #   @return [String]
     #
+    # @!attribute [rw] custom_orchestration
+    #   Contains details of the custom orchestration configured for the
+    #   agent.
+    #   @return [Types::CustomOrchestration]
+    #
     # @!attribute [rw] customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the KMS key with which to encrypt
     #   the agent.
@@ -1566,6 +1581,11 @@ module Aws::BedrockAgent
     #   Contains the details of the memory configured for the agent.
     #   @return [Types::MemoryConfiguration]
     #
+    # @!attribute [rw] orchestration_type
+    #   Specifies the type of orchestration strategy for the agent. This is
+    #   set to `DEFAULT` orchestration type, by default.
+    #   @return [String]
+    #
     # @!attribute [rw] prompt_override_configuration
     #   Contains configurations to override prompts in different parts of an
     #   agent sequence. For more information, see [Advanced prompts][1].
@@ -1585,6 +1605,7 @@ module Aws::BedrockAgent
       :agent_name,
       :agent_resource_role_arn,
       :client_token,
+      :custom_orchestration,
       :customer_encryption_key_arn,
       :description,
       :foundation_model,
@@ -1592,6 +1613,7 @@ module Aws::BedrockAgent
       :idle_session_ttl_in_seconds,
       :instruction,
       :memory_configuration,
+      :orchestration_type,
       :prompt_override_configuration,
       :tags)
       SENSITIVE = [:instruction, :prompt_override_configuration]
@@ -2323,6 +2345,21 @@ module Aws::BedrockAgent
       :variants,
       :version)
       SENSITIVE = [:variants]
+      include Aws::Structure
+    end
+
+    # Details of custom orchestration.
+    #
+    # @!attribute [rw] executor
+    #   The structure of the executor invoking the actions in custom
+    #   orchestration.
+    #   @return [Types::OrchestrationExecutor]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CustomOrchestration AWS API Documentation
+    #
+    class CustomOrchestration < Struct.new(
+      :executor)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -6105,6 +6142,32 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Contains details about the Lambda function containing the
+    # orchestration logic carried out upon invoking the custom
+    # orchestration.
+    #
+    # @note OrchestrationExecutor is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note OrchestrationExecutor is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of OrchestrationExecutor corresponding to the set member.
+    #
+    # @!attribute [rw] lambda
+    #   The Amazon Resource Name (ARN) of the Lambda function containing the
+    #   business logic that is carried out upon invoking the action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/OrchestrationExecutor AWS API Documentation
+    #
+    class OrchestrationExecutor < Struct.new(
+      :lambda,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Lambda < OrchestrationExecutor; end
+      class Unknown < OrchestrationExecutor; end
+    end
+
     # Contains configurations for an output flow node in the flow. You
     # specify the data type expected for the input into the node in the
     # `type` field and how to return the final output in the `expression`
@@ -8330,6 +8393,11 @@ module Aws::BedrockAgent
     #   invoke API operations on the agent.
     #   @return [String]
     #
+    # @!attribute [rw] custom_orchestration
+    #   Contains details of the custom orchestration configured for the
+    #   agent.
+    #   @return [Types::CustomOrchestration]
+    #
     # @!attribute [rw] customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the KMS key with which to encrypt
     #   the agent.
@@ -8402,6 +8470,11 @@ module Aws::BedrockAgent
     #   Specifies the new memory configuration for the agent.
     #   @return [Types::MemoryConfiguration]
     #
+    # @!attribute [rw] orchestration_type
+    #   Specifies the type of orchestration strategy for the agent. This is
+    #   set to `DEFAULT` orchestration type, by default.
+    #   @return [String]
+    #
     # @!attribute [rw] prompt_override_configuration
     #   Contains configurations to override prompts in different parts of an
     #   agent sequence. For more information, see [Advanced prompts][1].
@@ -8417,6 +8490,7 @@ module Aws::BedrockAgent
       :agent_id,
       :agent_name,
       :agent_resource_role_arn,
+      :custom_orchestration,
       :customer_encryption_key_arn,
       :description,
       :foundation_model,
@@ -8424,6 +8498,7 @@ module Aws::BedrockAgent
       :idle_session_ttl_in_seconds,
       :instruction,
       :memory_configuration,
+      :orchestration_type,
       :prompt_override_configuration)
       SENSITIVE = [:instruction, :prompt_override_configuration]
       include Aws::Structure

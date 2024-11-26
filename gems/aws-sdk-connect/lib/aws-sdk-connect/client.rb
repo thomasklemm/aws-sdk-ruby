@@ -1242,8 +1242,8 @@ module Aws::Connect
     #   The unique identifier of the Connect instance.
     #
     # @option params [required, String] :associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -1251,7 +1251,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #
     # @return [Types::BatchGetAttachedFileMetadataResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1556,8 +1557,8 @@ module Aws::Connect
     #   The unique identifier of the attached file resource.
     #
     # @option params [required, String] :associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -1565,7 +1566,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1648,33 +1650,83 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Creates a new contact.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
     #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #
     # @option params [String] :related_contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #
     # @option params [Hash<String,String>] :attributes
+    #   A custom key-value pair using an attribute map. The attributes are
+    #   standard Amazon Connect attributes, and can be accessed in flows just
+    #   like any other contact attributes.
+    #
+    #   There can be up to 32,768 UTF-8 bytes across all key-value pairs per
+    #   contact. Attribute keys can include only alphanumeric, dash, and
+    #   underscore characters.
     #
     # @option params [Hash<String,Types::Reference>] :references
+    #   A formatted URL that is shown to an agent in the Contact Control Panel
+    #   (CCP). Tasks can have the following reference types at the time of
+    #   creation: URL \| NUMBER \| STRING \| DATE \| EMAIL \| ATTACHMENT.
     #
     # @option params [required, String] :channel
+    #   The channel for the contact
     #
     # @option params [required, String] :initiation_method
+    #   Indicates how the contact was initiated.
     #
     # @option params [Integer] :expiry_duration_in_minutes
+    #   Number of minutes the contact will be active for before expiring
     #
     # @option params [Types::UserInfo] :user_info
+    #   User details for the contact
     #
     # @option params [String] :initiate_as
+    #   Initial state of the contact when it's created
     #
     # @option params [String] :name
+    #   The name of a the contact.
     #
     # @option params [String] :description
+    #   A description of the contact.
     #
     # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments (unique contact ID) using an attribute map. The attributes
+    #   are standard Amazon Connect attributes. They can be accessed in flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to set Segment Contact Expiry as a duration in
+    #   minutes.
+    #
+    #   <note markdown="1"> To set contact expiry, a ValueMap must be specified containing the
+    #   integer number of minutes the contact will be active for before
+    #   expiring, with `SegmentAttributes` like \{ ` "connect:ContactExpiry":
+    #   {"ValueMap" : { "ExpiryDuration": { "ValueInteger": 135}}}}`.
+    #
+    #    </note>
     #
     # @return [Types::CreateContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1711,6 +1763,12 @@ module Aws::Connect
     #     segment_attributes: {
     #       "SegmentAttributeName" => {
     #         value_string: "SegmentAttributeValueString",
+    #         value_map: {
+    #           "SegmentAttributeName" => {
+    #             # recursive SegmentAttributeValue
+    #           },
+    #         },
+    #         value_integer: 1,
     #       },
     #     },
     #   })
@@ -1941,17 +1999,46 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Create new email address in the specified Amazon Connect instance. For
+    # more information about email addresses, see [Create email
+    # addresses][1] in the Amazon Connect Administrator Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html
+    #
     # @option params [String] :description
+    #   The description of the email address.
     #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, String] :email_address
+    #   The email address with the instance, in
+    #   \[^\\s@\]+@\[^\\s@\]+\\.\[^\\s@\]+ format.
     #
     # @option params [String] :display_name
+    #   The display name of email address
     #
     # @option params [Hash<String,String>] :tags
+    #   The tags used to organize, track, or control access for this resource.
+    #   For example, \{ "Tags": \{"key1":"value1", "key2":"value2"}
+    #   }.
     #
     # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1].
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #
     # @return [Types::CreateEmailAddressResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2696,6 +2783,7 @@ module Aws::Connect
     #   The outbound caller ID name, number, and outbound whisper flow.
     #
     # @option params [Types::OutboundEmailConfig] :outbound_email_config
+    #   The outbound email address ID for a specified queue.
     #
     # @option params [required, String] :hours_of_operation_id
     #   The identifier for the hours of operation.
@@ -3192,6 +3280,8 @@ module Aws::Connect
     #   by referencing this template.
     #
     # @option params [String] :self_assign_flow_id
+    #   The ContactFlowId for the flow that will be run if this template is
+    #   used to create a self-assigned task.
     #
     # @option params [Types::TaskTemplateConstraints] :constraints
     #   Constraints that are applicable to the fields listed.
@@ -4033,9 +4123,18 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Deletes email address from the specified Amazon Connect instance.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, String] :email_address_id
+    #   The identifier of the email address.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -4945,6 +5044,9 @@ module Aws::Connect
     #   resp.contact.additional_email_recipients.cc_list[0].display_name #=> String
     #   resp.contact.segment_attributes #=> Hash
     #   resp.contact.segment_attributes["SegmentAttributeName"].value_string #=> String
+    #   resp.contact.segment_attributes["SegmentAttributeName"].value_map #=> Hash
+    #   resp.contact.segment_attributes["SegmentAttributeName"].value_map["SegmentAttributeName"] #=> Types::SegmentAttributeValue
+    #   resp.contact.segment_attributes["SegmentAttributeName"].value_integer #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeContact AWS API Documentation
     #
@@ -5063,8 +5165,8 @@ module Aws::Connect
     # language][1].
     #
     # Use the `$SAVED` alias in the request to describe the `SAVED` content
-    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. Once a
-    # contact flow is published, `$SAVED` needs to be supplied to view saved
+    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. After
+    # a flow is published, `$SAVED` needs to be supplied to view saved
     # content that has not been published.
     #
     # In the response, **Status** indicates the flow status as either
@@ -5105,7 +5207,6 @@ module Aws::Connect
     #   resp.contact_flow.content #=> String
     #   resp.contact_flow.tags #=> Hash
     #   resp.contact_flow.tags["TagKey"] #=> String
-    #   resp.contact_flow.is_default #=> Boolean
     #   resp.contact_flow.flow_content_sha_256 #=> String
     #   resp.contact_flow.version #=> Integer
     #   resp.contact_flow.version_description #=> String
@@ -5124,8 +5225,8 @@ module Aws::Connect
     # Describes the specified flow module.
     #
     # Use the `$SAVED` alias in the request to describe the `SAVED` content
-    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. Once a
-    # contact flow is published, `$SAVED` needs to be supplied to view saved
+    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. After
+    # a flow is published, `$SAVED` needs to be supplied to view saved
     # content that has not been published.
     #
     # @option params [required, String] :instance_id
@@ -5171,9 +5272,18 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Describe email address form the specified Amazon Connect instance.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, String] :email_address_id
+    #   The identifier of the email address.
     #
     # @return [Types::DescribeEmailAddressResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -6838,7 +6948,7 @@ module Aws::Connect
     # return a downloadURL if the status of the attached file is `APPROVED`.
     #
     # @option params [required, String] :instance_id
-    #   The unique identifier of the Connect instance.
+    #   The unique identifier of the Amazon Connect instance.
     #
     # @option params [required, String] :file_id
     #   The unique identifier of the attached file resource.
@@ -6848,8 +6958,8 @@ module Aws::Connect
     #   The default value is 300.
     #
     # @option params [required, String] :associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -6857,7 +6967,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #
     # @return [Types::GetAttachedFileResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -9641,13 +9752,32 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Provides information about contact tree, a list of associated contacts
+    # with a unique identifier.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, String] :contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #
     # @option params [Integer] :max_results
+    #   The maximum number of results to return per page.
+    #
+    #   The maximum number of results to return per page. The default
+    #   MaxResult size is 25.
+    #
+    #   Valid Range: Minimum value of 1. Maximum value of 100.
     #
     # @option params [String] :next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
     #
     # @return [Types::ListAssociatedContactsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -12893,7 +13023,7 @@ module Aws::Connect
     #   Filters to be applied to search results.
     #
     # @option params [Types::ContactFlowModuleSearchCriteria] :search_criteria
-    #   The search criteria to be used to return contact flow modules.
+    #   The search criteria to be used to return flow modules.
     #
     #   <note markdown="1"> The `name` and `description` fields support "contains" queries with
     #   a minimum of 2 characters and a maximum of 25 characters. Any queries
@@ -12981,8 +13111,8 @@ module Aws::Connect
       req.send_request(options)
     end
 
-    # Searches the contact flows in an Amazon Connect instance, with
-    # optional filtering.
+    # Searches the flows in an Amazon Connect instance, with optional
+    # filtering.
     #
     # @option params [required, String] :instance_id
     #   The identifier of the Amazon Connect instance. You can find the
@@ -13080,7 +13210,6 @@ module Aws::Connect
     #   resp.contact_flows[0].content #=> String
     #   resp.contact_flows[0].tags #=> Hash
     #   resp.contact_flows[0].tags["TagKey"] #=> String
-    #   resp.contact_flows[0].is_default #=> Boolean
     #   resp.contact_flows[0].flow_content_sha_256 #=> String
     #   resp.contact_flows[0].version #=> Integer
     #   resp.contact_flows[0].version_description #=> String
@@ -13219,15 +13348,29 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Searches email address in an instance, with optional filtering.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [Integer] :max_results
+    #   The maximum number of results to return per page.
     #
     # @option params [String] :next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
     #
     # @option params [Types::EmailAddressSearchCriteria] :search_criteria
+    #   The search criteria to be used to return email addresses.
     #
     # @option params [Types::EmailAddressSearchFilter] :search_filter
+    #   Filters to be applied to search results.
     #
     # @return [Types::SearchEmailAddressesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -14618,23 +14761,56 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Send outbound email for outbound campaigns. For more information about
+    # outbound campaigns, see [Set up Amazon Connect outbound campaigns][1].
+    #
+    # <note markdown="1"> Only the Amazon Connect outbound campaigns service principal is
+    # allowed to assume a role in your account and call this API.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/enable-outbound-campaigns.html
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, Types::EmailAddressInfo] :from_email_address
+    #   The email address to be used for sending email.
     #
     # @option params [required, Types::EmailAddressInfo] :destination_email_address
+    #   The email address to send the email to.
     #
     # @option params [Types::OutboundAdditionalRecipients] :additional_recipients
+    #   The additional recipients address of the email in CC.
     #
     # @option params [required, Types::OutboundEmailContent] :email_message
+    #   The email message body to be sent to the newly created email.
     #
     # @option params [required, String] :traffic_type
+    #   Denotes the class of traffic.
     #
     # @option params [Types::SourceCampaign] :source_campaign
+    #   A Campaign object need for Campaign traffic type.
     #
     # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -14697,11 +14873,12 @@ module Aws::Connect
     # content.
     #
     # You may only use this API to upload attachments to an [Amazon Connect
-    # Case][1].
+    # Case][1] or [Amazon Connect Email][2].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    # [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #
     # @option params [String] :client_token
     #   A unique, case-sensitive identifier that you provide to ensure the
@@ -14732,9 +14909,11 @@ module Aws::Connect
     # @option params [required, String] :file_use_case_type
     #   The use case for the file.
     #
+    #   Only `ATTACHMENTS` are supported.
+    #
     # @option params [required, String] :associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -14742,7 +14921,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #
     # @option params [Types::CreatedByInfo] :created_by
     #   Represents the identity that created the file.
@@ -14851,8 +15031,8 @@ module Aws::Connect
     # @option params [required, String] :contact_flow_id
     #   The identifier of the flow for initiating the chat. To see the
     #   ContactFlowId in the Amazon Connect admin website, on the navigation
-    #   menu go to **Routing**, **Contact Flows**. Choose the flow. On the
-    #   flow page, under the name of the flow, choose **Show additional flow
+    #   menu go to **Routing**, **Flows**. Choose the flow. On the flow page,
+    #   under the name of the flow, choose **Show additional flow
     #   information**. The ContactFlowId is the last part of the ARN, shown
     #   here in bold:
     #
@@ -14984,6 +15164,12 @@ module Aws::Connect
     #     segment_attributes: {
     #       "SegmentAttributeName" => {
     #         value_string: "SegmentAttributeValueString",
+    #         value_map: {
+    #           "SegmentAttributeName" => {
+    #             # recursive SegmentAttributeValue
+    #           },
+    #         },
+    #         value_integer: 1,
     #       },
     #     },
     #   })
@@ -15211,35 +15397,103 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Creates an inbound email contact and initiates a flow to start the
+    # email contact for the customer. Response of this API provides the
+    # ContactId of the email contact created.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, Types::EmailAddressInfo] :from_email_address
+    #   The email address of the customer.
     #
     # @option params [required, String] :destination_email_address
+    #   The email address associated with the instance.
     #
     # @option params [String] :description
+    #   A description of the email contact.
     #
     # @option params [Hash<String,Types::Reference>] :references
+    #   A formatted URL that is shown to an agent in the Contact Control Panel
+    #   (CCP). Emails can have the following reference types at the time of
+    #   creation: `URL` \| `NUMBER` \| `STRING` \| `DATE`. `EMAIL` \|
+    #   `EMAIL_MESSAGE` \|`ATTACHMENT` are not a supported reference type
+    #   during email creation.
     #
     # @option params [String] :name
+    #   The name of a email that is shown to an agent in the Contact Control
+    #   Panel (CCP).
     #
     # @option params [required, Types::InboundEmailContent] :email_message
+    #   The email message body to be sent to the newly created email.
     #
     # @option params [Types::InboundAdditionalRecipients] :additional_recipients
+    #   The addtional recipients address of the email.
     #
     # @option params [Array<Types::EmailAttachment>] :attachments
+    #   List of S3 presigned URLs of email attachments and their file name.
     #
     # @option params [String] :contact_flow_id
+    #   The identifier of the flow for initiating the emails. To see the
+    #   ContactFlowId in the Amazon Connect admin website, on the navigation
+    #   menu go to **Routing**, **Flows**. Choose the flow. On the flow page,
+    #   under the name of the flow, choose **Show additional flow
+    #   information**. The ContactFlowId is the last part of the ARN, shown
+    #   here in bold:
+    #
+    #   arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/**846ec553-a005-41c0-8341-xxxxxxxxxxxx**
     #
     # @option params [String] :related_contact_id
+    #   The contactId that is related to this contact. Linking emails together
+    #   by using `RelatedContactID` copies over contact attributes from the
+    #   related email contact to the new email contact. All updates to
+    #   user-defined attributes in the new email contact are limited to the
+    #   individual contact ID. There are no limits to the number of contacts
+    #   that can be linked by using `RelatedContactId`.
     #
     # @option params [Hash<String,String>] :attributes
+    #   A custom key-value pair using an attribute map. The attributes are
+    #   standard Amazon Connect attributes, and can be accessed in flows just
+    #   like any other contact attributes.
+    #
+    #   There can be up to 32,768 UTF-8 bytes across all key-value pairs per
+    #   contact. Attribute keys can include only alphanumeric, dash, and
+    #   underscore characters.
     #
     # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments using an attribute map. The attributes are standard Amazon
+    #   Connect attributes. They can be accessed in flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to show channel subtype, such as
+    #   `connect:Guide`.
+    #
+    #   <note markdown="1"> To set contact expiry, a `ValueMap` must be specified containing the
+    #   integer number of minutes the contact will be active for before
+    #   expiring, with `SegmentAttributes` like \{ ` "connect:ContactExpiry":
+    #   {"ValueMap" : { "ExpiryDuration": { "ValueInteger":135}}}}`.
+    #
+    #    </note>
     #
     # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #
     # @return [Types::StartEmailContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -15304,6 +15558,12 @@ module Aws::Connect
     #     segment_attributes: {
     #       "SegmentAttributeName" => {
     #         value_string: "SegmentAttributeValueString",
+    #         value_map: {
+    #           "SegmentAttributeName" => {
+    #             # recursive SegmentAttributeValue
+    #           },
+    #         },
+    #         value_integer: 1,
     #       },
     #     },
     #     client_token: "ClientToken",
@@ -15458,6 +15718,12 @@ module Aws::Connect
     #     segment_attributes: { # required
     #       "SegmentAttributeName" => {
     #         value_string: "SegmentAttributeValueString",
+    #         value_map: {
+    #           "SegmentAttributeName" => {
+    #             # recursive SegmentAttributeValue
+    #           },
+    #         },
+    #         value_integer: 1,
     #       },
     #     },
     #     attributes: {
@@ -15490,21 +15756,44 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Initiates a flow to send an agent reply or outbound email contact
+    # (created from the CreateContact API) to a customer.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, String] :contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #
     # @option params [Types::EmailAddressInfo] :from_email_address
+    #   The email address associated with the instance.
     #
     # @option params [required, Types::EmailAddressInfo] :destination_email_address
+    #   The email address of the customer.
     #
     # @option params [Types::OutboundAdditionalRecipients] :additional_recipients
+    #   The addtional recipients address of email in CC.
     #
     # @option params [required, Types::OutboundEmailContent] :email_message
+    #   The email message body to be sent to the newly created email.
     #
     # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #
     # @return [Types::StartOutboundEmailContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -15850,8 +16139,8 @@ module Aws::Connect
     # @option params [String] :contact_flow_id
     #   The identifier of the flow for initiating the tasks. To see the
     #   ContactFlowId in the Amazon Connect admin website, on the navigation
-    #   menu go to **Routing**, **Contact Flows**. Choose the flow. On the
-    #   flow page, under the name of the flow, choose **Show additional flow
+    #   menu go to **Routing**, **Flows**. Choose the flow. On the flow page,
+    #   under the name of the flow, choose **Show additional flow
     #   information**. The ContactFlowId is the last part of the ARN, shown
     #   here in bold:
     #
@@ -15931,6 +16220,26 @@ module Aws::Connect
     #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/tasks.html#linked-tasks
     #
     # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments (unique contact ID) using an attribute map. The attributes
+    #   are standard Amazon Connect attributes. They can be accessed in flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to set Contact Expiry as a duration in minutes
+    #   and set a UserId for the User who created a task.
+    #
+    #   <note markdown="1"> To set contact expiry, a ValueMap must be specified containing the
+    #   integer number of minutes the contact will be active for before
+    #   expiring, with `SegmentAttributes` like \{ ` "connect:ContactExpiry":
+    #   {"ValueMap" : { "ExpiryDuration": { "ValueInteger": 135}}}}`.
+    #
+    #    To set the created by user, a valid AgentResourceId must be supplied,
+    #   with `SegmentAttributes` like \{ `"connect:CreatedByUser" {
+    #   "ValueString":
+    #   "arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/agent/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}}}`.
+    #
+    #    </note>
     #
     # @return [Types::StartTaskContactResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -15964,6 +16273,12 @@ module Aws::Connect
     #     segment_attributes: {
     #       "SegmentAttributeName" => {
     #         value_string: "SegmentAttributeValueString",
+    #         value_map: {
+    #           "SegmentAttributeName" => {
+    #             # recursive SegmentAttributeValue
+    #           },
+    #         },
+    #         value_integer: 1,
     #       },
     #     },
     #   })
@@ -16418,9 +16733,9 @@ module Aws::Connect
     # Adds the specified tags to the specified resource.
     #
     # Some of the supported resource types are agents, routing profiles,
-    # queues, quick connects, contact flows, agent statuses, hours of
-    # operation, phone numbers, security profiles, and task templates. For a
-    # complete list, see [Tagging resources in Amazon Connect][1].
+    # queues, quick connects, flows, agent statuses, hours of operation,
+    # phone numbers, security profiles, and task templates. For a complete
+    # list, see [Tagging resources in Amazon Connect][1].
     #
     # For sample policies that use tags, see [Amazon Connect Identity-Based
     # Policy Examples][2] in the *Amazon Connect Administrator Guide*.
@@ -16775,6 +17090,17 @@ module Aws::Connect
     #   (CCP).
     #
     # @option params [Hash<String,Types::SegmentAttributeValue>] :segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments (unique contact ID) using an attribute map. The attributes
+    #   are standard Amazon Connect attributes. They can be accessed in flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to show channel subtype, such as
+    #   `connect:Guide`.
+    #
+    #   Currently Contact Expiry is the only segment attribute which can be
+    #   updated by using the UpdateContact API.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -16797,6 +17123,12 @@ module Aws::Connect
     #     segment_attributes: {
     #       "SegmentAttributeName" => {
     #         value_string: "SegmentAttributeValueString",
+    #         value_map: {
+    #           "SegmentAttributeName" => {
+    #             # recursive SegmentAttributeValue
+    #           },
+    #         },
+    #         value_integer: 1,
     #       },
     #     },
     #   })
@@ -16960,8 +17292,8 @@ module Aws::Connect
     # language][1].
     #
     # Use the `$SAVED` alias in the request to describe the `SAVED` content
-    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. Once a
-    # contact flow is published, `$SAVED` needs to be supplied to view saved
+    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. After
+    # a flow is published, `$SAVED` needs to be supplied to view saved
     # content that has not been published.
     #
     #
@@ -17050,8 +17382,8 @@ module Aws::Connect
     # instance.
     #
     # Use the `$SAVED` alias in the request to describe the `SAVED` content
-    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. Once a
-    # contact flow is published, `$SAVED` needs to be supplied to view saved
+    # of a Flow. For example, `arn:aws:.../contact-flow/{id}:$SAVED`. After
+    # a flow is published, `$SAVED` needs to be supplied to view saved
     # content that has not been published.
     #
     # @option params [required, String] :instance_id
@@ -17314,15 +17646,40 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Updates an email address metadata. For more information about email
+    # addresses, see [Create email addresses][1] in the Amazon Connect
+    # Administrator Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/create-email-address1.html
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, String] :email_address_id
+    #   The identifier of the email address.
     #
     # @option params [String] :description
+    #   The description of the email address.
     #
     # @option params [String] :display_name
+    #   The display name of email address.
     #
     # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1].
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #
     # @return [Types::UpdateEmailAddressMetadataResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -18158,11 +18515,21 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Updates the outbound email address Id for a specified queue.
+    #
     # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #
     # @option params [required, String] :queue_id
+    #   The identifier for the queue.
     #
     # @option params [required, Types::OutboundEmailConfig] :outbound_email_config
+    #   The outbound email address ID for a specified queue.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -18757,6 +19124,8 @@ module Aws::Connect
     #   by referencing this template.
     #
     # @option params [String] :self_assign_flow_id
+    #   The ContactFlowId for the flow that will be run if this template is
+    #   used to create a self-assigned task.
     #
     # @option params [Types::TaskTemplateConstraints] :constraints
     #   Constraints that are applicable to the fields listed.
@@ -19406,7 +19775,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.186.0'
+      context[:gem_version] = '1.187.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

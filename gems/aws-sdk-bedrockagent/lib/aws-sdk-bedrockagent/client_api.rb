@@ -96,6 +96,7 @@ module Aws::BedrockAgent
     CreatePromptVersionResponse = Shapes::StructureShape.new(name: 'CreatePromptVersionResponse')
     CreationMode = Shapes::StringShape.new(name: 'CreationMode')
     CustomControlMethod = Shapes::StringShape.new(name: 'CustomControlMethod')
+    CustomOrchestration = Shapes::StructureShape.new(name: 'CustomOrchestration')
     CustomTransformationConfiguration = Shapes::StructureShape.new(name: 'CustomTransformationConfiguration')
     CyclicConnectionFlowValidationDetails = Shapes::StructureShape.new(name: 'CyclicConnectionFlowValidationDetails')
     DataDeletionPolicy = Shapes::StringShape.new(name: 'DataDeletionPolicy')
@@ -333,6 +334,8 @@ module Aws::BedrockAgent
     OpenSearchServerlessConfiguration = Shapes::StructureShape.new(name: 'OpenSearchServerlessConfiguration')
     OpenSearchServerlessFieldMapping = Shapes::StructureShape.new(name: 'OpenSearchServerlessFieldMapping')
     OpenSearchServerlessIndexName = Shapes::StringShape.new(name: 'OpenSearchServerlessIndexName')
+    OrchestrationExecutor = Shapes::UnionShape.new(name: 'OrchestrationExecutor')
+    OrchestrationType = Shapes::StringShape.new(name: 'OrchestrationType')
     OutputFlowNodeConfiguration = Shapes::StructureShape.new(name: 'OutputFlowNodeConfiguration')
     ParameterDescription = Shapes::StringShape.new(name: 'ParameterDescription')
     ParameterDetail = Shapes::StructureShape.new(name: 'ParameterDetail')
@@ -557,6 +560,7 @@ module Aws::BedrockAgent
     Agent.add_member(:agent_version, Shapes::ShapeRef.new(shape: DraftVersion, required: true, location_name: "agentVersion"))
     Agent.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken"))
     Agent.add_member(:created_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "createdAt"))
+    Agent.add_member(:custom_orchestration, Shapes::ShapeRef.new(shape: CustomOrchestration, location_name: "customOrchestration"))
     Agent.add_member(:customer_encryption_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "customerEncryptionKeyArn"))
     Agent.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     Agent.add_member(:failure_reasons, Shapes::ShapeRef.new(shape: FailureReasons, location_name: "failureReasons"))
@@ -565,6 +569,7 @@ module Aws::BedrockAgent
     Agent.add_member(:idle_session_ttl_in_seconds, Shapes::ShapeRef.new(shape: SessionTTL, required: true, location_name: "idleSessionTTLInSeconds"))
     Agent.add_member(:instruction, Shapes::ShapeRef.new(shape: Instruction, location_name: "instruction"))
     Agent.add_member(:memory_configuration, Shapes::ShapeRef.new(shape: MemoryConfiguration, location_name: "memoryConfiguration"))
+    Agent.add_member(:orchestration_type, Shapes::ShapeRef.new(shape: OrchestrationType, location_name: "orchestrationType"))
     Agent.add_member(:prepared_at, Shapes::ShapeRef.new(shape: DateTimestamp, location_name: "preparedAt"))
     Agent.add_member(:prompt_override_configuration, Shapes::ShapeRef.new(shape: PromptOverrideConfiguration, location_name: "promptOverrideConfiguration"))
     Agent.add_member(:recommended_actions, Shapes::ShapeRef.new(shape: RecommendedActions, location_name: "recommendedActions"))
@@ -781,6 +786,7 @@ module Aws::BedrockAgent
     CreateAgentRequest.add_member(:agent_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "agentName"))
     CreateAgentRequest.add_member(:agent_resource_role_arn, Shapes::ShapeRef.new(shape: AgentRoleArn, location_name: "agentResourceRoleArn"))
     CreateAgentRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateAgentRequest.add_member(:custom_orchestration, Shapes::ShapeRef.new(shape: CustomOrchestration, location_name: "customOrchestration"))
     CreateAgentRequest.add_member(:customer_encryption_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "customerEncryptionKeyArn"))
     CreateAgentRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     CreateAgentRequest.add_member(:foundation_model, Shapes::ShapeRef.new(shape: ModelIdentifier, location_name: "foundationModel"))
@@ -788,6 +794,7 @@ module Aws::BedrockAgent
     CreateAgentRequest.add_member(:idle_session_ttl_in_seconds, Shapes::ShapeRef.new(shape: SessionTTL, location_name: "idleSessionTTLInSeconds"))
     CreateAgentRequest.add_member(:instruction, Shapes::ShapeRef.new(shape: Instruction, location_name: "instruction"))
     CreateAgentRequest.add_member(:memory_configuration, Shapes::ShapeRef.new(shape: MemoryConfiguration, location_name: "memoryConfiguration"))
+    CreateAgentRequest.add_member(:orchestration_type, Shapes::ShapeRef.new(shape: OrchestrationType, location_name: "orchestrationType"))
     CreateAgentRequest.add_member(:prompt_override_configuration, Shapes::ShapeRef.new(shape: PromptOverrideConfiguration, location_name: "promptOverrideConfiguration"))
     CreateAgentRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "tags"))
     CreateAgentRequest.struct_class = Types::CreateAgentRequest
@@ -915,6 +922,9 @@ module Aws::BedrockAgent
     CreatePromptVersionResponse.add_member(:variants, Shapes::ShapeRef.new(shape: PromptVariantList, location_name: "variants"))
     CreatePromptVersionResponse.add_member(:version, Shapes::ShapeRef.new(shape: Version, required: true, location_name: "version"))
     CreatePromptVersionResponse.struct_class = Types::CreatePromptVersionResponse
+
+    CustomOrchestration.add_member(:executor, Shapes::ShapeRef.new(shape: OrchestrationExecutor, location_name: "executor"))
+    CustomOrchestration.struct_class = Types::CustomOrchestration
 
     CustomTransformationConfiguration.add_member(:intermediate_storage, Shapes::ShapeRef.new(shape: IntermediateStorage, required: true, location_name: "intermediateStorage"))
     CustomTransformationConfiguration.add_member(:transformations, Shapes::ShapeRef.new(shape: Transformations, required: true, location_name: "transformations"))
@@ -1695,6 +1705,12 @@ module Aws::BedrockAgent
     OpenSearchServerlessFieldMapping.add_member(:vector_field, Shapes::ShapeRef.new(shape: FieldName, required: true, location_name: "vectorField"))
     OpenSearchServerlessFieldMapping.struct_class = Types::OpenSearchServerlessFieldMapping
 
+    OrchestrationExecutor.add_member(:lambda, Shapes::ShapeRef.new(shape: LambdaArn, location_name: "lambda"))
+    OrchestrationExecutor.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    OrchestrationExecutor.add_member_subclass(:lambda, Types::OrchestrationExecutor::Lambda)
+    OrchestrationExecutor.add_member_subclass(:unknown, Types::OrchestrationExecutor::Unknown)
+    OrchestrationExecutor.struct_class = Types::OrchestrationExecutor
+
     OutputFlowNodeConfiguration.struct_class = Types::OutputFlowNodeConfiguration
 
     ParameterDetail.add_member(:description, Shapes::ShapeRef.new(shape: ParameterDescription, location_name: "description"))
@@ -2131,6 +2147,7 @@ module Aws::BedrockAgent
     UpdateAgentRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
     UpdateAgentRequest.add_member(:agent_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "agentName"))
     UpdateAgentRequest.add_member(:agent_resource_role_arn, Shapes::ShapeRef.new(shape: AgentRoleArn, required: true, location_name: "agentResourceRoleArn"))
+    UpdateAgentRequest.add_member(:custom_orchestration, Shapes::ShapeRef.new(shape: CustomOrchestration, location_name: "customOrchestration"))
     UpdateAgentRequest.add_member(:customer_encryption_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "customerEncryptionKeyArn"))
     UpdateAgentRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     UpdateAgentRequest.add_member(:foundation_model, Shapes::ShapeRef.new(shape: ModelIdentifier, required: true, location_name: "foundationModel"))
@@ -2138,6 +2155,7 @@ module Aws::BedrockAgent
     UpdateAgentRequest.add_member(:idle_session_ttl_in_seconds, Shapes::ShapeRef.new(shape: SessionTTL, location_name: "idleSessionTTLInSeconds"))
     UpdateAgentRequest.add_member(:instruction, Shapes::ShapeRef.new(shape: Instruction, location_name: "instruction"))
     UpdateAgentRequest.add_member(:memory_configuration, Shapes::ShapeRef.new(shape: MemoryConfiguration, location_name: "memoryConfiguration"))
+    UpdateAgentRequest.add_member(:orchestration_type, Shapes::ShapeRef.new(shape: OrchestrationType, location_name: "orchestrationType"))
     UpdateAgentRequest.add_member(:prompt_override_configuration, Shapes::ShapeRef.new(shape: PromptOverrideConfiguration, location_name: "promptOverrideConfiguration"))
     UpdateAgentRequest.struct_class = Types::UpdateAgentRequest
 

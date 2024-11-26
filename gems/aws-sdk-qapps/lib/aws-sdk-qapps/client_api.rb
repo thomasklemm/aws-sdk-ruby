@@ -60,6 +60,9 @@ module Aws::QApps
     ConversationMessageBodyString = Shapes::StringShape.new(name: 'ConversationMessageBodyString')
     CreateLibraryItemInput = Shapes::StructureShape.new(name: 'CreateLibraryItemInput')
     CreateLibraryItemOutput = Shapes::StructureShape.new(name: 'CreateLibraryItemOutput')
+    CreatePresignedUrlInput = Shapes::StructureShape.new(name: 'CreatePresignedUrlInput')
+    CreatePresignedUrlInputFileContentsSha256String = Shapes::StringShape.new(name: 'CreatePresignedUrlInputFileContentsSha256String')
+    CreatePresignedUrlOutput = Shapes::StructureShape.new(name: 'CreatePresignedUrlOutput')
     CreateQAppInput = Shapes::StructureShape.new(name: 'CreateQAppInput')
     CreateQAppOutput = Shapes::StructureShape.new(name: 'CreateQAppOutput')
     Default = Shapes::StringShape.new(name: 'Default')
@@ -67,9 +70,12 @@ module Aws::QApps
     DeleteLibraryItemInput = Shapes::StructureShape.new(name: 'DeleteLibraryItemInput')
     DeleteQAppInput = Shapes::StructureShape.new(name: 'DeleteQAppInput')
     DependencyList = Shapes::ListShape.new(name: 'DependencyList')
+    DescribeQAppPermissionsInput = Shapes::StructureShape.new(name: 'DescribeQAppPermissionsInput')
+    DescribeQAppPermissionsOutput = Shapes::StructureShape.new(name: 'DescribeQAppPermissionsOutput')
     Description = Shapes::StringShape.new(name: 'Description')
     DisassociateLibraryItemReviewInput = Shapes::StructureShape.new(name: 'DisassociateLibraryItemReviewInput')
     DisassociateQAppFromUserInput = Shapes::StructureShape.new(name: 'DisassociateQAppFromUserInput')
+    Document = Shapes::DocumentShape.new(name: 'Document', document: true)
     DocumentAttribute = Shapes::StructureShape.new(name: 'DocumentAttribute')
     DocumentAttributeKey = Shapes::StringShape.new(name: 'DocumentAttributeKey')
     DocumentAttributeStringListValue = Shapes::ListShape.new(name: 'DocumentAttributeStringListValue')
@@ -77,18 +83,27 @@ module Aws::QApps
     DocumentAttributeValueStringValueString = Shapes::StringShape.new(name: 'DocumentAttributeValueStringValueString')
     DocumentScope = Shapes::StringShape.new(name: 'DocumentScope')
     ExecutionStatus = Shapes::StringShape.new(name: 'ExecutionStatus')
+    ExportQAppSessionDataInput = Shapes::StructureShape.new(name: 'ExportQAppSessionDataInput')
+    ExportQAppSessionDataOutput = Shapes::StructureShape.new(name: 'ExportQAppSessionDataOutput')
     FileUploadCard = Shapes::StructureShape.new(name: 'FileUploadCard')
     FileUploadCardInput = Shapes::StructureShape.new(name: 'FileUploadCardInput')
     Filename = Shapes::StringShape.new(name: 'Filename')
+    FormInputCard = Shapes::StructureShape.new(name: 'FormInputCard')
+    FormInputCardInput = Shapes::StructureShape.new(name: 'FormInputCardInput')
+    FormInputCardMetadata = Shapes::StructureShape.new(name: 'FormInputCardMetadata')
+    FormInputCardMetadataSchema = Shapes::DocumentShape.new(name: 'FormInputCardMetadataSchema', document: true)
     GetLibraryItemInput = Shapes::StructureShape.new(name: 'GetLibraryItemInput')
     GetLibraryItemOutput = Shapes::StructureShape.new(name: 'GetLibraryItemOutput')
     GetQAppInput = Shapes::StructureShape.new(name: 'GetQAppInput')
     GetQAppOutput = Shapes::StructureShape.new(name: 'GetQAppOutput')
     GetQAppSessionInput = Shapes::StructureShape.new(name: 'GetQAppSessionInput')
+    GetQAppSessionMetadataInput = Shapes::StructureShape.new(name: 'GetQAppSessionMetadataInput')
+    GetQAppSessionMetadataOutput = Shapes::StructureShape.new(name: 'GetQAppSessionMetadataOutput')
     GetQAppSessionOutput = Shapes::StructureShape.new(name: 'GetQAppSessionOutput')
     ImportDocumentInput = Shapes::StructureShape.new(name: 'ImportDocumentInput')
     ImportDocumentOutput = Shapes::StructureShape.new(name: 'ImportDocumentOutput')
     InitialPrompt = Shapes::StringShape.new(name: 'InitialPrompt')
+    InputCardComputeMode = Shapes::StringShape.new(name: 'InputCardComputeMode')
     InstanceId = Shapes::StringShape.new(name: 'InstanceId')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
@@ -99,13 +114,22 @@ module Aws::QApps
     ListCategoriesOutput = Shapes::StructureShape.new(name: 'ListCategoriesOutput')
     ListLibraryItemsInput = Shapes::StructureShape.new(name: 'ListLibraryItemsInput')
     ListLibraryItemsOutput = Shapes::StructureShape.new(name: 'ListLibraryItemsOutput')
+    ListQAppSessionDataInput = Shapes::StructureShape.new(name: 'ListQAppSessionDataInput')
+    ListQAppSessionDataOutput = Shapes::StructureShape.new(name: 'ListQAppSessionDataOutput')
     ListQAppsInput = Shapes::StructureShape.new(name: 'ListQAppsInput')
     ListQAppsOutput = Shapes::StructureShape.new(name: 'ListQAppsOutput')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     Long = Shapes::IntegerShape.new(name: 'Long')
+    MemoryReferenceList = Shapes::ListShape.new(name: 'MemoryReferenceList')
     PageLimit = Shapes::IntegerShape.new(name: 'PageLimit')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
+    PermissionInput = Shapes::StructureShape.new(name: 'PermissionInput')
+    PermissionInputActionEnum = Shapes::StringShape.new(name: 'PermissionInputActionEnum')
+    PermissionInputPrincipalString = Shapes::StringShape.new(name: 'PermissionInputPrincipalString')
+    PermissionOutput = Shapes::StructureShape.new(name: 'PermissionOutput')
+    PermissionOutputActionEnum = Shapes::StringShape.new(name: 'PermissionOutputActionEnum')
+    PermissionsOutputList = Shapes::ListShape.new(name: 'PermissionsOutputList')
     Placeholder = Shapes::StringShape.new(name: 'Placeholder')
     PlatoString = Shapes::StringShape.new(name: 'PlatoString')
     PluginId = Shapes::StringShape.new(name: 'PluginId')
@@ -116,7 +140,14 @@ module Aws::QApps
     PredictQAppInputOptionsConversationList = Shapes::ListShape.new(name: 'PredictQAppInputOptionsConversationList')
     PredictQAppInputOptionsProblemStatementString = Shapes::StringShape.new(name: 'PredictQAppInputOptionsProblemStatementString')
     PredictQAppOutput = Shapes::StructureShape.new(name: 'PredictQAppOutput')
+    PresignedUrlFields = Shapes::MapShape.new(name: 'PresignedUrlFields')
+    PrincipalOutput = Shapes::StructureShape.new(name: 'PrincipalOutput')
+    PrincipalOutputEmailString = Shapes::StringShape.new(name: 'PrincipalOutputEmailString')
+    PrincipalOutputUserIdString = Shapes::StringShape.new(name: 'PrincipalOutputUserIdString')
+    PrincipalOutputUserTypeEnum = Shapes::StringShape.new(name: 'PrincipalOutputUserTypeEnum')
     Prompt = Shapes::StringShape.new(name: 'Prompt')
+    QAppSessionData = Shapes::StructureShape.new(name: 'QAppSessionData')
+    QAppSessionDataList = Shapes::ListShape.new(name: 'QAppSessionDataList')
     QAppsTimestamp = Shapes::TimestampShape.new(name: 'QAppsTimestamp', timestampFormat: "iso8601")
     QPluginCard = Shapes::StructureShape.new(name: 'QPluginCard')
     QPluginCardInput = Shapes::StructureShape.new(name: 'QPluginCardInput')
@@ -125,10 +156,19 @@ module Aws::QApps
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     Sender = Shapes::StringShape.new(name: 'Sender')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    SessionName = Shapes::StringShape.new(name: 'SessionName')
+    SessionSharingAcceptResponses = Shapes::BooleanShape.new(name: 'SessionSharingAcceptResponses')
+    SessionSharingConfiguration = Shapes::StructureShape.new(name: 'SessionSharingConfiguration')
+    SessionSharingEnabled = Shapes::BooleanShape.new(name: 'SessionSharingEnabled')
+    SessionSharingRevealCards = Shapes::BooleanShape.new(name: 'SessionSharingRevealCards')
     StartQAppSessionInput = Shapes::StructureShape.new(name: 'StartQAppSessionInput')
     StartQAppSessionOutput = Shapes::StructureShape.new(name: 'StartQAppSessionOutput')
     StopQAppSessionInput = Shapes::StructureShape.new(name: 'StopQAppSessionInput')
     String = Shapes::StringShape.new(name: 'String')
+    Submission = Shapes::StructureShape.new(name: 'Submission')
+    SubmissionList = Shapes::ListShape.new(name: 'SubmissionList')
+    SubmissionMutation = Shapes::StructureShape.new(name: 'SubmissionMutation')
+    SubmissionMutationKind = Shapes::StringShape.new(name: 'SubmissionMutationKind')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagKeys = Shapes::ListShape.new(name: 'TagKeys')
     TagMap = Shapes::MapShape.new(name: 'TagMap')
@@ -150,10 +190,18 @@ module Aws::QApps
     UpdateLibraryItemOutput = Shapes::StructureShape.new(name: 'UpdateLibraryItemOutput')
     UpdateQAppInput = Shapes::StructureShape.new(name: 'UpdateQAppInput')
     UpdateQAppOutput = Shapes::StructureShape.new(name: 'UpdateQAppOutput')
+    UpdateQAppPermissionsInput = Shapes::StructureShape.new(name: 'UpdateQAppPermissionsInput')
+    UpdateQAppPermissionsInputGrantPermissionsList = Shapes::ListShape.new(name: 'UpdateQAppPermissionsInputGrantPermissionsList')
+    UpdateQAppPermissionsInputRevokePermissionsList = Shapes::ListShape.new(name: 'UpdateQAppPermissionsInputRevokePermissionsList')
+    UpdateQAppPermissionsOutput = Shapes::StructureShape.new(name: 'UpdateQAppPermissionsOutput')
     UpdateQAppSessionInput = Shapes::StructureShape.new(name: 'UpdateQAppSessionInput')
+    UpdateQAppSessionMetadataInput = Shapes::StructureShape.new(name: 'UpdateQAppSessionMetadataInput')
+    UpdateQAppSessionMetadataOutput = Shapes::StructureShape.new(name: 'UpdateQAppSessionMetadataOutput')
     UpdateQAppSessionOutput = Shapes::StructureShape.new(name: 'UpdateQAppSessionOutput')
+    User = Shapes::StructureShape.new(name: 'User')
     UserAppItem = Shapes::StructureShape.new(name: 'UserAppItem')
     UserAppsList = Shapes::ListShape.new(name: 'UserAppsList')
+    UserId = Shapes::StringShape.new(name: 'UserId')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
 
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
@@ -215,11 +263,13 @@ module Aws::QApps
     Card.add_member(:q_query, Shapes::ShapeRef.new(shape: QQueryCard, location_name: "qQuery"))
     Card.add_member(:q_plugin, Shapes::ShapeRef.new(shape: QPluginCard, location_name: "qPlugin"))
     Card.add_member(:file_upload, Shapes::ShapeRef.new(shape: FileUploadCard, location_name: "fileUpload"))
+    Card.add_member(:form_input, Shapes::ShapeRef.new(shape: FormInputCard, location_name: "formInput"))
     Card.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     Card.add_member_subclass(:text_input, Types::Card::TextInput)
     Card.add_member_subclass(:q_query, Types::Card::QQuery)
     Card.add_member_subclass(:q_plugin, Types::Card::QPlugin)
     Card.add_member_subclass(:file_upload, Types::Card::FileUpload)
+    Card.add_member_subclass(:form_input, Types::Card::FormInput)
     Card.add_member_subclass(:unknown, Types::Card::Unknown)
     Card.struct_class = Types::Card
 
@@ -227,11 +277,13 @@ module Aws::QApps
     CardInput.add_member(:q_query, Shapes::ShapeRef.new(shape: QQueryCardInput, location_name: "qQuery"))
     CardInput.add_member(:q_plugin, Shapes::ShapeRef.new(shape: QPluginCardInput, location_name: "qPlugin"))
     CardInput.add_member(:file_upload, Shapes::ShapeRef.new(shape: FileUploadCardInput, location_name: "fileUpload"))
+    CardInput.add_member(:form_input, Shapes::ShapeRef.new(shape: FormInputCardInput, location_name: "formInput"))
     CardInput.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     CardInput.add_member_subclass(:text_input, Types::CardInput::TextInput)
     CardInput.add_member_subclass(:q_query, Types::CardInput::QQuery)
     CardInput.add_member_subclass(:q_plugin, Types::CardInput::QPlugin)
     CardInput.add_member_subclass(:file_upload, Types::CardInput::FileUpload)
+    CardInput.add_member_subclass(:form_input, Types::CardInput::FormInput)
     CardInput.add_member_subclass(:unknown, Types::CardInput::Unknown)
     CardInput.struct_class = Types::CardInput
 
@@ -241,6 +293,7 @@ module Aws::QApps
 
     CardStatus.add_member(:current_state, Shapes::ShapeRef.new(shape: ExecutionStatus, required: true, location_name: "currentState"))
     CardStatus.add_member(:current_value, Shapes::ShapeRef.new(shape: String, required: true, location_name: "currentValue"))
+    CardStatus.add_member(:submissions, Shapes::ShapeRef.new(shape: SubmissionList, location_name: "submissions"))
     CardStatus.struct_class = Types::CardStatus
 
     CardStatusMap.key = Shapes::ShapeRef.new(shape: UUID)
@@ -248,6 +301,7 @@ module Aws::QApps
 
     CardValue.add_member(:card_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "cardId"))
     CardValue.add_member(:value, Shapes::ShapeRef.new(shape: CardValueValueString, required: true, location_name: "value"))
+    CardValue.add_member(:submission_mutation, Shapes::ShapeRef.new(shape: SubmissionMutation, location_name: "submissionMutation"))
     CardValue.struct_class = Types::CardValue
 
     CardValueList.member = Shapes::ShapeRef.new(shape: CardValue)
@@ -301,6 +355,21 @@ module Aws::QApps
     CreateLibraryItemOutput.add_member(:is_verified, Shapes::ShapeRef.new(shape: Boolean, location_name: "isVerified"))
     CreateLibraryItemOutput.struct_class = Types::CreateLibraryItemOutput
 
+    CreatePresignedUrlInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
+    CreatePresignedUrlInput.add_member(:card_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "cardId"))
+    CreatePresignedUrlInput.add_member(:app_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "appId"))
+    CreatePresignedUrlInput.add_member(:file_contents_sha_256, Shapes::ShapeRef.new(shape: CreatePresignedUrlInputFileContentsSha256String, required: true, location_name: "fileContentsSha256"))
+    CreatePresignedUrlInput.add_member(:file_name, Shapes::ShapeRef.new(shape: Filename, required: true, location_name: "fileName"))
+    CreatePresignedUrlInput.add_member(:scope, Shapes::ShapeRef.new(shape: DocumentScope, required: true, location_name: "scope"))
+    CreatePresignedUrlInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, location_name: "sessionId"))
+    CreatePresignedUrlInput.struct_class = Types::CreatePresignedUrlInput
+
+    CreatePresignedUrlOutput.add_member(:file_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "fileId"))
+    CreatePresignedUrlOutput.add_member(:presigned_url, Shapes::ShapeRef.new(shape: String, required: true, location_name: "presignedUrl"))
+    CreatePresignedUrlOutput.add_member(:presigned_url_fields, Shapes::ShapeRef.new(shape: PresignedUrlFields, required: true, location_name: "presignedUrlFields"))
+    CreatePresignedUrlOutput.add_member(:presigned_url_expiration, Shapes::ShapeRef.new(shape: QAppsTimestamp, required: true, location_name: "presignedUrlExpiration"))
+    CreatePresignedUrlOutput.struct_class = Types::CreatePresignedUrlOutput
+
     CreateQAppInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     CreateQAppInput.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
     CreateQAppInput.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -334,6 +403,15 @@ module Aws::QApps
 
     DependencyList.member = Shapes::ShapeRef.new(shape: String)
 
+    DescribeQAppPermissionsInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
+    DescribeQAppPermissionsInput.add_member(:app_id, Shapes::ShapeRef.new(shape: UUID, required: true, location: "querystring", location_name: "appId"))
+    DescribeQAppPermissionsInput.struct_class = Types::DescribeQAppPermissionsInput
+
+    DescribeQAppPermissionsOutput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String, location_name: "resourceArn"))
+    DescribeQAppPermissionsOutput.add_member(:app_id, Shapes::ShapeRef.new(shape: String, location_name: "appId"))
+    DescribeQAppPermissionsOutput.add_member(:permissions, Shapes::ShapeRef.new(shape: PermissionsOutputList, location_name: "permissions"))
+    DescribeQAppPermissionsOutput.struct_class = Types::DescribeQAppPermissionsOutput
+
     DisassociateLibraryItemReviewInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     DisassociateLibraryItemReviewInput.add_member(:library_item_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "libraryItemId"))
     DisassociateLibraryItemReviewInput.struct_class = Types::DisassociateLibraryItemReviewInput
@@ -360,6 +438,15 @@ module Aws::QApps
     DocumentAttributeValue.add_member_subclass(:unknown, Types::DocumentAttributeValue::Unknown)
     DocumentAttributeValue.struct_class = Types::DocumentAttributeValue
 
+    ExportQAppSessionDataInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
+    ExportQAppSessionDataInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "sessionId"))
+    ExportQAppSessionDataInput.struct_class = Types::ExportQAppSessionDataInput
+
+    ExportQAppSessionDataOutput.add_member(:csv_file_link, Shapes::ShapeRef.new(shape: String, required: true, location_name: "csvFileLink"))
+    ExportQAppSessionDataOutput.add_member(:expires_at, Shapes::ShapeRef.new(shape: QAppsTimestamp, required: true, location_name: "expiresAt"))
+    ExportQAppSessionDataOutput.add_member(:session_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionArn"))
+    ExportQAppSessionDataOutput.struct_class = Types::ExportQAppSessionDataOutput
+
     FileUploadCard.add_member(:id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "id"))
     FileUploadCard.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
     FileUploadCard.add_member(:dependencies, Shapes::ShapeRef.new(shape: DependencyList, required: true, location_name: "dependencies"))
@@ -376,6 +463,24 @@ module Aws::QApps
     FileUploadCardInput.add_member(:file_id, Shapes::ShapeRef.new(shape: UUID, location_name: "fileId"))
     FileUploadCardInput.add_member(:allow_override, Shapes::ShapeRef.new(shape: Boolean, location_name: "allowOverride"))
     FileUploadCardInput.struct_class = Types::FileUploadCardInput
+
+    FormInputCard.add_member(:id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "id"))
+    FormInputCard.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
+    FormInputCard.add_member(:dependencies, Shapes::ShapeRef.new(shape: DependencyList, required: true, location_name: "dependencies"))
+    FormInputCard.add_member(:type, Shapes::ShapeRef.new(shape: CardType, required: true, location_name: "type"))
+    FormInputCard.add_member(:metadata, Shapes::ShapeRef.new(shape: FormInputCardMetadata, required: true, location_name: "metadata"))
+    FormInputCard.add_member(:compute_mode, Shapes::ShapeRef.new(shape: InputCardComputeMode, location_name: "computeMode"))
+    FormInputCard.struct_class = Types::FormInputCard
+
+    FormInputCardInput.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
+    FormInputCardInput.add_member(:id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "id"))
+    FormInputCardInput.add_member(:type, Shapes::ShapeRef.new(shape: CardType, required: true, location_name: "type"))
+    FormInputCardInput.add_member(:metadata, Shapes::ShapeRef.new(shape: FormInputCardMetadata, required: true, location_name: "metadata"))
+    FormInputCardInput.add_member(:compute_mode, Shapes::ShapeRef.new(shape: InputCardComputeMode, location_name: "computeMode"))
+    FormInputCardInput.struct_class = Types::FormInputCardInput
+
+    FormInputCardMetadata.add_member(:schema, Shapes::ShapeRef.new(shape: FormInputCardMetadataSchema, required: true, location_name: "schema"))
+    FormInputCardMetadata.struct_class = Types::FormInputCardMetadata
 
     GetLibraryItemInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     GetLibraryItemInput.add_member(:library_item_id, Shapes::ShapeRef.new(shape: UUID, required: true, location: "querystring", location_name: "libraryItemId"))
@@ -399,6 +504,7 @@ module Aws::QApps
 
     GetQAppInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     GetQAppInput.add_member(:app_id, Shapes::ShapeRef.new(shape: UUID, required: true, location: "querystring", location_name: "appId"))
+    GetQAppInput.add_member(:app_version, Shapes::ShapeRef.new(shape: AppVersion, location: "querystring", location_name: "appVersion"))
     GetQAppInput.struct_class = Types::GetQAppInput
 
     GetQAppOutput.add_member(:app_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "appId"))
@@ -420,10 +526,25 @@ module Aws::QApps
     GetQAppSessionInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location: "querystring", location_name: "sessionId"))
     GetQAppSessionInput.struct_class = Types::GetQAppSessionInput
 
+    GetQAppSessionMetadataInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
+    GetQAppSessionMetadataInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location: "querystring", location_name: "sessionId"))
+    GetQAppSessionMetadataInput.struct_class = Types::GetQAppSessionMetadataInput
+
+    GetQAppSessionMetadataOutput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "sessionId"))
+    GetQAppSessionMetadataOutput.add_member(:session_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionArn"))
+    GetQAppSessionMetadataOutput.add_member(:session_name, Shapes::ShapeRef.new(shape: SessionName, location_name: "sessionName"))
+    GetQAppSessionMetadataOutput.add_member(:sharing_configuration, Shapes::ShapeRef.new(shape: SessionSharingConfiguration, required: true, location_name: "sharingConfiguration"))
+    GetQAppSessionMetadataOutput.add_member(:session_owner, Shapes::ShapeRef.new(shape: Boolean, location_name: "sessionOwner"))
+    GetQAppSessionMetadataOutput.struct_class = Types::GetQAppSessionMetadataOutput
+
     GetQAppSessionOutput.add_member(:session_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionId"))
     GetQAppSessionOutput.add_member(:session_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionArn"))
+    GetQAppSessionOutput.add_member(:session_name, Shapes::ShapeRef.new(shape: SessionName, location_name: "sessionName"))
+    GetQAppSessionOutput.add_member(:app_version, Shapes::ShapeRef.new(shape: AppVersion, location_name: "appVersion"))
+    GetQAppSessionOutput.add_member(:latest_published_app_version, Shapes::ShapeRef.new(shape: AppVersion, location_name: "latestPublishedAppVersion"))
     GetQAppSessionOutput.add_member(:status, Shapes::ShapeRef.new(shape: ExecutionStatus, required: true, location_name: "status"))
     GetQAppSessionOutput.add_member(:card_status, Shapes::ShapeRef.new(shape: CardStatusMap, required: true, location_name: "cardStatus"))
+    GetQAppSessionOutput.add_member(:user_is_host, Shapes::ShapeRef.new(shape: Boolean, location_name: "userIsHost"))
     GetQAppSessionOutput.struct_class = Types::GetQAppSessionOutput
 
     ImportDocumentInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
@@ -475,6 +596,16 @@ module Aws::QApps
     ListLibraryItemsOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     ListLibraryItemsOutput.struct_class = Types::ListLibraryItemsOutput
 
+    ListQAppSessionDataInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
+    ListQAppSessionDataInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location: "querystring", location_name: "sessionId"))
+    ListQAppSessionDataInput.struct_class = Types::ListQAppSessionDataInput
+
+    ListQAppSessionDataOutput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "sessionId"))
+    ListQAppSessionDataOutput.add_member(:session_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionArn"))
+    ListQAppSessionDataOutput.add_member(:session_data, Shapes::ShapeRef.new(shape: QAppSessionDataList, location_name: "sessionData"))
+    ListQAppSessionDataOutput.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListQAppSessionDataOutput.struct_class = Types::ListQAppSessionDataOutput
+
     ListQAppsInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     ListQAppsInput.add_member(:limit, Shapes::ShapeRef.new(shape: PageLimit, location: "querystring", location_name: "limit"))
     ListQAppsInput.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
@@ -489,6 +620,18 @@ module Aws::QApps
 
     ListTagsForResourceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     ListTagsForResourceResponse.struct_class = Types::ListTagsForResourceResponse
+
+    MemoryReferenceList.member = Shapes::ShapeRef.new(shape: String)
+
+    PermissionInput.add_member(:action, Shapes::ShapeRef.new(shape: PermissionInputActionEnum, required: true, location_name: "action"))
+    PermissionInput.add_member(:principal, Shapes::ShapeRef.new(shape: PermissionInputPrincipalString, required: true, location_name: "principal"))
+    PermissionInput.struct_class = Types::PermissionInput
+
+    PermissionOutput.add_member(:action, Shapes::ShapeRef.new(shape: PermissionOutputActionEnum, required: true, location_name: "action"))
+    PermissionOutput.add_member(:principal, Shapes::ShapeRef.new(shape: PrincipalOutput, required: true, location_name: "principal"))
+    PermissionOutput.struct_class = Types::PermissionOutput
+
+    PermissionsOutputList.member = Shapes::ShapeRef.new(shape: PermissionOutput)
 
     PredictAppDefinition.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
     PredictAppDefinition.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -513,6 +656,23 @@ module Aws::QApps
     PredictQAppOutput.add_member(:problem_statement, Shapes::ShapeRef.new(shape: String, required: true, location_name: "problemStatement"))
     PredictQAppOutput.struct_class = Types::PredictQAppOutput
 
+    PresignedUrlFields.key = Shapes::ShapeRef.new(shape: String)
+    PresignedUrlFields.value = Shapes::ShapeRef.new(shape: String)
+
+    PrincipalOutput.add_member(:user_id, Shapes::ShapeRef.new(shape: PrincipalOutputUserIdString, location_name: "userId"))
+    PrincipalOutput.add_member(:user_type, Shapes::ShapeRef.new(shape: PrincipalOutputUserTypeEnum, location_name: "userType"))
+    PrincipalOutput.add_member(:email, Shapes::ShapeRef.new(shape: PrincipalOutputEmailString, location_name: "email"))
+    PrincipalOutput.struct_class = Types::PrincipalOutput
+
+    QAppSessionData.add_member(:card_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "cardId"))
+    QAppSessionData.add_member(:value, Shapes::ShapeRef.new(shape: Document, location_name: "value"))
+    QAppSessionData.add_member(:user, Shapes::ShapeRef.new(shape: User, required: true, location_name: "user"))
+    QAppSessionData.add_member(:submission_id, Shapes::ShapeRef.new(shape: UUID, location_name: "submissionId"))
+    QAppSessionData.add_member(:timestamp, Shapes::ShapeRef.new(shape: QAppsTimestamp, location_name: "timestamp"))
+    QAppSessionData.struct_class = Types::QAppSessionData
+
+    QAppSessionDataList.member = Shapes::ShapeRef.new(shape: QAppSessionData)
+
     QPluginCard.add_member(:id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "id"))
     QPluginCard.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
     QPluginCard.add_member(:dependencies, Shapes::ShapeRef.new(shape: DependencyList, required: true, location_name: "dependencies"))
@@ -536,6 +696,7 @@ module Aws::QApps
     QQueryCard.add_member(:prompt, Shapes::ShapeRef.new(shape: Prompt, required: true, location_name: "prompt"))
     QQueryCard.add_member(:output_source, Shapes::ShapeRef.new(shape: CardOutputSource, required: true, location_name: "outputSource"))
     QQueryCard.add_member(:attribute_filter, Shapes::ShapeRef.new(shape: AttributeFilter, location_name: "attributeFilter"))
+    QQueryCard.add_member(:memory_references, Shapes::ShapeRef.new(shape: MemoryReferenceList, location_name: "memoryReferences"))
     QQueryCard.struct_class = Types::QQueryCard
 
     QQueryCardInput.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
@@ -558,10 +719,16 @@ module Aws::QApps
     ServiceQuotaExceededException.add_member(:quota_code, Shapes::ShapeRef.new(shape: String, required: true, location_name: "quotaCode"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
 
+    SessionSharingConfiguration.add_member(:enabled, Shapes::ShapeRef.new(shape: SessionSharingEnabled, required: true, location_name: "enabled"))
+    SessionSharingConfiguration.add_member(:accept_responses, Shapes::ShapeRef.new(shape: SessionSharingAcceptResponses, location_name: "acceptResponses"))
+    SessionSharingConfiguration.add_member(:reveal_cards, Shapes::ShapeRef.new(shape: SessionSharingRevealCards, location_name: "revealCards"))
+    SessionSharingConfiguration.struct_class = Types::SessionSharingConfiguration
+
     StartQAppSessionInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     StartQAppSessionInput.add_member(:app_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "appId"))
     StartQAppSessionInput.add_member(:app_version, Shapes::ShapeRef.new(shape: AppVersion, required: true, location_name: "appVersion"))
     StartQAppSessionInput.add_member(:initial_values, Shapes::ShapeRef.new(shape: CardValueList, location_name: "initialValues"))
+    StartQAppSessionInput.add_member(:session_id, Shapes::ShapeRef.new(shape: String, location_name: "sessionId"))
     StartQAppSessionInput.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     StartQAppSessionInput.struct_class = Types::StartQAppSessionInput
 
@@ -572,6 +739,17 @@ module Aws::QApps
     StopQAppSessionInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     StopQAppSessionInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "sessionId"))
     StopQAppSessionInput.struct_class = Types::StopQAppSessionInput
+
+    Submission.add_member(:value, Shapes::ShapeRef.new(shape: Document, location_name: "value"))
+    Submission.add_member(:submission_id, Shapes::ShapeRef.new(shape: UUID, location_name: "submissionId"))
+    Submission.add_member(:timestamp, Shapes::ShapeRef.new(shape: QAppsTimestamp, location_name: "timestamp"))
+    Submission.struct_class = Types::Submission
+
+    SubmissionList.member = Shapes::ShapeRef.new(shape: Submission)
+
+    SubmissionMutation.add_member(:submission_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "submissionId"))
+    SubmissionMutation.add_member(:mutation_type, Shapes::ShapeRef.new(shape: SubmissionMutationKind, required: true, location_name: "mutationType"))
+    SubmissionMutation.struct_class = Types::SubmissionMutation
 
     TagKeys.member = Shapes::ShapeRef.new(shape: TagKey)
 
@@ -664,14 +842,44 @@ module Aws::QApps
     UpdateQAppOutput.add_member(:required_capabilities, Shapes::ShapeRef.new(shape: AppRequiredCapabilities, location_name: "requiredCapabilities"))
     UpdateQAppOutput.struct_class = Types::UpdateQAppOutput
 
+    UpdateQAppPermissionsInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
+    UpdateQAppPermissionsInput.add_member(:app_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "appId"))
+    UpdateQAppPermissionsInput.add_member(:grant_permissions, Shapes::ShapeRef.new(shape: UpdateQAppPermissionsInputGrantPermissionsList, location_name: "grantPermissions"))
+    UpdateQAppPermissionsInput.add_member(:revoke_permissions, Shapes::ShapeRef.new(shape: UpdateQAppPermissionsInputRevokePermissionsList, location_name: "revokePermissions"))
+    UpdateQAppPermissionsInput.struct_class = Types::UpdateQAppPermissionsInput
+
+    UpdateQAppPermissionsInputGrantPermissionsList.member = Shapes::ShapeRef.new(shape: PermissionInput)
+
+    UpdateQAppPermissionsInputRevokePermissionsList.member = Shapes::ShapeRef.new(shape: PermissionInput)
+
+    UpdateQAppPermissionsOutput.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String, location_name: "resourceArn"))
+    UpdateQAppPermissionsOutput.add_member(:app_id, Shapes::ShapeRef.new(shape: String, location_name: "appId"))
+    UpdateQAppPermissionsOutput.add_member(:permissions, Shapes::ShapeRef.new(shape: PermissionsOutputList, location_name: "permissions"))
+    UpdateQAppPermissionsOutput.struct_class = Types::UpdateQAppPermissionsOutput
+
     UpdateQAppSessionInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
     UpdateQAppSessionInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "sessionId"))
     UpdateQAppSessionInput.add_member(:values, Shapes::ShapeRef.new(shape: CardValueList, location_name: "values"))
     UpdateQAppSessionInput.struct_class = Types::UpdateQAppSessionInput
 
+    UpdateQAppSessionMetadataInput.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "header", location_name: "instance-id"))
+    UpdateQAppSessionMetadataInput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "sessionId"))
+    UpdateQAppSessionMetadataInput.add_member(:session_name, Shapes::ShapeRef.new(shape: SessionName, location_name: "sessionName"))
+    UpdateQAppSessionMetadataInput.add_member(:sharing_configuration, Shapes::ShapeRef.new(shape: SessionSharingConfiguration, required: true, location_name: "sharingConfiguration"))
+    UpdateQAppSessionMetadataInput.struct_class = Types::UpdateQAppSessionMetadataInput
+
+    UpdateQAppSessionMetadataOutput.add_member(:session_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "sessionId"))
+    UpdateQAppSessionMetadataOutput.add_member(:session_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionArn"))
+    UpdateQAppSessionMetadataOutput.add_member(:session_name, Shapes::ShapeRef.new(shape: SessionName, location_name: "sessionName"))
+    UpdateQAppSessionMetadataOutput.add_member(:sharing_configuration, Shapes::ShapeRef.new(shape: SessionSharingConfiguration, required: true, location_name: "sharingConfiguration"))
+    UpdateQAppSessionMetadataOutput.struct_class = Types::UpdateQAppSessionMetadataOutput
+
     UpdateQAppSessionOutput.add_member(:session_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionId"))
     UpdateQAppSessionOutput.add_member(:session_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "sessionArn"))
     UpdateQAppSessionOutput.struct_class = Types::UpdateQAppSessionOutput
+
+    User.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location_name: "userId"))
+    User.struct_class = Types::User
 
     UserAppItem.add_member(:app_id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "appId"))
     UserAppItem.add_member(:app_arn, Shapes::ShapeRef.new(shape: AppArn, required: true, location_name: "appArn"))
@@ -798,6 +1006,19 @@ module Aws::QApps
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
+      api.add_operation(:create_presigned_url, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreatePresignedUrl"
+        o.http_method = "POST"
+        o.http_request_uri = "/apps.createPresignedUrl"
+        o.input = Shapes::ShapeRef.new(shape: CreatePresignedUrlInput)
+        o.output = Shapes::ShapeRef.new(shape: CreatePresignedUrlOutput)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
       api.add_operation(:create_q_app, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateQApp"
         o.http_method = "POST"
@@ -843,6 +1064,20 @@ module Aws::QApps
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
+      api.add_operation(:describe_q_app_permissions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeQAppPermissions"
+        o.http_method = "GET"
+        o.http_request_uri = "/apps.describeQAppPermissions"
+        o.input = Shapes::ShapeRef.new(shape: DescribeQAppPermissionsInput)
+        o.output = Shapes::ShapeRef.new(shape: DescribeQAppPermissionsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
       api.add_operation(:disassociate_library_item_review, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DisassociateLibraryItemReview"
         o.http_method = "POST"
@@ -870,6 +1105,22 @@ module Aws::QApps
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:export_q_app_session_data, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ExportQAppSessionData"
+        o.http_method = "POST"
+        o.http_request_uri = "/runtime.exportQAppSessionData"
+        o.input = Shapes::ShapeRef.new(shape: ExportQAppSessionDataInput)
+        o.output = Shapes::ShapeRef.new(shape: ExportQAppSessionDataOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
@@ -907,6 +1158,21 @@ module Aws::QApps
         o.http_request_uri = "/runtime.getQAppSession"
         o.input = Shapes::ShapeRef.new(shape: GetQAppSessionInput)
         o.output = Shapes::ShapeRef.new(shape: GetQAppSessionOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:get_q_app_session_metadata, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetQAppSessionMetadata"
+        o.http_method = "GET"
+        o.http_request_uri = "/runtime.getQAppSessionMetadata"
+        o.input = Shapes::ShapeRef.new(shape: GetQAppSessionMetadataInput)
+        o.output = Shapes::ShapeRef.new(shape: GetQAppSessionMetadataOutput)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -964,6 +1230,21 @@ module Aws::QApps
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:list_q_app_session_data, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListQAppSessionData"
+        o.http_method = "GET"
+        o.http_request_uri = "/runtime.listQAppSessionData"
+        o.input = Shapes::ShapeRef.new(shape: ListQAppSessionDataInput)
+        o.output = Shapes::ShapeRef.new(shape: ListQAppSessionDataOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
       api.add_operation(:list_q_apps, Seahorse::Model::Operation.new.tap do |o|
@@ -1113,12 +1394,41 @@ module Aws::QApps
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
+      api.add_operation(:update_q_app_permissions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateQAppPermissions"
+        o.http_method = "POST"
+        o.http_request_uri = "/apps.updateQAppPermissions"
+        o.input = Shapes::ShapeRef.new(shape: UpdateQAppPermissionsInput)
+        o.output = Shapes::ShapeRef.new(shape: UpdateQAppPermissionsOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
       api.add_operation(:update_q_app_session, Seahorse::Model::Operation.new.tap do |o|
         o.name = "UpdateQAppSession"
         o.http_method = "POST"
         o.http_request_uri = "/runtime.updateQAppSession"
         o.input = Shapes::ShapeRef.new(shape: UpdateQAppSessionInput)
         o.output = Shapes::ShapeRef.new(shape: UpdateQAppSessionOutput)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:update_q_app_session_metadata, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateQAppSessionMetadata"
+        o.http_method = "POST"
+        o.http_request_uri = "/runtime.updateQAppSessionMetadata"
+        o.input = Shapes::ShapeRef.new(shape: UpdateQAppSessionMetadataInput)
+        o.output = Shapes::ShapeRef.new(shape: UpdateQAppSessionMetadataOutput)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)

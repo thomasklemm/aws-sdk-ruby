@@ -88,10 +88,14 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # List of additional email addresses for an email contact.
+    #
     # @!attribute [rw] to_list
+    #   List of additional TO email recipients for an email contact.
     #   @return [Array<Types::EmailRecipient>]
     #
     # @!attribute [rw] cc_list
+    #   List of additional CC email recipients for an email contact.
     #   @return [Array<Types::EmailRecipient>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AdditionalEmailRecipients AWS API Documentation
@@ -1062,31 +1066,46 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Contact summary of a contact in contact tree associated with unique
+    # identifier.
+    #
     # @!attribute [rw] contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #   @return [String]
     #
     # @!attribute [rw] contact_arn
+    #   The Amazon Resource Name (ARN) of the contact
     #   @return [String]
     #
     # @!attribute [rw] initiation_timestamp
+    #   The date and time this contact was initiated, in UTC time.
     #   @return [Time]
     #
     # @!attribute [rw] disconnect_timestamp
+    #   The timestamp when the customer endpoint disconnected from Amazon
+    #   Connect.
     #   @return [Time]
     #
     # @!attribute [rw] initial_contact_id
+    #   If this contact is related to other contacts, this is the ID of the
+    #   initial contact.
     #   @return [String]
     #
     # @!attribute [rw] previous_contact_id
+    #   If this contact is not the first contact, this is the ID of the
+    #   previous contact.
     #   @return [String]
     #
     # @!attribute [rw] related_contact_id
+    #   The contactId that is related to this contact.
     #   @return [String]
     #
     # @!attribute [rw] initiation_method
+    #   Indicates how the contact was initiated.
     #   @return [String]
     #
     # @!attribute [rw] channel
+    #   How the contact reached your contact center.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AssociatedContactSummary AWS API Documentation
@@ -1218,6 +1237,7 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the attachment reference.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/AttachmentReference AWS API Documentation
@@ -1658,8 +1678,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -1667,7 +1687,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/BatchGetAttachedFileMetadataRequest AWS API Documentation
@@ -2142,8 +2163,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -2151,7 +2172,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CompleteAttachedFileUploadRequest AWS API Documentation
@@ -2197,6 +2219,8 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # A conditional check failed.
+    #
     # @!attribute [rw] message
     #   @return [String]
     #
@@ -2262,6 +2286,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] contact_association_id
+    #   This is the root contactId which is used as a unique identifier for
+    #   all subsequent contacts in a contact tree.
     #   @return [String]
     #
     # @!attribute [rw] initiation_method
@@ -2343,9 +2369,16 @@ module Aws::Connect
     #   @return [Types::WisdomInfo]
     #
     # @!attribute [rw] customer_endpoint
+    #   The customer or external third party participant endpoint.
     #   @return [Types::EndpointInfo]
     #
     # @!attribute [rw] system_endpoint
+    #   The system endpoint. For `INBOUND`, this is the phone number or
+    #   email address that the customer dialed. For `OUTBOUND` and
+    #   `EXTERNAL_OUTBOUND`, this is the outbound caller ID number assigned
+    #   to the outbound queue that is used to dial the customer. For
+    #   callback, this shows up as Softphone for calls handled by agents
+    #   with softphone.
     #   @return [Types::EndpointInfo]
     #
     # @!attribute [rw] queue_time_adjustment_seconds
@@ -2407,6 +2440,7 @@ module Aws::Connect
     #   @return [Types::DisconnectDetails]
     #
     # @!attribute [rw] additional_email_recipients
+    #   List of additional email addresses for an email contact.
     #   @return [Types::AdditionalEmailRecipients]
     #
     # @!attribute [rw] segment_attributes
@@ -2569,7 +2603,7 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   The status of the contact flow.
+    #   The status of the flow.
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -2593,11 +2627,6 @@ module Aws::Connect
     #   "key2":"value2"} }.
     #   @return [Hash<String,String>]
     #
-    # @!attribute [rw] is_default
-    #   Amazon Connect includes a set of default flows that have already
-    #   been published. It uses them to power your contact center.
-    #   @return [Boolean]
-    #
     # @!attribute [rw] flow_content_sha_256
     #   Indicates the checksum value of the flow content.
     #   @return [String]
@@ -2611,11 +2640,11 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] last_modified_time
-    #   The time at which the contact flow was last modified.
+    #   The time at which the flow was last modified.
     #   @return [Time]
     #
     # @!attribute [rw] last_modified_region
-    #   The region in which the contact flow was last modified
+    #   The region in which the flow was last modified
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactFlow AWS API Documentation
@@ -2630,7 +2659,6 @@ module Aws::Connect
       :description,
       :content,
       :tags,
-      :is_default,
       :flow_content_sha_256,
       :version,
       :version_description,
@@ -2787,7 +2815,7 @@ module Aws::Connect
       include Aws::Structure
     end
 
-    # The search criteria to be used to return contact flows.
+    # The search criteria to be used to return flows.
     #
     # @!attribute [rw] or_conditions
     #   A list of conditions which would be applied together with an `OR`
@@ -2881,7 +2909,7 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] contact_flow_status
-    #   The status of the contact flow.
+    #   The status of the flow.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactFlowSummary AWS API Documentation
@@ -2897,7 +2925,7 @@ module Aws::Connect
       include Aws::Structure
     end
 
-    # A summary of a contact flow version's metadata.
+    # A summary of a flow version's metadata.
     #
     # @!attribute [rw] arn
     #   The Amazon Resource Name (ARN) of the view version.
@@ -2995,6 +3023,7 @@ module Aws::Connect
     #   @return [Time]
     #
     # @!attribute [rw] segment_attributes
+    #   Set of segment attributes for a contact.
     #   @return [Hash<String,Types::ContactSearchSummarySegmentAttributeValue>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactSearchSummary AWS API Documentation
@@ -3054,7 +3083,13 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The value of a segment attribute. This is structured as a map with a
+    # single key-value pair. The key 'valueString' indicates that the
+    # attribute type is a string, and its corresponding value is the actual
+    # string value of the segment attribute.
+    #
     # @!attribute [rw] value_string
+    #   The value of a segment attribute represented as a string.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactSearchSummarySegmentAttributeValue AWS API Documentation
@@ -3476,44 +3511,95 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #   @return [String]
     #
     # @!attribute [rw] related_contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #   @return [String]
     #
     # @!attribute [rw] attributes
+    #   A custom key-value pair using an attribute map. The attributes are
+    #   standard Amazon Connect attributes, and can be accessed in flows
+    #   just like any other contact attributes.
+    #
+    #   There can be up to 32,768 UTF-8 bytes across all key-value pairs per
+    #   contact. Attribute keys can include only alphanumeric, dash, and
+    #   underscore characters.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] references
+    #   A formatted URL that is shown to an agent in the Contact Control
+    #   Panel (CCP). Tasks can have the following reference types at the
+    #   time of creation: URL \| NUMBER \| STRING \| DATE \| EMAIL \|
+    #   ATTACHMENT.
     #   @return [Hash<String,Types::Reference>]
     #
     # @!attribute [rw] channel
+    #   The channel for the contact
     #   @return [String]
     #
     # @!attribute [rw] initiation_method
+    #   Indicates how the contact was initiated.
     #   @return [String]
     #
     # @!attribute [rw] expiry_duration_in_minutes
+    #   Number of minutes the contact will be active for before expiring
     #   @return [Integer]
     #
     # @!attribute [rw] user_info
+    #   User details for the contact
     #   @return [Types::UserInfo]
     #
     # @!attribute [rw] initiate_as
+    #   Initial state of the contact when it's created
     #   @return [String]
     #
     # @!attribute [rw] name
+    #   The name of a the contact.
     #   @return [String]
     #
     # @!attribute [rw] description
+    #   A description of the contact.
     #   @return [String]
     #
     # @!attribute [rw] segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments (unique contact ID) using an attribute map. The attributes
+    #   are standard Amazon Connect attributes. They can be accessed in
+    #   flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to set Segment Contact Expiry as a duration
+    #   in minutes.
+    #
+    #   <note markdown="1"> To set contact expiry, a ValueMap must be specified containing the
+    #   integer number of minutes the contact will be active for before
+    #   expiring, with `SegmentAttributes` like \{ `
+    #   "connect:ContactExpiry": {"ValueMap" : { "ExpiryDuration": {
+    #   "ValueInteger": 135}}}}`.
+    #
+    #    </note>
     #   @return [Hash<String,Types::SegmentAttributeValue>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContactRequest AWS API Documentation
@@ -3537,9 +3623,11 @@ module Aws::Connect
     end
 
     # @!attribute [rw] contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #   @return [String]
     #
     # @!attribute [rw] contact_arn
+    #   The Amazon Resource Name (ARN) of the created contact.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateContactResponse AWS API Documentation
@@ -3552,21 +3640,42 @@ module Aws::Connect
     end
 
     # @!attribute [rw] description
+    #   The description of the email address.
     #   @return [String]
     #
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] email_address
+    #   The email address with the instance, in
+    #   \[^\\s@\]+@\[^\\s@\]+\\.\[^\\s@\]+ format.
     #   @return [String]
     #
     # @!attribute [rw] display_name
+    #   The display name of email address
     #   @return [String]
     #
     # @!attribute [rw] tags
+    #   The tags used to organize, track, or control access for this
+    #   resource. For example, \{ "Tags": \{"key1":"value1",
+    #   "key2":"value2"} }.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1].
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateEmailAddressRequest AWS API Documentation
@@ -3583,9 +3692,11 @@ module Aws::Connect
     end
 
     # @!attribute [rw] email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @!attribute [rw] email_address_arn
+    #   The Amazon Resource Name (ARN) of the email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateEmailAddressResponse AWS API Documentation
@@ -4159,6 +4270,7 @@ module Aws::Connect
     #   @return [Types::OutboundCallerConfig]
     #
     # @!attribute [rw] outbound_email_config
+    #   The outbound email address ID for a specified queue.
     #   @return [Types::OutboundEmailConfig]
     #
     # @!attribute [rw] hours_of_operation_id
@@ -4547,6 +4659,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] self_assign_flow_id
+    #   The ContactFlowId for the flow that will be run if this template is
+    #   used to create a self-assigned task.
     #   @return [String]
     #
     # @!attribute [rw] constraints
@@ -5545,9 +5659,16 @@ module Aws::Connect
     class DeleteContactFlowResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteEmailAddressRequest AWS API Documentation
@@ -6214,9 +6335,16 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeEmailAddressRequest AWS API Documentation
@@ -6229,27 +6357,38 @@ module Aws::Connect
     end
 
     # @!attribute [rw] email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @!attribute [rw] email_address_arn
+    #   The Amazon Resource Name (ARN) of the email address.
     #   @return [String]
     #
     # @!attribute [rw] email_address
+    #   The email address with the instance, in
+    #   \[^\\s@\]+@\[^\\s@\]+\\.\[^\\s@\]+ format.
     #   @return [String]
     #
     # @!attribute [rw] display_name
+    #   The display name of email address
     #   @return [String]
     #
     # @!attribute [rw] description
+    #   The description of the email address.
     #   @return [String]
     #
     # @!attribute [rw] create_timestamp
+    #   The email address creation timestamp in ISO 8601 Datetime.
     #   @return [String]
     #
     # @!attribute [rw] modified_timestamp
+    #   The email address last modification timestamp in ISO 8601 Datetime.
     #   @return [String]
     #
     # @!attribute [rw] tags
+    #   The tags used to organize, track, or control access for this
+    #   resource. For example, \{ "Tags": \{"key1":"value1",
+    #   "key2":"value2"} }.
     #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeEmailAddressResponse AWS API Documentation
@@ -7431,10 +7570,15 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Contains information about a source or destination email address
+    #
     # @!attribute [rw] email_address
+    #   The email address with the instance, in
+    #   \[^\\s@\]+@\[^\\s@\]+\\.\[^\\s@\]+ format.
     #   @return [String]
     #
     # @!attribute [rw] display_name
+    #   The display name of email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAddressInfo AWS API Documentation
@@ -7446,19 +7590,27 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Contains information about an email address for a contact center.
+    #
     # @!attribute [rw] email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @!attribute [rw] email_address_arn
+    #   The Amazon Resource Name (ARN) of the email address.
     #   @return [String]
     #
     # @!attribute [rw] email_address
+    #   The email address with the instance, in
+    #   \[^\\s@\]+@\[^\\s@\]+\\.\[^\\s@\]+ format.
     #   @return [String]
     #
     # @!attribute [rw] description
+    #   The description of the email address.
     #   @return [String]
     #
     # @!attribute [rw] display_name
+    #   The display name of email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAddressMetadata AWS API Documentation
@@ -7473,10 +7625,16 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The search criteria to be used to return email addresses.
+    #
     # @!attribute [rw] or_conditions
+    #   A list of conditions which would be applied together with an OR
+    #   condition.
     #   @return [Array<Types::EmailAddressSearchCriteria>]
     #
     # @!attribute [rw] and_conditions
+    #   A list of conditions which would be applied together with an AND
+    #   condition.
     #   @return [Array<Types::EmailAddressSearchCriteria>]
     #
     # @!attribute [rw] string_condition
@@ -7494,6 +7652,8 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Filters to be applied to search results.
+    #
     # @!attribute [rw] tag_filter
     #   An object that can be used to specify Tag conditions inside the
     #   `SearchFilter`. This accepts an `OR` of `AND` (List of List) input
@@ -7514,10 +7674,15 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the email attachment files.
+    #
     # @!attribute [rw] file_name
+    #   A case-sensitive name of the attached file being uploaded.
     #   @return [String]
     #
     # @!attribute [rw] s3_url
+    #   The pre-signed URLs for the S3 bucket where the email attachment is
+    #   stored.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailAttachment AWS API Documentation
@@ -7529,10 +7694,15 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the reference when the referenceType is
+    # `EMAIL_MESSAGE`. Otherwise, null.
+    #
     # @!attribute [rw] name
+    #   The name of the email message reference
     #   @return [String]
     #
     # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the email message reference
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailMessageReference AWS API Documentation
@@ -7544,10 +7714,22 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the email recipient
+    #
     # @!attribute [rw] address
+    #   Address of the email recipient.
+    #
+    #   Type: String
+    #
+    #   Length Constraints: Minimum length of 1. Maximum length of 256.
     #   @return [String]
     #
     # @!attribute [rw] display_name
+    #   Display name of the email recipient.
+    #
+    #   Type: String
+    #
+    #   Length Constraints: Minimum length of 1. Maximum length of 256.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EmailRecipient AWS API Documentation
@@ -7645,13 +7827,18 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the endpoint.
+    #
     # @!attribute [rw] type
+    #   Type of endpoint.
     #   @return [String]
     #
     # @!attribute [rw] address
+    #   Address of the endpoint.
     #   @return [String]
     #
     # @!attribute [rw] display_name
+    #   Display name of the endpoint.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EndpointInfo AWS API Documentation
@@ -8775,7 +8962,7 @@ module Aws::Connect
     # Request to GetAttachedFile API.
     #
     # @!attribute [rw] instance_id
-    #   The unique identifier of the Connect instance.
+    #   The unique identifier of the Amazon Connect instance.
     #   @return [String]
     #
     # @!attribute [rw] file_id
@@ -8788,8 +8975,8 @@ module Aws::Connect
     #   @return [Integer]
     #
     # @!attribute [rw] associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -8797,7 +8984,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/GetAttachedFileRequest AWS API Documentation
@@ -11142,6 +11330,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] self_assign_flow_id
+    #   ContactFlowId for the flow that will be run if this template is used
+    #   to create a self-assigned task
     #   @return [String]
     #
     # @!attribute [rw] constraints
@@ -11943,10 +12133,14 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The additional TO CC recipients information of inbound email.
+    #
     # @!attribute [rw] to_addresses
+    #   The additional recipients information present in to list.
     #   @return [Array<Types::EmailAddressInfo>]
     #
     # @!attribute [rw] cc_addresses
+    #   The additional recipients information present in cc list.
     #   @return [Array<Types::EmailAddressInfo>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/InboundAdditionalRecipients AWS API Documentation
@@ -11958,10 +12152,14 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about email body content.
+    #
     # @!attribute [rw] message_source_type
+    #   The message source type, that is, `RAW`.
     #   @return [String]
     #
     # @!attribute [rw] raw_message
+    #   The raw email body content.
     #   @return [Types::InboundRawMessage]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/InboundEmailContent AWS API Documentation
@@ -11973,16 +12171,22 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the raw email body content.
+    #
     # @!attribute [rw] subject
+    #   The email subject.
     #   @return [String]
     #
     # @!attribute [rw] body
+    #   The email message body.
     #   @return [String]
     #
     # @!attribute [rw] content_type
+    #   Type of content, that is, `text/plain` or `text/html`.
     #   @return [String]
     #
     # @!attribute [rw] headers
+    #   Headers present in inbound email.
     #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/InboundRawMessage AWS API Documentation
@@ -12672,15 +12876,31 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #   @return [String]
     #
     # @!attribute [rw] max_results
+    #   The maximum number of results to return per page.
+    #
+    #   The maximum number of results to return per page. The default
+    #   MaxResult size is 25.
+    #
+    #   Valid Range: Minimum value of 1. Maximum value of 100.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListAssociatedContactsRequest AWS API Documentation
@@ -12695,9 +12915,13 @@ module Aws::Connect
     end
 
     # @!attribute [rw] contact_summary_list
+    #   List of the contact summary for all the contacts in contact tree
+    #   associated with unique identifier.
     #   @return [Array<Types::AssociatedContactSummary>]
     #
     # @!attribute [rw] next_token
+    #   If there are additional results, this is the token for the next set
+    #   of results.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListAssociatedContactsResponse AWS API Documentation
@@ -15603,7 +15827,10 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The additional recipients information of outbound email.
+    #
     # @!attribute [rw] cc_email_addresses
+    #   The additional CC email address recipients information.
     #   @return [Array<Types::EmailAddressInfo>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundAdditionalRecipients AWS API Documentation
@@ -15652,7 +15879,10 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The outbound email address Id.
+    #
     # @!attribute [rw] outbound_email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundEmailConfig AWS API Documentation
@@ -15663,13 +15893,18 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about email body content.
+    #
     # @!attribute [rw] message_source_type
+    #   The message source type, that is, `RAW` or `TEMPLATE`.
     #   @return [String]
     #
     # @!attribute [rw] templated_message_config
+    #   Information about template message configuration.
     #   @return [Types::TemplatedMessageConfig]
     #
     # @!attribute [rw] raw_message
+    #   The raw email body content.
     #   @return [Types::OutboundRawMessage]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundEmailContent AWS API Documentation
@@ -15682,13 +15917,18 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the raw email body content.
+    #
     # @!attribute [rw] subject
+    #   The email subject.
     #   @return [String]
     #
     # @!attribute [rw] body
+    #   The email message body.
     #   @return [String]
     #
     # @!attribute [rw] content_type
+    #   Type of content, that is, `text/plain` or `text/html`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OutboundRawMessage AWS API Documentation
@@ -15703,8 +15943,8 @@ module Aws::Connect
 
     # Thrown for analyzed content when requested OutputType was not enabled
     # for a given contact. For example, if an OutputType.Raw was requested
-    # for a contact that had `RedactedOnly` Redaction policy set in
-    # Contact flow.
+    # for a contact that had `RedactedOnly` Redaction policy set in the
+    # flow.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -16406,6 +16646,7 @@ module Aws::Connect
     #   @return [Types::OutboundCallerConfig]
     #
     # @!attribute [rw] outbound_email_config
+    #   The outbound email address ID for a specified queue.
     #   @return [Types::OutboundEmailConfig]
     #
     # @!attribute [rw] hours_of_operation_id
@@ -17298,12 +17539,15 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] status
+    #   Status of the attachment reference type.
     #   @return [String]
     #
     # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the reference
     #   @return [String]
     #
     # @!attribute [rw] status_reason
+    #   Relevant details why the reference was not successfully created.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/Reference AWS API Documentation
@@ -17335,6 +17579,8 @@ module Aws::Connect
     #   @return [Types::AttachmentReference]
     #
     # @!attribute [rw] email_message
+    #   Information about the reference when the referenceType is
+    #   `EMAIL_MESSAGE`. Otherwise, null.
     #   @return [Types::EmailMessageReference]
     #
     # @!attribute [rw] string
@@ -18513,7 +18759,7 @@ module Aws::Connect
     #   @return [Types::ContactFlowModuleSearchFilter]
     #
     # @!attribute [rw] search_criteria
-    #   The search criteria to be used to return contact flow modules.
+    #   The search criteria to be used to return flow modules.
     #
     #   <note markdown="1"> The `name` and `description` fields support "contains" queries
     #   with a minimum of 2 characters and a maximum of 25 characters. Any
@@ -18536,7 +18782,7 @@ module Aws::Connect
     end
 
     # @!attribute [rw] contact_flow_modules
-    #   The search criteria to be used to return contact flow modules.
+    #   The search criteria to be used to return flow modules.
     #   @return [Array<Types::ContactFlowModule>]
     #
     # @!attribute [rw] next_token
@@ -18545,7 +18791,7 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] approximate_total_count
-    #   The total number of contact flows which matched your search query.
+    #   The total number of flows which matched your search query.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchContactFlowModulesResponse AWS API Documentation
@@ -18610,7 +18856,7 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] approximate_total_count
-    #   The total number of contact flows which matched your search query.
+    #   The total number of flows which matched your search query.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchContactFlowsResponse AWS API Documentation
@@ -18757,6 +19003,8 @@ module Aws::Connect
     #   @return [Types::SearchableContactAttributes]
     #
     # @!attribute [rw] searchable_segment_attributes
+    #   The search criteria based on searchable segment attributes of a
+    #   contact.
     #   @return [Types::SearchableSegmentAttributes]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchCriteria AWS API Documentation
@@ -18775,18 +19023,30 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] max_results
+    #   The maximum number of results to return per page.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
     #   @return [String]
     #
     # @!attribute [rw] search_criteria
+    #   The search criteria to be used to return email addresses.
     #   @return [Types::EmailAddressSearchCriteria]
     #
     # @!attribute [rw] search_filter
+    #   Filters to be applied to search results.
     #   @return [Types::EmailAddressSearchFilter]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchEmailAddressesRequest AWS API Documentation
@@ -18802,12 +19062,16 @@ module Aws::Connect
     end
 
     # @!attribute [rw] next_token
+    #   If there are additional results, this is the token for the next set
+    #   of results.
     #   @return [String]
     #
     # @!attribute [rw] email_addresses
+    #   List of email addresses matching SearchFilter and SearchCriteria
     #   @return [Array<Types::EmailAddressMetadata>]
     #
     # @!attribute [rw] approximate_total_count
+    #   The total number of email addresses which matched your search query.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchEmailAddressesResponse AWS API Documentation
@@ -19570,7 +19834,7 @@ module Aws::Connect
       include Aws::Structure
     end
 
-    # The search criteria based on user-defned contact attribute key and
+    # The search criteria based on user-defined contact attribute key and
     # values to search on.
     #
     # @!attribute [rw] key
@@ -19591,10 +19855,16 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The search criteria based on searchable segment attributes of a
+    # contact
+    #
     # @!attribute [rw] criteria
+    #   The list of criteria based on searchable segment attributes.
     #   @return [Array<Types::SearchableSegmentAttributesCriteria>]
     #
     # @!attribute [rw] match_type
+    #   The match type combining search criteria using multiple searchable
+    #   segment attributes.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchableSegmentAttributes AWS API Documentation
@@ -19606,10 +19876,16 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The search criteria based on searchable segment attribute key and
+    # values to search on.
+    #
     # @!attribute [rw] key
+    #   The key containing a searchable segment attribute.
     #   @return [String]
     #
     # @!attribute [rw] values
+    #   The list of values to search for within a searchable segment
+    #   attribute.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchableSegmentAttributesCriteria AWS API Documentation
@@ -19861,10 +20137,20 @@ module Aws::Connect
     #   The value of a segment attribute.
     #   @return [String]
     #
+    # @!attribute [rw] value_map
+    #   The value of a segment attribute.
+    #   @return [Hash<String,Types::SegmentAttributeValue>]
+    #
+    # @!attribute [rw] value_integer
+    #   The value of a segment attribute.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SegmentAttributeValue AWS API Documentation
     #
     class SegmentAttributeValue < Struct.new(
-      :value_string)
+      :value_string,
+      :value_map,
+      :value_integer)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19978,29 +20264,50 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] from_email_address
+    #   The email address to be used for sending email.
     #   @return [Types::EmailAddressInfo]
     #
     # @!attribute [rw] destination_email_address
+    #   The email address to send the email to.
     #   @return [Types::EmailAddressInfo]
     #
     # @!attribute [rw] additional_recipients
+    #   The additional recipients address of the email in CC.
     #   @return [Types::OutboundAdditionalRecipients]
     #
     # @!attribute [rw] email_message
+    #   The email message body to be sent to the newly created email.
     #   @return [Types::OutboundEmailContent]
     #
     # @!attribute [rw] traffic_type
+    #   Denotes the class of traffic.
     #   @return [String]
     #
     # @!attribute [rw] source_campaign
+    #   A Campaign object need for Campaign traffic type.
     #   @return [Types::SourceCampaign]
     #
     # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SendOutboundEmailRequest AWS API Documentation
@@ -20028,6 +20335,7 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] reason
+    #   The reason for the exception.
     #   @return [Types::ServiceQuotaExceededExceptionReason]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ServiceQuotaExceededException AWS API Documentation
@@ -20039,7 +20347,11 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The reason for the exception.
+    #
     # @!attribute [rw] attached_file_service_quota_exceeded_exception_reason
+    #   Total file size of all files or total number of files exceeds the
+    #   service quota
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ServiceQuotaExceededExceptionReason AWS API Documentation
@@ -20139,10 +20451,14 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the campaign.
+    #
     # @!attribute [rw] campaign_id
+    #   A unique identifier for a campaign.
     #   @return [String]
     #
     # @!attribute [rw] outbound_request_id
+    #   A unique identifier for a each request part of same campaign.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SourceCampaign AWS API Documentation
@@ -20187,11 +20503,13 @@ module Aws::Connect
     #
     # @!attribute [rw] file_use_case_type
     #   The use case for the file.
+    #
+    #   Only `ATTACHMENTS` are supported.
     #   @return [String]
     #
     # @!attribute [rw] associated_resource_arn
-    #   The resource to which the attached file is (being) uploaded to.
-    #   [Cases][1] are the only current supported resource.
+    #   The resource to which the attached file is (being) uploaded to. The
+    #   supported resources are [Cases][1] and [Email][2].
     #
     #   <note markdown="1"> This value must be a valid ARN.
     #
@@ -20199,7 +20517,8 @@ module Aws::Connect
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/connect/latest/APIReference/API_connect-cases_CreateCase.html
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/cases.html
+    #   [2]: https://docs.aws.amazon.com/connect/latest/adminguide/setup-email-channel.html
     #   @return [String]
     #
     # @!attribute [rw] created_by
@@ -20281,8 +20600,8 @@ module Aws::Connect
     # @!attribute [rw] contact_flow_id
     #   The identifier of the flow for initiating the chat. To see the
     #   ContactFlowId in the Amazon Connect admin website, on the navigation
-    #   menu go to **Routing**, **Contact Flows**. Choose the flow. On the
-    #   flow page, under the name of the flow, choose **Show additional flow
+    #   menu go to **Routing**, **Flows**. Choose the flow. On the flow
+    #   page, under the name of the flow, choose **Show additional flow
     #   information**. The ContactFlowId is the last part of the ARN, shown
     #   here in bold:
     #
@@ -20598,47 +20917,112 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] from_email_address
+    #   The email address of the customer.
     #   @return [Types::EmailAddressInfo]
     #
     # @!attribute [rw] destination_email_address
+    #   The email address associated with the instance.
     #   @return [String]
     #
     # @!attribute [rw] description
+    #   A description of the email contact.
     #   @return [String]
     #
     # @!attribute [rw] references
+    #   A formatted URL that is shown to an agent in the Contact Control
+    #   Panel (CCP). Emails can have the following reference types at the
+    #   time of creation: `URL` \| `NUMBER` \| `STRING` \| `DATE`. `EMAIL`
+    #   \| `EMAIL_MESSAGE` \|`ATTACHMENT` are not a supported reference type
+    #   during email creation.
     #   @return [Hash<String,Types::Reference>]
     #
     # @!attribute [rw] name
+    #   The name of a email that is shown to an agent in the Contact Control
+    #   Panel (CCP).
     #   @return [String]
     #
     # @!attribute [rw] email_message
+    #   The email message body to be sent to the newly created email.
     #   @return [Types::InboundEmailContent]
     #
     # @!attribute [rw] additional_recipients
+    #   The addtional recipients address of the email.
     #   @return [Types::InboundAdditionalRecipients]
     #
     # @!attribute [rw] attachments
+    #   List of S3 presigned URLs of email attachments and their file name.
     #   @return [Array<Types::EmailAttachment>]
     #
     # @!attribute [rw] contact_flow_id
+    #   The identifier of the flow for initiating the emails. To see the
+    #   ContactFlowId in the Amazon Connect admin website, on the navigation
+    #   menu go to **Routing**, **Flows**. Choose the flow. On the flow
+    #   page, under the name of the flow, choose **Show additional flow
+    #   information**. The ContactFlowId is the last part of the ARN, shown
+    #   here in bold:
+    #
+    #   arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/**846ec553-a005-41c0-8341-xxxxxxxxxxxx**
     #   @return [String]
     #
     # @!attribute [rw] related_contact_id
+    #   The contactId that is related to this contact. Linking emails
+    #   together by using `RelatedContactID` copies over contact attributes
+    #   from the related email contact to the new email contact. All updates
+    #   to user-defined attributes in the new email contact are limited to
+    #   the individual contact ID. There are no limits to the number of
+    #   contacts that can be linked by using `RelatedContactId`.
     #   @return [String]
     #
     # @!attribute [rw] attributes
+    #   A custom key-value pair using an attribute map. The attributes are
+    #   standard Amazon Connect attributes, and can be accessed in flows
+    #   just like any other contact attributes.
+    #
+    #   There can be up to 32,768 UTF-8 bytes across all key-value pairs per
+    #   contact. Attribute keys can include only alphanumeric, dash, and
+    #   underscore characters.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments using an attribute map. The attributes are standard Amazon
+    #   Connect attributes. They can be accessed in flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to show channel subtype, such as
+    #   `connect:Guide`.
+    #
+    #   <note markdown="1"> To set contact expiry, a `ValueMap` must be specified containing the
+    #   integer number of minutes the contact will be active for before
+    #   expiring, with `SegmentAttributes` like \{ `
+    #   "connect:ContactExpiry": {"ValueMap" : { "ExpiryDuration": {
+    #   "ValueInteger":135}}}}`.
+    #
+    #    </note>
     #   @return [Hash<String,Types::SegmentAttributeValue>]
     #
     # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartEmailContactRequest AWS API Documentation
@@ -20663,6 +21047,7 @@ module Aws::Connect
     end
 
     # @!attribute [rw] contact_id
+    #   The identifier of this contact within the Amazon Connect instance.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartEmailContactResponse AWS API Documentation
@@ -20808,26 +21193,46 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #   @return [String]
     #
     # @!attribute [rw] from_email_address
+    #   The email address associated with the instance.
     #   @return [Types::EmailAddressInfo]
     #
     # @!attribute [rw] destination_email_address
+    #   The email address of the customer.
     #   @return [Types::EmailAddressInfo]
     #
     # @!attribute [rw] additional_recipients
+    #   The addtional recipients address of email in CC.
     #   @return [Types::OutboundAdditionalRecipients]
     #
     # @!attribute [rw] email_message
+    #   The email message body to be sent to the newly created email.
     #   @return [Types::OutboundEmailContent]
     #
     # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1].
+    #
     #   **A suitable default value is auto-generated.** You should normally
     #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartOutboundEmailContactRequest AWS API Documentation
@@ -20845,6 +21250,7 @@ module Aws::Connect
     end
 
     # @!attribute [rw] contact_id
+    #   The identifier of the contact in this instance of Amazon Connect.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartOutboundEmailContactResponse AWS API Documentation
@@ -21054,8 +21460,8 @@ module Aws::Connect
     # @!attribute [rw] contact_flow_id
     #   The identifier of the flow for initiating the tasks. To see the
     #   ContactFlowId in the Amazon Connect admin website, on the navigation
-    #   menu go to **Routing**, **Contact Flows**. Choose the flow. On the
-    #   flow page, under the name of the flow, choose **Show additional flow
+    #   menu go to **Routing**, **Flows**. Choose the flow. On the flow
+    #   page, under the name of the flow, choose **Show additional flow
     #   information**. The ContactFlowId is the last part of the ARN, shown
     #   here in bold:
     #
@@ -21146,6 +21552,28 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments (unique contact ID) using an attribute map. The attributes
+    #   are standard Amazon Connect attributes. They can be accessed in
+    #   flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to set Contact Expiry as a duration in
+    #   minutes and set a UserId for the User who created a task.
+    #
+    #   <note markdown="1"> To set contact expiry, a ValueMap must be specified containing the
+    #   integer number of minutes the contact will be active for before
+    #   expiring, with `SegmentAttributes` like \{ `
+    #   "connect:ContactExpiry": {"ValueMap" : { "ExpiryDuration": {
+    #   "ValueInteger": 135}}}}`.
+    #
+    #    To set the created by user, a valid AgentResourceId must be
+    #   supplied, with `SegmentAttributes` like \{ `"connect:CreatedByUser"
+    #   { "ValueString":
+    #   "arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/agent/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"}}}`.
+    #
+    #    </note>
     #   @return [Hash<String,Types::SegmentAttributeValue>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/StartTaskContactRequest AWS API Documentation
@@ -21913,10 +22341,20 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the template attributes.
+    #
     # @!attribute [rw] custom_attributes
+    #   An object that specifies the custom attributes values to use for
+    #   variables in the message template. This object contains different
+    #   categories of key-value pairs. Each key defines a variable or
+    #   placeholder in the message template.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] customer_profile_attributes
+    #   An object that specifies the customer profile attributes values to
+    #   use for variables in the message template. This object contains
+    #   different categories of key-value pairs. Each key defines a variable
+    #   or placeholder in the message template.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/TemplateAttributes AWS API Documentation
@@ -21928,13 +22366,20 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about template message configuration.
+    #
     # @!attribute [rw] knowledge_base_id
+    #   The identifier of the knowledge base. Can be either the ID or the
+    #   ARN. URLs cannot contain the ARN.
     #   @return [String]
     #
     # @!attribute [rw] message_template_id
+    #   The identifier of the message template Id.
     #   @return [String]
     #
     # @!attribute [rw] template_attributes
+    #   Information about template attributes, that is, CustomAttributes or
+    #   CustomerProfileAttributes.
     #   @return [Types::TemplateAttributes]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/TemplatedMessageConfig AWS API Documentation
@@ -22812,6 +23257,18 @@ module Aws::Connect
     #   @return [Hash<String,Types::Reference>]
     #
     # @!attribute [rw] segment_attributes
+    #   A set of system defined key-value pairs stored on individual contact
+    #   segments (unique contact ID) using an attribute map. The attributes
+    #   are standard Amazon Connect attributes. They can be accessed in
+    #   flows.
+    #
+    #   Attribute keys can include only alphanumeric, -, and \_.
+    #
+    #   This field can be used to show channel subtype, such as
+    #   `connect:Guide`.
+    #
+    #   Currently Contact Expiry is the only segment attribute which can be
+    #   updated by using the UpdateContact API.
     #   @return [Hash<String,Types::SegmentAttributeValue>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateContactRequest AWS API Documentation
@@ -22913,18 +23370,35 @@ module Aws::Connect
     class UpdateContactScheduleResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @!attribute [rw] description
+    #   The description of the email address.
     #   @return [String]
     #
     # @!attribute [rw] display_name
+    #   The display name of email address.
     #   @return [String]
     #
     # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1].
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateEmailAddressMetadataRequest AWS API Documentation
@@ -22940,9 +23414,11 @@ module Aws::Connect
     end
 
     # @!attribute [rw] email_address_id
+    #   The identifier of the email address.
     #   @return [String]
     #
     # @!attribute [rw] email_address_arn
+    #   The Amazon Resource Name (ARN) of the email address.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateEmailAddressMetadataResponse AWS API Documentation
@@ -23498,12 +23974,20 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
     # @!attribute [rw] queue_id
+    #   The identifier for the queue.
     #   @return [String]
     #
     # @!attribute [rw] outbound_email_config
+    #   The outbound email address ID for a specified queue.
     #   @return [Types::OutboundEmailConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateQueueOutboundEmailConfigRequest AWS API Documentation
@@ -23888,6 +24372,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] self_assign_flow_id
+    #   The ContactFlowId for the flow that will be run if this template is
+    #   used to create a self-assigned task.
     #   @return [String]
     #
     # @!attribute [rw] constraints
@@ -23958,6 +24444,8 @@ module Aws::Connect
     #   @return [String]
     #
     # @!attribute [rw] self_assign_flow_id
+    #   The ContactFlowId for the flow that will be run if this template is
+    #   used to create a self-assigned task.
     #   @return [String]
     #
     # @!attribute [rw] constraints
@@ -24706,7 +25194,10 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The user details for the contact.
+    #
     # @!attribute [rw] user_id
+    #   The user identifier for the contact.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UserInfo AWS API Documentation

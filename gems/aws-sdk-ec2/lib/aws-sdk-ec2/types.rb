@@ -6655,6 +6655,10 @@ module Aws::EC2
     #   The state of the notification.
     #   @return [String]
     #
+    # @!attribute [rw] service_region
+    #   The Region for the endpoint service.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ConnectionNotification AWS API Documentation
     #
     class ConnectionNotification < Struct.new(
@@ -6664,7 +6668,8 @@ module Aws::EC2
       :connection_notification_type,
       :connection_notification_arn,
       :connection_events,
-      :connection_notification_state)
+      :connection_notification_state,
+      :service_region)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7184,6 +7189,20 @@ module Aws::EC2
     #   The tags to apply to the new snapshot.
     #   @return [Array<Types::TagSpecification>]
     #
+    # @!attribute [rw] completion_duration_minutes
+    #   Specify a completion duration, in 15 minute increments, to initiate
+    #   a time-based snapshot copy. Time-based snapshot copy operations
+    #   complete within the specified duration. For more information, see [
+    #   Time-based copies][1].
+    #
+    #   If you do not specify a value, the snapshot copy operation is
+    #   completed on a best-effort basis.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/time-based-copies.html
+    #   @return [Integer]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -7203,6 +7222,7 @@ module Aws::EC2
       :source_region,
       :source_snapshot_id,
       :tag_specifications,
+      :completion_duration_minutes,
       :dry_run)
       SENSITIVE = [:presigned_url]
       include Aws::Structure
@@ -13733,6 +13753,11 @@ module Aws::EC2
     #   The subnet configurations for the endpoint.
     #   @return [Array<Types::SubnetConfiguration>]
     #
+    # @!attribute [rw] service_region
+    #   The Region where the service is hosted. The default is the current
+    #   Region.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVpcEndpointRequest AWS API Documentation
     #
     class CreateVpcEndpointRequest < Struct.new(
@@ -13749,7 +13774,8 @@ module Aws::EC2
       :client_token,
       :private_dns_enabled,
       :tag_specifications,
-      :subnet_configurations)
+      :subnet_configurations,
+      :service_region)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13802,6 +13828,10 @@ module Aws::EC2
     #   `ipv6`.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] supported_regions
+    #   The Regions from which service consumers can access the service.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] client_token
     #   Unique, case-sensitive identifier that you provide to ensure the
     #   idempotency of the request. For more information, see [How to ensure
@@ -13825,6 +13855,7 @@ module Aws::EC2
       :network_load_balancer_arns,
       :gateway_load_balancer_arns,
       :supported_ip_address_types,
+      :supported_regions,
       :client_token,
       :tag_specifications)
       SENSITIVE = []
@@ -21279,6 +21310,12 @@ module Aws::EC2
     #     `impaired` \| `initializing` \| `insufficient-data` \|
     #     `not-applicable`).
     #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed instance.
+    #
+    #   * `operator.principal` - The principal that manages the instance.
+    #     Only valid for managed instances, where `managed` is `true`.
+    #
     #   * `system-status.reachability` - Filters on system status where the
     #     name is `reachability` (`passed` \| `failed` \| `initializing` \|
     #     `insufficient-data`).
@@ -22011,6 +22048,13 @@ module Aws::EC2
     #   * `network-interface.network-interface-id` - The ID of the network
     #     interface.
     #
+    #   * `network-interface.operator.managed` - A Boolean that indicates
+    #     whether the instance has a managed network interface.
+    #
+    #   * `network-interface.operator.principal` - The principal that
+    #     manages the network interface. Only valid for instances with
+    #     managed network interfaces, where `managed` is `true`.
+    #
     #   * `network-interface.outpost-arn` - The ARN of the Outpost.
     #
     #   * `network-interface.owner-id` - The ID of the owner of the network
@@ -22049,6 +22093,12 @@ module Aws::EC2
     #
     #   * `network-interface.vpc-id` - The ID of the VPC for the network
     #     interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed instance.
+    #
+    #   * `operator.principal` - The principal that manages the instance.
+    #     Only valid for managed instances, where `managed` is `true`.
     #
     #   * `outpost-arn` - The Amazon Resource Name (ARN) of the Outpost.
     #
@@ -24478,6 +24528,13 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed network interface.
+    #
+    #   * `operator.principal` - The principal that manages the network
+    #     interface. Only valid for managed network interfaces, where
+    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -28689,12 +28746,18 @@ module Aws::EC2
     #   * `encrypted` - Indicates whether the volume is encrypted (`true` \|
     #     `false`)
     #
-    #   * `multi-attach-enabled` - Indicates whether the volume is enabled
-    #     for Multi-Attach (`true` \| `false`)
-    #
     #   * `fast-restored` - Indicates whether the volume was created from a
     #     snapshot that is enabled for fast snapshot restore (`true` \|
     #     `false`).
+    #
+    #   * `multi-attach-enabled` - Indicates whether the volume is enabled
+    #     for Multi-Attach (`true` \| `false`)
+    #
+    #   * `operator.managed` - A Boolean that indicates whether this is a
+    #     managed volume.
+    #
+    #   * `operator.principal` - The principal that manages the volume. Only
+    #     valid for managed volumes, where `managed` is `true`.
     #
     #   * `size` - The size of the volume, in GiB.
     #
@@ -29120,6 +29183,9 @@ module Aws::EC2
     #   * `vpc-endpoint-owner` - The ID of the Amazon Web Services account
     #     ID that owns the endpoint.
     #
+    #   * `vpc-endpoint-region` - The Region of the endpoint or
+    #     `cross-region` to find endpoints for other Regions.
+    #
     #   * `vpc-endpoint-state` - The state of the endpoint
     #     (`pendingAcceptance` \| `pending` \| `available` \| `deleting` \|
     #     `deleted` \| `rejected` \| `failed`).
@@ -29326,6 +29392,8 @@ module Aws::EC2
     #
     #   * `service-name` - The name of the service.
     #
+    #   * `service-region` - The Region of the service.
+    #
     #   * `service-type` - The type of service (`Interface` \| `Gateway` \|
     #     `GatewayLoadBalancer`).
     #
@@ -29357,6 +29425,10 @@ module Aws::EC2
     #   token from a prior call.)
     #   @return [String]
     #
+    # @!attribute [rw] service_regions
+    #   The service Regions.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcEndpointServicesRequest AWS API Documentation
     #
     class DescribeVpcEndpointServicesRequest < Struct.new(
@@ -29364,7 +29436,8 @@ module Aws::EC2
       :service_names,
       :filters,
       :max_results,
-      :next_token)
+      :next_token,
+      :service_regions)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -29409,6 +29482,8 @@ module Aws::EC2
     #   * `ip-address-type` - The IP address type (`ipv4` \| `ipv6`).
     #
     #   * `service-name` - The name of the service.
+    #
+    #   * `service-region` - The Region of the service.
     #
     #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
     #     the resource. Use the tag key in the filter name and the tag value
@@ -42575,6 +42650,8 @@ module Aws::EC2
     #   * For instance types with Amazon Web Services CPUs, specify
     #     `amazon-web-services`.
     #
+    #   * For instance types with Apple CPUs, specify `apple`.
+    #
     #   <note markdown="1"> Don't confuse the CPU manufacturer with the CPU architecture.
     #   Instances will be launched with a compatible CPU architecture based
     #   on the Amazon Machine Image (AMI) that you specify in your launch
@@ -43055,6 +43132,8 @@ module Aws::EC2
     #
     #   * For instance types with Amazon Web Services CPUs, specify
     #     `amazon-web-services`.
+    #
+    #   * For instance types with Apple CPUs, specify `apple`.
     #
     #   <note markdown="1"> Don't confuse the CPU manufacturer with the CPU architecture.
     #   Instances will be launched with a compatible CPU architecture based
@@ -46373,9 +46452,13 @@ module Aws::EC2
     #   Indicates the instance's Capacity Reservation preferences. Possible
     #   preferences include:
     #
+    #   * `capacity-reservations-only` - The instance will only run in a
+    #     Capacity Reservation or Capacity Reservation group. If capacity
+    #     isn't available, the instance will fail to launch.
+    #
     #   * `open` - The instance can run in any `open` Capacity Reservation
     #     that has matching attributes (instance type, platform,
-    #     Availability Zone).
+    #     Availability Zone, tenancy).
     #
     #   * `none` - The instance avoids running in a Capacity Reservation
     #     even if one is available. The instance runs in On-Demand capacity.
@@ -53227,36 +53310,44 @@ module Aws::EC2
     #   @return [Boolean]
     #
     # @!attribute [rw] acceptance_required
-    #   Indicates whether requests to create an endpoint to your service
-    #   must be accepted.
+    #   Indicates whether requests to create an endpoint to the service must
+    #   be accepted.
     #   @return [Boolean]
     #
     # @!attribute [rw] add_network_load_balancer_arns
     #   The Amazon Resource Names (ARNs) of Network Load Balancers to add to
-    #   your service configuration.
+    #   the service configuration.
     #   @return [Array<String>]
     #
     # @!attribute [rw] remove_network_load_balancer_arns
     #   The Amazon Resource Names (ARNs) of Network Load Balancers to remove
-    #   from your service configuration.
+    #   from the service configuration.
     #   @return [Array<String>]
     #
     # @!attribute [rw] add_gateway_load_balancer_arns
     #   The Amazon Resource Names (ARNs) of Gateway Load Balancers to add to
-    #   your service configuration.
+    #   the service configuration.
     #   @return [Array<String>]
     #
     # @!attribute [rw] remove_gateway_load_balancer_arns
     #   The Amazon Resource Names (ARNs) of Gateway Load Balancers to remove
-    #   from your service configuration.
+    #   from the service configuration.
     #   @return [Array<String>]
     #
     # @!attribute [rw] add_supported_ip_address_types
-    #   The IP address types to add to your service configuration.
+    #   The IP address types to add to the service configuration.
     #   @return [Array<String>]
     #
     # @!attribute [rw] remove_supported_ip_address_types
-    #   The IP address types to remove from your service configuration.
+    #   The IP address types to remove from the service configuration.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] add_supported_regions
+    #   The supported Regions to add to the service configuration.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] remove_supported_regions
+    #   The supported Regions to remove from the service configuration.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVpcEndpointServiceConfigurationRequest AWS API Documentation
@@ -53272,7 +53363,9 @@ module Aws::EC2
       :add_gateway_load_balancer_arns,
       :remove_gateway_load_balancer_arns,
       :add_supported_ip_address_types,
-      :remove_supported_ip_address_types)
+      :remove_supported_ip_address_types,
+      :add_supported_regions,
+      :remove_supported_regions)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -63836,6 +63929,15 @@ module Aws::EC2
     #   The tags assigned to the service.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] supported_regions
+    #   The supported Regions.
+    #   @return [Array<Types::SupportedRegionDetail>]
+    #
+    # @!attribute [rw] remote_access_enabled
+    #   Indicates whether consumers can access the service from a Region
+    #   other than the Region where the service is hosted.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ServiceConfiguration AWS API Documentation
     #
     class ServiceConfiguration < Struct.new(
@@ -63853,7 +63955,9 @@ module Aws::EC2
       :private_dns_name,
       :private_dns_name_configuration,
       :payer_responsibility,
-      :tags)
+      :tags,
+      :supported_regions,
+      :remote_access_enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -63871,6 +63975,10 @@ module Aws::EC2
     # @!attribute [rw] service_type
     #   The type of service.
     #   @return [Array<Types::ServiceTypeDetail>]
+    #
+    # @!attribute [rw] service_region
+    #   The Region where the service is hosted.
+    #   @return [String]
     #
     # @!attribute [rw] availability_zones
     #   The Availability Zones in which the service is available.
@@ -63932,6 +64040,7 @@ module Aws::EC2
       :service_name,
       :service_id,
       :service_type,
+      :service_region,
       :availability_zones,
       :owner,
       :base_endpoint_dns_names,
@@ -64047,6 +64156,38 @@ module Aws::EC2
     #   Reserved for future use.
     #   @return [String]
     #
+    # @!attribute [rw] transfer_type
+    #   <note markdown="1"> Only for snapshot copies.
+    #
+    #    </note>
+    #
+    #   Indicates whether the snapshot copy was created with a standard or
+    #   time-based snapshot copy operation. Time-based snapshot copy
+    #   operations complete within the completion duration specified in the
+    #   request. Standard snapshot copy operations are completed on a
+    #   best-effort basis.
+    #
+    #   * `standard` - The snapshot copy was created with a standard
+    #     snapshot copy operation.
+    #
+    #   * `time-based` - The snapshot copy was created with a time-based
+    #     snapshot copy operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] completion_duration_minutes
+    #   <note markdown="1"> Only for snapshot copies created with time-based snapshot copy
+    #   operations.
+    #
+    #    </note>
+    #
+    #   The completion duration requested for the time-based snapshot copy
+    #   operation.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] completion_time
+    #   The time stamp when the snapshot was completed.
+    #   @return [Time]
+    #
     # @!attribute [rw] snapshot_id
     #   The ID of the snapshot. Each snapshot receives a unique identifier
     #   when it is created.
@@ -64120,6 +64261,9 @@ module Aws::EC2
       :storage_tier,
       :restore_expiry_time,
       :sse_type,
+      :transfer_type,
+      :completion_duration_minutes,
+      :completion_time,
       :snapshot_id,
       :volume_id,
       :state,
@@ -66710,6 +66854,26 @@ module Aws::EC2
     #
     class SuccessfulQueuedPurchaseDeletion < Struct.new(
       :reserved_instances_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a supported Region.
+    #
+    # @!attribute [rw] region
+    #   The Region code.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_state
+    #   The service state. The possible values are `Pending`, `Available`,
+    #   `Deleting`, `Deleted`, `Failed`, and `Closed`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/SupportedRegionDetail AWS API Documentation
+    #
+    class SupportedRegionDetail < Struct.new(
+      :region,
+      :service_state)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -71394,6 +71558,10 @@ module Aws::EC2
     #   The last error that occurred for endpoint.
     #   @return [Types::LastError]
     #
+    # @!attribute [rw] service_region
+    #   The Region where the service is hosted.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VpcEndpoint AWS API Documentation
     #
     class VpcEndpoint < Struct.new(
@@ -71415,7 +71583,8 @@ module Aws::EC2
       :creation_timestamp,
       :tags,
       :owner_id,
-      :last_error)
+      :last_error,
+      :service_region)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -71469,6 +71638,10 @@ module Aws::EC2
     #   The tags.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] vpc_endpoint_region
+    #   The Region of the endpoint.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VpcEndpointConnection AWS API Documentation
     #
     class VpcEndpointConnection < Struct.new(
@@ -71482,7 +71655,8 @@ module Aws::EC2
       :gateway_load_balancer_arns,
       :ip_address_type,
       :vpc_endpoint_connection_id,
-      :tags)
+      :tags,
+      :vpc_endpoint_region)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -164,6 +164,17 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class CustomOrchestrationTrace
+      attr_accessor event: Types::CustomOrchestrationTraceEvent
+      attr_accessor trace_id: ::String
+      SENSITIVE: [:event]
+    end
+
+    class CustomOrchestrationTraceEvent
+      attr_accessor text: ::String
+      SENSITIVE: []
+    end
+
     class DeleteAgentMemoryRequest
       attr_accessor agent_alias_id: ::String
       attr_accessor agent_id: ::String
@@ -643,6 +654,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor memory_id: ::String
       attr_accessor session_id: ::String
       attr_accessor session_state: Types::SessionState
+      attr_accessor streaming_configurations: Types::StreamingConfigurations
       SENSITIVE: [:input_text]
     end
 
@@ -1195,6 +1207,12 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class StreamingConfigurations
+      attr_accessor apply_guardrail_interval: ::Integer
+      attr_accessor stream_final_response: bool
+      SENSITIVE: []
+    end
+
     class TextInferenceConfig
       attr_accessor max_tokens: ::Integer
       attr_accessor stop_sequences: ::Array[::String]
@@ -1221,14 +1239,17 @@ module Aws::BedrockAgentRuntime
     end
 
     class Trace
+      attr_accessor custom_orchestration_trace: Types::CustomOrchestrationTrace
       attr_accessor failure_trace: Types::FailureTrace
       attr_accessor guardrail_trace: Types::GuardrailTrace
       attr_accessor orchestration_trace: Types::OrchestrationTrace
       attr_accessor post_processing_trace: Types::PostProcessingTrace
       attr_accessor pre_processing_trace: Types::PreProcessingTrace
       attr_accessor unknown: untyped
-      SENSITIVE: [:failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace]
+      SENSITIVE: [:custom_orchestration_trace, :failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace]
 
+      class CustomOrchestrationTrace < Trace
+      end
       class FailureTrace < Trace
       end
       class GuardrailTrace < Trace

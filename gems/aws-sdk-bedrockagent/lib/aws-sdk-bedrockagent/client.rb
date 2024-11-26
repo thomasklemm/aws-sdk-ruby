@@ -565,6 +565,9 @@ module Aws::BedrockAgent
     #
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
     #
+    # @option params [Types::CustomOrchestration] :custom_orchestration
+    #   Contains details of the custom orchestration configured for the agent.
+    #
     # @option params [String] :customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the KMS key with which to encrypt
     #   the agent.
@@ -630,6 +633,10 @@ module Aws::BedrockAgent
     # @option params [Types::MemoryConfiguration] :memory_configuration
     #   Contains the details of the memory configured for the agent.
     #
+    # @option params [String] :orchestration_type
+    #   Specifies the type of orchestration strategy for the agent. This is
+    #   set to `DEFAULT` orchestration type, by default.
+    #
     # @option params [Types::PromptOverrideConfiguration] :prompt_override_configuration
     #   Contains configurations to override prompts in different parts of an
     #   agent sequence. For more information, see [Advanced prompts][1].
@@ -651,6 +658,11 @@ module Aws::BedrockAgent
     #     agent_name: "Name", # required
     #     agent_resource_role_arn: "AgentRoleArn",
     #     client_token: "ClientToken",
+    #     custom_orchestration: {
+    #       executor: {
+    #         lambda: "LambdaArn",
+    #       },
+    #     },
     #     customer_encryption_key_arn: "KmsKeyArn",
     #     description: "Description",
     #     foundation_model: "ModelIdentifier",
@@ -664,6 +676,7 @@ module Aws::BedrockAgent
     #       enabled_memory_types: ["SESSION_SUMMARY"], # required, accepts SESSION_SUMMARY
     #       storage_days: 1,
     #     },
+    #     orchestration_type: "DEFAULT", # accepts DEFAULT, CUSTOM_ORCHESTRATION
     #     prompt_override_configuration: {
     #       override_lambda: "LambdaArn",
     #       prompt_configurations: [ # required
@@ -698,6 +711,7 @@ module Aws::BedrockAgent
     #   resp.agent.agent_version #=> String
     #   resp.agent.client_token #=> String
     #   resp.agent.created_at #=> Time
+    #   resp.agent.custom_orchestration.executor.lambda #=> String
     #   resp.agent.customer_encryption_key_arn #=> String
     #   resp.agent.description #=> String
     #   resp.agent.failure_reasons #=> Array
@@ -710,6 +724,7 @@ module Aws::BedrockAgent
     #   resp.agent.memory_configuration.enabled_memory_types #=> Array
     #   resp.agent.memory_configuration.enabled_memory_types[0] #=> String, one of "SESSION_SUMMARY"
     #   resp.agent.memory_configuration.storage_days #=> Integer
+    #   resp.agent.orchestration_type #=> String, one of "DEFAULT", "CUSTOM_ORCHESTRATION"
     #   resp.agent.prepared_at #=> Time
     #   resp.agent.prompt_override_configuration.override_lambda #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations #=> Array
@@ -2814,6 +2829,7 @@ module Aws::BedrockAgent
     #   resp.agent.agent_version #=> String
     #   resp.agent.client_token #=> String
     #   resp.agent.created_at #=> Time
+    #   resp.agent.custom_orchestration.executor.lambda #=> String
     #   resp.agent.customer_encryption_key_arn #=> String
     #   resp.agent.description #=> String
     #   resp.agent.failure_reasons #=> Array
@@ -2826,6 +2842,7 @@ module Aws::BedrockAgent
     #   resp.agent.memory_configuration.enabled_memory_types #=> Array
     #   resp.agent.memory_configuration.enabled_memory_types[0] #=> String, one of "SESSION_SUMMARY"
     #   resp.agent.memory_configuration.storage_days #=> Integer
+    #   resp.agent.orchestration_type #=> String, one of "DEFAULT", "CUSTOM_ORCHESTRATION"
     #   resp.agent.prepared_at #=> Time
     #   resp.agent.prompt_override_configuration.override_lambda #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations #=> Array
@@ -4698,6 +4715,9 @@ module Aws::BedrockAgent
     #   The Amazon Resource Name (ARN) of the IAM role with permissions to
     #   invoke API operations on the agent.
     #
+    # @option params [Types::CustomOrchestration] :custom_orchestration
+    #   Contains details of the custom orchestration configured for the agent.
+    #
     # @option params [String] :customer_encryption_key_arn
     #   The Amazon Resource Name (ARN) of the KMS key with which to encrypt
     #   the agent.
@@ -4763,6 +4783,10 @@ module Aws::BedrockAgent
     # @option params [Types::MemoryConfiguration] :memory_configuration
     #   Specifies the new memory configuration for the agent.
     #
+    # @option params [String] :orchestration_type
+    #   Specifies the type of orchestration strategy for the agent. This is
+    #   set to `DEFAULT` orchestration type, by default.
+    #
     # @option params [Types::PromptOverrideConfiguration] :prompt_override_configuration
     #   Contains configurations to override prompts in different parts of an
     #   agent sequence. For more information, see [Advanced prompts][1].
@@ -4781,6 +4805,11 @@ module Aws::BedrockAgent
     #     agent_id: "Id", # required
     #     agent_name: "Name", # required
     #     agent_resource_role_arn: "AgentRoleArn", # required
+    #     custom_orchestration: {
+    #       executor: {
+    #         lambda: "LambdaArn",
+    #       },
+    #     },
     #     customer_encryption_key_arn: "KmsKeyArn",
     #     description: "Description",
     #     foundation_model: "ModelIdentifier", # required
@@ -4794,6 +4823,7 @@ module Aws::BedrockAgent
     #       enabled_memory_types: ["SESSION_SUMMARY"], # required, accepts SESSION_SUMMARY
     #       storage_days: 1,
     #     },
+    #     orchestration_type: "DEFAULT", # accepts DEFAULT, CUSTOM_ORCHESTRATION
     #     prompt_override_configuration: {
     #       override_lambda: "LambdaArn",
     #       prompt_configurations: [ # required
@@ -4825,6 +4855,7 @@ module Aws::BedrockAgent
     #   resp.agent.agent_version #=> String
     #   resp.agent.client_token #=> String
     #   resp.agent.created_at #=> Time
+    #   resp.agent.custom_orchestration.executor.lambda #=> String
     #   resp.agent.customer_encryption_key_arn #=> String
     #   resp.agent.description #=> String
     #   resp.agent.failure_reasons #=> Array
@@ -4837,6 +4868,7 @@ module Aws::BedrockAgent
     #   resp.agent.memory_configuration.enabled_memory_types #=> Array
     #   resp.agent.memory_configuration.enabled_memory_types[0] #=> String, one of "SESSION_SUMMARY"
     #   resp.agent.memory_configuration.storage_days #=> Integer
+    #   resp.agent.orchestration_type #=> String, one of "DEFAULT", "CUSTOM_ORCHESTRATION"
     #   resp.agent.prepared_at #=> Time
     #   resp.agent.prompt_override_configuration.override_lambda #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations #=> Array
@@ -6404,7 +6436,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.35.0'
+      context[:gem_version] = '1.36.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

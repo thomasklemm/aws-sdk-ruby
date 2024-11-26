@@ -82,6 +82,7 @@ module Aws::QApps
       attr_accessor q_query: Types::QQueryCard
       attr_accessor q_plugin: Types::QPluginCard
       attr_accessor file_upload: Types::FileUploadCard
+      attr_accessor form_input: Types::FormInputCard
       attr_accessor unknown: untyped
       SENSITIVE: []
 
@@ -93,6 +94,8 @@ module Aws::QApps
       end
       class FileUpload < Card
       end
+      class FormInput < Card
+      end
       class Unknown < Card
       end
     end
@@ -102,6 +105,7 @@ module Aws::QApps
       attr_accessor q_query: Types::QQueryCardInput
       attr_accessor q_plugin: Types::QPluginCardInput
       attr_accessor file_upload: Types::FileUploadCardInput
+      attr_accessor form_input: Types::FormInputCardInput
       attr_accessor unknown: untyped
       SENSITIVE: []
 
@@ -113,19 +117,23 @@ module Aws::QApps
       end
       class FileUpload < CardInput
       end
+      class FormInput < CardInput
+      end
       class Unknown < CardInput
       end
     end
 
     class CardStatus
-      attr_accessor current_state: ("IN_PROGRESS" | "WAITING" | "COMPLETED")
+      attr_accessor current_state: ("IN_PROGRESS" | "WAITING" | "COMPLETED" | "ERROR")
       attr_accessor current_value: ::String
+      attr_accessor submissions: ::Array[Types::Submission]
       SENSITIVE: []
     end
 
     class CardValue
       attr_accessor card_id: ::String
       attr_accessor value: ::String
+      attr_accessor submission_mutation: Types::SubmissionMutation
       SENSITIVE: []
     end
 
@@ -184,6 +192,25 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class CreatePresignedUrlInput
+      attr_accessor instance_id: ::String
+      attr_accessor card_id: ::String
+      attr_accessor app_id: ::String
+      attr_accessor file_contents_sha_256: ::String
+      attr_accessor file_name: ::String
+      attr_accessor scope: ("APPLICATION" | "SESSION")
+      attr_accessor session_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreatePresignedUrlOutput
+      attr_accessor file_id: ::String
+      attr_accessor presigned_url: ::String
+      attr_accessor presigned_url_fields: ::Hash[::String, ::String]
+      attr_accessor presigned_url_expiration: ::Time
+      SENSITIVE: []
+    end
+
     class CreateQAppInput
       attr_accessor instance_id: ::String
       attr_accessor title: ::String
@@ -218,6 +245,19 @@ module Aws::QApps
     class DeleteQAppInput
       attr_accessor instance_id: ::String
       attr_accessor app_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeQAppPermissionsInput
+      attr_accessor instance_id: ::String
+      attr_accessor app_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeQAppPermissionsOutput
+      attr_accessor resource_arn: ::String
+      attr_accessor app_id: ::String
+      attr_accessor permissions: ::Array[Types::PermissionOutput]
       SENSITIVE: []
     end
 
@@ -259,11 +299,24 @@ module Aws::QApps
       end
     end
 
+    class ExportQAppSessionDataInput
+      attr_accessor instance_id: ::String
+      attr_accessor session_id: ::String
+      SENSITIVE: []
+    end
+
+    class ExportQAppSessionDataOutput
+      attr_accessor csv_file_link: ::String
+      attr_accessor expires_at: ::Time
+      attr_accessor session_arn: ::String
+      SENSITIVE: []
+    end
+
     class FileUploadCard
       attr_accessor id: ::String
       attr_accessor title: ::String
       attr_accessor dependencies: ::Array[::String]
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor filename: ::String
       attr_accessor file_id: ::String
       attr_accessor allow_override: bool
@@ -273,10 +326,34 @@ module Aws::QApps
     class FileUploadCardInput
       attr_accessor title: ::String
       attr_accessor id: ::String
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor filename: ::String
       attr_accessor file_id: ::String
       attr_accessor allow_override: bool
+      SENSITIVE: []
+    end
+
+    class FormInputCard
+      attr_accessor id: ::String
+      attr_accessor title: ::String
+      attr_accessor dependencies: ::Array[::String]
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
+      attr_accessor metadata: Types::FormInputCardMetadata
+      attr_accessor compute_mode: ("append" | "replace")
+      SENSITIVE: []
+    end
+
+    class FormInputCardInput
+      attr_accessor title: ::String
+      attr_accessor id: ::String
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
+      attr_accessor metadata: Types::FormInputCardMetadata
+      attr_accessor compute_mode: ("append" | "replace")
+      SENSITIVE: []
+    end
+
+    class FormInputCardMetadata
+      attr_accessor schema: untyped
       SENSITIVE: []
     end
 
@@ -307,6 +384,7 @@ module Aws::QApps
     class GetQAppInput
       attr_accessor instance_id: ::String
       attr_accessor app_id: ::String
+      attr_accessor app_version: ::Integer
       SENSITIVE: []
     end
 
@@ -333,11 +411,30 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class GetQAppSessionMetadataInput
+      attr_accessor instance_id: ::String
+      attr_accessor session_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetQAppSessionMetadataOutput
+      attr_accessor session_id: ::String
+      attr_accessor session_arn: ::String
+      attr_accessor session_name: ::String
+      attr_accessor sharing_configuration: Types::SessionSharingConfiguration
+      attr_accessor session_owner: bool
+      SENSITIVE: []
+    end
+
     class GetQAppSessionOutput
       attr_accessor session_id: ::String
       attr_accessor session_arn: ::String
-      attr_accessor status: ("IN_PROGRESS" | "WAITING" | "COMPLETED")
+      attr_accessor session_name: ::String
+      attr_accessor app_version: ::Integer
+      attr_accessor latest_published_app_version: ::Integer
+      attr_accessor status: ("IN_PROGRESS" | "WAITING" | "COMPLETED" | "ERROR")
       attr_accessor card_status: ::Hash[::String, Types::CardStatus]
+      attr_accessor user_is_host: bool
       SENSITIVE: []
     end
 
@@ -404,6 +501,20 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class ListQAppSessionDataInput
+      attr_accessor instance_id: ::String
+      attr_accessor session_id: ::String
+      SENSITIVE: []
+    end
+
+    class ListQAppSessionDataOutput
+      attr_accessor session_id: ::String
+      attr_accessor session_arn: ::String
+      attr_accessor session_data: ::Array[Types::QAppSessionData]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListQAppsInput
       attr_accessor instance_id: ::String
       attr_accessor limit: ::Integer
@@ -424,6 +535,18 @@ module Aws::QApps
 
     class ListTagsForResourceResponse
       attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class PermissionInput
+      attr_accessor action: ("read" | "write")
+      attr_accessor principal: ::String
+      SENSITIVE: []
+    end
+
+    class PermissionOutput
+      attr_accessor action: ("read" | "write")
+      attr_accessor principal: Types::PrincipalOutput
       SENSITIVE: []
     end
 
@@ -460,11 +583,27 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class PrincipalOutput
+      attr_accessor user_id: ::String
+      attr_accessor user_type: ("owner" | "user")
+      attr_accessor email: ::String
+      SENSITIVE: []
+    end
+
+    class QAppSessionData
+      attr_accessor card_id: ::String
+      attr_accessor value: untyped
+      attr_accessor user: Types::User
+      attr_accessor submission_id: ::String
+      attr_accessor timestamp: ::Time
+      SENSITIVE: []
+    end
+
     class QPluginCard
       attr_accessor id: ::String
       attr_accessor title: ::String
       attr_accessor dependencies: ::Array[::String]
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor prompt: ::String
       attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
       attr_accessor plugin_id: ::String
@@ -474,7 +613,7 @@ module Aws::QApps
     class QPluginCardInput
       attr_accessor title: ::String
       attr_accessor id: ::String
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor prompt: ::String
       attr_accessor plugin_id: ::String
       SENSITIVE: []
@@ -484,17 +623,18 @@ module Aws::QApps
       attr_accessor id: ::String
       attr_accessor title: ::String
       attr_accessor dependencies: ::Array[::String]
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor prompt: ::String
       attr_accessor output_source: ("approved-sources" | "llm")
       attr_accessor attribute_filter: Types::AttributeFilter
+      attr_accessor memory_references: ::Array[::String]
       SENSITIVE: []
     end
 
     class QQueryCardInput
       attr_accessor title: ::String
       attr_accessor id: ::String
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor prompt: ::String
       attr_accessor output_source: ("approved-sources" | "llm")
       attr_accessor attribute_filter: Types::AttributeFilter
@@ -517,11 +657,19 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class SessionSharingConfiguration
+      attr_accessor enabled: bool
+      attr_accessor accept_responses: bool
+      attr_accessor reveal_cards: bool
+      SENSITIVE: []
+    end
+
     class StartQAppSessionInput
       attr_accessor instance_id: ::String
       attr_accessor app_id: ::String
       attr_accessor app_version: ::Integer
       attr_accessor initial_values: ::Array[Types::CardValue]
+      attr_accessor session_id: ::String
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
     end
@@ -538,6 +686,19 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class Submission
+      attr_accessor value: untyped
+      attr_accessor submission_id: ::String
+      attr_accessor timestamp: ::Time
+      SENSITIVE: []
+    end
+
+    class SubmissionMutation
+      attr_accessor submission_id: ::String
+      attr_accessor mutation_type: ("edit" | "delete" | "add")
+      SENSITIVE: []
+    end
+
     class TagResourceRequest
       attr_accessor resource_arn: ::String
       attr_accessor tags: ::Hash[::String, ::String]
@@ -551,7 +712,7 @@ module Aws::QApps
       attr_accessor id: ::String
       attr_accessor title: ::String
       attr_accessor dependencies: ::Array[::String]
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor placeholder: ::String
       attr_accessor default_value: ::String
       SENSITIVE: []
@@ -560,7 +721,7 @@ module Aws::QApps
     class TextInputCardInput
       attr_accessor title: ::String
       attr_accessor id: ::String
-      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin")
+      attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor placeholder: ::String
       attr_accessor default_value: ::String
       SENSITIVE: []
@@ -645,6 +806,21 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class UpdateQAppPermissionsInput
+      attr_accessor instance_id: ::String
+      attr_accessor app_id: ::String
+      attr_accessor grant_permissions: ::Array[Types::PermissionInput]
+      attr_accessor revoke_permissions: ::Array[Types::PermissionInput]
+      SENSITIVE: []
+    end
+
+    class UpdateQAppPermissionsOutput
+      attr_accessor resource_arn: ::String
+      attr_accessor app_id: ::String
+      attr_accessor permissions: ::Array[Types::PermissionOutput]
+      SENSITIVE: []
+    end
+
     class UpdateQAppSessionInput
       attr_accessor instance_id: ::String
       attr_accessor session_id: ::String
@@ -652,9 +828,30 @@ module Aws::QApps
       SENSITIVE: []
     end
 
+    class UpdateQAppSessionMetadataInput
+      attr_accessor instance_id: ::String
+      attr_accessor session_id: ::String
+      attr_accessor session_name: ::String
+      attr_accessor sharing_configuration: Types::SessionSharingConfiguration
+      SENSITIVE: []
+    end
+
+    class UpdateQAppSessionMetadataOutput
+      attr_accessor session_id: ::String
+      attr_accessor session_arn: ::String
+      attr_accessor session_name: ::String
+      attr_accessor sharing_configuration: Types::SessionSharingConfiguration
+      SENSITIVE: []
+    end
+
     class UpdateQAppSessionOutput
       attr_accessor session_id: ::String
       attr_accessor session_arn: ::String
+      SENSITIVE: []
+    end
+
+    class User
+      attr_accessor user_id: ::String
       SENSITIVE: []
     end
 

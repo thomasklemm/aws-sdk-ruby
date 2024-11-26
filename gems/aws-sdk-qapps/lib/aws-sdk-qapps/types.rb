@@ -309,6 +309,10 @@ module Aws::QApps
     #   A container for the properties of the file upload card.
     #   @return [Types::FileUploadCard]
     #
+    # @!attribute [rw] form_input
+    #   A container for the properties of the form input card.
+    #   @return [Types::FormInputCard]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/Card AWS API Documentation
     #
     class Card < Struct.new(
@@ -316,6 +320,7 @@ module Aws::QApps
       :q_query,
       :q_plugin,
       :file_upload,
+      :form_input,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -325,6 +330,7 @@ module Aws::QApps
       class QQuery < Card; end
       class QPlugin < Card; end
       class FileUpload < Card; end
+      class FormInput < Card; end
       class Unknown < Card; end
     end
 
@@ -350,6 +356,10 @@ module Aws::QApps
     #   A container for the properties of the file upload input card.
     #   @return [Types::FileUploadCardInput]
     #
+    # @!attribute [rw] form_input
+    #   A container for the properties of the form input card.
+    #   @return [Types::FormInputCardInput]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/CardInput AWS API Documentation
     #
     class CardInput < Struct.new(
@@ -357,6 +367,7 @@ module Aws::QApps
       :q_query,
       :q_plugin,
       :file_upload,
+      :form_input,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -366,6 +377,7 @@ module Aws::QApps
       class QQuery < CardInput; end
       class QPlugin < CardInput; end
       class FileUpload < CardInput; end
+      class FormInput < CardInput; end
       class Unknown < CardInput; end
     end
 
@@ -380,11 +392,16 @@ module Aws::QApps
     #   The current value or result associated with the card.
     #   @return [String]
     #
+    # @!attribute [rw] submissions
+    #   A list of previous submissions, if the card is a form card.
+    #   @return [Array<Types::Submission>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/CardStatus AWS API Documentation
     #
     class CardStatus < Struct.new(
       :current_state,
-      :current_value)
+      :current_value,
+      :submissions)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -399,11 +416,18 @@ module Aws::QApps
     #   The value or result associated with the card.
     #   @return [String]
     #
+    # @!attribute [rw] submission_mutation
+    #   The structure that describes how the current form card value is
+    #   mutated. Only applies for form cards when multiple responses are
+    #   allowed.
+    #   @return [Types::SubmissionMutation]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/CardValue AWS API Documentation
     #
     class CardValue < Struct.new(
       :card_id,
-      :value)
+      :value,
+      :submission_mutation)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -613,6 +637,81 @@ module Aws::QApps
     #   environment instance.
     #   @return [String]
     #
+    # @!attribute [rw] card_id
+    #   The unique identifier of the card the file is associated with.
+    #   @return [String]
+    #
+    # @!attribute [rw] app_id
+    #   The unique identifier of the Q App the file is associated with.
+    #   @return [String]
+    #
+    # @!attribute [rw] file_contents_sha_256
+    #   The Base64-encoded SHA-256 digest of the contents of the file to be
+    #   uploaded.
+    #   @return [String]
+    #
+    # @!attribute [rw] file_name
+    #   The name of the file to be uploaded.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   Whether the file is associated with a Q App definition or a specific
+    #   Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the Q App session the file is associated
+    #   with, if applicable.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/CreatePresignedUrlInput AWS API Documentation
+    #
+    class CreatePresignedUrlInput < Struct.new(
+      :instance_id,
+      :card_id,
+      :app_id,
+      :file_contents_sha_256,
+      :file_name,
+      :scope,
+      :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] file_id
+    #   The unique identifier assigned to the file to be uploaded.
+    #   @return [String]
+    #
+    # @!attribute [rw] presigned_url
+    #   The URL for a presigned S3 POST operation used to upload a file.
+    #   @return [String]
+    #
+    # @!attribute [rw] presigned_url_fields
+    #   The form fields to include in the presigned S3 POST operation used
+    #   to upload a file.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] presigned_url_expiration
+    #   The date and time that the presigned URL will expire in ISO 8601
+    #   format.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/CreatePresignedUrlOutput AWS API Documentation
+    #
+    class CreatePresignedUrlOutput < Struct.new(
+      :file_id,
+      :presigned_url,
+      :presigned_url_fields,
+      :presigned_url_expiration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The unique identifier of the Amazon Q Business application
+    #   environment instance.
+    #   @return [String]
+    #
     # @!attribute [rw] title
     #   The title of the new Q App.
     #   @return [String]
@@ -750,6 +849,49 @@ module Aws::QApps
     #   environment instance.
     #   @return [String]
     #
+    # @!attribute [rw] app_id
+    #   The unique identifier of the Amazon Q App for which to retrieve
+    #   permissions.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/DescribeQAppPermissionsInput AWS API Documentation
+    #
+    class DescribeQAppPermissionsInput < Struct.new(
+      :instance_id,
+      :app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q App for which
+    #   permissions are returned.
+    #   @return [String]
+    #
+    # @!attribute [rw] app_id
+    #   The unique identifier of the Amazon Q App for which permissions are
+    #   returned.
+    #   @return [String]
+    #
+    # @!attribute [rw] permissions
+    #   The list of permissions granted for the Amazon Q App.
+    #   @return [Array<Types::PermissionOutput>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/DescribeQAppPermissionsOutput AWS API Documentation
+    #
+    class DescribeQAppPermissionsOutput < Struct.new(
+      :resource_arn,
+      :app_id,
+      :permissions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The unique identifier of the Amazon Q Business application
+    #   environment instance.
+    #   @return [String]
+    #
     # @!attribute [rw] library_item_id
     #   The unique identifier of the library item to remove the review from.
     #   @return [String]
@@ -847,6 +989,48 @@ module Aws::QApps
       class Unknown < DocumentAttributeValue; end
     end
 
+    # @!attribute [rw] instance_id
+    #   The unique identifier of the Amazon Q Business application
+    #   environment instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the Q App data collection session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/ExportQAppSessionDataInput AWS API Documentation
+    #
+    class ExportQAppSessionDataInput < Struct.new(
+      :instance_id,
+      :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] csv_file_link
+    #   The link where the exported Q App session data can be downloaded
+    #   from.
+    #   @return [String]
+    #
+    # @!attribute [rw] expires_at
+    #   The date and time when the link for the exported Q App session data
+    #   expires.
+    #   @return [Time]
+    #
+    # @!attribute [rw] session_arn
+    #   The Amazon Resource Name (ARN) of the Q App data collection session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/ExportQAppSessionDataOutput AWS API Documentation
+    #
+    class ExportQAppSessionDataOutput < Struct.new(
+      :csv_file_link,
+      :expires_at,
+      :session_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A card in an Amazon Q App that allows the user to upload a file.
     #
     # @!attribute [rw] id
@@ -930,6 +1114,103 @@ module Aws::QApps
       :filename,
       :file_id,
       :allow_override)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A card in an Amazon Q App that allows the user to submit a response.
+    #
+    # @!attribute [rw] id
+    #   The unique identifier of the form input card.
+    #   @return [String]
+    #
+    # @!attribute [rw] title
+    #   The title of the form input card.
+    #   @return [String]
+    #
+    # @!attribute [rw] dependencies
+    #   Any dependencies or requirements for the form input card.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] type
+    #   The type of the card.
+    #   @return [String]
+    #
+    # @!attribute [rw] metadata
+    #   The metadata that defines the form input card data.
+    #   @return [Types::FormInputCardMetadata]
+    #
+    # @!attribute [rw] compute_mode
+    #   The compute mode of the form input card. This property determines
+    #   whether individual participants of a data collection session can
+    #   submit multiple response or one response. A compute mode of `append`
+    #   shall allow participants to submit the same form multiple times with
+    #   different values. A compute mode of `replace`code&gt; shall
+    #   overwrite the current value for each participant.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/FormInputCard AWS API Documentation
+    #
+    class FormInputCard < Struct.new(
+      :id,
+      :title,
+      :dependencies,
+      :type,
+      :metadata,
+      :compute_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a form input card for an Amazon Q App.
+    #
+    # @!attribute [rw] title
+    #   The title or label of the form input card.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The unique identifier of the form input card.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the card.
+    #   @return [String]
+    #
+    # @!attribute [rw] metadata
+    #   The metadata that defines the form input card data.
+    #   @return [Types::FormInputCardMetadata]
+    #
+    # @!attribute [rw] compute_mode
+    #   The compute mode of the form input card. This property determines
+    #   whether individual participants of a data collection session can
+    #   submit multiple response or one response. A compute mode of `append`
+    #   shall allow participants to submit the same form multiple times with
+    #   different values. A compute mode of `replace`code&gt; shall
+    #   overwrite the current value for each participant.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/FormInputCardInput AWS API Documentation
+    #
+    class FormInputCardInput < Struct.new(
+      :title,
+      :id,
+      :type,
+      :metadata,
+      :compute_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The metadata of the form input card.
+    #
+    # @!attribute [rw] schema
+    #   The JSON schema that defines the shape of the response data.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/FormInputCardMetadata AWS API Documentation
+    #
+    class FormInputCardMetadata < Struct.new(
+      :schema)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1040,11 +1321,16 @@ module Aws::QApps
     #   The unique identifier of the Q App to retrieve.
     #   @return [String]
     #
+    # @!attribute [rw] app_version
+    #   The version of the Q App.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/GetQAppInput AWS API Documentation
     #
     class GetQAppInput < Struct.new(
       :instance_id,
-      :app_id)
+      :app_id,
+      :app_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1140,6 +1426,24 @@ module Aws::QApps
       include Aws::Structure
     end
 
+    # @!attribute [rw] instance_id
+    #   The unique identifier of the Amazon Q Business application
+    #   environment instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the Q App session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/GetQAppSessionMetadataInput AWS API Documentation
+    #
+    class GetQAppSessionMetadataInput < Struct.new(
+      :instance_id,
+      :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] session_id
     #   The unique identifier of the Q App session.
     #   @return [String]
@@ -1147,6 +1451,51 @@ module Aws::QApps
     # @!attribute [rw] session_arn
     #   The Amazon Resource Name (ARN) of the Q App session.
     #   @return [String]
+    #
+    # @!attribute [rw] session_name
+    #   The name of the Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] sharing_configuration
+    #   The sharing configuration of the Q App data collection session.
+    #   @return [Types::SessionSharingConfiguration]
+    #
+    # @!attribute [rw] session_owner
+    #   Indicates whether the current user is the owner of the Q App
+    #   session.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/GetQAppSessionMetadataOutput AWS API Documentation
+    #
+    class GetQAppSessionMetadataOutput < Struct.new(
+      :session_id,
+      :session_arn,
+      :session_name,
+      :sharing_configuration,
+      :session_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] session_id
+    #   The unique identifier of the Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_arn
+    #   The Amazon Resource Name (ARN) of the Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_name
+    #   The name of the Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] app_version
+    #   The version of the Q App used for the session.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] latest_published_app_version
+    #   The latest published version of the Q App used for the session.
+    #   @return [Integer]
     #
     # @!attribute [rw] status
     #   The current status of the Q App session.
@@ -1156,13 +1505,22 @@ module Aws::QApps
     #   The current status for each card in the Q App session.
     #   @return [Hash<String,Types::CardStatus>]
     #
+    # @!attribute [rw] user_is_host
+    #   Indicates whether the current user is the owner of the Q App data
+    #   collection session.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/GetQAppSessionOutput AWS API Documentation
     #
     class GetQAppSessionOutput < Struct.new(
       :session_id,
       :session_arn,
+      :session_name,
+      :app_version,
+      :latest_published_app_version,
       :status,
-      :card_status)
+      :card_status,
+      :user_is_host)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1173,8 +1531,7 @@ module Aws::QApps
     #   @return [String]
     #
     # @!attribute [rw] card_id
-    #   The unique identifier of the card the file is associated with, if
-    #   applicable.
+    #   The unique identifier of the card the file is associated with.
     #   @return [String]
     #
     # @!attribute [rw] app_id
@@ -1190,8 +1547,8 @@ module Aws::QApps
     #   @return [String]
     #
     # @!attribute [rw] scope
-    #   Whether the file is associated with an Q App definition or a
-    #   specific Q App session.
+    #   Whether the file is associated with a Q App definition or a specific
+    #   Q App session.
     #   @return [String]
     #
     # @!attribute [rw] session_id
@@ -1395,6 +1752,52 @@ module Aws::QApps
     #   environment instance.
     #   @return [String]
     #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the Q App data collection session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/ListQAppSessionDataInput AWS API Documentation
+    #
+    class ListQAppSessionDataInput < Struct.new(
+      :instance_id,
+      :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] session_id
+    #   The unique identifier of the Q App data collection session.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_arn
+    #   The Amazon Resource Name (ARN) of the Q App data collection session.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_data
+    #   The collected responses of a Q App session.
+    #   @return [Array<Types::QAppSessionData>]
+    #
+    # @!attribute [rw] next_token
+    #   The pagination token that indicates the next set of results to
+    #   retrieve.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/ListQAppSessionDataOutput AWS API Documentation
+    #
+    class ListQAppSessionDataOutput < Struct.new(
+      :session_id,
+      :session_arn,
+      :session_data,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The unique identifier of the Amazon Q Business application
+    #   environment instance.
+    #   @return [String]
+    #
     # @!attribute [rw] limit
     #   The maximum number of Q Apps to return in the response.
     #   @return [Integer]
@@ -1451,6 +1854,44 @@ module Aws::QApps
     #
     class ListTagsForResourceResponse < Struct.new(
       :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The permission to grant or revoke for a Amazon Q App.
+    #
+    # @!attribute [rw] action
+    #   The action associated with the permission.
+    #   @return [String]
+    #
+    # @!attribute [rw] principal
+    #   The principal user to which the permission applies.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/PermissionInput AWS API Documentation
+    #
+    class PermissionInput < Struct.new(
+      :action,
+      :principal)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The permission granted to the Amazon Q App.
+    #
+    # @!attribute [rw] action
+    #   The action associated with the permission.
+    #   @return [String]
+    #
+    # @!attribute [rw] principal
+    #   The principal user to which the permission applies.
+    #   @return [Types::PrincipalOutput]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/PermissionOutput AWS API Documentation
+    #
+    class PermissionOutput < Struct.new(
+      :action,
+      :principal)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1541,6 +1982,66 @@ module Aws::QApps
     class PredictQAppOutput < Struct.new(
       :app,
       :problem_statement)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The principal for which the permission applies.
+    #
+    # @!attribute [rw] user_id
+    #   The unique identifier of the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_type
+    #   The type of the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] email
+    #   The email address associated with the user.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/PrincipalOutput AWS API Documentation
+    #
+    class PrincipalOutput < Struct.new(
+      :user_id,
+      :user_type,
+      :email)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The response collected for a Amazon Q App session. This container
+    # represents a single response to a Q App session.
+    #
+    # @!attribute [rw] card_id
+    #   The card Id associated with the response submitted for a Q App
+    #   session.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The response submitted for a Q App session.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @!attribute [rw] user
+    #   The user who submitted the response for a Q App session.
+    #   @return [Types::User]
+    #
+    # @!attribute [rw] submission_id
+    #   The unique identifier of the submission.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The date and time when the session data is submitted.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/QAppSessionData AWS API Documentation
+    #
+    class QAppSessionData < Struct.new(
+      :card_id,
+      :value,
+      :user,
+      :submission_id,
+      :timestamp)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1656,6 +2157,11 @@ module Aws::QApps
     #   resolving data sources
     #   @return [Types::AttributeFilter]
     #
+    # @!attribute [rw] memory_references
+    #   Any dependencies for the query card, where the dependencies are
+    #   references to the collected responses.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/QQueryCard AWS API Documentation
     #
     class QQueryCard < Struct.new(
@@ -1665,7 +2171,8 @@ module Aws::QApps
       :type,
       :prompt,
       :output_source,
-      :attribute_filter)
+      :attribute_filter,
+      :memory_references)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1767,6 +2274,31 @@ module Aws::QApps
       include Aws::Structure
     end
 
+    # The sharing configuration of an Amazon Q App data collection session.
+    #
+    # @!attribute [rw] enabled
+    #   Indicates whether an Q App session is shareable with other users.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] accept_responses
+    #   Indicates whether an Q App session can accept responses from users.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] reveal_cards
+    #   Indicates whether collected responses for an Q App session are
+    #   revealed for all users.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/SessionSharingConfiguration AWS API Documentation
+    #
+    class SessionSharingConfiguration < Struct.new(
+      :enabled,
+      :accept_responses,
+      :reveal_cards)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] instance_id
     #   The unique identifier of the Amazon Q Business application
     #   environment instance.
@@ -1784,6 +2316,10 @@ module Aws::QApps
     #   Optional initial input values to provide for the Q App session.
     #   @return [Array<Types::CardValue>]
     #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the a Q App session.
+    #   @return [String]
+    #
     # @!attribute [rw] tags
     #   Optional tags to associate with the new Q App session.
     #   @return [Hash<String,String>]
@@ -1795,13 +2331,14 @@ module Aws::QApps
       :app_id,
       :app_version,
       :initial_values,
+      :session_id,
       :tags)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # @!attribute [rw] session_id
-    #   The unique identifier of the new Q App session.
+    #   The unique identifier of the new or retrieved Q App session.
     #   @return [String]
     #
     # @!attribute [rw] session_arn
@@ -1831,6 +2368,49 @@ module Aws::QApps
     class StopQAppSessionInput < Struct.new(
       :instance_id,
       :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A record created when a user submits a form card.
+    #
+    # @!attribute [rw] value
+    #   The data submitted by the user.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @!attribute [rw] submission_id
+    #   The unique identifier of the submission.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The date and time when the card is submitted.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/Submission AWS API Documentation
+    #
+    class Submission < Struct.new(
+      :value,
+      :submission_id,
+      :timestamp)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents an action performed on a submission.
+    #
+    # @!attribute [rw] submission_id
+    #   The unique identifier of the submission.
+    #   @return [String]
+    #
+    # @!attribute [rw] mutation_type
+    #   The operation that is performed on a submission.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/SubmissionMutation AWS API Documentation
+    #
+    class SubmissionMutation < Struct.new(
+      :submission_id,
+      :mutation_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2223,6 +2803,59 @@ module Aws::QApps
     #   environment instance.
     #   @return [String]
     #
+    # @!attribute [rw] app_id
+    #   The unique identifier of the Amazon Q App for which permissions are
+    #   being updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] grant_permissions
+    #   The list of permissions to grant for the Amazon Q App.
+    #   @return [Array<Types::PermissionInput>]
+    #
+    # @!attribute [rw] revoke_permissions
+    #   The list of permissions to revoke for the Amazon Q App.
+    #   @return [Array<Types::PermissionInput>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/UpdateQAppPermissionsInput AWS API Documentation
+    #
+    class UpdateQAppPermissionsInput < Struct.new(
+      :instance_id,
+      :app_id,
+      :grant_permissions,
+      :revoke_permissions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q App for which
+    #   permissions were updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] app_id
+    #   The unique identifier of the Amazon Q App for which permissions were
+    #   updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] permissions
+    #   The updated list of permissions for the Amazon Q App.
+    #   @return [Array<Types::PermissionOutput>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/UpdateQAppPermissionsOutput AWS API Documentation
+    #
+    class UpdateQAppPermissionsOutput < Struct.new(
+      :resource_arn,
+      :app_id,
+      :permissions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The unique identifier of the Amazon Q Business application
+    #   environment instance.
+    #   @return [String]
+    #
     # @!attribute [rw] session_id
     #   The unique identifier of the Q App session to provide input for.
     #   @return [String]
@@ -2242,6 +2875,63 @@ module Aws::QApps
       include Aws::Structure
     end
 
+    # @!attribute [rw] instance_id
+    #   The unique identifier of the Amazon Q Business application
+    #   environment instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the Q App session to update configuration
+    #   for.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_name
+    #   The new name for the Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] sharing_configuration
+    #   The new sharing configuration for the Q App data collection session.
+    #   @return [Types::SessionSharingConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/UpdateQAppSessionMetadataInput AWS API Documentation
+    #
+    class UpdateQAppSessionMetadataInput < Struct.new(
+      :instance_id,
+      :session_id,
+      :session_name,
+      :sharing_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] session_id
+    #   The unique identifier of the updated Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_arn
+    #   The Amazon Resource Name (ARN) of the updated Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_name
+    #   The new name of the updated Q App session.
+    #   @return [String]
+    #
+    # @!attribute [rw] sharing_configuration
+    #   The new sharing configuration of the updated Q App data collection
+    #   session.
+    #   @return [Types::SessionSharingConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/UpdateQAppSessionMetadataOutput AWS API Documentation
+    #
+    class UpdateQAppSessionMetadataOutput < Struct.new(
+      :session_id,
+      :session_arn,
+      :session_name,
+      :sharing_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] session_id
     #   The unique identifier of the updated Q App session.
     #   @return [String]
@@ -2255,6 +2945,20 @@ module Aws::QApps
     class UpdateQAppSessionOutput < Struct.new(
       :session_id,
       :session_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A user of an Amazon Q App.
+    #
+    # @!attribute [rw] user_id
+    #   The unique identifier of a user.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/User AWS API Documentation
+    #
+    class User < Struct.new(
+      :user_id)
       SENSITIVE = []
       include Aws::Structure
     end

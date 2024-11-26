@@ -2837,6 +2837,8 @@ module Aws::EC2
     Snapshot = Shapes::StructureShape.new(name: 'Snapshot')
     SnapshotAttributeName = Shapes::StringShape.new(name: 'SnapshotAttributeName')
     SnapshotBlockPublicAccessState = Shapes::StringShape.new(name: 'SnapshotBlockPublicAccessState')
+    SnapshotCompletionDurationMinutesRequest = Shapes::IntegerShape.new(name: 'SnapshotCompletionDurationMinutesRequest')
+    SnapshotCompletionDurationMinutesResponse = Shapes::IntegerShape.new(name: 'SnapshotCompletionDurationMinutesResponse')
     SnapshotDetail = Shapes::StructureShape.new(name: 'SnapshotDetail')
     SnapshotDetailList = Shapes::ListShape.new(name: 'SnapshotDetailList')
     SnapshotDiskContainer = Shapes::StructureShape.new(name: 'SnapshotDiskContainer')
@@ -2940,6 +2942,8 @@ module Aws::EC2
     SupportedAdditionalProcessorFeature = Shapes::StringShape.new(name: 'SupportedAdditionalProcessorFeature')
     SupportedAdditionalProcessorFeatureList = Shapes::ListShape.new(name: 'SupportedAdditionalProcessorFeatureList')
     SupportedIpAddressTypes = Shapes::ListShape.new(name: 'SupportedIpAddressTypes')
+    SupportedRegionDetail = Shapes::StructureShape.new(name: 'SupportedRegionDetail')
+    SupportedRegionSet = Shapes::ListShape.new(name: 'SupportedRegionSet')
     Tag = Shapes::StructureShape.new(name: 'Tag')
     TagDescription = Shapes::StructureShape.new(name: 'TagDescription')
     TagDescriptionList = Shapes::ListShape.new(name: 'TagDescriptionList')
@@ -3012,6 +3016,7 @@ module Aws::EC2
     TrafficMirrorTargetType = Shapes::StringShape.new(name: 'TrafficMirrorTargetType')
     TrafficMirroringMaxResults = Shapes::IntegerShape.new(name: 'TrafficMirroringMaxResults')
     TrafficType = Shapes::StringShape.new(name: 'TrafficType')
+    TransferType = Shapes::StringShape.new(name: 'TransferType')
     TransitAssociationGatewayId = Shapes::StringShape.new(name: 'TransitAssociationGatewayId')
     TransitGateway = Shapes::StructureShape.new(name: 'TransitGateway')
     TransitGatewayAssociation = Shapes::StructureShape.new(name: 'TransitGatewayAssociation')
@@ -4629,6 +4634,7 @@ module Aws::EC2
     ConnectionNotification.add_member(:connection_notification_arn, Shapes::ShapeRef.new(shape: String, location_name: "connectionNotificationArn"))
     ConnectionNotification.add_member(:connection_events, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "connectionEvents"))
     ConnectionNotification.add_member(:connection_notification_state, Shapes::ShapeRef.new(shape: ConnectionNotificationState, location_name: "connectionNotificationState"))
+    ConnectionNotification.add_member(:service_region, Shapes::ShapeRef.new(shape: String, location_name: "serviceRegion"))
     ConnectionNotification.struct_class = Types::ConnectionNotification
 
     ConnectionNotificationIdsList.member = Shapes::ShapeRef.new(shape: ConnectionNotificationId, location_name: "item")
@@ -4702,6 +4708,7 @@ module Aws::EC2
     CopySnapshotRequest.add_member(:source_region, Shapes::ShapeRef.new(shape: String, required: true, location_name: "SourceRegion"))
     CopySnapshotRequest.add_member(:source_snapshot_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "SourceSnapshotId"))
     CopySnapshotRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CopySnapshotRequest.add_member(:completion_duration_minutes, Shapes::ShapeRef.new(shape: SnapshotCompletionDurationMinutesRequest, location_name: "CompletionDurationMinutes"))
     CopySnapshotRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CopySnapshotRequest.struct_class = Types::CopySnapshotRequest
 
@@ -5756,6 +5763,7 @@ module Aws::EC2
     CreateVpcEndpointRequest.add_member(:private_dns_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "PrivateDnsEnabled"))
     CreateVpcEndpointRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateVpcEndpointRequest.add_member(:subnet_configurations, Shapes::ShapeRef.new(shape: SubnetConfigurationsList, location_name: "SubnetConfiguration"))
+    CreateVpcEndpointRequest.add_member(:service_region, Shapes::ShapeRef.new(shape: String, location_name: "ServiceRegion"))
     CreateVpcEndpointRequest.struct_class = Types::CreateVpcEndpointRequest
 
     CreateVpcEndpointResult.add_member(:vpc_endpoint, Shapes::ShapeRef.new(shape: VpcEndpoint, location_name: "vpcEndpoint"))
@@ -5768,6 +5776,7 @@ module Aws::EC2
     CreateVpcEndpointServiceConfigurationRequest.add_member(:network_load_balancer_arns, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "NetworkLoadBalancerArn"))
     CreateVpcEndpointServiceConfigurationRequest.add_member(:gateway_load_balancer_arns, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "GatewayLoadBalancerArn"))
     CreateVpcEndpointServiceConfigurationRequest.add_member(:supported_ip_address_types, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "SupportedIpAddressType"))
+    CreateVpcEndpointServiceConfigurationRequest.add_member(:supported_regions, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "SupportedRegion"))
     CreateVpcEndpointServiceConfigurationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: String, location_name: "ClientToken"))
     CreateVpcEndpointServiceConfigurationRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateVpcEndpointServiceConfigurationRequest.struct_class = Types::CreateVpcEndpointServiceConfigurationRequest
@@ -8180,6 +8189,7 @@ module Aws::EC2
     DescribeVpcEndpointServicesRequest.add_member(:filters, Shapes::ShapeRef.new(shape: FilterList, location_name: "Filter"))
     DescribeVpcEndpointServicesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: Integer, location_name: "MaxResults"))
     DescribeVpcEndpointServicesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeVpcEndpointServicesRequest.add_member(:service_regions, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "ServiceRegion"))
     DescribeVpcEndpointServicesRequest.struct_class = Types::DescribeVpcEndpointServicesRequest
 
     DescribeVpcEndpointServicesResult.add_member(:service_names, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "serviceNameSet"))
@@ -12503,6 +12513,8 @@ module Aws::EC2
     ModifyVpcEndpointServiceConfigurationRequest.add_member(:remove_gateway_load_balancer_arns, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "RemoveGatewayLoadBalancerArn"))
     ModifyVpcEndpointServiceConfigurationRequest.add_member(:add_supported_ip_address_types, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "AddSupportedIpAddressType"))
     ModifyVpcEndpointServiceConfigurationRequest.add_member(:remove_supported_ip_address_types, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "RemoveSupportedIpAddressType"))
+    ModifyVpcEndpointServiceConfigurationRequest.add_member(:add_supported_regions, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "AddSupportedRegion"))
+    ModifyVpcEndpointServiceConfigurationRequest.add_member(:remove_supported_regions, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "RemoveSupportedRegion"))
     ModifyVpcEndpointServiceConfigurationRequest.struct_class = Types::ModifyVpcEndpointServiceConfigurationRequest
 
     ModifyVpcEndpointServiceConfigurationResult.add_member(:return, Shapes::ShapeRef.new(shape: Boolean, location_name: "return"))
@@ -14570,6 +14582,8 @@ module Aws::EC2
     ServiceConfiguration.add_member(:private_dns_name_configuration, Shapes::ShapeRef.new(shape: PrivateDnsNameConfiguration, location_name: "privateDnsNameConfiguration"))
     ServiceConfiguration.add_member(:payer_responsibility, Shapes::ShapeRef.new(shape: PayerResponsibility, location_name: "payerResponsibility"))
     ServiceConfiguration.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    ServiceConfiguration.add_member(:supported_regions, Shapes::ShapeRef.new(shape: SupportedRegionSet, location_name: "supportedRegionSet"))
+    ServiceConfiguration.add_member(:remote_access_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "remoteAccessEnabled"))
     ServiceConfiguration.struct_class = Types::ServiceConfiguration
 
     ServiceConfigurationSet.member = Shapes::ShapeRef.new(shape: ServiceConfiguration, location_name: "item")
@@ -14577,6 +14591,7 @@ module Aws::EC2
     ServiceDetail.add_member(:service_name, Shapes::ShapeRef.new(shape: String, location_name: "serviceName"))
     ServiceDetail.add_member(:service_id, Shapes::ShapeRef.new(shape: String, location_name: "serviceId"))
     ServiceDetail.add_member(:service_type, Shapes::ShapeRef.new(shape: ServiceTypeDetailSet, location_name: "serviceType"))
+    ServiceDetail.add_member(:service_region, Shapes::ShapeRef.new(shape: String, location_name: "serviceRegion"))
     ServiceDetail.add_member(:availability_zones, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "availabilityZoneSet"))
     ServiceDetail.add_member(:owner, Shapes::ShapeRef.new(shape: String, location_name: "owner"))
     ServiceDetail.add_member(:base_endpoint_dns_names, Shapes::ShapeRef.new(shape: ValueStringList, location_name: "baseEndpointDnsNameSet"))
@@ -14612,6 +14627,9 @@ module Aws::EC2
     Snapshot.add_member(:storage_tier, Shapes::ShapeRef.new(shape: StorageTier, location_name: "storageTier"))
     Snapshot.add_member(:restore_expiry_time, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "restoreExpiryTime"))
     Snapshot.add_member(:sse_type, Shapes::ShapeRef.new(shape: SSEType, location_name: "sseType"))
+    Snapshot.add_member(:transfer_type, Shapes::ShapeRef.new(shape: TransferType, location_name: "transferType"))
+    Snapshot.add_member(:completion_duration_minutes, Shapes::ShapeRef.new(shape: SnapshotCompletionDurationMinutesResponse, location_name: "completionDurationMinutes"))
+    Snapshot.add_member(:completion_time, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "completionTime"))
     Snapshot.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: String, location_name: "snapshotId"))
     Snapshot.add_member(:volume_id, Shapes::ShapeRef.new(shape: String, location_name: "volumeId"))
     Snapshot.add_member(:state, Shapes::ShapeRef.new(shape: SnapshotState, location_name: "status"))
@@ -15043,6 +15061,12 @@ module Aws::EC2
     SupportedAdditionalProcessorFeatureList.member = Shapes::ShapeRef.new(shape: SupportedAdditionalProcessorFeature, location_name: "item")
 
     SupportedIpAddressTypes.member = Shapes::ShapeRef.new(shape: ServiceConnectivityType, location_name: "item")
+
+    SupportedRegionDetail.add_member(:region, Shapes::ShapeRef.new(shape: String, location_name: "region"))
+    SupportedRegionDetail.add_member(:service_state, Shapes::ShapeRef.new(shape: String, location_name: "serviceState"))
+    SupportedRegionDetail.struct_class = Types::SupportedRegionDetail
+
+    SupportedRegionSet.member = Shapes::ShapeRef.new(shape: SupportedRegionDetail, location_name: "item")
 
     Tag.add_member(:key, Shapes::ShapeRef.new(shape: String, location_name: "key"))
     Tag.add_member(:value, Shapes::ShapeRef.new(shape: String, location_name: "value"))
@@ -16131,6 +16155,7 @@ module Aws::EC2
     VpcEndpoint.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
     VpcEndpoint.add_member(:owner_id, Shapes::ShapeRef.new(shape: String, location_name: "ownerId"))
     VpcEndpoint.add_member(:last_error, Shapes::ShapeRef.new(shape: LastError, location_name: "lastError"))
+    VpcEndpoint.add_member(:service_region, Shapes::ShapeRef.new(shape: String, location_name: "serviceRegion"))
     VpcEndpoint.struct_class = Types::VpcEndpoint
 
     VpcEndpointConnection.add_member(:service_id, Shapes::ShapeRef.new(shape: String, location_name: "serviceId"))
@@ -16144,6 +16169,7 @@ module Aws::EC2
     VpcEndpointConnection.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: IpAddressType, location_name: "ipAddressType"))
     VpcEndpointConnection.add_member(:vpc_endpoint_connection_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcEndpointConnectionId"))
     VpcEndpointConnection.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tagSet"))
+    VpcEndpointConnection.add_member(:vpc_endpoint_region, Shapes::ShapeRef.new(shape: String, location_name: "vpcEndpointRegion"))
     VpcEndpointConnection.struct_class = Types::VpcEndpointConnection
 
     VpcEndpointConnectionSet.member = Shapes::ShapeRef.new(shape: VpcEndpointConnection, location_name: "item")

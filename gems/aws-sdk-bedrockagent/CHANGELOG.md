@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.36.0 (2024-11-26)
+------------------
+
+* Feature - Custom Orchestration API release for AWSBedrockAgents.
+
 1.35.0 (2024-11-18)
 ------------------
 

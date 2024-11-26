@@ -59,6 +59,7 @@ module Aws::BedrockAgent
       attr_accessor agent_version: ::String
       attr_accessor client_token: ::String
       attr_accessor created_at: ::Time
+      attr_accessor custom_orchestration: Types::CustomOrchestration
       attr_accessor customer_encryption_key_arn: ::String
       attr_accessor description: ::String
       attr_accessor failure_reasons: ::Array[::String]
@@ -67,6 +68,7 @@ module Aws::BedrockAgent
       attr_accessor idle_session_ttl_in_seconds: ::Integer
       attr_accessor instruction: ::String
       attr_accessor memory_configuration: Types::MemoryConfiguration
+      attr_accessor orchestration_type: ("DEFAULT" | "CUSTOM_ORCHESTRATION")
       attr_accessor prepared_at: ::Time
       attr_accessor prompt_override_configuration: Types::PromptOverrideConfiguration
       attr_accessor recommended_actions: ::Array[::String]
@@ -333,6 +335,7 @@ module Aws::BedrockAgent
       attr_accessor agent_name: ::String
       attr_accessor agent_resource_role_arn: ::String
       attr_accessor client_token: ::String
+      attr_accessor custom_orchestration: Types::CustomOrchestration
       attr_accessor customer_encryption_key_arn: ::String
       attr_accessor description: ::String
       attr_accessor foundation_model: ::String
@@ -340,6 +343,7 @@ module Aws::BedrockAgent
       attr_accessor idle_session_ttl_in_seconds: ::Integer
       attr_accessor instruction: ::String
       attr_accessor memory_configuration: Types::MemoryConfiguration
+      attr_accessor orchestration_type: ("DEFAULT" | "CUSTOM_ORCHESTRATION")
       attr_accessor prompt_override_configuration: Types::PromptOverrideConfiguration
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: [:instruction, :prompt_override_configuration]
@@ -497,6 +501,11 @@ module Aws::BedrockAgent
       attr_accessor variants: ::Array[Types::PromptVariant]
       attr_accessor version: ::String
       SENSITIVE: [:variants]
+    end
+
+    class CustomOrchestration
+      attr_accessor executor: Types::OrchestrationExecutor
+      SENSITIVE: []
     end
 
     class CustomTransformationConfiguration
@@ -1552,6 +1561,17 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class OrchestrationExecutor
+      attr_accessor lambda: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Lambda < OrchestrationExecutor
+      end
+      class Unknown < OrchestrationExecutor
+      end
+    end
+
     class OutputFlowNodeConfiguration < Aws::EmptyStructure
     end
 
@@ -2157,6 +2177,7 @@ module Aws::BedrockAgent
       attr_accessor agent_id: ::String
       attr_accessor agent_name: ::String
       attr_accessor agent_resource_role_arn: ::String
+      attr_accessor custom_orchestration: Types::CustomOrchestration
       attr_accessor customer_encryption_key_arn: ::String
       attr_accessor description: ::String
       attr_accessor foundation_model: ::String
@@ -2164,6 +2185,7 @@ module Aws::BedrockAgent
       attr_accessor idle_session_ttl_in_seconds: ::Integer
       attr_accessor instruction: ::String
       attr_accessor memory_configuration: Types::MemoryConfiguration
+      attr_accessor orchestration_type: ("DEFAULT" | "CUSTOM_ORCHESTRATION")
       attr_accessor prompt_override_configuration: Types::PromptOverrideConfiguration
       SENSITIVE: [:instruction, :prompt_override_configuration]
     end

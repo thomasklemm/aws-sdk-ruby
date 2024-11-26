@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.494.0 (2024-11-26)
+------------------
+
+* Feature - Adds support for Time-based Copy for EBS Snapshots and Cross Region PrivateLink. Time-based Copy ensures that EBS Snapshots are copied within and across AWS Regions in a specified timeframe. Cross Region PrivateLink enables customers to connect to VPC endpoint services hosted in other AWS Regions.
+
 1.493.0 (2024-11-21)
 ------------------
 

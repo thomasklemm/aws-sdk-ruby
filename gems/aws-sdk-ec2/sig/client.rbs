@@ -1047,6 +1047,7 @@ module Aws
                                ]?
                              },
                            ],
+                           ?completion_duration_minutes: ::Integer,
                            ?dry_run: bool
                          ) -> _CopySnapshotResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CopySnapshotResponseSuccess
@@ -3104,6 +3105,9 @@ module Aws
         def storage_tier: () -> ("archive" | "standard")
         def restore_expiry_time: () -> ::Time
         def sse_type: () -> ("sse-ebs" | "sse-kms" | "none")
+        def transfer_type: () -> ("time-based" | "standard")
+        def completion_duration_minutes: () -> ::Integer
+        def completion_time: () -> ::Time
         def snapshot_id: () -> ::String
         def volume_id: () -> ::String
         def state: () -> ("pending" | "completed" | "error" | "recoverable" | "recovering")
@@ -3941,7 +3945,8 @@ module Aws
                                      ipv_4: ::String?,
                                      ipv_6: ::String?
                                    },
-                                 ]
+                                 ],
+                                 ?service_region: ::String
                                ) -> _CreateVpcEndpointResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateVpcEndpointResponseSuccess
 
@@ -3974,6 +3979,7 @@ module Aws
                                                        ?network_load_balancer_arns: Array[::String],
                                                        ?gateway_load_balancer_arns: Array[::String],
                                                        ?supported_ip_address_types: Array[::String],
+                                                       ?supported_regions: Array[::String],
                                                        ?client_token: ::String,
                                                        ?tag_specifications: Array[
                                                          {
@@ -7965,7 +7971,8 @@ module Aws
                                               },
                                             ],
                                             ?max_results: ::Integer,
-                                            ?next_token: ::String
+                                            ?next_token: ::String,
+                                            ?service_regions: Array[::String]
                                           ) -> _DescribeVpcEndpointServicesResponseSuccess
                                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeVpcEndpointServicesResponseSuccess
 
@@ -11347,7 +11354,9 @@ module Aws
                                                        ?add_gateway_load_balancer_arns: Array[::String],
                                                        ?remove_gateway_load_balancer_arns: Array[::String],
                                                        ?add_supported_ip_address_types: Array[::String],
-                                                       ?remove_supported_ip_address_types: Array[::String]
+                                                       ?remove_supported_ip_address_types: Array[::String],
+                                                       ?add_supported_regions: Array[::String],
+                                                       ?remove_supported_regions: Array[::String]
                                                      ) -> _ModifyVpcEndpointServiceConfigurationResponseSuccess
                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyVpcEndpointServiceConfigurationResponseSuccess
 
