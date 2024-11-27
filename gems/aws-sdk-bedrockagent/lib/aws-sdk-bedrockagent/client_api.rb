@@ -135,6 +135,7 @@ module Aws::BedrockAgent
     DraftVersion = Shapes::StringShape.new(name: 'DraftVersion')
     DuplicateConditionExpressionFlowValidationDetails = Shapes::StructureShape.new(name: 'DuplicateConditionExpressionFlowValidationDetails')
     DuplicateConnectionsFlowValidationDetails = Shapes::StructureShape.new(name: 'DuplicateConnectionsFlowValidationDetails')
+    EmbeddingDataType = Shapes::StringShape.new(name: 'EmbeddingDataType')
     EmbeddingModelConfiguration = Shapes::StructureShape.new(name: 'EmbeddingModelConfiguration')
     EnabledMemoryTypes = Shapes::ListShape.new(name: 'EnabledMemoryTypes')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
@@ -706,6 +707,7 @@ module Aws::BedrockAgent
     AutoToolChoice.struct_class = Types::AutoToolChoice
 
     BedrockEmbeddingModelConfiguration.add_member(:dimensions, Shapes::ShapeRef.new(shape: Dimensions, location_name: "dimensions"))
+    BedrockEmbeddingModelConfiguration.add_member(:embedding_data_type, Shapes::ShapeRef.new(shape: EmbeddingDataType, location_name: "embeddingDataType"))
     BedrockEmbeddingModelConfiguration.struct_class = Types::BedrockEmbeddingModelConfiguration
 
     BedrockFoundationModelConfiguration.add_member(:model_arn, Shapes::ShapeRef.new(shape: BedrockModelArn, required: true, location_name: "modelArn"))

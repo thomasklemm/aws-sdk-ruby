@@ -665,6 +665,7 @@ RubyGems.org page under "LINKS" section.
 | Auto Scaling                                          | Aws::AutoScaling                         | aws-sdk-autoscaling                         | 2011-01-01  |
 | Braket                                                | Aws::Braket                              | aws-sdk-braket                              | 2019-09-01  |
 | CloudWatch Observability Access Manager               | Aws::OAM                                 | aws-sdk-oam                                 | 2022-06-10  |
+| CloudWatch Observability Admin Service                | Aws::ObservabilityAdmin                  | aws-sdk-observabilityadmin                  | 2018-05-10  |
 | CloudWatch RUM                                        | Aws::CloudWatchRUM                       | aws-sdk-cloudwatchrum                       | 2018-05-10  |
 | CodeArtifact                                          | Aws::CodeArtifact                        | aws-sdk-codeartifact                        | 2018-09-22  |
 | Cost Optimization Hub                                 | Aws::CostOptimizationHub                 | aws-sdk-costoptimizationhub                 | 2022-07-26  |

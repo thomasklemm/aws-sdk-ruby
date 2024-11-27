@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.37.0 (2024-11-27)
+------------------
+
+* Feature - Add support for specifying embeddingDataType, either FLOAT32 or BINARY
+
 1.36.0 (2024-11-26)
 ------------------
 

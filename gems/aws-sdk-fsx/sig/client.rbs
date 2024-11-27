@@ -316,6 +316,7 @@ module Aws
                                   copy_tags_to_backups: bool?,
                                   drive_cache_type: ("NONE" | "READ")?,
                                   data_compression_type: ("NONE" | "LZ4")?,
+                                  efa_enabled: bool?,
                                   log_configuration: {
                                     level: ("DISABLED" | "WARN_ONLY" | "ERROR_ONLY" | "WARN_ERROR"),
                                     destination: ::String?
@@ -446,6 +447,7 @@ module Aws
                                               copy_tags_to_backups: bool?,
                                               drive_cache_type: ("NONE" | "READ")?,
                                               data_compression_type: ("NONE" | "LZ4")?,
+                                              efa_enabled: bool?,
                                               log_configuration: {
                                                 level: ("DISABLED" | "WARN_ONLY" | "ERROR_ONLY" | "WARN_ERROR"),
                                                 destination: ::String?

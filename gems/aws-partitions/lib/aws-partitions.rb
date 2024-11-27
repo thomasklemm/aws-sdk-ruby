@@ -512,6 +512,7 @@ module Aws
             'NotificationsContacts' => 'notifications-contacts',
             'OAM' => 'oam',
             'OSIS' => 'osis',
+            'ObservabilityAdmin' => 'observabilityadmin',
             'Omics' => 'omics',
             'OpenSearchServerless' => 'aoss',
             'OpenSearchService' => 'es',

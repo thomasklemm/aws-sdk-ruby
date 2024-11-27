@@ -1,0 +1,83 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::ObservabilityAdmin
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      attr_accessor amzn_error_type: ::String
+      SENSITIVE: []
+    end
+
+    class GetTelemetryEvaluationStatusForOrganizationOutput
+      attr_accessor status: ("NOT_STARTED" | "STARTING" | "FAILED_START" | "RUNNING" | "STOPPING" | "FAILED_STOP" | "STOPPED")
+      attr_accessor failure_reason: ::String
+      SENSITIVE: []
+    end
+
+    class GetTelemetryEvaluationStatusOutput
+      attr_accessor status: ("NOT_STARTED" | "STARTING" | "FAILED_START" | "RUNNING" | "STOPPING" | "FAILED_STOP" | "STOPPED")
+      attr_accessor failure_reason: ::String
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      attr_accessor amzn_error_type: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceTelemetryForOrganizationInput
+      attr_accessor account_identifiers: ::Array[::String]
+      attr_accessor resource_identifier_prefix: ::String
+      attr_accessor resource_types: ::Array[("AWS::EC2::Instance" | "AWS::EC2::VPC" | "AWS::Lambda::Function")]
+      attr_accessor telemetry_configuration_state: ::Hash[("Logs" | "Metrics" | "Traces"), ("Enabled" | "Disabled" | "NotApplicable")]
+      attr_accessor resource_tags: ::Hash[::String, ::String]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceTelemetryForOrganizationOutput
+      attr_accessor telemetry_configurations: ::Array[Types::TelemetryConfiguration]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceTelemetryInput
+      attr_accessor resource_identifier_prefix: ::String
+      attr_accessor resource_types: ::Array[("AWS::EC2::Instance" | "AWS::EC2::VPC" | "AWS::Lambda::Function")]
+      attr_accessor telemetry_configuration_state: ::Hash[("Logs" | "Metrics" | "Traces"), ("Enabled" | "Disabled" | "NotApplicable")]
+      attr_accessor resource_tags: ::Hash[::String, ::String]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceTelemetryOutput
+      attr_accessor telemetry_configurations: ::Array[Types::TelemetryConfiguration]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class TelemetryConfiguration
+      attr_accessor account_identifier: ::String
+      attr_accessor telemetry_configuration_state: ::Hash[("Logs" | "Metrics" | "Traces"), ("Enabled" | "Disabled" | "NotApplicable")]
+      attr_accessor resource_type: ("AWS::EC2::Instance" | "AWS::EC2::VPC" | "AWS::Lambda::Function")
+      attr_accessor resource_identifier: ::String
+      attr_accessor resource_tags: ::Hash[::String, ::String]
+      attr_accessor last_update_time_stamp: ::Integer
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+  end
+end

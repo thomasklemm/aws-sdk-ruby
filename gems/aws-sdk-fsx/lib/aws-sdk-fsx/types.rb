@@ -1946,6 +1946,14 @@ module Aws::FSx
     #   [1]: https://docs.aws.amazon.com/fsx/latest/LustreGuide/data-compression.html
     #   @return [String]
     #
+    # @!attribute [rw] efa_enabled
+    #   (Optional) Specifies whether Elastic Fabric Adapter (EFA) and
+    #   GPUDirect Storage (GDS) support is enabled for the Amazon FSx for
+    #   Lustre file system.
+    #
+    #   (Default = `false`)
+    #   @return [Boolean]
+    #
     # @!attribute [rw] log_configuration
     #   The Lustre logging configuration used when creating an Amazon FSx
     #   for Lustre file system. When logging is enabled, Lustre logs error
@@ -1980,6 +1988,7 @@ module Aws::FSx
       :copy_tags_to_backups,
       :drive_cache_type,
       :data_compression_type,
+      :efa_enabled,
       :log_configuration,
       :root_squash_configuration,
       :metadata_configuration)
@@ -6592,6 +6601,11 @@ module Aws::FSx
     #   Lustre file system using a `PERSISTENT_2` deployment type.
     #   @return [Types::FileSystemLustreMetadataConfiguration]
     #
+    # @!attribute [rw] efa_enabled
+    #   Specifies whether Elastic Fabric Adapter (EFA) and GPUDirect Storage
+    #   (GDS) support is enabled for the Amazon FSx for Lustre file system.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/LustreFileSystemConfiguration AWS API Documentation
     #
     class LustreFileSystemConfiguration < Struct.new(
@@ -6607,7 +6621,8 @@ module Aws::FSx
       :data_compression_type,
       :log_configuration,
       :root_squash_configuration,
-      :metadata_configuration)
+      :metadata_configuration,
+      :efa_enabled)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -614,7 +614,8 @@ module Aws
                                        embedding_model_arn: ::String,
                                        embedding_model_configuration: {
                                          bedrock_embedding_model_configuration: {
-                                           dimensions: ::Integer?
+                                           dimensions: ::Integer?,
+                                           embedding_data_type: ("FLOAT32" | "BINARY")?
                                          }?
                                        }?
                                      }?
@@ -1871,7 +1872,8 @@ module Aws
                                        embedding_model_arn: ::String,
                                        embedding_model_configuration: {
                                          bedrock_embedding_model_configuration: {
-                                           dimensions: ::Integer?
+                                           dimensions: ::Integer?,
+                                           embedding_data_type: ("FLOAT32" | "BINARY")?
                                          }?
                                        }?
                                      }?

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.105.0 (2024-11-27)
+------------------
+
+* Feature - This release adds EFA support to increase FSx for Lustre file systems' throughput performance to a single client instance. This can be done by specifying EfaEnabled=true at the time of creation of Persistent_2 file systems.
+
 1.104.0 (2024-11-18)
 ------------------
 

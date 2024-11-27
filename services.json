@@ -854,6 +854,9 @@
   "OSIS": {
     "models": "osis/2022-01-01"
   },
+  "ObservabilityAdmin": {
+    "models": "observabilityadmin/2018-05-10"
+  },
   "Omics": {
     "models": "omics/2022-11-28"
   },

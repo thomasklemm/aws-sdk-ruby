@@ -54,7 +54,7 @@ module Aws::BedrockAgent
   autoload :EndpointProvider, 'aws-sdk-bedrockagent/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-bedrockagent/endpoints'
 
-  GEM_VERSION = '1.36.0'
+  GEM_VERSION = '1.37.0'
 
 end
 

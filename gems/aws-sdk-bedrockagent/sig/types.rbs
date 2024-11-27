@@ -223,6 +223,7 @@ module Aws::BedrockAgent
 
     class BedrockEmbeddingModelConfiguration
       attr_accessor dimensions: ::Integer
+      attr_accessor embedding_data_type: ("FLOAT32" | "BINARY")
       SENSITIVE: []
     end
 

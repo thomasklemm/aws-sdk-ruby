@@ -298,6 +298,7 @@ module Aws::FSx
       attr_accessor copy_tags_to_backups: bool
       attr_accessor drive_cache_type: ("NONE" | "READ")
       attr_accessor data_compression_type: ("NONE" | "LZ4")
+      attr_accessor efa_enabled: bool
       attr_accessor log_configuration: Types::LustreLogCreateConfiguration
       attr_accessor root_squash_configuration: Types::LustreRootSquashConfiguration
       attr_accessor metadata_configuration: Types::CreateFileSystemLustreMetadataConfiguration
@@ -1124,6 +1125,7 @@ module Aws::FSx
       attr_accessor log_configuration: Types::LustreLogConfiguration
       attr_accessor root_squash_configuration: Types::LustreRootSquashConfiguration
       attr_accessor metadata_configuration: Types::FileSystemLustreMetadataConfiguration
+      attr_accessor efa_enabled: bool
       SENSITIVE: []
     end
 

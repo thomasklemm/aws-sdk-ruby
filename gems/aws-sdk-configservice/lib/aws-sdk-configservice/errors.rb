@@ -27,6 +27,7 @@ module Aws::ConfigService
   # See {Seahorse::Client::RequestContext} for more information.
   #
   # ## Error Classes
+  # * {ConflictException}
   # * {ConformancePackTemplateValidationException}
   # * {IdempotentParameterMismatch}
   # * {InsufficientDeliveryPolicyException}
@@ -80,6 +81,7 @@ module Aws::ConfigService
   # * {ResourceNotDiscoveredException}
   # * {ResourceNotFoundException}
   # * {TooManyTagsException}
+  # * {UnmodifiableEntityException}
   # * {ValidationException}
   #
   # Additionally, error classes are dynamically generated for service errors based on the error code
@@ -87,6 +89,16 @@ module Aws::ConfigService
   module Errors
 
     extend Aws::Errors::DynamicErrors
+
+    class ConflictException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ConfigService::Types::ConflictException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
 
     class ConformancePackTemplateValidationException < ServiceError
 
@@ -623,6 +635,16 @@ module Aws::ConfigService
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::ConfigService::Types::TooManyTagsException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class UnmodifiableEntityException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ConfigService::Types::UnmodifiableEntityException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

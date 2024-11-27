@@ -689,6 +689,7 @@ module Aws::FSx
     CreateFileSystemLustreConfiguration.add_member(:copy_tags_to_backups, Shapes::ShapeRef.new(shape: Flag, location_name: "CopyTagsToBackups"))
     CreateFileSystemLustreConfiguration.add_member(:drive_cache_type, Shapes::ShapeRef.new(shape: DriveCacheType, location_name: "DriveCacheType"))
     CreateFileSystemLustreConfiguration.add_member(:data_compression_type, Shapes::ShapeRef.new(shape: DataCompressionType, location_name: "DataCompressionType"))
+    CreateFileSystemLustreConfiguration.add_member(:efa_enabled, Shapes::ShapeRef.new(shape: Flag, location_name: "EfaEnabled"))
     CreateFileSystemLustreConfiguration.add_member(:log_configuration, Shapes::ShapeRef.new(shape: LustreLogCreateConfiguration, location_name: "LogConfiguration"))
     CreateFileSystemLustreConfiguration.add_member(:root_squash_configuration, Shapes::ShapeRef.new(shape: LustreRootSquashConfiguration, location_name: "RootSquashConfiguration"))
     CreateFileSystemLustreConfiguration.add_member(:metadata_configuration, Shapes::ShapeRef.new(shape: CreateFileSystemLustreMetadataConfiguration, location_name: "MetadataConfiguration"))
@@ -1336,6 +1337,7 @@ module Aws::FSx
     LustreFileSystemConfiguration.add_member(:log_configuration, Shapes::ShapeRef.new(shape: LustreLogConfiguration, location_name: "LogConfiguration"))
     LustreFileSystemConfiguration.add_member(:root_squash_configuration, Shapes::ShapeRef.new(shape: LustreRootSquashConfiguration, location_name: "RootSquashConfiguration"))
     LustreFileSystemConfiguration.add_member(:metadata_configuration, Shapes::ShapeRef.new(shape: FileSystemLustreMetadataConfiguration, location_name: "MetadataConfiguration"))
+    LustreFileSystemConfiguration.add_member(:efa_enabled, Shapes::ShapeRef.new(shape: Flag, location_name: "EfaEnabled"))
     LustreFileSystemConfiguration.struct_class = Types::LustreFileSystemConfiguration
 
     LustreLogConfiguration.add_member(:level, Shapes::ShapeRef.new(shape: LustreAccessAuditLogLevel, required: true, location_name: "Level"))

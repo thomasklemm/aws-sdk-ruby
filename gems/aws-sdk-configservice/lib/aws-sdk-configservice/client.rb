@@ -454,6 +454,68 @@ module Aws::ConfigService
 
     # @!group API Operations
 
+    # Adds all resource types specified in the `ResourceTypes` list to the
+    # [RecordingGroup][1] of specified configuration recorder and includes
+    # those resource types when recording.
+    #
+    # For this operation, the specified configuration recorder must use a
+    # [RecordingStrategy][2] that is either `INCLUSION_BY_RESOURCE_TYPES` or
+    # `EXCLUSION_BY_RESOURCE_TYPES`.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html
+    # [2]: https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html
+    #
+    # @option params [required, String] :configuration_recorder_arn
+    #   The Amazon Resource Name (ARN) of the specified configuration
+    #   recorder.
+    #
+    # @option params [required, Array<String>] :resource_types
+    #   The list of resource types you want to add to the recording group of
+    #   the specified configuration recorder.
+    #
+    # @return [Types::AssociateResourceTypesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::AssociateResourceTypesResponse#configuration_recorder #configuration_recorder} => Types::ConfigurationRecorder
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.associate_resource_types({
+    #     configuration_recorder_arn: "AmazonResourceName", # required
+    #     resource_types: ["AWS::EC2::CustomerGateway"], # required, accepts AWS::EC2::CustomerGateway, AWS::EC2::EIP, AWS::EC2::Host, AWS::EC2::Instance, AWS::EC2::InternetGateway, AWS::EC2::NetworkAcl, AWS::EC2::NetworkInterface, AWS::EC2::RouteTable, AWS::EC2::SecurityGroup, AWS::EC2::Subnet, AWS::CloudTrail::Trail, AWS::EC2::Volume, AWS::EC2::VPC, AWS::EC2::VPNConnection, AWS::EC2::VPNGateway, AWS::EC2::RegisteredHAInstance, AWS::EC2::NatGateway, AWS::EC2::EgressOnlyInternetGateway, AWS::EC2::VPCEndpoint, AWS::EC2::VPCEndpointService, AWS::EC2::FlowLog, AWS::EC2::VPCPeeringConnection, AWS::Elasticsearch::Domain, AWS::IAM::Group, AWS::IAM::Policy, AWS::IAM::Role, AWS::IAM::User, AWS::ElasticLoadBalancingV2::LoadBalancer, AWS::ACM::Certificate, AWS::RDS::DBInstance, AWS::RDS::DBSubnetGroup, AWS::RDS::DBSecurityGroup, AWS::RDS::DBSnapshot, AWS::RDS::DBCluster, AWS::RDS::DBClusterSnapshot, AWS::RDS::EventSubscription, AWS::S3::Bucket, AWS::S3::AccountPublicAccessBlock, AWS::Redshift::Cluster, AWS::Redshift::ClusterSnapshot, AWS::Redshift::ClusterParameterGroup, AWS::Redshift::ClusterSecurityGroup, AWS::Redshift::ClusterSubnetGroup, AWS::Redshift::EventSubscription, AWS::SSM::ManagedInstanceInventory, AWS::CloudWatch::Alarm, AWS::CloudFormation::Stack, AWS::ElasticLoadBalancing::LoadBalancer, AWS::AutoScaling::AutoScalingGroup, AWS::AutoScaling::LaunchConfiguration, AWS::AutoScaling::ScalingPolicy, AWS::AutoScaling::ScheduledAction, AWS::DynamoDB::Table, AWS::CodeBuild::Project, AWS::WAF::RateBasedRule, AWS::WAF::Rule, AWS::WAF::RuleGroup, AWS::WAF::WebACL, AWS::WAFRegional::RateBasedRule, AWS::WAFRegional::Rule, AWS::WAFRegional::RuleGroup, AWS::WAFRegional::WebACL, AWS::CloudFront::Distribution, AWS::CloudFront::StreamingDistribution, AWS::Lambda::Function, AWS::NetworkFirewall::Firewall, AWS::NetworkFirewall::FirewallPolicy, AWS::NetworkFirewall::RuleGroup, AWS::ElasticBeanstalk::Application, AWS::ElasticBeanstalk::ApplicationVersion, AWS::ElasticBeanstalk::Environment, AWS::WAFv2::WebACL, AWS::WAFv2::RuleGroup, AWS::WAFv2::IPSet, AWS::WAFv2::RegexPatternSet, AWS::WAFv2::ManagedRuleSet, AWS::XRay::EncryptionConfig, AWS::SSM::AssociationCompliance, AWS::SSM::PatchCompliance, AWS::Shield::Protection, AWS::ShieldRegional::Protection, AWS::Config::ConformancePackCompliance, AWS::Config::ResourceCompliance, AWS::ApiGateway::Stage, AWS::ApiGateway::RestApi, AWS::ApiGatewayV2::Stage, AWS::ApiGatewayV2::Api, AWS::CodePipeline::Pipeline, AWS::ServiceCatalog::CloudFormationProvisionedProduct, AWS::ServiceCatalog::CloudFormationProduct, AWS::ServiceCatalog::Portfolio, AWS::SQS::Queue, AWS::KMS::Key, AWS::QLDB::Ledger, AWS::SecretsManager::Secret, AWS::SNS::Topic, AWS::SSM::FileData, AWS::Backup::BackupPlan, AWS::Backup::BackupSelection, AWS::Backup::BackupVault, AWS::Backup::RecoveryPoint, AWS::ECR::Repository, AWS::ECS::Cluster, AWS::ECS::Service, AWS::ECS::TaskDefinition, AWS::EFS::AccessPoint, AWS::EFS::FileSystem, AWS::EKS::Cluster, AWS::OpenSearch::Domain, AWS::EC2::TransitGateway, AWS::Kinesis::Stream, AWS::Kinesis::StreamConsumer, AWS::CodeDeploy::Application, AWS::CodeDeploy::DeploymentConfig, AWS::CodeDeploy::DeploymentGroup, AWS::EC2::LaunchTemplate, AWS::ECR::PublicRepository, AWS::GuardDuty::Detector, AWS::EMR::SecurityConfiguration, AWS::SageMaker::CodeRepository, AWS::Route53Resolver::ResolverEndpoint, AWS::Route53Resolver::ResolverRule, AWS::Route53Resolver::ResolverRuleAssociation, AWS::DMS::ReplicationSubnetGroup, AWS::DMS::EventSubscription, AWS::MSK::Cluster, AWS::StepFunctions::Activity, AWS::WorkSpaces::Workspace, AWS::WorkSpaces::ConnectionAlias, AWS::SageMaker::Model, AWS::ElasticLoadBalancingV2::Listener, AWS::StepFunctions::StateMachine, AWS::Batch::JobQueue, AWS::Batch::ComputeEnvironment, AWS::AccessAnalyzer::Analyzer, AWS::Athena::WorkGroup, AWS::Athena::DataCatalog, AWS::Detective::Graph, AWS::GlobalAccelerator::Accelerator, AWS::GlobalAccelerator::EndpointGroup, AWS::GlobalAccelerator::Listener, AWS::EC2::TransitGatewayAttachment, AWS::EC2::TransitGatewayRouteTable, AWS::DMS::Certificate, AWS::AppConfig::Application, AWS::AppSync::GraphQLApi, AWS::DataSync::LocationSMB, AWS::DataSync::LocationFSxLustre, AWS::DataSync::LocationS3, AWS::DataSync::LocationEFS, AWS::DataSync::Task, AWS::DataSync::LocationNFS, AWS::EC2::NetworkInsightsAccessScopeAnalysis, AWS::EKS::FargateProfile, AWS::Glue::Job, AWS::GuardDuty::ThreatIntelSet, AWS::GuardDuty::IPSet, AWS::SageMaker::Workteam, AWS::SageMaker::NotebookInstanceLifecycleConfig, AWS::ServiceDiscovery::Service, AWS::ServiceDiscovery::PublicDnsNamespace, AWS::SES::ContactList, AWS::SES::ConfigurationSet, AWS::Route53::HostedZone, AWS::IoTEvents::Input, AWS::IoTEvents::DetectorModel, AWS::IoTEvents::AlarmModel, AWS::ServiceDiscovery::HttpNamespace, AWS::Events::EventBus, AWS::ImageBuilder::ContainerRecipe, AWS::ImageBuilder::DistributionConfiguration, AWS::ImageBuilder::InfrastructureConfiguration, AWS::DataSync::LocationObjectStorage, AWS::DataSync::LocationHDFS, AWS::Glue::Classifier, AWS::Route53RecoveryReadiness::Cell, AWS::Route53RecoveryReadiness::ReadinessCheck, AWS::ECR::RegistryPolicy, AWS::Backup::ReportPlan, AWS::Lightsail::Certificate, AWS::RUM::AppMonitor, AWS::Events::Endpoint, AWS::SES::ReceiptRuleSet, AWS::Events::Archive, AWS::Events::ApiDestination, AWS::Lightsail::Disk, AWS::FIS::ExperimentTemplate, AWS::DataSync::LocationFSxWindows, AWS::SES::ReceiptFilter, AWS::GuardDuty::Filter, AWS::SES::Template, AWS::AmazonMQ::Broker, AWS::AppConfig::Environment, AWS::AppConfig::ConfigurationProfile, AWS::Cloud9::EnvironmentEC2, AWS::EventSchemas::Registry, AWS::EventSchemas::RegistryPolicy, AWS::EventSchemas::Discoverer, AWS::FraudDetector::Label, AWS::FraudDetector::EntityType, AWS::FraudDetector::Variable, AWS::FraudDetector::Outcome, AWS::IoT::Authorizer, AWS::IoT::SecurityProfile, AWS::IoT::RoleAlias, AWS::IoT::Dimension, AWS::IoTAnalytics::Datastore, AWS::Lightsail::Bucket, AWS::Lightsail::StaticIp, AWS::MediaPackage::PackagingGroup, AWS::Route53RecoveryReadiness::RecoveryGroup, AWS::ResilienceHub::ResiliencyPolicy, AWS::Transfer::Workflow, AWS::EKS::IdentityProviderConfig, AWS::EKS::Addon, AWS::Glue::MLTransform, AWS::IoT::Policy, AWS::IoT::MitigationAction, AWS::IoTTwinMaker::Workspace, AWS::IoTTwinMaker::Entity, AWS::IoTAnalytics::Dataset, AWS::IoTAnalytics::Pipeline, AWS::IoTAnalytics::Channel, AWS::IoTSiteWise::Dashboard, AWS::IoTSiteWise::Project, AWS::IoTSiteWise::Portal, AWS::IoTSiteWise::AssetModel, AWS::IVS::Channel, AWS::IVS::RecordingConfiguration, AWS::IVS::PlaybackKeyPair, AWS::KinesisAnalyticsV2::Application, AWS::RDS::GlobalCluster, AWS::S3::MultiRegionAccessPoint, AWS::DeviceFarm::TestGridProject, AWS::Budgets::BudgetsAction, AWS::Lex::Bot, AWS::CodeGuruReviewer::RepositoryAssociation, AWS::IoT::CustomMetric, AWS::Route53Resolver::FirewallDomainList, AWS::RoboMaker::RobotApplicationVersion, AWS::EC2::TrafficMirrorSession, AWS::IoTSiteWise::Gateway, AWS::Lex::BotAlias, AWS::LookoutMetrics::Alert, AWS::IoT::AccountAuditConfiguration, AWS::EC2::TrafficMirrorTarget, AWS::S3::StorageLens, AWS::IoT::ScheduledAudit, AWS::Events::Connection, AWS::EventSchemas::Schema, AWS::MediaPackage::PackagingConfiguration, AWS::KinesisVideo::SignalingChannel, AWS::AppStream::DirectoryConfig, AWS::LookoutVision::Project, AWS::Route53RecoveryControl::Cluster, AWS::Route53RecoveryControl::SafetyRule, AWS::Route53RecoveryControl::ControlPanel, AWS::Route53RecoveryControl::RoutingControl, AWS::Route53RecoveryReadiness::ResourceSet, AWS::RoboMaker::SimulationApplication, AWS::RoboMaker::RobotApplication, AWS::HealthLake::FHIRDatastore, AWS::Pinpoint::Segment, AWS::Pinpoint::ApplicationSettings, AWS::Events::Rule, AWS::EC2::DHCPOptions, AWS::EC2::NetworkInsightsPath, AWS::EC2::TrafficMirrorFilter, AWS::EC2::IPAM, AWS::IoTTwinMaker::Scene, AWS::NetworkManager::TransitGatewayRegistration, AWS::CustomerProfiles::Domain, AWS::AutoScaling::WarmPool, AWS::Connect::PhoneNumber, AWS::AppConfig::DeploymentStrategy, AWS::AppFlow::Flow, AWS::AuditManager::Assessment, AWS::CloudWatch::MetricStream, AWS::DeviceFarm::InstanceProfile, AWS::DeviceFarm::Project, AWS::EC2::EC2Fleet, AWS::EC2::SubnetRouteTableAssociation, AWS::ECR::PullThroughCacheRule, AWS::GroundStation::Config, AWS::ImageBuilder::ImagePipeline, AWS::IoT::FleetMetric, AWS::IoTWireless::ServiceProfile, AWS::NetworkManager::Device, AWS::NetworkManager::GlobalNetwork, AWS::NetworkManager::Link, AWS::NetworkManager::Site, AWS::Panorama::Package, AWS::Pinpoint::App, AWS::Redshift::ScheduledAction, AWS::Route53Resolver::FirewallRuleGroupAssociation, AWS::SageMaker::AppImageConfig, AWS::SageMaker::Image, AWS::ECS::TaskSet, AWS::Cassandra::Keyspace, AWS::Signer::SigningProfile, AWS::Amplify::App, AWS::AppMesh::VirtualNode, AWS::AppMesh::VirtualService, AWS::AppRunner::VpcConnector, AWS::AppStream::Application, AWS::CodeArtifact::Repository, AWS::EC2::PrefixList, AWS::EC2::SpotFleet, AWS::Evidently::Project, AWS::Forecast::Dataset, AWS::IAM::SAMLProvider, AWS::IAM::ServerCertificate, AWS::Pinpoint::Campaign, AWS::Pinpoint::InAppTemplate, AWS::SageMaker::Domain, AWS::Transfer::Agreement, AWS::Transfer::Connector, AWS::KinesisFirehose::DeliveryStream, AWS::Amplify::Branch, AWS::AppIntegrations::EventIntegration, AWS::AppMesh::Route, AWS::Athena::PreparedStatement, AWS::EC2::IPAMScope, AWS::Evidently::Launch, AWS::Forecast::DatasetGroup, AWS::GreengrassV2::ComponentVersion, AWS::GroundStation::MissionProfile, AWS::MediaConnect::FlowEntitlement, AWS::MediaConnect::FlowVpcInterface, AWS::MediaTailor::PlaybackConfiguration, AWS::MSK::Configuration, AWS::Personalize::Dataset, AWS::Personalize::Schema, AWS::Personalize::Solution, AWS::Pinpoint::EmailTemplate, AWS::Pinpoint::EventStream, AWS::ResilienceHub::App, AWS::ACMPCA::CertificateAuthority, AWS::AppConfig::HostedConfigurationVersion, AWS::AppMesh::VirtualGateway, AWS::AppMesh::VirtualRouter, AWS::AppRunner::Service, AWS::CustomerProfiles::ObjectType, AWS::DMS::Endpoint, AWS::EC2::CapacityReservation, AWS::EC2::ClientVpnEndpoint, AWS::Kendra::Index, AWS::KinesisVideo::Stream, AWS::Logs::Destination, AWS::Pinpoint::EmailChannel, AWS::S3::AccessPoint, AWS::NetworkManager::CustomerGatewayAssociation, AWS::NetworkManager::LinkAssociation, AWS::IoTWireless::MulticastGroup, AWS::Personalize::DatasetGroup, AWS::IoTTwinMaker::ComponentType, AWS::CodeBuild::ReportGroup, AWS::SageMaker::FeatureGroup, AWS::MSK::BatchScramSecret, AWS::AppStream::Stack, AWS::IoT::JobTemplate, AWS::IoTWireless::FuotaTask, AWS::IoT::ProvisioningTemplate, AWS::InspectorV2::Filter, AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation, AWS::ServiceDiscovery::Instance, AWS::Transfer::Certificate, AWS::MediaConnect::FlowSource, AWS::APS::RuleGroupsNamespace, AWS::CodeGuruProfiler::ProfilingGroup, AWS::Route53Resolver::ResolverQueryLoggingConfig, AWS::Batch::SchedulingPolicy, AWS::ACMPCA::CertificateAuthorityActivation, AWS::AppMesh::GatewayRoute, AWS::AppMesh::Mesh, AWS::Connect::Instance, AWS::Connect::QuickConnect, AWS::EC2::CarrierGateway, AWS::EC2::IPAMPool, AWS::EC2::TransitGatewayConnect, AWS::EC2::TransitGatewayMulticastDomain, AWS::ECS::CapacityProvider, AWS::IAM::InstanceProfile, AWS::IoT::CACertificate, AWS::IoTTwinMaker::SyncJob, AWS::KafkaConnect::Connector, AWS::Lambda::CodeSigningConfig, AWS::NetworkManager::ConnectPeer, AWS::ResourceExplorer2::Index, AWS::AppStream::Fleet, AWS::Cognito::UserPool, AWS::Cognito::UserPoolClient, AWS::Cognito::UserPoolGroup, AWS::EC2::NetworkInsightsAccessScope, AWS::EC2::NetworkInsightsAnalysis, AWS::Grafana::Workspace, AWS::GroundStation::DataflowEndpointGroup, AWS::ImageBuilder::ImageRecipe, AWS::KMS::Alias, AWS::M2::Environment, AWS::QuickSight::DataSource, AWS::QuickSight::Template, AWS::QuickSight::Theme, AWS::RDS::OptionGroup, AWS::Redshift::EndpointAccess, AWS::Route53Resolver::FirewallRuleGroup, AWS::SSM::Document
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.configuration_recorder.arn #=> String
+    #   resp.configuration_recorder.name #=> String
+    #   resp.configuration_recorder.role_arn #=> String
+    #   resp.configuration_recorder.recording_group.all_supported #=> Boolean
+    #   resp.configuration_recorder.recording_group.include_global_resource_types #=> Boolean
+    #   resp.configuration_recorder.recording_group.resource_types #=> Array
+    #   resp.configuration_recorder.recording_group.resource_types[0] #=> String, one of "AWS::EC2::CustomerGateway", "AWS::EC2::EIP", "AWS::EC2::Host", "AWS::EC2::Instance", "AWS::EC2::InternetGateway", "AWS::EC2::NetworkAcl", "AWS::EC2::NetworkInterface", "AWS::EC2::RouteTable", "AWS::EC2::SecurityGroup", "AWS::EC2::Subnet", "AWS::CloudTrail::Trail", "AWS::EC2::Volume", "AWS::EC2::VPC", "AWS::EC2::VPNConnection", "AWS::EC2::VPNGateway", "AWS::EC2::RegisteredHAInstance", "AWS::EC2::NatGateway", "AWS::EC2::EgressOnlyInternetGateway", "AWS::EC2::VPCEndpoint", "AWS::EC2::VPCEndpointService", "AWS::EC2::FlowLog", "AWS::EC2::VPCPeeringConnection", "AWS::Elasticsearch::Domain", "AWS::IAM::Group", "AWS::IAM::Policy", "AWS::IAM::Role", "AWS::IAM::User", "AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ACM::Certificate", "AWS::RDS::DBInstance", "AWS::RDS::DBSubnetGroup", "AWS::RDS::DBSecurityGroup", "AWS::RDS::DBSnapshot", "AWS::RDS::DBCluster", "AWS::RDS::DBClusterSnapshot", "AWS::RDS::EventSubscription", "AWS::S3::Bucket", "AWS::S3::AccountPublicAccessBlock", "AWS::Redshift::Cluster", "AWS::Redshift::ClusterSnapshot", "AWS::Redshift::ClusterParameterGroup", "AWS::Redshift::ClusterSecurityGroup", "AWS::Redshift::ClusterSubnetGroup", "AWS::Redshift::EventSubscription", "AWS::SSM::ManagedInstanceInventory", "AWS::CloudWatch::Alarm", "AWS::CloudFormation::Stack", "AWS::ElasticLoadBalancing::LoadBalancer", "AWS::AutoScaling::AutoScalingGroup", "AWS::AutoScaling::LaunchConfiguration", "AWS::AutoScaling::ScalingPolicy", "AWS::AutoScaling::ScheduledAction", "AWS::DynamoDB::Table", "AWS::CodeBuild::Project", "AWS::WAF::RateBasedRule", "AWS::WAF::Rule", "AWS::WAF::RuleGroup", "AWS::WAF::WebACL", "AWS::WAFRegional::RateBasedRule", "AWS::WAFRegional::Rule", "AWS::WAFRegional::RuleGroup", "AWS::WAFRegional::WebACL", "AWS::CloudFront::Distribution", "AWS::CloudFront::StreamingDistribution", "AWS::Lambda::Function", "AWS::NetworkFirewall::Firewall", "AWS::NetworkFirewall::FirewallPolicy", "AWS::NetworkFirewall::RuleGroup", "AWS::ElasticBeanstalk::Application", "AWS::ElasticBeanstalk::ApplicationVersion", "AWS::ElasticBeanstalk::Environment", "AWS::WAFv2::WebACL", "AWS::WAFv2::RuleGroup", "AWS::WAFv2::IPSet", "AWS::WAFv2::RegexPatternSet", "AWS::WAFv2::ManagedRuleSet", "AWS::XRay::EncryptionConfig", "AWS::SSM::AssociationCompliance", "AWS::SSM::PatchCompliance", "AWS::Shield::Protection", "AWS::ShieldRegional::Protection", "AWS::Config::ConformancePackCompliance", "AWS::Config::ResourceCompliance", "AWS::ApiGateway::Stage", "AWS::ApiGateway::RestApi", "AWS::ApiGatewayV2::Stage", "AWS::ApiGatewayV2::Api", "AWS::CodePipeline::Pipeline", "AWS::ServiceCatalog::CloudFormationProvisionedProduct", "AWS::ServiceCatalog::CloudFormationProduct", "AWS::ServiceCatalog::Portfolio", "AWS::SQS::Queue", "AWS::KMS::Key", "AWS::QLDB::Ledger", "AWS::SecretsManager::Secret", "AWS::SNS::Topic", "AWS::SSM::FileData", "AWS::Backup::BackupPlan", "AWS::Backup::BackupSelection", "AWS::Backup::BackupVault", "AWS::Backup::RecoveryPoint", "AWS::ECR::Repository", "AWS::ECS::Cluster", "AWS::ECS::Service", "AWS::ECS::TaskDefinition", "AWS::EFS::AccessPoint", "AWS::EFS::FileSystem", "AWS::EKS::Cluster", "AWS::OpenSearch::Domain", "AWS::EC2::TransitGateway", "AWS::Kinesis::Stream", "AWS::Kinesis::StreamConsumer", "AWS::CodeDeploy::Application", "AWS::CodeDeploy::DeploymentConfig", "AWS::CodeDeploy::DeploymentGroup", "AWS::EC2::LaunchTemplate", "AWS::ECR::PublicRepository", "AWS::GuardDuty::Detector", "AWS::EMR::SecurityConfiguration", "AWS::SageMaker::CodeRepository", "AWS::Route53Resolver::ResolverEndpoint", "AWS::Route53Resolver::ResolverRule", "AWS::Route53Resolver::ResolverRuleAssociation", "AWS::DMS::ReplicationSubnetGroup", "AWS::DMS::EventSubscription", "AWS::MSK::Cluster", "AWS::StepFunctions::Activity", "AWS::WorkSpaces::Workspace", "AWS::WorkSpaces::ConnectionAlias", "AWS::SageMaker::Model", "AWS::ElasticLoadBalancingV2::Listener", "AWS::StepFunctions::StateMachine", "AWS::Batch::JobQueue", "AWS::Batch::ComputeEnvironment", "AWS::AccessAnalyzer::Analyzer", "AWS::Athena::WorkGroup", "AWS::Athena::DataCatalog", "AWS::Detective::Graph", "AWS::GlobalAccelerator::Accelerator", "AWS::GlobalAccelerator::EndpointGroup", "AWS::GlobalAccelerator::Listener", "AWS::EC2::TransitGatewayAttachment", "AWS::EC2::TransitGatewayRouteTable", "AWS::DMS::Certificate", "AWS::AppConfig::Application", "AWS::AppSync::GraphQLApi", "AWS::DataSync::LocationSMB", "AWS::DataSync::LocationFSxLustre", "AWS::DataSync::LocationS3", "AWS::DataSync::LocationEFS", "AWS::DataSync::Task", "AWS::DataSync::LocationNFS", "AWS::EC2::NetworkInsightsAccessScopeAnalysis", "AWS::EKS::FargateProfile", "AWS::Glue::Job", "AWS::GuardDuty::ThreatIntelSet", "AWS::GuardDuty::IPSet", "AWS::SageMaker::Workteam", "AWS::SageMaker::NotebookInstanceLifecycleConfig", "AWS::ServiceDiscovery::Service", "AWS::ServiceDiscovery::PublicDnsNamespace", "AWS::SES::ContactList", "AWS::SES::ConfigurationSet", "AWS::Route53::HostedZone", "AWS::IoTEvents::Input", "AWS::IoTEvents::DetectorModel", "AWS::IoTEvents::AlarmModel", "AWS::ServiceDiscovery::HttpNamespace", "AWS::Events::EventBus", "AWS::ImageBuilder::ContainerRecipe", "AWS::ImageBuilder::DistributionConfiguration", "AWS::ImageBuilder::InfrastructureConfiguration", "AWS::DataSync::LocationObjectStorage", "AWS::DataSync::LocationHDFS", "AWS::Glue::Classifier", "AWS::Route53RecoveryReadiness::Cell", "AWS::Route53RecoveryReadiness::ReadinessCheck", "AWS::ECR::RegistryPolicy", "AWS::Backup::ReportPlan", "AWS::Lightsail::Certificate", "AWS::RUM::AppMonitor", "AWS::Events::Endpoint", "AWS::SES::ReceiptRuleSet", "AWS::Events::Archive", "AWS::Events::ApiDestination", "AWS::Lightsail::Disk", "AWS::FIS::ExperimentTemplate", "AWS::DataSync::LocationFSxWindows", "AWS::SES::ReceiptFilter", "AWS::GuardDuty::Filter", "AWS::SES::Template", "AWS::AmazonMQ::Broker", "AWS::AppConfig::Environment", "AWS::AppConfig::ConfigurationProfile", "AWS::Cloud9::EnvironmentEC2", "AWS::EventSchemas::Registry", "AWS::EventSchemas::RegistryPolicy", "AWS::EventSchemas::Discoverer", "AWS::FraudDetector::Label", "AWS::FraudDetector::EntityType", "AWS::FraudDetector::Variable", "AWS::FraudDetector::Outcome", "AWS::IoT::Authorizer", "AWS::IoT::SecurityProfile", "AWS::IoT::RoleAlias", "AWS::IoT::Dimension", "AWS::IoTAnalytics::Datastore", "AWS::Lightsail::Bucket", "AWS::Lightsail::StaticIp", "AWS::MediaPackage::PackagingGroup", "AWS::Route53RecoveryReadiness::RecoveryGroup", "AWS::ResilienceHub::ResiliencyPolicy", "AWS::Transfer::Workflow", "AWS::EKS::IdentityProviderConfig", "AWS::EKS::Addon", "AWS::Glue::MLTransform", "AWS::IoT::Policy", "AWS::IoT::MitigationAction", "AWS::IoTTwinMaker::Workspace", "AWS::IoTTwinMaker::Entity", "AWS::IoTAnalytics::Dataset", "AWS::IoTAnalytics::Pipeline", "AWS::IoTAnalytics::Channel", "AWS::IoTSiteWise::Dashboard", "AWS::IoTSiteWise::Project", "AWS::IoTSiteWise::Portal", "AWS::IoTSiteWise::AssetModel", "AWS::IVS::Channel", "AWS::IVS::RecordingConfiguration", "AWS::IVS::PlaybackKeyPair", "AWS::KinesisAnalyticsV2::Application", "AWS::RDS::GlobalCluster", "AWS::S3::MultiRegionAccessPoint", "AWS::DeviceFarm::TestGridProject", "AWS::Budgets::BudgetsAction", "AWS::Lex::Bot", "AWS::CodeGuruReviewer::RepositoryAssociation", "AWS::IoT::CustomMetric", "AWS::Route53Resolver::FirewallDomainList", "AWS::RoboMaker::RobotApplicationVersion", "AWS::EC2::TrafficMirrorSession", "AWS::IoTSiteWise::Gateway", "AWS::Lex::BotAlias", "AWS::LookoutMetrics::Alert", "AWS::IoT::AccountAuditConfiguration", "AWS::EC2::TrafficMirrorTarget", "AWS::S3::StorageLens", "AWS::IoT::ScheduledAudit", "AWS::Events::Connection", "AWS::EventSchemas::Schema", "AWS::MediaPackage::PackagingConfiguration", "AWS::KinesisVideo::SignalingChannel", "AWS::AppStream::DirectoryConfig", "AWS::LookoutVision::Project", "AWS::Route53RecoveryControl::Cluster", "AWS::Route53RecoveryControl::SafetyRule", "AWS::Route53RecoveryControl::ControlPanel", "AWS::Route53RecoveryControl::RoutingControl", "AWS::Route53RecoveryReadiness::ResourceSet", "AWS::RoboMaker::SimulationApplication", "AWS::RoboMaker::RobotApplication", "AWS::HealthLake::FHIRDatastore", "AWS::Pinpoint::Segment", "AWS::Pinpoint::ApplicationSettings", "AWS::Events::Rule", "AWS::EC2::DHCPOptions", "AWS::EC2::NetworkInsightsPath", "AWS::EC2::TrafficMirrorFilter", "AWS::EC2::IPAM", "AWS::IoTTwinMaker::Scene", "AWS::NetworkManager::TransitGatewayRegistration", "AWS::CustomerProfiles::Domain", "AWS::AutoScaling::WarmPool", "AWS::Connect::PhoneNumber", "AWS::AppConfig::DeploymentStrategy", "AWS::AppFlow::Flow", "AWS::AuditManager::Assessment", "AWS::CloudWatch::MetricStream", "AWS::DeviceFarm::InstanceProfile", "AWS::DeviceFarm::Project", "AWS::EC2::EC2Fleet", "AWS::EC2::SubnetRouteTableAssociation", "AWS::ECR::PullThroughCacheRule", "AWS::GroundStation::Config", "AWS::ImageBuilder::ImagePipeline", "AWS::IoT::FleetMetric", "AWS::IoTWireless::ServiceProfile", "AWS::NetworkManager::Device", "AWS::NetworkManager::GlobalNetwork", "AWS::NetworkManager::Link", "AWS::NetworkManager::Site", "AWS::Panorama::Package", "AWS::Pinpoint::App", "AWS::Redshift::ScheduledAction", "AWS::Route53Resolver::FirewallRuleGroupAssociation", "AWS::SageMaker::AppImageConfig", "AWS::SageMaker::Image", "AWS::ECS::TaskSet", "AWS::Cassandra::Keyspace", "AWS::Signer::SigningProfile", "AWS::Amplify::App", "AWS::AppMesh::VirtualNode", "AWS::AppMesh::VirtualService", "AWS::AppRunner::VpcConnector", "AWS::AppStream::Application", "AWS::CodeArtifact::Repository", "AWS::EC2::PrefixList", "AWS::EC2::SpotFleet", "AWS::Evidently::Project", "AWS::Forecast::Dataset", "AWS::IAM::SAMLProvider", "AWS::IAM::ServerCertificate", "AWS::Pinpoint::Campaign", "AWS::Pinpoint::InAppTemplate", "AWS::SageMaker::Domain", "AWS::Transfer::Agreement", "AWS::Transfer::Connector", "AWS::KinesisFirehose::DeliveryStream", "AWS::Amplify::Branch", "AWS::AppIntegrations::EventIntegration", "AWS::AppMesh::Route", "AWS::Athena::PreparedStatement", "AWS::EC2::IPAMScope", "AWS::Evidently::Launch", "AWS::Forecast::DatasetGroup", "AWS::GreengrassV2::ComponentVersion", "AWS::GroundStation::MissionProfile", "AWS::MediaConnect::FlowEntitlement", "AWS::MediaConnect::FlowVpcInterface", "AWS::MediaTailor::PlaybackConfiguration", "AWS::MSK::Configuration", "AWS::Personalize::Dataset", "AWS::Personalize::Schema", "AWS::Personalize::Solution", "AWS::Pinpoint::EmailTemplate", "AWS::Pinpoint::EventStream", "AWS::ResilienceHub::App", "AWS::ACMPCA::CertificateAuthority", "AWS::AppConfig::HostedConfigurationVersion", "AWS::AppMesh::VirtualGateway", "AWS::AppMesh::VirtualRouter", "AWS::AppRunner::Service", "AWS::CustomerProfiles::ObjectType", "AWS::DMS::Endpoint", "AWS::EC2::CapacityReservation", "AWS::EC2::ClientVpnEndpoint", "AWS::Kendra::Index", "AWS::KinesisVideo::Stream", "AWS::Logs::Destination", "AWS::Pinpoint::EmailChannel", "AWS::S3::AccessPoint", "AWS::NetworkManager::CustomerGatewayAssociation", "AWS::NetworkManager::LinkAssociation", "AWS::IoTWireless::MulticastGroup", "AWS::Personalize::DatasetGroup", "AWS::IoTTwinMaker::ComponentType", "AWS::CodeBuild::ReportGroup", "AWS::SageMaker::FeatureGroup", "AWS::MSK::BatchScramSecret", "AWS::AppStream::Stack", "AWS::IoT::JobTemplate", "AWS::IoTWireless::FuotaTask", "AWS::IoT::ProvisioningTemplate", "AWS::InspectorV2::Filter", "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation", "AWS::ServiceDiscovery::Instance", "AWS::Transfer::Certificate", "AWS::MediaConnect::FlowSource", "AWS::APS::RuleGroupsNamespace", "AWS::CodeGuruProfiler::ProfilingGroup", "AWS::Route53Resolver::ResolverQueryLoggingConfig", "AWS::Batch::SchedulingPolicy", "AWS::ACMPCA::CertificateAuthorityActivation", "AWS::AppMesh::GatewayRoute", "AWS::AppMesh::Mesh", "AWS::Connect::Instance", "AWS::Connect::QuickConnect", "AWS::EC2::CarrierGateway", "AWS::EC2::IPAMPool", "AWS::EC2::TransitGatewayConnect", "AWS::EC2::TransitGatewayMulticastDomain", "AWS::ECS::CapacityProvider", "AWS::IAM::InstanceProfile", "AWS::IoT::CACertificate", "AWS::IoTTwinMaker::SyncJob", "AWS::KafkaConnect::Connector", "AWS::Lambda::CodeSigningConfig", "AWS::NetworkManager::ConnectPeer", "AWS::ResourceExplorer2::Index", "AWS::AppStream::Fleet", "AWS::Cognito::UserPool", "AWS::Cognito::UserPoolClient", "AWS::Cognito::UserPoolGroup", "AWS::EC2::NetworkInsightsAccessScope", "AWS::EC2::NetworkInsightsAnalysis", "AWS::Grafana::Workspace", "AWS::GroundStation::DataflowEndpointGroup", "AWS::ImageBuilder::ImageRecipe", "AWS::KMS::Alias", "AWS::M2::Environment", "AWS::QuickSight::DataSource", "AWS::QuickSight::Template", "AWS::QuickSight::Theme", "AWS::RDS::OptionGroup", "AWS::Redshift::EndpointAccess", "AWS::Route53Resolver::FirewallRuleGroup", "AWS::SSM::Document"
+    #   resp.configuration_recorder.recording_group.exclusion_by_resource_types.resource_types #=> Array
+    #   resp.configuration_recorder.recording_group.exclusion_by_resource_types.resource_types[0] #=> String, one of "AWS::EC2::CustomerGateway", "AWS::EC2::EIP", "AWS::EC2::Host", "AWS::EC2::Instance", "AWS::EC2::InternetGateway", "AWS::EC2::NetworkAcl", "AWS::EC2::NetworkInterface", "AWS::EC2::RouteTable", "AWS::EC2::SecurityGroup", "AWS::EC2::Subnet", "AWS::CloudTrail::Trail", "AWS::EC2::Volume", "AWS::EC2::VPC", "AWS::EC2::VPNConnection", "AWS::EC2::VPNGateway", "AWS::EC2::RegisteredHAInstance", "AWS::EC2::NatGateway", "AWS::EC2::EgressOnlyInternetGateway", "AWS::EC2::VPCEndpoint", "AWS::EC2::VPCEndpointService", "AWS::EC2::FlowLog", "AWS::EC2::VPCPeeringConnection", "AWS::Elasticsearch::Domain", "AWS::IAM::Group", "AWS::IAM::Policy", "AWS::IAM::Role", "AWS::IAM::User", "AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ACM::Certificate", "AWS::RDS::DBInstance", "AWS::RDS::DBSubnetGroup", "AWS::RDS::DBSecurityGroup", "AWS::RDS::DBSnapshot", "AWS::RDS::DBCluster", "AWS::RDS::DBClusterSnapshot", "AWS::RDS::EventSubscription", "AWS::S3::Bucket", "AWS::S3::AccountPublicAccessBlock", "AWS::Redshift::Cluster", "AWS::Redshift::ClusterSnapshot", "AWS::Redshift::ClusterParameterGroup", "AWS::Redshift::ClusterSecurityGroup", "AWS::Redshift::ClusterSubnetGroup", "AWS::Redshift::EventSubscription", "AWS::SSM::ManagedInstanceInventory", "AWS::CloudWatch::Alarm", "AWS::CloudFormation::Stack", "AWS::ElasticLoadBalancing::LoadBalancer", "AWS::AutoScaling::AutoScalingGroup", "AWS::AutoScaling::LaunchConfiguration", "AWS::AutoScaling::ScalingPolicy", "AWS::AutoScaling::ScheduledAction", "AWS::DynamoDB::Table", "AWS::CodeBuild::Project", "AWS::WAF::RateBasedRule", "AWS::WAF::Rule", "AWS::WAF::RuleGroup", "AWS::WAF::WebACL", "AWS::WAFRegional::RateBasedRule", "AWS::WAFRegional::Rule", "AWS::WAFRegional::RuleGroup", "AWS::WAFRegional::WebACL", "AWS::CloudFront::Distribution", "AWS::CloudFront::StreamingDistribution", "AWS::Lambda::Function", "AWS::NetworkFirewall::Firewall", "AWS::NetworkFirewall::FirewallPolicy", "AWS::NetworkFirewall::RuleGroup", "AWS::ElasticBeanstalk::Application", "AWS::ElasticBeanstalk::ApplicationVersion", "AWS::ElasticBeanstalk::Environment", "AWS::WAFv2::WebACL", "AWS::WAFv2::RuleGroup", "AWS::WAFv2::IPSet", "AWS::WAFv2::RegexPatternSet", "AWS::WAFv2::ManagedRuleSet", "AWS::XRay::EncryptionConfig", "AWS::SSM::AssociationCompliance", "AWS::SSM::PatchCompliance", "AWS::Shield::Protection", "AWS::ShieldRegional::Protection", "AWS::Config::ConformancePackCompliance", "AWS::Config::ResourceCompliance", "AWS::ApiGateway::Stage", "AWS::ApiGateway::RestApi", "AWS::ApiGatewayV2::Stage", "AWS::ApiGatewayV2::Api", "AWS::CodePipeline::Pipeline", "AWS::ServiceCatalog::CloudFormationProvisionedProduct", "AWS::ServiceCatalog::CloudFormationProduct", "AWS::ServiceCatalog::Portfolio", "AWS::SQS::Queue", "AWS::KMS::Key", "AWS::QLDB::Ledger", "AWS::SecretsManager::Secret", "AWS::SNS::Topic", "AWS::SSM::FileData", "AWS::Backup::BackupPlan", "AWS::Backup::BackupSelection", "AWS::Backup::BackupVault", "AWS::Backup::RecoveryPoint", "AWS::ECR::Repository", "AWS::ECS::Cluster", "AWS::ECS::Service", "AWS::ECS::TaskDefinition", "AWS::EFS::AccessPoint", "AWS::EFS::FileSystem", "AWS::EKS::Cluster", "AWS::OpenSearch::Domain", "AWS::EC2::TransitGateway", "AWS::Kinesis::Stream", "AWS::Kinesis::StreamConsumer", "AWS::CodeDeploy::Application", "AWS::CodeDeploy::DeploymentConfig", "AWS::CodeDeploy::DeploymentGroup", "AWS::EC2::LaunchTemplate", "AWS::ECR::PublicRepository", "AWS::GuardDuty::Detector", "AWS::EMR::SecurityConfiguration", "AWS::SageMaker::CodeRepository", "AWS::Route53Resolver::ResolverEndpoint", "AWS::Route53Resolver::ResolverRule", "AWS::Route53Resolver::ResolverRuleAssociation", "AWS::DMS::ReplicationSubnetGroup", "AWS::DMS::EventSubscription", "AWS::MSK::Cluster", "AWS::StepFunctions::Activity", "AWS::WorkSpaces::Workspace", "AWS::WorkSpaces::ConnectionAlias", "AWS::SageMaker::Model", "AWS::ElasticLoadBalancingV2::Listener", "AWS::StepFunctions::StateMachine", "AWS::Batch::JobQueue", "AWS::Batch::ComputeEnvironment", "AWS::AccessAnalyzer::Analyzer", "AWS::Athena::WorkGroup", "AWS::Athena::DataCatalog", "AWS::Detective::Graph", "AWS::GlobalAccelerator::Accelerator", "AWS::GlobalAccelerator::EndpointGroup", "AWS::GlobalAccelerator::Listener", "AWS::EC2::TransitGatewayAttachment", "AWS::EC2::TransitGatewayRouteTable", "AWS::DMS::Certificate", "AWS::AppConfig::Application", "AWS::AppSync::GraphQLApi", "AWS::DataSync::LocationSMB", "AWS::DataSync::LocationFSxLustre", "AWS::DataSync::LocationS3", "AWS::DataSync::LocationEFS", "AWS::DataSync::Task", "AWS::DataSync::LocationNFS", "AWS::EC2::NetworkInsightsAccessScopeAnalysis", "AWS::EKS::FargateProfile", "AWS::Glue::Job", "AWS::GuardDuty::ThreatIntelSet", "AWS::GuardDuty::IPSet", "AWS::SageMaker::Workteam", "AWS::SageMaker::NotebookInstanceLifecycleConfig", "AWS::ServiceDiscovery::Service", "AWS::ServiceDiscovery::PublicDnsNamespace", "AWS::SES::ContactList", "AWS::SES::ConfigurationSet", "AWS::Route53::HostedZone", "AWS::IoTEvents::Input", "AWS::IoTEvents::DetectorModel", "AWS::IoTEvents::AlarmModel", "AWS::ServiceDiscovery::HttpNamespace", "AWS::Events::EventBus", "AWS::ImageBuilder::ContainerRecipe", "AWS::ImageBuilder::DistributionConfiguration", "AWS::ImageBuilder::InfrastructureConfiguration", "AWS::DataSync::LocationObjectStorage", "AWS::DataSync::LocationHDFS", "AWS::Glue::Classifier", "AWS::Route53RecoveryReadiness::Cell", "AWS::Route53RecoveryReadiness::ReadinessCheck", "AWS::ECR::RegistryPolicy", "AWS::Backup::ReportPlan", "AWS::Lightsail::Certificate", "AWS::RUM::AppMonitor", "AWS::Events::Endpoint", "AWS::SES::ReceiptRuleSet", "AWS::Events::Archive", "AWS::Events::ApiDestination", "AWS::Lightsail::Disk", "AWS::FIS::ExperimentTemplate", "AWS::DataSync::LocationFSxWindows", "AWS::SES::ReceiptFilter", "AWS::GuardDuty::Filter", "AWS::SES::Template", "AWS::AmazonMQ::Broker", "AWS::AppConfig::Environment", "AWS::AppConfig::ConfigurationProfile", "AWS::Cloud9::EnvironmentEC2", "AWS::EventSchemas::Registry", "AWS::EventSchemas::RegistryPolicy", "AWS::EventSchemas::Discoverer", "AWS::FraudDetector::Label", "AWS::FraudDetector::EntityType", "AWS::FraudDetector::Variable", "AWS::FraudDetector::Outcome", "AWS::IoT::Authorizer", "AWS::IoT::SecurityProfile", "AWS::IoT::RoleAlias", "AWS::IoT::Dimension", "AWS::IoTAnalytics::Datastore", "AWS::Lightsail::Bucket", "AWS::Lightsail::StaticIp", "AWS::MediaPackage::PackagingGroup", "AWS::Route53RecoveryReadiness::RecoveryGroup", "AWS::ResilienceHub::ResiliencyPolicy", "AWS::Transfer::Workflow", "AWS::EKS::IdentityProviderConfig", "AWS::EKS::Addon", "AWS::Glue::MLTransform", "AWS::IoT::Policy", "AWS::IoT::MitigationAction", "AWS::IoTTwinMaker::Workspace", "AWS::IoTTwinMaker::Entity", "AWS::IoTAnalytics::Dataset", "AWS::IoTAnalytics::Pipeline", "AWS::IoTAnalytics::Channel", "AWS::IoTSiteWise::Dashboard", "AWS::IoTSiteWise::Project", "AWS::IoTSiteWise::Portal", "AWS::IoTSiteWise::AssetModel", "AWS::IVS::Channel", "AWS::IVS::RecordingConfiguration", "AWS::IVS::PlaybackKeyPair", "AWS::KinesisAnalyticsV2::Application", "AWS::RDS::GlobalCluster", "AWS::S3::MultiRegionAccessPoint", "AWS::DeviceFarm::TestGridProject", "AWS::Budgets::BudgetsAction", "AWS::Lex::Bot", "AWS::CodeGuruReviewer::RepositoryAssociation", "AWS::IoT::CustomMetric", "AWS::Route53Resolver::FirewallDomainList", "AWS::RoboMaker::RobotApplicationVersion", "AWS::EC2::TrafficMirrorSession", "AWS::IoTSiteWise::Gateway", "AWS::Lex::BotAlias", "AWS::LookoutMetrics::Alert", "AWS::IoT::AccountAuditConfiguration", "AWS::EC2::TrafficMirrorTarget", "AWS::S3::StorageLens", "AWS::IoT::ScheduledAudit", "AWS::Events::Connection", "AWS::EventSchemas::Schema", "AWS::MediaPackage::PackagingConfiguration", "AWS::KinesisVideo::SignalingChannel", "AWS::AppStream::DirectoryConfig", "AWS::LookoutVision::Project", "AWS::Route53RecoveryControl::Cluster", "AWS::Route53RecoveryControl::SafetyRule", "AWS::Route53RecoveryControl::ControlPanel", "AWS::Route53RecoveryControl::RoutingControl", "AWS::Route53RecoveryReadiness::ResourceSet", "AWS::RoboMaker::SimulationApplication", "AWS::RoboMaker::RobotApplication", "AWS::HealthLake::FHIRDatastore", "AWS::Pinpoint::Segment", "AWS::Pinpoint::ApplicationSettings", "AWS::Events::Rule", "AWS::EC2::DHCPOptions", "AWS::EC2::NetworkInsightsPath", "AWS::EC2::TrafficMirrorFilter", "AWS::EC2::IPAM", "AWS::IoTTwinMaker::Scene", "AWS::NetworkManager::TransitGatewayRegistration", "AWS::CustomerProfiles::Domain", "AWS::AutoScaling::WarmPool", "AWS::Connect::PhoneNumber", "AWS::AppConfig::DeploymentStrategy", "AWS::AppFlow::Flow", "AWS::AuditManager::Assessment", "AWS::CloudWatch::MetricStream", "AWS::DeviceFarm::InstanceProfile", "AWS::DeviceFarm::Project", "AWS::EC2::EC2Fleet", "AWS::EC2::SubnetRouteTableAssociation", "AWS::ECR::PullThroughCacheRule", "AWS::GroundStation::Config", "AWS::ImageBuilder::ImagePipeline", "AWS::IoT::FleetMetric", "AWS::IoTWireless::ServiceProfile", "AWS::NetworkManager::Device", "AWS::NetworkManager::GlobalNetwork", "AWS::NetworkManager::Link", "AWS::NetworkManager::Site", "AWS::Panorama::Package", "AWS::Pinpoint::App", "AWS::Redshift::ScheduledAction", "AWS::Route53Resolver::FirewallRuleGroupAssociation", "AWS::SageMaker::AppImageConfig", "AWS::SageMaker::Image", "AWS::ECS::TaskSet", "AWS::Cassandra::Keyspace", "AWS::Signer::SigningProfile", "AWS::Amplify::App", "AWS::AppMesh::VirtualNode", "AWS::AppMesh::VirtualService", "AWS::AppRunner::VpcConnector", "AWS::AppStream::Application", "AWS::CodeArtifact::Repository", "AWS::EC2::PrefixList", "AWS::EC2::SpotFleet", "AWS::Evidently::Project", "AWS::Forecast::Dataset", "AWS::IAM::SAMLProvider", "AWS::IAM::ServerCertificate", "AWS::Pinpoint::Campaign", "AWS::Pinpoint::InAppTemplate", "AWS::SageMaker::Domain", "AWS::Transfer::Agreement", "AWS::Transfer::Connector", "AWS::KinesisFirehose::DeliveryStream", "AWS::Amplify::Branch", "AWS::AppIntegrations::EventIntegration", "AWS::AppMesh::Route", "AWS::Athena::PreparedStatement", "AWS::EC2::IPAMScope", "AWS::Evidently::Launch", "AWS::Forecast::DatasetGroup", "AWS::GreengrassV2::ComponentVersion", "AWS::GroundStation::MissionProfile", "AWS::MediaConnect::FlowEntitlement", "AWS::MediaConnect::FlowVpcInterface", "AWS::MediaTailor::PlaybackConfiguration", "AWS::MSK::Configuration", "AWS::Personalize::Dataset", "AWS::Personalize::Schema", "AWS::Personalize::Solution", "AWS::Pinpoint::EmailTemplate", "AWS::Pinpoint::EventStream", "AWS::ResilienceHub::App", "AWS::ACMPCA::CertificateAuthority", "AWS::AppConfig::HostedConfigurationVersion", "AWS::AppMesh::VirtualGateway", "AWS::AppMesh::VirtualRouter", "AWS::AppRunner::Service", "AWS::CustomerProfiles::ObjectType", "AWS::DMS::Endpoint", "AWS::EC2::CapacityReservation", "AWS::EC2::ClientVpnEndpoint", "AWS::Kendra::Index", "AWS::KinesisVideo::Stream", "AWS::Logs::Destination", "AWS::Pinpoint::EmailChannel", "AWS::S3::AccessPoint", "AWS::NetworkManager::CustomerGatewayAssociation", "AWS::NetworkManager::LinkAssociation", "AWS::IoTWireless::MulticastGroup", "AWS::Personalize::DatasetGroup", "AWS::IoTTwinMaker::ComponentType", "AWS::CodeBuild::ReportGroup", "AWS::SageMaker::FeatureGroup", "AWS::MSK::BatchScramSecret", "AWS::AppStream::Stack", "AWS::IoT::JobTemplate", "AWS::IoTWireless::FuotaTask", "AWS::IoT::ProvisioningTemplate", "AWS::InspectorV2::Filter", "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation", "AWS::ServiceDiscovery::Instance", "AWS::Transfer::Certificate", "AWS::MediaConnect::FlowSource", "AWS::APS::RuleGroupsNamespace", "AWS::CodeGuruProfiler::ProfilingGroup", "AWS::Route53Resolver::ResolverQueryLoggingConfig", "AWS::Batch::SchedulingPolicy", "AWS::ACMPCA::CertificateAuthorityActivation", "AWS::AppMesh::GatewayRoute", "AWS::AppMesh::Mesh", "AWS::Connect::Instance", "AWS::Connect::QuickConnect", "AWS::EC2::CarrierGateway", "AWS::EC2::IPAMPool", "AWS::EC2::TransitGatewayConnect", "AWS::EC2::TransitGatewayMulticastDomain", "AWS::ECS::CapacityProvider", "AWS::IAM::InstanceProfile", "AWS::IoT::CACertificate", "AWS::IoTTwinMaker::SyncJob", "AWS::KafkaConnect::Connector", "AWS::Lambda::CodeSigningConfig", "AWS::NetworkManager::ConnectPeer", "AWS::ResourceExplorer2::Index", "AWS::AppStream::Fleet", "AWS::Cognito::UserPool", "AWS::Cognito::UserPoolClient", "AWS::Cognito::UserPoolGroup", "AWS::EC2::NetworkInsightsAccessScope", "AWS::EC2::NetworkInsightsAnalysis", "AWS::Grafana::Workspace", "AWS::GroundStation::DataflowEndpointGroup", "AWS::ImageBuilder::ImageRecipe", "AWS::KMS::Alias", "AWS::M2::Environment", "AWS::QuickSight::DataSource", "AWS::QuickSight::Template", "AWS::QuickSight::Theme", "AWS::RDS::OptionGroup", "AWS::Redshift::EndpointAccess", "AWS::Route53Resolver::FirewallRuleGroup", "AWS::SSM::Document"
+    #   resp.configuration_recorder.recording_group.recording_strategy.use_only #=> String, one of "ALL_SUPPORTED_RESOURCE_TYPES", "INCLUSION_BY_RESOURCE_TYPES", "EXCLUSION_BY_RESOURCE_TYPES"
+    #   resp.configuration_recorder.recording_mode.recording_frequency #=> String, one of "CONTINUOUS", "DAILY"
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides #=> Array
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].description #=> String
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].resource_types #=> Array
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].resource_types[0] #=> String, one of "AWS::EC2::CustomerGateway", "AWS::EC2::EIP", "AWS::EC2::Host", "AWS::EC2::Instance", "AWS::EC2::InternetGateway", "AWS::EC2::NetworkAcl", "AWS::EC2::NetworkInterface", "AWS::EC2::RouteTable", "AWS::EC2::SecurityGroup", "AWS::EC2::Subnet", "AWS::CloudTrail::Trail", "AWS::EC2::Volume", "AWS::EC2::VPC", "AWS::EC2::VPNConnection", "AWS::EC2::VPNGateway", "AWS::EC2::RegisteredHAInstance", "AWS::EC2::NatGateway", "AWS::EC2::EgressOnlyInternetGateway", "AWS::EC2::VPCEndpoint", "AWS::EC2::VPCEndpointService", "AWS::EC2::FlowLog", "AWS::EC2::VPCPeeringConnection", "AWS::Elasticsearch::Domain", "AWS::IAM::Group", "AWS::IAM::Policy", "AWS::IAM::Role", "AWS::IAM::User", "AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ACM::Certificate", "AWS::RDS::DBInstance", "AWS::RDS::DBSubnetGroup", "AWS::RDS::DBSecurityGroup", "AWS::RDS::DBSnapshot", "AWS::RDS::DBCluster", "AWS::RDS::DBClusterSnapshot", "AWS::RDS::EventSubscription", "AWS::S3::Bucket", "AWS::S3::AccountPublicAccessBlock", "AWS::Redshift::Cluster", "AWS::Redshift::ClusterSnapshot", "AWS::Redshift::ClusterParameterGroup", "AWS::Redshift::ClusterSecurityGroup", "AWS::Redshift::ClusterSubnetGroup", "AWS::Redshift::EventSubscription", "AWS::SSM::ManagedInstanceInventory", "AWS::CloudWatch::Alarm", "AWS::CloudFormation::Stack", "AWS::ElasticLoadBalancing::LoadBalancer", "AWS::AutoScaling::AutoScalingGroup", "AWS::AutoScaling::LaunchConfiguration", "AWS::AutoScaling::ScalingPolicy", "AWS::AutoScaling::ScheduledAction", "AWS::DynamoDB::Table", "AWS::CodeBuild::Project", "AWS::WAF::RateBasedRule", "AWS::WAF::Rule", "AWS::WAF::RuleGroup", "AWS::WAF::WebACL", "AWS::WAFRegional::RateBasedRule", "AWS::WAFRegional::Rule", "AWS::WAFRegional::RuleGroup", "AWS::WAFRegional::WebACL", "AWS::CloudFront::Distribution", "AWS::CloudFront::StreamingDistribution", "AWS::Lambda::Function", "AWS::NetworkFirewall::Firewall", "AWS::NetworkFirewall::FirewallPolicy", "AWS::NetworkFirewall::RuleGroup", "AWS::ElasticBeanstalk::Application", "AWS::ElasticBeanstalk::ApplicationVersion", "AWS::ElasticBeanstalk::Environment", "AWS::WAFv2::WebACL", "AWS::WAFv2::RuleGroup", "AWS::WAFv2::IPSet", "AWS::WAFv2::RegexPatternSet", "AWS::WAFv2::ManagedRuleSet", "AWS::XRay::EncryptionConfig", "AWS::SSM::AssociationCompliance", "AWS::SSM::PatchCompliance", "AWS::Shield::Protection", "AWS::ShieldRegional::Protection", "AWS::Config::ConformancePackCompliance", "AWS::Config::ResourceCompliance", "AWS::ApiGateway::Stage", "AWS::ApiGateway::RestApi", "AWS::ApiGatewayV2::Stage", "AWS::ApiGatewayV2::Api", "AWS::CodePipeline::Pipeline", "AWS::ServiceCatalog::CloudFormationProvisionedProduct", "AWS::ServiceCatalog::CloudFormationProduct", "AWS::ServiceCatalog::Portfolio", "AWS::SQS::Queue", "AWS::KMS::Key", "AWS::QLDB::Ledger", "AWS::SecretsManager::Secret", "AWS::SNS::Topic", "AWS::SSM::FileData", "AWS::Backup::BackupPlan", "AWS::Backup::BackupSelection", "AWS::Backup::BackupVault", "AWS::Backup::RecoveryPoint", "AWS::ECR::Repository", "AWS::ECS::Cluster", "AWS::ECS::Service", "AWS::ECS::TaskDefinition", "AWS::EFS::AccessPoint", "AWS::EFS::FileSystem", "AWS::EKS::Cluster", "AWS::OpenSearch::Domain", "AWS::EC2::TransitGateway", "AWS::Kinesis::Stream", "AWS::Kinesis::StreamConsumer", "AWS::CodeDeploy::Application", "AWS::CodeDeploy::DeploymentConfig", "AWS::CodeDeploy::DeploymentGroup", "AWS::EC2::LaunchTemplate", "AWS::ECR::PublicRepository", "AWS::GuardDuty::Detector", "AWS::EMR::SecurityConfiguration", "AWS::SageMaker::CodeRepository", "AWS::Route53Resolver::ResolverEndpoint", "AWS::Route53Resolver::ResolverRule", "AWS::Route53Resolver::ResolverRuleAssociation", "AWS::DMS::ReplicationSubnetGroup", "AWS::DMS::EventSubscription", "AWS::MSK::Cluster", "AWS::StepFunctions::Activity", "AWS::WorkSpaces::Workspace", "AWS::WorkSpaces::ConnectionAlias", "AWS::SageMaker::Model", "AWS::ElasticLoadBalancingV2::Listener", "AWS::StepFunctions::StateMachine", "AWS::Batch::JobQueue", "AWS::Batch::ComputeEnvironment", "AWS::AccessAnalyzer::Analyzer", "AWS::Athena::WorkGroup", "AWS::Athena::DataCatalog", "AWS::Detective::Graph", "AWS::GlobalAccelerator::Accelerator", "AWS::GlobalAccelerator::EndpointGroup", "AWS::GlobalAccelerator::Listener", "AWS::EC2::TransitGatewayAttachment", "AWS::EC2::TransitGatewayRouteTable", "AWS::DMS::Certificate", "AWS::AppConfig::Application", "AWS::AppSync::GraphQLApi", "AWS::DataSync::LocationSMB", "AWS::DataSync::LocationFSxLustre", "AWS::DataSync::LocationS3", "AWS::DataSync::LocationEFS", "AWS::DataSync::Task", "AWS::DataSync::LocationNFS", "AWS::EC2::NetworkInsightsAccessScopeAnalysis", "AWS::EKS::FargateProfile", "AWS::Glue::Job", "AWS::GuardDuty::ThreatIntelSet", "AWS::GuardDuty::IPSet", "AWS::SageMaker::Workteam", "AWS::SageMaker::NotebookInstanceLifecycleConfig", "AWS::ServiceDiscovery::Service", "AWS::ServiceDiscovery::PublicDnsNamespace", "AWS::SES::ContactList", "AWS::SES::ConfigurationSet", "AWS::Route53::HostedZone", "AWS::IoTEvents::Input", "AWS::IoTEvents::DetectorModel", "AWS::IoTEvents::AlarmModel", "AWS::ServiceDiscovery::HttpNamespace", "AWS::Events::EventBus", "AWS::ImageBuilder::ContainerRecipe", "AWS::ImageBuilder::DistributionConfiguration", "AWS::ImageBuilder::InfrastructureConfiguration", "AWS::DataSync::LocationObjectStorage", "AWS::DataSync::LocationHDFS", "AWS::Glue::Classifier", "AWS::Route53RecoveryReadiness::Cell", "AWS::Route53RecoveryReadiness::ReadinessCheck", "AWS::ECR::RegistryPolicy", "AWS::Backup::ReportPlan", "AWS::Lightsail::Certificate", "AWS::RUM::AppMonitor", "AWS::Events::Endpoint", "AWS::SES::ReceiptRuleSet", "AWS::Events::Archive", "AWS::Events::ApiDestination", "AWS::Lightsail::Disk", "AWS::FIS::ExperimentTemplate", "AWS::DataSync::LocationFSxWindows", "AWS::SES::ReceiptFilter", "AWS::GuardDuty::Filter", "AWS::SES::Template", "AWS::AmazonMQ::Broker", "AWS::AppConfig::Environment", "AWS::AppConfig::ConfigurationProfile", "AWS::Cloud9::EnvironmentEC2", "AWS::EventSchemas::Registry", "AWS::EventSchemas::RegistryPolicy", "AWS::EventSchemas::Discoverer", "AWS::FraudDetector::Label", "AWS::FraudDetector::EntityType", "AWS::FraudDetector::Variable", "AWS::FraudDetector::Outcome", "AWS::IoT::Authorizer", "AWS::IoT::SecurityProfile", "AWS::IoT::RoleAlias", "AWS::IoT::Dimension", "AWS::IoTAnalytics::Datastore", "AWS::Lightsail::Bucket", "AWS::Lightsail::StaticIp", "AWS::MediaPackage::PackagingGroup", "AWS::Route53RecoveryReadiness::RecoveryGroup", "AWS::ResilienceHub::ResiliencyPolicy", "AWS::Transfer::Workflow", "AWS::EKS::IdentityProviderConfig", "AWS::EKS::Addon", "AWS::Glue::MLTransform", "AWS::IoT::Policy", "AWS::IoT::MitigationAction", "AWS::IoTTwinMaker::Workspace", "AWS::IoTTwinMaker::Entity", "AWS::IoTAnalytics::Dataset", "AWS::IoTAnalytics::Pipeline", "AWS::IoTAnalytics::Channel", "AWS::IoTSiteWise::Dashboard", "AWS::IoTSiteWise::Project", "AWS::IoTSiteWise::Portal", "AWS::IoTSiteWise::AssetModel", "AWS::IVS::Channel", "AWS::IVS::RecordingConfiguration", "AWS::IVS::PlaybackKeyPair", "AWS::KinesisAnalyticsV2::Application", "AWS::RDS::GlobalCluster", "AWS::S3::MultiRegionAccessPoint", "AWS::DeviceFarm::TestGridProject", "AWS::Budgets::BudgetsAction", "AWS::Lex::Bot", "AWS::CodeGuruReviewer::RepositoryAssociation", "AWS::IoT::CustomMetric", "AWS::Route53Resolver::FirewallDomainList", "AWS::RoboMaker::RobotApplicationVersion", "AWS::EC2::TrafficMirrorSession", "AWS::IoTSiteWise::Gateway", "AWS::Lex::BotAlias", "AWS::LookoutMetrics::Alert", "AWS::IoT::AccountAuditConfiguration", "AWS::EC2::TrafficMirrorTarget", "AWS::S3::StorageLens", "AWS::IoT::ScheduledAudit", "AWS::Events::Connection", "AWS::EventSchemas::Schema", "AWS::MediaPackage::PackagingConfiguration", "AWS::KinesisVideo::SignalingChannel", "AWS::AppStream::DirectoryConfig", "AWS::LookoutVision::Project", "AWS::Route53RecoveryControl::Cluster", "AWS::Route53RecoveryControl::SafetyRule", "AWS::Route53RecoveryControl::ControlPanel", "AWS::Route53RecoveryControl::RoutingControl", "AWS::Route53RecoveryReadiness::ResourceSet", "AWS::RoboMaker::SimulationApplication", "AWS::RoboMaker::RobotApplication", "AWS::HealthLake::FHIRDatastore", "AWS::Pinpoint::Segment", "AWS::Pinpoint::ApplicationSettings", "AWS::Events::Rule", "AWS::EC2::DHCPOptions", "AWS::EC2::NetworkInsightsPath", "AWS::EC2::TrafficMirrorFilter", "AWS::EC2::IPAM", "AWS::IoTTwinMaker::Scene", "AWS::NetworkManager::TransitGatewayRegistration", "AWS::CustomerProfiles::Domain", "AWS::AutoScaling::WarmPool", "AWS::Connect::PhoneNumber", "AWS::AppConfig::DeploymentStrategy", "AWS::AppFlow::Flow", "AWS::AuditManager::Assessment", "AWS::CloudWatch::MetricStream", "AWS::DeviceFarm::InstanceProfile", "AWS::DeviceFarm::Project", "AWS::EC2::EC2Fleet", "AWS::EC2::SubnetRouteTableAssociation", "AWS::ECR::PullThroughCacheRule", "AWS::GroundStation::Config", "AWS::ImageBuilder::ImagePipeline", "AWS::IoT::FleetMetric", "AWS::IoTWireless::ServiceProfile", "AWS::NetworkManager::Device", "AWS::NetworkManager::GlobalNetwork", "AWS::NetworkManager::Link", "AWS::NetworkManager::Site", "AWS::Panorama::Package", "AWS::Pinpoint::App", "AWS::Redshift::ScheduledAction", "AWS::Route53Resolver::FirewallRuleGroupAssociation", "AWS::SageMaker::AppImageConfig", "AWS::SageMaker::Image", "AWS::ECS::TaskSet", "AWS::Cassandra::Keyspace", "AWS::Signer::SigningProfile", "AWS::Amplify::App", "AWS::AppMesh::VirtualNode", "AWS::AppMesh::VirtualService", "AWS::AppRunner::VpcConnector", "AWS::AppStream::Application", "AWS::CodeArtifact::Repository", "AWS::EC2::PrefixList", "AWS::EC2::SpotFleet", "AWS::Evidently::Project", "AWS::Forecast::Dataset", "AWS::IAM::SAMLProvider", "AWS::IAM::ServerCertificate", "AWS::Pinpoint::Campaign", "AWS::Pinpoint::InAppTemplate", "AWS::SageMaker::Domain", "AWS::Transfer::Agreement", "AWS::Transfer::Connector", "AWS::KinesisFirehose::DeliveryStream", "AWS::Amplify::Branch", "AWS::AppIntegrations::EventIntegration", "AWS::AppMesh::Route", "AWS::Athena::PreparedStatement", "AWS::EC2::IPAMScope", "AWS::Evidently::Launch", "AWS::Forecast::DatasetGroup", "AWS::GreengrassV2::ComponentVersion", "AWS::GroundStation::MissionProfile", "AWS::MediaConnect::FlowEntitlement", "AWS::MediaConnect::FlowVpcInterface", "AWS::MediaTailor::PlaybackConfiguration", "AWS::MSK::Configuration", "AWS::Personalize::Dataset", "AWS::Personalize::Schema", "AWS::Personalize::Solution", "AWS::Pinpoint::EmailTemplate", "AWS::Pinpoint::EventStream", "AWS::ResilienceHub::App", "AWS::ACMPCA::CertificateAuthority", "AWS::AppConfig::HostedConfigurationVersion", "AWS::AppMesh::VirtualGateway", "AWS::AppMesh::VirtualRouter", "AWS::AppRunner::Service", "AWS::CustomerProfiles::ObjectType", "AWS::DMS::Endpoint", "AWS::EC2::CapacityReservation", "AWS::EC2::ClientVpnEndpoint", "AWS::Kendra::Index", "AWS::KinesisVideo::Stream", "AWS::Logs::Destination", "AWS::Pinpoint::EmailChannel", "AWS::S3::AccessPoint", "AWS::NetworkManager::CustomerGatewayAssociation", "AWS::NetworkManager::LinkAssociation", "AWS::IoTWireless::MulticastGroup", "AWS::Personalize::DatasetGroup", "AWS::IoTTwinMaker::ComponentType", "AWS::CodeBuild::ReportGroup", "AWS::SageMaker::FeatureGroup", "AWS::MSK::BatchScramSecret", "AWS::AppStream::Stack", "AWS::IoT::JobTemplate", "AWS::IoTWireless::FuotaTask", "AWS::IoT::ProvisioningTemplate", "AWS::InspectorV2::Filter", "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation", "AWS::ServiceDiscovery::Instance", "AWS::Transfer::Certificate", "AWS::MediaConnect::FlowSource", "AWS::APS::RuleGroupsNamespace", "AWS::CodeGuruProfiler::ProfilingGroup", "AWS::Route53Resolver::ResolverQueryLoggingConfig", "AWS::Batch::SchedulingPolicy", "AWS::ACMPCA::CertificateAuthorityActivation", "AWS::AppMesh::GatewayRoute", "AWS::AppMesh::Mesh", "AWS::Connect::Instance", "AWS::Connect::QuickConnect", "AWS::EC2::CarrierGateway", "AWS::EC2::IPAMPool", "AWS::EC2::TransitGatewayConnect", "AWS::EC2::TransitGatewayMulticastDomain", "AWS::ECS::CapacityProvider", "AWS::IAM::InstanceProfile", "AWS::IoT::CACertificate", "AWS::IoTTwinMaker::SyncJob", "AWS::KafkaConnect::Connector", "AWS::Lambda::CodeSigningConfig", "AWS::NetworkManager::ConnectPeer", "AWS::ResourceExplorer2::Index", "AWS::AppStream::Fleet", "AWS::Cognito::UserPool", "AWS::Cognito::UserPoolClient", "AWS::Cognito::UserPoolGroup", "AWS::EC2::NetworkInsightsAccessScope", "AWS::EC2::NetworkInsightsAnalysis", "AWS::Grafana::Workspace", "AWS::GroundStation::DataflowEndpointGroup", "AWS::ImageBuilder::ImageRecipe", "AWS::KMS::Alias", "AWS::M2::Environment", "AWS::QuickSight::DataSource", "AWS::QuickSight::Template", "AWS::QuickSight::Theme", "AWS::RDS::OptionGroup", "AWS::Redshift::EndpointAccess", "AWS::Route53Resolver::FirewallRuleGroup", "AWS::SSM::Document"
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].recording_frequency #=> String, one of "CONTINUOUS", "DAILY"
+    #   resp.configuration_recorder.recording_scope #=> String, one of "INTERNAL", "PAID"
+    #   resp.configuration_recorder.service_principal #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/AssociateResourceTypes AWS API Documentation
+    #
+    # @overload associate_resource_types(params = {})
+    # @param [Hash] params ({})
+    def associate_resource_types(params = {}, options = {})
+      req = build_request(:associate_resource_types, params)
+      req.send_request(options)
+    end
+
     # Returns the current configuration items for resources that are present
     # in your Config aggregator. The operation also returns a list of
     # resources that are not processed in the current request. If there are
@@ -632,6 +694,31 @@ module Aws::ConfigService
     # You can check the state of a rule by using the `DescribeConfigRules`
     # request.
     #
+    # <note markdown="1"> **Recommendation: Stop recording resource compliance before deleting
+    # rules**
+    #
+    #  It is highly recommended that you stop recording for the
+    # `AWS::Config::ResourceCompliance` resource type before you delete
+    # rules in your account. Deleting rules creates CIs for
+    # `AWS::Config::ResourceCompliance` and can affect your Config
+    # [configuration recorder][1] costs. If you are deleting rules which
+    # evaluate a large number of resource types, this can lead to a spike in
+    # the number of CIs recorded.
+    #
+    #  Best practice:
+    #
+    #  1.  Stop recording `AWS::Config::ResourceCompliance`
+    #
+    # 2.  Delete rule(s)
+    #
+    # 3.  Turn on recording for `AWS::Config::ResourceCompliance`
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html
+    #
     # @option params [required, String] :config_rule_name
     #   The name of the Config rule that you want to delete.
     #
@@ -675,22 +762,27 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Deletes the configuration recorder.
+    # Deletes the customer managed configuration recorder.
     #
-    # After the configuration recorder is deleted, Config will not record
-    # resource configuration changes until you create a new configuration
-    # recorder.
-    #
-    # This action does not delete the configuration information that was
+    # This operation does not delete the configuration information that was
     # previously recorded. You will be able to access the previously
-    # recorded information by using the `GetResourceConfigHistory` action,
-    # but you will not be able to access this information in the Config
-    # console until you create a new configuration recorder.
+    # recorded information by using the [GetResourceConfigHistory][1]
+    # operation, but you will not be able to access this information in the
+    # Config console until you have created a new customer managed
+    # configuration recorder.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_GetResourceConfigHistory.html
     #
     # @option params [required, String] :configuration_recorder_name
-    #   The name of the configuration recorder to be deleted. You can retrieve
-    #   the name of your configuration recorder by using the
-    #   `DescribeConfigurationRecorders` action.
+    #   The name of the customer managed configuration recorder that you want
+    #   to delete. You can retrieve the name of your configuration recorders
+    #   by using the [DescribeConfigurationRecorders][1] operation.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_DescribeConfigurationRecorders.html
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -739,11 +831,13 @@ module Aws::ConfigService
 
     # Deletes the delivery channel.
     #
-    # Before you can delete the delivery channel, you must stop the
-    # configuration recorder by using the StopConfigurationRecorder action.
+    # Before you can delete the delivery channel, you must stop the customer
+    # managed configuration recorder. You can use the
+    # StopConfigurationRecorder operation to stop the customer managed
+    # configuration recorder.
     #
     # @option params [required, String] :delivery_channel_name
-    #   The name of the delivery channel to delete.
+    #   The name of the delivery channel that you want to delete.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1009,6 +1103,57 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
+    # Deletes an existing service-linked configuration recorder.
+    #
+    # This operation does not delete the configuration information that was
+    # previously recorded. You will be able to access the previously
+    # recorded information by using the [GetResourceConfigHistory][1]
+    # operation, but you will not be able to access this information in the
+    # Config console until you have created a new service-linked
+    # configuration recorder for the same service.
+    #
+    # <note markdown="1"> **The recording scope determines if you receive configuration items**
+    #
+    #  The recording scope is set by the service that is linked to the
+    # configuration recorder and determines whether you receive
+    # configuration items (CIs) in the delivery channel. If the recording
+    # scope is internal, you will not receive CIs in the delivery channel.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_GetResourceConfigHistory.html
+    #
+    # @option params [required, String] :service_principal
+    #   The service principal of the Amazon Web Services service for the
+    #   service-linked configuration recorder that you want to delete.
+    #
+    # @return [Types::DeleteServiceLinkedConfigurationRecorderResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteServiceLinkedConfigurationRecorderResponse#arn #arn} => String
+    #   * {Types::DeleteServiceLinkedConfigurationRecorderResponse#name #name} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_service_linked_configuration_recorder({
+    #     service_principal: "ServicePrincipal", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DeleteServiceLinkedConfigurationRecorder AWS API Documentation
+    #
+    # @overload delete_service_linked_configuration_recorder(params = {})
+    # @param [Hash] params ({})
+    def delete_service_linked_configuration_recorder(params = {}, options = {})
+      req = build_request(:delete_service_linked_configuration_recorder, params)
+      req.send_request(options)
+    end
+
     # Deletes the stored query for a single Amazon Web Services account and
     # a single Amazon Web Services Region.
     #
@@ -1135,11 +1280,11 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Returns a list of the conformance packs and their associated
-    # compliance status with the count of compliant and noncompliant Config
-    # rules within each conformance pack. Also returns the total rule count
-    # which includes compliant rules, noncompliant rules, and rules that
-    # cannot be evaluated due to insufficient data.
+    # Returns a list of the existing and deleted conformance packs and their
+    # associated compliance status with the count of compliant and
+    # noncompliant Config rules within each conformance pack. Also returns
+    # the total rule count which includes compliant rules, noncompliant
+    # rules, and rules that cannot be evaluated due to insufficient data.
     #
     # <note markdown="1"> The results can return an empty result page, but if you have a
     # `nextToken`, the results are displayed on the next page.
@@ -1248,8 +1393,8 @@ module Aws::ConfigService
     end
 
     # Indicates whether the specified Config rules are compliant. If a rule
-    # is noncompliant, this action returns the number of Amazon Web Services
-    # resources that do not comply with the rule.
+    # is noncompliant, this operation returns the number of Amazon Web
+    # Services resources that do not comply with the rule.
     #
     # A rule is compliant if all of the evaluated resources comply with it.
     # It is noncompliant if any of these resources do not comply.
@@ -1317,7 +1462,7 @@ module Aws::ConfigService
     end
 
     # Indicates whether the specified Amazon Web Services resources are
-    # compliant. If a resource is noncompliant, this action returns the
+    # compliant. If a resource is noncompliant, this operation returns the
     # number of Config rules that the resource does not comply with.
     #
     # A resource is compliant if it complies with all the Config rules that
@@ -1346,7 +1491,7 @@ module Aws::ConfigService
     # @option params [String] :resource_type
     #   The types of Amazon Web Services resources for which you want
     #   compliance information (for example, `AWS::EC2::Instance`). For this
-    #   action, you can specify that the resource type is an Amazon Web
+    #   operation, you can specify that the resource type is an Amazon Web
     #   Services account by specifying `AWS::::Account`.
     #
     # @option params [String] :resource_id
@@ -1613,7 +1758,7 @@ module Aws::ConfigService
     end
 
     # Returns the details of one or more configuration aggregators. If the
-    # configuration aggregator is not specified, this action returns the
+    # configuration aggregator is not specified, this operation returns the
     # details for all the configuration aggregators associated with the
     # account.
     #
@@ -1661,6 +1806,12 @@ module Aws::ConfigService
     #   resp.configuration_aggregators[0].creation_time #=> Time
     #   resp.configuration_aggregators[0].last_updated_time #=> Time
     #   resp.configuration_aggregators[0].created_by #=> String
+    #   resp.configuration_aggregators[0].aggregator_filters.resource_type.type #=> String, one of "INCLUDE"
+    #   resp.configuration_aggregators[0].aggregator_filters.resource_type.value #=> Array
+    #   resp.configuration_aggregators[0].aggregator_filters.resource_type.value[0] #=> String
+    #   resp.configuration_aggregators[0].aggregator_filters.service_principal.type #=> String, one of "INCLUDE"
+    #   resp.configuration_aggregators[0].aggregator_filters.service_principal.value #=> Array
+    #   resp.configuration_aggregators[0].aggregator_filters.service_principal.value[0] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DescribeConfigurationAggregators AWS API Documentation
@@ -1672,22 +1823,40 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Returns the current status of the specified configuration recorder as
-    # well as the status of the last recording event for the recorder. If a
-    # configuration recorder is not specified, this action returns the
-    # status of all configuration recorders associated with the account.
+    # Returns the current status of the configuration recorder you specify
+    # as well as the status of the last recording event for the
+    # configuration recorders.
     #
-    # <note markdown="1"> &gt;You can specify only one configuration recorder for each Amazon
-    # Web Services Region for each account. For a detailed status of
-    # recording events over time, add your Config events to Amazon
-    # CloudWatch metrics and use CloudWatch metrics.
+    # For a detailed status of recording events over time, add your Config
+    # events to Amazon CloudWatch metrics and use CloudWatch metrics.
+    #
+    # If a configuration recorder is not specified, this operation returns
+    # the status for the customer managed configuration recorder configured
+    # for the account, if applicable.
+    #
+    # <note markdown="1"> When making a request to this operation, you can only specify one
+    # configuration recorder.
     #
     #  </note>
     #
     # @option params [Array<String>] :configuration_recorder_names
-    #   The name(s) of the configuration recorder. If the name is not
-    #   specified, the action returns the current status of all the
-    #   configuration recorders associated with the account.
+    #   The name of the configuration recorder. If the name is not specified,
+    #   the opertation returns the status for the customer managed
+    #   configuration recorder configured for the account, if applicable.
+    #
+    #   <note markdown="1"> When making a request to this operation, you can only specify one
+    #   configuration recorder.
+    #
+    #    </note>
+    #
+    # @option params [String] :service_principal
+    #   For service-linked configuration recorders, you can use the service
+    #   principal of the linked Amazon Web Services service to specify the
+    #   configuration recorder.
+    #
+    # @option params [String] :arn
+    #   The Amazon Resource Name (ARN) of the configuration recorder that you
+    #   want to specify.
     #
     # @return [Types::DescribeConfigurationRecorderStatusResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1697,19 +1866,23 @@ module Aws::ConfigService
     #
     #   resp = client.describe_configuration_recorder_status({
     #     configuration_recorder_names: ["RecorderName"],
+    #     service_principal: "ServicePrincipal",
+    #     arn: "AmazonResourceName",
     #   })
     #
     # @example Response structure
     #
     #   resp.configuration_recorders_status #=> Array
+    #   resp.configuration_recorders_status[0].arn #=> String
     #   resp.configuration_recorders_status[0].name #=> String
     #   resp.configuration_recorders_status[0].last_start_time #=> Time
     #   resp.configuration_recorders_status[0].last_stop_time #=> Time
     #   resp.configuration_recorders_status[0].recording #=> Boolean
-    #   resp.configuration_recorders_status[0].last_status #=> String, one of "Pending", "Success", "Failure"
+    #   resp.configuration_recorders_status[0].last_status #=> String, one of "Pending", "Success", "Failure", "NotApplicable"
     #   resp.configuration_recorders_status[0].last_error_code #=> String
     #   resp.configuration_recorders_status[0].last_error_message #=> String
     #   resp.configuration_recorders_status[0].last_status_change_time #=> Time
+    #   resp.configuration_recorders_status[0].service_principal #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DescribeConfigurationRecorderStatus AWS API Documentation
     #
@@ -1720,17 +1893,29 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Returns the details for the specified configuration recorders. If the
-    # configuration recorder is not specified, this action returns the
-    # details for all configuration recorders associated with the account.
+    # Returns details for the configuration recorder you specify.
     #
-    # <note markdown="1"> You can specify only one configuration recorder for each Amazon Web
-    # Services Region for each account.
+    # If a configuration recorder is not specified, this operation returns
+    # details for the customer managed configuration recorder configured for
+    # the account, if applicable.
+    #
+    # <note markdown="1"> When making a request to this operation, you can only specify one
+    # configuration recorder.
     #
     #  </note>
     #
     # @option params [Array<String>] :configuration_recorder_names
-    #   A list of configuration recorder names.
+    #   A list of names of the configuration recorders that you want to
+    #   specify.
+    #
+    # @option params [String] :service_principal
+    #   For service-linked configuration recorders, you can use the service
+    #   principal of the linked Amazon Web Services service to specify the
+    #   configuration recorder.
+    #
+    # @option params [String] :arn
+    #   The Amazon Resource Name (ARN) of the configuration recorder that you
+    #   want to specify.
     #
     # @return [Types::DescribeConfigurationRecordersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1740,11 +1925,14 @@ module Aws::ConfigService
     #
     #   resp = client.describe_configuration_recorders({
     #     configuration_recorder_names: ["RecorderName"],
+    #     service_principal: "ServicePrincipal",
+    #     arn: "AmazonResourceName",
     #   })
     #
     # @example Response structure
     #
     #   resp.configuration_recorders #=> Array
+    #   resp.configuration_recorders[0].arn #=> String
     #   resp.configuration_recorders[0].name #=> String
     #   resp.configuration_recorders[0].role_arn #=> String
     #   resp.configuration_recorders[0].recording_group.all_supported #=> Boolean
@@ -1760,6 +1948,8 @@ module Aws::ConfigService
     #   resp.configuration_recorders[0].recording_mode.recording_mode_overrides[0].resource_types #=> Array
     #   resp.configuration_recorders[0].recording_mode.recording_mode_overrides[0].resource_types[0] #=> String, one of "AWS::EC2::CustomerGateway", "AWS::EC2::EIP", "AWS::EC2::Host", "AWS::EC2::Instance", "AWS::EC2::InternetGateway", "AWS::EC2::NetworkAcl", "AWS::EC2::NetworkInterface", "AWS::EC2::RouteTable", "AWS::EC2::SecurityGroup", "AWS::EC2::Subnet", "AWS::CloudTrail::Trail", "AWS::EC2::Volume", "AWS::EC2::VPC", "AWS::EC2::VPNConnection", "AWS::EC2::VPNGateway", "AWS::EC2::RegisteredHAInstance", "AWS::EC2::NatGateway", "AWS::EC2::EgressOnlyInternetGateway", "AWS::EC2::VPCEndpoint", "AWS::EC2::VPCEndpointService", "AWS::EC2::FlowLog", "AWS::EC2::VPCPeeringConnection", "AWS::Elasticsearch::Domain", "AWS::IAM::Group", "AWS::IAM::Policy", "AWS::IAM::Role", "AWS::IAM::User", "AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ACM::Certificate", "AWS::RDS::DBInstance", "AWS::RDS::DBSubnetGroup", "AWS::RDS::DBSecurityGroup", "AWS::RDS::DBSnapshot", "AWS::RDS::DBCluster", "AWS::RDS::DBClusterSnapshot", "AWS::RDS::EventSubscription", "AWS::S3::Bucket", "AWS::S3::AccountPublicAccessBlock", "AWS::Redshift::Cluster", "AWS::Redshift::ClusterSnapshot", "AWS::Redshift::ClusterParameterGroup", "AWS::Redshift::ClusterSecurityGroup", "AWS::Redshift::ClusterSubnetGroup", "AWS::Redshift::EventSubscription", "AWS::SSM::ManagedInstanceInventory", "AWS::CloudWatch::Alarm", "AWS::CloudFormation::Stack", "AWS::ElasticLoadBalancing::LoadBalancer", "AWS::AutoScaling::AutoScalingGroup", "AWS::AutoScaling::LaunchConfiguration", "AWS::AutoScaling::ScalingPolicy", "AWS::AutoScaling::ScheduledAction", "AWS::DynamoDB::Table", "AWS::CodeBuild::Project", "AWS::WAF::RateBasedRule", "AWS::WAF::Rule", "AWS::WAF::RuleGroup", "AWS::WAF::WebACL", "AWS::WAFRegional::RateBasedRule", "AWS::WAFRegional::Rule", "AWS::WAFRegional::RuleGroup", "AWS::WAFRegional::WebACL", "AWS::CloudFront::Distribution", "AWS::CloudFront::StreamingDistribution", "AWS::Lambda::Function", "AWS::NetworkFirewall::Firewall", "AWS::NetworkFirewall::FirewallPolicy", "AWS::NetworkFirewall::RuleGroup", "AWS::ElasticBeanstalk::Application", "AWS::ElasticBeanstalk::ApplicationVersion", "AWS::ElasticBeanstalk::Environment", "AWS::WAFv2::WebACL", "AWS::WAFv2::RuleGroup", "AWS::WAFv2::IPSet", "AWS::WAFv2::RegexPatternSet", "AWS::WAFv2::ManagedRuleSet", "AWS::XRay::EncryptionConfig", "AWS::SSM::AssociationCompliance", "AWS::SSM::PatchCompliance", "AWS::Shield::Protection", "AWS::ShieldRegional::Protection", "AWS::Config::ConformancePackCompliance", "AWS::Config::ResourceCompliance", "AWS::ApiGateway::Stage", "AWS::ApiGateway::RestApi", "AWS::ApiGatewayV2::Stage", "AWS::ApiGatewayV2::Api", "AWS::CodePipeline::Pipeline", "AWS::ServiceCatalog::CloudFormationProvisionedProduct", "AWS::ServiceCatalog::CloudFormationProduct", "AWS::ServiceCatalog::Portfolio", "AWS::SQS::Queue", "AWS::KMS::Key", "AWS::QLDB::Ledger", "AWS::SecretsManager::Secret", "AWS::SNS::Topic", "AWS::SSM::FileData", "AWS::Backup::BackupPlan", "AWS::Backup::BackupSelection", "AWS::Backup::BackupVault", "AWS::Backup::RecoveryPoint", "AWS::ECR::Repository", "AWS::ECS::Cluster", "AWS::ECS::Service", "AWS::ECS::TaskDefinition", "AWS::EFS::AccessPoint", "AWS::EFS::FileSystem", "AWS::EKS::Cluster", "AWS::OpenSearch::Domain", "AWS::EC2::TransitGateway", "AWS::Kinesis::Stream", "AWS::Kinesis::StreamConsumer", "AWS::CodeDeploy::Application", "AWS::CodeDeploy::DeploymentConfig", "AWS::CodeDeploy::DeploymentGroup", "AWS::EC2::LaunchTemplate", "AWS::ECR::PublicRepository", "AWS::GuardDuty::Detector", "AWS::EMR::SecurityConfiguration", "AWS::SageMaker::CodeRepository", "AWS::Route53Resolver::ResolverEndpoint", "AWS::Route53Resolver::ResolverRule", "AWS::Route53Resolver::ResolverRuleAssociation", "AWS::DMS::ReplicationSubnetGroup", "AWS::DMS::EventSubscription", "AWS::MSK::Cluster", "AWS::StepFunctions::Activity", "AWS::WorkSpaces::Workspace", "AWS::WorkSpaces::ConnectionAlias", "AWS::SageMaker::Model", "AWS::ElasticLoadBalancingV2::Listener", "AWS::StepFunctions::StateMachine", "AWS::Batch::JobQueue", "AWS::Batch::ComputeEnvironment", "AWS::AccessAnalyzer::Analyzer", "AWS::Athena::WorkGroup", "AWS::Athena::DataCatalog", "AWS::Detective::Graph", "AWS::GlobalAccelerator::Accelerator", "AWS::GlobalAccelerator::EndpointGroup", "AWS::GlobalAccelerator::Listener", "AWS::EC2::TransitGatewayAttachment", "AWS::EC2::TransitGatewayRouteTable", "AWS::DMS::Certificate", "AWS::AppConfig::Application", "AWS::AppSync::GraphQLApi", "AWS::DataSync::LocationSMB", "AWS::DataSync::LocationFSxLustre", "AWS::DataSync::LocationS3", "AWS::DataSync::LocationEFS", "AWS::DataSync::Task", "AWS::DataSync::LocationNFS", "AWS::EC2::NetworkInsightsAccessScopeAnalysis", "AWS::EKS::FargateProfile", "AWS::Glue::Job", "AWS::GuardDuty::ThreatIntelSet", "AWS::GuardDuty::IPSet", "AWS::SageMaker::Workteam", "AWS::SageMaker::NotebookInstanceLifecycleConfig", "AWS::ServiceDiscovery::Service", "AWS::ServiceDiscovery::PublicDnsNamespace", "AWS::SES::ContactList", "AWS::SES::ConfigurationSet", "AWS::Route53::HostedZone", "AWS::IoTEvents::Input", "AWS::IoTEvents::DetectorModel", "AWS::IoTEvents::AlarmModel", "AWS::ServiceDiscovery::HttpNamespace", "AWS::Events::EventBus", "AWS::ImageBuilder::ContainerRecipe", "AWS::ImageBuilder::DistributionConfiguration", "AWS::ImageBuilder::InfrastructureConfiguration", "AWS::DataSync::LocationObjectStorage", "AWS::DataSync::LocationHDFS", "AWS::Glue::Classifier", "AWS::Route53RecoveryReadiness::Cell", "AWS::Route53RecoveryReadiness::ReadinessCheck", "AWS::ECR::RegistryPolicy", "AWS::Backup::ReportPlan", "AWS::Lightsail::Certificate", "AWS::RUM::AppMonitor", "AWS::Events::Endpoint", "AWS::SES::ReceiptRuleSet", "AWS::Events::Archive", "AWS::Events::ApiDestination", "AWS::Lightsail::Disk", "AWS::FIS::ExperimentTemplate", "AWS::DataSync::LocationFSxWindows", "AWS::SES::ReceiptFilter", "AWS::GuardDuty::Filter", "AWS::SES::Template", "AWS::AmazonMQ::Broker", "AWS::AppConfig::Environment", "AWS::AppConfig::ConfigurationProfile", "AWS::Cloud9::EnvironmentEC2", "AWS::EventSchemas::Registry", "AWS::EventSchemas::RegistryPolicy", "AWS::EventSchemas::Discoverer", "AWS::FraudDetector::Label", "AWS::FraudDetector::EntityType", "AWS::FraudDetector::Variable", "AWS::FraudDetector::Outcome", "AWS::IoT::Authorizer", "AWS::IoT::SecurityProfile", "AWS::IoT::RoleAlias", "AWS::IoT::Dimension", "AWS::IoTAnalytics::Datastore", "AWS::Lightsail::Bucket", "AWS::Lightsail::StaticIp", "AWS::MediaPackage::PackagingGroup", "AWS::Route53RecoveryReadiness::RecoveryGroup", "AWS::ResilienceHub::ResiliencyPolicy", "AWS::Transfer::Workflow", "AWS::EKS::IdentityProviderConfig", "AWS::EKS::Addon", "AWS::Glue::MLTransform", "AWS::IoT::Policy", "AWS::IoT::MitigationAction", "AWS::IoTTwinMaker::Workspace", "AWS::IoTTwinMaker::Entity", "AWS::IoTAnalytics::Dataset", "AWS::IoTAnalytics::Pipeline", "AWS::IoTAnalytics::Channel", "AWS::IoTSiteWise::Dashboard", "AWS::IoTSiteWise::Project", "AWS::IoTSiteWise::Portal", "AWS::IoTSiteWise::AssetModel", "AWS::IVS::Channel", "AWS::IVS::RecordingConfiguration", "AWS::IVS::PlaybackKeyPair", "AWS::KinesisAnalyticsV2::Application", "AWS::RDS::GlobalCluster", "AWS::S3::MultiRegionAccessPoint", "AWS::DeviceFarm::TestGridProject", "AWS::Budgets::BudgetsAction", "AWS::Lex::Bot", "AWS::CodeGuruReviewer::RepositoryAssociation", "AWS::IoT::CustomMetric", "AWS::Route53Resolver::FirewallDomainList", "AWS::RoboMaker::RobotApplicationVersion", "AWS::EC2::TrafficMirrorSession", "AWS::IoTSiteWise::Gateway", "AWS::Lex::BotAlias", "AWS::LookoutMetrics::Alert", "AWS::IoT::AccountAuditConfiguration", "AWS::EC2::TrafficMirrorTarget", "AWS::S3::StorageLens", "AWS::IoT::ScheduledAudit", "AWS::Events::Connection", "AWS::EventSchemas::Schema", "AWS::MediaPackage::PackagingConfiguration", "AWS::KinesisVideo::SignalingChannel", "AWS::AppStream::DirectoryConfig", "AWS::LookoutVision::Project", "AWS::Route53RecoveryControl::Cluster", "AWS::Route53RecoveryControl::SafetyRule", "AWS::Route53RecoveryControl::ControlPanel", "AWS::Route53RecoveryControl::RoutingControl", "AWS::Route53RecoveryReadiness::ResourceSet", "AWS::RoboMaker::SimulationApplication", "AWS::RoboMaker::RobotApplication", "AWS::HealthLake::FHIRDatastore", "AWS::Pinpoint::Segment", "AWS::Pinpoint::ApplicationSettings", "AWS::Events::Rule", "AWS::EC2::DHCPOptions", "AWS::EC2::NetworkInsightsPath", "AWS::EC2::TrafficMirrorFilter", "AWS::EC2::IPAM", "AWS::IoTTwinMaker::Scene", "AWS::NetworkManager::TransitGatewayRegistration", "AWS::CustomerProfiles::Domain", "AWS::AutoScaling::WarmPool", "AWS::Connect::PhoneNumber", "AWS::AppConfig::DeploymentStrategy", "AWS::AppFlow::Flow", "AWS::AuditManager::Assessment", "AWS::CloudWatch::MetricStream", "AWS::DeviceFarm::InstanceProfile", "AWS::DeviceFarm::Project", "AWS::EC2::EC2Fleet", "AWS::EC2::SubnetRouteTableAssociation", "AWS::ECR::PullThroughCacheRule", "AWS::GroundStation::Config", "AWS::ImageBuilder::ImagePipeline", "AWS::IoT::FleetMetric", "AWS::IoTWireless::ServiceProfile", "AWS::NetworkManager::Device", "AWS::NetworkManager::GlobalNetwork", "AWS::NetworkManager::Link", "AWS::NetworkManager::Site", "AWS::Panorama::Package", "AWS::Pinpoint::App", "AWS::Redshift::ScheduledAction", "AWS::Route53Resolver::FirewallRuleGroupAssociation", "AWS::SageMaker::AppImageConfig", "AWS::SageMaker::Image", "AWS::ECS::TaskSet", "AWS::Cassandra::Keyspace", "AWS::Signer::SigningProfile", "AWS::Amplify::App", "AWS::AppMesh::VirtualNode", "AWS::AppMesh::VirtualService", "AWS::AppRunner::VpcConnector", "AWS::AppStream::Application", "AWS::CodeArtifact::Repository", "AWS::EC2::PrefixList", "AWS::EC2::SpotFleet", "AWS::Evidently::Project", "AWS::Forecast::Dataset", "AWS::IAM::SAMLProvider", "AWS::IAM::ServerCertificate", "AWS::Pinpoint::Campaign", "AWS::Pinpoint::InAppTemplate", "AWS::SageMaker::Domain", "AWS::Transfer::Agreement", "AWS::Transfer::Connector", "AWS::KinesisFirehose::DeliveryStream", "AWS::Amplify::Branch", "AWS::AppIntegrations::EventIntegration", "AWS::AppMesh::Route", "AWS::Athena::PreparedStatement", "AWS::EC2::IPAMScope", "AWS::Evidently::Launch", "AWS::Forecast::DatasetGroup", "AWS::GreengrassV2::ComponentVersion", "AWS::GroundStation::MissionProfile", "AWS::MediaConnect::FlowEntitlement", "AWS::MediaConnect::FlowVpcInterface", "AWS::MediaTailor::PlaybackConfiguration", "AWS::MSK::Configuration", "AWS::Personalize::Dataset", "AWS::Personalize::Schema", "AWS::Personalize::Solution", "AWS::Pinpoint::EmailTemplate", "AWS::Pinpoint::EventStream", "AWS::ResilienceHub::App", "AWS::ACMPCA::CertificateAuthority", "AWS::AppConfig::HostedConfigurationVersion", "AWS::AppMesh::VirtualGateway", "AWS::AppMesh::VirtualRouter", "AWS::AppRunner::Service", "AWS::CustomerProfiles::ObjectType", "AWS::DMS::Endpoint", "AWS::EC2::CapacityReservation", "AWS::EC2::ClientVpnEndpoint", "AWS::Kendra::Index", "AWS::KinesisVideo::Stream", "AWS::Logs::Destination", "AWS::Pinpoint::EmailChannel", "AWS::S3::AccessPoint", "AWS::NetworkManager::CustomerGatewayAssociation", "AWS::NetworkManager::LinkAssociation", "AWS::IoTWireless::MulticastGroup", "AWS::Personalize::DatasetGroup", "AWS::IoTTwinMaker::ComponentType", "AWS::CodeBuild::ReportGroup", "AWS::SageMaker::FeatureGroup", "AWS::MSK::BatchScramSecret", "AWS::AppStream::Stack", "AWS::IoT::JobTemplate", "AWS::IoTWireless::FuotaTask", "AWS::IoT::ProvisioningTemplate", "AWS::InspectorV2::Filter", "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation", "AWS::ServiceDiscovery::Instance", "AWS::Transfer::Certificate", "AWS::MediaConnect::FlowSource", "AWS::APS::RuleGroupsNamespace", "AWS::CodeGuruProfiler::ProfilingGroup", "AWS::Route53Resolver::ResolverQueryLoggingConfig", "AWS::Batch::SchedulingPolicy", "AWS::ACMPCA::CertificateAuthorityActivation", "AWS::AppMesh::GatewayRoute", "AWS::AppMesh::Mesh", "AWS::Connect::Instance", "AWS::Connect::QuickConnect", "AWS::EC2::CarrierGateway", "AWS::EC2::IPAMPool", "AWS::EC2::TransitGatewayConnect", "AWS::EC2::TransitGatewayMulticastDomain", "AWS::ECS::CapacityProvider", "AWS::IAM::InstanceProfile", "AWS::IoT::CACertificate", "AWS::IoTTwinMaker::SyncJob", "AWS::KafkaConnect::Connector", "AWS::Lambda::CodeSigningConfig", "AWS::NetworkManager::ConnectPeer", "AWS::ResourceExplorer2::Index", "AWS::AppStream::Fleet", "AWS::Cognito::UserPool", "AWS::Cognito::UserPoolClient", "AWS::Cognito::UserPoolGroup", "AWS::EC2::NetworkInsightsAccessScope", "AWS::EC2::NetworkInsightsAnalysis", "AWS::Grafana::Workspace", "AWS::GroundStation::DataflowEndpointGroup", "AWS::ImageBuilder::ImageRecipe", "AWS::KMS::Alias", "AWS::M2::Environment", "AWS::QuickSight::DataSource", "AWS::QuickSight::Template", "AWS::QuickSight::Theme", "AWS::RDS::OptionGroup", "AWS::Redshift::EndpointAccess", "AWS::Route53Resolver::FirewallRuleGroup", "AWS::SSM::Document"
     #   resp.configuration_recorders[0].recording_mode.recording_mode_overrides[0].recording_frequency #=> String, one of "CONTINUOUS", "DAILY"
+    #   resp.configuration_recorders[0].recording_scope #=> String, one of "INTERNAL", "PAID"
+    #   resp.configuration_recorders[0].service_principal #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DescribeConfigurationRecorders AWS API Documentation
     #
@@ -1938,7 +2128,7 @@ module Aws::ConfigService
     end
 
     # Returns the current status of the specified delivery channel. If a
-    # delivery channel is not specified, this action returns the current
+    # delivery channel is not specified, this operation returns the current
     # status of all delivery channels associated with the account.
     #
     # <note markdown="1"> Currently, you can specify only one delivery channel per region in
@@ -1990,7 +2180,7 @@ module Aws::ConfigService
     end
 
     # Returns details about the specified delivery channel. If a delivery
-    # channel is not specified, this action returns the details of all
+    # channel is not specified, this operation returns the details of all
     # delivery channels associated with the account.
     #
     # <note markdown="1"> Currently, you can specify only one delivery channel per region in
@@ -2504,7 +2694,7 @@ module Aws::ConfigService
     # receive a paginated response.
     #
     # @option params [required, String] :config_rule_name
-    #   A list of Config rule names.
+    #   The name of the Config rule.
     #
     # @option params [Array<Types::ResourceKey>] :resource_keys
     #   A list of resource keys to be processed with the current request. Each
@@ -2566,8 +2756,8 @@ module Aws::ConfigService
     end
 
     # Returns the details of one or more retention configurations. If the
-    # retention configuration name is not specified, this action returns the
-    # details for all the retention configurations for that account.
+    # retention configuration name is not specified, this operation returns
+    # the details for all the retention configurations for that account.
     #
     # <note markdown="1"> Currently, Config supports only one retention configuration per region
     # in your account.
@@ -2615,6 +2805,68 @@ module Aws::ConfigService
     # @param [Hash] params ({})
     def describe_retention_configurations(params = {}, options = {})
       req = build_request(:describe_retention_configurations, params)
+      req.send_request(options)
+    end
+
+    # Removes all resource types specified in the `ResourceTypes` list from
+    # the [RecordingGroup][1] of configuration recorder and excludes these
+    # resource types when recording.
+    #
+    # For this operation, the configuration recorder must use a
+    # [RecordingStrategy][2] that is either `INCLUSION_BY_RESOURCE_TYPES` or
+    # `EXCLUSION_BY_RESOURCE_TYPES`.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html
+    # [2]: https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html
+    #
+    # @option params [required, String] :configuration_recorder_arn
+    #   The Amazon Resource Name (ARN) of the specified configuration
+    #   recorder.
+    #
+    # @option params [required, Array<String>] :resource_types
+    #   The list of resource types you want to remove from the recording group
+    #   of the specified configuration recorder.
+    #
+    # @return [Types::DisassociateResourceTypesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DisassociateResourceTypesResponse#configuration_recorder #configuration_recorder} => Types::ConfigurationRecorder
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.disassociate_resource_types({
+    #     configuration_recorder_arn: "AmazonResourceName", # required
+    #     resource_types: ["AWS::EC2::CustomerGateway"], # required, accepts AWS::EC2::CustomerGateway, AWS::EC2::EIP, AWS::EC2::Host, AWS::EC2::Instance, AWS::EC2::InternetGateway, AWS::EC2::NetworkAcl, AWS::EC2::NetworkInterface, AWS::EC2::RouteTable, AWS::EC2::SecurityGroup, AWS::EC2::Subnet, AWS::CloudTrail::Trail, AWS::EC2::Volume, AWS::EC2::VPC, AWS::EC2::VPNConnection, AWS::EC2::VPNGateway, AWS::EC2::RegisteredHAInstance, AWS::EC2::NatGateway, AWS::EC2::EgressOnlyInternetGateway, AWS::EC2::VPCEndpoint, AWS::EC2::VPCEndpointService, AWS::EC2::FlowLog, AWS::EC2::VPCPeeringConnection, AWS::Elasticsearch::Domain, AWS::IAM::Group, AWS::IAM::Policy, AWS::IAM::Role, AWS::IAM::User, AWS::ElasticLoadBalancingV2::LoadBalancer, AWS::ACM::Certificate, AWS::RDS::DBInstance, AWS::RDS::DBSubnetGroup, AWS::RDS::DBSecurityGroup, AWS::RDS::DBSnapshot, AWS::RDS::DBCluster, AWS::RDS::DBClusterSnapshot, AWS::RDS::EventSubscription, AWS::S3::Bucket, AWS::S3::AccountPublicAccessBlock, AWS::Redshift::Cluster, AWS::Redshift::ClusterSnapshot, AWS::Redshift::ClusterParameterGroup, AWS::Redshift::ClusterSecurityGroup, AWS::Redshift::ClusterSubnetGroup, AWS::Redshift::EventSubscription, AWS::SSM::ManagedInstanceInventory, AWS::CloudWatch::Alarm, AWS::CloudFormation::Stack, AWS::ElasticLoadBalancing::LoadBalancer, AWS::AutoScaling::AutoScalingGroup, AWS::AutoScaling::LaunchConfiguration, AWS::AutoScaling::ScalingPolicy, AWS::AutoScaling::ScheduledAction, AWS::DynamoDB::Table, AWS::CodeBuild::Project, AWS::WAF::RateBasedRule, AWS::WAF::Rule, AWS::WAF::RuleGroup, AWS::WAF::WebACL, AWS::WAFRegional::RateBasedRule, AWS::WAFRegional::Rule, AWS::WAFRegional::RuleGroup, AWS::WAFRegional::WebACL, AWS::CloudFront::Distribution, AWS::CloudFront::StreamingDistribution, AWS::Lambda::Function, AWS::NetworkFirewall::Firewall, AWS::NetworkFirewall::FirewallPolicy, AWS::NetworkFirewall::RuleGroup, AWS::ElasticBeanstalk::Application, AWS::ElasticBeanstalk::ApplicationVersion, AWS::ElasticBeanstalk::Environment, AWS::WAFv2::WebACL, AWS::WAFv2::RuleGroup, AWS::WAFv2::IPSet, AWS::WAFv2::RegexPatternSet, AWS::WAFv2::ManagedRuleSet, AWS::XRay::EncryptionConfig, AWS::SSM::AssociationCompliance, AWS::SSM::PatchCompliance, AWS::Shield::Protection, AWS::ShieldRegional::Protection, AWS::Config::ConformancePackCompliance, AWS::Config::ResourceCompliance, AWS::ApiGateway::Stage, AWS::ApiGateway::RestApi, AWS::ApiGatewayV2::Stage, AWS::ApiGatewayV2::Api, AWS::CodePipeline::Pipeline, AWS::ServiceCatalog::CloudFormationProvisionedProduct, AWS::ServiceCatalog::CloudFormationProduct, AWS::ServiceCatalog::Portfolio, AWS::SQS::Queue, AWS::KMS::Key, AWS::QLDB::Ledger, AWS::SecretsManager::Secret, AWS::SNS::Topic, AWS::SSM::FileData, AWS::Backup::BackupPlan, AWS::Backup::BackupSelection, AWS::Backup::BackupVault, AWS::Backup::RecoveryPoint, AWS::ECR::Repository, AWS::ECS::Cluster, AWS::ECS::Service, AWS::ECS::TaskDefinition, AWS::EFS::AccessPoint, AWS::EFS::FileSystem, AWS::EKS::Cluster, AWS::OpenSearch::Domain, AWS::EC2::TransitGateway, AWS::Kinesis::Stream, AWS::Kinesis::StreamConsumer, AWS::CodeDeploy::Application, AWS::CodeDeploy::DeploymentConfig, AWS::CodeDeploy::DeploymentGroup, AWS::EC2::LaunchTemplate, AWS::ECR::PublicRepository, AWS::GuardDuty::Detector, AWS::EMR::SecurityConfiguration, AWS::SageMaker::CodeRepository, AWS::Route53Resolver::ResolverEndpoint, AWS::Route53Resolver::ResolverRule, AWS::Route53Resolver::ResolverRuleAssociation, AWS::DMS::ReplicationSubnetGroup, AWS::DMS::EventSubscription, AWS::MSK::Cluster, AWS::StepFunctions::Activity, AWS::WorkSpaces::Workspace, AWS::WorkSpaces::ConnectionAlias, AWS::SageMaker::Model, AWS::ElasticLoadBalancingV2::Listener, AWS::StepFunctions::StateMachine, AWS::Batch::JobQueue, AWS::Batch::ComputeEnvironment, AWS::AccessAnalyzer::Analyzer, AWS::Athena::WorkGroup, AWS::Athena::DataCatalog, AWS::Detective::Graph, AWS::GlobalAccelerator::Accelerator, AWS::GlobalAccelerator::EndpointGroup, AWS::GlobalAccelerator::Listener, AWS::EC2::TransitGatewayAttachment, AWS::EC2::TransitGatewayRouteTable, AWS::DMS::Certificate, AWS::AppConfig::Application, AWS::AppSync::GraphQLApi, AWS::DataSync::LocationSMB, AWS::DataSync::LocationFSxLustre, AWS::DataSync::LocationS3, AWS::DataSync::LocationEFS, AWS::DataSync::Task, AWS::DataSync::LocationNFS, AWS::EC2::NetworkInsightsAccessScopeAnalysis, AWS::EKS::FargateProfile, AWS::Glue::Job, AWS::GuardDuty::ThreatIntelSet, AWS::GuardDuty::IPSet, AWS::SageMaker::Workteam, AWS::SageMaker::NotebookInstanceLifecycleConfig, AWS::ServiceDiscovery::Service, AWS::ServiceDiscovery::PublicDnsNamespace, AWS::SES::ContactList, AWS::SES::ConfigurationSet, AWS::Route53::HostedZone, AWS::IoTEvents::Input, AWS::IoTEvents::DetectorModel, AWS::IoTEvents::AlarmModel, AWS::ServiceDiscovery::HttpNamespace, AWS::Events::EventBus, AWS::ImageBuilder::ContainerRecipe, AWS::ImageBuilder::DistributionConfiguration, AWS::ImageBuilder::InfrastructureConfiguration, AWS::DataSync::LocationObjectStorage, AWS::DataSync::LocationHDFS, AWS::Glue::Classifier, AWS::Route53RecoveryReadiness::Cell, AWS::Route53RecoveryReadiness::ReadinessCheck, AWS::ECR::RegistryPolicy, AWS::Backup::ReportPlan, AWS::Lightsail::Certificate, AWS::RUM::AppMonitor, AWS::Events::Endpoint, AWS::SES::ReceiptRuleSet, AWS::Events::Archive, AWS::Events::ApiDestination, AWS::Lightsail::Disk, AWS::FIS::ExperimentTemplate, AWS::DataSync::LocationFSxWindows, AWS::SES::ReceiptFilter, AWS::GuardDuty::Filter, AWS::SES::Template, AWS::AmazonMQ::Broker, AWS::AppConfig::Environment, AWS::AppConfig::ConfigurationProfile, AWS::Cloud9::EnvironmentEC2, AWS::EventSchemas::Registry, AWS::EventSchemas::RegistryPolicy, AWS::EventSchemas::Discoverer, AWS::FraudDetector::Label, AWS::FraudDetector::EntityType, AWS::FraudDetector::Variable, AWS::FraudDetector::Outcome, AWS::IoT::Authorizer, AWS::IoT::SecurityProfile, AWS::IoT::RoleAlias, AWS::IoT::Dimension, AWS::IoTAnalytics::Datastore, AWS::Lightsail::Bucket, AWS::Lightsail::StaticIp, AWS::MediaPackage::PackagingGroup, AWS::Route53RecoveryReadiness::RecoveryGroup, AWS::ResilienceHub::ResiliencyPolicy, AWS::Transfer::Workflow, AWS::EKS::IdentityProviderConfig, AWS::EKS::Addon, AWS::Glue::MLTransform, AWS::IoT::Policy, AWS::IoT::MitigationAction, AWS::IoTTwinMaker::Workspace, AWS::IoTTwinMaker::Entity, AWS::IoTAnalytics::Dataset, AWS::IoTAnalytics::Pipeline, AWS::IoTAnalytics::Channel, AWS::IoTSiteWise::Dashboard, AWS::IoTSiteWise::Project, AWS::IoTSiteWise::Portal, AWS::IoTSiteWise::AssetModel, AWS::IVS::Channel, AWS::IVS::RecordingConfiguration, AWS::IVS::PlaybackKeyPair, AWS::KinesisAnalyticsV2::Application, AWS::RDS::GlobalCluster, AWS::S3::MultiRegionAccessPoint, AWS::DeviceFarm::TestGridProject, AWS::Budgets::BudgetsAction, AWS::Lex::Bot, AWS::CodeGuruReviewer::RepositoryAssociation, AWS::IoT::CustomMetric, AWS::Route53Resolver::FirewallDomainList, AWS::RoboMaker::RobotApplicationVersion, AWS::EC2::TrafficMirrorSession, AWS::IoTSiteWise::Gateway, AWS::Lex::BotAlias, AWS::LookoutMetrics::Alert, AWS::IoT::AccountAuditConfiguration, AWS::EC2::TrafficMirrorTarget, AWS::S3::StorageLens, AWS::IoT::ScheduledAudit, AWS::Events::Connection, AWS::EventSchemas::Schema, AWS::MediaPackage::PackagingConfiguration, AWS::KinesisVideo::SignalingChannel, AWS::AppStream::DirectoryConfig, AWS::LookoutVision::Project, AWS::Route53RecoveryControl::Cluster, AWS::Route53RecoveryControl::SafetyRule, AWS::Route53RecoveryControl::ControlPanel, AWS::Route53RecoveryControl::RoutingControl, AWS::Route53RecoveryReadiness::ResourceSet, AWS::RoboMaker::SimulationApplication, AWS::RoboMaker::RobotApplication, AWS::HealthLake::FHIRDatastore, AWS::Pinpoint::Segment, AWS::Pinpoint::ApplicationSettings, AWS::Events::Rule, AWS::EC2::DHCPOptions, AWS::EC2::NetworkInsightsPath, AWS::EC2::TrafficMirrorFilter, AWS::EC2::IPAM, AWS::IoTTwinMaker::Scene, AWS::NetworkManager::TransitGatewayRegistration, AWS::CustomerProfiles::Domain, AWS::AutoScaling::WarmPool, AWS::Connect::PhoneNumber, AWS::AppConfig::DeploymentStrategy, AWS::AppFlow::Flow, AWS::AuditManager::Assessment, AWS::CloudWatch::MetricStream, AWS::DeviceFarm::InstanceProfile, AWS::DeviceFarm::Project, AWS::EC2::EC2Fleet, AWS::EC2::SubnetRouteTableAssociation, AWS::ECR::PullThroughCacheRule, AWS::GroundStation::Config, AWS::ImageBuilder::ImagePipeline, AWS::IoT::FleetMetric, AWS::IoTWireless::ServiceProfile, AWS::NetworkManager::Device, AWS::NetworkManager::GlobalNetwork, AWS::NetworkManager::Link, AWS::NetworkManager::Site, AWS::Panorama::Package, AWS::Pinpoint::App, AWS::Redshift::ScheduledAction, AWS::Route53Resolver::FirewallRuleGroupAssociation, AWS::SageMaker::AppImageConfig, AWS::SageMaker::Image, AWS::ECS::TaskSet, AWS::Cassandra::Keyspace, AWS::Signer::SigningProfile, AWS::Amplify::App, AWS::AppMesh::VirtualNode, AWS::AppMesh::VirtualService, AWS::AppRunner::VpcConnector, AWS::AppStream::Application, AWS::CodeArtifact::Repository, AWS::EC2::PrefixList, AWS::EC2::SpotFleet, AWS::Evidently::Project, AWS::Forecast::Dataset, AWS::IAM::SAMLProvider, AWS::IAM::ServerCertificate, AWS::Pinpoint::Campaign, AWS::Pinpoint::InAppTemplate, AWS::SageMaker::Domain, AWS::Transfer::Agreement, AWS::Transfer::Connector, AWS::KinesisFirehose::DeliveryStream, AWS::Amplify::Branch, AWS::AppIntegrations::EventIntegration, AWS::AppMesh::Route, AWS::Athena::PreparedStatement, AWS::EC2::IPAMScope, AWS::Evidently::Launch, AWS::Forecast::DatasetGroup, AWS::GreengrassV2::ComponentVersion, AWS::GroundStation::MissionProfile, AWS::MediaConnect::FlowEntitlement, AWS::MediaConnect::FlowVpcInterface, AWS::MediaTailor::PlaybackConfiguration, AWS::MSK::Configuration, AWS::Personalize::Dataset, AWS::Personalize::Schema, AWS::Personalize::Solution, AWS::Pinpoint::EmailTemplate, AWS::Pinpoint::EventStream, AWS::ResilienceHub::App, AWS::ACMPCA::CertificateAuthority, AWS::AppConfig::HostedConfigurationVersion, AWS::AppMesh::VirtualGateway, AWS::AppMesh::VirtualRouter, AWS::AppRunner::Service, AWS::CustomerProfiles::ObjectType, AWS::DMS::Endpoint, AWS::EC2::CapacityReservation, AWS::EC2::ClientVpnEndpoint, AWS::Kendra::Index, AWS::KinesisVideo::Stream, AWS::Logs::Destination, AWS::Pinpoint::EmailChannel, AWS::S3::AccessPoint, AWS::NetworkManager::CustomerGatewayAssociation, AWS::NetworkManager::LinkAssociation, AWS::IoTWireless::MulticastGroup, AWS::Personalize::DatasetGroup, AWS::IoTTwinMaker::ComponentType, AWS::CodeBuild::ReportGroup, AWS::SageMaker::FeatureGroup, AWS::MSK::BatchScramSecret, AWS::AppStream::Stack, AWS::IoT::JobTemplate, AWS::IoTWireless::FuotaTask, AWS::IoT::ProvisioningTemplate, AWS::InspectorV2::Filter, AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation, AWS::ServiceDiscovery::Instance, AWS::Transfer::Certificate, AWS::MediaConnect::FlowSource, AWS::APS::RuleGroupsNamespace, AWS::CodeGuruProfiler::ProfilingGroup, AWS::Route53Resolver::ResolverQueryLoggingConfig, AWS::Batch::SchedulingPolicy, AWS::ACMPCA::CertificateAuthorityActivation, AWS::AppMesh::GatewayRoute, AWS::AppMesh::Mesh, AWS::Connect::Instance, AWS::Connect::QuickConnect, AWS::EC2::CarrierGateway, AWS::EC2::IPAMPool, AWS::EC2::TransitGatewayConnect, AWS::EC2::TransitGatewayMulticastDomain, AWS::ECS::CapacityProvider, AWS::IAM::InstanceProfile, AWS::IoT::CACertificate, AWS::IoTTwinMaker::SyncJob, AWS::KafkaConnect::Connector, AWS::Lambda::CodeSigningConfig, AWS::NetworkManager::ConnectPeer, AWS::ResourceExplorer2::Index, AWS::AppStream::Fleet, AWS::Cognito::UserPool, AWS::Cognito::UserPoolClient, AWS::Cognito::UserPoolGroup, AWS::EC2::NetworkInsightsAccessScope, AWS::EC2::NetworkInsightsAnalysis, AWS::Grafana::Workspace, AWS::GroundStation::DataflowEndpointGroup, AWS::ImageBuilder::ImageRecipe, AWS::KMS::Alias, AWS::M2::Environment, AWS::QuickSight::DataSource, AWS::QuickSight::Template, AWS::QuickSight::Theme, AWS::RDS::OptionGroup, AWS::Redshift::EndpointAccess, AWS::Route53Resolver::FirewallRuleGroup, AWS::SSM::Document
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.configuration_recorder.arn #=> String
+    #   resp.configuration_recorder.name #=> String
+    #   resp.configuration_recorder.role_arn #=> String
+    #   resp.configuration_recorder.recording_group.all_supported #=> Boolean
+    #   resp.configuration_recorder.recording_group.include_global_resource_types #=> Boolean
+    #   resp.configuration_recorder.recording_group.resource_types #=> Array
+    #   resp.configuration_recorder.recording_group.resource_types[0] #=> String, one of "AWS::EC2::CustomerGateway", "AWS::EC2::EIP", "AWS::EC2::Host", "AWS::EC2::Instance", "AWS::EC2::InternetGateway", "AWS::EC2::NetworkAcl", "AWS::EC2::NetworkInterface", "AWS::EC2::RouteTable", "AWS::EC2::SecurityGroup", "AWS::EC2::Subnet", "AWS::CloudTrail::Trail", "AWS::EC2::Volume", "AWS::EC2::VPC", "AWS::EC2::VPNConnection", "AWS::EC2::VPNGateway", "AWS::EC2::RegisteredHAInstance", "AWS::EC2::NatGateway", "AWS::EC2::EgressOnlyInternetGateway", "AWS::EC2::VPCEndpoint", "AWS::EC2::VPCEndpointService", "AWS::EC2::FlowLog", "AWS::EC2::VPCPeeringConnection", "AWS::Elasticsearch::Domain", "AWS::IAM::Group", "AWS::IAM::Policy", "AWS::IAM::Role", "AWS::IAM::User", "AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ACM::Certificate", "AWS::RDS::DBInstance", "AWS::RDS::DBSubnetGroup", "AWS::RDS::DBSecurityGroup", "AWS::RDS::DBSnapshot", "AWS::RDS::DBCluster", "AWS::RDS::DBClusterSnapshot", "AWS::RDS::EventSubscription", "AWS::S3::Bucket", "AWS::S3::AccountPublicAccessBlock", "AWS::Redshift::Cluster", "AWS::Redshift::ClusterSnapshot", "AWS::Redshift::ClusterParameterGroup", "AWS::Redshift::ClusterSecurityGroup", "AWS::Redshift::ClusterSubnetGroup", "AWS::Redshift::EventSubscription", "AWS::SSM::ManagedInstanceInventory", "AWS::CloudWatch::Alarm", "AWS::CloudFormation::Stack", "AWS::ElasticLoadBalancing::LoadBalancer", "AWS::AutoScaling::AutoScalingGroup", "AWS::AutoScaling::LaunchConfiguration", "AWS::AutoScaling::ScalingPolicy", "AWS::AutoScaling::ScheduledAction", "AWS::DynamoDB::Table", "AWS::CodeBuild::Project", "AWS::WAF::RateBasedRule", "AWS::WAF::Rule", "AWS::WAF::RuleGroup", "AWS::WAF::WebACL", "AWS::WAFRegional::RateBasedRule", "AWS::WAFRegional::Rule", "AWS::WAFRegional::RuleGroup", "AWS::WAFRegional::WebACL", "AWS::CloudFront::Distribution", "AWS::CloudFront::StreamingDistribution", "AWS::Lambda::Function", "AWS::NetworkFirewall::Firewall", "AWS::NetworkFirewall::FirewallPolicy", "AWS::NetworkFirewall::RuleGroup", "AWS::ElasticBeanstalk::Application", "AWS::ElasticBeanstalk::ApplicationVersion", "AWS::ElasticBeanstalk::Environment", "AWS::WAFv2::WebACL", "AWS::WAFv2::RuleGroup", "AWS::WAFv2::IPSet", "AWS::WAFv2::RegexPatternSet", "AWS::WAFv2::ManagedRuleSet", "AWS::XRay::EncryptionConfig", "AWS::SSM::AssociationCompliance", "AWS::SSM::PatchCompliance", "AWS::Shield::Protection", "AWS::ShieldRegional::Protection", "AWS::Config::ConformancePackCompliance", "AWS::Config::ResourceCompliance", "AWS::ApiGateway::Stage", "AWS::ApiGateway::RestApi", "AWS::ApiGatewayV2::Stage", "AWS::ApiGatewayV2::Api", "AWS::CodePipeline::Pipeline", "AWS::ServiceCatalog::CloudFormationProvisionedProduct", "AWS::ServiceCatalog::CloudFormationProduct", "AWS::ServiceCatalog::Portfolio", "AWS::SQS::Queue", "AWS::KMS::Key", "AWS::QLDB::Ledger", "AWS::SecretsManager::Secret", "AWS::SNS::Topic", "AWS::SSM::FileData", "AWS::Backup::BackupPlan", "AWS::Backup::BackupSelection", "AWS::Backup::BackupVault", "AWS::Backup::RecoveryPoint", "AWS::ECR::Repository", "AWS::ECS::Cluster", "AWS::ECS::Service", "AWS::ECS::TaskDefinition", "AWS::EFS::AccessPoint", "AWS::EFS::FileSystem", "AWS::EKS::Cluster", "AWS::OpenSearch::Domain", "AWS::EC2::TransitGateway", "AWS::Kinesis::Stream", "AWS::Kinesis::StreamConsumer", "AWS::CodeDeploy::Application", "AWS::CodeDeploy::DeploymentConfig", "AWS::CodeDeploy::DeploymentGroup", "AWS::EC2::LaunchTemplate", "AWS::ECR::PublicRepository", "AWS::GuardDuty::Detector", "AWS::EMR::SecurityConfiguration", "AWS::SageMaker::CodeRepository", "AWS::Route53Resolver::ResolverEndpoint", "AWS::Route53Resolver::ResolverRule", "AWS::Route53Resolver::ResolverRuleAssociation", "AWS::DMS::ReplicationSubnetGroup", "AWS::DMS::EventSubscription", "AWS::MSK::Cluster", "AWS::StepFunctions::Activity", "AWS::WorkSpaces::Workspace", "AWS::WorkSpaces::ConnectionAlias", "AWS::SageMaker::Model", "AWS::ElasticLoadBalancingV2::Listener", "AWS::StepFunctions::StateMachine", "AWS::Batch::JobQueue", "AWS::Batch::ComputeEnvironment", "AWS::AccessAnalyzer::Analyzer", "AWS::Athena::WorkGroup", "AWS::Athena::DataCatalog", "AWS::Detective::Graph", "AWS::GlobalAccelerator::Accelerator", "AWS::GlobalAccelerator::EndpointGroup", "AWS::GlobalAccelerator::Listener", "AWS::EC2::TransitGatewayAttachment", "AWS::EC2::TransitGatewayRouteTable", "AWS::DMS::Certificate", "AWS::AppConfig::Application", "AWS::AppSync::GraphQLApi", "AWS::DataSync::LocationSMB", "AWS::DataSync::LocationFSxLustre", "AWS::DataSync::LocationS3", "AWS::DataSync::LocationEFS", "AWS::DataSync::Task", "AWS::DataSync::LocationNFS", "AWS::EC2::NetworkInsightsAccessScopeAnalysis", "AWS::EKS::FargateProfile", "AWS::Glue::Job", "AWS::GuardDuty::ThreatIntelSet", "AWS::GuardDuty::IPSet", "AWS::SageMaker::Workteam", "AWS::SageMaker::NotebookInstanceLifecycleConfig", "AWS::ServiceDiscovery::Service", "AWS::ServiceDiscovery::PublicDnsNamespace", "AWS::SES::ContactList", "AWS::SES::ConfigurationSet", "AWS::Route53::HostedZone", "AWS::IoTEvents::Input", "AWS::IoTEvents::DetectorModel", "AWS::IoTEvents::AlarmModel", "AWS::ServiceDiscovery::HttpNamespace", "AWS::Events::EventBus", "AWS::ImageBuilder::ContainerRecipe", "AWS::ImageBuilder::DistributionConfiguration", "AWS::ImageBuilder::InfrastructureConfiguration", "AWS::DataSync::LocationObjectStorage", "AWS::DataSync::LocationHDFS", "AWS::Glue::Classifier", "AWS::Route53RecoveryReadiness::Cell", "AWS::Route53RecoveryReadiness::ReadinessCheck", "AWS::ECR::RegistryPolicy", "AWS::Backup::ReportPlan", "AWS::Lightsail::Certificate", "AWS::RUM::AppMonitor", "AWS::Events::Endpoint", "AWS::SES::ReceiptRuleSet", "AWS::Events::Archive", "AWS::Events::ApiDestination", "AWS::Lightsail::Disk", "AWS::FIS::ExperimentTemplate", "AWS::DataSync::LocationFSxWindows", "AWS::SES::ReceiptFilter", "AWS::GuardDuty::Filter", "AWS::SES::Template", "AWS::AmazonMQ::Broker", "AWS::AppConfig::Environment", "AWS::AppConfig::ConfigurationProfile", "AWS::Cloud9::EnvironmentEC2", "AWS::EventSchemas::Registry", "AWS::EventSchemas::RegistryPolicy", "AWS::EventSchemas::Discoverer", "AWS::FraudDetector::Label", "AWS::FraudDetector::EntityType", "AWS::FraudDetector::Variable", "AWS::FraudDetector::Outcome", "AWS::IoT::Authorizer", "AWS::IoT::SecurityProfile", "AWS::IoT::RoleAlias", "AWS::IoT::Dimension", "AWS::IoTAnalytics::Datastore", "AWS::Lightsail::Bucket", "AWS::Lightsail::StaticIp", "AWS::MediaPackage::PackagingGroup", "AWS::Route53RecoveryReadiness::RecoveryGroup", "AWS::ResilienceHub::ResiliencyPolicy", "AWS::Transfer::Workflow", "AWS::EKS::IdentityProviderConfig", "AWS::EKS::Addon", "AWS::Glue::MLTransform", "AWS::IoT::Policy", "AWS::IoT::MitigationAction", "AWS::IoTTwinMaker::Workspace", "AWS::IoTTwinMaker::Entity", "AWS::IoTAnalytics::Dataset", "AWS::IoTAnalytics::Pipeline", "AWS::IoTAnalytics::Channel", "AWS::IoTSiteWise::Dashboard", "AWS::IoTSiteWise::Project", "AWS::IoTSiteWise::Portal", "AWS::IoTSiteWise::AssetModel", "AWS::IVS::Channel", "AWS::IVS::RecordingConfiguration", "AWS::IVS::PlaybackKeyPair", "AWS::KinesisAnalyticsV2::Application", "AWS::RDS::GlobalCluster", "AWS::S3::MultiRegionAccessPoint", "AWS::DeviceFarm::TestGridProject", "AWS::Budgets::BudgetsAction", "AWS::Lex::Bot", "AWS::CodeGuruReviewer::RepositoryAssociation", "AWS::IoT::CustomMetric", "AWS::Route53Resolver::FirewallDomainList", "AWS::RoboMaker::RobotApplicationVersion", "AWS::EC2::TrafficMirrorSession", "AWS::IoTSiteWise::Gateway", "AWS::Lex::BotAlias", "AWS::LookoutMetrics::Alert", "AWS::IoT::AccountAuditConfiguration", "AWS::EC2::TrafficMirrorTarget", "AWS::S3::StorageLens", "AWS::IoT::ScheduledAudit", "AWS::Events::Connection", "AWS::EventSchemas::Schema", "AWS::MediaPackage::PackagingConfiguration", "AWS::KinesisVideo::SignalingChannel", "AWS::AppStream::DirectoryConfig", "AWS::LookoutVision::Project", "AWS::Route53RecoveryControl::Cluster", "AWS::Route53RecoveryControl::SafetyRule", "AWS::Route53RecoveryControl::ControlPanel", "AWS::Route53RecoveryControl::RoutingControl", "AWS::Route53RecoveryReadiness::ResourceSet", "AWS::RoboMaker::SimulationApplication", "AWS::RoboMaker::RobotApplication", "AWS::HealthLake::FHIRDatastore", "AWS::Pinpoint::Segment", "AWS::Pinpoint::ApplicationSettings", "AWS::Events::Rule", "AWS::EC2::DHCPOptions", "AWS::EC2::NetworkInsightsPath", "AWS::EC2::TrafficMirrorFilter", "AWS::EC2::IPAM", "AWS::IoTTwinMaker::Scene", "AWS::NetworkManager::TransitGatewayRegistration", "AWS::CustomerProfiles::Domain", "AWS::AutoScaling::WarmPool", "AWS::Connect::PhoneNumber", "AWS::AppConfig::DeploymentStrategy", "AWS::AppFlow::Flow", "AWS::AuditManager::Assessment", "AWS::CloudWatch::MetricStream", "AWS::DeviceFarm::InstanceProfile", "AWS::DeviceFarm::Project", "AWS::EC2::EC2Fleet", "AWS::EC2::SubnetRouteTableAssociation", "AWS::ECR::PullThroughCacheRule", "AWS::GroundStation::Config", "AWS::ImageBuilder::ImagePipeline", "AWS::IoT::FleetMetric", "AWS::IoTWireless::ServiceProfile", "AWS::NetworkManager::Device", "AWS::NetworkManager::GlobalNetwork", "AWS::NetworkManager::Link", "AWS::NetworkManager::Site", "AWS::Panorama::Package", "AWS::Pinpoint::App", "AWS::Redshift::ScheduledAction", "AWS::Route53Resolver::FirewallRuleGroupAssociation", "AWS::SageMaker::AppImageConfig", "AWS::SageMaker::Image", "AWS::ECS::TaskSet", "AWS::Cassandra::Keyspace", "AWS::Signer::SigningProfile", "AWS::Amplify::App", "AWS::AppMesh::VirtualNode", "AWS::AppMesh::VirtualService", "AWS::AppRunner::VpcConnector", "AWS::AppStream::Application", "AWS::CodeArtifact::Repository", "AWS::EC2::PrefixList", "AWS::EC2::SpotFleet", "AWS::Evidently::Project", "AWS::Forecast::Dataset", "AWS::IAM::SAMLProvider", "AWS::IAM::ServerCertificate", "AWS::Pinpoint::Campaign", "AWS::Pinpoint::InAppTemplate", "AWS::SageMaker::Domain", "AWS::Transfer::Agreement", "AWS::Transfer::Connector", "AWS::KinesisFirehose::DeliveryStream", "AWS::Amplify::Branch", "AWS::AppIntegrations::EventIntegration", "AWS::AppMesh::Route", "AWS::Athena::PreparedStatement", "AWS::EC2::IPAMScope", "AWS::Evidently::Launch", "AWS::Forecast::DatasetGroup", "AWS::GreengrassV2::ComponentVersion", "AWS::GroundStation::MissionProfile", "AWS::MediaConnect::FlowEntitlement", "AWS::MediaConnect::FlowVpcInterface", "AWS::MediaTailor::PlaybackConfiguration", "AWS::MSK::Configuration", "AWS::Personalize::Dataset", "AWS::Personalize::Schema", "AWS::Personalize::Solution", "AWS::Pinpoint::EmailTemplate", "AWS::Pinpoint::EventStream", "AWS::ResilienceHub::App", "AWS::ACMPCA::CertificateAuthority", "AWS::AppConfig::HostedConfigurationVersion", "AWS::AppMesh::VirtualGateway", "AWS::AppMesh::VirtualRouter", "AWS::AppRunner::Service", "AWS::CustomerProfiles::ObjectType", "AWS::DMS::Endpoint", "AWS::EC2::CapacityReservation", "AWS::EC2::ClientVpnEndpoint", "AWS::Kendra::Index", "AWS::KinesisVideo::Stream", "AWS::Logs::Destination", "AWS::Pinpoint::EmailChannel", "AWS::S3::AccessPoint", "AWS::NetworkManager::CustomerGatewayAssociation", "AWS::NetworkManager::LinkAssociation", "AWS::IoTWireless::MulticastGroup", "AWS::Personalize::DatasetGroup", "AWS::IoTTwinMaker::ComponentType", "AWS::CodeBuild::ReportGroup", "AWS::SageMaker::FeatureGroup", "AWS::MSK::BatchScramSecret", "AWS::AppStream::Stack", "AWS::IoT::JobTemplate", "AWS::IoTWireless::FuotaTask", "AWS::IoT::ProvisioningTemplate", "AWS::InspectorV2::Filter", "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation", "AWS::ServiceDiscovery::Instance", "AWS::Transfer::Certificate", "AWS::MediaConnect::FlowSource", "AWS::APS::RuleGroupsNamespace", "AWS::CodeGuruProfiler::ProfilingGroup", "AWS::Route53Resolver::ResolverQueryLoggingConfig", "AWS::Batch::SchedulingPolicy", "AWS::ACMPCA::CertificateAuthorityActivation", "AWS::AppMesh::GatewayRoute", "AWS::AppMesh::Mesh", "AWS::Connect::Instance", "AWS::Connect::QuickConnect", "AWS::EC2::CarrierGateway", "AWS::EC2::IPAMPool", "AWS::EC2::TransitGatewayConnect", "AWS::EC2::TransitGatewayMulticastDomain", "AWS::ECS::CapacityProvider", "AWS::IAM::InstanceProfile", "AWS::IoT::CACertificate", "AWS::IoTTwinMaker::SyncJob", "AWS::KafkaConnect::Connector", "AWS::Lambda::CodeSigningConfig", "AWS::NetworkManager::ConnectPeer", "AWS::ResourceExplorer2::Index", "AWS::AppStream::Fleet", "AWS::Cognito::UserPool", "AWS::Cognito::UserPoolClient", "AWS::Cognito::UserPoolGroup", "AWS::EC2::NetworkInsightsAccessScope", "AWS::EC2::NetworkInsightsAnalysis", "AWS::Grafana::Workspace", "AWS::GroundStation::DataflowEndpointGroup", "AWS::ImageBuilder::ImageRecipe", "AWS::KMS::Alias", "AWS::M2::Environment", "AWS::QuickSight::DataSource", "AWS::QuickSight::Template", "AWS::QuickSight::Theme", "AWS::RDS::OptionGroup", "AWS::Redshift::EndpointAccess", "AWS::Route53Resolver::FirewallRuleGroup", "AWS::SSM::Document"
+    #   resp.configuration_recorder.recording_group.exclusion_by_resource_types.resource_types #=> Array
+    #   resp.configuration_recorder.recording_group.exclusion_by_resource_types.resource_types[0] #=> String, one of "AWS::EC2::CustomerGateway", "AWS::EC2::EIP", "AWS::EC2::Host", "AWS::EC2::Instance", "AWS::EC2::InternetGateway", "AWS::EC2::NetworkAcl", "AWS::EC2::NetworkInterface", "AWS::EC2::RouteTable", "AWS::EC2::SecurityGroup", "AWS::EC2::Subnet", "AWS::CloudTrail::Trail", "AWS::EC2::Volume", "AWS::EC2::VPC", "AWS::EC2::VPNConnection", "AWS::EC2::VPNGateway", "AWS::EC2::RegisteredHAInstance", "AWS::EC2::NatGateway", "AWS::EC2::EgressOnlyInternetGateway", "AWS::EC2::VPCEndpoint", "AWS::EC2::VPCEndpointService", "AWS::EC2::FlowLog", "AWS::EC2::VPCPeeringConnection", "AWS::Elasticsearch::Domain", "AWS::IAM::Group", "AWS::IAM::Policy", "AWS::IAM::Role", "AWS::IAM::User", "AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ACM::Certificate", "AWS::RDS::DBInstance", "AWS::RDS::DBSubnetGroup", "AWS::RDS::DBSecurityGroup", "AWS::RDS::DBSnapshot", "AWS::RDS::DBCluster", "AWS::RDS::DBClusterSnapshot", "AWS::RDS::EventSubscription", "AWS::S3::Bucket", "AWS::S3::AccountPublicAccessBlock", "AWS::Redshift::Cluster", "AWS::Redshift::ClusterSnapshot", "AWS::Redshift::ClusterParameterGroup", "AWS::Redshift::ClusterSecurityGroup", "AWS::Redshift::ClusterSubnetGroup", "AWS::Redshift::EventSubscription", "AWS::SSM::ManagedInstanceInventory", "AWS::CloudWatch::Alarm", "AWS::CloudFormation::Stack", "AWS::ElasticLoadBalancing::LoadBalancer", "AWS::AutoScaling::AutoScalingGroup", "AWS::AutoScaling::LaunchConfiguration", "AWS::AutoScaling::ScalingPolicy", "AWS::AutoScaling::ScheduledAction", "AWS::DynamoDB::Table", "AWS::CodeBuild::Project", "AWS::WAF::RateBasedRule", "AWS::WAF::Rule", "AWS::WAF::RuleGroup", "AWS::WAF::WebACL", "AWS::WAFRegional::RateBasedRule", "AWS::WAFRegional::Rule", "AWS::WAFRegional::RuleGroup", "AWS::WAFRegional::WebACL", "AWS::CloudFront::Distribution", "AWS::CloudFront::StreamingDistribution", "AWS::Lambda::Function", "AWS::NetworkFirewall::Firewall", "AWS::NetworkFirewall::FirewallPolicy", "AWS::NetworkFirewall::RuleGroup", "AWS::ElasticBeanstalk::Application", "AWS::ElasticBeanstalk::ApplicationVersion", "AWS::ElasticBeanstalk::Environment", "AWS::WAFv2::WebACL", "AWS::WAFv2::RuleGroup", "AWS::WAFv2::IPSet", "AWS::WAFv2::RegexPatternSet", "AWS::WAFv2::ManagedRuleSet", "AWS::XRay::EncryptionConfig", "AWS::SSM::AssociationCompliance", "AWS::SSM::PatchCompliance", "AWS::Shield::Protection", "AWS::ShieldRegional::Protection", "AWS::Config::ConformancePackCompliance", "AWS::Config::ResourceCompliance", "AWS::ApiGateway::Stage", "AWS::ApiGateway::RestApi", "AWS::ApiGatewayV2::Stage", "AWS::ApiGatewayV2::Api", "AWS::CodePipeline::Pipeline", "AWS::ServiceCatalog::CloudFormationProvisionedProduct", "AWS::ServiceCatalog::CloudFormationProduct", "AWS::ServiceCatalog::Portfolio", "AWS::SQS::Queue", "AWS::KMS::Key", "AWS::QLDB::Ledger", "AWS::SecretsManager::Secret", "AWS::SNS::Topic", "AWS::SSM::FileData", "AWS::Backup::BackupPlan", "AWS::Backup::BackupSelection", "AWS::Backup::BackupVault", "AWS::Backup::RecoveryPoint", "AWS::ECR::Repository", "AWS::ECS::Cluster", "AWS::ECS::Service", "AWS::ECS::TaskDefinition", "AWS::EFS::AccessPoint", "AWS::EFS::FileSystem", "AWS::EKS::Cluster", "AWS::OpenSearch::Domain", "AWS::EC2::TransitGateway", "AWS::Kinesis::Stream", "AWS::Kinesis::StreamConsumer", "AWS::CodeDeploy::Application", "AWS::CodeDeploy::DeploymentConfig", "AWS::CodeDeploy::DeploymentGroup", "AWS::EC2::LaunchTemplate", "AWS::ECR::PublicRepository", "AWS::GuardDuty::Detector", "AWS::EMR::SecurityConfiguration", "AWS::SageMaker::CodeRepository", "AWS::Route53Resolver::ResolverEndpoint", "AWS::Route53Resolver::ResolverRule", "AWS::Route53Resolver::ResolverRuleAssociation", "AWS::DMS::ReplicationSubnetGroup", "AWS::DMS::EventSubscription", "AWS::MSK::Cluster", "AWS::StepFunctions::Activity", "AWS::WorkSpaces::Workspace", "AWS::WorkSpaces::ConnectionAlias", "AWS::SageMaker::Model", "AWS::ElasticLoadBalancingV2::Listener", "AWS::StepFunctions::StateMachine", "AWS::Batch::JobQueue", "AWS::Batch::ComputeEnvironment", "AWS::AccessAnalyzer::Analyzer", "AWS::Athena::WorkGroup", "AWS::Athena::DataCatalog", "AWS::Detective::Graph", "AWS::GlobalAccelerator::Accelerator", "AWS::GlobalAccelerator::EndpointGroup", "AWS::GlobalAccelerator::Listener", "AWS::EC2::TransitGatewayAttachment", "AWS::EC2::TransitGatewayRouteTable", "AWS::DMS::Certificate", "AWS::AppConfig::Application", "AWS::AppSync::GraphQLApi", "AWS::DataSync::LocationSMB", "AWS::DataSync::LocationFSxLustre", "AWS::DataSync::LocationS3", "AWS::DataSync::LocationEFS", "AWS::DataSync::Task", "AWS::DataSync::LocationNFS", "AWS::EC2::NetworkInsightsAccessScopeAnalysis", "AWS::EKS::FargateProfile", "AWS::Glue::Job", "AWS::GuardDuty::ThreatIntelSet", "AWS::GuardDuty::IPSet", "AWS::SageMaker::Workteam", "AWS::SageMaker::NotebookInstanceLifecycleConfig", "AWS::ServiceDiscovery::Service", "AWS::ServiceDiscovery::PublicDnsNamespace", "AWS::SES::ContactList", "AWS::SES::ConfigurationSet", "AWS::Route53::HostedZone", "AWS::IoTEvents::Input", "AWS::IoTEvents::DetectorModel", "AWS::IoTEvents::AlarmModel", "AWS::ServiceDiscovery::HttpNamespace", "AWS::Events::EventBus", "AWS::ImageBuilder::ContainerRecipe", "AWS::ImageBuilder::DistributionConfiguration", "AWS::ImageBuilder::InfrastructureConfiguration", "AWS::DataSync::LocationObjectStorage", "AWS::DataSync::LocationHDFS", "AWS::Glue::Classifier", "AWS::Route53RecoveryReadiness::Cell", "AWS::Route53RecoveryReadiness::ReadinessCheck", "AWS::ECR::RegistryPolicy", "AWS::Backup::ReportPlan", "AWS::Lightsail::Certificate", "AWS::RUM::AppMonitor", "AWS::Events::Endpoint", "AWS::SES::ReceiptRuleSet", "AWS::Events::Archive", "AWS::Events::ApiDestination", "AWS::Lightsail::Disk", "AWS::FIS::ExperimentTemplate", "AWS::DataSync::LocationFSxWindows", "AWS::SES::ReceiptFilter", "AWS::GuardDuty::Filter", "AWS::SES::Template", "AWS::AmazonMQ::Broker", "AWS::AppConfig::Environment", "AWS::AppConfig::ConfigurationProfile", "AWS::Cloud9::EnvironmentEC2", "AWS::EventSchemas::Registry", "AWS::EventSchemas::RegistryPolicy", "AWS::EventSchemas::Discoverer", "AWS::FraudDetector::Label", "AWS::FraudDetector::EntityType", "AWS::FraudDetector::Variable", "AWS::FraudDetector::Outcome", "AWS::IoT::Authorizer", "AWS::IoT::SecurityProfile", "AWS::IoT::RoleAlias", "AWS::IoT::Dimension", "AWS::IoTAnalytics::Datastore", "AWS::Lightsail::Bucket", "AWS::Lightsail::StaticIp", "AWS::MediaPackage::PackagingGroup", "AWS::Route53RecoveryReadiness::RecoveryGroup", "AWS::ResilienceHub::ResiliencyPolicy", "AWS::Transfer::Workflow", "AWS::EKS::IdentityProviderConfig", "AWS::EKS::Addon", "AWS::Glue::MLTransform", "AWS::IoT::Policy", "AWS::IoT::MitigationAction", "AWS::IoTTwinMaker::Workspace", "AWS::IoTTwinMaker::Entity", "AWS::IoTAnalytics::Dataset", "AWS::IoTAnalytics::Pipeline", "AWS::IoTAnalytics::Channel", "AWS::IoTSiteWise::Dashboard", "AWS::IoTSiteWise::Project", "AWS::IoTSiteWise::Portal", "AWS::IoTSiteWise::AssetModel", "AWS::IVS::Channel", "AWS::IVS::RecordingConfiguration", "AWS::IVS::PlaybackKeyPair", "AWS::KinesisAnalyticsV2::Application", "AWS::RDS::GlobalCluster", "AWS::S3::MultiRegionAccessPoint", "AWS::DeviceFarm::TestGridProject", "AWS::Budgets::BudgetsAction", "AWS::Lex::Bot", "AWS::CodeGuruReviewer::RepositoryAssociation", "AWS::IoT::CustomMetric", "AWS::Route53Resolver::FirewallDomainList", "AWS::RoboMaker::RobotApplicationVersion", "AWS::EC2::TrafficMirrorSession", "AWS::IoTSiteWise::Gateway", "AWS::Lex::BotAlias", "AWS::LookoutMetrics::Alert", "AWS::IoT::AccountAuditConfiguration", "AWS::EC2::TrafficMirrorTarget", "AWS::S3::StorageLens", "AWS::IoT::ScheduledAudit", "AWS::Events::Connection", "AWS::EventSchemas::Schema", "AWS::MediaPackage::PackagingConfiguration", "AWS::KinesisVideo::SignalingChannel", "AWS::AppStream::DirectoryConfig", "AWS::LookoutVision::Project", "AWS::Route53RecoveryControl::Cluster", "AWS::Route53RecoveryControl::SafetyRule", "AWS::Route53RecoveryControl::ControlPanel", "AWS::Route53RecoveryControl::RoutingControl", "AWS::Route53RecoveryReadiness::ResourceSet", "AWS::RoboMaker::SimulationApplication", "AWS::RoboMaker::RobotApplication", "AWS::HealthLake::FHIRDatastore", "AWS::Pinpoint::Segment", "AWS::Pinpoint::ApplicationSettings", "AWS::Events::Rule", "AWS::EC2::DHCPOptions", "AWS::EC2::NetworkInsightsPath", "AWS::EC2::TrafficMirrorFilter", "AWS::EC2::IPAM", "AWS::IoTTwinMaker::Scene", "AWS::NetworkManager::TransitGatewayRegistration", "AWS::CustomerProfiles::Domain", "AWS::AutoScaling::WarmPool", "AWS::Connect::PhoneNumber", "AWS::AppConfig::DeploymentStrategy", "AWS::AppFlow::Flow", "AWS::AuditManager::Assessment", "AWS::CloudWatch::MetricStream", "AWS::DeviceFarm::InstanceProfile", "AWS::DeviceFarm::Project", "AWS::EC2::EC2Fleet", "AWS::EC2::SubnetRouteTableAssociation", "AWS::ECR::PullThroughCacheRule", "AWS::GroundStation::Config", "AWS::ImageBuilder::ImagePipeline", "AWS::IoT::FleetMetric", "AWS::IoTWireless::ServiceProfile", "AWS::NetworkManager::Device", "AWS::NetworkManager::GlobalNetwork", "AWS::NetworkManager::Link", "AWS::NetworkManager::Site", "AWS::Panorama::Package", "AWS::Pinpoint::App", "AWS::Redshift::ScheduledAction", "AWS::Route53Resolver::FirewallRuleGroupAssociation", "AWS::SageMaker::AppImageConfig", "AWS::SageMaker::Image", "AWS::ECS::TaskSet", "AWS::Cassandra::Keyspace", "AWS::Signer::SigningProfile", "AWS::Amplify::App", "AWS::AppMesh::VirtualNode", "AWS::AppMesh::VirtualService", "AWS::AppRunner::VpcConnector", "AWS::AppStream::Application", "AWS::CodeArtifact::Repository", "AWS::EC2::PrefixList", "AWS::EC2::SpotFleet", "AWS::Evidently::Project", "AWS::Forecast::Dataset", "AWS::IAM::SAMLProvider", "AWS::IAM::ServerCertificate", "AWS::Pinpoint::Campaign", "AWS::Pinpoint::InAppTemplate", "AWS::SageMaker::Domain", "AWS::Transfer::Agreement", "AWS::Transfer::Connector", "AWS::KinesisFirehose::DeliveryStream", "AWS::Amplify::Branch", "AWS::AppIntegrations::EventIntegration", "AWS::AppMesh::Route", "AWS::Athena::PreparedStatement", "AWS::EC2::IPAMScope", "AWS::Evidently::Launch", "AWS::Forecast::DatasetGroup", "AWS::GreengrassV2::ComponentVersion", "AWS::GroundStation::MissionProfile", "AWS::MediaConnect::FlowEntitlement", "AWS::MediaConnect::FlowVpcInterface", "AWS::MediaTailor::PlaybackConfiguration", "AWS::MSK::Configuration", "AWS::Personalize::Dataset", "AWS::Personalize::Schema", "AWS::Personalize::Solution", "AWS::Pinpoint::EmailTemplate", "AWS::Pinpoint::EventStream", "AWS::ResilienceHub::App", "AWS::ACMPCA::CertificateAuthority", "AWS::AppConfig::HostedConfigurationVersion", "AWS::AppMesh::VirtualGateway", "AWS::AppMesh::VirtualRouter", "AWS::AppRunner::Service", "AWS::CustomerProfiles::ObjectType", "AWS::DMS::Endpoint", "AWS::EC2::CapacityReservation", "AWS::EC2::ClientVpnEndpoint", "AWS::Kendra::Index", "AWS::KinesisVideo::Stream", "AWS::Logs::Destination", "AWS::Pinpoint::EmailChannel", "AWS::S3::AccessPoint", "AWS::NetworkManager::CustomerGatewayAssociation", "AWS::NetworkManager::LinkAssociation", "AWS::IoTWireless::MulticastGroup", "AWS::Personalize::DatasetGroup", "AWS::IoTTwinMaker::ComponentType", "AWS::CodeBuild::ReportGroup", "AWS::SageMaker::FeatureGroup", "AWS::MSK::BatchScramSecret", "AWS::AppStream::Stack", "AWS::IoT::JobTemplate", "AWS::IoTWireless::FuotaTask", "AWS::IoT::ProvisioningTemplate", "AWS::InspectorV2::Filter", "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation", "AWS::ServiceDiscovery::Instance", "AWS::Transfer::Certificate", "AWS::MediaConnect::FlowSource", "AWS::APS::RuleGroupsNamespace", "AWS::CodeGuruProfiler::ProfilingGroup", "AWS::Route53Resolver::ResolverQueryLoggingConfig", "AWS::Batch::SchedulingPolicy", "AWS::ACMPCA::CertificateAuthorityActivation", "AWS::AppMesh::GatewayRoute", "AWS::AppMesh::Mesh", "AWS::Connect::Instance", "AWS::Connect::QuickConnect", "AWS::EC2::CarrierGateway", "AWS::EC2::IPAMPool", "AWS::EC2::TransitGatewayConnect", "AWS::EC2::TransitGatewayMulticastDomain", "AWS::ECS::CapacityProvider", "AWS::IAM::InstanceProfile", "AWS::IoT::CACertificate", "AWS::IoTTwinMaker::SyncJob", "AWS::KafkaConnect::Connector", "AWS::Lambda::CodeSigningConfig", "AWS::NetworkManager::ConnectPeer", "AWS::ResourceExplorer2::Index", "AWS::AppStream::Fleet", "AWS::Cognito::UserPool", "AWS::Cognito::UserPoolClient", "AWS::Cognito::UserPoolGroup", "AWS::EC2::NetworkInsightsAccessScope", "AWS::EC2::NetworkInsightsAnalysis", "AWS::Grafana::Workspace", "AWS::GroundStation::DataflowEndpointGroup", "AWS::ImageBuilder::ImageRecipe", "AWS::KMS::Alias", "AWS::M2::Environment", "AWS::QuickSight::DataSource", "AWS::QuickSight::Template", "AWS::QuickSight::Theme", "AWS::RDS::OptionGroup", "AWS::Redshift::EndpointAccess", "AWS::Route53Resolver::FirewallRuleGroup", "AWS::SSM::Document"
+    #   resp.configuration_recorder.recording_group.recording_strategy.use_only #=> String, one of "ALL_SUPPORTED_RESOURCE_TYPES", "INCLUSION_BY_RESOURCE_TYPES", "EXCLUSION_BY_RESOURCE_TYPES"
+    #   resp.configuration_recorder.recording_mode.recording_frequency #=> String, one of "CONTINUOUS", "DAILY"
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides #=> Array
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].description #=> String
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].resource_types #=> Array
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].resource_types[0] #=> String, one of "AWS::EC2::CustomerGateway", "AWS::EC2::EIP", "AWS::EC2::Host", "AWS::EC2::Instance", "AWS::EC2::InternetGateway", "AWS::EC2::NetworkAcl", "AWS::EC2::NetworkInterface", "AWS::EC2::RouteTable", "AWS::EC2::SecurityGroup", "AWS::EC2::Subnet", "AWS::CloudTrail::Trail", "AWS::EC2::Volume", "AWS::EC2::VPC", "AWS::EC2::VPNConnection", "AWS::EC2::VPNGateway", "AWS::EC2::RegisteredHAInstance", "AWS::EC2::NatGateway", "AWS::EC2::EgressOnlyInternetGateway", "AWS::EC2::VPCEndpoint", "AWS::EC2::VPCEndpointService", "AWS::EC2::FlowLog", "AWS::EC2::VPCPeeringConnection", "AWS::Elasticsearch::Domain", "AWS::IAM::Group", "AWS::IAM::Policy", "AWS::IAM::Role", "AWS::IAM::User", "AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ACM::Certificate", "AWS::RDS::DBInstance", "AWS::RDS::DBSubnetGroup", "AWS::RDS::DBSecurityGroup", "AWS::RDS::DBSnapshot", "AWS::RDS::DBCluster", "AWS::RDS::DBClusterSnapshot", "AWS::RDS::EventSubscription", "AWS::S3::Bucket", "AWS::S3::AccountPublicAccessBlock", "AWS::Redshift::Cluster", "AWS::Redshift::ClusterSnapshot", "AWS::Redshift::ClusterParameterGroup", "AWS::Redshift::ClusterSecurityGroup", "AWS::Redshift::ClusterSubnetGroup", "AWS::Redshift::EventSubscription", "AWS::SSM::ManagedInstanceInventory", "AWS::CloudWatch::Alarm", "AWS::CloudFormation::Stack", "AWS::ElasticLoadBalancing::LoadBalancer", "AWS::AutoScaling::AutoScalingGroup", "AWS::AutoScaling::LaunchConfiguration", "AWS::AutoScaling::ScalingPolicy", "AWS::AutoScaling::ScheduledAction", "AWS::DynamoDB::Table", "AWS::CodeBuild::Project", "AWS::WAF::RateBasedRule", "AWS::WAF::Rule", "AWS::WAF::RuleGroup", "AWS::WAF::WebACL", "AWS::WAFRegional::RateBasedRule", "AWS::WAFRegional::Rule", "AWS::WAFRegional::RuleGroup", "AWS::WAFRegional::WebACL", "AWS::CloudFront::Distribution", "AWS::CloudFront::StreamingDistribution", "AWS::Lambda::Function", "AWS::NetworkFirewall::Firewall", "AWS::NetworkFirewall::FirewallPolicy", "AWS::NetworkFirewall::RuleGroup", "AWS::ElasticBeanstalk::Application", "AWS::ElasticBeanstalk::ApplicationVersion", "AWS::ElasticBeanstalk::Environment", "AWS::WAFv2::WebACL", "AWS::WAFv2::RuleGroup", "AWS::WAFv2::IPSet", "AWS::WAFv2::RegexPatternSet", "AWS::WAFv2::ManagedRuleSet", "AWS::XRay::EncryptionConfig", "AWS::SSM::AssociationCompliance", "AWS::SSM::PatchCompliance", "AWS::Shield::Protection", "AWS::ShieldRegional::Protection", "AWS::Config::ConformancePackCompliance", "AWS::Config::ResourceCompliance", "AWS::ApiGateway::Stage", "AWS::ApiGateway::RestApi", "AWS::ApiGatewayV2::Stage", "AWS::ApiGatewayV2::Api", "AWS::CodePipeline::Pipeline", "AWS::ServiceCatalog::CloudFormationProvisionedProduct", "AWS::ServiceCatalog::CloudFormationProduct", "AWS::ServiceCatalog::Portfolio", "AWS::SQS::Queue", "AWS::KMS::Key", "AWS::QLDB::Ledger", "AWS::SecretsManager::Secret", "AWS::SNS::Topic", "AWS::SSM::FileData", "AWS::Backup::BackupPlan", "AWS::Backup::BackupSelection", "AWS::Backup::BackupVault", "AWS::Backup::RecoveryPoint", "AWS::ECR::Repository", "AWS::ECS::Cluster", "AWS::ECS::Service", "AWS::ECS::TaskDefinition", "AWS::EFS::AccessPoint", "AWS::EFS::FileSystem", "AWS::EKS::Cluster", "AWS::OpenSearch::Domain", "AWS::EC2::TransitGateway", "AWS::Kinesis::Stream", "AWS::Kinesis::StreamConsumer", "AWS::CodeDeploy::Application", "AWS::CodeDeploy::DeploymentConfig", "AWS::CodeDeploy::DeploymentGroup", "AWS::EC2::LaunchTemplate", "AWS::ECR::PublicRepository", "AWS::GuardDuty::Detector", "AWS::EMR::SecurityConfiguration", "AWS::SageMaker::CodeRepository", "AWS::Route53Resolver::ResolverEndpoint", "AWS::Route53Resolver::ResolverRule", "AWS::Route53Resolver::ResolverRuleAssociation", "AWS::DMS::ReplicationSubnetGroup", "AWS::DMS::EventSubscription", "AWS::MSK::Cluster", "AWS::StepFunctions::Activity", "AWS::WorkSpaces::Workspace", "AWS::WorkSpaces::ConnectionAlias", "AWS::SageMaker::Model", "AWS::ElasticLoadBalancingV2::Listener", "AWS::StepFunctions::StateMachine", "AWS::Batch::JobQueue", "AWS::Batch::ComputeEnvironment", "AWS::AccessAnalyzer::Analyzer", "AWS::Athena::WorkGroup", "AWS::Athena::DataCatalog", "AWS::Detective::Graph", "AWS::GlobalAccelerator::Accelerator", "AWS::GlobalAccelerator::EndpointGroup", "AWS::GlobalAccelerator::Listener", "AWS::EC2::TransitGatewayAttachment", "AWS::EC2::TransitGatewayRouteTable", "AWS::DMS::Certificate", "AWS::AppConfig::Application", "AWS::AppSync::GraphQLApi", "AWS::DataSync::LocationSMB", "AWS::DataSync::LocationFSxLustre", "AWS::DataSync::LocationS3", "AWS::DataSync::LocationEFS", "AWS::DataSync::Task", "AWS::DataSync::LocationNFS", "AWS::EC2::NetworkInsightsAccessScopeAnalysis", "AWS::EKS::FargateProfile", "AWS::Glue::Job", "AWS::GuardDuty::ThreatIntelSet", "AWS::GuardDuty::IPSet", "AWS::SageMaker::Workteam", "AWS::SageMaker::NotebookInstanceLifecycleConfig", "AWS::ServiceDiscovery::Service", "AWS::ServiceDiscovery::PublicDnsNamespace", "AWS::SES::ContactList", "AWS::SES::ConfigurationSet", "AWS::Route53::HostedZone", "AWS::IoTEvents::Input", "AWS::IoTEvents::DetectorModel", "AWS::IoTEvents::AlarmModel", "AWS::ServiceDiscovery::HttpNamespace", "AWS::Events::EventBus", "AWS::ImageBuilder::ContainerRecipe", "AWS::ImageBuilder::DistributionConfiguration", "AWS::ImageBuilder::InfrastructureConfiguration", "AWS::DataSync::LocationObjectStorage", "AWS::DataSync::LocationHDFS", "AWS::Glue::Classifier", "AWS::Route53RecoveryReadiness::Cell", "AWS::Route53RecoveryReadiness::ReadinessCheck", "AWS::ECR::RegistryPolicy", "AWS::Backup::ReportPlan", "AWS::Lightsail::Certificate", "AWS::RUM::AppMonitor", "AWS::Events::Endpoint", "AWS::SES::ReceiptRuleSet", "AWS::Events::Archive", "AWS::Events::ApiDestination", "AWS::Lightsail::Disk", "AWS::FIS::ExperimentTemplate", "AWS::DataSync::LocationFSxWindows", "AWS::SES::ReceiptFilter", "AWS::GuardDuty::Filter", "AWS::SES::Template", "AWS::AmazonMQ::Broker", "AWS::AppConfig::Environment", "AWS::AppConfig::ConfigurationProfile", "AWS::Cloud9::EnvironmentEC2", "AWS::EventSchemas::Registry", "AWS::EventSchemas::RegistryPolicy", "AWS::EventSchemas::Discoverer", "AWS::FraudDetector::Label", "AWS::FraudDetector::EntityType", "AWS::FraudDetector::Variable", "AWS::FraudDetector::Outcome", "AWS::IoT::Authorizer", "AWS::IoT::SecurityProfile", "AWS::IoT::RoleAlias", "AWS::IoT::Dimension", "AWS::IoTAnalytics::Datastore", "AWS::Lightsail::Bucket", "AWS::Lightsail::StaticIp", "AWS::MediaPackage::PackagingGroup", "AWS::Route53RecoveryReadiness::RecoveryGroup", "AWS::ResilienceHub::ResiliencyPolicy", "AWS::Transfer::Workflow", "AWS::EKS::IdentityProviderConfig", "AWS::EKS::Addon", "AWS::Glue::MLTransform", "AWS::IoT::Policy", "AWS::IoT::MitigationAction", "AWS::IoTTwinMaker::Workspace", "AWS::IoTTwinMaker::Entity", "AWS::IoTAnalytics::Dataset", "AWS::IoTAnalytics::Pipeline", "AWS::IoTAnalytics::Channel", "AWS::IoTSiteWise::Dashboard", "AWS::IoTSiteWise::Project", "AWS::IoTSiteWise::Portal", "AWS::IoTSiteWise::AssetModel", "AWS::IVS::Channel", "AWS::IVS::RecordingConfiguration", "AWS::IVS::PlaybackKeyPair", "AWS::KinesisAnalyticsV2::Application", "AWS::RDS::GlobalCluster", "AWS::S3::MultiRegionAccessPoint", "AWS::DeviceFarm::TestGridProject", "AWS::Budgets::BudgetsAction", "AWS::Lex::Bot", "AWS::CodeGuruReviewer::RepositoryAssociation", "AWS::IoT::CustomMetric", "AWS::Route53Resolver::FirewallDomainList", "AWS::RoboMaker::RobotApplicationVersion", "AWS::EC2::TrafficMirrorSession", "AWS::IoTSiteWise::Gateway", "AWS::Lex::BotAlias", "AWS::LookoutMetrics::Alert", "AWS::IoT::AccountAuditConfiguration", "AWS::EC2::TrafficMirrorTarget", "AWS::S3::StorageLens", "AWS::IoT::ScheduledAudit", "AWS::Events::Connection", "AWS::EventSchemas::Schema", "AWS::MediaPackage::PackagingConfiguration", "AWS::KinesisVideo::SignalingChannel", "AWS::AppStream::DirectoryConfig", "AWS::LookoutVision::Project", "AWS::Route53RecoveryControl::Cluster", "AWS::Route53RecoveryControl::SafetyRule", "AWS::Route53RecoveryControl::ControlPanel", "AWS::Route53RecoveryControl::RoutingControl", "AWS::Route53RecoveryReadiness::ResourceSet", "AWS::RoboMaker::SimulationApplication", "AWS::RoboMaker::RobotApplication", "AWS::HealthLake::FHIRDatastore", "AWS::Pinpoint::Segment", "AWS::Pinpoint::ApplicationSettings", "AWS::Events::Rule", "AWS::EC2::DHCPOptions", "AWS::EC2::NetworkInsightsPath", "AWS::EC2::TrafficMirrorFilter", "AWS::EC2::IPAM", "AWS::IoTTwinMaker::Scene", "AWS::NetworkManager::TransitGatewayRegistration", "AWS::CustomerProfiles::Domain", "AWS::AutoScaling::WarmPool", "AWS::Connect::PhoneNumber", "AWS::AppConfig::DeploymentStrategy", "AWS::AppFlow::Flow", "AWS::AuditManager::Assessment", "AWS::CloudWatch::MetricStream", "AWS::DeviceFarm::InstanceProfile", "AWS::DeviceFarm::Project", "AWS::EC2::EC2Fleet", "AWS::EC2::SubnetRouteTableAssociation", "AWS::ECR::PullThroughCacheRule", "AWS::GroundStation::Config", "AWS::ImageBuilder::ImagePipeline", "AWS::IoT::FleetMetric", "AWS::IoTWireless::ServiceProfile", "AWS::NetworkManager::Device", "AWS::NetworkManager::GlobalNetwork", "AWS::NetworkManager::Link", "AWS::NetworkManager::Site", "AWS::Panorama::Package", "AWS::Pinpoint::App", "AWS::Redshift::ScheduledAction", "AWS::Route53Resolver::FirewallRuleGroupAssociation", "AWS::SageMaker::AppImageConfig", "AWS::SageMaker::Image", "AWS::ECS::TaskSet", "AWS::Cassandra::Keyspace", "AWS::Signer::SigningProfile", "AWS::Amplify::App", "AWS::AppMesh::VirtualNode", "AWS::AppMesh::VirtualService", "AWS::AppRunner::VpcConnector", "AWS::AppStream::Application", "AWS::CodeArtifact::Repository", "AWS::EC2::PrefixList", "AWS::EC2::SpotFleet", "AWS::Evidently::Project", "AWS::Forecast::Dataset", "AWS::IAM::SAMLProvider", "AWS::IAM::ServerCertificate", "AWS::Pinpoint::Campaign", "AWS::Pinpoint::InAppTemplate", "AWS::SageMaker::Domain", "AWS::Transfer::Agreement", "AWS::Transfer::Connector", "AWS::KinesisFirehose::DeliveryStream", "AWS::Amplify::Branch", "AWS::AppIntegrations::EventIntegration", "AWS::AppMesh::Route", "AWS::Athena::PreparedStatement", "AWS::EC2::IPAMScope", "AWS::Evidently::Launch", "AWS::Forecast::DatasetGroup", "AWS::GreengrassV2::ComponentVersion", "AWS::GroundStation::MissionProfile", "AWS::MediaConnect::FlowEntitlement", "AWS::MediaConnect::FlowVpcInterface", "AWS::MediaTailor::PlaybackConfiguration", "AWS::MSK::Configuration", "AWS::Personalize::Dataset", "AWS::Personalize::Schema", "AWS::Personalize::Solution", "AWS::Pinpoint::EmailTemplate", "AWS::Pinpoint::EventStream", "AWS::ResilienceHub::App", "AWS::ACMPCA::CertificateAuthority", "AWS::AppConfig::HostedConfigurationVersion", "AWS::AppMesh::VirtualGateway", "AWS::AppMesh::VirtualRouter", "AWS::AppRunner::Service", "AWS::CustomerProfiles::ObjectType", "AWS::DMS::Endpoint", "AWS::EC2::CapacityReservation", "AWS::EC2::ClientVpnEndpoint", "AWS::Kendra::Index", "AWS::KinesisVideo::Stream", "AWS::Logs::Destination", "AWS::Pinpoint::EmailChannel", "AWS::S3::AccessPoint", "AWS::NetworkManager::CustomerGatewayAssociation", "AWS::NetworkManager::LinkAssociation", "AWS::IoTWireless::MulticastGroup", "AWS::Personalize::DatasetGroup", "AWS::IoTTwinMaker::ComponentType", "AWS::CodeBuild::ReportGroup", "AWS::SageMaker::FeatureGroup", "AWS::MSK::BatchScramSecret", "AWS::AppStream::Stack", "AWS::IoT::JobTemplate", "AWS::IoTWireless::FuotaTask", "AWS::IoT::ProvisioningTemplate", "AWS::InspectorV2::Filter", "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation", "AWS::ServiceDiscovery::Instance", "AWS::Transfer::Certificate", "AWS::MediaConnect::FlowSource", "AWS::APS::RuleGroupsNamespace", "AWS::CodeGuruProfiler::ProfilingGroup", "AWS::Route53Resolver::ResolverQueryLoggingConfig", "AWS::Batch::SchedulingPolicy", "AWS::ACMPCA::CertificateAuthorityActivation", "AWS::AppMesh::GatewayRoute", "AWS::AppMesh::Mesh", "AWS::Connect::Instance", "AWS::Connect::QuickConnect", "AWS::EC2::CarrierGateway", "AWS::EC2::IPAMPool", "AWS::EC2::TransitGatewayConnect", "AWS::EC2::TransitGatewayMulticastDomain", "AWS::ECS::CapacityProvider", "AWS::IAM::InstanceProfile", "AWS::IoT::CACertificate", "AWS::IoTTwinMaker::SyncJob", "AWS::KafkaConnect::Connector", "AWS::Lambda::CodeSigningConfig", "AWS::NetworkManager::ConnectPeer", "AWS::ResourceExplorer2::Index", "AWS::AppStream::Fleet", "AWS::Cognito::UserPool", "AWS::Cognito::UserPoolClient", "AWS::Cognito::UserPoolGroup", "AWS::EC2::NetworkInsightsAccessScope", "AWS::EC2::NetworkInsightsAnalysis", "AWS::Grafana::Workspace", "AWS::GroundStation::DataflowEndpointGroup", "AWS::ImageBuilder::ImageRecipe", "AWS::KMS::Alias", "AWS::M2::Environment", "AWS::QuickSight::DataSource", "AWS::QuickSight::Template", "AWS::QuickSight::Theme", "AWS::RDS::OptionGroup", "AWS::Redshift::EndpointAccess", "AWS::Route53Resolver::FirewallRuleGroup", "AWS::SSM::Document"
+    #   resp.configuration_recorder.recording_mode.recording_mode_overrides[0].recording_frequency #=> String, one of "CONTINUOUS", "DAILY"
+    #   resp.configuration_recorder.recording_scope #=> String, one of "INTERNAL", "PAID"
+    #   resp.configuration_recorder.service_principal #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/DisassociateResourceTypes AWS API Documentation
+    #
+    # @overload disassociate_resource_types(params = {})
+    # @param [Hash] params ({})
+    def disassociate_resource_types(params = {}, options = {})
+      req = build_request(:disassociate_resource_types, params)
       req.send_request(options)
     end
 
@@ -2911,6 +3163,10 @@ module Aws::ConfigService
 
     # Returns configuration item that is aggregated for your specific
     # resource in a specific source account and region.
+    #
+    # <note markdown="1"> The API does not return results for deleted resources.
+    #
+    #  </note>
     #
     # @option params [required, String] :configuration_aggregator_name
     #   The name of the configuration aggregator.
@@ -3846,6 +4102,58 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
+    # Returns a list of configuration recorders depending on the filters you
+    # specify.
+    #
+    # @option params [Array<Types::ConfigurationRecorderFilter>] :filters
+    #   Filters the results based on a list of `ConfigurationRecorderFilter`
+    #   objects that you specify.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to include in the response.
+    #
+    # @option params [String] :next_token
+    #   The `NextToken` string returned on a previous page that you use to get
+    #   the next page of results in a paginated response.
+    #
+    # @return [Types::ListConfigurationRecordersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListConfigurationRecordersResponse#configuration_recorder_summaries #configuration_recorder_summaries} => Array&lt;Types::ConfigurationRecorderSummary&gt;
+    #   * {Types::ListConfigurationRecordersResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_configuration_recorders({
+    #     filters: [
+    #       {
+    #         filter_name: "recordingScope", # accepts recordingScope
+    #         filter_value: ["ConfigurationRecorderFilterValue"],
+    #       },
+    #     ],
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.configuration_recorder_summaries #=> Array
+    #   resp.configuration_recorder_summaries[0].arn #=> String
+    #   resp.configuration_recorder_summaries[0].name #=> String
+    #   resp.configuration_recorder_summaries[0].service_principal #=> String
+    #   resp.configuration_recorder_summaries[0].recording_scope #=> String, one of "INTERNAL", "PAID"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/ListConfigurationRecorders AWS API Documentation
+    #
+    # @overload list_configuration_recorders(params = {})
+    # @param [Hash] params ({})
+    def list_configuration_recorders(params = {}, options = {})
+      req = build_request(:list_configuration_recorders, params)
+      req.send_request(options)
+    end
+
     # Returns a list of conformance pack compliance scores. A compliance
     # score is the percentage of the number of compliant rule-resource
     # combinations in a conformance pack compared to the number of total
@@ -4113,8 +4421,23 @@ module Aws::ConfigService
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) that identifies the resource for which
-    #   to list the tags. Currently, the supported resources are `ConfigRule`,
-    #   `ConfigurationAggregator` and `AggregatorAuthorization`.
+    #   to list the tags. The following resources are supported:
+    #
+    #   * `ConfigurationRecorder`
+    #
+    #   * `ConfigRule`
+    #
+    #   * `OrganizationConfigRule`
+    #
+    #   * `ConformancePack`
+    #
+    #   * `OrganizationConformancePack`
+    #
+    #   * `ConfigurationAggregator`
+    #
+    #   * `AggregationAuthorization`
+    #
+    #   * `StoredQuery`
     #
     # @option params [Integer] :limit
     #   The maximum number of tags returned on each page. The limit maximum is
@@ -4159,14 +4482,25 @@ module Aws::ConfigService
     # Authorizes the aggregator account and region to collect data from the
     # source account and region.
     #
-    # <note markdown="1"> `PutAggregationAuthorization` is an idempotent API. Subsequent
+    # <note markdown="1"> **Tags are added at creation and cannot be updated with this
+    # operation**
+    #
+    #  `PutAggregationAuthorization` is an idempotent API. Subsequent
     # requests won’t create a duplicate resource if one was already created.
     # If a following request has different `tags` values, Config will ignore
     # these differences and treat it as an idempotent request of the
     # previous. In this case, `tags` will not be updated, even if they are
     # different.
     #
+    #  Use [TagResource][1] and [UntagResource][2] to update tags after
+    # creation.
+    #
     #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html
+    # [2]: https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html
     #
     # @option params [required, String] :authorized_account_id
     #   The 12-digit account ID of the account authorized to aggregate data.
@@ -4252,11 +4586,17 @@ module Aws::ConfigService
     # [Evaluating Resources with Config Rules][5] in the *Config Developer
     # Guide*.
     #
-    # <note markdown="1"> `PutConfigRule` is an idempotent API. Subsequent requests won’t create
+    # <note markdown="1"> **Tags are added at creation and cannot be updated with this
+    # operation**
+    #
+    #  `PutConfigRule` is an idempotent API. Subsequent requests won’t create
     # a duplicate resource if one was already created. If a following
     # request has different `tags` values, Config will ignore these
     # differences and treat it as an idempotent request of the previous. In
     # this case, `tags` will not be updated, even if they are different.
+    #
+    #  Use [TagResource][6] and [UntagResource][7] to update tags after
+    # creation.
     #
     #  </note>
     #
@@ -4267,6 +4607,8 @@ module Aws::ConfigService
     # [3]: https://docs.aws.amazon.com/config/latest/developerguide/gettingstarted-concepts.html#gettingstarted-concepts-function
     # [4]: https://github.com/aws-cloudformation/cloudformation-guard
     # [5]: https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config.html
+    # [6]: https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html
+    # [7]: https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html
     #
     # @option params [required, Types::ConfigRule] :config_rule
     #   The rule that you want to add to your account.
@@ -4359,18 +4701,26 @@ module Aws::ConfigService
     #
     #  </note>
     #
-    # <note markdown="1"> `PutConfigurationAggregator` is an idempotent API. Subsequent requests
+    # <note markdown="1"> **Tags are added at creation and cannot be updated with this
+    # operation**
+    #
+    #  `PutConfigurationAggregator` is an idempotent API. Subsequent requests
     # won’t create a duplicate resource if one was already created. If a
     # following request has different `tags` values, Config will ignore
     # these differences and treat it as an idempotent request of the
     # previous. In this case, `tags` will not be updated, even if they are
     # different.
     #
+    #  Use [TagResource][2] and [UntagResource][3] to update tags after
+    # creation.
+    #
     #  </note>
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/config/latest/developerguide/set-up-aggregator-cli.html#register-a-delegated-administrator-cli
+    # [2]: https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html
+    # [3]: https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html
     #
     # @option params [required, String] :configuration_aggregator_name
     #   The name of the configuration aggregator.
@@ -4383,6 +4733,10 @@ module Aws::ConfigService
     #
     # @option params [Array<Types::Tag>] :tags
     #   An array of tag object.
+    #
+    # @option params [Types::AggregatorFilters] :aggregator_filters
+    #   An object to filter configuration recorders in an aggregator. Either
+    #   `ResourceType` or `ServicePrincipal` is required.
     #
     # @return [Types::PutConfigurationAggregatorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4410,6 +4764,16 @@ module Aws::ConfigService
     #         value: "TagValue",
     #       },
     #     ],
+    #     aggregator_filters: {
+    #       resource_type: {
+    #         type: "INCLUDE", # accepts INCLUDE
+    #         value: ["ResourceTypeValue"],
+    #       },
+    #       service_principal: {
+    #         type: "INCLUDE", # accepts INCLUDE
+    #         value: ["ServicePrincipalValue"],
+    #       },
+    #     },
     #   })
     #
     # @example Response structure
@@ -4429,6 +4793,12 @@ module Aws::ConfigService
     #   resp.configuration_aggregator.creation_time #=> Time
     #   resp.configuration_aggregator.last_updated_time #=> Time
     #   resp.configuration_aggregator.created_by #=> String
+    #   resp.configuration_aggregator.aggregator_filters.resource_type.type #=> String, one of "INCLUDE"
+    #   resp.configuration_aggregator.aggregator_filters.resource_type.value #=> Array
+    #   resp.configuration_aggregator.aggregator_filters.resource_type.value[0] #=> String
+    #   resp.configuration_aggregator.aggregator_filters.service_principal.type #=> String, one of "INCLUDE"
+    #   resp.configuration_aggregator.aggregator_filters.service_principal.value #=> Array
+    #   resp.configuration_aggregator.aggregator_filters.service_principal.value[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/PutConfigurationAggregator AWS API Documentation
     #
@@ -4439,29 +4809,61 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Creates a new configuration recorder to record configuration changes
-    # for specified resource types.
+    # Creates or updates the customer managed configuration recorder.
     #
-    # You can also use this action to change the `roleARN` or the
-    # `recordingGroup` of an existing recorder. For more information, see [
-    # **Managing the Configuration Recorder** ][1] in the *Config Developer
-    # Guide*.
+    # You can use this operation to create a new customer managed
+    # configuration recorder or to update the `roleARN` and the
+    # `recordingGroup` for an existing customer managed configuration
+    # recorder.
     #
-    # <note markdown="1"> You can specify only one configuration recorder for each Amazon Web
-    # Services Region for each account.
+    # To start the customer managed configuration recorder and begin
+    # recording configuration changes for the resource types you specify,
+    # use the [StartConfigurationRecorder][1] operation.
     #
-    #  If the configuration recorder does not have the `recordingGroup` field
-    # specified, the default is to record all supported resource types.
+    # For more information, see [ **Working with the Configuration
+    # Recorder** ][2] in the *Config Developer Guide*.
+    #
+    # <note markdown="1"> **One customer managed configuration recorder per account per Region**
+    #
+    #  You can create only one customer managed configuration recorder for
+    # each account for each Amazon Web Services Region.
+    #
+    #  **Default is to record all supported resource types, excluding the
+    # global IAM resource types**
+    #
+    #  If you have not specified values for the `recordingGroup` field, the
+    # default for the customer managed configuration recorder is to record
+    # all supported resource types, excluding the global IAM resource types:
+    # `AWS::IAM::Group`, `AWS::IAM::Policy`, `AWS::IAM::Role`, and
+    # `AWS::IAM::User`.
+    #
+    #  **Tags are added at creation and cannot be updated**
+    #
+    #  `PutConfigurationRecorder` is an idempotent API. Subsequent requests
+    # won’t create a duplicate resource if one was already created. If a
+    # following request has different tags values, Config will ignore these
+    # differences and treat it as an idempotent request of the previous. In
+    # this case, tags will not be updated, even if they are different.
+    #
+    #  Use [TagResource][3] and [UntagResource][4] to update tags after
+    # creation.
     #
     #  </note>
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html
+    # [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_StartConfigurationRecorder.html
+    # [2]: https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html
+    # [3]: https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html
+    # [4]: https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html
     #
     # @option params [required, Types::ConfigurationRecorder] :configuration_recorder
-    #   An object for the configuration recorder to record configuration
-    #   changes for specified resource types.
+    #   An object for the configuration recorder. A configuration recorder
+    #   records configuration changes for the resource types in scope.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   The tags for the customer managed configuration recorder. Each tag
+    #   consists of a key and an optional value, both of which you define.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -4469,6 +4871,7 @@ module Aws::ConfigService
     #
     #   resp = client.put_configuration_recorder({
     #     configuration_recorder: { # required
+    #       arn: "AmazonResourceName",
     #       name: "RecorderName",
     #       role_arn: "String",
     #       recording_group: {
@@ -4492,7 +4895,15 @@ module Aws::ConfigService
     #           },
     #         ],
     #       },
+    #       recording_scope: "INTERNAL", # accepts INTERNAL, PAID
+    #       service_principal: "ServicePrincipal",
     #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey",
+    #         value: "TagValue",
+    #       },
+    #     ],
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/PutConfigurationRecorder AWS API Documentation
@@ -4614,33 +5025,30 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Creates a delivery channel object to deliver configuration information
-    # and other compliance information to an Amazon S3 bucket and Amazon SNS
-    # topic. For more information, see [Notifications that Config Sends to
-    # an Amazon SNS topic][1].
+    # Creates or updates a delivery channel to deliver configuration
+    # information and other compliance information.
     #
-    # Before you can create a delivery channel, you must create a
-    # configuration recorder.
+    # You can use this operation to create a new delivery channel or to
+    # update the Amazon S3 bucket and the Amazon SNS topic of an existing
+    # delivery channel.
     #
-    # You can use this action to change the Amazon S3 bucket or an Amazon
-    # SNS topic of the existing delivery channel. To change the Amazon S3
-    # bucket or an Amazon SNS topic, call this action and specify the
-    # changed values for the S3 bucket and the SNS topic. If you specify a
-    # different value for either the S3 bucket or the SNS topic, this action
-    # will keep the existing value for the parameter that is not changed.
+    # For more information, see [ **Working with the Delivery Channel** ][1]
+    # in the *Config Developer Guide.*
     #
-    # <note markdown="1"> You can have only one delivery channel per region in your account.
+    # <note markdown="1"> **One delivery channel per account per Region**
+    #
+    #  You can have only one delivery channel for each account for each
+    # Amazon Web Services Region.
     #
     #  </note>
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/config/latest/developerguide/notifications-for-AWS-Config.html
+    # [1]: https://docs.aws.amazon.com/config/latest/developerguide/manage-delivery-channel.html
     #
     # @option params [required, Types::DeliveryChannel] :delivery_channel
-    #   The configuration delivery channel object that delivers the
-    #   configuration information to an Amazon S3 bucket and to an Amazon SNS
-    #   topic.
+    #   An object for the delivery channel. A delivery channel sends
+    #   notifications and updated configuration states.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -4669,8 +5077,8 @@ module Aws::ConfigService
     end
 
     # Used by an Lambda function to deliver evaluation results to Config.
-    # This action is required in every Lambda function that is invoked by an
-    # Config rule.
+    # This operation is required in every Lambda function that is invoked by
+    # an Config rule.
     #
     # @option params [Array<Types::Evaluation>] :evaluations
     #   The assessments that the Lambda function performs. Each evaluation
@@ -5206,6 +5614,13 @@ module Aws::ConfigService
     #
     #  </note>
     #
+    # <note markdown="1"> **Exceptions cannot be placed on service-linked remediation actions**
+    #
+    #  You cannot place an exception on service-linked remediation actions,
+    # such as remediation actions put by an organizational conformance pack.
+    #
+    #  </note>
+    #
     # <note markdown="1"> **Auto remediation can be initiated even for compliant resources**
     #
     #  If you enable auto remediation for a specific Config rule using the
@@ -5405,13 +5820,90 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
+    # Creates a service-linked configuration recorder that is linked to a
+    # specific Amazon Web Services service based on the `ServicePrincipal`
+    # you specify.
+    #
+    # The configuration recorder's `name`, `recordingGroup`,
+    # `recordingMode`, and `recordingScope` is set by the service that is
+    # linked to the configuration recorder.
+    #
+    # For more information, see [ **Working with the Configuration
+    # Recorder** ][1] in the *Config Developer Guide*.
+    #
+    # This API creates a service-linked role `AWSServiceRoleForConfig` in
+    # your account. The service-linked role is created only when the role
+    # does not exist in your account.
+    #
+    # <note markdown="1"> **The recording scope determines if you receive configuration items**
+    #
+    #  The recording scope is set by the service that is linked to the
+    # configuration recorder and determines whether you receive
+    # configuration items (CIs) in the delivery channel. If the recording
+    # scope is internal, you will not receive CIs in the delivery channel.
+    #
+    #  **Tags are added at creation and cannot be updated with this
+    # operation**
+    #
+    #  Use [TagResource][2] and [UntagResource][3] to update tags after
+    # creation.
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html
+    # [2]: https://docs.aws.amazon.com/config/latest/APIReference/API_TagResource.html
+    # [3]: https://docs.aws.amazon.com/config/latest/APIReference/API_UntagResource.html
+    #
+    # @option params [required, String] :service_principal
+    #   The service principal of the Amazon Web Services service for the
+    #   service-linked configuration recorder that you want to create.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   The tags for a service-linked configuration recorder. Each tag
+    #   consists of a key and an optional value, both of which you define.
+    #
+    # @return [Types::PutServiceLinkedConfigurationRecorderResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutServiceLinkedConfigurationRecorderResponse#arn #arn} => String
+    #   * {Types::PutServiceLinkedConfigurationRecorderResponse#name #name} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_service_linked_configuration_recorder({
+    #     service_principal: "ServicePrincipal", # required
+    #     tags: [
+    #       {
+    #         key: "TagKey",
+    #         value: "TagValue",
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/config-2014-11-12/PutServiceLinkedConfigurationRecorder AWS API Documentation
+    #
+    # @overload put_service_linked_configuration_recorder(params = {})
+    # @param [Hash] params ({})
+    def put_service_linked_configuration_recorder(params = {}, options = {})
+      req = build_request(:put_service_linked_configuration_recorder, params)
+      req.send_request(options)
+    end
+
     # Saves a new query or updates an existing saved query. The `QueryName`
     # must be unique for a single Amazon Web Services account and a single
     # Amazon Web Services Region. You can create upto 300 queries in a
     # single Amazon Web Services account and a single Amazon Web Services
     # Region.
     #
-    # <note markdown="1"> `PutStoredQuery` is an idempotent API. Subsequent requests won’t
+    # <note markdown="1"> **Tags are added at creation and cannot be updated**
+    #
+    #  `PutStoredQuery` is an idempotent API. Subsequent requests won’t
     # create a duplicate resource if one was already created. If a following
     # request has different `tags` values, Config will ignore these
     # differences and treat it as an idempotent request of the previous. In
@@ -5658,15 +6150,21 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Starts recording configurations of the Amazon Web Services resources
-    # you have selected to record in your Amazon Web Services account.
+    # Starts the customer managed configuration recorder. The customer
+    # managed configuration recorder will begin recording configuration
+    # changes for the resource types you specify.
     #
-    # You must have created at least one delivery channel to successfully
-    # start the configuration recorder.
+    # You must have created a delivery channel to successfully start the
+    # customer managed configuration recorder. You can use the
+    # [PutDeliveryChannel][1] operation to create a delivery channel.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/config/latest/APIReference/API_PutDeliveryChannel.html
     #
     # @option params [required, String] :configuration_recorder_name
-    #   The name of the recorder object that records each configuration change
-    #   made to the resources.
+    #   The name of the customer managed configuration recorder that you want
+    #   to start.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -5826,12 +6324,13 @@ module Aws::ConfigService
       req.send_request(options)
     end
 
-    # Stops recording configurations of the Amazon Web Services resources
-    # you have selected to record in your Amazon Web Services account.
+    # Stops the customer managed configuration recorder. The customer
+    # managed configuration recorder will stop recording configuration
+    # changes for the resource types you have specified.
     #
     # @option params [required, String] :configuration_recorder_name
-    #   The name of the recorder object that records each configuration change
-    #   made to the resources.
+    #   The name of the customer managed configuration recorder that you want
+    #   to stop.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -5851,7 +6350,7 @@ module Aws::ConfigService
     end
 
     # Associates the specified tags to a resource with the specified
-    # resourceArn. If existing tags on a resource are not specified in the
+    # `ResourceArn`. If existing tags on a resource are not specified in the
     # request parameters, they are not changed. If existing tags are
     # specified, however, then their values will be updated. When a resource
     # is deleted, the tags associated with that resource are deleted as
@@ -5859,8 +6358,23 @@ module Aws::ConfigService
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) that identifies the resource for which
-    #   to list the tags. Currently, the supported resources are `ConfigRule`,
-    #   `ConfigurationAggregator` and `AggregatorAuthorization`.
+    #   to list the tags. The following resources are supported:
+    #
+    #   * `ConfigurationRecorder`
+    #
+    #   * `ConfigRule`
+    #
+    #   * `OrganizationConfigRule`
+    #
+    #   * `ConformancePack`
+    #
+    #   * `OrganizationConformancePack`
+    #
+    #   * `ConfigurationAggregator`
+    #
+    #   * `AggregationAuthorization`
+    #
+    #   * `StoredQuery`
     #
     # @option params [required, Array<Types::Tag>] :tags
     #   An array of tag object.
@@ -5892,8 +6406,23 @@ module Aws::ConfigService
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) that identifies the resource for which
-    #   to list the tags. Currently, the supported resources are `ConfigRule`,
-    #   `ConfigurationAggregator` and `AggregatorAuthorization`.
+    #   to list the tags. The following resources are supported:
+    #
+    #   * `ConfigurationRecorder`
+    #
+    #   * `ConfigRule`
+    #
+    #   * `OrganizationConfigRule`
+    #
+    #   * `ConformancePack`
+    #
+    #   * `OrganizationConformancePack`
+    #
+    #   * `ConfigurationAggregator`
+    #
+    #   * `AggregationAuthorization`
+    #
+    #   * `StoredQuery`
     #
     # @option params [required, Array<String>] :tag_keys
     #   The keys of the tags to be removed.
@@ -5934,7 +6463,7 @@ module Aws::ConfigService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-configservice'
-      context[:gem_version] = '1.122.0'
+      context[:gem_version] = '1.123.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

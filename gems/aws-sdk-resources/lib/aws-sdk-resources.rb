@@ -274,6 +274,7 @@ module Aws
   autoload :NotificationsContacts, 'aws-sdk-notificationscontacts'
   autoload :OAM, 'aws-sdk-oam'
   autoload :OSIS, 'aws-sdk-osis'
+  autoload :ObservabilityAdmin, 'aws-sdk-observabilityadmin'
   autoload :Omics, 'aws-sdk-omics'
   autoload :OpenSearchServerless, 'aws-sdk-opensearchserverless'
   autoload :OpenSearchService, 'aws-sdk-opensearchservice'

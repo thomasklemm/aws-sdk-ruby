@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+3.217.0 (2024-11-27)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-observabilityadmin` gem.
+
 3.216.0 (2024-11-22)
 ------------------
 

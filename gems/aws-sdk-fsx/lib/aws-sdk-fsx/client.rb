@@ -815,6 +815,7 @@ module Aws::FSx
     #   resp.backup.file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.backup.file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.backup.file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.backup.file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.backup.file_system.administrative_actions #=> Array
     #   resp.backup.file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.backup.file_system.administrative_actions[0].progress_percent #=> Integer
@@ -1059,6 +1060,7 @@ module Aws::FSx
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -1303,6 +1305,7 @@ module Aws::FSx
     #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -1656,6 +1659,7 @@ module Aws::FSx
     #   resp.backup.file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.backup.file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.backup.file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.backup.file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.backup.file_system.administrative_actions #=> Array
     #   resp.backup.file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.backup.file_system.administrative_actions[0].progress_percent #=> Integer
@@ -1900,6 +1904,7 @@ module Aws::FSx
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -2871,6 +2876,7 @@ module Aws::FSx
     #       copy_tags_to_backups: false,
     #       drive_cache_type: "NONE", # accepts NONE, READ
     #       data_compression_type: "NONE", # accepts NONE, LZ4
+    #       efa_enabled: false,
     #       log_configuration: {
     #         level: "DISABLED", # required, accepts DISABLED, WARN_ONLY, ERROR_ONLY, WARN_ERROR
     #         destination: "GeneralARN",
@@ -3012,6 +3018,7 @@ module Aws::FSx
     #   resp.file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.file_system.administrative_actions #=> Array
     #   resp.file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.file_system.administrative_actions[0].progress_percent #=> Integer
@@ -3430,6 +3437,7 @@ module Aws::FSx
     #       copy_tags_to_backups: false,
     #       drive_cache_type: "NONE", # accepts NONE, READ
     #       data_compression_type: "NONE", # accepts NONE, LZ4
+    #       efa_enabled: false,
     #       log_configuration: {
     #         level: "DISABLED", # required, accepts DISABLED, WARN_ONLY, ERROR_ONLY, WARN_ERROR
     #         destination: "GeneralARN",
@@ -3557,6 +3565,7 @@ module Aws::FSx
     #   resp.file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.file_system.administrative_actions #=> Array
     #   resp.file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.file_system.administrative_actions[0].progress_percent #=> Integer
@@ -3843,6 +3852,7 @@ module Aws::FSx
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.snapshot.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.snapshot.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.snapshot.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -4326,6 +4336,7 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.volume.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.volume.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.volume.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -4616,6 +4627,7 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.volume.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.volume.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.volume.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -5375,6 +5387,7 @@ module Aws::FSx
     #   resp.backups[0].file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.backups[0].file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.backups[0].file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.backups[0].file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.backups[0].file_system.administrative_actions #=> Array
     #   resp.backups[0].file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.backups[0].file_system.administrative_actions[0].progress_percent #=> Integer
@@ -5619,6 +5632,7 @@ module Aws::FSx
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -6240,6 +6254,7 @@ module Aws::FSx
     #   resp.file_systems[0].lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.file_systems[0].lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.file_systems[0].lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.file_systems[0].lustre_configuration.efa_enabled #=> Boolean
     #   resp.file_systems[0].administrative_actions #=> Array
     #   resp.file_systems[0].administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.file_systems[0].administrative_actions[0].progress_percent #=> Integer
@@ -6560,6 +6575,7 @@ module Aws::FSx
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.snapshots[0].administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -6923,6 +6939,7 @@ module Aws::FSx
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.volumes[0].administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -7254,6 +7271,7 @@ module Aws::FSx
     #   resp.file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.file_system.administrative_actions #=> Array
     #   resp.file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.file_system.administrative_actions[0].progress_percent #=> Integer
@@ -7511,6 +7529,7 @@ module Aws::FSx
     #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -7737,6 +7756,7 @@ module Aws::FSx
     #   resp.file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.file_system.administrative_actions #=> Array
     #   resp.file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.file_system.administrative_actions[0].progress_percent #=> Integer
@@ -8497,6 +8517,7 @@ module Aws::FSx
     #   resp.file_system.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.file_system.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.file_system.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.file_system.lustre_configuration.efa_enabled #=> Boolean
     #   resp.file_system.administrative_actions #=> Array
     #   resp.file_system.administrative_actions[0].administrative_action_type #=> String, one of "FILE_SYSTEM_UPDATE", "STORAGE_OPTIMIZATION", "FILE_SYSTEM_ALIAS_ASSOCIATION", "FILE_SYSTEM_ALIAS_DISASSOCIATION", "VOLUME_UPDATE", "SNAPSHOT_UPDATE", "RELEASE_NFS_V3_LOCKS", "VOLUME_RESTORE", "THROUGHPUT_OPTIMIZATION", "IOPS_OPTIMIZATION", "STORAGE_TYPE_OPTIMIZATION", "MISCONFIGURED_STATE_RECOVERY", "VOLUME_UPDATE_WITH_SNAPSHOT", "VOLUME_INITIALIZE_WITH_SNAPSHOT", "DOWNLOAD_DATA_FROM_BACKUP"
     #   resp.file_system.administrative_actions[0].progress_percent #=> Integer
@@ -8802,6 +8823,7 @@ module Aws::FSx
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.snapshot.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.snapshot.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.snapshot.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -9225,6 +9247,7 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.root_squash_configuration.no_squash_nids[0] #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.iops #=> Integer
     #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.metadata_configuration.mode #=> String, one of "AUTOMATIC", "USER_PROVISIONED"
+    #   resp.volume.administrative_actions[0].target_file_system_values.lustre_configuration.efa_enabled #=> Boolean
     #   resp.volume.administrative_actions[0].target_file_system_values.administrative_actions #=> Types::AdministrativeActions
     #   resp.volume.administrative_actions[0].target_file_system_values.ontap_configuration.automatic_backup_retention_days #=> Integer
     #   resp.volume.administrative_actions[0].target_file_system_values.ontap_configuration.daily_automatic_backup_start_time #=> String
@@ -9331,7 +9354,7 @@ module Aws::FSx
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-fsx'
-      context[:gem_version] = '1.104.0'
+      context[:gem_version] = '1.105.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

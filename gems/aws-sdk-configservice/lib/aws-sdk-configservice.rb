@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:configservice)
 # structure.
 #
 #     config_service = Aws::ConfigService::Client.new
-#     resp = config_service.batch_get_aggregate_resource_config(params)
+#     resp = config_service.associate_resource_types(params)
 #
 # See {Client} for more information.
 #
@@ -54,7 +54,7 @@ module Aws::ConfigService
   autoload :EndpointProvider, 'aws-sdk-configservice/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-configservice/endpoints'
 
-  GEM_VERSION = '1.122.0'
+  GEM_VERSION = '1.123.0'
 
 end
 

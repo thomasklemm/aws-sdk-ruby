@@ -1950,6 +1950,7 @@ module Aws::BedrockAgent
     #         embedding_model_configuration: {
     #           bedrock_embedding_model_configuration: {
     #             dimensions: 1,
+    #             embedding_data_type: "FLOAT32", # accepts FLOAT32, BINARY
     #           },
     #         },
     #       },
@@ -2027,6 +2028,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR"
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_arn #=> String
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.dimensions #=> Integer
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.embedding_data_type #=> String, one of "FLOAT32", "BINARY"
     #   resp.knowledge_base.knowledge_base_id #=> String
     #   resp.knowledge_base.name #=> String
     #   resp.knowledge_base.role_arn #=> String
@@ -3590,6 +3592,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR"
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_arn #=> String
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.dimensions #=> Integer
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.embedding_data_type #=> String, one of "FLOAT32", "BINARY"
     #   resp.knowledge_base.knowledge_base_id #=> String
     #   resp.knowledge_base.name #=> String
     #   resp.knowledge_base.role_arn #=> String
@@ -5871,6 +5874,7 @@ module Aws::BedrockAgent
     #         embedding_model_configuration: {
     #           bedrock_embedding_model_configuration: {
     #             dimensions: 1,
+    #             embedding_data_type: "FLOAT32", # accepts FLOAT32, BINARY
     #           },
     #         },
     #       },
@@ -5946,6 +5950,7 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR"
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_arn #=> String
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.dimensions #=> Integer
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.embedding_data_type #=> String, one of "FLOAT32", "BINARY"
     #   resp.knowledge_base.knowledge_base_id #=> String
     #   resp.knowledge_base.name #=> String
     #   resp.knowledge_base.role_arn #=> String
@@ -6436,7 +6441,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.36.0'
+      context[:gem_version] = '1.37.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

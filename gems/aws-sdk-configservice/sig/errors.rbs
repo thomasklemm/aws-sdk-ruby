@@ -11,6 +11,8 @@ module Aws
       class ServiceError < ::Aws::Errors::ServiceError
       end
 
+      class ConflictException < ::Aws::Errors::ServiceError
+      end
       class ConformancePackTemplateValidationException < ::Aws::Errors::ServiceError
       end
       class IdempotentParameterMismatch < ::Aws::Errors::ServiceError
@@ -118,6 +120,8 @@ module Aws
       class ResourceNotFoundException < ::Aws::Errors::ServiceError
       end
       class TooManyTagsException < ::Aws::Errors::ServiceError
+      end
+      class UnmodifiableEntityException < ::Aws::Errors::ServiceError
       end
       class ValidationException < ::Aws::Errors::ServiceError
       end

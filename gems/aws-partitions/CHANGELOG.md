@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1014.0 (2024-11-27)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::ObservabilityAdmin`.
+
 1.1013.0 (2024-11-22)
 ------------------
 
