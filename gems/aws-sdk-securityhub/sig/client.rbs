@@ -4373,7 +4373,88 @@ module Aws
                                          labels: Array[::String]?
                                        }?,
                                        processed_at: ::String?,
-                                       aws_account_name: ::String?
+                                       aws_account_name: ::String?,
+                                       detection: {
+                                         sequence: {
+                                           uid: ::String?,
+                                           actors: Array[
+                                             {
+                                               id: ::String?,
+                                               user: {
+                                                 name: ::String?,
+                                                 uid: ::String?,
+                                                 type: ::String?,
+                                                 credential_uid: ::String?,
+                                                 account: {
+                                                   uid: ::String?,
+                                                   name: ::String?
+                                                 }?
+                                               }?,
+                                               session: {
+                                                 uid: ::String?,
+                                                 mfa_status: ("ENABLED" | "DISABLED")?,
+                                                 created_time: ::Integer?,
+                                                 issuer: ::String?
+                                               }?
+                                             },
+                                           ]?,
+                                           endpoints: Array[
+                                             {
+                                               id: ::String?,
+                                               ip: ::String?,
+                                               domain: ::String?,
+                                               port: ::Integer?,
+                                               location: {
+                                                 city: ::String?,
+                                                 country: ::String?,
+                                                 lat: ::Float?,
+                                                 lon: ::Float?
+                                               }?,
+                                               autonomous_system: {
+                                                 name: ::String?,
+                                                 number: ::Integer?
+                                               }?,
+                                               connection: {
+                                                 direction: ("INBOUND" | "OUTBOUND")?
+                                               }?
+                                             },
+                                           ]?,
+                                           signals: Array[
+                                             {
+                                               type: ::String?,
+                                               id: ::String?,
+                                               title: ::String?,
+                                               product_arn: ::String?,
+                                               resource_ids: Array[::String]?,
+                                               signal_indicators: Array[
+                                                 {
+                                                   key: ::String?,
+                                                   values: Array[::String]?,
+                                                   title: ::String?,
+                                                   type: ::String?
+                                                 },
+                                               ]?,
+                                               name: ::String?,
+                                               created_at: ::Integer?,
+                                               updated_at: ::Integer?,
+                                               first_seen_at: ::Integer?,
+                                               last_seen_at: ::Integer?,
+                                               severity: ::Float?,
+                                               count: ::Integer?,
+                                               actor_ids: Array[::String]?,
+                                               endpoint_ids: Array[::String]?
+                                             },
+                                           ]?,
+                                           sequence_indicators: Array[
+                                             {
+                                               key: ::String?,
+                                               values: Array[::String]?,
+                                               title: ::String?,
+                                               type: ::String?
+                                             },
+                                           ]?
+                                         }?
+                                       }?
                                      },
                                    ]
                                  ) -> _BatchImportFindingsResponseSuccess

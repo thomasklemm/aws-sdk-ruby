@@ -23,36 +23,44 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
-    # Use to specify a automatic model evaluation job. The
+    # The configuration details of an automated evaluation job. The
     # `EvaluationDatasetMetricConfig` object is used to specify the prompt
     # datasets, task type, and metric names.
     #
     # @!attribute [rw] dataset_metric_configs
-    #   Specifies the required elements for an automatic model evaluation
-    #   job.
+    #   Configuration details of the prompt datasets and metrics you want to
+    #   use for your evaluation job.
     #   @return [Array<Types::EvaluationDatasetMetricConfig>]
+    #
+    # @!attribute [rw] evaluator_model_config
+    #   Contains the evaluator model configuration details.
+    #   `EvaluatorModelConfig` is required for evaluation jobs that use a
+    #   knowledge base or in model evaluation job that use a model as judge.
+    #   This model computes all evaluation related metrics.
+    #   @return [Types::EvaluatorModelConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/AutomatedEvaluationConfig AWS API Documentation
     #
     class AutomatedEvaluationConfig < Struct.new(
-      :dataset_metric_configs)
+      :dataset_metric_configs,
+      :evaluator_model_config)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # A JSON array that provides the status of the model evaluation jobs
-    # being deleted.
+    # A JSON array that provides the status of the evaluation jobs being
+    # deleted.
     #
     # @!attribute [rw] job_identifier
-    #   The ARN of the model evaluation job being deleted.
+    #   The ARN of the evaluation job being deleted.
     #   @return [String]
     #
     # @!attribute [rw] code
-    #   A HTTP status code of the model evaluation job being deleted.
+    #   A HTTP status code of the evaluation job being deleted.
     #   @return [String]
     #
     # @!attribute [rw] message
-    #   A status message about the model evaluation job deletion.
+    #   A status message about the evaluation job deletion.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/BatchDeleteEvaluationJobError AWS API Documentation
@@ -65,15 +73,14 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
-    # An array of model evaluation jobs to be deleted, and their associated
-    # statuses.
+    # An evaluation job for deletion, and it’s current status.
     #
     # @!attribute [rw] job_identifier
-    #   The ARN of model evaluation job to be deleted.
+    #   The Amazon Resource Name (ARN) of the evaluation job for deletion.
     #   @return [String]
     #
     # @!attribute [rw] job_status
-    #   The status of the job's deletion.
+    #   The status of the evaluation job for deletion.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/BatchDeleteEvaluationJobItem AWS API Documentation
@@ -86,7 +93,8 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] job_identifiers
-    #   An array of model evaluation job ARNs to be deleted.
+    #   A list of one or more evaluation job Amazon Resource Names (ARNs)
+    #   you want to delete.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/BatchDeleteEvaluationJobRequest AWS API Documentation
@@ -98,12 +106,12 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] errors
-    #   A JSON object containing the HTTP status codes and the ARNs of model
+    #   A JSON object containing the HTTP status codes and the ARNs of
     #   evaluation jobs that failed to be deleted.
     #   @return [Array<Types::BatchDeleteEvaluationJobError>]
     #
     # @!attribute [rw] evaluation_jobs
-    #   The list of model evaluation jobs to be deleted.
+    #   The list of evaluation jobs for deletion.
     #   @return [Array<Types::BatchDeleteEvaluationJobItem>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/BatchDeleteEvaluationJobResponse AWS API Documentation
@@ -112,6 +120,49 @@ module Aws::Bedrock
       :errors,
       :evaluation_jobs)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The evaluator model used in knowledge base evaluation job or in model
+    # evaluation job that use a model as judge. This model computes all
+    # evaluation related metrics.
+    #
+    # @!attribute [rw] model_identifier
+    #   The Amazon Resource Name (ARN) of the evaluator model used used in
+    #   knowledge base evaluation job or in model evaluation job that use a
+    #   model as judge.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/BedrockEvaluatorModel AWS API Documentation
+    #
+    class BedrockEvaluatorModel < Struct.new(
+      :model_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains the document contained in the wrapper object, along with its
+    # attributes/fields.
+    #
+    # @!attribute [rw] identifier
+    #   The file name of the document contained in the wrapper object.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_type
+    #   The MIME type of the document contained in the wrapper object.
+    #   @return [String]
+    #
+    # @!attribute [rw] data
+    #   The byte value of the file to upload, encoded as a Base-64 string.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ByteContentDoc AWS API Documentation
+    #
+    class ByteContentDoc < Struct.new(
+      :identifier,
+      :content_type,
+      :data)
+      SENSITIVE = [:identifier, :data]
       include Aws::Structure
     end
 
@@ -153,12 +204,13 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] job_name
-    #   The name of the model evaluation job. Model evaluation job names
-    #   must unique with your AWS account, and your account's AWS region.
+    #   A name for the evaluation job. Names must unique with your Amazon
+    #   Web Services account, and your account's Amazon Web Services
+    #   region.
     #   @return [String]
     #
     # @!attribute [rw] job_description
-    #   A description of the model evaluation job.
+    #   A description of the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] client_request_token
@@ -177,12 +229,9 @@ module Aws::Bedrock
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM service role that Amazon
-    #   Bedrock can assume to perform tasks on your behalf. The service role
-    #   must have Amazon Bedrock as the service principal, and provide
-    #   access to any Amazon S3 buckets specified in the `EvaluationConfig`
-    #   object. To pass this role to Amazon Bedrock, the caller of this API
-    #   must have the `iam:PassRole` permission. To learn more about the
-    #   required permissions, see [Required permissions][1].
+    #   Bedrock can assume to perform tasks on your behalf. To learn more
+    #   about the required permissions, see [Required permissions for model
+    #   evaluations][1].
     #
     #
     #
@@ -190,24 +239,31 @@ module Aws::Bedrock
     #   @return [String]
     #
     # @!attribute [rw] customer_encryption_key_id
-    #   Specify your customer managed key ARN that will be used to encrypt
-    #   your model evaluation job.
+    #   Specify your customer managed encryption key Amazon Resource Name
+    #   (ARN) that will be used to encrypt your evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] job_tags
     #   Tags to attach to the model evaluation job.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] application_type
+    #   Specifies whether the evaluation job is for evaluating a model or
+    #   evaluating a knowledge base (retrieval and response generation).
+    #   @return [String]
+    #
     # @!attribute [rw] evaluation_config
-    #   Specifies whether the model evaluation job is automatic or uses
-    #   human worker.
+    #   Contains the configuration details of either an automated or
+    #   human-based evaluation job.
     #   @return [Types::EvaluationConfig]
     #
     # @!attribute [rw] inference_config
-    #   Specify the models you want to use in your model evaluation job.
-    #   Automatic model evaluation jobs support a single model or [inference
-    #   profile][1], and model evaluation job that use human workers support
-    #   two models or inference profiles.
+    #   Contains the configuration details of the inference model for the
+    #   evaluation job.
+    #
+    #   For model evaluation jobs, automated jobs support a single model or
+    #   [inference profile][1], and jobs that use human workers support two
+    #   models or inference profiles.
     #
     #
     #
@@ -215,8 +271,8 @@ module Aws::Bedrock
     #   @return [Types::EvaluationInferenceConfig]
     #
     # @!attribute [rw] output_data_config
-    #   An object that defines where the results of model evaluation job
-    #   will be saved in Amazon S3.
+    #   Contains the configuration details of the Amazon S3 bucket for
+    #   storing the results of the evaluation job.
     #   @return [Types::EvaluationOutputDataConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreateEvaluationJobRequest AWS API Documentation
@@ -228,6 +284,7 @@ module Aws::Bedrock
       :role_arn,
       :customer_encryption_key_id,
       :job_tags,
+      :application_type,
       :evaluation_config,
       :inference_config,
       :output_data_config)
@@ -236,7 +293,7 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] job_arn
-    #   The ARN of the model evaluation job.
+    #   The Amazon Resource Name (ARN) of the evaluation job.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreateEvaluationJobResponse AWS API Documentation
@@ -1060,10 +1117,10 @@ module Aws::Bedrock
     class DeleteProvisionedModelThroughputResponse < Aws::EmptyStructure; end
 
     # Contains the ARN of the Amazon Bedrock model or [inference profile][1]
-    # specified in your model evaluation job. Each Amazon Bedrock model
-    # supports different `inferenceParams`. To learn more about supported
-    # inference parameters for Amazon Bedrock models, see [Inference
-    # parameters for foundation models][2].
+    # specified in your evaluation job. Each Amazon Bedrock model supports
+    # different `inferenceParams`. To learn more about supported inference
+    # parameters for Amazon Bedrock models, see [Inference parameters for
+    # foundation models][2].
     #
     # The `inferenceParams` are specified using JSON. To successfully insert
     # JSON as string make sure that all quotations are properly escaped. For
@@ -1094,21 +1151,21 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
-    # Used to specify either a `AutomatedEvaluationConfig` or
-    # `HumanEvaluationConfig` object.
+    # The configuration details of either an automated or human-based
+    # evaluation job.
     #
     # @note EvaluationConfig is a union - when making an API calls you must set exactly one of the members.
     #
     # @note EvaluationConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of EvaluationConfig corresponding to the set member.
     #
     # @!attribute [rw] automated
-    #   Used to specify an automated model evaluation job. See
-    #   `AutomatedEvaluationConfig` to view the required parameters.
+    #   Contains the configuration details of an automated evaluation job
+    #   that computes metrics.
     #   @return [Types::AutomatedEvaluationConfig]
     #
     # @!attribute [rw] human
-    #   Used to specify a model evaluation job that uses human workers.See
-    #   `HumanEvaluationConfig` to view the required parameters.
+    #   Contains the configuration details of an evaluation job that uses
+    #   human workers.
     #   @return [Types::HumanEvaluationConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/EvaluationConfig AWS API Documentation
@@ -1174,11 +1231,13 @@ module Aws::Bedrock
       class Unknown < EvaluationDatasetLocation; end
     end
 
-    # Defines the built-in prompt datasets, built-in metric names and custom
-    # metric names, and the task type.
+    # Defines the prompt datasets, built-in metric names and custom metric
+    # names, and the task type.
     #
     # @!attribute [rw] task_type
-    #   The task type you want the model to carry out.
+    #   The the type of task you want to evaluate for your evaluation job.
+    #   This applies only to model evaluation jobs and is ignored for
+    #   knowledge base evaluation jobs.
     #   @return [String]
     #
     # @!attribute [rw] dataset
@@ -1186,10 +1245,33 @@ module Aws::Bedrock
     #   @return [Types::EvaluationDataset]
     #
     # @!attribute [rw] metric_names
-    #   The names of the metrics used. For automated model evaluation jobs
-    #   valid values are `"Builtin.Accuracy"`, `"Builtin.Robustness"`, and
-    #   `"Builtin.Toxicity"`. In human-based model evaluation jobs the array
-    #   of strings must match the `name` parameter specified in
+    #   The names of the metrics you want to use for your evaluation job.
+    #
+    #   For knowledge base evaluation jobs that evaluate retrieval only,
+    #   valid values are "`Builtin.ContextRelevance`",
+    #   "`Builtin.ContextConverage`".
+    #
+    #   For knowledge base evaluation jobs that evaluate retrieval with
+    #   response generation, valid values are "`Builtin.Correctness`",
+    #   "`Builtin.Completeness`", "`Builtin.Helpfulness`",
+    #   "`Builtin.LogicalCoherence`", "`Builtin.Faithfulness`",
+    #   "`Builtin.Harmfulness`", "`Builtin.Stereotyping`",
+    #   "`Builtin.Refusal`".
+    #
+    #   For automated model evaluation jobs, valid values are
+    #   "`Builtin.Accuracy`", "`Builtin.Robustness`", and
+    #   "`Builtin.Toxicity`". In model evaluation jobs that use a LLM as
+    #   judge you can specify "`Builtin.Correctness`",
+    #   "`Builtin.Completeness"`, "`Builtin.Faithfulness"`,
+    #   "`Builtin.Helpfulness`", "`Builtin.Coherence`",
+    #   "`Builtin.Relevance`", "`Builtin.FollowingInstructions`",
+    #   "`Builtin.ProfessionalStyleAndTone`", You can also specify the
+    #   following responsible AI related metrics only for model evaluation
+    #   job that use a LLM as judge "`Builtin.Harmfulness`",
+    #   "`Builtin.Stereotyping`", and "`Builtin.Refusal`".
+    #
+    #   For human-based model evaluation jobs, the list of strings must
+    #   match the `name` parameter specified in
     #   `HumanEvaluationCustomMetric`.
     #   @return [Array<String>]
     #
@@ -1203,9 +1285,12 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
-    # Used to define the models you want used in your model evaluation job.
-    # Automated model evaluation jobs support only a single model. In a
-    # human-based model evaluation job, your annotator can compare the
+    # The configuration details of the inference model for an evaluation
+    # job.
+    #
+    # For automated model evaluation jobs, only a single model is supported.
+    #
+    # For human-based model evaluation jobs, your annotator can compare the
     # responses for up to two different models.
     #
     # @note EvaluationInferenceConfig is a union - when making an API calls you must set exactly one of the members.
@@ -1213,19 +1298,28 @@ module Aws::Bedrock
     # @note EvaluationInferenceConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of EvaluationInferenceConfig corresponding to the set member.
     #
     # @!attribute [rw] models
-    #   Used to specify the models.
+    #   Specifies the inference models.
     #   @return [Array<Types::EvaluationModelConfig>]
+    #
+    # @!attribute [rw] rag_configs
+    #   Contains the configuration details of the inference for a knowledge
+    #   base evaluation job, including either the retrieval only
+    #   configuration or the retrieval with response generation
+    #   configuration.
+    #   @return [Array<Types::RAGConfig>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/EvaluationInferenceConfig AWS API Documentation
     #
     class EvaluationInferenceConfig < Struct.new(
       :models,
+      :rag_configs,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
       class Models < EvaluationInferenceConfig; end
+      class RagConfigs < EvaluationInferenceConfig; end
       class Unknown < EvaluationInferenceConfig; end
     end
 
@@ -1253,12 +1347,11 @@ module Aws::Bedrock
       class Unknown < EvaluationModelConfig; end
     end
 
-    # The Amazon S3 location where the results of your model evaluation job
-    # are saved.
+    # The Amazon S3 location where the results of your evaluation job are
+    # saved.
     #
     # @!attribute [rw] s3_uri
-    #   The Amazon S3 URI where the results of model evaluation job are
-    #   saved.
+    #   The Amazon S3 URI where the results of the evaluation job are saved.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/EvaluationOutputDataConfig AWS API Documentation
@@ -1269,36 +1362,51 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
-    # A summary of the model evaluation job.
+    # Summary information of an evaluation job.
     #
     # @!attribute [rw] job_arn
-    #   The Amazon Resource Name (ARN) of the model evaluation job.
+    #   The Amazon Resource Name (ARN) of the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] job_name
-    #   The name of the model evaluation job.
+    #   The name for the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   The current status of the model evaluation job.
+    #   The current status of the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] creation_time
-    #   When the model evaluation job was created.
+    #   The time the evaluation job was created.
     #   @return [Time]
     #
     # @!attribute [rw] job_type
-    #   The type, either human or automatic, of model evaluation job.
+    #   Specifies whether the evaluation job is automated or human-based.
     #   @return [String]
     #
     # @!attribute [rw] evaluation_task_types
-    #   What task type was used in the model evaluation job.
+    #   The type of task for model evaluation.
     #   @return [Array<String>]
     #
     # @!attribute [rw] model_identifiers
-    #   The Amazon Resource Names (ARNs) of the model(s) used in the model
+    #   The Amazon Resource Names (ARNs) of the model(s) used for the
     #   evaluation job.
     #   @return [Array<String>]
+    #
+    # @!attribute [rw] rag_identifiers
+    #   The Amazon Resource Names (ARNs) of the knowledge base resources
+    #   used for a knowledge base evaluation job.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] evaluator_model_identifiers
+    #   The Amazon Resource Names (ARNs) of the models used to compute the
+    #   metrics for a knowledge base evaluation job.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] application_type
+    #   Specifies whether the evaluation job is for evaluating a model or
+    #   evaluating a knowledge base (retrieval and response generation).
+    #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/EvaluationSummary AWS API Documentation
     #
@@ -1309,7 +1417,153 @@ module Aws::Bedrock
       :creation_time,
       :job_type,
       :evaluation_task_types,
-      :model_identifiers)
+      :model_identifiers,
+      :rag_identifiers,
+      :evaluator_model_identifiers,
+      :application_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies the model configuration for the evaluator model.
+    # `EvaluatorModelConfig` is required for evaluation jobs that use a
+    # knowledge base or in model evaluation job that use a model as judge.
+    # This model computes all evaluation related metrics.
+    #
+    # @note EvaluatorModelConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note EvaluatorModelConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of EvaluatorModelConfig corresponding to the set member.
+    #
+    # @!attribute [rw] bedrock_evaluator_models
+    #   The evaluator model used in knowledge base evaluation job or in
+    #   model evaluation job that use a model as judge. This model computes
+    #   all evaluation related metrics.
+    #   @return [Array<Types::BedrockEvaluatorModel>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/EvaluatorModelConfig AWS API Documentation
+    #
+    class EvaluatorModelConfig < Struct.new(
+      :bedrock_evaluator_models,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class BedrockEvaluatorModels < EvaluatorModelConfig; end
+      class Unknown < EvaluatorModelConfig; end
+    end
+
+    # The unique external source of the content contained in the wrapper
+    # object.
+    #
+    # @!attribute [rw] source_type
+    #   The source type of the external source wrapper object.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_location
+    #   The S3 location of the external source wrapper object.
+    #   @return [Types::S3ObjectDoc]
+    #
+    # @!attribute [rw] byte_content
+    #   The identifier, content type, and data of the external source
+    #   wrapper object.
+    #   @return [Types::ByteContentDoc]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ExternalSource AWS API Documentation
+    #
+    class ExternalSource < Struct.new(
+      :source_type,
+      :s3_location,
+      :byte_content)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The response generation configuration of the external source wrapper
+    # object.
+    #
+    # @!attribute [rw] prompt_template
+    #   Contains the template for the prompt for the external source wrapper
+    #   object.
+    #   @return [Types::PromptTemplate]
+    #
+    # @!attribute [rw] guardrail_configuration
+    #   Configuration details for the guardrail.
+    #   @return [Types::GuardrailConfiguration]
+    #
+    # @!attribute [rw] kb_inference_config
+    #   Configuration details for inference when using `RetrieveAndGenerate`
+    #   to generate responses while using an external source.
+    #   @return [Types::KbInferenceConfig]
+    #
+    # @!attribute [rw] additional_model_request_fields
+    #   Additional model parameters and their corresponding values not
+    #   included in the text inference configuration for an external source.
+    #   Takes in custom model parameters specific to the language model
+    #   being used.
+    #   @return [Hash<String,Hash,Array,String,Numeric,Boolean>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ExternalSourcesGenerationConfiguration AWS API Documentation
+    #
+    class ExternalSourcesGenerationConfiguration < Struct.new(
+      :prompt_template,
+      :guardrail_configuration,
+      :kb_inference_config,
+      :additional_model_request_fields)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration of the external source wrapper object in the
+    # `retrieveAndGenerate` function.
+    #
+    # @!attribute [rw] model_arn
+    #   The Amazon Resource Name (ARN) of the foundation model or [inference
+    #   profile][1] used to generate responses.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+    #   @return [String]
+    #
+    # @!attribute [rw] sources
+    #   The document for the external source wrapper object in the
+    #   `retrieveAndGenerate` function.
+    #   @return [Array<Types::ExternalSource>]
+    #
+    # @!attribute [rw] generation_configuration
+    #   Contains configurations details for response generation based on
+    #   retrieved text chunks.
+    #   @return [Types::ExternalSourcesGenerationConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ExternalSourcesRetrieveAndGenerateConfiguration AWS API Documentation
+    #
+    class ExternalSourcesRetrieveAndGenerateConfiguration < Struct.new(
+      :model_arn,
+      :sources,
+      :generation_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies the name of the metadata attribute/field to apply filters.
+    # You must match the name of the attribute/field in your data
+    # source/document metadata.
+    #
+    # @!attribute [rw] key
+    #   The name of metadata attribute/field, which must match the name in
+    #   your data source/document metadata.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value of the metadata attribute/field.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/FilterAttribute AWS API Documentation
+    #
+    class FilterAttribute < Struct.new(
+      :key,
+      :value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1449,6 +1703,41 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # The configuration details for response generation based on retrieved
+    # text chunks.
+    #
+    # @!attribute [rw] prompt_template
+    #   Contains the template for the prompt that's sent to the model for
+    #   response generation.
+    #   @return [Types::PromptTemplate]
+    #
+    # @!attribute [rw] guardrail_configuration
+    #   Contains configuration details for the guardrail.
+    #   @return [Types::GuardrailConfiguration]
+    #
+    # @!attribute [rw] kb_inference_config
+    #   Contains configuration details for inference for knowledge base
+    #   retrieval and response generation.
+    #   @return [Types::KbInferenceConfig]
+    #
+    # @!attribute [rw] additional_model_request_fields
+    #   Additional model parameters and corresponding values not included in
+    #   the `textInferenceConfig` structure for a knowledge base. This
+    #   allows you to provide custom model parameters specific to the
+    #   language model being used.
+    #   @return [Hash<String,Hash,Array,String,Numeric,Boolean>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GenerationConfiguration AWS API Documentation
+    #
+    class GenerationConfiguration < Struct.new(
+      :prompt_template,
+      :guardrail_configuration,
+      :kb_inference_config,
+      :additional_model_request_fields)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] model_identifier
     #   Name or Amazon Resource Name (ARN) of the custom model.
     #   @return [String]
@@ -1544,7 +1833,8 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] job_identifier
-    #   The Amazon Resource Name (ARN) of the model evaluation job.
+    #   The Amazon Resource Name (ARN) of the evaluation job you want get
+    #   information on.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetEvaluationJobRequest AWS API Documentation
@@ -1556,60 +1846,66 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] job_name
-    #   The name of the model evaluation job.
+    #   The name for the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] status
-    #   The status of the model evaluation job.
+    #   The current status of the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] job_arn
-    #   The Amazon Resource Name (ARN) of the model evaluation job.
+    #   The Amazon Resource Name (ARN) of the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] job_description
-    #   The description of the model evaluation job.
+    #   The description of the evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of the IAM service role used in the
-    #   model evaluation job.
+    #   evaluation job.
     #   @return [String]
     #
     # @!attribute [rw] customer_encryption_key_id
-    #   The Amazon Resource Name (ARN) of the customer managed key specified
-    #   when the model evaluation job was created.
+    #   The Amazon Resource Name (ARN) of the customer managed encryption
+    #   key specified when the evaluation job was created.
     #   @return [String]
     #
     # @!attribute [rw] job_type
-    #   The type of model evaluation job.
+    #   Specifies whether the evaluation job is automated or human-based.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_type
+    #   Specifies whether the evaluation job is for evaluating a model or
+    #   evaluating a knowledge base (retrieval and response generation).
     #   @return [String]
     #
     # @!attribute [rw] evaluation_config
-    #   Contains details about the type of model evaluation job, the metrics
-    #   used, the task type selected, the datasets used, and any custom
-    #   metrics you defined.
+    #   Contains the configuration details of either an automated or
+    #   human-based evaluation job.
     #   @return [Types::EvaluationConfig]
     #
     # @!attribute [rw] inference_config
-    #   Details about the models you specified in your model evaluation job.
+    #   Contains the configuration details of the inference model used for
+    #   the evaluation job.
     #   @return [Types::EvaluationInferenceConfig]
     #
     # @!attribute [rw] output_data_config
-    #   Amazon S3 location for where output data is saved.
+    #   Contains the configuration details of the Amazon S3 bucket for
+    #   storing the results of the evaluation job.
     #   @return [Types::EvaluationOutputDataConfig]
     #
     # @!attribute [rw] creation_time
-    #   When the model evaluation job was created.
+    #   The time the evaluation job was created.
     #   @return [Time]
     #
     # @!attribute [rw] last_modified_time
-    #   When the model evaluation job was last modified.
+    #   The time the evaluation job was last modified.
     #   @return [Time]
     #
     # @!attribute [rw] failure_messages
-    #   An array of strings the specify why the model evaluation job has
-    #   failed.
+    #   A list of strings that specify why the evaluation job failed to
+    #   create.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetEvaluationJobResponse AWS API Documentation
@@ -1622,6 +1918,7 @@ module Aws::Bedrock
       :role_arn,
       :customer_encryption_key_id,
       :job_type,
+      :application_type,
       :evaluation_config,
       :inference_config,
       :output_data_config,
@@ -2440,6 +2737,25 @@ module Aws::Bedrock
       :failure_message,
       :commitment_duration,
       :commitment_expiration_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration details for the guardrail.
+    #
+    # @!attribute [rw] guardrail_id
+    #   The unique identifier for the guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] guardrail_version
+    #   The version of the guardrail.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailConfiguration AWS API Documentation
+    #
+    class GuardrailConfiguration < Struct.new(
+      :guardrail_id,
+      :guardrail_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3564,6 +3880,145 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # Contains configuration details of the inference for knowledge base
+    # retrieval and response generation.
+    #
+    # @!attribute [rw] text_inference_config
+    #   Contains configuration details for text generation using a language
+    #   model via the `RetrieveAndGenerate` function.
+    #   @return [Types::TextInferenceConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/KbInferenceConfig AWS API Documentation
+    #
+    class KbInferenceConfig < Struct.new(
+      :text_inference_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration details for retrieving information from a knowledge
+    # base and generating responses.
+    #
+    # @note KnowledgeBaseConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note KnowledgeBaseConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of KnowledgeBaseConfig corresponding to the set member.
+    #
+    # @!attribute [rw] retrieve_config
+    #   Contains configuration details for retrieving information from a
+    #   knowledge base.
+    #   @return [Types::RetrieveConfig]
+    #
+    # @!attribute [rw] retrieve_and_generate_config
+    #   Contains configuration details for retrieving information from a
+    #   knowledge base and generating responses.
+    #   @return [Types::RetrieveAndGenerateConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/KnowledgeBaseConfig AWS API Documentation
+    #
+    class KnowledgeBaseConfig < Struct.new(
+      :retrieve_config,
+      :retrieve_and_generate_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class RetrieveConfig < KnowledgeBaseConfig; end
+      class RetrieveAndGenerateConfig < KnowledgeBaseConfig; end
+      class Unknown < KnowledgeBaseConfig; end
+    end
+
+    # Contains configuration details for retrieving information from a
+    # knowledge base.
+    #
+    # @!attribute [rw] vector_search_configuration
+    #   Contains configuration details for returning the results from the
+    #   vector search.
+    #   @return [Types::KnowledgeBaseVectorSearchConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/KnowledgeBaseRetrievalConfiguration AWS API Documentation
+    #
+    class KnowledgeBaseRetrievalConfiguration < Struct.new(
+      :vector_search_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configuration details for retrieving information from a
+    # knowledge base and generating responses.
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The unique identifier of the knowledge base.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_arn
+    #   The Amazon Resource Name (ARN) of the foundation model or [inference
+    #   profile][1] used to generate responses.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+    #   @return [String]
+    #
+    # @!attribute [rw] retrieval_configuration
+    #   Contains configuration details for retrieving text chunks.
+    #   @return [Types::KnowledgeBaseRetrievalConfiguration]
+    #
+    # @!attribute [rw] generation_configuration
+    #   Contains configurations details for response generation based on
+    #   retrieved text chunks.
+    #   @return [Types::GenerationConfiguration]
+    #
+    # @!attribute [rw] orchestration_configuration
+    #   Contains configuration details for the model to process the prompt
+    #   prior to retrieval and response generation.
+    #   @return [Types::OrchestrationConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/KnowledgeBaseRetrieveAndGenerateConfiguration AWS API Documentation
+    #
+    class KnowledgeBaseRetrieveAndGenerateConfiguration < Struct.new(
+      :knowledge_base_id,
+      :model_arn,
+      :retrieval_configuration,
+      :generation_configuration,
+      :orchestration_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration details for returning the results from the knowledge
+    # base vector search.
+    #
+    # @!attribute [rw] number_of_results
+    #   The number of text chunks to retrieve; the number of results to
+    #   return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] override_search_type
+    #   By default, Amazon Bedrock decides a search strategy for you. If
+    #   you're using an Amazon OpenSearch Serverless vector store that
+    #   contains a filterable text field, you can specify whether to query
+    #   the knowledge base with a `HYBRID` search using both vector
+    #   embeddings and raw text, or `SEMANTIC` search using only vector
+    #   embeddings. For other vector store configurations, only `SEMANTIC`
+    #   search is available.
+    #   @return [String]
+    #
+    # @!attribute [rw] filter
+    #   Specifies the filters to use on the metadata fields in the knowledge
+    #   base data sources before returning results.
+    #   @return [Types::RetrievalFilter]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/KnowledgeBaseVectorSearchConfiguration AWS API Documentation
+    #
+    class KnowledgeBaseVectorSearchConfiguration < Struct.new(
+      :number_of_results,
+      :override_search_type,
+      :filter)
+      SENSITIVE = [:filter]
+      include Aws::Structure
+    end
+
     # @!attribute [rw] creation_time_before
     #   Return custom models created before the specified time.
     #   @return [Time]
@@ -3651,21 +4106,27 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] creation_time_after
-    #   A filter that includes model evaluation jobs created after the time
-    #   specified.
+    #   A filter to only list evaluation jobs created after a specified
+    #   time.
     #   @return [Time]
     #
     # @!attribute [rw] creation_time_before
-    #   A filter that includes model evaluation jobs created prior to the
-    #   time specified.
+    #   A filter to only list evaluation jobs created before a specified
+    #   time.
     #   @return [Time]
     #
     # @!attribute [rw] status_equals
-    #   Only return jobs where the status condition is met.
+    #   A filter to only list evaluation jobs that are of a certain status.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_type_equals
+    #   A filter to only list evaluation jobs that are either model
+    #   evaluations or knowledge base evaluations.
     #   @return [String]
     #
     # @!attribute [rw] name_contains
-    #   Query parameter string for model evaluation job names.
+    #   A filter to only list evaluation jobs that contain a specified
+    #   string in the job name.
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -3678,11 +4139,13 @@ module Aws::Bedrock
     #   @return [String]
     #
     # @!attribute [rw] sort_by
-    #   Allows you to sort model evaluation jobs by when they were created.
+    #   Specifies a creation time to sort the list of evaluation jobs by
+    #   when they were created.
     #   @return [String]
     #
     # @!attribute [rw] sort_order
-    #   How you want the order of jobs sorted.
+    #   Specifies whether to sort the list of evaluation jobs by either
+    #   ascending or descending order.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListEvaluationJobsRequest AWS API Documentation
@@ -3691,6 +4154,7 @@ module Aws::Bedrock
       :creation_time_after,
       :creation_time_before,
       :status_equals,
+      :application_type_equals,
       :name_contains,
       :max_results,
       :next_token,
@@ -3706,7 +4170,7 @@ module Aws::Bedrock
     #   @return [String]
     #
     # @!attribute [rw] job_summaries
-    #   A summary of the model evaluation jobs.
+    #   A list of summaries of the evaluation jobs.
     #   @return [Array<Types::EvaluationSummary>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListEvaluationJobsResponse AWS API Documentation
@@ -4818,6 +5282,21 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # The configuration details for the model to process the prompt prior to
+    # retrieval and response generation.
+    #
+    # @!attribute [rw] query_transformation_configuration
+    #   Contains configuration details for transforming the prompt.
+    #   @return [Types::QueryTransformationConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/OrchestrationConfiguration AWS API Documentation
+    #
+    class OrchestrationConfiguration < Struct.new(
+      :query_transformation_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # S3 Location of the output data.
     #
     # @!attribute [rw] s3_uri
@@ -4829,6 +5308,33 @@ module Aws::Bedrock
     class OutputDataConfig < Struct.new(
       :s3_uri)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The template for the prompt that's sent to the model for response
+    # generation.
+    #
+    # @!attribute [rw] text_prompt_template
+    #   The template for the prompt that's sent to the model for response
+    #   generation. You can include prompt placeholders, which become
+    #   replaced before the prompt is sent to the model to provide
+    #   instructions and context to the model. In addition, you can include
+    #   XML tags to delineate meaningful sections of the prompt template.
+    #
+    #   For more information, see [Knowledge base prompt template][1] and
+    #   [Use XML tags with Anthropic Claude models][2].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html
+    #   [2]: https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/PromptTemplate AWS API Documentation
+    #
+    class PromptTemplate < Struct.new(
+      :text_prompt_template)
+      SENSITIVE = [:text_prompt_template]
       include Aws::Structure
     end
 
@@ -4935,6 +5441,45 @@ module Aws::Bedrock
     #
     class PutModelInvocationLoggingConfigurationResponse < Aws::EmptyStructure; end
 
+    # The configuration details for transforming the prompt.
+    #
+    # @!attribute [rw] type
+    #   The type of transformation to apply to the prompt.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/QueryTransformationConfiguration AWS API Documentation
+    #
+    class QueryTransformationConfiguration < Struct.new(
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configuration details for retrieval of information and
+    # response generation.
+    #
+    # @note RAGConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note RAGConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of RAGConfig corresponding to the set member.
+    #
+    # @!attribute [rw] knowledge_base_config
+    #   Contains configuration details for knowledge base retrieval and
+    #   response generation.
+    #   @return [Types::KnowledgeBaseConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RAGConfig AWS API Documentation
+    #
+    class RAGConfig < Struct.new(
+      :knowledge_base_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class KnowledgeBaseConfig < RAGConfig; end
+      class Unknown < RAGConfig; end
+    end
+
     # The specified resource Amazon Resource Name (ARN) was not found. Check
     # the Amazon Resource Name (ARN) and try your request again.
     #
@@ -4945,6 +5490,231 @@ module Aws::Bedrock
     #
     class ResourceNotFoundException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies the filters to use on the metadata attributes/fields in the
+    # knowledge base data sources before returning results.
+    #
+    # @note RetrievalFilter is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note RetrievalFilter is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of RetrievalFilter corresponding to the set member.
+    #
+    # @!attribute [rw] equals
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value matches the
+    #   value in this object.
+    #
+    #   The following example would return data sources with an animal
+    #   attribute whose value is 'cat': `"equals": { "key": "animal",
+    #   "value": "cat" }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] not_equals
+    #   Knowledge base data sources that contain a metadata attribute whose
+    #   name matches the key and whose value doesn't match the value in
+    #   this object are returned.
+    #
+    #   The following example would return data sources that don't contain
+    #   an animal attribute whose value is 'cat': `"notEquals": { "key":
+    #   "animal", "value": "cat" }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] greater_than
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value is greater than
+    #   the value in this object.
+    #
+    #   The following example would return data sources with an year
+    #   attribute whose value is greater than '1989': `"greaterThan": {
+    #   "key": "year", "value": 1989 }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] greater_than_or_equals
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value is greater than
+    #   or equal to the value in this object.
+    #
+    #   The following example would return data sources with an year
+    #   attribute whose value is greater than or equal to '1989':
+    #   `"greaterThanOrEquals": { "key": "year", "value": 1989 }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] less_than
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value is less than
+    #   the value in this object.
+    #
+    #   The following example would return data sources with an year
+    #   attribute whose value is less than to '1989': `"lessThan": {
+    #   "key": "year", "value": 1989 }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] less_than_or_equals
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value is less than or
+    #   equal to the value in this object.
+    #
+    #   The following example would return data sources with an year
+    #   attribute whose value is less than or equal to '1989':
+    #   `"lessThanOrEquals": { "key": "year", "value": 1989 }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] in
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value is in the list
+    #   specified in the value in this object.
+    #
+    #   The following example would return data sources with an animal
+    #   attribute that is either 'cat' or 'dog': `"in": { "key":
+    #   "animal", "value": ["cat", "dog"] }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] not_in
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value isn't in the
+    #   list specified in the value in this object.
+    #
+    #   The following example would return data sources whose animal
+    #   attribute is neither 'cat' nor 'dog': `"notIn": { "key":
+    #   "animal", "value": ["cat", "dog"] }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] starts_with
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value starts with the
+    #   value in this object. This filter is currently only supported for
+    #   Amazon OpenSearch Serverless vector stores.
+    #
+    #   The following example would return data sources with an animal
+    #   attribute starts with 'ca' (for example, 'cat' or 'camel').
+    #   `"startsWith": { "key": "animal", "value": "ca" }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] list_contains
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value is a list that
+    #   contains the value as one of its members.
+    #
+    #   The following example would return data sources with an animals
+    #   attribute that is a list containing a cat member (for example,
+    #   `["dog", "cat"]`): `"listContains": { "key": "animals", "value":
+    #   "cat" }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] string_contains
+    #   Knowledge base data sources are returned if they contain a metadata
+    #   attribute whose name matches the key and whose value is one of the
+    #   following:
+    #
+    #   A string that contains the value as a substring. The following
+    #   example would return data sources with an animal attribute that
+    #   contains the substring at (for example, 'cat'): `"stringContains":
+    #   { "key": "animal", "value": "at" }`
+    #
+    #   A list with a member that contains the value as a substring. The
+    #   following example would return data sources with an animals
+    #   attribute that is a list containing a member that contains the
+    #   substring at (for example, `["dog", "cat"]`): `"stringContains": {
+    #   "key": "animals", "value": "at" }`
+    #   @return [Types::FilterAttribute]
+    #
+    # @!attribute [rw] and_all
+    #   Knowledge base data sources are returned if their metadata
+    #   attributes fulfill all the filter conditions inside this list.
+    #   @return [Array<Types::RetrievalFilter>]
+    #
+    # @!attribute [rw] or_all
+    #   Knowledge base data sources are returned if their metadata
+    #   attributes fulfill at least one of the filter conditions inside this
+    #   list.
+    #   @return [Array<Types::RetrievalFilter>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RetrievalFilter AWS API Documentation
+    #
+    class RetrievalFilter < Struct.new(
+      :equals,
+      :not_equals,
+      :greater_than,
+      :greater_than_or_equals,
+      :less_than,
+      :less_than_or_equals,
+      :in,
+      :not_in,
+      :starts_with,
+      :list_contains,
+      :string_contains,
+      :and_all,
+      :or_all,
+      :unknown)
+      SENSITIVE = [:and_all, :or_all]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Equals < RetrievalFilter; end
+      class NotEquals < RetrievalFilter; end
+      class GreaterThan < RetrievalFilter; end
+      class GreaterThanOrEquals < RetrievalFilter; end
+      class LessThan < RetrievalFilter; end
+      class LessThanOrEquals < RetrievalFilter; end
+      class In < RetrievalFilter; end
+      class NotIn < RetrievalFilter; end
+      class StartsWith < RetrievalFilter; end
+      class ListContains < RetrievalFilter; end
+      class StringContains < RetrievalFilter; end
+      class AndAll < RetrievalFilter; end
+      class OrAll < RetrievalFilter; end
+      class Unknown < RetrievalFilter; end
+    end
+
+    # Contains configuration details for a knowledge base retrieval and
+    # response generation.
+    #
+    # @!attribute [rw] type
+    #   The type of resource that contains your data for retrieving
+    #   information and generating responses.
+    #
+    #   If you choose to use `EXTERNAL_SOURCES`, then currently only Claude
+    #   3 Sonnet models for knowledge bases are supported.
+    #   @return [String]
+    #
+    # @!attribute [rw] knowledge_base_configuration
+    #   Contains configuration details for the knowledge base retrieval and
+    #   response generation.
+    #   @return [Types::KnowledgeBaseRetrieveAndGenerateConfiguration]
+    #
+    # @!attribute [rw] external_sources_configuration
+    #   The configuration for the external source wrapper object in the
+    #   `retrieveAndGenerate` function.
+    #   @return [Types::ExternalSourcesRetrieveAndGenerateConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RetrieveAndGenerateConfiguration AWS API Documentation
+    #
+    class RetrieveAndGenerateConfiguration < Struct.new(
+      :type,
+      :knowledge_base_configuration,
+      :external_sources_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration details for retrieving information from a knowledge
+    # base.
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The unique identifier of the knowledge base.
+    #   @return [String]
+    #
+    # @!attribute [rw] knowledge_base_retrieval_configuration
+    #   Contains configuration details for knowledge base retrieval.
+    #   @return [Types::KnowledgeBaseRetrievalConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RetrieveConfig AWS API Documentation
+    #
+    class RetrieveConfig < Struct.new(
+      :knowledge_base_id,
+      :knowledge_base_retrieval_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4982,6 +5752,20 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # The unique wrapper object of the document from the S3 location.
+    #
+    # @!attribute [rw] uri
+    #   The S3 URI location for the wrapper object of the document.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/S3ObjectDoc AWS API Documentation
+    #
+    class S3ObjectDoc < Struct.new(
+      :uri)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The number of requests exceeds the service quota. Resubmit your
     # request later.
     #
@@ -4997,7 +5781,8 @@ module Aws::Bedrock
     end
 
     # @!attribute [rw] job_identifier
-    #   The ARN of the model evaluation job you want to stop.
+    #   The Amazon Resource Name (ARN) of the evaluation job you want to
+    #   stop.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/StopEvaluationJobRequest AWS API Documentation
@@ -5083,6 +5868,51 @@ module Aws::Bedrock
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/TagResourceResponse AWS API Documentation
     #
     class TagResourceResponse < Aws::EmptyStructure; end
+
+    # The configuration details for text generation using a language model
+    # via the `RetrieveAndGenerate` function.
+    #
+    # @!attribute [rw] temperature
+    #   Controls the random-ness of text generated by the language model,
+    #   influencing how much the model sticks to the most predictable next
+    #   words versus exploring more surprising options. A lower temperature
+    #   value (e.g. 0.2 or 0.3) makes model outputs more deterministic or
+    #   predictable, while a higher temperature (e.g. 0.8 or 0.9) makes the
+    #   outputs more creative or unpredictable.
+    #   @return [Float]
+    #
+    # @!attribute [rw] top_p
+    #   A probability distribution threshold which controls what the model
+    #   considers for the set of possible next tokens. The model will only
+    #   consider the top p% of the probability distribution when generating
+    #   the next token.
+    #   @return [Float]
+    #
+    # @!attribute [rw] max_tokens
+    #   The maximum number of tokens to generate in the output text. Do not
+    #   use the minimum of 0 or the maximum of 65536. The limit values
+    #   described here are arbitrary values, for actual values consult the
+    #   limits defined by your specific model.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] stop_sequences
+    #   A list of sequences of characters that, if generated, will cause the
+    #   model to stop generating further tokens. Do not use a minimum length
+    #   of 1 or a maximum length of 1000. The limit values described here
+    #   are arbitrary values, for actual values consult the limits defined
+    #   by your specific model.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/TextInferenceConfig AWS API Documentation
+    #
+    class TextInferenceConfig < Struct.new(
+      :temperature,
+      :top_p,
+      :max_tokens,
+      :stop_sequences)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # The number of requests exceeds the limit. Resubmit your request later.
     #

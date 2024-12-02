@@ -134,6 +134,7 @@ module Aws
       def create_cluster: (
                             cluster_name: ::String,
                             node_type: ::String,
+                            ?multi_region_cluster_name: ::String,
                             ?parameter_group_name: ::String,
                             ?description: ::String,
                             ?num_shards: ::Integer,
@@ -162,6 +163,29 @@ module Aws
                             ?data_tiering: bool
                           ) -> _CreateClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateClusterResponseSuccess
+
+      interface _CreateMultiRegionClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateMultiRegionClusterResponse]
+        def multi_region_cluster: () -> Types::MultiRegionCluster
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MemoryDB/Client.html#create_multi_region_cluster-instance_method
+      def create_multi_region_cluster: (
+                                         multi_region_cluster_name_suffix: ::String,
+                                         ?description: ::String,
+                                         ?engine: ::String,
+                                         ?engine_version: ::String,
+                                         node_type: ::String,
+                                         ?multi_region_parameter_group_name: ::String,
+                                         ?num_shards: ::Integer,
+                                         ?tls_enabled: bool,
+                                         ?tags: Array[
+                                           {
+                                             key: ::String?,
+                                             value: ::String?
+                                           },
+                                         ]
+                                       ) -> _CreateMultiRegionClusterResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMultiRegionClusterResponseSuccess
 
       interface _CreateParameterGroupResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateParameterGroupResponse]
@@ -255,9 +279,20 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MemoryDB/Client.html#delete_cluster-instance_method
       def delete_cluster: (
                             cluster_name: ::String,
+                            ?multi_region_cluster_name: ::String,
                             ?final_snapshot_name: ::String
                           ) -> _DeleteClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteClusterResponseSuccess
+
+      interface _DeleteMultiRegionClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteMultiRegionClusterResponse]
+        def multi_region_cluster: () -> Types::MultiRegionCluster
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MemoryDB/Client.html#delete_multi_region_cluster-instance_method
+      def delete_multi_region_cluster: (
+                                         multi_region_cluster_name: ::String
+                                       ) -> _DeleteMultiRegionClusterResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteMultiRegionClusterResponseSuccess
 
       interface _DeleteParameterGroupResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteParameterGroupResponse]
@@ -358,6 +393,20 @@ module Aws
                              ?next_token: ::String
                            ) -> _DescribeEventsResponseSuccess
                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeEventsResponseSuccess
+
+      interface _DescribeMultiRegionClustersResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeMultiRegionClustersResponse]
+        def next_token: () -> ::String
+        def multi_region_clusters: () -> ::Array[Types::MultiRegionCluster]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MemoryDB/Client.html#describe_multi_region_clusters-instance_method
+      def describe_multi_region_clusters: (
+                                            ?multi_region_cluster_name: ::String,
+                                            ?max_results: ::Integer,
+                                            ?next_token: ::String,
+                                            ?show_cluster_details: bool
+                                          ) -> _DescribeMultiRegionClustersResponseSuccess
+                                        | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeMultiRegionClustersResponseSuccess
 
       interface _DescribeParameterGroupsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeParameterGroupsResponse]
@@ -492,6 +541,17 @@ module Aws
                           ) -> _FailoverShardResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _FailoverShardResponseSuccess
 
+      interface _ListAllowedMultiRegionClusterUpdatesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAllowedMultiRegionClusterUpdatesResponse]
+        def scale_up_node_types: () -> ::Array[::String]
+        def scale_down_node_types: () -> ::Array[::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MemoryDB/Client.html#list_allowed_multi_region_cluster_updates-instance_method
+      def list_allowed_multi_region_cluster_updates: (
+                                                       multi_region_cluster_name: ::String
+                                                     ) -> _ListAllowedMultiRegionClusterUpdatesResponseSuccess
+                                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAllowedMultiRegionClusterUpdatesResponseSuccess
+
       interface _ListAllowedNodeTypeUpdatesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListAllowedNodeTypeUpdatesResponse]
         def scale_up_node_types: () -> ::Array[::String]
@@ -609,6 +669,24 @@ module Aws
                             ?acl_name: ::String
                           ) -> _UpdateClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateClusterResponseSuccess
+
+      interface _UpdateMultiRegionClusterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateMultiRegionClusterResponse]
+        def multi_region_cluster: () -> Types::MultiRegionCluster
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MemoryDB/Client.html#update_multi_region_cluster-instance_method
+      def update_multi_region_cluster: (
+                                         multi_region_cluster_name: ::String,
+                                         ?node_type: ::String,
+                                         ?description: ::String,
+                                         ?engine_version: ::String,
+                                         ?shard_configuration: {
+                                           shard_count: ::Integer?
+                                         },
+                                         ?multi_region_parameter_group_name: ::String,
+                                         ?update_strategy: ("coordinated" | "uncoordinated")
+                                       ) -> _UpdateMultiRegionClusterResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateMultiRegionClusterResponseSuccess
 
       interface _UpdateParameterGroupResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateParameterGroupResponse]

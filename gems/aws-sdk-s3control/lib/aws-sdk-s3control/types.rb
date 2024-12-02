@@ -1175,7 +1175,7 @@ module Aws::S3Control
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-actions.html
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/batch-ops-operations.html
     #   @return [Types::JobOperation]
     #
     # @!attribute [rw] report
@@ -6938,9 +6938,20 @@ module Aws::S3Control
     #
     #   * **Directory buckets** - For example, to copy objects to a
     #     directory bucket named `destinationBucket` in the Availability
-    #     Zone; identified by the AZ ID `usw2-az1`, set the `TargetResource`
+    #     Zone identified by the AZ ID `usw2-az1`, set the `TargetResource`
     #     property to
     #     `arn:aws:s3express:region:account_id:/bucket/destination_bucket_base_name--usw2-az1--x-s3`.
+    #     A directory bucket as a destination bucket can be in Availability
+    #     Zone or Local Zone.
+    #
+    #     <note markdown="1"> Copying objects across different Amazon Web Services Regions
+    #     isn't supported when the source or destination bucket is in
+    #     Amazon Web Services Local Zones. The source and destination
+    #     buckets must have the same parent Amazon Web Services Region.
+    #     Otherwise, you get an HTTP `400 Bad Request` error with the error
+    #     code `InvalidRequest`.
+    #
+    #      </note>
     #   @return [String]
     #
     # @!attribute [rw] canned_access_control_list
@@ -7013,9 +7024,35 @@ module Aws::S3Control
     #   @return [Time]
     #
     # @!attribute [rw] sse_aws_kms_key_id
-    #   <note markdown="1"> This functionality is not supported by directory buckets.
+    #   Specifies the KMS key ID (Key ID, Key ARN, or Key Alias) to use for
+    #   object encryption. If the KMS key doesn't exist in the same account
+    #   that's issuing the command, you must use the full Key ARN not the
+    #   Key ID.
+    #
+    #   <note markdown="1"> **Directory buckets** - If you specify `SSEAlgorithm` with `KMS`,
+    #   you must specify the ` SSEAwsKmsKeyId` parameter with the ID (Key ID
+    #   or Key ARN) of the KMS symmetric encryption customer managed key to
+    #   use. Otherwise, you get an HTTP `400 Bad Request` error. The key
+    #   alias format of the KMS key isn't supported. To encrypt new object
+    #   copies in a directory bucket with SSE-KMS, you must specify SSE-KMS
+    #   as the directory bucket's default encryption configuration with a
+    #   KMS key (specifically, a [customer managed key][1]). The [Amazon Web
+    #   Services managed key][2] (`aws/s3`) isn't supported. Your SSE-KMS
+    #   configuration can only support 1 [customer managed key][1] per
+    #   directory bucket for the lifetime of the bucket. After you specify a
+    #   customer managed key for SSE-KMS as the bucket default encryption,
+    #   you can't override the customer managed key for the bucket's
+    #   SSE-KMS configuration. Then, when you specify server-side encryption
+    #   settings for new object copies with SSE-KMS, you must make sure the
+    #   encryption key is the same customer managed key that you specified
+    #   for the directory bucket's default encryption configuration.
     #
     #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk
+    #   [2]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk
     #   @return [String]
     #
     # @!attribute [rw] target_key_prefix
@@ -7058,12 +7095,21 @@ module Aws::S3Control
     #   (SSE-KMS). Setting this header to `true` causes Amazon S3 to use an
     #   S3 Bucket Key for object encryption with SSE-KMS.
     #
-    #   Specifying this header with an *object* action doesn’t affect
+    #   Specifying this header with an *Copy* action doesn’t affect
     #   *bucket-level* settings for S3 Bucket Key.
     #
-    #   <note markdown="1"> This functionality is not supported by directory buckets.
+    #   <note markdown="1"> **Directory buckets** - S3 Bucket Keys aren't supported, when you
+    #   copy SSE-KMS encrypted objects from general purpose buckets to
+    #   directory buckets, from directory buckets to general purpose
+    #   buckets, or between directory buckets, through [the Copy operation
+    #   in Batch Operations][1]. In this case, Amazon S3 makes a call to KMS
+    #   every time a copy request is made for a KMS-encrypted object.
     #
     #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops
     #   @return [Boolean]
     #
     # @!attribute [rw] checksum_algorithm
@@ -7360,10 +7406,22 @@ module Aws::S3Control
     #   @return [Boolean]
     #
     # @!attribute [rw] sse_algorithm
-    #   <note markdown="1"> For directory buckets, only the server-side encryption with Amazon
-    #   S3 managed keys (SSE-S3) (`AES256`) is supported.
+    #   The server-side encryption algorithm used when storing objects in
+    #   Amazon S3.
     #
-    #    </note>
+    #   <b>Directory buckets </b> - For directory buckets, there are only
+    #   two supported options for server-side encryption: server-side
+    #   encryption with Amazon S3 managed keys (SSE-S3) (`AES256`) and
+    #   server-side encryption with KMS keys (SSE-KMS) (`KMS`). For more
+    #   information, see [Protecting data with server-side encryption][1] in
+    #   the *Amazon S3 User Guide*. For [the Copy operation in Batch
+    #   Operations][2], see [S3CopyObjectOperation][3].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
+    #   [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops
+    #   [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_S3CopyObjectOperation.html
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3control-2018-08-20/S3ObjectMetadata AWS API Documentation

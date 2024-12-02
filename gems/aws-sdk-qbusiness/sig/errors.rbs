@@ -19,10 +19,16 @@ module Aws
         def resource_id: () -> ::String
         def resource_type: () -> ::String
       end
+      class ExternalResourceException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class InternalServerException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
       class LicenseNotFoundException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class MediaTooLargeException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
       class ResourceNotFoundException < ::Aws::Errors::ServiceError

@@ -76,6 +76,7 @@ module Aws::MemoryDB
       attr_accessor description: ::String
       attr_accessor status: ::String
       attr_accessor pending_updates: Types::ClusterPendingUpdates
+      attr_accessor multi_region_cluster_name: ::String
       attr_accessor number_of_shards: ::Integer
       attr_accessor shards: ::Array[Types::Shard]
       attr_accessor availability_mode: ("singleaz" | "multiaz")
@@ -121,6 +122,8 @@ module Aws::MemoryDB
       attr_accessor snapshot_window: ::String
       attr_accessor num_shards: ::Integer
       attr_accessor shards: ::Array[Types::ShardDetail]
+      attr_accessor multi_region_parameter_group_name: ::String
+      attr_accessor multi_region_cluster_name: ::String
       SENSITIVE: []
     end
 
@@ -166,6 +169,7 @@ module Aws::MemoryDB
     class CreateClusterRequest
       attr_accessor cluster_name: ::String
       attr_accessor node_type: ::String
+      attr_accessor multi_region_cluster_name: ::String
       attr_accessor parameter_group_name: ::String
       attr_accessor description: ::String
       attr_accessor num_shards: ::Integer
@@ -192,6 +196,24 @@ module Aws::MemoryDB
 
     class CreateClusterResponse
       attr_accessor cluster: Types::Cluster
+      SENSITIVE: []
+    end
+
+    class CreateMultiRegionClusterRequest
+      attr_accessor multi_region_cluster_name_suffix: ::String
+      attr_accessor description: ::String
+      attr_accessor engine: ::String
+      attr_accessor engine_version: ::String
+      attr_accessor node_type: ::String
+      attr_accessor multi_region_parameter_group_name: ::String
+      attr_accessor num_shards: ::Integer
+      attr_accessor tls_enabled: bool
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class CreateMultiRegionClusterResponse
+      attr_accessor multi_region_cluster: Types::MultiRegionCluster
       SENSITIVE: []
     end
 
@@ -262,12 +284,23 @@ module Aws::MemoryDB
 
     class DeleteClusterRequest
       attr_accessor cluster_name: ::String
+      attr_accessor multi_region_cluster_name: ::String
       attr_accessor final_snapshot_name: ::String
       SENSITIVE: []
     end
 
     class DeleteClusterResponse
       attr_accessor cluster: Types::Cluster
+      SENSITIVE: []
+    end
+
+    class DeleteMultiRegionClusterRequest
+      attr_accessor multi_region_cluster_name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteMultiRegionClusterResponse
+      attr_accessor multi_region_cluster: Types::MultiRegionCluster
       SENSITIVE: []
     end
 
@@ -368,6 +401,20 @@ module Aws::MemoryDB
     class DescribeEventsResponse
       attr_accessor next_token: ::String
       attr_accessor events: ::Array[Types::Event]
+      SENSITIVE: []
+    end
+
+    class DescribeMultiRegionClustersRequest
+      attr_accessor multi_region_cluster_name: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor show_cluster_details: bool
+      SENSITIVE: []
+    end
+
+    class DescribeMultiRegionClustersResponse
+      attr_accessor next_token: ::String
+      attr_accessor multi_region_clusters: ::Array[Types::MultiRegionCluster]
       SENSITIVE: []
     end
 
@@ -548,6 +595,9 @@ module Aws::MemoryDB
     class InvalidKMSKeyFault < Aws::EmptyStructure
     end
 
+    class InvalidMultiRegionClusterStateFault < Aws::EmptyStructure
+    end
+
     class InvalidNodeStateFault < Aws::EmptyStructure
     end
 
@@ -576,6 +626,17 @@ module Aws::MemoryDB
     class InvalidVPCNetworkStateFault < Aws::EmptyStructure
     end
 
+    class ListAllowedMultiRegionClusterUpdatesRequest
+      attr_accessor multi_region_cluster_name: ::String
+      SENSITIVE: []
+    end
+
+    class ListAllowedMultiRegionClusterUpdatesResponse
+      attr_accessor scale_up_node_types: ::Array[::String]
+      attr_accessor scale_down_node_types: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class ListAllowedNodeTypeUpdatesRequest
       attr_accessor cluster_name: ::String
       SENSITIVE: []
@@ -595,6 +656,30 @@ module Aws::MemoryDB
     class ListTagsResponse
       attr_accessor tag_list: ::Array[Types::Tag]
       SENSITIVE: []
+    end
+
+    class MultiRegionCluster
+      attr_accessor multi_region_cluster_name: ::String
+      attr_accessor description: ::String
+      attr_accessor status: ::String
+      attr_accessor node_type: ::String
+      attr_accessor engine: ::String
+      attr_accessor engine_version: ::String
+      attr_accessor number_of_shards: ::Integer
+      attr_accessor clusters: ::Array[Types::RegionalCluster]
+      attr_accessor multi_region_parameter_group_name: ::String
+      attr_accessor tls_enabled: bool
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class MultiRegionClusterAlreadyExistsFault < Aws::EmptyStructure
+    end
+
+    class MultiRegionClusterNotFoundFault < Aws::EmptyStructure
+    end
+
+    class MultiRegionParameterGroupNotFoundFault < Aws::EmptyStructure
     end
 
     class NoOperationFault < Aws::EmptyStructure
@@ -670,6 +755,14 @@ module Aws::MemoryDB
     class RecurringCharge
       attr_accessor recurring_charge_amount: ::Float
       attr_accessor recurring_charge_frequency: ::String
+      SENSITIVE: []
+    end
+
+    class RegionalCluster
+      attr_accessor cluster_name: ::String
+      attr_accessor region: ::String
+      attr_accessor status: ::String
+      attr_accessor arn: ::String
       SENSITIVE: []
     end
 
@@ -934,6 +1027,22 @@ module Aws::MemoryDB
 
     class UpdateClusterResponse
       attr_accessor cluster: Types::Cluster
+      SENSITIVE: []
+    end
+
+    class UpdateMultiRegionClusterRequest
+      attr_accessor multi_region_cluster_name: ::String
+      attr_accessor node_type: ::String
+      attr_accessor description: ::String
+      attr_accessor engine_version: ::String
+      attr_accessor shard_configuration: Types::ShardConfigurationRequest
+      attr_accessor multi_region_parameter_group_name: ::String
+      attr_accessor update_strategy: ("coordinated" | "uncoordinated")
+      SENSITIVE: []
+    end
+
+    class UpdateMultiRegionClusterResponse
+      attr_accessor multi_region_cluster: Types::MultiRegionCluster
       SENSITIVE: []
     end
 

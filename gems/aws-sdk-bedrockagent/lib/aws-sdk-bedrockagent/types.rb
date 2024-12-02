@@ -1047,6 +1047,70 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Contains information about content defined inline in bytes.
+    #
+    # @!attribute [rw] data
+    #   The base64-encoded string of the content.
+    #   @return [String]
+    #
+    # @!attribute [rw] mime_type
+    #   The MIME type of the content. For a list of MIME types, see [Media
+    #   Types][1]. The following MIME types are supported:
+    #
+    #   * text/plain
+    #
+    #   * text/html
+    #
+    #   * text/csv
+    #
+    #   * text/vtt
+    #
+    #   * message/rfc822
+    #
+    #   * application/xhtml+xml
+    #
+    #   * application/pdf
+    #
+    #   * application/msword
+    #
+    #   * application/vnd.ms-word.document.macroenabled.12
+    #
+    #   * application/vnd.ms-word.template.macroenabled.12
+    #
+    #   * application/vnd.ms-excel
+    #
+    #   * application/vnd.ms-excel.addin.macroenabled.12
+    #
+    #   * application/vnd.ms-excel.sheet.macroenabled.12
+    #
+    #   * application/vnd.ms-excel.template.macroenabled.12
+    #
+    #   * application/vnd.ms-excel.sheet.binary.macroenabled.12
+    #
+    #   * application/vnd.ms-spreadsheetml
+    #
+    #   * application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+    #
+    #   * application/vnd.openxmlformats-officedocument.spreadsheetml.template
+    #
+    #   * application/vnd.openxmlformats-officedocument.wordprocessingml.document
+    #
+    #   * application/vnd.openxmlformats-officedocument.wordprocessingml.template
+    #
+    #
+    #
+    #   [1]: https://www.iana.org/assignments/media-types/media-types.xhtml
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ByteContentDoc AWS API Documentation
+    #
+    class ByteContentDoc < Struct.new(
+      :data,
+      :mime_type)
+      SENSITIVE = [:data]
+      include Aws::Structure
+    end
+
     # Contains configurations to use a prompt in a conversational format.
     # For more information, see [Create a prompt using Prompt
     # management][1].
@@ -2362,6 +2426,54 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Contains information about the content to ingest into a knowledge base
+    # connected to a custom data source. Choose a `sourceType` and include
+    # the field that corresponds to it.
+    #
+    # @!attribute [rw] custom_document_identifier
+    #   A unique identifier for the document.
+    #   @return [Types::CustomDocumentIdentifier]
+    #
+    # @!attribute [rw] inline_content
+    #   Contains information about content defined inline to ingest into a
+    #   knowledge base.
+    #   @return [Types::InlineContent]
+    #
+    # @!attribute [rw] s3_location
+    #   Contains information about the Amazon S3 location of the file from
+    #   which to ingest data.
+    #   @return [Types::CustomS3Location]
+    #
+    # @!attribute [rw] source_type
+    #   The source of the data to ingest.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CustomContent AWS API Documentation
+    #
+    class CustomContent < Struct.new(
+      :custom_document_identifier,
+      :inline_content,
+      :s3_location,
+      :source_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the identifier of the document to ingest
+    # into a custom data source.
+    #
+    # @!attribute [rw] id
+    #   The identifier of the document to ingest into a custom data source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CustomDocumentIdentifier AWS API Documentation
+    #
+    class CustomDocumentIdentifier < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Details of custom orchestration.
     #
     # @!attribute [rw] executor
@@ -2373,6 +2485,28 @@ module Aws::BedrockAgent
     #
     class CustomOrchestration < Struct.new(
       :executor)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the Amazon S3 location of the file
+    # containing the content to ingest into a knowledge base connected to a
+    # custom data source.
+    #
+    # @!attribute [rw] bucket_owner_account_id
+    #   The identifier of the Amazon Web Services account that owns the S3
+    #   bucket containing the content to ingest.
+    #   @return [String]
+    #
+    # @!attribute [rw] uri
+    #   The S3 URI of the file containing the content to ingest.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CustomS3Location AWS API Documentation
+    #
+    class CustomS3Location < Struct.new(
+      :bucket_owner_account_id,
+      :uri)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2905,6 +3039,59 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier to ensure that the API request
+    #   completes no more than one time. If this token matches a previous
+    #   request, Amazon Bedrock ignores the request, but does not return an
+    #   error. For more information, see [Ensuring idempotency][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_id
+    #   The unique identifier of the data source that contains the
+    #   documents.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_identifiers
+    #   A list of objects, each of which contains information to identify a
+    #   document to delete.
+    #   @return [Array<Types::DocumentIdentifier>]
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The unique identifier of the knowledge base that is connected to the
+    #   data source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DeleteKnowledgeBaseDocumentsRequest AWS API Documentation
+    #
+    class DeleteKnowledgeBaseDocumentsRequest < Struct.new(
+      :client_token,
+      :data_source_id,
+      :document_identifiers,
+      :knowledge_base_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] document_details
+    #   A list of objects, each of which contains information about the
+    #   documents that were deleted.
+    #   @return [Array<Types::KnowledgeBaseDocumentDetail>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DeleteKnowledgeBaseDocumentsResponse AWS API Documentation
+    #
+    class DeleteKnowledgeBaseDocumentsResponse < Struct.new(
+      :document_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] knowledge_base_id
     #   The unique identifier of the knowledge base to delete.
     #   @return [String]
@@ -2997,6 +3184,90 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DisassociateAgentKnowledgeBaseResponse AWS API Documentation
     #
     class DisassociateAgentKnowledgeBaseResponse < Aws::EmptyStructure; end
+
+    # Contains information about the content of a document. Choose a
+    # `dataSourceType` and include the field that corresponds to it.
+    #
+    # @!attribute [rw] custom
+    #   Contains information about the content to ingest into a knowledge
+    #   base connected to a custom data source.
+    #   @return [Types::CustomContent]
+    #
+    # @!attribute [rw] data_source_type
+    #   The type of data source that is connected to the knowledge base to
+    #   which to ingest this document.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3
+    #   Contains information about the content to ingest into a knowledge
+    #   base connected to an Amazon S3 data source
+    #   @return [Types::S3Content]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DocumentContent AWS API Documentation
+    #
+    class DocumentContent < Struct.new(
+      :custom,
+      :data_source_type,
+      :s3)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information that identifies the document.
+    #
+    # @!attribute [rw] custom
+    #   Contains information that identifies the document in a custom data
+    #   source.
+    #   @return [Types::CustomDocumentIdentifier]
+    #
+    # @!attribute [rw] data_source_type
+    #   The type of data source connected to the knowledge base that
+    #   contains the document.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3
+    #   Contains information that identifies the document in an S3 data
+    #   source.
+    #   @return [Types::S3Location]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DocumentIdentifier AWS API Documentation
+    #
+    class DocumentIdentifier < Struct.new(
+      :custom,
+      :data_source_type,
+      :s3)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the metadata associate with the content to
+    # ingest into a knowledge base. Choose a `type` and include the field
+    # that corresponds to it.
+    #
+    # @!attribute [rw] inline_attributes
+    #   An array of objects, each of which defines a metadata attribute to
+    #   associate with the content to ingest. You define the attributes
+    #   inline.
+    #   @return [Array<Types::MetadataAttribute>]
+    #
+    # @!attribute [rw] s3_location
+    #   The Amazon S3 location of the file containing metadata to associate
+    #   with the content to ingest.
+    #   @return [Types::CustomS3Location]
+    #
+    # @!attribute [rw] type
+    #   The type of the source source from which to add metadata.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DocumentMetadata AWS API Documentation
+    #
+    class DocumentMetadata < Struct.new(
+      :inline_attributes,
+      :s3_location,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # Details about duplicate condition expressions found in a condition
     # node.
@@ -4399,6 +4670,44 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # @!attribute [rw] data_source_id
+    #   The unique identifier of the data source that contains the
+    #   documents.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_identifiers
+    #   A list of objects, each of which contains information to identify a
+    #   document for which to retrieve information.
+    #   @return [Array<Types::DocumentIdentifier>]
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The unique identifier of the knowledge base that is connected to the
+    #   data source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetKnowledgeBaseDocumentsRequest AWS API Documentation
+    #
+    class GetKnowledgeBaseDocumentsRequest < Struct.new(
+      :data_source_id,
+      :document_identifiers,
+      :knowledge_base_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] document_details
+    #   A list of objects, each of which contains information about the
+    #   documents that were retrieved.
+    #   @return [Array<Types::KnowledgeBaseDocumentDetail>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetKnowledgeBaseDocumentsResponse AWS API Documentation
+    #
+    class GetKnowledgeBaseDocumentsResponse < Struct.new(
+      :document_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] knowledge_base_id
     #   The unique identifier of the knowledge base you want to get
     #   information on.
@@ -4638,6 +4947,59 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier to ensure that the API request
+    #   completes no more than one time. If this token matches a previous
+    #   request, Amazon Bedrock ignores the request, but does not return an
+    #   error. For more information, see [Ensuring idempotency][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_id
+    #   The unique identifier of the data source connected to the knowledge
+    #   base that you're adding documents to.
+    #   @return [String]
+    #
+    # @!attribute [rw] documents
+    #   A list of objects, each of which contains information about the
+    #   documents to add.
+    #   @return [Array<Types::KnowledgeBaseDocument>]
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The unique identifier of the knowledge base to ingest the documents
+    #   into.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/IngestKnowledgeBaseDocumentsRequest AWS API Documentation
+    #
+    class IngestKnowledgeBaseDocumentsRequest < Struct.new(
+      :client_token,
+      :data_source_id,
+      :documents,
+      :knowledge_base_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] document_details
+    #   A list of objects, each of which contains information about the
+    #   documents that were ingested.
+    #   @return [Array<Types::KnowledgeBaseDocumentDetail>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/IngestKnowledgeBaseDocumentsResponse AWS API Documentation
+    #
+    class IngestKnowledgeBaseDocumentsResponse < Struct.new(
+      :document_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains details about a data ingestion job. Data sources are ingested
     # into a knowledge base so that Large Language Models (LLMs) can use
     # your data.
@@ -4855,6 +5217,32 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Contains information about content defined inline to ingest into a
+    # data source. Choose a `type` and include the field that corresponds to
+    # it.
+    #
+    # @!attribute [rw] byte_content
+    #   Contains information about content defined inline in bytes.
+    #   @return [Types::ByteContentDoc]
+    #
+    # @!attribute [rw] text_content
+    #   Contains information about content defined inline in text.
+    #   @return [Types::TextContentDoc]
+    #
+    # @!attribute [rw] type
+    #   The type of inline content to define.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/InlineContent AWS API Documentation
+    #
+    class InlineContent < Struct.new(
+      :byte_content,
+      :text_content,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains configurations for the input flow node for a flow. This node
     # takes the input from flow invocation and passes it to the next node in
     # the data type that you specify.
@@ -5005,6 +5393,94 @@ module Aws::BedrockAgent
     class KnowledgeBaseConfiguration < Struct.new(
       :type,
       :vector_knowledge_base_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about a document to ingest into a knowledge base
+    # and metadata to associate with it.
+    #
+    # @!attribute [rw] content
+    #   Contains the content of the document.
+    #   @return [Types::DocumentContent]
+    #
+    # @!attribute [rw] metadata
+    #   Contains the metadata to associate with the document.
+    #   @return [Types::DocumentMetadata]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/KnowledgeBaseDocument AWS API Documentation
+    #
+    class KnowledgeBaseDocument < Struct.new(
+      :content,
+      :metadata)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains the details for a document that was ingested or deleted.
+    #
+    # @!attribute [rw] data_source_id
+    #   The identifier of the data source connected to the knowledge base
+    #   that the document was ingested into or deleted from.
+    #   @return [String]
+    #
+    # @!attribute [rw] identifier
+    #   Contains information that identifies the document.
+    #   @return [Types::DocumentIdentifier]
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The identifier of the knowledge base that the document was ingested
+    #   into or deleted from.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The ingestion status of the document. The following statuses are
+    #   possible:
+    #
+    #   * STARTED – You submitted the ingestion job containing the document.
+    #
+    #   * PENDING – The document is waiting to be ingested.
+    #
+    #   * IN\_PROGRESS – The document is being ingested.
+    #
+    #   * INDEXED – The document was successfully indexed.
+    #
+    #   * PARTIALLY\_INDEXED – The document was partially indexed.
+    #
+    #   * METADATA\_PARTIALLY\_INDEXED – You submitted metadata for an
+    #     existing document and it was partially indexed.
+    #
+    #   * METADATA\_UPDATE\_FAILED – You submitted a metadata update for an
+    #     existing document but it failed.
+    #
+    #   * FAILED – The document failed to be ingested.
+    #
+    #   * NOT\_FOUND – The document wasn't found.
+    #
+    #   * IGNORED – The document was ignored during ingestion.
+    #
+    #   * DELETING – You submitted the delete job containing the document.
+    #
+    #   * DELETE\_IN\_PROGRESS – The document is being deleted.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_reason
+    #   The reason for the status. Appears alongside the status `IGNORED`.
+    #   @return [String]
+    #
+    # @!attribute [rw] updated_at
+    #   The date and time at which the document was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/KnowledgeBaseDocumentDetail AWS API Documentation
+    #
+    class KnowledgeBaseDocumentDetail < Struct.new(
+      :data_source_id,
+      :identifier,
+      :knowledge_base_id,
+      :status,
+      :status_reason,
+      :updated_at)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5639,6 +6115,62 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # @!attribute [rw] data_source_id
+    #   The unique identifier of the data source that contains the
+    #   documents.
+    #   @return [String]
+    #
+    # @!attribute [rw] knowledge_base_id
+    #   The unique identifier of the knowledge base that is connected to the
+    #   data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return in the response. If the
+    #   total number of results is greater than this value, use the token
+    #   returned in the response in the `nextToken` field when making
+    #   another request to return the next batch of results.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   If the total number of results is greater than the `maxResults`
+    #   value provided in the request, enter the token returned in the
+    #   `nextToken` field in the response in this field to return the next
+    #   batch of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListKnowledgeBaseDocumentsRequest AWS API Documentation
+    #
+    class ListKnowledgeBaseDocumentsRequest < Struct.new(
+      :data_source_id,
+      :knowledge_base_id,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] document_details
+    #   A list of objects, each of which contains information about the
+    #   documents that were retrieved.
+    #   @return [Array<Types::KnowledgeBaseDocumentDetail>]
+    #
+    # @!attribute [rw] next_token
+    #   If the total number of results is greater than the `maxResults`
+    #   value provided in the request, use this token when making another
+    #   request in the `nextToken` field to return the next batch of
+    #   results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListKnowledgeBaseDocumentsResponse AWS API Documentation
+    #
+    class ListKnowledgeBaseDocumentsResponse < Struct.new(
+      :document_details,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] max_results
     #   The maximum number of results to return in the response. If the
     #   total number of results is greater than this value, use the token
@@ -5849,6 +6381,60 @@ module Aws::BedrockAgent
       :content,
       :role)
       SENSITIVE = [:content]
+      include Aws::Structure
+    end
+
+    # Contains information about a metadata attribute.
+    #
+    # @!attribute [rw] key
+    #   The key of the metadata attribute.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   Contains the value of the metadata attribute.
+    #   @return [Types::MetadataAttributeValue]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/MetadataAttribute AWS API Documentation
+    #
+    class MetadataAttribute < Struct.new(
+      :key,
+      :value)
+      SENSITIVE = [:key]
+      include Aws::Structure
+    end
+
+    # Contains the value of the metadata attribute. Choose a `type` and
+    # include the field that corresponds to it.
+    #
+    # @!attribute [rw] boolean_value
+    #   The value of the Boolean metadata attribute.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] number_value
+    #   The value of the numeric metadata attribute.
+    #   @return [Float]
+    #
+    # @!attribute [rw] string_list_value
+    #   An array of strings that define the value of the metadata attribute.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] string_value
+    #   The value of the string metadata attribute.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the metadata attribute.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/MetadataAttributeValue AWS API Documentation
+    #
+    class MetadataAttributeValue < Struct.new(
+      :boolean_value,
+      :number_value,
+      :string_list_value,
+      :string_value,
+      :type)
+      SENSITIVE = [:number_value, :string_list_value, :string_value]
       include Aws::Structure
     end
 
@@ -7236,6 +7822,21 @@ module Aws::BedrockAgent
       class Unknown < RetrievalFlowNodeServiceConfiguration; end
     end
 
+    # Contains information about the content to ingest into a knowledge base
+    # connected to an Amazon S3 data source.
+    #
+    # @!attribute [rw] s3_location
+    #   The S3 location of the file containing the content to ingest.
+    #   @return [Types::S3Location]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/S3Content AWS API Documentation
+    #
+    class S3Content < Struct.new(
+      :s3_location)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The configuration information to connect to Amazon S3 as your data
     # source.
     #
@@ -7808,6 +8409,20 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/TagResourceResponse AWS API Documentation
     #
     class TagResourceResponse < Aws::EmptyStructure; end
+
+    # Contains information about content defined inline in text.
+    #
+    # @!attribute [rw] data
+    #   The text of the content.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/TextContentDoc AWS API Documentation
+    #
+    class TextContentDoc < Struct.new(
+      :data)
+      SENSITIVE = [:data]
+      include Aws::Structure
+    end
 
     # Contains configurations for a text prompt template. To include a
     # variable, enclose a word in double curly braces as in `{{variable}}`.

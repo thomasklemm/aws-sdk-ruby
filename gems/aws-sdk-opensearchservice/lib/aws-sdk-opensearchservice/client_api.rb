@@ -30,6 +30,8 @@ module Aws::OpenSearchService
     ActionType = Shapes::StringShape.new(name: 'ActionType')
     AddDataSourceRequest = Shapes::StructureShape.new(name: 'AddDataSourceRequest')
     AddDataSourceResponse = Shapes::StructureShape.new(name: 'AddDataSourceResponse')
+    AddDirectQueryDataSourceRequest = Shapes::StructureShape.new(name: 'AddDirectQueryDataSourceRequest')
+    AddDirectQueryDataSourceResponse = Shapes::StructureShape.new(name: 'AddDirectQueryDataSourceResponse')
     AddTagsRequest = Shapes::StructureShape.new(name: 'AddTagsRequest')
     AdditionalLimit = Shapes::StructureShape.new(name: 'AdditionalLimit')
     AdditionalLimitList = Shapes::ListShape.new(name: 'AdditionalLimitList')
@@ -89,6 +91,7 @@ module Aws::OpenSearchService
     ChangeProgressStageStatus = Shapes::StringShape.new(name: 'ChangeProgressStageStatus')
     ChangeProgressStatusDetails = Shapes::StructureShape.new(name: 'ChangeProgressStatusDetails')
     ClientToken = Shapes::StringShape.new(name: 'ClientToken')
+    CloudWatchDirectQueryDataSource = Shapes::StructureShape.new(name: 'CloudWatchDirectQueryDataSource')
     CloudWatchLogsLogGroupArn = Shapes::StringShape.new(name: 'CloudWatchLogsLogGroupArn')
     ClusterConfig = Shapes::StructureShape.new(name: 'ClusterConfig')
     ClusterConfigStatus = Shapes::StructureShape.new(name: 'ClusterConfigStatus')
@@ -129,6 +132,7 @@ module Aws::OpenSearchService
     DeleteApplicationResponse = Shapes::StructureShape.new(name: 'DeleteApplicationResponse')
     DeleteDataSourceRequest = Shapes::StructureShape.new(name: 'DeleteDataSourceRequest')
     DeleteDataSourceResponse = Shapes::StructureShape.new(name: 'DeleteDataSourceResponse')
+    DeleteDirectQueryDataSourceRequest = Shapes::StructureShape.new(name: 'DeleteDirectQueryDataSourceRequest')
     DeleteDomainRequest = Shapes::StructureShape.new(name: 'DeleteDomainRequest')
     DeleteDomainResponse = Shapes::StructureShape.new(name: 'DeleteDomainResponse')
     DeleteInboundConnectionRequest = Shapes::StructureShape.new(name: 'DeleteInboundConnectionRequest')
@@ -179,6 +183,13 @@ module Aws::OpenSearchService
     DescribeVpcEndpointsRequest = Shapes::StructureShape.new(name: 'DescribeVpcEndpointsRequest')
     DescribeVpcEndpointsResponse = Shapes::StructureShape.new(name: 'DescribeVpcEndpointsResponse')
     Description = Shapes::StringShape.new(name: 'Description')
+    DirectQueryDataSource = Shapes::StructureShape.new(name: 'DirectQueryDataSource')
+    DirectQueryDataSourceDescription = Shapes::StringShape.new(name: 'DirectQueryDataSourceDescription')
+    DirectQueryDataSourceList = Shapes::ListShape.new(name: 'DirectQueryDataSourceList')
+    DirectQueryDataSourceName = Shapes::StringShape.new(name: 'DirectQueryDataSourceName')
+    DirectQueryDataSourceRoleArn = Shapes::StringShape.new(name: 'DirectQueryDataSourceRoleArn')
+    DirectQueryDataSourceType = Shapes::UnionShape.new(name: 'DirectQueryDataSourceType')
+    DirectQueryOpenSearchARNList = Shapes::ListShape.new(name: 'DirectQueryOpenSearchARNList')
     DisableTimestamp = Shapes::TimestampShape.new(name: 'DisableTimestamp')
     DisabledOperationException = Shapes::StructureShape.new(name: 'DisabledOperationException')
     DissociatePackageRequest = Shapes::StructureShape.new(name: 'DissociatePackageRequest')
@@ -238,6 +249,8 @@ module Aws::OpenSearchService
     GetCompatibleVersionsResponse = Shapes::StructureShape.new(name: 'GetCompatibleVersionsResponse')
     GetDataSourceRequest = Shapes::StructureShape.new(name: 'GetDataSourceRequest')
     GetDataSourceResponse = Shapes::StructureShape.new(name: 'GetDataSourceResponse')
+    GetDirectQueryDataSourceRequest = Shapes::StructureShape.new(name: 'GetDirectQueryDataSourceRequest')
+    GetDirectQueryDataSourceResponse = Shapes::StructureShape.new(name: 'GetDirectQueryDataSourceResponse')
     GetDomainMaintenanceStatusRequest = Shapes::StructureShape.new(name: 'GetDomainMaintenanceStatusRequest')
     GetDomainMaintenanceStatusResponse = Shapes::StructureShape.new(name: 'GetDomainMaintenanceStatusResponse')
     GetPackageVersionHistoryRequest = Shapes::StructureShape.new(name: 'GetPackageVersionHistoryRequest')
@@ -295,6 +308,8 @@ module Aws::OpenSearchService
     ListApplicationsResponse = Shapes::StructureShape.new(name: 'ListApplicationsResponse')
     ListDataSourcesRequest = Shapes::StructureShape.new(name: 'ListDataSourcesRequest')
     ListDataSourcesResponse = Shapes::StructureShape.new(name: 'ListDataSourcesResponse')
+    ListDirectQueryDataSourcesRequest = Shapes::StructureShape.new(name: 'ListDirectQueryDataSourcesRequest')
+    ListDirectQueryDataSourcesResponse = Shapes::StructureShape.new(name: 'ListDirectQueryDataSourcesResponse')
     ListDomainMaintenancesRequest = Shapes::StructureShape.new(name: 'ListDomainMaintenancesRequest')
     ListDomainMaintenancesResponse = Shapes::StructureShape.new(name: 'ListDomainMaintenancesResponse')
     ListDomainNamesRequest = Shapes::StructureShape.new(name: 'ListDomainNamesRequest')
@@ -436,6 +451,7 @@ module Aws::OpenSearchService
     ScheduledAutoTuneDetails = Shapes::StructureShape.new(name: 'ScheduledAutoTuneDetails')
     ScheduledAutoTuneSeverityType = Shapes::StringShape.new(name: 'ScheduledAutoTuneSeverityType')
     ScheduledBy = Shapes::StringShape.new(name: 'ScheduledBy')
+    SecurityLakeDirectQueryDataSource = Shapes::StructureShape.new(name: 'SecurityLakeDirectQueryDataSource')
     ServiceSoftwareOptions = Shapes::StructureShape.new(name: 'ServiceSoftwareOptions')
     ServiceUrl = Shapes::StringShape.new(name: 'ServiceUrl')
     SkipUnavailableStatus = Shapes::StringShape.new(name: 'SkipUnavailableStatus')
@@ -477,6 +493,8 @@ module Aws::OpenSearchService
     UpdateApplicationResponse = Shapes::StructureShape.new(name: 'UpdateApplicationResponse')
     UpdateDataSourceRequest = Shapes::StructureShape.new(name: 'UpdateDataSourceRequest')
     UpdateDataSourceResponse = Shapes::StructureShape.new(name: 'UpdateDataSourceResponse')
+    UpdateDirectQueryDataSourceRequest = Shapes::StructureShape.new(name: 'UpdateDirectQueryDataSourceRequest')
+    UpdateDirectQueryDataSourceResponse = Shapes::StructureShape.new(name: 'UpdateDirectQueryDataSourceResponse')
     UpdateDomainConfigRequest = Shapes::StructureShape.new(name: 'UpdateDomainConfigRequest')
     UpdateDomainConfigResponse = Shapes::StructureShape.new(name: 'UpdateDomainConfigResponse')
     UpdatePackageRequest = Shapes::StructureShape.new(name: 'UpdatePackageRequest')
@@ -560,6 +578,16 @@ module Aws::OpenSearchService
 
     AddDataSourceResponse.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     AddDataSourceResponse.struct_class = Types::AddDataSourceResponse
+
+    AddDirectQueryDataSourceRequest.add_member(:data_source_name, Shapes::ShapeRef.new(shape: DirectQueryDataSourceName, required: true, location_name: "DataSourceName"))
+    AddDirectQueryDataSourceRequest.add_member(:data_source_type, Shapes::ShapeRef.new(shape: DirectQueryDataSourceType, required: true, location_name: "DataSourceType"))
+    AddDirectQueryDataSourceRequest.add_member(:description, Shapes::ShapeRef.new(shape: DirectQueryDataSourceDescription, location_name: "Description"))
+    AddDirectQueryDataSourceRequest.add_member(:open_search_arns, Shapes::ShapeRef.new(shape: DirectQueryOpenSearchARNList, required: true, location_name: "OpenSearchArns"))
+    AddDirectQueryDataSourceRequest.add_member(:tag_list, Shapes::ShapeRef.new(shape: TagList, location_name: "TagList"))
+    AddDirectQueryDataSourceRequest.struct_class = Types::AddDirectQueryDataSourceRequest
+
+    AddDirectQueryDataSourceResponse.add_member(:data_source_arn, Shapes::ShapeRef.new(shape: String, location_name: "DataSourceArn"))
+    AddDirectQueryDataSourceResponse.struct_class = Types::AddDirectQueryDataSourceResponse
 
     AddTagsRequest.add_member(:arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "ARN"))
     AddTagsRequest.add_member(:tag_list, Shapes::ShapeRef.new(shape: TagList, required: true, location_name: "TagList"))
@@ -756,6 +784,9 @@ module Aws::OpenSearchService
     ChangeProgressStatusDetails.add_member(:initiated_by, Shapes::ShapeRef.new(shape: InitiatedBy, location_name: "InitiatedBy"))
     ChangeProgressStatusDetails.struct_class = Types::ChangeProgressStatusDetails
 
+    CloudWatchDirectQueryDataSource.add_member(:role_arn, Shapes::ShapeRef.new(shape: DirectQueryDataSourceRoleArn, required: true, location_name: "RoleArn"))
+    CloudWatchDirectQueryDataSource.struct_class = Types::CloudWatchDirectQueryDataSource
+
     ClusterConfig.add_member(:instance_type, Shapes::ShapeRef.new(shape: OpenSearchPartitionInstanceType, location_name: "InstanceType"))
     ClusterConfig.add_member(:instance_count, Shapes::ShapeRef.new(shape: IntegerClass, location_name: "InstanceCount"))
     ClusterConfig.add_member(:dedicated_master_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "DedicatedMasterEnabled"))
@@ -915,6 +946,9 @@ module Aws::OpenSearchService
 
     DeleteDataSourceResponse.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     DeleteDataSourceResponse.struct_class = Types::DeleteDataSourceResponse
+
+    DeleteDirectQueryDataSourceRequest.add_member(:data_source_name, Shapes::ShapeRef.new(shape: DirectQueryDataSourceName, required: true, location: "uri", location_name: "DataSourceName"))
+    DeleteDirectQueryDataSourceRequest.struct_class = Types::DeleteDirectQueryDataSourceRequest
 
     DeleteDomainRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: DomainName, required: true, location: "uri", location_name: "DomainName"))
     DeleteDomainRequest.struct_class = Types::DeleteDomainRequest
@@ -1083,6 +1117,26 @@ module Aws::OpenSearchService
     DescribeVpcEndpointsResponse.add_member(:vpc_endpoints, Shapes::ShapeRef.new(shape: VpcEndpoints, required: true, location_name: "VpcEndpoints"))
     DescribeVpcEndpointsResponse.add_member(:vpc_endpoint_errors, Shapes::ShapeRef.new(shape: VpcEndpointErrorList, required: true, location_name: "VpcEndpointErrors"))
     DescribeVpcEndpointsResponse.struct_class = Types::DescribeVpcEndpointsResponse
+
+    DirectQueryDataSource.add_member(:data_source_name, Shapes::ShapeRef.new(shape: DirectQueryDataSourceName, location_name: "DataSourceName"))
+    DirectQueryDataSource.add_member(:data_source_type, Shapes::ShapeRef.new(shape: DirectQueryDataSourceType, location_name: "DataSourceType"))
+    DirectQueryDataSource.add_member(:description, Shapes::ShapeRef.new(shape: DirectQueryDataSourceDescription, location_name: "Description"))
+    DirectQueryDataSource.add_member(:open_search_arns, Shapes::ShapeRef.new(shape: DirectQueryOpenSearchARNList, location_name: "OpenSearchArns"))
+    DirectQueryDataSource.add_member(:data_source_arn, Shapes::ShapeRef.new(shape: String, location_name: "DataSourceArn"))
+    DirectQueryDataSource.add_member(:tag_list, Shapes::ShapeRef.new(shape: TagList, location_name: "TagList"))
+    DirectQueryDataSource.struct_class = Types::DirectQueryDataSource
+
+    DirectQueryDataSourceList.member = Shapes::ShapeRef.new(shape: DirectQueryDataSource)
+
+    DirectQueryDataSourceType.add_member(:cloud_watch_log, Shapes::ShapeRef.new(shape: CloudWatchDirectQueryDataSource, location_name: "CloudWatchLog"))
+    DirectQueryDataSourceType.add_member(:security_lake, Shapes::ShapeRef.new(shape: SecurityLakeDirectQueryDataSource, location_name: "SecurityLake"))
+    DirectQueryDataSourceType.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    DirectQueryDataSourceType.add_member_subclass(:cloud_watch_log, Types::DirectQueryDataSourceType::CloudWatchLog)
+    DirectQueryDataSourceType.add_member_subclass(:security_lake, Types::DirectQueryDataSourceType::SecurityLake)
+    DirectQueryDataSourceType.add_member_subclass(:unknown, Types::DirectQueryDataSourceType::Unknown)
+    DirectQueryDataSourceType.struct_class = Types::DirectQueryDataSourceType
+
+    DirectQueryOpenSearchARNList.member = Shapes::ShapeRef.new(shape: ARN)
 
     DisabledOperationException.struct_class = Types::DisabledOperationException
 
@@ -1307,6 +1361,16 @@ module Aws::OpenSearchService
     GetDataSourceResponse.add_member(:status, Shapes::ShapeRef.new(shape: DataSourceStatus, location_name: "Status"))
     GetDataSourceResponse.struct_class = Types::GetDataSourceResponse
 
+    GetDirectQueryDataSourceRequest.add_member(:data_source_name, Shapes::ShapeRef.new(shape: DirectQueryDataSourceName, required: true, location: "uri", location_name: "DataSourceName"))
+    GetDirectQueryDataSourceRequest.struct_class = Types::GetDirectQueryDataSourceRequest
+
+    GetDirectQueryDataSourceResponse.add_member(:data_source_name, Shapes::ShapeRef.new(shape: DirectQueryDataSourceName, location_name: "DataSourceName"))
+    GetDirectQueryDataSourceResponse.add_member(:data_source_type, Shapes::ShapeRef.new(shape: DirectQueryDataSourceType, location_name: "DataSourceType"))
+    GetDirectQueryDataSourceResponse.add_member(:description, Shapes::ShapeRef.new(shape: DirectQueryDataSourceDescription, location_name: "Description"))
+    GetDirectQueryDataSourceResponse.add_member(:open_search_arns, Shapes::ShapeRef.new(shape: DirectQueryOpenSearchARNList, location_name: "OpenSearchArns"))
+    GetDirectQueryDataSourceResponse.add_member(:data_source_arn, Shapes::ShapeRef.new(shape: String, location_name: "DataSourceArn"))
+    GetDirectQueryDataSourceResponse.struct_class = Types::GetDirectQueryDataSourceResponse
+
     GetDomainMaintenanceStatusRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: DomainName, required: true, location: "uri", location_name: "DomainName"))
     GetDomainMaintenanceStatusRequest.add_member(:maintenance_id, Shapes::ShapeRef.new(shape: RequestId, required: true, location: "querystring", location_name: "maintenanceId"))
     GetDomainMaintenanceStatusRequest.struct_class = Types::GetDomainMaintenanceStatusRequest
@@ -1463,6 +1527,13 @@ module Aws::OpenSearchService
 
     ListDataSourcesResponse.add_member(:data_sources, Shapes::ShapeRef.new(shape: DataSourceList, location_name: "DataSources"))
     ListDataSourcesResponse.struct_class = Types::ListDataSourcesResponse
+
+    ListDirectQueryDataSourcesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nexttoken"))
+    ListDirectQueryDataSourcesRequest.struct_class = Types::ListDirectQueryDataSourcesRequest
+
+    ListDirectQueryDataSourcesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListDirectQueryDataSourcesResponse.add_member(:direct_query_data_sources, Shapes::ShapeRef.new(shape: DirectQueryDataSourceList, location_name: "DirectQueryDataSources"))
+    ListDirectQueryDataSourcesResponse.struct_class = Types::ListDirectQueryDataSourcesResponse
 
     ListDomainMaintenancesRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: DomainName, required: true, location: "uri", location_name: "DomainName"))
     ListDomainMaintenancesRequest.add_member(:action, Shapes::ShapeRef.new(shape: MaintenanceType, location: "querystring", location_name: "action"))
@@ -1814,6 +1885,9 @@ module Aws::OpenSearchService
     ScheduledAutoTuneDetails.add_member(:severity, Shapes::ShapeRef.new(shape: ScheduledAutoTuneSeverityType, location_name: "Severity"))
     ScheduledAutoTuneDetails.struct_class = Types::ScheduledAutoTuneDetails
 
+    SecurityLakeDirectQueryDataSource.add_member(:role_arn, Shapes::ShapeRef.new(shape: DirectQueryDataSourceRoleArn, required: true, location_name: "RoleArn"))
+    SecurityLakeDirectQueryDataSource.struct_class = Types::SecurityLakeDirectQueryDataSource
+
     ServiceSoftwareOptions.add_member(:current_version, Shapes::ShapeRef.new(shape: String, location_name: "CurrentVersion"))
     ServiceSoftwareOptions.add_member(:new_version, Shapes::ShapeRef.new(shape: String, location_name: "NewVersion"))
     ServiceSoftwareOptions.add_member(:update_available, Shapes::ShapeRef.new(shape: Boolean, location_name: "UpdateAvailable"))
@@ -1904,6 +1978,15 @@ module Aws::OpenSearchService
 
     UpdateDataSourceResponse.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "Message"))
     UpdateDataSourceResponse.struct_class = Types::UpdateDataSourceResponse
+
+    UpdateDirectQueryDataSourceRequest.add_member(:data_source_name, Shapes::ShapeRef.new(shape: DirectQueryDataSourceName, required: true, location: "uri", location_name: "DataSourceName"))
+    UpdateDirectQueryDataSourceRequest.add_member(:data_source_type, Shapes::ShapeRef.new(shape: DirectQueryDataSourceType, required: true, location_name: "DataSourceType"))
+    UpdateDirectQueryDataSourceRequest.add_member(:description, Shapes::ShapeRef.new(shape: DirectQueryDataSourceDescription, location_name: "Description"))
+    UpdateDirectQueryDataSourceRequest.add_member(:open_search_arns, Shapes::ShapeRef.new(shape: DirectQueryOpenSearchARNList, required: true, location_name: "OpenSearchArns"))
+    UpdateDirectQueryDataSourceRequest.struct_class = Types::UpdateDirectQueryDataSourceRequest
+
+    UpdateDirectQueryDataSourceResponse.add_member(:data_source_arn, Shapes::ShapeRef.new(shape: String, location_name: "DataSourceArn"))
+    UpdateDirectQueryDataSourceResponse.struct_class = Types::UpdateDirectQueryDataSourceResponse
 
     UpdateDomainConfigRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: DomainName, required: true, location: "uri", location_name: "DomainName"))
     UpdateDomainConfigRequest.add_member(:cluster_config, Shapes::ShapeRef.new(shape: ClusterConfig, location_name: "ClusterConfig"))
@@ -2109,6 +2192,20 @@ module Aws::OpenSearchService
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
       end)
 
+      api.add_operation(:add_direct_query_data_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "AddDirectQueryDataSource"
+        o.http_method = "POST"
+        o.http_request_uri = "/2021-01-01/opensearch/directQueryDataSource"
+        o.input = Shapes::ShapeRef.new(shape: AddDirectQueryDataSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: AddDirectQueryDataSourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BaseException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+      end)
+
       api.add_operation(:add_tags, Seahorse::Model::Operation.new.tap do |o|
         o.name = "AddTags"
         o.http_method = "POST"
@@ -2285,6 +2382,19 @@ module Aws::OpenSearchService
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
         o.errors << Shapes::ShapeRef.new(shape: DependencyFailureException)
+      end)
+
+      api.add_operation(:delete_direct_query_data_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteDirectQueryDataSource"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteDirectQueryDataSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: BaseException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
       end)
 
       api.add_operation(:delete_domain, Seahorse::Model::Operation.new.tap do |o|
@@ -2632,6 +2742,19 @@ module Aws::OpenSearchService
         o.errors << Shapes::ShapeRef.new(shape: DependencyFailureException)
       end)
 
+      api.add_operation(:get_direct_query_data_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetDirectQueryDataSource"
+        o.http_method = "GET"
+        o.http_request_uri = "/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+        o.input = Shapes::ShapeRef.new(shape: GetDirectQueryDataSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetDirectQueryDataSourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BaseException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
+      end)
+
       api.add_operation(:get_domain_maintenance_status, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetDomainMaintenanceStatus"
         o.http_method = "GET"
@@ -2728,6 +2851,19 @@ module Aws::OpenSearchService
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
         o.errors << Shapes::ShapeRef.new(shape: DependencyFailureException)
+      end)
+
+      api.add_operation(:list_direct_query_data_sources, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListDirectQueryDataSources"
+        o.http_method = "GET"
+        o.http_request_uri = "/2021-01-01/opensearch/directQueryDataSource"
+        o.input = Shapes::ShapeRef.new(shape: ListDirectQueryDataSourcesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListDirectQueryDataSourcesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BaseException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
       end)
 
       api.add_operation(:list_domain_maintenances, Seahorse::Model::Operation.new.tap do |o|
@@ -2999,6 +3135,19 @@ module Aws::OpenSearchService
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
         o.errors << Shapes::ShapeRef.new(shape: DependencyFailureException)
+      end)
+
+      api.add_operation(:update_direct_query_data_source, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateDirectQueryDataSource"
+        o.http_method = "PUT"
+        o.http_request_uri = "/2021-01-01/opensearch/directQueryDataSource/{DataSourceName}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateDirectQueryDataSourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateDirectQueryDataSourceResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BaseException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: DisabledOperationException)
       end)
 
       api.add_operation(:update_domain_config, Seahorse::Model::Operation.new.tap do |o|

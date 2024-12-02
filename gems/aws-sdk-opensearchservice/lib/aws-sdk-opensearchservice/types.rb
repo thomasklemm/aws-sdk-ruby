@@ -190,12 +190,61 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
+    # @!attribute [rw] data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_type
+    #   The supported Amazon Web Services service that you want to use as
+    #   the source for direct queries in OpenSearch Service.
+    #   @return [Types::DirectQueryDataSourceType]
+    #
+    # @!attribute [rw] description
+    #   An optional text field for providing additional context and details
+    #   about the data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] open_search_arns
+    #   A list of Amazon Resource Names (ARNs) for the OpenSearch
+    #   collections that are associated with the direct query data source.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] tag_list
+    #   A list of tags attached to a domain.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/AddDirectQueryDataSourceRequest AWS API Documentation
+    #
+    class AddDirectQueryDataSourceRequest < Struct.new(
+      :data_source_name,
+      :data_source_type,
+      :description,
+      :open_search_arns,
+      :tag_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_source_arn
+    #   The unique, system-generated identifier that represents the data
+    #   source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/AddDirectQueryDataSourceResponse AWS API Documentation
+    #
+    class AddDirectQueryDataSourceResponse < Struct.new(
+      :data_source_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Container for the parameters to the `AddTags` operation. Specifies the
-    # tags to attach to the domain.
+    # tags to attach to the domain, data source, or application.
     #
     # @!attribute [rw] arn
-    #   Amazon Resource Name (ARN) for the OpenSearch Service domain to
-    #   which you want to attach resource tags.
+    #   Amazon Resource Name (ARN) for the OpenSearch Service domain, data
+    #   source, or application to which you want to attach resource tags.
     #   @return [String]
     #
     # @!attribute [rw] tag_list
@@ -1183,6 +1232,22 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
+    # Configuration details for a CloudWatch Logs data source that can be
+    # used for direct queries.
+    #
+    # @!attribute [rw] role_arn
+    #   The unique identifier of the IAM role that grants OpenSearch Service
+    #   permission to access the specified data source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/CloudWatchDirectQueryDataSource AWS API Documentation
+    #
+    class CloudWatchDirectQueryDataSource < Struct.new(
+      :role_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Container for the cluster configuration of an OpenSearch Service
     # domain. For more information, see [Creating and managing Amazon
     # OpenSearch Service domains][1].
@@ -2045,6 +2110,19 @@ module Aws::OpenSearchService
     #
     class DeleteDataSourceResponse < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DeleteDirectQueryDataSourceRequest AWS API Documentation
+    #
+    class DeleteDirectQueryDataSourceRequest < Struct.new(
+      :data_source_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2930,6 +3008,83 @@ module Aws::OpenSearchService
       :vpc_endpoint_errors)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # The configuration details for a data source that can be directly
+    # queried.
+    #
+    # @!attribute [rw] data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_type
+    #   The supported Amazon Web Services service that is used as the source
+    #   for direct queries in OpenSearch Service.
+    #   @return [Types::DirectQueryDataSourceType]
+    #
+    # @!attribute [rw] description
+    #   A description that provides additional context and details about the
+    #   data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] open_search_arns
+    #   A list of Amazon Resource Names (ARNs) for the OpenSearch
+    #   collections that are associated with the direct query data source.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] data_source_arn
+    #   The unique, system-generated identifier that represents the data
+    #   source.
+    #   @return [String]
+    #
+    # @!attribute [rw] tag_list
+    #   A list of tags attached to a direct query data source.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DirectQueryDataSource AWS API Documentation
+    #
+    class DirectQueryDataSource < Struct.new(
+      :data_source_name,
+      :data_source_type,
+      :description,
+      :open_search_arns,
+      :data_source_arn,
+      :tag_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The type of data source that is used for direct queries. This is a
+    # supported Amazon Web Services service, such as CloudWatch Logs or
+    # Security Lake.
+    #
+    # @note DirectQueryDataSourceType is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note DirectQueryDataSourceType is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of DirectQueryDataSourceType corresponding to the set member.
+    #
+    # @!attribute [rw] cloud_watch_log
+    #   Specifies CloudWatch Logs as a type of data source for direct
+    #   queries.
+    #   @return [Types::CloudWatchDirectQueryDataSource]
+    #
+    # @!attribute [rw] security_lake
+    #   Specifies Security Lake as a type of data source for direct queries.
+    #   @return [Types::SecurityLakeDirectQueryDataSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DirectQueryDataSourceType AWS API Documentation
+    #
+    class DirectQueryDataSourceType < Struct.new(
+      :cloud_watch_log,
+      :security_lake,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class CloudWatchLog < DirectQueryDataSourceType; end
+      class SecurityLake < DirectQueryDataSourceType; end
+      class Unknown < DirectQueryDataSourceType; end
     end
 
     # An error occured because the client wanted to access an unsupported
@@ -4030,6 +4185,56 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
+    # @!attribute [rw] data_source_name
+    #   A unique, user-defined label that identifies the data source within
+    #   your OpenSearch Service environment.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDirectQueryDataSourceRequest AWS API Documentation
+    #
+    class GetDirectQueryDataSourceRequest < Struct.new(
+      :data_source_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_type
+    #   The supported Amazon Web Services service that is used as the source
+    #   for direct queries in OpenSearch Service.
+    #   @return [Types::DirectQueryDataSourceType]
+    #
+    # @!attribute [rw] description
+    #   A description that provides additional context and details about the
+    #   data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] open_search_arns
+    #   A list of Amazon Resource Names (ARNs) for the OpenSearch
+    #   collections that are associated with the direct query data source.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] data_source_arn
+    #   The unique, system-generated identifier that represents the data
+    #   source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDirectQueryDataSourceResponse AWS API Documentation
+    #
+    class GetDirectQueryDataSourceResponse < Struct.new(
+      :data_source_name,
+      :data_source_type,
+      :description,
+      :open_search_arns,
+      :data_source_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Container for the parameters to the `GetDomainMaintenanceStatus`
     # operation.
     #
@@ -4808,6 +5013,42 @@ module Aws::OpenSearchService
       include Aws::Structure
     end
 
+    # @!attribute [rw] next_token
+    #   When `nextToken` is returned, there are more results available. The
+    #   value of `nextToken` is a unique pagination token for each page.
+    #   Send the request again using the returned token to retrieve the next
+    #   page.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListDirectQueryDataSourcesRequest AWS API Documentation
+    #
+    class ListDirectQueryDataSourcesRequest < Struct.new(
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   When `nextToken` is returned, there are more results available. The
+    #   value of `nextToken` is a unique pagination token for each page.
+    #   Send the request again using the returned token to retrieve the next
+    #   page.
+    #   @return [String]
+    #
+    # @!attribute [rw] direct_query_data_sources
+    #   A list of the direct query data sources that are returned by the
+    #   `ListDirectQueryDataSources` API operation.
+    #   @return [Array<Types::DirectQueryDataSource>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListDirectQueryDataSourcesResponse AWS API Documentation
+    #
+    class ListDirectQueryDataSourcesResponse < Struct.new(
+      :next_token,
+      :direct_query_data_sources)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Container for the parameters to the `ListDomainMaintenances`
     # operation.
     #
@@ -5121,7 +5362,8 @@ module Aws::OpenSearchService
     # Container for the parameters to the `ListTags` operation.
     #
     # @!attribute [rw] arn
-    #   Amazon Resource Name (ARN) for the domain to view tags for.
+    #   Amazon Resource Name (ARN) for the domain, data source, or
+    #   application to view tags for.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListTagsRequest AWS API Documentation
@@ -5135,7 +5377,8 @@ module Aws::OpenSearchService
     # The results of a `ListTags` operation.
     #
     # @!attribute [rw] tag_list
-    #   List of resource tags associated with the specified domain.
+    #   List of resource tags associated with the specified domain, data
+    #   source, or application.
     #   @return [Array<Types::Tag>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListTagsResponse AWS API Documentation
@@ -6150,12 +6393,13 @@ module Aws::OpenSearchService
     # Container for the request parameters to the `RemoveTags` operation.
     #
     # @!attribute [rw] arn
-    #   The Amazon Resource Name (ARN) of the domain from which you want to
-    #   delete the specified tags.
+    #   The Amazon Resource Name (ARN) of the domain, data source, or
+    #   application from which you want to delete the specified tags.
     #   @return [String]
     #
     # @!attribute [rw] tag_keys
-    #   The list of tag keys to remove from the domain.
+    #   The list of tag keys to remove from the domain, data source, or
+    #   application.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/RemoveTagsRequest AWS API Documentation
@@ -6556,6 +6800,22 @@ module Aws::OpenSearchService
       :action_type,
       :action,
       :severity)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration details for a Security Lake data source that can be used
+    # for direct queries.
+    #
+    # @!attribute [rw] role_arn
+    #   The unique identifier of the IAM role that grants OpenSearch Service
+    #   permission to access the specified data source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/SecurityLakeDirectQueryDataSource AWS API Documentation
+    #
+    class SecurityLakeDirectQueryDataSource < Struct.new(
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7015,6 +7275,50 @@ module Aws::OpenSearchService
     #
     class UpdateDataSourceResponse < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_type
+    #   The supported Amazon Web Services service that you want to use as
+    #   the source for direct queries in OpenSearch Service.
+    #   @return [Types::DirectQueryDataSourceType]
+    #
+    # @!attribute [rw] description
+    #   An optional text field for providing additional context and details
+    #   about the data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] open_search_arns
+    #   A list of Amazon Resource Names (ARNs) for the OpenSearch
+    #   collections that are associated with the direct query data source.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/UpdateDirectQueryDataSourceRequest AWS API Documentation
+    #
+    class UpdateDirectQueryDataSourceRequest < Struct.new(
+      :data_source_name,
+      :data_source_type,
+      :description,
+      :open_search_arns)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_source_arn
+    #   The unique, system-generated identifier that represents the data
+    #   source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/UpdateDirectQueryDataSourceResponse AWS API Documentation
+    #
+    class UpdateDirectQueryDataSourceResponse < Struct.new(
+      :data_source_arn)
       SENSITIVE = []
       include Aws::Structure
     end

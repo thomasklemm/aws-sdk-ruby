@@ -228,7 +228,8 @@ module Aws
                                         key: ::String,
                                         value: ::String
                                       },
-                                    ]
+                                    ],
+                                    ?integration_type: ("CONNECT_CALL_TRANSFER_CONNECTOR" | "CONNECT_ANALYTICS_CONNECTOR")
                                   ) -> _CreateVoiceConnectorResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateVoiceConnectorResponseSuccess
 
@@ -315,6 +316,12 @@ module Aws
                                                                     voice_connector_id: ::String
                                                                   ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ChimeSDKVoice/Client.html#delete_voice_connector_external_systems_configuration-instance_method
+      def delete_voice_connector_external_systems_configuration: (
+                                                                   voice_connector_id: ::String
+                                                                 ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ChimeSDKVoice/Client.html#delete_voice_connector_group-instance_method
       def delete_voice_connector_group: (
@@ -505,6 +512,16 @@ module Aws
                                                                  voice_connector_id: ::String
                                                                ) -> _GetVoiceConnectorEmergencyCallingConfigurationResponseSuccess
                                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetVoiceConnectorEmergencyCallingConfigurationResponseSuccess
+
+      interface _GetVoiceConnectorExternalSystemsConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetVoiceConnectorExternalSystemsConfigurationResponse]
+        def external_systems_configuration: () -> Types::ExternalSystemsConfiguration
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ChimeSDKVoice/Client.html#get_voice_connector_external_systems_configuration-instance_method
+      def get_voice_connector_external_systems_configuration: (
+                                                                voice_connector_id: ::String
+                                                              ) -> _GetVoiceConnectorExternalSystemsConfigurationResponseSuccess
+                                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetVoiceConnectorExternalSystemsConfigurationResponseSuccess
 
       interface _GetVoiceConnectorGroupResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetVoiceConnectorGroupResponse]
@@ -807,6 +824,18 @@ module Aws
                                                                  }
                                                                ) -> _PutVoiceConnectorEmergencyCallingConfigurationResponseSuccess
                                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutVoiceConnectorEmergencyCallingConfigurationResponseSuccess
+
+      interface _PutVoiceConnectorExternalSystemsConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutVoiceConnectorExternalSystemsConfigurationResponse]
+        def external_systems_configuration: () -> Types::ExternalSystemsConfiguration
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ChimeSDKVoice/Client.html#put_voice_connector_external_systems_configuration-instance_method
+      def put_voice_connector_external_systems_configuration: (
+                                                                voice_connector_id: ::String,
+                                                                ?session_border_controller_types: Array[("RIBBON_SBC" | "ORACLE_ACME_PACKET_SBC" | "AVAYA_SBCE" | "CISCO_UNIFIED_BORDER_ELEMENT" | "AUDIOCODES_MEDIANT_SBC")],
+                                                                ?contact_center_system_types: Array[("GENESYS_ENGAGE_ON_PREMISES" | "AVAYA_AURA_CALL_CENTER_ELITE" | "AVAYA_AURA_CONTACT_CENTER" | "CISCO_UNIFIED_CONTACT_CENTER_ENTERPRISE")]
+                                                              ) -> _PutVoiceConnectorExternalSystemsConfigurationResponseSuccess
+                                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutVoiceConnectorExternalSystemsConfigurationResponseSuccess
 
       interface _PutVoiceConnectorLoggingConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PutVoiceConnectorLoggingConfigurationResponse]

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.74.0 (2024-12-02)
+------------------
+
+* Feature - Added support for EC2 Image Builder's integration with AWS Marketplace for Marketplace components.
+
 1.73.0 (2024-10-22)
 ------------------
 

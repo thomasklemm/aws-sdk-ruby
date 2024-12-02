@@ -267,7 +267,7 @@ module Aws::ECS
     #
     # @!attribute [rw] assign_public_ip
     #   Whether the task's elastic network interface receives a public IP
-    #   address. The default value is `DISABLED`.
+    #   address. The default value is `ENABLED`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ecs-2014-11-13/AwsVpcConfiguration AWS API Documentation
@@ -871,7 +871,26 @@ module Aws::ECS
     end
 
     # The settings to use when creating a cluster. This parameter is used to
-    # turn on CloudWatch Container Insights for a cluster.
+    # turn on CloudWatch Container Insights with enhanced observability or
+    # CloudWatch Container Insights for a cluster.
+    #
+    # Container Insights with enhanced observability provides all the
+    # Container Insights metrics, plus additional task and container
+    # metrics. This version supports enhanced observability for Amazon ECS
+    # clusters using the Amazon EC2 and Fargate launch types. After you
+    # configure Container Insights with enhanced observability on Amazon
+    # ECS, Container Insights auto-collects detailed infrastructure
+    # telemetry from the cluster level down to the container level in your
+    # environment and displays these critical performance data in curated
+    # dashboards removing the heavy lifting in observability set-up.
+    #
+    # For more information, see [Monitor Amazon ECS containers using
+    # Container Insights with enhanced observability][1] in the *Amazon
+    # Elastic Container Service Developer Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/cloudwatch-container-insights.html
     #
     # @!attribute [rw] name
     #   The name of the cluster setting. The value is `containerInsights` .
@@ -879,12 +898,15 @@ module Aws::ECS
     #
     # @!attribute [rw] value
     #   The value to set for the cluster setting. The supported values are
-    #   `enabled` and `disabled`.
+    #   `enhanced`, `enabled`, and `disabled`.
     #
-    #   If you set `name` to `containerInsights` and `value` to `enabled`,
-    #   CloudWatch Container Insights will be on for the cluster, otherwise
-    #   it will be off unless the `containerInsights` account setting is
-    #   turned on. If a cluster value is specified, it will override the
+    #   To use Container Insights with enhanced observability, set the
+    #   `containerInsights` account setting to `enhanced`.
+    #
+    #   To use Container Insights, set the `containerInsights` account
+    #   setting to `enabled`.
+    #
+    #   If a cluster value is specified, it will override the
     #   `containerInsights` value set with [PutAccountSetting][1] or
     #   [PutAccountSettingDefault][2].
     #
@@ -4506,9 +4528,8 @@ module Aws::ECS
     # @!attribute [rw] cluster
     #   The short name or full Amazon Resource Name (ARN) of the cluster
     #   that hosts the task or tasks to describe. If you do not specify a
-    #   cluster, the default cluster is assumed. This parameter is required
-    #   if the task or tasks you are describing were launched in any cluster
-    #   other than the default cluster.
+    #   cluster, the default cluster is assumed. This parameter is required.
+    #   If you do not specify a value, the `default` cluster is used.
     #   @return [String]
     #
     # @!attribute [rw] tasks
@@ -4894,7 +4915,7 @@ module Aws::ECS
     #
     # @!attribute [rw] size_in_gi_b
     #   The total amount, in GiB, of ephemeral storage to set for the task.
-    #   The minimum supported value is `20` GiB and the maximum supported
+    #   The minimum supported value is `21` GiB and the maximum supported
     #   value is `200` GiB.
     #   @return [Integer]
     #
@@ -6107,7 +6128,7 @@ module Aws::ECS
     #   onboard new customers to Amazon Elastic Inference (EI), and will
     #   help current customers migrate their workloads to options that offer
     #   better price and performanceIf you don't specify a cluster,
-    #   `deault` is used.
+    #   `default` is used.
     #   @return [String]
     #
     # @!attribute [rw] status
@@ -7840,14 +7861,26 @@ module Aws::ECS
     #     [Elastic Network Interface Trunking][1] in the *Amazon Elastic
     #     Container Service Developer Guide*.
     #
-    #   * `containerInsights` - When modified, the default setting
-    #     indicating whether Amazon Web Services CloudWatch Container
-    #     Insights is turned on for your clusters is changed. If
-    #     `containerInsights` is turned on, any new clusters that are
-    #     created will have Container Insights turned on unless you disable
-    #     it during cluster creation. For more information, see [CloudWatch
-    #     Container Insights][2] in the *Amazon Elastic Container Service
-    #     Developer Guide*.
+    #   * `containerInsights` - Container Insights with enhanced
+    #     observability provides all the Container Insights metrics, plus
+    #     additional task and container metrics. This version supports
+    #     enhanced observability for Amazon ECS clusters using the Amazon
+    #     EC2 and Fargate launch types. After you configure Container
+    #     Insights with enhanced observability on Amazon ECS, Container
+    #     Insights auto-collects detailed infrastructure telemetry from the
+    #     cluster level down to the container level in your environment and
+    #     displays these critical performance data in curated dashboards
+    #     removing the heavy lifting in observability set-up.
+    #
+    #     To use Container Insights with enhanced observability, set the
+    #     `containerInsights` account setting to `enhanced`.
+    #
+    #     To use Container Insights, set the `containerInsights` account
+    #     setting to `enabled`.
+    #
+    #     For more information, see [Monitor Amazon ECS containers using
+    #     Container Insights with enhanced observability][2] in the *Amazon
+    #     Elastic Container Service Developer Guide*.
     #
     #   * `dualStackIPv6` - When turned on, when using a VPC in dual stack
     #     mode, your tasks using the `awsvpc` network mode can have an IPv6
@@ -7898,7 +7931,7 @@ module Aws::ECS
     #
     # @!attribute [rw] value
     #   The account setting value for the specified principal ARN. Accepted
-    #   values are `enabled`, `disabled`, `on`, and `off`.
+    #   values are `enabled`, `disabled`, `on`, `enhanced`, and `off`.
     #
     #   When you specify `fargateTaskRetirementWaitPeriod` for the `name`,
     #   the following are the valid values:
@@ -7974,14 +8007,26 @@ module Aws::ECS
     #     [Elastic Network Interface Trunking][1] in the *Amazon Elastic
     #     Container Service Developer Guide*.
     #
-    #   * `containerInsights` - When modified, the default setting
-    #     indicating whether Amazon Web Services CloudWatch Container
-    #     Insights is turned on for your clusters is changed. If
-    #     `containerInsights` is turned on, any new clusters that are
-    #     created will have Container Insights turned on unless you disable
-    #     it during cluster creation. For more information, see [CloudWatch
-    #     Container Insights][2] in the *Amazon Elastic Container Service
-    #     Developer Guide*.
+    #   * `containerInsights` - Container Insights with enhanced
+    #     observability provides all the Container Insights metrics, plus
+    #     additional task and container metrics. This version supports
+    #     enhanced observability for Amazon ECS clusters using the Amazon
+    #     EC2 and Fargate launch types. After you configure Container
+    #     Insights with enhanced observability on Amazon ECS, Container
+    #     Insights auto-collects detailed infrastructure telemetry from the
+    #     cluster level down to the container level in your environment and
+    #     displays these critical performance data in curated dashboards
+    #     removing the heavy lifting in observability set-up.
+    #
+    #     To use Container Insights with enhanced observability, set the
+    #     `containerInsights` account setting to `enhanced`.
+    #
+    #     To use Container Insights, set the `containerInsights` account
+    #     setting to `enabled`.
+    #
+    #     For more information, see [Monitor Amazon ECS containers using
+    #     Container Insights with enhanced observability][2] in the *Amazon
+    #     Elastic Container Service Developer Guide*.
     #
     #   * `dualStackIPv6` - When turned on, when using a VPC in dual stack
     #     mode, your tasks using the `awsvpc` network mode can have an IPv6
@@ -8029,7 +8074,7 @@ module Aws::ECS
     #
     # @!attribute [rw] value
     #   The account setting value for the specified principal ARN. Accepted
-    #   values are `enabled`, `disabled`, `on`, and `off`.
+    #   values are `enabled`, `disabled`, `enhanced`, `on`, and `off`.
     #
     #   When you specify `fargateTaskRetirementWaitPeriod` for the `name`,
     #   the following are the valid values:

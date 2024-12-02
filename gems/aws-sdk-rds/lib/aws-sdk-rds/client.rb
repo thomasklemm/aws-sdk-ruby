@@ -3356,6 +3356,9 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html#USER_Monitoring.OS.Enabling
     #
+    # @option params [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the cluster.
+    #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #
@@ -3758,6 +3761,7 @@ module Aws::RDS
     #     auto_minor_version_upgrade: false,
     #     monitoring_interval: 1,
     #     monitoring_role_arn: "String",
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -3898,6 +3902,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -5353,6 +5358,9 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     #
+    # @option params [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
+    #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #   For more information, see [Using Amazon Performance Insights][1] in
@@ -5838,6 +5846,7 @@ module Aws::RDS
     #     promotion_tier: 1,
     #     timezone: "String",
     #     enable_iam_database_authentication: false,
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -5979,6 +5988,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -6416,6 +6426,9 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     #
+    # @option params [String] :database_insights_mode
+    #   Specifies the mode of Database Insights.
+    #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the read replica.
     #
@@ -6780,6 +6793,7 @@ module Aws::RDS
     #     kms_key_id: "String",
     #     pre_signed_url: "String",
     #     enable_iam_database_authentication: false,
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -6927,6 +6941,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -9269,6 +9284,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -9845,6 +9861,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -12713,6 +12730,7 @@ module Aws::RDS
     #   resp.db_clusters[0].auto_minor_version_upgrade #=> Boolean
     #   resp.db_clusters[0].monitoring_interval #=> Integer
     #   resp.db_clusters[0].monitoring_role_arn #=> String
+    #   resp.db_clusters[0].database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_clusters[0].performance_insights_enabled #=> Boolean
     #   resp.db_clusters[0].performance_insights_kms_key_id #=> String
     #   resp.db_clusters[0].performance_insights_retention_period #=> Integer
@@ -13430,6 +13448,7 @@ module Aws::RDS
     #   resp.db_instances[0].db_instance_arn #=> String
     #   resp.db_instances[0].timezone #=> String
     #   resp.db_instances[0].iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instances[0].database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instances[0].performance_insights_enabled #=> Boolean
     #   resp.db_instances[0].performance_insights_kms_key_id #=> String
     #   resp.db_instances[0].performance_insights_retention_period #=> Integer
@@ -17645,10 +17664,10 @@ module Aws::RDS
     # For more information, see [Using RDS Data API][1] in the *Amazon
     # Aurora User Guide*.
     #
-    # <note markdown="1"> This operation applies only to Aurora PostgreSQL Serverless v2 and
-    # provisioned DB clusters. To disable the HTTP endpoint for Aurora
-    # Serverless v1 DB clusters, use the `EnableHttpEndpoint` parameter of
-    # the `ModifyDBCluster` operation.
+    # <note markdown="1"> This operation applies only to Aurora Serverless v2 and provisioned DB
+    # clusters. To disable the HTTP endpoint for Aurora Serverless v1 DB
+    # clusters, use the `EnableHttpEndpoint` parameter of the
+    # `ModifyDBCluster` operation.
     #
     #  </note>
     #
@@ -17790,10 +17809,10 @@ module Aws::RDS
     # For more information, see [Using RDS Data API][1] in the *Amazon
     # Aurora User Guide*.
     #
-    # <note markdown="1"> This operation applies only to Aurora PostgreSQL Serverless v2 and
-    # provisioned DB clusters. To enable the HTTP endpoint for Aurora
-    # Serverless v1 DB clusters, use the `EnableHttpEndpoint` parameter of
-    # the `ModifyDBCluster` operation.
+    # <note markdown="1"> This operation applies only to Aurora Serverless v2 and provisioned DB
+    # clusters. To enable the HTTP endpoint for Aurora Serverless v1 DB
+    # clusters, use the `EnableHttpEndpoint` parameter of the
+    # `ModifyDBCluster` operation.
     #
     #  </note>
     #
@@ -18029,6 +18048,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -19095,9 +19115,9 @@ module Aws::RDS
     #   Aurora User Guide*.
     #
     #   <note markdown="1"> This parameter applies only to Aurora Serverless v1 DB clusters. To
-    #   enable or disable the HTTP endpoint for an Aurora PostgreSQL
-    #   Serverless v2 or provisioned DB cluster, use the `EnableHttpEndpoint`
-    #   and `DisableHttpEndpoint` operations.
+    #   enable or disable the HTTP endpoint for an Aurora Serverless v2 or
+    #   provisioned DB cluster, use the `EnableHttpEndpoint` and
+    #   `DisableHttpEndpoint` operations.
     #
     #    </note>
     #
@@ -19237,6 +19257,9 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.html#USER_Monitoring.OS.IAMRole
+    #
+    # @option params [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the cluster.
     #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
@@ -19593,6 +19616,7 @@ module Aws::RDS
     #     auto_minor_version_upgrade: false,
     #     monitoring_interval: 1,
     #     monitoring_role_arn: "String",
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -19733,6 +19757,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -20845,6 +20870,9 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     #
+    # @option params [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
+    #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #
@@ -21294,6 +21322,7 @@ module Aws::RDS
     #     disable_domain: false,
     #     promotion_tier: 1,
     #     enable_iam_database_authentication: false,
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -21441,6 +21470,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -23258,6 +23288,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -23460,6 +23491,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -23762,6 +23794,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -23981,6 +24014,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -25352,6 +25386,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -26173,6 +26208,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -26973,6 +27009,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -27837,6 +27874,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -28246,6 +28284,9 @@ module Aws::RDS
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Procedural.Importing.html#MySQL.Procedural.Importing.Enabling.IAM
     #
+    # @option params [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
+    #
     # @option params [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #
@@ -28498,6 +28539,7 @@ module Aws::RDS
     #     s3_bucket_name: "String", # required
     #     s3_prefix: "String",
     #     s3_ingestion_role_arn: "String", # required
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -28635,6 +28677,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -29592,6 +29635,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -30022,6 +30066,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -30213,6 +30258,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -30865,6 +30911,7 @@ module Aws::RDS
     #   resp.db_cluster.auto_minor_version_upgrade #=> Boolean
     #   resp.db_cluster.monitoring_interval #=> Integer
     #   resp.db_cluster.monitoring_role_arn #=> String
+    #   resp.db_cluster.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_cluster.performance_insights_enabled #=> Boolean
     #   resp.db_cluster.performance_insights_kms_key_id #=> String
     #   resp.db_cluster.performance_insights_retention_period #=> Integer
@@ -31063,6 +31110,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -31669,6 +31717,7 @@ module Aws::RDS
     #   resp.db_instance.db_instance_arn #=> String
     #   resp.db_instance.timezone #=> String
     #   resp.db_instance.iam_database_authentication_enabled #=> Boolean
+    #   resp.db_instance.database_insights_mode #=> String, one of "standard", "advanced"
     #   resp.db_instance.performance_insights_enabled #=> Boolean
     #   resp.db_instance.performance_insights_kms_key_id #=> String
     #   resp.db_instance.performance_insights_retention_period #=> Integer
@@ -31745,7 +31794,7 @@ module Aws::RDS
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-rds'
-      context[:gem_version] = '1.260.0'
+      context[:gem_version] = '1.261.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

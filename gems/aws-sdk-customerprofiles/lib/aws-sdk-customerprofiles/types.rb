@@ -1198,6 +1198,113 @@ module Aws::CustomerProfiles
     #   The unique name of the domain.
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] object_type_name
+    #   The unique name of the object type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_conditions
+    #   A list of conditions that determine when an event should trigger the
+    #   destination.
+    #   @return [Array<Types::EventTriggerCondition>]
+    #
+    # @!attribute [rw] segment_filter
+    #   The destination is triggered only for profiles that meet the
+    #   criteria of a segment definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_limits
+    #   Defines limits controlling whether an event triggers the
+    #   destination, based on ingestion latency and the number of
+    #   invocations per profile over specific time periods.
+    #   @return [Types::EventTriggerLimits]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to this resource.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/CreateEventTriggerRequest AWS API Documentation
+    #
+    class CreateEventTriggerRequest < Struct.new(
+      :domain_name,
+      :event_trigger_name,
+      :object_type_name,
+      :description,
+      :event_trigger_conditions,
+      :segment_filter,
+      :event_trigger_limits,
+      :tags)
+      SENSITIVE = [:description, :event_trigger_conditions]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] object_type_name
+    #   The unique name of the object type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_conditions
+    #   A list of conditions that determine when an event should trigger the
+    #   destination.
+    #   @return [Array<Types::EventTriggerCondition>]
+    #
+    # @!attribute [rw] segment_filter
+    #   The destination is triggered only for profiles that meet the
+    #   criteria of a segment definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_limits
+    #   Defines limits controlling whether an event triggers the
+    #   destination, based on ingestion latency and the number of
+    #   invocations per profile over specific time periods.
+    #   @return [Types::EventTriggerLimits]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the event trigger was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The timestamp of when the event trigger was most recently updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to this resource.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/CreateEventTriggerResponse AWS API Documentation
+    #
+    class CreateEventTriggerResponse < Struct.new(
+      :event_trigger_name,
+      :object_type_name,
+      :description,
+      :event_trigger_conditions,
+      :segment_filter,
+      :event_trigger_limits,
+      :created_at,
+      :last_updated_at,
+      :tags)
+      SENSITIVE = [:description, :event_trigger_conditions]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] domain_name
+    #   The unique name of the domain.
+    #   @return [String]
+    #
     # @!attribute [rw] workflow_type
     #   The type of workflow. The only supported value is
     #   APPFLOW\_INTEGRATION.
@@ -1655,6 +1762,35 @@ module Aws::CustomerProfiles
     #   The unique name of the domain.
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/DeleteEventTriggerRequest AWS API Documentation
+    #
+    class DeleteEventTriggerRequest < Struct.new(
+      :domain_name,
+      :event_trigger_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] message
+    #   A message that indicates the delete request is done.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/DeleteEventTriggerResponse AWS API Documentation
+    #
+    class DeleteEventTriggerResponse < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] domain_name
+    #   The unique name of the domain.
+    #   @return [String]
+    #
     # @!attribute [rw] uri
     #   The URI of the S3 bucket or any other type of data source.
     #   @return [String]
@@ -2082,6 +2218,101 @@ module Aws::CustomerProfiles
       :state,
       :stopped_since,
       :destination_summary,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies the circumstances under which the event should trigger the
+    # destination.
+    #
+    # @!attribute [rw] event_trigger_dimensions
+    #   A list of dimensions to be evaluated for the event.
+    #   @return [Array<Types::EventTriggerDimension>]
+    #
+    # @!attribute [rw] logical_operator
+    #   The operator used to combine multiple dimensions.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/EventTriggerCondition AWS API Documentation
+    #
+    class EventTriggerCondition < Struct.new(
+      :event_trigger_dimensions,
+      :logical_operator)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A specific event dimension to be assessed.
+    #
+    # @!attribute [rw] object_attributes
+    #   A list of object attributes to be evaluated.
+    #   @return [Array<Types::ObjectAttribute>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/EventTriggerDimension AWS API Documentation
+    #
+    class EventTriggerDimension < Struct.new(
+      :object_attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Defines limits controlling whether an event triggers the destination,
+    # based on ingestion latency and the number of invocations per profile
+    # over specific time periods.
+    #
+    # @!attribute [rw] event_expiration
+    #   In milliseconds. Specifies that an event will only trigger the
+    #   destination if it is processed within a certain latency period.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] periods
+    #   A list of time periods during which the limits apply.
+    #   @return [Array<Types::Period>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/EventTriggerLimits AWS API Documentation
+    #
+    class EventTriggerLimits < Struct.new(
+      :event_expiration,
+      :periods)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The summary of the event trigger.
+    #
+    # @!attribute [rw] object_type_name
+    #   The unique name of the object type.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the event trigger was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The timestamp of when the event trigger was most recently updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to this resource.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/EventTriggerSummaryItem AWS API Documentation
+    #
+    class EventTriggerSummaryItem < Struct.new(
+      :object_type_name,
+      :event_trigger_name,
+      :description,
+      :created_at,
+      :last_updated_at,
       :tags)
       SENSITIVE = []
       include Aws::Structure
@@ -2754,6 +2985,79 @@ module Aws::CustomerProfiles
     #   The unique name of the domain.
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/GetEventTriggerRequest AWS API Documentation
+    #
+    class GetEventTriggerRequest < Struct.new(
+      :domain_name,
+      :event_trigger_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] object_type_name
+    #   The unique name of the object type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_conditions
+    #   A list of conditions that determine when an event should trigger the
+    #   destination.
+    #   @return [Array<Types::EventTriggerCondition>]
+    #
+    # @!attribute [rw] segment_filter
+    #   The destination is triggered only for profiles that meet the
+    #   criteria of a segment definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_limits
+    #   Defines limits controlling whether an event triggers the
+    #   destination, based on ingestion latency and the number of
+    #   invocations per profile over specific time periods.
+    #   @return [Types::EventTriggerLimits]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the event trigger was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The timestamp of when the event trigger was most recently updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to this resource.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/GetEventTriggerResponse AWS API Documentation
+    #
+    class GetEventTriggerResponse < Struct.new(
+      :event_trigger_name,
+      :object_type_name,
+      :description,
+      :event_trigger_conditions,
+      :segment_filter,
+      :event_trigger_limits,
+      :created_at,
+      :last_updated_at,
+      :tags)
+      SENSITIVE = [:description, :event_trigger_conditions]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] domain_name
+    #   The unique name of the domain.
+    #   @return [String]
+    #
     # @!attribute [rw] job_id
     #   The unique identifier of the Identity Resolution Job.
     #   @return [String]
@@ -2923,6 +3227,12 @@ module Aws::CustomerProfiles
     #   this role to make Customer Profiles requests on your behalf.
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger_names
+    #   A list of unique names for active event triggers associated with the
+    #   integration. This list would be empty if no Event Trigger is
+    #   associated with the integration.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/GetIntegrationResponse AWS API Documentation
     #
     class GetIntegrationResponse < Struct.new(
@@ -2935,7 +3245,8 @@ module Aws::CustomerProfiles
       :object_type_names,
       :workflow_id,
       :is_unstructured,
-      :role_arn)
+      :role_arn,
+      :event_trigger_names)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4098,6 +4409,45 @@ module Aws::CustomerProfiles
     #   @return [String]
     #
     # @!attribute [rw] next_token
+    #   The pagination token to use with ListEventTriggers.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return per page.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/ListEventTriggersRequest AWS API Documentation
+    #
+    class ListEventTriggersRequest < Struct.new(
+      :domain_name,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   The list of Event Triggers.
+    #   @return [Array<Types::EventTriggerSummaryItem>]
+    #
+    # @!attribute [rw] next_token
+    #   The pagination token from the previous call to ListEventTriggers.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/ListEventTriggersResponse AWS API Documentation
+    #
+    class ListEventTriggersResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = [:items]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] domain_name
+    #   The unique name of the domain.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
     #   The token for the next set of results. Use the value returned in the
     #   previous response in the next request to retrieve the next set of
     #   results.
@@ -4187,6 +4537,11 @@ module Aws::CustomerProfiles
     #   this role to make Customer Profiles requests on your behalf.
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger_names
+    #   A list of unique names for active event triggers associated with the
+    #   integration.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/ListIntegrationItem AWS API Documentation
     #
     class ListIntegrationItem < Struct.new(
@@ -4199,7 +4554,8 @@ module Aws::CustomerProfiles
       :object_type_names,
       :workflow_id,
       :is_unstructured,
-      :role_arn)
+      :role_arn,
+      :event_trigger_names)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4946,6 +5302,36 @@ module Aws::CustomerProfiles
       include Aws::Structure
     end
 
+    # The criteria that a specific object attribute must meet to trigger the
+    # destination.
+    #
+    # @!attribute [rw] source
+    #   An attribute contained within a source object.
+    #   @return [String]
+    #
+    # @!attribute [rw] field_name
+    #   A field defined within an object type.
+    #   @return [String]
+    #
+    # @!attribute [rw] comparison_operator
+    #   The operator used to compare an attribute against a list of values.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   A list of attribute values used for comparison.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/ObjectAttribute AWS API Documentation
+    #
+    class ObjectAttribute < Struct.new(
+      :source,
+      :field_name,
+      :comparison_operator,
+      :values)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The filter applied to `ListProfileObjects` response to include profile
     # objects with the specified index values.
     #
@@ -5024,6 +5410,36 @@ module Aws::CustomerProfiles
     class ObjectTypeKey < Struct.new(
       :standard_identifiers,
       :field_names)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Defines a limit and the time period during which it is enforced.
+    #
+    # @!attribute [rw] unit
+    #   The unit of time.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The amount of time of the specified unit.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] max_invocations_per_profile
+    #   The maximum allowed number of destination invocations per profile.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] unlimited
+    #   If set to true, there is no limit on the number of destination
+    #   invocations per profile. The default is false.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/Period AWS API Documentation
+    #
+    class Period < Struct.new(
+      :unit,
+      :value,
+      :max_invocations_per_profile,
+      :unlimited)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5455,6 +5871,11 @@ module Aws::CustomerProfiles
     #   this role to make Customer Profiles requests on your behalf.
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger_names
+    #   A list of unique names for active event triggers associated with the
+    #   integration.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/PutIntegrationRequest AWS API Documentation
     #
     class PutIntegrationRequest < Struct.new(
@@ -5464,7 +5885,8 @@ module Aws::CustomerProfiles
       :tags,
       :flow_definition,
       :object_type_names,
-      :role_arn)
+      :role_arn,
+      :event_trigger_names)
       SENSITIVE = [:flow_definition]
       include Aws::Structure
     end
@@ -5519,6 +5941,12 @@ module Aws::CustomerProfiles
     #   this role to make Customer Profiles requests on your behalf.
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger_names
+    #   A list of unique names for active event triggers associated with the
+    #   integration. This list would be empty if no Event Trigger is
+    #   associated with the integration.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/PutIntegrationResponse AWS API Documentation
     #
     class PutIntegrationResponse < Struct.new(
@@ -5531,7 +5959,8 @@ module Aws::CustomerProfiles
       :object_type_names,
       :workflow_id,
       :is_unstructured,
-      :role_arn)
+      :role_arn,
+      :event_trigger_names)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6818,6 +7247,108 @@ module Aws::CustomerProfiles
       :last_updated_at,
       :tags)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] domain_name
+    #   The unique name of the domain.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] object_type_name
+    #   The unique name of the object type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_conditions
+    #   A list of conditions that determine when an event should trigger the
+    #   destination.
+    #   @return [Array<Types::EventTriggerCondition>]
+    #
+    # @!attribute [rw] segment_filter
+    #   The destination is triggered only for profiles that meet the
+    #   criteria of a segment definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_limits
+    #   Defines limits controlling whether an event triggers the
+    #   destination, based on ingestion latency and the number of
+    #   invocations per profile over specific time periods.
+    #   @return [Types::EventTriggerLimits]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/UpdateEventTriggerRequest AWS API Documentation
+    #
+    class UpdateEventTriggerRequest < Struct.new(
+      :domain_name,
+      :event_trigger_name,
+      :object_type_name,
+      :description,
+      :event_trigger_conditions,
+      :segment_filter,
+      :event_trigger_limits)
+      SENSITIVE = [:description, :event_trigger_conditions]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] event_trigger_name
+    #   The unique name of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] object_type_name
+    #   The unique name of the object type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the event trigger.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_conditions
+    #   A list of conditions that determine when an event should trigger the
+    #   destination.
+    #   @return [Array<Types::EventTriggerCondition>]
+    #
+    # @!attribute [rw] segment_filter
+    #   The destination is triggered only for profiles that meet the
+    #   criteria of a segment definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_trigger_limits
+    #   Defines limits controlling whether an event triggers the
+    #   destination, based on ingestion latency and the number of
+    #   invocations per profile over specific time periods.
+    #   @return [Types::EventTriggerLimits]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp of when the event trigger was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The timestamp of when the event trigger was most recently updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to this resource.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/UpdateEventTriggerResponse AWS API Documentation
+    #
+    class UpdateEventTriggerResponse < Struct.new(
+      :event_trigger_name,
+      :object_type_name,
+      :description,
+      :event_trigger_conditions,
+      :segment_filter,
+      :event_trigger_limits,
+      :created_at,
+      :last_updated_at,
+      :tags)
+      SENSITIVE = [:description, :event_trigger_conditions]
       include Aws::Structure
     end
 

@@ -143,7 +143,7 @@ module Aws
                             instance_id: ::String,
                             resource_id: ::String,
                             flow_id: ::String,
-                            resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+                            resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
                           ) -> _AssociateFlowResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateFlowResponseSuccess
 
@@ -317,7 +317,7 @@ module Aws
       def batch_get_flow_association: (
                                         instance_id: ::String,
                                         resource_ids: Array[::String],
-                                        ?resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+                                        ?resource_type: ("WHATSAPP_MESSAGING_PHONE_NUMBER" | "VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR")
                                       ) -> _BatchGetFlowAssociationResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetFlowAssociationResponseSuccess
 
@@ -627,7 +627,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#create_integration_association-instance_method
       def create_integration_association: (
                                             instance_id: ::String,
-                                            integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY"),
+                                            integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR"),
                                             integration_arn: ::String,
                                             ?source_application_url: ::String,
                                             ?source_application_name: ::String,
@@ -1615,7 +1615,7 @@ module Aws
       def disassociate_flow: (
                                instance_id: ::String,
                                resource_id: ::String,
-                               resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+                               resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
                              ) -> _DisassociateFlowResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateFlowResponseSuccess
 
@@ -1820,13 +1820,13 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GetFlowAssociationResponse]
         def resource_id: () -> ::String
         def flow_id: () -> ::String
-        def resource_type: () -> ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+        def resource_type: () -> ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#get_flow_association-instance_method
       def get_flow_association: (
                                   instance_id: ::String,
                                   resource_id: ::String,
-                                  resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+                                  resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
                                 ) -> _GetFlowAssociationResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetFlowAssociationResponseSuccess
 
@@ -2174,7 +2174,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#list_flow_associations-instance_method
       def list_flow_associations: (
                                     instance_id: ::String,
-                                    ?resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL"),
+                                    ?resource_type: ("WHATSAPP_MESSAGING_PHONE_NUMBER" | "VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR"),
                                     ?next_token: ::String,
                                     ?max_results: ::Integer
                                   ) -> _ListFlowAssociationsResponseSuccess
@@ -2240,7 +2240,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#list_integration_associations-instance_method
       def list_integration_associations: (
                                            instance_id: ::String,
-                                           ?integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY"),
+                                           ?integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR"),
                                            ?next_token: ::String,
                                            ?max_results: ::Integer,
                                            ?integration_arn: ::String
@@ -2706,7 +2706,8 @@ module Aws
       def resume_contact_recording: (
                                       instance_id: ::String,
                                       contact_id: ::String,
-                                      initial_contact_id: ::String
+                                      initial_contact_id: ::String,
+                                      ?contact_recording_type: ("AGENT" | "IVR" | "SCREEN")
                                     ) -> _ResumeContactRecordingResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ResumeContactRecordingResponseSuccess
 
@@ -3675,7 +3676,8 @@ module Aws
                                      contact_id: ::String,
                                      initial_contact_id: ::String,
                                      voice_recording_configuration: {
-                                       voice_recording_track: ("FROM_AGENT" | "TO_AGENT" | "ALL")?
+                                       voice_recording_track: ("FROM_AGENT" | "TO_AGENT" | "ALL")?,
+                                       ivr_recording_track: ("ALL")?
                                      }
                                    ) -> _StartContactRecordingResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartContactRecordingResponseSuccess
@@ -3970,7 +3972,8 @@ module Aws
       def stop_contact_recording: (
                                     instance_id: ::String,
                                     contact_id: ::String,
-                                    initial_contact_id: ::String
+                                    initial_contact_id: ::String,
+                                    ?contact_recording_type: ("AGENT" | "IVR" | "SCREEN")
                                   ) -> _StopContactRecordingResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopContactRecordingResponseSuccess
 
@@ -4014,7 +4017,8 @@ module Aws
       def suspend_contact_recording: (
                                        instance_id: ::String,
                                        contact_id: ::String,
-                                       initial_contact_id: ::String
+                                       initial_contact_id: ::String,
+                                       ?contact_recording_type: ("AGENT" | "IVR" | "SCREEN")
                                      ) -> _SuspendContactRecordingResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SuspendContactRecordingResponseSuccess
 
@@ -4114,7 +4118,21 @@ module Aws
                                 value_string: ::String?,
                                 value_map: Hash[::String, untyped]?,
                                 value_integer: ::Integer?
-                              }]
+                              }],
+                            ?queue_info: {
+                              id: ::String?
+                            },
+                            ?user_info: {
+                              user_id: ::String?
+                            },
+                            ?customer_endpoint: {
+                              type: ("TELEPHONE_NUMBER" | "VOIP" | "CONTACT_FLOW" | "CONNECT_PHONENUMBER_ARN" | "EMAIL_ADDRESS")?,
+                              address: ::String?
+                            },
+                            ?system_endpoint: {
+                              type: ("TELEPHONE_NUMBER" | "VOIP" | "CONTACT_FLOW" | "CONNECT_PHONENUMBER_ARN" | "EMAIL_ADDRESS")?,
+                              address: ::String?
+                            }
                           ) -> _UpdateContactResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateContactResponseSuccess
 

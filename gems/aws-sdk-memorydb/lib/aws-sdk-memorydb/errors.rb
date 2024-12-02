@@ -42,6 +42,7 @@ module Aws::MemoryDB
   # * {InvalidClusterStateFault}
   # * {InvalidCredentialsException}
   # * {InvalidKMSKeyFault}
+  # * {InvalidMultiRegionClusterStateFault}
   # * {InvalidNodeStateFault}
   # * {InvalidParameterCombinationException}
   # * {InvalidParameterGroupStateFault}
@@ -50,6 +51,9 @@ module Aws::MemoryDB
   # * {InvalidSubnet}
   # * {InvalidUserStateFault}
   # * {InvalidVPCNetworkStateFault}
+  # * {MultiRegionClusterAlreadyExistsFault}
+  # * {MultiRegionClusterNotFoundFault}
+  # * {MultiRegionParameterGroupNotFoundFault}
   # * {NoOperationFault}
   # * {NodeQuotaForClusterExceededFault}
   # * {NodeQuotaForCustomerExceededFault}
@@ -237,6 +241,16 @@ module Aws::MemoryDB
       end
     end
 
+    class InvalidMultiRegionClusterStateFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::MemoryDB::Types::InvalidMultiRegionClusterStateFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
     class InvalidNodeStateFault < ServiceError
 
       # @param [Seahorse::Client::RequestContext] context
@@ -322,6 +336,36 @@ module Aws::MemoryDB
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::MemoryDB::Types::InvalidVPCNetworkStateFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class MultiRegionClusterAlreadyExistsFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::MemoryDB::Types::MultiRegionClusterAlreadyExistsFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class MultiRegionClusterNotFoundFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::MemoryDB::Types::MultiRegionClusterNotFoundFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class MultiRegionParameterGroupNotFoundFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::MemoryDB::Types::MultiRegionParameterGroupNotFoundFault] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

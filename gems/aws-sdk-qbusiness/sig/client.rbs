@@ -204,6 +204,11 @@ module Aws
                                         s3_bucket_name: ::String?,
                                         role_arn: ::String?
                                       }?
+                                    }?,
+                                    media_extraction_configuration: {
+                                      image_extraction_configuration: {
+                                        image_extraction_status: ("ENABLED" | "DISABLED")
+                                      }?
                                     }?
                                   },
                                 ],
@@ -247,8 +252,14 @@ module Aws
                        ?user_message: ::String,
                        ?attachments: Array[
                          {
-                           name: ::String,
-                           data: ::String
+                           data: ::String?,
+                           name: ::String?,
+                           copy_from: {
+                             conversation: {
+                               conversation_id: ::String,
+                               attachment_id: ::String
+                             }?
+                           }?
                          },
                        ],
                        ?action_execution: {
@@ -464,6 +475,11 @@ module Aws
                                     s3_bucket_name: ::String?,
                                     role_arn: ::String?
                                   }?
+                                },
+                                ?media_extraction_configuration: {
+                                  image_extraction_configuration: {
+                                    image_extraction_status: ("ENABLED" | "DISABLED")
+                                  }?
                                 }
                               ) -> _CreateDataSourceResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDataSourceResponseSuccess
@@ -477,8 +493,8 @@ module Aws
       def create_index: (
                           application_id: ::String,
                           display_name: ::String,
-                          ?type: ("ENTERPRISE" | "STARTER"),
                           ?description: ::String,
+                          ?type: ("ENTERPRISE" | "STARTER"),
                           ?tags: Array[
                             {
                               key: ::String,
@@ -630,6 +646,9 @@ module Aws
                                        secrets_arn: ::String,
                                        secrets_role: ::String
                                      }?
+                                   },
+                                   ?browser_extension_configuration: {
+                                     enabled_browser_extensions: Array[("FIREFOX" | "CHROME")]
                                    }
                                  ) -> _CreateWebExperienceResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWebExperienceResponseSuccess
@@ -795,6 +814,7 @@ module Aws
         def sync_schedule: () -> ::String
         def role_arn: () -> ::String
         def document_enrichment_configuration: () -> Types::DocumentEnrichmentConfiguration
+        def media_extraction_configuration: () -> Types::MediaExtractionConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_data_source-instance_method
       def get_data_source: (
@@ -823,9 +843,9 @@ module Aws
         def application_id: () -> ::String
         def index_id: () -> ::String
         def display_name: () -> ::String
-        def type: () -> ("ENTERPRISE" | "STARTER")
         def index_arn: () -> ::String
         def status: () -> ("CREATING" | "ACTIVE" | "DELETING" | "FAILED" | "UPDATING")
+        def type: () -> ("ENTERPRISE" | "STARTER")
         def description: () -> ::String
         def created_at: () -> ::Time
         def updated_at: () -> ::Time
@@ -839,6 +859,20 @@ module Aws
                        index_id: ::String
                      ) -> _GetIndexResponseSuccess
                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetIndexResponseSuccess
+
+      interface _GetMediaResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetMediaResponse]
+        def media_bytes: () -> ::String
+        def media_mime_type: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_media-instance_method
+      def get_media: (
+                       application_id: ::String,
+                       conversation_id: ::String,
+                       message_id: ::String,
+                       media_id: ::String
+                     ) -> _GetMediaResponseSuccess
+                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMediaResponseSuccess
 
       interface _GetPluginResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetPluginResponse]
@@ -910,6 +944,7 @@ module Aws
         def role_arn: () -> ::String
         def identity_provider_configuration: () -> Types::IdentityProviderConfiguration
         def authentication_configuration: () -> Types::WebExperienceAuthConfiguration
+        def browser_extension_configuration: () -> Types::BrowserExtensionConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_web_experience-instance_method
       def get_web_experience: (
@@ -929,6 +964,21 @@ module Aws
                                ?max_results: ::Integer
                              ) -> _ListApplicationsResponseSuccess
                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListApplicationsResponseSuccess
+
+      interface _ListAttachmentsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAttachmentsResponse]
+        def attachments: () -> ::Array[Types::Attachment]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#list_attachments-instance_method
+      def list_attachments: (
+                              application_id: ::String,
+                              ?conversation_id: ::String,
+                              ?user_id: ::String,
+                              ?next_token: ::String,
+                              ?max_results: ::Integer
+                            ) -> _ListAttachmentsResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAttachmentsResponseSuccess
 
       interface _ListConversationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListConversationsResponse]
@@ -1365,6 +1415,11 @@ module Aws
                                     s3_bucket_name: ::String?,
                                     role_arn: ::String?
                                   }?
+                                },
+                                ?media_extraction_configuration: {
+                                  image_extraction_configuration: {
+                                    image_extraction_status: ("ENABLED" | "DISABLED")
+                                  }?
                                 }
                               ) -> _UpdateDataSourceResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDataSourceResponseSuccess
@@ -1520,7 +1575,10 @@ module Aws
                                        secrets_role: ::String
                                      }?
                                    },
-                                   ?origins: Array[::String]
+                                   ?origins: Array[::String],
+                                   ?browser_extension_configuration: {
+                                     enabled_browser_extensions: Array[("FIREFOX" | "CHROME")]
+                                   }
                                  ) -> _UpdateWebExperienceResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateWebExperienceResponseSuccess
     end

@@ -56,6 +56,9 @@ module Aws::BedrockAgent
     BedrockModelArn = Shapes::StringShape.new(name: 'BedrockModelArn')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BucketOwnerAccountId = Shapes::StringShape.new(name: 'BucketOwnerAccountId')
+    ByteContentBlob = Shapes::BlobShape.new(name: 'ByteContentBlob')
+    ByteContentDoc = Shapes::StructureShape.new(name: 'ByteContentDoc')
+    ByteContentDocMimeTypeString = Shapes::StringShape.new(name: 'ByteContentDocMimeTypeString')
     ChatPromptTemplateConfiguration = Shapes::StructureShape.new(name: 'ChatPromptTemplateConfiguration')
     ChunkingConfiguration = Shapes::StructureShape.new(name: 'ChunkingConfiguration')
     ChunkingStrategy = Shapes::StringShape.new(name: 'ChunkingStrategy')
@@ -71,6 +74,7 @@ module Aws::BedrockAgent
     ConfluenceSourceConfiguration = Shapes::StructureShape.new(name: 'ConfluenceSourceConfiguration')
     ContentBlock = Shapes::UnionShape.new(name: 'ContentBlock')
     ContentBlocks = Shapes::ListShape.new(name: 'ContentBlocks')
+    ContentDataSourceType = Shapes::StringShape.new(name: 'ContentDataSourceType')
     ConversationRole = Shapes::StringShape.new(name: 'ConversationRole')
     CrawlFilterConfiguration = Shapes::StructureShape.new(name: 'CrawlFilterConfiguration')
     CrawlFilterConfigurationType = Shapes::StringShape.new(name: 'CrawlFilterConfigurationType')
@@ -95,10 +99,16 @@ module Aws::BedrockAgent
     CreatePromptVersionRequest = Shapes::StructureShape.new(name: 'CreatePromptVersionRequest')
     CreatePromptVersionResponse = Shapes::StructureShape.new(name: 'CreatePromptVersionResponse')
     CreationMode = Shapes::StringShape.new(name: 'CreationMode')
+    CustomContent = Shapes::StructureShape.new(name: 'CustomContent')
     CustomControlMethod = Shapes::StringShape.new(name: 'CustomControlMethod')
+    CustomDocumentIdentifier = Shapes::StructureShape.new(name: 'CustomDocumentIdentifier')
+    CustomDocumentIdentifierIdString = Shapes::StringShape.new(name: 'CustomDocumentIdentifierIdString')
     CustomOrchestration = Shapes::StructureShape.new(name: 'CustomOrchestration')
+    CustomS3Location = Shapes::StructureShape.new(name: 'CustomS3Location')
+    CustomSourceType = Shapes::StringShape.new(name: 'CustomSourceType')
     CustomTransformationConfiguration = Shapes::StructureShape.new(name: 'CustomTransformationConfiguration')
     CyclicConnectionFlowValidationDetails = Shapes::StructureShape.new(name: 'CyclicConnectionFlowValidationDetails')
+    Data = Shapes::StringShape.new(name: 'Data')
     DataDeletionPolicy = Shapes::StringShape.new(name: 'DataDeletionPolicy')
     DataSource = Shapes::StructureShape.new(name: 'DataSource')
     DataSourceConfiguration = Shapes::StructureShape.new(name: 'DataSourceConfiguration')
@@ -123,6 +133,8 @@ module Aws::BedrockAgent
     DeleteFlowResponse = Shapes::StructureShape.new(name: 'DeleteFlowResponse')
     DeleteFlowVersionRequest = Shapes::StructureShape.new(name: 'DeleteFlowVersionRequest')
     DeleteFlowVersionResponse = Shapes::StructureShape.new(name: 'DeleteFlowVersionResponse')
+    DeleteKnowledgeBaseDocumentsRequest = Shapes::StructureShape.new(name: 'DeleteKnowledgeBaseDocumentsRequest')
+    DeleteKnowledgeBaseDocumentsResponse = Shapes::StructureShape.new(name: 'DeleteKnowledgeBaseDocumentsResponse')
     DeleteKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'DeleteKnowledgeBaseRequest')
     DeleteKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'DeleteKnowledgeBaseResponse')
     DeletePromptRequest = Shapes::StructureShape.new(name: 'DeletePromptRequest')
@@ -132,6 +144,12 @@ module Aws::BedrockAgent
     DisassociateAgentKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'DisassociateAgentKnowledgeBaseRequest')
     DisassociateAgentKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'DisassociateAgentKnowledgeBaseResponse')
     Document = Shapes::DocumentShape.new(name: 'Document', document: true)
+    DocumentContent = Shapes::StructureShape.new(name: 'DocumentContent')
+    DocumentIdentifier = Shapes::StructureShape.new(name: 'DocumentIdentifier')
+    DocumentIdentifiers = Shapes::ListShape.new(name: 'DocumentIdentifiers')
+    DocumentMetadata = Shapes::StructureShape.new(name: 'DocumentMetadata')
+    DocumentMetadataInlineAttributesList = Shapes::ListShape.new(name: 'DocumentMetadataInlineAttributesList')
+    DocumentStatus = Shapes::StringShape.new(name: 'DocumentStatus')
     DraftVersion = Shapes::StringShape.new(name: 'DraftVersion')
     DuplicateConditionExpressionFlowValidationDetails = Shapes::StructureShape.new(name: 'DuplicateConditionExpressionFlowValidationDetails')
     DuplicateConnectionsFlowValidationDetails = Shapes::StructureShape.new(name: 'DuplicateConnectionsFlowValidationDetails')
@@ -220,6 +238,8 @@ module Aws::BedrockAgent
     GetFlowVersionResponse = Shapes::StructureShape.new(name: 'GetFlowVersionResponse')
     GetIngestionJobRequest = Shapes::StructureShape.new(name: 'GetIngestionJobRequest')
     GetIngestionJobResponse = Shapes::StructureShape.new(name: 'GetIngestionJobResponse')
+    GetKnowledgeBaseDocumentsRequest = Shapes::StructureShape.new(name: 'GetKnowledgeBaseDocumentsRequest')
+    GetKnowledgeBaseDocumentsResponse = Shapes::StructureShape.new(name: 'GetKnowledgeBaseDocumentsResponse')
     GetKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'GetKnowledgeBaseRequest')
     GetKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'GetKnowledgeBaseResponse')
     GetPromptRequest = Shapes::StructureShape.new(name: 'GetPromptRequest')
@@ -236,6 +256,8 @@ module Aws::BedrockAgent
     Id = Shapes::StringShape.new(name: 'Id')
     IncompatibleConnectionDataTypeFlowValidationDetails = Shapes::StructureShape.new(name: 'IncompatibleConnectionDataTypeFlowValidationDetails')
     InferenceConfiguration = Shapes::StructureShape.new(name: 'InferenceConfiguration')
+    IngestKnowledgeBaseDocumentsRequest = Shapes::StructureShape.new(name: 'IngestKnowledgeBaseDocumentsRequest')
+    IngestKnowledgeBaseDocumentsResponse = Shapes::StructureShape.new(name: 'IngestKnowledgeBaseDocumentsResponse')
     IngestionJob = Shapes::StructureShape.new(name: 'IngestionJob')
     IngestionJobFilter = Shapes::StructureShape.new(name: 'IngestionJobFilter')
     IngestionJobFilterAttribute = Shapes::StringShape.new(name: 'IngestionJobFilterAttribute')
@@ -249,15 +271,22 @@ module Aws::BedrockAgent
     IngestionJobStatus = Shapes::StringShape.new(name: 'IngestionJobStatus')
     IngestionJobSummaries = Shapes::ListShape.new(name: 'IngestionJobSummaries')
     IngestionJobSummary = Shapes::StructureShape.new(name: 'IngestionJobSummary')
+    InlineContent = Shapes::StructureShape.new(name: 'InlineContent')
+    InlineContentType = Shapes::StringShape.new(name: 'InlineContentType')
     InputFlowNodeConfiguration = Shapes::StructureShape.new(name: 'InputFlowNodeConfiguration')
     Instruction = Shapes::StringShape.new(name: 'Instruction')
     IntermediateStorage = Shapes::StructureShape.new(name: 'IntermediateStorage')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     IteratorFlowNodeConfiguration = Shapes::StructureShape.new(name: 'IteratorFlowNodeConfiguration')
+    Key = Shapes::StringShape.new(name: 'Key')
     KmsKeyArn = Shapes::StringShape.new(name: 'KmsKeyArn')
     KnowledgeBase = Shapes::StructureShape.new(name: 'KnowledgeBase')
     KnowledgeBaseArn = Shapes::StringShape.new(name: 'KnowledgeBaseArn')
     KnowledgeBaseConfiguration = Shapes::StructureShape.new(name: 'KnowledgeBaseConfiguration')
+    KnowledgeBaseDocument = Shapes::StructureShape.new(name: 'KnowledgeBaseDocument')
+    KnowledgeBaseDocumentDetail = Shapes::StructureShape.new(name: 'KnowledgeBaseDocumentDetail')
+    KnowledgeBaseDocumentDetails = Shapes::ListShape.new(name: 'KnowledgeBaseDocumentDetails')
+    KnowledgeBaseDocuments = Shapes::ListShape.new(name: 'KnowledgeBaseDocuments')
     KnowledgeBaseFlowNodeConfiguration = Shapes::StructureShape.new(name: 'KnowledgeBaseFlowNodeConfiguration')
     KnowledgeBaseId = Shapes::StringShape.new(name: 'KnowledgeBaseId')
     KnowledgeBaseModelIdentifier = Shapes::StringShape.new(name: 'KnowledgeBaseModelIdentifier')
@@ -293,6 +322,8 @@ module Aws::BedrockAgent
     ListFlowsResponse = Shapes::StructureShape.new(name: 'ListFlowsResponse')
     ListIngestionJobsRequest = Shapes::StructureShape.new(name: 'ListIngestionJobsRequest')
     ListIngestionJobsResponse = Shapes::StructureShape.new(name: 'ListIngestionJobsResponse')
+    ListKnowledgeBaseDocumentsRequest = Shapes::StructureShape.new(name: 'ListKnowledgeBaseDocumentsRequest')
+    ListKnowledgeBaseDocumentsResponse = Shapes::StructureShape.new(name: 'ListKnowledgeBaseDocumentsResponse')
     ListKnowledgeBasesRequest = Shapes::StructureShape.new(name: 'ListKnowledgeBasesRequest')
     ListKnowledgeBasesResponse = Shapes::StructureShape.new(name: 'ListKnowledgeBasesResponse')
     ListPromptsRequest = Shapes::StructureShape.new(name: 'ListPromptsRequest')
@@ -307,6 +338,11 @@ module Aws::BedrockAgent
     MemoryType = Shapes::StringShape.new(name: 'MemoryType')
     Message = Shapes::StructureShape.new(name: 'Message')
     Messages = Shapes::ListShape.new(name: 'Messages')
+    MetadataAttribute = Shapes::StructureShape.new(name: 'MetadataAttribute')
+    MetadataAttributeValue = Shapes::StructureShape.new(name: 'MetadataAttributeValue')
+    MetadataAttributeValueStringListValueList = Shapes::ListShape.new(name: 'MetadataAttributeValueStringListValueList')
+    MetadataSourceType = Shapes::StringShape.new(name: 'MetadataSourceType')
+    MetadataValueType = Shapes::StringShape.new(name: 'MetadataValueType')
     Microsoft365TenantId = Shapes::StringShape.new(name: 'Microsoft365TenantId')
     MismatchedNodeInputTypeFlowValidationDetails = Shapes::StructureShape.new(name: 'MismatchedNodeInputTypeFlowValidationDetails')
     MismatchedNodeOutputTypeFlowValidationDetails = Shapes::StructureShape.new(name: 'MismatchedNodeOutputTypeFlowValidationDetails')
@@ -330,6 +366,7 @@ module Aws::BedrockAgent
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
     NonEmptyString = Shapes::StringShape.new(name: 'NonEmptyString')
+    NumberValue = Shapes::FloatShape.new(name: 'NumberValue')
     NumericalVersion = Shapes::StringShape.new(name: 'NumericalVersion')
     OpenSearchServerlessCollectionArn = Shapes::StringShape.new(name: 'OpenSearchServerlessCollectionArn')
     OpenSearchServerlessConfiguration = Shapes::StructureShape.new(name: 'OpenSearchServerlessConfiguration')
@@ -411,10 +448,12 @@ module Aws::BedrockAgent
     S3BucketArn = Shapes::StringShape.new(name: 'S3BucketArn')
     S3BucketName = Shapes::StringShape.new(name: 'S3BucketName')
     S3BucketUri = Shapes::StringShape.new(name: 'S3BucketUri')
+    S3Content = Shapes::StructureShape.new(name: 'S3Content')
     S3DataSourceConfiguration = Shapes::StructureShape.new(name: 'S3DataSourceConfiguration')
     S3Identifier = Shapes::StructureShape.new(name: 'S3Identifier')
     S3Location = Shapes::StructureShape.new(name: 'S3Location')
     S3ObjectKey = Shapes::StringShape.new(name: 'S3ObjectKey')
+    S3ObjectUri = Shapes::StringShape.new(name: 'S3ObjectUri')
     S3Prefix = Shapes::StringShape.new(name: 'S3Prefix')
     S3Prefixes = Shapes::ListShape.new(name: 'S3Prefixes')
     SalesforceAuthType = Shapes::StringShape.new(name: 'SalesforceAuthType')
@@ -452,6 +491,7 @@ module Aws::BedrockAgent
     StorageFlowNodeS3Configuration = Shapes::StructureShape.new(name: 'StorageFlowNodeS3Configuration')
     StorageFlowNodeServiceConfiguration = Shapes::UnionShape.new(name: 'StorageFlowNodeServiceConfiguration')
     String = Shapes::StringShape.new(name: 'String')
+    StringValue = Shapes::StringShape.new(name: 'StringValue')
     SystemContentBlock = Shapes::UnionShape.new(name: 'SystemContentBlock')
     SystemContentBlocks = Shapes::ListShape.new(name: 'SystemContentBlocks')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
@@ -462,6 +502,7 @@ module Aws::BedrockAgent
     TaggableResourcesArn = Shapes::StringShape.new(name: 'TaggableResourcesArn')
     TagsMap = Shapes::MapShape.new(name: 'TagsMap')
     Temperature = Shapes::FloatShape.new(name: 'Temperature')
+    TextContentDoc = Shapes::StructureShape.new(name: 'TextContentDoc')
     TextPrompt = Shapes::StringShape.new(name: 'TextPrompt')
     TextPromptTemplateConfiguration = Shapes::StructureShape.new(name: 'TextPromptTemplateConfiguration')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
@@ -714,6 +755,10 @@ module Aws::BedrockAgent
     BedrockFoundationModelConfiguration.add_member(:parsing_prompt, Shapes::ShapeRef.new(shape: ParsingPrompt, location_name: "parsingPrompt"))
     BedrockFoundationModelConfiguration.struct_class = Types::BedrockFoundationModelConfiguration
 
+    ByteContentDoc.add_member(:data, Shapes::ShapeRef.new(shape: ByteContentBlob, required: true, location_name: "data"))
+    ByteContentDoc.add_member(:mime_type, Shapes::ShapeRef.new(shape: ByteContentDocMimeTypeString, required: true, location_name: "mimeType"))
+    ByteContentDoc.struct_class = Types::ByteContentDoc
+
     ChatPromptTemplateConfiguration.add_member(:input_variables, Shapes::ShapeRef.new(shape: PromptInputVariablesList, location_name: "inputVariables"))
     ChatPromptTemplateConfiguration.add_member(:messages, Shapes::ShapeRef.new(shape: Messages, required: true, location_name: "messages"))
     ChatPromptTemplateConfiguration.add_member(:system, Shapes::ShapeRef.new(shape: SystemContentBlocks, location_name: "system"))
@@ -925,8 +970,21 @@ module Aws::BedrockAgent
     CreatePromptVersionResponse.add_member(:version, Shapes::ShapeRef.new(shape: Version, required: true, location_name: "version"))
     CreatePromptVersionResponse.struct_class = Types::CreatePromptVersionResponse
 
+    CustomContent.add_member(:custom_document_identifier, Shapes::ShapeRef.new(shape: CustomDocumentIdentifier, required: true, location_name: "customDocumentIdentifier"))
+    CustomContent.add_member(:inline_content, Shapes::ShapeRef.new(shape: InlineContent, location_name: "inlineContent"))
+    CustomContent.add_member(:s3_location, Shapes::ShapeRef.new(shape: CustomS3Location, location_name: "s3Location"))
+    CustomContent.add_member(:source_type, Shapes::ShapeRef.new(shape: CustomSourceType, required: true, location_name: "sourceType"))
+    CustomContent.struct_class = Types::CustomContent
+
+    CustomDocumentIdentifier.add_member(:id, Shapes::ShapeRef.new(shape: CustomDocumentIdentifierIdString, required: true, location_name: "id"))
+    CustomDocumentIdentifier.struct_class = Types::CustomDocumentIdentifier
+
     CustomOrchestration.add_member(:executor, Shapes::ShapeRef.new(shape: OrchestrationExecutor, location_name: "executor"))
     CustomOrchestration.struct_class = Types::CustomOrchestration
+
+    CustomS3Location.add_member(:bucket_owner_account_id, Shapes::ShapeRef.new(shape: BucketOwnerAccountId, location_name: "bucketOwnerAccountId"))
+    CustomS3Location.add_member(:uri, Shapes::ShapeRef.new(shape: S3ObjectUri, required: true, location_name: "uri"))
+    CustomS3Location.struct_class = Types::CustomS3Location
 
     CustomTransformationConfiguration.add_member(:intermediate_storage, Shapes::ShapeRef.new(shape: IntermediateStorage, required: true, location_name: "intermediateStorage"))
     CustomTransformationConfiguration.add_member(:transformations, Shapes::ShapeRef.new(shape: Transformations, required: true, location_name: "transformations"))
@@ -1035,6 +1093,15 @@ module Aws::BedrockAgent
     DeleteFlowVersionResponse.add_member(:version, Shapes::ShapeRef.new(shape: NumericalVersion, required: true, location_name: "version"))
     DeleteFlowVersionResponse.struct_class = Types::DeleteFlowVersionResponse
 
+    DeleteKnowledgeBaseDocumentsRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    DeleteKnowledgeBaseDocumentsRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "dataSourceId"))
+    DeleteKnowledgeBaseDocumentsRequest.add_member(:document_identifiers, Shapes::ShapeRef.new(shape: DocumentIdentifiers, required: true, location_name: "documentIdentifiers"))
+    DeleteKnowledgeBaseDocumentsRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
+    DeleteKnowledgeBaseDocumentsRequest.struct_class = Types::DeleteKnowledgeBaseDocumentsRequest
+
+    DeleteKnowledgeBaseDocumentsResponse.add_member(:document_details, Shapes::ShapeRef.new(shape: KnowledgeBaseDocumentDetails, location_name: "documentDetails"))
+    DeleteKnowledgeBaseDocumentsResponse.struct_class = Types::DeleteKnowledgeBaseDocumentsResponse
+
     DeleteKnowledgeBaseRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
     DeleteKnowledgeBaseRequest.struct_class = Types::DeleteKnowledgeBaseRequest
 
@@ -1056,6 +1123,25 @@ module Aws::BedrockAgent
     DisassociateAgentKnowledgeBaseRequest.struct_class = Types::DisassociateAgentKnowledgeBaseRequest
 
     DisassociateAgentKnowledgeBaseResponse.struct_class = Types::DisassociateAgentKnowledgeBaseResponse
+
+    DocumentContent.add_member(:custom, Shapes::ShapeRef.new(shape: CustomContent, location_name: "custom"))
+    DocumentContent.add_member(:data_source_type, Shapes::ShapeRef.new(shape: ContentDataSourceType, required: true, location_name: "dataSourceType"))
+    DocumentContent.add_member(:s3, Shapes::ShapeRef.new(shape: S3Content, location_name: "s3"))
+    DocumentContent.struct_class = Types::DocumentContent
+
+    DocumentIdentifier.add_member(:custom, Shapes::ShapeRef.new(shape: CustomDocumentIdentifier, location_name: "custom"))
+    DocumentIdentifier.add_member(:data_source_type, Shapes::ShapeRef.new(shape: ContentDataSourceType, required: true, location_name: "dataSourceType"))
+    DocumentIdentifier.add_member(:s3, Shapes::ShapeRef.new(shape: S3Location, location_name: "s3"))
+    DocumentIdentifier.struct_class = Types::DocumentIdentifier
+
+    DocumentIdentifiers.member = Shapes::ShapeRef.new(shape: DocumentIdentifier)
+
+    DocumentMetadata.add_member(:inline_attributes, Shapes::ShapeRef.new(shape: DocumentMetadataInlineAttributesList, location_name: "inlineAttributes"))
+    DocumentMetadata.add_member(:s3_location, Shapes::ShapeRef.new(shape: CustomS3Location, location_name: "s3Location"))
+    DocumentMetadata.add_member(:type, Shapes::ShapeRef.new(shape: MetadataSourceType, required: true, location_name: "type"))
+    DocumentMetadata.struct_class = Types::DocumentMetadata
+
+    DocumentMetadataInlineAttributesList.member = Shapes::ShapeRef.new(shape: MetadataAttribute)
 
     DuplicateConditionExpressionFlowValidationDetails.add_member(:expression, Shapes::ShapeRef.new(shape: FlowConditionExpression, required: true, location_name: "expression"))
     DuplicateConditionExpressionFlowValidationDetails.add_member(:node, Shapes::ShapeRef.new(shape: FlowNodeName, required: true, location_name: "node"))
@@ -1374,6 +1460,14 @@ module Aws::BedrockAgent
     GetIngestionJobResponse.add_member(:ingestion_job, Shapes::ShapeRef.new(shape: IngestionJob, required: true, location_name: "ingestionJob"))
     GetIngestionJobResponse.struct_class = Types::GetIngestionJobResponse
 
+    GetKnowledgeBaseDocumentsRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "dataSourceId"))
+    GetKnowledgeBaseDocumentsRequest.add_member(:document_identifiers, Shapes::ShapeRef.new(shape: DocumentIdentifiers, required: true, location_name: "documentIdentifiers"))
+    GetKnowledgeBaseDocumentsRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
+    GetKnowledgeBaseDocumentsRequest.struct_class = Types::GetKnowledgeBaseDocumentsRequest
+
+    GetKnowledgeBaseDocumentsResponse.add_member(:document_details, Shapes::ShapeRef.new(shape: KnowledgeBaseDocumentDetails, location_name: "documentDetails"))
+    GetKnowledgeBaseDocumentsResponse.struct_class = Types::GetKnowledgeBaseDocumentsResponse
+
     GetKnowledgeBaseRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
     GetKnowledgeBaseRequest.struct_class = Types::GetKnowledgeBaseRequest
 
@@ -1418,6 +1512,15 @@ module Aws::BedrockAgent
     InferenceConfiguration.add_member(:top_k, Shapes::ShapeRef.new(shape: TopK, location_name: "topK"))
     InferenceConfiguration.add_member(:top_p, Shapes::ShapeRef.new(shape: TopP, location_name: "topP"))
     InferenceConfiguration.struct_class = Types::InferenceConfiguration
+
+    IngestKnowledgeBaseDocumentsRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    IngestKnowledgeBaseDocumentsRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "dataSourceId"))
+    IngestKnowledgeBaseDocumentsRequest.add_member(:documents, Shapes::ShapeRef.new(shape: KnowledgeBaseDocuments, required: true, location_name: "documents"))
+    IngestKnowledgeBaseDocumentsRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
+    IngestKnowledgeBaseDocumentsRequest.struct_class = Types::IngestKnowledgeBaseDocumentsRequest
+
+    IngestKnowledgeBaseDocumentsResponse.add_member(:document_details, Shapes::ShapeRef.new(shape: KnowledgeBaseDocumentDetails, location_name: "documentDetails"))
+    IngestKnowledgeBaseDocumentsResponse.struct_class = Types::IngestKnowledgeBaseDocumentsResponse
 
     IngestionJob.add_member(:data_source_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "dataSourceId"))
     IngestionJob.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -1464,6 +1567,11 @@ module Aws::BedrockAgent
     IngestionJobSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "updatedAt"))
     IngestionJobSummary.struct_class = Types::IngestionJobSummary
 
+    InlineContent.add_member(:byte_content, Shapes::ShapeRef.new(shape: ByteContentDoc, location_name: "byteContent"))
+    InlineContent.add_member(:text_content, Shapes::ShapeRef.new(shape: TextContentDoc, location_name: "textContent"))
+    InlineContent.add_member(:type, Shapes::ShapeRef.new(shape: InlineContentType, required: true, location_name: "type"))
+    InlineContent.struct_class = Types::InlineContent
+
     InputFlowNodeConfiguration.struct_class = Types::InputFlowNodeConfiguration
 
     IntermediateStorage.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3Location, required: true, location_name: "s3Location"))
@@ -1490,6 +1598,22 @@ module Aws::BedrockAgent
     KnowledgeBaseConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: KnowledgeBaseType, required: true, location_name: "type"))
     KnowledgeBaseConfiguration.add_member(:vector_knowledge_base_configuration, Shapes::ShapeRef.new(shape: VectorKnowledgeBaseConfiguration, location_name: "vectorKnowledgeBaseConfiguration"))
     KnowledgeBaseConfiguration.struct_class = Types::KnowledgeBaseConfiguration
+
+    KnowledgeBaseDocument.add_member(:content, Shapes::ShapeRef.new(shape: DocumentContent, required: true, location_name: "content"))
+    KnowledgeBaseDocument.add_member(:metadata, Shapes::ShapeRef.new(shape: DocumentMetadata, location_name: "metadata"))
+    KnowledgeBaseDocument.struct_class = Types::KnowledgeBaseDocument
+
+    KnowledgeBaseDocumentDetail.add_member(:data_source_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "dataSourceId"))
+    KnowledgeBaseDocumentDetail.add_member(:identifier, Shapes::ShapeRef.new(shape: DocumentIdentifier, required: true, location_name: "identifier"))
+    KnowledgeBaseDocumentDetail.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "knowledgeBaseId"))
+    KnowledgeBaseDocumentDetail.add_member(:status, Shapes::ShapeRef.new(shape: DocumentStatus, required: true, location_name: "status"))
+    KnowledgeBaseDocumentDetail.add_member(:status_reason, Shapes::ShapeRef.new(shape: String, location_name: "statusReason"))
+    KnowledgeBaseDocumentDetail.add_member(:updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, location_name: "updatedAt"))
+    KnowledgeBaseDocumentDetail.struct_class = Types::KnowledgeBaseDocumentDetail
+
+    KnowledgeBaseDocumentDetails.member = Shapes::ShapeRef.new(shape: KnowledgeBaseDocumentDetail)
+
+    KnowledgeBaseDocuments.member = Shapes::ShapeRef.new(shape: KnowledgeBaseDocument)
 
     KnowledgeBaseFlowNodeConfiguration.add_member(:guardrail_configuration, Shapes::ShapeRef.new(shape: GuardrailConfiguration, location_name: "guardrailConfiguration"))
     KnowledgeBaseFlowNodeConfiguration.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: KnowledgeBaseId, required: true, location_name: "knowledgeBaseId"))
@@ -1605,6 +1729,16 @@ module Aws::BedrockAgent
     ListIngestionJobsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListIngestionJobsResponse.struct_class = Types::ListIngestionJobsResponse
 
+    ListKnowledgeBaseDocumentsRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "dataSourceId"))
+    ListKnowledgeBaseDocumentsRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
+    ListKnowledgeBaseDocumentsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
+    ListKnowledgeBaseDocumentsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListKnowledgeBaseDocumentsRequest.struct_class = Types::ListKnowledgeBaseDocumentsRequest
+
+    ListKnowledgeBaseDocumentsResponse.add_member(:document_details, Shapes::ShapeRef.new(shape: KnowledgeBaseDocumentDetails, required: true, location_name: "documentDetails"))
+    ListKnowledgeBaseDocumentsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
+    ListKnowledgeBaseDocumentsResponse.struct_class = Types::ListKnowledgeBaseDocumentsResponse
+
     ListKnowledgeBasesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
     ListKnowledgeBasesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListKnowledgeBasesRequest.struct_class = Types::ListKnowledgeBasesRequest
@@ -1647,6 +1781,19 @@ module Aws::BedrockAgent
     Message.struct_class = Types::Message
 
     Messages.member = Shapes::ShapeRef.new(shape: Message)
+
+    MetadataAttribute.add_member(:key, Shapes::ShapeRef.new(shape: Key, required: true, location_name: "key"))
+    MetadataAttribute.add_member(:value, Shapes::ShapeRef.new(shape: MetadataAttributeValue, required: true, location_name: "value"))
+    MetadataAttribute.struct_class = Types::MetadataAttribute
+
+    MetadataAttributeValue.add_member(:boolean_value, Shapes::ShapeRef.new(shape: Boolean, location_name: "booleanValue"))
+    MetadataAttributeValue.add_member(:number_value, Shapes::ShapeRef.new(shape: NumberValue, location_name: "numberValue"))
+    MetadataAttributeValue.add_member(:string_list_value, Shapes::ShapeRef.new(shape: MetadataAttributeValueStringListValueList, location_name: "stringListValue"))
+    MetadataAttributeValue.add_member(:string_value, Shapes::ShapeRef.new(shape: StringValue, location_name: "stringValue"))
+    MetadataAttributeValue.add_member(:type, Shapes::ShapeRef.new(shape: MetadataValueType, required: true, location_name: "type"))
+    MetadataAttributeValue.struct_class = Types::MetadataAttributeValue
+
+    MetadataAttributeValueStringListValueList.member = Shapes::ShapeRef.new(shape: StringValue)
 
     MismatchedNodeInputTypeFlowValidationDetails.add_member(:expected_type, Shapes::ShapeRef.new(shape: FlowNodeIODataType, required: true, location_name: "expectedType"))
     MismatchedNodeInputTypeFlowValidationDetails.add_member(:input, Shapes::ShapeRef.new(shape: FlowNodeInputName, required: true, location_name: "input"))
@@ -1906,6 +2053,9 @@ module Aws::BedrockAgent
     RetrievalFlowNodeServiceConfiguration.add_member_subclass(:unknown, Types::RetrievalFlowNodeServiceConfiguration::Unknown)
     RetrievalFlowNodeServiceConfiguration.struct_class = Types::RetrievalFlowNodeServiceConfiguration
 
+    S3Content.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3Location, required: true, location_name: "s3Location"))
+    S3Content.struct_class = Types::S3Content
+
     S3DataSourceConfiguration.add_member(:bucket_arn, Shapes::ShapeRef.new(shape: S3BucketArn, required: true, location_name: "bucketArn"))
     S3DataSourceConfiguration.add_member(:bucket_owner_account_id, Shapes::ShapeRef.new(shape: BucketOwnerAccountId, location_name: "bucketOwnerAccountId"))
     S3DataSourceConfiguration.add_member(:inclusion_prefixes, Shapes::ShapeRef.new(shape: S3Prefixes, location_name: "inclusionPrefixes"))
@@ -2025,6 +2175,9 @@ module Aws::BedrockAgent
 
     TagsMap.key = Shapes::ShapeRef.new(shape: TagKey)
     TagsMap.value = Shapes::ShapeRef.new(shape: TagValue)
+
+    TextContentDoc.add_member(:data, Shapes::ShapeRef.new(shape: Data, required: true, location_name: "data"))
+    TextContentDoc.struct_class = Types::TextContentDoc
 
     TextPromptTemplateConfiguration.add_member(:input_variables, Shapes::ShapeRef.new(shape: PromptInputVariablesList, location_name: "inputVariables"))
     TextPromptTemplateConfiguration.add_member(:text, Shapes::ShapeRef.new(shape: TextPrompt, required: true, location_name: "text"))
@@ -2596,6 +2749,20 @@ module Aws::BedrockAgent
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
+      api.add_operation(:delete_knowledge_base_documents, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteKnowledgeBaseDocuments"
+        o.http_method = "POST"
+        o.http_request_uri = "/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents/deleteDocuments"
+        o.input = Shapes::ShapeRef.new(shape: DeleteKnowledgeBaseDocumentsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteKnowledgeBaseDocumentsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
       api.add_operation(:delete_prompt, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeletePrompt"
         o.http_method = "DELETE"
@@ -2767,6 +2934,20 @@ module Aws::BedrockAgent
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
+      api.add_operation(:get_knowledge_base_documents, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetKnowledgeBaseDocuments"
+        o.http_method = "POST"
+        o.http_request_uri = "/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents/getDocuments"
+        o.input = Shapes::ShapeRef.new(shape: GetKnowledgeBaseDocumentsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetKnowledgeBaseDocumentsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
       api.add_operation(:get_prompt, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetPrompt"
         o.http_method = "GET"
@@ -2778,6 +2959,20 @@ module Aws::BedrockAgent
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:ingest_knowledge_base_documents, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "IngestKnowledgeBaseDocuments"
+        o.http_method = "PUT"
+        o.http_request_uri = "/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents"
+        o.input = Shapes::ShapeRef.new(shape: IngestKnowledgeBaseDocumentsRequest)
+        o.output = Shapes::ShapeRef.new(shape: IngestKnowledgeBaseDocumentsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
       end)
 
       api.add_operation(:list_agent_action_groups, Seahorse::Model::Operation.new.tap do |o|
@@ -2960,6 +3155,26 @@ module Aws::BedrockAgent
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_knowledge_base_documents, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListKnowledgeBaseDocuments"
+        o.http_method = "POST"
+        o.http_request_uri = "/knowledgebases/{knowledgeBaseId}/datasources/{dataSourceId}/documents"
+        o.input = Shapes::ShapeRef.new(shape: ListKnowledgeBaseDocumentsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListKnowledgeBaseDocumentsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
           tokens: {

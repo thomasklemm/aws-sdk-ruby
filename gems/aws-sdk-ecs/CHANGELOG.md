@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.171.0 (2024-12-02)
+------------------
+
+* Feature - This release adds support for Container Insights with Enhanced Observability for Amazon ECS.
+
 1.170.0 (2024-11-20)
 ------------------
 

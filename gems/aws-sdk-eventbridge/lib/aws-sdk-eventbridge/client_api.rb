@@ -14,6 +14,7 @@ module Aws::EventBridge
 
     include Seahorse::Model
 
+    AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     AccountId = Shapes::StringShape.new(name: 'AccountId')
     Action = Shapes::StringShape.new(name: 'Action')
     ActivateEventSourceRequest = Shapes::StructureShape.new(name: 'ActivateEventSourceRequest')
@@ -72,6 +73,8 @@ module Aws::EventBridge
     ConnectionResponseList = Shapes::ListShape.new(name: 'ConnectionResponseList')
     ConnectionState = Shapes::StringShape.new(name: 'ConnectionState')
     ConnectionStateReason = Shapes::StringShape.new(name: 'ConnectionStateReason')
+    ConnectivityResourceConfigurationArn = Shapes::StructureShape.new(name: 'ConnectivityResourceConfigurationArn')
+    ConnectivityResourceParameters = Shapes::StructureShape.new(name: 'ConnectivityResourceParameters')
     CreateApiDestinationRequest = Shapes::StructureShape.new(name: 'CreateApiDestinationRequest')
     CreateApiDestinationResponse = Shapes::StructureShape.new(name: 'CreateApiDestinationResponse')
     CreateArchiveRequest = Shapes::StructureShape.new(name: 'CreateArchiveRequest')
@@ -111,7 +114,9 @@ module Aws::EventBridge
     DescribeApiDestinationResponse = Shapes::StructureShape.new(name: 'DescribeApiDestinationResponse')
     DescribeArchiveRequest = Shapes::StructureShape.new(name: 'DescribeArchiveRequest')
     DescribeArchiveResponse = Shapes::StructureShape.new(name: 'DescribeArchiveResponse')
+    DescribeConnectionConnectivityParameters = Shapes::StructureShape.new(name: 'DescribeConnectionConnectivityParameters')
     DescribeConnectionRequest = Shapes::StructureShape.new(name: 'DescribeConnectionRequest')
+    DescribeConnectionResourceParameters = Shapes::StructureShape.new(name: 'DescribeConnectionResourceParameters')
     DescribeConnectionResponse = Shapes::StructureShape.new(name: 'DescribeConnectionResponse')
     DescribeEndpointRequest = Shapes::StructureShape.new(name: 'DescribeEndpointRequest')
     DescribeEndpointResponse = Shapes::StructureShape.new(name: 'DescribeEndpointResponse')
@@ -281,6 +286,8 @@ module Aws::EventBridge
     ReplicationState = Shapes::StringShape.new(name: 'ReplicationState')
     ResourceAlreadyExistsException = Shapes::StructureShape.new(name: 'ResourceAlreadyExistsException')
     ResourceArn = Shapes::StringShape.new(name: 'ResourceArn')
+    ResourceAssociationArn = Shapes::StringShape.new(name: 'ResourceAssociationArn')
+    ResourceConfigurationArn = Shapes::StringShape.new(name: 'ResourceConfigurationArn')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     RetentionDays = Shapes::IntegerShape.new(name: 'RetentionDays')
     RetryPolicy = Shapes::StructureShape.new(name: 'RetryPolicy')
@@ -335,6 +342,7 @@ module Aws::EventBridge
     TargetPartitionKeyPath = Shapes::StringShape.new(name: 'TargetPartitionKeyPath')
     TestEventPatternRequest = Shapes::StructureShape.new(name: 'TestEventPatternRequest')
     TestEventPatternResponse = Shapes::StructureShape.new(name: 'TestEventPatternResponse')
+    ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp')
     TraceHeader = Shapes::StringShape.new(name: 'TraceHeader')
     TransformerInput = Shapes::StringShape.new(name: 'TransformerInput')
@@ -356,6 +364,8 @@ module Aws::EventBridge
     UpdateEndpointResponse = Shapes::StructureShape.new(name: 'UpdateEndpointResponse')
     UpdateEventBusRequest = Shapes::StructureShape.new(name: 'UpdateEventBusRequest')
     UpdateEventBusResponse = Shapes::StructureShape.new(name: 'UpdateEventBusResponse')
+
+    AccessDeniedException.struct_class = Types::AccessDeniedException
 
     ActivateEventSourceRequest.add_member(:name, Shapes::ShapeRef.new(shape: EventSourceName, required: true, location_name: "Name"))
     ActivateEventSourceRequest.struct_class = Types::ActivateEventSourceRequest
@@ -444,6 +454,7 @@ module Aws::EventBridge
     ConnectionAuthResponseParameters.add_member(:o_auth_parameters, Shapes::ShapeRef.new(shape: ConnectionOAuthResponseParameters, location_name: "OAuthParameters"))
     ConnectionAuthResponseParameters.add_member(:api_key_auth_parameters, Shapes::ShapeRef.new(shape: ConnectionApiKeyAuthResponseParameters, location_name: "ApiKeyAuthParameters"))
     ConnectionAuthResponseParameters.add_member(:invocation_http_parameters, Shapes::ShapeRef.new(shape: ConnectionHttpParameters, location_name: "InvocationHttpParameters"))
+    ConnectionAuthResponseParameters.add_member(:connectivity_parameters, Shapes::ShapeRef.new(shape: DescribeConnectionConnectivityParameters, location_name: "ConnectivityParameters"))
     ConnectionAuthResponseParameters.struct_class = Types::ConnectionAuthResponseParameters
 
     ConnectionBasicAuthResponseParameters.add_member(:username, Shapes::ShapeRef.new(shape: AuthHeaderParameters, location_name: "Username"))
@@ -486,6 +497,12 @@ module Aws::EventBridge
 
     ConnectionResponseList.member = Shapes::ShapeRef.new(shape: Connection)
 
+    ConnectivityResourceConfigurationArn.add_member(:resource_configuration_arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, required: true, location_name: "ResourceConfigurationArn"))
+    ConnectivityResourceConfigurationArn.struct_class = Types::ConnectivityResourceConfigurationArn
+
+    ConnectivityResourceParameters.add_member(:resource_parameters, Shapes::ShapeRef.new(shape: ConnectivityResourceConfigurationArn, required: true, location_name: "ResourceParameters"))
+    ConnectivityResourceParameters.struct_class = Types::ConnectivityResourceParameters
+
     CreateApiDestinationRequest.add_member(:name, Shapes::ShapeRef.new(shape: ApiDestinationName, required: true, location_name: "Name"))
     CreateApiDestinationRequest.add_member(:description, Shapes::ShapeRef.new(shape: ApiDestinationDescription, location_name: "Description"))
     CreateApiDestinationRequest.add_member(:connection_arn, Shapes::ShapeRef.new(shape: ConnectionArn, required: true, location_name: "ConnectionArn"))
@@ -521,6 +538,7 @@ module Aws::EventBridge
     CreateConnectionAuthRequestParameters.add_member(:o_auth_parameters, Shapes::ShapeRef.new(shape: CreateConnectionOAuthRequestParameters, location_name: "OAuthParameters"))
     CreateConnectionAuthRequestParameters.add_member(:api_key_auth_parameters, Shapes::ShapeRef.new(shape: CreateConnectionApiKeyAuthRequestParameters, location_name: "ApiKeyAuthParameters"))
     CreateConnectionAuthRequestParameters.add_member(:invocation_http_parameters, Shapes::ShapeRef.new(shape: ConnectionHttpParameters, location_name: "InvocationHttpParameters"))
+    CreateConnectionAuthRequestParameters.add_member(:connectivity_parameters, Shapes::ShapeRef.new(shape: ConnectivityResourceParameters, location_name: "ConnectivityParameters"))
     CreateConnectionAuthRequestParameters.struct_class = Types::CreateConnectionAuthRequestParameters
 
     CreateConnectionBasicAuthRequestParameters.add_member(:username, Shapes::ShapeRef.new(shape: AuthHeaderParameters, required: true, location_name: "Username"))
@@ -541,6 +559,7 @@ module Aws::EventBridge
     CreateConnectionRequest.add_member(:description, Shapes::ShapeRef.new(shape: ConnectionDescription, location_name: "Description"))
     CreateConnectionRequest.add_member(:authorization_type, Shapes::ShapeRef.new(shape: ConnectionAuthorizationType, required: true, location_name: "AuthorizationType"))
     CreateConnectionRequest.add_member(:auth_parameters, Shapes::ShapeRef.new(shape: CreateConnectionAuthRequestParameters, required: true, location_name: "AuthParameters"))
+    CreateConnectionRequest.add_member(:invocation_connectivity_parameters, Shapes::ShapeRef.new(shape: ConnectivityResourceParameters, location_name: "InvocationConnectivityParameters"))
     CreateConnectionRequest.struct_class = Types::CreateConnectionRequest
 
     CreateConnectionResponse.add_member(:connection_arn, Shapes::ShapeRef.new(shape: ConnectionArn, location_name: "ConnectionArn"))
@@ -671,12 +690,20 @@ module Aws::EventBridge
     DescribeArchiveResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreationTime"))
     DescribeArchiveResponse.struct_class = Types::DescribeArchiveResponse
 
+    DescribeConnectionConnectivityParameters.add_member(:resource_parameters, Shapes::ShapeRef.new(shape: DescribeConnectionResourceParameters, required: true, location_name: "ResourceParameters"))
+    DescribeConnectionConnectivityParameters.struct_class = Types::DescribeConnectionConnectivityParameters
+
     DescribeConnectionRequest.add_member(:name, Shapes::ShapeRef.new(shape: ConnectionName, required: true, location_name: "Name"))
     DescribeConnectionRequest.struct_class = Types::DescribeConnectionRequest
+
+    DescribeConnectionResourceParameters.add_member(:resource_configuration_arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, required: true, location_name: "ResourceConfigurationArn"))
+    DescribeConnectionResourceParameters.add_member(:resource_association_arn, Shapes::ShapeRef.new(shape: ResourceAssociationArn, required: true, location_name: "ResourceAssociationArn"))
+    DescribeConnectionResourceParameters.struct_class = Types::DescribeConnectionResourceParameters
 
     DescribeConnectionResponse.add_member(:connection_arn, Shapes::ShapeRef.new(shape: ConnectionArn, location_name: "ConnectionArn"))
     DescribeConnectionResponse.add_member(:name, Shapes::ShapeRef.new(shape: ConnectionName, location_name: "Name"))
     DescribeConnectionResponse.add_member(:description, Shapes::ShapeRef.new(shape: ConnectionDescription, location_name: "Description"))
+    DescribeConnectionResponse.add_member(:invocation_connectivity_parameters, Shapes::ShapeRef.new(shape: DescribeConnectionConnectivityParameters, location_name: "InvocationConnectivityParameters"))
     DescribeConnectionResponse.add_member(:connection_state, Shapes::ShapeRef.new(shape: ConnectionState, location_name: "ConnectionState"))
     DescribeConnectionResponse.add_member(:state_reason, Shapes::ShapeRef.new(shape: ConnectionStateReason, location_name: "StateReason"))
     DescribeConnectionResponse.add_member(:authorization_type, Shapes::ShapeRef.new(shape: ConnectionAuthorizationType, location_name: "AuthorizationType"))
@@ -1287,6 +1314,8 @@ module Aws::EventBridge
     TestEventPatternResponse.add_member(:result, Shapes::ShapeRef.new(shape: Boolean, location_name: "Result"))
     TestEventPatternResponse.struct_class = Types::TestEventPatternResponse
 
+    ThrottlingException.struct_class = Types::ThrottlingException
+
     TransformerPaths.key = Shapes::ShapeRef.new(shape: InputTransformerPathKey)
     TransformerPaths.value = Shapes::ShapeRef.new(shape: TargetInputPath)
 
@@ -1330,6 +1359,7 @@ module Aws::EventBridge
     UpdateConnectionAuthRequestParameters.add_member(:o_auth_parameters, Shapes::ShapeRef.new(shape: UpdateConnectionOAuthRequestParameters, location_name: "OAuthParameters"))
     UpdateConnectionAuthRequestParameters.add_member(:api_key_auth_parameters, Shapes::ShapeRef.new(shape: UpdateConnectionApiKeyAuthRequestParameters, location_name: "ApiKeyAuthParameters"))
     UpdateConnectionAuthRequestParameters.add_member(:invocation_http_parameters, Shapes::ShapeRef.new(shape: ConnectionHttpParameters, location_name: "InvocationHttpParameters"))
+    UpdateConnectionAuthRequestParameters.add_member(:connectivity_parameters, Shapes::ShapeRef.new(shape: ConnectivityResourceParameters, location_name: "ConnectivityParameters"))
     UpdateConnectionAuthRequestParameters.struct_class = Types::UpdateConnectionAuthRequestParameters
 
     UpdateConnectionBasicAuthRequestParameters.add_member(:username, Shapes::ShapeRef.new(shape: AuthHeaderParameters, location_name: "Username"))
@@ -1350,6 +1380,7 @@ module Aws::EventBridge
     UpdateConnectionRequest.add_member(:description, Shapes::ShapeRef.new(shape: ConnectionDescription, location_name: "Description"))
     UpdateConnectionRequest.add_member(:authorization_type, Shapes::ShapeRef.new(shape: ConnectionAuthorizationType, location_name: "AuthorizationType"))
     UpdateConnectionRequest.add_member(:auth_parameters, Shapes::ShapeRef.new(shape: UpdateConnectionAuthRequestParameters, location_name: "AuthParameters"))
+    UpdateConnectionRequest.add_member(:invocation_connectivity_parameters, Shapes::ShapeRef.new(shape: ConnectivityResourceParameters, location_name: "InvocationConnectivityParameters"))
     UpdateConnectionRequest.struct_class = Types::UpdateConnectionRequest
 
     UpdateConnectionResponse.add_member(:connection_arn, Shapes::ShapeRef.new(shape: ConnectionArn, location_name: "ConnectionArn"))
@@ -1470,7 +1501,10 @@ module Aws::EventBridge
         o.output = Shapes::ShapeRef.new(shape: CreateConnectionResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceAlreadyExistsException)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
       api.add_operation(:create_endpoint, Seahorse::Model::Operation.new.tap do |o|
@@ -2021,6 +2055,8 @@ module Aws::EventBridge
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalException)
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
       api.add_operation(:update_endpoint, Seahorse::Model::Operation.new.tap do |o|

@@ -45,6 +45,7 @@ module Aws::CloudWatchLogs
     CSV = Shapes::StructureShape.new(name: 'CSV')
     CancelExportTaskRequest = Shapes::StructureShape.new(name: 'CancelExportTaskRequest')
     ClientToken = Shapes::StringShape.new(name: 'ClientToken')
+    CollectionRetentionDays = Shapes::IntegerShape.new(name: 'CollectionRetentionDays')
     Column = Shapes::StringShape.new(name: 'Column')
     Columns = Shapes::ListShape.new(name: 'Columns')
     ConfigurationTemplate = Shapes::StructureShape.new(name: 'ConfigurationTemplate')
@@ -63,6 +64,7 @@ module Aws::CloudWatchLogs
     CreateLogAnomalyDetectorResponse = Shapes::StructureShape.new(name: 'CreateLogAnomalyDetectorResponse')
     CreateLogGroupRequest = Shapes::StructureShape.new(name: 'CreateLogGroupRequest')
     CreateLogStreamRequest = Shapes::StructureShape.new(name: 'CreateLogStreamRequest')
+    DashboardViewerPrincipals = Shapes::ListShape.new(name: 'DashboardViewerPrincipals')
     DataAlreadyAcceptedException = Shapes::StructureShape.new(name: 'DataAlreadyAcceptedException')
     DataProtectionPolicyDocument = Shapes::StringShape.new(name: 'DataProtectionPolicyDocument')
     DataProtectionStatus = Shapes::StringShape.new(name: 'DataProtectionStatus')
@@ -78,6 +80,8 @@ module Aws::CloudWatchLogs
     DeleteDestinationRequest = Shapes::StructureShape.new(name: 'DeleteDestinationRequest')
     DeleteIndexPolicyRequest = Shapes::StructureShape.new(name: 'DeleteIndexPolicyRequest')
     DeleteIndexPolicyResponse = Shapes::StructureShape.new(name: 'DeleteIndexPolicyResponse')
+    DeleteIntegrationRequest = Shapes::StructureShape.new(name: 'DeleteIntegrationRequest')
+    DeleteIntegrationResponse = Shapes::StructureShape.new(name: 'DeleteIntegrationResponse')
     DeleteKeys = Shapes::StructureShape.new(name: 'DeleteKeys')
     DeleteLogAnomalyDetectorRequest = Shapes::StructureShape.new(name: 'DeleteLogAnomalyDetectorRequest')
     DeleteLogGroupRequest = Shapes::StructureShape.new(name: 'DeleteLogGroupRequest')
@@ -197,6 +201,7 @@ module Aws::CloudWatchLogs
     FilteredLogEvents = Shapes::ListShape.new(name: 'FilteredLogEvents')
     Flatten = Shapes::BooleanShape.new(name: 'Flatten')
     FlattenedElement = Shapes::StringShape.new(name: 'FlattenedElement')
+    Force = Shapes::BooleanShape.new(name: 'Force')
     ForceUpdate = Shapes::BooleanShape.new(name: 'ForceUpdate')
     FromKey = Shapes::StringShape.new(name: 'FromKey')
     GetDataProtectionPolicyRequest = Shapes::StructureShape.new(name: 'GetDataProtectionPolicyRequest')
@@ -209,6 +214,8 @@ module Aws::CloudWatchLogs
     GetDeliveryResponse = Shapes::StructureShape.new(name: 'GetDeliveryResponse')
     GetDeliverySourceRequest = Shapes::StructureShape.new(name: 'GetDeliverySourceRequest')
     GetDeliverySourceResponse = Shapes::StructureShape.new(name: 'GetDeliverySourceResponse')
+    GetIntegrationRequest = Shapes::StructureShape.new(name: 'GetIntegrationRequest')
+    GetIntegrationResponse = Shapes::StructureShape.new(name: 'GetIntegrationResponse')
     GetLogAnomalyDetectorRequest = Shapes::StructureShape.new(name: 'GetLogAnomalyDetectorRequest')
     GetLogAnomalyDetectorResponse = Shapes::StructureShape.new(name: 'GetLogAnomalyDetectorResponse')
     GetLogEventsRequest = Shapes::StructureShape.new(name: 'GetLogEventsRequest')
@@ -235,6 +242,14 @@ module Aws::CloudWatchLogs
     InputLogEvents = Shapes::ListShape.new(name: 'InputLogEvents')
     InputLogStreamNames = Shapes::ListShape.new(name: 'InputLogStreamNames')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
+    IntegrationDetails = Shapes::UnionShape.new(name: 'IntegrationDetails')
+    IntegrationName = Shapes::StringShape.new(name: 'IntegrationName')
+    IntegrationNamePrefix = Shapes::StringShape.new(name: 'IntegrationNamePrefix')
+    IntegrationStatus = Shapes::StringShape.new(name: 'IntegrationStatus')
+    IntegrationStatusMessage = Shapes::StringShape.new(name: 'IntegrationStatusMessage')
+    IntegrationSummaries = Shapes::ListShape.new(name: 'IntegrationSummaries')
+    IntegrationSummary = Shapes::StructureShape.new(name: 'IntegrationSummary')
+    IntegrationType = Shapes::StringShape.new(name: 'IntegrationType')
     Interleaved = Shapes::BooleanShape.new(name: 'Interleaved')
     InvalidOperationException = Shapes::StructureShape.new(name: 'InvalidOperationException')
     InvalidParameterException = Shapes::StructureShape.new(name: 'InvalidParameterException')
@@ -248,6 +263,8 @@ module Aws::CloudWatchLogs
     ListAnomaliesLimit = Shapes::IntegerShape.new(name: 'ListAnomaliesLimit')
     ListAnomaliesRequest = Shapes::StructureShape.new(name: 'ListAnomaliesRequest')
     ListAnomaliesResponse = Shapes::StructureShape.new(name: 'ListAnomaliesResponse')
+    ListIntegrationsRequest = Shapes::StructureShape.new(name: 'ListIntegrationsRequest')
+    ListIntegrationsResponse = Shapes::StructureShape.new(name: 'ListIntegrationsResponse')
     ListLogAnomalyDetectorsLimit = Shapes::IntegerShape.new(name: 'ListLogAnomalyDetectorsLimit')
     ListLogAnomalyDetectorsRequest = Shapes::StructureShape.new(name: 'ListLogAnomalyDetectorsRequest')
     ListLogAnomalyDetectorsResponse = Shapes::StructureShape.new(name: 'ListLogAnomalyDetectorsResponse')
@@ -308,6 +325,24 @@ module Aws::CloudWatchLogs
     MoveKeys = Shapes::StructureShape.new(name: 'MoveKeys')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NonMatchValue = Shapes::StringShape.new(name: 'NonMatchValue')
+    OpenSearchApplication = Shapes::StructureShape.new(name: 'OpenSearchApplication')
+    OpenSearchApplicationEndpoint = Shapes::StringShape.new(name: 'OpenSearchApplicationEndpoint')
+    OpenSearchApplicationId = Shapes::StringShape.new(name: 'OpenSearchApplicationId')
+    OpenSearchCollection = Shapes::StructureShape.new(name: 'OpenSearchCollection')
+    OpenSearchCollectionEndpoint = Shapes::StringShape.new(name: 'OpenSearchCollectionEndpoint')
+    OpenSearchDataAccessPolicy = Shapes::StructureShape.new(name: 'OpenSearchDataAccessPolicy')
+    OpenSearchDataSource = Shapes::StructureShape.new(name: 'OpenSearchDataSource')
+    OpenSearchDataSourceName = Shapes::StringShape.new(name: 'OpenSearchDataSourceName')
+    OpenSearchEncryptionPolicy = Shapes::StructureShape.new(name: 'OpenSearchEncryptionPolicy')
+    OpenSearchIntegrationDetails = Shapes::StructureShape.new(name: 'OpenSearchIntegrationDetails')
+    OpenSearchLifecyclePolicy = Shapes::StructureShape.new(name: 'OpenSearchLifecyclePolicy')
+    OpenSearchNetworkPolicy = Shapes::StructureShape.new(name: 'OpenSearchNetworkPolicy')
+    OpenSearchPolicyName = Shapes::StringShape.new(name: 'OpenSearchPolicyName')
+    OpenSearchResourceConfig = Shapes::StructureShape.new(name: 'OpenSearchResourceConfig')
+    OpenSearchResourceStatus = Shapes::StructureShape.new(name: 'OpenSearchResourceStatus')
+    OpenSearchResourceStatusType = Shapes::StringShape.new(name: 'OpenSearchResourceStatusType')
+    OpenSearchWorkspace = Shapes::StructureShape.new(name: 'OpenSearchWorkspace')
+    OpenSearchWorkspaceId = Shapes::StringShape.new(name: 'OpenSearchWorkspaceId')
     OperationAbortedException = Shapes::StructureShape.new(name: 'OperationAbortedException')
     OrderBy = Shapes::StringShape.new(name: 'OrderBy')
     OutputFormat = Shapes::StringShape.new(name: 'OutputFormat')
@@ -351,6 +386,8 @@ module Aws::CloudWatchLogs
     PutDestinationResponse = Shapes::StructureShape.new(name: 'PutDestinationResponse')
     PutIndexPolicyRequest = Shapes::StructureShape.new(name: 'PutIndexPolicyRequest')
     PutIndexPolicyResponse = Shapes::StructureShape.new(name: 'PutIndexPolicyResponse')
+    PutIntegrationRequest = Shapes::StructureShape.new(name: 'PutIntegrationRequest')
+    PutIntegrationResponse = Shapes::StructureShape.new(name: 'PutIntegrationResponse')
     PutLogEventsRequest = Shapes::StructureShape.new(name: 'PutLogEventsRequest')
     PutLogEventsResponse = Shapes::StructureShape.new(name: 'PutLogEventsResponse')
     PutMetricFilterRequest = Shapes::StructureShape.new(name: 'PutMetricFilterRequest')
@@ -371,6 +408,7 @@ module Aws::CloudWatchLogs
     QueryId = Shapes::StringShape.new(name: 'QueryId')
     QueryInfo = Shapes::StructureShape.new(name: 'QueryInfo')
     QueryInfoList = Shapes::ListShape.new(name: 'QueryInfoList')
+    QueryLanguage = Shapes::StringShape.new(name: 'QueryLanguage')
     QueryListMaxResults = Shapes::IntegerShape.new(name: 'QueryListMaxResults')
     QueryResults = Shapes::ListShape.new(name: 'QueryResults')
     QueryStatistics = Shapes::StructureShape.new(name: 'QueryStatistics')
@@ -388,6 +426,7 @@ module Aws::CloudWatchLogs
     RequestId = Shapes::StringShape.new(name: 'RequestId')
     ResourceAlreadyExistsException = Shapes::StructureShape.new(name: 'ResourceAlreadyExistsException')
     ResourceArns = Shapes::ListShape.new(name: 'ResourceArns')
+    ResourceConfig = Shapes::UnionShape.new(name: 'ResourceConfig')
     ResourceIdentifier = Shapes::StringShape.new(name: 'ResourceIdentifier')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourcePolicies = Shapes::ListShape.new(name: 'ResourcePolicies')
@@ -643,6 +682,8 @@ module Aws::CloudWatchLogs
     CreateLogStreamRequest.add_member(:log_stream_name, Shapes::ShapeRef.new(shape: LogStreamName, required: true, location_name: "logStreamName"))
     CreateLogStreamRequest.struct_class = Types::CreateLogStreamRequest
 
+    DashboardViewerPrincipals.member = Shapes::ShapeRef.new(shape: Arn)
+
     DataAlreadyAcceptedException.add_member(:expected_sequence_token, Shapes::ShapeRef.new(shape: SequenceToken, location_name: "expectedSequenceToken"))
     DataAlreadyAcceptedException.struct_class = Types::DataAlreadyAcceptedException
 
@@ -681,6 +722,12 @@ module Aws::CloudWatchLogs
     DeleteIndexPolicyRequest.struct_class = Types::DeleteIndexPolicyRequest
 
     DeleteIndexPolicyResponse.struct_class = Types::DeleteIndexPolicyResponse
+
+    DeleteIntegrationRequest.add_member(:integration_name, Shapes::ShapeRef.new(shape: IntegrationName, required: true, location_name: "integrationName"))
+    DeleteIntegrationRequest.add_member(:force, Shapes::ShapeRef.new(shape: Force, location_name: "force"))
+    DeleteIntegrationRequest.struct_class = Types::DeleteIntegrationRequest
+
+    DeleteIntegrationResponse.struct_class = Types::DeleteIntegrationResponse
 
     DeleteKeys.add_member(:with_keys, Shapes::ShapeRef.new(shape: DeleteWithKeys, required: true, location_name: "withKeys"))
     DeleteKeys.struct_class = Types::DeleteKeys
@@ -885,12 +932,14 @@ module Aws::CloudWatchLogs
     DescribeQueriesRequest.add_member(:status, Shapes::ShapeRef.new(shape: QueryStatus, location_name: "status"))
     DescribeQueriesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DescribeQueriesMaxResults, location_name: "maxResults"))
     DescribeQueriesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    DescribeQueriesRequest.add_member(:query_language, Shapes::ShapeRef.new(shape: QueryLanguage, location_name: "queryLanguage"))
     DescribeQueriesRequest.struct_class = Types::DescribeQueriesRequest
 
     DescribeQueriesResponse.add_member(:queries, Shapes::ShapeRef.new(shape: QueryInfoList, location_name: "queries"))
     DescribeQueriesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     DescribeQueriesResponse.struct_class = Types::DescribeQueriesResponse
 
+    DescribeQueryDefinitionsRequest.add_member(:query_language, Shapes::ShapeRef.new(shape: QueryLanguage, location_name: "queryLanguage"))
     DescribeQueryDefinitionsRequest.add_member(:query_definition_name_prefix, Shapes::ShapeRef.new(shape: QueryDefinitionName, location_name: "queryDefinitionNamePrefix"))
     DescribeQueryDefinitionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: QueryListMaxResults, location_name: "maxResults"))
     DescribeQueryDefinitionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
@@ -1040,6 +1089,15 @@ module Aws::CloudWatchLogs
     GetDeliverySourceResponse.add_member(:delivery_source, Shapes::ShapeRef.new(shape: DeliverySource, location_name: "deliverySource"))
     GetDeliverySourceResponse.struct_class = Types::GetDeliverySourceResponse
 
+    GetIntegrationRequest.add_member(:integration_name, Shapes::ShapeRef.new(shape: IntegrationName, required: true, location_name: "integrationName"))
+    GetIntegrationRequest.struct_class = Types::GetIntegrationRequest
+
+    GetIntegrationResponse.add_member(:integration_name, Shapes::ShapeRef.new(shape: IntegrationName, location_name: "integrationName"))
+    GetIntegrationResponse.add_member(:integration_type, Shapes::ShapeRef.new(shape: IntegrationType, location_name: "integrationType"))
+    GetIntegrationResponse.add_member(:integration_status, Shapes::ShapeRef.new(shape: IntegrationStatus, location_name: "integrationStatus"))
+    GetIntegrationResponse.add_member(:integration_details, Shapes::ShapeRef.new(shape: IntegrationDetails, location_name: "integrationDetails"))
+    GetIntegrationResponse.struct_class = Types::GetIntegrationResponse
+
     GetLogAnomalyDetectorRequest.add_member(:anomaly_detector_arn, Shapes::ShapeRef.new(shape: AnomalyDetectorArn, required: true, location_name: "anomalyDetectorArn"))
     GetLogAnomalyDetectorRequest.struct_class = Types::GetLogAnomalyDetectorRequest
 
@@ -1088,6 +1146,7 @@ module Aws::CloudWatchLogs
     GetQueryResultsRequest.add_member(:query_id, Shapes::ShapeRef.new(shape: QueryId, required: true, location_name: "queryId"))
     GetQueryResultsRequest.struct_class = Types::GetQueryResultsRequest
 
+    GetQueryResultsResponse.add_member(:query_language, Shapes::ShapeRef.new(shape: QueryLanguage, location_name: "queryLanguage"))
     GetQueryResultsResponse.add_member(:results, Shapes::ShapeRef.new(shape: QueryResults, location_name: "results"))
     GetQueryResultsResponse.add_member(:statistics, Shapes::ShapeRef.new(shape: QueryStatistics, location_name: "statistics"))
     GetQueryResultsResponse.add_member(:status, Shapes::ShapeRef.new(shape: QueryStatus, location_name: "status"))
@@ -1129,6 +1188,19 @@ module Aws::CloudWatchLogs
 
     InputLogStreamNames.member = Shapes::ShapeRef.new(shape: LogStreamName)
 
+    IntegrationDetails.add_member(:open_search_integration_details, Shapes::ShapeRef.new(shape: OpenSearchIntegrationDetails, location_name: "openSearchIntegrationDetails"))
+    IntegrationDetails.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    IntegrationDetails.add_member_subclass(:open_search_integration_details, Types::IntegrationDetails::OpenSearchIntegrationDetails)
+    IntegrationDetails.add_member_subclass(:unknown, Types::IntegrationDetails::Unknown)
+    IntegrationDetails.struct_class = Types::IntegrationDetails
+
+    IntegrationSummaries.member = Shapes::ShapeRef.new(shape: IntegrationSummary)
+
+    IntegrationSummary.add_member(:integration_name, Shapes::ShapeRef.new(shape: IntegrationName, location_name: "integrationName"))
+    IntegrationSummary.add_member(:integration_type, Shapes::ShapeRef.new(shape: IntegrationType, location_name: "integrationType"))
+    IntegrationSummary.add_member(:integration_status, Shapes::ShapeRef.new(shape: IntegrationStatus, location_name: "integrationStatus"))
+    IntegrationSummary.struct_class = Types::IntegrationSummary
+
     InvalidOperationException.struct_class = Types::InvalidOperationException
 
     InvalidParameterException.struct_class = Types::InvalidParameterException
@@ -1147,6 +1219,14 @@ module Aws::CloudWatchLogs
     ListAnomaliesResponse.add_member(:anomalies, Shapes::ShapeRef.new(shape: Anomalies, location_name: "anomalies"))
     ListAnomaliesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListAnomaliesResponse.struct_class = Types::ListAnomaliesResponse
+
+    ListIntegrationsRequest.add_member(:integration_name_prefix, Shapes::ShapeRef.new(shape: IntegrationNamePrefix, location_name: "integrationNamePrefix"))
+    ListIntegrationsRequest.add_member(:integration_type, Shapes::ShapeRef.new(shape: IntegrationType, location_name: "integrationType"))
+    ListIntegrationsRequest.add_member(:integration_status, Shapes::ShapeRef.new(shape: IntegrationStatus, location_name: "integrationStatus"))
+    ListIntegrationsRequest.struct_class = Types::ListIntegrationsRequest
+
+    ListIntegrationsResponse.add_member(:integration_summaries, Shapes::ShapeRef.new(shape: IntegrationSummaries, location_name: "integrationSummaries"))
+    ListIntegrationsResponse.struct_class = Types::ListIntegrationsResponse
 
     ListLogAnomalyDetectorsRequest.add_member(:filter_log_group_arn, Shapes::ShapeRef.new(shape: LogGroupArn, location_name: "filterLogGroupArn"))
     ListLogAnomalyDetectorsRequest.add_member(:limit, Shapes::ShapeRef.new(shape: ListLogAnomalyDetectorsLimit, location_name: "limit"))
@@ -1307,6 +1387,62 @@ module Aws::CloudWatchLogs
     MoveKeys.add_member(:entries, Shapes::ShapeRef.new(shape: MoveKeyEntries, required: true, location_name: "entries"))
     MoveKeys.struct_class = Types::MoveKeys
 
+    OpenSearchApplication.add_member(:application_endpoint, Shapes::ShapeRef.new(shape: OpenSearchApplicationEndpoint, location_name: "applicationEndpoint"))
+    OpenSearchApplication.add_member(:application_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "applicationArn"))
+    OpenSearchApplication.add_member(:application_id, Shapes::ShapeRef.new(shape: OpenSearchApplicationId, location_name: "applicationId"))
+    OpenSearchApplication.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchApplication.struct_class = Types::OpenSearchApplication
+
+    OpenSearchCollection.add_member(:collection_endpoint, Shapes::ShapeRef.new(shape: OpenSearchCollectionEndpoint, location_name: "collectionEndpoint"))
+    OpenSearchCollection.add_member(:collection_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "collectionArn"))
+    OpenSearchCollection.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchCollection.struct_class = Types::OpenSearchCollection
+
+    OpenSearchDataAccessPolicy.add_member(:policy_name, Shapes::ShapeRef.new(shape: OpenSearchPolicyName, location_name: "policyName"))
+    OpenSearchDataAccessPolicy.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchDataAccessPolicy.struct_class = Types::OpenSearchDataAccessPolicy
+
+    OpenSearchDataSource.add_member(:data_source_name, Shapes::ShapeRef.new(shape: OpenSearchDataSourceName, location_name: "dataSourceName"))
+    OpenSearchDataSource.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchDataSource.struct_class = Types::OpenSearchDataSource
+
+    OpenSearchEncryptionPolicy.add_member(:policy_name, Shapes::ShapeRef.new(shape: OpenSearchPolicyName, location_name: "policyName"))
+    OpenSearchEncryptionPolicy.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchEncryptionPolicy.struct_class = Types::OpenSearchEncryptionPolicy
+
+    OpenSearchIntegrationDetails.add_member(:data_source, Shapes::ShapeRef.new(shape: OpenSearchDataSource, location_name: "dataSource"))
+    OpenSearchIntegrationDetails.add_member(:application, Shapes::ShapeRef.new(shape: OpenSearchApplication, location_name: "application"))
+    OpenSearchIntegrationDetails.add_member(:collection, Shapes::ShapeRef.new(shape: OpenSearchCollection, location_name: "collection"))
+    OpenSearchIntegrationDetails.add_member(:workspace, Shapes::ShapeRef.new(shape: OpenSearchWorkspace, location_name: "workspace"))
+    OpenSearchIntegrationDetails.add_member(:encryption_policy, Shapes::ShapeRef.new(shape: OpenSearchEncryptionPolicy, location_name: "encryptionPolicy"))
+    OpenSearchIntegrationDetails.add_member(:network_policy, Shapes::ShapeRef.new(shape: OpenSearchNetworkPolicy, location_name: "networkPolicy"))
+    OpenSearchIntegrationDetails.add_member(:access_policy, Shapes::ShapeRef.new(shape: OpenSearchDataAccessPolicy, location_name: "accessPolicy"))
+    OpenSearchIntegrationDetails.add_member(:lifecycle_policy, Shapes::ShapeRef.new(shape: OpenSearchLifecyclePolicy, location_name: "lifecyclePolicy"))
+    OpenSearchIntegrationDetails.struct_class = Types::OpenSearchIntegrationDetails
+
+    OpenSearchLifecyclePolicy.add_member(:policy_name, Shapes::ShapeRef.new(shape: OpenSearchPolicyName, location_name: "policyName"))
+    OpenSearchLifecyclePolicy.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchLifecyclePolicy.struct_class = Types::OpenSearchLifecyclePolicy
+
+    OpenSearchNetworkPolicy.add_member(:policy_name, Shapes::ShapeRef.new(shape: OpenSearchPolicyName, location_name: "policyName"))
+    OpenSearchNetworkPolicy.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchNetworkPolicy.struct_class = Types::OpenSearchNetworkPolicy
+
+    OpenSearchResourceConfig.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "kmsKeyArn"))
+    OpenSearchResourceConfig.add_member(:data_source_role_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "dataSourceRoleArn"))
+    OpenSearchResourceConfig.add_member(:dashboard_viewer_principals, Shapes::ShapeRef.new(shape: DashboardViewerPrincipals, required: true, location_name: "dashboardViewerPrincipals"))
+    OpenSearchResourceConfig.add_member(:application_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "applicationArn"))
+    OpenSearchResourceConfig.add_member(:retention_days, Shapes::ShapeRef.new(shape: CollectionRetentionDays, required: true, location_name: "retentionDays"))
+    OpenSearchResourceConfig.struct_class = Types::OpenSearchResourceConfig
+
+    OpenSearchResourceStatus.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatusType, location_name: "status"))
+    OpenSearchResourceStatus.add_member(:status_message, Shapes::ShapeRef.new(shape: IntegrationStatusMessage, location_name: "statusMessage"))
+    OpenSearchResourceStatus.struct_class = Types::OpenSearchResourceStatus
+
+    OpenSearchWorkspace.add_member(:workspace_id, Shapes::ShapeRef.new(shape: OpenSearchWorkspaceId, location_name: "workspaceId"))
+    OpenSearchWorkspace.add_member(:status, Shapes::ShapeRef.new(shape: OpenSearchResourceStatus, location_name: "status"))
+    OpenSearchWorkspace.struct_class = Types::OpenSearchWorkspace
+
     OperationAbortedException.struct_class = Types::OperationAbortedException
 
     OutputFormats.member = Shapes::ShapeRef.new(shape: OutputFormat)
@@ -1449,6 +1585,15 @@ module Aws::CloudWatchLogs
     PutIndexPolicyResponse.add_member(:index_policy, Shapes::ShapeRef.new(shape: IndexPolicy, location_name: "indexPolicy"))
     PutIndexPolicyResponse.struct_class = Types::PutIndexPolicyResponse
 
+    PutIntegrationRequest.add_member(:integration_name, Shapes::ShapeRef.new(shape: IntegrationName, required: true, location_name: "integrationName"))
+    PutIntegrationRequest.add_member(:resource_config, Shapes::ShapeRef.new(shape: ResourceConfig, required: true, location_name: "resourceConfig"))
+    PutIntegrationRequest.add_member(:integration_type, Shapes::ShapeRef.new(shape: IntegrationType, required: true, location_name: "integrationType"))
+    PutIntegrationRequest.struct_class = Types::PutIntegrationRequest
+
+    PutIntegrationResponse.add_member(:integration_name, Shapes::ShapeRef.new(shape: IntegrationName, location_name: "integrationName"))
+    PutIntegrationResponse.add_member(:integration_status, Shapes::ShapeRef.new(shape: IntegrationStatus, location_name: "integrationStatus"))
+    PutIntegrationResponse.struct_class = Types::PutIntegrationResponse
+
     PutLogEventsRequest.add_member(:log_group_name, Shapes::ShapeRef.new(shape: LogGroupName, required: true, location_name: "logGroupName"))
     PutLogEventsRequest.add_member(:log_stream_name, Shapes::ShapeRef.new(shape: LogStreamName, required: true, location_name: "logStreamName"))
     PutLogEventsRequest.add_member(:log_events, Shapes::ShapeRef.new(shape: InputLogEvents, required: true, location_name: "logEvents"))
@@ -1468,6 +1613,7 @@ module Aws::CloudWatchLogs
     PutMetricFilterRequest.add_member(:apply_on_transformed_logs, Shapes::ShapeRef.new(shape: ApplyOnTransformedLogs, location_name: "applyOnTransformedLogs"))
     PutMetricFilterRequest.struct_class = Types::PutMetricFilterRequest
 
+    PutQueryDefinitionRequest.add_member(:query_language, Shapes::ShapeRef.new(shape: QueryLanguage, location_name: "queryLanguage"))
     PutQueryDefinitionRequest.add_member(:name, Shapes::ShapeRef.new(shape: QueryDefinitionName, required: true, location_name: "name"))
     PutQueryDefinitionRequest.add_member(:query_definition_id, Shapes::ShapeRef.new(shape: QueryId, location_name: "queryDefinitionId"))
     PutQueryDefinitionRequest.add_member(:log_group_names, Shapes::ShapeRef.new(shape: LogGroupNames, location_name: "logGroupNames"))
@@ -1510,6 +1656,7 @@ module Aws::CloudWatchLogs
     QueryCompileErrorLocation.add_member(:end_char_offset, Shapes::ShapeRef.new(shape: QueryCharOffset, location_name: "endCharOffset"))
     QueryCompileErrorLocation.struct_class = Types::QueryCompileErrorLocation
 
+    QueryDefinition.add_member(:query_language, Shapes::ShapeRef.new(shape: QueryLanguage, location_name: "queryLanguage"))
     QueryDefinition.add_member(:query_definition_id, Shapes::ShapeRef.new(shape: QueryId, location_name: "queryDefinitionId"))
     QueryDefinition.add_member(:name, Shapes::ShapeRef.new(shape: QueryDefinitionName, location_name: "name"))
     QueryDefinition.add_member(:query_string, Shapes::ShapeRef.new(shape: QueryDefinitionString, location_name: "queryString"))
@@ -1519,6 +1666,7 @@ module Aws::CloudWatchLogs
 
     QueryDefinitionList.member = Shapes::ShapeRef.new(shape: QueryDefinition)
 
+    QueryInfo.add_member(:query_language, Shapes::ShapeRef.new(shape: QueryLanguage, location_name: "queryLanguage"))
     QueryInfo.add_member(:query_id, Shapes::ShapeRef.new(shape: QueryId, location_name: "queryId"))
     QueryInfo.add_member(:query_string, Shapes::ShapeRef.new(shape: QueryString, location_name: "queryString"))
     QueryInfo.add_member(:status, Shapes::ShapeRef.new(shape: QueryStatus, location_name: "status"))
@@ -1565,6 +1713,12 @@ module Aws::CloudWatchLogs
     ResourceAlreadyExistsException.struct_class = Types::ResourceAlreadyExistsException
 
     ResourceArns.member = Shapes::ShapeRef.new(shape: Arn)
+
+    ResourceConfig.add_member(:open_search_resource_config, Shapes::ShapeRef.new(shape: OpenSearchResourceConfig, location_name: "openSearchResourceConfig"))
+    ResourceConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ResourceConfig.add_member_subclass(:open_search_resource_config, Types::ResourceConfig::OpenSearchResourceConfig)
+    ResourceConfig.add_member_subclass(:unknown, Types::ResourceConfig::Unknown)
+    ResourceConfig.struct_class = Types::ResourceConfig
 
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
@@ -1629,6 +1783,7 @@ module Aws::CloudWatchLogs
     StartLiveTailResponseStream.add_member(:session_streaming_exception, Shapes::ShapeRef.new(shape: SessionStreamingException, location_name: "SessionStreamingException"))
     StartLiveTailResponseStream.struct_class = Types::StartLiveTailResponseStream
 
+    StartQueryRequest.add_member(:query_language, Shapes::ShapeRef.new(shape: QueryLanguage, location_name: "queryLanguage"))
     StartQueryRequest.add_member(:log_group_name, Shapes::ShapeRef.new(shape: LogGroupName, location_name: "logGroupName"))
     StartQueryRequest.add_member(:log_group_names, Shapes::ShapeRef.new(shape: LogGroupNames, location_name: "logGroupNames"))
     StartQueryRequest.add_member(:log_group_identifiers, Shapes::ShapeRef.new(shape: LogGroupIdentifiers, location_name: "logGroupIdentifiers"))
@@ -1983,6 +2138,18 @@ module Aws::CloudWatchLogs
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: OperationAbortedException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:delete_integration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteIntegration"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteIntegrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteIntegrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
       end)
 
       api.add_operation(:delete_log_anomaly_detector, Seahorse::Model::Operation.new.tap do |o|
@@ -2417,6 +2584,17 @@ module Aws::CloudWatchLogs
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
+      api.add_operation(:get_integration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetIntegration"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetIntegrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetIntegrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:get_log_anomaly_detector, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetLogAnomalyDetector"
         o.http_method = "POST"
@@ -2509,6 +2687,16 @@ module Aws::CloudWatchLogs
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:list_integrations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListIntegrations"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListIntegrationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListIntegrationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
       end)
 
       api.add_operation(:list_log_anomaly_detectors, Seahorse::Model::Operation.new.tap do |o|
@@ -2667,6 +2855,18 @@ module Aws::CloudWatchLogs
         o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: OperationAbortedException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:put_integration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutIntegration"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: PutIntegrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: PutIntegrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
       end)
 
       api.add_operation(:put_log_events, Seahorse::Model::Operation.new.tap do |o|

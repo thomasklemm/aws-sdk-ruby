@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.30.0 (2024-12-02)
+------------------
+
+* Feature - Add support for Knowledge Base Evaluations & LLM as a judge
+
 1.29.0 (2024-11-18)
 ------------------
 

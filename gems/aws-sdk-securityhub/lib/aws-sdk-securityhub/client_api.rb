@@ -31,6 +31,11 @@ module Aws::SecurityHub
     ActionRemotePortDetails = Shapes::StructureShape.new(name: 'ActionRemotePortDetails')
     ActionTarget = Shapes::StructureShape.new(name: 'ActionTarget')
     ActionTargetList = Shapes::ListShape.new(name: 'ActionTargetList')
+    Actor = Shapes::StructureShape.new(name: 'Actor')
+    ActorSession = Shapes::StructureShape.new(name: 'ActorSession')
+    ActorSessionMfaStatus = Shapes::StringShape.new(name: 'ActorSessionMfaStatus')
+    ActorUser = Shapes::StructureShape.new(name: 'ActorUser')
+    ActorsList = Shapes::ListShape.new(name: 'ActorsList')
     Adjustment = Shapes::StructureShape.new(name: 'Adjustment')
     AdjustmentList = Shapes::ListShape.new(name: 'AdjustmentList')
     AdminAccount = Shapes::StructureShape.new(name: 'AdminAccount')
@@ -758,6 +763,7 @@ module Aws::SecurityHub
     ConfigurationPolicyAssociationsList = Shapes::ListShape.new(name: 'ConfigurationPolicyAssociationsList')
     ConfigurationPolicySummary = Shapes::StructureShape.new(name: 'ConfigurationPolicySummary')
     ConfigurationPolicySummaryList = Shapes::ListShape.new(name: 'ConfigurationPolicySummaryList')
+    ConnectionDirection = Shapes::StringShape.new(name: 'ConnectionDirection')
     ContainerDetails = Shapes::StructureShape.new(name: 'ContainerDetails')
     ControlFindingGenerator = Shapes::StringShape.new(name: 'ControlFindingGenerator')
     ControlStatus = Shapes::StringShape.new(name: 'ControlStatus')
@@ -812,6 +818,7 @@ module Aws::SecurityHub
     DescribeStandardsControlsResponse = Shapes::StructureShape.new(name: 'DescribeStandardsControlsResponse')
     DescribeStandardsRequest = Shapes::StructureShape.new(name: 'DescribeStandardsRequest')
     DescribeStandardsResponse = Shapes::StructureShape.new(name: 'DescribeStandardsResponse')
+    Detection = Shapes::StructureShape.new(name: 'Detection')
     DisableImportFindingsForProductRequest = Shapes::StructureShape.new(name: 'DisableImportFindingsForProductRequest')
     DisableImportFindingsForProductResponse = Shapes::StructureShape.new(name: 'DisableImportFindingsForProductResponse')
     DisableOrganizationAdminAccountRequest = Shapes::StructureShape.new(name: 'DisableOrganizationAdminAccountRequest')
@@ -889,6 +896,8 @@ module Aws::SecurityHub
     IcmpTypeCode = Shapes::StructureShape.new(name: 'IcmpTypeCode')
     ImportFindingsError = Shapes::StructureShape.new(name: 'ImportFindingsError')
     ImportFindingsErrorList = Shapes::ListShape.new(name: 'ImportFindingsErrorList')
+    Indicator = Shapes::StructureShape.new(name: 'Indicator')
+    IndicatorsList = Shapes::ListShape.new(name: 'IndicatorsList')
     Insight = Shapes::StructureShape.new(name: 'Insight')
     InsightList = Shapes::ListShape.new(name: 'InsightList')
     InsightResultValue = Shapes::StructureShape.new(name: 'InsightResultValue')
@@ -950,8 +959,13 @@ module Aws::SecurityHub
     Member = Shapes::StructureShape.new(name: 'Member')
     MemberList = Shapes::ListShape.new(name: 'MemberList')
     Network = Shapes::StructureShape.new(name: 'Network')
+    NetworkAutonomousSystem = Shapes::StructureShape.new(name: 'NetworkAutonomousSystem')
+    NetworkConnection = Shapes::StructureShape.new(name: 'NetworkConnection')
     NetworkConnectionAction = Shapes::StructureShape.new(name: 'NetworkConnectionAction')
     NetworkDirection = Shapes::StringShape.new(name: 'NetworkDirection')
+    NetworkEndpoint = Shapes::StructureShape.new(name: 'NetworkEndpoint')
+    NetworkEndpointsList = Shapes::ListShape.new(name: 'NetworkEndpointsList')
+    NetworkGeoLocation = Shapes::StructureShape.new(name: 'NetworkGeoLocation')
     NetworkHeader = Shapes::StructureShape.new(name: 'NetworkHeader')
     NetworkPathComponent = Shapes::StructureShape.new(name: 'NetworkPathComponent')
     NetworkPathComponentDetails = Shapes::StructureShape.new(name: 'NetworkPathComponentDetails')
@@ -1061,10 +1075,13 @@ module Aws::SecurityHub
     SensitiveDataDetectionsList = Shapes::ListShape.new(name: 'SensitiveDataDetectionsList')
     SensitiveDataResult = Shapes::StructureShape.new(name: 'SensitiveDataResult')
     SensitiveDataResultList = Shapes::ListShape.new(name: 'SensitiveDataResultList')
+    Sequence = Shapes::StructureShape.new(name: 'Sequence')
     Severity = Shapes::StructureShape.new(name: 'Severity')
     SeverityLabel = Shapes::StringShape.new(name: 'SeverityLabel')
     SeverityRating = Shapes::StringShape.new(name: 'SeverityRating')
     SeverityUpdate = Shapes::StructureShape.new(name: 'SeverityUpdate')
+    Signal = Shapes::StructureShape.new(name: 'Signal')
+    SignalsList = Shapes::ListShape.new(name: 'SignalsList')
     SizeBytes = Shapes::IntegerShape.new(name: 'SizeBytes')
     SoftwarePackage = Shapes::StructureShape.new(name: 'SoftwarePackage')
     SoftwarePackageList = Shapes::ListShape.new(name: 'SoftwarePackageList')
@@ -1160,6 +1177,7 @@ module Aws::SecurityHub
     UpdateStandardsControlRequest = Shapes::StructureShape.new(name: 'UpdateStandardsControlRequest')
     UpdateStandardsControlResponse = Shapes::StructureShape.new(name: 'UpdateStandardsControlResponse')
     UpdateStatus = Shapes::StringShape.new(name: 'UpdateStatus')
+    UserAccount = Shapes::StructureShape.new(name: 'UserAccount')
     VerificationState = Shapes::StringShape.new(name: 'VerificationState')
     VolumeMount = Shapes::StructureShape.new(name: 'VolumeMount')
     VolumeMountList = Shapes::ListShape.new(name: 'VolumeMountList')
@@ -1241,6 +1259,26 @@ module Aws::SecurityHub
     ActionTarget.struct_class = Types::ActionTarget
 
     ActionTargetList.member = Shapes::ShapeRef.new(shape: ActionTarget)
+
+    Actor.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Id"))
+    Actor.add_member(:user, Shapes::ShapeRef.new(shape: ActorUser, location_name: "User"))
+    Actor.add_member(:session, Shapes::ShapeRef.new(shape: ActorSession, location_name: "Session"))
+    Actor.struct_class = Types::Actor
+
+    ActorSession.add_member(:uid, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Uid"))
+    ActorSession.add_member(:mfa_status, Shapes::ShapeRef.new(shape: ActorSessionMfaStatus, location_name: "MfaStatus"))
+    ActorSession.add_member(:created_time, Shapes::ShapeRef.new(shape: Long, location_name: "CreatedTime"))
+    ActorSession.add_member(:issuer, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Issuer"))
+    ActorSession.struct_class = Types::ActorSession
+
+    ActorUser.add_member(:name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Name"))
+    ActorUser.add_member(:uid, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Uid"))
+    ActorUser.add_member(:type, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Type"))
+    ActorUser.add_member(:credential_uid, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "CredentialUid"))
+    ActorUser.add_member(:account, Shapes::ShapeRef.new(shape: UserAccount, location_name: "Account"))
+    ActorUser.struct_class = Types::ActorUser
+
+    ActorsList.member = Shapes::ShapeRef.new(shape: Actor)
 
     Adjustment.add_member(:metric, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Metric"))
     Adjustment.add_member(:reason, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Reason"))
@@ -4679,6 +4717,7 @@ module Aws::SecurityHub
     AwsSecurityFinding.add_member(:generator_details, Shapes::ShapeRef.new(shape: GeneratorDetails, location_name: "GeneratorDetails"))
     AwsSecurityFinding.add_member(:processed_at, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "ProcessedAt"))
     AwsSecurityFinding.add_member(:aws_account_name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "AwsAccountName"))
+    AwsSecurityFinding.add_member(:detection, Shapes::ShapeRef.new(shape: Detection, location_name: "Detection"))
     AwsSecurityFinding.struct_class = Types::AwsSecurityFinding
 
     AwsSecurityFindingFilters.add_member(:product_arn, Shapes::ShapeRef.new(shape: StringFilterList, location_name: "ProductArn"))
@@ -5486,6 +5525,9 @@ module Aws::SecurityHub
     DescribeStandardsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     DescribeStandardsResponse.struct_class = Types::DescribeStandardsResponse
 
+    Detection.add_member(:sequence, Shapes::ShapeRef.new(shape: Sequence, location_name: "Sequence"))
+    Detection.struct_class = Types::Detection
+
     DisableImportFindingsForProductRequest.add_member(:product_subscription_arn, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location: "uri", location_name: "ProductSubscriptionArn"))
     DisableImportFindingsForProductRequest.struct_class = Types::DisableImportFindingsForProductRequest
 
@@ -5754,6 +5796,14 @@ module Aws::SecurityHub
 
     ImportFindingsErrorList.member = Shapes::ShapeRef.new(shape: ImportFindingsError)
 
+    Indicator.add_member(:key, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Key"))
+    Indicator.add_member(:values, Shapes::ShapeRef.new(shape: NonEmptyStringList, location_name: "Values"))
+    Indicator.add_member(:title, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Title"))
+    Indicator.add_member(:type, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Type"))
+    Indicator.struct_class = Types::Indicator
+
+    IndicatorsList.member = Shapes::ShapeRef.new(shape: Indicator)
+
     Insight.add_member(:insight_arn, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "InsightArn"))
     Insight.add_member(:name, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location_name: "Name"))
     Insight.add_member(:filters, Shapes::ShapeRef.new(shape: AwsSecurityFindingFilters, required: true, location_name: "Filters"))
@@ -5975,6 +6025,13 @@ module Aws::SecurityHub
     Network.add_member(:destination_domain, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "DestinationDomain"))
     Network.struct_class = Types::Network
 
+    NetworkAutonomousSystem.add_member(:name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Name"))
+    NetworkAutonomousSystem.add_member(:number, Shapes::ShapeRef.new(shape: Integer, location_name: "Number"))
+    NetworkAutonomousSystem.struct_class = Types::NetworkAutonomousSystem
+
+    NetworkConnection.add_member(:direction, Shapes::ShapeRef.new(shape: ConnectionDirection, location_name: "Direction"))
+    NetworkConnection.struct_class = Types::NetworkConnection
+
     NetworkConnectionAction.add_member(:connection_direction, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "ConnectionDirection"))
     NetworkConnectionAction.add_member(:remote_ip_details, Shapes::ShapeRef.new(shape: ActionRemoteIpDetails, location_name: "RemoteIpDetails"))
     NetworkConnectionAction.add_member(:remote_port_details, Shapes::ShapeRef.new(shape: ActionRemotePortDetails, location_name: "RemotePortDetails"))
@@ -5982,6 +6039,23 @@ module Aws::SecurityHub
     NetworkConnectionAction.add_member(:protocol, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Protocol"))
     NetworkConnectionAction.add_member(:blocked, Shapes::ShapeRef.new(shape: Boolean, location_name: "Blocked"))
     NetworkConnectionAction.struct_class = Types::NetworkConnectionAction
+
+    NetworkEndpoint.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Id"))
+    NetworkEndpoint.add_member(:ip, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Ip"))
+    NetworkEndpoint.add_member(:domain, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Domain"))
+    NetworkEndpoint.add_member(:port, Shapes::ShapeRef.new(shape: Integer, location_name: "Port"))
+    NetworkEndpoint.add_member(:location, Shapes::ShapeRef.new(shape: NetworkGeoLocation, location_name: "Location"))
+    NetworkEndpoint.add_member(:autonomous_system, Shapes::ShapeRef.new(shape: NetworkAutonomousSystem, location_name: "AutonomousSystem"))
+    NetworkEndpoint.add_member(:connection, Shapes::ShapeRef.new(shape: NetworkConnection, location_name: "Connection"))
+    NetworkEndpoint.struct_class = Types::NetworkEndpoint
+
+    NetworkEndpointsList.member = Shapes::ShapeRef.new(shape: NetworkEndpoint)
+
+    NetworkGeoLocation.add_member(:city, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "City"))
+    NetworkGeoLocation.add_member(:country, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Country"))
+    NetworkGeoLocation.add_member(:lat, Shapes::ShapeRef.new(shape: Double, location_name: "Lat"))
+    NetworkGeoLocation.add_member(:lon, Shapes::ShapeRef.new(shape: Double, location_name: "Lon"))
+    NetworkGeoLocation.struct_class = Types::NetworkGeoLocation
 
     NetworkHeader.add_member(:protocol, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Protocol"))
     NetworkHeader.add_member(:destination, Shapes::ShapeRef.new(shape: NetworkPathComponentDetails, location_name: "Destination"))
@@ -6492,6 +6566,13 @@ module Aws::SecurityHub
 
     SensitiveDataResultList.member = Shapes::ShapeRef.new(shape: SensitiveDataResult)
 
+    Sequence.add_member(:uid, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Uid"))
+    Sequence.add_member(:actors, Shapes::ShapeRef.new(shape: ActorsList, location_name: "Actors"))
+    Sequence.add_member(:endpoints, Shapes::ShapeRef.new(shape: NetworkEndpointsList, location_name: "Endpoints"))
+    Sequence.add_member(:signals, Shapes::ShapeRef.new(shape: SignalsList, location_name: "Signals"))
+    Sequence.add_member(:sequence_indicators, Shapes::ShapeRef.new(shape: IndicatorsList, location_name: "SequenceIndicators"))
+    Sequence.struct_class = Types::Sequence
+
     Severity.add_member(:product, Shapes::ShapeRef.new(shape: Double, location_name: "Product"))
     Severity.add_member(:label, Shapes::ShapeRef.new(shape: SeverityLabel, location_name: "Label"))
     Severity.add_member(:normalized, Shapes::ShapeRef.new(shape: Integer, location_name: "Normalized"))
@@ -6502,6 +6583,25 @@ module Aws::SecurityHub
     SeverityUpdate.add_member(:product, Shapes::ShapeRef.new(shape: Double, location_name: "Product"))
     SeverityUpdate.add_member(:label, Shapes::ShapeRef.new(shape: SeverityLabel, location_name: "Label"))
     SeverityUpdate.struct_class = Types::SeverityUpdate
+
+    Signal.add_member(:type, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Type"))
+    Signal.add_member(:id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Id"))
+    Signal.add_member(:title, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Title"))
+    Signal.add_member(:product_arn, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "ProductArn"))
+    Signal.add_member(:resource_ids, Shapes::ShapeRef.new(shape: NonEmptyStringList, location_name: "ResourceIds"))
+    Signal.add_member(:signal_indicators, Shapes::ShapeRef.new(shape: IndicatorsList, location_name: "SignalIndicators"))
+    Signal.add_member(:name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Name"))
+    Signal.add_member(:created_at, Shapes::ShapeRef.new(shape: Long, location_name: "CreatedAt"))
+    Signal.add_member(:updated_at, Shapes::ShapeRef.new(shape: Long, location_name: "UpdatedAt"))
+    Signal.add_member(:first_seen_at, Shapes::ShapeRef.new(shape: Long, location_name: "FirstSeenAt"))
+    Signal.add_member(:last_seen_at, Shapes::ShapeRef.new(shape: Long, location_name: "LastSeenAt"))
+    Signal.add_member(:severity, Shapes::ShapeRef.new(shape: Double, location_name: "Severity"))
+    Signal.add_member(:count, Shapes::ShapeRef.new(shape: Integer, location_name: "Count"))
+    Signal.add_member(:actor_ids, Shapes::ShapeRef.new(shape: NonEmptyStringList, location_name: "ActorIds"))
+    Signal.add_member(:endpoint_ids, Shapes::ShapeRef.new(shape: NonEmptyStringList, location_name: "EndpointIds"))
+    Signal.struct_class = Types::Signal
+
+    SignalsList.member = Shapes::ShapeRef.new(shape: Signal)
 
     SoftwarePackage.add_member(:name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Name"))
     SoftwarePackage.add_member(:version, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Version"))
@@ -6841,6 +6941,10 @@ module Aws::SecurityHub
     UpdateStandardsControlRequest.struct_class = Types::UpdateStandardsControlRequest
 
     UpdateStandardsControlResponse.struct_class = Types::UpdateStandardsControlResponse
+
+    UserAccount.add_member(:uid, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Uid"))
+    UserAccount.add_member(:name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Name"))
+    UserAccount.struct_class = Types::UserAccount
 
     VolumeMount.add_member(:name, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "Name"))
     VolumeMount.add_member(:mount_path, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "MountPath"))

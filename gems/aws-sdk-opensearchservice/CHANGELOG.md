@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.62.0 (2024-12-02)
+------------------
+
+* Feature - This feature introduces support for CRUDL APIs, enabling the creation and management of Connected data sources.
+
 1.61.0 (2024-11-11)
 ------------------
 

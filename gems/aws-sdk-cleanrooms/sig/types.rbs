@@ -172,6 +172,14 @@ module Aws::CleanRooms
       SENSITIVE: []
     end
 
+    class AthenaTableReference
+      attr_accessor work_group: ::String
+      attr_accessor output_location: ::String
+      attr_accessor database_name: ::String
+      attr_accessor table_name: ::String
+      SENSITIVE: []
+    end
+
     class BatchGetCollaborationAnalysisTemplateError
       attr_accessor arn: ::String
       attr_accessor code: ::String
@@ -2002,6 +2010,33 @@ module Aws::CleanRooms
       SENSITIVE: []
     end
 
+    class SnowflakeTableReference
+      attr_accessor secret_arn: ::String
+      attr_accessor account_identifier: ::String
+      attr_accessor database_name: ::String
+      attr_accessor table_name: ::String
+      attr_accessor schema_name: ::String
+      attr_accessor table_schema: Types::SnowflakeTableSchema
+      SENSITIVE: []
+    end
+
+    class SnowflakeTableSchema
+      attr_accessor v1: ::Array[Types::SnowflakeTableSchemaV1]
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class V1 < SnowflakeTableSchema
+      end
+      class Unknown < SnowflakeTableSchema
+      end
+    end
+
+    class SnowflakeTableSchemaV1
+      attr_accessor column_name: ::String
+      attr_accessor column_type: ::String
+      SENSITIVE: []
+    end
+
     class StartProtectedQueryInput
       attr_accessor type: ("SQL")
       attr_accessor membership_identifier: ::String
@@ -2018,10 +2053,16 @@ module Aws::CleanRooms
 
     class TableReference
       attr_accessor glue: Types::GlueTableReference
+      attr_accessor snowflake: Types::SnowflakeTableReference
+      attr_accessor athena: Types::AthenaTableReference
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class Glue < TableReference
+      end
+      class Snowflake < TableReference
+      end
+      class Athena < TableReference
       end
       class Unknown < TableReference
       end

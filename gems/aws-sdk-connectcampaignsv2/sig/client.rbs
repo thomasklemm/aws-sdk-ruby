@@ -133,7 +133,10 @@ module Aws
                                }?
                              },
                              ?source: {
-                               customer_profiles_segment_arn: ::String?
+                               customer_profiles_segment_arn: ::String?,
+                               event_trigger: {
+                                 customer_profiles_domain_arn: ::String?
+                               }?
                              },
                              ?connect_campaign_flow_arn: ::String,
                              ?schedule: {
@@ -426,6 +429,24 @@ module Aws
                                       ) -> _PutOutboundRequestBatchResponseSuccess
                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutOutboundRequestBatchResponseSuccess
 
+      interface _PutProfileOutboundRequestBatchResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutProfileOutboundRequestBatchResponse]
+        def successful_requests: () -> ::Array[Types::SuccessfulProfileOutboundRequest]
+        def failed_requests: () -> ::Array[Types::FailedProfileOutboundRequest]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ConnectCampaignsV2/Client.html#put_profile_outbound_request_batch-instance_method
+      def put_profile_outbound_request_batch: (
+                                                id: ::String,
+                                                profile_outbound_requests: Array[
+                                                  {
+                                                    client_token: ::String,
+                                                    profile_id: ::String,
+                                                    expiration_time: ::Time?
+                                                  },
+                                                ]
+                                              ) -> _PutProfileOutboundRequestBatchResponseSuccess
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutProfileOutboundRequestBatchResponseSuccess
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ConnectCampaignsV2/Client.html#resume_campaign-instance_method
       def resume_campaign: (
                              id: ::String
@@ -641,7 +662,10 @@ module Aws
       def update_campaign_source: (
                                     id: ::String,
                                     source: {
-                                      customer_profiles_segment_arn: ::String?
+                                      customer_profiles_segment_arn: ::String?,
+                                      event_trigger: {
+                                        customer_profiles_domain_arn: ::String?
+                                      }?
                                     }
                                   ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]

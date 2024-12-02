@@ -217,6 +217,10 @@ module Aws::MemoryDB
     #   A group of settings that are currently being applied.
     #   @return [Types::ClusterPendingUpdates]
     #
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of the multi-Region cluster that this cluster belongs to.
+    #   @return [String]
+    #
     # @!attribute [rw] number_of_shards
     #   The number of shards in the cluster
     #   @return [Integer]
@@ -239,15 +243,15 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The Redis OSS or Valkey engine used by the cluster.
+    #   The name of the engine used by the cluster.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
-    #   The Redis engine version used by the cluster
+    #   The Redis OSS engine version used by the cluster
     #   @return [String]
     #
     # @!attribute [rw] engine_patch_version
-    #   The engine patch version used by the cluster
+    #   The Redis OSS engine patch version used by the cluster
     #   @return [String]
     #
     # @!attribute [rw] parameter_group_name
@@ -334,6 +338,7 @@ module Aws::MemoryDB
       :description,
       :status,
       :pending_updates,
+      :multi_region_cluster_name,
       :number_of_shards,
       :shards,
       :availability_mode,
@@ -380,12 +385,11 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The configuration for the Redis OSS or Valkey engine used by the
-    #   cluster.
+    #   The name of the engine used by the cluster configuration.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
-    #   The engine version used by the cluster
+    #   The Redis OSS engine version used by the cluster
     #   @return [String]
     #
     # @!attribute [rw] maintenance_window
@@ -429,6 +433,16 @@ module Aws::MemoryDB
     #   The list of shards in the cluster
     #   @return [Array<Types::ShardDetail>]
     #
+    # @!attribute [rw] multi_region_parameter_group_name
+    #   The name of the multi-Region parameter group associated with the
+    #   cluster configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name for the multi-Region cluster associated with the cluster
+    #   configuration.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/ClusterConfiguration AWS API Documentation
     #
     class ClusterConfiguration < Struct.new(
@@ -446,7 +460,9 @@ module Aws::MemoryDB
       :snapshot_retention_limit,
       :snapshot_window,
       :num_shards,
-      :shards)
+      :shards,
+      :multi_region_parameter_group_name,
+      :multi_region_cluster_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -586,6 +602,10 @@ module Aws::MemoryDB
     #   The compute and memory capacity of the nodes in the cluster.
     #   @return [String]
     #
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of the multi-Region cluster to be created.
+    #   @return [String]
+    #
     # @!attribute [rw] parameter_group_name
     #   The name of the parameter group associated with the cluster.
     #   @return [String]
@@ -696,12 +716,12 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The name of the engine to be used for the nodes in this cluster. The
-    #   value must be set to either Redis or Valkey.
+    #   The name of the engine to be used for the cluster.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
-    #   The version number of the engine to be used for the cluster.
+    #   The version number of the Redis OSS engine to be used for the
+    #   cluster.
     #   @return [String]
     #
     # @!attribute [rw] auto_minor_version_upgrade
@@ -724,6 +744,7 @@ module Aws::MemoryDB
     class CreateClusterRequest < Struct.new(
       :cluster_name,
       :node_type,
+      :multi_region_cluster_name,
       :parameter_group_name,
       :description,
       :num_shards,
@@ -757,6 +778,71 @@ module Aws::MemoryDB
     #
     class CreateClusterResponse < Struct.new(
       :cluster)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] multi_region_cluster_name_suffix
+    #   A suffix to be added to the multi-Region cluster name.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description for the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine
+    #   The name of the engine to be used for the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine_version
+    #   The version of the engine to be used for the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_type
+    #   The node type to be used for the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] multi_region_parameter_group_name
+    #   The name of the multi-Region parameter group to be associated with
+    #   the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] num_shards
+    #   The number of shards for the multi-Region cluster.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] tls_enabled
+    #   Whether to enable TLS encryption for the multi-Region cluster.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] tags
+    #   A list of tags to be applied to the multi-Region cluster.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateMultiRegionClusterRequest AWS API Documentation
+    #
+    class CreateMultiRegionClusterRequest < Struct.new(
+      :multi_region_cluster_name_suffix,
+      :description,
+      :engine,
+      :engine_version,
+      :node_type,
+      :multi_region_parameter_group_name,
+      :num_shards,
+      :tls_enabled,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] multi_region_cluster
+    #   Details about the newly created multi-Region cluster.
+    #   @return [Types::MultiRegionCluster]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateMultiRegionClusterResponse AWS API Documentation
+    #
+    class CreateMultiRegionClusterResponse < Struct.new(
+      :multi_region_cluster)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -874,7 +960,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] subnet_group
-    #   The newly-created subnet group
+    #   The newly-created subnet group.
     #   @return [Types::SubnetGroup]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateSubnetGroupResponse AWS API Documentation
@@ -933,7 +1019,7 @@ module Aws::MemoryDB
     class DefaultUserRequired < Aws::EmptyStructure; end
 
     # @!attribute [rw] acl_name
-    #   The name of the Access Control List to delete
+    #   The name of the Access Control List to delete.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteACLRequest AWS API Documentation
@@ -960,6 +1046,10 @@ module Aws::MemoryDB
     #   The name of the cluster to be deleted
     #   @return [String]
     #
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of the multi-Region cluster to be deleted.
+    #   @return [String]
+    #
     # @!attribute [rw] final_snapshot_name
     #   The user-supplied name of a final cluster snapshot. This is the
     #   unique name that identifies the snapshot. MemoryDB creates the
@@ -970,19 +1060,44 @@ module Aws::MemoryDB
     #
     class DeleteClusterRequest < Struct.new(
       :cluster_name,
+      :multi_region_cluster_name,
       :final_snapshot_name)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # @!attribute [rw] cluster
-    #   The cluster object that has been deleted
+    #   The cluster object that has been deleted.
     #   @return [Types::Cluster]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteClusterResponse AWS API Documentation
     #
     class DeleteClusterResponse < Struct.new(
       :cluster)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of the multi-Region cluster to be deleted.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteMultiRegionClusterRequest AWS API Documentation
+    #
+    class DeleteMultiRegionClusterRequest < Struct.new(
+      :multi_region_cluster_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] multi_region_cluster
+    #   Details about the deleted multi-Region cluster.
+    #   @return [Types::MultiRegionCluster]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteMultiRegionClusterResponse AWS API Documentation
+    #
+    class DeleteMultiRegionClusterResponse < Struct.new(
+      :multi_region_cluster)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1012,7 +1127,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] snapshot_name
-    #   The name of the snapshot to delete
+    #   The name of the snapshot to delete.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteSnapshotRequest AWS API Documentation
@@ -1036,7 +1151,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] subnet_group_name
-    #   The name of the subnet group to delete
+    #   The name of the subnet group to delete.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteSubnetGroupRequest AWS API Documentation
@@ -1084,7 +1199,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] acl_name
-    #   The name of the ACL
+    #   The name of the ACL.
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -1114,7 +1229,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] acls
-    #   The list of ACLs
+    #   The list of ACLs.
     #   @return [Array<Types::ACL>]
     #
     # @!attribute [rw] next_token
@@ -1134,7 +1249,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] cluster_name
-    #   The name of the cluster
+    #   The name of the cluster.
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -1192,12 +1307,11 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] engine
-    #   The engine version to return. Valid values are either valkey or
-    #   redis.
+    #   The name of the engine for which to list available versions.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
-    #   The engine version.
+    #   The Redis OSS engine version
     #   @return [String]
     #
     # @!attribute [rw] parameter_group_family
@@ -1334,6 +1448,50 @@ module Aws::MemoryDB
     class DescribeEventsResponse < Struct.new(
       :next_token,
       :events)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of a specific multi-Region cluster to describe.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   A token to specify where to start paginating.
+    #   @return [String]
+    #
+    # @!attribute [rw] show_cluster_details
+    #   Details about the multi-Region cluster.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeMultiRegionClustersRequest AWS API Documentation
+    #
+    class DescribeMultiRegionClustersRequest < Struct.new(
+      :multi_region_cluster_name,
+      :max_results,
+      :next_token,
+      :show_cluster_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   A token to use to retrieve the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] multi_region_clusters
+    #   A list of multi-Region clusters.
+    #   @return [Array<Types::MultiRegionCluster>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeMultiRegionClustersResponse AWS API Documentation
+    #
+    class DescribeMultiRegionClustersResponse < Struct.new(
+      :next_token,
+      :multi_region_clusters)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1604,11 +1762,11 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] cluster_names
-    #   The list of cluster names to identify service updates to apply
+    #   The list of cluster names to identify service updates to apply.
     #   @return [Array<String>]
     #
     # @!attribute [rw] status
-    #   The status(es) of the service updates to filter on
+    #   The status(es) of the service updates to filter on.
     #   @return [Array<String>]
     #
     # @!attribute [rw] max_results
@@ -1789,7 +1947,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] user_name
-    #   The name of the user
+    #   The name of the user.
     #   @return [String]
     #
     # @!attribute [rw] filters
@@ -1869,10 +2027,10 @@ module Aws::MemoryDB
       include Aws::Structure
     end
 
-    # Provides details of the engine version.
+    # Provides details of the Redis OSS engine version
     #
     # @!attribute [rw] engine
-    #   The version of the Redis OSS or Valkey engine used by the cluster.
+    #   The name of the engine for which version information is provided.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
@@ -1934,11 +2092,11 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] cluster_name
-    #   The cluster being failed over
+    #   The cluster being failed over.
     #   @return [String]
     #
     # @!attribute [rw] shard_name
-    #   The name of the shard
+    #   The name of the shard.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/FailoverShardRequest AWS API Documentation
@@ -1951,7 +2109,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] cluster
-    #   The cluster being failed over
+    #   The cluster being failed over.
     #   @return [Types::Cluster]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/FailoverShardResponse AWS API Documentation
@@ -2006,6 +2164,13 @@ module Aws::MemoryDB
     #
     class InvalidKMSKeyFault < Aws::EmptyStructure; end
 
+    # The requested operation cannot be performed on the multi-Region
+    # cluster in its current state.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/InvalidMultiRegionClusterStateFault AWS API Documentation
+    #
+    class InvalidMultiRegionClusterStateFault < Aws::EmptyStructure; end
+
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/InvalidNodeStateFault AWS API Documentation
     #
     class InvalidNodeStateFault < Aws::EmptyStructure; end
@@ -2052,6 +2217,35 @@ module Aws::MemoryDB
     #
     class InvalidVPCNetworkStateFault < Aws::EmptyStructure; end
 
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of the multi-Region cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/ListAllowedMultiRegionClusterUpdatesRequest AWS API Documentation
+    #
+    class ListAllowedMultiRegionClusterUpdatesRequest < Struct.new(
+      :multi_region_cluster_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] scale_up_node_types
+    #   The node types that the cluster can be scaled up to.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] scale_down_node_types
+    #   The node types that the cluster can be scaled down to.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/ListAllowedMultiRegionClusterUpdatesResponse AWS API Documentation
+    #
+    class ListAllowedMultiRegionClusterUpdatesResponse < Struct.new(
+      :scale_up_node_types,
+      :scale_down_node_types)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] cluster_name
     #   The name of the cluster you want to scale. MemoryDB uses the cluster
     #   name to identify the current node type being used by this cluster,
@@ -2085,7 +2279,7 @@ module Aws::MemoryDB
 
     # @!attribute [rw] resource_arn
     #   The Amazon Resource Name (ARN) of the resource for which you want
-    #   the list of tags
+    #   the list of tags.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/ListTagsRequest AWS API Documentation
@@ -2107,6 +2301,89 @@ module Aws::MemoryDB
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # Represents a multi-Region cluster.
+    #
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_type
+    #   The node type used by the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine
+    #   The name of the engine used by the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine_version
+    #   The version of the engine used by the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] number_of_shards
+    #   The number of shards in the multi-Region cluster.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] clusters
+    #   The clusters in this multi-Region cluster.
+    #   @return [Array<Types::RegionalCluster>]
+    #
+    # @!attribute [rw] multi_region_parameter_group_name
+    #   The name of the multi-Region parameter group associated with the
+    #   cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] tls_enabled
+    #   Indiciates if the multi-Region cluster is TLS enabled.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the multi-Region cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/MultiRegionCluster AWS API Documentation
+    #
+    class MultiRegionCluster < Struct.new(
+      :multi_region_cluster_name,
+      :description,
+      :status,
+      :node_type,
+      :engine,
+      :engine_version,
+      :number_of_shards,
+      :clusters,
+      :multi_region_parameter_group_name,
+      :tls_enabled,
+      :arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A multi-Region cluster with the specified name already exists.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/MultiRegionClusterAlreadyExistsFault AWS API Documentation
+    #
+    class MultiRegionClusterAlreadyExistsFault < Aws::EmptyStructure; end
+
+    # The specified multi-Region cluster does not exist.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/MultiRegionClusterNotFoundFault AWS API Documentation
+    #
+    class MultiRegionClusterNotFoundFault < Aws::EmptyStructure; end
+
+    # The specified multi-Region parameter group does not exist.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/MultiRegionParameterGroupNotFoundFault AWS API Documentation
+    #
+    class MultiRegionParameterGroupNotFoundFault < Aws::EmptyStructure; end
 
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/NoOperationFault AWS API Documentation
     #
@@ -2340,6 +2617,35 @@ module Aws::MemoryDB
     class RecurringCharge < Struct.new(
       :recurring_charge_amount,
       :recurring_charge_frequency)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a Regional cluster
+    #
+    # @!attribute [rw] cluster_name
+    #   The name of the Regional cluster
+    #   @return [String]
+    #
+    # @!attribute [rw] region
+    #   The Region the current Regional cluster is assigned to.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the Regional cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) the Regional cluster
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/RegionalCluster AWS API Documentation
+    #
+    class RegionalCluster < Struct.new(
+      :cluster_name,
+      :region,
+      :status,
+      :arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2596,8 +2902,7 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The MemoryDB engine to which the update applies. The values are
-    #   either Redis or Valkey.
+    #   The name of the engine for which a service update is available.
     #   @return [String]
     #
     # @!attribute [rw] nodes_updated
@@ -2962,7 +3267,7 @@ module Aws::MemoryDB
 
     # @!attribute [rw] resource_arn
     #   The Amazon Resource Name (ARN) of the resource to which the tags are
-    #   to be added
+    #   to be added.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -3022,11 +3327,11 @@ module Aws::MemoryDB
 
     # @!attribute [rw] resource_arn
     #   The Amazon Resource Name (ARN) of the resource to which the tags are
-    #   to be removed
+    #   to be removed.
     #   @return [String]
     #
     # @!attribute [rw] tag_keys
-    #   The list of keys of the tags that are to be removed
+    #   The list of keys of the tags that are to be removed.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UntagResourceRequest AWS API Documentation
@@ -3039,7 +3344,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] tag_list
-    #   The list of tags removed
+    #   The list of tags removed.
     #   @return [Array<Types::Tag>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UntagResourceResponse AWS API Documentation
@@ -3051,15 +3356,15 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] acl_name
-    #   The name of the Access Control List
+    #   The name of the Access Control List.
     #   @return [String]
     #
     # @!attribute [rw] user_names_to_add
-    #   The list of users to add to the Access Control List
+    #   The list of users to add to the Access Control List.
     #   @return [Array<String>]
     #
     # @!attribute [rw] user_names_to_remove
-    #   The list of users to remove from the Access Control List
+    #   The list of users to remove from the Access Control List.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateACLRequest AWS API Documentation
@@ -3073,7 +3378,7 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] acl
-    #   The updated Access Control List
+    #   The updated Access Control List.
     #   @return [Types::ACL]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateACLResponse AWS API Documentation
@@ -3085,15 +3390,15 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] cluster_name
-    #   The name of the cluster to update
+    #   The name of the cluster to update.
     #   @return [String]
     #
     # @!attribute [rw] description
-    #   The description of the cluster to update
+    #   The description of the cluster to update.
     #   @return [String]
     #
     # @!attribute [rw] security_group_ids
-    #   The SecurityGroupIds to update
+    #   The SecurityGroupIds to update.
     #   @return [Array<String>]
     #
     # @!attribute [rw] maintenance_window
@@ -3122,7 +3427,7 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] sns_topic_arn
-    #   The SNS topic ARN to update
+    #   The SNS topic ARN to update.
     #   @return [String]
     #
     # @!attribute [rw] sns_topic_status
@@ -3131,7 +3436,7 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] parameter_group_name
-    #   The name of the parameter group to update
+    #   The name of the parameter group to update.
     #   @return [String]
     #
     # @!attribute [rw] snapshot_window
@@ -3151,8 +3456,7 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] engine
-    #   The name of the engine to be used for the nodes in this cluster. The
-    #   value must be set to either Redis or Valkey.
+    #   The name of the engine to be used for the cluster.
     #   @return [String]
     #
     # @!attribute [rw] engine_version
@@ -3164,15 +3468,15 @@ module Aws::MemoryDB
     #   @return [String]
     #
     # @!attribute [rw] replica_configuration
-    #   The number of replicas that will reside in each shard
+    #   The number of replicas that will reside in each shard.
     #   @return [Types::ReplicaConfigurationRequest]
     #
     # @!attribute [rw] shard_configuration
-    #   The number of shards in the cluster
+    #   The number of shards in the cluster.
     #   @return [Types::ShardConfigurationRequest]
     #
     # @!attribute [rw] acl_name
-    #   The Access Control List that is associated with the cluster
+    #   The Access Control List that is associated with the cluster.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateClusterRequest AWS API Documentation
@@ -3198,13 +3502,68 @@ module Aws::MemoryDB
     end
 
     # @!attribute [rw] cluster
-    #   The updated cluster
+    #   The updated cluster.
     #   @return [Types::Cluster]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateClusterResponse AWS API Documentation
     #
     class UpdateClusterResponse < Struct.new(
       :cluster)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] multi_region_cluster_name
+    #   The name of the multi-Region cluster to be updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] node_type
+    #   The new node type to be used for the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A new description for the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] engine_version
+    #   The new engine version to be used for the multi-Region cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] shard_configuration
+    #   A request to configure the sharding properties of a cluster
+    #   @return [Types::ShardConfigurationRequest]
+    #
+    # @!attribute [rw] multi_region_parameter_group_name
+    #   The new multi-Region parameter group to be associated with the
+    #   cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] update_strategy
+    #   Whether to force the update even if it may cause data loss.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateMultiRegionClusterRequest AWS API Documentation
+    #
+    class UpdateMultiRegionClusterRequest < Struct.new(
+      :multi_region_cluster_name,
+      :node_type,
+      :description,
+      :engine_version,
+      :shard_configuration,
+      :multi_region_parameter_group_name,
+      :update_strategy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] multi_region_cluster
+    #   The status of updating the multi-Region cluster.
+    #   @return [Types::MultiRegionCluster]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateMultiRegionClusterResponse AWS API Documentation
+    #
+    class UpdateMultiRegionClusterResponse < Struct.new(
+      :multi_region_cluster)
       SENSITIVE = []
       include Aws::Structure
     end

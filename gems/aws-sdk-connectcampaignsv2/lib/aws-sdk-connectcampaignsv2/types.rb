@@ -758,6 +758,20 @@ module Aws::ConnectCampaignsV2
       include Aws::Structure
     end
 
+    # Event trigger of the campaign
+    #
+    # @!attribute [rw] customer_profiles_domain_arn
+    #   Amazon Resource Names(ARN)
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/EventTrigger AWS API Documentation
+    #
+    class EventTrigger < Struct.new(
+      :customer_profiles_domain_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Failed response of campaign state
     #
     # @!attribute [rw] campaign_id
@@ -773,6 +787,31 @@ module Aws::ConnectCampaignsV2
     #
     class FailedCampaignStateResponse < Struct.new(
       :campaign_id,
+      :failure_code)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Failure details for a profile outbound request
+    #
+    # @!attribute [rw] client_token
+    #   Client provided parameter used for idempotency. Its value must be
+    #   unique for each request.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   Identifier of the profile outbound request
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_code
+    #   Predefined code indicating the error that caused the failure
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/FailedProfileOutboundRequest AWS API Documentation
+    #
+    class FailedProfileOutboundRequest < Struct.new(
+      :client_token,
+      :id,
       :failure_code)
       SENSITIVE = []
       include Aws::Structure
@@ -1346,6 +1385,31 @@ module Aws::ConnectCampaignsV2
       include Aws::Structure
     end
 
+    # Information about a profile outbound request
+    #
+    # @!attribute [rw] client_token
+    #   Client provided parameter used for idempotency. Its value must be
+    #   unique for each request.
+    #   @return [String]
+    #
+    # @!attribute [rw] profile_id
+    #   Identifier of the customer profile
+    #   @return [String]
+    #
+    # @!attribute [rw] expiration_time
+    #   Timestamp with no UTC offset or timezone
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/ProfileOutboundRequest AWS API Documentation
+    #
+    class ProfileOutboundRequest < Struct.new(
+      :client_token,
+      :profile_id,
+      :expiration_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Progressive config
     #
     # @!attribute [rw] bandwidth_allocation
@@ -1411,6 +1475,44 @@ module Aws::ConnectCampaignsV2
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/PutOutboundRequestBatchResponse AWS API Documentation
     #
     class PutOutboundRequestBatchResponse < Struct.new(
+      :successful_requests,
+      :failed_requests)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The request for PutProfileOutboundRequestBatch API
+    #
+    # @!attribute [rw] id
+    #   Identifier representing a Campaign
+    #   @return [String]
+    #
+    # @!attribute [rw] profile_outbound_requests
+    #   List of profile outbound requests
+    #   @return [Array<Types::ProfileOutboundRequest>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/PutProfileOutboundRequestBatchRequest AWS API Documentation
+    #
+    class PutProfileOutboundRequestBatchRequest < Struct.new(
+      :id,
+      :profile_outbound_requests)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The response for PutProfileOutboundRequestBatch API
+    #
+    # @!attribute [rw] successful_requests
+    #   List of successful profile outbound requests
+    #   @return [Array<Types::SuccessfulProfileOutboundRequest>]
+    #
+    # @!attribute [rw] failed_requests
+    #   List of failed profile outbound requests
+    #   @return [Array<Types::FailedProfileOutboundRequest>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/PutProfileOutboundRequestBatchResponse AWS API Documentation
+    #
+    class PutProfileOutboundRequestBatchResponse < Struct.new(
       :successful_requests,
       :failed_requests)
       SENSITIVE = []
@@ -1690,16 +1792,22 @@ module Aws::ConnectCampaignsV2
     #   Amazon Resource Names(ARN)
     #   @return [String]
     #
+    # @!attribute [rw] event_trigger
+    #   Event trigger of the campaign
+    #   @return [Types::EventTrigger]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/Source AWS API Documentation
     #
     class Source < Struct.new(
       :customer_profiles_segment_arn,
+      :event_trigger,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
       class CustomerProfilesSegmentArn < Source; end
+      class EventTrigger < Source; end
       class Unknown < Source; end
     end
 
@@ -1782,6 +1890,26 @@ module Aws::ConnectCampaignsV2
     class SuccessfulCampaignStateResponse < Struct.new(
       :campaign_id,
       :state)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Success details for a profile outbound request
+    #
+    # @!attribute [rw] client_token
+    #   Client provided parameter used for idempotency. Its value must be
+    #   unique for each request.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   Identifier of the profile outbound request
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/SuccessfulProfileOutboundRequest AWS API Documentation
+    #
+    class SuccessfulProfileOutboundRequest < Struct.new(
+      :client_token,
+      :id)
       SENSITIVE = []
       include Aws::Structure
     end

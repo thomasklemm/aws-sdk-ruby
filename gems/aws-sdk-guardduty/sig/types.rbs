@@ -40,11 +40,24 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class AccessKey
+      attr_accessor principal_id: ::String
+      attr_accessor user_name: ::String
+      attr_accessor user_type: ::String
+      SENSITIVE: []
+    end
+
     class AccessKeyDetails
       attr_accessor access_key_id: ::String
       attr_accessor principal_id: ::String
       attr_accessor user_name: ::String
       attr_accessor user_type: ::String
+      SENSITIVE: []
+    end
+
+    class Account
+      attr_accessor uid: ::String
+      attr_accessor name: ::String
       SENSITIVE: []
     end
 
@@ -84,6 +97,13 @@ module Aws::GuardDuty
       attr_accessor kubernetes_permission_checked_details: Types::KubernetesPermissionCheckedDetails
       attr_accessor kubernetes_role_binding_details: Types::KubernetesRoleBindingDetails
       attr_accessor kubernetes_role_details: Types::KubernetesRoleDetails
+      SENSITIVE: []
+    end
+
+    class Actor
+      attr_accessor id: ::String
+      attr_accessor user: Types::User
+      attr_accessor session: Types::Session
       SENSITIVE: []
     end
 
@@ -137,6 +157,12 @@ module Aws::GuardDuty
     end
 
     class ArchiveFindingsResponse < Aws::EmptyStructure
+    end
+
+    class AutonomousSystem
+      attr_accessor name: ::String
+      attr_accessor number: ::Integer
+      SENSITIVE: []
     end
 
     class AwsApiCallAction
@@ -623,6 +649,7 @@ module Aws::GuardDuty
 
     class Detection
       attr_accessor anomaly: Types::Anomaly
+      attr_accessor sequence: Types::Sequence
       SENSITIVE: []
     end
 
@@ -725,6 +752,29 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class Ec2Instance
+      attr_accessor availability_zone: ::String
+      attr_accessor image_description: ::String
+      attr_accessor instance_state: ::String
+      attr_accessor iam_instance_profile: Types::IamInstanceProfile
+      attr_accessor instance_type: ::String
+      attr_accessor outpost_arn: ::String
+      attr_accessor platform: ::String
+      attr_accessor product_codes: ::Array[Types::ProductCode]
+      attr_accessor ec2_network_interface_uids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class Ec2NetworkInterface
+      attr_accessor ipv_6_addresses: ::Array[::String]
+      attr_accessor private_ip_addresses: ::Array[Types::PrivateIpAddressDetails]
+      attr_accessor public_ip: ::String
+      attr_accessor security_groups: ::Array[Types::SecurityGroup]
+      attr_accessor sub_net_id: ::String
+      attr_accessor vpc_id: ::String
+      SENSITIVE: []
+    end
+
     class EcsClusterDetails
       attr_accessor name: ::String
       attr_accessor arn: ::String
@@ -815,6 +865,7 @@ module Aws::GuardDuty
       attr_accessor title: ::String
       attr_accessor type: ::String
       attr_accessor updated_at: ::String
+      attr_accessor associated_attack_sequence_arn: ::String
       SENSITIVE: []
     end
 
@@ -1094,6 +1145,13 @@ module Aws::GuardDuty
     class ImpersonatedUser
       attr_accessor username: ::String
       attr_accessor groups: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class Indicator
+      attr_accessor key: ("SUSPICIOUS_USER_AGENT" | "SUSPICIOUS_NETWORK" | "MALICIOUS_IP" | "TOR_IP" | "ATTACK_TACTIC" | "HIGH_RISK_API" | "ATTACK_TECHNIQUE" | "UNUSUAL_API_FOR_ACCOUNT" | "UNUSUAL_ASN_FOR_ACCOUNT" | "UNUSUAL_ASN_FOR_USER")
+      attr_accessor values: ::Array[::String]
+      attr_accessor title: ::String
       SENSITIVE: []
     end
 
@@ -1536,6 +1594,11 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class NetworkConnection
+      attr_accessor direction: ("INBOUND" | "OUTBOUND")
+      SENSITIVE: []
+    end
+
     class NetworkConnectionAction
       attr_accessor blocked: bool
       attr_accessor connection_direction: ::String
@@ -1545,6 +1608,25 @@ module Aws::GuardDuty
       attr_accessor local_network_interface: ::String
       attr_accessor remote_ip_details: Types::RemoteIpDetails
       attr_accessor remote_port_details: Types::RemotePortDetails
+      SENSITIVE: []
+    end
+
+    class NetworkEndpoint
+      attr_accessor id: ::String
+      attr_accessor ip: ::String
+      attr_accessor domain: ::String
+      attr_accessor port: ::Integer
+      attr_accessor location: Types::NetworkGeoLocation
+      attr_accessor autonomous_system: Types::AutonomousSystem
+      attr_accessor connection: Types::NetworkConnection
+      SENSITIVE: []
+    end
+
+    class NetworkGeoLocation
+      attr_accessor city: ::String
+      attr_accessor country: ::String
+      attr_accessor latitude: ::Float
+      attr_accessor longitude: ::Float
       SENSITIVE: []
     end
 
@@ -1762,6 +1844,14 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class PublicAccessConfiguration
+      attr_accessor public_acl_access: ("BLOCKED" | "ALLOWED")
+      attr_accessor public_policy_access: ("BLOCKED" | "ALLOWED")
+      attr_accessor public_acl_ignore_behavior: ("IGNORED" | "NOT_IGNORED")
+      attr_accessor public_bucket_restrict_behavior: ("RESTRICTED" | "NOT_RESTRICTED")
+      SENSITIVE: []
+    end
+
     class RdsDbInstanceDetails
       attr_accessor db_instance_identifier: ::String
       attr_accessor engine: ::String
@@ -1837,6 +1927,15 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class ResourceData
+      attr_accessor s3_bucket: Types::S3Bucket
+      attr_accessor ec2_instance: Types::Ec2Instance
+      attr_accessor access_key: Types::AccessKey
+      attr_accessor ec2_network_interface: Types::Ec2NetworkInterface
+      attr_accessor s3_object: Types::S3Object
+      SENSITIVE: []
+    end
+
     class ResourceDetails
       attr_accessor instance_arn: ::String
       SENSITIVE: []
@@ -1854,6 +1953,19 @@ module Aws::GuardDuty
       attr_accessor resource_id: ::String
       attr_accessor resource_type: ::String
       attr_accessor total_findings: ::Integer
+      SENSITIVE: []
+    end
+
+    class ResourceV2
+      attr_accessor uid: ::String
+      attr_accessor name: ::String
+      attr_accessor account_id: ::String
+      attr_accessor resource_type: ("EC2_INSTANCE" | "EC2_NETWORK_INTERFACE" | "S3_BUCKET" | "S3_OBJECT" | "ACCESS_KEY")
+      attr_accessor region: ::String
+      attr_accessor service: ::String
+      attr_accessor cloud_partition: ::String
+      attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor data: Types::ResourceData
       SENSITIVE: []
     end
 
@@ -1892,6 +2004,20 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class S3Bucket
+      attr_accessor owner_id: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor encryption_type: ::String
+      attr_accessor encryption_key_arn: ::String
+      attr_accessor effective_permission: ::String
+      attr_accessor public_read_access: ("BLOCKED" | "ALLOWED")
+      attr_accessor public_write_access: ("BLOCKED" | "ALLOWED")
+      attr_accessor account_public_access: Types::PublicAccessConfiguration
+      attr_accessor bucket_public_access: Types::PublicAccessConfiguration
+      attr_accessor s3_object_uids: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class S3BucketDetail
       attr_accessor arn: ::String
       attr_accessor name: ::String
@@ -1912,6 +2038,13 @@ module Aws::GuardDuty
 
     class S3LogsConfigurationResult
       attr_accessor status: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class S3Object
+      attr_accessor etag: ::String
+      attr_accessor key: ::String
+      attr_accessor version_id: ::String
       SENSITIVE: []
     end
 
@@ -2018,6 +2151,17 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class Sequence
+      attr_accessor uid: ::String
+      attr_accessor description: ::String
+      attr_accessor actors: ::Array[Types::Actor]
+      attr_accessor resources: ::Array[Types::ResourceV2]
+      attr_accessor endpoints: ::Array[Types::NetworkEndpoint]
+      attr_accessor signals: ::Array[Types::Signal]
+      attr_accessor sequence_indicators: ::Array[Types::Indicator]
+      SENSITIVE: []
+    end
+
     class Service
       attr_accessor action: Types::Action
       attr_accessor evidence: Types::Evidence
@@ -2044,10 +2188,36 @@ module Aws::GuardDuty
       SENSITIVE: []
     end
 
+    class Session
+      attr_accessor uid: ::String
+      attr_accessor mfa_status: ("ENABLED" | "DISABLED")
+      attr_accessor created_time: ::Time
+      attr_accessor issuer: ::String
+      SENSITIVE: []
+    end
+
     class SeverityStatistics
       attr_accessor last_generated_at: ::Time
       attr_accessor severity: ::Float
       attr_accessor total_findings: ::Integer
+      SENSITIVE: []
+    end
+
+    class Signal
+      attr_accessor uid: ::String
+      attr_accessor type: ("FINDING" | "CLOUD_TRAIL" | "S3_DATA_EVENTS")
+      attr_accessor description: ::String
+      attr_accessor name: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
+      attr_accessor first_seen_at: ::Time
+      attr_accessor last_seen_at: ::Time
+      attr_accessor severity: ::Float
+      attr_accessor count: ::Integer
+      attr_accessor resource_uids: ::Array[::String]
+      attr_accessor actor_ids: ::Array[::String]
+      attr_accessor endpoint_ids: ::Array[::String]
+      attr_accessor signal_indicators: ::Array[Types::Indicator]
       SENSITIVE: []
     end
 
@@ -2348,6 +2518,15 @@ module Aws::GuardDuty
     class UsageTopAccountsResult
       attr_accessor feature: ("FLOW_LOGS" | "CLOUD_TRAIL" | "DNS_LOGS" | "S3_DATA_EVENTS" | "EKS_AUDIT_LOGS" | "EBS_MALWARE_PROTECTION" | "RDS_LOGIN_EVENTS" | "LAMBDA_NETWORK_LOGS" | "EKS_RUNTIME_MONITORING" | "FARGATE_RUNTIME_MONITORING" | "EC2_RUNTIME_MONITORING" | "RDS_DBI_PROTECTION_PROVISIONED" | "RDS_DBI_PROTECTION_SERVERLESS")
       attr_accessor accounts: ::Array[Types::UsageTopAccountResult]
+      SENSITIVE: []
+    end
+
+    class User
+      attr_accessor name: ::String
+      attr_accessor uid: ::String
+      attr_accessor type: ::String
+      attr_accessor credential_uid: ::String
+      attr_accessor account: Types::Account
       SENSITIVE: []
     end
 

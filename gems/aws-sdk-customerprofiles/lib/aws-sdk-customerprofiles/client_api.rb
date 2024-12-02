@@ -59,6 +59,7 @@ module Aws::CustomerProfiles
     CalculatedAttributeValueList = Shapes::ListShape.new(name: 'CalculatedAttributeValueList')
     CalculatedAttributesForProfileList = Shapes::ListShape.new(name: 'CalculatedAttributesForProfileList')
     CalculatedCustomAttributes = Shapes::MapShape.new(name: 'CalculatedCustomAttributes')
+    ComparisonOperator = Shapes::StringShape.new(name: 'ComparisonOperator')
     ConditionOverrides = Shapes::StructureShape.new(name: 'ConditionOverrides')
     Conditions = Shapes::StructureShape.new(name: 'Conditions')
     ConflictResolution = Shapes::StructureShape.new(name: 'ConflictResolution')
@@ -72,6 +73,8 @@ module Aws::CustomerProfiles
     CreateDomainResponse = Shapes::StructureShape.new(name: 'CreateDomainResponse')
     CreateEventStreamRequest = Shapes::StructureShape.new(name: 'CreateEventStreamRequest')
     CreateEventStreamResponse = Shapes::StructureShape.new(name: 'CreateEventStreamResponse')
+    CreateEventTriggerRequest = Shapes::StructureShape.new(name: 'CreateEventTriggerRequest')
+    CreateEventTriggerResponse = Shapes::StructureShape.new(name: 'CreateEventTriggerResponse')
     CreateIntegrationWorkflowRequest = Shapes::StructureShape.new(name: 'CreateIntegrationWorkflowRequest')
     CreateIntegrationWorkflowResponse = Shapes::StructureShape.new(name: 'CreateIntegrationWorkflowResponse')
     CreateProfileRequest = Shapes::StructureShape.new(name: 'CreateProfileRequest')
@@ -96,6 +99,8 @@ module Aws::CustomerProfiles
     DeleteDomainResponse = Shapes::StructureShape.new(name: 'DeleteDomainResponse')
     DeleteEventStreamRequest = Shapes::StructureShape.new(name: 'DeleteEventStreamRequest')
     DeleteEventStreamResponse = Shapes::StructureShape.new(name: 'DeleteEventStreamResponse')
+    DeleteEventTriggerRequest = Shapes::StructureShape.new(name: 'DeleteEventTriggerRequest')
+    DeleteEventTriggerResponse = Shapes::StructureShape.new(name: 'DeleteEventTriggerResponse')
     DeleteIntegrationRequest = Shapes::StructureShape.new(name: 'DeleteIntegrationRequest')
     DeleteIntegrationResponse = Shapes::StructureShape.new(name: 'DeleteIntegrationResponse')
     DeleteProfileKeyRequest = Shapes::StructureShape.new(name: 'DeleteProfileKeyRequest')
@@ -130,6 +135,16 @@ module Aws::CustomerProfiles
     EventStreamState = Shapes::StringShape.new(name: 'EventStreamState')
     EventStreamSummary = Shapes::StructureShape.new(name: 'EventStreamSummary')
     EventStreamSummaryList = Shapes::ListShape.new(name: 'EventStreamSummaryList')
+    EventTriggerCondition = Shapes::StructureShape.new(name: 'EventTriggerCondition')
+    EventTriggerConditions = Shapes::ListShape.new(name: 'EventTriggerConditions')
+    EventTriggerDimension = Shapes::StructureShape.new(name: 'EventTriggerDimension')
+    EventTriggerDimensions = Shapes::ListShape.new(name: 'EventTriggerDimensions')
+    EventTriggerLimits = Shapes::StructureShape.new(name: 'EventTriggerLimits')
+    EventTriggerLogicalOperator = Shapes::StringShape.new(name: 'EventTriggerLogicalOperator')
+    EventTriggerNames = Shapes::ListShape.new(name: 'EventTriggerNames')
+    EventTriggerSummaryItem = Shapes::StructureShape.new(name: 'EventTriggerSummaryItem')
+    EventTriggerSummaryList = Shapes::ListShape.new(name: 'EventTriggerSummaryList')
+    EventTriggerValues = Shapes::ListShape.new(name: 'EventTriggerValues')
     ExportingConfig = Shapes::StructureShape.new(name: 'ExportingConfig')
     ExportingLocation = Shapes::StructureShape.new(name: 'ExportingLocation')
     ExtraLengthValueProfileDimension = Shapes::StructureShape.new(name: 'ExtraLengthValueProfileDimension')
@@ -160,6 +175,8 @@ module Aws::CustomerProfiles
     GetDomainResponse = Shapes::StructureShape.new(name: 'GetDomainResponse')
     GetEventStreamRequest = Shapes::StructureShape.new(name: 'GetEventStreamRequest')
     GetEventStreamResponse = Shapes::StructureShape.new(name: 'GetEventStreamResponse')
+    GetEventTriggerRequest = Shapes::StructureShape.new(name: 'GetEventTriggerRequest')
+    GetEventTriggerResponse = Shapes::StructureShape.new(name: 'GetEventTriggerResponse')
     GetIdentityResolutionJobRequest = Shapes::StructureShape.new(name: 'GetIdentityResolutionJobRequest')
     GetIdentityResolutionJobResponse = Shapes::StructureShape.new(name: 'GetIdentityResolutionJobResponse')
     GetIntegrationRequest = Shapes::StructureShape.new(name: 'GetIntegrationRequest')
@@ -216,6 +233,8 @@ module Aws::CustomerProfiles
     ListDomainsResponse = Shapes::StructureShape.new(name: 'ListDomainsResponse')
     ListEventStreamsRequest = Shapes::StructureShape.new(name: 'ListEventStreamsRequest')
     ListEventStreamsResponse = Shapes::StructureShape.new(name: 'ListEventStreamsResponse')
+    ListEventTriggersRequest = Shapes::StructureShape.new(name: 'ListEventTriggersRequest')
+    ListEventTriggersResponse = Shapes::StructureShape.new(name: 'ListEventTriggersResponse')
     ListIdentityResolutionJobsRequest = Shapes::StructureShape.new(name: 'ListIdentityResolutionJobsRequest')
     ListIdentityResolutionJobsResponse = Shapes::StructureShape.new(name: 'ListIdentityResolutionJobsResponse')
     ListIntegrationItem = Shapes::StructureShape.new(name: 'ListIntegrationItem')
@@ -262,6 +281,8 @@ module Aws::CustomerProfiles
     MergeProfilesRequest = Shapes::StructureShape.new(name: 'MergeProfilesRequest')
     MergeProfilesResponse = Shapes::StructureShape.new(name: 'MergeProfilesResponse')
     Object = Shapes::StringShape.new(name: 'Object')
+    ObjectAttribute = Shapes::StructureShape.new(name: 'ObjectAttribute')
+    ObjectAttributes = Shapes::ListShape.new(name: 'ObjectAttributes')
     ObjectCount = Shapes::IntegerShape.new(name: 'ObjectCount')
     ObjectFilter = Shapes::StructureShape.new(name: 'ObjectFilter')
     ObjectTypeField = Shapes::StructureShape.new(name: 'ObjectTypeField')
@@ -272,6 +293,9 @@ module Aws::CustomerProfiles
     Operator = Shapes::StringShape.new(name: 'Operator')
     OperatorPropertiesKeys = Shapes::StringShape.new(name: 'OperatorPropertiesKeys')
     PartyType = Shapes::StringShape.new(name: 'PartyType')
+    Period = Shapes::StructureShape.new(name: 'Period')
+    PeriodUnit = Shapes::StringShape.new(name: 'PeriodUnit')
+    Periods = Shapes::ListShape.new(name: 'Periods')
     PhoneNumberList = Shapes::ListShape.new(name: 'PhoneNumberList')
     Profile = Shapes::StructureShape.new(name: 'Profile')
     ProfileAttributeValuesRequest = Shapes::StructureShape.new(name: 'ProfileAttributeValuesRequest')
@@ -367,6 +391,8 @@ module Aws::CustomerProfiles
     UpdateCalculatedAttributeDefinitionResponse = Shapes::StructureShape.new(name: 'UpdateCalculatedAttributeDefinitionResponse')
     UpdateDomainRequest = Shapes::StructureShape.new(name: 'UpdateDomainRequest')
     UpdateDomainResponse = Shapes::StructureShape.new(name: 'UpdateDomainResponse')
+    UpdateEventTriggerRequest = Shapes::StructureShape.new(name: 'UpdateEventTriggerRequest')
+    UpdateEventTriggerResponse = Shapes::StructureShape.new(name: 'UpdateEventTriggerResponse')
     UpdateProfileRequest = Shapes::StructureShape.new(name: 'UpdateProfileRequest')
     UpdateProfileResponse = Shapes::StructureShape.new(name: 'UpdateProfileResponse')
     Value = Shapes::IntegerShape.new(name: 'Value')
@@ -386,16 +412,20 @@ module Aws::CustomerProfiles
     displayName = Shapes::StringShape.new(name: 'displayName')
     encryptionKey = Shapes::StringShape.new(name: 'encryptionKey')
     expirationDaysInteger = Shapes::IntegerShape.new(name: 'expirationDaysInteger')
+    fieldName = Shapes::StringShape.new(name: 'fieldName')
     foundByList = Shapes::ListShape.new(name: 'foundByList')
     logicalOperator = Shapes::StringShape.new(name: 'logicalOperator')
     long = Shapes::IntegerShape.new(name: 'long')
     matchesNumber = Shapes::IntegerShape.new(name: 'matchesNumber')
     maxSize100 = Shapes::IntegerShape.new(name: 'maxSize100')
+    maxSize1000 = Shapes::IntegerShape.new(name: 'maxSize1000')
+    maxSize24 = Shapes::IntegerShape.new(name: 'maxSize24')
     message = Shapes::StringShape.new(name: 'message')
     minSize0 = Shapes::IntegerShape.new(name: 'minSize0')
     minSize1 = Shapes::IntegerShape.new(name: 'minSize1')
     name = Shapes::StringShape.new(name: 'name')
     optionalBoolean = Shapes::BooleanShape.new(name: 'optionalBoolean')
+    optionalLong = Shapes::IntegerShape.new(name: 'optionalLong')
     requestValueList = Shapes::ListShape.new(name: 'requestValueList')
     s3BucketName = Shapes::StringShape.new(name: 's3BucketName')
     s3KeyName = Shapes::StringShape.new(name: 's3KeyName')
@@ -661,6 +691,27 @@ module Aws::CustomerProfiles
     CreateEventStreamResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
     CreateEventStreamResponse.struct_class = Types::CreateEventStreamResponse
 
+    CreateEventTriggerRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
+    CreateEventTriggerRequest.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "EventTriggerName"))
+    CreateEventTriggerRequest.add_member(:object_type_name, Shapes::ShapeRef.new(shape: typeName, required: true, location_name: "ObjectTypeName"))
+    CreateEventTriggerRequest.add_member(:description, Shapes::ShapeRef.new(shape: sensitiveText, location_name: "Description"))
+    CreateEventTriggerRequest.add_member(:event_trigger_conditions, Shapes::ShapeRef.new(shape: EventTriggerConditions, required: true, location_name: "EventTriggerConditions"))
+    CreateEventTriggerRequest.add_member(:segment_filter, Shapes::ShapeRef.new(shape: name, location_name: "SegmentFilter"))
+    CreateEventTriggerRequest.add_member(:event_trigger_limits, Shapes::ShapeRef.new(shape: EventTriggerLimits, location_name: "EventTriggerLimits"))
+    CreateEventTriggerRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
+    CreateEventTriggerRequest.struct_class = Types::CreateEventTriggerRequest
+
+    CreateEventTriggerResponse.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, location_name: "EventTriggerName"))
+    CreateEventTriggerResponse.add_member(:object_type_name, Shapes::ShapeRef.new(shape: typeName, location_name: "ObjectTypeName"))
+    CreateEventTriggerResponse.add_member(:description, Shapes::ShapeRef.new(shape: sensitiveText, location_name: "Description"))
+    CreateEventTriggerResponse.add_member(:event_trigger_conditions, Shapes::ShapeRef.new(shape: EventTriggerConditions, location_name: "EventTriggerConditions"))
+    CreateEventTriggerResponse.add_member(:segment_filter, Shapes::ShapeRef.new(shape: name, location_name: "SegmentFilter"))
+    CreateEventTriggerResponse.add_member(:event_trigger_limits, Shapes::ShapeRef.new(shape: EventTriggerLimits, location_name: "EventTriggerLimits"))
+    CreateEventTriggerResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "CreatedAt"))
+    CreateEventTriggerResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "LastUpdatedAt"))
+    CreateEventTriggerResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
+    CreateEventTriggerResponse.struct_class = Types::CreateEventTriggerResponse
+
     CreateIntegrationWorkflowRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
     CreateIntegrationWorkflowRequest.add_member(:workflow_type, Shapes::ShapeRef.new(shape: WorkflowType, required: true, location_name: "WorkflowType"))
     CreateIntegrationWorkflowRequest.add_member(:integration_config, Shapes::ShapeRef.new(shape: IntegrationConfig, required: true, location_name: "IntegrationConfig"))
@@ -764,6 +815,13 @@ module Aws::CustomerProfiles
     DeleteEventStreamRequest.struct_class = Types::DeleteEventStreamRequest
 
     DeleteEventStreamResponse.struct_class = Types::DeleteEventStreamResponse
+
+    DeleteEventTriggerRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
+    DeleteEventTriggerRequest.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "EventTriggerName"))
+    DeleteEventTriggerRequest.struct_class = Types::DeleteEventTriggerRequest
+
+    DeleteEventTriggerResponse.add_member(:message, Shapes::ShapeRef.new(shape: message, required: true, location_name: "Message"))
+    DeleteEventTriggerResponse.struct_class = Types::DeleteEventTriggerResponse
 
     DeleteIntegrationRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
     DeleteIntegrationRequest.add_member(:uri, Shapes::ShapeRef.new(shape: string1To255, required: true, location_name: "Uri"))
@@ -872,6 +930,35 @@ module Aws::CustomerProfiles
     EventStreamSummary.struct_class = Types::EventStreamSummary
 
     EventStreamSummaryList.member = Shapes::ShapeRef.new(shape: EventStreamSummary)
+
+    EventTriggerCondition.add_member(:event_trigger_dimensions, Shapes::ShapeRef.new(shape: EventTriggerDimensions, required: true, location_name: "EventTriggerDimensions"))
+    EventTriggerCondition.add_member(:logical_operator, Shapes::ShapeRef.new(shape: EventTriggerLogicalOperator, required: true, location_name: "LogicalOperator"))
+    EventTriggerCondition.struct_class = Types::EventTriggerCondition
+
+    EventTriggerConditions.member = Shapes::ShapeRef.new(shape: EventTriggerCondition)
+
+    EventTriggerDimension.add_member(:object_attributes, Shapes::ShapeRef.new(shape: ObjectAttributes, required: true, location_name: "ObjectAttributes"))
+    EventTriggerDimension.struct_class = Types::EventTriggerDimension
+
+    EventTriggerDimensions.member = Shapes::ShapeRef.new(shape: EventTriggerDimension)
+
+    EventTriggerLimits.add_member(:event_expiration, Shapes::ShapeRef.new(shape: optionalLong, location_name: "EventExpiration"))
+    EventTriggerLimits.add_member(:periods, Shapes::ShapeRef.new(shape: Periods, location_name: "Periods"))
+    EventTriggerLimits.struct_class = Types::EventTriggerLimits
+
+    EventTriggerNames.member = Shapes::ShapeRef.new(shape: name)
+
+    EventTriggerSummaryItem.add_member(:object_type_name, Shapes::ShapeRef.new(shape: typeName, location_name: "ObjectTypeName"))
+    EventTriggerSummaryItem.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, location_name: "EventTriggerName"))
+    EventTriggerSummaryItem.add_member(:description, Shapes::ShapeRef.new(shape: text, location_name: "Description"))
+    EventTriggerSummaryItem.add_member(:created_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "CreatedAt"))
+    EventTriggerSummaryItem.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "LastUpdatedAt"))
+    EventTriggerSummaryItem.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
+    EventTriggerSummaryItem.struct_class = Types::EventTriggerSummaryItem
+
+    EventTriggerSummaryList.member = Shapes::ShapeRef.new(shape: EventTriggerSummaryItem)
+
+    EventTriggerValues.member = Shapes::ShapeRef.new(shape: string1To255)
 
     ExportingConfig.add_member(:s3_exporting, Shapes::ShapeRef.new(shape: S3ExportingConfig, location_name: "S3Exporting"))
     ExportingConfig.struct_class = Types::ExportingConfig
@@ -1011,6 +1098,21 @@ module Aws::CustomerProfiles
     GetEventStreamResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
     GetEventStreamResponse.struct_class = Types::GetEventStreamResponse
 
+    GetEventTriggerRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
+    GetEventTriggerRequest.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "EventTriggerName"))
+    GetEventTriggerRequest.struct_class = Types::GetEventTriggerRequest
+
+    GetEventTriggerResponse.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, location_name: "EventTriggerName"))
+    GetEventTriggerResponse.add_member(:object_type_name, Shapes::ShapeRef.new(shape: typeName, location_name: "ObjectTypeName"))
+    GetEventTriggerResponse.add_member(:description, Shapes::ShapeRef.new(shape: sensitiveText, location_name: "Description"))
+    GetEventTriggerResponse.add_member(:event_trigger_conditions, Shapes::ShapeRef.new(shape: EventTriggerConditions, location_name: "EventTriggerConditions"))
+    GetEventTriggerResponse.add_member(:segment_filter, Shapes::ShapeRef.new(shape: name, location_name: "SegmentFilter"))
+    GetEventTriggerResponse.add_member(:event_trigger_limits, Shapes::ShapeRef.new(shape: EventTriggerLimits, location_name: "EventTriggerLimits"))
+    GetEventTriggerResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "CreatedAt"))
+    GetEventTriggerResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "LastUpdatedAt"))
+    GetEventTriggerResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
+    GetEventTriggerResponse.struct_class = Types::GetEventTriggerResponse
+
     GetIdentityResolutionJobRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
     GetIdentityResolutionJobRequest.add_member(:job_id, Shapes::ShapeRef.new(shape: uuid, required: true, location: "uri", location_name: "JobId"))
     GetIdentityResolutionJobRequest.struct_class = Types::GetIdentityResolutionJobRequest
@@ -1042,6 +1144,7 @@ module Aws::CustomerProfiles
     GetIntegrationResponse.add_member(:workflow_id, Shapes::ShapeRef.new(shape: string1To255, location_name: "WorkflowId"))
     GetIntegrationResponse.add_member(:is_unstructured, Shapes::ShapeRef.new(shape: optionalBoolean, location_name: "IsUnstructured"))
     GetIntegrationResponse.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
+    GetIntegrationResponse.add_member(:event_trigger_names, Shapes::ShapeRef.new(shape: EventTriggerNames, location_name: "EventTriggerNames"))
     GetIntegrationResponse.struct_class = Types::GetIntegrationResponse
 
     GetMatchesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: token, location: "querystring", location_name: "next-token"))
@@ -1287,6 +1390,15 @@ module Aws::CustomerProfiles
     ListEventStreamsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: token, location_name: "NextToken"))
     ListEventStreamsResponse.struct_class = Types::ListEventStreamsResponse
 
+    ListEventTriggersRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
+    ListEventTriggersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: token, location: "querystring", location_name: "next-token"))
+    ListEventTriggersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: maxSize100, location: "querystring", location_name: "max-results"))
+    ListEventTriggersRequest.struct_class = Types::ListEventTriggersRequest
+
+    ListEventTriggersResponse.add_member(:items, Shapes::ShapeRef.new(shape: EventTriggerSummaryList, location_name: "Items"))
+    ListEventTriggersResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: token, location_name: "NextToken"))
+    ListEventTriggersResponse.struct_class = Types::ListEventTriggersResponse
+
     ListIdentityResolutionJobsRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
     ListIdentityResolutionJobsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: token, location: "querystring", location_name: "next-token"))
     ListIdentityResolutionJobsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: maxSize100, location: "querystring", location_name: "max-results"))
@@ -1306,6 +1418,7 @@ module Aws::CustomerProfiles
     ListIntegrationItem.add_member(:workflow_id, Shapes::ShapeRef.new(shape: string1To255, location_name: "WorkflowId"))
     ListIntegrationItem.add_member(:is_unstructured, Shapes::ShapeRef.new(shape: optionalBoolean, location_name: "IsUnstructured"))
     ListIntegrationItem.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
+    ListIntegrationItem.add_member(:event_trigger_names, Shapes::ShapeRef.new(shape: EventTriggerNames, location_name: "EventTriggerNames"))
     ListIntegrationItem.struct_class = Types::ListIntegrationItem
 
     ListIntegrationsRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
@@ -1471,6 +1584,14 @@ module Aws::CustomerProfiles
     MergeProfilesResponse.add_member(:message, Shapes::ShapeRef.new(shape: message, location_name: "Message"))
     MergeProfilesResponse.struct_class = Types::MergeProfilesResponse
 
+    ObjectAttribute.add_member(:source, Shapes::ShapeRef.new(shape: text, location_name: "Source"))
+    ObjectAttribute.add_member(:field_name, Shapes::ShapeRef.new(shape: fieldName, location_name: "FieldName"))
+    ObjectAttribute.add_member(:comparison_operator, Shapes::ShapeRef.new(shape: ComparisonOperator, required: true, location_name: "ComparisonOperator"))
+    ObjectAttribute.add_member(:values, Shapes::ShapeRef.new(shape: EventTriggerValues, required: true, location_name: "Values"))
+    ObjectAttribute.struct_class = Types::ObjectAttribute
+
+    ObjectAttributes.member = Shapes::ShapeRef.new(shape: ObjectAttribute)
+
     ObjectFilter.add_member(:key_name, Shapes::ShapeRef.new(shape: name, required: true, location_name: "KeyName"))
     ObjectFilter.add_member(:values, Shapes::ShapeRef.new(shape: requestValueList, required: true, location_name: "Values"))
     ObjectFilter.struct_class = Types::ObjectFilter
@@ -1490,6 +1611,14 @@ module Aws::CustomerProfiles
     ObjectTypeNames.value = Shapes::ShapeRef.new(shape: typeName)
 
     Objects.member = Shapes::ShapeRef.new(shape: stringifiedJson)
+
+    Period.add_member(:unit, Shapes::ShapeRef.new(shape: PeriodUnit, required: true, location_name: "Unit"))
+    Period.add_member(:value, Shapes::ShapeRef.new(shape: maxSize24, required: true, location_name: "Value"))
+    Period.add_member(:max_invocations_per_profile, Shapes::ShapeRef.new(shape: maxSize1000, location_name: "MaxInvocationsPerProfile"))
+    Period.add_member(:unlimited, Shapes::ShapeRef.new(shape: boolean, location_name: "Unlimited"))
+    Period.struct_class = Types::Period
+
+    Periods.member = Shapes::ShapeRef.new(shape: Period)
 
     PhoneNumberList.member = Shapes::ShapeRef.new(shape: string1To255)
 
@@ -1590,6 +1719,7 @@ module Aws::CustomerProfiles
     PutIntegrationRequest.add_member(:flow_definition, Shapes::ShapeRef.new(shape: FlowDefinition, location_name: "FlowDefinition"))
     PutIntegrationRequest.add_member(:object_type_names, Shapes::ShapeRef.new(shape: ObjectTypeNames, location_name: "ObjectTypeNames"))
     PutIntegrationRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
+    PutIntegrationRequest.add_member(:event_trigger_names, Shapes::ShapeRef.new(shape: EventTriggerNames, location_name: "EventTriggerNames"))
     PutIntegrationRequest.struct_class = Types::PutIntegrationRequest
 
     PutIntegrationResponse.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location_name: "DomainName"))
@@ -1602,6 +1732,7 @@ module Aws::CustomerProfiles
     PutIntegrationResponse.add_member(:workflow_id, Shapes::ShapeRef.new(shape: string1To255, location_name: "WorkflowId"))
     PutIntegrationResponse.add_member(:is_unstructured, Shapes::ShapeRef.new(shape: optionalBoolean, location_name: "IsUnstructured"))
     PutIntegrationResponse.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
+    PutIntegrationResponse.add_member(:event_trigger_names, Shapes::ShapeRef.new(shape: EventTriggerNames, location_name: "EventTriggerNames"))
     PutIntegrationResponse.struct_class = Types::PutIntegrationResponse
 
     PutProfileObjectRequest.add_member(:object_type_name, Shapes::ShapeRef.new(shape: typeName, required: true, location_name: "ObjectTypeName"))
@@ -1853,6 +1984,26 @@ module Aws::CustomerProfiles
     UpdateDomainResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
     UpdateDomainResponse.struct_class = Types::UpdateDomainResponse
 
+    UpdateEventTriggerRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
+    UpdateEventTriggerRequest.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "EventTriggerName"))
+    UpdateEventTriggerRequest.add_member(:object_type_name, Shapes::ShapeRef.new(shape: typeName, location_name: "ObjectTypeName"))
+    UpdateEventTriggerRequest.add_member(:description, Shapes::ShapeRef.new(shape: sensitiveText, location_name: "Description"))
+    UpdateEventTriggerRequest.add_member(:event_trigger_conditions, Shapes::ShapeRef.new(shape: EventTriggerConditions, location_name: "EventTriggerConditions"))
+    UpdateEventTriggerRequest.add_member(:segment_filter, Shapes::ShapeRef.new(shape: name, location_name: "SegmentFilter"))
+    UpdateEventTriggerRequest.add_member(:event_trigger_limits, Shapes::ShapeRef.new(shape: EventTriggerLimits, location_name: "EventTriggerLimits"))
+    UpdateEventTriggerRequest.struct_class = Types::UpdateEventTriggerRequest
+
+    UpdateEventTriggerResponse.add_member(:event_trigger_name, Shapes::ShapeRef.new(shape: name, location_name: "EventTriggerName"))
+    UpdateEventTriggerResponse.add_member(:object_type_name, Shapes::ShapeRef.new(shape: typeName, location_name: "ObjectTypeName"))
+    UpdateEventTriggerResponse.add_member(:description, Shapes::ShapeRef.new(shape: sensitiveText, location_name: "Description"))
+    UpdateEventTriggerResponse.add_member(:event_trigger_conditions, Shapes::ShapeRef.new(shape: EventTriggerConditions, location_name: "EventTriggerConditions"))
+    UpdateEventTriggerResponse.add_member(:segment_filter, Shapes::ShapeRef.new(shape: name, location_name: "SegmentFilter"))
+    UpdateEventTriggerResponse.add_member(:event_trigger_limits, Shapes::ShapeRef.new(shape: EventTriggerLimits, location_name: "EventTriggerLimits"))
+    UpdateEventTriggerResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "CreatedAt"))
+    UpdateEventTriggerResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: timestamp, location_name: "LastUpdatedAt"))
+    UpdateEventTriggerResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "Tags"))
+    UpdateEventTriggerResponse.struct_class = Types::UpdateEventTriggerResponse
+
     UpdateProfileRequest.add_member(:domain_name, Shapes::ShapeRef.new(shape: name, required: true, location: "uri", location_name: "DomainName"))
     UpdateProfileRequest.add_member(:profile_id, Shapes::ShapeRef.new(shape: uuid, required: true, location_name: "ProfileId"))
     UpdateProfileRequest.add_member(:additional_information, Shapes::ShapeRef.new(shape: sensitiveString0To1000, location_name: "AdditionalInformation"))
@@ -2008,6 +2159,19 @@ module Aws::CustomerProfiles
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:create_event_trigger, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateEventTrigger"
+        o.http_method = "POST"
+        o.http_request_uri = "/domains/{DomainName}/event-triggers/{EventTriggerName}"
+        o.input = Shapes::ShapeRef.new(shape: CreateEventTriggerRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateEventTriggerResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
       api.add_operation(:create_integration_workflow, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateIntegrationWorkflow"
         o.http_method = "POST"
@@ -2105,6 +2269,19 @@ module Aws::CustomerProfiles
         o.http_request_uri = "/domains/{DomainName}/event-streams/{EventStreamName}"
         o.input = Shapes::ShapeRef.new(shape: DeleteEventStreamRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteEventStreamResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:delete_event_trigger, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteEventTrigger"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/domains/{DomainName}/event-triggers/{EventTriggerName}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteEventTriggerRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteEventTriggerResponse)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2274,6 +2451,19 @@ module Aws::CustomerProfiles
         o.http_request_uri = "/domains/{DomainName}/event-streams/{EventStreamName}"
         o.input = Shapes::ShapeRef.new(shape: GetEventStreamRequest)
         o.output = Shapes::ShapeRef.new(shape: GetEventStreamResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:get_event_trigger, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetEventTrigger"
+        o.http_method = "GET"
+        o.http_request_uri = "/domains/{DomainName}/event-triggers/{EventTriggerName}"
+        o.input = Shapes::ShapeRef.new(shape: GetEventTriggerRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetEventTriggerResponse)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2501,6 +2691,25 @@ module Aws::CustomerProfiles
         o.http_request_uri = "/domains/{DomainName}/event-streams"
         o.input = Shapes::ShapeRef.new(shape: ListEventStreamsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListEventStreamsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_event_triggers, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListEventTriggers"
+        o.http_method = "GET"
+        o.http_request_uri = "/domains/{DomainName}/event-triggers"
+        o.input = Shapes::ShapeRef.new(shape: ListEventTriggersRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListEventTriggersResponse)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2778,6 +2987,19 @@ module Aws::CustomerProfiles
         o.http_request_uri = "/domains/{DomainName}"
         o.input = Shapes::ShapeRef.new(shape: UpdateDomainRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateDomainResponse)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:update_event_trigger, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateEventTrigger"
+        o.http_method = "PUT"
+        o.http_request_uri = "/domains/{DomainName}/event-triggers/{EventTriggerName}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateEventTriggerRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateEventTriggerResponse)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)

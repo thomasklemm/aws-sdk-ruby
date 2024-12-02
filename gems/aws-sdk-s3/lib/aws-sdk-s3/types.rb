@@ -55,10 +55,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -406,8 +406,8 @@ module Aws::S3
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html
     #
     # @!attribute [rw] data_redundancy
-    #   The number of Availability Zone that's used for redundancy for the
-    #   bucket.
+    #   The number of Zone (Availability Zone or Local Zone) that's used
+    #   for redundancy for the bucket.
     #   @return [String]
     #
     # @!attribute [rw] type
@@ -943,10 +943,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -1353,7 +1353,9 @@ module Aws::S3
     #   If the object expiration is configured, the response includes this
     #   header.
     #
-    #   <note markdown="1"> This functionality is not supported for directory buckets.
+    #   <note markdown="1"> Object expiration information is not returned in directory buckets
+    #   and this header returns the value "`NotImplemented`" in all
+    #   responses for directory buckets.
     #
     #    </note>
     #   @return [String]
@@ -1485,13 +1487,21 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
+    #
+    #   <note markdown="1"> Copying objects across different Amazon Web Services Regions isn't
+    #   supported when the source or destination bucket is in Amazon Web
+    #   Services Local Zones. The source and destination buckets must have
+    #   the same parent Amazon Web Services Region. Otherwise, you get an
+    #   HTTP `400 Bad Request` error with the error code `InvalidRequest`.
+    #
+    #    </note>
     #
     #   **Access points** - When you use this action with an access point,
     #   you must provide the alias of the access point in place of the
@@ -2486,11 +2496,20 @@ module Aws::S3
     # @!attribute [rw] location
     #   Specifies the location where the bucket will be created.
     #
-    #   For directory buckets, the location type is Availability Zone.
+    #   <b>Directory buckets </b> - The location type is Availability Zone
+    #   or Local Zone. When the location type is Local Zone, your Local Zone
+    #   must be in opt-in status. Otherwise, you get an HTTP `400 Bad
+    #   Request` error with the error code `Access denied`. To learn more
+    #   about opt-in Local Zones, see [Opt-in Dedicated Local Zones][1]in
+    #   the *Amazon S3 User Guide*.
     #
     #   <note markdown="1"> This functionality is only supported by directory buckets.
     #
     #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/opt-in-directory-bucket-lz.html
     #   @return [Types::LocationInfo]
     #
     # @!attribute [rw] bucket
@@ -2540,13 +2559,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][2] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][2] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -2824,10 +2844,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -3731,13 +3751,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][1] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -3888,13 +3909,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][1] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -3948,13 +3970,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][1] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -4142,10 +4165,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -4407,10 +4430,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -5855,13 +5878,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][1] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -6268,13 +6292,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][1] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #   **Access points** - When you use this API operation with an access
     #   point, provide the alias of the access point in place of the bucket
@@ -6781,10 +6806,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -7081,7 +7106,9 @@ module Aws::S3
     #   providing object expiration information. The value of the `rule-id`
     #   is URL-encoded.
     #
-    #   <note markdown="1"> This functionality is not supported for directory buckets.
+    #   <note markdown="1"> Object expiration information is not returned in directory buckets
+    #   and this header returns the value "`NotImplemented`" in all
+    #   responses for directory buckets.
     #
     #    </note>
     #
@@ -7393,10 +7420,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -8124,8 +8151,9 @@ module Aws::S3
     # @!attribute [rw] bucket_location_name
     #   The name of the location where the bucket will be created.
     #
-    #   For directory buckets, the AZ ID of the Availability Zone where the
-    #   bucket is created. An example AZ ID value is `usw2-az1`.
+    #   For directory buckets, the Zone ID of the Availability Zone or the
+    #   Local Zone where the bucket is created. An example Zone ID value for
+    #   an Availability Zone is `usw2-az1`.
     #
     #   <note markdown="1"> This functionality is only supported by directory buckets.
     #
@@ -8161,10 +8189,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -8246,7 +8274,9 @@ module Aws::S3
     #   providing object expiration information. The value of the `rule-id`
     #   is URL-encoded.
     #
-    #   <note markdown="1"> This functionality is not supported for directory buckets.
+    #   <note markdown="1"> Object expiration information is not returned in directory buckets
+    #   and this header returns the value "`NotImplemented`" in all
+    #   responses for directory buckets.
     #
     #    </note>
     #
@@ -8635,10 +8665,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -10169,10 +10199,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -10691,10 +10721,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -10962,10 +10992,10 @@ module Aws::S3
     # @!attribute [rw] bucket
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -11273,10 +11303,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -11420,9 +11450,9 @@ module Aws::S3
 
     # Specifies the location where the bucket will be created.
     #
-    # For directory buckets, the location type is Availability Zone. For
-    # more information about directory buckets, see [Directory buckets][1]
-    # in the *Amazon S3 User Guide*.
+    # For directory buckets, the location type is Availability Zone or Local
+    # Zone. For more information about directory buckets, see [Directory
+    # buckets][1] in the *Amazon S3 User Guide*.
     #
     # <note markdown="1"> This functionality is only supported by directory buckets.
     #
@@ -11439,9 +11469,9 @@ module Aws::S3
     # @!attribute [rw] name
     #   The name of the location where the bucket will be created.
     #
-    #   For directory buckets, the name of the location is the AZ ID of the
-    #   Availability Zone where the bucket will be created. An example AZ ID
-    #   value is `usw2-az1`.
+    #   For directory buckets, the name of the location is the Zone ID of
+    #   the Availability Zone (AZ) or Local Zone (LZ) where the bucket will
+    #   be created. An example AZ ID value is `usw2-az1`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/LocationInfo AWS API Documentation
@@ -12925,13 +12955,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][1] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -13418,13 +13449,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information
-    #   about bucket naming restrictions, see [Directory bucket naming
-    #   rules][1] in the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -14233,7 +14265,9 @@ module Aws::S3
     #   `rule-id` key-value pairs that provide information about object
     #   expiration. The value of the `rule-id` is URL-encoded.
     #
-    #   <note markdown="1"> This functionality is not supported for directory buckets.
+    #   <note markdown="1"> Object expiration information is not returned in directory buckets
+    #   and this header returns the value "`NotImplemented`" in all
+    #   responses for directory buckets.
     #
     #    </note>
     #
@@ -14473,10 +14507,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -16095,7 +16129,15 @@ module Aws::S3
     #   @return [Types::GlacierJobParameters]
     #
     # @!attribute [rw] type
+    #   Amazon S3 Select is no longer available to new customers. Existing
+    #   customers of Amazon S3 Select can continue to use the feature as
+    #   usual. [Learn more][1]
+    #
     #   Type of restore request.
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/
     #   @return [String]
     #
     # @!attribute [rw] tier
@@ -16107,7 +16149,15 @@ module Aws::S3
     #   @return [String]
     #
     # @!attribute [rw] select_parameters
+    #   Amazon S3 Select is no longer available to new customers. Existing
+    #   customers of Amazon S3 Select can continue to use the feature as
+    #   usual. [Learn more][1]
+    #
     #   Describes the parameters for Select job types.
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/
     #   @return [Types::SelectParameters]
     #
     # @!attribute [rw] output_location
@@ -16443,6 +16493,12 @@ module Aws::S3
       include Aws::Structure
     end
 
+    # <note markdown="1"> Learn Amazon S3 Select is no longer available to new customers.
+    # Existing customers of Amazon S3 Select can continue to use the feature
+    # as usual. [Learn more][1]
+    #
+    #  </note>
+    #
     # Request to filter the contents of an Amazon S3 object based on a
     # simple Structured Query Language (SQL) statement. In the request,
     # along with the SQL expression, you must specify a data serialization
@@ -16450,11 +16506,12 @@ module Aws::S3
     # object data into records. It returns only records that match the
     # specified SQL expression. You must also specify the data serialization
     # format for the response. For more information, see [S3Select API
-    # Documentation][1].
+    # Documentation][2].
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectSELECTContent.html
+    # [1]: http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectSELECTContent.html
     #
     # @!attribute [rw] bucket
     #   The S3 bucket.
@@ -16566,7 +16623,20 @@ module Aws::S3
       include Aws::Structure
     end
 
+    # Amazon S3 Select is no longer available to new customers. Existing
+    # customers of Amazon S3 Select can continue to use the feature as
+    # usual. [Learn more][1]
+    #
     # Describes the parameters for Select job types.
+    #
+    # Learn [How to optimize querying your data in Amazon S3][1] using
+    # [Amazon Athena][2], [S3 Object Lambda][3], or client-side filtering.
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/
+    # [2]: https://docs.aws.amazon.com/athena/latest/ug/what-is.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/transforming-objects.html
     #
     # @!attribute [rw] input_serialization
     #   Describes the serialization format of the object.
@@ -16577,7 +16647,15 @@ module Aws::S3
     #   @return [String]
     #
     # @!attribute [rw] expression
+    #   Amazon S3 Select is no longer available to new customers. Existing
+    #   customers of Amazon S3 Select can continue to use the feature as
+    #   usual. [Learn more][1]
+    #
     #   The expression that is used to query the object.
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/blogs/storage/how-to-optimize-querying-your-data-in-amazon-s3/
     #   @return [String]
     #
     # @!attribute [rw] output_serialization
@@ -17285,13 +17363,21 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
+    #
+    #   <note markdown="1"> Copying objects across different Amazon Web Services Regions isn't
+    #   supported when the source or destination bucket is in Amazon Web
+    #   Services Local Zones. The source and destination buckets must have
+    #   the same parent Amazon Web Services Region. Otherwise, you get an
+    #   HTTP `400 Bad Request` error with the error code `InvalidRequest`.
+    #
+    #    </note>
     #
     #   **Access points** - When you use this action with an access point,
     #   you must provide the alias of the access point in place of the
@@ -17738,10 +17824,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
     #   requests are not supported. Directory bucket names must be unique in
-    #   the chosen Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.

@@ -213,6 +213,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDS/DBCluster.html#monitoring_role_arn-instance_method
       def monitoring_role_arn: () -> ::String
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDS/DBCluster.html#database_insights_mode-instance_method
+      def database_insights_mode: () -> ("standard" | "advanced")
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDS/DBCluster.html#performance_insights_enabled-instance_method
       def performance_insights_enabled: () -> bool
 
@@ -330,6 +333,7 @@ module Aws
                     ?auto_minor_version_upgrade: bool,
                     ?monitoring_interval: ::Integer,
                     ?monitoring_role_arn: ::String,
+                    ?database_insights_mode: ("standard" | "advanced"),
                     ?enable_performance_insights: bool,
                     ?performance_insights_kms_key_id: ::String,
                     ?performance_insights_retention_period: ::Integer,
@@ -419,6 +423,7 @@ module Aws
                     ?auto_minor_version_upgrade: bool,
                     ?monitoring_interval: ::Integer,
                     ?monitoring_role_arn: ::String,
+                    ?database_insights_mode: ("standard" | "advanced"),
                     ?enable_performance_insights: bool,
                     ?performance_insights_kms_key_id: ::String,
                     ?performance_insights_retention_period: ::Integer,

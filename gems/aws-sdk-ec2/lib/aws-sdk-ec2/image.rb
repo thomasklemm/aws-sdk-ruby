@@ -222,6 +222,23 @@ module Aws::EC2
       data[:last_launched_time]
     end
 
+    # If `true`, the AMI satisfies the criteria for Allowed AMIs and can be
+    # discovered and used in the account. If `false` and Allowed AMIs is set
+    # to `enabled`, the AMI can't be discovered or used in the account. If
+    # `false` and Allowed AMIs is set to `audit-mode`, the AMI can be
+    # discovered and used in the account.
+    #
+    # For more information, see [Control the discovery and use of AMIs in
+    # Amazon EC2 with Allowed AMIs][1] in *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html
+    # @return [Boolean]
+    def image_allowed
+      data[:image_allowed]
+    end
+
     # The ID of the source AMI from which the AMI was created.
     #
     # The ID only appears if the AMI was created using CreateImage,

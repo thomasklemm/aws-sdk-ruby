@@ -1380,6 +1380,45 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
+    # Deletes the integration between CloudWatch Logs and OpenSearch
+    # Service. If your integration has active vended logs dashboards, you
+    # must specify `true` for the `force` parameter, otherwise the operation
+    # will fail. If you delete the integration by setting `force` to `true`,
+    # all your vended logs dashboards powered by OpenSearch Service will be
+    # deleted and the data that was on them will no longer be accessible.
+    #
+    # @option params [required, String] :integration_name
+    #   The name of the integration to delete. To find the name of your
+    #   integration, use [ListIntegrations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListIntegrations.html
+    #
+    # @option params [Boolean] :force
+    #   Specify `true` to force the deletion of the integration even if vended
+    #   logs dashboards currently exist.
+    #
+    #   The default is `false`.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_integration({
+    #     integration_name: "IntegrationName", # required
+    #     force: false,
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteIntegration AWS API Documentation
+    #
+    # @overload delete_integration(params = {})
+    # @param [Hash] params ({})
+    def delete_integration(params = {}, options = {})
+      req = build_request(:delete_integration, params)
+      req.send_request(options)
+    end
+
     # Deletes the specified CloudWatch Logs anomaly detector.
     #
     # @option params [required, String] :anomaly_detector_arn
@@ -2485,6 +2524,10 @@ module Aws::CloudWatchLogs
     #   The token for the next set of items to return. The token expires after
     #   24 hours.
     #
+    # @option params [String] :query_language
+    #   Limits the returned queries to only the queries that use the specified
+    #   query language.
+    #
     # @return [Types::DescribeQueriesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::DescribeQueriesResponse#queries #queries} => Array&lt;Types::QueryInfo&gt;
@@ -2497,11 +2540,13 @@ module Aws::CloudWatchLogs
     #     status: "Scheduled", # accepts Scheduled, Running, Complete, Failed, Cancelled, Timeout, Unknown
     #     max_results: 1,
     #     next_token: "NextToken",
+    #     query_language: "CWLI", # accepts CWLI, SQL, PPL
     #   })
     #
     # @example Response structure
     #
     #   resp.queries #=> Array
+    #   resp.queries[0].query_language #=> String, one of "CWLI", "SQL", "PPL"
     #   resp.queries[0].query_id #=> String
     #   resp.queries[0].query_string #=> String
     #   resp.queries[0].status #=> String, one of "Scheduled", "Running", "Complete", "Failed", "Cancelled", "Timeout", "Unknown"
@@ -2527,6 +2572,15 @@ module Aws::CloudWatchLogs
     # results to only the query definitions that have names that start with
     # a certain string.
     #
+    # @option params [String] :query_language
+    #   The query language used for this query. For more information about the
+    #   query languages that CloudWatch Logs supports, see [Supported query
+    #   languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #
     # @option params [String] :query_definition_name_prefix
     #   Use this parameter to filter your results to only the query
     #   definitions that have names that start with the prefix you specify.
@@ -2547,6 +2601,7 @@ module Aws::CloudWatchLogs
     # @example Request syntax with placeholder values
     #
     #   resp = client.describe_query_definitions({
+    #     query_language: "CWLI", # accepts CWLI, SQL, PPL
     #     query_definition_name_prefix: "QueryDefinitionName",
     #     max_results: 1,
     #     next_token: "NextToken",
@@ -2555,6 +2610,7 @@ module Aws::CloudWatchLogs
     # @example Response structure
     #
     #   resp.query_definitions #=> Array
+    #   resp.query_definitions[0].query_language #=> String, one of "CWLI", "SQL", "PPL"
     #   resp.query_definitions[0].query_definition_id #=> String
     #   resp.query_definitions[0].name #=> String
     #   resp.query_definitions[0].query_string #=> String
@@ -3101,6 +3157,72 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
+    # Returns information about one integration between CloudWatch Logs and
+    # OpenSearch Service.
+    #
+    # @option params [required, String] :integration_name
+    #   The name of the integration that you want to find information about.
+    #   To find the name of your integration, use [ListIntegrations][1]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListIntegrations.html
+    #
+    # @return [Types::GetIntegrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetIntegrationResponse#integration_name #integration_name} => String
+    #   * {Types::GetIntegrationResponse#integration_type #integration_type} => String
+    #   * {Types::GetIntegrationResponse#integration_status #integration_status} => String
+    #   * {Types::GetIntegrationResponse#integration_details #integration_details} => Types::IntegrationDetails
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_integration({
+    #     integration_name: "IntegrationName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.integration_name #=> String
+    #   resp.integration_type #=> String, one of "OPENSEARCH"
+    #   resp.integration_status #=> String, one of "PROVISIONING", "ACTIVE", "FAILED"
+    #   resp.integration_details.open_search_integration_details.data_source.data_source_name #=> String
+    #   resp.integration_details.open_search_integration_details.data_source.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.data_source.status.status_message #=> String
+    #   resp.integration_details.open_search_integration_details.application.application_endpoint #=> String
+    #   resp.integration_details.open_search_integration_details.application.application_arn #=> String
+    #   resp.integration_details.open_search_integration_details.application.application_id #=> String
+    #   resp.integration_details.open_search_integration_details.application.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.application.status.status_message #=> String
+    #   resp.integration_details.open_search_integration_details.collection.collection_endpoint #=> String
+    #   resp.integration_details.open_search_integration_details.collection.collection_arn #=> String
+    #   resp.integration_details.open_search_integration_details.collection.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.collection.status.status_message #=> String
+    #   resp.integration_details.open_search_integration_details.workspace.workspace_id #=> String
+    #   resp.integration_details.open_search_integration_details.workspace.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.workspace.status.status_message #=> String
+    #   resp.integration_details.open_search_integration_details.encryption_policy.policy_name #=> String
+    #   resp.integration_details.open_search_integration_details.encryption_policy.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.encryption_policy.status.status_message #=> String
+    #   resp.integration_details.open_search_integration_details.network_policy.policy_name #=> String
+    #   resp.integration_details.open_search_integration_details.network_policy.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.network_policy.status.status_message #=> String
+    #   resp.integration_details.open_search_integration_details.access_policy.policy_name #=> String
+    #   resp.integration_details.open_search_integration_details.access_policy.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.access_policy.status.status_message #=> String
+    #   resp.integration_details.open_search_integration_details.lifecycle_policy.policy_name #=> String
+    #   resp.integration_details.open_search_integration_details.lifecycle_policy.status.status #=> String, one of "ACTIVE", "NOT_FOUND", "ERROR"
+    #   resp.integration_details.open_search_integration_details.lifecycle_policy.status.status_message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/GetIntegration AWS API Documentation
+    #
+    # @overload get_integration(params = {})
+    # @param [Hash] params ({})
+    def get_integration(params = {}, options = {})
+      req = build_request(:get_integration, params)
+      req.send_request(options)
+    end
+
     # Retrieves information about the log anomaly detector that you specify.
     #
     # @option params [required, String] :anomaly_detector_arn
@@ -3431,6 +3553,7 @@ module Aws::CloudWatchLogs
     #
     # @return [Types::GetQueryResultsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
+    #   * {Types::GetQueryResultsResponse#query_language #query_language} => String
     #   * {Types::GetQueryResultsResponse#results #results} => Array&lt;Array&lt;Types::ResultField&gt;&gt;
     #   * {Types::GetQueryResultsResponse#statistics #statistics} => Types::QueryStatistics
     #   * {Types::GetQueryResultsResponse#status #status} => String
@@ -3444,6 +3567,7 @@ module Aws::CloudWatchLogs
     #
     # @example Response structure
     #
+    #   resp.query_language #=> String, one of "CWLI", "SQL", "PPL"
     #   resp.results #=> Array
     #   resp.results[0] #=> Array
     #   resp.results[0][0].field #=> String
@@ -3656,6 +3780,51 @@ module Aws::CloudWatchLogs
     # @param [Hash] params ({})
     def list_anomalies(params = {}, options = {})
       req = build_request(:list_anomalies, params)
+      req.send_request(options)
+    end
+
+    # Returns a list of integrations between CloudWatch Logs and other
+    # services in this account. Currently, only one integration can be
+    # created in an account, and this integration must be with OpenSearch
+    # Service.
+    #
+    # @option params [String] :integration_name_prefix
+    #   To limit the results to integrations that start with a certain name
+    #   prefix, specify that name prefix here.
+    #
+    # @option params [String] :integration_type
+    #   To limit the results to integrations of a certain type, specify that
+    #   type here.
+    #
+    # @option params [String] :integration_status
+    #   To limit the results to integrations with a certain status, specify
+    #   that status here.
+    #
+    # @return [Types::ListIntegrationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListIntegrationsResponse#integration_summaries #integration_summaries} => Array&lt;Types::IntegrationSummary&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_integrations({
+    #     integration_name_prefix: "IntegrationNamePrefix",
+    #     integration_type: "OPENSEARCH", # accepts OPENSEARCH
+    #     integration_status: "PROVISIONING", # accepts PROVISIONING, ACTIVE, FAILED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.integration_summaries #=> Array
+    #   resp.integration_summaries[0].integration_name #=> String
+    #   resp.integration_summaries[0].integration_type #=> String, one of "OPENSEARCH"
+    #   resp.integration_summaries[0].integration_status #=> String, one of "PROVISIONING", "ACTIVE", "FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ListIntegrations AWS API Documentation
+    #
+    # @overload list_integrations(params = {})
+    # @param [Hash] params ({})
+    def list_integrations(params = {}, options = {})
+      req = build_request(:list_integrations, params)
       req.send_request(options)
     end
 
@@ -4831,6 +5000,69 @@ module Aws::CloudWatchLogs
       req.send_request(options)
     end
 
+    # Creates an integration between CloudWatch Logs and another service in
+    # this account. Currently, only integrations with OpenSearch Service are
+    # supported, and currently you can have only one integration in your
+    # account.
+    #
+    # Integrating with OpenSearch Service makes it possible for you to
+    # create curated vended logs dashboards, powered by OpenSearch Service
+    # analytics. For more information, see [Vended log dashboards powered by
+    # Amazon OpenSearch Service][1].
+    #
+    # You can use this operation only to create a new integration. You
+    # can't modify an existing integration.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CloudWatchLogs-OpenSearch-Dashboards.html
+    #
+    # @option params [required, String] :integration_name
+    #   A name for the integration.
+    #
+    # @option params [required, Types::ResourceConfig] :resource_config
+    #   A structure that contains configuration information for the
+    #   integration that you are creating.
+    #
+    # @option params [required, String] :integration_type
+    #   The type of integration. Currently, the only supported type is
+    #   `OPENSEARCH`.
+    #
+    # @return [Types::PutIntegrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutIntegrationResponse#integration_name #integration_name} => String
+    #   * {Types::PutIntegrationResponse#integration_status #integration_status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_integration({
+    #     integration_name: "IntegrationName", # required
+    #     resource_config: { # required
+    #       open_search_resource_config: {
+    #         kms_key_arn: "Arn",
+    #         data_source_role_arn: "Arn", # required
+    #         dashboard_viewer_principals: ["Arn"], # required
+    #         application_arn: "Arn",
+    #         retention_days: 1, # required
+    #       },
+    #     },
+    #     integration_type: "OPENSEARCH", # required, accepts OPENSEARCH
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.integration_name #=> String
+    #   resp.integration_status #=> String, one of "PROVISIONING", "ACTIVE", "FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutIntegration AWS API Documentation
+    #
+    # @overload put_integration(params = {})
+    # @param [Hash] params ({})
+    def put_integration(params = {}, options = {})
+      req = build_request(:put_integration, params)
+      req.send_request(options)
+    end
+
     # Uploads a batch of log events to the specified log stream.
     #
     # The sequence token is now ignored in `PutLogEvents` actions.
@@ -5059,6 +5291,16 @@ module Aws::CloudWatchLogs
     #
     # [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AnalyzingLogData.html
     #
+    # @option params [String] :query_language
+    #   Specify the query language to use for this query. The options are Logs
+    #   Insights QL, OpenSearch PPL, and OpenSearch SQL. For more information
+    #   about the query languages that CloudWatch Logs supports, see
+    #   [Supported query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #
     # @option params [required, String] :name
     #   A name for the query definition. If you are saving numerous query
     #   definitions, we recommend that you name them. This way, you can find
@@ -5086,10 +5328,13 @@ module Aws::CloudWatchLogs
     #
     # @option params [Array<String>] :log_group_names
     #   Use this parameter to include specific log groups as part of your
-    #   query definition.
+    #   query definition. If your query uses the OpenSearch Service query
+    #   language, you specify the log group names inside the `querystring`
+    #   instead of here.
     #
-    #   If you are updating a query definition and you omit this parameter,
-    #   then the updated definition will contain no log groups.
+    #   If you are updating an existing query definition for the Logs Insights
+    #   QL or OpenSearch Service PPL and you omit this parameter, then the
+    #   updated definition will contain no log groups.
     #
     # @option params [required, String] :query_string
     #   The query string to use for this definition. For more information, see
@@ -5113,6 +5358,7 @@ module Aws::CloudWatchLogs
     # @example Request syntax with placeholder values
     #
     #   resp = client.put_query_definition({
+    #     query_language: "CWLI", # accepts CWLI, SQL, PPL
     #     name: "QueryDefinitionName", # required
     #     query_definition_id: "QueryId",
     #     log_group_names: ["LogGroupName"],
@@ -5936,12 +6182,38 @@ module Aws::CloudWatchLogs
     # [4]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_StartQuery.html
     # [5]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-Unified-Cross-Account.html
     #
+    # @option params [String] :query_language
+    #   Specify the query language to use for this query. The options are Logs
+    #   Insights QL, OpenSearch PPL, and OpenSearch SQL. For more information
+    #   about the query languages that CloudWatch Logs supports, see
+    #   [Supported query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #
     # @option params [String] :log_group_name
     #   The log group on which to perform the query.
+    #
+    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
+    #   parameters: `logGroupName`, `logGroupNames`, or `logGroupIdentifiers`.
+    #   The exception is queries using the OpenSearch Service SQL query
+    #   language, where you specify the log group names inside the
+    #   `querystring` instead of here.
+    #
+    #    </note>
     #
     # @option params [Array<String>] :log_group_names
     #   The list of log groups to be queried. You can include up to 50 log
     #   groups.
+    #
+    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
+    #   parameters: `logGroupName`, `logGroupNames`, or `logGroupIdentifiers`.
+    #   The exception is queries using the OpenSearch Service SQL query
+    #   language, where you specify the log group names inside the
+    #   `querystring` instead of here.
+    #
+    #    </note>
     #
     # @option params [Array<String>] :log_group_identifiers
     #   The list of log groups to query. You can include up to 50 log groups.
@@ -5957,6 +6229,9 @@ module Aws::CloudWatchLogs
     #
     #   A `StartQuery` operation must include exactly one of the following
     #   parameters: `logGroupName`, `logGroupNames`, or `logGroupIdentifiers`.
+    #   The exception is queries using the OpenSearch Service SQL query
+    #   language, where you specify the log group names inside the
+    #   `querystring` instead of here.
     #
     # @option params [required, Integer] :start_time
     #   The beginning of the time range to query. The range is inclusive, so
@@ -5988,6 +6263,7 @@ module Aws::CloudWatchLogs
     # @example Request syntax with placeholder values
     #
     #   resp = client.start_query({
+    #     query_language: "CWLI", # accepts CWLI, SQL, PPL
     #     log_group_name: "LogGroupName",
     #     log_group_names: ["LogGroupName"],
     #     log_group_identifiers: ["LogGroupIdentifier"],
@@ -6642,7 +6918,7 @@ module Aws::CloudWatchLogs
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudwatchlogs'
-      context[:gem_version] = '1.103.0'
+      context[:gem_version] = '1.104.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

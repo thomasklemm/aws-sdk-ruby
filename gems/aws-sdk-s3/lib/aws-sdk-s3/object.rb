@@ -66,7 +66,9 @@ module Aws::S3
     # providing object expiration information. The value of the `rule-id` is
     # URL-encoded.
     #
-    # <note markdown="1"> This functionality is not supported for directory buckets.
+    # <note markdown="1"> Object expiration information is not returned in directory buckets and
+    # this header returns the value "`NotImplemented`" in all responses
+    # for directory buckets.
     #
     #  </note>
     #

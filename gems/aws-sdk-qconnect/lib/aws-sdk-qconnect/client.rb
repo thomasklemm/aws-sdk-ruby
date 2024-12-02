@@ -540,6 +540,7 @@ module Aws::QConnect
     #     client_token: "ClientToken",
     #     configuration: { # required
     #       answer_recommendation_ai_agent_configuration: {
+    #         answer_generation_ai_guardrail_id: "UuidWithQualifier",
     #         answer_generation_ai_prompt_id: "UuidWithQualifier",
     #         association_configurations: [
     #           {
@@ -583,6 +584,7 @@ module Aws::QConnect
     #         query_reformulation_ai_prompt_id: "UuidWithQualifier",
     #       },
     #       manual_search_ai_agent_configuration: {
+    #         answer_generation_ai_guardrail_id: "UuidWithQualifier",
     #         answer_generation_ai_prompt_id: "UuidWithQualifier",
     #         association_configurations: [
     #           {
@@ -623,13 +625,56 @@ module Aws::QConnect
     #           },
     #         ],
     #       },
+    #       self_service_ai_agent_configuration: {
+    #         association_configurations: [
+    #           {
+    #             association_configuration_data: {
+    #               knowledge_base_association_configuration_data: {
+    #                 content_tag_filter: {
+    #                   and_conditions: [
+    #                     {
+    #                       key: "TagKey", # required
+    #                       value: "TagValue",
+    #                     },
+    #                   ],
+    #                   or_conditions: [
+    #                     {
+    #                       and_conditions: [
+    #                         {
+    #                           key: "TagKey", # required
+    #                           value: "TagValue",
+    #                         },
+    #                       ],
+    #                       tag_condition: {
+    #                         key: "TagKey", # required
+    #                         value: "TagValue",
+    #                       },
+    #                     },
+    #                   ],
+    #                   tag_condition: {
+    #                     key: "TagKey", # required
+    #                     value: "TagValue",
+    #                   },
+    #                 },
+    #                 max_results: 1,
+    #                 override_knowledge_base_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #               },
+    #             },
+    #             association_id: "Uuid",
+    #             association_type: "KNOWLEDGE_BASE", # accepts KNOWLEDGE_BASE
+    #           },
+    #         ],
+    #         self_service_ai_guardrail_id: "UuidWithQualifier",
+    #         self_service_answer_generation_ai_prompt_id: "UuidWithQualifier",
+    #         self_service_pre_processing_ai_prompt_id: "UuidWithQualifier",
+    #       },
     #     },
     #     description: "Description",
     #     name: "Name", # required
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
-    #     type: "MANUAL_SEARCH", # required, accepts MANUAL_SEARCH, ANSWER_RECOMMENDATION
+    #     type: "MANUAL_SEARCH", # required, accepts MANUAL_SEARCH, ANSWER_RECOMMENDATION, SELF_SERVICE
     #     visibility_status: "SAVED", # required, accepts SAVED, PUBLISHED
     #   })
     #
@@ -639,6 +684,7 @@ module Aws::QConnect
     #   resp.ai_agent.ai_agent_id #=> String
     #   resp.ai_agent.assistant_arn #=> String
     #   resp.ai_agent.assistant_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -658,6 +704,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -675,6 +722,25 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.max_results #=> Integer
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_ai_guardrail_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_answer_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_pre_processing_ai_prompt_id #=> String
     #   resp.ai_agent.description #=> String
     #   resp.ai_agent.modified_time #=> Time
     #   resp.ai_agent.name #=> String
@@ -682,7 +748,7 @@ module Aws::QConnect
     #   resp.ai_agent.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
     #   resp.ai_agent.tags #=> Hash
     #   resp.ai_agent.tags["TagKey"] #=> String
-    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION"
+    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION", "SELF_SERVICE"
     #   resp.ai_agent.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIAgent AWS API Documentation
@@ -744,6 +810,7 @@ module Aws::QConnect
     #   resp.ai_agent.ai_agent_id #=> String
     #   resp.ai_agent.assistant_arn #=> String
     #   resp.ai_agent.assistant_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -763,6 +830,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -780,6 +848,25 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.max_results #=> Integer
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_ai_guardrail_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_answer_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_pre_processing_ai_prompt_id #=> String
     #   resp.ai_agent.description #=> String
     #   resp.ai_agent.modified_time #=> Time
     #   resp.ai_agent.name #=> String
@@ -787,7 +874,7 @@ module Aws::QConnect
     #   resp.ai_agent.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
     #   resp.ai_agent.tags #=> Hash
     #   resp.ai_agent.tags["TagKey"] #=> String
-    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION"
+    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION", "SELF_SERVICE"
     #   resp.ai_agent.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.version_number #=> Integer
     #
@@ -797,6 +884,273 @@ module Aws::QConnect
     # @param [Hash] params ({})
     def create_ai_agent_version(params = {}, options = {})
       req = build_request(:create_ai_agent_version, params)
+      req.send_request(options)
+    end
+
+    # Creates an Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @option params [required, String] :blocked_input_messaging
+    #   The message to return when the AI Guardrail blocks a prompt.
+    #
+    # @option params [required, String] :blocked_outputs_messaging
+    #   The message to return when the AI Guardrail blocks a model response.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1]..
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #
+    # @option params [Types::AIGuardrailContentPolicyConfig] :content_policy_config
+    #   The content filter policies to configure for the AI Guardrail.
+    #
+    # @option params [Types::AIGuardrailContextualGroundingPolicyConfig] :contextual_grounding_policy_config
+    #   The contextual grounding policy configuration used to create an AI
+    #   Guardrail.
+    #
+    # @option params [String] :description
+    #   A description of the AI Guardrail.
+    #
+    # @option params [required, String] :name
+    #   The name of the AI Guardrail.
+    #
+    # @option params [Types::AIGuardrailSensitiveInformationPolicyConfig] :sensitive_information_policy_config
+    #   The sensitive information policy to configure for the AI Guardrail.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   The tags used to organize, track, or control access for this resource.
+    #
+    # @option params [Types::AIGuardrailTopicPolicyConfig] :topic_policy_config
+    #   The topic policies to configure for the AI Guardrail.
+    #
+    # @option params [required, String] :visibility_status
+    #   The visibility status of the AI Guardrail.
+    #
+    # @option params [Types::AIGuardrailWordPolicyConfig] :word_policy_config
+    #   The word policy you configure for the AI Guardrail.
+    #
+    # @return [Types::CreateAIGuardrailResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateAIGuardrailResponse#ai_guardrail #ai_guardrail} => Types::AIGuardrailData
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_ai_guardrail({
+    #     assistant_id: "UuidOrArn", # required
+    #     blocked_input_messaging: "AIGuardrailBlockedMessaging", # required
+    #     blocked_outputs_messaging: "AIGuardrailBlockedMessaging", # required
+    #     client_token: "ClientToken",
+    #     content_policy_config: {
+    #       filters_config: [ # required
+    #         {
+    #           input_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
+    #           output_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
+    #           type: "SEXUAL", # required, accepts SEXUAL, VIOLENCE, HATE, INSULTS, MISCONDUCT, PROMPT_ATTACK
+    #         },
+    #       ],
+    #     },
+    #     contextual_grounding_policy_config: {
+    #       filters_config: [ # required
+    #         {
+    #           threshold: 1.0, # required
+    #           type: "GROUNDING", # required, accepts GROUNDING, RELEVANCE
+    #         },
+    #       ],
+    #     },
+    #     description: "AIGuardrailDescription",
+    #     name: "Name", # required
+    #     sensitive_information_policy_config: {
+    #       pii_entities_config: [
+    #         {
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           type: "ADDRESS", # required, accepts ADDRESS, AGE, AWS_ACCESS_KEY, AWS_SECRET_KEY, CA_HEALTH_NUMBER, CA_SOCIAL_INSURANCE_NUMBER, CREDIT_DEBIT_CARD_CVV, CREDIT_DEBIT_CARD_EXPIRY, CREDIT_DEBIT_CARD_NUMBER, DRIVER_ID, EMAIL, INTERNATIONAL_BANK_ACCOUNT_NUMBER, IP_ADDRESS, LICENSE_PLATE, MAC_ADDRESS, NAME, PASSWORD, PHONE, PIN, SWIFT_CODE, UK_NATIONAL_HEALTH_SERVICE_NUMBER, UK_NATIONAL_INSURANCE_NUMBER, UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER, URL, USERNAME, US_BANK_ACCOUNT_NUMBER, US_BANK_ROUTING_NUMBER, US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER, US_PASSPORT_NUMBER, US_SOCIAL_SECURITY_NUMBER, VEHICLE_IDENTIFICATION_NUMBER
+    #         },
+    #       ],
+    #       regexes_config: [
+    #         {
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           description: "GuardrailRegexDescription",
+    #           name: "GuardrailRegexName", # required
+    #           pattern: "GuardrailRegexPattern", # required
+    #         },
+    #       ],
+    #     },
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #     topic_policy_config: {
+    #       topics_config: [ # required
+    #         {
+    #           definition: "GuardrailTopicDefinition", # required
+    #           examples: ["GuardrailTopicExample"],
+    #           name: "GuardrailTopicName", # required
+    #           type: "DENY", # required, accepts DENY
+    #         },
+    #       ],
+    #     },
+    #     visibility_status: "SAVED", # required, accepts SAVED, PUBLISHED
+    #     word_policy_config: {
+    #       managed_word_lists_config: [
+    #         {
+    #           type: "PROFANITY", # required, accepts PROFANITY
+    #         },
+    #       ],
+    #       words_config: [
+    #         {
+    #           text: "GuardrailWordText", # required
+    #         },
+    #       ],
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ai_guardrail.ai_guardrail_arn #=> String
+    #   resp.ai_guardrail.ai_guardrail_id #=> String
+    #   resp.ai_guardrail.assistant_arn #=> String
+    #   resp.ai_guardrail.assistant_id #=> String
+    #   resp.ai_guardrail.blocked_input_messaging #=> String
+    #   resp.ai_guardrail.blocked_outputs_messaging #=> String
+    #   resp.ai_guardrail.content_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].input_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].output_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].type #=> String, one of "SEXUAL", "VIOLENCE", "HATE", "INSULTS", "MISCONDUCT", "PROMPT_ATTACK"
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].threshold #=> Float
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].type #=> String, one of "GROUNDING", "RELEVANCE"
+    #   resp.ai_guardrail.description #=> String
+    #   resp.ai_guardrail.modified_time #=> Time
+    #   resp.ai_guardrail.name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].description #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].pattern #=> String
+    #   resp.ai_guardrail.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
+    #   resp.ai_guardrail.tags #=> Hash
+    #   resp.ai_guardrail.tags["TagKey"] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].definition #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples[0] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].name #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].type #=> String, one of "DENY"
+    #   resp.ai_guardrail.visibility_status #=> String, one of "SAVED", "PUBLISHED"
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config[0].type #=> String, one of "PROFANITY"
+    #   resp.ai_guardrail.word_policy_config.words_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.words_config[0].text #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIGuardrail AWS API Documentation
+    #
+    # @overload create_ai_guardrail(params = {})
+    # @param [Hash] params ({})
+    def create_ai_guardrail(params = {}, options = {})
+      req = build_request(:create_ai_guardrail, params)
+      req.send_request(options)
+    end
+
+    # Creates an Amazon Q in Connect AI Guardrail version.
+    #
+    # @option params [required, String] :ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1]..
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :modified_time
+    #   The time the AI Guardrail was last modified.
+    #
+    # @return [Types::CreateAIGuardrailVersionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateAIGuardrailVersionResponse#ai_guardrail #ai_guardrail} => Types::AIGuardrailData
+    #   * {Types::CreateAIGuardrailVersionResponse#version_number #version_number} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_ai_guardrail_version({
+    #     ai_guardrail_id: "UuidOrArnOrEitherWithQualifier", # required
+    #     assistant_id: "UuidOrArn", # required
+    #     client_token: "ClientToken",
+    #     modified_time: Time.now,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ai_guardrail.ai_guardrail_arn #=> String
+    #   resp.ai_guardrail.ai_guardrail_id #=> String
+    #   resp.ai_guardrail.assistant_arn #=> String
+    #   resp.ai_guardrail.assistant_id #=> String
+    #   resp.ai_guardrail.blocked_input_messaging #=> String
+    #   resp.ai_guardrail.blocked_outputs_messaging #=> String
+    #   resp.ai_guardrail.content_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].input_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].output_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].type #=> String, one of "SEXUAL", "VIOLENCE", "HATE", "INSULTS", "MISCONDUCT", "PROMPT_ATTACK"
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].threshold #=> Float
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].type #=> String, one of "GROUNDING", "RELEVANCE"
+    #   resp.ai_guardrail.description #=> String
+    #   resp.ai_guardrail.modified_time #=> Time
+    #   resp.ai_guardrail.name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].description #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].pattern #=> String
+    #   resp.ai_guardrail.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
+    #   resp.ai_guardrail.tags #=> Hash
+    #   resp.ai_guardrail.tags["TagKey"] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].definition #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples[0] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].name #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].type #=> String, one of "DENY"
+    #   resp.ai_guardrail.visibility_status #=> String, one of "SAVED", "PUBLISHED"
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config[0].type #=> String, one of "PROFANITY"
+    #   resp.ai_guardrail.word_policy_config.words_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.words_config[0].text #=> String
+    #   resp.version_number #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIGuardrailVersion AWS API Documentation
+    #
+    # @overload create_ai_guardrail_version(params = {})
+    # @param [Hash] params ({})
+    def create_ai_guardrail_version(params = {}, options = {})
+      req = build_request(:create_ai_guardrail_version, params)
       req.send_request(options)
     end
 
@@ -869,7 +1223,7 @@ module Aws::QConnect
     #       },
     #     },
     #     template_type: "TEXT", # required, accepts TEXT
-    #     type: "ANSWER_GENERATION", # required, accepts ANSWER_GENERATION, INTENT_LABELING_GENERATION, QUERY_REFORMULATION
+    #     type: "ANSWER_GENERATION", # required, accepts ANSWER_GENERATION, INTENT_LABELING_GENERATION, QUERY_REFORMULATION, SELF_SERVICE_PRE_PROCESSING, SELF_SERVICE_ANSWER_GENERATION
     #     visibility_status: "SAVED", # required, accepts SAVED, PUBLISHED
     #   })
     #
@@ -890,7 +1244,7 @@ module Aws::QConnect
     #   resp.ai_prompt.tags["TagKey"] #=> String
     #   resp.ai_prompt.template_configuration.text_full_ai_prompt_edit_template_configuration.text #=> String
     #   resp.ai_prompt.template_type #=> String, one of "TEXT"
-    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION"
+    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION", "SELF_SERVICE_PRE_PROCESSING", "SELF_SERVICE_ANSWER_GENERATION"
     #   resp.ai_prompt.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIPrompt AWS API Documentation
@@ -958,7 +1312,7 @@ module Aws::QConnect
     #   resp.ai_prompt.tags["TagKey"] #=> String
     #   resp.ai_prompt.template_configuration.text_full_ai_prompt_edit_template_configuration.text #=> String
     #   resp.ai_prompt.template_type #=> String, one of "TEXT"
-    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION"
+    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION", "SELF_SERVICE_PRE_PROCESSING", "SELF_SERVICE_ANSWER_GENERATION"
     #   resp.ai_prompt.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.version_number #=> Integer
     #
@@ -2400,6 +2754,65 @@ module Aws::QConnect
       req.send_request(options)
     end
 
+    # Deletes an Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [required, String] :ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_ai_guardrail({
+    #     ai_guardrail_id: "UuidOrArnOrEitherWithQualifier", # required
+    #     assistant_id: "UuidOrArn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteAIGuardrail AWS API Documentation
+    #
+    # @overload delete_ai_guardrail(params = {})
+    # @param [Hash] params ({})
+    def delete_ai_guardrail(params = {}, options = {})
+      req = build_request(:delete_ai_guardrail, params)
+      req.send_request(options)
+    end
+
+    # Delete and Amazon Q in Connect AI Guardrail version.
+    #
+    # @option params [required, String] :ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @option params [required, Integer] :version_number
+    #   The version number of the AI Guardrail version to be deleted.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_ai_guardrail_version({
+    #     ai_guardrail_id: "UuidOrArnOrEitherWithQualifier", # required
+    #     assistant_id: "UuidOrArn", # required
+    #     version_number: 1, # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteAIGuardrailVersion AWS API Documentation
+    #
+    # @overload delete_ai_guardrail_version(params = {})
+    # @param [Hash] params ({})
+    def delete_ai_guardrail_version(params = {}, options = {})
+      req = build_request(:delete_ai_guardrail_version, params)
+      req.send_request(options)
+    end
+
     # Deletes an Amazon Q in Connect AI Prompt.
     #
     # @option params [required, String] :ai_prompt_id
@@ -2765,6 +3178,7 @@ module Aws::QConnect
     #   resp.ai_agent.ai_agent_id #=> String
     #   resp.ai_agent.assistant_arn #=> String
     #   resp.ai_agent.assistant_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -2784,6 +3198,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -2801,6 +3216,25 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.max_results #=> Integer
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_ai_guardrail_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_answer_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_pre_processing_ai_prompt_id #=> String
     #   resp.ai_agent.description #=> String
     #   resp.ai_agent.modified_time #=> Time
     #   resp.ai_agent.name #=> String
@@ -2808,7 +3242,7 @@ module Aws::QConnect
     #   resp.ai_agent.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
     #   resp.ai_agent.tags #=> Hash
     #   resp.ai_agent.tags["TagKey"] #=> String
-    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION"
+    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION", "SELF_SERVICE"
     #   resp.ai_agent.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.version_number #=> Integer
     #
@@ -2818,6 +3252,78 @@ module Aws::QConnect
     # @param [Hash] params ({})
     def get_ai_agent(params = {}, options = {})
       req = build_request(:get_ai_agent, params)
+      req.send_request(options)
+    end
+
+    # Gets the Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [required, String] :ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @return [Types::GetAIGuardrailResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAIGuardrailResponse#ai_guardrail #ai_guardrail} => Types::AIGuardrailData
+    #   * {Types::GetAIGuardrailResponse#version_number #version_number} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_ai_guardrail({
+    #     ai_guardrail_id: "UuidOrArnOrEitherWithQualifier", # required
+    #     assistant_id: "UuidOrArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ai_guardrail.ai_guardrail_arn #=> String
+    #   resp.ai_guardrail.ai_guardrail_id #=> String
+    #   resp.ai_guardrail.assistant_arn #=> String
+    #   resp.ai_guardrail.assistant_id #=> String
+    #   resp.ai_guardrail.blocked_input_messaging #=> String
+    #   resp.ai_guardrail.blocked_outputs_messaging #=> String
+    #   resp.ai_guardrail.content_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].input_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].output_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].type #=> String, one of "SEXUAL", "VIOLENCE", "HATE", "INSULTS", "MISCONDUCT", "PROMPT_ATTACK"
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].threshold #=> Float
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].type #=> String, one of "GROUNDING", "RELEVANCE"
+    #   resp.ai_guardrail.description #=> String
+    #   resp.ai_guardrail.modified_time #=> Time
+    #   resp.ai_guardrail.name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].description #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].pattern #=> String
+    #   resp.ai_guardrail.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
+    #   resp.ai_guardrail.tags #=> Hash
+    #   resp.ai_guardrail.tags["TagKey"] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].definition #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples[0] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].name #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].type #=> String, one of "DENY"
+    #   resp.ai_guardrail.visibility_status #=> String, one of "SAVED", "PUBLISHED"
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config[0].type #=> String, one of "PROFANITY"
+    #   resp.ai_guardrail.word_policy_config.words_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.words_config[0].text #=> String
+    #   resp.version_number #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetAIGuardrail AWS API Documentation
+    #
+    # @overload get_ai_guardrail(params = {})
+    # @param [Hash] params ({})
+    def get_ai_guardrail(params = {}, options = {})
+      req = build_request(:get_ai_guardrail, params)
       req.send_request(options)
     end
 
@@ -2859,7 +3365,7 @@ module Aws::QConnect
     #   resp.ai_prompt.tags["TagKey"] #=> String
     #   resp.ai_prompt.template_configuration.text_full_ai_prompt_edit_template_configuration.text #=> String
     #   resp.ai_prompt.template_type #=> String, one of "TEXT"
-    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION"
+    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION", "SELF_SERVICE_PRE_PROCESSING", "SELF_SERVICE_ANSWER_GENERATION"
     #   resp.ai_prompt.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.version_number #=> Integer
     #
@@ -3355,6 +3861,60 @@ module Aws::QConnect
       req.send_request(options)
     end
 
+    # Retrieves next message on an Amazon Q in Connect session.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant.
+    #
+    # @option params [required, String] :next_message_token
+    #   The token for the next message. Use the value returned in the
+    #   SendMessage or previous response in the next request to retrieve the
+    #   next message.
+    #
+    # @option params [required, String] :session_id
+    #   The identifier of the Amazon Q in Connect session.
+    #
+    # @return [Types::GetNextMessageResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetNextMessageResponse#conversation_session_data #conversation_session_data} => Array&lt;Types::RuntimeSessionData&gt;
+    #   * {Types::GetNextMessageResponse#conversation_state #conversation_state} => Types::ConversationState
+    #   * {Types::GetNextMessageResponse#next_message_token #next_message_token} => String
+    #   * {Types::GetNextMessageResponse#request_message_id #request_message_id} => String
+    #   * {Types::GetNextMessageResponse#response #response} => Types::MessageOutput
+    #   * {Types::GetNextMessageResponse#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_next_message({
+    #     assistant_id: "UuidOrArn", # required
+    #     next_message_token: "NextToken", # required
+    #     session_id: "UuidOrArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.conversation_session_data #=> Array
+    #   resp.conversation_session_data[0].key #=> String
+    #   resp.conversation_session_data[0].value.string_value #=> String
+    #   resp.conversation_state.reason #=> String, one of "SUCCESS", "FAILED", "REJECTED"
+    #   resp.conversation_state.status #=> String, one of "CLOSED", "READY", "PROCESSING"
+    #   resp.next_message_token #=> String
+    #   resp.request_message_id #=> String
+    #   resp.response.message_id #=> String
+    #   resp.response.participant #=> String, one of "CUSTOMER", "AGENT", "BOT"
+    #   resp.response.timestamp #=> Time
+    #   resp.response.value.text.value #=> String
+    #   resp.type #=> String, one of "TEXT"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetNextMessage AWS API Documentation
+    #
+    # @overload get_next_message(params = {})
+    # @param [Hash] params ({})
+    def get_next_message(params = {}, options = {})
+      req = build_request(:get_next_message, params)
+      req.send_request(options)
+    end
+
     # Retrieves the quick response.
     #
     # @option params [required, String] :knowledge_base_id
@@ -3638,6 +4198,7 @@ module Aws::QConnect
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.ai_agent_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.assistant_arn #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.assistant_id #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -3657,6 +4218,7 @@ module Aws::QConnect
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -3674,6 +4236,25 @@ module Aws::QConnect
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].value #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions #=> Array
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions #=> Array
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].key #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].value #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.key #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.value #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.key #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.value #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.max_results #=> Integer
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_id #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.self_service_ai_guardrail_id #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.self_service_answer_generation_ai_prompt_id #=> String
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.configuration.self_service_ai_agent_configuration.self_service_pre_processing_ai_prompt_id #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.description #=> String
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.modified_time #=> Time
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.name #=> String
@@ -3681,7 +4262,7 @@ module Aws::QConnect
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.tags #=> Hash
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.tags["TagKey"] #=> String
-    #   resp.ai_agent_version_summaries[0].ai_agent_summary.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION"
+    #   resp.ai_agent_version_summaries[0].ai_agent_summary.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION", "SELF_SERVICE"
     #   resp.ai_agent_version_summaries[0].ai_agent_summary.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.ai_agent_version_summaries[0].version_number #=> Integer
     #   resp.next_token #=> String
@@ -3737,6 +4318,7 @@ module Aws::QConnect
     #   resp.ai_agent_summaries[0].ai_agent_id #=> String
     #   resp.ai_agent_summaries[0].assistant_arn #=> String
     #   resp.ai_agent_summaries[0].assistant_id #=> String
+    #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -3756,6 +4338,7 @@ module Aws::QConnect
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
     #   resp.ai_agent_summaries[0].configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
+    #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -3773,6 +4356,25 @@ module Aws::QConnect
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent_summaries[0].configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations #=> Array
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].value #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions #=> Array
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions #=> Array
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].key #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].value #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.key #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.value #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.key #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.value #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.max_results #=> Integer
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_id #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.self_service_ai_guardrail_id #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.self_service_answer_generation_ai_prompt_id #=> String
+    #   resp.ai_agent_summaries[0].configuration.self_service_ai_agent_configuration.self_service_pre_processing_ai_prompt_id #=> String
     #   resp.ai_agent_summaries[0].description #=> String
     #   resp.ai_agent_summaries[0].modified_time #=> Time
     #   resp.ai_agent_summaries[0].name #=> String
@@ -3780,7 +4382,7 @@ module Aws::QConnect
     #   resp.ai_agent_summaries[0].status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
     #   resp.ai_agent_summaries[0].tags #=> Hash
     #   resp.ai_agent_summaries[0].tags["TagKey"] #=> String
-    #   resp.ai_agent_summaries[0].type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION"
+    #   resp.ai_agent_summaries[0].type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION", "SELF_SERVICE"
     #   resp.ai_agent_summaries[0].visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.next_token #=> String
     #
@@ -3790,6 +4392,121 @@ module Aws::QConnect
     # @param [Hash] params ({})
     def list_ai_agents(params = {}, options = {})
       req = build_request(:list_ai_agents, params)
+      req.send_request(options)
+    end
+
+    # Lists AI Guardrail versions.
+    #
+    # @option params [required, String] :ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail for which
+    #   versions are to be listed.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return per page.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #
+    # @return [Types::ListAIGuardrailVersionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAIGuardrailVersionsResponse#ai_guardrail_version_summaries #ai_guardrail_version_summaries} => Array&lt;Types::AIGuardrailVersionSummary&gt;
+    #   * {Types::ListAIGuardrailVersionsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_ai_guardrail_versions({
+    #     ai_guardrail_id: "UuidOrArnOrEitherWithQualifier", # required
+    #     assistant_id: "UuidOrArn", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ai_guardrail_version_summaries #=> Array
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.ai_guardrail_arn #=> String
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.ai_guardrail_id #=> String
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.assistant_arn #=> String
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.assistant_id #=> String
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.description #=> String
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.modified_time #=> Time
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.name #=> String
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.tags #=> Hash
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.tags["TagKey"] #=> String
+    #   resp.ai_guardrail_version_summaries[0].ai_guardrail_summary.visibility_status #=> String, one of "SAVED", "PUBLISHED"
+    #   resp.ai_guardrail_version_summaries[0].version_number #=> Integer
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListAIGuardrailVersions AWS API Documentation
+    #
+    # @overload list_ai_guardrail_versions(params = {})
+    # @param [Hash] params ({})
+    def list_ai_guardrail_versions(params = {}, options = {})
+      req = build_request(:list_ai_guardrail_versions, params)
+      req.send_request(options)
+    end
+
+    # Lists the AI Guardrails available on the Amazon Q in Connect
+    # assistant.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return per page.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #
+    # @return [Types::ListAIGuardrailsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAIGuardrailsResponse#ai_guardrail_summaries #ai_guardrail_summaries} => Array&lt;Types::AIGuardrailSummary&gt;
+    #   * {Types::ListAIGuardrailsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_ai_guardrails({
+    #     assistant_id: "UuidOrArn", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ai_guardrail_summaries #=> Array
+    #   resp.ai_guardrail_summaries[0].ai_guardrail_arn #=> String
+    #   resp.ai_guardrail_summaries[0].ai_guardrail_id #=> String
+    #   resp.ai_guardrail_summaries[0].assistant_arn #=> String
+    #   resp.ai_guardrail_summaries[0].assistant_id #=> String
+    #   resp.ai_guardrail_summaries[0].description #=> String
+    #   resp.ai_guardrail_summaries[0].modified_time #=> Time
+    #   resp.ai_guardrail_summaries[0].name #=> String
+    #   resp.ai_guardrail_summaries[0].status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
+    #   resp.ai_guardrail_summaries[0].tags #=> Hash
+    #   resp.ai_guardrail_summaries[0].tags["TagKey"] #=> String
+    #   resp.ai_guardrail_summaries[0].visibility_status #=> String, one of "SAVED", "PUBLISHED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListAIGuardrails AWS API Documentation
+    #
+    # @overload list_ai_guardrails(params = {})
+    # @param [Hash] params ({})
+    def list_ai_guardrails(params = {}, options = {})
+      req = build_request(:list_ai_guardrails, params)
       req.send_request(options)
     end
 
@@ -3850,7 +4567,7 @@ module Aws::QConnect
     #   resp.ai_prompt_version_summaries[0].ai_prompt_summary.tags #=> Hash
     #   resp.ai_prompt_version_summaries[0].ai_prompt_summary.tags["TagKey"] #=> String
     #   resp.ai_prompt_version_summaries[0].ai_prompt_summary.template_type #=> String, one of "TEXT"
-    #   resp.ai_prompt_version_summaries[0].ai_prompt_summary.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION"
+    #   resp.ai_prompt_version_summaries[0].ai_prompt_summary.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION", "SELF_SERVICE_PRE_PROCESSING", "SELF_SERVICE_ANSWER_GENERATION"
     #   resp.ai_prompt_version_summaries[0].ai_prompt_summary.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.ai_prompt_version_summaries[0].version_number #=> Integer
     #   resp.next_token #=> String
@@ -3916,7 +4633,7 @@ module Aws::QConnect
     #   resp.ai_prompt_summaries[0].tags #=> Hash
     #   resp.ai_prompt_summaries[0].tags["TagKey"] #=> String
     #   resp.ai_prompt_summaries[0].template_type #=> String, one of "TEXT"
-    #   resp.ai_prompt_summaries[0].type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION"
+    #   resp.ai_prompt_summaries[0].type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION", "SELF_SERVICE_PRE_PROCESSING", "SELF_SERVICE_ANSWER_GENERATION"
     #   resp.ai_prompt_summaries[0].visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #   resp.next_token #=> String
     #
@@ -4393,6 +5110,56 @@ module Aws::QConnect
       req.send_request(options)
     end
 
+    # Lists messages on an Amazon Q in Connect session.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return per page.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #
+    # @option params [required, String] :session_id
+    #   The identifier of the Amazon Q in Connect session.
+    #
+    # @return [Types::ListMessagesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListMessagesResponse#messages #messages} => Array&lt;Types::MessageOutput&gt;
+    #   * {Types::ListMessagesResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_messages({
+    #     assistant_id: "UuidOrArn", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     session_id: "UuidOrArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.messages #=> Array
+    #   resp.messages[0].message_id #=> String
+    #   resp.messages[0].participant #=> String, one of "CUSTOMER", "AGENT", "BOT"
+    #   resp.messages[0].timestamp #=> Time
+    #   resp.messages[0].value.text.value #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListMessages AWS API Documentation
+    #
+    # @overload list_messages(params = {})
+    # @param [Hash] params ({})
+    def list_messages(params = {}, options = {})
+      req = build_request(:list_messages, params)
+      req.send_request(options)
+    end
+
     # Lists information about quick response.
     #
     # @option params [required, String] :knowledge_base_id
@@ -4748,7 +5515,7 @@ module Aws::QConnect
     # @example Request syntax with placeholder values
     #
     #   resp = client.remove_assistant_ai_agent({
-    #     ai_agent_type: "MANUAL_SEARCH", # required, accepts MANUAL_SEARCH, ANSWER_RECOMMENDATION
+    #     ai_agent_type: "MANUAL_SEARCH", # required, accepts MANUAL_SEARCH, ANSWER_RECOMMENDATION, SELF_SERVICE
     #     assistant_id: "UuidOrArn", # required
     #   })
     #
@@ -5254,6 +6021,76 @@ module Aws::QConnect
       req.send_request(options)
     end
 
+    # Submits a message to the Amazon Q in Connect session.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the AWS SDK populates
+    #   this field.For more information about idempotency, see Making retries
+    #   safe with idempotent APIs.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [Types::ConversationContext] :conversation_context
+    #   The conversation context before the Amazon Q in Connect session.
+    #
+    # @option params [required, Types::MessageInput] :message
+    #   The message data to submit to the Amazon Q in Connect session.
+    #
+    # @option params [required, String] :session_id
+    #   The identifier of the Amazon Q in Connect session.
+    #
+    # @option params [required, String] :type
+    #   The message type.
+    #
+    # @return [Types::SendMessageResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::SendMessageResponse#next_message_token #next_message_token} => String
+    #   * {Types::SendMessageResponse#request_message_id #request_message_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.send_message({
+    #     assistant_id: "UuidOrArn", # required
+    #     client_token: "ClientToken",
+    #     conversation_context: {
+    #       self_service_conversation_history: [ # required
+    #         {
+    #           bot_response: "SensitiveString",
+    #           input_transcript: "SensitiveString",
+    #           turn_number: 1, # required
+    #         },
+    #       ],
+    #     },
+    #     message: { # required
+    #       value: { # required
+    #         text: {
+    #           value: "TextMessageValueString",
+    #         },
+    #       },
+    #     },
+    #     session_id: "UuidOrArn", # required
+    #     type: "TEXT", # required, accepts TEXT
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_message_token #=> String
+    #   resp.request_message_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/SendMessage AWS API Documentation
+    #
+    # @overload send_message(params = {})
+    # @param [Hash] params ({})
+    def send_message(params = {}, options = {})
+      req = build_request(:send_message, params)
+      req.send_request(options)
+    end
+
     # Get a URL to upload content to a knowledge base. To upload content,
     # first make a PUT request to the returned URL with your file, making
     # sure to include the required headers. Then use [CreateContent][1] to
@@ -5512,6 +6349,7 @@ module Aws::QConnect
     #     client_token: "ClientToken",
     #     configuration: {
     #       answer_recommendation_ai_agent_configuration: {
+    #         answer_generation_ai_guardrail_id: "UuidWithQualifier",
     #         answer_generation_ai_prompt_id: "UuidWithQualifier",
     #         association_configurations: [
     #           {
@@ -5555,6 +6393,7 @@ module Aws::QConnect
     #         query_reformulation_ai_prompt_id: "UuidWithQualifier",
     #       },
     #       manual_search_ai_agent_configuration: {
+    #         answer_generation_ai_guardrail_id: "UuidWithQualifier",
     #         answer_generation_ai_prompt_id: "UuidWithQualifier",
     #         association_configurations: [
     #           {
@@ -5595,6 +6434,49 @@ module Aws::QConnect
     #           },
     #         ],
     #       },
+    #       self_service_ai_agent_configuration: {
+    #         association_configurations: [
+    #           {
+    #             association_configuration_data: {
+    #               knowledge_base_association_configuration_data: {
+    #                 content_tag_filter: {
+    #                   and_conditions: [
+    #                     {
+    #                       key: "TagKey", # required
+    #                       value: "TagValue",
+    #                     },
+    #                   ],
+    #                   or_conditions: [
+    #                     {
+    #                       and_conditions: [
+    #                         {
+    #                           key: "TagKey", # required
+    #                           value: "TagValue",
+    #                         },
+    #                       ],
+    #                       tag_condition: {
+    #                         key: "TagKey", # required
+    #                         value: "TagValue",
+    #                       },
+    #                     },
+    #                   ],
+    #                   tag_condition: {
+    #                     key: "TagKey", # required
+    #                     value: "TagValue",
+    #                   },
+    #                 },
+    #                 max_results: 1,
+    #                 override_knowledge_base_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #               },
+    #             },
+    #             association_id: "Uuid",
+    #             association_type: "KNOWLEDGE_BASE", # accepts KNOWLEDGE_BASE
+    #           },
+    #         ],
+    #         self_service_ai_guardrail_id: "UuidWithQualifier",
+    #         self_service_answer_generation_ai_prompt_id: "UuidWithQualifier",
+    #         self_service_pre_processing_ai_prompt_id: "UuidWithQualifier",
+    #       },
     #     },
     #     description: "Description",
     #     visibility_status: "SAVED", # required, accepts SAVED, PUBLISHED
@@ -5606,6 +6488,7 @@ module Aws::QConnect
     #   resp.ai_agent.ai_agent_id #=> String
     #   resp.ai_agent.assistant_arn #=> String
     #   resp.ai_agent.assistant_id #=> String
+    #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -5625,6 +6508,7 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.intent_labeling_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.answer_recommendation_ai_agent_configuration.query_reformulation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_guardrail_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.answer_generation_ai_prompt_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations #=> Array
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
@@ -5642,6 +6526,25 @@ module Aws::QConnect
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_id #=> String
     #   resp.ai_agent.configuration.manual_search_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions #=> Array
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].and_conditions[0].value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.or_conditions[0].tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.key #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.content_tag_filter.tag_condition.value #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.max_results #=> Integer
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_configuration_data.knowledge_base_association_configuration_data.override_knowledge_base_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.association_configurations[0].association_type #=> String, one of "KNOWLEDGE_BASE"
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_ai_guardrail_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_answer_generation_ai_prompt_id #=> String
+    #   resp.ai_agent.configuration.self_service_ai_agent_configuration.self_service_pre_processing_ai_prompt_id #=> String
     #   resp.ai_agent.description #=> String
     #   resp.ai_agent.modified_time #=> Time
     #   resp.ai_agent.name #=> String
@@ -5649,7 +6552,7 @@ module Aws::QConnect
     #   resp.ai_agent.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
     #   resp.ai_agent.tags #=> Hash
     #   resp.ai_agent.tags["TagKey"] #=> String
-    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION"
+    #   resp.ai_agent.type #=> String, one of "MANUAL_SEARCH", "ANSWER_RECOMMENDATION", "SELF_SERVICE"
     #   resp.ai_agent.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateAIAgent AWS API Documentation
@@ -5658,6 +6561,177 @@ module Aws::QConnect
     # @param [Hash] params ({})
     def update_ai_agent(params = {}, options = {})
       req = build_request(:update_ai_agent, params)
+      req.send_request(options)
+    end
+
+    # Updates an AI Guardrail.
+    #
+    # @option params [required, String] :ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [required, String] :assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either the
+    #   ID or the ARN. URLs cannot contain the ARN.
+    #
+    # @option params [required, String] :blocked_input_messaging
+    #   The message to return when the AI Guardrail blocks a prompt.
+    #
+    # @option params [required, String] :blocked_outputs_messaging
+    #   The message to return when the AI Guardrail blocks a model response.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1]..
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #
+    # @option params [Types::AIGuardrailContentPolicyConfig] :content_policy_config
+    #   The content filter policies to configure for the AI Guardrail.
+    #
+    # @option params [Types::AIGuardrailContextualGroundingPolicyConfig] :contextual_grounding_policy_config
+    #   The contextual grounding policy configuration used to create an AI
+    #   Guardrail.
+    #
+    # @option params [String] :description
+    #   A description of the AI Guardrail.
+    #
+    # @option params [Types::AIGuardrailSensitiveInformationPolicyConfig] :sensitive_information_policy_config
+    #   The sensitive information policy to configure for the AI Guardrail.
+    #
+    # @option params [Types::AIGuardrailTopicPolicyConfig] :topic_policy_config
+    #   The topic policies to configure for the AI Guardrail.
+    #
+    # @option params [required, String] :visibility_status
+    #   The visibility status of the Amazon Q in Connect AI Guardrail.
+    #
+    # @option params [Types::AIGuardrailWordPolicyConfig] :word_policy_config
+    #   The word policy you configure for the AI Guardrail.
+    #
+    # @return [Types::UpdateAIGuardrailResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateAIGuardrailResponse#ai_guardrail #ai_guardrail} => Types::AIGuardrailData
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_ai_guardrail({
+    #     ai_guardrail_id: "UuidOrArnOrEitherWithQualifier", # required
+    #     assistant_id: "UuidOrArn", # required
+    #     blocked_input_messaging: "AIGuardrailBlockedMessaging", # required
+    #     blocked_outputs_messaging: "AIGuardrailBlockedMessaging", # required
+    #     client_token: "ClientToken",
+    #     content_policy_config: {
+    #       filters_config: [ # required
+    #         {
+    #           input_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
+    #           output_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
+    #           type: "SEXUAL", # required, accepts SEXUAL, VIOLENCE, HATE, INSULTS, MISCONDUCT, PROMPT_ATTACK
+    #         },
+    #       ],
+    #     },
+    #     contextual_grounding_policy_config: {
+    #       filters_config: [ # required
+    #         {
+    #           threshold: 1.0, # required
+    #           type: "GROUNDING", # required, accepts GROUNDING, RELEVANCE
+    #         },
+    #       ],
+    #     },
+    #     description: "AIGuardrailDescription",
+    #     sensitive_information_policy_config: {
+    #       pii_entities_config: [
+    #         {
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           type: "ADDRESS", # required, accepts ADDRESS, AGE, AWS_ACCESS_KEY, AWS_SECRET_KEY, CA_HEALTH_NUMBER, CA_SOCIAL_INSURANCE_NUMBER, CREDIT_DEBIT_CARD_CVV, CREDIT_DEBIT_CARD_EXPIRY, CREDIT_DEBIT_CARD_NUMBER, DRIVER_ID, EMAIL, INTERNATIONAL_BANK_ACCOUNT_NUMBER, IP_ADDRESS, LICENSE_PLATE, MAC_ADDRESS, NAME, PASSWORD, PHONE, PIN, SWIFT_CODE, UK_NATIONAL_HEALTH_SERVICE_NUMBER, UK_NATIONAL_INSURANCE_NUMBER, UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER, URL, USERNAME, US_BANK_ACCOUNT_NUMBER, US_BANK_ROUTING_NUMBER, US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER, US_PASSPORT_NUMBER, US_SOCIAL_SECURITY_NUMBER, VEHICLE_IDENTIFICATION_NUMBER
+    #         },
+    #       ],
+    #       regexes_config: [
+    #         {
+    #           action: "BLOCK", # required, accepts BLOCK, ANONYMIZE
+    #           description: "GuardrailRegexDescription",
+    #           name: "GuardrailRegexName", # required
+    #           pattern: "GuardrailRegexPattern", # required
+    #         },
+    #       ],
+    #     },
+    #     topic_policy_config: {
+    #       topics_config: [ # required
+    #         {
+    #           definition: "GuardrailTopicDefinition", # required
+    #           examples: ["GuardrailTopicExample"],
+    #           name: "GuardrailTopicName", # required
+    #           type: "DENY", # required, accepts DENY
+    #         },
+    #       ],
+    #     },
+    #     visibility_status: "SAVED", # required, accepts SAVED, PUBLISHED
+    #     word_policy_config: {
+    #       managed_word_lists_config: [
+    #         {
+    #           type: "PROFANITY", # required, accepts PROFANITY
+    #         },
+    #       ],
+    #       words_config: [
+    #         {
+    #           text: "GuardrailWordText", # required
+    #         },
+    #       ],
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.ai_guardrail.ai_guardrail_arn #=> String
+    #   resp.ai_guardrail.ai_guardrail_id #=> String
+    #   resp.ai_guardrail.assistant_arn #=> String
+    #   resp.ai_guardrail.assistant_id #=> String
+    #   resp.ai_guardrail.blocked_input_messaging #=> String
+    #   resp.ai_guardrail.blocked_outputs_messaging #=> String
+    #   resp.ai_guardrail.content_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].input_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].output_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.ai_guardrail.content_policy_config.filters_config[0].type #=> String, one of "SEXUAL", "VIOLENCE", "HATE", "INSULTS", "MISCONDUCT", "PROMPT_ATTACK"
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config #=> Array
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].threshold #=> Float
+    #   resp.ai_guardrail.contextual_grounding_policy_config.filters_config[0].type #=> String, one of "GROUNDING", "RELEVANCE"
+    #   resp.ai_guardrail.description #=> String
+    #   resp.ai_guardrail.modified_time #=> Time
+    #   resp.ai_guardrail.name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.pii_entities_config[0].type #=> String, one of "ADDRESS", "AGE", "AWS_ACCESS_KEY", "AWS_SECRET_KEY", "CA_HEALTH_NUMBER", "CA_SOCIAL_INSURANCE_NUMBER", "CREDIT_DEBIT_CARD_CVV", "CREDIT_DEBIT_CARD_EXPIRY", "CREDIT_DEBIT_CARD_NUMBER", "DRIVER_ID", "EMAIL", "INTERNATIONAL_BANK_ACCOUNT_NUMBER", "IP_ADDRESS", "LICENSE_PLATE", "MAC_ADDRESS", "NAME", "PASSWORD", "PHONE", "PIN", "SWIFT_CODE", "UK_NATIONAL_HEALTH_SERVICE_NUMBER", "UK_NATIONAL_INSURANCE_NUMBER", "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER", "URL", "USERNAME", "US_BANK_ACCOUNT_NUMBER", "US_BANK_ROUTING_NUMBER", "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER", "US_PASSPORT_NUMBER", "US_SOCIAL_SECURITY_NUMBER", "VEHICLE_IDENTIFICATION_NUMBER"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config #=> Array
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].action #=> String, one of "BLOCK", "ANONYMIZE"
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].description #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].name #=> String
+    #   resp.ai_guardrail.sensitive_information_policy_config.regexes_config[0].pattern #=> String
+    #   resp.ai_guardrail.status #=> String, one of "CREATE_IN_PROGRESS", "CREATE_FAILED", "ACTIVE", "DELETE_IN_PROGRESS", "DELETE_FAILED", "DELETED"
+    #   resp.ai_guardrail.tags #=> Hash
+    #   resp.ai_guardrail.tags["TagKey"] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].definition #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples #=> Array
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].examples[0] #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].name #=> String
+    #   resp.ai_guardrail.topic_policy_config.topics_config[0].type #=> String, one of "DENY"
+    #   resp.ai_guardrail.visibility_status #=> String, one of "SAVED", "PUBLISHED"
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.managed_word_lists_config[0].type #=> String, one of "PROFANITY"
+    #   resp.ai_guardrail.word_policy_config.words_config #=> Array
+    #   resp.ai_guardrail.word_policy_config.words_config[0].text #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateAIGuardrail AWS API Documentation
+    #
+    # @overload update_ai_guardrail(params = {})
+    # @param [Hash] params ({})
+    def update_ai_guardrail(params = {}, options = {})
+      req = build_request(:update_ai_guardrail, params)
       req.send_request(options)
     end
 
@@ -5728,7 +6802,7 @@ module Aws::QConnect
     #   resp.ai_prompt.tags["TagKey"] #=> String
     #   resp.ai_prompt.template_configuration.text_full_ai_prompt_edit_template_configuration.text #=> String
     #   resp.ai_prompt.template_type #=> String, one of "TEXT"
-    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION"
+    #   resp.ai_prompt.type #=> String, one of "ANSWER_GENERATION", "INTENT_LABELING_GENERATION", "QUERY_REFORMULATION", "SELF_SERVICE_PRE_PROCESSING", "SELF_SERVICE_ANSWER_GENERATION"
     #   resp.ai_prompt.visibility_status #=> String, one of "SAVED", "PUBLISHED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateAIPrompt AWS API Documentation
@@ -5762,7 +6836,7 @@ module Aws::QConnect
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_assistant_ai_agent({
-    #     ai_agent_type: "MANUAL_SEARCH", # required, accepts MANUAL_SEARCH, ANSWER_RECOMMENDATION
+    #     ai_agent_type: "MANUAL_SEARCH", # required, accepts MANUAL_SEARCH, ANSWER_RECOMMENDATION, SELF_SERVICE
     #     assistant_id: "UuidOrArn", # required
     #     configuration: { # required
     #       ai_agent_id: "UuidWithQualifier", # required
@@ -6652,7 +7726,7 @@ module Aws::QConnect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qconnect'
-      context[:gem_version] = '1.24.0'
+      context[:gem_version] = '1.25.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

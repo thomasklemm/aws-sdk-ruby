@@ -1,0 +1,456 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws
+  module SecurityIR
+    class Client < ::Seahorse::Client::Base
+      include ::Aws::ClientStubs
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#initialize-instance_method
+      def self.new: (
+                      ?credentials: untyped,
+                      ?region: String,
+                      ?access_key_id: String,
+                      ?account_id: String,
+                      ?active_endpoint_cache: bool,
+                      ?adaptive_retry_wait_to_fill: bool,
+                      ?client_side_monitoring: bool,
+                      ?client_side_monitoring_client_id: String,
+                      ?client_side_monitoring_host: String,
+                      ?client_side_monitoring_port: Integer,
+                      ?client_side_monitoring_publisher: untyped,
+                      ?convert_params: bool,
+                      ?correct_clock_skew: bool,
+                      ?defaults_mode: String,
+                      ?disable_host_prefix_injection: bool,
+                      ?disable_request_compression: bool,
+                      ?endpoint: String,
+                      ?endpoint_cache_max_entries: Integer,
+                      ?endpoint_cache_max_threads: Integer,
+                      ?endpoint_cache_poll_interval: Integer,
+                      ?endpoint_discovery: bool,
+                      ?ignore_configured_endpoint_urls: bool,
+                      ?log_formatter: untyped,
+                      ?log_level: Symbol,
+                      ?logger: untyped,
+                      ?max_attempts: Integer,
+                      ?profile: String,
+                      ?request_min_compression_size_bytes: Integer,
+                      ?retry_backoff: Proc,
+                      ?retry_base_delay: Float,
+                      ?retry_jitter: (:none | :equal | :full | ^(Integer) -> Integer),
+                      ?retry_limit: Integer,
+                      ?retry_max_delay: Integer,
+                      ?retry_mode: ("legacy" | "standard" | "adaptive"),
+                      ?sdk_ua_app_id: String,
+                      ?secret_access_key: String,
+                      ?session_token: String,
+                      ?sigv4a_signing_region_set: Array[String],
+                      ?stub_responses: untyped,
+                      ?telemetry_provider: Aws::Telemetry::TelemetryProviderBase,
+                      ?token_provider: untyped,
+                      ?use_dualstack_endpoint: bool,
+                      ?use_fips_endpoint: bool,
+                      ?validate_params: bool,
+                      ?endpoint_provider: untyped,
+                      ?http_proxy: String,
+                      ?http_open_timeout: (Float | Integer),
+                      ?http_read_timeout: (Float | Integer),
+                      ?http_idle_timeout: (Float | Integer),
+                      ?http_continue_timeout: (Float | Integer),
+                      ?ssl_timeout: (Float | Integer | nil),
+                      ?http_wire_trace: bool,
+                      ?ssl_verify_peer: bool,
+                      ?ssl_ca_bundle: String,
+                      ?ssl_ca_directory: String,
+                      ?ssl_ca_store: String,
+                      ?on_chunk_received: Proc,
+                      ?on_chunk_sent: Proc,
+                      ?raise_response_errors: bool
+                    ) -> instance
+                  | (?Hash[Symbol, untyped]) -> instance
+
+
+      interface _BatchGetMemberAccountDetailsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchGetMemberAccountDetailsResponse]
+        def items: () -> ::Array[Types::GetMembershipAccountDetailItem]
+        def errors: () -> ::Array[Types::GetMembershipAccountDetailError]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#batch_get_member_account_details-instance_method
+      def batch_get_member_account_details: (
+                                              membership_id: ::String,
+                                              account_ids: Array[::String]
+                                            ) -> _BatchGetMemberAccountDetailsResponseSuccess
+                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetMemberAccountDetailsResponseSuccess
+
+      interface _CancelMembershipResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CancelMembershipResponse]
+        def membership_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#cancel_membership-instance_method
+      def cancel_membership: (
+                               membership_id: ::String
+                             ) -> _CancelMembershipResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CancelMembershipResponseSuccess
+
+      interface _CloseCaseResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CloseCaseResponse]
+        def case_status: () -> ("Submitted" | "Acknowledged" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities" | "Ready to Close" | "Closed")
+        def closed_date: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#close_case-instance_method
+      def close_case: (
+                        case_id: ::String
+                      ) -> _CloseCaseResponseSuccess
+                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CloseCaseResponseSuccess
+
+      interface _CreateCaseResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateCaseResponse]
+        def case_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#create_case-instance_method
+      def create_case: (
+                         ?client_token: ::String,
+                         resolver_type: ("AWS" | "Self"),
+                         title: ::String,
+                         description: ::String,
+                         engagement_type: ("Security Incident" | "Investigation"),
+                         reported_incident_start_date: ::Time,
+                         impacted_accounts: Array[::String],
+                         watchers: Array[
+                           {
+                             email: ::String,
+                             name: ::String?,
+                             job_title: ::String?
+                           },
+                         ],
+                         ?threat_actor_ip_addresses: Array[
+                           {
+                             ip_address: ::String,
+                             user_agent: ::String?
+                           },
+                         ],
+                         ?impacted_services: Array[::String],
+                         ?impacted_aws_regions: Array[
+                           {
+                             region: ("af-south-1" | "ap-east-1" | "ap-northeast-1" | "ap-northeast-2" | "ap-northeast-3" | "ap-south-1" | "ap-south-2" | "ap-southeast-1" | "ap-southeast-2" | "ap-southeast-3" | "ap-southeast-4" | "ap-southeast-5" | "ca-central-1" | "ca-west-1" | "cn-north-1" | "cn-northwest-1" | "eu-central-1" | "eu-central-2" | "eu-north-1" | "eu-south-1" | "eu-south-2" | "eu-west-1" | "eu-west-2" | "eu-west-3" | "il-central-1" | "me-central-1" | "me-south-1" | "sa-east-1" | "us-east-1" | "us-east-2" | "us-west-1" | "us-west-2")
+                           },
+                         ],
+                         ?tags: Hash[::String, ::String]
+                       ) -> _CreateCaseResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCaseResponseSuccess
+
+      interface _CreateCaseCommentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateCaseCommentResponse]
+        def comment_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#create_case_comment-instance_method
+      def create_case_comment: (
+                                 case_id: ::String,
+                                 ?client_token: ::String,
+                                 body: ::String
+                               ) -> _CreateCaseCommentResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCaseCommentResponseSuccess
+
+      interface _CreateMembershipResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateMembershipResponse]
+        def membership_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#create_membership-instance_method
+      def create_membership: (
+                               ?client_token: ::String,
+                               membership_name: ::String,
+                               incident_response_team: Array[
+                                 {
+                                   name: ::String,
+                                   job_title: ::String,
+                                   email: ::String
+                                 },
+                               ],
+                               ?opt_in_features: Array[
+                                 {
+                                   feature_name: ("Triage"),
+                                   is_enabled: bool
+                                 },
+                               ],
+                               ?tags: Hash[::String, ::String]
+                             ) -> _CreateMembershipResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMembershipResponseSuccess
+
+      interface _GetCaseResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCaseResponse]
+        def title: () -> ::String
+        def case_arn: () -> ::String
+        def description: () -> ::String
+        def case_status: () -> ("Submitted" | "Acknowledged" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities" | "Ready to Close" | "Closed")
+        def engagement_type: () -> ("Security Incident" | "Investigation")
+        def reported_incident_start_date: () -> ::Time
+        def actual_incident_start_date: () -> ::Time
+        def impacted_aws_regions: () -> ::Array[Types::ImpactedAwsRegion]
+        def threat_actor_ip_addresses: () -> ::Array[Types::ThreatActorIp]
+        def pending_action: () -> ("Customer" | "None")
+        def impacted_accounts: () -> ::Array[::String]
+        def watchers: () -> ::Array[Types::Watcher]
+        def created_date: () -> ::Time
+        def last_updated_date: () -> ::Time
+        def closure_code: () -> ("Investigation Completed" | "Not Resolved" | "False Positive" | "Duplicate")
+        def resolver_type: () -> ("AWS" | "Self")
+        def impacted_services: () -> ::Array[::String]
+        def case_attachments: () -> ::Array[Types::CaseAttachmentAttributes]
+        def closed_date: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#get_case-instance_method
+      def get_case: (
+                      case_id: ::String
+                    ) -> _GetCaseResponseSuccess
+                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCaseResponseSuccess
+
+      interface _GetCaseAttachmentDownloadUrlResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCaseAttachmentDownloadUrlResponse]
+        def attachment_presigned_url: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#get_case_attachment_download_url-instance_method
+      def get_case_attachment_download_url: (
+                                              case_id: ::String,
+                                              attachment_id: ::String
+                                            ) -> _GetCaseAttachmentDownloadUrlResponseSuccess
+                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCaseAttachmentDownloadUrlResponseSuccess
+
+      interface _GetCaseAttachmentUploadUrlResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCaseAttachmentUploadUrlResponse]
+        def attachment_presigned_url: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#get_case_attachment_upload_url-instance_method
+      def get_case_attachment_upload_url: (
+                                            case_id: ::String,
+                                            file_name: ::String,
+                                            content_length: ::Integer,
+                                            ?client_token: ::String
+                                          ) -> _GetCaseAttachmentUploadUrlResponseSuccess
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCaseAttachmentUploadUrlResponseSuccess
+
+      interface _GetMembershipResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetMembershipResponse]
+        def membership_id: () -> ::String
+        def account_id: () -> ::String
+        def region: () -> ("af-south-1" | "ap-east-1" | "ap-northeast-1" | "ap-northeast-2" | "ap-northeast-3" | "ap-south-1" | "ap-south-2" | "ap-southeast-1" | "ap-southeast-2" | "ap-southeast-3" | "ap-southeast-4" | "ap-southeast-5" | "ca-central-1" | "ca-west-1" | "cn-north-1" | "cn-northwest-1" | "eu-central-1" | "eu-central-2" | "eu-north-1" | "eu-south-1" | "eu-south-2" | "eu-west-1" | "eu-west-2" | "eu-west-3" | "il-central-1" | "me-central-1" | "me-south-1" | "sa-east-1" | "us-east-1" | "us-east-2" | "us-west-1" | "us-west-2")
+        def membership_name: () -> ::String
+        def membership_arn: () -> ::String
+        def membership_status: () -> ("Active" | "Cancelled" | "Terminated")
+        def membership_activation_timestamp: () -> ::Time
+        def membership_deactivation_timestamp: () -> ::Time
+        def customer_type: () -> ("Standalone" | "Organization")
+        def number_of_accounts_covered: () -> ::Integer
+        def incident_response_team: () -> ::Array[Types::IncidentResponder]
+        def opt_in_features: () -> ::Array[Types::OptInFeature]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#get_membership-instance_method
+      def get_membership: (
+                            membership_id: ::String
+                          ) -> _GetMembershipResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMembershipResponseSuccess
+
+      interface _ListCaseEditsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCaseEditsResponse]
+        def next_token: () -> ::String
+        def items: () -> ::Array[Types::CaseEditItem]
+        def total: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#list_case_edits-instance_method
+      def list_case_edits: (
+                             ?next_token: ::String,
+                             ?max_results: ::Integer,
+                             case_id: ::String
+                           ) -> _ListCaseEditsResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCaseEditsResponseSuccess
+
+      interface _ListCasesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCasesResponse]
+        def next_token: () -> ::String
+        def items: () -> ::Array[Types::ListCasesItem]
+        def total: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#list_cases-instance_method
+      def list_cases: (
+                        ?next_token: ::String,
+                        ?max_results: ::Integer
+                      ) -> _ListCasesResponseSuccess
+                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCasesResponseSuccess
+
+      interface _ListCommentsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListCommentsResponse]
+        def next_token: () -> ::String
+        def items: () -> ::Array[Types::ListCommentsItem]
+        def total: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#list_comments-instance_method
+      def list_comments: (
+                           ?next_token: ::String,
+                           ?max_results: ::Integer,
+                           case_id: ::String
+                         ) -> _ListCommentsResponseSuccess
+                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCommentsResponseSuccess
+
+      interface _ListMembershipsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListMembershipsResponse]
+        def next_token: () -> ::String
+        def items: () -> ::Array[Types::ListMembershipItem]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#list_memberships-instance_method
+      def list_memberships: (
+                              ?next_token: ::String,
+                              ?max_results: ::Integer
+                            ) -> _ListMembershipsResponseSuccess
+                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMembershipsResponseSuccess
+
+      interface _ListTagsForResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceOutput]
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#list_tags_for_resource-instance_method
+      def list_tags_for_resource: (
+                                    resource_arn: ::String
+                                  ) -> _ListTagsForResourceResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _TagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#tag_resource-instance_method
+      def tag_resource: (
+                          resource_arn: ::String,
+                          tags: Hash[::String, ::String]
+                        ) -> _TagResourceResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
+
+      interface _UntagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#untag_resource-instance_method
+      def untag_resource: (
+                            resource_arn: ::String,
+                            tag_keys: Array[::String]
+                          ) -> _UntagResourceResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateCaseResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateCaseResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#update_case-instance_method
+      def update_case: (
+                         case_id: ::String,
+                         ?title: ::String,
+                         ?description: ::String,
+                         ?reported_incident_start_date: ::Time,
+                         ?actual_incident_start_date: ::Time,
+                         ?engagement_type: ("Security Incident" | "Investigation"),
+                         ?watchers_to_add: Array[
+                           {
+                             email: ::String,
+                             name: ::String?,
+                             job_title: ::String?
+                           },
+                         ],
+                         ?watchers_to_delete: Array[
+                           {
+                             email: ::String,
+                             name: ::String?,
+                             job_title: ::String?
+                           },
+                         ],
+                         ?threat_actor_ip_addresses_to_add: Array[
+                           {
+                             ip_address: ::String,
+                             user_agent: ::String?
+                           },
+                         ],
+                         ?threat_actor_ip_addresses_to_delete: Array[
+                           {
+                             ip_address: ::String,
+                             user_agent: ::String?
+                           },
+                         ],
+                         ?impacted_services_to_add: Array[::String],
+                         ?impacted_services_to_delete: Array[::String],
+                         ?impacted_aws_regions_to_add: Array[
+                           {
+                             region: ("af-south-1" | "ap-east-1" | "ap-northeast-1" | "ap-northeast-2" | "ap-northeast-3" | "ap-south-1" | "ap-south-2" | "ap-southeast-1" | "ap-southeast-2" | "ap-southeast-3" | "ap-southeast-4" | "ap-southeast-5" | "ca-central-1" | "ca-west-1" | "cn-north-1" | "cn-northwest-1" | "eu-central-1" | "eu-central-2" | "eu-north-1" | "eu-south-1" | "eu-south-2" | "eu-west-1" | "eu-west-2" | "eu-west-3" | "il-central-1" | "me-central-1" | "me-south-1" | "sa-east-1" | "us-east-1" | "us-east-2" | "us-west-1" | "us-west-2")
+                           },
+                         ],
+                         ?impacted_aws_regions_to_delete: Array[
+                           {
+                             region: ("af-south-1" | "ap-east-1" | "ap-northeast-1" | "ap-northeast-2" | "ap-northeast-3" | "ap-south-1" | "ap-south-2" | "ap-southeast-1" | "ap-southeast-2" | "ap-southeast-3" | "ap-southeast-4" | "ap-southeast-5" | "ca-central-1" | "ca-west-1" | "cn-north-1" | "cn-northwest-1" | "eu-central-1" | "eu-central-2" | "eu-north-1" | "eu-south-1" | "eu-south-2" | "eu-west-1" | "eu-west-2" | "eu-west-3" | "il-central-1" | "me-central-1" | "me-south-1" | "sa-east-1" | "us-east-1" | "us-east-2" | "us-west-1" | "us-west-2")
+                           },
+                         ],
+                         ?impacted_accounts_to_add: Array[::String],
+                         ?impacted_accounts_to_delete: Array[::String]
+                       ) -> _UpdateCaseResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCaseResponseSuccess
+
+      interface _UpdateCaseCommentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateCaseCommentResponse]
+        def comment_id: () -> ::String
+        def body: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#update_case_comment-instance_method
+      def update_case_comment: (
+                                 case_id: ::String,
+                                 comment_id: ::String,
+                                 body: ::String
+                               ) -> _UpdateCaseCommentResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCaseCommentResponseSuccess
+
+      interface _UpdateCaseStatusResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateCaseStatusResponse]
+        def case_status: () -> ("Submitted" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#update_case_status-instance_method
+      def update_case_status: (
+                                case_id: ::String,
+                                case_status: ("Submitted" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities")
+                              ) -> _UpdateCaseStatusResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCaseStatusResponseSuccess
+
+      interface _UpdateMembershipResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateMembershipResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#update_membership-instance_method
+      def update_membership: (
+                               membership_id: ::String,
+                               ?membership_name: ::String,
+                               ?incident_response_team: Array[
+                                 {
+                                   name: ::String,
+                                   job_title: ::String,
+                                   email: ::String
+                                 },
+                               ],
+                               ?opt_in_features: Array[
+                                 {
+                                   feature_name: ("Triage"),
+                                   is_enabled: bool
+                                 },
+                               ]
+                             ) -> _UpdateMembershipResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateMembershipResponseSuccess
+
+      interface _UpdateResolverTypeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateResolverTypeResponse]
+        def case_id: () -> ::String
+        def case_status: () -> ("Submitted" | "Acknowledged" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities" | "Ready to Close" | "Closed")
+        def resolver_type: () -> ("AWS" | "Self")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SecurityIR/Client.html#update_resolver_type-instance_method
+      def update_resolver_type: (
+                                  case_id: ::String,
+                                  resolver_type: ("AWS" | "Self")
+                                ) -> _UpdateResolverTypeResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateResolverTypeResponseSuccess
+    end
+  end
+end
+

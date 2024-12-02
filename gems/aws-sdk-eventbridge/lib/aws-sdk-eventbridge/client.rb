@@ -661,6 +661,13 @@ module Aws::EventBridge
     # credentials to use for authorization with an API destination HTTP
     # endpoint.
     #
+    # For more information, see [Connections for endpoint targets][1] in the
+    # *Amazon EventBridge User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection.html
+    #
     # @option params [required, String] :name
     #   The name for the connection to create.
     #
@@ -675,8 +682,21 @@ module Aws::EventBridge
     #    </note>
     #
     # @option params [required, Types::CreateConnectionAuthRequestParameters] :auth_parameters
-    #   A `CreateConnectionAuthRequestParameters` object that contains the
-    #   authorization parameters to use to authorize with the endpoint.
+    #   The authorization parameters to use to authorize with the endpoint.
+    #
+    #   You must include only authorization parameters for the
+    #   `AuthorizationType` you specify.
+    #
+    # @option params [Types::ConnectivityResourceParameters] :invocation_connectivity_parameters
+    #   For connections to private resource endpoints, the parameters to use
+    #   for invoking the resource endpoint.
+    #
+    #   For more information, see [Connecting to private resources][1] in the
+    #   <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html
     #
     # @return [Types::CreateConnectionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -754,13 +774,23 @@ module Aws::EventBridge
     #           },
     #         ],
     #       },
+    #       connectivity_parameters: {
+    #         resource_parameters: { # required
+    #           resource_configuration_arn: "ResourceConfigurationArn", # required
+    #         },
+    #       },
+    #     },
+    #     invocation_connectivity_parameters: {
+    #       resource_parameters: { # required
+    #         resource_configuration_arn: "ResourceConfigurationArn", # required
+    #       },
     #     },
     #   })
     #
     # @example Response structure
     #
     #   resp.connection_arn #=> String
-    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING"
+    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING", "ACTIVE", "FAILED_CONNECTIVITY"
     #   resp.creation_time #=> Time
     #   resp.last_modified_time #=> Time
     #
@@ -927,9 +957,12 @@ module Aws::EventBridge
     #   Configuration details of the Amazon SQS queue for EventBridge to use
     #   as a dead-letter queue (DLQ).
     #
-    #   For more information, see [Event retry policy and using dead-letter
-    #   queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    #   *EventBridge User Guide*.
+    #   For more information, see [Using dead-letter queues to process
+    #   undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #
     # @option params [Array<Types::Tag>] :tags
     #   Tags to associate with the event bus.
@@ -1108,7 +1141,7 @@ module Aws::EventBridge
     # @example Response structure
     #
     #   resp.connection_arn #=> String
-    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING"
+    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING", "ACTIVE", "FAILED_CONNECTIVITY"
     #   resp.creation_time #=> Time
     #   resp.last_modified_time #=> Time
     #   resp.last_authorized_time #=> Time
@@ -1188,7 +1221,7 @@ module Aws::EventBridge
     # @example Response structure
     #
     #   resp.connection_arn #=> String
-    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING"
+    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING", "ACTIVE", "FAILED_CONNECTIVITY"
     #   resp.creation_time #=> Time
     #   resp.last_modified_time #=> Time
     #   resp.last_authorized_time #=> Time
@@ -1448,6 +1481,7 @@ module Aws::EventBridge
     #   * {Types::DescribeConnectionResponse#connection_arn #connection_arn} => String
     #   * {Types::DescribeConnectionResponse#name #name} => String
     #   * {Types::DescribeConnectionResponse#description #description} => String
+    #   * {Types::DescribeConnectionResponse#invocation_connectivity_parameters #invocation_connectivity_parameters} => Types::DescribeConnectionConnectivityParameters
     #   * {Types::DescribeConnectionResponse#connection_state #connection_state} => String
     #   * {Types::DescribeConnectionResponse#state_reason #state_reason} => String
     #   * {Types::DescribeConnectionResponse#authorization_type #authorization_type} => String
@@ -1468,7 +1502,9 @@ module Aws::EventBridge
     #   resp.connection_arn #=> String
     #   resp.name #=> String
     #   resp.description #=> String
-    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING"
+    #   resp.invocation_connectivity_parameters.resource_parameters.resource_configuration_arn #=> String
+    #   resp.invocation_connectivity_parameters.resource_parameters.resource_association_arn #=> String
+    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING", "ACTIVE", "FAILED_CONNECTIVITY"
     #   resp.state_reason #=> String
     #   resp.authorization_type #=> String, one of "BASIC", "OAUTH_CLIENT_CREDENTIALS", "API_KEY"
     #   resp.secret_arn #=> String
@@ -1501,6 +1537,8 @@ module Aws::EventBridge
     #   resp.auth_parameters.invocation_http_parameters.body_parameters[0].key #=> String
     #   resp.auth_parameters.invocation_http_parameters.body_parameters[0].value #=> String
     #   resp.auth_parameters.invocation_http_parameters.body_parameters[0].is_value_secret #=> Boolean
+    #   resp.auth_parameters.connectivity_parameters.resource_parameters.resource_configuration_arn #=> String
+    #   resp.auth_parameters.connectivity_parameters.resource_parameters.resource_association_arn #=> String
     #   resp.creation_time #=> Time
     #   resp.last_modified_time #=> Time
     #   resp.last_authorized_time #=> Time
@@ -1910,8 +1948,15 @@ module Aws::EventBridge
     #   The ARN of the connection specified for the API destination.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   The maximum number of API destinations to include in the response.
@@ -1968,8 +2013,15 @@ module Aws::EventBridge
     #   The state of the archive.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   The maximum number of results to return.
@@ -2021,8 +2073,15 @@ module Aws::EventBridge
     #   The state of the connection.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   The maximum number of connections to return.
@@ -2036,7 +2095,7 @@ module Aws::EventBridge
     #
     #   resp = client.list_connections({
     #     name_prefix: "ConnectionName",
-    #     connection_state: "CREATING", # accepts CREATING, UPDATING, DELETING, AUTHORIZED, DEAUTHORIZED, AUTHORIZING, DEAUTHORIZING
+    #     connection_state: "CREATING", # accepts CREATING, UPDATING, DELETING, AUTHORIZED, DEAUTHORIZED, AUTHORIZING, DEAUTHORIZING, ACTIVE, FAILED_CONNECTIVITY
     #     next_token: "NextToken",
     #     limit: 1,
     #   })
@@ -2046,7 +2105,7 @@ module Aws::EventBridge
     #   resp.connections #=> Array
     #   resp.connections[0].connection_arn #=> String
     #   resp.connections[0].name #=> String
-    #   resp.connections[0].connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING"
+    #   resp.connections[0].connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING", "ACTIVE", "FAILED_CONNECTIVITY"
     #   resp.connections[0].state_reason #=> String
     #   resp.connections[0].authorization_type #=> String, one of "BASIC", "OAUTH_CLIENT_CREDENTIALS", "API_KEY"
     #   resp.connections[0].creation_time #=> Time
@@ -2082,12 +2141,15 @@ module Aws::EventBridge
     #   example `"HomeRegion": "us-east-1"`.
     #
     # @option params [String] :next_token
-    #   If `nextToken` is returned, there are more results available. The
-    #   value of `nextToken` is a unique pagination token for each page. Make
-    #   the call again using the returned token to retrieve the next page.
-    #   Keep all other arguments unchanged. Each pagination token expires
-    #   after 24 hours. Using an expired pagination token will return an HTTP
-    #   400 InvalidToken error.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :max_results
     #   The maximum number of results returned by the call.
@@ -2143,8 +2205,15 @@ module Aws::EventBridge
     #   names that start with the specified prefix.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   Specifying this limits the number of results returned by this
@@ -2197,8 +2266,15 @@ module Aws::EventBridge
     #   with names that start with the specified prefix.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   Specifying this limits the number of results returned by this
@@ -2248,8 +2324,15 @@ module Aws::EventBridge
     #   about.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to this operation. Specifying
-    #   this retrieves the next set of results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   Specifying this limits the number of results returned by this
@@ -2296,8 +2379,15 @@ module Aws::EventBridge
     #   event sources that start with the string you specify.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to this operation. Specifying
-    #   this retrieves the next set of results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   pecifying this limits the number of results returned by this
@@ -2348,8 +2438,15 @@ module Aws::EventBridge
     #   The ARN of the archive from which the events are replayed.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   The maximum number of replays to retrieve.
@@ -2406,8 +2503,15 @@ module Aws::EventBridge
     #   the default event bus is used.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   The maximum number of results to return.
@@ -2461,8 +2565,15 @@ module Aws::EventBridge
     #   this, the default event bus is used.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   The maximum number of results to return.
@@ -2547,8 +2658,15 @@ module Aws::EventBridge
     #   this, the default event bus is used.
     #
     # @option params [String] :next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #
     # @option params [Integer] :limit
     #   The maximum number of results to return.
@@ -2661,7 +2779,7 @@ module Aws::EventBridge
     # -9,223,372,036,854,775,808 and a maximum value of
     # 9,223,372,036,854,775,807.
     #
-    # <note markdown="1"> PutEvents will only process nested JSON up to 1100 levels deep.
+    # <note markdown="1"> PutEvents will only process nested JSON up to 1000 levels deep.
     #
     #  </note>
     #
@@ -2772,9 +2890,8 @@ module Aws::EventBridge
 
     # Running `PutPermission` permits the specified Amazon Web Services
     # account or Amazon Web Services organization to put events to the
-    # specified *event bus*. Amazon EventBridge (CloudWatch Events) rules in
-    # your account are triggered by these events arriving to an event bus in
-    # your account.
+    # specified *event bus*. Amazon EventBridge rules in your account are
+    # triggered by these events arriving to an event bus in your account.
     #
     # For another account to send events to your account, that external
     # account must have an EventBridge rule with your account's event bus
@@ -2944,6 +3061,10 @@ module Aws::EventBridge
     # your specified limit. For more information, see [Managing Your Costs
     # with Budgets][5].
     #
+    # To create a rule that filters for management events from Amazon Web
+    # Services services, see [Receiving read-only management events from
+    # Amazon Web Services services][6] in the *EventBridge User Guide*.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_DisableRule.html
@@ -2951,6 +3072,7 @@ module Aws::EventBridge
     # [3]: https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_TagResource.html
     # [4]: https://docs.aws.amazon.com/eventbridge/latest/APIReference/API_UntagResource.html
     # [5]: https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/budgets-managing-costs.html
+    # [6]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-service-event-cloudtrail.html#eb-service-event-cloudtrail-management
     #
     # @option params [required, String] :name
     #   The name of the rule that you are creating or updating.
@@ -3622,8 +3744,7 @@ module Aws::EventBridge
     end
 
     # Removes one or more tags from the specified EventBridge resource. In
-    # Amazon EventBridge (CloudWatch Events), rules and event buses can be
-    # tagged.
+    # Amazon EventBridge, rules and event buses can be tagged.
     #
     # @option params [required, String] :resource_arn
     #   The ARN of the EventBridge resource from which you are removing tags.
@@ -3764,6 +3885,17 @@ module Aws::EventBridge
     # @option params [Types::UpdateConnectionAuthRequestParameters] :auth_parameters
     #   The authorization parameters to use for the connection.
     #
+    # @option params [Types::ConnectivityResourceParameters] :invocation_connectivity_parameters
+    #   For connections to private resource endpoints, the parameters to use
+    #   for invoking the resource endpoint.
+    #
+    #   For more information, see [Connecting to private resources][1] in the
+    #   <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html
+    #
     # @return [Types::UpdateConnectionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::UpdateConnectionResponse#connection_arn #connection_arn} => String
@@ -3841,13 +3973,23 @@ module Aws::EventBridge
     #           },
     #         ],
     #       },
+    #       connectivity_parameters: {
+    #         resource_parameters: { # required
+    #           resource_configuration_arn: "ResourceConfigurationArn", # required
+    #         },
+    #       },
+    #     },
+    #     invocation_connectivity_parameters: {
+    #       resource_parameters: { # required
+    #         resource_configuration_arn: "ResourceConfigurationArn", # required
+    #       },
     #     },
     #   })
     #
     # @example Response structure
     #
     #   resp.connection_arn #=> String
-    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING"
+    #   resp.connection_state #=> String, one of "CREATING", "UPDATING", "DELETING", "AUTHORIZED", "DEAUTHORIZED", "AUTHORIZING", "DEAUTHORIZING", "ACTIVE", "FAILED_CONNECTIVITY"
     #   resp.creation_time #=> Time
     #   resp.last_modified_time #=> Time
     #   resp.last_authorized_time #=> Time
@@ -3999,9 +4141,12 @@ module Aws::EventBridge
     #   Configuration details of the Amazon SQS queue for EventBridge to use
     #   as a dead-letter queue (DLQ).
     #
-    #   For more information, see [Event retry policy and using dead-letter
-    #   queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    #   *EventBridge User Guide*.
+    #   For more information, see [Using dead-letter queues to process
+    #   undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #
     # @return [Types::UpdateEventBusResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4057,7 +4202,7 @@ module Aws::EventBridge
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-eventbridge'
-      context[:gem_version] = '1.73.0'
+      context[:gem_version] = '1.74.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

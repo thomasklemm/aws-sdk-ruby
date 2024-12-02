@@ -80,6 +80,30 @@ module Aws::SecurityHub
       SENSITIVE: []
     end
 
+    class Actor
+      attr_accessor id: ::String
+      attr_accessor user: Types::ActorUser
+      attr_accessor session: Types::ActorSession
+      SENSITIVE: []
+    end
+
+    class ActorSession
+      attr_accessor uid: ::String
+      attr_accessor mfa_status: ("ENABLED" | "DISABLED")
+      attr_accessor created_time: ::Integer
+      attr_accessor issuer: ::String
+      SENSITIVE: []
+    end
+
+    class ActorUser
+      attr_accessor name: ::String
+      attr_accessor uid: ::String
+      attr_accessor type: ::String
+      attr_accessor credential_uid: ::String
+      attr_accessor account: Types::UserAccount
+      SENSITIVE: []
+    end
+
     class Adjustment
       attr_accessor metric: ::String
       attr_accessor reason: ::String
@@ -4146,6 +4170,7 @@ module Aws::SecurityHub
       attr_accessor generator_details: Types::GeneratorDetails
       attr_accessor processed_at: ::String
       attr_accessor aws_account_name: ::String
+      attr_accessor detection: Types::Detection
       SENSITIVE: []
     end
 
@@ -5169,6 +5194,11 @@ module Aws::SecurityHub
       SENSITIVE: []
     end
 
+    class Detection
+      attr_accessor sequence: Types::Sequence
+      SENSITIVE: []
+    end
+
     class DisableImportFindingsForProductRequest
       attr_accessor product_subscription_arn: ::String
       SENSITIVE: []
@@ -5524,6 +5554,14 @@ module Aws::SecurityHub
       SENSITIVE: []
     end
 
+    class Indicator
+      attr_accessor key: ::String
+      attr_accessor values: ::Array[::String]
+      attr_accessor title: ::String
+      attr_accessor type: ::String
+      SENSITIVE: []
+    end
+
     class Insight
       attr_accessor insight_arn: ::String
       attr_accessor name: ::String
@@ -5809,6 +5847,17 @@ module Aws::SecurityHub
       SENSITIVE: []
     end
 
+    class NetworkAutonomousSystem
+      attr_accessor name: ::String
+      attr_accessor number: ::Integer
+      SENSITIVE: []
+    end
+
+    class NetworkConnection
+      attr_accessor direction: ("INBOUND" | "OUTBOUND")
+      SENSITIVE: []
+    end
+
     class NetworkConnectionAction
       attr_accessor connection_direction: ::String
       attr_accessor remote_ip_details: Types::ActionRemoteIpDetails
@@ -5816,6 +5865,25 @@ module Aws::SecurityHub
       attr_accessor local_port_details: Types::ActionLocalPortDetails
       attr_accessor protocol: ::String
       attr_accessor blocked: bool
+      SENSITIVE: []
+    end
+
+    class NetworkEndpoint
+      attr_accessor id: ::String
+      attr_accessor ip: ::String
+      attr_accessor domain: ::String
+      attr_accessor port: ::Integer
+      attr_accessor location: Types::NetworkGeoLocation
+      attr_accessor autonomous_system: Types::NetworkAutonomousSystem
+      attr_accessor connection: Types::NetworkConnection
+      SENSITIVE: []
+    end
+
+    class NetworkGeoLocation
+      attr_accessor city: ::String
+      attr_accessor country: ::String
+      attr_accessor lat: ::Float
+      attr_accessor lon: ::Float
       SENSITIVE: []
     end
 
@@ -6387,6 +6455,15 @@ module Aws::SecurityHub
       SENSITIVE: []
     end
 
+    class Sequence
+      attr_accessor uid: ::String
+      attr_accessor actors: ::Array[Types::Actor]
+      attr_accessor endpoints: ::Array[Types::NetworkEndpoint]
+      attr_accessor signals: ::Array[Types::Signal]
+      attr_accessor sequence_indicators: ::Array[Types::Indicator]
+      SENSITIVE: []
+    end
+
     class Severity
       attr_accessor product: ::Float
       attr_accessor label: ("INFORMATIONAL" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL")
@@ -6399,6 +6476,25 @@ module Aws::SecurityHub
       attr_accessor normalized: ::Integer
       attr_accessor product: ::Float
       attr_accessor label: ("INFORMATIONAL" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL")
+      SENSITIVE: []
+    end
+
+    class Signal
+      attr_accessor type: ::String
+      attr_accessor id: ::String
+      attr_accessor title: ::String
+      attr_accessor product_arn: ::String
+      attr_accessor resource_ids: ::Array[::String]
+      attr_accessor signal_indicators: ::Array[Types::Indicator]
+      attr_accessor name: ::String
+      attr_accessor created_at: ::Integer
+      attr_accessor updated_at: ::Integer
+      attr_accessor first_seen_at: ::Integer
+      attr_accessor last_seen_at: ::Integer
+      attr_accessor severity: ::Float
+      attr_accessor count: ::Integer
+      attr_accessor actor_ids: ::Array[::String]
+      attr_accessor endpoint_ids: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -6784,6 +6880,12 @@ module Aws::SecurityHub
     end
 
     class UpdateStandardsControlResponse < Aws::EmptyStructure
+    end
+
+    class UserAccount
+      attr_accessor uid: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
     end
 
     class VolumeMount

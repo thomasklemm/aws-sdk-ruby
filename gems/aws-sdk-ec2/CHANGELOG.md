@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.495.0 (2024-12-02)
+------------------
+
+* Feature - Adds support for declarative policies that allow you to enforce desired configuration across an AWS organization through configuring account attributes. Adds support for Allowed AMIs that allows you to limit the use of AMIs in AWS accounts. Adds support for connectivity over non-HTTP protocols.
+
 1.494.0 (2024-11-26)
 ------------------
 

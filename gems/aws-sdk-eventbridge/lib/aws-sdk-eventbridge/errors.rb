@@ -27,6 +27,7 @@ module Aws::EventBridge
   # See {Seahorse::Client::RequestContext} for more information.
   #
   # ## Error Classes
+  # * {AccessDeniedException}
   # * {ConcurrentModificationException}
   # * {IllegalStatusException}
   # * {InternalException}
@@ -38,12 +39,23 @@ module Aws::EventBridge
   # * {PolicyLengthExceededException}
   # * {ResourceAlreadyExistsException}
   # * {ResourceNotFoundException}
+  # * {ThrottlingException}
   #
   # Additionally, error classes are dynamically generated for service errors based on the error code
   # if they are not defined above.
   module Errors
 
     extend Aws::Errors::DynamicErrors
+
+    class AccessDeniedException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::EventBridge::Types::AccessDeniedException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
 
     class ConcurrentModificationException < ServiceError
 
@@ -150,6 +162,16 @@ module Aws::EventBridge
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::EventBridge::Types::ResourceNotFoundException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+    end
+
+    class ThrottlingException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::EventBridge::Types::ThrottlingException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

@@ -792,7 +792,7 @@ module Aws::Transfer
     #   `API_GATEWAY`. Accepts an array containing all of the information
     #   required to use a directory in `AWS_DIRECTORY_SERVICE` or invoke a
     #   customer-supplied authentication API, including the API Gateway URL.
-    #   Not required when `IdentityProviderType` is set to
+    #   Cannot be specified when `IdentityProviderType` is set to
     #   `SERVICE_MANAGED`.
     #   @return [Types::IdentityProviderDetails]
     #
@@ -1172,6 +1172,49 @@ module Aws::Transfer
       include Aws::Structure
     end
 
+    # @!attribute [rw] identity_provider_details
+    #   You can provide a structure that contains the details for the
+    #   identity provider to use with your web app.
+    #   @return [Types::WebAppIdentityProviderDetails]
+    #
+    # @!attribute [rw] access_endpoint
+    #   The `AccessEndpoint` is the URL that you provide to your users for
+    #   them to interact with the Transfer Family web app. You can specify a
+    #   custom URL or use the default value.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_units
+    #   A union that contains the value for number of concurrent connections
+    #   or the user sessions on your web app.
+    #   @return [Types::WebAppUnits]
+    #
+    # @!attribute [rw] tags
+    #   Key-value pairs that can be used to group and search for web apps.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateWebAppRequest AWS API Documentation
+    #
+    class CreateWebAppRequest < Struct.new(
+      :identity_provider_details,
+      :access_endpoint,
+      :web_app_units,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app_id
+    #   Returns a unique identifier for the web app.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateWebAppResponse AWS API Documentation
+    #
+    class CreateWebAppResponse < Struct.new(
+      :web_app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] description
     #   A textual description for the workflow.
     #   @return [String]
@@ -1540,6 +1583,31 @@ module Aws::Transfer
       include Aws::Structure
     end
 
+    # @!attribute [rw] web_app_id
+    #   Provide the unique identifier for the web app that contains the
+    #   customizations that you are deleting.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteWebAppCustomizationRequest AWS API Documentation
+    #
+    class DeleteWebAppCustomizationRequest < Struct.new(
+      :web_app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app_id
+    #   Provide the unique identifier for the web app that you are deleting.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteWebAppRequest AWS API Documentation
+    #
+    class DeleteWebAppRequest < Struct.new(
+      :web_app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] workflow_id
     #   A unique identifier for the workflow.
     #   @return [String]
@@ -1858,6 +1926,55 @@ module Aws::Transfer
     class DescribeUserResponse < Struct.new(
       :server_id,
       :user)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app_id
+    #   Provide the unique identifier for the web app.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWebAppCustomizationRequest AWS API Documentation
+    #
+    class DescribeWebAppCustomizationRequest < Struct.new(
+      :web_app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app_customization
+    #   Returns a structure that contains the details of the web app
+    #   customizations.
+    #   @return [Types::DescribedWebAppCustomization]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWebAppCustomizationResponse AWS API Documentation
+    #
+    class DescribeWebAppCustomizationResponse < Struct.new(
+      :web_app_customization)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app_id
+    #   Provide the unique identifier for the web app.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWebAppRequest AWS API Documentation
+    #
+    class DescribeWebAppRequest < Struct.new(
+      :web_app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app
+    #   Returns a structure that contains the details of the web app.
+    #   @return [Types::DescribedWebApp]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWebAppResponse AWS API Documentation
+    #
+    class DescribeWebAppResponse < Struct.new(
+      :web_app)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2401,6 +2518,34 @@ module Aws::Transfer
       include Aws::Structure
     end
 
+    # A structure that contains the details of the IAM Identity Center used
+    # for your web app. Returned during a call to `DescribeWebApp`.
+    #
+    # @!attribute [rw] application_arn
+    #   The Amazon Resource Name (ARN) for the IAM Identity Center
+    #   application: this value is set automatically when you create your
+    #   web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_arn
+    #   The Amazon Resource Name (ARN) for the IAM Identity Center used for
+    #   the web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] role
+    #   The IAM role in IAM Identity Center used for the web app.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedIdentityCenterConfig AWS API Documentation
+    #
+    class DescribedIdentityCenterConfig < Struct.new(
+      :application_arn,
+      :instance_arn,
+      :role)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The details for a local or partner AS2 profile.
     #
     # @!attribute [rw] arn
@@ -2924,6 +3069,118 @@ module Aws::Transfer
       include Aws::Structure
     end
 
+    # A structure that describes the parameters for the web app, as
+    # identified by the `WebAppId`.
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_id
+    #   The unique identifier for the web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] described_identity_provider_details
+    #   A structure that contains the details for the identity provider used
+    #   by the web app.
+    #   @return [Types::DescribedWebAppIdentityProviderDetails]
+    #
+    # @!attribute [rw] access_endpoint
+    #   The `AccessEndpoint` is the URL that you provide to your users for
+    #   them to interact with the Transfer Family web app. You can specify a
+    #   custom URL or use the default value.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_endpoint
+    #   The `WebAppEndpoint` is the unique URL for your Transfer Family web
+    #   app. This is the value that you use when you configure **Origins**
+    #   on CloudFront.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_units
+    #   A union that contains the value for number of concurrent connections
+    #   or the user sessions on your web app.
+    #   @return [Types::WebAppUnits]
+    #
+    # @!attribute [rw] tags
+    #   Key-value pairs that can be used to group and search for web apps.
+    #   Tags are metadata attached to web apps for any purpose.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedWebApp AWS API Documentation
+    #
+    class DescribedWebApp < Struct.new(
+      :arn,
+      :web_app_id,
+      :described_identity_provider_details,
+      :access_endpoint,
+      :web_app_endpoint,
+      :web_app_units,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A structure that contains the customization fields for the web app.
+    # You can provide a title, logo, and icon to customize the appearance of
+    # your web app.
+    #
+    # @!attribute [rw] arn
+    #   Returns the Amazon Resource Name (ARN) for the web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_id
+    #   Returns the unique identifier for your web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] title
+    #   Returns the page title that you defined for your web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] logo_file
+    #   Returns a logo file data string (in base64 encoding).
+    #   @return [String]
+    #
+    # @!attribute [rw] favicon_file
+    #   Returns a icon file data string (in base64 encoding).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedWebAppCustomization AWS API Documentation
+    #
+    class DescribedWebAppCustomization < Struct.new(
+      :arn,
+      :web_app_id,
+      :title,
+      :logo_file,
+      :favicon_file)
+      SENSITIVE = [:logo_file, :favicon_file]
+      include Aws::Structure
+    end
+
+    # Returns a structure that contains the identity provider details for
+    # your web app.
+    #
+    # @note DescribedWebAppIdentityProviderDetails is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of DescribedWebAppIdentityProviderDetails corresponding to the set member.
+    #
+    # @!attribute [rw] identity_center_config
+    #   Returns a structure for your identity provider details. This
+    #   structure contains the instance ARN and role being used for the web
+    #   app.
+    #   @return [Types::DescribedIdentityCenterConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribedWebAppIdentityProviderDetails AWS API Documentation
+    #
+    class DescribedWebAppIdentityProviderDetails < Struct.new(
+      :identity_center_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class IdentityCenterConfig < DescribedWebAppIdentityProviderDetails; end
+      class Unknown < DescribedWebAppIdentityProviderDetails; end
+    end
+
     # Describes the properties of the specified workflow
     #
     # @!attribute [rw] arn
@@ -3287,6 +3544,27 @@ module Aws::Transfer
       include Aws::Structure
     end
 
+    # A structure that describes the values to use for the IAM Identity
+    # Center settings when you create or update a web app.
+    #
+    # @!attribute [rw] instance_arn
+    #   The Amazon Resource Name (ARN) for the IAM Identity Center used for
+    #   the web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] role
+    #   The IAM role in IAM Identity Center used for the web app.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/IdentityCenterConfig AWS API Documentation
+    #
+    class IdentityCenterConfig < Struct.new(
+      :instance_arn,
+      :role)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Returns information related to the type of user authentication that is
     # in use for a file transfer protocol-enabled server's users. A server
     # can have only one method of authentication.
@@ -3583,7 +3861,7 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   Specifies the maximum number of access SIDs to return.
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3636,7 +3914,7 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   The maximum number of agreements to return.
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3681,7 +3959,7 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   The maximum number of certificates to return.
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3720,7 +3998,7 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   The maximum number of connectors to return.
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3759,7 +4037,7 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   Specifies the maximum number of executions to return.
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3896,7 +4174,7 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   The maximum number of host keys to return.
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -3945,7 +4223,7 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   The maximum number of profiles to return.
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -4180,7 +4458,45 @@ module Aws::Transfer
     end
 
     # @!attribute [rw] max_results
-    #   Specifies the maximum number of workflows to return.
+    #   The maximum number of items to return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   Returns the `NextToken` parameter in the output. You can then pass
+    #   the `NextToken` parameter in a subsequent command to continue
+    #   listing additional web apps.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListWebAppsRequest AWS API Documentation
+    #
+    class ListWebAppsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   Provide this value for the `NextToken` parameter in a subsequent
+    #   command to continue listing additional web apps.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_apps
+    #   Returns, for each listed web app, a structure that contains details
+    #   for the web app.
+    #   @return [Array<Types::ListedWebApp>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListWebAppsResponse AWS API Documentation
+    #
+    class ListWebAppsResponse < Struct.new(
+      :next_token,
+      :web_apps)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return.
     #   @return [Integer]
     #
     # @!attribute [rw] next_token
@@ -4717,6 +5033,39 @@ module Aws::Transfer
       :role,
       :ssh_public_key_count,
       :user_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # a structure that contains details for the web app.
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) for the web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_id
+    #   The unique identifier for the web app.
+    #   @return [String]
+    #
+    # @!attribute [rw] access_endpoint
+    #   The `AccessEndpoint` is the URL that you provide to your users for
+    #   them to interact with the Transfer Family web app. You can specify a
+    #   custom URL or use the default value.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_endpoint
+    #   The `WebAppEndpoint` is the unique URL for your Transfer Family web
+    #   app. This is the value that you use when you configure **Origins**
+    #   on CloudFront.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListedWebApp AWS API Documentation
+    #
+    class ListedWebApp < Struct.new(
+      :arn,
+      :web_app_id,
+      :access_endpoint,
+      :web_app_endpoint)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6534,6 +6883,125 @@ module Aws::Transfer
       include Aws::Structure
     end
 
+    # @!attribute [rw] web_app_id
+    #   Provide the identifier of the web app that you are updating.
+    #   @return [String]
+    #
+    # @!attribute [rw] title
+    #   Provide an updated title.
+    #   @return [String]
+    #
+    # @!attribute [rw] logo_file
+    #   Specify logo file data string (in base64 encoding).
+    #   @return [String]
+    #
+    # @!attribute [rw] favicon_file
+    #   Specify icon file data string (in base64 encoding).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppCustomizationRequest AWS API Documentation
+    #
+    class UpdateWebAppCustomizationRequest < Struct.new(
+      :web_app_id,
+      :title,
+      :logo_file,
+      :favicon_file)
+      SENSITIVE = [:logo_file, :favicon_file]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app_id
+    #   Returns the unique identifier for the web app being updated.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppCustomizationResponse AWS API Documentation
+    #
+    class UpdateWebAppCustomizationResponse < Struct.new(
+      :web_app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A structure that describes the values to use for the IAM Identity
+    # Center settings when you update a web app.
+    #
+    # @!attribute [rw] role
+    #   The IAM role used to access IAM Identity Center.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppIdentityCenterConfig AWS API Documentation
+    #
+    class UpdateWebAppIdentityCenterConfig < Struct.new(
+      :role)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A union that contains the `UpdateWebAppIdentityCenterConfig` object.
+    #
+    # @note UpdateWebAppIdentityProviderDetails is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] identity_center_config
+    #   A structure that describes the values to use for the IAM Identity
+    #   Center settings when you update a web app.
+    #   @return [Types::UpdateWebAppIdentityCenterConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppIdentityProviderDetails AWS API Documentation
+    #
+    class UpdateWebAppIdentityProviderDetails < Struct.new(
+      :identity_center_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class IdentityCenterConfig < UpdateWebAppIdentityProviderDetails; end
+      class Unknown < UpdateWebAppIdentityProviderDetails; end
+    end
+
+    # @!attribute [rw] web_app_id
+    #   Provide the identifier of the web app that you are updating.
+    #   @return [String]
+    #
+    # @!attribute [rw] identity_provider_details
+    #   Provide updated identity provider values in a
+    #   `WebAppIdentityProviderDetails` object.
+    #   @return [Types::UpdateWebAppIdentityProviderDetails]
+    #
+    # @!attribute [rw] access_endpoint
+    #   The `AccessEndpoint` is the URL that you provide to your users for
+    #   them to interact with the Transfer Family web app. You can specify a
+    #   custom URL or use the default value.
+    #   @return [String]
+    #
+    # @!attribute [rw] web_app_units
+    #   A union that contains the value for number of concurrent connections
+    #   or the user sessions on your web app.
+    #   @return [Types::WebAppUnits]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppRequest AWS API Documentation
+    #
+    class UpdateWebAppRequest < Struct.new(
+      :web_app_id,
+      :identity_provider_details,
+      :access_endpoint,
+      :web_app_units)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] web_app_id
+    #   Returns the unique identifier for the web app being updated.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppResponse AWS API Documentation
+    #
+    class UpdateWebAppResponse < Struct.new(
+      :web_app_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifies the user name, server ID, and session ID for a workflow.
     #
     # @!attribute [rw] user_name
@@ -6559,6 +7027,58 @@ module Aws::Transfer
       :session_id)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # A union that contains the `IdentityCenterConfig` object.
+    #
+    # @note WebAppIdentityProviderDetails is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] identity_center_config
+    #   A structure that describes the values to use for the IAM Identity
+    #   Center settings when you create a web app.
+    #   @return [Types::IdentityCenterConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/WebAppIdentityProviderDetails AWS API Documentation
+    #
+    class WebAppIdentityProviderDetails < Struct.new(
+      :identity_center_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class IdentityCenterConfig < WebAppIdentityProviderDetails; end
+      class Unknown < WebAppIdentityProviderDetails; end
+    end
+
+    # Contains an integer value that represents the value for number of
+    # concurrent connections or the user sessions on your web app.
+    #
+    # @note WebAppUnits is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note WebAppUnits is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of WebAppUnits corresponding to the set member.
+    #
+    # @!attribute [rw] provisioned
+    #   An integer that represents the number of units for your desired
+    #   number of concurrent connections, or the number of user sessions on
+    #   your web app at the same time.
+    #
+    #   Each increment allows an additional 250 concurrent sessions: a value
+    #   of `1` sets the number of concurrent sessions to 250; `2` sets a
+    #   value of 500, and so on.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/WebAppUnits AWS API Documentation
+    #
+    class WebAppUnits < Struct.new(
+      :provisioned,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Provisioned < WebAppUnits; end
+      class Unknown < WebAppUnits; end
     end
 
     # Specifies the workflow ID for the workflow to assign and the execution

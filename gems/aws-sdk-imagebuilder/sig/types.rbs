@@ -93,6 +93,7 @@ module Aws::Imagebuilder
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor publisher: ::String
       attr_accessor obfuscate: bool
+      attr_accessor product_codes: ::Array[Types::ProductCodeListItem]
       SENSITIVE: []
     end
 
@@ -117,7 +118,7 @@ module Aws::Imagebuilder
     end
 
     class ComponentState
-      attr_accessor status: ("DEPRECATED")
+      attr_accessor status: ("DEPRECATED" | "DISABLED" | "ACTIVE")
       attr_accessor reason: ::String
       SENSITIVE: []
     end
@@ -150,6 +151,8 @@ module Aws::Imagebuilder
       attr_accessor type: ("BUILD" | "TEST")
       attr_accessor owner: ::String
       attr_accessor date_created: ::String
+      attr_accessor status: ("DEPRECATED" | "DISABLED" | "ACTIVE")
+      attr_accessor product_codes: ::Array[Types::ProductCodeListItem]
       SENSITIVE: []
     end
 
@@ -744,6 +747,20 @@ module Aws::Imagebuilder
       SENSITIVE: []
     end
 
+    class GetMarketplaceResourceRequest
+      attr_accessor resource_type: ("COMPONENT_DATA" | "COMPONENT_ARTIFACT")
+      attr_accessor resource_arn: ::String
+      attr_accessor resource_location: ::String
+      SENSITIVE: []
+    end
+
+    class GetMarketplaceResourceResponse
+      attr_accessor resource_arn: ::String
+      attr_accessor url: ::String
+      attr_accessor data: ::String
+      SENSITIVE: []
+    end
+
     class GetWorkflowExecutionRequest
       attr_accessor workflow_execution_id: ::String
       SENSITIVE: []
@@ -1303,7 +1320,7 @@ module Aws::Imagebuilder
     end
 
     class ListComponentsRequest
-      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty")
+      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace")
       attr_accessor filters: ::Array[Types::Filter]
       attr_accessor by_name: bool
       attr_accessor max_results: ::Integer
@@ -1319,7 +1336,7 @@ module Aws::Imagebuilder
     end
 
     class ListContainerRecipesRequest
-      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty")
+      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace")
       attr_accessor filters: ::Array[Types::Filter]
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -1406,7 +1423,7 @@ module Aws::Imagebuilder
     end
 
     class ListImageRecipesRequest
-      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty")
+      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace")
       attr_accessor filters: ::Array[Types::Filter]
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -1449,7 +1466,7 @@ module Aws::Imagebuilder
     end
 
     class ListImagesRequest
-      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty")
+      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace")
       attr_accessor filters: ::Array[Types::Filter]
       attr_accessor by_name: bool
       attr_accessor max_results: ::Integer
@@ -1591,7 +1608,7 @@ module Aws::Imagebuilder
     end
 
     class ListWorkflowsRequest
-      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty")
+      attr_accessor owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace")
       attr_accessor filters: ::Array[Types::Filter]
       attr_accessor by_name: bool
       attr_accessor max_results: ::Integer
@@ -1635,6 +1652,12 @@ module Aws::Imagebuilder
       attr_accessor tenancy: ("default" | "dedicated" | "host")
       attr_accessor host_id: ::String
       attr_accessor host_resource_group_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ProductCodeListItem
+      attr_accessor product_code_id: ::String
+      attr_accessor product_code_type: ("marketplace")
       SENSITIVE: []
     end
 

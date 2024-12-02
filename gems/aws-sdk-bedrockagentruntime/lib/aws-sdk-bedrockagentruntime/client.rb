@@ -938,8 +938,46 @@ module Aws::BedrockAgentRuntime
     #                   },
     #                 },
     #               },
+    #               implicit_filter_configuration: {
+    #                 metadata_attributes: [ # required
+    #                   {
+    #                     description: "MetadataAttributeSchemaDescriptionString", # required
+    #                     key: "MetadataAttributeSchemaKeyString", # required
+    #                     type: "STRING", # required, accepts STRING, NUMBER, BOOLEAN, STRING_LIST
+    #                   },
+    #                 ],
+    #                 model_arn: "BedrockModelArn", # required
+    #               },
     #               number_of_results: 1,
     #               override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #               reranking_configuration: {
+    #                 bedrock_reranking_configuration: {
+    #                   metadata_configuration: {
+    #                     selection_mode: "SELECTIVE", # required, accepts SELECTIVE, ALL
+    #                     selective_mode_configuration: {
+    #                       fields_to_exclude: [
+    #                         {
+    #                           field_name: "FieldForRerankingFieldNameString", # required
+    #                         },
+    #                       ],
+    #                       fields_to_include: [
+    #                         {
+    #                           field_name: "FieldForRerankingFieldNameString", # required
+    #                         },
+    #                       ],
+    #                     },
+    #                   },
+    #                   model_configuration: { # required
+    #                     additional_model_request_fields: {
+    #                       "AdditionalModelRequestFieldsKey" => {
+    #                       },
+    #                     },
+    #                     model_arn: "BedrockRerankingModelArn", # required
+    #                   },
+    #                   number_of_reranked_results: 1,
+    #                 },
+    #                 type: "BEDROCK_RERANKING_MODEL", # required, accepts BEDROCK_RERANKING_MODEL
+    #               },
     #             },
     #           },
     #         },
@@ -1006,10 +1044,11 @@ module Aws::BedrockAgentRuntime
     #   event.attribution.citations[0].retrieved_references #=> Array
     #   event.attribution.citations[0].retrieved_references[0].content.text #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.confluence_location.url #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.custom_document_location.id #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.s3_location.uri #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.salesforce_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.share_point_location.url #=> String
-    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   event.attribution.citations[0].retrieved_references[0].location.web_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].metadata #=> Hash
     #   event.bytes #=> String
@@ -1172,10 +1211,11 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
-    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
     #   event.trace.orchestration_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
@@ -2058,8 +2098,46 @@ module Aws::BedrockAgentRuntime
     #                 },
     #               },
     #             },
+    #             implicit_filter_configuration: {
+    #               metadata_attributes: [ # required
+    #                 {
+    #                   description: "MetadataAttributeSchemaDescriptionString", # required
+    #                   key: "MetadataAttributeSchemaKeyString", # required
+    #                   type: "STRING", # required, accepts STRING, NUMBER, BOOLEAN, STRING_LIST
+    #                 },
+    #               ],
+    #               model_arn: "BedrockModelArn", # required
+    #             },
     #             number_of_results: 1,
     #             override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #             reranking_configuration: {
+    #               bedrock_reranking_configuration: {
+    #                 metadata_configuration: {
+    #                   selection_mode: "SELECTIVE", # required, accepts SELECTIVE, ALL
+    #                   selective_mode_configuration: {
+    #                     fields_to_exclude: [
+    #                       {
+    #                         field_name: "FieldForRerankingFieldNameString", # required
+    #                       },
+    #                     ],
+    #                     fields_to_include: [
+    #                       {
+    #                         field_name: "FieldForRerankingFieldNameString", # required
+    #                       },
+    #                     ],
+    #                   },
+    #                 },
+    #                 model_configuration: { # required
+    #                   additional_model_request_fields: {
+    #                     "AdditionalModelRequestFieldsKey" => {
+    #                     },
+    #                   },
+    #                   model_arn: "BedrockRerankingModelArn", # required
+    #                 },
+    #                 number_of_reranked_results: 1,
+    #               },
+    #               type: "BEDROCK_RERANKING_MODEL", # required, accepts BEDROCK_RERANKING_MODEL
+    #             },
     #           },
     #         },
     #       },
@@ -2107,10 +2185,11 @@ module Aws::BedrockAgentRuntime
     #   event.attribution.citations[0].retrieved_references #=> Array
     #   event.attribution.citations[0].retrieved_references[0].content.text #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.confluence_location.url #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.custom_document_location.id #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.s3_location.uri #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.salesforce_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.share_point_location.url #=> String
-    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   event.attribution.citations[0].retrieved_references[0].location.web_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].metadata #=> Hash
     #   event.bytes #=> String
@@ -2270,10 +2349,11 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
-    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
     #   event.trace.orchestration_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
@@ -2587,7 +2667,99 @@ module Aws::BedrockAgentRuntime
       req.send_request(options, &block)
     end
 
+    # Reranks the relevance of sources based on queries. For more
+    # information, see [Improve the relevance of query responses with a
+    # reranker model][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/rerank.html
+    #
+    # @option params [String] :next_token
+    #   If the total number of results was greater than could fit in a
+    #   response, a token is returned in the `nextToken` field. You can enter
+    #   that token in this field to return the next batch of results.
+    #
+    # @option params [required, Array<Types::RerankQuery>] :queries
+    #   An array of objects, each of which contains information about a query
+    #   to submit to the reranker model.
+    #
+    # @option params [required, Types::RerankingConfiguration] :reranking_configuration
+    #   Contains configurations for reranking.
+    #
+    # @option params [required, Array<Types::RerankSource>] :sources
+    #   An array of objects, each of which contains information about the
+    #   sources to rerank.
+    #
+    # @return [Types::RerankResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::RerankResponse#next_token #next_token} => String
+    #   * {Types::RerankResponse#results #results} => Array&lt;Types::RerankResult&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.rerank({
+    #     next_token: "NextToken",
+    #     queries: [ # required
+    #       {
+    #         text_query: { # required
+    #           text: "RerankTextDocumentTextString",
+    #         },
+    #         type: "TEXT", # required, accepts TEXT
+    #       },
+    #     ],
+    #     reranking_configuration: { # required
+    #       bedrock_reranking_configuration: { # required
+    #         model_configuration: { # required
+    #           additional_model_request_fields: {
+    #             "AdditionalModelRequestFieldsKey" => {
+    #             },
+    #           },
+    #           model_arn: "BedrockModelArn", # required
+    #         },
+    #         number_of_results: 1,
+    #       },
+    #       type: "BEDROCK_RERANKING_MODEL", # required, accepts BEDROCK_RERANKING_MODEL
+    #     },
+    #     sources: [ # required
+    #       {
+    #         inline_document_source: { # required
+    #           json_document: {
+    #           },
+    #           text_document: {
+    #             text: "RerankTextDocumentTextString",
+    #           },
+    #           type: "TEXT", # required, accepts TEXT, JSON
+    #         },
+    #         type: "INLINE", # required, accepts INLINE
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.results #=> Array
+    #   resp.results[0].document.text_document.text #=> String
+    #   resp.results[0].document.type #=> String, one of "TEXT", "JSON"
+    #   resp.results[0].index #=> Integer
+    #   resp.results[0].relevance_score #=> Float
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/Rerank AWS API Documentation
+    #
+    # @overload rerank(params = {})
+    # @param [Hash] params ({})
+    def rerank(params = {}, options = {})
+      req = build_request(:rerank, params)
+      req.send_request(options)
+    end
+
     # Queries a knowledge base and retrieves information from it.
+    #
+    # @option params [Types::GuardrailConfiguration] :guardrail_configuration
+    #   Guardrail settings.
     #
     # @option params [required, String] :knowledge_base_id
     #   The unique identifier of the knowledge base to query.
@@ -2610,6 +2782,7 @@ module Aws::BedrockAgentRuntime
     #
     # @return [Types::RetrieveResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
+    #   * {Types::RetrieveResponse#guardrail_action #guardrail_action} => String
     #   * {Types::RetrieveResponse#next_token #next_token} => String
     #   * {Types::RetrieveResponse#retrieval_results #retrieval_results} => Array&lt;Types::KnowledgeBaseRetrievalResult&gt;
     #
@@ -2618,6 +2791,10 @@ module Aws::BedrockAgentRuntime
     # @example Request syntax with placeholder values
     #
     #   resp = client.retrieve({
+    #     guardrail_configuration: {
+    #       guardrail_id: "GuardrailConfigurationGuardrailIdString", # required
+    #       guardrail_version: "GuardrailConfigurationGuardrailVersionString", # required
+    #     },
     #     knowledge_base_id: "KnowledgeBaseId", # required
     #     next_token: "NextToken",
     #     retrieval_configuration: {
@@ -2689,8 +2866,46 @@ module Aws::BedrockAgentRuntime
     #             },
     #           },
     #         },
+    #         implicit_filter_configuration: {
+    #           metadata_attributes: [ # required
+    #             {
+    #               description: "MetadataAttributeSchemaDescriptionString", # required
+    #               key: "MetadataAttributeSchemaKeyString", # required
+    #               type: "STRING", # required, accepts STRING, NUMBER, BOOLEAN, STRING_LIST
+    #             },
+    #           ],
+    #           model_arn: "BedrockModelArn", # required
+    #         },
     #         number_of_results: 1,
     #         override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #         reranking_configuration: {
+    #           bedrock_reranking_configuration: {
+    #             metadata_configuration: {
+    #               selection_mode: "SELECTIVE", # required, accepts SELECTIVE, ALL
+    #               selective_mode_configuration: {
+    #                 fields_to_exclude: [
+    #                   {
+    #                     field_name: "FieldForRerankingFieldNameString", # required
+    #                   },
+    #                 ],
+    #                 fields_to_include: [
+    #                   {
+    #                     field_name: "FieldForRerankingFieldNameString", # required
+    #                   },
+    #                 ],
+    #               },
+    #             },
+    #             model_configuration: { # required
+    #               additional_model_request_fields: {
+    #                 "AdditionalModelRequestFieldsKey" => {
+    #                 },
+    #               },
+    #               model_arn: "BedrockRerankingModelArn", # required
+    #             },
+    #             number_of_reranked_results: 1,
+    #           },
+    #           type: "BEDROCK_RERANKING_MODEL", # required, accepts BEDROCK_RERANKING_MODEL
+    #         },
     #       },
     #     },
     #     retrieval_query: { # required
@@ -2700,14 +2915,16 @@ module Aws::BedrockAgentRuntime
     #
     # @example Response structure
     #
+    #   resp.guardrail_action #=> String, one of "INTERVENED", "NONE"
     #   resp.next_token #=> String
     #   resp.retrieval_results #=> Array
     #   resp.retrieval_results[0].content.text #=> String
     #   resp.retrieval_results[0].location.confluence_location.url #=> String
+    #   resp.retrieval_results[0].location.custom_document_location.id #=> String
     #   resp.retrieval_results[0].location.s3_location.uri #=> String
     #   resp.retrieval_results[0].location.salesforce_location.url #=> String
     #   resp.retrieval_results[0].location.share_point_location.url #=> String
-    #   resp.retrieval_results[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   resp.retrieval_results[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   resp.retrieval_results[0].location.web_location.url #=> String
     #   resp.retrieval_results[0].metadata #=> Hash
     #   resp.retrieval_results[0].score #=> Float
@@ -2916,8 +3133,46 @@ module Aws::BedrockAgentRuntime
     #                 },
     #               },
     #             },
+    #             implicit_filter_configuration: {
+    #               metadata_attributes: [ # required
+    #                 {
+    #                   description: "MetadataAttributeSchemaDescriptionString", # required
+    #                   key: "MetadataAttributeSchemaKeyString", # required
+    #                   type: "STRING", # required, accepts STRING, NUMBER, BOOLEAN, STRING_LIST
+    #                 },
+    #               ],
+    #               model_arn: "BedrockModelArn", # required
+    #             },
     #             number_of_results: 1,
     #             override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #             reranking_configuration: {
+    #               bedrock_reranking_configuration: {
+    #                 metadata_configuration: {
+    #                   selection_mode: "SELECTIVE", # required, accepts SELECTIVE, ALL
+    #                   selective_mode_configuration: {
+    #                     fields_to_exclude: [
+    #                       {
+    #                         field_name: "FieldForRerankingFieldNameString", # required
+    #                       },
+    #                     ],
+    #                     fields_to_include: [
+    #                       {
+    #                         field_name: "FieldForRerankingFieldNameString", # required
+    #                       },
+    #                     ],
+    #                   },
+    #                 },
+    #                 model_configuration: { # required
+    #                   additional_model_request_fields: {
+    #                     "AdditionalModelRequestFieldsKey" => {
+    #                     },
+    #                   },
+    #                   model_arn: "BedrockRerankingModelArn", # required
+    #                 },
+    #                 number_of_reranked_results: 1,
+    #               },
+    #               type: "BEDROCK_RERANKING_MODEL", # required, accepts BEDROCK_RERANKING_MODEL
+    #             },
     #           },
     #         },
     #       },
@@ -2938,10 +3193,11 @@ module Aws::BedrockAgentRuntime
     #   resp.citations[0].retrieved_references #=> Array
     #   resp.citations[0].retrieved_references[0].content.text #=> String
     #   resp.citations[0].retrieved_references[0].location.confluence_location.url #=> String
+    #   resp.citations[0].retrieved_references[0].location.custom_document_location.id #=> String
     #   resp.citations[0].retrieved_references[0].location.s3_location.uri #=> String
     #   resp.citations[0].retrieved_references[0].location.salesforce_location.url #=> String
     #   resp.citations[0].retrieved_references[0].location.share_point_location.url #=> String
-    #   resp.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   resp.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   resp.citations[0].retrieved_references[0].location.web_location.url #=> String
     #   resp.citations[0].retrieved_references[0].metadata #=> Hash
     #   resp.guardrail_action #=> String, one of "INTERVENED", "NONE"
@@ -2955,6 +3211,515 @@ module Aws::BedrockAgentRuntime
     def retrieve_and_generate(params = {}, options = {})
       req = build_request(:retrieve_and_generate, params)
       req.send_request(options)
+    end
+
+    # Queries a knowledge base and generates responses based on the
+    # retrieved results, with output in streaming format.
+    #
+    # <note markdown="1"> The CLI doesn't support streaming operations in Amazon Bedrock,
+    # including `InvokeModelWithResponseStream`.
+    #
+    #  </note>
+    #
+    # @option params [required, Types::RetrieveAndGenerateInput] :input
+    #   Contains the query to be made to the knowledge base.
+    #
+    # @option params [Types::RetrieveAndGenerateConfiguration] :retrieve_and_generate_configuration
+    #   Contains configurations for the knowledge base query and retrieval
+    #   process. For more information, see [Query configurations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html
+    #
+    # @option params [Types::RetrieveAndGenerateSessionConfiguration] :session_configuration
+    #   Contains details about the session with the knowledge base.
+    #
+    # @option params [String] :session_id
+    #   The unique identifier of the session. When you first make a
+    #   `RetrieveAndGenerate` request, Amazon Bedrock automatically generates
+    #   this value. You must reuse this value for all subsequent requests in
+    #   the same conversational session. This value allows Amazon Bedrock to
+    #   maintain context and knowledge from previous interactions. You can't
+    #   explicitly set the `sessionId` yourself.
+    #
+    # @return [Types::RetrieveAndGenerateStreamResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::RetrieveAndGenerateStreamResponse#session_id #session_id} => String
+    #   * {Types::RetrieveAndGenerateStreamResponse#stream #stream} => Types::RetrieveAndGenerateStreamResponseOutput
+    #
+    # @example EventStream Operation Example
+    #
+    #   You can process the event once it arrives immediately, or wait until the
+    #   full response is complete and iterate through the eventstream enumerator.
+    #
+    #   To interact with event immediately, you need to register #retrieve_and_generate_stream
+    #   with callbacks. Callbacks can be registered for specific events or for all
+    #   events, including error events.
+    #
+    #   Callbacks can be passed into the `:event_stream_handler` option or within a
+    #   block statement attached to the #retrieve_and_generate_stream call directly. Hybrid
+    #   pattern of both is also supported.
+    #
+    #   `:event_stream_handler` option takes in either a Proc object or
+    #   Aws::BedrockAgentRuntime::EventStreams::RetrieveAndGenerateStreamResponseOutput object.
+    #
+    #   Usage pattern a): Callbacks with a block attached to #retrieve_and_generate_stream
+    #     Example for registering callbacks for all event types and an error event
+    #
+    #     client.retrieve_and_generate_stream( # params input# ) do |stream|
+    #       stream.on_error_event do |event|
+    #         # catch unmodeled error event in the stream
+    #         raise event
+    #         # => Aws::Errors::EventError
+    #         # event.event_type => :error
+    #         # event.error_code => String
+    #         # event.error_message => String
+    #       end
+    #
+    #       stream.on_event do |event|
+    #         # process all events arrive
+    #         puts event.event_type
+    #         ...
+    #       end
+    #
+    #     end
+    #
+    #   Usage pattern b): Pass in `:event_stream_handler` for #retrieve_and_generate_stream
+    #
+    #     1) Create a Aws::BedrockAgentRuntime::EventStreams::RetrieveAndGenerateStreamResponseOutput object
+    #     Example for registering callbacks with specific events
+    #
+    #       handler = Aws::BedrockAgentRuntime::EventStreams::RetrieveAndGenerateStreamResponseOutput.new
+    #       handler.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       handler.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       handler.on_citation_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::citation
+    #       end
+    #       handler.on_conflict_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::conflictException
+    #       end
+    #       handler.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       handler.on_guardrail_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::guardrail
+    #       end
+    #       handler.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       handler.on_output_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::output
+    #       end
+    #       handler.on_resource_not_found_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
+    #       end
+    #       handler.on_service_quota_exceeded_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::serviceQuotaExceededException
+    #       end
+    #       handler.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       handler.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #
+    #     client.retrieve_and_generate_stream( # params input #, event_stream_handler: handler)
+    #
+    #     2) Use a Ruby Proc object
+    #     Example for registering callbacks with specific events
+    #
+    #     handler = Proc.new do |stream|
+    #       stream.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       stream.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       stream.on_citation_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::citation
+    #       end
+    #       stream.on_conflict_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::conflictException
+    #       end
+    #       stream.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       stream.on_guardrail_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::guardrail
+    #       end
+    #       stream.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       stream.on_output_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::output
+    #       end
+    #       stream.on_resource_not_found_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
+    #       end
+    #       stream.on_service_quota_exceeded_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::serviceQuotaExceededException
+    #       end
+    #       stream.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       stream.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #     end
+    #
+    #     client.retrieve_and_generate_stream( # params input #, event_stream_handler: handler)
+    #
+    #   Usage pattern c): Hybrid pattern of a) and b)
+    #
+    #       handler = Aws::BedrockAgentRuntime::EventStreams::RetrieveAndGenerateStreamResponseOutput.new
+    #       handler.on_access_denied_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::accessDeniedException
+    #       end
+    #       handler.on_bad_gateway_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::badGatewayException
+    #       end
+    #       handler.on_citation_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::citation
+    #       end
+    #       handler.on_conflict_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::conflictException
+    #       end
+    #       handler.on_dependency_failed_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::dependencyFailedException
+    #       end
+    #       handler.on_guardrail_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::guardrail
+    #       end
+    #       handler.on_internal_server_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::internalServerException
+    #       end
+    #       handler.on_output_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::output
+    #       end
+    #       handler.on_resource_not_found_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::resourceNotFoundException
+    #       end
+    #       handler.on_service_quota_exceeded_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::serviceQuotaExceededException
+    #       end
+    #       handler.on_throttling_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::throttlingException
+    #       end
+    #       handler.on_validation_exception_event do |event|
+    #         event # => Aws::BedrockAgentRuntime::Types::validationException
+    #       end
+    #
+    #     client.retrieve_and_generate_stream( # params input #, event_stream_handler: handler) do |stream|
+    #       stream.on_error_event do |event|
+    #         # catch unmodeled error event in the stream
+    #         raise event
+    #         # => Aws::Errors::EventError
+    #         # event.event_type => :error
+    #         # event.error_code => String
+    #         # event.error_message => String
+    #       end
+    #     end
+    #
+    #   You can also iterate through events after the response complete.
+    #
+    #   Events are available at resp.stream # => Enumerator
+    #   For parameter input example, please refer to following request syntax
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.retrieve_and_generate_stream({
+    #     input: { # required
+    #       text: "RetrieveAndGenerateInputTextString", # required
+    #     },
+    #     retrieve_and_generate_configuration: {
+    #       external_sources_configuration: {
+    #         generation_configuration: {
+    #           additional_model_request_fields: {
+    #             "AdditionalModelRequestFieldsKey" => {
+    #             },
+    #           },
+    #           guardrail_configuration: {
+    #             guardrail_id: "GuardrailConfigurationGuardrailIdString", # required
+    #             guardrail_version: "GuardrailConfigurationGuardrailVersionString", # required
+    #           },
+    #           inference_config: {
+    #             text_inference_config: {
+    #               max_tokens: 1,
+    #               stop_sequences: ["RAGStopSequencesMemberString"],
+    #               temperature: 1.0,
+    #               top_p: 1.0,
+    #             },
+    #           },
+    #           prompt_template: {
+    #             text_prompt_template: "TextPromptTemplate",
+    #           },
+    #         },
+    #         model_arn: "BedrockModelArn", # required
+    #         sources: [ # required
+    #           {
+    #             byte_content: {
+    #               content_type: "ContentType", # required
+    #               data: "data", # required
+    #               identifier: "Identifier", # required
+    #             },
+    #             s3_location: {
+    #               uri: "S3Uri", # required
+    #             },
+    #             source_type: "S3", # required, accepts S3, BYTE_CONTENT
+    #           },
+    #         ],
+    #       },
+    #       knowledge_base_configuration: {
+    #         generation_configuration: {
+    #           additional_model_request_fields: {
+    #             "AdditionalModelRequestFieldsKey" => {
+    #             },
+    #           },
+    #           guardrail_configuration: {
+    #             guardrail_id: "GuardrailConfigurationGuardrailIdString", # required
+    #             guardrail_version: "GuardrailConfigurationGuardrailVersionString", # required
+    #           },
+    #           inference_config: {
+    #             text_inference_config: {
+    #               max_tokens: 1,
+    #               stop_sequences: ["RAGStopSequencesMemberString"],
+    #               temperature: 1.0,
+    #               top_p: 1.0,
+    #             },
+    #           },
+    #           prompt_template: {
+    #             text_prompt_template: "TextPromptTemplate",
+    #           },
+    #         },
+    #         knowledge_base_id: "KnowledgeBaseId", # required
+    #         model_arn: "BedrockModelArn", # required
+    #         orchestration_configuration: {
+    #           additional_model_request_fields: {
+    #             "AdditionalModelRequestFieldsKey" => {
+    #             },
+    #           },
+    #           inference_config: {
+    #             text_inference_config: {
+    #               max_tokens: 1,
+    #               stop_sequences: ["RAGStopSequencesMemberString"],
+    #               temperature: 1.0,
+    #               top_p: 1.0,
+    #             },
+    #           },
+    #           prompt_template: {
+    #             text_prompt_template: "TextPromptTemplate",
+    #           },
+    #           query_transformation_configuration: {
+    #             type: "QUERY_DECOMPOSITION", # required, accepts QUERY_DECOMPOSITION
+    #           },
+    #         },
+    #         retrieval_configuration: {
+    #           vector_search_configuration: { # required
+    #             filter: {
+    #               and_all: [
+    #                 {
+    #                   # recursive RetrievalFilter
+    #                 },
+    #               ],
+    #               equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               greater_than: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               greater_than_or_equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               in: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               less_than: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               less_than_or_equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               list_contains: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               not_equals: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               not_in: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               or_all: [
+    #                 {
+    #                   # recursive RetrievalFilter
+    #                 },
+    #               ],
+    #               starts_with: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #               string_contains: {
+    #                 key: "FilterKey", # required
+    #                 value: { # required
+    #                 },
+    #               },
+    #             },
+    #             implicit_filter_configuration: {
+    #               metadata_attributes: [ # required
+    #                 {
+    #                   description: "MetadataAttributeSchemaDescriptionString", # required
+    #                   key: "MetadataAttributeSchemaKeyString", # required
+    #                   type: "STRING", # required, accepts STRING, NUMBER, BOOLEAN, STRING_LIST
+    #                 },
+    #               ],
+    #               model_arn: "BedrockModelArn", # required
+    #             },
+    #             number_of_results: 1,
+    #             override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #             reranking_configuration: {
+    #               bedrock_reranking_configuration: {
+    #                 metadata_configuration: {
+    #                   selection_mode: "SELECTIVE", # required, accepts SELECTIVE, ALL
+    #                   selective_mode_configuration: {
+    #                     fields_to_exclude: [
+    #                       {
+    #                         field_name: "FieldForRerankingFieldNameString", # required
+    #                       },
+    #                     ],
+    #                     fields_to_include: [
+    #                       {
+    #                         field_name: "FieldForRerankingFieldNameString", # required
+    #                       },
+    #                     ],
+    #                   },
+    #                 },
+    #                 model_configuration: { # required
+    #                   additional_model_request_fields: {
+    #                     "AdditionalModelRequestFieldsKey" => {
+    #                     },
+    #                   },
+    #                   model_arn: "BedrockRerankingModelArn", # required
+    #                 },
+    #                 number_of_reranked_results: 1,
+    #               },
+    #               type: "BEDROCK_RERANKING_MODEL", # required, accepts BEDROCK_RERANKING_MODEL
+    #             },
+    #           },
+    #         },
+    #       },
+    #       type: "KNOWLEDGE_BASE", # required, accepts KNOWLEDGE_BASE, EXTERNAL_SOURCES
+    #     },
+    #     session_configuration: {
+    #       kms_key_arn: "KmsKeyArn", # required
+    #     },
+    #     session_id: "SessionId",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.session_id #=> String
+    #   All events are available at resp.stream:
+    #   resp.stream #=> Enumerator
+    #   resp.stream.event_types #=> [:access_denied_exception, :bad_gateway_exception, :citation, :conflict_exception, :dependency_failed_exception, :guardrail, :internal_server_exception, :output, :resource_not_found_exception, :service_quota_exceeded_exception, :throttling_exception, :validation_exception]
+    #
+    #   For :access_denied_exception event available at #on_access_denied_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :bad_gateway_exception event available at #on_bad_gateway_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #   event.resource_name #=> String
+    #
+    #   For :citation event available at #on_citation_event callback and response eventstream enumerator:
+    #   event.citation.generated_response_part.text_response_part.span.end #=> Integer
+    #   event.citation.generated_response_part.text_response_part.span.start #=> Integer
+    #   event.citation.generated_response_part.text_response_part.text #=> String
+    #   event.citation.retrieved_references #=> Array
+    #   event.citation.retrieved_references[0].content.text #=> String
+    #   event.citation.retrieved_references[0].location.confluence_location.url #=> String
+    #   event.citation.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.citation.retrieved_references[0].location.s3_location.uri #=> String
+    #   event.citation.retrieved_references[0].location.salesforce_location.url #=> String
+    #   event.citation.retrieved_references[0].location.share_point_location.url #=> String
+    #   event.citation.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.citation.retrieved_references[0].location.web_location.url #=> String
+    #   event.citation.retrieved_references[0].metadata #=> Hash
+    #
+    #   For :conflict_exception event available at #on_conflict_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :dependency_failed_exception event available at #on_dependency_failed_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #   event.resource_name #=> String
+    #
+    #   For :guardrail event available at #on_guardrail_event callback and response eventstream enumerator:
+    #   event.action #=> String, one of "INTERVENED", "NONE"
+    #
+    #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :output event available at #on_output_event callback and response eventstream enumerator:
+    #   event.text #=> String
+    #
+    #   For :resource_not_found_exception event available at #on_resource_not_found_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :service_quota_exceeded_exception event available at #on_service_quota_exceeded_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :throttling_exception event available at #on_throttling_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    #   For :validation_exception event available at #on_validation_exception_event callback and response eventstream enumerator:
+    #   event.message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveAndGenerateStream AWS API Documentation
+    #
+    # @overload retrieve_and_generate_stream(params = {})
+    # @param [Hash] params ({})
+    def retrieve_and_generate_stream(params = {}, options = {}, &block)
+      params = params.dup
+      event_stream_handler = case handler = params.delete(:event_stream_handler)
+        when EventStreams::RetrieveAndGenerateStreamResponseOutput then handler
+        when Proc then EventStreams::RetrieveAndGenerateStreamResponseOutput.new.tap(&handler)
+        when nil then EventStreams::RetrieveAndGenerateStreamResponseOutput.new
+        else
+          msg = "expected :event_stream_handler to be a block or "\
+                "instance of Aws::BedrockAgentRuntime::EventStreams::RetrieveAndGenerateStreamResponseOutput"\
+                ", got `#{handler.inspect}` instead"
+          raise ArgumentError, msg
+        end
+
+      yield(event_stream_handler) if block_given?
+
+      req = build_request(:retrieve_and_generate_stream, params)
+
+      req.context[:event_stream_handler] = event_stream_handler
+      req.handlers.add(Aws::Binary::DecodeHandler, priority: 95)
+
+      req.send_request(options, &block)
     end
 
     # @!endgroup
@@ -2975,7 +3740,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.34.0'
+      context[:gem_version] = '1.35.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

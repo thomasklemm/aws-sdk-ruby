@@ -211,6 +211,16 @@ module Aws
                                ) -> _DeleteIndexPolicyResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteIndexPolicyResponseSuccess
 
+      interface _DeleteIntegrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteIntegrationResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#delete_integration-instance_method
+      def delete_integration: (
+                                integration_name: ::String,
+                                ?force: bool
+                              ) -> _DeleteIntegrationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteIntegrationResponseSuccess
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#delete_log_anomaly_detector-instance_method
       def delete_log_anomaly_detector: (
                                          anomaly_detector_arn: ::String
@@ -449,7 +459,8 @@ module Aws
                               ?log_group_name: ::String,
                               ?status: ("Scheduled" | "Running" | "Complete" | "Failed" | "Cancelled" | "Timeout" | "Unknown"),
                               ?max_results: ::Integer,
-                              ?next_token: ::String
+                              ?next_token: ::String,
+                              ?query_language: ("CWLI" | "SQL" | "PPL")
                             ) -> _DescribeQueriesResponseSuccess
                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeQueriesResponseSuccess
 
@@ -460,6 +471,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#describe_query_definitions-instance_method
       def describe_query_definitions: (
+                                        ?query_language: ("CWLI" | "SQL" | "PPL"),
                                         ?query_definition_name_prefix: ::String,
                                         ?max_results: ::Integer,
                                         ?next_token: ::String
@@ -573,6 +585,19 @@ module Aws
                                ) -> _GetDeliverySourceResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDeliverySourceResponseSuccess
 
+      interface _GetIntegrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetIntegrationResponse]
+        def integration_name: () -> ::String
+        def integration_type: () -> ("OPENSEARCH")
+        def integration_status: () -> ("PROVISIONING" | "ACTIVE" | "FAILED")
+        def integration_details: () -> Types::IntegrationDetails
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#get_integration-instance_method
+      def get_integration: (
+                             integration_name: ::String
+                           ) -> _GetIntegrationResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetIntegrationResponseSuccess
+
       interface _GetLogAnomalyDetectorResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetLogAnomalyDetectorResponse]
         def detector_name: () -> ::String
@@ -636,6 +661,7 @@ module Aws
 
       interface _GetQueryResultsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetQueryResultsResponse]
+        def query_language: () -> ("CWLI" | "SQL" | "PPL")
         def results: () -> ::Array[::Array[Types::ResultField]]
         def statistics: () -> Types::QueryStatistics
         def status: () -> ("Scheduled" | "Running" | "Complete" | "Failed" | "Cancelled" | "Timeout" | "Unknown")
@@ -673,6 +699,18 @@ module Aws
                             ?next_token: ::String
                           ) -> _ListAnomaliesResponseSuccess
                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAnomaliesResponseSuccess
+
+      interface _ListIntegrationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListIntegrationsResponse]
+        def integration_summaries: () -> ::Array[Types::IntegrationSummary]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#list_integrations-instance_method
+      def list_integrations: (
+                               ?integration_name_prefix: ::String,
+                               ?integration_type: ("OPENSEARCH"),
+                               ?integration_status: ("PROVISIONING" | "ACTIVE" | "FAILED")
+                             ) -> _ListIntegrationsResponseSuccess
+                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListIntegrationsResponseSuccess
 
       interface _ListLogAnomalyDetectorsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListLogAnomalyDetectorsResponse]
@@ -818,6 +856,27 @@ module Aws
                             ) -> _PutIndexPolicyResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutIndexPolicyResponseSuccess
 
+      interface _PutIntegrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::PutIntegrationResponse]
+        def integration_name: () -> ::String
+        def integration_status: () -> ("PROVISIONING" | "ACTIVE" | "FAILED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#put_integration-instance_method
+      def put_integration: (
+                             integration_name: ::String,
+                             resource_config: {
+                               open_search_resource_config: {
+                                 kms_key_arn: ::String?,
+                                 data_source_role_arn: ::String,
+                                 dashboard_viewer_principals: Array[::String],
+                                 application_arn: ::String?,
+                                 retention_days: ::Integer
+                               }?
+                             },
+                             integration_type: ("OPENSEARCH")
+                           ) -> _PutIntegrationResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutIntegrationResponseSuccess
+
       interface _PutLogEventsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PutLogEventsResponse]
         def next_sequence_token: () -> ::String
@@ -867,6 +926,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#put_query_definition-instance_method
       def put_query_definition: (
+                                  ?query_language: ("CWLI" | "SQL" | "PPL"),
                                   name: ::String,
                                   ?query_definition_id: ::String,
                                   ?log_group_names: Array[::String],
@@ -1062,6 +1122,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudWatchLogs/Client.html#start_query-instance_method
       def start_query: (
+                         ?query_language: ("CWLI" | "SQL" | "PPL"),
                          ?log_group_name: ::String,
                          ?log_group_names: Array[::String],
                          ?log_group_identifiers: Array[::String],

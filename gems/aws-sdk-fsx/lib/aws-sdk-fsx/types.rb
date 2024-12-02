@@ -652,6 +652,11 @@ module Aws::FSx
     #   Describes an Amazon FSx volume.
     #   @return [Types::Volume]
     #
+    # @!attribute [rw] size_in_bytes
+    #   The size of the backup in bytes. This represents the amount of data
+    #   that the file system would contain if you restore this backup.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/Backup AWS API Documentation
     #
     class Backup < Struct.new(
@@ -670,7 +675,8 @@ module Aws::FSx
       :source_backup_id,
       :source_backup_region,
       :resource_type,
-      :volume)
+      :volume,
+      :size_in_bytes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2394,6 +2400,11 @@ module Aws::FSx
     #   default, Amazon FSx selects your VPC's default route table.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] read_cache_configuration
+    #   Specifies the optional provisioned SSD read cache on file systems
+    #   that use the Intelligent-Tiering storage class.
+    #   @return [Types::OpenZFSReadCacheConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/CreateFileSystemOpenZFSConfiguration AWS API Documentation
     #
     class CreateFileSystemOpenZFSConfiguration < Struct.new(
@@ -2408,7 +2419,8 @@ module Aws::FSx
       :root_volume_configuration,
       :preferred_subnet_id,
       :endpoint_ip_address_range,
-      :route_table_ids)
+      :route_table_ids,
+      :read_cache_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2467,8 +2479,8 @@ module Aws::FSx
     #   @return [Integer]
     #
     # @!attribute [rw] storage_type
-    #   Sets the storage type for the file system that you're creating.
-    #   Valid values are `SSD` and `HDD`.
+    #   Sets the storage class for the file system that you're creating.
+    #   Valid values are `SSD`, `HDD`, and `INTELLIGENT_TIERING`.
     #
     #   * Set to `SSD` to use solid state drive storage. SSD is supported on
     #     all Windows, Lustre, ONTAP, and OpenZFS deployment types.
@@ -2477,14 +2489,22 @@ module Aws::FSx
     #     `SINGLE_AZ_2` and `MULTI_AZ_1` Windows file system deployment
     #     types, and on `PERSISTENT_1` Lustre file system deployment types.
     #
+    #   * Set to `INTELLIGENT_TIERING` to use fully elastic,
+    #     intelligently-tiered storage. Intelligent-Tiering is only
+    #     available for OpenZFS file systems with the Multi-AZ deployment
+    #     type.
+    #
     #   Default value is `SSD`. For more information, see [ Storage type
-    #   options][1] in the *FSx for Windows File Server User Guide* and
-    #   [Multiple storage options][2] in the *FSx for Lustre User Guide*.
+    #   options][1] in the *FSx for Windows File Server User Guide*,
+    #   [Multiple storage options][2] in the *FSx for Lustre User Guide*,
+    #   and [Working with Intelligent-Tiering][3] in the *Amazon FSx for
+    #   OpenZFS User Guide*.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/fsx/latest/WindowsGuide/optimize-fsx-costs.html#storage-type-options
     #   [2]: https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options
+    #   [3]: https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering
     #   @return [String]
     #
     # @!attribute [rw] subnet_ids
@@ -3081,14 +3101,17 @@ module Aws::FSx
     #
     # @!attribute [rw] record_size_ki_b
     #   Specifies the suggested block size for a volume in a ZFS dataset, in
-    #   kibibytes (KiB). Valid values are 4, 8, 16, 32, 64, 128, 256, 512,
-    #   or 1024 KiB. The default is 128 KiB. We recommend using the default
-    #   setting for the majority of use cases. Generally, workloads that
-    #   write in fixed small or large record sizes may benefit from setting
-    #   a custom record size, like database workloads (small record size) or
-    #   media streaming workloads (large record size). For additional
-    #   guidance on when to set a custom record size, see [ ZFS Record
-    #   size][1] in the *Amazon FSx for OpenZFS User Guide*.
+    #   kibibytes (KiB). For file systems using the Intelligent-Tiering
+    #   storage class, valid values are 128, 256, 512, 1024, 2048, or 4096
+    #   KiB, with a default of 2048 KiB. For all other file systems, valid
+    #   values are 4, 8, 16, 32, 64, 128, 256, 512, or 1024 KiB, with a
+    #   default of 128 KiB. We recommend using the default setting for the
+    #   majority of use cases. Generally, workloads that write in fixed
+    #   small or large record sizes may benefit from setting a custom record
+    #   size, like database workloads (small record size) or media streaming
+    #   workloads (large record size). For additional guidance on when to
+    #   set a custom record size, see [ ZFS Record size][1] in the *Amazon
+    #   FSx for OpenZFS User Guide*.
     #
     #
     #
@@ -7424,6 +7447,11 @@ module Aws::FSx
     #   manage the file system.
     #   @return [String]
     #
+    # @!attribute [rw] read_cache_configuration
+    #   Required when `StorageType` is set to `INTELLIGENT_TIERING`.
+    #   Specifies the optional provisioned SSD read cache.
+    #   @return [Types::OpenZFSReadCacheConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/OpenZFSFileSystemConfiguration AWS API Documentation
     #
     class OpenZFSFileSystemConfiguration < Struct.new(
@@ -7439,7 +7467,8 @@ module Aws::FSx
       :preferred_subnet_id,
       :endpoint_ip_address_range,
       :route_table_ids,
-      :endpoint_ip_address)
+      :endpoint_ip_address,
+      :read_cache_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7503,6 +7532,36 @@ module Aws::FSx
     class OpenZFSOriginSnapshotConfiguration < Struct.new(
       :snapshot_arn,
       :copy_strategy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration for the optional provisioned SSD read cache on file
+    # systems that use the Intelligent-Tiering storage class.
+    #
+    # @!attribute [rw] sizing_mode
+    #   Specifies how the provisioned SSD read cache is sized, as follows:
+    #
+    #   * Set to `NO_CACHE` if you do not want to use an SSD read cache with
+    #     your Intelligent-Tiering file system.
+    #
+    #   * Set to `USER_PROVISIONED` to specify the exact size of your SSD
+    #     read cache.
+    #
+    #   * Set to `PROPORTIONAL_TO_THROUGHPUT_CAPACITY` to have your SSD read
+    #     cache automatically sized based on your throughput capacity.
+    #   @return [String]
+    #
+    # @!attribute [rw] size_gi_b
+    #   Required if `SizingMode` is set to `USER_PROVISIONED`. Specifies the
+    #   size of the file system's SSD read cache, in gibibytes (GiB).
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/OpenZFSReadCacheConfiguration AWS API Documentation
+    #
+    class OpenZFSReadCacheConfiguration < Struct.new(
+      :sizing_mode,
+      :size_gi_b)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9370,6 +9429,11 @@ module Aws::FSx
     #   list of VPC route table IDs for a file system.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] read_cache_configuration
+    #   The configuration for the optional provisioned SSD read cache on
+    #   file systems that use the Intelligent-Tiering storage class.
+    #   @return [Types::OpenZFSReadCacheConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/UpdateFileSystemOpenZFSConfiguration AWS API Documentation
     #
     class UpdateFileSystemOpenZFSConfiguration < Struct.new(
@@ -9381,7 +9445,8 @@ module Aws::FSx
       :weekly_maintenance_start_time,
       :disk_iops_configuration,
       :add_route_table_ids,
-      :remove_route_table_ids)
+      :remove_route_table_ids,
+      :read_cache_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

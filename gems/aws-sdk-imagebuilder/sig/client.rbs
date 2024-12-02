@@ -750,6 +750,19 @@ module Aws
                                 ) -> _GetLifecyclePolicyResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetLifecyclePolicyResponseSuccess
 
+      interface _GetMarketplaceResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetMarketplaceResourceResponse]
+        def resource_arn: () -> ::String
+        def url: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Imagebuilder/Client.html#get_marketplace_resource-instance_method
+      def get_marketplace_resource: (
+                                      resource_type: ("COMPONENT_DATA" | "COMPONENT_ARTIFACT"),
+                                      resource_arn: ::String,
+                                      ?resource_location: ::String
+                                    ) -> _GetMarketplaceResourceResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMarketplaceResourceResponseSuccess
+
       interface _GetWorkflowResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetWorkflowResponse]
         def workflow: () -> Types::Workflow
@@ -873,7 +886,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Imagebuilder/Client.html#list_components-instance_method
       def list_components: (
-                             ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty"),
+                             ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace"),
                              ?filters: Array[
                                {
                                  name: ::String?,
@@ -894,7 +907,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Imagebuilder/Client.html#list_container_recipes-instance_method
       def list_container_recipes: (
-                                    ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty"),
+                                    ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace"),
                                     ?filters: Array[
                                       {
                                         name: ::String?,
@@ -1006,7 +1019,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Imagebuilder/Client.html#list_image_recipes-instance_method
       def list_image_recipes: (
-                                ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty"),
+                                ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace"),
                                 ?filters: Array[
                                   {
                                     name: ::String?,
@@ -1062,7 +1075,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Imagebuilder/Client.html#list_images-instance_method
       def list_images: (
-                         ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty"),
+                         ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace"),
                          ?filters: Array[
                            {
                              name: ::String?,
@@ -1218,7 +1231,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Imagebuilder/Client.html#list_workflows-instance_method
       def list_workflows: (
-                            ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty"),
+                            ?owner: ("Self" | "Shared" | "Amazon" | "ThirdParty" | "AWSMarketplace"),
                             ?filters: Array[
                               {
                                 name: ::String?,

@@ -15,6 +15,7 @@ module Aws::Bedrock
 
     class AutomatedEvaluationConfig
       attr_accessor dataset_metric_configs: ::Array[Types::EvaluationDatasetMetricConfig]
+      attr_accessor evaluator_model_config: Types::EvaluatorModelConfig
       SENSITIVE: []
     end
 
@@ -42,6 +43,18 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class BedrockEvaluatorModel
+      attr_accessor model_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class ByteContentDoc
+      attr_accessor identifier: ::String
+      attr_accessor content_type: ::String
+      attr_accessor data: ::String
+      SENSITIVE: [:identifier, :data]
+    end
+
     class CloudWatchConfig
       attr_accessor log_group_name: ::String
       attr_accessor role_arn: ::String
@@ -61,6 +74,7 @@ module Aws::Bedrock
       attr_accessor role_arn: ::String
       attr_accessor customer_encryption_key_id: ::String
       attr_accessor job_tags: ::Array[Types::Tag]
+      attr_accessor application_type: ("ModelEvaluation" | "RagEvaluation")
       attr_accessor evaluation_config: Types::EvaluationConfig
       attr_accessor inference_config: Types::EvaluationInferenceConfig
       attr_accessor output_data_config: Types::EvaluationOutputDataConfig
@@ -316,10 +330,13 @@ module Aws::Bedrock
 
     class EvaluationInferenceConfig
       attr_accessor models: ::Array[Types::EvaluationModelConfig]
+      attr_accessor rag_configs: ::Array[Types::RAGConfig]
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class Models < EvaluationInferenceConfig
+      end
+      class RagConfigs < EvaluationInferenceConfig
       end
       class Unknown < EvaluationInferenceConfig
       end
@@ -349,6 +366,48 @@ module Aws::Bedrock
       attr_accessor job_type: ("Human" | "Automated")
       attr_accessor evaluation_task_types: ::Array[("Summarization" | "Classification" | "QuestionAndAnswer" | "Generation" | "Custom")]
       attr_accessor model_identifiers: ::Array[::String]
+      attr_accessor rag_identifiers: ::Array[::String]
+      attr_accessor evaluator_model_identifiers: ::Array[::String]
+      attr_accessor application_type: ("ModelEvaluation" | "RagEvaluation")
+      SENSITIVE: []
+    end
+
+    class EvaluatorModelConfig
+      attr_accessor bedrock_evaluator_models: ::Array[Types::BedrockEvaluatorModel]
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class BedrockEvaluatorModels < EvaluatorModelConfig
+      end
+      class Unknown < EvaluatorModelConfig
+      end
+    end
+
+    class ExternalSource
+      attr_accessor source_type: ("S3" | "BYTE_CONTENT")
+      attr_accessor s3_location: Types::S3ObjectDoc
+      attr_accessor byte_content: Types::ByteContentDoc
+      SENSITIVE: []
+    end
+
+    class ExternalSourcesGenerationConfiguration
+      attr_accessor prompt_template: Types::PromptTemplate
+      attr_accessor guardrail_configuration: Types::GuardrailConfiguration
+      attr_accessor kb_inference_config: Types::KbInferenceConfig
+      attr_accessor additional_model_request_fields: ::Hash[::String, untyped]
+      SENSITIVE: []
+    end
+
+    class ExternalSourcesRetrieveAndGenerateConfiguration
+      attr_accessor model_arn: ::String
+      attr_accessor sources: ::Array[Types::ExternalSource]
+      attr_accessor generation_configuration: Types::ExternalSourcesGenerationConfiguration
+      SENSITIVE: []
+    end
+
+    class FilterAttribute
+      attr_accessor key: ::String
+      attr_accessor value: untyped
       SENSITIVE: []
     end
 
@@ -382,6 +441,14 @@ module Aws::Bedrock
       attr_accessor customizations_supported: ::Array[("FINE_TUNING" | "CONTINUED_PRE_TRAINING")]
       attr_accessor inference_types_supported: ::Array[("ON_DEMAND" | "PROVISIONED")]
       attr_accessor model_lifecycle: Types::FoundationModelLifecycle
+      SENSITIVE: []
+    end
+
+    class GenerationConfiguration
+      attr_accessor prompt_template: Types::PromptTemplate
+      attr_accessor guardrail_configuration: Types::GuardrailConfiguration
+      attr_accessor kb_inference_config: Types::KbInferenceConfig
+      attr_accessor additional_model_request_fields: ::Hash[::String, untyped]
       SENSITIVE: []
     end
 
@@ -421,6 +488,7 @@ module Aws::Bedrock
       attr_accessor role_arn: ::String
       attr_accessor customer_encryption_key_id: ::String
       attr_accessor job_type: ("Human" | "Automated")
+      attr_accessor application_type: ("ModelEvaluation" | "RagEvaluation")
       attr_accessor evaluation_config: Types::EvaluationConfig
       attr_accessor inference_config: Types::EvaluationInferenceConfig
       attr_accessor output_data_config: Types::EvaluationOutputDataConfig
@@ -627,6 +695,12 @@ module Aws::Bedrock
       attr_accessor failure_message: ::String
       attr_accessor commitment_duration: ("OneMonth" | "SixMonths")
       attr_accessor commitment_expiration_time: ::Time
+      SENSITIVE: []
+    end
+
+    class GuardrailConfiguration
+      attr_accessor guardrail_id: ::String
+      attr_accessor guardrail_version: ::String
       SENSITIVE: []
     end
 
@@ -849,6 +923,46 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class KbInferenceConfig
+      attr_accessor text_inference_config: Types::TextInferenceConfig
+      SENSITIVE: []
+    end
+
+    class KnowledgeBaseConfig
+      attr_accessor retrieve_config: Types::RetrieveConfig
+      attr_accessor retrieve_and_generate_config: Types::RetrieveAndGenerateConfiguration
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class RetrieveConfig < KnowledgeBaseConfig
+      end
+      class RetrieveAndGenerateConfig < KnowledgeBaseConfig
+      end
+      class Unknown < KnowledgeBaseConfig
+      end
+    end
+
+    class KnowledgeBaseRetrievalConfiguration
+      attr_accessor vector_search_configuration: Types::KnowledgeBaseVectorSearchConfiguration
+      SENSITIVE: []
+    end
+
+    class KnowledgeBaseRetrieveAndGenerateConfiguration
+      attr_accessor knowledge_base_id: ::String
+      attr_accessor model_arn: ::String
+      attr_accessor retrieval_configuration: Types::KnowledgeBaseRetrievalConfiguration
+      attr_accessor generation_configuration: Types::GenerationConfiguration
+      attr_accessor orchestration_configuration: Types::OrchestrationConfiguration
+      SENSITIVE: []
+    end
+
+    class KnowledgeBaseVectorSearchConfiguration
+      attr_accessor number_of_results: ::Integer
+      attr_accessor override_search_type: ("HYBRID" | "SEMANTIC")
+      attr_accessor filter: Types::RetrievalFilter
+      SENSITIVE: [:filter]
+    end
+
     class ListCustomModelsRequest
       attr_accessor creation_time_before: ::Time
       attr_accessor creation_time_after: ::Time
@@ -873,6 +987,7 @@ module Aws::Bedrock
       attr_accessor creation_time_after: ::Time
       attr_accessor creation_time_before: ::Time
       attr_accessor status_equals: ("InProgress" | "Completed" | "Failed" | "Stopping" | "Stopped" | "Deleting")
+      attr_accessor application_type_equals: ("ModelEvaluation" | "RagEvaluation")
       attr_accessor name_contains: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -1162,9 +1277,19 @@ module Aws::Bedrock
       SENSITIVE: [:message]
     end
 
+    class OrchestrationConfiguration
+      attr_accessor query_transformation_configuration: Types::QueryTransformationConfiguration
+      SENSITIVE: []
+    end
+
     class OutputDataConfig
       attr_accessor s3_uri: ::String
       SENSITIVE: []
+    end
+
+    class PromptTemplate
+      attr_accessor text_prompt_template: ::String
+      SENSITIVE: [:text_prompt_template]
     end
 
     class ProvisionedModelSummary
@@ -1191,8 +1316,84 @@ module Aws::Bedrock
     class PutModelInvocationLoggingConfigurationResponse < Aws::EmptyStructure
     end
 
+    class QueryTransformationConfiguration
+      attr_accessor type: ("QUERY_DECOMPOSITION")
+      SENSITIVE: []
+    end
+
+    class RAGConfig
+      attr_accessor knowledge_base_config: Types::KnowledgeBaseConfig
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class KnowledgeBaseConfig < RAGConfig
+      end
+      class Unknown < RAGConfig
+      end
+    end
+
     class ResourceNotFoundException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class RetrievalFilter
+      attr_accessor equals: Types::FilterAttribute
+      attr_accessor not_equals: Types::FilterAttribute
+      attr_accessor greater_than: Types::FilterAttribute
+      attr_accessor greater_than_or_equals: Types::FilterAttribute
+      attr_accessor less_than: Types::FilterAttribute
+      attr_accessor less_than_or_equals: Types::FilterAttribute
+      attr_accessor in: Types::FilterAttribute
+      attr_accessor not_in: Types::FilterAttribute
+      attr_accessor starts_with: Types::FilterAttribute
+      attr_accessor list_contains: Types::FilterAttribute
+      attr_accessor string_contains: Types::FilterAttribute
+      attr_accessor and_all: ::Array[Types::RetrievalFilter]
+      attr_accessor or_all: ::Array[Types::RetrievalFilter]
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Equals < RetrievalFilter
+      end
+      class NotEquals < RetrievalFilter
+      end
+      class GreaterThan < RetrievalFilter
+      end
+      class GreaterThanOrEquals < RetrievalFilter
+      end
+      class LessThan < RetrievalFilter
+      end
+      class LessThanOrEquals < RetrievalFilter
+      end
+      class In < RetrievalFilter
+      end
+      class NotIn < RetrievalFilter
+      end
+      class StartsWith < RetrievalFilter
+      end
+      class ListContains < RetrievalFilter
+      end
+      class StringContains < RetrievalFilter
+      end
+      class AndAll < RetrievalFilter
+      end
+      class OrAll < RetrievalFilter
+      end
+      class Unknown < RetrievalFilter
+      end
+    end
+
+    class RetrieveAndGenerateConfiguration
+      attr_accessor type: ("KNOWLEDGE_BASE" | "EXTERNAL_SOURCES")
+      attr_accessor knowledge_base_configuration: Types::KnowledgeBaseRetrieveAndGenerateConfiguration
+      attr_accessor external_sources_configuration: Types::ExternalSourcesRetrieveAndGenerateConfiguration
+      SENSITIVE: []
+    end
+
+    class RetrieveConfig
+      attr_accessor knowledge_base_id: ::String
+      attr_accessor knowledge_base_retrieval_configuration: Types::KnowledgeBaseRetrievalConfiguration
       SENSITIVE: []
     end
 
@@ -1204,6 +1405,11 @@ module Aws::Bedrock
 
     class S3DataSource
       attr_accessor s3_uri: ::String
+      SENSITIVE: []
+    end
+
+    class S3ObjectDoc
+      attr_accessor uri: ::String
       SENSITIVE: []
     end
 
@@ -1249,6 +1455,14 @@ module Aws::Bedrock
     end
 
     class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class TextInferenceConfig
+      attr_accessor temperature: ::Float
+      attr_accessor top_p: ::Float
+      attr_accessor max_tokens: ::Integer
+      attr_accessor stop_sequences: ::Array[::String]
+      SENSITIVE: []
     end
 
     class ThrottlingException

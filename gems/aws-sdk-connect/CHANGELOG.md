@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.188.0 (2024-12-02)
+------------------
+
+* Feature - Adds support for WhatsApp Business messaging, IVR call recording, enabling Contact Lens for existing on-premise contact centers and telephony platforms, and enabling telephony and IVR migration to Amazon Connect independent of their contact center agents.
+
 1.187.0 (2024-11-26)
 ------------------
 

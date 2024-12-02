@@ -577,6 +577,9 @@
   "InternetMonitor": {
     "models": "internetmonitor/2021-06-03"
   },
+  "Invoicing": {
+    "models": "invoicing/2024-12-01"
+  },
   "IoT": {
     "models": "iot/2015-05-28"
   },
@@ -835,6 +838,9 @@
   },
   "NetworkFirewall": {
     "models": "network-firewall/2020-11-12"
+  },
+  "NetworkFlowMonitor": {
+    "models": "networkflowmonitor/2023-04-19"
   },
   "NetworkManager": {
     "models": "networkmanager/2019-07-05"
@@ -1158,6 +1164,9 @@
   },
   "SecurityHub": {
     "models": "securityhub/2018-10-26"
+  },
+  "SecurityIR": {
+    "models": "security-ir/2018-05-10"
   },
   "SecurityLake": {
     "models": "securitylake/2018-05-10"

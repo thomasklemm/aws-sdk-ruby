@@ -1,0 +1,469 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws
+  module NetworkFlowMonitor
+    class Client < ::Seahorse::Client::Base
+      include ::Aws::ClientStubs
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#initialize-instance_method
+      def self.new: (
+                      ?credentials: untyped,
+                      ?region: String,
+                      ?access_key_id: String,
+                      ?account_id: String,
+                      ?active_endpoint_cache: bool,
+                      ?adaptive_retry_wait_to_fill: bool,
+                      ?client_side_monitoring: bool,
+                      ?client_side_monitoring_client_id: String,
+                      ?client_side_monitoring_host: String,
+                      ?client_side_monitoring_port: Integer,
+                      ?client_side_monitoring_publisher: untyped,
+                      ?convert_params: bool,
+                      ?correct_clock_skew: bool,
+                      ?defaults_mode: String,
+                      ?disable_host_prefix_injection: bool,
+                      ?disable_request_compression: bool,
+                      ?endpoint: String,
+                      ?endpoint_cache_max_entries: Integer,
+                      ?endpoint_cache_max_threads: Integer,
+                      ?endpoint_cache_poll_interval: Integer,
+                      ?endpoint_discovery: bool,
+                      ?ignore_configured_endpoint_urls: bool,
+                      ?log_formatter: untyped,
+                      ?log_level: Symbol,
+                      ?logger: untyped,
+                      ?max_attempts: Integer,
+                      ?profile: String,
+                      ?request_min_compression_size_bytes: Integer,
+                      ?retry_backoff: Proc,
+                      ?retry_base_delay: Float,
+                      ?retry_jitter: (:none | :equal | :full | ^(Integer) -> Integer),
+                      ?retry_limit: Integer,
+                      ?retry_max_delay: Integer,
+                      ?retry_mode: ("legacy" | "standard" | "adaptive"),
+                      ?sdk_ua_app_id: String,
+                      ?secret_access_key: String,
+                      ?session_token: String,
+                      ?sigv4a_signing_region_set: Array[String],
+                      ?stub_responses: untyped,
+                      ?telemetry_provider: Aws::Telemetry::TelemetryProviderBase,
+                      ?token_provider: untyped,
+                      ?use_dualstack_endpoint: bool,
+                      ?use_fips_endpoint: bool,
+                      ?validate_params: bool,
+                      ?endpoint_provider: untyped,
+                      ?http_proxy: String,
+                      ?http_open_timeout: (Float | Integer),
+                      ?http_read_timeout: (Float | Integer),
+                      ?http_idle_timeout: (Float | Integer),
+                      ?http_continue_timeout: (Float | Integer),
+                      ?ssl_timeout: (Float | Integer | nil),
+                      ?http_wire_trace: bool,
+                      ?ssl_verify_peer: bool,
+                      ?ssl_ca_bundle: String,
+                      ?ssl_ca_directory: String,
+                      ?ssl_ca_store: String,
+                      ?on_chunk_received: Proc,
+                      ?on_chunk_sent: Proc,
+                      ?raise_response_errors: bool
+                    ) -> instance
+                  | (?Hash[Symbol, untyped]) -> instance
+
+
+      interface _CreateMonitorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateMonitorOutput]
+        def monitor_arn: () -> ::String
+        def monitor_name: () -> ::String
+        def monitor_status: () -> ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+        def local_resources: () -> ::Array[Types::MonitorLocalResource]
+        def remote_resources: () -> ::Array[Types::MonitorRemoteResource]
+        def created_at: () -> ::Time
+        def modified_at: () -> ::Time
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#create_monitor-instance_method
+      def create_monitor: (
+                            monitor_name: ::String,
+                            local_resources: Array[
+                              {
+                                type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet"),
+                                identifier: ::String
+                              },
+                            ],
+                            ?remote_resources: Array[
+                              {
+                                type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet" | "AWS::AWSService"),
+                                identifier: ::String
+                              },
+                            ],
+                            scope_arn: ::String,
+                            ?client_token: ::String,
+                            ?tags: Hash[::String, ::String]
+                          ) -> _CreateMonitorResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMonitorResponseSuccess
+
+      interface _CreateScopeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateScopeOutput]
+        def scope_id: () -> ::String
+        def status: () -> ("SUCCEEDED" | "IN_PROGRESS" | "FAILED")
+        def scope_arn: () -> ::String
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#create_scope-instance_method
+      def create_scope: (
+                          targets: Array[
+                            {
+                              target_identifier: {
+                                target_id: {
+                                  account_id: ::String?
+                                },
+                                target_type: ("ACCOUNT")
+                              },
+                              region: ::String
+                            },
+                          ],
+                          ?client_token: ::String,
+                          ?tags: Hash[::String, ::String]
+                        ) -> _CreateScopeResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateScopeResponseSuccess
+
+      interface _DeleteMonitorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteMonitorOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#delete_monitor-instance_method
+      def delete_monitor: (
+                            monitor_name: ::String
+                          ) -> _DeleteMonitorResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteMonitorResponseSuccess
+
+      interface _DeleteScopeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteScopeOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#delete_scope-instance_method
+      def delete_scope: (
+                          scope_id: ::String
+                        ) -> _DeleteScopeResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteScopeResponseSuccess
+
+      interface _GetMonitorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetMonitorOutput]
+        def monitor_arn: () -> ::String
+        def monitor_name: () -> ::String
+        def monitor_status: () -> ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+        def local_resources: () -> ::Array[Types::MonitorLocalResource]
+        def remote_resources: () -> ::Array[Types::MonitorRemoteResource]
+        def created_at: () -> ::Time
+        def modified_at: () -> ::Time
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_monitor-instance_method
+      def get_monitor: (
+                         monitor_name: ::String
+                       ) -> _GetMonitorResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMonitorResponseSuccess
+
+      interface _GetQueryResultsMonitorTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetQueryResultsMonitorTopContributorsOutput]
+        def unit: () -> ("Seconds" | "Microseconds" | "Milliseconds" | "Bytes" | "Kilobytes" | "Megabytes" | "Gigabytes" | "Terabytes" | "Bits" | "Kilobits" | "Megabits" | "Gigabits" | "Terabits" | "Percent" | "Count" | "Bytes/Second" | "Kilobytes/Second" | "Megabytes/Second" | "Gigabytes/Second" | "Terabytes/Second" | "Bits/Second" | "Kilobits/Second" | "Megabits/Second" | "Gigabits/Second" | "Terabits/Second" | "Count/Second" | "None")
+        def top_contributors: () -> ::Array[Types::MonitorTopContributorsRow]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_query_results_monitor_top_contributors-instance_method
+      def get_query_results_monitor_top_contributors: (
+                                                        monitor_name: ::String,
+                                                        query_id: ::String,
+                                                        ?next_token: ::String,
+                                                        ?max_results: ::Integer
+                                                      ) -> _GetQueryResultsMonitorTopContributorsResponseSuccess
+                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryResultsMonitorTopContributorsResponseSuccess
+
+      interface _GetQueryResultsWorkloadInsightsTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetQueryResultsWorkloadInsightsTopContributorsOutput]
+        def top_contributors: () -> ::Array[Types::WorkloadInsightsTopContributorsRow]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_query_results_workload_insights_top_contributors-instance_method
+      def get_query_results_workload_insights_top_contributors: (
+                                                                  scope_id: ::String,
+                                                                  query_id: ::String,
+                                                                  ?next_token: ::String,
+                                                                  ?max_results: ::Integer
+                                                                ) -> _GetQueryResultsWorkloadInsightsTopContributorsResponseSuccess
+                                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryResultsWorkloadInsightsTopContributorsResponseSuccess
+
+      interface _GetQueryResultsWorkloadInsightsTopContributorsDataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetQueryResultsWorkloadInsightsTopContributorsDataOutput]
+        def unit: () -> ("Seconds" | "Microseconds" | "Milliseconds" | "Bytes" | "Kilobytes" | "Megabytes" | "Gigabytes" | "Terabytes" | "Bits" | "Kilobits" | "Megabits" | "Gigabits" | "Terabits" | "Percent" | "Count" | "Bytes/Second" | "Kilobytes/Second" | "Megabytes/Second" | "Gigabytes/Second" | "Terabytes/Second" | "Bits/Second" | "Kilobits/Second" | "Megabits/Second" | "Gigabits/Second" | "Terabits/Second" | "Count/Second" | "None")
+        def datapoints: () -> ::Array[Types::WorkloadInsightsTopContributorsDataPoint]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_query_results_workload_insights_top_contributors_data-instance_method
+      def get_query_results_workload_insights_top_contributors_data: (
+                                                                       scope_id: ::String,
+                                                                       query_id: ::String,
+                                                                       ?next_token: ::String,
+                                                                       ?max_results: ::Integer
+                                                                     ) -> _GetQueryResultsWorkloadInsightsTopContributorsDataResponseSuccess
+                                                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryResultsWorkloadInsightsTopContributorsDataResponseSuccess
+
+      interface _GetQueryStatusMonitorTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetQueryStatusMonitorTopContributorsOutput]
+        def status: () -> ("QUEUED" | "RUNNING" | "SUCCEEDED" | "FAILED" | "CANCELED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_query_status_monitor_top_contributors-instance_method
+      def get_query_status_monitor_top_contributors: (
+                                                       monitor_name: ::String,
+                                                       query_id: ::String
+                                                     ) -> _GetQueryStatusMonitorTopContributorsResponseSuccess
+                                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryStatusMonitorTopContributorsResponseSuccess
+
+      interface _GetQueryStatusWorkloadInsightsTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetQueryStatusWorkloadInsightsTopContributorsOutput]
+        def status: () -> ("QUEUED" | "RUNNING" | "SUCCEEDED" | "FAILED" | "CANCELED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_query_status_workload_insights_top_contributors-instance_method
+      def get_query_status_workload_insights_top_contributors: (
+                                                                 scope_id: ::String,
+                                                                 query_id: ::String
+                                                               ) -> _GetQueryStatusWorkloadInsightsTopContributorsResponseSuccess
+                                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryStatusWorkloadInsightsTopContributorsResponseSuccess
+
+      interface _GetQueryStatusWorkloadInsightsTopContributorsDataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetQueryStatusWorkloadInsightsTopContributorsDataOutput]
+        def status: () -> ("QUEUED" | "RUNNING" | "SUCCEEDED" | "FAILED" | "CANCELED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_query_status_workload_insights_top_contributors_data-instance_method
+      def get_query_status_workload_insights_top_contributors_data: (
+                                                                      scope_id: ::String,
+                                                                      query_id: ::String
+                                                                    ) -> _GetQueryStatusWorkloadInsightsTopContributorsDataResponseSuccess
+                                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetQueryStatusWorkloadInsightsTopContributorsDataResponseSuccess
+
+      interface _GetScopeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetScopeOutput]
+        def scope_id: () -> ::String
+        def status: () -> ("SUCCEEDED" | "IN_PROGRESS" | "FAILED")
+        def scope_arn: () -> ::String
+        def targets: () -> ::Array[Types::TargetResource]
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#get_scope-instance_method
+      def get_scope: (
+                       scope_id: ::String
+                     ) -> _GetScopeResponseSuccess
+                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetScopeResponseSuccess
+
+      interface _ListMonitorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListMonitorsOutput]
+        def monitors: () -> ::Array[Types::MonitorSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#list_monitors-instance_method
+      def list_monitors: (
+                           ?next_token: ::String,
+                           ?max_results: ::Integer,
+                           ?monitor_status: ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+                         ) -> _ListMonitorsResponseSuccess
+                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMonitorsResponseSuccess
+
+      interface _ListScopesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListScopesOutput]
+        def scopes: () -> ::Array[Types::ScopeSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#list_scopes-instance_method
+      def list_scopes: (
+                         ?next_token: ::String,
+                         ?max_results: ::Integer
+                       ) -> _ListScopesResponseSuccess
+                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListScopesResponseSuccess
+
+      interface _ListTagsForResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceOutput]
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#list_tags_for_resource-instance_method
+      def list_tags_for_resource: (
+                                    resource_arn: ::String
+                                  ) -> _ListTagsForResourceResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _StartQueryMonitorTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartQueryMonitorTopContributorsOutput]
+        def query_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#start_query_monitor_top_contributors-instance_method
+      def start_query_monitor_top_contributors: (
+                                                  monitor_name: ::String,
+                                                  start_time: ::Time,
+                                                  end_time: ::Time,
+                                                  metric_name: ("ROUND_TRIP_TIME" | "TIMEOUTS" | "RETRANSMISSIONS" | "DATA_TRANSFERRED"),
+                                                  destination_category: ("INTRA_AZ" | "INTER_AZ" | "INTER_VPC" | "UNCLASSIFIED" | "AMAZON_S3" | "AMAZON_DYNAMODB"),
+                                                  ?limit: ::Integer
+                                                ) -> _StartQueryMonitorTopContributorsResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartQueryMonitorTopContributorsResponseSuccess
+
+      interface _StartQueryWorkloadInsightsTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartQueryWorkloadInsightsTopContributorsOutput]
+        def query_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#start_query_workload_insights_top_contributors-instance_method
+      def start_query_workload_insights_top_contributors: (
+                                                            scope_id: ::String,
+                                                            start_time: ::Time,
+                                                            end_time: ::Time,
+                                                            metric_name: ("TIMEOUTS" | "RETRANSMISSIONS" | "DATA_TRANSFERRED"),
+                                                            destination_category: ("INTRA_AZ" | "INTER_AZ" | "INTER_VPC" | "UNCLASSIFIED" | "AMAZON_S3" | "AMAZON_DYNAMODB"),
+                                                            ?limit: ::Integer
+                                                          ) -> _StartQueryWorkloadInsightsTopContributorsResponseSuccess
+                                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartQueryWorkloadInsightsTopContributorsResponseSuccess
+
+      interface _StartQueryWorkloadInsightsTopContributorsDataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StartQueryWorkloadInsightsTopContributorsDataOutput]
+        def query_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#start_query_workload_insights_top_contributors_data-instance_method
+      def start_query_workload_insights_top_contributors_data: (
+                                                                 scope_id: ::String,
+                                                                 start_time: ::Time,
+                                                                 end_time: ::Time,
+                                                                 metric_name: ("TIMEOUTS" | "RETRANSMISSIONS" | "DATA_TRANSFERRED"),
+                                                                 destination_category: ("INTRA_AZ" | "INTER_AZ" | "INTER_VPC" | "UNCLASSIFIED" | "AMAZON_S3" | "AMAZON_DYNAMODB")
+                                                               ) -> _StartQueryWorkloadInsightsTopContributorsDataResponseSuccess
+                                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StartQueryWorkloadInsightsTopContributorsDataResponseSuccess
+
+      interface _StopQueryMonitorTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StopQueryMonitorTopContributorsOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#stop_query_monitor_top_contributors-instance_method
+      def stop_query_monitor_top_contributors: (
+                                                 monitor_name: ::String,
+                                                 query_id: ::String
+                                               ) -> _StopQueryMonitorTopContributorsResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopQueryMonitorTopContributorsResponseSuccess
+
+      interface _StopQueryWorkloadInsightsTopContributorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StopQueryWorkloadInsightsTopContributorsOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#stop_query_workload_insights_top_contributors-instance_method
+      def stop_query_workload_insights_top_contributors: (
+                                                           scope_id: ::String,
+                                                           query_id: ::String
+                                                         ) -> _StopQueryWorkloadInsightsTopContributorsResponseSuccess
+                                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopQueryWorkloadInsightsTopContributorsResponseSuccess
+
+      interface _StopQueryWorkloadInsightsTopContributorsDataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::StopQueryWorkloadInsightsTopContributorsDataOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#stop_query_workload_insights_top_contributors_data-instance_method
+      def stop_query_workload_insights_top_contributors_data: (
+                                                                scope_id: ::String,
+                                                                query_id: ::String
+                                                              ) -> _StopQueryWorkloadInsightsTopContributorsDataResponseSuccess
+                                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _StopQueryWorkloadInsightsTopContributorsDataResponseSuccess
+
+      interface _TagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#tag_resource-instance_method
+      def tag_resource: (
+                          resource_arn: ::String,
+                          tags: Hash[::String, ::String]
+                        ) -> _TagResourceResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
+
+      interface _UntagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#untag_resource-instance_method
+      def untag_resource: (
+                            resource_arn: ::String,
+                            tag_keys: Array[::String]
+                          ) -> _UntagResourceResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateMonitorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateMonitorOutput]
+        def monitor_arn: () -> ::String
+        def monitor_name: () -> ::String
+        def monitor_status: () -> ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+        def local_resources: () -> ::Array[Types::MonitorLocalResource]
+        def remote_resources: () -> ::Array[Types::MonitorRemoteResource]
+        def created_at: () -> ::Time
+        def modified_at: () -> ::Time
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#update_monitor-instance_method
+      def update_monitor: (
+                            monitor_name: ::String,
+                            ?local_resources_to_add: Array[
+                              {
+                                type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet"),
+                                identifier: ::String
+                              },
+                            ],
+                            ?local_resources_to_remove: Array[
+                              {
+                                type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet"),
+                                identifier: ::String
+                              },
+                            ],
+                            ?remote_resources_to_add: Array[
+                              {
+                                type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet" | "AWS::AWSService"),
+                                identifier: ::String
+                              },
+                            ],
+                            ?remote_resources_to_remove: Array[
+                              {
+                                type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet" | "AWS::AWSService"),
+                                identifier: ::String
+                              },
+                            ],
+                            ?client_token: ::String
+                          ) -> _UpdateMonitorResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateMonitorResponseSuccess
+
+      interface _UpdateScopeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateScopeOutput]
+        def scope_id: () -> ::String
+        def status: () -> ("SUCCEEDED" | "IN_PROGRESS" | "FAILED")
+        def scope_arn: () -> ::String
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/NetworkFlowMonitor/Client.html#update_scope-instance_method
+      def update_scope: (
+                          scope_id: ::String,
+                          ?resources_to_add: Array[
+                            {
+                              target_identifier: {
+                                target_id: {
+                                  account_id: ::String?
+                                },
+                                target_type: ("ACCOUNT")
+                              },
+                              region: ::String
+                            },
+                          ],
+                          ?resources_to_delete: Array[
+                            {
+                              target_identifier: {
+                                target_id: {
+                                  account_id: ::String?
+                                },
+                                target_type: ("ACCOUNT")
+                              },
+                              region: ::String
+                            },
+                          ]
+                        ) -> _UpdateScopeResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateScopeResponseSuccess
+    end
+  end
+end
+

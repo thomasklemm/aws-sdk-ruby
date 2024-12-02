@@ -324,8 +324,7 @@ module Aws::Imagebuilder
     #   @return [Array<String>]
     #
     # @!attribute [rw] state
-    #   Describes the current status of the component. This is used for
-    #   components that are no longer active.
+    #   Describes the current status of the component.
     #   @return [Types::ComponentState]
     #
     # @!attribute [rw] parameters
@@ -368,6 +367,11 @@ module Aws::Imagebuilder
     #   operations.
     #   @return [Boolean]
     #
+    # @!attribute [rw] product_codes
+    #   Contains product codes that are used for billing purposes for Amazon
+    #   Web Services Marketplace components.
+    #   @return [Array<Types::ProductCodeListItem>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/Component AWS API Documentation
     #
     class Component < Struct.new(
@@ -388,7 +392,8 @@ module Aws::Imagebuilder
       :date_created,
       :tags,
       :publisher,
-      :obfuscate)
+      :obfuscate,
+      :product_codes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -647,6 +652,15 @@ module Aws::Imagebuilder
     #   The date that the component was created.
     #   @return [String]
     #
+    # @!attribute [rw] status
+    #   Describes the current status of the component version.
+    #   @return [String]
+    #
+    # @!attribute [rw] product_codes
+    #   Contains product codes that are used for billing purposes for Amazon
+    #   Web Services Marketplace components.
+    #   @return [Array<Types::ProductCodeListItem>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/ComponentVersion AWS API Documentation
     #
     class ComponentVersion < Struct.new(
@@ -658,7 +672,9 @@ module Aws::Imagebuilder
       :supported_os_versions,
       :type,
       :owner,
-      :date_created)
+      :date_created,
+      :status,
+      :product_codes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2991,6 +3007,55 @@ module Aws::Imagebuilder
       include Aws::Structure
     end
 
+    # @!attribute [rw] resource_type
+    #   Specifies which type of Amazon Web Services Marketplace resource
+    #   Image Builder retrieves.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies an Amazon
+    #   Web Services Marketplace resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_location
+    #   The bucket path that you can specify to download the resource from
+    #   Amazon S3.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/GetMarketplaceResourceRequest AWS API Documentation
+    #
+    class GetMarketplaceResourceRequest < Struct.new(
+      :resource_type,
+      :resource_arn,
+      :resource_location)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The Amazon Resource Name (ARN) for the Amazon Web Services
+    #   Marketplace resource that was requested.
+    #   @return [String]
+    #
+    # @!attribute [rw] url
+    #   The obfuscated S3 URL to download the component artifact from.
+    #   @return [String]
+    #
+    # @!attribute [rw] data
+    #   Returns obfuscated data that contains the YAML content of the
+    #   component.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/GetMarketplaceResourceResponse AWS API Documentation
+    #
+    class GetMarketplaceResourceResponse < Struct.new(
+      :resource_arn,
+      :url,
+      :data)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] workflow_execution_id
     #   Use the unique identifier for a runtime instance of the workflow to
     #   get runtime details.
@@ -3479,15 +3544,16 @@ module Aws::Imagebuilder
       include Aws::Structure
     end
 
-    # Represents a package installed on an Image Builder image.
+    # A software package that's installed on top of the base image to
+    # create a customized image.
     #
     # @!attribute [rw] package_name
-    #   The name of the package as reported to the operating system package
-    #   manager.
+    #   The name of the package that's reported to the operating system
+    #   package manager.
     #   @return [String]
     #
     # @!attribute [rw] package_version
-    #   The version of the package as reported to the operating system
+    #   The version of the package that's reported to the operating system
     #   package manager.
     #   @return [String]
     #
@@ -4085,7 +4151,7 @@ module Aws::Imagebuilder
     # @!attribute [rw] timeout_minutes
     #   The maximum time in minutes that tests are permitted to run.
     #
-    #   <note markdown="1"> The timeoutMinutes attribute is not currently active. This value is
+    #   <note markdown="1"> The timeout attribute is not currently active. This value is
     #   ignored.
     #
     #    </note>
@@ -6863,6 +6929,29 @@ module Aws::Imagebuilder
       include Aws::Structure
     end
 
+    # Information about a single product code.
+    #
+    # @!attribute [rw] product_code_id
+    #   For Amazon Web Services Marketplace components, this contains the
+    #   product code ID that can be stamped onto an EC2 AMI to ensure that
+    #   components are billed correctly. If this property is empty, it might
+    #   mean that the component is not published.
+    #   @return [String]
+    #
+    # @!attribute [rw] product_code_type
+    #   The owner of the product code that's billed. If this property is
+    #   empty, it might mean that the component is not published.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/ProductCodeListItem AWS API Documentation
+    #
+    class ProductCodeListItem < Struct.new(
+      :product_code_id,
+      :product_code_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] component_arn
     #   The Amazon Resource Name (ARN) of the component that this policy
     #   should be applied to.
@@ -7586,6 +7675,7 @@ module Aws::Imagebuilder
     # @!attribute [rw] repository_name
     #   The name of the container repository where the output container
     #   image is stored. This name is prefixed by the repository location.
+    #   For example, `<repository location url>/repository_name`.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/TargetContainerRepository AWS API Documentation

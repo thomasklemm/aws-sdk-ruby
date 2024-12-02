@@ -434,21 +434,91 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
-    # A file directly uploaded into a web experience chat.
+    # An attachment in an Amazon Q Business conversation.
+    #
+    # @!attribute [rw] attachment_id
+    #   The identifier of the Amazon Q Business attachment.
+    #   @return [String]
+    #
+    # @!attribute [rw] conversation_id
+    #   The identifier of the Amazon Q Business conversation the attachment
+    #   is associated with.
+    #   @return [String]
     #
     # @!attribute [rw] name
-    #   The name of the file.
+    #   Filename of the Amazon Q Business attachment.
     #   @return [String]
     #
-    # @!attribute [rw] data
-    #   The data contained within the uploaded file.
+    # @!attribute [rw] copy_from
+    #   A CopyFromSource containing a reference to the original source of
+    #   the Amazon Q Business attachment.
+    #   @return [Types::CopyFromSource]
+    #
+    # @!attribute [rw] file_type
+    #   Filetype of the Amazon Q Business attachment.
     #   @return [String]
+    #
+    # @!attribute [rw] file_size
+    #   Size in bytes of the Amazon Q Business attachment.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] md5chksum
+    #   MD5 checksum of the Amazon Q Business attachment contents.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The Unix timestamp when the Amazon Q Business attachment was
+    #   created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   AttachmentStatus of the Amazon Q Business attachment.
+    #   @return [String]
+    #
+    # @!attribute [rw] error
+    #   ErrorDetail providing information about a Amazon Q Business
+    #   attachment error.
+    #   @return [Types::ErrorDetail]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/Attachment AWS API Documentation
+    #
+    class Attachment < Struct.new(
+      :attachment_id,
+      :conversation_id,
+      :name,
+      :copy_from,
+      :file_type,
+      :file_size,
+      :md5chksum,
+      :created_at,
+      :status,
+      :error)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This is either a file directly uploaded into a web experience chat or
+    # a reference to an existing attachment that is part of a web experience
+    # chat.
+    #
+    # @!attribute [rw] data
+    #   The contents of the attachment.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The filename of the attachment.
+    #   @return [String]
+    #
+    # @!attribute [rw] copy_from
+    #   A reference to an existing attachment.
+    #   @return [Types::CopyFromSource]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AttachmentInput AWS API Documentation
     #
     class AttachmentInput < Struct.new(
+      :data,
       :name,
-      :data)
+      :copy_from)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -457,7 +527,9 @@ module Aws::QBusiness
     # into their web experience chat.
     #
     # @!attribute [rw] attachment
-    #   A file directly uploaded into a web experience chat.
+    #   This is either a file directly uploaded into a web experience chat
+    #   or a reference to an existing attachment that is part of a web
+    #   experience chat.
     #   @return [Types::AttachmentInput]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AttachmentInputEvent AWS API Documentation
@@ -483,12 +555,22 @@ module Aws::QBusiness
     #   An error associated with a file uploaded during chat.
     #   @return [Types::ErrorDetail]
     #
+    # @!attribute [rw] attachment_id
+    #   The unique identifier of the Amazon Q Business attachment.
+    #   @return [String]
+    #
+    # @!attribute [rw] conversation_id
+    #   The unique identifier of the Amazon Q Business conversation.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AttachmentOutput AWS API Documentation
     #
     class AttachmentOutput < Struct.new(
       :name,
       :status,
-      :error)
+      :error,
+      :attachment_id,
+      :conversation_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -870,6 +952,30 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # The container for browser extension configuration for an Amazon Q
+    # Business web experience.
+    #
+    # @!attribute [rw] enabled_browser_extensions
+    #   Specify the browser extensions allowed for your Amazon Q web
+    #   experience.
+    #
+    #   * `CHROME` — Enables the extension for Chromium-based browsers
+    #     (Google Chrome, Microsoft Edge, Opera, etc.).
+    #
+    #   * `FIREFOX` — Enables the extension for Mozilla Firefox.
+    #
+    #   * `CHROME` and `FIREFOX` — Enable the extension for Chromium-based
+    #     browsers and Mozilla Firefox.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/BrowserExtensionConfiguration AWS API Documentation
+    #
+    class BrowserExtensionConfiguration < Struct.new(
+      :enabled_browser_extensions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] application_id
     #   The identifier of the Amazon Q Business application linked to a
     #   streaming Amazon Q Business conversation.
@@ -1006,22 +1112,34 @@ module Aws::QBusiness
     #   @return [Types::AttributeFilter]
     #
     # @!attribute [rw] chat_mode
-    #   The chat modes available to an Amazon Q Business end user.
+    #   The `chatMode` parameter determines the chat modes available to
+    #   Amazon Q Business users:
     #
-    #   * `RETRIEVAL_MODE` - The default chat mode for an Amazon Q Business
-    #     application. When this mode is enabled, Amazon Q Business
-    #     generates responses only from data sources connected to an Amazon
-    #     Q Business application.
+    #   * `RETRIEVAL_MODE` - If you choose this mode, Amazon Q generates
+    #     responses solely from the data sources connected and indexed by
+    #     the application. If an answer is not found in the data sources or
+    #     there are no data sources available, Amazon Q will respond with a
+    #     "*No Answer Found*" message, unless LLM knowledge has been
+    #     enabled. In that case, Amazon Q will generate a response from the
+    #     LLM knowledge
     #
-    #   * `CREATOR_MODE` - By selecting this mode, users can choose to
-    #     generate responses only from the LLM knowledge, without consulting
-    #     connected data sources, for a chat request.
+    #   * `CREATOR_MODE` - By selecting this mode, you can choose to
+    #     generate responses only from the LLM knowledge. You can also
+    #     attach files and have Amazon Q generate a response based on the
+    #     data in those files. If the attached files do not contain an
+    #     answer for the query, Amazon Q will automatically fall back to
+    #     generating a response from the LLM knowledge.
     #
     #   * `PLUGIN_MODE` - By selecting this mode, users can choose to use
-    #     plugins in chat.
+    #     plugins in chat to get their responses.
+    #
+    #   <note markdown="1"> If none of the modes are selected, Amazon Q will only respond using
+    #   the information from the attached files.
+    #
+    #    </note>
     #
     #   For more information, see [Admin controls and guardrails][1],
-    #   [Plugins][2], and [Conversation settings][3].
+    #   [Plugins][2], and [Response sources][3].
     #
     #
     #
@@ -1170,7 +1288,7 @@ module Aws::QBusiness
     end
 
     # You are trying to perform an action that conflicts with the current
-    # status of your resource. Fix any inconsistences with your resources
+    # status of your resource. Fix any inconsistencies with your resources
     # and try again.
     #
     # @!attribute [rw] message
@@ -1251,6 +1369,49 @@ module Aws::QBusiness
       :start_time)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # The source reference for an existing attachment in an existing
+    # conversation.
+    #
+    # @!attribute [rw] conversation_id
+    #   The unique identifier of the Amazon Q Business conversation.
+    #   @return [String]
+    #
+    # @!attribute [rw] attachment_id
+    #   The unique identifier of the Amazon Q Business attachment.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ConversationSource AWS API Documentation
+    #
+    class ConversationSource < Struct.new(
+      :conversation_id,
+      :attachment_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The source reference for an existing attachment.
+    #
+    # @note CopyFromSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note CopyFromSource is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of CopyFromSource corresponding to the set member.
+    #
+    # @!attribute [rw] conversation
+    #   A reference to an attachment in an existing conversation.
+    #   @return [Types::ConversationSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CopyFromSource AWS API Documentation
+    #
+    class CopyFromSource < Struct.new(
+      :conversation,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Conversation < CopyFromSource; end
+      class Unknown < CopyFromSource; end
     end
 
     # @!attribute [rw] display_name
@@ -1470,6 +1631,11 @@ module Aws::QBusiness
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/business-use-dg/custom-document-enrichment.html
     #   @return [Types::DocumentEnrichmentConfiguration]
     #
+    # @!attribute [rw] media_extraction_configuration
+    #   The configuration for extracting information from media in documents
+    #   during ingestion.
+    #   @return [Types::MediaExtractionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateDataSourceRequest AWS API Documentation
     #
     class CreateDataSourceRequest < Struct.new(
@@ -1483,7 +1649,8 @@ module Aws::QBusiness
       :sync_schedule,
       :role_arn,
       :client_token,
-      :document_enrichment_configuration)
+      :document_enrichment_configuration,
+      :media_extraction_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1514,6 +1681,10 @@ module Aws::QBusiness
     #   A name for the Amazon Q Business index.
     #   @return [String]
     #
+    # @!attribute [rw] description
+    #   A description for the Amazon Q Business index.
+    #   @return [String]
+    #
     # @!attribute [rw] type
     #   The index type that's suitable for your needs. For more information
     #   on what's included in each type of index, see [Amazon Q Business
@@ -1522,10 +1693,6 @@ module Aws::QBusiness
     #
     #
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#index-tiers
-    #   @return [String]
-    #
-    # @!attribute [rw] description
-    #   A description for the Amazon Q Business index.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -1554,8 +1721,8 @@ module Aws::QBusiness
     class CreateIndexRequest < Struct.new(
       :application_id,
       :display_name,
-      :type,
       :description,
+      :type,
       :tags,
       :capacity_configuration,
       :client_token)
@@ -1828,6 +1995,23 @@ module Aws::QBusiness
     #   end users of an Amazon Q Business web experience.
     #   @return [Types::IdentityProviderConfiguration]
     #
+    # @!attribute [rw] browser_extension_configuration
+    #   The browser extension configuration for an Amazon Q Business web
+    #   experience.
+    #
+    #   <note markdown="1"> For Amazon Q Business application using external OIDC-compliant
+    #   identity providers (IdPs). The IdP administrator must add the
+    #   browser extension sign-in redirect URLs to the IdP application. For
+    #   more information, see [Configure external OIDC identity provider for
+    #   your browser extensions.][1].
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
+    #   @return [Types::BrowserExtensionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateWebExperienceRequest AWS API Documentation
     #
     class CreateWebExperienceRequest < Struct.new(
@@ -1840,7 +2024,8 @@ module Aws::QBusiness
       :role_arn,
       :tags,
       :client_token,
-      :identity_provider_configuration)
+      :identity_provider_configuration,
+      :browser_extension_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2389,6 +2574,11 @@ module Aws::QBusiness
     #   content during the document ingestion process.
     #   @return [Types::DocumentEnrichmentConfiguration]
     #
+    # @!attribute [rw] media_extraction_configuration
+    #   The configuration for extracting information from media in the
+    #   document.
+    #   @return [Types::MediaExtractionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/Document AWS API Documentation
     #
     class Document < Struct.new(
@@ -2398,7 +2588,8 @@ module Aws::QBusiness
       :content_type,
       :title,
       :access_configuration,
-      :document_enrichment_configuration)
+      :document_enrichment_configuration,
+      :media_extraction_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2859,14 +3050,14 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
-    # Provides information about a data source sync error.
+    # Provides information about a Amazon Q Business request error.
     #
     # @!attribute [rw] error_message
-    #   The message explaining the data source sync error.
+    #   The message explaining the Amazon Q Business request error.
     #   @return [String]
     #
     # @!attribute [rw] error_code
-    #   The code associated with the data source sync error.
+    #   The code associated with the Amazon Q Business request error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ErrorDetail AWS API Documentation
@@ -2874,6 +3065,21 @@ module Aws::QBusiness
     class ErrorDetail < Struct.new(
       :error_message,
       :error_code)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An external resource that you configured with your application is
+    # returning errors and preventing this operation from succeeding. Fix
+    # those errors and try again.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ExternalResourceException AWS API Documentation
+    #
+    class ExternalResourceException < Struct.new(
+      :message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3233,6 +3439,11 @@ module Aws::QBusiness
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/business-use-dg/custom-document-enrichment.html
     #   @return [Types::DocumentEnrichmentConfiguration]
     #
+    # @!attribute [rw] media_extraction_configuration
+    #   The configuration for extracting information from media in documents
+    #   for the data source.
+    #   @return [Types::MediaExtractionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetDataSourceResponse AWS API Documentation
     #
     class GetDataSourceResponse < Struct.new(
@@ -3251,7 +3462,8 @@ module Aws::QBusiness
       :sync_schedule,
       :role_arn,
       :error,
-      :document_enrichment_configuration)
+      :document_enrichment_configuration,
+      :media_extraction_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3332,10 +3544,6 @@ module Aws::QBusiness
     #   The name of the Amazon Q Business index.
     #   @return [String]
     #
-    # @!attribute [rw] type
-    #   The type of index attached to your Amazon Q Business application.
-    #   @return [String]
-    #
     # @!attribute [rw] index_arn
     #   The Amazon Resource Name (ARN) of the Amazon Q Business index.
     #   @return [String]
@@ -3344,6 +3552,10 @@ module Aws::QBusiness
     #   The current status of the index. When the value is `ACTIVE`, the
     #   index is ready for use. If the `Status` field value is `FAILED`, the
     #   `ErrorMessage` field contains a message that explains why.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of index attached to your Amazon Q Business application.
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -3389,9 +3601,9 @@ module Aws::QBusiness
       :application_id,
       :index_id,
       :display_name,
-      :type,
       :index_arn,
       :status,
+      :type,
       :description,
       :created_at,
       :updated_at,
@@ -3399,6 +3611,53 @@ module Aws::QBusiness
       :document_attribute_configurations,
       :error,
       :index_statistics)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The identifier of the Amazon Q Business which contains the media
+    #   object.
+    #   @return [String]
+    #
+    # @!attribute [rw] conversation_id
+    #   The identifier of the Amazon Q Business conversation.
+    #   @return [String]
+    #
+    # @!attribute [rw] message_id
+    #   The identifier of the Amazon Q Business message.
+    #   @return [String]
+    #
+    # @!attribute [rw] media_id
+    #   The identifier of the media object. You can find this in the
+    #   `sourceAttributions` returned by the `Chat`, `ChatSync`, and
+    #   `ListMessages` API responses.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetMediaRequest AWS API Documentation
+    #
+    class GetMediaRequest < Struct.new(
+      :application_id,
+      :conversation_id,
+      :message_id,
+      :media_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] media_bytes
+    #   The base64-encoded bytes of the media object.
+    #   @return [String]
+    #
+    # @!attribute [rw] media_mime_type
+    #   The MIME type of the media object (image/png).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetMediaResponse AWS API Documentation
+    #
+    class GetMediaResponse < Struct.new(
+      :media_bytes,
+      :media_mime_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3697,6 +3956,11 @@ module Aws::QBusiness
     #   connector to fail.
     #   @return [Types::ErrorDetail]
     #
+    # @!attribute [rw] browser_extension_configuration
+    #   The browser extension configuration for an Amazon Q Business web
+    #   experience.
+    #   @return [Types::BrowserExtensionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetWebExperienceResponse AWS API Documentation
     #
     class GetWebExperienceResponse < Struct.new(
@@ -3715,7 +3979,8 @@ module Aws::QBusiness
       :role_arn,
       :identity_provider_configuration,
       :authentication_configuration,
-      :error)
+      :error,
+      :browser_extension_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3887,6 +4152,27 @@ module Aws::QBusiness
       class SamlConfiguration < IdentityProviderConfiguration; end
       class OpenIdConnectConfiguration < IdentityProviderConfiguration; end
       class Unknown < IdentityProviderConfiguration; end
+    end
+
+    # The configuration for extracting semantic meaning from images in
+    # documents. For more information, see [Extracting semantic meaning from
+    # images and visuals][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/extracting-meaning-from-images.html
+    #
+    # @!attribute [rw] image_extraction_status
+    #   Specify whether to extract semantic meaning from images and visuals
+    #   from documents.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ImageExtractionConfiguration AWS API Documentation
+    #
+    class ImageExtractionConfiguration < Struct.new(
+      :image_extraction_status)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # Summary information for your Amazon Q Business index.
@@ -4114,6 +4400,61 @@ module Aws::QBusiness
     class ListApplicationsResponse < Struct.new(
       :next_token,
       :applications)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier for the Amazon Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] conversation_id
+    #   The unique identifier of the Amazon Q Business web experience
+    #   conversation.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_id
+    #   The unique identifier of the user involved in the Amazon Q Business
+    #   web experience conversation.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If the number of attachments returned exceeds `maxResults`, Amazon Q
+    #   Business returns a next token as a pagination token to retrieve the
+    #   next set of attachments.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of attachements to return.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListAttachmentsRequest AWS API Documentation
+    #
+    class ListAttachmentsRequest < Struct.new(
+      :application_id,
+      :conversation_id,
+      :user_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] attachments
+    #   An array of information on one or more attachments.
+    #   @return [Array<Types::Attachment>]
+    #
+    # @!attribute [rw] next_token
+    #   If the response is truncated, Amazon Q Business returns this token,
+    #   which you can use in a later request to list the next set of
+    #   attachments.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListAttachmentsResponse AWS API Documentation
+    #
+    class ListAttachmentsResponse < Struct.new(
+      :attachments,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4471,7 +4812,7 @@ module Aws::QBusiness
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   If the number of retrievers returned exceeds `maxResults`, Amazon Q
+    #   If the number of messages returned exceeds `maxResults`, Amazon Q
     #   Business returns a next token as a pagination token to retrieve the
     #   next set of messages.
     #   @return [String]
@@ -4668,6 +5009,39 @@ module Aws::QBusiness
     class ListWebExperiencesResponse < Struct.new(
       :web_experiences,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration for extracting information from media in documents.
+    #
+    # @!attribute [rw] image_extraction_configuration
+    #   The configuration for extracting semantic meaning from images in
+    #   documents. For more information, see [Extracting semantic meaning
+    #   from images and visuals][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/extracting-meaning-from-images.html
+    #   @return [Types::ImageExtractionConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/MediaExtractionConfiguration AWS API Documentation
+    #
+    class MediaExtractionConfiguration < Struct.new(
+      :image_extraction_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The requested media object is too large to be returned.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/MediaTooLargeException AWS API Documentation
+    #
+    class MediaTooLargeException < Struct.new(
+      :message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5839,12 +6213,24 @@ module Aws::QBusiness
     #   citation text segment in an Amazon Q Business chat response.
     #   @return [Types::SnippetExcerpt]
     #
+    # @!attribute [rw] media_id
+    #   The identifier of the media object associated with the text segment
+    #   in the source attribution.
+    #   @return [String]
+    #
+    # @!attribute [rw] media_mime_type
+    #   The MIME type (image/png) of the media object associated with the
+    #   text segment in the source attribution.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/TextSegment AWS API Documentation
     #
     class TextSegment < Struct.new(
       :begin_offset,
       :end_offset,
-      :snippet_excerpt)
+      :snippet_excerpt,
+      :media_id,
+      :media_mime_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6094,6 +6480,11 @@ module Aws::QBusiness
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/business-use-dg/custom-document-enrichment.html
     #   @return [Types::DocumentEnrichmentConfiguration]
     #
+    # @!attribute [rw] media_extraction_configuration
+    #   The configuration for extracting information from media in documents
+    #   for your data source.
+    #   @return [Types::MediaExtractionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateDataSourceRequest AWS API Documentation
     #
     class UpdateDataSourceRequest < Struct.new(
@@ -6106,7 +6497,8 @@ module Aws::QBusiness
       :description,
       :sync_schedule,
       :role_arn,
-      :document_enrichment_configuration)
+      :document_enrichment_configuration,
+      :media_extraction_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6354,6 +6746,23 @@ module Aws::QBusiness
     #   <code>https://docs.aws.amazon.com</code>.</p> </li> </ul> </note>
     #   @return [Array<String>]
     #
+    # @!attribute [rw] browser_extension_configuration
+    #   The browser extension configuration for an Amazon Q Business web
+    #   experience.
+    #
+    #   <note markdown="1"> For Amazon Q Business application using external OIDC-compliant
+    #   identity providers (IdPs). The IdP administrator must add the
+    #   browser extension sign-in redirect URLs to the IdP application. For
+    #   more information, see [Configure external OIDC identity provider for
+    #   your browser extensions.][1].
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
+    #   @return [Types::BrowserExtensionConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateWebExperienceRequest AWS API Documentation
     #
     class UpdateWebExperienceRequest < Struct.new(
@@ -6366,7 +6775,8 @@ module Aws::QBusiness
       :welcome_message,
       :sample_prompts_control_mode,
       :identity_provider_configuration,
-      :origins)
+      :origins,
+      :browser_extension_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

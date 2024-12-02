@@ -3258,6 +3258,43 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # A summary report for the attribute across all Regions.
+    #
+    # @!attribute [rw] attribute_name
+    #   The name of the attribute.
+    #   @return [String]
+    #
+    # @!attribute [rw] most_frequent_value
+    #   The configuration value that is most frequently observed for the
+    #   attribute.
+    #   @return [String]
+    #
+    # @!attribute [rw] number_of_matched_accounts
+    #   The number of accounts with the same configuration value for the
+    #   attribute that is most frequently observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] number_of_unmatched_accounts
+    #   The number of accounts with a configuration value different from the
+    #   most frequently observed value for the attribute.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] regional_summaries
+    #   The summary report for each Region for the attribute.
+    #   @return [Array<Types::RegionalSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/AttributeSummary AWS API Documentation
+    #
+    class AttributeSummary < Struct.new(
+      :attribute_name,
+      :most_frequent_value,
+      :number_of_matched_accounts,
+      :number_of_unmatched_accounts,
+      :regional_summaries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes a value for a resource attribute that is a String.
     #
     # @!attribute [rw] value
@@ -4277,6 +4314,38 @@ module Aws::EC2
       :dry_run,
       :conversion_task_id,
       :reason_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] report_id
+    #   The ID of the report.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelDeclarativePoliciesReportRequest AWS API Documentation
+    #
+    class CancelDeclarativePoliciesReportRequest < Struct.new(
+      :dry_run,
+      :report_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] return
+    #   Is `true` if the request succeeds, and an error otherwise.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CancelDeclarativePoliciesReportResult AWS API Documentation
+    #
+    class CancelDeclarativePoliciesReportResult < Struct.new(
+      :return)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12844,6 +12913,35 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes the CIDR options for a Verified Access endpoint.
+    #
+    # @!attribute [rw] protocol
+    #   The protocol.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the subnets.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] cidr
+    #   The CIDR.
+    #   @return [String]
+    #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::CreateVerifiedAccessEndpointPortRange>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpointCidrOptions AWS API Documentation
+    #
+    class CreateVerifiedAccessEndpointCidrOptions < Struct.new(
+      :protocol,
+      :subnet_ids,
+      :cidr,
+      :port_ranges)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes the network interface options when creating an Amazon Web
     # Services Verified Access endpoint using the `network-interface` type.
     #
@@ -12859,12 +12957,17 @@ module Aws::EC2
     #   The IP port number.
     #   @return [Integer]
     #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::CreateVerifiedAccessEndpointPortRange>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpointEniOptions AWS API Documentation
     #
     class CreateVerifiedAccessEndpointEniOptions < Struct.new(
       :network_interface_id,
       :protocol,
-      :port)
+      :port,
+      :port_ranges)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12888,12 +12991,80 @@ module Aws::EC2
     #   The IDs of the subnets.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::CreateVerifiedAccessEndpointPortRange>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpointLoadBalancerOptions AWS API Documentation
     #
     class CreateVerifiedAccessEndpointLoadBalancerOptions < Struct.new(
       :protocol,
       :port,
       :load_balancer_arn,
+      :subnet_ids,
+      :port_ranges)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the port range for a Verified Access endpoint.
+    #
+    # @!attribute [rw] from_port
+    #   The start of the port range.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] to_port
+    #   The end of the port range.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpointPortRange AWS API Documentation
+    #
+    class CreateVerifiedAccessEndpointPortRange < Struct.new(
+      :from_port,
+      :to_port)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the RDS options for a Verified Access endpoint.
+    #
+    # @!attribute [rw] protocol
+    #   The protocol.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] rds_db_instance_arn
+    #   The ARN of the RDS instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] rds_db_cluster_arn
+    #   The ARN of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] rds_db_proxy_arn
+    #   The ARN of the RDS proxy.
+    #   @return [String]
+    #
+    # @!attribute [rw] rds_endpoint
+    #   The RDS endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the subnets.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpointRdsOptions AWS API Documentation
+    #
+    class CreateVerifiedAccessEndpointRdsOptions < Struct.new(
+      :protocol,
+      :port,
+      :rds_db_instance_arn,
+      :rds_db_cluster_arn,
+      :rds_db_proxy_arn,
+      :rds_endpoint,
       :subnet_ids)
       SENSITIVE = []
       include Aws::Structure
@@ -12978,6 +13149,16 @@ module Aws::EC2
     #   The options for server side encryption.
     #   @return [Types::VerifiedAccessSseSpecificationRequest]
     #
+    # @!attribute [rw] rds_options
+    #   The RDS details. This parameter is required if the endpoint type is
+    #   `rds`.
+    #   @return [Types::CreateVerifiedAccessEndpointRdsOptions]
+    #
+    # @!attribute [rw] cidr_options
+    #   The CIDR options. This parameter is required if the endpoint type is
+    #   `cidr`.
+    #   @return [Types::CreateVerifiedAccessEndpointCidrOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessEndpointRequest AWS API Documentation
     #
     class CreateVerifiedAccessEndpointRequest < Struct.new(
@@ -12995,7 +13176,9 @@ module Aws::EC2
       :tag_specifications,
       :client_token,
       :dry_run,
-      :sse_specification)
+      :sse_specification,
+      :rds_options,
+      :cidr_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13111,6 +13294,10 @@ module Aws::EC2
     #   Standards (FIPS) on the instance.
     #   @return [Boolean]
     #
+    # @!attribute [rw] cidr_endpoints_custom_sub_domain
+    #   The custom subdomain.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessInstanceRequest AWS API Documentation
     #
     class CreateVerifiedAccessInstanceRequest < Struct.new(
@@ -13118,7 +13305,8 @@ module Aws::EC2
       :tag_specifications,
       :client_token,
       :dry_run,
-      :fips_enabled)
+      :fips_enabled,
+      :cidr_endpoints_custom_sub_domain)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13132,6 +13320,55 @@ module Aws::EC2
     class CreateVerifiedAccessInstanceResult < Struct.new(
       :verified_access_instance)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the OpenID Connect (OIDC) options.
+    #
+    # @!attribute [rw] public_signing_key_endpoint
+    #   The public signing key endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] issuer
+    #   The OIDC issuer identifier of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] authorization_endpoint
+    #   The authorization endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] token_endpoint
+    #   The token endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_info_endpoint
+    #   The user info endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_id
+    #   The OAuth 2.0 client identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_secret
+    #   The OAuth 2.0 client secret.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The set of user claims to be requested from the IdP.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessNativeApplicationOidcOptions AWS API Documentation
+    #
+    class CreateVerifiedAccessNativeApplicationOidcOptions < Struct.new(
+      :public_signing_key_endpoint,
+      :issuer,
+      :authorization_endpoint,
+      :token_endpoint,
+      :user_info_endpoint,
+      :client_id,
+      :client_secret,
+      :scope)
+      SENSITIVE = [:client_secret]
       include Aws::Structure
     end
 
@@ -13264,6 +13501,10 @@ module Aws::EC2
     #   The options for server side encryption.
     #   @return [Types::VerifiedAccessSseSpecificationRequest]
     #
+    # @!attribute [rw] native_application_oidc_options
+    #   The OpenID Connect (OIDC) options.
+    #   @return [Types::CreateVerifiedAccessNativeApplicationOidcOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateVerifiedAccessTrustProviderRequest AWS API Documentation
     #
     class CreateVerifiedAccessTrustProviderRequest < Struct.new(
@@ -13277,7 +13518,8 @@ module Aws::EC2
       :tag_specifications,
       :client_token,
       :dry_run,
-      :sse_specification)
+      :sse_specification,
+      :native_application_oidc_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13753,6 +13995,16 @@ module Aws::EC2
     #   The subnet configurations for the endpoint.
     #   @return [Array<Types::SubnetConfiguration>]
     #
+    # @!attribute [rw] service_network_arn
+    #   The Amazon Resource Name (ARN) of a service network that will be
+    #   associated with the VPC endpoint of type service-network.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of a resource configuration that will
+    #   be associated with the VPC endpoint of type resource.
+    #   @return [String]
+    #
     # @!attribute [rw] service_region
     #   The Region where the service is hosted. The default is the current
     #   Region.
@@ -13775,6 +14027,8 @@ module Aws::EC2
       :private_dns_enabled,
       :tag_specifications,
       :subnet_configurations,
+      :service_network_arn,
+      :resource_configuration_arn,
       :service_region)
       SENSITIVE = []
       include Aws::Structure
@@ -14401,6 +14655,63 @@ module Aws::EC2
       :statistic,
       :period,
       :metric_points)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the metadata of the account status report.
+    #
+    # @!attribute [rw] report_id
+    #   The ID of the report.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_bucket
+    #   The name of the Amazon S3 bucket where the report is located.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_prefix
+    #   The prefix for your S3 object.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_id
+    #   The root ID, organizational unit ID, or account ID.
+    #
+    #   Format:
+    #
+    #   * For root: `r-ab12`
+    #
+    #   * For OU: `ou-ab12-cdef1234`
+    #
+    #   * For account: `123456789012`
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The time when the report generation started.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The time when the report generation ended.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   The current status of the report.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Any tags assigned to the report.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeclarativePoliciesReport AWS API Documentation
+    #
+    class DeclarativePoliciesReport < Struct.new(
+      :report_id,
+      :s3_bucket,
+      :s3_prefix,
+      :target_id,
+      :start_time,
+      :end_time,
+      :status,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -18992,6 +19303,62 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] next_token
+    #   The token returned from a previous paginated request. Pagination
+    #   continues from the end of the items returned by the previous
+    #   request.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of items to return for this request. To get the
+    #   next page of items, make another request with the token returned in
+    #   the output. For more information, see [Pagination][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Query-Requests.html#api-pagination
+    #   @return [Integer]
+    #
+    # @!attribute [rw] report_ids
+    #   One or more report IDs.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeDeclarativePoliciesReportsRequest AWS API Documentation
+    #
+    class DescribeDeclarativePoliciesReportsRequest < Struct.new(
+      :dry_run,
+      :next_token,
+      :max_results,
+      :report_ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The token to include in another request to get the next page of
+    #   items. This value is `null` when there are no more items to return.
+    #   @return [String]
+    #
+    # @!attribute [rw] reports
+    #   The report metadata.
+    #   @return [Array<Types::DeclarativePoliciesReport>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeDeclarativePoliciesReportsResult AWS API Documentation
+    #
+    class DescribeDeclarativePoliciesReportsResult < Struct.new(
+      :next_token,
+      :reports)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] dhcp_options_ids
     #   The IDs of DHCP option sets.
     #   @return [Array<String>]
@@ -20614,6 +20981,9 @@ module Aws::EC2
     #
     #   * `hypervisor` - The hypervisor type (`ovm` \| `xen`).
     #
+    #   * `image-allowed` - A Boolean that indicates whether the image meets
+    #     the criteria specified for Allowed AMIs.
+    #
     #   * `image-id` - The ID of the image.
     #
     #   * `image-type` - The image type (`machine` \| `kernel` \|
@@ -20653,6 +21023,11 @@ module Aws::EC2
     #
     #   * `root-device-type` - The type of the root device volume (`ebs` \|
     #     `instance-store`).
+    #
+    #   * `source-image-id` - The ID of the source AMI from which the AMI
+    #     was created.
+    #
+    #   * `source-image-region` - The Region of the source AMI.
     #
     #   * `source-instance-id` - The ID of the instance that the AMI was
     #     created from if the AMI was created using CreateImage. This filter
@@ -21145,6 +21520,9 @@ module Aws::EC2
     #
     #   * `instance-id` - The ID of the instance.
     #
+    #   * `image-allowed` - A Boolean that indicates whether the image meets
+    #     the criteria specified for Allowed AMIs.
+    #
     #   * `instance-state-name` - The state of the instance (`pending` \|
     #     `running` \| `shutting-down` \| `terminated` \| `stopping` \|
     #     `stopped`).
@@ -21155,6 +21533,16 @@ module Aws::EC2
     #     ISO 8601 format in the UTC time zone (YYYY-MM-DDThh:mm:ss.sssZ),
     #     for example, `2023-09-29T11:04:43.305Z`. You can use a wildcard
     #     (`*`), for example, `2023-09-29T*`, which matches an entire day.
+    #
+    #   * `owner-alias` - The owner alias (`amazon` \| `aws-marketplace` \|
+    #     `aws-backup-vault`). The valid aliases are defined in an
+    #     Amazon-maintained list. This is not the Amazon Web Services
+    #     account alias that can be set using the IAM console. We recommend
+    #     that you use the `Owner` request parameter instead of this filter.
+    #
+    #   * `owner-id` - The Amazon Web Services account ID of the owner. We
+    #     recommend that you use the `Owner` request parameter instead of
+    #     this filter.
     #
     #   * `tag:<key>` - The key/value combination of a tag assigned to the
     #     resource. Use the tag key in the filter name and the tag value as
@@ -26194,6 +26582,9 @@ module Aws::EC2
     #   * `storage-tier` - The storage tier of the snapshot (`archive` \|
     #     `standard`).
     #
+    #   * `transfer-type` - The type of operation used to create the
+    #     snapshot (`time-based` \| `standard`).
+    #
     #   * `tag`:&lt;key&gt; - The key/value combination of a tag assigned to
     #     the resource. Use the tag key in the filter name and the tag value
     #     as the filter value. For example, to find all resources that have
@@ -29103,6 +29494,79 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #   @return [Boolean]
     #
+    # @!attribute [rw] vpc_endpoint_ids
+    #   The IDs of the VPC endpoints.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] filters
+    #   The filters.
+    #
+    #   * `vpc-endpoint-id` - The ID of the VPC endpoint.
+    #
+    #   * `associated-resource-accessibility` - The association state. When
+    #     the state is `accessible`, it returns `AVAILABLE`. When the state
+    #     is `inaccessible`, it returns `PENDING` or `FAILED`.
+    #
+    #   * `association-id` - The ID of the VPC endpoint association.
+    #
+    #   * `associated-resource-id` - The ID of the associated resource
+    #     configuration.
+    #
+    #   * `service-network-arn` - The Amazon Resource Name (ARN) of the
+    #     associated service network. Only VPC endpoints of type service
+    #     network will be returned.
+    #
+    #   * `resource-configuration-group-arn` - The Amazon Resource Name
+    #     (ARN) of the resource configuration of type GROUP.
+    #
+    #   * `service-network-resource-association-id` - The ID of the
+    #     association.
+    #   @return [Array<Types::Filter>]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum page size.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The pagination token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcEndpointAssociationsRequest AWS API Documentation
+    #
+    class DescribeVpcEndpointAssociationsRequest < Struct.new(
+      :dry_run,
+      :vpc_endpoint_ids,
+      :filters,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] vpc_endpoint_associations
+    #   Details of the endpoint associations.
+    #   @return [Array<Types::VpcEndpointAssociation>]
+    #
+    # @!attribute [rw] next_token
+    #   The pagination token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DescribeVpcEndpointAssociationsResult AWS API Documentation
+    #
+    class DescribeVpcEndpointAssociationsResult < Struct.new(
+      :vpc_endpoint_associations,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
     # @!attribute [rw] connection_notification_id
     #   The ID of the notification.
     #   @return [String]
@@ -30330,6 +30794,34 @@ module Aws::EC2
     #
     class DisableAddressTransferResult < Struct.new(
       :address_transfer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableAllowedImagesSettingsRequest AWS API Documentation
+    #
+    class DisableAllowedImagesSettingsRequest < Struct.new(
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] allowed_images_settings_state
+    #   Returns `disabled` if the request succeeds; otherwise, it returns an
+    #   error.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DisableAllowedImagesSettingsResult AWS API Documentation
+    #
+    class DisableAllowedImagesSettingsResult < Struct.new(
+      :allowed_images_settings_state)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -32114,7 +32606,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] operator
-    #   The entity that manages the EBS volume.
+    #   The service provider that manages the EBS volume.
     #   @return [Types::OperatorResponse]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EbsInstanceBlockDevice AWS API Documentation
@@ -32716,6 +33208,41 @@ module Aws::EC2
     #
     class EnableAddressTransferResult < Struct.new(
       :address_transfer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] allowed_images_settings_state
+    #   Specify `enabled` to apply the image criteria specified by the
+    #   Allowed AMIs settings. Specify `audit-mode` so that you can check
+    #   which AMIs will be allowed or not allowed by the image criteria.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableAllowedImagesSettingsRequest AWS API Documentation
+    #
+    class EnableAllowedImagesSettingsRequest < Struct.new(
+      :allowed_images_settings_state,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] allowed_images_settings_state
+    #   Returns `enabled` or `audit-mode` if the request succeeds;
+    #   otherwise, it returns an error.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/EnableAllowedImagesSettingsResult AWS API Documentation
+    #
+    class EnableAllowedImagesSettingsResult < Struct.new(
+      :allowed_images_settings_state)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -34432,6 +34959,63 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] verified_access_instance_id
+    #   The ID of the Verified Access instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ExportVerifiedAccessInstanceClientConfigurationRequest AWS API Documentation
+    #
+    class ExportVerifiedAccessInstanceClientConfigurationRequest < Struct.new(
+      :verified_access_instance_id,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] version
+    #   The version.
+    #   @return [String]
+    #
+    # @!attribute [rw] verified_access_instance_id
+    #   The ID of the Verified Access instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] region
+    #   The Region.
+    #   @return [String]
+    #
+    # @!attribute [rw] device_trust_providers
+    #   The device trust providers.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] user_trust_provider
+    #   The user identity trust provider.
+    #   @return [Types::VerifiedAccessInstanceUserTrustProviderClientConfiguration]
+    #
+    # @!attribute [rw] open_vpn_configurations
+    #   The Open VPN configuration.
+    #   @return [Array<Types::VerifiedAccessInstanceOpenVpnClientConfiguration>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ExportVerifiedAccessInstanceClientConfigurationResult AWS API Documentation
+    #
+    class ExportVerifiedAccessInstanceClientConfigurationResult < Struct.new(
+      :version,
+      :verified_access_instance_id,
+      :region,
+      :device_trust_providers,
+      :user_trust_provider,
+      :open_vpn_configurations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes a Capacity Reservation Fleet that could not be cancelled.
     #
     # @!attribute [rw] capacity_reservation_fleet_id
@@ -35880,6 +36464,62 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetAllowedImagesSettingsRequest AWS API Documentation
+    #
+    class GetAllowedImagesSettingsRequest < Struct.new(
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] state
+    #   The current state of the Allowed AMIs setting at the account level
+    #   in the specified Amazon Web Services Region.
+    #
+    #   Possible values:
+    #
+    #   * `disabled`: All AMIs are allowed.
+    #
+    #   * `audit-mode`: All AMIs are allowed, but the `ImageAllowed` field
+    #     is set to `true` if the AMI would be allowed with the current list
+    #     of criteria if allowed AMIs was enabled.
+    #
+    #   * `enabled`: Only AMIs matching the image criteria are discoverable
+    #     and available for use.
+    #   @return [String]
+    #
+    # @!attribute [rw] image_criteria
+    #   The list of criteria for images that are discoverable and usable in
+    #   the account in the specified Amazon Web Services Region.
+    #   @return [Array<Types::ImageCriterion>]
+    #
+    # @!attribute [rw] managed_by
+    #   The entity that manages the Allowed AMIs settings. Possible values
+    #   include:
+    #
+    #   * `account` - The Allowed AMIs settings is managed by the account.
+    #
+    #   * `declarative-policy` - The Allowed AMIs settings is managed by a
+    #     declarative policy and can't be modified by the account.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetAllowedImagesSettingsResult AWS API Documentation
+    #
+    class GetAllowedImagesSettingsResult < Struct.new(
+      :state,
+      :image_criteria,
+      :managed_by)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] certificate_arn
     #   The ARN of the ACM certificate for which to view the associated IAM
     #   roles, encryption keys, and Amazon S3 object information.
@@ -36316,6 +36956,88 @@ module Aws::EC2
     end
 
     # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] report_id
+    #   The ID of the report.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetDeclarativePoliciesReportSummaryRequest AWS API Documentation
+    #
+    class GetDeclarativePoliciesReportSummaryRequest < Struct.new(
+      :dry_run,
+      :report_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] report_id
+    #   The ID of the report.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_bucket
+    #   The name of the Amazon S3 bucket where the report is located.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_prefix
+    #   The prefix for your S3 object.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_id
+    #   The root ID, organizational unit ID, or account ID.
+    #
+    #   Format:
+    #
+    #   * For root: `r-ab12`
+    #
+    #   * For OU: `ou-ab12-cdef1234`
+    #
+    #   * For account: `123456789012`
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The time when the report generation started.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The time when the report generation ended.
+    #   @return [Time]
+    #
+    # @!attribute [rw] number_of_accounts
+    #   The total number of accounts associated with the specified
+    #   `targetId`.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] number_of_failed_accounts
+    #   The number of accounts where attributes could not be retrieved in
+    #   any Region.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] attribute_summaries
+    #   The attributes described in the report.
+    #   @return [Array<Types::AttributeSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetDeclarativePoliciesReportSummaryResult AWS API Documentation
+    #
+    class GetDeclarativePoliciesReportSummaryResult < Struct.new(
+      :report_id,
+      :s3_bucket,
+      :s3_prefix,
+      :target_id,
+      :start_time,
+      :end_time,
+      :number_of_accounts,
+      :number_of_failed_accounts,
+      :attribute_summaries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the operation,
     #   without actually making the request, and provides an error response.
     #   If you have the required permissions, the error response is
@@ -36583,10 +37305,21 @@ module Aws::EC2
     #     shared.
     #   @return [String]
     #
+    # @!attribute [rw] managed_by
+    #   The entity that manages the state for block public access for AMIs.
+    #   Possible values include:
+    #
+    #   * `account` - The state is managed by the account.
+    #
+    #   * `declarative-policy` - The state is managed by a declarative
+    #     policy and can't be modified by the account.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetImageBlockPublicAccessStateResult AWS API Documentation
     #
     class GetImageBlockPublicAccessStateResult < Struct.new(
-      :image_block_public_access_state)
+      :image_block_public_access_state,
+      :managed_by)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -37696,10 +38429,21 @@ module Aws::EC2
     #   console of all instances is disabled for your account.
     #   @return [Boolean]
     #
+    # @!attribute [rw] managed_by
+    #   The entity that manages access to the serial console. Possible
+    #   values include:
+    #
+    #   * `account` - Access is managed by the account.
+    #
+    #   * `declarative-policy` - Access is managed by a declarative policy
+    #     and can't be modified by the account.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetSerialConsoleAccessStatusResult AWS API Documentation
     #
     class GetSerialConsoleAccessStatusResult < Struct.new(
-      :serial_console_access_enabled)
+      :serial_console_access_enabled,
+      :managed_by)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -37737,10 +38481,21 @@ module Aws::EC2
     #     share snapshots.
     #   @return [String]
     #
+    # @!attribute [rw] managed_by
+    #   The entity that manages the state for block public access for
+    #   snapshots. Possible values include:
+    #
+    #   * `account` - The state is managed by the account.
+    #
+    #   * `declarative-policy` - The state is managed by a declarative
+    #     policy and can't be modified by the account.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetSnapshotBlockPublicAccessStateResult AWS API Documentation
     #
     class GetSnapshotBlockPublicAccessStateResult < Struct.new(
-      :state)
+      :state,
+      :managed_by)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -38405,6 +39160,56 @@ module Aws::EC2
     class GetVerifiedAccessEndpointPolicyResult < Struct.new(
       :policy_enabled,
       :policy_document)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] verified_access_endpoint_id
+    #   The ID of the network CIDR endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return with a single call. To
+    #   retrieve the remaining results, make another call with the returned
+    #   `nextToken` value.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetVerifiedAccessEndpointTargetsRequest AWS API Documentation
+    #
+    class GetVerifiedAccessEndpointTargetsRequest < Struct.new(
+      :verified_access_endpoint_id,
+      :max_results,
+      :next_token,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] verified_access_endpoint_targets
+    #   The Verified Access targets.
+    #   @return [Array<Types::VerifiedAccessEndpointTarget>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next page of results. This value is
+    #   `null` when there are no more results to return.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetVerifiedAccessEndpointTargetsResult AWS API Documentation
+    #
+    class GetVerifiedAccessEndpointTargetsResult < Struct.new(
+      :verified_access_endpoint_targets,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -39438,6 +40243,21 @@ module Aws::EC2
     #   [1]: http://www.iso.org/iso/iso8601
     #   @return [String]
     #
+    # @!attribute [rw] image_allowed
+    #   If `true`, the AMI satisfies the criteria for Allowed AMIs and can
+    #   be discovered and used in the account. If `false` and Allowed AMIs
+    #   is set to `enabled`, the AMI can't be discovered or used in the
+    #   account. If `false` and Allowed AMIs is set to `audit-mode`, the AMI
+    #   can be discovered and used in the account.
+    #
+    #   For more information, see [Control the discovery and use of AMIs in
+    #   Amazon EC2 with Allowed AMIs][1] in *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html
+    #   @return [Boolean]
+    #
     # @!attribute [rw] source_image_id
     #   The ID of the source AMI from which the AMI was created.
     #
@@ -39546,6 +40366,7 @@ module Aws::EC2
       :source_instance_id,
       :deregistration_protection,
       :last_launched_time,
+      :image_allowed,
       :source_image_id,
       :source_image_region,
       :image_id,
@@ -39676,6 +40497,91 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # The list of criteria that are evaluated to determine whch AMIs are
+    # discoverable and usable in the account in the specified Amazon Web
+    # Services Region. Currently, the only criteria that can be specified
+    # are AMI providers.
+    #
+    # Up to 10 `imageCriteria` objects can be specified, and up to a total
+    # of 200 values for all `imageProviders`. For more information, see
+    # [JSON configuration for the Allowed AMIs criteria][1] in the *Amazon
+    # EC2 User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html#allowed-amis-json-configuration
+    #
+    # @!attribute [rw] image_providers
+    #   A list of AMI providers whose AMIs are discoverable and useable in
+    #   the account. Up to a total of 200 values can be specified.
+    #
+    #   Possible values:
+    #
+    #   `amazon`: Allow AMIs created by Amazon Web Services.
+    #
+    #   `aws-marketplace`: Allow AMIs created by verified providers in the
+    #   Amazon Web Services Marketplace.
+    #
+    #   `aws-backup-vault`: Allow AMIs created by Amazon Web Services
+    #   Backup.
+    #
+    #   12-digit account ID: Allow AMIs created by this account. One or more
+    #   account IDs can be specified.
+    #
+    #   `none`: Allow AMIs created by your own account only.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ImageCriterion AWS API Documentation
+    #
+    class ImageCriterion < Struct.new(
+      :image_providers)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The list of criteria that are evaluated to determine whch AMIs are
+    # discoverable and usable in the account in the specified Amazon Web
+    # Services Region. Currently, the only criteria that can be specified
+    # are AMI providers.
+    #
+    # Up to 10 `imageCriteria` objects can be specified, and up to a total
+    # of 200 values for all `imageProviders`. For more information, see
+    # [JSON configuration for the Allowed AMIs criteria][1] in the *Amazon
+    # EC2 User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html#allowed-amis-json-configuration
+    #
+    # @!attribute [rw] image_providers
+    #   A list of image providers whose AMIs are discoverable and useable in
+    #   the account. Up to a total of 200 values can be specified.
+    #
+    #   Possible values:
+    #
+    #   `amazon`: Allow AMIs created by Amazon Web Services.
+    #
+    #   `aws-marketplace`: Allow AMIs created by verified providers in the
+    #   Amazon Web Services Marketplace.
+    #
+    #   `aws-backup-vault`: Allow AMIs created by Amazon Web Services
+    #   Backup.
+    #
+    #   12-digit account ID: Allow AMIs created by this account. One or more
+    #   account IDs can be specified.
+    #
+    #   `none`: Allow AMIs created by your own account only. When `none` is
+    #   specified, no other values can be specified.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ImageCriterionRequest AWS API Documentation
+    #
+    class ImageCriterionRequest < Struct.new(
+      :image_providers)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes the disk container object for an import image task.
     #
     # @!attribute [rw] description
@@ -39752,6 +40658,19 @@ module Aws::EC2
     #   format: *YYYY*-*MM*-*DD*T*HH*:*MM*:*SS*Z.
     #   @return [String]
     #
+    # @!attribute [rw] image_allowed
+    #   If `true`, the AMI satisfies the criteria for Allowed AMIs and can
+    #   be discovered and used in the account. If `false`, the AMI can't be
+    #   discovered or used in the account.
+    #
+    #   For more information, see [Control the discovery and use of AMIs in
+    #   Amazon EC2 with Allowed AMIs][1] in *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-allowed-amis.html
+    #   @return [Boolean]
+    #
     # @!attribute [rw] is_public
     #   Indicates whether the AMI has public launch permissions. A value of
     #   `true` means this AMI has public launch permissions, while `false`
@@ -39769,6 +40688,7 @@ module Aws::EC2
       :image_owner_alias,
       :creation_date,
       :deprecation_time,
+      :image_allowed,
       :is_public)
       SENSITIVE = []
       include Aws::Structure
@@ -41020,7 +41940,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] operator
-    #   The entity that manages the instance.
+    #   The service provider that manages the instance.
     #   @return [Types::OperatorResponse]
     #
     # @!attribute [rw] instance_id
@@ -41952,13 +42872,30 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html#work-with-tags-in-IMDS
     #   @return [String]
     #
+    # @!attribute [rw] managed_by
+    #   The entity that manages the IMDS default settings. Possible values
+    #   include:
+    #
+    #   * `account` - The IMDS default settings are managed by the account.
+    #
+    #   * `declarative-policy` - The IMDS default settings are managed by a
+    #     declarative policy and can't be modified by the account.
+    #   @return [String]
+    #
+    # @!attribute [rw] managed_exception_message
+    #   The customized exception message that is specified in the
+    #   declarative policy.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceMetadataDefaultsResponse AWS API Documentation
     #
     class InstanceMetadataDefaultsResponse < Struct.new(
       :http_tokens,
       :http_put_response_hop_limit,
       :http_endpoint,
-      :instance_metadata_tags)
+      :instance_metadata_tags,
+      :managed_by,
+      :managed_exception_message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -42217,7 +43154,7 @@ module Aws::EC2
     #   @return [Types::ConnectionTrackingSpecificationResponse]
     #
     # @!attribute [rw] operator
-    #   The entity that manages the network interface.
+    #   The service provider that manages the network interface.
     #   @return [Types::OperatorResponse]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceNetworkInterface AWS API Documentation
@@ -43695,7 +44632,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] operator
-    #   The entity that manages the instance.
+    #   The service provider that manages the instance.
     #   @return [Types::OperatorResponse]
     #
     # @!attribute [rw] events
@@ -52323,6 +53260,20 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # The CIDR options for a Verified Access endpoint.
+    #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::ModifyVerifiedAccessEndpointPortRange>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpointCidrOptions AWS API Documentation
+    #
+    class ModifyVerifiedAccessEndpointCidrOptions < Struct.new(
+      :port_ranges)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes the options when modifying a Verified Access endpoint with
     # the `network-interface` type.
     #
@@ -52334,11 +53285,16 @@ module Aws::EC2
     #   The IP port number.
     #   @return [Integer]
     #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::ModifyVerifiedAccessEndpointPortRange>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpointEniOptions AWS API Documentation
     #
     class ModifyVerifiedAccessEndpointEniOptions < Struct.new(
       :protocol,
-      :port)
+      :port,
+      :port_ranges)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -52358,12 +53314,17 @@ module Aws::EC2
     #   The IP port number.
     #   @return [Integer]
     #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::ModifyVerifiedAccessEndpointPortRange>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpointLoadBalancerOptions AWS API Documentation
     #
     class ModifyVerifiedAccessEndpointLoadBalancerOptions < Struct.new(
       :subnet_ids,
       :protocol,
-      :port)
+      :port,
+      :port_ranges)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -52439,6 +53400,49 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes the port range for a Verified Access endpoint.
+    #
+    # @!attribute [rw] from_port
+    #   The start of the port range.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] to_port
+    #   The end of the port range.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpointPortRange AWS API Documentation
+    #
+    class ModifyVerifiedAccessEndpointPortRange < Struct.new(
+      :from_port,
+      :to_port)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The RDS options for a Verified Access endpoint.
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the subnets.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] port
+    #   The port.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] rds_endpoint
+    #   The RDS endpoint.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpointRdsOptions AWS API Documentation
+    #
+    class ModifyVerifiedAccessEndpointRdsOptions < Struct.new(
+      :subnet_ids,
+      :port,
+      :rds_endpoint)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] verified_access_endpoint_id
     #   The ID of the Verified Access endpoint.
     #   @return [String]
@@ -52480,6 +53484,14 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #   @return [Boolean]
     #
+    # @!attribute [rw] rds_options
+    #   The RDS options.
+    #   @return [Types::ModifyVerifiedAccessEndpointRdsOptions]
+    #
+    # @!attribute [rw] cidr_options
+    #   The CIDR options.
+    #   @return [Types::ModifyVerifiedAccessEndpointCidrOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessEndpointRequest AWS API Documentation
     #
     class ModifyVerifiedAccessEndpointRequest < Struct.new(
@@ -52489,7 +53501,9 @@ module Aws::EC2
       :network_interface_options,
       :description,
       :client_token,
-      :dry_run)
+      :dry_run,
+      :rds_options,
+      :cidr_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -52712,13 +53726,18 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/ec2/latest/devguide/ec2-api-idempotency.html
     #   @return [String]
     #
+    # @!attribute [rw] cidr_endpoints_custom_sub_domain
+    #   The custom subdomain.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessInstanceRequest AWS API Documentation
     #
     class ModifyVerifiedAccessInstanceRequest < Struct.new(
       :verified_access_instance_id,
       :description,
       :dry_run,
-      :client_token)
+      :client_token,
+      :cidr_endpoints_custom_sub_domain)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -52732,6 +53751,55 @@ module Aws::EC2
     class ModifyVerifiedAccessInstanceResult < Struct.new(
       :verified_access_instance)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the OpenID Connect (OIDC) options.
+    #
+    # @!attribute [rw] public_signing_key_endpoint
+    #   The public signing key endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] issuer
+    #   The OIDC issuer identifier of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] authorization_endpoint
+    #   The authorization endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] token_endpoint
+    #   The token endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_info_endpoint
+    #   The user info endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_id
+    #   The OAuth 2.0 client identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_secret
+    #   The OAuth 2.0 client secret.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The set of user claims to be requested from the IdP.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessNativeApplicationOidcOptions AWS API Documentation
+    #
+    class ModifyVerifiedAccessNativeApplicationOidcOptions < Struct.new(
+      :public_signing_key_endpoint,
+      :issuer,
+      :authorization_endpoint,
+      :token_endpoint,
+      :user_info_endpoint,
+      :client_id,
+      :client_secret,
+      :scope)
+      SENSITIVE = [:client_secret]
       include Aws::Structure
     end
 
@@ -52839,6 +53907,10 @@ module Aws::EC2
     #   The options for server side encryption.
     #   @return [Types::VerifiedAccessSseSpecificationRequest]
     #
+    # @!attribute [rw] native_application_oidc_options
+    #   The OpenID Connect (OIDC) options.
+    #   @return [Types::ModifyVerifiedAccessNativeApplicationOidcOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyVerifiedAccessTrustProviderRequest AWS API Documentation
     #
     class ModifyVerifiedAccessTrustProviderRequest < Struct.new(
@@ -52848,7 +53920,8 @@ module Aws::EC2
       :description,
       :dry_run,
       :client_token,
-      :sse_specification)
+      :sse_specification,
+      :native_application_oidc_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -54352,6 +55425,50 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # Describes the OpenID Connect (OIDC) options.
+    #
+    # @!attribute [rw] public_signing_key_endpoint
+    #   The public signing key endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] issuer
+    #   The OIDC issuer identifier of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] authorization_endpoint
+    #   The authorization endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] token_endpoint
+    #   The token endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_info_endpoint
+    #   The user info endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_id
+    #   The OAuth 2.0 client identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] scope
+    #   The set of user claims to be requested from the IdP.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NativeApplicationOidcOptions AWS API Documentation
+    #
+    class NativeApplicationOidcOptions < Struct.new(
+      :public_signing_key_endpoint,
+      :issuer,
+      :authorization_endpoint,
+      :token_endpoint,
+      :user_info_endpoint,
+      :client_id,
+      :scope)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes a network ACL.
     #
     # @!attribute [rw] associations
@@ -55082,7 +56199,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] operator
-    #   The entity that manages the network interface.
+    #   The service provider that manages the network interface.
     #   @return [Types::OperatorResponse]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkInterface AWS API Documentation
@@ -55724,10 +56841,10 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # The entity that manages the resource.
+    # The service provider that manages the resource.
     #
     # @!attribute [rw] principal
-    #   The entity that manages the resource.
+    #   The service provider that manages the resource.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/OperatorRequest AWS API Documentation
@@ -55738,16 +56855,16 @@ module Aws::EC2
       include Aws::Structure
     end
 
-    # Describes whether the resource is managed by an entity and, if so,
-    # describes the entity that manages it.
+    # Describes whether the resource is managed by an service provider and,
+    # if so, describes the service provider that manages it.
     #
     # @!attribute [rw] managed
-    #   If `true`, the resource is managed by an entity.
+    #   If `true`, the resource is managed by an service provider.
     #   @return [Boolean]
     #
     # @!attribute [rw] principal
     #   If `managed` is `true`, then the principal is returned. The
-    #   principal is the entity that manages the resource.
+    #   principal is the service provider that manages the resource.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/OperatorResponse AWS API Documentation
@@ -57989,6 +59106,32 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # A summary report for the attribute for a Region.
+    #
+    # @!attribute [rw] region_name
+    #   The Amazon Web Services Region.
+    #   @return [String]
+    #
+    # @!attribute [rw] number_of_matched_accounts
+    #   The number of accounts in the Region with the same configuration
+    #   value for the attribute that is most frequently observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] number_of_unmatched_accounts
+    #   The number of accounts in the Region with a configuration value
+    #   different from the most frequently observed value for the attribute.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RegionalSummary AWS API Documentation
+    #
+    class RegionalSummary < Struct.new(
+      :region_name,
+      :number_of_matched_accounts,
+      :number_of_unmatched_accounts)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains the parameters for RegisterImage.
     #
     # @!attribute [rw] image_location
@@ -58788,6 +59931,41 @@ module Aws::EC2
     #
     class ReplaceIamInstanceProfileAssociationResult < Struct.new(
       :iam_instance_profile_association)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] image_criteria
+    #   The list of criteria that are evaluated to determine whether AMIs
+    #   are discoverable and usable in the account in the specified Amazon
+    #   Web Services Region.
+    #   @return [Array<Types::ImageCriterionRequest>]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceImageCriteriaInAllowedImagesSettingsRequest AWS API Documentation
+    #
+    class ReplaceImageCriteriaInAllowedImagesSettingsRequest < Struct.new(
+      :image_criteria,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] return_value
+    #   Returns `true` if the request succeeds; otherwise, it returns an
+    #   error.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ReplaceImageCriteriaInAllowedImagesSettingsResult AWS API Documentation
+    #
+    class ReplaceImageCriteriaInAllowedImagesSettingsResult < Struct.new(
+      :return_value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -66110,6 +67288,61 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the action,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] s3_bucket
+    #   The name of the S3 bucket where the report will be saved.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_prefix
+    #   The prefix for your S3 object.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_id
+    #   The root ID, organizational unit ID, or account ID.
+    #
+    #   Format:
+    #
+    #   * For root: `r-ab12`
+    #
+    #   * For OU: `ou-ab12-cdef1234`
+    #
+    #   * For account: `123456789012`
+    #   @return [String]
+    #
+    # @!attribute [rw] tag_specifications
+    #   The tags to apply.
+    #   @return [Array<Types::TagSpecification>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/StartDeclarativePoliciesReportRequest AWS API Documentation
+    #
+    class StartDeclarativePoliciesReportRequest < Struct.new(
+      :dry_run,
+      :s3_bucket,
+      :s3_prefix,
+      :target_id,
+      :tag_specifications)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] report_id
+    #   The ID of the report.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/StartDeclarativePoliciesReportResult AWS API Documentation
+    #
+    class StartDeclarativePoliciesReportResult < Struct.new(
+      :report_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] instance_ids
     #   The IDs of the instances.
     #   @return [Array<String>]
@@ -66749,6 +67982,25 @@ module Aws::EC2
       :subnet_id,
       :ipv_4,
       :ipv_6)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Prefixes of the subnet IP.
+    #
+    # @!attribute [rw] subnet_id
+    #   ID of the subnet.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_prefixes
+    #   Array of SubnetIpPrefixes objects.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/SubnetIpPrefixes AWS API Documentation
+    #
+    class SubnetIpPrefixes < Struct.new(
+      :subnet_id,
+      :ip_prefixes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -70079,6 +71331,14 @@ module Aws::EC2
     #   The options in use for server side encryption.
     #   @return [Types::VerifiedAccessSseSpecificationResponse]
     #
+    # @!attribute [rw] rds_options
+    #   The options for an RDS endpoint.
+    #   @return [Types::VerifiedAccessEndpointRdsOptions]
+    #
+    # @!attribute [rw] cidr_options
+    #   The options for a CIDR endpoint.
+    #   @return [Types::VerifiedAccessEndpointCidrOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpoint AWS API Documentation
     #
     class VerifiedAccessEndpoint < Struct.new(
@@ -70100,7 +71360,38 @@ module Aws::EC2
       :last_updated_time,
       :deletion_time,
       :tags,
-      :sse_specification)
+      :sse_specification,
+      :rds_options,
+      :cidr_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the CIDR options for a Verified Access endpoint.
+    #
+    # @!attribute [rw] cidr
+    #   The CIDR.
+    #   @return [String]
+    #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::VerifiedAccessEndpointPortRange>]
+    #
+    # @!attribute [rw] protocol
+    #   The protocol.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the subnets.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointCidrOptions AWS API Documentation
+    #
+    class VerifiedAccessEndpointCidrOptions < Struct.new(
+      :cidr,
+      :port_ranges,
+      :protocol,
+      :subnet_ids)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -70119,12 +71410,17 @@ module Aws::EC2
     #   The IP port number.
     #   @return [Integer]
     #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::VerifiedAccessEndpointPortRange>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointEniOptions AWS API Documentation
     #
     class VerifiedAccessEndpointEniOptions < Struct.new(
       :network_interface_id,
       :protocol,
-      :port)
+      :port,
+      :port_ranges)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -70148,12 +71444,80 @@ module Aws::EC2
     #   The IDs of the subnets.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] port_ranges
+    #   The port ranges.
+    #   @return [Array<Types::VerifiedAccessEndpointPortRange>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointLoadBalancerOptions AWS API Documentation
     #
     class VerifiedAccessEndpointLoadBalancerOptions < Struct.new(
       :protocol,
       :port,
       :load_balancer_arn,
+      :subnet_ids,
+      :port_ranges)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a port range.
+    #
+    # @!attribute [rw] from_port
+    #   The start of the port range.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] to_port
+    #   The end of the port range.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointPortRange AWS API Documentation
+    #
+    class VerifiedAccessEndpointPortRange < Struct.new(
+      :from_port,
+      :to_port)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the RDS options for a Verified Access endpoint.
+    #
+    # @!attribute [rw] protocol
+    #   The protocol.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] rds_db_instance_arn
+    #   The ARN of the RDS instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] rds_db_cluster_arn
+    #   The ARN of the DB cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] rds_db_proxy_arn
+    #   The ARN of the RDS proxy.
+    #   @return [String]
+    #
+    # @!attribute [rw] rds_endpoint
+    #   The RDS endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the subnets.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointRdsOptions AWS API Documentation
+    #
+    class VerifiedAccessEndpointRdsOptions < Struct.new(
+      :protocol,
+      :port,
+      :rds_db_instance_arn,
+      :rds_db_cluster_arn,
+      :rds_db_proxy_arn,
+      :rds_endpoint,
       :subnet_ids)
       SENSITIVE = []
       include Aws::Structure
@@ -70174,6 +71538,30 @@ module Aws::EC2
     class VerifiedAccessEndpointStatus < Struct.new(
       :code,
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the targets for the specified Verified Access endpoint.
+    #
+    # @!attribute [rw] verified_access_endpoint_id
+    #   The ID of the Verified Access endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] verified_access_endpoint_target_ip_address
+    #   The IP address of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] verified_access_endpoint_target_dns
+    #   The DNS name of the target.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessEndpointTarget AWS API Documentation
+    #
+    class VerifiedAccessEndpointTarget < Struct.new(
+      :verified_access_endpoint_id,
+      :verified_access_endpoint_target_ip_address,
+      :verified_access_endpoint_target_dns)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -70268,6 +71656,10 @@ module Aws::EC2
     #   Standards (FIPS) is enabled on the instance.
     #   @return [Boolean]
     #
+    # @!attribute [rw] cidr_endpoints_custom_sub_domain
+    #   The custom subdomain.
+    #   @return [Types::VerifiedAccessInstanceCustomSubDomain]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessInstance AWS API Documentation
     #
     class VerifiedAccessInstance < Struct.new(
@@ -70277,7 +71669,28 @@ module Aws::EC2
       :creation_time,
       :last_updated_time,
       :tags,
-      :fips_enabled)
+      :fips_enabled,
+      :cidr_endpoints_custom_sub_domain)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a custom subdomain for a network CIDR endpoint for Verified
+    # Access.
+    #
+    # @!attribute [rw] sub_domain
+    #   The subdomain.
+    #   @return [String]
+    #
+    # @!attribute [rw] nameservers
+    #   The name servers.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessInstanceCustomSubDomain AWS API Documentation
+    #
+    class VerifiedAccessInstanceCustomSubDomain < Struct.new(
+      :sub_domain,
+      :nameservers)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -70299,6 +71712,98 @@ module Aws::EC2
       :verified_access_instance_id,
       :access_logs)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a set of routes.
+    #
+    # @!attribute [rw] config
+    #   The base64-encoded Open VPN client configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] routes
+    #   The routes.
+    #   @return [Array<Types::VerifiedAccessInstanceOpenVpnClientConfigurationRoute>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessInstanceOpenVpnClientConfiguration AWS API Documentation
+    #
+    class VerifiedAccessInstanceOpenVpnClientConfiguration < Struct.new(
+      :config,
+      :routes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a route.
+    #
+    # @!attribute [rw] cidr
+    #   The CIDR block.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessInstanceOpenVpnClientConfigurationRoute AWS API Documentation
+    #
+    class VerifiedAccessInstanceOpenVpnClientConfigurationRoute < Struct.new(
+      :cidr)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the trust provider.
+    #
+    # @!attribute [rw] type
+    #   The trust provider type.
+    #   @return [String]
+    #
+    # @!attribute [rw] scopes
+    #   The set of user claims to be requested from the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] issuer
+    #   The OIDC issuer identifier of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] authorization_endpoint
+    #   The authorization endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] public_signing_key_endpoint
+    #   The public signing key endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] token_endpoint
+    #   The token endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_info_endpoint
+    #   The user info endpoint of the IdP.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_id
+    #   The OAuth 2.0 client identifier.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_secret
+    #   The OAuth 2.0 client secret.
+    #   @return [String]
+    #
+    # @!attribute [rw] pkce_enabled
+    #   Indicates whether Proof of Key Code Exchange (PKCE) is enabled.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessInstanceUserTrustProviderClientConfiguration AWS API Documentation
+    #
+    class VerifiedAccessInstanceUserTrustProviderClientConfiguration < Struct.new(
+      :type,
+      :scopes,
+      :issuer,
+      :authorization_endpoint,
+      :public_signing_key_endpoint,
+      :token_endpoint,
+      :user_info_endpoint,
+      :client_id,
+      :client_secret,
+      :pkce_enabled)
+      SENSITIVE = [:client_secret]
       include Aws::Structure
     end
 
@@ -70641,6 +72146,10 @@ module Aws::EC2
     #   The options in use for server side encryption.
     #   @return [Types::VerifiedAccessSseSpecificationResponse]
     #
+    # @!attribute [rw] native_application_oidc_options
+    #   The OpenID Connect (OIDC) options.
+    #   @return [Types::NativeApplicationOidcOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VerifiedAccessTrustProvider AWS API Documentation
     #
     class VerifiedAccessTrustProvider < Struct.new(
@@ -70655,7 +72164,8 @@ module Aws::EC2
       :creation_time,
       :last_updated_time,
       :tags,
-      :sse_specification)
+      :sse_specification,
+      :native_application_oidc_options)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -70785,7 +72295,7 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] operator
-    #   The entity that manages the volume.
+    #   The service provider that manages the volume.
     #   @return [Types::OperatorResponse]
     #
     # @!attribute [rw] volume_id
@@ -71393,6 +72903,26 @@ module Aws::EC2
     #   The last time the VPC BPA mode was updated.
     #   @return [Time]
     #
+    # @!attribute [rw] managed_by
+    #   The entity that manages the state of VPC BPA. Possible values
+    #   include:
+    #
+    #   * `account` - The state is managed by the account.
+    #
+    #   * `declarative-policy` - The state is managed by a declarative
+    #     policy and can't be modified by the account.
+    #   @return [String]
+    #
+    # @!attribute [rw] exclusions_allowed
+    #   Determines if exclusions are allowed. If you have [enabled VPC BPA
+    #   at the Organization level][1], exclusions may be `not-allowed`.
+    #   Otherwise, they are `allowed`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html#security-vpc-bpa-exclusions-orgs
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VpcBlockPublicAccessOptions AWS API Documentation
     #
     class VpcBlockPublicAccessOptions < Struct.new(
@@ -71401,7 +72931,9 @@ module Aws::EC2
       :state,
       :internet_gateway_block_mode,
       :reason,
-      :last_update_timestamp)
+      :last_update_timestamp,
+      :managed_by,
+      :exclusions_allowed)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -71558,6 +73090,26 @@ module Aws::EC2
     #   The last error that occurred for endpoint.
     #   @return [Types::LastError]
     #
+    # @!attribute [rw] ipv_4_prefixes
+    #   Array of IPv4 prefixes.
+    #   @return [Array<Types::SubnetIpPrefixes>]
+    #
+    # @!attribute [rw] ipv_6_prefixes
+    #   Array of IPv6 prefixes.
+    #   @return [Array<Types::SubnetIpPrefixes>]
+    #
+    # @!attribute [rw] failure_reason
+    #   Reason for the failure.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_arn
+    #   The Amazon Resource Name (ARN) of the service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of the resource configuration.
+    #   @return [String]
+    #
     # @!attribute [rw] service_region
     #   The Region where the service is hosted.
     #   @return [String]
@@ -71584,7 +73136,85 @@ module Aws::EC2
       :tags,
       :owner_id,
       :last_error,
+      :ipv_4_prefixes,
+      :ipv_6_prefixes,
+      :failure_reason,
+      :service_network_arn,
+      :resource_configuration_arn,
       :service_region)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes the VPC resources, VPC endpoint services, Lattice services,
+    # or service networks associated with the VPC endpoint.
+    #
+    # @!attribute [rw] id
+    #   The ID of the VPC endpoint association.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_id
+    #   The ID of the VPC endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_arn
+    #   The Amazon Resource Name (ARN) of the service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_name
+    #   The name of the service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] associated_resource_accessibility
+    #   The connectivity status of the resources associated to a VPC
+    #   endpoint. The resource is accessible if the associated resource
+    #   configuration is `AVAILABLE`, otherwise the resource is
+    #   inaccessible.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_reason
+    #   A message related to why an VPC endpoint association failed.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_code
+    #   An error code related to why an VPC endpoint association failed.
+    #   @return [String]
+    #
+    # @!attribute [rw] dns_entry
+    #   The DNS entry of the VPC endpoint association.
+    #   @return [Types::DnsEntry]
+    #
+    # @!attribute [rw] private_dns_entry
+    #   The private DNS entry of the VPC endpoint association.
+    #   @return [Types::DnsEntry]
+    #
+    # @!attribute [rw] associated_resource_arn
+    #   The Amazon Resource Name (ARN) of the associated resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_group_arn
+    #   The Amazon Resource Name (ARN) of the resource configuration group.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags to apply to the VPC endpoint association.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/VpcEndpointAssociation AWS API Documentation
+    #
+    class VpcEndpointAssociation < Struct.new(
+      :id,
+      :vpc_endpoint_id,
+      :service_network_arn,
+      :service_network_name,
+      :associated_resource_accessibility,
+      :failure_reason,
+      :failure_code,
+      :dns_entry,
+      :private_dns_entry,
+      :associated_resource_arn,
+      :resource_configuration_group_arn,
+      :tags)
       SENSITIVE = []
       include Aws::Structure
     end

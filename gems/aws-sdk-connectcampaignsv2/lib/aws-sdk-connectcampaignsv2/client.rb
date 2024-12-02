@@ -537,6 +537,9 @@ module Aws::ConnectCampaignsV2
     #     },
     #     source: {
     #       customer_profiles_segment_arn: "Arn",
+    #       event_trigger: {
+    #         customer_profiles_domain_arn: "Arn",
+    #       },
     #     },
     #     connect_campaign_flow_arn: "Arn",
     #     schedule: {
@@ -868,6 +871,7 @@ module Aws::ConnectCampaignsV2
     #   resp.campaign.channel_subtype_config.email.default_outbound_config.source_email_address_display_name #=> String
     #   resp.campaign.channel_subtype_config.email.default_outbound_config.wisdom_template_arn #=> String
     #   resp.campaign.source.customer_profiles_segment_arn #=> String
+    #   resp.campaign.source.event_trigger.customer_profiles_domain_arn #=> String
     #   resp.campaign.connect_campaign_flow_arn #=> String
     #   resp.campaign.schedule.start_time #=> Time
     #   resp.campaign.schedule.end_time #=> Time
@@ -1299,6 +1303,52 @@ module Aws::ConnectCampaignsV2
     # @param [Hash] params ({})
     def put_outbound_request_batch(params = {}, options = {})
       req = build_request(:put_outbound_request_batch, params)
+      req.send_request(options)
+    end
+
+    # Takes in a list of profile outbound requests to be placed as part of
+    # an outbound campaign. This API is idempotent.
+    #
+    # @option params [required, String] :id
+    #   Identifier representing a Campaign
+    #
+    # @option params [required, Array<Types::ProfileOutboundRequest>] :profile_outbound_requests
+    #   List of profile outbound requests
+    #
+    # @return [Types::PutProfileOutboundRequestBatchResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutProfileOutboundRequestBatchResponse#successful_requests #successful_requests} => Array&lt;Types::SuccessfulProfileOutboundRequest&gt;
+    #   * {Types::PutProfileOutboundRequestBatchResponse#failed_requests #failed_requests} => Array&lt;Types::FailedProfileOutboundRequest&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_profile_outbound_request_batch({
+    #     id: "CampaignId", # required
+    #     profile_outbound_requests: [ # required
+    #       {
+    #         client_token: "ClientToken", # required
+    #         profile_id: "ProfileId", # required
+    #         expiration_time: Time.now,
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.successful_requests #=> Array
+    #   resp.successful_requests[0].client_token #=> String
+    #   resp.successful_requests[0].id #=> String
+    #   resp.failed_requests #=> Array
+    #   resp.failed_requests[0].client_token #=> String
+    #   resp.failed_requests[0].id #=> String
+    #   resp.failed_requests[0].failure_code #=> String, one of "UnknownError", "ResourceNotFound", "Conflict", "RequestThrottled", "InvalidInput"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connectcampaignsv2-2024-04-23/PutProfileOutboundRequestBatch AWS API Documentation
+    #
+    # @overload put_profile_outbound_request_batch(params = {})
+    # @param [Hash] params ({})
+    def put_profile_outbound_request_batch(params = {}, options = {})
+      req = build_request(:put_profile_outbound_request_batch, params)
       req.send_request(options)
     end
 
@@ -1767,6 +1817,9 @@ module Aws::ConnectCampaignsV2
     #     id: "CampaignId", # required
     #     source: { # required
     #       customer_profiles_segment_arn: "Arn",
+    #       event_trigger: {
+    #         customer_profiles_domain_arn: "Arn",
+    #       },
     #     },
     #   })
     #
@@ -1797,7 +1850,7 @@ module Aws::ConnectCampaignsV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connectcampaignsv2'
-      context[:gem_version] = '1.0.0'
+      context[:gem_version] = '1.1.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

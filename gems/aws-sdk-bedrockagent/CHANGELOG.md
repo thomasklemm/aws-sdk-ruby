@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.38.0 (2024-12-02)
+------------------
+
+* Feature - This release introduces APIs to upload documents directly into a Knowledge Base
+
 1.37.0 (2024-11-27)
 ------------------
 

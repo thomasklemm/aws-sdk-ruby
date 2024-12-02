@@ -44,8 +44,11 @@ module Aws::QBusiness
     Applications = Shapes::ListShape.new(name: 'Applications')
     AppliedAttachmentsConfiguration = Shapes::StructureShape.new(name: 'AppliedAttachmentsConfiguration')
     AppliedCreatorModeConfiguration = Shapes::StructureShape.new(name: 'AppliedCreatorModeConfiguration')
+    Attachment = Shapes::StructureShape.new(name: 'Attachment')
+    AttachmentId = Shapes::StringShape.new(name: 'AttachmentId')
     AttachmentInput = Shapes::StructureShape.new(name: 'AttachmentInput')
     AttachmentInputEvent = Shapes::StructureShape.new(name: 'AttachmentInputEvent')
+    AttachmentList = Shapes::ListShape.new(name: 'AttachmentList')
     AttachmentName = Shapes::StringShape.new(name: 'AttachmentName')
     AttachmentOutput = Shapes::StructureShape.new(name: 'AttachmentOutput')
     AttachmentStatus = Shapes::StringShape.new(name: 'AttachmentStatus')
@@ -78,6 +81,9 @@ module Aws::QBusiness
     BlockedPhrasesConfigurationUpdate = Shapes::StructureShape.new(name: 'BlockedPhrasesConfigurationUpdate')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BoostingDurationInSeconds = Shapes::IntegerShape.new(name: 'BoostingDurationInSeconds')
+    BrowserExtension = Shapes::StringShape.new(name: 'BrowserExtension')
+    BrowserExtensionConfiguration = Shapes::StructureShape.new(name: 'BrowserExtensionConfiguration')
+    BrowserExtensionList = Shapes::ListShape.new(name: 'BrowserExtensionList')
     ChatInput = Shapes::StructureShape.new(name: 'ChatInput')
     ChatInputStream = Shapes::StructureShape.new(name: 'ChatInputStream')
     ChatMode = Shapes::StringShape.new(name: 'ChatMode')
@@ -96,8 +102,10 @@ module Aws::QBusiness
     ContentType = Shapes::StringShape.new(name: 'ContentType')
     Conversation = Shapes::StructureShape.new(name: 'Conversation')
     ConversationId = Shapes::StringShape.new(name: 'ConversationId')
+    ConversationSource = Shapes::StructureShape.new(name: 'ConversationSource')
     ConversationTitle = Shapes::StringShape.new(name: 'ConversationTitle')
     Conversations = Shapes::ListShape.new(name: 'Conversations')
+    CopyFromSource = Shapes::UnionShape.new(name: 'CopyFromSource')
     CreateApplicationRequest = Shapes::StructureShape.new(name: 'CreateApplicationRequest')
     CreateApplicationResponse = Shapes::StructureShape.new(name: 'CreateApplicationResponse')
     CreateDataSourceRequest = Shapes::StructureShape.new(name: 'CreateDataSourceRequest')
@@ -188,6 +196,7 @@ module Aws::QBusiness
     ExampleChatMessage = Shapes::StringShape.new(name: 'ExampleChatMessage')
     ExampleChatMessages = Shapes::ListShape.new(name: 'ExampleChatMessages')
     ExecutionId = Shapes::StringShape.new(name: 'ExecutionId')
+    ExternalResourceException = Shapes::StructureShape.new(name: 'ExternalResourceException')
     FailedAttachmentEvent = Shapes::StructureShape.new(name: 'FailedAttachmentEvent')
     FailedDocument = Shapes::StructureShape.new(name: 'FailedDocument')
     FailedDocuments = Shapes::ListShape.new(name: 'FailedDocuments')
@@ -201,6 +210,8 @@ module Aws::QBusiness
     GetGroupResponse = Shapes::StructureShape.new(name: 'GetGroupResponse')
     GetIndexRequest = Shapes::StructureShape.new(name: 'GetIndexRequest')
     GetIndexResponse = Shapes::StructureShape.new(name: 'GetIndexResponse')
+    GetMediaRequest = Shapes::StructureShape.new(name: 'GetMediaRequest')
+    GetMediaResponse = Shapes::StructureShape.new(name: 'GetMediaResponse')
     GetPluginRequest = Shapes::StructureShape.new(name: 'GetPluginRequest')
     GetPluginResponse = Shapes::StructureShape.new(name: 'GetPluginResponse')
     GetRetrieverRequest = Shapes::StructureShape.new(name: 'GetRetrieverRequest')
@@ -217,10 +228,12 @@ module Aws::QBusiness
     GroupSummary = Shapes::StructureShape.new(name: 'GroupSummary')
     GroupSummaryList = Shapes::ListShape.new(name: 'GroupSummaryList')
     HookConfiguration = Shapes::StructureShape.new(name: 'HookConfiguration')
-    IamIdentityProviderArn = Shapes::StringShape.new(name: 'IamIdentityProviderArn')
+    IAMIdentityProviderArn = Shapes::StringShape.new(name: 'IAMIdentityProviderArn')
     IdcApplicationArn = Shapes::StringShape.new(name: 'IdcApplicationArn')
     IdentityProviderConfiguration = Shapes::UnionShape.new(name: 'IdentityProviderConfiguration')
     IdentityType = Shapes::StringShape.new(name: 'IdentityType')
+    ImageExtractionConfiguration = Shapes::StructureShape.new(name: 'ImageExtractionConfiguration')
+    ImageExtractionStatus = Shapes::StringShape.new(name: 'ImageExtractionStatus')
     Index = Shapes::StructureShape.new(name: 'Index')
     IndexArn = Shapes::StringShape.new(name: 'IndexArn')
     IndexCapacityConfiguration = Shapes::StructureShape.new(name: 'IndexCapacityConfiguration')
@@ -245,6 +258,8 @@ module Aws::QBusiness
     LicenseNotFoundException = Shapes::StructureShape.new(name: 'LicenseNotFoundException')
     ListApplicationsRequest = Shapes::StructureShape.new(name: 'ListApplicationsRequest')
     ListApplicationsResponse = Shapes::StructureShape.new(name: 'ListApplicationsResponse')
+    ListAttachmentsRequest = Shapes::StructureShape.new(name: 'ListAttachmentsRequest')
+    ListAttachmentsResponse = Shapes::StructureShape.new(name: 'ListAttachmentsResponse')
     ListConversationsRequest = Shapes::StructureShape.new(name: 'ListConversationsRequest')
     ListConversationsResponse = Shapes::StructureShape.new(name: 'ListConversationsResponse')
     ListDataSourceSyncJobsRequest = Shapes::StructureShape.new(name: 'ListDataSourceSyncJobsRequest')
@@ -270,6 +285,7 @@ module Aws::QBusiness
     Long = Shapes::IntegerShape.new(name: 'Long')
     MaxResultsIntegerForGetTopicConfigurations = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForGetTopicConfigurations')
     MaxResultsIntegerForListApplications = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListApplications')
+    MaxResultsIntegerForListAttachments = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListAttachments')
     MaxResultsIntegerForListConversations = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListConversations')
     MaxResultsIntegerForListDataSources = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListDataSources')
     MaxResultsIntegerForListDataSourcesSyncJobs = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListDataSourcesSyncJobs')
@@ -280,6 +296,9 @@ module Aws::QBusiness
     MaxResultsIntegerForListPlugins = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListPlugins')
     MaxResultsIntegerForListRetrieversRequest = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListRetrieversRequest')
     MaxResultsIntegerForListWebExperiencesRequest = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListWebExperiencesRequest')
+    MediaExtractionConfiguration = Shapes::StructureShape.new(name: 'MediaExtractionConfiguration')
+    MediaId = Shapes::StringShape.new(name: 'MediaId')
+    MediaTooLargeException = Shapes::StructureShape.new(name: 'MediaTooLargeException')
     MemberGroup = Shapes::StructureShape.new(name: 'MemberGroup')
     MemberGroups = Shapes::ListShape.new(name: 'MemberGroups')
     MemberRelation = Shapes::StringShape.new(name: 'MemberRelation')
@@ -359,6 +378,7 @@ module Aws::QBusiness
     SnippetExcerpt = Shapes::StructureShape.new(name: 'SnippetExcerpt')
     SnippetExcerptText = Shapes::StringShape.new(name: 'SnippetExcerptText')
     SourceAttribution = Shapes::StructureShape.new(name: 'SourceAttribution')
+    SourceAttributionMediaId = Shapes::StringShape.new(name: 'SourceAttributionMediaId')
     SourceAttributions = Shapes::ListShape.new(name: 'SourceAttributions')
     StartDataSourceSyncJobRequest = Shapes::StructureShape.new(name: 'StartDataSourceSyncJobRequest')
     StartDataSourceSyncJobResponse = Shapes::StructureShape.new(name: 'StartDataSourceSyncJobResponse')
@@ -525,16 +545,33 @@ module Aws::QBusiness
     AppliedCreatorModeConfiguration.add_member(:creator_mode_control, Shapes::ShapeRef.new(shape: CreatorModeControl, required: true, location_name: "creatorModeControl"))
     AppliedCreatorModeConfiguration.struct_class = Types::AppliedCreatorModeConfiguration
 
-    AttachmentInput.add_member(:name, Shapes::ShapeRef.new(shape: AttachmentName, required: true, location_name: "name"))
-    AttachmentInput.add_member(:data, Shapes::ShapeRef.new(shape: Blob, required: true, location_name: "data"))
+    Attachment.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, location_name: "attachmentId"))
+    Attachment.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location_name: "conversationId"))
+    Attachment.add_member(:name, Shapes::ShapeRef.new(shape: AttachmentName, location_name: "name"))
+    Attachment.add_member(:copy_from, Shapes::ShapeRef.new(shape: CopyFromSource, location_name: "copyFrom"))
+    Attachment.add_member(:file_type, Shapes::ShapeRef.new(shape: String, location_name: "fileType"))
+    Attachment.add_member(:file_size, Shapes::ShapeRef.new(shape: Integer, location_name: "fileSize"))
+    Attachment.add_member(:md5chksum, Shapes::ShapeRef.new(shape: String, location_name: "md5chksum"))
+    Attachment.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    Attachment.add_member(:status, Shapes::ShapeRef.new(shape: AttachmentStatus, location_name: "status"))
+    Attachment.add_member(:error, Shapes::ShapeRef.new(shape: ErrorDetail, location_name: "error"))
+    Attachment.struct_class = Types::Attachment
+
+    AttachmentInput.add_member(:data, Shapes::ShapeRef.new(shape: Blob, location_name: "data"))
+    AttachmentInput.add_member(:name, Shapes::ShapeRef.new(shape: AttachmentName, location_name: "name"))
+    AttachmentInput.add_member(:copy_from, Shapes::ShapeRef.new(shape: CopyFromSource, location_name: "copyFrom"))
     AttachmentInput.struct_class = Types::AttachmentInput
 
     AttachmentInputEvent.add_member(:attachment, Shapes::ShapeRef.new(shape: AttachmentInput, location_name: "attachment"))
     AttachmentInputEvent.struct_class = Types::AttachmentInputEvent
 
+    AttachmentList.member = Shapes::ShapeRef.new(shape: Attachment)
+
     AttachmentOutput.add_member(:name, Shapes::ShapeRef.new(shape: AttachmentName, location_name: "name"))
     AttachmentOutput.add_member(:status, Shapes::ShapeRef.new(shape: AttachmentStatus, location_name: "status"))
     AttachmentOutput.add_member(:error, Shapes::ShapeRef.new(shape: ErrorDetail, location_name: "error"))
+    AttachmentOutput.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, location_name: "attachmentId"))
+    AttachmentOutput.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location_name: "conversationId"))
     AttachmentOutput.struct_class = Types::AttachmentOutput
 
     AttachmentsConfiguration.add_member(:attachments_control_mode, Shapes::ShapeRef.new(shape: AttachmentsControlMode, required: true, location_name: "attachmentsControlMode"))
@@ -610,6 +647,11 @@ module Aws::QBusiness
     BlockedPhrasesConfigurationUpdate.add_member(:blocked_phrases_to_delete, Shapes::ShapeRef.new(shape: BlockedPhrases, location_name: "blockedPhrasesToDelete"))
     BlockedPhrasesConfigurationUpdate.add_member(:system_message_override, Shapes::ShapeRef.new(shape: SystemMessageOverride, location_name: "systemMessageOverride"))
     BlockedPhrasesConfigurationUpdate.struct_class = Types::BlockedPhrasesConfigurationUpdate
+
+    BrowserExtensionConfiguration.add_member(:enabled_browser_extensions, Shapes::ShapeRef.new(shape: BrowserExtensionList, required: true, location_name: "enabledBrowserExtensions"))
+    BrowserExtensionConfiguration.struct_class = Types::BrowserExtensionConfiguration
+
+    BrowserExtensionList.member = Shapes::ShapeRef.new(shape: BrowserExtension)
 
     ChatInput.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     ChatInput.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location: "querystring", location_name: "userId"))
@@ -696,12 +738,22 @@ module Aws::QBusiness
     Conversation.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "startTime"))
     Conversation.struct_class = Types::Conversation
 
+    ConversationSource.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, required: true, location_name: "conversationId"))
+    ConversationSource.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, required: true, location_name: "attachmentId"))
+    ConversationSource.struct_class = Types::ConversationSource
+
     Conversations.member = Shapes::ShapeRef.new(shape: Conversation)
+
+    CopyFromSource.add_member(:conversation, Shapes::ShapeRef.new(shape: ConversationSource, location_name: "conversation"))
+    CopyFromSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    CopyFromSource.add_member_subclass(:conversation, Types::CopyFromSource::Conversation)
+    CopyFromSource.add_member_subclass(:unknown, Types::CopyFromSource::Unknown)
+    CopyFromSource.struct_class = Types::CopyFromSource
 
     CreateApplicationRequest.add_member(:display_name, Shapes::ShapeRef.new(shape: ApplicationName, required: true, location_name: "displayName"))
     CreateApplicationRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     CreateApplicationRequest.add_member(:identity_type, Shapes::ShapeRef.new(shape: IdentityType, location_name: "identityType"))
-    CreateApplicationRequest.add_member(:iam_identity_provider_arn, Shapes::ShapeRef.new(shape: IamIdentityProviderArn, location_name: "iamIdentityProviderArn"))
+    CreateApplicationRequest.add_member(:iam_identity_provider_arn, Shapes::ShapeRef.new(shape: IAMIdentityProviderArn, location_name: "iamIdentityProviderArn"))
     CreateApplicationRequest.add_member(:identity_center_instance_arn, Shapes::ShapeRef.new(shape: InstanceArn, location_name: "identityCenterInstanceArn"))
     CreateApplicationRequest.add_member(:client_ids_for_oidc, Shapes::ShapeRef.new(shape: ClientIdsForOIDC, location_name: "clientIdsForOIDC"))
     CreateApplicationRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -728,6 +780,7 @@ module Aws::QBusiness
     CreateDataSourceRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     CreateDataSourceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateDataSourceRequest.add_member(:document_enrichment_configuration, Shapes::ShapeRef.new(shape: DocumentEnrichmentConfiguration, location_name: "documentEnrichmentConfiguration"))
+    CreateDataSourceRequest.add_member(:media_extraction_configuration, Shapes::ShapeRef.new(shape: MediaExtractionConfiguration, location_name: "mediaExtractionConfiguration"))
     CreateDataSourceRequest.struct_class = Types::CreateDataSourceRequest
 
     CreateDataSourceResponse.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, location_name: "dataSourceId"))
@@ -736,8 +789,8 @@ module Aws::QBusiness
 
     CreateIndexRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     CreateIndexRequest.add_member(:display_name, Shapes::ShapeRef.new(shape: IndexName, required: true, location_name: "displayName"))
-    CreateIndexRequest.add_member(:type, Shapes::ShapeRef.new(shape: IndexType, location_name: "type"))
     CreateIndexRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
+    CreateIndexRequest.add_member(:type, Shapes::ShapeRef.new(shape: IndexType, location_name: "type"))
     CreateIndexRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     CreateIndexRequest.add_member(:capacity_configuration, Shapes::ShapeRef.new(shape: IndexCapacityConfiguration, location_name: "capacityConfiguration"))
     CreateIndexRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
@@ -795,6 +848,7 @@ module Aws::QBusiness
     CreateWebExperienceRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
     CreateWebExperienceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateWebExperienceRequest.add_member(:identity_provider_configuration, Shapes::ShapeRef.new(shape: IdentityProviderConfiguration, location_name: "identityProviderConfiguration"))
+    CreateWebExperienceRequest.add_member(:browser_extension_configuration, Shapes::ShapeRef.new(shape: BrowserExtensionConfiguration, location_name: "browserExtensionConfiguration"))
     CreateWebExperienceRequest.struct_class = Types::CreateWebExperienceRequest
 
     CreateWebExperienceResponse.add_member(:web_experience_id, Shapes::ShapeRef.new(shape: WebExperienceId, location_name: "webExperienceId"))
@@ -921,6 +975,7 @@ module Aws::QBusiness
     Document.add_member(:title, Shapes::ShapeRef.new(shape: Title, location_name: "title"))
     Document.add_member(:access_configuration, Shapes::ShapeRef.new(shape: AccessConfiguration, location_name: "accessConfiguration"))
     Document.add_member(:document_enrichment_configuration, Shapes::ShapeRef.new(shape: DocumentEnrichmentConfiguration, location_name: "documentEnrichmentConfiguration"))
+    Document.add_member(:media_extraction_configuration, Shapes::ShapeRef.new(shape: MediaExtractionConfiguration, location_name: "mediaExtractionConfiguration"))
     Document.struct_class = Types::Document
 
     DocumentAttribute.add_member(:name, Shapes::ShapeRef.new(shape: DocumentAttributeKey, required: true, location_name: "name"))
@@ -1016,6 +1071,9 @@ module Aws::QBusiness
 
     ExampleChatMessages.member = Shapes::ShapeRef.new(shape: ExampleChatMessage)
 
+    ExternalResourceException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
+    ExternalResourceException.struct_class = Types::ExternalResourceException
+
     FailedAttachmentEvent.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location_name: "conversationId"))
     FailedAttachmentEvent.add_member(:user_message_id, Shapes::ShapeRef.new(shape: MessageId, location_name: "userMessageId"))
     FailedAttachmentEvent.add_member(:system_message_id, Shapes::ShapeRef.new(shape: MessageId, location_name: "systemMessageId"))
@@ -1036,7 +1094,7 @@ module Aws::QBusiness
     GetApplicationResponse.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, location_name: "applicationId"))
     GetApplicationResponse.add_member(:application_arn, Shapes::ShapeRef.new(shape: ApplicationArn, location_name: "applicationArn"))
     GetApplicationResponse.add_member(:identity_type, Shapes::ShapeRef.new(shape: IdentityType, location_name: "identityType"))
-    GetApplicationResponse.add_member(:iam_identity_provider_arn, Shapes::ShapeRef.new(shape: IamIdentityProviderArn, location_name: "iamIdentityProviderArn"))
+    GetApplicationResponse.add_member(:iam_identity_provider_arn, Shapes::ShapeRef.new(shape: IAMIdentityProviderArn, location_name: "iamIdentityProviderArn"))
     GetApplicationResponse.add_member(:identity_center_application_arn, Shapes::ShapeRef.new(shape: IdcApplicationArn, location_name: "identityCenterApplicationArn"))
     GetApplicationResponse.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     GetApplicationResponse.add_member(:status, Shapes::ShapeRef.new(shape: ApplicationStatus, location_name: "status"))
@@ -1085,6 +1143,7 @@ module Aws::QBusiness
     GetDataSourceResponse.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     GetDataSourceResponse.add_member(:error, Shapes::ShapeRef.new(shape: ErrorDetail, location_name: "error"))
     GetDataSourceResponse.add_member(:document_enrichment_configuration, Shapes::ShapeRef.new(shape: DocumentEnrichmentConfiguration, location_name: "documentEnrichmentConfiguration"))
+    GetDataSourceResponse.add_member(:media_extraction_configuration, Shapes::ShapeRef.new(shape: MediaExtractionConfiguration, location_name: "mediaExtractionConfiguration"))
     GetDataSourceResponse.struct_class = Types::GetDataSourceResponse
 
     GetGroupRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
@@ -1104,9 +1163,9 @@ module Aws::QBusiness
     GetIndexResponse.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, location_name: "applicationId"))
     GetIndexResponse.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, location_name: "indexId"))
     GetIndexResponse.add_member(:display_name, Shapes::ShapeRef.new(shape: IndexName, location_name: "displayName"))
-    GetIndexResponse.add_member(:type, Shapes::ShapeRef.new(shape: IndexType, location_name: "type"))
     GetIndexResponse.add_member(:index_arn, Shapes::ShapeRef.new(shape: IndexArn, location_name: "indexArn"))
     GetIndexResponse.add_member(:status, Shapes::ShapeRef.new(shape: IndexStatus, location_name: "status"))
+    GetIndexResponse.add_member(:type, Shapes::ShapeRef.new(shape: IndexType, location_name: "type"))
     GetIndexResponse.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     GetIndexResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
     GetIndexResponse.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "updatedAt"))
@@ -1115,6 +1174,16 @@ module Aws::QBusiness
     GetIndexResponse.add_member(:error, Shapes::ShapeRef.new(shape: ErrorDetail, location_name: "error"))
     GetIndexResponse.add_member(:index_statistics, Shapes::ShapeRef.new(shape: IndexStatistics, location_name: "indexStatistics"))
     GetIndexResponse.struct_class = Types::GetIndexResponse
+
+    GetMediaRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    GetMediaRequest.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, required: true, location: "uri", location_name: "conversationId"))
+    GetMediaRequest.add_member(:message_id, Shapes::ShapeRef.new(shape: MessageId, required: true, location: "uri", location_name: "messageId"))
+    GetMediaRequest.add_member(:media_id, Shapes::ShapeRef.new(shape: MediaId, required: true, location: "uri", location_name: "mediaId"))
+    GetMediaRequest.struct_class = Types::GetMediaRequest
+
+    GetMediaResponse.add_member(:media_bytes, Shapes::ShapeRef.new(shape: Blob, location_name: "mediaBytes"))
+    GetMediaResponse.add_member(:media_mime_type, Shapes::ShapeRef.new(shape: String, location_name: "mediaMimeType"))
+    GetMediaResponse.struct_class = Types::GetMediaResponse
 
     GetPluginRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     GetPluginRequest.add_member(:plugin_id, Shapes::ShapeRef.new(shape: PluginId, required: true, location: "uri", location_name: "pluginId"))
@@ -1177,6 +1246,7 @@ module Aws::QBusiness
     GetWebExperienceResponse.add_member(:identity_provider_configuration, Shapes::ShapeRef.new(shape: IdentityProviderConfiguration, location_name: "identityProviderConfiguration"))
     GetWebExperienceResponse.add_member(:authentication_configuration, Shapes::ShapeRef.new(shape: WebExperienceAuthConfiguration, deprecated: true, location_name: "authenticationConfiguration", metadata: {"deprecatedMessage"=>"Property associated with legacy SAML IdP flow. Deprecated in favor of using AWS IAM Identity Center for user management."}))
     GetWebExperienceResponse.add_member(:error, Shapes::ShapeRef.new(shape: ErrorDetail, location_name: "error"))
+    GetWebExperienceResponse.add_member(:browser_extension_configuration, Shapes::ShapeRef.new(shape: BrowserExtensionConfiguration, location_name: "browserExtensionConfiguration"))
     GetWebExperienceResponse.struct_class = Types::GetWebExperienceResponse
 
     GroupMembers.add_member(:member_groups, Shapes::ShapeRef.new(shape: MemberGroups, location_name: "memberGroups"))
@@ -1209,6 +1279,9 @@ module Aws::QBusiness
     IdentityProviderConfiguration.add_member_subclass(:open_id_connect_configuration, Types::IdentityProviderConfiguration::OpenIdConnectConfiguration)
     IdentityProviderConfiguration.add_member_subclass(:unknown, Types::IdentityProviderConfiguration::Unknown)
     IdentityProviderConfiguration.struct_class = Types::IdentityProviderConfiguration
+
+    ImageExtractionConfiguration.add_member(:image_extraction_status, Shapes::ShapeRef.new(shape: ImageExtractionStatus, required: true, location_name: "imageExtractionStatus"))
+    ImageExtractionConfiguration.struct_class = Types::ImageExtractionConfiguration
 
     Index.add_member(:display_name, Shapes::ShapeRef.new(shape: IndexName, location_name: "displayName"))
     Index.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, location_name: "indexId"))
@@ -1248,6 +1321,17 @@ module Aws::QBusiness
     ListApplicationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListApplicationsResponse.add_member(:applications, Shapes::ShapeRef.new(shape: Applications, location_name: "applications"))
     ListApplicationsResponse.struct_class = Types::ListApplicationsResponse
+
+    ListAttachmentsRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    ListAttachmentsRequest.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location: "querystring", location_name: "conversationId"))
+    ListAttachmentsRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location: "querystring", location_name: "userId"))
+    ListAttachmentsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListAttachmentsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsIntegerForListAttachments, location: "querystring", location_name: "maxResults"))
+    ListAttachmentsRequest.struct_class = Types::ListAttachmentsRequest
+
+    ListAttachmentsResponse.add_member(:attachments, Shapes::ShapeRef.new(shape: AttachmentList, location_name: "attachments"))
+    ListAttachmentsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListAttachmentsResponse.struct_class = Types::ListAttachmentsResponse
 
     ListConversationsRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     ListConversationsRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location: "querystring", location_name: "userId"))
@@ -1358,6 +1442,12 @@ module Aws::QBusiness
     ListWebExperiencesResponse.add_member(:web_experiences, Shapes::ShapeRef.new(shape: WebExperiences, location_name: "webExperiences"))
     ListWebExperiencesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListWebExperiencesResponse.struct_class = Types::ListWebExperiencesResponse
+
+    MediaExtractionConfiguration.add_member(:image_extraction_configuration, Shapes::ShapeRef.new(shape: ImageExtractionConfiguration, location_name: "imageExtractionConfiguration"))
+    MediaExtractionConfiguration.struct_class = Types::MediaExtractionConfiguration
+
+    MediaTooLargeException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
+    MediaTooLargeException.struct_class = Types::MediaTooLargeException
 
     MemberGroup.add_member(:group_name, Shapes::ShapeRef.new(shape: GroupName, required: true, location_name: "groupName"))
     MemberGroup.add_member(:type, Shapes::ShapeRef.new(shape: MembershipType, location_name: "type"))
@@ -1612,6 +1702,8 @@ module Aws::QBusiness
     TextSegment.add_member(:begin_offset, Shapes::ShapeRef.new(shape: Integer, location_name: "beginOffset"))
     TextSegment.add_member(:end_offset, Shapes::ShapeRef.new(shape: Integer, location_name: "endOffset"))
     TextSegment.add_member(:snippet_excerpt, Shapes::ShapeRef.new(shape: SnippetExcerpt, location_name: "snippetExcerpt"))
+    TextSegment.add_member(:media_id, Shapes::ShapeRef.new(shape: SourceAttributionMediaId, location_name: "mediaId"))
+    TextSegment.add_member(:media_mime_type, Shapes::ShapeRef.new(shape: String, location_name: "mediaMimeType"))
     TextSegment.struct_class = Types::TextSegment
 
     TextSegmentList.member = Shapes::ShapeRef.new(shape: TextSegment)
@@ -1667,6 +1759,7 @@ module Aws::QBusiness
     UpdateDataSourceRequest.add_member(:sync_schedule, Shapes::ShapeRef.new(shape: SyncSchedule, location_name: "syncSchedule"))
     UpdateDataSourceRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     UpdateDataSourceRequest.add_member(:document_enrichment_configuration, Shapes::ShapeRef.new(shape: DocumentEnrichmentConfiguration, location_name: "documentEnrichmentConfiguration"))
+    UpdateDataSourceRequest.add_member(:media_extraction_configuration, Shapes::ShapeRef.new(shape: MediaExtractionConfiguration, location_name: "mediaExtractionConfiguration"))
     UpdateDataSourceRequest.struct_class = Types::UpdateDataSourceRequest
 
     UpdateDataSourceResponse.struct_class = Types::UpdateDataSourceResponse
@@ -1722,6 +1815,7 @@ module Aws::QBusiness
     UpdateWebExperienceRequest.add_member(:sample_prompts_control_mode, Shapes::ShapeRef.new(shape: WebExperienceSamplePromptsControlMode, location_name: "samplePromptsControlMode"))
     UpdateWebExperienceRequest.add_member(:identity_provider_configuration, Shapes::ShapeRef.new(shape: IdentityProviderConfiguration, location_name: "identityProviderConfiguration"))
     UpdateWebExperienceRequest.add_member(:origins, Shapes::ShapeRef.new(shape: WebExperienceOrigins, location_name: "origins"))
+    UpdateWebExperienceRequest.add_member(:browser_extension_configuration, Shapes::ShapeRef.new(shape: BrowserExtensionConfiguration, location_name: "browserExtensionConfiguration"))
     UpdateWebExperienceRequest.struct_class = Types::UpdateWebExperienceRequest
 
     UpdateWebExperienceResponse.struct_class = Types::UpdateWebExperienceResponse
@@ -1828,6 +1922,7 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ExternalResourceException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -1844,6 +1939,7 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ExternalResourceException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2165,6 +2261,21 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
+      api.add_operation(:get_media, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetMedia"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/conversations/{conversationId}/messages/{messageId}/media/{mediaId}"
+        o.input = Shapes::ShapeRef.new(shape: GetMediaRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetMediaResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: MediaTooLargeException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
       api.add_operation(:get_plugin, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetPlugin"
         o.http_method = "GET"
@@ -2236,6 +2347,26 @@ module Aws::QBusiness
         )
       end)
 
+      api.add_operation(:list_attachments, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAttachments"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/attachments"
+        o.input = Shapes::ShapeRef.new(shape: ListAttachmentsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAttachmentsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_conversations, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListConversations"
         o.http_method = "GET"
@@ -2264,6 +2395,7 @@ module Aws::QBusiness
         o.output = Shapes::ShapeRef.new(shape: ListDataSourceSyncJobsResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2493,6 +2625,7 @@ module Aws::QBusiness
         o.output = Shapes::ShapeRef.new(shape: StopDataSourceSyncJobResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)

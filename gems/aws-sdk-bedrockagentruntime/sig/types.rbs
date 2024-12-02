@@ -120,6 +120,18 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class BedrockRerankingConfiguration
+      attr_accessor model_configuration: Types::BedrockRerankingModelConfiguration
+      attr_accessor number_of_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class BedrockRerankingModelConfiguration
+      attr_accessor additional_model_request_fields: ::Hash[::String, untyped]
+      attr_accessor model_arn: ::String
+      SENSITIVE: []
+    end
+
     class ByteContentDoc
       attr_accessor content_type: ::String
       attr_accessor data: ::String
@@ -136,6 +148,12 @@ module Aws::BedrockAgentRuntime
     class Citation
       attr_accessor generated_response_part: Types::GeneratedResponsePart
       attr_accessor retrieved_references: ::Array[Types::RetrievedReference]
+      SENSITIVE: []
+    end
+
+    class CitationEvent
+      attr_accessor citation: Types::Citation
+      attr_accessor event_type: untyped
       SENSITIVE: []
     end
 
@@ -218,6 +236,11 @@ module Aws::BedrockAgentRuntime
       attr_accessor failure_reason: ::String
       attr_accessor trace_id: ::String
       SENSITIVE: [:failure_reason]
+    end
+
+    class FieldForReranking
+      attr_accessor field_name: ::String
+      SENSITIVE: []
     end
 
     class FilePart
@@ -480,6 +503,12 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class GuardrailEvent
+      attr_accessor action: ("INTERVENED" | "NONE")
+      attr_accessor event_type: untyped
+      SENSITIVE: []
+    end
+
     class GuardrailManagedWord
       attr_accessor action: ("BLOCKED")
       attr_accessor match: ::String
@@ -532,6 +561,12 @@ module Aws::BedrockAgentRuntime
       attr_accessor custom_words: ::Array[Types::GuardrailCustomWord]
       attr_accessor managed_word_lists: ::Array[Types::GuardrailManagedWord]
       SENSITIVE: [:custom_words, :managed_word_lists]
+    end
+
+    class ImplicitFilterConfiguration
+      attr_accessor metadata_attributes: ::Array[Types::MetadataAttributeSchema]
+      attr_accessor model_arn: ::String
+      SENSITIVE: []
     end
 
     class InferenceConfig
@@ -756,8 +791,10 @@ module Aws::BedrockAgentRuntime
 
     class KnowledgeBaseVectorSearchConfiguration
       attr_accessor filter: Types::RetrievalFilter
+      attr_accessor implicit_filter_configuration: Types::ImplicitFilterConfiguration
       attr_accessor number_of_results: ::Integer
       attr_accessor override_search_type: ("HYBRID" | "SEMANTIC")
+      attr_accessor reranking_configuration: Types::VectorSearchRerankingConfiguration
       SENSITIVE: [:filter]
     end
 
@@ -784,6 +821,19 @@ module Aws::BedrockAgentRuntime
     class Metadata
       attr_accessor usage: Types::Usage
       SENSITIVE: [:usage]
+    end
+
+    class MetadataAttributeSchema
+      attr_accessor description: ::String
+      attr_accessor key: ::String
+      attr_accessor type: ("STRING" | "NUMBER" | "BOOLEAN" | "STRING_LIST")
+      SENSITIVE: []
+    end
+
+    class MetadataConfigurationForReranking
+      attr_accessor selection_mode: ("SELECTIVE" | "ALL")
+      attr_accessor selective_mode_configuration: Types::RerankingMetadataSelectiveModeConfiguration
+      SENSITIVE: []
     end
 
     class ModelInvocationInput
@@ -1010,6 +1060,71 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class RerankDocument
+      attr_accessor json_document: untyped
+      attr_accessor text_document: Types::RerankTextDocument
+      attr_accessor type: ("TEXT" | "JSON")
+      SENSITIVE: [:text_document]
+    end
+
+    class RerankQuery
+      attr_accessor text_query: Types::RerankTextDocument
+      attr_accessor type: ("TEXT")
+      SENSITIVE: [:text_query]
+    end
+
+    class RerankRequest
+      attr_accessor next_token: ::String
+      attr_accessor queries: ::Array[Types::RerankQuery]
+      attr_accessor reranking_configuration: Types::RerankingConfiguration
+      attr_accessor sources: ::Array[Types::RerankSource]
+      SENSITIVE: [:queries, :sources]
+    end
+
+    class RerankResponse
+      attr_accessor next_token: ::String
+      attr_accessor results: ::Array[Types::RerankResult]
+      SENSITIVE: []
+    end
+
+    class RerankResult
+      attr_accessor document: Types::RerankDocument
+      attr_accessor index: ::Integer
+      attr_accessor relevance_score: ::Float
+      SENSITIVE: [:document]
+    end
+
+    class RerankSource
+      attr_accessor inline_document_source: Types::RerankDocument
+      attr_accessor type: ("INLINE")
+      SENSITIVE: [:inline_document_source]
+    end
+
+    class RerankTextDocument
+      attr_accessor text: ::String
+      SENSITIVE: []
+    end
+
+    class RerankingConfiguration
+      attr_accessor bedrock_reranking_configuration: Types::BedrockRerankingConfiguration
+      attr_accessor type: ("BEDROCK_RERANKING_MODEL")
+      SENSITIVE: []
+    end
+
+    class RerankingMetadataSelectiveModeConfiguration
+      attr_accessor fields_to_exclude: ::Array[Types::FieldForReranking]
+      attr_accessor fields_to_include: ::Array[Types::FieldForReranking]
+      attr_accessor unknown: untyped
+      SENSITIVE: [:fields_to_exclude, :fields_to_include]
+
+      class FieldsToExclude < RerankingMetadataSelectiveModeConfiguration
+      end
+      class FieldsToInclude < RerankingMetadataSelectiveModeConfiguration
+      end
+      class Unknown < RerankingMetadataSelectiveModeConfiguration
+      end
+    end
+
     class ResourceNotFoundException
       attr_accessor message: ::String
       attr_accessor event_type: untyped
@@ -1073,12 +1188,18 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class RetrievalResultCustomDocumentLocation
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
     class RetrievalResultLocation
       attr_accessor confluence_location: Types::RetrievalResultConfluenceLocation
+      attr_accessor custom_document_location: Types::RetrievalResultCustomDocumentLocation
       attr_accessor s3_location: Types::RetrievalResultS3Location
       attr_accessor salesforce_location: Types::RetrievalResultSalesforceLocation
       attr_accessor share_point_location: Types::RetrievalResultSharePointLocation
-      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT")
+      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM")
       attr_accessor web_location: Types::RetrievalResultWebLocation
       SENSITIVE: []
     end
@@ -1120,6 +1241,12 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class RetrieveAndGenerateOutputEvent
+      attr_accessor text: ::String
+      attr_accessor event_type: untyped
+      SENSITIVE: []
+    end
+
     class RetrieveAndGenerateRequest
       attr_accessor input: Types::RetrieveAndGenerateInput
       attr_accessor retrieve_and_generate_configuration: Types::RetrieveAndGenerateConfiguration
@@ -1141,7 +1268,22 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class RetrieveAndGenerateStreamRequest
+      attr_accessor input: Types::RetrieveAndGenerateInput
+      attr_accessor retrieve_and_generate_configuration: Types::RetrieveAndGenerateConfiguration
+      attr_accessor session_configuration: Types::RetrieveAndGenerateSessionConfiguration
+      attr_accessor session_id: ::String
+      SENSITIVE: [:input]
+    end
+
+    class RetrieveAndGenerateStreamResponse
+      attr_accessor session_id: ::String
+      attr_accessor stream: Types::RetrieveAndGenerateStreamResponseOutput
+      SENSITIVE: []
+    end
+
     class RetrieveRequest
+      attr_accessor guardrail_configuration: Types::GuardrailConfiguration
       attr_accessor knowledge_base_id: ::String
       attr_accessor next_token: ::String
       attr_accessor retrieval_configuration: Types::KnowledgeBaseRetrievalConfiguration
@@ -1150,6 +1292,7 @@ module Aws::BedrockAgentRuntime
     end
 
     class RetrieveResponse
+      attr_accessor guardrail_action: ("INTERVENED" | "NONE")
       attr_accessor next_token: ::String
       attr_accessor retrieval_results: ::Array[Types::KnowledgeBaseRetrievalResult]
       SENSITIVE: [:retrieval_results]
@@ -1286,6 +1429,25 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class VectorSearchBedrockRerankingConfiguration
+      attr_accessor metadata_configuration: Types::MetadataConfigurationForReranking
+      attr_accessor model_configuration: Types::VectorSearchBedrockRerankingModelConfiguration
+      attr_accessor number_of_reranked_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class VectorSearchBedrockRerankingModelConfiguration
+      attr_accessor additional_model_request_fields: ::Hash[::String, untyped]
+      attr_accessor model_arn: ::String
+      SENSITIVE: []
+    end
+
+    class VectorSearchRerankingConfiguration
+      attr_accessor bedrock_reranking_configuration: Types::VectorSearchBedrockRerankingConfiguration
+      attr_accessor type: ("BEDROCK_RERANKING_MODEL")
+      SENSITIVE: []
+    end
+
     class FlowResponseStream < Enumerator[untyped, untyped]
       def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :conflict_exception, :dependency_failed_exception, :flow_completion_event, :flow_output_event, :flow_trace_event, :internal_server_exception, :resource_not_found_exception, :service_quota_exceeded_exception, :throttling_exception, :validation_exception]
     end
@@ -1300,6 +1462,10 @@ module Aws::BedrockAgentRuntime
 
     class ResponseStream < Enumerator[untyped, untyped]
       def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :chunk, :conflict_exception, :dependency_failed_exception, :files, :internal_server_exception, :resource_not_found_exception, :return_control, :service_quota_exceeded_exception, :throttling_exception, :trace, :validation_exception]
+    end
+
+    class RetrieveAndGenerateStreamResponseOutput < Enumerator[untyped, untyped]
+      def event_types: () -> [:access_denied_exception, :bad_gateway_exception, :citation, :conflict_exception, :dependency_failed_exception, :guardrail, :internal_server_exception, :output, :resource_not_found_exception, :service_quota_exceeded_exception, :throttling_exception, :validation_exception]
     end
   end
 end

@@ -525,6 +525,8 @@ module Aws::QBusiness
     #   event.source_attributions[0].text_message_segments[0].begin_offset #=> Integer
     #   event.source_attributions[0].text_message_segments[0].end_offset #=> Integer
     #   event.source_attributions[0].text_message_segments[0].snippet_excerpt.text #=> String
+    #   event.source_attributions[0].text_message_segments[0].media_id #=> String
+    #   event.source_attributions[0].text_message_segments[0].media_mime_type #=> String
     #   event.final_text_message #=> String
     #
     #   For :action_review_event event available at #on_action_review_event_event callback and response eventstream enumerator:
@@ -548,9 +550,11 @@ module Aws::QBusiness
     #   event.user_message_id #=> String
     #   event.system_message_id #=> String
     #   event.attachment.name #=> String
-    #   event.attachment.status #=> String, one of "FAILED", "SUCCEEDED"
+    #   event.attachment.status #=> String, one of "FAILED", "SUCCESS"
     #   event.attachment.error.error_message #=> String
     #   event.attachment.error.error_code #=> String, one of "InternalError", "InvalidRequest", "ResourceInactive", "ResourceNotFound"
+    #   event.attachment.attachment_id #=> String
+    #   event.attachment.conversation_id #=> String
     #
     #   For :auth_challenge_request_event event available at #on_auth_challenge_request_event_event callback and response eventstream enumerator:
     #   event.authorization_url #=> String
@@ -603,7 +607,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.22.0'
+      context[:gem_version] = '1.23.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

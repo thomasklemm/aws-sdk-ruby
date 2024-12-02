@@ -8,6 +8,9 @@
 module Aws::EventBridge
   module Types
 
+    class AccessDeniedException < Aws::EmptyStructure
+    end
+
     class ActivateEventSourceRequest
       attr_accessor name: ::String
       SENSITIVE: []
@@ -100,7 +103,7 @@ module Aws::EventBridge
     class Connection
       attr_accessor connection_arn: ::String
       attr_accessor name: ::String
-      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
       attr_accessor state_reason: ::String
       attr_accessor authorization_type: ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
       attr_accessor creation_time: ::Time
@@ -119,6 +122,7 @@ module Aws::EventBridge
       attr_accessor o_auth_parameters: Types::ConnectionOAuthResponseParameters
       attr_accessor api_key_auth_parameters: Types::ConnectionApiKeyAuthResponseParameters
       attr_accessor invocation_http_parameters: Types::ConnectionHttpParameters
+      attr_accessor connectivity_parameters: Types::DescribeConnectionConnectivityParameters
       SENSITIVE: []
     end
 
@@ -168,6 +172,16 @@ module Aws::EventBridge
       SENSITIVE: [:value]
     end
 
+    class ConnectivityResourceConfigurationArn
+      attr_accessor resource_configuration_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ConnectivityResourceParameters
+      attr_accessor resource_parameters: Types::ConnectivityResourceConfigurationArn
+      SENSITIVE: []
+    end
+
     class CreateApiDestinationRequest
       attr_accessor name: ::String
       attr_accessor description: ::String
@@ -214,6 +228,7 @@ module Aws::EventBridge
       attr_accessor o_auth_parameters: Types::CreateConnectionOAuthRequestParameters
       attr_accessor api_key_auth_parameters: Types::CreateConnectionApiKeyAuthRequestParameters
       attr_accessor invocation_http_parameters: Types::ConnectionHttpParameters
+      attr_accessor connectivity_parameters: Types::ConnectivityResourceParameters
       SENSITIVE: []
     end
 
@@ -242,12 +257,13 @@ module Aws::EventBridge
       attr_accessor description: ::String
       attr_accessor authorization_type: ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
       attr_accessor auth_parameters: Types::CreateConnectionAuthRequestParameters
+      attr_accessor invocation_connectivity_parameters: Types::ConnectivityResourceParameters
       SENSITIVE: []
     end
 
     class CreateConnectionResponse
       attr_accessor connection_arn: ::String
-      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
       attr_accessor creation_time: ::Time
       attr_accessor last_modified_time: ::Time
       SENSITIVE: []
@@ -320,7 +336,7 @@ module Aws::EventBridge
 
     class DeauthorizeConnectionResponse
       attr_accessor connection_arn: ::String
-      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
       attr_accessor creation_time: ::Time
       attr_accessor last_modified_time: ::Time
       attr_accessor last_authorized_time: ::Time
@@ -350,7 +366,7 @@ module Aws::EventBridge
 
     class DeleteConnectionResponse
       attr_accessor connection_arn: ::String
-      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
       attr_accessor creation_time: ::Time
       attr_accessor last_modified_time: ::Time
       attr_accessor last_authorized_time: ::Time
@@ -422,8 +438,19 @@ module Aws::EventBridge
       SENSITIVE: []
     end
 
+    class DescribeConnectionConnectivityParameters
+      attr_accessor resource_parameters: Types::DescribeConnectionResourceParameters
+      SENSITIVE: []
+    end
+
     class DescribeConnectionRequest
       attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeConnectionResourceParameters
+      attr_accessor resource_configuration_arn: ::String
+      attr_accessor resource_association_arn: ::String
       SENSITIVE: []
     end
 
@@ -431,7 +458,8 @@ module Aws::EventBridge
       attr_accessor connection_arn: ::String
       attr_accessor name: ::String
       attr_accessor description: ::String
-      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+      attr_accessor invocation_connectivity_parameters: Types::DescribeConnectionConnectivityParameters
+      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
       attr_accessor state_reason: ::String
       attr_accessor authorization_type: ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
       attr_accessor secret_arn: ::String
@@ -691,7 +719,7 @@ module Aws::EventBridge
 
     class ListConnectionsRequest
       attr_accessor name_prefix: ::String
-      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
       attr_accessor next_token: ::String
       attr_accessor limit: ::Integer
       SENSITIVE: []
@@ -1175,6 +1203,9 @@ module Aws::EventBridge
       SENSITIVE: []
     end
 
+    class ThrottlingException < Aws::EmptyStructure
+    end
+
     class UntagResourceRequest
       attr_accessor resource_arn: ::String
       attr_accessor tag_keys: ::Array[::String]
@@ -1229,6 +1260,7 @@ module Aws::EventBridge
       attr_accessor o_auth_parameters: Types::UpdateConnectionOAuthRequestParameters
       attr_accessor api_key_auth_parameters: Types::UpdateConnectionApiKeyAuthRequestParameters
       attr_accessor invocation_http_parameters: Types::ConnectionHttpParameters
+      attr_accessor connectivity_parameters: Types::ConnectivityResourceParameters
       SENSITIVE: []
     end
 
@@ -1257,12 +1289,13 @@ module Aws::EventBridge
       attr_accessor description: ::String
       attr_accessor authorization_type: ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
       attr_accessor auth_parameters: Types::UpdateConnectionAuthRequestParameters
+      attr_accessor invocation_connectivity_parameters: Types::ConnectivityResourceParameters
       SENSITIVE: []
     end
 
     class UpdateConnectionResponse
       attr_accessor connection_arn: ::String
-      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+      attr_accessor connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
       attr_accessor creation_time: ::Time
       attr_accessor last_modified_time: ::Time
       attr_accessor last_authorized_time: ::Time

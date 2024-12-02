@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.106.0 (2024-12-02)
+------------------
+
+* Feature - FSx API changes to support the public launch of the Amazon FSx Intelligent Tiering for OpenZFS storage class.
+
 1.105.0 (2024-11-27)
 ------------------
 

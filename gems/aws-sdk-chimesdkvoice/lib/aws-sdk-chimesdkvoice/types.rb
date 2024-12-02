@@ -566,13 +566,46 @@ module Aws::ChimeSDKVoice
     #   The tags assigned to the Voice Connector.
     #   @return [Array<Types::Tag>]
     #
+    # @!attribute [rw] integration_type
+    #   The connectors for use with Amazon Connect.
+    #
+    #   The following options are available:
+    #
+    #   * `CONNECT_CALL_TRANSFER_CONNECTOR` - Enables enterprises to
+    #     integrate Amazon Connect with other voice systems to directly
+    #     transfer voice calls and metadata without using the public
+    #     telephone network. They can use Amazon Connect telephony and
+    #     Interactive Voice Response (IVR) with their existing voice systems
+    #     to modernize the IVR experience of their existing contact center
+    #     and their enterprise and branch voice systems. Additionally,
+    #     enterprises migrating their contact center to Amazon Connect can
+    #     start with Connect telephony and IVR for immediate modernization
+    #     ahead of agent migration.
+    #
+    #   * `CONNECT_ANALYTICS_CONNECTOR` - Enables enterprises to integrate
+    #     Amazon Connect with other voice systems for real-time and
+    #     post-call analytics. They can use Amazon Connect Contact Lens with
+    #     their existing voice systems to provides call recordings,
+    #     conversational analytics (including contact transcript, sensitive
+    #     data redaction, content categorization, theme detection, sentiment
+    #     analysis, real-time alerts, and post-contact summary), and agent
+    #     performance evaluations (including evaluation forms, automated
+    #     evaluation, supervisor review) with a rich user experience to
+    #     display, search and filter customer interactions, and programmatic
+    #     access to data streams and the data lake. Additionally,
+    #     enterprises migrating their contact center to Amazon Connect can
+    #     start with Contact Lens analytics and performance insights ahead
+    #     of agent migration.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/CreateVoiceConnectorRequest AWS API Documentation
     #
     class CreateVoiceConnectorRequest < Struct.new(
       :name,
       :aws_region,
       :require_encryption,
-      :tags)
+      :tags,
+      :integration_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -774,6 +807,19 @@ module Aws::ChimeSDKVoice
       include Aws::Structure
     end
 
+    # @!attribute [rw] voice_connector_id
+    #   The ID of the Voice Connector for which to delete the external
+    #   system configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/DeleteVoiceConnectorExternalSystemsConfigurationRequest AWS API Documentation
+    #
+    class DeleteVoiceConnectorExternalSystemsConfigurationRequest < Struct.new(
+      :voice_connector_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] voice_connector_group_id
     #   The Voice Connector Group ID.
     #   @return [String]
@@ -962,6 +1008,26 @@ module Aws::ChimeSDKVoice
     #
     class EmergencyCallingConfiguration < Struct.new(
       :dnis)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about an external systems configuration for a
+    # Voice Connector.
+    #
+    # @!attribute [rw] session_border_controller_types
+    #   The session border controllers.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] contact_center_system_types
+    #   The contact center system.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/ExternalSystemsConfiguration AWS API Documentation
+    #
+    class ExternalSystemsConfiguration < Struct.new(
+      :session_border_controller_types,
+      :contact_center_system_types)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1243,6 +1309,32 @@ module Aws::ChimeSDKVoice
     #
     class GetVoiceConnectorEmergencyCallingConfigurationResponse < Struct.new(
       :emergency_calling_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] voice_connector_id
+    #   The ID of the Voice Connector for which to return information about
+    #   the external system configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/GetVoiceConnectorExternalSystemsConfigurationRequest AWS API Documentation
+    #
+    class GetVoiceConnectorExternalSystemsConfigurationRequest < Struct.new(
+      :voice_connector_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] external_systems_configuration
+    #   An object that contains information about an external systems
+    #   configuration for a Voice Connector.
+    #   @return [Types::ExternalSystemsConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/GetVoiceConnectorExternalSystemsConfigurationResponse AWS API Documentation
+    #
+    class GetVoiceConnectorExternalSystemsConfigurationResponse < Struct.new(
+      :external_systems_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2554,6 +2646,42 @@ module Aws::ChimeSDKVoice
     #
     class PutVoiceConnectorEmergencyCallingConfigurationResponse < Struct.new(
       :emergency_calling_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] voice_connector_id
+    #   The ID of the Voice Connector for which to add the external system
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_border_controller_types
+    #   The session border controllers to use.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] contact_center_system_types
+    #   The contact center system to use.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/PutVoiceConnectorExternalSystemsConfigurationRequest AWS API Documentation
+    #
+    class PutVoiceConnectorExternalSystemsConfigurationRequest < Struct.new(
+      :voice_connector_id,
+      :session_border_controller_types,
+      :contact_center_system_types)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] external_systems_configuration
+    #   An object that contains information about an external systems
+    #   configuration for a Voice Connector.
+    #   @return [Types::ExternalSystemsConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/PutVoiceConnectorExternalSystemsConfigurationResponse AWS API Documentation
+    #
+    class PutVoiceConnectorExternalSystemsConfigurationResponse < Struct.new(
+      :external_systems_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3947,6 +4075,10 @@ module Aws::ChimeSDKVoice
     #   The ARN of the Voice Connector.
     #   @return [String]
     #
+    # @!attribute [rw] integration_type
+    #   The connectors for use with Amazon Connect.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/VoiceConnector AWS API Documentation
     #
     class VoiceConnector < Struct.new(
@@ -3957,7 +4089,8 @@ module Aws::ChimeSDKVoice
       :require_encryption,
       :created_timestamp,
       :updated_timestamp,
-      :voice_connector_arn)
+      :voice_connector_arn,
+      :integration_type)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -1062,6 +1062,128 @@ module Aws::CustomerProfiles
       req.send_request(options)
     end
 
+    # Creates an event trigger, which specifies the rules when to perform
+    # action based on customer's ingested data.
+    #
+    # Each event stream can be associated with only one integration in the
+    # same region and AWS account as the event stream.
+    #
+    # @option params [required, String] :domain_name
+    #   The unique name of the domain.
+    #
+    # @option params [required, String] :event_trigger_name
+    #   The unique name of the event trigger.
+    #
+    # @option params [required, String] :object_type_name
+    #   The unique name of the object type.
+    #
+    # @option params [String] :description
+    #   The description of the event trigger.
+    #
+    # @option params [required, Array<Types::EventTriggerCondition>] :event_trigger_conditions
+    #   A list of conditions that determine when an event should trigger the
+    #   destination.
+    #
+    # @option params [String] :segment_filter
+    #   The destination is triggered only for profiles that meet the criteria
+    #   of a segment definition.
+    #
+    # @option params [Types::EventTriggerLimits] :event_trigger_limits
+    #   Defines limits controlling whether an event triggers the destination,
+    #   based on ingestion latency and the number of invocations per profile
+    #   over specific time periods.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   An array of key-value pairs to apply to this resource.
+    #
+    # @return [Types::CreateEventTriggerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateEventTriggerResponse#event_trigger_name #event_trigger_name} => String
+    #   * {Types::CreateEventTriggerResponse#object_type_name #object_type_name} => String
+    #   * {Types::CreateEventTriggerResponse#description #description} => String
+    #   * {Types::CreateEventTriggerResponse#event_trigger_conditions #event_trigger_conditions} => Array&lt;Types::EventTriggerCondition&gt;
+    #   * {Types::CreateEventTriggerResponse#segment_filter #segment_filter} => String
+    #   * {Types::CreateEventTriggerResponse#event_trigger_limits #event_trigger_limits} => Types::EventTriggerLimits
+    #   * {Types::CreateEventTriggerResponse#created_at #created_at} => Time
+    #   * {Types::CreateEventTriggerResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::CreateEventTriggerResponse#tags #tags} => Hash&lt;String,String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_event_trigger({
+    #     domain_name: "name", # required
+    #     event_trigger_name: "name", # required
+    #     object_type_name: "typeName", # required
+    #     description: "sensitiveText",
+    #     event_trigger_conditions: [ # required
+    #       {
+    #         event_trigger_dimensions: [ # required
+    #           {
+    #             object_attributes: [ # required
+    #               {
+    #                 source: "text",
+    #                 field_name: "fieldName",
+    #                 comparison_operator: "INCLUSIVE", # required, accepts INCLUSIVE, EXCLUSIVE, CONTAINS, BEGINS_WITH, ENDS_WITH, GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL, LESS_THAN_OR_EQUAL, EQUAL, BEFORE, AFTER, ON, BETWEEN, NOT_BETWEEN
+    #                 values: ["string1To255"], # required
+    #               },
+    #             ],
+    #           },
+    #         ],
+    #         logical_operator: "ANY", # required, accepts ANY, ALL, NONE
+    #       },
+    #     ],
+    #     segment_filter: "name",
+    #     event_trigger_limits: {
+    #       event_expiration: 1,
+    #       periods: [
+    #         {
+    #           unit: "HOURS", # required, accepts HOURS, DAYS, WEEKS, MONTHS
+    #           value: 1, # required
+    #           max_invocations_per_profile: 1,
+    #           unlimited: false,
+    #         },
+    #       ],
+    #     },
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.event_trigger_name #=> String
+    #   resp.object_type_name #=> String
+    #   resp.description #=> String
+    #   resp.event_trigger_conditions #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].source #=> String
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].field_name #=> String
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].comparison_operator #=> String, one of "INCLUSIVE", "EXCLUSIVE", "CONTAINS", "BEGINS_WITH", "ENDS_WITH", "GREATER_THAN", "LESS_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN_OR_EQUAL", "EQUAL", "BEFORE", "AFTER", "ON", "BETWEEN", "NOT_BETWEEN"
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].values #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].values[0] #=> String
+    #   resp.event_trigger_conditions[0].logical_operator #=> String, one of "ANY", "ALL", "NONE"
+    #   resp.segment_filter #=> String
+    #   resp.event_trigger_limits.event_expiration #=> Integer
+    #   resp.event_trigger_limits.periods #=> Array
+    #   resp.event_trigger_limits.periods[0].unit #=> String, one of "HOURS", "DAYS", "WEEKS", "MONTHS"
+    #   resp.event_trigger_limits.periods[0].value #=> Integer
+    #   resp.event_trigger_limits.periods[0].max_invocations_per_profile #=> Integer
+    #   resp.event_trigger_limits.periods[0].unlimited #=> Boolean
+    #   resp.created_at #=> Time
+    #   resp.last_updated_at #=> Time
+    #   resp.tags #=> Hash
+    #   resp.tags["TagKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/CreateEventTrigger AWS API Documentation
+    #
+    # @overload create_event_trigger(params = {})
+    # @param [Hash] params ({})
+    def create_event_trigger(params = {}, options = {})
+      req = build_request(:create_event_trigger, params)
+      req.send_request(options)
+    end
+
     # Creates an integration workflow. An integration workflow is an async
     # process which ingests historic data and sets up an integration for
     # ongoing updates. The supported Amazon AppFlow sources are Salesforce,
@@ -2012,6 +2134,43 @@ module Aws::CustomerProfiles
       req.send_request(options)
     end
 
+    # Disable and deletes the Event Trigger.
+    #
+    # <note markdown="1"> You cannot delete an Event Trigger with an active Integration
+    # associated.
+    #
+    #  </note>
+    #
+    # @option params [required, String] :domain_name
+    #   The unique name of the domain.
+    #
+    # @option params [required, String] :event_trigger_name
+    #   The unique name of the event trigger.
+    #
+    # @return [Types::DeleteEventTriggerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteEventTriggerResponse#message #message} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_event_trigger({
+    #     domain_name: "name", # required
+    #     event_trigger_name: "name", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/DeleteEventTrigger AWS API Documentation
+    #
+    # @overload delete_event_trigger(params = {})
+    # @param [Hash] params ({})
+    def delete_event_trigger(params = {}, options = {})
+      req = build_request(:delete_event_trigger, params)
+      req.send_request(options)
+    end
+
     # Removes an integration from a specific domain.
     #
     # @option params [required, String] :domain_name
@@ -2601,6 +2760,68 @@ module Aws::CustomerProfiles
       req.send_request(options)
     end
 
+    # Get a specific Event Trigger from the domain.
+    #
+    # @option params [required, String] :domain_name
+    #   The unique name of the domain.
+    #
+    # @option params [required, String] :event_trigger_name
+    #   The unique name of the event trigger.
+    #
+    # @return [Types::GetEventTriggerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetEventTriggerResponse#event_trigger_name #event_trigger_name} => String
+    #   * {Types::GetEventTriggerResponse#object_type_name #object_type_name} => String
+    #   * {Types::GetEventTriggerResponse#description #description} => String
+    #   * {Types::GetEventTriggerResponse#event_trigger_conditions #event_trigger_conditions} => Array&lt;Types::EventTriggerCondition&gt;
+    #   * {Types::GetEventTriggerResponse#segment_filter #segment_filter} => String
+    #   * {Types::GetEventTriggerResponse#event_trigger_limits #event_trigger_limits} => Types::EventTriggerLimits
+    #   * {Types::GetEventTriggerResponse#created_at #created_at} => Time
+    #   * {Types::GetEventTriggerResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::GetEventTriggerResponse#tags #tags} => Hash&lt;String,String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_event_trigger({
+    #     domain_name: "name", # required
+    #     event_trigger_name: "name", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.event_trigger_name #=> String
+    #   resp.object_type_name #=> String
+    #   resp.description #=> String
+    #   resp.event_trigger_conditions #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].source #=> String
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].field_name #=> String
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].comparison_operator #=> String, one of "INCLUSIVE", "EXCLUSIVE", "CONTAINS", "BEGINS_WITH", "ENDS_WITH", "GREATER_THAN", "LESS_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN_OR_EQUAL", "EQUAL", "BEFORE", "AFTER", "ON", "BETWEEN", "NOT_BETWEEN"
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].values #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].values[0] #=> String
+    #   resp.event_trigger_conditions[0].logical_operator #=> String, one of "ANY", "ALL", "NONE"
+    #   resp.segment_filter #=> String
+    #   resp.event_trigger_limits.event_expiration #=> Integer
+    #   resp.event_trigger_limits.periods #=> Array
+    #   resp.event_trigger_limits.periods[0].unit #=> String, one of "HOURS", "DAYS", "WEEKS", "MONTHS"
+    #   resp.event_trigger_limits.periods[0].value #=> Integer
+    #   resp.event_trigger_limits.periods[0].max_invocations_per_profile #=> Integer
+    #   resp.event_trigger_limits.periods[0].unlimited #=> Boolean
+    #   resp.created_at #=> Time
+    #   resp.last_updated_at #=> Time
+    #   resp.tags #=> Hash
+    #   resp.tags["TagKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/GetEventTrigger AWS API Documentation
+    #
+    # @overload get_event_trigger(params = {})
+    # @param [Hash] params ({})
+    def get_event_trigger(params = {}, options = {})
+      req = build_request(:get_event_trigger, params)
+      req.send_request(options)
+    end
+
     # Returns information about an Identity Resolution Job in a specific
     # domain.
     #
@@ -2691,6 +2912,7 @@ module Aws::CustomerProfiles
     #   * {Types::GetIntegrationResponse#workflow_id #workflow_id} => String
     #   * {Types::GetIntegrationResponse#is_unstructured #is_unstructured} => Boolean
     #   * {Types::GetIntegrationResponse#role_arn #role_arn} => String
+    #   * {Types::GetIntegrationResponse#event_trigger_names #event_trigger_names} => Array&lt;String&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -2713,6 +2935,8 @@ module Aws::CustomerProfiles
     #   resp.workflow_id #=> String
     #   resp.is_unstructured #=> Boolean
     #   resp.role_arn #=> String
+    #   resp.event_trigger_names #=> Array
+    #   resp.event_trigger_names[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/GetIntegration AWS API Documentation
     #
@@ -3538,6 +3762,8 @@ module Aws::CustomerProfiles
     #   resp.items[0].workflow_id #=> String
     #   resp.items[0].is_unstructured #=> Boolean
     #   resp.items[0].role_arn #=> String
+    #   resp.items[0].event_trigger_names #=> Array
+    #   resp.items[0].event_trigger_names[0] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/ListAccountIntegrations AWS API Documentation
@@ -3733,6 +3959,53 @@ module Aws::CustomerProfiles
       req.send_request(options)
     end
 
+    # List all Event Triggers under a domain.
+    #
+    # @option params [required, String] :domain_name
+    #   The unique name of the domain.
+    #
+    # @option params [String] :next_token
+    #   The pagination token to use with ListEventTriggers.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return per page.
+    #
+    # @return [Types::ListEventTriggersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListEventTriggersResponse#items #items} => Array&lt;Types::EventTriggerSummaryItem&gt;
+    #   * {Types::ListEventTriggersResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_event_triggers({
+    #     domain_name: "name", # required
+    #     next_token: "token",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].object_type_name #=> String
+    #   resp.items[0].event_trigger_name #=> String
+    #   resp.items[0].description #=> String
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].last_updated_at #=> Time
+    #   resp.items[0].tags #=> Hash
+    #   resp.items[0].tags["TagKey"] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/ListEventTriggers AWS API Documentation
+    #
+    # @overload list_event_triggers(params = {})
+    # @param [Hash] params ({})
+    def list_event_triggers(params = {}, options = {})
+      req = build_request(:list_event_triggers, params)
+      req.send_request(options)
+    end
+
     # Lists all of the Identity Resolution Jobs in your domain. The response
     # sorts the list by `JobStartTime`.
     #
@@ -3829,6 +4102,8 @@ module Aws::CustomerProfiles
     #   resp.items[0].workflow_id #=> String
     #   resp.items[0].is_unstructured #=> Boolean
     #   resp.items[0].role_arn #=> String
+    #   resp.items[0].event_trigger_names #=> Array
+    #   resp.items[0].event_trigger_names[0] #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/ListIntegrations AWS API Documentation
@@ -4392,6 +4667,10 @@ module Aws::CustomerProfiles
     #   The Amazon Resource Name (ARN) of the IAM role. The Integration uses
     #   this role to make Customer Profiles requests on your behalf.
     #
+    # @option params [Array<String>] :event_trigger_names
+    #   A list of unique names for active event triggers associated with the
+    #   integration.
+    #
     # @return [Types::PutIntegrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::PutIntegrationResponse#domain_name #domain_name} => String
@@ -4404,6 +4683,7 @@ module Aws::CustomerProfiles
     #   * {Types::PutIntegrationResponse#workflow_id #workflow_id} => String
     #   * {Types::PutIntegrationResponse#is_unstructured #is_unstructured} => Boolean
     #   * {Types::PutIntegrationResponse#role_arn #role_arn} => String
+    #   * {Types::PutIntegrationResponse#event_trigger_names #event_trigger_names} => Array&lt;String&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -4481,6 +4761,7 @@ module Aws::CustomerProfiles
     #       "string1To255" => "typeName",
     #     },
     #     role_arn: "RoleArn",
+    #     event_trigger_names: ["name"],
     #   })
     #
     # @example Response structure
@@ -4497,6 +4778,8 @@ module Aws::CustomerProfiles
     #   resp.workflow_id #=> String
     #   resp.is_unstructured #=> Boolean
     #   resp.role_arn #=> String
+    #   resp.event_trigger_names #=> Array
+    #   resp.event_trigger_names[0] #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/PutIntegration AWS API Documentation
     #
@@ -5210,6 +5493,118 @@ module Aws::CustomerProfiles
       req.send_request(options)
     end
 
+    # Update the properties of an Event Trigger.
+    #
+    # @option params [required, String] :domain_name
+    #   The unique name of the domain.
+    #
+    # @option params [required, String] :event_trigger_name
+    #   The unique name of the event trigger.
+    #
+    # @option params [String] :object_type_name
+    #   The unique name of the object type.
+    #
+    # @option params [String] :description
+    #   The description of the event trigger.
+    #
+    # @option params [Array<Types::EventTriggerCondition>] :event_trigger_conditions
+    #   A list of conditions that determine when an event should trigger the
+    #   destination.
+    #
+    # @option params [String] :segment_filter
+    #   The destination is triggered only for profiles that meet the criteria
+    #   of a segment definition.
+    #
+    # @option params [Types::EventTriggerLimits] :event_trigger_limits
+    #   Defines limits controlling whether an event triggers the destination,
+    #   based on ingestion latency and the number of invocations per profile
+    #   over specific time periods.
+    #
+    # @return [Types::UpdateEventTriggerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateEventTriggerResponse#event_trigger_name #event_trigger_name} => String
+    #   * {Types::UpdateEventTriggerResponse#object_type_name #object_type_name} => String
+    #   * {Types::UpdateEventTriggerResponse#description #description} => String
+    #   * {Types::UpdateEventTriggerResponse#event_trigger_conditions #event_trigger_conditions} => Array&lt;Types::EventTriggerCondition&gt;
+    #   * {Types::UpdateEventTriggerResponse#segment_filter #segment_filter} => String
+    #   * {Types::UpdateEventTriggerResponse#event_trigger_limits #event_trigger_limits} => Types::EventTriggerLimits
+    #   * {Types::UpdateEventTriggerResponse#created_at #created_at} => Time
+    #   * {Types::UpdateEventTriggerResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::UpdateEventTriggerResponse#tags #tags} => Hash&lt;String,String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_event_trigger({
+    #     domain_name: "name", # required
+    #     event_trigger_name: "name", # required
+    #     object_type_name: "typeName",
+    #     description: "sensitiveText",
+    #     event_trigger_conditions: [
+    #       {
+    #         event_trigger_dimensions: [ # required
+    #           {
+    #             object_attributes: [ # required
+    #               {
+    #                 source: "text",
+    #                 field_name: "fieldName",
+    #                 comparison_operator: "INCLUSIVE", # required, accepts INCLUSIVE, EXCLUSIVE, CONTAINS, BEGINS_WITH, ENDS_WITH, GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL, LESS_THAN_OR_EQUAL, EQUAL, BEFORE, AFTER, ON, BETWEEN, NOT_BETWEEN
+    #                 values: ["string1To255"], # required
+    #               },
+    #             ],
+    #           },
+    #         ],
+    #         logical_operator: "ANY", # required, accepts ANY, ALL, NONE
+    #       },
+    #     ],
+    #     segment_filter: "name",
+    #     event_trigger_limits: {
+    #       event_expiration: 1,
+    #       periods: [
+    #         {
+    #           unit: "HOURS", # required, accepts HOURS, DAYS, WEEKS, MONTHS
+    #           value: 1, # required
+    #           max_invocations_per_profile: 1,
+    #           unlimited: false,
+    #         },
+    #       ],
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.event_trigger_name #=> String
+    #   resp.object_type_name #=> String
+    #   resp.description #=> String
+    #   resp.event_trigger_conditions #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].source #=> String
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].field_name #=> String
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].comparison_operator #=> String, one of "INCLUSIVE", "EXCLUSIVE", "CONTAINS", "BEGINS_WITH", "ENDS_WITH", "GREATER_THAN", "LESS_THAN", "GREATER_THAN_OR_EQUAL", "LESS_THAN_OR_EQUAL", "EQUAL", "BEFORE", "AFTER", "ON", "BETWEEN", "NOT_BETWEEN"
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].values #=> Array
+    #   resp.event_trigger_conditions[0].event_trigger_dimensions[0].object_attributes[0].values[0] #=> String
+    #   resp.event_trigger_conditions[0].logical_operator #=> String, one of "ANY", "ALL", "NONE"
+    #   resp.segment_filter #=> String
+    #   resp.event_trigger_limits.event_expiration #=> Integer
+    #   resp.event_trigger_limits.periods #=> Array
+    #   resp.event_trigger_limits.periods[0].unit #=> String, one of "HOURS", "DAYS", "WEEKS", "MONTHS"
+    #   resp.event_trigger_limits.periods[0].value #=> Integer
+    #   resp.event_trigger_limits.periods[0].max_invocations_per_profile #=> Integer
+    #   resp.event_trigger_limits.periods[0].unlimited #=> Boolean
+    #   resp.created_at #=> Time
+    #   resp.last_updated_at #=> Time
+    #   resp.tags #=> Hash
+    #   resp.tags["TagKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/customer-profiles-2020-08-15/UpdateEventTrigger AWS API Documentation
+    #
+    # @overload update_event_trigger(params = {})
+    # @param [Hash] params ({})
+    def update_event_trigger(params = {}, options = {})
+      req = build_request(:update_event_trigger, params)
+      req.send_request(options)
+    end
+
     # Updates the properties of a profile. The ProfileId is required for
     # updating a customer profile.
     #
@@ -5406,7 +5801,7 @@ module Aws::CustomerProfiles
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-customerprofiles'
-      context[:gem_version] = '1.57.0'
+      context[:gem_version] = '1.58.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

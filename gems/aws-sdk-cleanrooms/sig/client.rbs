@@ -228,6 +228,27 @@ module Aws
                                        glue: {
                                          table_name: ::String,
                                          database_name: ::String
+                                       }?,
+                                       snowflake: {
+                                         secret_arn: ::String,
+                                         account_identifier: ::String,
+                                         database_name: ::String,
+                                         table_name: ::String,
+                                         schema_name: ::String,
+                                         table_schema: {
+                                           v1: Array[
+                                             {
+                                               column_name: ::String,
+                                               column_type: ::String
+                                             },
+                                           ]?
+                                         }
+                                       }?,
+                                       athena: {
+                                         work_group: ::String,
+                                         output_location: ::String?,
+                                         database_name: ::String,
+                                         table_name: ::String
                                        }?
                                      },
                                      allowed_columns: Array[::String],

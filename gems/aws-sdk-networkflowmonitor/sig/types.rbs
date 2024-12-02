@@ -1,0 +1,484 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::NetworkFlowMonitor
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class CreateMonitorInput
+      attr_accessor monitor_name: ::String
+      attr_accessor local_resources: ::Array[Types::MonitorLocalResource]
+      attr_accessor remote_resources: ::Array[Types::MonitorRemoteResource]
+      attr_accessor scope_arn: ::String
+      attr_accessor client_token: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateMonitorOutput
+      attr_accessor monitor_arn: ::String
+      attr_accessor monitor_name: ::String
+      attr_accessor monitor_status: ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+      attr_accessor local_resources: ::Array[Types::MonitorLocalResource]
+      attr_accessor remote_resources: ::Array[Types::MonitorRemoteResource]
+      attr_accessor created_at: ::Time
+      attr_accessor modified_at: ::Time
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateScopeInput
+      attr_accessor targets: ::Array[Types::TargetResource]
+      attr_accessor client_token: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateScopeOutput
+      attr_accessor scope_id: ::String
+      attr_accessor status: ("SUCCEEDED" | "IN_PROGRESS" | "FAILED")
+      attr_accessor scope_arn: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class DeleteMonitorInput
+      attr_accessor monitor_name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteMonitorOutput < Aws::EmptyStructure
+    end
+
+    class DeleteScopeInput
+      attr_accessor scope_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteScopeOutput < Aws::EmptyStructure
+    end
+
+    class GetMonitorInput
+      attr_accessor monitor_name: ::String
+      SENSITIVE: []
+    end
+
+    class GetMonitorOutput
+      attr_accessor monitor_arn: ::String
+      attr_accessor monitor_name: ::String
+      attr_accessor monitor_status: ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+      attr_accessor local_resources: ::Array[Types::MonitorLocalResource]
+      attr_accessor remote_resources: ::Array[Types::MonitorRemoteResource]
+      attr_accessor created_at: ::Time
+      attr_accessor modified_at: ::Time
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class GetQueryResultsMonitorTopContributorsInput
+      attr_accessor monitor_name: ::String
+      attr_accessor query_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class GetQueryResultsMonitorTopContributorsOutput
+      attr_accessor unit: ("Seconds" | "Microseconds" | "Milliseconds" | "Bytes" | "Kilobytes" | "Megabytes" | "Gigabytes" | "Terabytes" | "Bits" | "Kilobits" | "Megabits" | "Gigabits" | "Terabits" | "Percent" | "Count" | "Bytes/Second" | "Kilobytes/Second" | "Megabytes/Second" | "Gigabytes/Second" | "Terabytes/Second" | "Bits/Second" | "Kilobits/Second" | "Megabits/Second" | "Gigabits/Second" | "Terabits/Second" | "Count/Second" | "None")
+      attr_accessor top_contributors: ::Array[Types::MonitorTopContributorsRow]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetQueryResultsWorkloadInsightsTopContributorsDataInput
+      attr_accessor scope_id: ::String
+      attr_accessor query_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class GetQueryResultsWorkloadInsightsTopContributorsDataOutput
+      attr_accessor unit: ("Seconds" | "Microseconds" | "Milliseconds" | "Bytes" | "Kilobytes" | "Megabytes" | "Gigabytes" | "Terabytes" | "Bits" | "Kilobits" | "Megabits" | "Gigabits" | "Terabits" | "Percent" | "Count" | "Bytes/Second" | "Kilobytes/Second" | "Megabytes/Second" | "Gigabytes/Second" | "Terabytes/Second" | "Bits/Second" | "Kilobits/Second" | "Megabits/Second" | "Gigabits/Second" | "Terabits/Second" | "Count/Second" | "None")
+      attr_accessor datapoints: ::Array[Types::WorkloadInsightsTopContributorsDataPoint]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetQueryResultsWorkloadInsightsTopContributorsInput
+      attr_accessor scope_id: ::String
+      attr_accessor query_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class GetQueryResultsWorkloadInsightsTopContributorsOutput
+      attr_accessor top_contributors: ::Array[Types::WorkloadInsightsTopContributorsRow]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class GetQueryStatusMonitorTopContributorsInput
+      attr_accessor monitor_name: ::String
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetQueryStatusMonitorTopContributorsOutput
+      attr_accessor status: ("QUEUED" | "RUNNING" | "SUCCEEDED" | "FAILED" | "CANCELED")
+      SENSITIVE: []
+    end
+
+    class GetQueryStatusWorkloadInsightsTopContributorsDataInput
+      attr_accessor scope_id: ::String
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetQueryStatusWorkloadInsightsTopContributorsDataOutput
+      attr_accessor status: ("QUEUED" | "RUNNING" | "SUCCEEDED" | "FAILED" | "CANCELED")
+      SENSITIVE: []
+    end
+
+    class GetQueryStatusWorkloadInsightsTopContributorsInput
+      attr_accessor scope_id: ::String
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetQueryStatusWorkloadInsightsTopContributorsOutput
+      attr_accessor status: ("QUEUED" | "RUNNING" | "SUCCEEDED" | "FAILED" | "CANCELED")
+      SENSITIVE: []
+    end
+
+    class GetScopeInput
+      attr_accessor scope_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetScopeOutput
+      attr_accessor scope_id: ::String
+      attr_accessor status: ("SUCCEEDED" | "IN_PROGRESS" | "FAILED")
+      attr_accessor scope_arn: ::String
+      attr_accessor targets: ::Array[Types::TargetResource]
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class KubernetesMetadata
+      attr_accessor local_service_name: ::String
+      attr_accessor local_pod_name: ::String
+      attr_accessor local_pod_namespace: ::String
+      attr_accessor remote_service_name: ::String
+      attr_accessor remote_pod_name: ::String
+      attr_accessor remote_pod_namespace: ::String
+      SENSITIVE: []
+    end
+
+    class ListMonitorsInput
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor monitor_status: ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+      SENSITIVE: []
+    end
+
+    class ListMonitorsOutput
+      attr_accessor monitors: ::Array[Types::MonitorSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListScopesInput
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListScopesOutput
+      attr_accessor scopes: ::Array[Types::ScopeSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceInput
+      attr_accessor resource_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceOutput
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class MonitorLocalResource
+      attr_accessor type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet")
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class MonitorRemoteResource
+      attr_accessor type: ("AWS::EC2::VPC" | "AWS::AvailabilityZone" | "AWS::EC2::Subnet" | "AWS::AWSService")
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class MonitorSummary
+      attr_accessor monitor_arn: ::String
+      attr_accessor monitor_name: ::String
+      attr_accessor monitor_status: ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+      SENSITIVE: []
+    end
+
+    class MonitorTopContributorsRow
+      attr_accessor local_ip: ::String
+      attr_accessor snat_ip: ::String
+      attr_accessor local_instance_id: ::String
+      attr_accessor local_vpc_id: ::String
+      attr_accessor local_region: ::String
+      attr_accessor local_az: ::String
+      attr_accessor local_subnet_id: ::String
+      attr_accessor target_port: ::Integer
+      attr_accessor destination_category: ("INTRA_AZ" | "INTER_AZ" | "INTER_VPC" | "UNCLASSIFIED" | "AMAZON_S3" | "AMAZON_DYNAMODB")
+      attr_accessor remote_vpc_id: ::String
+      attr_accessor remote_region: ::String
+      attr_accessor remote_az: ::String
+      attr_accessor remote_subnet_id: ::String
+      attr_accessor remote_instance_id: ::String
+      attr_accessor remote_ip: ::String
+      attr_accessor dnat_ip: ::String
+      attr_accessor value: ::Integer
+      attr_accessor traversed_constructs: ::Array[Types::TraversedComponent]
+      attr_accessor kubernetes_metadata: Types::KubernetesMetadata
+      attr_accessor local_instance_arn: ::String
+      attr_accessor local_subnet_arn: ::String
+      attr_accessor local_vpc_arn: ::String
+      attr_accessor remote_instance_arn: ::String
+      attr_accessor remote_subnet_arn: ::String
+      attr_accessor remote_vpc_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ScopeSummary
+      attr_accessor scope_id: ::String
+      attr_accessor status: ("SUCCEEDED" | "IN_PROGRESS" | "FAILED")
+      attr_accessor scope_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class StartQueryMonitorTopContributorsInput
+      attr_accessor monitor_name: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor metric_name: ("ROUND_TRIP_TIME" | "TIMEOUTS" | "RETRANSMISSIONS" | "DATA_TRANSFERRED")
+      attr_accessor destination_category: ("INTRA_AZ" | "INTER_AZ" | "INTER_VPC" | "UNCLASSIFIED" | "AMAZON_S3" | "AMAZON_DYNAMODB")
+      attr_accessor limit: ::Integer
+      SENSITIVE: []
+    end
+
+    class StartQueryMonitorTopContributorsOutput
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class StartQueryWorkloadInsightsTopContributorsDataInput
+      attr_accessor scope_id: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor metric_name: ("TIMEOUTS" | "RETRANSMISSIONS" | "DATA_TRANSFERRED")
+      attr_accessor destination_category: ("INTRA_AZ" | "INTER_AZ" | "INTER_VPC" | "UNCLASSIFIED" | "AMAZON_S3" | "AMAZON_DYNAMODB")
+      SENSITIVE: []
+    end
+
+    class StartQueryWorkloadInsightsTopContributorsDataOutput
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class StartQueryWorkloadInsightsTopContributorsInput
+      attr_accessor scope_id: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor metric_name: ("TIMEOUTS" | "RETRANSMISSIONS" | "DATA_TRANSFERRED")
+      attr_accessor destination_category: ("INTRA_AZ" | "INTER_AZ" | "INTER_VPC" | "UNCLASSIFIED" | "AMAZON_S3" | "AMAZON_DYNAMODB")
+      attr_accessor limit: ::Integer
+      SENSITIVE: []
+    end
+
+    class StartQueryWorkloadInsightsTopContributorsOutput
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class StopQueryMonitorTopContributorsInput
+      attr_accessor monitor_name: ::String
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class StopQueryMonitorTopContributorsOutput < Aws::EmptyStructure
+    end
+
+    class StopQueryWorkloadInsightsTopContributorsDataInput
+      attr_accessor scope_id: ::String
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class StopQueryWorkloadInsightsTopContributorsDataOutput < Aws::EmptyStructure
+    end
+
+    class StopQueryWorkloadInsightsTopContributorsInput
+      attr_accessor scope_id: ::String
+      attr_accessor query_id: ::String
+      SENSITIVE: []
+    end
+
+    class StopQueryWorkloadInsightsTopContributorsOutput < Aws::EmptyStructure
+    end
+
+    class TagResourceInput
+      attr_accessor resource_arn: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class TagResourceOutput < Aws::EmptyStructure
+    end
+
+    class TargetId
+      attr_accessor account_id: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AccountId < TargetId
+      end
+      class Unknown < TargetId
+      end
+    end
+
+    class TargetIdentifier
+      attr_accessor target_id: Types::TargetId
+      attr_accessor target_type: ("ACCOUNT")
+      SENSITIVE: []
+    end
+
+    class TargetResource
+      attr_accessor target_identifier: Types::TargetIdentifier
+      attr_accessor region: ::String
+      SENSITIVE: []
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class TraversedComponent
+      attr_accessor component_id: ::String
+      attr_accessor component_type: ::String
+      attr_accessor component_arn: ::String
+      attr_accessor service_name: ::String
+      SENSITIVE: []
+    end
+
+    class UntagResourceInput
+      attr_accessor resource_arn: ::String
+      attr_accessor tag_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UntagResourceOutput < Aws::EmptyStructure
+    end
+
+    class UpdateMonitorInput
+      attr_accessor monitor_name: ::String
+      attr_accessor local_resources_to_add: ::Array[Types::MonitorLocalResource]
+      attr_accessor local_resources_to_remove: ::Array[Types::MonitorLocalResource]
+      attr_accessor remote_resources_to_add: ::Array[Types::MonitorRemoteResource]
+      attr_accessor remote_resources_to_remove: ::Array[Types::MonitorRemoteResource]
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateMonitorOutput
+      attr_accessor monitor_arn: ::String
+      attr_accessor monitor_name: ::String
+      attr_accessor monitor_status: ("PENDING" | "ACTIVE" | "INACTIVE" | "ERROR" | "DELETING")
+      attr_accessor local_resources: ::Array[Types::MonitorLocalResource]
+      attr_accessor remote_resources: ::Array[Types::MonitorRemoteResource]
+      attr_accessor created_at: ::Time
+      attr_accessor modified_at: ::Time
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class UpdateScopeInput
+      attr_accessor scope_id: ::String
+      attr_accessor resources_to_add: ::Array[Types::TargetResource]
+      attr_accessor resources_to_delete: ::Array[Types::TargetResource]
+      SENSITIVE: []
+    end
+
+    class UpdateScopeOutput
+      attr_accessor scope_id: ::String
+      attr_accessor status: ("SUCCEEDED" | "IN_PROGRESS" | "FAILED")
+      attr_accessor scope_arn: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class WorkloadInsightsTopContributorsDataPoint
+      attr_accessor timestamps: ::Array[::Time]
+      attr_accessor values: ::Array[::Float]
+      attr_accessor label: ::String
+      SENSITIVE: []
+    end
+
+    class WorkloadInsightsTopContributorsRow
+      attr_accessor account_id: ::String
+      attr_accessor local_subnet_id: ::String
+      attr_accessor local_az: ::String
+      attr_accessor local_vpc_id: ::String
+      attr_accessor local_region: ::String
+      attr_accessor remote_identifier: ::String
+      attr_accessor value: ::Integer
+      attr_accessor local_subnet_arn: ::String
+      attr_accessor local_vpc_arn: ::String
+      SENSITIVE: []
+    end
+  end
+end

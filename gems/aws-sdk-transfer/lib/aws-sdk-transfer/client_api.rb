@@ -55,6 +55,8 @@ module Aws::Transfer
     CreateServerResponse = Shapes::StructureShape.new(name: 'CreateServerResponse')
     CreateUserRequest = Shapes::StructureShape.new(name: 'CreateUserRequest')
     CreateUserResponse = Shapes::StructureShape.new(name: 'CreateUserResponse')
+    CreateWebAppRequest = Shapes::StructureShape.new(name: 'CreateWebAppRequest')
+    CreateWebAppResponse = Shapes::StructureShape.new(name: 'CreateWebAppResponse')
     CreateWorkflowRequest = Shapes::StructureShape.new(name: 'CreateWorkflowRequest')
     CreateWorkflowResponse = Shapes::StructureShape.new(name: 'CreateWorkflowResponse')
     CustomStepDetails = Shapes::StructureShape.new(name: 'CustomStepDetails')
@@ -73,6 +75,8 @@ module Aws::Transfer
     DeleteSshPublicKeyRequest = Shapes::StructureShape.new(name: 'DeleteSshPublicKeyRequest')
     DeleteStepDetails = Shapes::StructureShape.new(name: 'DeleteStepDetails')
     DeleteUserRequest = Shapes::StructureShape.new(name: 'DeleteUserRequest')
+    DeleteWebAppCustomizationRequest = Shapes::StructureShape.new(name: 'DeleteWebAppCustomizationRequest')
+    DeleteWebAppRequest = Shapes::StructureShape.new(name: 'DeleteWebAppRequest')
     DeleteWorkflowRequest = Shapes::StructureShape.new(name: 'DeleteWorkflowRequest')
     DescribeAccessRequest = Shapes::StructureShape.new(name: 'DescribeAccessRequest')
     DescribeAccessResponse = Shapes::StructureShape.new(name: 'DescribeAccessResponse')
@@ -94,6 +98,10 @@ module Aws::Transfer
     DescribeServerResponse = Shapes::StructureShape.new(name: 'DescribeServerResponse')
     DescribeUserRequest = Shapes::StructureShape.new(name: 'DescribeUserRequest')
     DescribeUserResponse = Shapes::StructureShape.new(name: 'DescribeUserResponse')
+    DescribeWebAppCustomizationRequest = Shapes::StructureShape.new(name: 'DescribeWebAppCustomizationRequest')
+    DescribeWebAppCustomizationResponse = Shapes::StructureShape.new(name: 'DescribeWebAppCustomizationResponse')
+    DescribeWebAppRequest = Shapes::StructureShape.new(name: 'DescribeWebAppRequest')
+    DescribeWebAppResponse = Shapes::StructureShape.new(name: 'DescribeWebAppResponse')
     DescribeWorkflowRequest = Shapes::StructureShape.new(name: 'DescribeWorkflowRequest')
     DescribeWorkflowResponse = Shapes::StructureShape.new(name: 'DescribeWorkflowResponse')
     DescribedAccess = Shapes::StructureShape.new(name: 'DescribedAccess')
@@ -102,10 +110,14 @@ module Aws::Transfer
     DescribedConnector = Shapes::StructureShape.new(name: 'DescribedConnector')
     DescribedExecution = Shapes::StructureShape.new(name: 'DescribedExecution')
     DescribedHostKey = Shapes::StructureShape.new(name: 'DescribedHostKey')
+    DescribedIdentityCenterConfig = Shapes::StructureShape.new(name: 'DescribedIdentityCenterConfig')
     DescribedProfile = Shapes::StructureShape.new(name: 'DescribedProfile')
     DescribedSecurityPolicy = Shapes::StructureShape.new(name: 'DescribedSecurityPolicy')
     DescribedServer = Shapes::StructureShape.new(name: 'DescribedServer')
     DescribedUser = Shapes::StructureShape.new(name: 'DescribedUser')
+    DescribedWebApp = Shapes::StructureShape.new(name: 'DescribedWebApp')
+    DescribedWebAppCustomization = Shapes::StructureShape.new(name: 'DescribedWebAppCustomization')
+    DescribedWebAppIdentityProviderDetails = Shapes::UnionShape.new(name: 'DescribedWebAppIdentityProviderDetails')
     DescribedWorkflow = Shapes::StructureShape.new(name: 'DescribedWorkflow')
     Description = Shapes::StringShape.new(name: 'Description')
     DirectoryId = Shapes::StringShape.new(name: 'DirectoryId')
@@ -142,6 +154,9 @@ module Aws::Transfer
     HostKeyFingerprint = Shapes::StringShape.new(name: 'HostKeyFingerprint')
     HostKeyId = Shapes::StringShape.new(name: 'HostKeyId')
     HostKeyType = Shapes::StringShape.new(name: 'HostKeyType')
+    IdentityCenterApplicationArn = Shapes::StringShape.new(name: 'IdentityCenterApplicationArn')
+    IdentityCenterConfig = Shapes::StructureShape.new(name: 'IdentityCenterConfig')
+    IdentityCenterInstanceArn = Shapes::StringShape.new(name: 'IdentityCenterInstanceArn')
     IdentityProviderDetails = Shapes::StructureShape.new(name: 'IdentityProviderDetails')
     IdentityProviderType = Shapes::StringShape.new(name: 'IdentityProviderType')
     ImportCertificateRequest = Shapes::StructureShape.new(name: 'ImportCertificateRequest')
@@ -178,6 +193,8 @@ module Aws::Transfer
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     ListUsersRequest = Shapes::StructureShape.new(name: 'ListUsersRequest')
     ListUsersResponse = Shapes::StructureShape.new(name: 'ListUsersResponse')
+    ListWebAppsRequest = Shapes::StructureShape.new(name: 'ListWebAppsRequest')
+    ListWebAppsResponse = Shapes::StructureShape.new(name: 'ListWebAppsResponse')
     ListWorkflowsRequest = Shapes::StructureShape.new(name: 'ListWorkflowsRequest')
     ListWorkflowsResponse = Shapes::StructureShape.new(name: 'ListWorkflowsResponse')
     ListedAccess = Shapes::StructureShape.new(name: 'ListedAccess')
@@ -198,6 +215,8 @@ module Aws::Transfer
     ListedServers = Shapes::ListShape.new(name: 'ListedServers')
     ListedUser = Shapes::StructureShape.new(name: 'ListedUser')
     ListedUsers = Shapes::ListShape.new(name: 'ListedUsers')
+    ListedWebApp = Shapes::StructureShape.new(name: 'ListedWebApp')
+    ListedWebApps = Shapes::ListShape.new(name: 'ListedWebApps')
     ListedWorkflow = Shapes::StructureShape.new(name: 'ListedWorkflow')
     ListedWorkflows = Shapes::ListShape.new(name: 'ListedWorkflows')
     ListingId = Shapes::StringShape.new(name: 'ListingId')
@@ -326,6 +345,12 @@ module Aws::Transfer
     UpdateServerResponse = Shapes::StructureShape.new(name: 'UpdateServerResponse')
     UpdateUserRequest = Shapes::StructureShape.new(name: 'UpdateUserRequest')
     UpdateUserResponse = Shapes::StructureShape.new(name: 'UpdateUserResponse')
+    UpdateWebAppCustomizationRequest = Shapes::StructureShape.new(name: 'UpdateWebAppCustomizationRequest')
+    UpdateWebAppCustomizationResponse = Shapes::StructureShape.new(name: 'UpdateWebAppCustomizationResponse')
+    UpdateWebAppIdentityCenterConfig = Shapes::StructureShape.new(name: 'UpdateWebAppIdentityCenterConfig')
+    UpdateWebAppIdentityProviderDetails = Shapes::UnionShape.new(name: 'UpdateWebAppIdentityProviderDetails')
+    UpdateWebAppRequest = Shapes::StructureShape.new(name: 'UpdateWebAppRequest')
+    UpdateWebAppResponse = Shapes::StructureShape.new(name: 'UpdateWebAppResponse')
     Url = Shapes::StringShape.new(name: 'Url')
     UserCount = Shapes::IntegerShape.new(name: 'UserCount')
     UserDetails = Shapes::StructureShape.new(name: 'UserDetails')
@@ -333,6 +358,15 @@ module Aws::Transfer
     UserPassword = Shapes::StringShape.new(name: 'UserPassword')
     VpcEndpointId = Shapes::StringShape.new(name: 'VpcEndpointId')
     VpcId = Shapes::StringShape.new(name: 'VpcId')
+    WebAppAccessEndpoint = Shapes::StringShape.new(name: 'WebAppAccessEndpoint')
+    WebAppEndpoint = Shapes::StringShape.new(name: 'WebAppEndpoint')
+    WebAppFaviconFile = Shapes::BlobShape.new(name: 'WebAppFaviconFile')
+    WebAppId = Shapes::StringShape.new(name: 'WebAppId')
+    WebAppIdentityProviderDetails = Shapes::UnionShape.new(name: 'WebAppIdentityProviderDetails')
+    WebAppLogoFile = Shapes::BlobShape.new(name: 'WebAppLogoFile')
+    WebAppTitle = Shapes::StringShape.new(name: 'WebAppTitle')
+    WebAppUnitCount = Shapes::IntegerShape.new(name: 'WebAppUnitCount')
+    WebAppUnits = Shapes::UnionShape.new(name: 'WebAppUnits')
     WorkflowDescription = Shapes::StringShape.new(name: 'WorkflowDescription')
     WorkflowDetail = Shapes::StructureShape.new(name: 'WorkflowDetail')
     WorkflowDetails = Shapes::StructureShape.new(name: 'WorkflowDetails')
@@ -465,6 +499,15 @@ module Aws::Transfer
     CreateUserResponse.add_member(:user_name, Shapes::ShapeRef.new(shape: UserName, required: true, location_name: "UserName"))
     CreateUserResponse.struct_class = Types::CreateUserResponse
 
+    CreateWebAppRequest.add_member(:identity_provider_details, Shapes::ShapeRef.new(shape: WebAppIdentityProviderDetails, required: true, location_name: "IdentityProviderDetails"))
+    CreateWebAppRequest.add_member(:access_endpoint, Shapes::ShapeRef.new(shape: WebAppAccessEndpoint, location_name: "AccessEndpoint"))
+    CreateWebAppRequest.add_member(:web_app_units, Shapes::ShapeRef.new(shape: WebAppUnits, location_name: "WebAppUnits"))
+    CreateWebAppRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "Tags"))
+    CreateWebAppRequest.struct_class = Types::CreateWebAppRequest
+
+    CreateWebAppResponse.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    CreateWebAppResponse.struct_class = Types::CreateWebAppResponse
+
     CreateWorkflowRequest.add_member(:description, Shapes::ShapeRef.new(shape: WorkflowDescription, location_name: "Description"))
     CreateWorkflowRequest.add_member(:steps, Shapes::ShapeRef.new(shape: WorkflowSteps, required: true, location_name: "Steps"))
     CreateWorkflowRequest.add_member(:on_exception_steps, Shapes::ShapeRef.new(shape: WorkflowSteps, location_name: "OnExceptionSteps"))
@@ -523,6 +566,12 @@ module Aws::Transfer
     DeleteUserRequest.add_member(:server_id, Shapes::ShapeRef.new(shape: ServerId, required: true, location_name: "ServerId"))
     DeleteUserRequest.add_member(:user_name, Shapes::ShapeRef.new(shape: UserName, required: true, location_name: "UserName"))
     DeleteUserRequest.struct_class = Types::DeleteUserRequest
+
+    DeleteWebAppCustomizationRequest.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    DeleteWebAppCustomizationRequest.struct_class = Types::DeleteWebAppCustomizationRequest
+
+    DeleteWebAppRequest.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    DeleteWebAppRequest.struct_class = Types::DeleteWebAppRequest
 
     DeleteWorkflowRequest.add_member(:workflow_id, Shapes::ShapeRef.new(shape: WorkflowId, required: true, location_name: "WorkflowId"))
     DeleteWorkflowRequest.struct_class = Types::DeleteWorkflowRequest
@@ -594,6 +643,18 @@ module Aws::Transfer
     DescribeUserResponse.add_member(:server_id, Shapes::ShapeRef.new(shape: ServerId, required: true, location_name: "ServerId"))
     DescribeUserResponse.add_member(:user, Shapes::ShapeRef.new(shape: DescribedUser, required: true, location_name: "User"))
     DescribeUserResponse.struct_class = Types::DescribeUserResponse
+
+    DescribeWebAppCustomizationRequest.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    DescribeWebAppCustomizationRequest.struct_class = Types::DescribeWebAppCustomizationRequest
+
+    DescribeWebAppCustomizationResponse.add_member(:web_app_customization, Shapes::ShapeRef.new(shape: DescribedWebAppCustomization, required: true, location_name: "WebAppCustomization"))
+    DescribeWebAppCustomizationResponse.struct_class = Types::DescribeWebAppCustomizationResponse
+
+    DescribeWebAppRequest.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    DescribeWebAppRequest.struct_class = Types::DescribeWebAppRequest
+
+    DescribeWebAppResponse.add_member(:web_app, Shapes::ShapeRef.new(shape: DescribedWebApp, required: true, location_name: "WebApp"))
+    DescribeWebAppResponse.struct_class = Types::DescribeWebAppResponse
 
     DescribeWorkflowRequest.add_member(:workflow_id, Shapes::ShapeRef.new(shape: WorkflowId, required: true, location_name: "WorkflowId"))
     DescribeWorkflowRequest.struct_class = Types::DescribeWorkflowRequest
@@ -669,6 +730,11 @@ module Aws::Transfer
     DescribedHostKey.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "Tags"))
     DescribedHostKey.struct_class = Types::DescribedHostKey
 
+    DescribedIdentityCenterConfig.add_member(:application_arn, Shapes::ShapeRef.new(shape: IdentityCenterApplicationArn, location_name: "ApplicationArn"))
+    DescribedIdentityCenterConfig.add_member(:instance_arn, Shapes::ShapeRef.new(shape: IdentityCenterInstanceArn, location_name: "InstanceArn"))
+    DescribedIdentityCenterConfig.add_member(:role, Shapes::ShapeRef.new(shape: Role, location_name: "Role"))
+    DescribedIdentityCenterConfig.struct_class = Types::DescribedIdentityCenterConfig
+
     DescribedProfile.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Arn"))
     DescribedProfile.add_member(:profile_id, Shapes::ShapeRef.new(shape: ProfileId, location_name: "ProfileId"))
     DescribedProfile.add_member(:profile_type, Shapes::ShapeRef.new(shape: ProfileType, location_name: "ProfileType"))
@@ -724,6 +790,28 @@ module Aws::Transfer
     DescribedUser.add_member(:user_name, Shapes::ShapeRef.new(shape: UserName, location_name: "UserName"))
     DescribedUser.struct_class = Types::DescribedUser
 
+    DescribedWebApp.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Arn"))
+    DescribedWebApp.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    DescribedWebApp.add_member(:described_identity_provider_details, Shapes::ShapeRef.new(shape: DescribedWebAppIdentityProviderDetails, location_name: "DescribedIdentityProviderDetails"))
+    DescribedWebApp.add_member(:access_endpoint, Shapes::ShapeRef.new(shape: WebAppAccessEndpoint, location_name: "AccessEndpoint"))
+    DescribedWebApp.add_member(:web_app_endpoint, Shapes::ShapeRef.new(shape: WebAppEndpoint, location_name: "WebAppEndpoint"))
+    DescribedWebApp.add_member(:web_app_units, Shapes::ShapeRef.new(shape: WebAppUnits, location_name: "WebAppUnits"))
+    DescribedWebApp.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "Tags"))
+    DescribedWebApp.struct_class = Types::DescribedWebApp
+
+    DescribedWebAppCustomization.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Arn"))
+    DescribedWebAppCustomization.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    DescribedWebAppCustomization.add_member(:title, Shapes::ShapeRef.new(shape: WebAppTitle, location_name: "Title"))
+    DescribedWebAppCustomization.add_member(:logo_file, Shapes::ShapeRef.new(shape: WebAppLogoFile, location_name: "LogoFile"))
+    DescribedWebAppCustomization.add_member(:favicon_file, Shapes::ShapeRef.new(shape: WebAppFaviconFile, location_name: "FaviconFile"))
+    DescribedWebAppCustomization.struct_class = Types::DescribedWebAppCustomization
+
+    DescribedWebAppIdentityProviderDetails.add_member(:identity_center_config, Shapes::ShapeRef.new(shape: DescribedIdentityCenterConfig, location_name: "IdentityCenterConfig"))
+    DescribedWebAppIdentityProviderDetails.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    DescribedWebAppIdentityProviderDetails.add_member_subclass(:identity_center_config, Types::DescribedWebAppIdentityProviderDetails::IdentityCenterConfig)
+    DescribedWebAppIdentityProviderDetails.add_member_subclass(:unknown, Types::DescribedWebAppIdentityProviderDetails::Unknown)
+    DescribedWebAppIdentityProviderDetails.struct_class = Types::DescribedWebAppIdentityProviderDetails
+
     DescribedWorkflow.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Arn"))
     DescribedWorkflow.add_member(:description, Shapes::ShapeRef.new(shape: WorkflowDescription, location_name: "Description"))
     DescribedWorkflow.add_member(:steps, Shapes::ShapeRef.new(shape: WorkflowSteps, location_name: "Steps"))
@@ -770,6 +858,10 @@ module Aws::Transfer
     HomeDirectoryMapEntry.struct_class = Types::HomeDirectoryMapEntry
 
     HomeDirectoryMappings.member = Shapes::ShapeRef.new(shape: HomeDirectoryMapEntry)
+
+    IdentityCenterConfig.add_member(:instance_arn, Shapes::ShapeRef.new(shape: IdentityCenterInstanceArn, location_name: "InstanceArn"))
+    IdentityCenterConfig.add_member(:role, Shapes::ShapeRef.new(shape: Role, location_name: "Role"))
+    IdentityCenterConfig.struct_class = Types::IdentityCenterConfig
 
     IdentityProviderDetails.add_member(:url, Shapes::ShapeRef.new(shape: Url, location_name: "Url"))
     IdentityProviderDetails.add_member(:invocation_role, Shapes::ShapeRef.new(shape: Role, location_name: "InvocationRole"))
@@ -934,6 +1026,14 @@ module Aws::Transfer
     ListUsersResponse.add_member(:users, Shapes::ShapeRef.new(shape: ListedUsers, required: true, location_name: "Users"))
     ListUsersResponse.struct_class = Types::ListUsersResponse
 
+    ListWebAppsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
+    ListWebAppsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListWebAppsRequest.struct_class = Types::ListWebAppsRequest
+
+    ListWebAppsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListWebAppsResponse.add_member(:web_apps, Shapes::ShapeRef.new(shape: ListedWebApps, required: true, location_name: "WebApps"))
+    ListWebAppsResponse.struct_class = Types::ListWebAppsResponse
+
     ListWorkflowsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
     ListWorkflowsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     ListWorkflowsRequest.struct_class = Types::ListWorkflowsRequest
@@ -1027,6 +1127,14 @@ module Aws::Transfer
     ListedUser.struct_class = Types::ListedUser
 
     ListedUsers.member = Shapes::ShapeRef.new(shape: ListedUser)
+
+    ListedWebApp.add_member(:arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "Arn"))
+    ListedWebApp.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    ListedWebApp.add_member(:access_endpoint, Shapes::ShapeRef.new(shape: WebAppAccessEndpoint, location_name: "AccessEndpoint"))
+    ListedWebApp.add_member(:web_app_endpoint, Shapes::ShapeRef.new(shape: WebAppEndpoint, location_name: "WebAppEndpoint"))
+    ListedWebApp.struct_class = Types::ListedWebApp
+
+    ListedWebApps.member = Shapes::ShapeRef.new(shape: ListedWebApp)
 
     ListedWorkflow.add_member(:workflow_id, Shapes::ShapeRef.new(shape: WorkflowId, location_name: "WorkflowId"))
     ListedWorkflow.add_member(:description, Shapes::ShapeRef.new(shape: WorkflowDescription, location_name: "Description"))
@@ -1297,10 +1405,49 @@ module Aws::Transfer
     UpdateUserResponse.add_member(:user_name, Shapes::ShapeRef.new(shape: UserName, required: true, location_name: "UserName"))
     UpdateUserResponse.struct_class = Types::UpdateUserResponse
 
+    UpdateWebAppCustomizationRequest.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    UpdateWebAppCustomizationRequest.add_member(:title, Shapes::ShapeRef.new(shape: WebAppTitle, location_name: "Title"))
+    UpdateWebAppCustomizationRequest.add_member(:logo_file, Shapes::ShapeRef.new(shape: WebAppLogoFile, location_name: "LogoFile"))
+    UpdateWebAppCustomizationRequest.add_member(:favicon_file, Shapes::ShapeRef.new(shape: WebAppFaviconFile, location_name: "FaviconFile"))
+    UpdateWebAppCustomizationRequest.struct_class = Types::UpdateWebAppCustomizationRequest
+
+    UpdateWebAppCustomizationResponse.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    UpdateWebAppCustomizationResponse.struct_class = Types::UpdateWebAppCustomizationResponse
+
+    UpdateWebAppIdentityCenterConfig.add_member(:role, Shapes::ShapeRef.new(shape: Role, location_name: "Role"))
+    UpdateWebAppIdentityCenterConfig.struct_class = Types::UpdateWebAppIdentityCenterConfig
+
+    UpdateWebAppIdentityProviderDetails.add_member(:identity_center_config, Shapes::ShapeRef.new(shape: UpdateWebAppIdentityCenterConfig, location_name: "IdentityCenterConfig"))
+    UpdateWebAppIdentityProviderDetails.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    UpdateWebAppIdentityProviderDetails.add_member_subclass(:identity_center_config, Types::UpdateWebAppIdentityProviderDetails::IdentityCenterConfig)
+    UpdateWebAppIdentityProviderDetails.add_member_subclass(:unknown, Types::UpdateWebAppIdentityProviderDetails::Unknown)
+    UpdateWebAppIdentityProviderDetails.struct_class = Types::UpdateWebAppIdentityProviderDetails
+
+    UpdateWebAppRequest.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    UpdateWebAppRequest.add_member(:identity_provider_details, Shapes::ShapeRef.new(shape: UpdateWebAppIdentityProviderDetails, location_name: "IdentityProviderDetails"))
+    UpdateWebAppRequest.add_member(:access_endpoint, Shapes::ShapeRef.new(shape: WebAppAccessEndpoint, location_name: "AccessEndpoint"))
+    UpdateWebAppRequest.add_member(:web_app_units, Shapes::ShapeRef.new(shape: WebAppUnits, location_name: "WebAppUnits"))
+    UpdateWebAppRequest.struct_class = Types::UpdateWebAppRequest
+
+    UpdateWebAppResponse.add_member(:web_app_id, Shapes::ShapeRef.new(shape: WebAppId, required: true, location_name: "WebAppId"))
+    UpdateWebAppResponse.struct_class = Types::UpdateWebAppResponse
+
     UserDetails.add_member(:user_name, Shapes::ShapeRef.new(shape: UserName, required: true, location_name: "UserName"))
     UserDetails.add_member(:server_id, Shapes::ShapeRef.new(shape: ServerId, required: true, location_name: "ServerId"))
     UserDetails.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, location_name: "SessionId"))
     UserDetails.struct_class = Types::UserDetails
+
+    WebAppIdentityProviderDetails.add_member(:identity_center_config, Shapes::ShapeRef.new(shape: IdentityCenterConfig, location_name: "IdentityCenterConfig"))
+    WebAppIdentityProviderDetails.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    WebAppIdentityProviderDetails.add_member_subclass(:identity_center_config, Types::WebAppIdentityProviderDetails::IdentityCenterConfig)
+    WebAppIdentityProviderDetails.add_member_subclass(:unknown, Types::WebAppIdentityProviderDetails::Unknown)
+    WebAppIdentityProviderDetails.struct_class = Types::WebAppIdentityProviderDetails
+
+    WebAppUnits.add_member(:provisioned, Shapes::ShapeRef.new(shape: WebAppUnitCount, location_name: "Provisioned"))
+    WebAppUnits.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    WebAppUnits.add_member_subclass(:provisioned, Types::WebAppUnits::Provisioned)
+    WebAppUnits.add_member_subclass(:unknown, Types::WebAppUnits::Unknown)
+    WebAppUnits.struct_class = Types::WebAppUnits
 
     WorkflowDetail.add_member(:workflow_id, Shapes::ShapeRef.new(shape: WorkflowId, required: true, location_name: "WorkflowId"))
     WorkflowDetail.add_member(:execution_role, Shapes::ShapeRef.new(shape: Role, required: true, location_name: "ExecutionRole"))
@@ -1422,6 +1569,19 @@ module Aws::Transfer
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceExistsException)
+      end)
+
+      api.add_operation(:create_web_app, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateWebApp"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateWebAppRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateWebAppResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:create_workflow, Seahorse::Model::Operation.new.tap do |o|
@@ -1547,6 +1707,33 @@ module Aws::Transfer
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:delete_web_app, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteWebApp"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteWebAppRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:delete_web_app_customization, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteWebAppCustomization"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteWebAppCustomizationRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:delete_workflow, Seahorse::Model::Operation.new.tap do |o|
@@ -1680,6 +1867,32 @@ module Aws::Transfer
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:describe_web_app, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeWebApp"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeWebAppRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeWebAppResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:describe_web_app_customization, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeWebAppCustomization"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeWebAppCustomizationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeWebAppCustomizationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:describe_workflow, Seahorse::Model::Operation.new.tap do |o|
@@ -1952,6 +2165,24 @@ module Aws::Transfer
         )
       end)
 
+      api.add_operation(:list_web_apps, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListWebApps"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListWebAppsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListWebAppsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidNextTokenException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_workflows, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListWorkflows"
         o.http_method = "POST"
@@ -2192,6 +2423,34 @@ module Aws::Transfer
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+      end)
+
+      api.add_operation(:update_web_app, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateWebApp"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateWebAppRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateWebAppResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:update_web_app_customization, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateWebAppCustomization"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateWebAppCustomizationRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateWebAppCustomizationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceError)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
     end
 

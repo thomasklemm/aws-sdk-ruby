@@ -264,8 +264,8 @@ module Aws
       def create_file_system: (
                                 ?client_request_token: ::String,
                                 file_system_type: ("WINDOWS" | "LUSTRE" | "ONTAP" | "OPENZFS"),
-                                storage_capacity: ::Integer,
-                                ?storage_type: ("SSD" | "HDD"),
+                                ?storage_capacity: ::Integer,
+                                ?storage_type: ("SSD" | "HDD" | "INTELLIGENT_TIERING"),
                                 subnet_ids: Array[::String],
                                 ?security_group_ids: Array[::String],
                                 ?tags: Array[
@@ -385,7 +385,11 @@ module Aws
                                   }?,
                                   preferred_subnet_id: ::String?,
                                   endpoint_ip_address_range: ::String?,
-                                  route_table_ids: Array[::String]?
+                                  route_table_ids: Array[::String]?,
+                                  read_cache_configuration: {
+                                    sizing_mode: ("NO_CACHE" | "USER_PROVISIONED" | "PROPORTIONAL_TO_THROUGHPUT_CAPACITY")?,
+                                    size_gi_b: ::Integer?
+                                  }?
                                 }
                               ) -> _CreateFileSystemResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateFileSystemResponseSuccess
@@ -461,7 +465,7 @@ module Aws
                                                 mode: ("AUTOMATIC" | "USER_PROVISIONED")
                                               }?
                                             },
-                                            ?storage_type: ("SSD" | "HDD"),
+                                            ?storage_type: ("SSD" | "HDD" | "INTELLIGENT_TIERING"),
                                             ?kms_key_id: ::String,
                                             ?file_system_type_version: ::String,
                                             ?open_zfs_configuration: {
@@ -501,7 +505,11 @@ module Aws
                                               }?,
                                               preferred_subnet_id: ::String?,
                                               endpoint_ip_address_range: ::String?,
-                                              route_table_ids: Array[::String]?
+                                              route_table_ids: Array[::String]?,
+                                              read_cache_configuration: {
+                                                sizing_mode: ("NO_CACHE" | "USER_PROVISIONED" | "PROPORTIONAL_TO_THROUGHPUT_CAPACITY")?,
+                                                size_gi_b: ::Integer?
+                                              }?
                                             },
                                             ?storage_capacity: ::Integer
                                           ) -> _CreateFileSystemFromBackupResponseSuccess
@@ -1205,9 +1213,13 @@ module Aws
                                     iops: ::Integer?
                                   }?,
                                   add_route_table_ids: Array[::String]?,
-                                  remove_route_table_ids: Array[::String]?
+                                  remove_route_table_ids: Array[::String]?,
+                                  read_cache_configuration: {
+                                    sizing_mode: ("NO_CACHE" | "USER_PROVISIONED" | "PROPORTIONAL_TO_THROUGHPUT_CAPACITY")?,
+                                    size_gi_b: ::Integer?
+                                  }?
                                 },
-                                ?storage_type: ("SSD" | "HDD")
+                                ?storage_type: ("SSD" | "HDD" | "INTELLIGENT_TIERING")
                               ) -> _UpdateFileSystemResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateFileSystemResponseSuccess
 

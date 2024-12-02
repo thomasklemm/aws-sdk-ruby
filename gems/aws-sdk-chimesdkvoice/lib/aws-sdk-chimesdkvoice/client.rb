@@ -951,6 +951,35 @@ module Aws::ChimeSDKVoice
     # @option params [Array<Types::Tag>] :tags
     #   The tags assigned to the Voice Connector.
     #
+    # @option params [String] :integration_type
+    #   The connectors for use with Amazon Connect.
+    #
+    #   The following options are available:
+    #
+    #   * `CONNECT_CALL_TRANSFER_CONNECTOR` - Enables enterprises to integrate
+    #     Amazon Connect with other voice systems to directly transfer voice
+    #     calls and metadata without using the public telephone network. They
+    #     can use Amazon Connect telephony and Interactive Voice Response
+    #     (IVR) with their existing voice systems to modernize the IVR
+    #     experience of their existing contact center and their enterprise and
+    #     branch voice systems. Additionally, enterprises migrating their
+    #     contact center to Amazon Connect can start with Connect telephony
+    #     and IVR for immediate modernization ahead of agent migration.
+    #
+    #   * `CONNECT_ANALYTICS_CONNECTOR` - Enables enterprises to integrate
+    #     Amazon Connect with other voice systems for real-time and post-call
+    #     analytics. They can use Amazon Connect Contact Lens with their
+    #     existing voice systems to provides call recordings, conversational
+    #     analytics (including contact transcript, sensitive data redaction,
+    #     content categorization, theme detection, sentiment analysis,
+    #     real-time alerts, and post-contact summary), and agent performance
+    #     evaluations (including evaluation forms, automated evaluation,
+    #     supervisor review) with a rich user experience to display, search
+    #     and filter customer interactions, and programmatic access to data
+    #     streams and the data lake. Additionally, enterprises migrating their
+    #     contact center to Amazon Connect can start with Contact Lens
+    #     analytics and performance insights ahead of agent migration.
+    #
     # @return [Types::CreateVoiceConnectorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateVoiceConnectorResponse#voice_connector #voice_connector} => Types::VoiceConnector
@@ -967,6 +996,7 @@ module Aws::ChimeSDKVoice
     #         value: "TagValue", # required
     #       },
     #     ],
+    #     integration_type: "CONNECT_CALL_TRANSFER_CONNECTOR", # accepts CONNECT_CALL_TRANSFER_CONNECTOR, CONNECT_ANALYTICS_CONNECTOR
     #   })
     #
     # @example Response structure
@@ -979,6 +1009,7 @@ module Aws::ChimeSDKVoice
     #   resp.voice_connector.created_timestamp #=> Time
     #   resp.voice_connector.updated_timestamp #=> Time
     #   resp.voice_connector.voice_connector_arn #=> String
+    #   resp.voice_connector.integration_type #=> String, one of "CONNECT_CALL_TRANSFER_CONNECTOR", "CONNECT_ANALYTICS_CONNECTOR"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/CreateVoiceConnector AWS API Documentation
     #
@@ -1303,6 +1334,29 @@ module Aws::ChimeSDKVoice
     # @param [Hash] params ({})
     def delete_voice_connector_emergency_calling_configuration(params = {}, options = {})
       req = build_request(:delete_voice_connector_emergency_calling_configuration, params)
+      req.send_request(options)
+    end
+
+    # Deletes the external systems configuration for a Voice Connector.
+    #
+    # @option params [required, String] :voice_connector_id
+    #   The ID of the Voice Connector for which to delete the external system
+    #   configuration.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_voice_connector_external_systems_configuration({
+    #     voice_connector_id: "NonEmptyString", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/DeleteVoiceConnectorExternalSystemsConfiguration AWS API Documentation
+    #
+    # @overload delete_voice_connector_external_systems_configuration(params = {})
+    # @param [Hash] params ({})
+    def delete_voice_connector_external_systems_configuration(params = {}, options = {})
+      req = build_request(:delete_voice_connector_external_systems_configuration, params)
       req.send_request(options)
     end
 
@@ -1969,6 +2023,7 @@ module Aws::ChimeSDKVoice
     #   resp.voice_connector.created_timestamp #=> Time
     #   resp.voice_connector.updated_timestamp #=> Time
     #   resp.voice_connector.voice_connector_arn #=> String
+    #   resp.voice_connector.integration_type #=> String, one of "CONNECT_CALL_TRANSFER_CONNECTOR", "CONNECT_ANALYTICS_CONNECTOR"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/GetVoiceConnector AWS API Documentation
     #
@@ -2008,6 +2063,39 @@ module Aws::ChimeSDKVoice
     # @param [Hash] params ({})
     def get_voice_connector_emergency_calling_configuration(params = {}, options = {})
       req = build_request(:get_voice_connector_emergency_calling_configuration, params)
+      req.send_request(options)
+    end
+
+    # Gets information about an external systems configuration for a Voice
+    # Connector.
+    #
+    # @option params [required, String] :voice_connector_id
+    #   The ID of the Voice Connector for which to return information about
+    #   the external system configuration.
+    #
+    # @return [Types::GetVoiceConnectorExternalSystemsConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetVoiceConnectorExternalSystemsConfigurationResponse#external_systems_configuration #external_systems_configuration} => Types::ExternalSystemsConfiguration
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_voice_connector_external_systems_configuration({
+    #     voice_connector_id: "NonEmptyString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.external_systems_configuration.session_border_controller_types #=> Array
+    #   resp.external_systems_configuration.session_border_controller_types[0] #=> String, one of "RIBBON_SBC", "ORACLE_ACME_PACKET_SBC", "AVAYA_SBCE", "CISCO_UNIFIED_BORDER_ELEMENT", "AUDIOCODES_MEDIANT_SBC"
+    #   resp.external_systems_configuration.contact_center_system_types #=> Array
+    #   resp.external_systems_configuration.contact_center_system_types[0] #=> String, one of "GENESYS_ENGAGE_ON_PREMISES", "AVAYA_AURA_CALL_CENTER_ELITE", "AVAYA_AURA_CONTACT_CENTER", "CISCO_UNIFIED_CONTACT_CENTER_ENTERPRISE"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/GetVoiceConnectorExternalSystemsConfiguration AWS API Documentation
+    #
+    # @overload get_voice_connector_external_systems_configuration(params = {})
+    # @param [Hash] params ({})
+    def get_voice_connector_external_systems_configuration(params = {}, options = {})
+      req = build_request(:get_voice_connector_external_systems_configuration, params)
       req.send_request(options)
     end
 
@@ -2833,6 +2921,7 @@ module Aws::ChimeSDKVoice
     #   resp.voice_connectors[0].created_timestamp #=> Time
     #   resp.voice_connectors[0].updated_timestamp #=> Time
     #   resp.voice_connectors[0].voice_connector_arn #=> String
+    #   resp.voice_connectors[0].integration_type #=> String, one of "CONNECT_CALL_TRANSFER_CONNECTOR", "CONNECT_ANALYTICS_CONNECTOR"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/ListVoiceConnectors AWS API Documentation
@@ -3053,6 +3142,46 @@ module Aws::ChimeSDKVoice
     # @param [Hash] params ({})
     def put_voice_connector_emergency_calling_configuration(params = {}, options = {})
       req = build_request(:put_voice_connector_emergency_calling_configuration, params)
+      req.send_request(options)
+    end
+
+    # Adds an external systems configuration to a Voice Connector.
+    #
+    # @option params [required, String] :voice_connector_id
+    #   The ID of the Voice Connector for which to add the external system
+    #   configuration.
+    #
+    # @option params [Array<String>] :session_border_controller_types
+    #   The session border controllers to use.
+    #
+    # @option params [Array<String>] :contact_center_system_types
+    #   The contact center system to use.
+    #
+    # @return [Types::PutVoiceConnectorExternalSystemsConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutVoiceConnectorExternalSystemsConfigurationResponse#external_systems_configuration #external_systems_configuration} => Types::ExternalSystemsConfiguration
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_voice_connector_external_systems_configuration({
+    #     voice_connector_id: "NonEmptyString128", # required
+    #     session_border_controller_types: ["RIBBON_SBC"], # accepts RIBBON_SBC, ORACLE_ACME_PACKET_SBC, AVAYA_SBCE, CISCO_UNIFIED_BORDER_ELEMENT, AUDIOCODES_MEDIANT_SBC
+    #     contact_center_system_types: ["GENESYS_ENGAGE_ON_PREMISES"], # accepts GENESYS_ENGAGE_ON_PREMISES, AVAYA_AURA_CALL_CENTER_ELITE, AVAYA_AURA_CONTACT_CENTER, CISCO_UNIFIED_CONTACT_CENTER_ENTERPRISE
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.external_systems_configuration.session_border_controller_types #=> Array
+    #   resp.external_systems_configuration.session_border_controller_types[0] #=> String, one of "RIBBON_SBC", "ORACLE_ACME_PACKET_SBC", "AVAYA_SBCE", "CISCO_UNIFIED_BORDER_ELEMENT", "AUDIOCODES_MEDIANT_SBC"
+    #   resp.external_systems_configuration.contact_center_system_types #=> Array
+    #   resp.external_systems_configuration.contact_center_system_types[0] #=> String, one of "GENESYS_ENGAGE_ON_PREMISES", "AVAYA_AURA_CALL_CENTER_ELITE", "AVAYA_AURA_CONTACT_CENTER", "CISCO_UNIFIED_CONTACT_CENTER_ENTERPRISE"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/PutVoiceConnectorExternalSystemsConfiguration AWS API Documentation
+    #
+    # @overload put_voice_connector_external_systems_configuration(params = {})
+    # @param [Hash] params ({})
+    def put_voice_connector_external_systems_configuration(params = {}, options = {})
+      req = build_request(:put_voice_connector_external_systems_configuration, params)
       req.send_request(options)
     end
 
@@ -4025,6 +4154,7 @@ module Aws::ChimeSDKVoice
     #   resp.voice_connector.created_timestamp #=> Time
     #   resp.voice_connector.updated_timestamp #=> Time
     #   resp.voice_connector.voice_connector_arn #=> String
+    #   resp.voice_connector.integration_type #=> String, one of "CONNECT_CALL_TRANSFER_CONNECTOR", "CONNECT_ANALYTICS_CONNECTOR"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/chime-sdk-voice-2022-08-03/UpdateVoiceConnector AWS API Documentation
     #
@@ -4279,7 +4409,7 @@ module Aws::ChimeSDKVoice
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-chimesdkvoice'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

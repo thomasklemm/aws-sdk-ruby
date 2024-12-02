@@ -461,6 +461,12 @@ module Aws::RDS
       data[:iam_database_authentication_enabled]
     end
 
+    # The mode of Database Insights that is enabled for the instance.
+    # @return [String]
+    def database_insights_mode
+      data[:database_insights_mode]
+    end
+
     # Indicates whether Performance Insights is enabled for the DB instance.
     # @return [Boolean]
     def performance_insights_enabled
@@ -988,6 +994,7 @@ module Aws::RDS
     #     promotion_tier: 1,
     #     timezone: "String",
     #     enable_iam_database_authentication: false,
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -1935,6 +1942,8 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
+    # @option options [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #   For more information, see [Using Amazon Performance Insights][1] in
@@ -2276,6 +2285,7 @@ module Aws::RDS
     #     kms_key_id: "String",
     #     pre_signed_url: "String",
     #     enable_iam_database_authentication: false,
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -2605,6 +2615,8 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
+    # @option options [String] :database_insights_mode
+    #   Specifies the mode of Database Insights.
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the read replica.
     #
@@ -3059,6 +3071,7 @@ module Aws::RDS
     #     disable_domain: false,
     #     promotion_tier: 1,
     #     enable_iam_database_authentication: false,
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -3772,6 +3785,8 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
+    # @option options [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.25.0 (2024-12-02)
+------------------
+
+* Feature - This release adds following capabilities: Configuring safeguards via AIGuardrails for Q in Connect inferencing, and APIs to support Q&A self-service use cases
+
 1.24.0 (2024-11-18)
 ------------------
 

@@ -16,6 +16,10 @@ module Aws::Bedrock
 
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     AccountId = Shapes::StringShape.new(name: 'AccountId')
+    AdditionalModelRequestFields = Shapes::MapShape.new(name: 'AdditionalModelRequestFields')
+    AdditionalModelRequestFieldsKey = Shapes::StringShape.new(name: 'AdditionalModelRequestFieldsKey')
+    AdditionalModelRequestFieldsValue = Shapes::DocumentShape.new(name: 'AdditionalModelRequestFieldsValue', document: true)
+    ApplicationType = Shapes::StringShape.new(name: 'ApplicationType')
     AutomatedEvaluationConfig = Shapes::StructureShape.new(name: 'AutomatedEvaluationConfig')
     BaseModelIdentifier = Shapes::StringShape.new(name: 'BaseModelIdentifier')
     BatchDeleteEvaluationJobError = Shapes::StructureShape.new(name: 'BatchDeleteEvaluationJobError')
@@ -24,13 +28,19 @@ module Aws::Bedrock
     BatchDeleteEvaluationJobItems = Shapes::ListShape.new(name: 'BatchDeleteEvaluationJobItems')
     BatchDeleteEvaluationJobRequest = Shapes::StructureShape.new(name: 'BatchDeleteEvaluationJobRequest')
     BatchDeleteEvaluationJobResponse = Shapes::StructureShape.new(name: 'BatchDeleteEvaluationJobResponse')
+    BedrockEvaluatorModel = Shapes::StructureShape.new(name: 'BedrockEvaluatorModel')
+    BedrockEvaluatorModels = Shapes::ListShape.new(name: 'BedrockEvaluatorModels')
+    BedrockModelArn = Shapes::StringShape.new(name: 'BedrockModelArn')
     BedrockModelId = Shapes::StringShape.new(name: 'BedrockModelId')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BrandedName = Shapes::StringShape.new(name: 'BrandedName')
     BucketName = Shapes::StringShape.new(name: 'BucketName')
+    ByteContentBlob = Shapes::BlobShape.new(name: 'ByteContentBlob')
+    ByteContentDoc = Shapes::StructureShape.new(name: 'ByteContentDoc')
     CloudWatchConfig = Shapes::StructureShape.new(name: 'CloudWatchConfig')
     CommitmentDuration = Shapes::StringShape.new(name: 'CommitmentDuration')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
+    ContentType = Shapes::StringShape.new(name: 'ContentType')
     CreateEvaluationJobRequest = Shapes::StructureShape.new(name: 'CreateEvaluationJobRequest')
     CreateEvaluationJobResponse = Shapes::StructureShape.new(name: 'CreateEvaluationJobResponse')
     CreateGuardrailRequest = Shapes::StructureShape.new(name: 'CreateGuardrailRequest')
@@ -97,6 +107,17 @@ module Aws::Bedrock
     EvaluationSummary = Shapes::StructureShape.new(name: 'EvaluationSummary')
     EvaluationTaskType = Shapes::StringShape.new(name: 'EvaluationTaskType')
     EvaluationTaskTypes = Shapes::ListShape.new(name: 'EvaluationTaskTypes')
+    EvaluatorModelConfig = Shapes::UnionShape.new(name: 'EvaluatorModelConfig')
+    EvaluatorModelIdentifier = Shapes::StringShape.new(name: 'EvaluatorModelIdentifier')
+    EvaluatorModelIdentifiers = Shapes::ListShape.new(name: 'EvaluatorModelIdentifiers')
+    ExternalSource = Shapes::StructureShape.new(name: 'ExternalSource')
+    ExternalSourceType = Shapes::StringShape.new(name: 'ExternalSourceType')
+    ExternalSources = Shapes::ListShape.new(name: 'ExternalSources')
+    ExternalSourcesGenerationConfiguration = Shapes::StructureShape.new(name: 'ExternalSourcesGenerationConfiguration')
+    ExternalSourcesRetrieveAndGenerateConfiguration = Shapes::StructureShape.new(name: 'ExternalSourcesRetrieveAndGenerateConfiguration')
+    FilterAttribute = Shapes::StructureShape.new(name: 'FilterAttribute')
+    FilterKey = Shapes::StringShape.new(name: 'FilterKey')
+    FilterValue = Shapes::DocumentShape.new(name: 'FilterValue', document: true)
     FineTuningJobStatus = Shapes::StringShape.new(name: 'FineTuningJobStatus')
     FoundationModelArn = Shapes::StringShape.new(name: 'FoundationModelArn')
     FoundationModelDetails = Shapes::StructureShape.new(name: 'FoundationModelDetails')
@@ -104,6 +125,7 @@ module Aws::Bedrock
     FoundationModelLifecycleStatus = Shapes::StringShape.new(name: 'FoundationModelLifecycleStatus')
     FoundationModelSummary = Shapes::StructureShape.new(name: 'FoundationModelSummary')
     FoundationModelSummaryList = Shapes::ListShape.new(name: 'FoundationModelSummaryList')
+    GenerationConfiguration = Shapes::StructureShape.new(name: 'GenerationConfiguration')
     GetCustomModelRequest = Shapes::StructureShape.new(name: 'GetCustomModelRequest')
     GetCustomModelResponse = Shapes::StructureShape.new(name: 'GetCustomModelResponse')
     GetEvaluationJobRequest = Shapes::StructureShape.new(name: 'GetEvaluationJobRequest')
@@ -130,6 +152,9 @@ module Aws::Bedrock
     GetProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'GetProvisionedModelThroughputResponse')
     GuardrailArn = Shapes::StringShape.new(name: 'GuardrailArn')
     GuardrailBlockedMessaging = Shapes::StringShape.new(name: 'GuardrailBlockedMessaging')
+    GuardrailConfiguration = Shapes::StructureShape.new(name: 'GuardrailConfiguration')
+    GuardrailConfigurationGuardrailIdString = Shapes::StringShape.new(name: 'GuardrailConfigurationGuardrailIdString')
+    GuardrailConfigurationGuardrailVersionString = Shapes::StringShape.new(name: 'GuardrailConfigurationGuardrailVersionString')
     GuardrailContentFilter = Shapes::StructureShape.new(name: 'GuardrailContentFilter')
     GuardrailContentFilterConfig = Shapes::StructureShape.new(name: 'GuardrailContentFilterConfig')
     GuardrailContentFilterType = Shapes::StringShape.new(name: 'GuardrailContentFilterType')
@@ -209,6 +234,7 @@ module Aws::Bedrock
     HumanTaskInstructions = Shapes::StringShape.new(name: 'HumanTaskInstructions')
     HumanWorkflowConfig = Shapes::StructureShape.new(name: 'HumanWorkflowConfig')
     IdempotencyToken = Shapes::StringShape.new(name: 'IdempotencyToken')
+    Identifier = Shapes::StringShape.new(name: 'Identifier')
     ImportedModelArn = Shapes::StringShape.new(name: 'ImportedModelArn')
     ImportedModelIdentifier = Shapes::StringShape.new(name: 'ImportedModelIdentifier')
     ImportedModelName = Shapes::StringShape.new(name: 'ImportedModelName')
@@ -232,9 +258,16 @@ module Aws::Bedrock
     InstructSupported = Shapes::BooleanShape.new(name: 'InstructSupported')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     JobName = Shapes::StringShape.new(name: 'JobName')
+    KbInferenceConfig = Shapes::StructureShape.new(name: 'KbInferenceConfig')
     KeyPrefix = Shapes::StringShape.new(name: 'KeyPrefix')
     KmsKeyArn = Shapes::StringShape.new(name: 'KmsKeyArn')
     KmsKeyId = Shapes::StringShape.new(name: 'KmsKeyId')
+    KnowledgeBaseConfig = Shapes::UnionShape.new(name: 'KnowledgeBaseConfig')
+    KnowledgeBaseId = Shapes::StringShape.new(name: 'KnowledgeBaseId')
+    KnowledgeBaseRetrievalConfiguration = Shapes::StructureShape.new(name: 'KnowledgeBaseRetrievalConfiguration')
+    KnowledgeBaseRetrieveAndGenerateConfiguration = Shapes::StructureShape.new(name: 'KnowledgeBaseRetrieveAndGenerateConfiguration')
+    KnowledgeBaseVectorSearchConfiguration = Shapes::StructureShape.new(name: 'KnowledgeBaseVectorSearchConfiguration')
+    KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger = Shapes::IntegerShape.new(name: 'KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger')
     ListCustomModelsRequest = Shapes::StructureShape.new(name: 'ListCustomModelsRequest')
     ListCustomModelsResponse = Shapes::StructureShape.new(name: 'ListCustomModelsResponse')
     ListEvaluationJobsRequest = Shapes::StructureShape.new(name: 'ListEvaluationJobsRequest')
@@ -262,6 +295,7 @@ module Aws::Bedrock
     LogGroupName = Shapes::StringShape.new(name: 'LogGroupName')
     LoggingConfig = Shapes::StructureShape.new(name: 'LoggingConfig')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
+    MaxTokens = Shapes::IntegerShape.new(name: 'MaxTokens')
     Message = Shapes::StringShape.new(name: 'Message')
     MetricFloat = Shapes::FloatShape.new(name: 'MetricFloat')
     ModelArchitecture = Shapes::StringShape.new(name: 'ModelArchitecture')
@@ -302,9 +336,11 @@ module Aws::Bedrock
     ModelModalityList = Shapes::ListShape.new(name: 'ModelModalityList')
     ModelName = Shapes::StringShape.new(name: 'ModelName')
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
+    OrchestrationConfiguration = Shapes::StructureShape.new(name: 'OrchestrationConfiguration')
     OutputDataConfig = Shapes::StructureShape.new(name: 'OutputDataConfig')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
     PositiveInteger = Shapes::IntegerShape.new(name: 'PositiveInteger')
+    PromptTemplate = Shapes::StructureShape.new(name: 'PromptTemplate')
     Provider = Shapes::StringShape.new(name: 'Provider')
     ProvisionedModelArn = Shapes::StringShape.new(name: 'ProvisionedModelArn')
     ProvisionedModelId = Shapes::StringShape.new(name: 'ProvisionedModelId')
@@ -314,13 +350,27 @@ module Aws::Bedrock
     ProvisionedModelSummary = Shapes::StructureShape.new(name: 'ProvisionedModelSummary')
     PutModelInvocationLoggingConfigurationRequest = Shapes::StructureShape.new(name: 'PutModelInvocationLoggingConfigurationRequest')
     PutModelInvocationLoggingConfigurationResponse = Shapes::StructureShape.new(name: 'PutModelInvocationLoggingConfigurationResponse')
+    QueryTransformationConfiguration = Shapes::StructureShape.new(name: 'QueryTransformationConfiguration')
+    QueryTransformationType = Shapes::StringShape.new(name: 'QueryTransformationType')
+    RAGConfig = Shapes::UnionShape.new(name: 'RAGConfig')
+    RAGIdentifiers = Shapes::ListShape.new(name: 'RAGIdentifiers')
+    RAGStopSequences = Shapes::ListShape.new(name: 'RAGStopSequences')
+    RAGStopSequencesMemberString = Shapes::StringShape.new(name: 'RAGStopSequencesMemberString')
+    RagConfigs = Shapes::ListShape.new(name: 'RagConfigs')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
+    RetrievalFilter = Shapes::UnionShape.new(name: 'RetrievalFilter')
+    RetrievalFilterList = Shapes::ListShape.new(name: 'RetrievalFilterList')
+    RetrieveAndGenerateConfiguration = Shapes::StructureShape.new(name: 'RetrieveAndGenerateConfiguration')
+    RetrieveAndGenerateType = Shapes::StringShape.new(name: 'RetrieveAndGenerateType')
+    RetrieveConfig = Shapes::StructureShape.new(name: 'RetrieveConfig')
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     S3Config = Shapes::StructureShape.new(name: 'S3Config')
     S3DataSource = Shapes::StructureShape.new(name: 'S3DataSource')
     S3InputFormat = Shapes::StringShape.new(name: 'S3InputFormat')
+    S3ObjectDoc = Shapes::StructureShape.new(name: 'S3ObjectDoc')
     S3Uri = Shapes::StringShape.new(name: 'S3Uri')
     SageMakerFlowDefinitionArn = Shapes::StringShape.new(name: 'SageMakerFlowDefinitionArn')
+    SearchType = Shapes::StringShape.new(name: 'SearchType')
     SecurityGroupId = Shapes::StringShape.new(name: 'SecurityGroupId')
     SecurityGroupIds = Shapes::ListShape.new(name: 'SecurityGroupIds')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
@@ -345,9 +395,13 @@ module Aws::Bedrock
     TagResourceResponse = Shapes::StructureShape.new(name: 'TagResourceResponse')
     TagValue = Shapes::StringShape.new(name: 'TagValue')
     TaggableResourcesArn = Shapes::StringShape.new(name: 'TaggableResourcesArn')
+    Temperature = Shapes::FloatShape.new(name: 'Temperature')
+    TextInferenceConfig = Shapes::StructureShape.new(name: 'TextInferenceConfig')
+    TextPromptTemplate = Shapes::StringShape.new(name: 'TextPromptTemplate')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
     Timestamp = Shapes::TimestampShape.new(name: 'Timestamp', timestampFormat: "iso8601")
     TooManyTagsException = Shapes::StructureShape.new(name: 'TooManyTagsException')
+    TopP = Shapes::FloatShape.new(name: 'TopP')
     TrainingDataConfig = Shapes::StructureShape.new(name: 'TrainingDataConfig')
     TrainingMetrics = Shapes::StructureShape.new(name: 'TrainingMetrics')
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
@@ -363,11 +417,16 @@ module Aws::Bedrock
     ValidatorMetric = Shapes::StructureShape.new(name: 'ValidatorMetric')
     Validators = Shapes::ListShape.new(name: 'Validators')
     VpcConfig = Shapes::StructureShape.new(name: 'VpcConfig')
+    kBS3Uri = Shapes::StringShape.new(name: 'kBS3Uri')
 
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
 
+    AdditionalModelRequestFields.key = Shapes::ShapeRef.new(shape: AdditionalModelRequestFieldsKey)
+    AdditionalModelRequestFields.value = Shapes::ShapeRef.new(shape: AdditionalModelRequestFieldsValue)
+
     AutomatedEvaluationConfig.add_member(:dataset_metric_configs, Shapes::ShapeRef.new(shape: EvaluationDatasetMetricConfigs, required: true, location_name: "datasetMetricConfigs"))
+    AutomatedEvaluationConfig.add_member(:evaluator_model_config, Shapes::ShapeRef.new(shape: EvaluatorModelConfig, location_name: "evaluatorModelConfig"))
     AutomatedEvaluationConfig.struct_class = Types::AutomatedEvaluationConfig
 
     BatchDeleteEvaluationJobError.add_member(:job_identifier, Shapes::ShapeRef.new(shape: EvaluationJobIdentifier, required: true, location_name: "jobIdentifier"))
@@ -390,6 +449,16 @@ module Aws::Bedrock
     BatchDeleteEvaluationJobResponse.add_member(:evaluation_jobs, Shapes::ShapeRef.new(shape: BatchDeleteEvaluationJobItems, required: true, location_name: "evaluationJobs"))
     BatchDeleteEvaluationJobResponse.struct_class = Types::BatchDeleteEvaluationJobResponse
 
+    BedrockEvaluatorModel.add_member(:model_identifier, Shapes::ShapeRef.new(shape: EvaluatorModelIdentifier, required: true, location_name: "modelIdentifier"))
+    BedrockEvaluatorModel.struct_class = Types::BedrockEvaluatorModel
+
+    BedrockEvaluatorModels.member = Shapes::ShapeRef.new(shape: BedrockEvaluatorModel)
+
+    ByteContentDoc.add_member(:identifier, Shapes::ShapeRef.new(shape: Identifier, required: true, location_name: "identifier"))
+    ByteContentDoc.add_member(:content_type, Shapes::ShapeRef.new(shape: ContentType, required: true, location_name: "contentType"))
+    ByteContentDoc.add_member(:data, Shapes::ShapeRef.new(shape: ByteContentBlob, required: true, location_name: "data"))
+    ByteContentDoc.struct_class = Types::ByteContentDoc
+
     CloudWatchConfig.add_member(:log_group_name, Shapes::ShapeRef.new(shape: LogGroupName, required: true, location_name: "logGroupName"))
     CloudWatchConfig.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     CloudWatchConfig.add_member(:large_data_delivery_s3_config, Shapes::ShapeRef.new(shape: S3Config, location_name: "largeDataDeliveryS3Config"))
@@ -404,6 +473,7 @@ module Aws::Bedrock
     CreateEvaluationJobRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     CreateEvaluationJobRequest.add_member(:customer_encryption_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "customerEncryptionKeyId"))
     CreateEvaluationJobRequest.add_member(:job_tags, Shapes::ShapeRef.new(shape: TagList, location_name: "jobTags"))
+    CreateEvaluationJobRequest.add_member(:application_type, Shapes::ShapeRef.new(shape: ApplicationType, location_name: "applicationType"))
     CreateEvaluationJobRequest.add_member(:evaluation_config, Shapes::ShapeRef.new(shape: EvaluationConfig, required: true, location_name: "evaluationConfig"))
     CreateEvaluationJobRequest.add_member(:inference_config, Shapes::ShapeRef.new(shape: EvaluationInferenceConfig, required: true, location_name: "inferenceConfig"))
     CreateEvaluationJobRequest.add_member(:output_data_config, Shapes::ShapeRef.new(shape: EvaluationOutputDataConfig, required: true, location_name: "outputDataConfig"))
@@ -564,7 +634,7 @@ module Aws::Bedrock
     ErrorMessages.member = Shapes::ShapeRef.new(shape: ErrorMessage)
 
     EvaluationBedrockModel.add_member(:model_identifier, Shapes::ShapeRef.new(shape: EvaluationModelIdentifier, required: true, location_name: "modelIdentifier"))
-    EvaluationBedrockModel.add_member(:inference_params, Shapes::ShapeRef.new(shape: EvaluationModelInferenceParams, required: true, location_name: "inferenceParams"))
+    EvaluationBedrockModel.add_member(:inference_params, Shapes::ShapeRef.new(shape: EvaluationModelInferenceParams, location_name: "inferenceParams"))
     EvaluationBedrockModel.struct_class = Types::EvaluationBedrockModel
 
     EvaluationConfig.add_member(:automated, Shapes::ShapeRef.new(shape: AutomatedEvaluationConfig, location_name: "automated"))
@@ -593,8 +663,10 @@ module Aws::Bedrock
     EvaluationDatasetMetricConfigs.member = Shapes::ShapeRef.new(shape: EvaluationDatasetMetricConfig)
 
     EvaluationInferenceConfig.add_member(:models, Shapes::ShapeRef.new(shape: EvaluationModelConfigs, location_name: "models"))
+    EvaluationInferenceConfig.add_member(:rag_configs, Shapes::ShapeRef.new(shape: RagConfigs, location_name: "ragConfigs"))
     EvaluationInferenceConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     EvaluationInferenceConfig.add_member_subclass(:models, Types::EvaluationInferenceConfig::Models)
+    EvaluationInferenceConfig.add_member_subclass(:rag_configs, Types::EvaluationInferenceConfig::RagConfigs)
     EvaluationInferenceConfig.add_member_subclass(:unknown, Types::EvaluationInferenceConfig::Unknown)
     EvaluationInferenceConfig.struct_class = Types::EvaluationInferenceConfig
 
@@ -623,10 +695,43 @@ module Aws::Bedrock
     EvaluationSummary.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "creationTime"))
     EvaluationSummary.add_member(:job_type, Shapes::ShapeRef.new(shape: EvaluationJobType, required: true, location_name: "jobType"))
     EvaluationSummary.add_member(:evaluation_task_types, Shapes::ShapeRef.new(shape: EvaluationTaskTypes, required: true, location_name: "evaluationTaskTypes"))
-    EvaluationSummary.add_member(:model_identifiers, Shapes::ShapeRef.new(shape: EvaluationModelIdentifiers, required: true, location_name: "modelIdentifiers"))
+    EvaluationSummary.add_member(:model_identifiers, Shapes::ShapeRef.new(shape: EvaluationModelIdentifiers, location_name: "modelIdentifiers"))
+    EvaluationSummary.add_member(:rag_identifiers, Shapes::ShapeRef.new(shape: RAGIdentifiers, location_name: "ragIdentifiers"))
+    EvaluationSummary.add_member(:evaluator_model_identifiers, Shapes::ShapeRef.new(shape: EvaluatorModelIdentifiers, location_name: "evaluatorModelIdentifiers"))
+    EvaluationSummary.add_member(:application_type, Shapes::ShapeRef.new(shape: ApplicationType, location_name: "applicationType"))
     EvaluationSummary.struct_class = Types::EvaluationSummary
 
     EvaluationTaskTypes.member = Shapes::ShapeRef.new(shape: EvaluationTaskType)
+
+    EvaluatorModelConfig.add_member(:bedrock_evaluator_models, Shapes::ShapeRef.new(shape: BedrockEvaluatorModels, location_name: "bedrockEvaluatorModels"))
+    EvaluatorModelConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    EvaluatorModelConfig.add_member_subclass(:bedrock_evaluator_models, Types::EvaluatorModelConfig::BedrockEvaluatorModels)
+    EvaluatorModelConfig.add_member_subclass(:unknown, Types::EvaluatorModelConfig::Unknown)
+    EvaluatorModelConfig.struct_class = Types::EvaluatorModelConfig
+
+    EvaluatorModelIdentifiers.member = Shapes::ShapeRef.new(shape: EvaluatorModelIdentifier)
+
+    ExternalSource.add_member(:source_type, Shapes::ShapeRef.new(shape: ExternalSourceType, required: true, location_name: "sourceType"))
+    ExternalSource.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3ObjectDoc, location_name: "s3Location"))
+    ExternalSource.add_member(:byte_content, Shapes::ShapeRef.new(shape: ByteContentDoc, location_name: "byteContent"))
+    ExternalSource.struct_class = Types::ExternalSource
+
+    ExternalSources.member = Shapes::ShapeRef.new(shape: ExternalSource)
+
+    ExternalSourcesGenerationConfiguration.add_member(:prompt_template, Shapes::ShapeRef.new(shape: PromptTemplate, location_name: "promptTemplate"))
+    ExternalSourcesGenerationConfiguration.add_member(:guardrail_configuration, Shapes::ShapeRef.new(shape: GuardrailConfiguration, location_name: "guardrailConfiguration"))
+    ExternalSourcesGenerationConfiguration.add_member(:kb_inference_config, Shapes::ShapeRef.new(shape: KbInferenceConfig, location_name: "kbInferenceConfig"))
+    ExternalSourcesGenerationConfiguration.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: AdditionalModelRequestFields, location_name: "additionalModelRequestFields"))
+    ExternalSourcesGenerationConfiguration.struct_class = Types::ExternalSourcesGenerationConfiguration
+
+    ExternalSourcesRetrieveAndGenerateConfiguration.add_member(:model_arn, Shapes::ShapeRef.new(shape: BedrockModelArn, required: true, location_name: "modelArn"))
+    ExternalSourcesRetrieveAndGenerateConfiguration.add_member(:sources, Shapes::ShapeRef.new(shape: ExternalSources, required: true, location_name: "sources"))
+    ExternalSourcesRetrieveAndGenerateConfiguration.add_member(:generation_configuration, Shapes::ShapeRef.new(shape: ExternalSourcesGenerationConfiguration, location_name: "generationConfiguration"))
+    ExternalSourcesRetrieveAndGenerateConfiguration.struct_class = Types::ExternalSourcesRetrieveAndGenerateConfiguration
+
+    FilterAttribute.add_member(:key, Shapes::ShapeRef.new(shape: FilterKey, required: true, location_name: "key"))
+    FilterAttribute.add_member(:value, Shapes::ShapeRef.new(shape: FilterValue, required: true, location_name: "value"))
+    FilterAttribute.struct_class = Types::FilterAttribute
 
     FoundationModelDetails.add_member(:model_arn, Shapes::ShapeRef.new(shape: FoundationModelArn, required: true, location_name: "modelArn"))
     FoundationModelDetails.add_member(:model_id, Shapes::ShapeRef.new(shape: BedrockModelId, required: true, location_name: "modelId"))
@@ -657,6 +762,12 @@ module Aws::Bedrock
 
     FoundationModelSummaryList.member = Shapes::ShapeRef.new(shape: FoundationModelSummary)
 
+    GenerationConfiguration.add_member(:prompt_template, Shapes::ShapeRef.new(shape: PromptTemplate, location_name: "promptTemplate"))
+    GenerationConfiguration.add_member(:guardrail_configuration, Shapes::ShapeRef.new(shape: GuardrailConfiguration, location_name: "guardrailConfiguration"))
+    GenerationConfiguration.add_member(:kb_inference_config, Shapes::ShapeRef.new(shape: KbInferenceConfig, location_name: "kbInferenceConfig"))
+    GenerationConfiguration.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: AdditionalModelRequestFields, location_name: "additionalModelRequestFields"))
+    GenerationConfiguration.struct_class = Types::GenerationConfiguration
+
     GetCustomModelRequest.add_member(:model_identifier, Shapes::ShapeRef.new(shape: ModelIdentifier, required: true, location: "uri", location_name: "modelIdentifier"))
     GetCustomModelRequest.struct_class = Types::GetCustomModelRequest
 
@@ -686,6 +797,7 @@ module Aws::Bedrock
     GetEvaluationJobResponse.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
     GetEvaluationJobResponse.add_member(:customer_encryption_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "customerEncryptionKeyId"))
     GetEvaluationJobResponse.add_member(:job_type, Shapes::ShapeRef.new(shape: EvaluationJobType, required: true, location_name: "jobType"))
+    GetEvaluationJobResponse.add_member(:application_type, Shapes::ShapeRef.new(shape: ApplicationType, location_name: "applicationType"))
     GetEvaluationJobResponse.add_member(:evaluation_config, Shapes::ShapeRef.new(shape: EvaluationConfig, required: true, location_name: "evaluationConfig"))
     GetEvaluationJobResponse.add_member(:inference_config, Shapes::ShapeRef.new(shape: EvaluationInferenceConfig, required: true, location_name: "inferenceConfig"))
     GetEvaluationJobResponse.add_member(:output_data_config, Shapes::ShapeRef.new(shape: EvaluationOutputDataConfig, required: true, location_name: "outputDataConfig"))
@@ -854,6 +966,10 @@ module Aws::Bedrock
     GetProvisionedModelThroughputResponse.add_member(:commitment_duration, Shapes::ShapeRef.new(shape: CommitmentDuration, location_name: "commitmentDuration"))
     GetProvisionedModelThroughputResponse.add_member(:commitment_expiration_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "commitmentExpirationTime"))
     GetProvisionedModelThroughputResponse.struct_class = Types::GetProvisionedModelThroughputResponse
+
+    GuardrailConfiguration.add_member(:guardrail_id, Shapes::ShapeRef.new(shape: GuardrailConfigurationGuardrailIdString, required: true, location_name: "guardrailId"))
+    GuardrailConfiguration.add_member(:guardrail_version, Shapes::ShapeRef.new(shape: GuardrailConfigurationGuardrailVersionString, required: true, location_name: "guardrailVersion"))
+    GuardrailConfiguration.struct_class = Types::GuardrailConfiguration
 
     GuardrailContentFilter.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailContentFilterType, required: true, location_name: "type"))
     GuardrailContentFilter.add_member(:input_strength, Shapes::ShapeRef.new(shape: GuardrailFilterStrength, required: true, location_name: "inputStrength"))
@@ -1051,6 +1167,32 @@ module Aws::Bedrock
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     InternalServerException.struct_class = Types::InternalServerException
 
+    KbInferenceConfig.add_member(:text_inference_config, Shapes::ShapeRef.new(shape: TextInferenceConfig, location_name: "textInferenceConfig"))
+    KbInferenceConfig.struct_class = Types::KbInferenceConfig
+
+    KnowledgeBaseConfig.add_member(:retrieve_config, Shapes::ShapeRef.new(shape: RetrieveConfig, location_name: "retrieveConfig"))
+    KnowledgeBaseConfig.add_member(:retrieve_and_generate_config, Shapes::ShapeRef.new(shape: RetrieveAndGenerateConfiguration, location_name: "retrieveAndGenerateConfig"))
+    KnowledgeBaseConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    KnowledgeBaseConfig.add_member_subclass(:retrieve_config, Types::KnowledgeBaseConfig::RetrieveConfig)
+    KnowledgeBaseConfig.add_member_subclass(:retrieve_and_generate_config, Types::KnowledgeBaseConfig::RetrieveAndGenerateConfig)
+    KnowledgeBaseConfig.add_member_subclass(:unknown, Types::KnowledgeBaseConfig::Unknown)
+    KnowledgeBaseConfig.struct_class = Types::KnowledgeBaseConfig
+
+    KnowledgeBaseRetrievalConfiguration.add_member(:vector_search_configuration, Shapes::ShapeRef.new(shape: KnowledgeBaseVectorSearchConfiguration, required: true, location_name: "vectorSearchConfiguration"))
+    KnowledgeBaseRetrievalConfiguration.struct_class = Types::KnowledgeBaseRetrievalConfiguration
+
+    KnowledgeBaseRetrieveAndGenerateConfiguration.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: KnowledgeBaseId, required: true, location_name: "knowledgeBaseId"))
+    KnowledgeBaseRetrieveAndGenerateConfiguration.add_member(:model_arn, Shapes::ShapeRef.new(shape: BedrockModelArn, required: true, location_name: "modelArn"))
+    KnowledgeBaseRetrieveAndGenerateConfiguration.add_member(:retrieval_configuration, Shapes::ShapeRef.new(shape: KnowledgeBaseRetrievalConfiguration, location_name: "retrievalConfiguration"))
+    KnowledgeBaseRetrieveAndGenerateConfiguration.add_member(:generation_configuration, Shapes::ShapeRef.new(shape: GenerationConfiguration, location_name: "generationConfiguration"))
+    KnowledgeBaseRetrieveAndGenerateConfiguration.add_member(:orchestration_configuration, Shapes::ShapeRef.new(shape: OrchestrationConfiguration, location_name: "orchestrationConfiguration"))
+    KnowledgeBaseRetrieveAndGenerateConfiguration.struct_class = Types::KnowledgeBaseRetrieveAndGenerateConfiguration
+
+    KnowledgeBaseVectorSearchConfiguration.add_member(:number_of_results, Shapes::ShapeRef.new(shape: KnowledgeBaseVectorSearchConfigurationNumberOfResultsInteger, location_name: "numberOfResults"))
+    KnowledgeBaseVectorSearchConfiguration.add_member(:override_search_type, Shapes::ShapeRef.new(shape: SearchType, location_name: "overrideSearchType"))
+    KnowledgeBaseVectorSearchConfiguration.add_member(:filter, Shapes::ShapeRef.new(shape: RetrievalFilter, location_name: "filter"))
+    KnowledgeBaseVectorSearchConfiguration.struct_class = Types::KnowledgeBaseVectorSearchConfiguration
+
     ListCustomModelsRequest.add_member(:creation_time_before, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeBefore"))
     ListCustomModelsRequest.add_member(:creation_time_after, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeAfter"))
     ListCustomModelsRequest.add_member(:name_contains, Shapes::ShapeRef.new(shape: CustomModelName, location: "querystring", location_name: "nameContains"))
@@ -1070,6 +1212,7 @@ module Aws::Bedrock
     ListEvaluationJobsRequest.add_member(:creation_time_after, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeAfter"))
     ListEvaluationJobsRequest.add_member(:creation_time_before, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeBefore"))
     ListEvaluationJobsRequest.add_member(:status_equals, Shapes::ShapeRef.new(shape: EvaluationJobStatus, location: "querystring", location_name: "statusEquals"))
+    ListEvaluationJobsRequest.add_member(:application_type_equals, Shapes::ShapeRef.new(shape: ApplicationType, location: "querystring", location_name: "applicationTypeEquals"))
     ListEvaluationJobsRequest.add_member(:name_contains, Shapes::ShapeRef.new(shape: EvaluationJobName, location: "querystring", location_name: "nameContains"))
     ListEvaluationJobsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
     ListEvaluationJobsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
@@ -1302,8 +1445,14 @@ module Aws::Bedrock
 
     ModelModalityList.member = Shapes::ShapeRef.new(shape: ModelModality)
 
+    OrchestrationConfiguration.add_member(:query_transformation_configuration, Shapes::ShapeRef.new(shape: QueryTransformationConfiguration, required: true, location_name: "queryTransformationConfiguration"))
+    OrchestrationConfiguration.struct_class = Types::OrchestrationConfiguration
+
     OutputDataConfig.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "s3Uri"))
     OutputDataConfig.struct_class = Types::OutputDataConfig
+
+    PromptTemplate.add_member(:text_prompt_template, Shapes::ShapeRef.new(shape: TextPromptTemplate, location_name: "textPromptTemplate"))
+    PromptTemplate.struct_class = Types::PromptTemplate
 
     ProvisionedModelSummaries.member = Shapes::ShapeRef.new(shape: ProvisionedModelSummary)
 
@@ -1326,8 +1475,64 @@ module Aws::Bedrock
 
     PutModelInvocationLoggingConfigurationResponse.struct_class = Types::PutModelInvocationLoggingConfigurationResponse
 
+    QueryTransformationConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: QueryTransformationType, required: true, location_name: "type"))
+    QueryTransformationConfiguration.struct_class = Types::QueryTransformationConfiguration
+
+    RAGConfig.add_member(:knowledge_base_config, Shapes::ShapeRef.new(shape: KnowledgeBaseConfig, location_name: "knowledgeBaseConfig"))
+    RAGConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    RAGConfig.add_member_subclass(:knowledge_base_config, Types::RAGConfig::KnowledgeBaseConfig)
+    RAGConfig.add_member_subclass(:unknown, Types::RAGConfig::Unknown)
+    RAGConfig.struct_class = Types::RAGConfig
+
+    RAGIdentifiers.member = Shapes::ShapeRef.new(shape: KnowledgeBaseId)
+
+    RAGStopSequences.member = Shapes::ShapeRef.new(shape: RAGStopSequencesMemberString)
+
+    RagConfigs.member = Shapes::ShapeRef.new(shape: RAGConfig)
+
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
+
+    RetrievalFilter.add_member(:equals, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "equals"))
+    RetrievalFilter.add_member(:not_equals, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "notEquals"))
+    RetrievalFilter.add_member(:greater_than, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "greaterThan"))
+    RetrievalFilter.add_member(:greater_than_or_equals, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "greaterThanOrEquals"))
+    RetrievalFilter.add_member(:less_than, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "lessThan"))
+    RetrievalFilter.add_member(:less_than_or_equals, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "lessThanOrEquals"))
+    RetrievalFilter.add_member(:in, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "in"))
+    RetrievalFilter.add_member(:not_in, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "notIn"))
+    RetrievalFilter.add_member(:starts_with, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "startsWith"))
+    RetrievalFilter.add_member(:list_contains, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "listContains"))
+    RetrievalFilter.add_member(:string_contains, Shapes::ShapeRef.new(shape: FilterAttribute, location_name: "stringContains"))
+    RetrievalFilter.add_member(:and_all, Shapes::ShapeRef.new(shape: RetrievalFilterList, location_name: "andAll"))
+    RetrievalFilter.add_member(:or_all, Shapes::ShapeRef.new(shape: RetrievalFilterList, location_name: "orAll"))
+    RetrievalFilter.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    RetrievalFilter.add_member_subclass(:equals, Types::RetrievalFilter::Equals)
+    RetrievalFilter.add_member_subclass(:not_equals, Types::RetrievalFilter::NotEquals)
+    RetrievalFilter.add_member_subclass(:greater_than, Types::RetrievalFilter::GreaterThan)
+    RetrievalFilter.add_member_subclass(:greater_than_or_equals, Types::RetrievalFilter::GreaterThanOrEquals)
+    RetrievalFilter.add_member_subclass(:less_than, Types::RetrievalFilter::LessThan)
+    RetrievalFilter.add_member_subclass(:less_than_or_equals, Types::RetrievalFilter::LessThanOrEquals)
+    RetrievalFilter.add_member_subclass(:in, Types::RetrievalFilter::In)
+    RetrievalFilter.add_member_subclass(:not_in, Types::RetrievalFilter::NotIn)
+    RetrievalFilter.add_member_subclass(:starts_with, Types::RetrievalFilter::StartsWith)
+    RetrievalFilter.add_member_subclass(:list_contains, Types::RetrievalFilter::ListContains)
+    RetrievalFilter.add_member_subclass(:string_contains, Types::RetrievalFilter::StringContains)
+    RetrievalFilter.add_member_subclass(:and_all, Types::RetrievalFilter::AndAll)
+    RetrievalFilter.add_member_subclass(:or_all, Types::RetrievalFilter::OrAll)
+    RetrievalFilter.add_member_subclass(:unknown, Types::RetrievalFilter::Unknown)
+    RetrievalFilter.struct_class = Types::RetrievalFilter
+
+    RetrievalFilterList.member = Shapes::ShapeRef.new(shape: RetrievalFilter)
+
+    RetrieveAndGenerateConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: RetrieveAndGenerateType, required: true, location_name: "type"))
+    RetrieveAndGenerateConfiguration.add_member(:knowledge_base_configuration, Shapes::ShapeRef.new(shape: KnowledgeBaseRetrieveAndGenerateConfiguration, location_name: "knowledgeBaseConfiguration"))
+    RetrieveAndGenerateConfiguration.add_member(:external_sources_configuration, Shapes::ShapeRef.new(shape: ExternalSourcesRetrieveAndGenerateConfiguration, location_name: "externalSourcesConfiguration"))
+    RetrieveAndGenerateConfiguration.struct_class = Types::RetrieveAndGenerateConfiguration
+
+    RetrieveConfig.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: KnowledgeBaseId, required: true, location_name: "knowledgeBaseId"))
+    RetrieveConfig.add_member(:knowledge_base_retrieval_configuration, Shapes::ShapeRef.new(shape: KnowledgeBaseRetrievalConfiguration, required: true, location_name: "knowledgeBaseRetrievalConfiguration"))
+    RetrieveConfig.struct_class = Types::RetrieveConfig
 
     S3Config.add_member(:bucket_name, Shapes::ShapeRef.new(shape: BucketName, required: true, location_name: "bucketName"))
     S3Config.add_member(:key_prefix, Shapes::ShapeRef.new(shape: KeyPrefix, location_name: "keyPrefix"))
@@ -1335,6 +1540,9 @@ module Aws::Bedrock
 
     S3DataSource.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "s3Uri"))
     S3DataSource.struct_class = Types::S3DataSource
+
+    S3ObjectDoc.add_member(:uri, Shapes::ShapeRef.new(shape: kBS3Uri, required: true, location_name: "uri"))
+    S3ObjectDoc.struct_class = Types::S3ObjectDoc
 
     SecurityGroupIds.member = Shapes::ShapeRef.new(shape: SecurityGroupId)
 
@@ -1371,6 +1579,12 @@ module Aws::Bedrock
     TagResourceRequest.struct_class = Types::TagResourceRequest
 
     TagResourceResponse.struct_class = Types::TagResourceResponse
+
+    TextInferenceConfig.add_member(:temperature, Shapes::ShapeRef.new(shape: Temperature, location_name: "temperature"))
+    TextInferenceConfig.add_member(:top_p, Shapes::ShapeRef.new(shape: TopP, location_name: "topP"))
+    TextInferenceConfig.add_member(:max_tokens, Shapes::ShapeRef.new(shape: MaxTokens, location_name: "maxTokens"))
+    TextInferenceConfig.add_member(:stop_sequences, Shapes::ShapeRef.new(shape: RAGStopSequences, location_name: "stopSequences"))
+    TextInferenceConfig.struct_class = Types::TextInferenceConfig
 
     ThrottlingException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ThrottlingException.struct_class = Types::ThrottlingException

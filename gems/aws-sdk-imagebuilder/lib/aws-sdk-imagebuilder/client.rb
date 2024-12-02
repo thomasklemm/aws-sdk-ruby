@@ -1998,7 +1998,7 @@ module Aws::Imagebuilder
     #   resp.component.platform #=> String, one of "Windows", "Linux", "macOS"
     #   resp.component.supported_os_versions #=> Array
     #   resp.component.supported_os_versions[0] #=> String
-    #   resp.component.state.status #=> String, one of "DEPRECATED"
+    #   resp.component.state.status #=> String, one of "DEPRECATED", "DISABLED", "ACTIVE"
     #   resp.component.state.reason #=> String
     #   resp.component.parameters #=> Array
     #   resp.component.parameters[0].name #=> String
@@ -2015,6 +2015,9 @@ module Aws::Imagebuilder
     #   resp.component.tags["TagKey"] #=> String
     #   resp.component.publisher #=> String
     #   resp.component.obfuscate #=> Boolean
+    #   resp.component.product_codes #=> Array
+    #   resp.component.product_codes[0].product_code_id #=> String
+    #   resp.component.product_codes[0].product_code_type #=> String, one of "marketplace"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/GetComponent AWS API Documentation
     #
@@ -2792,6 +2795,52 @@ module Aws::Imagebuilder
       req.send_request(options)
     end
 
+    # Verify the subscription and perform resource dependency checks on the
+    # requested Amazon Web Services Marketplace resource. For Amazon Web
+    # Services Marketplace components, the response contains fields to
+    # download the components and their artifacts.
+    #
+    # @option params [required, String] :resource_type
+    #   Specifies which type of Amazon Web Services Marketplace resource Image
+    #   Builder retrieves.
+    #
+    # @option params [required, String] :resource_arn
+    #   The Amazon Resource Name (ARN) that uniquely identifies an Amazon Web
+    #   Services Marketplace resource.
+    #
+    # @option params [String] :resource_location
+    #   The bucket path that you can specify to download the resource from
+    #   Amazon S3.
+    #
+    # @return [Types::GetMarketplaceResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetMarketplaceResourceResponse#resource_arn #resource_arn} => String
+    #   * {Types::GetMarketplaceResourceResponse#url #url} => String
+    #   * {Types::GetMarketplaceResourceResponse#data #data} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_marketplace_resource({
+    #     resource_type: "COMPONENT_DATA", # required, accepts COMPONENT_DATA, COMPONENT_ARTIFACT
+    #     resource_arn: "ImageBuilderArn", # required
+    #     resource_location: "MarketplaceResourceLocation",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.url #=> String
+    #   resp.data #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/GetMarketplaceResource AWS API Documentation
+    #
+    # @overload get_marketplace_resource(params = {})
+    # @param [Hash] params ({})
+    def get_marketplace_resource(params = {}, options = {})
+      req = build_request(:get_marketplace_resource, params)
+      req.send_request(options)
+    end
+
     # Get a workflow resource object.
     #
     # @option params [required, String] :workflow_build_version_arn
@@ -3213,7 +3262,7 @@ module Aws::Imagebuilder
     #   resp.component_summary_list[0].platform #=> String, one of "Windows", "Linux", "macOS"
     #   resp.component_summary_list[0].supported_os_versions #=> Array
     #   resp.component_summary_list[0].supported_os_versions[0] #=> String
-    #   resp.component_summary_list[0].state.status #=> String, one of "DEPRECATED"
+    #   resp.component_summary_list[0].state.status #=> String, one of "DEPRECATED", "DISABLED", "ACTIVE"
     #   resp.component_summary_list[0].state.reason #=> String
     #   resp.component_summary_list[0].type #=> String, one of "BUILD", "TEST"
     #   resp.component_summary_list[0].owner #=> String
@@ -3295,7 +3344,7 @@ module Aws::Imagebuilder
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_components({
-    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty
+    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty, AWSMarketplace
     #     filters: [
     #       {
     #         name: "FilterName",
@@ -3321,6 +3370,10 @@ module Aws::Imagebuilder
     #   resp.component_version_list[0].type #=> String, one of "BUILD", "TEST"
     #   resp.component_version_list[0].owner #=> String
     #   resp.component_version_list[0].date_created #=> String
+    #   resp.component_version_list[0].status #=> String, one of "DEPRECATED", "DISABLED", "ACTIVE"
+    #   resp.component_version_list[0].product_codes #=> Array
+    #   resp.component_version_list[0].product_codes[0].product_code_id #=> String
+    #   resp.component_version_list[0].product_codes[0].product_code_type #=> String, one of "marketplace"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/imagebuilder-2019-12-02/ListComponents AWS API Documentation
@@ -3368,7 +3421,7 @@ module Aws::Imagebuilder
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_container_recipes({
-    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty
+    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty, AWSMarketplace
     #     filters: [
     #       {
     #         name: "FilterName",
@@ -3814,7 +3867,7 @@ module Aws::Imagebuilder
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_image_recipes({
-    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty
+    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty, AWSMarketplace
     #     filters: [
     #       {
     #         name: "FilterName",
@@ -4086,7 +4139,7 @@ module Aws::Imagebuilder
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_images({
-    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty
+    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty, AWSMarketplace
     #     filters: [
     #       {
     #         name: "FilterName",
@@ -4652,7 +4705,7 @@ module Aws::Imagebuilder
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_workflows({
-    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty
+    #     owner: "Self", # accepts Self, Shared, Amazon, ThirdParty, AWSMarketplace
     #     filters: [
     #       {
     #         name: "FilterName",
@@ -5627,7 +5680,7 @@ module Aws::Imagebuilder
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-imagebuilder'
-      context[:gem_version] = '1.73.0'
+      context[:gem_version] = '1.74.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

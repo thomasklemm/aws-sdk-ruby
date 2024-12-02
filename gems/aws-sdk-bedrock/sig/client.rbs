@@ -103,6 +103,7 @@ module Aws
                                        value: ::String
                                      },
                                    ],
+                                   ?application_type: ("ModelEvaluation" | "RagEvaluation"),
                                    evaluation_config: {
                                      automated: {
                                        dataset_metric_configs: Array[
@@ -116,7 +117,14 @@ module Aws
                                            },
                                            metric_names: Array[::String]
                                          },
-                                       ]
+                                       ],
+                                       evaluator_model_config: {
+                                         bedrock_evaluator_models: Array[
+                                           {
+                                             model_identifier: ::String
+                                           },
+                                         ]?
+                                       }?
                                      }?,
                                      human: {
                                        human_workflow_config: {
@@ -149,7 +157,220 @@ module Aws
                                        {
                                          bedrock_model: {
                                            model_identifier: ::String,
-                                           inference_params: ::String
+                                           inference_params: ::String?
+                                         }?
+                                       },
+                                     ]?,
+                                     rag_configs: Array[
+                                       {
+                                         knowledge_base_config: {
+                                           retrieve_config: {
+                                             knowledge_base_id: ::String,
+                                             knowledge_base_retrieval_configuration: {
+                                               vector_search_configuration: {
+                                                 number_of_results: ::Integer?,
+                                                 override_search_type: ("HYBRID" | "SEMANTIC")?,
+                                                 filter: {
+                                                   equals: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   not_equals: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   greater_than: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   greater_than_or_equals: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   less_than: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   less_than_or_equals: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   in: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   not_in: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   starts_with: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   list_contains: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   string_contains: {
+                                                     key: ::String,
+                                                     value: {
+                                                     }
+                                                   }?,
+                                                   and_all: Array[
+                                                     untyped,
+                                                   ]?,
+                                                   or_all: Array[
+                                                     untyped,
+                                                   ]?
+                                                 }?
+                                               }
+                                             }
+                                           }?,
+                                           retrieve_and_generate_config: {
+                                             type: ("KNOWLEDGE_BASE" | "EXTERNAL_SOURCES"),
+                                             knowledge_base_configuration: {
+                                               knowledge_base_id: ::String,
+                                               model_arn: ::String,
+                                               retrieval_configuration: {
+                                                 vector_search_configuration: {
+                                                   number_of_results: ::Integer?,
+                                                   override_search_type: ("HYBRID" | "SEMANTIC")?,
+                                                   filter: {
+                                                     equals: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     not_equals: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     greater_than: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     greater_than_or_equals: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     less_than: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     less_than_or_equals: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     in: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     not_in: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     starts_with: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     list_contains: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     string_contains: {
+                                                       key: ::String,
+                                                       value: {
+                                                       }
+                                                     }?,
+                                                     and_all: Array[
+                                                       untyped,
+                                                     ]?,
+                                                     or_all: Array[
+                                                       untyped,
+                                                     ]?
+                                                   }?
+                                                 }
+                                               }?,
+                                               generation_configuration: {
+                                                 prompt_template: {
+                                                   text_prompt_template: ::String?
+                                                 }?,
+                                                 guardrail_configuration: {
+                                                   guardrail_id: ::String,
+                                                   guardrail_version: ::String
+                                                 }?,
+                                                 kb_inference_config: {
+                                                   text_inference_config: {
+                                                     temperature: ::Float?,
+                                                     top_p: ::Float?,
+                                                     max_tokens: ::Integer?,
+                                                     stop_sequences: Array[::String]?
+                                                   }?
+                                                 }?,
+                                                 additional_model_request_fields: Hash[::String, {
+                                                   }]?
+                                               }?,
+                                               orchestration_configuration: {
+                                                 query_transformation_configuration: {
+                                                   type: ("QUERY_DECOMPOSITION")
+                                                 }
+                                               }?
+                                             }?,
+                                             external_sources_configuration: {
+                                               model_arn: ::String,
+                                               sources: Array[
+                                                 {
+                                                   source_type: ("S3" | "BYTE_CONTENT"),
+                                                   s3_location: {
+                                                     uri: ::String
+                                                   }?,
+                                                   byte_content: {
+                                                     identifier: ::String,
+                                                     content_type: ::String,
+                                                     data: ::String
+                                                   }?
+                                                 },
+                                               ],
+                                               generation_configuration: {
+                                                 prompt_template: {
+                                                   text_prompt_template: ::String?
+                                                 }?,
+                                                 guardrail_configuration: {
+                                                   guardrail_id: ::String,
+                                                   guardrail_version: ::String
+                                                 }?,
+                                                 kb_inference_config: {
+                                                   text_inference_config: {
+                                                     temperature: ::Float?,
+                                                     top_p: ::Float?,
+                                                     max_tokens: ::Integer?,
+                                                     stop_sequences: Array[::String]?
+                                                   }?
+                                                 }?,
+                                                 additional_model_request_fields: Hash[::String, {
+                                                   }]?
+                                               }?
+                                             }?
+                                           }?
                                          }?
                                        },
                                      ]?
@@ -518,6 +739,7 @@ module Aws
         def role_arn: () -> ::String
         def customer_encryption_key_id: () -> ::String
         def job_type: () -> ("Human" | "Automated")
+        def application_type: () -> ("ModelEvaluation" | "RagEvaluation")
         def evaluation_config: () -> Types::EvaluationConfig
         def inference_config: () -> Types::EvaluationInferenceConfig
         def output_data_config: () -> Types::EvaluationOutputDataConfig
@@ -762,6 +984,7 @@ module Aws
                                   ?creation_time_after: ::Time,
                                   ?creation_time_before: ::Time,
                                   ?status_equals: ("InProgress" | "Completed" | "Failed" | "Stopping" | "Stopped" | "Deleting"),
+                                  ?application_type_equals: ("ModelEvaluation" | "RagEvaluation"),
                                   ?name_contains: ::String,
                                   ?max_results: ::Integer,
                                   ?next_token: ::String,

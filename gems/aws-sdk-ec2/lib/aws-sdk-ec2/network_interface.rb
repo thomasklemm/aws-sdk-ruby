@@ -201,7 +201,7 @@ module Aws::EC2
       data[:ipv_6_address]
     end
 
-    # The entity that manages the network interface.
+    # The service provider that manages the network interface.
     # @return [Types::OperatorResponse]
     def operator
       data[:operator]

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.58.0 (2024-12-02)
+------------------
+
+* Feature - This release introduces Event Trigger APIs as part of Amazon Connect Customer Profiles service.
+
 1.57.0 (2024-11-18)
 ------------------
 

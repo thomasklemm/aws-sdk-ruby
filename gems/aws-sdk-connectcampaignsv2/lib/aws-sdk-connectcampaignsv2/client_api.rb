@@ -78,9 +78,12 @@ module Aws::ConnectCampaignsV2
     EncryptionConfig = Shapes::StructureShape.new(name: 'EncryptionConfig')
     EncryptionKey = Shapes::StringShape.new(name: 'EncryptionKey')
     EncryptionType = Shapes::StringShape.new(name: 'EncryptionType')
+    EventTrigger = Shapes::StructureShape.new(name: 'EventTrigger')
     EventType = Shapes::StringShape.new(name: 'EventType')
     FailedCampaignStateResponse = Shapes::StructureShape.new(name: 'FailedCampaignStateResponse')
     FailedCampaignStateResponseList = Shapes::ListShape.new(name: 'FailedCampaignStateResponseList')
+    FailedProfileOutboundRequest = Shapes::StructureShape.new(name: 'FailedProfileOutboundRequest')
+    FailedProfileOutboundRequestList = Shapes::ListShape.new(name: 'FailedProfileOutboundRequestList')
     FailedRequest = Shapes::StructureShape.new(name: 'FailedRequest')
     FailedRequestList = Shapes::ListShape.new(name: 'FailedRequestList')
     FailureCode = Shapes::StringShape.new(name: 'FailureCode')
@@ -129,10 +132,17 @@ module Aws::ConnectCampaignsV2
     OutboundRequestList = Shapes::ListShape.new(name: 'OutboundRequestList')
     PauseCampaignRequest = Shapes::StructureShape.new(name: 'PauseCampaignRequest')
     PredictiveConfig = Shapes::StructureShape.new(name: 'PredictiveConfig')
+    ProfileId = Shapes::StringShape.new(name: 'ProfileId')
+    ProfileOutboundRequest = Shapes::StructureShape.new(name: 'ProfileOutboundRequest')
+    ProfileOutboundRequestFailureCode = Shapes::StringShape.new(name: 'ProfileOutboundRequestFailureCode')
+    ProfileOutboundRequestId = Shapes::StringShape.new(name: 'ProfileOutboundRequestId')
+    ProfileOutboundRequestList = Shapes::ListShape.new(name: 'ProfileOutboundRequestList')
     ProgressiveConfig = Shapes::StructureShape.new(name: 'ProgressiveConfig')
     PutConnectInstanceIntegrationRequest = Shapes::StructureShape.new(name: 'PutConnectInstanceIntegrationRequest')
     PutOutboundRequestBatchRequest = Shapes::StructureShape.new(name: 'PutOutboundRequestBatchRequest')
     PutOutboundRequestBatchResponse = Shapes::StructureShape.new(name: 'PutOutboundRequestBatchResponse')
+    PutProfileOutboundRequestBatchRequest = Shapes::StructureShape.new(name: 'PutProfileOutboundRequestBatchRequest')
+    PutProfileOutboundRequestBatchResponse = Shapes::StructureShape.new(name: 'PutProfileOutboundRequestBatchResponse')
     QConnectIntegrationConfig = Shapes::StructureShape.new(name: 'QConnectIntegrationConfig')
     QConnectIntegrationIdentifier = Shapes::StructureShape.new(name: 'QConnectIntegrationIdentifier')
     QConnectIntegrationSummary = Shapes::StructureShape.new(name: 'QConnectIntegrationSummary')
@@ -159,6 +169,8 @@ module Aws::ConnectCampaignsV2
     String = Shapes::StringShape.new(name: 'String')
     SuccessfulCampaignStateResponse = Shapes::StructureShape.new(name: 'SuccessfulCampaignStateResponse')
     SuccessfulCampaignStateResponseList = Shapes::ListShape.new(name: 'SuccessfulCampaignStateResponseList')
+    SuccessfulProfileOutboundRequest = Shapes::StructureShape.new(name: 'SuccessfulProfileOutboundRequest')
+    SuccessfulProfileOutboundRequestList = Shapes::ListShape.new(name: 'SuccessfulProfileOutboundRequestList')
     SuccessfulRequest = Shapes::StructureShape.new(name: 'SuccessfulRequest')
     SuccessfulRequestList = Shapes::ListShape.new(name: 'SuccessfulRequestList')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
@@ -359,11 +371,21 @@ module Aws::ConnectCampaignsV2
     EncryptionConfig.add_member(:key_arn, Shapes::ShapeRef.new(shape: EncryptionKey, location_name: "keyArn"))
     EncryptionConfig.struct_class = Types::EncryptionConfig
 
+    EventTrigger.add_member(:customer_profiles_domain_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "customerProfilesDomainArn"))
+    EventTrigger.struct_class = Types::EventTrigger
+
     FailedCampaignStateResponse.add_member(:campaign_id, Shapes::ShapeRef.new(shape: CampaignId, location_name: "campaignId"))
     FailedCampaignStateResponse.add_member(:failure_code, Shapes::ShapeRef.new(shape: GetCampaignStateBatchFailureCode, location_name: "failureCode"))
     FailedCampaignStateResponse.struct_class = Types::FailedCampaignStateResponse
 
     FailedCampaignStateResponseList.member = Shapes::ShapeRef.new(shape: FailedCampaignStateResponse)
+
+    FailedProfileOutboundRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken"))
+    FailedProfileOutboundRequest.add_member(:id, Shapes::ShapeRef.new(shape: ProfileOutboundRequestId, location_name: "id"))
+    FailedProfileOutboundRequest.add_member(:failure_code, Shapes::ShapeRef.new(shape: ProfileOutboundRequestFailureCode, location_name: "failureCode"))
+    FailedProfileOutboundRequest.struct_class = Types::FailedProfileOutboundRequest
+
+    FailedProfileOutboundRequestList.member = Shapes::ShapeRef.new(shape: FailedProfileOutboundRequest)
 
     FailedRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken"))
     FailedRequest.add_member(:id, Shapes::ShapeRef.new(shape: DialRequestId, location_name: "id"))
@@ -504,6 +526,13 @@ module Aws::ConnectCampaignsV2
     PredictiveConfig.add_member(:bandwidth_allocation, Shapes::ShapeRef.new(shape: BandwidthAllocation, required: true, location_name: "bandwidthAllocation"))
     PredictiveConfig.struct_class = Types::PredictiveConfig
 
+    ProfileOutboundRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, required: true, location_name: "clientToken"))
+    ProfileOutboundRequest.add_member(:profile_id, Shapes::ShapeRef.new(shape: ProfileId, required: true, location_name: "profileId"))
+    ProfileOutboundRequest.add_member(:expiration_time, Shapes::ShapeRef.new(shape: TimeStamp, location_name: "expirationTime"))
+    ProfileOutboundRequest.struct_class = Types::ProfileOutboundRequest
+
+    ProfileOutboundRequestList.member = Shapes::ShapeRef.new(shape: ProfileOutboundRequest)
+
     ProgressiveConfig.add_member(:bandwidth_allocation, Shapes::ShapeRef.new(shape: BandwidthAllocation, required: true, location_name: "bandwidthAllocation"))
     ProgressiveConfig.struct_class = Types::ProgressiveConfig
 
@@ -518,6 +547,14 @@ module Aws::ConnectCampaignsV2
     PutOutboundRequestBatchResponse.add_member(:successful_requests, Shapes::ShapeRef.new(shape: SuccessfulRequestList, location_name: "successfulRequests"))
     PutOutboundRequestBatchResponse.add_member(:failed_requests, Shapes::ShapeRef.new(shape: FailedRequestList, location_name: "failedRequests"))
     PutOutboundRequestBatchResponse.struct_class = Types::PutOutboundRequestBatchResponse
+
+    PutProfileOutboundRequestBatchRequest.add_member(:id, Shapes::ShapeRef.new(shape: CampaignId, required: true, location: "uri", location_name: "id"))
+    PutProfileOutboundRequestBatchRequest.add_member(:profile_outbound_requests, Shapes::ShapeRef.new(shape: ProfileOutboundRequestList, required: true, location_name: "profileOutboundRequests"))
+    PutProfileOutboundRequestBatchRequest.struct_class = Types::PutProfileOutboundRequestBatchRequest
+
+    PutProfileOutboundRequestBatchResponse.add_member(:successful_requests, Shapes::ShapeRef.new(shape: SuccessfulProfileOutboundRequestList, location_name: "successfulRequests"))
+    PutProfileOutboundRequestBatchResponse.add_member(:failed_requests, Shapes::ShapeRef.new(shape: FailedProfileOutboundRequestList, location_name: "failedRequests"))
+    PutProfileOutboundRequestBatchResponse.struct_class = Types::PutProfileOutboundRequestBatchResponse
 
     QConnectIntegrationConfig.add_member(:knowledge_base_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "knowledgeBaseArn"))
     QConnectIntegrationConfig.struct_class = Types::QConnectIntegrationConfig
@@ -579,8 +616,10 @@ module Aws::ConnectCampaignsV2
     SmsOutboundMode.struct_class = Types::SmsOutboundMode
 
     Source.add_member(:customer_profiles_segment_arn, Shapes::ShapeRef.new(shape: Arn, location_name: "customerProfilesSegmentArn"))
+    Source.add_member(:event_trigger, Shapes::ShapeRef.new(shape: EventTrigger, location_name: "eventTrigger"))
     Source.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     Source.add_member_subclass(:customer_profiles_segment_arn, Types::Source::CustomerProfilesSegmentArn)
+    Source.add_member_subclass(:event_trigger, Types::Source::EventTrigger)
     Source.add_member_subclass(:unknown, Types::Source::Unknown)
     Source.struct_class = Types::Source
 
@@ -602,6 +641,12 @@ module Aws::ConnectCampaignsV2
     SuccessfulCampaignStateResponse.struct_class = Types::SuccessfulCampaignStateResponse
 
     SuccessfulCampaignStateResponseList.member = Shapes::ShapeRef.new(shape: SuccessfulCampaignStateResponse)
+
+    SuccessfulProfileOutboundRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken"))
+    SuccessfulProfileOutboundRequest.add_member(:id, Shapes::ShapeRef.new(shape: ProfileOutboundRequestId, location_name: "id"))
+    SuccessfulProfileOutboundRequest.struct_class = Types::SuccessfulProfileOutboundRequest
+
+    SuccessfulProfileOutboundRequestList.member = Shapes::ShapeRef.new(shape: SuccessfulProfileOutboundRequest)
 
     SuccessfulRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken"))
     SuccessfulRequest.add_member(:id, Shapes::ShapeRef.new(shape: DialRequestId, location_name: "id"))
@@ -968,6 +1013,21 @@ module Aws::ConnectCampaignsV2
         o.http_request_uri = "/v2/campaigns/{id}/outbound-requests"
         o.input = Shapes::ShapeRef.new(shape: PutOutboundRequestBatchRequest)
         o.output = Shapes::ShapeRef.new(shape: PutOutboundRequestBatchResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidCampaignStateException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:put_profile_outbound_request_batch, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutProfileOutboundRequestBatch"
+        o.http_method = "PUT"
+        o.http_request_uri = "/v2/campaigns/{id}/profile-outbound-requests"
+        o.input = Shapes::ShapeRef.new(shape: PutProfileOutboundRequestBatchRequest)
+        o.output = Shapes::ShapeRef.new(shape: PutProfileOutboundRequestBatchResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)

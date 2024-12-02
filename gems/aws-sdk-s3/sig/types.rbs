@@ -91,7 +91,7 @@ module Aws::S3
     end
 
     class BucketInfo
-      attr_accessor data_redundancy: ("SingleAvailabilityZone")
+      attr_accessor data_redundancy: ("SingleAvailabilityZone" | "SingleLocalZone")
       attr_accessor type: ("Directory")
       SENSITIVE: []
     end
@@ -1091,7 +1091,7 @@ module Aws::S3
     end
 
     class HeadBucketOutput
-      attr_accessor bucket_location_type: ("AvailabilityZone")
+      attr_accessor bucket_location_type: ("AvailabilityZone" | "LocalZone")
       attr_accessor bucket_location_name: ::String
       attr_accessor bucket_region: ::String
       attr_accessor access_point_alias: bool
@@ -1564,7 +1564,7 @@ module Aws::S3
     end
 
     class LocationInfo
-      attr_accessor type: ("AvailabilityZone")
+      attr_accessor type: ("AvailabilityZone" | "LocalZone")
       attr_accessor name: ::String
       SENSITIVE: []
     end

@@ -461,13 +461,13 @@ module Aws::VPCLattice
     # [1]: https://docs.aws.amazon.com/vpc-lattice/latest/ug/security_iam_service-with-iam.html
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [required, Array<Types::RuleUpdate>] :rules
     #   The rules for the specified listener.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::BatchUpdateRuleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -588,8 +588,11 @@ module Aws::VPCLattice
     #   delivery streams, and Amazon S3 buckets.
     #
     # @option params [required, String] :resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service.
+    #   The ID or ARN of the service network or service.
+    #
+    # @option params [String] :service_network_log_type
+    #   The type of log that monitors your Amazon VPC Lattice service
+    #   networks.
     #
     # @option params [Hash<String,String>] :tags
     #   The tags for the access log subscription.
@@ -601,6 +604,7 @@ module Aws::VPCLattice
     #   * {Types::CreateAccessLogSubscriptionResponse#id #id} => String
     #   * {Types::CreateAccessLogSubscriptionResponse#resource_arn #resource_arn} => String
     #   * {Types::CreateAccessLogSubscriptionResponse#resource_id #resource_id} => String
+    #   * {Types::CreateAccessLogSubscriptionResponse#service_network_log_type #service_network_log_type} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -608,6 +612,7 @@ module Aws::VPCLattice
     #     client_token: "ClientToken",
     #     destination_arn: "AccessLogDestinationArn", # required
     #     resource_identifier: "ResourceIdentifier", # required
+    #     service_network_log_type: "SERVICE", # accepts SERVICE, RESOURCE
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
@@ -620,6 +625,7 @@ module Aws::VPCLattice
     #   resp.id #=> String
     #   resp.resource_arn #=> String
     #   resp.resource_id #=> String
+    #   resp.service_network_log_type #=> String, one of "SERVICE", "RESOURCE"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateAccessLogSubscription AWS API Documentation
     #
@@ -668,7 +674,7 @@ module Aws::VPCLattice
     #   The listener protocol.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @option params [Hash<String,String>] :tags
     #   The tags for the listener.
@@ -733,6 +739,219 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
+    # Creates a resource configuration. A resource configuration defines a
+    # specific resource. You can associate a resource configuration with a
+    # service network or a VPC endpoint.
+    #
+    # @option params [Boolean] :allow_association_to_shareable_service_network
+    #   (SINGLE, GROUP, ARN) Specifies whether the resource configuration can
+    #   be associated with a sharable service network. The default is false.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If you retry a request that completed
+    #   successfully using the same client token and parameters, the retry
+    #   succeeds without performing any actions. If the parameters aren't
+    #   identical, the retry fails.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :name
+    #   The name of the resource configuration. The name must be unique within
+    #   the account. The valid characters are a-z, 0-9, and hyphens (-). You
+    #   can't use a hyphen as the first or last character, or immediately
+    #   after another hyphen.
+    #
+    # @option params [Array<String>] :port_ranges
+    #   (SINGLE, GROUP, CHILD) The TCP port ranges that a consumer can use to
+    #   access a resource configuration (for example: 1-65535). You can
+    #   separate port ranges using commas (for example: 1,2,22-30).
+    #
+    # @option params [String] :protocol
+    #   (SINGLE, GROUP) The protocol accepted by the resource configuration.
+    #
+    # @option params [Types::ResourceConfigurationDefinition] :resource_configuration_definition
+    #   (SINGLE, CHILD, ARN) The resource configuration.
+    #
+    # @option params [String] :resource_configuration_group_identifier
+    #   (CHILD) The ID or ARN of the parent resource configuration (type is
+    #   `GROUP`). This is used to associate a child resource configuration
+    #   with a group resource configuration.
+    #
+    # @option params [String] :resource_gateway_identifier
+    #   (SINGLE, GROUP, ARN) The ID or ARN of the resource gateway used to
+    #   connect to the resource configuration. For a child resource
+    #   configuration, this value is inherited from the parent resource
+    #   configuration.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   The tags for the resource configuration.
+    #
+    # @option params [required, String] :type
+    #   The type of resource configuration.
+    #
+    #   * `SINGLE` - A single resource.
+    #
+    #   * `GROUP` - A group of resources. You must create a group resource
+    #     configuration before you create a child resource configuration.
+    #
+    #   * `CHILD` - A single resource that is part of a group resource
+    #     configuration.
+    #
+    #   * `ARN` - An Amazon Web Services resource.
+    #
+    # @return [Types::CreateResourceConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateResourceConfigurationResponse#allow_association_to_shareable_service_network #allow_association_to_shareable_service_network} => Boolean
+    #   * {Types::CreateResourceConfigurationResponse#arn #arn} => String
+    #   * {Types::CreateResourceConfigurationResponse#created_at #created_at} => Time
+    #   * {Types::CreateResourceConfigurationResponse#failure_reason #failure_reason} => String
+    #   * {Types::CreateResourceConfigurationResponse#id #id} => String
+    #   * {Types::CreateResourceConfigurationResponse#name #name} => String
+    #   * {Types::CreateResourceConfigurationResponse#port_ranges #port_ranges} => Array&lt;String&gt;
+    #   * {Types::CreateResourceConfigurationResponse#protocol #protocol} => String
+    #   * {Types::CreateResourceConfigurationResponse#resource_configuration_definition #resource_configuration_definition} => Types::ResourceConfigurationDefinition
+    #   * {Types::CreateResourceConfigurationResponse#resource_configuration_group_id #resource_configuration_group_id} => String
+    #   * {Types::CreateResourceConfigurationResponse#resource_gateway_id #resource_gateway_id} => String
+    #   * {Types::CreateResourceConfigurationResponse#status #status} => String
+    #   * {Types::CreateResourceConfigurationResponse#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_resource_configuration({
+    #     allow_association_to_shareable_service_network: false,
+    #     client_token: "ClientToken",
+    #     name: "ResourceConfigurationName", # required
+    #     port_ranges: ["PortRange"],
+    #     protocol: "TCP", # accepts TCP
+    #     resource_configuration_definition: {
+    #       arn_resource: {
+    #         arn: "WildcardArn",
+    #       },
+    #       dns_resource: {
+    #         domain_name: "DomainName",
+    #         ip_address_type: "IPV4", # accepts IPV4, IPV6, DUALSTACK
+    #       },
+    #       ip_resource: {
+    #         ip_address: "IpAddress",
+    #       },
+    #     },
+    #     resource_configuration_group_identifier: "ResourceConfigurationIdentifier",
+    #     resource_gateway_identifier: "ResourceGatewayIdentifier",
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #     type: "GROUP", # required, accepts GROUP, CHILD, SINGLE, ARN
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.allow_association_to_shareable_service_network #=> Boolean
+    #   resp.arn #=> String
+    #   resp.created_at #=> Time
+    #   resp.failure_reason #=> String
+    #   resp.id #=> String
+    #   resp.name #=> String
+    #   resp.port_ranges #=> Array
+    #   resp.port_ranges[0] #=> String
+    #   resp.protocol #=> String, one of "TCP"
+    #   resp.resource_configuration_definition.arn_resource.arn #=> String
+    #   resp.resource_configuration_definition.dns_resource.domain_name #=> String
+    #   resp.resource_configuration_definition.dns_resource.ip_address_type #=> String, one of "IPV4", "IPV6", "DUALSTACK"
+    #   resp.resource_configuration_definition.ip_resource.ip_address #=> String
+    #   resp.resource_configuration_group_id #=> String
+    #   resp.resource_gateway_id #=> String
+    #   resp.status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.type #=> String, one of "GROUP", "CHILD", "SINGLE", "ARN"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateResourceConfiguration AWS API Documentation
+    #
+    # @overload create_resource_configuration(params = {})
+    # @param [Hash] params ({})
+    def create_resource_configuration(params = {}, options = {})
+      req = build_request(:create_resource_configuration, params)
+      req.send_request(options)
+    end
+
+    # Creates a resource gateway.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If you retry a request that completed
+    #   successfully using the same client token and parameters, the retry
+    #   succeeds without performing any actions. If the parameters aren't
+    #   identical, the retry fails.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [String] :ip_address_type
+    #   The type of IP address used by the resource gateway.
+    #
+    # @option params [required, String] :name
+    #   The name of the resource gateway.
+    #
+    # @option params [Array<String>] :security_group_ids
+    #   The IDs of the security groups to apply to the resource gateway. The
+    #   security groups must be in the same VPC.
+    #
+    # @option params [required, Array<String>] :subnet_ids
+    #   The IDs of the VPC subnets in which to create the resource gateway.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   The tags for the resource gateway.
+    #
+    # @option params [required, String] :vpc_identifier
+    #   The ID of the VPC for the resource gateway.
+    #
+    # @return [Types::CreateResourceGatewayResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateResourceGatewayResponse#arn #arn} => String
+    #   * {Types::CreateResourceGatewayResponse#id #id} => String
+    #   * {Types::CreateResourceGatewayResponse#ip_address_type #ip_address_type} => String
+    #   * {Types::CreateResourceGatewayResponse#name #name} => String
+    #   * {Types::CreateResourceGatewayResponse#security_group_ids #security_group_ids} => Array&lt;String&gt;
+    #   * {Types::CreateResourceGatewayResponse#status #status} => String
+    #   * {Types::CreateResourceGatewayResponse#subnet_ids #subnet_ids} => Array&lt;String&gt;
+    #   * {Types::CreateResourceGatewayResponse#vpc_identifier #vpc_identifier} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_resource_gateway({
+    #     client_token: "ClientToken",
+    #     ip_address_type: "IPV4", # accepts IPV4, IPV6, DUALSTACK
+    #     name: "ResourceGatewayName", # required
+    #     security_group_ids: ["SecurityGroupId"],
+    #     subnet_ids: ["SubnetId"], # required
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #     vpc_identifier: "VpcId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #   resp.ip_address_type #=> String, one of "IPV4", "IPV6", "DUALSTACK"
+    #   resp.name #=> String
+    #   resp.security_group_ids #=> Array
+    #   resp.security_group_ids[0] #=> String
+    #   resp.status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.subnet_ids #=> Array
+    #   resp.subnet_ids[0] #=> String
+    #   resp.vpc_identifier #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateResourceGateway AWS API Documentation
+    #
+    # @overload create_resource_gateway(params = {})
+    # @param [Hash] params ({})
+    def create_resource_gateway(params = {}, options = {})
+      req = build_request(:create_resource_gateway, params)
+      req.send_request(options)
+    end
+
     # Creates a listener rule. Each listener has a default rule for checking
     # connection requests, but you can define additional rules. Each rule
     # consists of a priority, one or more actions, and one or more
@@ -757,7 +976,7 @@ module Aws::VPCLattice
     #   not need to pass this option.**
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [required, Types::RuleMatch] :match
     #   The rule match.
@@ -774,7 +993,7 @@ module Aws::VPCLattice
     #   the priority.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @option params [Hash<String,String>] :tags
     #   The tags for the rule.
@@ -993,6 +1212,9 @@ module Aws::VPCLattice
     #   can't use a hyphen as the first or last character, or immediately
     #   after another hyphen.
     #
+    # @option params [Types::SharingConfig] :sharing_config
+    #   Specify if the service network should be enabled for sharing.
+    #
     # @option params [Hash<String,String>] :tags
     #   The tags for the service network.
     #
@@ -1002,6 +1224,7 @@ module Aws::VPCLattice
     #   * {Types::CreateServiceNetworkResponse#auth_type #auth_type} => String
     #   * {Types::CreateServiceNetworkResponse#id #id} => String
     #   * {Types::CreateServiceNetworkResponse#name #name} => String
+    #   * {Types::CreateServiceNetworkResponse#sharing_config #sharing_config} => Types::SharingConfig
     #
     # @example Request syntax with placeholder values
     #
@@ -1009,6 +1232,9 @@ module Aws::VPCLattice
     #     auth_type: "NONE", # accepts NONE, AWS_IAM
     #     client_token: "ClientToken",
     #     name: "ServiceNetworkName", # required
+    #     sharing_config: {
+    #       enabled: false,
+    #     },
     #     tags: {
     #       "TagKey" => "TagValue",
     #     },
@@ -1020,6 +1246,7 @@ module Aws::VPCLattice
     #   resp.auth_type #=> String, one of "NONE", "AWS_IAM"
     #   resp.id #=> String
     #   resp.name #=> String
+    #   resp.sharing_config.enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateServiceNetwork AWS API Documentation
     #
@@ -1030,9 +1257,69 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Associates a service with a service network. For more information, see
-    # [Manage service associations][1] in the *Amazon VPC Lattice User
-    # Guide*.
+    # Associates the specified service network with the specified resource
+    # configuration. This allows the resource configuration to receive
+    # connections through the service network, including through a service
+    # network VPC endpoint.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If you retry a request that completed
+    #   successfully using the same client token and parameters, the retry
+    #   succeeds without performing any actions. If the parameters aren't
+    #   identical, the retry fails.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :resource_configuration_identifier
+    #   The ID of the resource configuration to associate with the service
+    #   network.
+    #
+    # @option params [required, String] :service_network_identifier
+    #   The ID of the service network to associate with the resource
+    #   configuration.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   The tags for the association.
+    #
+    # @return [Types::CreateServiceNetworkResourceAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateServiceNetworkResourceAssociationResponse#arn #arn} => String
+    #   * {Types::CreateServiceNetworkResourceAssociationResponse#created_by #created_by} => String
+    #   * {Types::CreateServiceNetworkResourceAssociationResponse#id #id} => String
+    #   * {Types::CreateServiceNetworkResourceAssociationResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_service_network_resource_association({
+    #     client_token: "ClientToken",
+    #     resource_configuration_identifier: "ResourceConfigurationIdentifier", # required
+    #     service_network_identifier: "ServiceNetworkIdentifierWithoutRegex", # required
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.created_by #=> String
+    #   resp.id #=> String
+    #   resp.status #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "PARTIAL", "DELETE_IN_PROGRESS", "CREATE_FAILED", "DELETE_FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateServiceNetworkResourceAssociation AWS API Documentation
+    #
+    # @overload create_service_network_resource_association(params = {})
+    # @param [Hash] params ({})
+    def create_service_network_resource_association(params = {}, options = {})
+      req = build_request(:create_service_network_resource_association, params)
+      req.send_request(options)
+    end
+
+    # Associates the specified service with the specified service network.
+    # For more information, see [Manage service associations][1] in the
+    # *Amazon VPC Lattice User Guide*.
     #
     # You can't use this operation if the service and service network are
     # already associated or if there is a disassociation or deletion in
@@ -1061,12 +1348,11 @@ module Aws::VPCLattice
     #   not need to pass this option.**
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @option params [required, String] :service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network. You must
-    #   use the ARN if the resources specified in the operation are in
-    #   different accounts.
+    #   The ID or ARN of the service network. You must use an ARN if the
+    #   resources are in different accounts.
     #
     # @option params [Hash<String,String>] :tags
     #   The tags for the association.
@@ -1155,9 +1441,8 @@ module Aws::VPCLattice
     #   [1]: https://docs.aws.amazon.com/vpc/latest/userguide/VPC_SecurityGroups.html
     #
     # @option params [required, String] :service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network. You must
-    #   use the ARN when the resources specified in the operation are in
-    #   different accounts.
+    #   The ID or ARN of the service network. You must use an ARN if the
+    #   resources are in different accounts.
     #
     # @option params [Hash<String,String>] :tags
     #   The tags for the association.
@@ -1317,7 +1602,7 @@ module Aws::VPCLattice
     # Deletes the specified access log subscription.
     #
     # @option params [required, String] :access_log_subscription_identifier
-    #   The ID or Amazon Resource Name (ARN) of the access log subscription.
+    #   The ID or ARN of the access log subscription.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1343,7 +1628,7 @@ module Aws::VPCLattice
     # all requests are denied.
     #
     # @option params [required, String] :resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the resource.
+    #   The ID or ARN of the resource.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1365,10 +1650,10 @@ module Aws::VPCLattice
     # Deletes the specified listener.
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1385,6 +1670,99 @@ module Aws::VPCLattice
     # @param [Hash] params ({})
     def delete_listener(params = {}, options = {})
       req = build_request(:delete_listener, params)
+      req.send_request(options)
+    end
+
+    # Deletes the specified resource configuration.
+    #
+    # @option params [required, String] :resource_configuration_identifier
+    #   The ID or ARN of the resource configuration.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_resource_configuration({
+    #     resource_configuration_identifier: "ResourceConfigurationIdentifier", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceConfiguration AWS API Documentation
+    #
+    # @overload delete_resource_configuration(params = {})
+    # @param [Hash] params ({})
+    def delete_resource_configuration(params = {}, options = {})
+      req = build_request(:delete_resource_configuration, params)
+      req.send_request(options)
+    end
+
+    # Disassociates the resource configuration from the resource VPC
+    # endpoint.
+    #
+    # @option params [required, String] :resource_endpoint_association_identifier
+    #   The ID or ARN of the association.
+    #
+    # @return [Types::DeleteResourceEndpointAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteResourceEndpointAssociationResponse#arn #arn} => String
+    #   * {Types::DeleteResourceEndpointAssociationResponse#id #id} => String
+    #   * {Types::DeleteResourceEndpointAssociationResponse#resource_configuration_arn #resource_configuration_arn} => String
+    #   * {Types::DeleteResourceEndpointAssociationResponse#resource_configuration_id #resource_configuration_id} => String
+    #   * {Types::DeleteResourceEndpointAssociationResponse#vpc_endpoint_id #vpc_endpoint_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_resource_endpoint_association({
+    #     resource_endpoint_association_identifier: "ResourceEndpointAssociationIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #   resp.resource_configuration_arn #=> String
+    #   resp.resource_configuration_id #=> String
+    #   resp.vpc_endpoint_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceEndpointAssociation AWS API Documentation
+    #
+    # @overload delete_resource_endpoint_association(params = {})
+    # @param [Hash] params ({})
+    def delete_resource_endpoint_association(params = {}, options = {})
+      req = build_request(:delete_resource_endpoint_association, params)
+      req.send_request(options)
+    end
+
+    # Deletes the specified resource gateway.
+    #
+    # @option params [required, String] :resource_gateway_identifier
+    #   The ID or ARN of the resource gateway.
+    #
+    # @return [Types::DeleteResourceGatewayResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteResourceGatewayResponse#arn #arn} => String
+    #   * {Types::DeleteResourceGatewayResponse#id #id} => String
+    #   * {Types::DeleteResourceGatewayResponse#name #name} => String
+    #   * {Types::DeleteResourceGatewayResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_resource_gateway({
+    #     resource_gateway_identifier: "ResourceGatewayIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #   resp.name #=> String
+    #   resp.status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceGateway AWS API Documentation
+    #
+    # @overload delete_resource_gateway(params = {})
+    # @param [Hash] params ({})
+    def delete_resource_gateway(params = {}, options = {})
+      req = build_request(:delete_resource_gateway, params)
       req.send_request(options)
     end
 
@@ -1424,13 +1802,13 @@ module Aws::VPCLattice
     # [1]: https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-rules
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [required, String] :rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the rule.
+    #   The ID or ARN of the rule.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1463,7 +1841,7 @@ module Aws::VPCLattice
     # [1]: https://docs.aws.amazon.com/vpc-lattice/latest/ug/services.html#delete-service
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::DeleteServiceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1506,7 +1884,7 @@ module Aws::VPCLattice
     # [1]: https://docs.aws.amazon.com/vpc-lattice/latest/ug/service-networks.html#delete-service-network
     #
     # @option params [required, String] :service_network_identifier
-    #   The Amazon Resource Name (ARN) or ID of the service network.
+    #   The ID or ARN of the service network.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -1525,12 +1903,44 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Deletes the association between a specified service and the specific
-    # service network. This operation fails if an association is still in
-    # progress.
+    # Deletes the association between a service network and a resource
+    # configuration.
+    #
+    # @option params [required, String] :service_network_resource_association_identifier
+    #   The ID of the association.
+    #
+    # @return [Types::DeleteServiceNetworkResourceAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteServiceNetworkResourceAssociationResponse#arn #arn} => String
+    #   * {Types::DeleteServiceNetworkResourceAssociationResponse#id #id} => String
+    #   * {Types::DeleteServiceNetworkResourceAssociationResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_service_network_resource_association({
+    #     service_network_resource_association_identifier: "ServiceNetworkResourceAssociationIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #   resp.status #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "PARTIAL", "DELETE_IN_PROGRESS", "CREATE_FAILED", "DELETE_FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceNetworkResourceAssociation AWS API Documentation
+    #
+    # @overload delete_service_network_resource_association(params = {})
+    # @param [Hash] params ({})
+    def delete_service_network_resource_association(params = {}, options = {})
+      req = build_request(:delete_service_network_resource_association, params)
+      req.send_request(options)
+    end
+
+    # Deletes the association between a service and a service network. This
+    # operation fails if an association is still in progress.
     #
     # @option params [required, String] :service_network_service_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #
     # @return [Types::DeleteServiceNetworkServiceAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1564,7 +1974,7 @@ module Aws::VPCLattice
     # progress.
     #
     # @option params [required, String] :service_network_vpc_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #
     # @return [Types::DeleteServiceNetworkVpcAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1597,7 +2007,7 @@ module Aws::VPCLattice
     # in a listener rule or if the target group creation is in progress.
     #
     # @option params [required, String] :target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #
     # @return [Types::DeleteTargetGroupResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1629,7 +2039,7 @@ module Aws::VPCLattice
     # Deregisters the specified targets from the specified target group.
     #
     # @option params [required, String] :target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #
     # @option params [required, Array<Types::Target>] :targets
     #   The targets to deregister.
@@ -1674,7 +2084,7 @@ module Aws::VPCLattice
     # Retrieves information about the specified access log subscription.
     #
     # @option params [required, String] :access_log_subscription_identifier
-    #   The ID or Amazon Resource Name (ARN) of the access log subscription.
+    #   The ID or ARN of the access log subscription.
     #
     # @return [Types::GetAccessLogSubscriptionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1685,6 +2095,7 @@ module Aws::VPCLattice
     #   * {Types::GetAccessLogSubscriptionResponse#last_updated_at #last_updated_at} => Time
     #   * {Types::GetAccessLogSubscriptionResponse#resource_arn #resource_arn} => String
     #   * {Types::GetAccessLogSubscriptionResponse#resource_id #resource_id} => String
+    #   * {Types::GetAccessLogSubscriptionResponse#service_network_log_type #service_network_log_type} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1701,6 +2112,7 @@ module Aws::VPCLattice
     #   resp.last_updated_at #=> Time
     #   resp.resource_arn #=> String
     #   resp.resource_id #=> String
+    #   resp.service_network_log_type #=> String, one of "SERVICE", "RESOURCE"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetAccessLogSubscription AWS API Documentation
     #
@@ -1715,8 +2127,7 @@ module Aws::VPCLattice
     # or service network.
     #
     # @option params [required, String] :resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service.
+    #   The ID or ARN of the service network or service.
     #
     # @return [Types::GetAuthPolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1751,10 +2162,10 @@ module Aws::VPCLattice
     # service.
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::GetListenerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1801,9 +2212,119 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Retrieves information about the resource policy. The resource policy
-    # is an IAM policy created on behalf of the resource owner when they
-    # share a resource.
+    # Retrieves information about the specified resource configuration.
+    #
+    # @option params [required, String] :resource_configuration_identifier
+    #   The ID of the resource configuration.
+    #
+    # @return [Types::GetResourceConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetResourceConfigurationResponse#allow_association_to_shareable_service_network #allow_association_to_shareable_service_network} => Boolean
+    #   * {Types::GetResourceConfigurationResponse#amazon_managed #amazon_managed} => Boolean
+    #   * {Types::GetResourceConfigurationResponse#arn #arn} => String
+    #   * {Types::GetResourceConfigurationResponse#created_at #created_at} => Time
+    #   * {Types::GetResourceConfigurationResponse#custom_domain_name #custom_domain_name} => String
+    #   * {Types::GetResourceConfigurationResponse#failure_reason #failure_reason} => String
+    #   * {Types::GetResourceConfigurationResponse#id #id} => String
+    #   * {Types::GetResourceConfigurationResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::GetResourceConfigurationResponse#name #name} => String
+    #   * {Types::GetResourceConfigurationResponse#port_ranges #port_ranges} => Array&lt;String&gt;
+    #   * {Types::GetResourceConfigurationResponse#protocol #protocol} => String
+    #   * {Types::GetResourceConfigurationResponse#resource_configuration_definition #resource_configuration_definition} => Types::ResourceConfigurationDefinition
+    #   * {Types::GetResourceConfigurationResponse#resource_configuration_group_id #resource_configuration_group_id} => String
+    #   * {Types::GetResourceConfigurationResponse#resource_gateway_id #resource_gateway_id} => String
+    #   * {Types::GetResourceConfigurationResponse#status #status} => String
+    #   * {Types::GetResourceConfigurationResponse#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_resource_configuration({
+    #     resource_configuration_identifier: "ResourceConfigurationIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.allow_association_to_shareable_service_network #=> Boolean
+    #   resp.amazon_managed #=> Boolean
+    #   resp.arn #=> String
+    #   resp.created_at #=> Time
+    #   resp.custom_domain_name #=> String
+    #   resp.failure_reason #=> String
+    #   resp.id #=> String
+    #   resp.last_updated_at #=> Time
+    #   resp.name #=> String
+    #   resp.port_ranges #=> Array
+    #   resp.port_ranges[0] #=> String
+    #   resp.protocol #=> String, one of "TCP"
+    #   resp.resource_configuration_definition.arn_resource.arn #=> String
+    #   resp.resource_configuration_definition.dns_resource.domain_name #=> String
+    #   resp.resource_configuration_definition.dns_resource.ip_address_type #=> String, one of "IPV4", "IPV6", "DUALSTACK"
+    #   resp.resource_configuration_definition.ip_resource.ip_address #=> String
+    #   resp.resource_configuration_group_id #=> String
+    #   resp.resource_gateway_id #=> String
+    #   resp.status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.type #=> String, one of "GROUP", "CHILD", "SINGLE", "ARN"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetResourceConfiguration AWS API Documentation
+    #
+    # @overload get_resource_configuration(params = {})
+    # @param [Hash] params ({})
+    def get_resource_configuration(params = {}, options = {})
+      req = build_request(:get_resource_configuration, params)
+      req.send_request(options)
+    end
+
+    # Retrieves information about the specified resource gateway.
+    #
+    # @option params [required, String] :resource_gateway_identifier
+    #   The ID of the resource gateway.
+    #
+    # @return [Types::GetResourceGatewayResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetResourceGatewayResponse#arn #arn} => String
+    #   * {Types::GetResourceGatewayResponse#created_at #created_at} => Time
+    #   * {Types::GetResourceGatewayResponse#id #id} => String
+    #   * {Types::GetResourceGatewayResponse#ip_address_type #ip_address_type} => String
+    #   * {Types::GetResourceGatewayResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::GetResourceGatewayResponse#name #name} => String
+    #   * {Types::GetResourceGatewayResponse#security_group_ids #security_group_ids} => Array&lt;String&gt;
+    #   * {Types::GetResourceGatewayResponse#status #status} => String
+    #   * {Types::GetResourceGatewayResponse#subnet_ids #subnet_ids} => Array&lt;String&gt;
+    #   * {Types::GetResourceGatewayResponse#vpc_id #vpc_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_resource_gateway({
+    #     resource_gateway_identifier: "ResourceGatewayIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.created_at #=> Time
+    #   resp.id #=> String
+    #   resp.ip_address_type #=> String, one of "IPV4", "IPV6", "DUALSTACK"
+    #   resp.last_updated_at #=> Time
+    #   resp.name #=> String
+    #   resp.security_group_ids #=> Array
+    #   resp.security_group_ids[0] #=> String
+    #   resp.status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.subnet_ids #=> Array
+    #   resp.subnet_ids[0] #=> String
+    #   resp.vpc_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetResourceGateway AWS API Documentation
+    #
+    # @overload get_resource_gateway(params = {})
+    # @param [Hash] params ({})
+    def get_resource_gateway(params = {}, options = {})
+      req = build_request(:get_resource_gateway, params)
+      req.send_request(options)
+    end
+
+    # Retrieves information about the specified resource policy. The
+    # resource policy is an IAM policy created on behalf of the resource
+    # owner when they share a resource.
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the service network or service.
@@ -1831,22 +2352,23 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Retrieves information about listener rules. You can also retrieve
-    # information about the default listener rule. For more information, see
-    # [Listener rules][1] in the *Amazon VPC Lattice User Guide*.
+    # Retrieves information about the specified listener rules. You can also
+    # retrieve information about the default listener rule. For more
+    # information, see [Listener rules][1] in the *Amazon VPC Lattice User
+    # Guide*.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/vpc-lattice/latest/ug/listeners.html#listener-rules
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [required, String] :rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener rule.
+    #   The ID or ARN of the listener rule.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::GetRuleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1904,7 +2426,7 @@ module Aws::VPCLattice
     # Retrieves information about the specified service.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::GetServiceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1955,7 +2477,7 @@ module Aws::VPCLattice
     # Retrieves information about the specified service network.
     #
     # @option params [required, String] :service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #
     # @return [Types::GetServiceNetworkResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1967,6 +2489,7 @@ module Aws::VPCLattice
     #   * {Types::GetServiceNetworkResponse#name #name} => String
     #   * {Types::GetServiceNetworkResponse#number_of_associated_services #number_of_associated_services} => Integer
     #   * {Types::GetServiceNetworkResponse#number_of_associated_vp_cs #number_of_associated_vp_cs} => Integer
+    #   * {Types::GetServiceNetworkResponse#sharing_config #sharing_config} => Types::SharingConfig
     #
     # @example Request syntax with placeholder values
     #
@@ -1984,6 +2507,7 @@ module Aws::VPCLattice
     #   resp.name #=> String
     #   resp.number_of_associated_services #=> Integer
     #   resp.number_of_associated_vp_cs #=> Integer
+    #   resp.sharing_config.enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetwork AWS API Documentation
     #
@@ -1995,10 +2519,73 @@ module Aws::VPCLattice
     end
 
     # Retrieves information about the specified association between a
+    # service network and a resource configuration.
+    #
+    # @option params [required, String] :service_network_resource_association_identifier
+    #   The ID of the association.
+    #
+    # @return [Types::GetServiceNetworkResourceAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#arn #arn} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#created_at #created_at} => Time
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#created_by #created_by} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#dns_entry #dns_entry} => Types::DnsEntry
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#failure_code #failure_code} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#failure_reason #failure_reason} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#id #id} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#is_managed_association #is_managed_association} => Boolean
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#last_updated_at #last_updated_at} => Time
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#private_dns_entry #private_dns_entry} => Types::DnsEntry
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#resource_configuration_arn #resource_configuration_arn} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#resource_configuration_id #resource_configuration_id} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#resource_configuration_name #resource_configuration_name} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#service_network_arn #service_network_arn} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#service_network_id #service_network_id} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#service_network_name #service_network_name} => String
+    #   * {Types::GetServiceNetworkResourceAssociationResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_service_network_resource_association({
+    #     service_network_resource_association_identifier: "ServiceNetworkResourceAssociationIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.dns_entry.domain_name #=> String
+    #   resp.dns_entry.hosted_zone_id #=> String
+    #   resp.failure_code #=> String
+    #   resp.failure_reason #=> String
+    #   resp.id #=> String
+    #   resp.is_managed_association #=> Boolean
+    #   resp.last_updated_at #=> Time
+    #   resp.private_dns_entry.domain_name #=> String
+    #   resp.private_dns_entry.hosted_zone_id #=> String
+    #   resp.resource_configuration_arn #=> String
+    #   resp.resource_configuration_id #=> String
+    #   resp.resource_configuration_name #=> String
+    #   resp.service_network_arn #=> String
+    #   resp.service_network_id #=> String
+    #   resp.service_network_name #=> String
+    #   resp.status #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "PARTIAL", "DELETE_IN_PROGRESS", "CREATE_FAILED", "DELETE_FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetworkResourceAssociation AWS API Documentation
+    #
+    # @overload get_service_network_resource_association(params = {})
+    # @param [Hash] params ({})
+    def get_service_network_resource_association(params = {}, options = {})
+      req = build_request(:get_service_network_resource_association, params)
+      req.send_request(options)
+    end
+
+    # Retrieves information about the specified association between a
     # service network and a service.
     #
     # @option params [required, String] :service_network_service_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #
     # @return [Types::GetServiceNetworkServiceAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2052,11 +2639,11 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Retrieves information about the association between a service network
-    # and a VPC.
+    # Retrieves information about the specified association between a
+    # service network and a VPC.
     #
     # @option params [required, String] :service_network_vpc_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #
     # @return [Types::GetServiceNetworkVpcAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2109,7 +2696,7 @@ module Aws::VPCLattice
     # Retrieves information about the specified target group.
     #
     # @option params [required, String] :target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #
     # @return [Types::GetTargetGroupResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2170,7 +2757,7 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Lists all access log subscriptions for the specified service network
+    # Lists the access log subscriptions for the specified service network
     # or service.
     #
     # @option params [Integer] :max_results
@@ -2180,8 +2767,7 @@ module Aws::VPCLattice
     #   A pagination token for the next page of results.
     #
     # @option params [required, String] :resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service.
+    #   The ID or ARN of the service network or service.
     #
     # @return [Types::ListAccessLogSubscriptionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2208,6 +2794,7 @@ module Aws::VPCLattice
     #   resp.items[0].last_updated_at #=> Time
     #   resp.items[0].resource_arn #=> String
     #   resp.items[0].resource_id #=> String
+    #   resp.items[0].service_network_log_type #=> String, one of "SERVICE", "RESOURCE"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListAccessLogSubscriptions AWS API Documentation
@@ -2228,7 +2815,7 @@ module Aws::VPCLattice
     #   A pagination token for the next page of results.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::ListListenersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2266,10 +2853,176 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Lists the rules for the listener.
+    # Lists the resource configurations owned by or shared with this
+    # account.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum page size.
+    #
+    # @option params [String] :next_token
+    #   A pagination token for the next page of results.
+    #
+    # @option params [String] :resource_configuration_group_identifier
+    #   The ID of the group resource configuration.
+    #
+    # @option params [String] :resource_gateway_identifier
+    #   The ID of the resource gateway for the resource configuration.
+    #
+    # @return [Types::ListResourceConfigurationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListResourceConfigurationsResponse#items #items} => Array&lt;Types::ResourceConfigurationSummary&gt;
+    #   * {Types::ListResourceConfigurationsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_resource_configurations({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     resource_configuration_group_identifier: "ResourceConfigurationIdentifier",
+    #     resource_gateway_identifier: "ResourceGatewayIdentifier",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].amazon_managed #=> Boolean
+    #   resp.items[0].arn #=> String
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].id #=> String
+    #   resp.items[0].last_updated_at #=> Time
+    #   resp.items[0].name #=> String
+    #   resp.items[0].resource_configuration_group_id #=> String
+    #   resp.items[0].resource_gateway_id #=> String
+    #   resp.items[0].status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.items[0].type #=> String, one of "GROUP", "CHILD", "SINGLE", "ARN"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceConfigurations AWS API Documentation
+    #
+    # @overload list_resource_configurations(params = {})
+    # @param [Hash] params ({})
+    def list_resource_configurations(params = {}, options = {})
+      req = build_request(:list_resource_configurations, params)
+      req.send_request(options)
+    end
+
+    # Lists the associations for the specified VPC endpoint.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum page size.
+    #
+    # @option params [String] :next_token
+    #   A pagination token for the next page of results.
+    #
+    # @option params [required, String] :resource_configuration_identifier
+    #   The ID for the resource configuration associated with the VPC
+    #   endpoint.
+    #
+    # @option params [String] :resource_endpoint_association_identifier
+    #   The ID of the association.
+    #
+    # @option params [String] :vpc_endpoint_id
+    #   The ID of the VPC endpoint in the association.
+    #
+    # @option params [String] :vpc_endpoint_owner
+    #   The owner of the VPC endpoint in the association.
+    #
+    # @return [Types::ListResourceEndpointAssociationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListResourceEndpointAssociationsResponse#items #items} => Array&lt;Types::ResourceEndpointAssociationSummary&gt;
+    #   * {Types::ListResourceEndpointAssociationsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_resource_endpoint_associations({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     resource_configuration_identifier: "ResourceConfigurationIdentifier", # required
+    #     resource_endpoint_association_identifier: "ResourceEndpointAssociationIdentifier",
+    #     vpc_endpoint_id: "VpcEndpointId",
+    #     vpc_endpoint_owner: "VpcEndpointOwner",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].arn #=> String
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].created_by #=> String
+    #   resp.items[0].id #=> String
+    #   resp.items[0].resource_configuration_arn #=> String
+    #   resp.items[0].resource_configuration_id #=> String
+    #   resp.items[0].resource_configuration_name #=> String
+    #   resp.items[0].vpc_endpoint_id #=> String
+    #   resp.items[0].vpc_endpoint_owner #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceEndpointAssociations AWS API Documentation
+    #
+    # @overload list_resource_endpoint_associations(params = {})
+    # @param [Hash] params ({})
+    def list_resource_endpoint_associations(params = {}, options = {})
+      req = build_request(:list_resource_endpoint_associations, params)
+      req.send_request(options)
+    end
+
+    # Lists the resource gateways that you own or that were shared with you.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum page size.
+    #
+    # @option params [String] :next_token
+    #   If there are additional results, a pagination token for the next page
+    #   of results.
+    #
+    # @return [Types::ListResourceGatewaysResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListResourceGatewaysResponse#items #items} => Array&lt;Types::ResourceGatewaySummary&gt;
+    #   * {Types::ListResourceGatewaysResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_resource_gateways({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].arn #=> String
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].id #=> String
+    #   resp.items[0].ip_address_type #=> String, one of "IPV4", "IPV6", "DUALSTACK"
+    #   resp.items[0].last_updated_at #=> Time
+    #   resp.items[0].name #=> String
+    #   resp.items[0].security_group_ids #=> Array
+    #   resp.items[0].security_group_ids[0] #=> String
+    #   resp.items[0].status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.items[0].subnet_ids #=> Array
+    #   resp.items[0].subnet_ids[0] #=> String
+    #   resp.items[0].vpc_identifier #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceGateways AWS API Documentation
+    #
+    # @overload list_resource_gateways(params = {})
+    # @param [Hash] params ({})
+    def list_resource_gateways(params = {}, options = {})
+      req = build_request(:list_resource_gateways, params)
+      req.send_request(options)
+    end
+
+    # Lists the rules for the specified listener.
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [Integer] :max_results
     #   The maximum number of results to return.
@@ -2278,7 +3031,7 @@ module Aws::VPCLattice
     #   A pagination token for the next page of results.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::ListRulesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2317,17 +3070,79 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Lists the associations between the service network and the service.
-    # You can filter the list either by service or service network. You must
+    # Lists the associations between a service network and a resource
+    # configuration.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum page size.
+    #
+    # @option params [String] :next_token
+    #   If there are additional results, a pagination token for the next page
+    #   of results.
+    #
+    # @option params [String] :resource_configuration_identifier
+    #   The ID of the resource configurationk.
+    #
+    # @option params [String] :service_network_identifier
+    #   The ID of the service network.
+    #
+    # @return [Types::ListServiceNetworkResourceAssociationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListServiceNetworkResourceAssociationsResponse#items #items} => Array&lt;Types::ServiceNetworkResourceAssociationSummary&gt;
+    #   * {Types::ListServiceNetworkResourceAssociationsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_service_network_resource_associations({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     resource_configuration_identifier: "ResourceConfigurationIdentifier",
+    #     service_network_identifier: "ServiceNetworkIdentifier",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].arn #=> String
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].created_by #=> String
+    #   resp.items[0].dns_entry.domain_name #=> String
+    #   resp.items[0].dns_entry.hosted_zone_id #=> String
+    #   resp.items[0].failure_code #=> String
+    #   resp.items[0].id #=> String
+    #   resp.items[0].is_managed_association #=> Boolean
+    #   resp.items[0].private_dns_entry.domain_name #=> String
+    #   resp.items[0].private_dns_entry.hosted_zone_id #=> String
+    #   resp.items[0].resource_configuration_arn #=> String
+    #   resp.items[0].resource_configuration_id #=> String
+    #   resp.items[0].resource_configuration_name #=> String
+    #   resp.items[0].service_network_arn #=> String
+    #   resp.items[0].service_network_id #=> String
+    #   resp.items[0].service_network_name #=> String
+    #   resp.items[0].status #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "PARTIAL", "DELETE_IN_PROGRESS", "CREATE_FAILED", "DELETE_FAILED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkResourceAssociations AWS API Documentation
+    #
+    # @overload list_service_network_resource_associations(params = {})
+    # @param [Hash] params ({})
+    def list_service_network_resource_associations(params = {}, options = {})
+      req = build_request(:list_service_network_resource_associations, params)
+      req.send_request(options)
+    end
+
+    # Lists the associations between a service network and a service. You
+    # can filter the list either by service or service network. You must
     # provide either the service network identifier or the service
     # identifier.
     #
-    # Every association in Amazon VPC Lattice is given a unique Amazon
-    # Resource Name (ARN), such as when a service network is associated with
-    # a VPC or when a service is associated with a service network. If the
-    # association is for a resource that is shared with another account, the
-    # association includes the local account ID as the prefix in the ARN for
-    # each account the resource is shared with.
+    # Every association in Amazon VPC Lattice has a unique Amazon Resource
+    # Name (ARN), such as when a service network is associated with a VPC or
+    # when a service is associated with a service network. If the
+    # association is for a resource is shared with another account, the
+    # association includes the local account ID as the prefix in the ARN.
     #
     # @option params [Integer] :max_results
     #   The maximum number of results to return.
@@ -2336,10 +3151,10 @@ module Aws::VPCLattice
     #   A pagination token for the next page of results.
     #
     # @option params [String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @option params [String] :service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #
     # @return [Types::ListServiceNetworkServiceAssociationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2385,9 +3200,9 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Lists the service network and VPC associations. You can filter the
-    # list either by VPC or service network. You must provide either the
-    # service network identifier or the VPC identifier.
+    # Lists the associations between a service network and a VPC. You can
+    # filter the list either by VPC or service network. You must provide
+    # either the ID of the service network identifier or the ID of the VPC.
     #
     # @option params [Integer] :max_results
     #   The maximum number of results to return.
@@ -2396,10 +3211,10 @@ module Aws::VPCLattice
     #   A pagination token for the next page of results.
     #
     # @option params [String] :service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #
     # @option params [String] :vpc_identifier
-    #   The ID or Amazon Resource Name (ARN) of the VPC.
+    #   The ID or ARN of the VPC.
     #
     # @return [Types::ListServiceNetworkVpcAssociationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2441,9 +3256,56 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Lists the service networks owned by the caller account or shared with
-    # the caller account. Also includes the account ID in the ARN to show
-    # which account owns the service network.
+    # Lists the associations between a service network and a VPC endpoint.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum page size.
+    #
+    # @option params [String] :next_token
+    #   If there are additional results, a pagination token for the next page
+    #   of results.
+    #
+    # @option params [required, String] :service_network_identifier
+    #   The ID of the service network associated with the VPC endpoint.
+    #
+    # @return [Types::ListServiceNetworkVpcEndpointAssociationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListServiceNetworkVpcEndpointAssociationsResponse#items #items} => Array&lt;Types::ServiceNetworkEndpointAssociation&gt;
+    #   * {Types::ListServiceNetworkVpcEndpointAssociationsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_service_network_vpc_endpoint_associations({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #     service_network_identifier: "ServiceNetworkIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].id #=> String
+    #   resp.items[0].service_network_arn #=> String
+    #   resp.items[0].state #=> String
+    #   resp.items[0].vpc_endpoint_id #=> String
+    #   resp.items[0].vpc_endpoint_owner_id #=> String
+    #   resp.items[0].vpc_id #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkVpcEndpointAssociations AWS API Documentation
+    #
+    # @overload list_service_network_vpc_endpoint_associations(params = {})
+    # @param [Hash] params ({})
+    def list_service_network_vpc_endpoint_associations(params = {}, options = {})
+      req = build_request(:list_service_network_vpc_endpoint_associations, params)
+      req.send_request(options)
+    end
+
+    # Lists the service networks owned by or shared with this account. The
+    # account ID in the ARN shows which account owns the service network.
     #
     # @option params [Integer] :max_results
     #   The maximum number of results to return.
@@ -2473,6 +3335,7 @@ module Aws::VPCLattice
     #   resp.items[0].id #=> String
     #   resp.items[0].last_updated_at #=> Time
     #   resp.items[0].name #=> String
+    #   resp.items[0].number_of_associated_resource_configurations #=> Integer
     #   resp.items[0].number_of_associated_services #=> Integer
     #   resp.items[0].number_of_associated_vp_cs #=> Integer
     #   resp.next_token #=> String
@@ -2574,7 +3437,7 @@ module Aws::VPCLattice
     #   The target group type.
     #
     # @option params [String] :vpc_identifier
-    #   The ID or Amazon Resource Name (ARN) of the VPC.
+    #   The ID or ARN of the VPC.
     #
     # @return [Types::ListTargetGroupsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2631,7 +3494,7 @@ module Aws::VPCLattice
     #   A pagination token for the next page of results.
     #
     # @option params [required, String] :target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #
     # @option params [Array<Types::Target>] :targets
     #   The targets.
@@ -2690,8 +3553,8 @@ module Aws::VPCLattice
     #   or blank lines.
     #
     # @option params [required, String] :resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or service
-    #   for which the policy is created.
+    #   The ID or ARN of the service network or service for which the policy
+    #   is created.
     #
     # @return [Types::PutAuthPolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2729,8 +3592,8 @@ module Aws::VPCLattice
     #   blank lines.
     #
     # @option params [required, String] :resource_arn
-    #   The ID or Amazon Resource Name (ARN) of the service network or service
-    #   for which the policy is created.
+    #   The ID or ARN of the service network or service for which the policy
+    #   is created.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -2754,7 +3617,7 @@ module Aws::VPCLattice
     # you can only have one target in a target group.
     #
     # @option params [required, String] :target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #
     # @option params [required, Array<Types::Target>] :targets
     #   The targets.
@@ -2853,7 +3716,7 @@ module Aws::VPCLattice
     # Updates the specified access log subscription.
     #
     # @option params [required, String] :access_log_subscription_identifier
-    #   The ID or Amazon Resource Name (ARN) of the access log subscription.
+    #   The ID or ARN of the access log subscription.
     #
     # @option params [required, String] :destination_arn
     #   The Amazon Resource Name (ARN) of the access log destination.
@@ -2896,10 +3759,10 @@ module Aws::VPCLattice
     #   The action for the default rule.
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::UpdateListenerResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2955,14 +3818,141 @@ module Aws::VPCLattice
       req.send_request(options)
     end
 
-    # Updates a rule for the listener. You can't modify a default listener
-    # rule. To modify a default listener rule, use `UpdateListener`.
+    # Updates the specified resource configuration.
+    #
+    # @option params [Boolean] :allow_association_to_shareable_service_network
+    #   Indicates whether to add the resource configuration to service
+    #   networks that are shared with other accounts.
+    #
+    # @option params [Array<String>] :port_ranges
+    #   The TCP port ranges that a consumer can use to access a resource
+    #   configuration. You can separate port ranges with a comma. Example:
+    #   1-65535 or 1,2,22-30
+    #
+    # @option params [Types::ResourceConfigurationDefinition] :resource_configuration_definition
+    #   The resource configuration.
+    #
+    # @option params [required, String] :resource_configuration_identifier
+    #   The ID of the resource configuration.
+    #
+    # @return [Types::UpdateResourceConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateResourceConfigurationResponse#allow_association_to_shareable_service_network #allow_association_to_shareable_service_network} => Boolean
+    #   * {Types::UpdateResourceConfigurationResponse#arn #arn} => String
+    #   * {Types::UpdateResourceConfigurationResponse#id #id} => String
+    #   * {Types::UpdateResourceConfigurationResponse#name #name} => String
+    #   * {Types::UpdateResourceConfigurationResponse#port_ranges #port_ranges} => Array&lt;String&gt;
+    #   * {Types::UpdateResourceConfigurationResponse#protocol #protocol} => String
+    #   * {Types::UpdateResourceConfigurationResponse#resource_configuration_definition #resource_configuration_definition} => Types::ResourceConfigurationDefinition
+    #   * {Types::UpdateResourceConfigurationResponse#resource_configuration_group_id #resource_configuration_group_id} => String
+    #   * {Types::UpdateResourceConfigurationResponse#resource_gateway_id #resource_gateway_id} => String
+    #   * {Types::UpdateResourceConfigurationResponse#status #status} => String
+    #   * {Types::UpdateResourceConfigurationResponse#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_resource_configuration({
+    #     allow_association_to_shareable_service_network: false,
+    #     port_ranges: ["PortRange"],
+    #     resource_configuration_definition: {
+    #       arn_resource: {
+    #         arn: "WildcardArn",
+    #       },
+    #       dns_resource: {
+    #         domain_name: "DomainName",
+    #         ip_address_type: "IPV4", # accepts IPV4, IPV6, DUALSTACK
+    #       },
+    #       ip_resource: {
+    #         ip_address: "IpAddress",
+    #       },
+    #     },
+    #     resource_configuration_identifier: "ResourceConfigurationIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.allow_association_to_shareable_service_network #=> Boolean
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #   resp.name #=> String
+    #   resp.port_ranges #=> Array
+    #   resp.port_ranges[0] #=> String
+    #   resp.protocol #=> String, one of "TCP"
+    #   resp.resource_configuration_definition.arn_resource.arn #=> String
+    #   resp.resource_configuration_definition.dns_resource.domain_name #=> String
+    #   resp.resource_configuration_definition.dns_resource.ip_address_type #=> String, one of "IPV4", "IPV6", "DUALSTACK"
+    #   resp.resource_configuration_definition.ip_resource.ip_address #=> String
+    #   resp.resource_configuration_group_id #=> String
+    #   resp.resource_gateway_id #=> String
+    #   resp.status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.type #=> String, one of "GROUP", "CHILD", "SINGLE", "ARN"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateResourceConfiguration AWS API Documentation
+    #
+    # @overload update_resource_configuration(params = {})
+    # @param [Hash] params ({})
+    def update_resource_configuration(params = {}, options = {})
+      req = build_request(:update_resource_configuration, params)
+      req.send_request(options)
+    end
+
+    # Updates the specified resource gateway.
+    #
+    # @option params [required, String] :resource_gateway_identifier
+    #   The ID or ARN of the resource gateway.
+    #
+    # @option params [Array<String>] :security_group_ids
+    #   The IDs of the security groups associated with the resource gateway.
+    #
+    # @return [Types::UpdateResourceGatewayResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateResourceGatewayResponse#arn #arn} => String
+    #   * {Types::UpdateResourceGatewayResponse#id #id} => String
+    #   * {Types::UpdateResourceGatewayResponse#ip_address_type #ip_address_type} => String
+    #   * {Types::UpdateResourceGatewayResponse#name #name} => String
+    #   * {Types::UpdateResourceGatewayResponse#security_group_ids #security_group_ids} => Array&lt;String&gt;
+    #   * {Types::UpdateResourceGatewayResponse#status #status} => String
+    #   * {Types::UpdateResourceGatewayResponse#subnet_ids #subnet_ids} => Array&lt;String&gt;
+    #   * {Types::UpdateResourceGatewayResponse#vpc_id #vpc_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_resource_gateway({
+    #     resource_gateway_identifier: "ResourceGatewayIdentifier", # required
+    #     security_group_ids: ["SecurityGroupId"],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #   resp.ip_address_type #=> String, one of "IPV4", "IPV6"
+    #   resp.name #=> String
+    #   resp.security_group_ids #=> Array
+    #   resp.security_group_ids[0] #=> String
+    #   resp.status #=> String, one of "ACTIVE", "CREATE_IN_PROGRESS", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_FAILED", "DELETE_FAILED"
+    #   resp.subnet_ids #=> Array
+    #   resp.subnet_ids[0] #=> String
+    #   resp.vpc_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateResourceGateway AWS API Documentation
+    #
+    # @overload update_resource_gateway(params = {})
+    # @param [Hash] params ({})
+    def update_resource_gateway(params = {}, options = {})
+      req = build_request(:update_resource_gateway, params)
+      req.send_request(options)
+    end
+
+    # Updates a specified rule for the listener. You can't modify a default
+    # listener rule. To modify a default listener rule, use
+    # `UpdateListener`.
     #
     # @option params [Types::RuleAction] :action
     #   Information about the action for the specified listener rule.
     #
     # @option params [required, String] :listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #
     # @option params [Types::RuleMatch] :match
     #   The rule match.
@@ -2972,10 +3962,10 @@ module Aws::VPCLattice
     #   priority.
     #
     # @option params [required, String] :rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the rule.
+    #   The ID or ARN of the rule.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::UpdateRuleResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3078,7 +4068,7 @@ module Aws::VPCLattice
     #   The Amazon Resource Name (ARN) of the certificate.
     #
     # @option params [required, String] :service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #
     # @return [Types::UpdateServiceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3127,7 +4117,7 @@ module Aws::VPCLattice
     #     auth is enabled and an auth policy is required.
     #
     # @option params [required, String] :service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #
     # @return [Types::UpdateServiceNetworkResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3161,16 +4151,16 @@ module Aws::VPCLattice
 
     # Updates the service network and VPC association. If you add a security
     # group to the service network and VPC association, the association must
-    # continue to always have at least one security group. You can add or
-    # edit security groups at any time. However, to remove all security
-    # groups, you must first delete the association and recreate it without
+    # continue to have at least one security group. You can add or edit
+    # security groups at any time. However, to remove all security groups,
+    # you must first delete the association and then recreate it without
     # security groups.
     #
     # @option params [required, Array<String>] :security_group_ids
     #   The IDs of the security groups.
     #
     # @option params [required, String] :service_network_vpc_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #
     # @return [Types::UpdateServiceNetworkVpcAssociationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3211,7 +4201,7 @@ module Aws::VPCLattice
     #   The health check configuration.
     #
     # @option params [required, String] :target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #
     # @return [Types::UpdateTargetGroupResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -3293,7 +4283,7 @@ module Aws::VPCLattice
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-vpclattice'
-      context[:gem_version] = '1.24.0'
+      context[:gem_version] = '1.25.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

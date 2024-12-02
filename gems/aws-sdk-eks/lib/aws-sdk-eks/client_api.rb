@@ -49,6 +49,7 @@ module Aws::EKS
     AutoScalingGroup = Shapes::StructureShape.new(name: 'AutoScalingGroup')
     AutoScalingGroupList = Shapes::ListShape.new(name: 'AutoScalingGroupList')
     BadRequestException = Shapes::StructureShape.new(name: 'BadRequestException')
+    BlockStorage = Shapes::StructureShape.new(name: 'BlockStorage')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BoxedBoolean = Shapes::BooleanShape.new(name: 'BoxedBoolean')
     BoxedInteger = Shapes::IntegerShape.new(name: 'BoxedInteger')
@@ -69,6 +70,8 @@ module Aws::EKS
     ClusterStatus = Shapes::StringShape.new(name: 'ClusterStatus')
     Compatibilities = Shapes::ListShape.new(name: 'Compatibilities')
     Compatibility = Shapes::StructureShape.new(name: 'Compatibility')
+    ComputeConfigRequest = Shapes::StructureShape.new(name: 'ComputeConfigRequest')
+    ComputeConfigResponse = Shapes::StructureShape.new(name: 'ComputeConfigResponse')
     ConnectorConfigProvider = Shapes::StringShape.new(name: 'ConnectorConfigProvider')
     ConnectorConfigRequest = Shapes::StructureShape.new(name: 'ConnectorConfigRequest')
     ConnectorConfigResponse = Shapes::StructureShape.new(name: 'ConnectorConfigResponse')
@@ -144,6 +147,7 @@ module Aws::EKS
     EksAnywhereSubscriptionStatusValues = Shapes::ListShape.new(name: 'EksAnywhereSubscriptionStatusValues')
     EksAnywhereSubscriptionTerm = Shapes::StructureShape.new(name: 'EksAnywhereSubscriptionTerm')
     EksAnywhereSubscriptionTermUnit = Shapes::StringShape.new(name: 'EksAnywhereSubscriptionTermUnit')
+    ElasticLoadBalancing = Shapes::StructureShape.new(name: 'ElasticLoadBalancing')
     EncryptionConfig = Shapes::StructureShape.new(name: 'EncryptionConfig')
     EncryptionConfigList = Shapes::ListShape.new(name: 'EncryptionConfigList')
     ErrorCode = Shapes::StringShape.new(name: 'ErrorCode')
@@ -248,6 +252,12 @@ module Aws::EKS
     RegisterClusterRequest = Shapes::StructureShape.new(name: 'RegisterClusterRequest')
     RegisterClusterResponse = Shapes::StructureShape.new(name: 'RegisterClusterResponse')
     RemoteAccessConfig = Shapes::StructureShape.new(name: 'RemoteAccessConfig')
+    RemoteNetworkConfigRequest = Shapes::StructureShape.new(name: 'RemoteNetworkConfigRequest')
+    RemoteNetworkConfigResponse = Shapes::StructureShape.new(name: 'RemoteNetworkConfigResponse')
+    RemoteNodeNetwork = Shapes::StructureShape.new(name: 'RemoteNodeNetwork')
+    RemoteNodeNetworkList = Shapes::ListShape.new(name: 'RemoteNodeNetworkList')
+    RemotePodNetwork = Shapes::StructureShape.new(name: 'RemotePodNetwork')
+    RemotePodNetworkList = Shapes::ListShape.new(name: 'RemotePodNetworkList')
     ResolveConflicts = Shapes::StringShape.new(name: 'ResolveConflicts')
     ResourceInUseException = Shapes::StructureShape.new(name: 'ResourceInUseException')
     ResourceLimitExceededException = Shapes::StructureShape.new(name: 'ResourceLimitExceededException')
@@ -256,6 +266,8 @@ module Aws::EKS
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     ServerException = Shapes::StructureShape.new(name: 'ServerException')
     ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
+    StorageConfigRequest = Shapes::StructureShape.new(name: 'StorageConfigRequest')
+    StorageConfigResponse = Shapes::StructureShape.new(name: 'StorageConfigResponse')
     String = Shapes::StringShape.new(name: 'String')
     StringList = Shapes::ListShape.new(name: 'StringList')
     SupportType = Shapes::StringShape.new(name: 'SupportType')
@@ -395,6 +407,7 @@ module Aws::EKS
 
     AddonVersionInfo.add_member(:addon_version, Shapes::ShapeRef.new(shape: String, location_name: "addonVersion"))
     AddonVersionInfo.add_member(:architecture, Shapes::ShapeRef.new(shape: StringList, location_name: "architecture"))
+    AddonVersionInfo.add_member(:compute_types, Shapes::ShapeRef.new(shape: StringList, location_name: "computeTypes"))
     AddonVersionInfo.add_member(:compatibilities, Shapes::ShapeRef.new(shape: Compatibilities, location_name: "compatibilities"))
     AddonVersionInfo.add_member(:requires_configuration, Shapes::ShapeRef.new(shape: Boolean, location_name: "requiresConfiguration"))
     AddonVersionInfo.add_member(:requires_iam_permissions, Shapes::ShapeRef.new(shape: Boolean, location_name: "requiresIamPermissions"))
@@ -449,6 +462,9 @@ module Aws::EKS
     BadRequestException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))
     BadRequestException.struct_class = Types::BadRequestException
 
+    BlockStorage.add_member(:enabled, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "enabled"))
+    BlockStorage.struct_class = Types::BlockStorage
+
     CategoryList.member = Shapes::ShapeRef.new(shape: Category)
 
     Certificate.add_member(:data, Shapes::ShapeRef.new(shape: String, location_name: "data"))
@@ -491,6 +507,9 @@ module Aws::EKS
     Cluster.add_member(:access_config, Shapes::ShapeRef.new(shape: AccessConfigResponse, location_name: "accessConfig"))
     Cluster.add_member(:upgrade_policy, Shapes::ShapeRef.new(shape: UpgradePolicyResponse, location_name: "upgradePolicy"))
     Cluster.add_member(:zonal_shift_config, Shapes::ShapeRef.new(shape: ZonalShiftConfigResponse, location_name: "zonalShiftConfig"))
+    Cluster.add_member(:remote_network_config, Shapes::ShapeRef.new(shape: RemoteNetworkConfigResponse, location_name: "remoteNetworkConfig"))
+    Cluster.add_member(:compute_config, Shapes::ShapeRef.new(shape: ComputeConfigResponse, location_name: "computeConfig"))
+    Cluster.add_member(:storage_config, Shapes::ShapeRef.new(shape: StorageConfigResponse, location_name: "storageConfig"))
     Cluster.struct_class = Types::Cluster
 
     ClusterHealth.add_member(:issues, Shapes::ShapeRef.new(shape: ClusterIssueList, location_name: "issues"))
@@ -509,6 +528,16 @@ module Aws::EKS
     Compatibility.add_member(:platform_versions, Shapes::ShapeRef.new(shape: StringList, location_name: "platformVersions"))
     Compatibility.add_member(:default_version, Shapes::ShapeRef.new(shape: Boolean, location_name: "defaultVersion"))
     Compatibility.struct_class = Types::Compatibility
+
+    ComputeConfigRequest.add_member(:enabled, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "enabled"))
+    ComputeConfigRequest.add_member(:node_pools, Shapes::ShapeRef.new(shape: StringList, location_name: "nodePools"))
+    ComputeConfigRequest.add_member(:node_role_arn, Shapes::ShapeRef.new(shape: String, location_name: "nodeRoleArn"))
+    ComputeConfigRequest.struct_class = Types::ComputeConfigRequest
+
+    ComputeConfigResponse.add_member(:enabled, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "enabled"))
+    ComputeConfigResponse.add_member(:node_pools, Shapes::ShapeRef.new(shape: StringList, location_name: "nodePools"))
+    ComputeConfigResponse.add_member(:node_role_arn, Shapes::ShapeRef.new(shape: String, location_name: "nodeRoleArn"))
+    ComputeConfigResponse.struct_class = Types::ComputeConfigResponse
 
     ConnectorConfigRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "roleArn"))
     ConnectorConfigRequest.add_member(:provider, Shapes::ShapeRef.new(shape: ConnectorConfigProvider, required: true, location_name: "provider"))
@@ -571,6 +600,9 @@ module Aws::EKS
     CreateClusterRequest.add_member(:bootstrap_self_managed_addons, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "bootstrapSelfManagedAddons"))
     CreateClusterRequest.add_member(:upgrade_policy, Shapes::ShapeRef.new(shape: UpgradePolicyRequest, location_name: "upgradePolicy"))
     CreateClusterRequest.add_member(:zonal_shift_config, Shapes::ShapeRef.new(shape: ZonalShiftConfigRequest, location_name: "zonalShiftConfig"))
+    CreateClusterRequest.add_member(:remote_network_config, Shapes::ShapeRef.new(shape: RemoteNetworkConfigRequest, location_name: "remoteNetworkConfig"))
+    CreateClusterRequest.add_member(:compute_config, Shapes::ShapeRef.new(shape: ComputeConfigRequest, location_name: "computeConfig"))
+    CreateClusterRequest.add_member(:storage_config, Shapes::ShapeRef.new(shape: StorageConfigRequest, location_name: "storageConfig"))
     CreateClusterRequest.struct_class = Types::CreateClusterRequest
 
     CreateClusterResponse.add_member(:cluster, Shapes::ShapeRef.new(shape: Cluster, location_name: "cluster"))
@@ -826,6 +858,9 @@ module Aws::EKS
     EksAnywhereSubscriptionTerm.add_member(:unit, Shapes::ShapeRef.new(shape: EksAnywhereSubscriptionTermUnit, location_name: "unit"))
     EksAnywhereSubscriptionTerm.struct_class = Types::EksAnywhereSubscriptionTerm
 
+    ElasticLoadBalancing.add_member(:enabled, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "enabled"))
+    ElasticLoadBalancing.struct_class = Types::ElasticLoadBalancing
+
     EncryptionConfig.add_member(:resources, Shapes::ShapeRef.new(shape: StringList, location_name: "resources"))
     EncryptionConfig.add_member(:provider, Shapes::ShapeRef.new(shape: Provider, location_name: "provider"))
     EncryptionConfig.struct_class = Types::EncryptionConfig
@@ -955,11 +990,13 @@ module Aws::EKS
 
     KubernetesNetworkConfigRequest.add_member(:service_ipv_4_cidr, Shapes::ShapeRef.new(shape: String, location_name: "serviceIpv4Cidr"))
     KubernetesNetworkConfigRequest.add_member(:ip_family, Shapes::ShapeRef.new(shape: IpFamily, location_name: "ipFamily"))
+    KubernetesNetworkConfigRequest.add_member(:elastic_load_balancing, Shapes::ShapeRef.new(shape: ElasticLoadBalancing, location_name: "elasticLoadBalancing"))
     KubernetesNetworkConfigRequest.struct_class = Types::KubernetesNetworkConfigRequest
 
     KubernetesNetworkConfigResponse.add_member(:service_ipv_4_cidr, Shapes::ShapeRef.new(shape: String, location_name: "serviceIpv4Cidr"))
     KubernetesNetworkConfigResponse.add_member(:service_ipv_6_cidr, Shapes::ShapeRef.new(shape: String, location_name: "serviceIpv6Cidr"))
     KubernetesNetworkConfigResponse.add_member(:ip_family, Shapes::ShapeRef.new(shape: IpFamily, location_name: "ipFamily"))
+    KubernetesNetworkConfigResponse.add_member(:elastic_load_balancing, Shapes::ShapeRef.new(shape: ElasticLoadBalancing, location_name: "elasticLoadBalancing"))
     KubernetesNetworkConfigResponse.struct_class = Types::KubernetesNetworkConfigResponse
 
     LaunchTemplateSpecification.add_member(:name, Shapes::ShapeRef.new(shape: String, location_name: "name"))
@@ -1223,6 +1260,24 @@ module Aws::EKS
     RemoteAccessConfig.add_member(:source_security_groups, Shapes::ShapeRef.new(shape: StringList, location_name: "sourceSecurityGroups"))
     RemoteAccessConfig.struct_class = Types::RemoteAccessConfig
 
+    RemoteNetworkConfigRequest.add_member(:remote_node_networks, Shapes::ShapeRef.new(shape: RemoteNodeNetworkList, location_name: "remoteNodeNetworks"))
+    RemoteNetworkConfigRequest.add_member(:remote_pod_networks, Shapes::ShapeRef.new(shape: RemotePodNetworkList, location_name: "remotePodNetworks"))
+    RemoteNetworkConfigRequest.struct_class = Types::RemoteNetworkConfigRequest
+
+    RemoteNetworkConfigResponse.add_member(:remote_node_networks, Shapes::ShapeRef.new(shape: RemoteNodeNetworkList, location_name: "remoteNodeNetworks"))
+    RemoteNetworkConfigResponse.add_member(:remote_pod_networks, Shapes::ShapeRef.new(shape: RemotePodNetworkList, location_name: "remotePodNetworks"))
+    RemoteNetworkConfigResponse.struct_class = Types::RemoteNetworkConfigResponse
+
+    RemoteNodeNetwork.add_member(:cidrs, Shapes::ShapeRef.new(shape: StringList, location_name: "cidrs"))
+    RemoteNodeNetwork.struct_class = Types::RemoteNodeNetwork
+
+    RemoteNodeNetworkList.member = Shapes::ShapeRef.new(shape: RemoteNodeNetwork)
+
+    RemotePodNetwork.add_member(:cidrs, Shapes::ShapeRef.new(shape: StringList, location_name: "cidrs"))
+    RemotePodNetwork.struct_class = Types::RemotePodNetwork
+
+    RemotePodNetworkList.member = Shapes::ShapeRef.new(shape: RemotePodNetwork)
+
     ResourceInUseException.add_member(:cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "clusterName"))
     ResourceInUseException.add_member(:nodegroup_name, Shapes::ShapeRef.new(shape: String, location_name: "nodegroupName"))
     ResourceInUseException.add_member(:addon_name, Shapes::ShapeRef.new(shape: String, location_name: "addonName"))
@@ -1255,6 +1310,12 @@ module Aws::EKS
 
     ServiceUnavailableException.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))
     ServiceUnavailableException.struct_class = Types::ServiceUnavailableException
+
+    StorageConfigRequest.add_member(:block_storage, Shapes::ShapeRef.new(shape: BlockStorage, location_name: "blockStorage"))
+    StorageConfigRequest.struct_class = Types::StorageConfigRequest
+
+    StorageConfigResponse.add_member(:block_storage, Shapes::ShapeRef.new(shape: BlockStorage, location_name: "blockStorage"))
+    StorageConfigResponse.struct_class = Types::StorageConfigResponse
 
     StringList.member = Shapes::ShapeRef.new(shape: String)
 
@@ -1327,6 +1388,9 @@ module Aws::EKS
     UpdateClusterConfigRequest.add_member(:access_config, Shapes::ShapeRef.new(shape: UpdateAccessConfigRequest, location_name: "accessConfig"))
     UpdateClusterConfigRequest.add_member(:upgrade_policy, Shapes::ShapeRef.new(shape: UpgradePolicyRequest, location_name: "upgradePolicy"))
     UpdateClusterConfigRequest.add_member(:zonal_shift_config, Shapes::ShapeRef.new(shape: ZonalShiftConfigRequest, location_name: "zonalShiftConfig"))
+    UpdateClusterConfigRequest.add_member(:compute_config, Shapes::ShapeRef.new(shape: ComputeConfigRequest, location_name: "computeConfig"))
+    UpdateClusterConfigRequest.add_member(:kubernetes_network_config, Shapes::ShapeRef.new(shape: KubernetesNetworkConfigRequest, location_name: "kubernetesNetworkConfig"))
+    UpdateClusterConfigRequest.add_member(:storage_config, Shapes::ShapeRef.new(shape: StorageConfigRequest, location_name: "storageConfig"))
     UpdateClusterConfigRequest.struct_class = Types::UpdateClusterConfigRequest
 
     UpdateClusterConfigResponse.add_member(:update, Shapes::ShapeRef.new(shape: Update, location_name: "update"))

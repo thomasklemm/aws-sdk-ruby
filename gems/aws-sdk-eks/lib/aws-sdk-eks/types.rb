@@ -424,6 +424,10 @@ module Aws::EKS
     #   The architectures that the version supports.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] compute_types
+    #   Indicates the compute type of the addon version.
+    #   @return [Array<String>]
+    #
     # @!attribute [rw] compatibilities
     #   An object representing the compatibilities of a version.
     #   @return [Array<Types::Compatibility>]
@@ -442,6 +446,7 @@ module Aws::EKS
     class AddonVersionInfo < Struct.new(
       :addon_version,
       :architecture,
+      :compute_types,
       :compatibilities,
       :requires_configuration,
       :requires_iam_permissions)
@@ -651,6 +656,28 @@ module Aws::EKS
     #
     class BadRequestException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Indicates the current configuration of the block storage capability on
+    # your EKS Auto Mode cluster. For example, if the capability is enabled
+    # or disabled. If the block storage capability is enabled, EKS Auto Mode
+    # will create and delete EBS volumes in your Amazon Web Services
+    # account. For more information, see EKS Auto Mode block storage
+    # capability in the EKS User Guide.
+    #
+    # @!attribute [rw] enabled
+    #   Indicates if the block storage capability is enabled on your EKS
+    #   Auto Mode cluster. If the block storage capability is enabled, EKS
+    #   Auto Mode will create and delete EBS volumes in your Amazon Web
+    #   Services account.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/BlockStorage AWS API Documentation
+    #
+    class BlockStorage < Struct.new(
+      :enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -876,6 +903,29 @@ module Aws::EKS
     #   The configuration for zonal shift for the cluster.
     #   @return [Types::ZonalShiftConfigResponse]
     #
+    # @!attribute [rw] remote_network_config
+    #   The configuration in the cluster for EKS Hybrid Nodes. You can't
+    #   change or update this configuration after the cluster is created.
+    #   @return [Types::RemoteNetworkConfigResponse]
+    #
+    # @!attribute [rw] compute_config
+    #   Indicates the current configuration of the compute capability on
+    #   your EKS Auto Mode cluster. For example, if the capability is
+    #   enabled or disabled. If the compute capability is enabled, EKS Auto
+    #   Mode will create and delete EC2 Managed Instances in your Amazon Web
+    #   Services account. For more information, see EKS Auto Mode compute
+    #   capability in the EKS User Guide.
+    #   @return [Types::ComputeConfigResponse]
+    #
+    # @!attribute [rw] storage_config
+    #   Indicates the current configuration of the block storage capability
+    #   on your EKS Auto Mode cluster. For example, if the capability is
+    #   enabled or disabled. If the block storage capability is enabled, EKS
+    #   Auto Mode will create and delete EBS volumes in your Amazon Web
+    #   Services account. For more information, see EKS Auto Mode block
+    #   storage capability in the EKS User Guide.
+    #   @return [Types::StorageConfigResponse]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/Cluster AWS API Documentation
     #
     class Cluster < Struct.new(
@@ -901,7 +951,10 @@ module Aws::EKS
       :outpost_config,
       :access_config,
       :upgrade_policy,
-      :zonal_shift_config)
+      :zonal_shift_config,
+      :remote_network_config,
+      :compute_config,
+      :storage_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -964,6 +1017,72 @@ module Aws::EKS
       :cluster_version,
       :platform_versions,
       :default_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Request to update the configuration of the compute capability of your
+    # EKS Auto Mode cluster. For example, enable the capability. For more
+    # information, see EKS Auto Mode compute capability in the EKS User
+    # Guide.
+    #
+    # @!attribute [rw] enabled
+    #   Request to enable or disable the compute capability on your EKS Auto
+    #   Mode cluster. If the compute capability is enabled, EKS Auto Mode
+    #   will create and delete EC2 Managed Instances in your Amazon Web
+    #   Services account.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] node_pools
+    #   Configuration for node pools that defines the compute resources for
+    #   your EKS Auto Mode cluster. For more information, see EKS Auto Mode
+    #   Node Pools in the EKS User Guide.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] node_role_arn
+    #   The ARN of the IAM Role EKS will assign to EC2 Managed Instances in
+    #   your EKS Auto Mode cluster. This value cannot be changed after the
+    #   compute capability of EKS Auto Mode is enabled. For more
+    #   information, see the IAM Reference in the EKS User Guide.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/ComputeConfigRequest AWS API Documentation
+    #
+    class ComputeConfigRequest < Struct.new(
+      :enabled,
+      :node_pools,
+      :node_role_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Indicates the status of the request to update the compute capability
+    # of your EKS Auto Mode cluster.
+    #
+    # @!attribute [rw] enabled
+    #   Indicates if the compute capability is enabled on your EKS Auto Mode
+    #   cluster. If the compute capability is enabled, EKS Auto Mode will
+    #   create and delete EC2 Managed Instances in your Amazon Web Services
+    #   account.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] node_pools
+    #   Indicates the current configuration of node pools in your EKS Auto
+    #   Mode cluster. For more information, see EKS Auto Mode Node Pools in
+    #   the EKS User Guide.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] node_role_arn
+    #   The ARN of the IAM Role EKS will assign to EC2 Managed Instances in
+    #   your EKS Auto Mode cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/ComputeConfigResponse AWS API Documentation
+    #
+    class ComputeConfigResponse < Struct.new(
+      :enabled,
+      :node_pools,
+      :node_role_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1508,6 +1627,25 @@ module Aws::EKS
     #   [1]: https://docs.aws.amazon.com/eks/latest/userguide/zone-shift.html
     #   @return [Types::ZonalShiftConfigRequest]
     #
+    # @!attribute [rw] remote_network_config
+    #   The configuration in the cluster for EKS Hybrid Nodes. You can't
+    #   change or update this configuration after the cluster is created.
+    #   @return [Types::RemoteNetworkConfigRequest]
+    #
+    # @!attribute [rw] compute_config
+    #   Enable or disable the compute capability of EKS Auto Mode when
+    #   creating your EKS Auto Mode cluster. If the compute capability is
+    #   enabled, EKS Auto Mode will create and delete EC2 Managed Instances
+    #   in your Amazon Web Services account
+    #   @return [Types::ComputeConfigRequest]
+    #
+    # @!attribute [rw] storage_config
+    #   Enable or disable the block storage capability of EKS Auto Mode when
+    #   creating your EKS Auto Mode cluster. If the block storage capability
+    #   is enabled, EKS Auto Mode will create and delete EBS volumes in your
+    #   Amazon Web Services account.
+    #   @return [Types::StorageConfigRequest]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/CreateClusterRequest AWS API Documentation
     #
     class CreateClusterRequest < Struct.new(
@@ -1524,7 +1662,10 @@ module Aws::EKS
       :access_config,
       :bootstrap_self_managed_addons,
       :upgrade_policy,
-      :zonal_shift_config)
+      :zonal_shift_config,
+      :remote_network_config,
+      :compute_config,
+      :storage_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2912,6 +3053,26 @@ module Aws::EKS
       include Aws::Structure
     end
 
+    # Indicates the current configuration of the load balancing capability
+    # on your EKS Auto Mode cluster. For example, if the capability is
+    # enabled or disabled. For more information, see EKS Auto Mode load
+    # balancing capability in the EKS User Guide.
+    #
+    # @!attribute [rw] enabled
+    #   Indicates if the load balancing capability is enabled on your EKS
+    #   Auto Mode cluster. If the load balancing capability is enabled, EKS
+    #   Auto Mode will create and delete load balancers in your Amazon Web
+    #   Services account.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/ElasticLoadBalancing AWS API Documentation
+    #
+    class ElasticLoadBalancing < Struct.new(
+      :enabled)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The encryption configuration for the cluster.
     #
     # @!attribute [rw] resources
@@ -3603,11 +3764,18 @@ module Aws::EKS
     #   [1]: https://docs.aws.amazon.com/eks/latest/userguide/cni-ipv6.html
     #   @return [String]
     #
+    # @!attribute [rw] elastic_load_balancing
+    #   Request to enable or disable the load balancing capability on your
+    #   EKS Auto Mode cluster. For more information, see EKS Auto Mode load
+    #   balancing capability in the EKS User Guide.
+    #   @return [Types::ElasticLoadBalancing]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/KubernetesNetworkConfigRequest AWS API Documentation
     #
     class KubernetesNetworkConfigRequest < Struct.new(
       :service_ipv_4_cidr,
-      :ip_family)
+      :ip_family,
+      :elastic_load_balancing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3644,12 +3812,19 @@ module Aws::EKS
     #   created the cluster.
     #   @return [String]
     #
+    # @!attribute [rw] elastic_load_balancing
+    #   Indicates the current configuration of the load balancing capability
+    #   on your EKS Auto Mode cluster. For example, if the capability is
+    #   enabled or disabled.
+    #   @return [Types::ElasticLoadBalancing]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/KubernetesNetworkConfigResponse AWS API Documentation
     #
     class KubernetesNetworkConfigResponse < Struct.new(
       :service_ipv_4_cidr,
       :service_ipv_6_cidr,
-      :ip_family)
+      :ip_family,
+      :elastic_load_balancing)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5464,6 +5639,78 @@ module Aws::EKS
       include Aws::Structure
     end
 
+    # The configuration in the cluster for EKS Hybrid Nodes. You can't
+    # change or update this configuration after the cluster is created.
+    #
+    # @!attribute [rw] remote_node_networks
+    #   The list of network CIDRs that can contain hybrid nodes.
+    #   @return [Array<Types::RemoteNodeNetwork>]
+    #
+    # @!attribute [rw] remote_pod_networks
+    #   The list of network CIDRs that can contain pods that run Kubernetes
+    #   webhooks on hybrid nodes.
+    #   @return [Array<Types::RemotePodNetwork>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/RemoteNetworkConfigRequest AWS API Documentation
+    #
+    class RemoteNetworkConfigRequest < Struct.new(
+      :remote_node_networks,
+      :remote_pod_networks)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The configuration in the cluster for EKS Hybrid Nodes. You can't
+    # change or update this configuration after the cluster is created.
+    #
+    # @!attribute [rw] remote_node_networks
+    #   The list of network CIDRs that can contain hybrid nodes.
+    #   @return [Array<Types::RemoteNodeNetwork>]
+    #
+    # @!attribute [rw] remote_pod_networks
+    #   The list of network CIDRs that can contain pods that run Kubernetes
+    #   webhooks on hybrid nodes.
+    #   @return [Array<Types::RemotePodNetwork>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/RemoteNetworkConfigResponse AWS API Documentation
+    #
+    class RemoteNetworkConfigResponse < Struct.new(
+      :remote_node_networks,
+      :remote_pod_networks)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A network CIDR that can contain hybrid nodes.
+    #
+    # @!attribute [rw] cidrs
+    #   A network CIDR that can contain hybrid nodes.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/RemoteNodeNetwork AWS API Documentation
+    #
+    class RemoteNodeNetwork < Struct.new(
+      :cidrs)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A network CIDR that can contain pods that run Kubernetes webhooks on
+    # hybrid nodes.
+    #
+    # @!attribute [rw] cidrs
+    #   A network CIDR that can contain pods that run Kubernetes webhooks on
+    #   hybrid nodes.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/RemotePodNetwork AWS API Documentation
+    #
+    class RemotePodNetwork < Struct.new(
+      :cidrs)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The specified resource is in use.
     #
     # @!attribute [rw] cluster_name
@@ -5624,6 +5871,41 @@ module Aws::EKS
     #
     class ServiceUnavailableException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Request to update the configuration of the storage capability of your
+    # EKS Auto Mode cluster. For example, enable the capability. For more
+    # information, see EKS Auto Mode block storage capability in the EKS
+    # User Guide.
+    #
+    # @!attribute [rw] block_storage
+    #   Request to configure EBS Block Storage settings for your EKS Auto
+    #   Mode cluster.
+    #   @return [Types::BlockStorage]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/StorageConfigRequest AWS API Documentation
+    #
+    class StorageConfigRequest < Struct.new(
+      :block_storage)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Indicates the status of the request to update the block storage
+    # capability of your EKS Auto Mode cluster.
+    #
+    # @!attribute [rw] block_storage
+    #   Indicates the current configuration of the block storage capability
+    #   on your EKS Auto Mode cluster. For example, if the capability is
+    #   enabled or disabled.
+    #   @return [Types::BlockStorage]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/StorageConfigResponse AWS API Documentation
+    #
+    class StorageConfigResponse < Struct.new(
+      :block_storage)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6062,6 +6344,20 @@ module Aws::EKS
     #   [1]: https://docs.aws.amazon.com/eks/latest/userguide/zone-shift.html
     #   @return [Types::ZonalShiftConfigRequest]
     #
+    # @!attribute [rw] compute_config
+    #   Update the configuration of the compute capability of your EKS Auto
+    #   Mode cluster. For example, enable the capability.
+    #   @return [Types::ComputeConfigRequest]
+    #
+    # @!attribute [rw] kubernetes_network_config
+    #   The Kubernetes network configuration for the cluster.
+    #   @return [Types::KubernetesNetworkConfigRequest]
+    #
+    # @!attribute [rw] storage_config
+    #   Update the configuration of the block storage capability of your EKS
+    #   Auto Mode cluster. For example, enable the capability.
+    #   @return [Types::StorageConfigRequest]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/UpdateClusterConfigRequest AWS API Documentation
     #
     class UpdateClusterConfigRequest < Struct.new(
@@ -6071,7 +6367,10 @@ module Aws::EKS
       :client_request_token,
       :access_config,
       :upgrade_policy,
-      :zonal_shift_config)
+      :zonal_shift_config,
+      :compute_config,
+      :kubernetes_network_config,
+      :storage_config)
       SENSITIVE = []
       include Aws::Structure
     end

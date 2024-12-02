@@ -10,6 +10,12 @@
 module Aws::EventBridge
   module Types
 
+    # You do not have the necessary permissons for this action.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/AccessDeniedException AWS API Documentation
+    #
+    class AccessDeniedException < Aws::EmptyStructure; end
+
     # @!attribute [rw] name
     #   The name of the partner event source to activate.
     #   @return [String]
@@ -438,7 +444,7 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the authorization parameters to use for the connection.
+    # Tthe authorization parameters to use for the connection.
     #
     # @!attribute [rw] basic_auth_parameters
     #   The authorization parameters for Basic authorization.
@@ -457,19 +463,32 @@ module Aws::EventBridge
     #   with every invocation to the HTTP endpoint.
     #   @return [Types::ConnectionHttpParameters]
     #
+    # @!attribute [rw] connectivity_parameters
+    #   For private OAuth authentication endpoints. The parameters
+    #   EventBridge uses to authenticate against the endpoint.
+    #
+    #   For more information, see [Authorization methods for connections][1]
+    #   in the <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html
+    #   @return [Types::DescribeConnectionConnectivityParameters]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ConnectionAuthResponseParameters AWS API Documentation
     #
     class ConnectionAuthResponseParameters < Struct.new(
       :basic_auth_parameters,
       :o_auth_parameters,
       :api_key_auth_parameters,
-      :invocation_http_parameters)
+      :invocation_http_parameters,
+      :connectivity_parameters)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # Contains the authorization parameters for the connection if Basic is
-    # specified as the authorization type.
+    # The authorization parameters for the connection if Basic is specified
+    # as the authorization type.
     #
     # @!attribute [rw] username
     #   The user name to use for Basic authorization.
@@ -496,7 +515,7 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] is_value_secret
-    #   Specified whether the value is secret.
+    #   Specifies whether the value is secret.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ConnectionBodyParameter AWS API Documentation
@@ -522,7 +541,7 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] is_value_secret
-    #   Specified whether the value is a secret.
+    #   Specifies whether the value is a secret.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ConnectionHeaderParameter AWS API Documentation
@@ -535,18 +554,18 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains additional parameters for the connection.
+    # Any additional parameters for the connection.
     #
     # @!attribute [rw] header_parameters
-    #   Contains additional header parameters for the connection.
+    #   Any additional header parameters for the connection.
     #   @return [Array<Types::ConnectionHeaderParameter>]
     #
     # @!attribute [rw] query_string_parameters
-    #   Contains additional query string parameters for the connection.
+    #   Any additional query string parameters for the connection.
     #   @return [Array<Types::ConnectionQueryStringParameter>]
     #
     # @!attribute [rw] body_parameters
-    #   Contains additional body string parameters for the connection.
+    #   Any additional body string parameters for the connection.
     #   @return [Array<Types::ConnectionBodyParameter>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ConnectionHttpParameters AWS API Documentation
@@ -559,8 +578,8 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the client response parameters for the connection when OAuth
-    # is specified as the authorization type.
+    # The client response parameters for the connection when OAuth is
+    # specified as the authorization type.
     #
     # @!attribute [rw] client_id
     #   The client ID associated with the response to the connection
@@ -575,12 +594,11 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the response parameters when OAuth is specified as the
-    # authorization type.
+    # The response parameters when OAuth is specified as the authorization
+    # type.
     #
     # @!attribute [rw] client_parameters
-    #   A `ConnectionOAuthClientResponseParameters` object that contains
-    #   details about the client parameters returned when OAuth is specified
+    #   Details about the client parameters returned when OAuth is specified
     #   as the authorization type.
     #   @return [Types::ConnectionOAuthClientResponseParameters]
     #
@@ -608,8 +626,8 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Additional query string parameter for the connection. You can include
-    # up to 100 additional query string parameters per request. Each
+    # Any additional query string parameter for the connection. You can
+    # include up to 100 additional query string parameters per request. Each
     # additional parameter counts towards the event payload size, which
     # cannot exceed 64 KB.
     #
@@ -632,6 +650,38 @@ module Aws::EventBridge
       :value,
       :is_value_secret)
       SENSITIVE = [:value]
+      include Aws::Structure
+    end
+
+    # The Amazon Resource Name (ARN) of the resource configuration for the
+    # resource endpoint.
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of the resource configuration for the
+    #   resource endpoint.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ConnectivityResourceConfigurationArn AWS API Documentation
+    #
+    class ConnectivityResourceConfigurationArn < Struct.new(
+      :resource_configuration_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The parameters for EventBridge to use when invoking the resource
+    # endpoint.
+    #
+    # @!attribute [rw] resource_parameters
+    #   The parameters for EventBridge to use when invoking the resource
+    #   endpoint.
+    #   @return [Types::ConnectivityResourceConfigurationArn]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ConnectivityResourceParameters AWS API Documentation
+    #
+    class ConnectivityResourceParameters < Struct.new(
+      :resource_parameters)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -764,7 +814,7 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the API key authorization parameters for the connection.
+    # The API key authorization parameters for the connection.
     #
     # @!attribute [rw] api_key_name
     #   The name of the API key to use for authorization.
@@ -783,30 +833,41 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the authorization parameters for the connection.
+    # The authorization parameters for the connection.
+    #
+    # You must include only authorization parameters for the
+    # `AuthorizationType` you specify.
     #
     # @!attribute [rw] basic_auth_parameters
-    #   A `CreateConnectionBasicAuthRequestParameters` object that contains
-    #   the Basic authorization parameters to use for the connection.
+    #   The Basic authorization parameters to use for the connection.
     #   @return [Types::CreateConnectionBasicAuthRequestParameters]
     #
     # @!attribute [rw] o_auth_parameters
-    #   A `CreateConnectionOAuthRequestParameters` object that contains the
-    #   OAuth authorization parameters to use for the connection.
+    #   The OAuth authorization parameters to use for the connection.
     #   @return [Types::CreateConnectionOAuthRequestParameters]
     #
     # @!attribute [rw] api_key_auth_parameters
-    #   A `CreateConnectionApiKeyAuthRequestParameters` object that contains
-    #   the API key authorization parameters to use for the connection.
+    #   The API key authorization parameters to use for the connection.
     #   @return [Types::CreateConnectionApiKeyAuthRequestParameters]
     #
     # @!attribute [rw] invocation_http_parameters
-    #   A `ConnectionHttpParameters` object that contains the API key
-    #   authorization parameters to use for the connection. Note that if you
-    #   include additional parameters for the target of a rule via
-    #   `HttpParameters`, including query strings, the parameters added for
-    #   the connection take precedence.
+    #   The API key authorization parameters to use for the connection. Note
+    #   that if you include additional parameters for the target of a rule
+    #   via `HttpParameters`, including query strings, the parameters added
+    #   for the connection take precedence.
     #   @return [Types::ConnectionHttpParameters]
+    #
+    # @!attribute [rw] connectivity_parameters
+    #   If you specify a private OAuth endpoint, the parameters for
+    #   EventBridge to use when authenticating against the endpoint.
+    #
+    #   For more information, see [Authorization methods for connections][1]
+    #   in the <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html
+    #   @return [Types::ConnectivityResourceParameters]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/CreateConnectionAuthRequestParameters AWS API Documentation
     #
@@ -814,7 +875,8 @@ module Aws::EventBridge
       :basic_auth_parameters,
       :o_auth_parameters,
       :api_key_auth_parameters,
-      :invocation_http_parameters)
+      :invocation_http_parameters,
+      :connectivity_parameters)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -839,7 +901,7 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the Basic authorization parameters to use for the connection.
+    # The Basic authorization parameters to use for the connection.
     #
     # @!attribute [rw] client_id
     #   The client ID to use for OAuth authorization for the connection.
@@ -862,8 +924,7 @@ module Aws::EventBridge
     # Contains the OAuth authorization parameters to use for the connection.
     #
     # @!attribute [rw] client_parameters
-    #   A `CreateConnectionOAuthClientRequestParameters` object that
-    #   contains the client parameters for OAuth authorization.
+    #   The client parameters for OAuth authorization.
     #   @return [Types::CreateConnectionOAuthClientRequestParameters]
     #
     # @!attribute [rw] authorization_endpoint
@@ -876,8 +937,7 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] o_auth_http_parameters
-    #   A `ConnectionHttpParameters` object that contains details about the
-    #   additional parameters to use for the connection.
+    #   Details about the additional parameters to use for the connection.
     #   @return [Types::ConnectionHttpParameters]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/CreateConnectionOAuthRequestParameters AWS API Documentation
@@ -908,9 +968,23 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] auth_parameters
-    #   A `CreateConnectionAuthRequestParameters` object that contains the
-    #   authorization parameters to use to authorize with the endpoint.
+    #   The authorization parameters to use to authorize with the endpoint.
+    #
+    #   You must include only authorization parameters for the
+    #   `AuthorizationType` you specify.
     #   @return [Types::CreateConnectionAuthRequestParameters]
+    #
+    # @!attribute [rw] invocation_connectivity_parameters
+    #   For connections to private resource endpoints, the parameters to use
+    #   for invoking the resource endpoint.
+    #
+    #   For more information, see [Connecting to private resources][1] in
+    #   the <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html
+    #   @return [Types::ConnectivityResourceParameters]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/CreateConnectionRequest AWS API Documentation
     #
@@ -918,7 +992,8 @@ module Aws::EventBridge
       :name,
       :description,
       :authorization_type,
-      :auth_parameters)
+      :auth_parameters,
+      :invocation_connectivity_parameters)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1100,9 +1175,12 @@ module Aws::EventBridge
     #   Configuration details of the Amazon SQS queue for EventBridge to use
     #   as a dead-letter queue (DLQ).
     #
-    #   For more information, see [Event retry policy and using dead-letter
-    #   queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    #   *EventBridge User Guide*.
+    #   For more information, see [Using dead-letter queues to process
+    #   undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #   @return [Types::DeadLetterConfig]
     #
     # @!attribute [rw] tags
@@ -1146,9 +1224,12 @@ module Aws::EventBridge
     #   Configuration details of the Amazon SQS queue for EventBridge to use
     #   as a dead-letter queue (DLQ).
     #
-    #   For more information, see [Event retry policy and using dead-letter
-    #   queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    #   *EventBridge User Guide*.
+    #   For more information, see [Using dead-letter queues to process
+    #   undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #   @return [Types::DeadLetterConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/CreateEventBusResponse AWS API Documentation
@@ -1211,9 +1292,12 @@ module Aws::EventBridge
     # Configuration details of the Amazon SQS queue for EventBridge to use
     # as a dead-letter queue (DLQ).
     #
-    # For more information, see [Event retry policy and using dead-letter
-    # queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    # *EventBridge User Guide*.
+    # For more information, see [Using dead-letter queues to process
+    # undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #
     # @!attribute [rw] arn
     #   The ARN of the SQS queue specified as the target for the dead-letter
@@ -1577,6 +1661,29 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
+    # If the connection uses a private OAuth endpoint, the parameters for
+    # EventBridge to use when authenticating against the endpoint.
+    #
+    # For more information, see [Authorization methods for connections][1]
+    # in the <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html
+    #
+    # @!attribute [rw] resource_parameters
+    #   The parameters for EventBridge to use when invoking the resource
+    #   endpoint.
+    #   @return [Types::DescribeConnectionResourceParameters]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/DescribeConnectionConnectivityParameters AWS API Documentation
+    #
+    class DescribeConnectionConnectivityParameters < Struct.new(
+      :resource_parameters)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] name
     #   The name of the connection to retrieve.
     #   @return [String]
@@ -1585,6 +1692,29 @@ module Aws::EventBridge
     #
     class DescribeConnectionRequest < Struct.new(
       :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The parameters for EventBridge to use when invoking the resource
+    # endpoint.
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of the resource configuration for the
+    #   private API.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_association_arn
+    #   For connections to private APIs, the Amazon Resource Name (ARN) of
+    #   the resource association EventBridge created between the connection
+    #   and the private API's resource configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/DescribeConnectionResourceParameters AWS API Documentation
+    #
+    class DescribeConnectionResourceParameters < Struct.new(
+      :resource_configuration_arn,
+      :resource_association_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1600,6 +1730,18 @@ module Aws::EventBridge
     # @!attribute [rw] description
     #   The description for the connection retrieved.
     #   @return [String]
+    #
+    # @!attribute [rw] invocation_connectivity_parameters
+    #   For connections to private resource endpoints. The parameters
+    #   EventBridge uses to invoke the resource endpoint.
+    #
+    #   For more information, see [Connecting to private resources][1] in
+    #   the <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html
+    #   @return [Types::DescribeConnectionConnectivityParameters]
     #
     # @!attribute [rw] connection_state
     #   The state of the connection retrieved.
@@ -1640,6 +1782,7 @@ module Aws::EventBridge
       :connection_arn,
       :name,
       :description,
+      :invocation_connectivity_parameters,
       :connection_state,
       :state_reason,
       :authorization_type,
@@ -1791,9 +1934,12 @@ module Aws::EventBridge
     #   Configuration details of the Amazon SQS queue for EventBridge to use
     #   as a dead-letter queue (DLQ).
     #
-    #   For more information, see [Event retry policy and using dead-letter
-    #   queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    #   *EventBridge User Guide*.
+    #   For more information, see [Using dead-letter queues to process
+    #   undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #   @return [Types::DeadLetterConfig]
     #
     # @!attribute [rw] policy
@@ -2643,8 +2789,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -2663,13 +2816,19 @@ module Aws::EventBridge
     end
 
     # @!attribute [rw] api_destinations
-    #   An array of `ApiDestination` objects that include information about
-    #   an API destination.
+    #   An array that includes information about each API destination.
     #   @return [Array<Types::ApiDestination>]
     #
     # @!attribute [rw] next_token
-    #   A token you can use in a subsequent request to retrieve the next set
-    #   of results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListApiDestinationsResponse AWS API Documentation
@@ -2695,8 +2854,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -2720,8 +2886,15 @@ module Aws::EventBridge
     #   @return [Array<Types::Archive>]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListArchivesResponse AWS API Documentation
@@ -2743,8 +2916,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -2768,8 +2948,15 @@ module Aws::EventBridge
     #   @return [Array<Types::Connection>]
     #
     # @!attribute [rw] next_token
-    #   A token you can use in a subsequent request to retrieve the next set
-    #   of results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListConnectionsResponse AWS API Documentation
@@ -2793,12 +2980,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   If `nextToken` is returned, there are more results available. The
-    #   value of `nextToken` is a unique pagination token for each page.
-    #   Make the call again using the returned token to retrieve the next
-    #   page. Keep all other arguments unchanged. Each pagination token
-    #   expires after 24 hours. Using an expired pagination token will
-    #   return an HTTP 400 InvalidToken error.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -2821,12 +3011,15 @@ module Aws::EventBridge
     #   @return [Array<Types::Endpoint>]
     #
     # @!attribute [rw] next_token
-    #   If `nextToken` is returned, there are more results available. The
-    #   value of `nextToken` is a unique pagination token for each page.
-    #   Make the call again using the returned token to retrieve the next
-    #   page. Keep all other arguments unchanged. Each pagination token
-    #   expires after 24 hours. Using an expired pagination token will
-    #   return an HTTP 400 InvalidToken error.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListEndpointsResponse AWS API Documentation
@@ -2844,8 +3037,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -2869,8 +3069,15 @@ module Aws::EventBridge
     #   @return [Array<Types::EventBus>]
     #
     # @!attribute [rw] next_token
-    #   A token you can use in a subsequent operation to retrieve the next
-    #   set of results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListEventBusesResponse AWS API Documentation
@@ -2888,8 +3095,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -2913,8 +3127,15 @@ module Aws::EventBridge
     #   @return [Array<Types::EventSource>]
     #
     # @!attribute [rw] next_token
-    #   A token you can use in a subsequent operation to retrieve the next
-    #   set of results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListEventSourcesResponse AWS API Documentation
@@ -2932,8 +3153,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to this operation. Specifying
-    #   this retrieves the next set of results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -2957,8 +3185,15 @@ module Aws::EventBridge
     #   @return [Array<Types::PartnerEventSourceAccount>]
     #
     # @!attribute [rw] next_token
-    #   A token you can use in a subsequent operation to retrieve the next
-    #   set of results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListPartnerEventSourceAccountsResponse AWS API Documentation
@@ -2976,8 +3211,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to this operation. Specifying
-    #   this retrieves the next set of results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -3001,8 +3243,15 @@ module Aws::EventBridge
     #   @return [Array<Types::PartnerEventSource>]
     #
     # @!attribute [rw] next_token
-    #   A token you can use in a subsequent operation to retrieve the next
-    #   set of results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListPartnerEventSourcesResponse AWS API Documentation
@@ -3028,8 +3277,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -3054,8 +3310,15 @@ module Aws::EventBridge
     #   @return [Array<Types::Replay>]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListReplaysResponse AWS API Documentation
@@ -3077,8 +3340,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -3101,8 +3371,15 @@ module Aws::EventBridge
     #   @return [Array<String>]
     #
     # @!attribute [rw] next_token
-    #   Indicates whether there are additional results to retrieve. If there
-    #   are no more results, the value is null.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListRuleNamesByTargetResponse AWS API Documentation
@@ -3124,8 +3401,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -3148,8 +3432,15 @@ module Aws::EventBridge
     #   @return [Array<Types::Rule>]
     #
     # @!attribute [rw] next_token
-    #   Indicates whether there are additional results to retrieve. If there
-    #   are no more results, the value is null.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListRulesResponse AWS API Documentation
@@ -3196,8 +3487,15 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] next_token
-    #   The token returned by a previous call to retrieve the next set of
-    #   results.
+    #   The token returned by a previous call, which you can use to retrieve
+    #   the next set of results.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @!attribute [rw] limit
@@ -3220,8 +3518,15 @@ module Aws::EventBridge
     #   @return [Array<Types::Target>]
     #
     # @!attribute [rw] next_token
-    #   Indicates whether there are additional results to retrieve. If there
-    #   are no more results, the value is null.
+    #   A token indicating there are more results available. If there are no
+    #   more results, no token is included in the response.
+    #
+    #   The value of `nextToken` is a unique pagination token for each page.
+    #   To retrieve the next page of results, make the call again using the
+    #   returned token. Keep all other arguments unchanged.
+    #
+    #   Using an expired pagination token results in an `HTTP 400
+    #   InvalidToken` error.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ListTargetsByRuleResponse AWS API Documentation
@@ -4788,8 +5093,7 @@ module Aws::EventBridge
     #   @return [Types::DeadLetterConfig]
     #
     # @!attribute [rw] retry_policy
-    #   The `RetryPolicy` object that contains the retry policy
-    #   configuration to use for the dead-letter queue.
+    #   The retry policy configuration to use for the dead-letter queue.
     #   @return [Types::RetryPolicy]
     #
     # @!attribute [rw] app_sync_parameters
@@ -4874,6 +5178,12 @@ module Aws::EventBridge
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # This request cannot be completed due to throttling issues.
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/ThrottlingException AWS API Documentation
+    #
+    class ThrottlingException < Aws::EmptyStructure; end
 
     # @!attribute [rw] resource_arn
     #   The ARN of the EventBridge resource from which you are removing
@@ -5025,7 +5335,7 @@ module Aws::EventBridge
     #   @return [String]
     #
     # @!attribute [rw] api_key_value
-    #   The value associated with teh API key to use for authorization.
+    #   The value associated with the API key to use for authorization.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/UpdateConnectionApiKeyAuthRequestParameters AWS API Documentation
@@ -5040,24 +5350,32 @@ module Aws::EventBridge
     # Contains the additional parameters to use for the connection.
     #
     # @!attribute [rw] basic_auth_parameters
-    #   A `UpdateConnectionBasicAuthRequestParameters` object that contains
-    #   the authorization parameters for Basic authorization.
+    #   The authorization parameters for Basic authorization.
     #   @return [Types::UpdateConnectionBasicAuthRequestParameters]
     #
     # @!attribute [rw] o_auth_parameters
-    #   A `UpdateConnectionOAuthRequestParameters` object that contains the
-    #   authorization parameters for OAuth authorization.
+    #   The authorization parameters for OAuth authorization.
     #   @return [Types::UpdateConnectionOAuthRequestParameters]
     #
     # @!attribute [rw] api_key_auth_parameters
-    #   A `UpdateConnectionApiKeyAuthRequestParameters` object that contains
-    #   the authorization parameters for API key authorization.
+    #   The authorization parameters for API key authorization.
     #   @return [Types::UpdateConnectionApiKeyAuthRequestParameters]
     #
     # @!attribute [rw] invocation_http_parameters
-    #   A `ConnectionHttpParameters` object that contains the additional
-    #   parameters to use for the connection.
+    #   The additional parameters to use for the connection.
     #   @return [Types::ConnectionHttpParameters]
+    #
+    # @!attribute [rw] connectivity_parameters
+    #   If you specify a private OAuth endpoint, the parameters for
+    #   EventBridge to use when authenticating against the endpoint.
+    #
+    #   For more information, see [Authorization methods for connections][1]
+    #   in the <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-auth.html
+    #   @return [Types::ConnectivityResourceParameters]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/UpdateConnectionAuthRequestParameters AWS API Documentation
     #
@@ -5065,12 +5383,13 @@ module Aws::EventBridge
       :basic_auth_parameters,
       :o_auth_parameters,
       :api_key_auth_parameters,
-      :invocation_http_parameters)
+      :invocation_http_parameters,
+      :connectivity_parameters)
       SENSITIVE = []
       include Aws::Structure
     end
 
-    # Contains the Basic authorization parameters for the connection.
+    # The Basic authorization parameters for the connection.
     #
     # @!attribute [rw] username
     #   The user name to use for Basic authorization.
@@ -5090,7 +5409,7 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the OAuth authorization parameters to use for the connection.
+    # The OAuth authorization parameters to use for the connection.
     #
     # @!attribute [rw] client_id
     #   The client ID to use for OAuth authorization.
@@ -5110,12 +5429,11 @@ module Aws::EventBridge
       include Aws::Structure
     end
 
-    # Contains the OAuth request parameters to use for the connection.
+    # The OAuth request parameters to use for the connection.
     #
     # @!attribute [rw] client_parameters
-    #   A `UpdateConnectionOAuthClientRequestParameters` object that
-    #   contains the client parameters to use for the connection when OAuth
-    #   is specified as the authorization type.
+    #   The client parameters to use for the connection when OAuth is
+    #   specified as the authorization type.
     #   @return [Types::UpdateConnectionOAuthClientRequestParameters]
     #
     # @!attribute [rw] authorization_endpoint
@@ -5159,13 +5477,26 @@ module Aws::EventBridge
     #   The authorization parameters to use for the connection.
     #   @return [Types::UpdateConnectionAuthRequestParameters]
     #
+    # @!attribute [rw] invocation_connectivity_parameters
+    #   For connections to private resource endpoints, the parameters to use
+    #   for invoking the resource endpoint.
+    #
+    #   For more information, see [Connecting to private resources][1] in
+    #   the <i> <i>Amazon EventBridge User Guide</i> </i>.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-target-connection-private.html
+    #   @return [Types::ConnectivityResourceParameters]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/UpdateConnectionRequest AWS API Documentation
     #
     class UpdateConnectionRequest < Struct.new(
       :name,
       :description,
       :authorization_type,
-      :auth_parameters)
+      :auth_parameters,
+      :invocation_connectivity_parameters)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5346,9 +5677,12 @@ module Aws::EventBridge
     #   Configuration details of the Amazon SQS queue for EventBridge to use
     #   as a dead-letter queue (DLQ).
     #
-    #   For more information, see [Event retry policy and using dead-letter
-    #   queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    #   *EventBridge User Guide*.
+    #   For more information, see [Using dead-letter queues to process
+    #   undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #   @return [Types::DeadLetterConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/UpdateEventBusRequest AWS API Documentation
@@ -5390,9 +5724,12 @@ module Aws::EventBridge
     #   Configuration details of the Amazon SQS queue for EventBridge to use
     #   as a dead-letter queue (DLQ).
     #
-    #   For more information, see [Event retry policy and using dead-letter
-    #   queues](eventbridge/latest/userguide/eb-rule-dlq.html) in the
-    #   *EventBridge User Guide*.
+    #   For more information, see [Using dead-letter queues to process
+    #   undelivered events][1] in the *EventBridge User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-event-delivery.html#eb-rule-dlq
     #   @return [Types::DeadLetterConfig]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eventbridge-2015-10-07/UpdateEventBusResponse AWS API Documentation

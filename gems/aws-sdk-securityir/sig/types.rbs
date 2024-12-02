@@ -1,0 +1,474 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::SecurityIR
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class BatchGetMemberAccountDetailsRequest
+      attr_accessor membership_id: ::String
+      attr_accessor account_ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchGetMemberAccountDetailsResponse
+      attr_accessor items: ::Array[Types::GetMembershipAccountDetailItem]
+      attr_accessor errors: ::Array[Types::GetMembershipAccountDetailError]
+      SENSITIVE: []
+    end
+
+    class CancelMembershipRequest
+      attr_accessor membership_id: ::String
+      SENSITIVE: []
+    end
+
+    class CancelMembershipResponse
+      attr_accessor membership_id: ::String
+      SENSITIVE: []
+    end
+
+    class CaseAttachmentAttributes
+      attr_accessor attachment_id: ::String
+      attr_accessor file_name: ::String
+      attr_accessor attachment_status: ("Verified" | "Failed" | "Pending")
+      attr_accessor creator: ::String
+      attr_accessor created_date: ::Time
+      SENSITIVE: [:file_name]
+    end
+
+    class CaseEditItem
+      attr_accessor event_timestamp: ::Time
+      attr_accessor principal: ::String
+      attr_accessor action: ::String
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class CloseCaseRequest
+      attr_accessor case_id: ::String
+      SENSITIVE: []
+    end
+
+    class CloseCaseResponse
+      attr_accessor case_status: ("Submitted" | "Acknowledged" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities" | "Ready to Close" | "Closed")
+      attr_accessor closed_date: ::Time
+      SENSITIVE: []
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      SENSITIVE: []
+    end
+
+    class CreateCaseCommentRequest
+      attr_accessor case_id: ::String
+      attr_accessor client_token: ::String
+      attr_accessor body: ::String
+      SENSITIVE: [:body]
+    end
+
+    class CreateCaseCommentResponse
+      attr_accessor comment_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateCaseRequest
+      attr_accessor client_token: ::String
+      attr_accessor resolver_type: ("AWS" | "Self")
+      attr_accessor title: ::String
+      attr_accessor description: ::String
+      attr_accessor engagement_type: ("Security Incident" | "Investigation")
+      attr_accessor reported_incident_start_date: ::Time
+      attr_accessor impacted_accounts: ::Array[::String]
+      attr_accessor watchers: ::Array[Types::Watcher]
+      attr_accessor threat_actor_ip_addresses: ::Array[Types::ThreatActorIp]
+      attr_accessor impacted_services: ::Array[::String]
+      attr_accessor impacted_aws_regions: ::Array[Types::ImpactedAwsRegion]
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:title, :description]
+    end
+
+    class CreateCaseResponse
+      attr_accessor case_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateMembershipRequest
+      attr_accessor client_token: ::String
+      attr_accessor membership_name: ::String
+      attr_accessor incident_response_team: ::Array[Types::IncidentResponder]
+      attr_accessor opt_in_features: ::Array[Types::OptInFeature]
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:membership_name]
+    end
+
+    class CreateMembershipResponse
+      attr_accessor membership_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetCaseAttachmentDownloadUrlRequest
+      attr_accessor case_id: ::String
+      attr_accessor attachment_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetCaseAttachmentDownloadUrlResponse
+      attr_accessor attachment_presigned_url: ::String
+      SENSITIVE: [:attachment_presigned_url]
+    end
+
+    class GetCaseAttachmentUploadUrlRequest
+      attr_accessor case_id: ::String
+      attr_accessor file_name: ::String
+      attr_accessor content_length: ::Integer
+      attr_accessor client_token: ::String
+      SENSITIVE: [:file_name]
+    end
+
+    class GetCaseAttachmentUploadUrlResponse
+      attr_accessor attachment_presigned_url: ::String
+      SENSITIVE: [:attachment_presigned_url]
+    end
+
+    class GetCaseRequest
+      attr_accessor case_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetCaseResponse
+      attr_accessor title: ::String
+      attr_accessor case_arn: ::String
+      attr_accessor description: ::String
+      attr_accessor case_status: ("Submitted" | "Acknowledged" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities" | "Ready to Close" | "Closed")
+      attr_accessor engagement_type: ("Security Incident" | "Investigation")
+      attr_accessor reported_incident_start_date: ::Time
+      attr_accessor actual_incident_start_date: ::Time
+      attr_accessor impacted_aws_regions: ::Array[Types::ImpactedAwsRegion]
+      attr_accessor threat_actor_ip_addresses: ::Array[Types::ThreatActorIp]
+      attr_accessor pending_action: ("Customer" | "None")
+      attr_accessor impacted_accounts: ::Array[::String]
+      attr_accessor watchers: ::Array[Types::Watcher]
+      attr_accessor created_date: ::Time
+      attr_accessor last_updated_date: ::Time
+      attr_accessor closure_code: ("Investigation Completed" | "Not Resolved" | "False Positive" | "Duplicate")
+      attr_accessor resolver_type: ("AWS" | "Self")
+      attr_accessor impacted_services: ::Array[::String]
+      attr_accessor case_attachments: ::Array[Types::CaseAttachmentAttributes]
+      attr_accessor closed_date: ::Time
+      SENSITIVE: [:title, :description]
+    end
+
+    class GetMembershipAccountDetailError
+      attr_accessor account_id: ::String
+      attr_accessor error: ::String
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class GetMembershipAccountDetailItem
+      attr_accessor account_id: ::String
+      attr_accessor relationship_status: ("Associated" | "Disassociated")
+      attr_accessor relationship_type: ("Organization")
+      SENSITIVE: []
+    end
+
+    class GetMembershipRequest
+      attr_accessor membership_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetMembershipResponse
+      attr_accessor membership_id: ::String
+      attr_accessor account_id: ::String
+      attr_accessor region: ("af-south-1" | "ap-east-1" | "ap-northeast-1" | "ap-northeast-2" | "ap-northeast-3" | "ap-south-1" | "ap-south-2" | "ap-southeast-1" | "ap-southeast-2" | "ap-southeast-3" | "ap-southeast-4" | "ap-southeast-5" | "ca-central-1" | "ca-west-1" | "cn-north-1" | "cn-northwest-1" | "eu-central-1" | "eu-central-2" | "eu-north-1" | "eu-south-1" | "eu-south-2" | "eu-west-1" | "eu-west-2" | "eu-west-3" | "il-central-1" | "me-central-1" | "me-south-1" | "sa-east-1" | "us-east-1" | "us-east-2" | "us-west-1" | "us-west-2")
+      attr_accessor membership_name: ::String
+      attr_accessor membership_arn: ::String
+      attr_accessor membership_status: ("Active" | "Cancelled" | "Terminated")
+      attr_accessor membership_activation_timestamp: ::Time
+      attr_accessor membership_deactivation_timestamp: ::Time
+      attr_accessor customer_type: ("Standalone" | "Organization")
+      attr_accessor number_of_accounts_covered: ::Integer
+      attr_accessor incident_response_team: ::Array[Types::IncidentResponder]
+      attr_accessor opt_in_features: ::Array[Types::OptInFeature]
+      SENSITIVE: [:membership_name]
+    end
+
+    class ImpactedAwsRegion
+      attr_accessor region: ("af-south-1" | "ap-east-1" | "ap-northeast-1" | "ap-northeast-2" | "ap-northeast-3" | "ap-south-1" | "ap-south-2" | "ap-southeast-1" | "ap-southeast-2" | "ap-southeast-3" | "ap-southeast-4" | "ap-southeast-5" | "ca-central-1" | "ca-west-1" | "cn-north-1" | "cn-northwest-1" | "eu-central-1" | "eu-central-2" | "eu-north-1" | "eu-south-1" | "eu-south-2" | "eu-west-1" | "eu-west-2" | "eu-west-3" | "il-central-1" | "me-central-1" | "me-south-1" | "sa-east-1" | "us-east-1" | "us-east-2" | "us-west-1" | "us-west-2")
+      SENSITIVE: []
+    end
+
+    class IncidentResponder
+      attr_accessor name: ::String
+      attr_accessor job_title: ::String
+      attr_accessor email: ::String
+      SENSITIVE: [:name, :job_title, :email]
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class InvalidTokenException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListCaseEditsRequest
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor case_id: ::String
+      SENSITIVE: []
+    end
+
+    class ListCaseEditsResponse
+      attr_accessor next_token: ::String
+      attr_accessor items: ::Array[Types::CaseEditItem]
+      attr_accessor total: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListCasesItem
+      attr_accessor case_id: ::String
+      attr_accessor last_updated_date: ::Time
+      attr_accessor title: ::String
+      attr_accessor case_arn: ::String
+      attr_accessor engagement_type: ("Security Incident" | "Investigation")
+      attr_accessor case_status: ("Submitted" | "Acknowledged" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities" | "Ready to Close" | "Closed")
+      attr_accessor created_date: ::Time
+      attr_accessor closed_date: ::Time
+      attr_accessor resolver_type: ("AWS" | "Self")
+      attr_accessor pending_action: ("Customer" | "None")
+      SENSITIVE: [:title]
+    end
+
+    class ListCasesRequest
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListCasesResponse
+      attr_accessor next_token: ::String
+      attr_accessor items: ::Array[Types::ListCasesItem]
+      attr_accessor total: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListCommentsItem
+      attr_accessor comment_id: ::String
+      attr_accessor created_date: ::Time
+      attr_accessor last_updated_date: ::Time
+      attr_accessor creator: ::String
+      attr_accessor last_updated_by: ::String
+      attr_accessor body: ::String
+      SENSITIVE: [:body]
+    end
+
+    class ListCommentsRequest
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor case_id: ::String
+      SENSITIVE: []
+    end
+
+    class ListCommentsResponse
+      attr_accessor next_token: ::String
+      attr_accessor items: ::Array[Types::ListCommentsItem]
+      attr_accessor total: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListMembershipItem
+      attr_accessor membership_id: ::String
+      attr_accessor account_id: ::String
+      attr_accessor region: ("af-south-1" | "ap-east-1" | "ap-northeast-1" | "ap-northeast-2" | "ap-northeast-3" | "ap-south-1" | "ap-south-2" | "ap-southeast-1" | "ap-southeast-2" | "ap-southeast-3" | "ap-southeast-4" | "ap-southeast-5" | "ca-central-1" | "ca-west-1" | "cn-north-1" | "cn-northwest-1" | "eu-central-1" | "eu-central-2" | "eu-north-1" | "eu-south-1" | "eu-south-2" | "eu-west-1" | "eu-west-2" | "eu-west-3" | "il-central-1" | "me-central-1" | "me-south-1" | "sa-east-1" | "us-east-1" | "us-east-2" | "us-west-1" | "us-west-2")
+      attr_accessor membership_arn: ::String
+      attr_accessor membership_status: ("Active" | "Cancelled" | "Terminated")
+      SENSITIVE: []
+    end
+
+    class ListMembershipsRequest
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListMembershipsResponse
+      attr_accessor next_token: ::String
+      attr_accessor items: ::Array[Types::ListMembershipItem]
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceInput
+      attr_accessor resource_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceOutput
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class OptInFeature
+      attr_accessor feature_name: ("Triage")
+      attr_accessor is_enabled: bool
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class SecurityIncidentResponseNotActiveException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      SENSITIVE: []
+    end
+
+    class TagResourceInput
+      attr_accessor resource_arn: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class TagResourceOutput < Aws::EmptyStructure
+    end
+
+    class ThreatActorIp
+      attr_accessor ip_address: ::String
+      attr_accessor user_agent: ::String
+      SENSITIVE: [:ip_address]
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      attr_accessor service_code: ::String
+      attr_accessor quota_code: ::String
+      attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class UntagResourceInput
+      attr_accessor resource_arn: ::String
+      attr_accessor tag_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UntagResourceOutput < Aws::EmptyStructure
+    end
+
+    class UpdateCaseCommentRequest
+      attr_accessor case_id: ::String
+      attr_accessor comment_id: ::String
+      attr_accessor body: ::String
+      SENSITIVE: [:body]
+    end
+
+    class UpdateCaseCommentResponse
+      attr_accessor comment_id: ::String
+      attr_accessor body: ::String
+      SENSITIVE: [:body]
+    end
+
+    class UpdateCaseRequest
+      attr_accessor case_id: ::String
+      attr_accessor title: ::String
+      attr_accessor description: ::String
+      attr_accessor reported_incident_start_date: ::Time
+      attr_accessor actual_incident_start_date: ::Time
+      attr_accessor engagement_type: ("Security Incident" | "Investigation")
+      attr_accessor watchers_to_add: ::Array[Types::Watcher]
+      attr_accessor watchers_to_delete: ::Array[Types::Watcher]
+      attr_accessor threat_actor_ip_addresses_to_add: ::Array[Types::ThreatActorIp]
+      attr_accessor threat_actor_ip_addresses_to_delete: ::Array[Types::ThreatActorIp]
+      attr_accessor impacted_services_to_add: ::Array[::String]
+      attr_accessor impacted_services_to_delete: ::Array[::String]
+      attr_accessor impacted_aws_regions_to_add: ::Array[Types::ImpactedAwsRegion]
+      attr_accessor impacted_aws_regions_to_delete: ::Array[Types::ImpactedAwsRegion]
+      attr_accessor impacted_accounts_to_add: ::Array[::String]
+      attr_accessor impacted_accounts_to_delete: ::Array[::String]
+      SENSITIVE: [:title, :description]
+    end
+
+    class UpdateCaseResponse < Aws::EmptyStructure
+    end
+
+    class UpdateCaseStatusRequest
+      attr_accessor case_id: ::String
+      attr_accessor case_status: ("Submitted" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities")
+      SENSITIVE: []
+    end
+
+    class UpdateCaseStatusResponse
+      attr_accessor case_status: ("Submitted" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities")
+      SENSITIVE: []
+    end
+
+    class UpdateMembershipRequest
+      attr_accessor membership_id: ::String
+      attr_accessor membership_name: ::String
+      attr_accessor incident_response_team: ::Array[Types::IncidentResponder]
+      attr_accessor opt_in_features: ::Array[Types::OptInFeature]
+      SENSITIVE: [:membership_name]
+    end
+
+    class UpdateMembershipResponse < Aws::EmptyStructure
+    end
+
+    class UpdateResolverTypeRequest
+      attr_accessor case_id: ::String
+      attr_accessor resolver_type: ("AWS" | "Self")
+      SENSITIVE: []
+    end
+
+    class UpdateResolverTypeResponse
+      attr_accessor case_id: ::String
+      attr_accessor case_status: ("Submitted" | "Acknowledged" | "Detection and Analysis" | "Containment, Eradication and Recovery" | "Post-incident Activities" | "Ready to Close" | "Closed")
+      attr_accessor resolver_type: ("AWS" | "Self")
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      attr_accessor reason: ("UNKNOWN_OPERATION" | "CANNOT_PARSE" | "FIELD_VALIDATION_FAILED" | "OTHER")
+      attr_accessor field_list: ::Array[Types::ValidationExceptionField]
+      SENSITIVE: []
+    end
+
+    class ValidationExceptionField
+      attr_accessor name: ::String
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class Watcher
+      attr_accessor email: ::String
+      attr_accessor name: ::String
+      attr_accessor job_title: ::String
+      SENSITIVE: [:email, :name, :job_title]
+    end
+  end
+end

@@ -99,6 +99,7 @@ module Aws
                              ?client_token: ::String,
                              configuration: {
                                answer_recommendation_ai_agent_configuration: {
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  answer_generation_ai_prompt_id: ::String?,
                                  association_configurations: Array[
                                    {
@@ -142,6 +143,7 @@ module Aws
                                  query_reformulation_ai_prompt_id: ::String?
                                }?,
                                manual_search_ai_agent_configuration: {
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  answer_generation_ai_prompt_id: ::String?,
                                  association_configurations: Array[
                                    {
@@ -181,12 +183,55 @@ module Aws
                                      association_type: ("KNOWLEDGE_BASE")?
                                    },
                                  ]?
+                               }?,
+                               self_service_ai_agent_configuration: {
+                                 association_configurations: Array[
+                                   {
+                                     association_configuration_data: {
+                                       knowledge_base_association_configuration_data: {
+                                         content_tag_filter: {
+                                           and_conditions: Array[
+                                             {
+                                               key: ::String,
+                                               value: ::String?
+                                             },
+                                           ]?,
+                                           or_conditions: Array[
+                                             {
+                                               and_conditions: Array[
+                                                 {
+                                                   key: ::String,
+                                                   value: ::String?
+                                                 },
+                                               ]?,
+                                               tag_condition: {
+                                                 key: ::String,
+                                                 value: ::String?
+                                               }?
+                                             },
+                                           ]?,
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?
+                                         }?,
+                                         max_results: ::Integer?,
+                                         override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
+                                       }?
+                                     }?,
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?
+                                   },
+                                 ]?,
+                                 self_service_ai_guardrail_id: ::String?,
+                                 self_service_answer_generation_ai_prompt_id: ::String?,
+                                 self_service_pre_processing_ai_prompt_id: ::String?
                                }?
                              },
                              ?description: ::String,
                              name: ::String,
                              ?tags: Hash[::String, ::String],
-                             type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"),
+                             type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
                              visibility_status: ("SAVED" | "PUBLISHED")
                            ) -> _CreateAIAgentResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIAgentResponseSuccess
@@ -204,6 +249,92 @@ module Aws
                                      ?modified_time: ::Time
                                    ) -> _CreateAIAgentVersionResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIAgentVersionResponseSuccess
+
+      interface _CreateAIGuardrailResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateAIGuardrailResponse]
+        def ai_guardrail: () -> Types::AIGuardrailData
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_guardrail-instance_method
+      def create_ai_guardrail: (
+                                 assistant_id: ::String,
+                                 blocked_input_messaging: ::String,
+                                 blocked_outputs_messaging: ::String,
+                                 ?client_token: ::String,
+                                 ?content_policy_config: {
+                                   filters_config: Array[
+                                     {
+                                       input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                       output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                       type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK")
+                                     },
+                                   ]
+                                 },
+                                 ?contextual_grounding_policy_config: {
+                                   filters_config: Array[
+                                     {
+                                       threshold: ::Float,
+                                       type: ("GROUNDING" | "RELEVANCE")
+                                     },
+                                   ]
+                                 },
+                                 ?description: ::String,
+                                 name: ::String,
+                                 ?sensitive_information_policy_config: {
+                                   pii_entities_config: Array[
+                                     {
+                                       action: ("BLOCK" | "ANONYMIZE"),
+                                       type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
+                                     },
+                                   ]?,
+                                   regexes_config: Array[
+                                     {
+                                       action: ("BLOCK" | "ANONYMIZE"),
+                                       description: ::String?,
+                                       name: ::String,
+                                       pattern: ::String
+                                     },
+                                   ]?
+                                 },
+                                 ?tags: Hash[::String, ::String],
+                                 ?topic_policy_config: {
+                                   topics_config: Array[
+                                     {
+                                       definition: ::String,
+                                       examples: Array[::String]?,
+                                       name: ::String,
+                                       type: ("DENY")
+                                     },
+                                   ]
+                                 },
+                                 visibility_status: ("SAVED" | "PUBLISHED"),
+                                 ?word_policy_config: {
+                                   managed_word_lists_config: Array[
+                                     {
+                                       type: ("PROFANITY")
+                                     },
+                                   ]?,
+                                   words_config: Array[
+                                     {
+                                       text: ::String
+                                     },
+                                   ]?
+                                 }
+                               ) -> _CreateAIGuardrailResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIGuardrailResponseSuccess
+
+      interface _CreateAIGuardrailVersionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateAIGuardrailVersionResponse]
+        def ai_guardrail: () -> Types::AIGuardrailData
+        def version_number: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_ai_guardrail_version-instance_method
+      def create_ai_guardrail_version: (
+                                         ai_guardrail_id: ::String,
+                                         assistant_id: ::String,
+                                         ?client_token: ::String,
+                                         ?modified_time: ::Time
+                                       ) -> _CreateAIGuardrailVersionResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIGuardrailVersionResponseSuccess
 
       interface _CreateAIPromptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateAIPromptResponse]
@@ -224,7 +355,7 @@ module Aws
                                 }?
                               },
                               template_type: ("TEXT"),
-                              type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION"),
+                              type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION" | "SELF_SERVICE_PRE_PROCESSING" | "SELF_SERVICE_ANSWER_GENERATION"),
                               visibility_status: ("SAVED" | "PUBLISHED")
                             ) -> _CreateAIPromptResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAIPromptResponseSuccess
@@ -567,7 +698,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#create_session-instance_method
       def create_session: (
-                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"), {
+                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), {
                                 ai_agent_id: ::String
                               }],
                             assistant_id: ::String,
@@ -638,6 +769,27 @@ module Aws
                                      version_number: ::Integer
                                    ) -> _DeleteAIAgentVersionResponseSuccess
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIAgentVersionResponseSuccess
+
+      interface _DeleteAIGuardrailResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteAIGuardrailResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_guardrail-instance_method
+      def delete_ai_guardrail: (
+                                 ai_guardrail_id: ::String,
+                                 assistant_id: ::String
+                               ) -> _DeleteAIGuardrailResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIGuardrailResponseSuccess
+
+      interface _DeleteAIGuardrailVersionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteAIGuardrailVersionResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#delete_ai_guardrail_version-instance_method
+      def delete_ai_guardrail_version: (
+                                         ai_guardrail_id: ::String,
+                                         assistant_id: ::String,
+                                         version_number: ::Integer
+                                       ) -> _DeleteAIGuardrailVersionResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAIGuardrailVersionResponseSuccess
 
       interface _DeleteAIPromptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteAIPromptResponse]
@@ -762,6 +914,18 @@ module Aws
                         ) -> _GetAIAgentResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAIAgentResponseSuccess
 
+      interface _GetAIGuardrailResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetAIGuardrailResponse]
+        def ai_guardrail: () -> Types::AIGuardrailData
+        def version_number: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_ai_guardrail-instance_method
+      def get_ai_guardrail: (
+                              ai_guardrail_id: ::String,
+                              assistant_id: ::String
+                            ) -> _GetAIGuardrailResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAIGuardrailResponseSuccess
+
       interface _GetAIPromptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetAIPromptResponse]
         def ai_prompt: () -> Types::AIPromptData
@@ -861,6 +1025,23 @@ module Aws
                                 ) -> _GetMessageTemplateResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMessageTemplateResponseSuccess
 
+      interface _GetNextMessageResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetNextMessageResponse]
+        def conversation_session_data: () -> ::Array[Types::RuntimeSessionData]
+        def conversation_state: () -> Types::ConversationState
+        def next_message_token: () -> ::String
+        def request_message_id: () -> ::String
+        def response: () -> Types::MessageOutput
+        def type: () -> ("TEXT")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#get_next_message-instance_method
+      def get_next_message: (
+                              assistant_id: ::String,
+                              next_message_token: ::String,
+                              session_id: ::String
+                            ) -> _GetNextMessageResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetNextMessageResponseSuccess
+
       interface _GetQuickResponseResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetQuickResponseResponse]
         def quick_response: () -> Types::QuickResponseData
@@ -925,6 +1106,33 @@ module Aws
                             ?origin: ("SYSTEM" | "CUSTOMER")
                           ) -> _ListAIAgentsResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIAgentsResponseSuccess
+
+      interface _ListAIGuardrailVersionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAIGuardrailVersionsResponse]
+        def ai_guardrail_version_summaries: () -> ::Array[Types::AIGuardrailVersionSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_guardrail_versions-instance_method
+      def list_ai_guardrail_versions: (
+                                        ai_guardrail_id: ::String,
+                                        assistant_id: ::String,
+                                        ?max_results: ::Integer,
+                                        ?next_token: ::String
+                                      ) -> _ListAIGuardrailVersionsResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIGuardrailVersionsResponseSuccess
+
+      interface _ListAIGuardrailsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAIGuardrailsResponse]
+        def ai_guardrail_summaries: () -> ::Array[Types::AIGuardrailSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_ai_guardrails-instance_method
+      def list_ai_guardrails: (
+                                assistant_id: ::String,
+                                ?max_results: ::Integer,
+                                ?next_token: ::String
+                              ) -> _ListAIGuardrailsResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAIGuardrailsResponseSuccess
 
       interface _ListAIPromptVersionsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListAIPromptVersionsResponse]
@@ -1059,6 +1267,20 @@ module Aws
                                   ) -> _ListMessageTemplatesResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMessageTemplatesResponseSuccess
 
+      interface _ListMessagesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListMessagesResponse]
+        def messages: () -> ::Array[Types::MessageOutput]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#list_messages-instance_method
+      def list_messages: (
+                           assistant_id: ::String,
+                           ?max_results: ::Integer,
+                           ?next_token: ::String,
+                           session_id: ::String
+                         ) -> _ListMessagesResponseSuccess
+                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMessagesResponseSuccess
+
       interface _ListQuickResponsesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListQuickResponsesResponse]
         def next_token: () -> ::String
@@ -1154,7 +1376,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#remove_assistant_ai_agent-instance_method
       def remove_assistant_ai_agent: (
-                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"),
+                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
                                        assistant_id: ::String
                                      ) -> _RemoveAssistantAIAgentResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RemoveAssistantAIAgentResponseSuccess
@@ -1374,6 +1596,36 @@ module Aws
                            ) -> _SearchSessionsResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SearchSessionsResponseSuccess
 
+      interface _SendMessageResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::SendMessageResponse]
+        def next_message_token: () -> ::String
+        def request_message_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#send_message-instance_method
+      def send_message: (
+                          assistant_id: ::String,
+                          ?client_token: ::String,
+                          ?conversation_context: {
+                            self_service_conversation_history: Array[
+                              {
+                                bot_response: ::String?,
+                                input_transcript: ::String?,
+                                turn_number: ::Integer
+                              },
+                            ]
+                          },
+                          message: {
+                            value: {
+                              text: {
+                                value: ::String?
+                              }?
+                            }
+                          },
+                          session_id: ::String,
+                          type: ("TEXT")
+                        ) -> _SendMessageResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SendMessageResponseSuccess
+
       interface _StartContentUploadResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartContentUploadResponse]
         def headers_to_include: () -> ::Hash[::String, ::String]
@@ -1442,6 +1694,7 @@ module Aws
                              ?client_token: ::String,
                              ?configuration: {
                                answer_recommendation_ai_agent_configuration: {
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  answer_generation_ai_prompt_id: ::String?,
                                  association_configurations: Array[
                                    {
@@ -1485,6 +1738,7 @@ module Aws
                                  query_reformulation_ai_prompt_id: ::String?
                                }?,
                                manual_search_ai_agent_configuration: {
+                                 answer_generation_ai_guardrail_id: ::String?,
                                  answer_generation_ai_prompt_id: ::String?,
                                  association_configurations: Array[
                                    {
@@ -1524,12 +1778,126 @@ module Aws
                                      association_type: ("KNOWLEDGE_BASE")?
                                    },
                                  ]?
+                               }?,
+                               self_service_ai_agent_configuration: {
+                                 association_configurations: Array[
+                                   {
+                                     association_configuration_data: {
+                                       knowledge_base_association_configuration_data: {
+                                         content_tag_filter: {
+                                           and_conditions: Array[
+                                             {
+                                               key: ::String,
+                                               value: ::String?
+                                             },
+                                           ]?,
+                                           or_conditions: Array[
+                                             {
+                                               and_conditions: Array[
+                                                 {
+                                                   key: ::String,
+                                                   value: ::String?
+                                                 },
+                                               ]?,
+                                               tag_condition: {
+                                                 key: ::String,
+                                                 value: ::String?
+                                               }?
+                                             },
+                                           ]?,
+                                           tag_condition: {
+                                             key: ::String,
+                                             value: ::String?
+                                           }?
+                                         }?,
+                                         max_results: ::Integer?,
+                                         override_knowledge_base_search_type: ("HYBRID" | "SEMANTIC")?
+                                       }?
+                                     }?,
+                                     association_id: ::String?,
+                                     association_type: ("KNOWLEDGE_BASE")?
+                                   },
+                                 ]?,
+                                 self_service_ai_guardrail_id: ::String?,
+                                 self_service_answer_generation_ai_prompt_id: ::String?,
+                                 self_service_pre_processing_ai_prompt_id: ::String?
                                }?
                              },
                              ?description: ::String,
                              visibility_status: ("SAVED" | "PUBLISHED")
                            ) -> _UpdateAIAgentResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAIAgentResponseSuccess
+
+      interface _UpdateAIGuardrailResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateAIGuardrailResponse]
+        def ai_guardrail: () -> Types::AIGuardrailData
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_ai_guardrail-instance_method
+      def update_ai_guardrail: (
+                                 ai_guardrail_id: ::String,
+                                 assistant_id: ::String,
+                                 blocked_input_messaging: ::String,
+                                 blocked_outputs_messaging: ::String,
+                                 ?client_token: ::String,
+                                 ?content_policy_config: {
+                                   filters_config: Array[
+                                     {
+                                       input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                       output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                       type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK")
+                                     },
+                                   ]
+                                 },
+                                 ?contextual_grounding_policy_config: {
+                                   filters_config: Array[
+                                     {
+                                       threshold: ::Float,
+                                       type: ("GROUNDING" | "RELEVANCE")
+                                     },
+                                   ]
+                                 },
+                                 ?description: ::String,
+                                 ?sensitive_information_policy_config: {
+                                   pii_entities_config: Array[
+                                     {
+                                       action: ("BLOCK" | "ANONYMIZE"),
+                                       type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
+                                     },
+                                   ]?,
+                                   regexes_config: Array[
+                                     {
+                                       action: ("BLOCK" | "ANONYMIZE"),
+                                       description: ::String?,
+                                       name: ::String,
+                                       pattern: ::String
+                                     },
+                                   ]?
+                                 },
+                                 ?topic_policy_config: {
+                                   topics_config: Array[
+                                     {
+                                       definition: ::String,
+                                       examples: Array[::String]?,
+                                       name: ::String,
+                                       type: ("DENY")
+                                     },
+                                   ]
+                                 },
+                                 visibility_status: ("SAVED" | "PUBLISHED"),
+                                 ?word_policy_config: {
+                                   managed_word_lists_config: Array[
+                                     {
+                                       type: ("PROFANITY")
+                                     },
+                                   ]?,
+                                   words_config: Array[
+                                     {
+                                       text: ::String
+                                     },
+                                   ]?
+                                 }
+                               ) -> _UpdateAIGuardrailResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAIGuardrailResponseSuccess
 
       interface _UpdateAIPromptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateAIPromptResponse]
@@ -1556,7 +1924,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_assistant_ai_agent-instance_method
       def update_assistant_ai_agent: (
-                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"),
+                                       ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"),
                                        assistant_id: ::String,
                                        configuration: {
                                          ai_agent_id: ::String
@@ -1757,7 +2125,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QConnect/Client.html#update_session-instance_method
       def update_session: (
-                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"), {
+                            ?ai_agent_configuration: Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), {
                                 ai_agent_id: ::String
                               }],
                             assistant_id: ::String,

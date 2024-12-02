@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.125.0 (2024-12-02)
+------------------
+
+* Feature - Add new Multi Domain Correlation findings.
+
 1.124.0 (2024-11-18)
 ------------------
 

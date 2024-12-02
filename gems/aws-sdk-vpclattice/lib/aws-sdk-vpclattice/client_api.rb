@@ -23,6 +23,7 @@ module Aws::VPCLattice
     AccessLogSubscriptionSummary = Shapes::StructureShape.new(name: 'AccessLogSubscriptionSummary')
     AccountId = Shapes::StringShape.new(name: 'AccountId')
     Arn = Shapes::StringShape.new(name: 'Arn')
+    ArnResource = Shapes::StructureShape.new(name: 'ArnResource')
     AuthPolicyState = Shapes::StringShape.new(name: 'AuthPolicyState')
     AuthPolicyString = Shapes::StringShape.new(name: 'AuthPolicyString')
     AuthType = Shapes::StringShape.new(name: 'AuthType')
@@ -36,9 +37,16 @@ module Aws::VPCLattice
     CreateAccessLogSubscriptionResponse = Shapes::StructureShape.new(name: 'CreateAccessLogSubscriptionResponse')
     CreateListenerRequest = Shapes::StructureShape.new(name: 'CreateListenerRequest')
     CreateListenerResponse = Shapes::StructureShape.new(name: 'CreateListenerResponse')
+    CreateResourceConfigurationRequest = Shapes::StructureShape.new(name: 'CreateResourceConfigurationRequest')
+    CreateResourceConfigurationResponse = Shapes::StructureShape.new(name: 'CreateResourceConfigurationResponse')
+    CreateResourceGatewayRequest = Shapes::StructureShape.new(name: 'CreateResourceGatewayRequest')
+    CreateResourceGatewayRequestSecurityGroupIdsList = Shapes::ListShape.new(name: 'CreateResourceGatewayRequestSecurityGroupIdsList')
+    CreateResourceGatewayResponse = Shapes::StructureShape.new(name: 'CreateResourceGatewayResponse')
     CreateRuleRequest = Shapes::StructureShape.new(name: 'CreateRuleRequest')
     CreateRuleResponse = Shapes::StructureShape.new(name: 'CreateRuleResponse')
     CreateServiceNetworkRequest = Shapes::StructureShape.new(name: 'CreateServiceNetworkRequest')
+    CreateServiceNetworkResourceAssociationRequest = Shapes::StructureShape.new(name: 'CreateServiceNetworkResourceAssociationRequest')
+    CreateServiceNetworkResourceAssociationResponse = Shapes::StructureShape.new(name: 'CreateServiceNetworkResourceAssociationResponse')
     CreateServiceNetworkResponse = Shapes::StructureShape.new(name: 'CreateServiceNetworkResponse')
     CreateServiceNetworkServiceAssociationRequest = Shapes::StructureShape.new(name: 'CreateServiceNetworkServiceAssociationRequest')
     CreateServiceNetworkServiceAssociationResponse = Shapes::StructureShape.new(name: 'CreateServiceNetworkServiceAssociationResponse')
@@ -55,11 +63,19 @@ module Aws::VPCLattice
     DeleteAuthPolicyResponse = Shapes::StructureShape.new(name: 'DeleteAuthPolicyResponse')
     DeleteListenerRequest = Shapes::StructureShape.new(name: 'DeleteListenerRequest')
     DeleteListenerResponse = Shapes::StructureShape.new(name: 'DeleteListenerResponse')
+    DeleteResourceConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteResourceConfigurationRequest')
+    DeleteResourceConfigurationResponse = Shapes::StructureShape.new(name: 'DeleteResourceConfigurationResponse')
+    DeleteResourceEndpointAssociationRequest = Shapes::StructureShape.new(name: 'DeleteResourceEndpointAssociationRequest')
+    DeleteResourceEndpointAssociationResponse = Shapes::StructureShape.new(name: 'DeleteResourceEndpointAssociationResponse')
+    DeleteResourceGatewayRequest = Shapes::StructureShape.new(name: 'DeleteResourceGatewayRequest')
+    DeleteResourceGatewayResponse = Shapes::StructureShape.new(name: 'DeleteResourceGatewayResponse')
     DeleteResourcePolicyRequest = Shapes::StructureShape.new(name: 'DeleteResourcePolicyRequest')
     DeleteResourcePolicyResponse = Shapes::StructureShape.new(name: 'DeleteResourcePolicyResponse')
     DeleteRuleRequest = Shapes::StructureShape.new(name: 'DeleteRuleRequest')
     DeleteRuleResponse = Shapes::StructureShape.new(name: 'DeleteRuleResponse')
     DeleteServiceNetworkRequest = Shapes::StructureShape.new(name: 'DeleteServiceNetworkRequest')
+    DeleteServiceNetworkResourceAssociationRequest = Shapes::StructureShape.new(name: 'DeleteServiceNetworkResourceAssociationRequest')
+    DeleteServiceNetworkResourceAssociationResponse = Shapes::StructureShape.new(name: 'DeleteServiceNetworkResourceAssociationResponse')
     DeleteServiceNetworkResponse = Shapes::StructureShape.new(name: 'DeleteServiceNetworkResponse')
     DeleteServiceNetworkServiceAssociationRequest = Shapes::StructureShape.new(name: 'DeleteServiceNetworkServiceAssociationRequest')
     DeleteServiceNetworkServiceAssociationResponse = Shapes::StructureShape.new(name: 'DeleteServiceNetworkServiceAssociationResponse')
@@ -73,6 +89,8 @@ module Aws::VPCLattice
     DeregisterTargetsRequestTargetsList = Shapes::ListShape.new(name: 'DeregisterTargetsRequestTargetsList')
     DeregisterTargetsResponse = Shapes::StructureShape.new(name: 'DeregisterTargetsResponse')
     DnsEntry = Shapes::StructureShape.new(name: 'DnsEntry')
+    DnsResource = Shapes::StructureShape.new(name: 'DnsResource')
+    DomainName = Shapes::StringShape.new(name: 'DomainName')
     FailureCode = Shapes::StringShape.new(name: 'FailureCode')
     FailureMessage = Shapes::StringShape.new(name: 'FailureMessage')
     FixedResponseAction = Shapes::StructureShape.new(name: 'FixedResponseAction')
@@ -83,11 +101,17 @@ module Aws::VPCLattice
     GetAuthPolicyResponse = Shapes::StructureShape.new(name: 'GetAuthPolicyResponse')
     GetListenerRequest = Shapes::StructureShape.new(name: 'GetListenerRequest')
     GetListenerResponse = Shapes::StructureShape.new(name: 'GetListenerResponse')
+    GetResourceConfigurationRequest = Shapes::StructureShape.new(name: 'GetResourceConfigurationRequest')
+    GetResourceConfigurationResponse = Shapes::StructureShape.new(name: 'GetResourceConfigurationResponse')
+    GetResourceGatewayRequest = Shapes::StructureShape.new(name: 'GetResourceGatewayRequest')
+    GetResourceGatewayResponse = Shapes::StructureShape.new(name: 'GetResourceGatewayResponse')
     GetResourcePolicyRequest = Shapes::StructureShape.new(name: 'GetResourcePolicyRequest')
     GetResourcePolicyResponse = Shapes::StructureShape.new(name: 'GetResourcePolicyResponse')
     GetRuleRequest = Shapes::StructureShape.new(name: 'GetRuleRequest')
     GetRuleResponse = Shapes::StructureShape.new(name: 'GetRuleResponse')
     GetServiceNetworkRequest = Shapes::StructureShape.new(name: 'GetServiceNetworkRequest')
+    GetServiceNetworkResourceAssociationRequest = Shapes::StructureShape.new(name: 'GetServiceNetworkResourceAssociationRequest')
+    GetServiceNetworkResourceAssociationResponse = Shapes::StructureShape.new(name: 'GetServiceNetworkResourceAssociationResponse')
     GetServiceNetworkResponse = Shapes::StructureShape.new(name: 'GetServiceNetworkResponse')
     GetServiceNetworkServiceAssociationRequest = Shapes::StructureShape.new(name: 'GetServiceNetworkServiceAssociationRequest')
     GetServiceNetworkServiceAssociationResponse = Shapes::StructureShape.new(name: 'GetServiceNetworkServiceAssociationResponse')
@@ -117,18 +141,30 @@ module Aws::VPCLattice
     HttpStatusCode = Shapes::IntegerShape.new(name: 'HttpStatusCode')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
+    IpAddress = Shapes::StringShape.new(name: 'IpAddress')
     IpAddressType = Shapes::StringShape.new(name: 'IpAddressType')
+    IpResource = Shapes::StructureShape.new(name: 'IpResource')
     LambdaEventStructureVersion = Shapes::StringShape.new(name: 'LambdaEventStructureVersion')
     ListAccessLogSubscriptionsRequest = Shapes::StructureShape.new(name: 'ListAccessLogSubscriptionsRequest')
     ListAccessLogSubscriptionsResponse = Shapes::StructureShape.new(name: 'ListAccessLogSubscriptionsResponse')
     ListListenersRequest = Shapes::StructureShape.new(name: 'ListListenersRequest')
     ListListenersResponse = Shapes::StructureShape.new(name: 'ListListenersResponse')
+    ListResourceConfigurationsRequest = Shapes::StructureShape.new(name: 'ListResourceConfigurationsRequest')
+    ListResourceConfigurationsResponse = Shapes::StructureShape.new(name: 'ListResourceConfigurationsResponse')
+    ListResourceEndpointAssociationsRequest = Shapes::StructureShape.new(name: 'ListResourceEndpointAssociationsRequest')
+    ListResourceEndpointAssociationsResponse = Shapes::StructureShape.new(name: 'ListResourceEndpointAssociationsResponse')
+    ListResourceGatewaysRequest = Shapes::StructureShape.new(name: 'ListResourceGatewaysRequest')
+    ListResourceGatewaysResponse = Shapes::StructureShape.new(name: 'ListResourceGatewaysResponse')
     ListRulesRequest = Shapes::StructureShape.new(name: 'ListRulesRequest')
     ListRulesResponse = Shapes::StructureShape.new(name: 'ListRulesResponse')
+    ListServiceNetworkResourceAssociationsRequest = Shapes::StructureShape.new(name: 'ListServiceNetworkResourceAssociationsRequest')
+    ListServiceNetworkResourceAssociationsResponse = Shapes::StructureShape.new(name: 'ListServiceNetworkResourceAssociationsResponse')
     ListServiceNetworkServiceAssociationsRequest = Shapes::StructureShape.new(name: 'ListServiceNetworkServiceAssociationsRequest')
     ListServiceNetworkServiceAssociationsResponse = Shapes::StructureShape.new(name: 'ListServiceNetworkServiceAssociationsResponse')
     ListServiceNetworkVpcAssociationsRequest = Shapes::StructureShape.new(name: 'ListServiceNetworkVpcAssociationsRequest')
     ListServiceNetworkVpcAssociationsResponse = Shapes::StructureShape.new(name: 'ListServiceNetworkVpcAssociationsResponse')
+    ListServiceNetworkVpcEndpointAssociationsRequest = Shapes::StructureShape.new(name: 'ListServiceNetworkVpcEndpointAssociationsRequest')
+    ListServiceNetworkVpcEndpointAssociationsResponse = Shapes::StructureShape.new(name: 'ListServiceNetworkVpcEndpointAssociationsResponse')
     ListServiceNetworksRequest = Shapes::StructureShape.new(name: 'ListServiceNetworksRequest')
     ListServiceNetworksResponse = Shapes::StructureShape.new(name: 'ListServiceNetworksResponse')
     ListServicesRequest = Shapes::StructureShape.new(name: 'ListServicesRequest')
@@ -157,6 +193,9 @@ module Aws::VPCLattice
     PathMatchType = Shapes::UnionShape.new(name: 'PathMatchType')
     PolicyString = Shapes::StringShape.new(name: 'PolicyString')
     Port = Shapes::IntegerShape.new(name: 'Port')
+    PortRange = Shapes::StringShape.new(name: 'PortRange')
+    PortRangeList = Shapes::ListShape.new(name: 'PortRangeList')
+    ProtocolType = Shapes::StringShape.new(name: 'ProtocolType')
     PutAuthPolicyRequest = Shapes::StructureShape.new(name: 'PutAuthPolicyRequest')
     PutAuthPolicyResponse = Shapes::StructureShape.new(name: 'PutAuthPolicyResponse')
     PutResourcePolicyRequest = Shapes::StructureShape.new(name: 'PutResourcePolicyRequest')
@@ -165,6 +204,29 @@ module Aws::VPCLattice
     RegisterTargetsRequestTargetsList = Shapes::ListShape.new(name: 'RegisterTargetsRequestTargetsList')
     RegisterTargetsResponse = Shapes::StructureShape.new(name: 'RegisterTargetsResponse')
     ResourceArn = Shapes::StringShape.new(name: 'ResourceArn')
+    ResourceConfigurationArn = Shapes::StringShape.new(name: 'ResourceConfigurationArn')
+    ResourceConfigurationDefinition = Shapes::UnionShape.new(name: 'ResourceConfigurationDefinition')
+    ResourceConfigurationId = Shapes::StringShape.new(name: 'ResourceConfigurationId')
+    ResourceConfigurationIdentifier = Shapes::StringShape.new(name: 'ResourceConfigurationIdentifier')
+    ResourceConfigurationIpAddressType = Shapes::StringShape.new(name: 'ResourceConfigurationIpAddressType')
+    ResourceConfigurationName = Shapes::StringShape.new(name: 'ResourceConfigurationName')
+    ResourceConfigurationStatus = Shapes::StringShape.new(name: 'ResourceConfigurationStatus')
+    ResourceConfigurationSummary = Shapes::StructureShape.new(name: 'ResourceConfigurationSummary')
+    ResourceConfigurationSummaryList = Shapes::ListShape.new(name: 'ResourceConfigurationSummaryList')
+    ResourceConfigurationType = Shapes::StringShape.new(name: 'ResourceConfigurationType')
+    ResourceEndpointAssociationArn = Shapes::StringShape.new(name: 'ResourceEndpointAssociationArn')
+    ResourceEndpointAssociationId = Shapes::StringShape.new(name: 'ResourceEndpointAssociationId')
+    ResourceEndpointAssociationIdentifier = Shapes::StringShape.new(name: 'ResourceEndpointAssociationIdentifier')
+    ResourceEndpointAssociationList = Shapes::ListShape.new(name: 'ResourceEndpointAssociationList')
+    ResourceEndpointAssociationSummary = Shapes::StructureShape.new(name: 'ResourceEndpointAssociationSummary')
+    ResourceGatewayArn = Shapes::StringShape.new(name: 'ResourceGatewayArn')
+    ResourceGatewayId = Shapes::StringShape.new(name: 'ResourceGatewayId')
+    ResourceGatewayIdentifier = Shapes::StringShape.new(name: 'ResourceGatewayIdentifier')
+    ResourceGatewayIpAddressType = Shapes::StringShape.new(name: 'ResourceGatewayIpAddressType')
+    ResourceGatewayList = Shapes::ListShape.new(name: 'ResourceGatewayList')
+    ResourceGatewayName = Shapes::StringShape.new(name: 'ResourceGatewayName')
+    ResourceGatewayStatus = Shapes::StringShape.new(name: 'ResourceGatewayStatus')
+    ResourceGatewaySummary = Shapes::StructureShape.new(name: 'ResourceGatewaySummary')
     ResourceId = Shapes::StringShape.new(name: 'ResourceId')
     ResourceIdentifier = Shapes::StringShape.new(name: 'ResourceIdentifier')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
@@ -193,10 +255,21 @@ module Aws::VPCLattice
     ServiceList = Shapes::ListShape.new(name: 'ServiceList')
     ServiceName = Shapes::StringShape.new(name: 'ServiceName')
     ServiceNetworkArn = Shapes::StringShape.new(name: 'ServiceNetworkArn')
+    ServiceNetworkArnWithoutRegex = Shapes::StringShape.new(name: 'ServiceNetworkArnWithoutRegex')
+    ServiceNetworkEndpointAssociation = Shapes::StructureShape.new(name: 'ServiceNetworkEndpointAssociation')
     ServiceNetworkId = Shapes::StringShape.new(name: 'ServiceNetworkId')
     ServiceNetworkIdentifier = Shapes::StringShape.new(name: 'ServiceNetworkIdentifier')
+    ServiceNetworkIdentifierWithoutRegex = Shapes::StringShape.new(name: 'ServiceNetworkIdentifierWithoutRegex')
     ServiceNetworkList = Shapes::ListShape.new(name: 'ServiceNetworkList')
+    ServiceNetworkLogType = Shapes::StringShape.new(name: 'ServiceNetworkLogType')
     ServiceNetworkName = Shapes::StringShape.new(name: 'ServiceNetworkName')
+    ServiceNetworkNameWithoutRegex = Shapes::StringShape.new(name: 'ServiceNetworkNameWithoutRegex')
+    ServiceNetworkResourceAssociationArn = Shapes::StringShape.new(name: 'ServiceNetworkResourceAssociationArn')
+    ServiceNetworkResourceAssociationId = Shapes::StringShape.new(name: 'ServiceNetworkResourceAssociationId')
+    ServiceNetworkResourceAssociationIdentifier = Shapes::StringShape.new(name: 'ServiceNetworkResourceAssociationIdentifier')
+    ServiceNetworkResourceAssociationList = Shapes::ListShape.new(name: 'ServiceNetworkResourceAssociationList')
+    ServiceNetworkResourceAssociationStatus = Shapes::StringShape.new(name: 'ServiceNetworkResourceAssociationStatus')
+    ServiceNetworkResourceAssociationSummary = Shapes::StructureShape.new(name: 'ServiceNetworkResourceAssociationSummary')
     ServiceNetworkServiceAssociationArn = Shapes::StringShape.new(name: 'ServiceNetworkServiceAssociationArn')
     ServiceNetworkServiceAssociationIdentifier = Shapes::StringShape.new(name: 'ServiceNetworkServiceAssociationIdentifier')
     ServiceNetworkServiceAssociationList = Shapes::ListShape.new(name: 'ServiceNetworkServiceAssociationList')
@@ -209,10 +282,14 @@ module Aws::VPCLattice
     ServiceNetworkVpcAssociationList = Shapes::ListShape.new(name: 'ServiceNetworkVpcAssociationList')
     ServiceNetworkVpcAssociationStatus = Shapes::StringShape.new(name: 'ServiceNetworkVpcAssociationStatus')
     ServiceNetworkVpcAssociationSummary = Shapes::StructureShape.new(name: 'ServiceNetworkVpcAssociationSummary')
+    ServiceNetworkVpcEndpointAssociationList = Shapes::ListShape.new(name: 'ServiceNetworkVpcEndpointAssociationList')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
     ServiceStatus = Shapes::StringShape.new(name: 'ServiceStatus')
     ServiceSummary = Shapes::StructureShape.new(name: 'ServiceSummary')
+    SharingConfig = Shapes::StructureShape.new(name: 'SharingConfig')
     String = Shapes::StringShape.new(name: 'String')
+    SubnetId = Shapes::StringShape.new(name: 'SubnetId')
+    SubnetList = Shapes::ListShape.new(name: 'SubnetList')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagKeys = Shapes::ListShape.new(name: 'TagKeys')
     TagMap = Shapes::MapShape.new(name: 'TagMap')
@@ -248,6 +325,11 @@ module Aws::VPCLattice
     UpdateAccessLogSubscriptionResponse = Shapes::StructureShape.new(name: 'UpdateAccessLogSubscriptionResponse')
     UpdateListenerRequest = Shapes::StructureShape.new(name: 'UpdateListenerRequest')
     UpdateListenerResponse = Shapes::StructureShape.new(name: 'UpdateListenerResponse')
+    UpdateResourceConfigurationRequest = Shapes::StructureShape.new(name: 'UpdateResourceConfigurationRequest')
+    UpdateResourceConfigurationResponse = Shapes::StructureShape.new(name: 'UpdateResourceConfigurationResponse')
+    UpdateResourceGatewayRequest = Shapes::StructureShape.new(name: 'UpdateResourceGatewayRequest')
+    UpdateResourceGatewayRequestSecurityGroupIdsList = Shapes::ListShape.new(name: 'UpdateResourceGatewayRequestSecurityGroupIdsList')
+    UpdateResourceGatewayResponse = Shapes::StructureShape.new(name: 'UpdateResourceGatewayResponse')
     UpdateRuleRequest = Shapes::StructureShape.new(name: 'UpdateRuleRequest')
     UpdateRuleResponse = Shapes::StructureShape.new(name: 'UpdateRuleResponse')
     UpdateServiceNetworkRequest = Shapes::StructureShape.new(name: 'UpdateServiceNetworkRequest')
@@ -263,9 +345,12 @@ module Aws::VPCLattice
     ValidationExceptionField = Shapes::StructureShape.new(name: 'ValidationExceptionField')
     ValidationExceptionFieldList = Shapes::ListShape.new(name: 'ValidationExceptionFieldList')
     ValidationExceptionReason = Shapes::StringShape.new(name: 'ValidationExceptionReason')
+    VpcEndpointId = Shapes::StringShape.new(name: 'VpcEndpointId')
+    VpcEndpointOwner = Shapes::StringShape.new(name: 'VpcEndpointOwner')
     VpcId = Shapes::StringShape.new(name: 'VpcId')
     WeightedTargetGroup = Shapes::StructureShape.new(name: 'WeightedTargetGroup')
     WeightedTargetGroupList = Shapes::ListShape.new(name: 'WeightedTargetGroupList')
+    WildcardArn = Shapes::StringShape.new(name: 'WildcardArn')
 
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
@@ -279,7 +364,11 @@ module Aws::VPCLattice
     AccessLogSubscriptionSummary.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "lastUpdatedAt"))
     AccessLogSubscriptionSummary.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location_name: "resourceArn"))
     AccessLogSubscriptionSummary.add_member(:resource_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location_name: "resourceId"))
+    AccessLogSubscriptionSummary.add_member(:service_network_log_type, Shapes::ShapeRef.new(shape: ServiceNetworkLogType, location_name: "serviceNetworkLogType"))
     AccessLogSubscriptionSummary.struct_class = Types::AccessLogSubscriptionSummary
+
+    ArnResource.add_member(:arn, Shapes::ShapeRef.new(shape: WildcardArn, location_name: "arn"))
+    ArnResource.struct_class = Types::ArnResource
 
     BatchUpdateRuleRequest.add_member(:listener_identifier, Shapes::ShapeRef.new(shape: ListenerIdentifier, required: true, location: "uri", location_name: "listenerIdentifier"))
     BatchUpdateRuleRequest.add_member(:rules, Shapes::ShapeRef.new(shape: RuleUpdateList, required: true, location_name: "rules"))
@@ -298,6 +387,7 @@ module Aws::VPCLattice
     CreateAccessLogSubscriptionRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateAccessLogSubscriptionRequest.add_member(:destination_arn, Shapes::ShapeRef.new(shape: AccessLogDestinationArn, required: true, location_name: "destinationArn"))
     CreateAccessLogSubscriptionRequest.add_member(:resource_identifier, Shapes::ShapeRef.new(shape: ResourceIdentifier, required: true, location_name: "resourceIdentifier"))
+    CreateAccessLogSubscriptionRequest.add_member(:service_network_log_type, Shapes::ShapeRef.new(shape: ServiceNetworkLogType, location_name: "serviceNetworkLogType"))
     CreateAccessLogSubscriptionRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     CreateAccessLogSubscriptionRequest.struct_class = Types::CreateAccessLogSubscriptionRequest
 
@@ -306,6 +396,7 @@ module Aws::VPCLattice
     CreateAccessLogSubscriptionResponse.add_member(:id, Shapes::ShapeRef.new(shape: AccessLogSubscriptionId, required: true, location_name: "id"))
     CreateAccessLogSubscriptionResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location_name: "resourceArn"))
     CreateAccessLogSubscriptionResponse.add_member(:resource_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location_name: "resourceId"))
+    CreateAccessLogSubscriptionResponse.add_member(:service_network_log_type, Shapes::ShapeRef.new(shape: ServiceNetworkLogType, location_name: "serviceNetworkLogType"))
     CreateAccessLogSubscriptionResponse.struct_class = Types::CreateAccessLogSubscriptionResponse
 
     CreateListenerRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
@@ -326,6 +417,54 @@ module Aws::VPCLattice
     CreateListenerResponse.add_member(:service_arn, Shapes::ShapeRef.new(shape: ServiceArn, location_name: "serviceArn"))
     CreateListenerResponse.add_member(:service_id, Shapes::ShapeRef.new(shape: ServiceId, location_name: "serviceId"))
     CreateListenerResponse.struct_class = Types::CreateListenerResponse
+
+    CreateResourceConfigurationRequest.add_member(:allow_association_to_shareable_service_network, Shapes::ShapeRef.new(shape: Boolean, location_name: "allowAssociationToShareableServiceNetwork"))
+    CreateResourceConfigurationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateResourceConfigurationRequest.add_member(:name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, required: true, location_name: "name"))
+    CreateResourceConfigurationRequest.add_member(:port_ranges, Shapes::ShapeRef.new(shape: PortRangeList, location_name: "portRanges"))
+    CreateResourceConfigurationRequest.add_member(:protocol, Shapes::ShapeRef.new(shape: ProtocolType, location_name: "protocol"))
+    CreateResourceConfigurationRequest.add_member(:resource_configuration_definition, Shapes::ShapeRef.new(shape: ResourceConfigurationDefinition, location_name: "resourceConfigurationDefinition"))
+    CreateResourceConfigurationRequest.add_member(:resource_configuration_group_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, location_name: "resourceConfigurationGroupIdentifier"))
+    CreateResourceConfigurationRequest.add_member(:resource_gateway_identifier, Shapes::ShapeRef.new(shape: ResourceGatewayIdentifier, location_name: "resourceGatewayIdentifier"))
+    CreateResourceConfigurationRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    CreateResourceConfigurationRequest.add_member(:type, Shapes::ShapeRef.new(shape: ResourceConfigurationType, required: true, location_name: "type"))
+    CreateResourceConfigurationRequest.struct_class = Types::CreateResourceConfigurationRequest
+
+    CreateResourceConfigurationResponse.add_member(:allow_association_to_shareable_service_network, Shapes::ShapeRef.new(shape: Boolean, location_name: "allowAssociationToShareableServiceNetwork"))
+    CreateResourceConfigurationResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "arn"))
+    CreateResourceConfigurationResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    CreateResourceConfigurationResponse.add_member(:failure_reason, Shapes::ShapeRef.new(shape: String, location_name: "failureReason"))
+    CreateResourceConfigurationResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "id"))
+    CreateResourceConfigurationResponse.add_member(:name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, location_name: "name"))
+    CreateResourceConfigurationResponse.add_member(:port_ranges, Shapes::ShapeRef.new(shape: PortRangeList, location_name: "portRanges"))
+    CreateResourceConfigurationResponse.add_member(:protocol, Shapes::ShapeRef.new(shape: ProtocolType, location_name: "protocol"))
+    CreateResourceConfigurationResponse.add_member(:resource_configuration_definition, Shapes::ShapeRef.new(shape: ResourceConfigurationDefinition, location_name: "resourceConfigurationDefinition"))
+    CreateResourceConfigurationResponse.add_member(:resource_configuration_group_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationGroupId"))
+    CreateResourceConfigurationResponse.add_member(:resource_gateway_id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "resourceGatewayId"))
+    CreateResourceConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: ResourceConfigurationStatus, location_name: "status"))
+    CreateResourceConfigurationResponse.add_member(:type, Shapes::ShapeRef.new(shape: ResourceConfigurationType, location_name: "type"))
+    CreateResourceConfigurationResponse.struct_class = Types::CreateResourceConfigurationResponse
+
+    CreateResourceGatewayRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateResourceGatewayRequest.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: ResourceGatewayIpAddressType, location_name: "ipAddressType"))
+    CreateResourceGatewayRequest.add_member(:name, Shapes::ShapeRef.new(shape: ResourceGatewayName, required: true, location_name: "name"))
+    CreateResourceGatewayRequest.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: CreateResourceGatewayRequestSecurityGroupIdsList, location_name: "securityGroupIds"))
+    CreateResourceGatewayRequest.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetList, required: true, location_name: "subnetIds"))
+    CreateResourceGatewayRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    CreateResourceGatewayRequest.add_member(:vpc_identifier, Shapes::ShapeRef.new(shape: VpcId, required: true, location_name: "vpcIdentifier"))
+    CreateResourceGatewayRequest.struct_class = Types::CreateResourceGatewayRequest
+
+    CreateResourceGatewayRequestSecurityGroupIdsList.member = Shapes::ShapeRef.new(shape: SecurityGroupId)
+
+    CreateResourceGatewayResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceGatewayArn, location_name: "arn"))
+    CreateResourceGatewayResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "id"))
+    CreateResourceGatewayResponse.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: ResourceGatewayIpAddressType, location_name: "ipAddressType"))
+    CreateResourceGatewayResponse.add_member(:name, Shapes::ShapeRef.new(shape: ResourceGatewayName, location_name: "name"))
+    CreateResourceGatewayResponse.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupList, location_name: "securityGroupIds"))
+    CreateResourceGatewayResponse.add_member(:status, Shapes::ShapeRef.new(shape: ResourceGatewayStatus, location_name: "status"))
+    CreateResourceGatewayResponse.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetList, location_name: "subnetIds"))
+    CreateResourceGatewayResponse.add_member(:vpc_identifier, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcIdentifier"))
+    CreateResourceGatewayResponse.struct_class = Types::CreateResourceGatewayResponse
 
     CreateRuleRequest.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, required: true, location_name: "action"))
     CreateRuleRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
@@ -348,13 +487,27 @@ module Aws::VPCLattice
     CreateServiceNetworkRequest.add_member(:auth_type, Shapes::ShapeRef.new(shape: AuthType, location_name: "authType"))
     CreateServiceNetworkRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateServiceNetworkRequest.add_member(:name, Shapes::ShapeRef.new(shape: ServiceNetworkName, required: true, location_name: "name"))
+    CreateServiceNetworkRequest.add_member(:sharing_config, Shapes::ShapeRef.new(shape: SharingConfig, location_name: "sharingConfig"))
     CreateServiceNetworkRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     CreateServiceNetworkRequest.struct_class = Types::CreateServiceNetworkRequest
+
+    CreateServiceNetworkResourceAssociationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateServiceNetworkResourceAssociationRequest.add_member(:resource_configuration_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, required: true, location_name: "resourceConfigurationIdentifier"))
+    CreateServiceNetworkResourceAssociationRequest.add_member(:service_network_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifierWithoutRegex, required: true, location_name: "serviceNetworkIdentifier"))
+    CreateServiceNetworkResourceAssociationRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
+    CreateServiceNetworkResourceAssociationRequest.struct_class = Types::CreateServiceNetworkResourceAssociationRequest
+
+    CreateServiceNetworkResourceAssociationResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationArn, location_name: "arn"))
+    CreateServiceNetworkResourceAssociationResponse.add_member(:created_by, Shapes::ShapeRef.new(shape: AccountId, location_name: "createdBy"))
+    CreateServiceNetworkResourceAssociationResponse.add_member(:id, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationId, location_name: "id"))
+    CreateServiceNetworkResourceAssociationResponse.add_member(:status, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationStatus, location_name: "status"))
+    CreateServiceNetworkResourceAssociationResponse.struct_class = Types::CreateServiceNetworkResourceAssociationResponse
 
     CreateServiceNetworkResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ServiceNetworkArn, location_name: "arn"))
     CreateServiceNetworkResponse.add_member(:auth_type, Shapes::ShapeRef.new(shape: AuthType, location_name: "authType"))
     CreateServiceNetworkResponse.add_member(:id, Shapes::ShapeRef.new(shape: ServiceNetworkId, location_name: "id"))
     CreateServiceNetworkResponse.add_member(:name, Shapes::ShapeRef.new(shape: ServiceNetworkName, location_name: "name"))
+    CreateServiceNetworkResponse.add_member(:sharing_config, Shapes::ShapeRef.new(shape: SharingConfig, location_name: "sharingConfig"))
     CreateServiceNetworkResponse.struct_class = Types::CreateServiceNetworkResponse
 
     CreateServiceNetworkServiceAssociationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
@@ -436,6 +589,30 @@ module Aws::VPCLattice
 
     DeleteListenerResponse.struct_class = Types::DeleteListenerResponse
 
+    DeleteResourceConfigurationRequest.add_member(:resource_configuration_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, required: true, location: "uri", location_name: "resourceConfigurationIdentifier"))
+    DeleteResourceConfigurationRequest.struct_class = Types::DeleteResourceConfigurationRequest
+
+    DeleteResourceConfigurationResponse.struct_class = Types::DeleteResourceConfigurationResponse
+
+    DeleteResourceEndpointAssociationRequest.add_member(:resource_endpoint_association_identifier, Shapes::ShapeRef.new(shape: ResourceEndpointAssociationIdentifier, required: true, location: "uri", location_name: "resourceEndpointAssociationIdentifier"))
+    DeleteResourceEndpointAssociationRequest.struct_class = Types::DeleteResourceEndpointAssociationRequest
+
+    DeleteResourceEndpointAssociationResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceEndpointAssociationArn, location_name: "arn"))
+    DeleteResourceEndpointAssociationResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceEndpointAssociationId, location_name: "id"))
+    DeleteResourceEndpointAssociationResponse.add_member(:resource_configuration_arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "resourceConfigurationArn"))
+    DeleteResourceEndpointAssociationResponse.add_member(:resource_configuration_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationId"))
+    DeleteResourceEndpointAssociationResponse.add_member(:vpc_endpoint_id, Shapes::ShapeRef.new(shape: VpcEndpointId, location_name: "vpcEndpointId"))
+    DeleteResourceEndpointAssociationResponse.struct_class = Types::DeleteResourceEndpointAssociationResponse
+
+    DeleteResourceGatewayRequest.add_member(:resource_gateway_identifier, Shapes::ShapeRef.new(shape: ResourceGatewayIdentifier, required: true, location: "uri", location_name: "resourceGatewayIdentifier"))
+    DeleteResourceGatewayRequest.struct_class = Types::DeleteResourceGatewayRequest
+
+    DeleteResourceGatewayResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceGatewayArn, location_name: "arn"))
+    DeleteResourceGatewayResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "id"))
+    DeleteResourceGatewayResponse.add_member(:name, Shapes::ShapeRef.new(shape: ResourceGatewayName, location_name: "name"))
+    DeleteResourceGatewayResponse.add_member(:status, Shapes::ShapeRef.new(shape: ResourceGatewayStatus, location_name: "status"))
+    DeleteResourceGatewayResponse.struct_class = Types::DeleteResourceGatewayResponse
+
     DeleteResourcePolicyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location: "uri", location_name: "resourceArn"))
     DeleteResourcePolicyRequest.struct_class = Types::DeleteResourcePolicyRequest
 
@@ -450,6 +627,14 @@ module Aws::VPCLattice
 
     DeleteServiceNetworkRequest.add_member(:service_network_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifier, required: true, location: "uri", location_name: "serviceNetworkIdentifier"))
     DeleteServiceNetworkRequest.struct_class = Types::DeleteServiceNetworkRequest
+
+    DeleteServiceNetworkResourceAssociationRequest.add_member(:service_network_resource_association_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationIdentifier, required: true, location: "uri", location_name: "serviceNetworkResourceAssociationIdentifier"))
+    DeleteServiceNetworkResourceAssociationRequest.struct_class = Types::DeleteServiceNetworkResourceAssociationRequest
+
+    DeleteServiceNetworkResourceAssociationResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationArn, location_name: "arn"))
+    DeleteServiceNetworkResourceAssociationResponse.add_member(:id, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationId, location_name: "id"))
+    DeleteServiceNetworkResourceAssociationResponse.add_member(:status, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationStatus, location_name: "status"))
+    DeleteServiceNetworkResourceAssociationResponse.struct_class = Types::DeleteServiceNetworkResourceAssociationResponse
 
     DeleteServiceNetworkResponse.struct_class = Types::DeleteServiceNetworkResponse
 
@@ -500,6 +685,10 @@ module Aws::VPCLattice
     DnsEntry.add_member(:hosted_zone_id, Shapes::ShapeRef.new(shape: String, location_name: "hostedZoneId"))
     DnsEntry.struct_class = Types::DnsEntry
 
+    DnsResource.add_member(:domain_name, Shapes::ShapeRef.new(shape: DomainName, location_name: "domainName"))
+    DnsResource.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: ResourceConfigurationIpAddressType, location_name: "ipAddressType"))
+    DnsResource.struct_class = Types::DnsResource
+
     FixedResponseAction.add_member(:status_code, Shapes::ShapeRef.new(shape: HttpStatusCode, required: true, location_name: "statusCode"))
     FixedResponseAction.struct_class = Types::FixedResponseAction
 
@@ -516,6 +705,7 @@ module Aws::VPCLattice
     GetAccessLogSubscriptionResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "lastUpdatedAt"))
     GetAccessLogSubscriptionResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location_name: "resourceArn"))
     GetAccessLogSubscriptionResponse.add_member(:resource_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location_name: "resourceId"))
+    GetAccessLogSubscriptionResponse.add_member(:service_network_log_type, Shapes::ShapeRef.new(shape: ServiceNetworkLogType, location_name: "serviceNetworkLogType"))
     GetAccessLogSubscriptionResponse.struct_class = Types::GetAccessLogSubscriptionResponse
 
     GetAuthPolicyRequest.add_member(:resource_identifier, Shapes::ShapeRef.new(shape: ResourceIdentifier, required: true, location: "uri", location_name: "resourceIdentifier"))
@@ -543,6 +733,42 @@ module Aws::VPCLattice
     GetListenerResponse.add_member(:service_id, Shapes::ShapeRef.new(shape: ServiceId, location_name: "serviceId"))
     GetListenerResponse.struct_class = Types::GetListenerResponse
 
+    GetResourceConfigurationRequest.add_member(:resource_configuration_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, required: true, location: "uri", location_name: "resourceConfigurationIdentifier"))
+    GetResourceConfigurationRequest.struct_class = Types::GetResourceConfigurationRequest
+
+    GetResourceConfigurationResponse.add_member(:allow_association_to_shareable_service_network, Shapes::ShapeRef.new(shape: Boolean, location_name: "allowAssociationToShareableServiceNetwork"))
+    GetResourceConfigurationResponse.add_member(:amazon_managed, Shapes::ShapeRef.new(shape: Boolean, location_name: "amazonManaged"))
+    GetResourceConfigurationResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "arn"))
+    GetResourceConfigurationResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    GetResourceConfigurationResponse.add_member(:custom_domain_name, Shapes::ShapeRef.new(shape: DomainName, location_name: "customDomainName"))
+    GetResourceConfigurationResponse.add_member(:failure_reason, Shapes::ShapeRef.new(shape: String, location_name: "failureReason"))
+    GetResourceConfigurationResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "id"))
+    GetResourceConfigurationResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedAt"))
+    GetResourceConfigurationResponse.add_member(:name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, location_name: "name"))
+    GetResourceConfigurationResponse.add_member(:port_ranges, Shapes::ShapeRef.new(shape: PortRangeList, location_name: "portRanges"))
+    GetResourceConfigurationResponse.add_member(:protocol, Shapes::ShapeRef.new(shape: ProtocolType, location_name: "protocol"))
+    GetResourceConfigurationResponse.add_member(:resource_configuration_definition, Shapes::ShapeRef.new(shape: ResourceConfigurationDefinition, location_name: "resourceConfigurationDefinition"))
+    GetResourceConfigurationResponse.add_member(:resource_configuration_group_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationGroupId"))
+    GetResourceConfigurationResponse.add_member(:resource_gateway_id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "resourceGatewayId"))
+    GetResourceConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: ResourceConfigurationStatus, location_name: "status"))
+    GetResourceConfigurationResponse.add_member(:type, Shapes::ShapeRef.new(shape: ResourceConfigurationType, location_name: "type"))
+    GetResourceConfigurationResponse.struct_class = Types::GetResourceConfigurationResponse
+
+    GetResourceGatewayRequest.add_member(:resource_gateway_identifier, Shapes::ShapeRef.new(shape: ResourceGatewayIdentifier, required: true, location: "uri", location_name: "resourceGatewayIdentifier"))
+    GetResourceGatewayRequest.struct_class = Types::GetResourceGatewayRequest
+
+    GetResourceGatewayResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceGatewayArn, location_name: "arn"))
+    GetResourceGatewayResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    GetResourceGatewayResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "id"))
+    GetResourceGatewayResponse.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: ResourceGatewayIpAddressType, location_name: "ipAddressType"))
+    GetResourceGatewayResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedAt"))
+    GetResourceGatewayResponse.add_member(:name, Shapes::ShapeRef.new(shape: ResourceGatewayName, location_name: "name"))
+    GetResourceGatewayResponse.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupList, location_name: "securityGroupIds"))
+    GetResourceGatewayResponse.add_member(:status, Shapes::ShapeRef.new(shape: ResourceGatewayStatus, location_name: "status"))
+    GetResourceGatewayResponse.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetList, location_name: "subnetIds"))
+    GetResourceGatewayResponse.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcId"))
+    GetResourceGatewayResponse.struct_class = Types::GetResourceGatewayResponse
+
     GetResourcePolicyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location: "uri", location_name: "resourceArn"))
     GetResourcePolicyRequest.struct_class = Types::GetResourcePolicyRequest
 
@@ -568,6 +794,28 @@ module Aws::VPCLattice
     GetServiceNetworkRequest.add_member(:service_network_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifier, required: true, location: "uri", location_name: "serviceNetworkIdentifier"))
     GetServiceNetworkRequest.struct_class = Types::GetServiceNetworkRequest
 
+    GetServiceNetworkResourceAssociationRequest.add_member(:service_network_resource_association_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationIdentifier, required: true, location: "uri", location_name: "serviceNetworkResourceAssociationIdentifier"))
+    GetServiceNetworkResourceAssociationRequest.struct_class = Types::GetServiceNetworkResourceAssociationRequest
+
+    GetServiceNetworkResourceAssociationResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationArn, location_name: "arn"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:created_by, Shapes::ShapeRef.new(shape: AccountId, location_name: "createdBy"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:dns_entry, Shapes::ShapeRef.new(shape: DnsEntry, location_name: "dnsEntry"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:failure_code, Shapes::ShapeRef.new(shape: String, location_name: "failureCode"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:failure_reason, Shapes::ShapeRef.new(shape: String, location_name: "failureReason"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:id, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationId, location_name: "id"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:is_managed_association, Shapes::ShapeRef.new(shape: Boolean, location_name: "isManagedAssociation"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedAt"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:private_dns_entry, Shapes::ShapeRef.new(shape: DnsEntry, location_name: "privateDnsEntry"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:resource_configuration_arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "resourceConfigurationArn"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:resource_configuration_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationId"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:resource_configuration_name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, location_name: "resourceConfigurationName"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:service_network_arn, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifierWithoutRegex, location_name: "serviceNetworkArn"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:service_network_id, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifierWithoutRegex, location_name: "serviceNetworkId"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:service_network_name, Shapes::ShapeRef.new(shape: ServiceNetworkNameWithoutRegex, location_name: "serviceNetworkName"))
+    GetServiceNetworkResourceAssociationResponse.add_member(:status, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationStatus, location_name: "status"))
+    GetServiceNetworkResourceAssociationResponse.struct_class = Types::GetServiceNetworkResourceAssociationResponse
+
     GetServiceNetworkResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ServiceNetworkArn, location_name: "arn"))
     GetServiceNetworkResponse.add_member(:auth_type, Shapes::ShapeRef.new(shape: AuthType, location_name: "authType"))
     GetServiceNetworkResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
@@ -576,6 +824,7 @@ module Aws::VPCLattice
     GetServiceNetworkResponse.add_member(:name, Shapes::ShapeRef.new(shape: ServiceNetworkName, location_name: "name"))
     GetServiceNetworkResponse.add_member(:number_of_associated_services, Shapes::ShapeRef.new(shape: Long, location_name: "numberOfAssociatedServices"))
     GetServiceNetworkResponse.add_member(:number_of_associated_vp_cs, Shapes::ShapeRef.new(shape: Long, location_name: "numberOfAssociatedVPCs"))
+    GetServiceNetworkResponse.add_member(:sharing_config, Shapes::ShapeRef.new(shape: SharingConfig, location_name: "sharingConfig"))
     GetServiceNetworkResponse.struct_class = Types::GetServiceNetworkResponse
 
     GetServiceNetworkServiceAssociationRequest.add_member(:service_network_service_association_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkServiceAssociationIdentifier, required: true, location: "uri", location_name: "serviceNetworkServiceAssociationIdentifier"))
@@ -687,6 +936,9 @@ module Aws::VPCLattice
     InternalServerException.add_member(:retry_after_seconds, Shapes::ShapeRef.new(shape: Integer, location: "header", location_name: "Retry-After"))
     InternalServerException.struct_class = Types::InternalServerException
 
+    IpResource.add_member(:ip_address, Shapes::ShapeRef.new(shape: IpAddress, location_name: "ipAddress"))
+    IpResource.struct_class = Types::IpResource
+
     ListAccessLogSubscriptionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
     ListAccessLogSubscriptionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
     ListAccessLogSubscriptionsRequest.add_member(:resource_identifier, Shapes::ShapeRef.new(shape: ResourceIdentifier, required: true, location: "querystring", location_name: "resourceIdentifier"))
@@ -705,6 +957,36 @@ module Aws::VPCLattice
     ListListenersResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListListenersResponse.struct_class = Types::ListListenersResponse
 
+    ListResourceConfigurationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListResourceConfigurationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListResourceConfigurationsRequest.add_member(:resource_configuration_group_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, location: "querystring", location_name: "resourceConfigurationGroupIdentifier"))
+    ListResourceConfigurationsRequest.add_member(:resource_gateway_identifier, Shapes::ShapeRef.new(shape: ResourceGatewayIdentifier, location: "querystring", location_name: "resourceGatewayIdentifier"))
+    ListResourceConfigurationsRequest.struct_class = Types::ListResourceConfigurationsRequest
+
+    ListResourceConfigurationsResponse.add_member(:items, Shapes::ShapeRef.new(shape: ResourceConfigurationSummaryList, location_name: "items"))
+    ListResourceConfigurationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListResourceConfigurationsResponse.struct_class = Types::ListResourceConfigurationsResponse
+
+    ListResourceEndpointAssociationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListResourceEndpointAssociationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListResourceEndpointAssociationsRequest.add_member(:resource_configuration_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, required: true, location: "querystring", location_name: "resourceConfigurationIdentifier"))
+    ListResourceEndpointAssociationsRequest.add_member(:resource_endpoint_association_identifier, Shapes::ShapeRef.new(shape: ResourceEndpointAssociationIdentifier, location: "querystring", location_name: "resourceEndpointAssociationIdentifier"))
+    ListResourceEndpointAssociationsRequest.add_member(:vpc_endpoint_id, Shapes::ShapeRef.new(shape: VpcEndpointId, location: "querystring", location_name: "vpcEndpointId"))
+    ListResourceEndpointAssociationsRequest.add_member(:vpc_endpoint_owner, Shapes::ShapeRef.new(shape: VpcEndpointOwner, location: "querystring", location_name: "vpcEndpointOwner"))
+    ListResourceEndpointAssociationsRequest.struct_class = Types::ListResourceEndpointAssociationsRequest
+
+    ListResourceEndpointAssociationsResponse.add_member(:items, Shapes::ShapeRef.new(shape: ResourceEndpointAssociationList, required: true, location_name: "items"))
+    ListResourceEndpointAssociationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListResourceEndpointAssociationsResponse.struct_class = Types::ListResourceEndpointAssociationsResponse
+
+    ListResourceGatewaysRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListResourceGatewaysRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListResourceGatewaysRequest.struct_class = Types::ListResourceGatewaysRequest
+
+    ListResourceGatewaysResponse.add_member(:items, Shapes::ShapeRef.new(shape: ResourceGatewayList, location_name: "items"))
+    ListResourceGatewaysResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListResourceGatewaysResponse.struct_class = Types::ListResourceGatewaysResponse
+
     ListRulesRequest.add_member(:listener_identifier, Shapes::ShapeRef.new(shape: ListenerIdentifier, required: true, location: "uri", location_name: "listenerIdentifier"))
     ListRulesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
     ListRulesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
@@ -714,6 +996,16 @@ module Aws::VPCLattice
     ListRulesResponse.add_member(:items, Shapes::ShapeRef.new(shape: RuleSummaryList, required: true, location_name: "items"))
     ListRulesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListRulesResponse.struct_class = Types::ListRulesResponse
+
+    ListServiceNetworkResourceAssociationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListServiceNetworkResourceAssociationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListServiceNetworkResourceAssociationsRequest.add_member(:resource_configuration_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, location: "querystring", location_name: "resourceConfigurationIdentifier"))
+    ListServiceNetworkResourceAssociationsRequest.add_member(:service_network_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifier, location: "querystring", location_name: "serviceNetworkIdentifier"))
+    ListServiceNetworkResourceAssociationsRequest.struct_class = Types::ListServiceNetworkResourceAssociationsRequest
+
+    ListServiceNetworkResourceAssociationsResponse.add_member(:items, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationList, required: true, location_name: "items"))
+    ListServiceNetworkResourceAssociationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListServiceNetworkResourceAssociationsResponse.struct_class = Types::ListServiceNetworkResourceAssociationsResponse
 
     ListServiceNetworkServiceAssociationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
     ListServiceNetworkServiceAssociationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
@@ -734,6 +1026,15 @@ module Aws::VPCLattice
     ListServiceNetworkVpcAssociationsResponse.add_member(:items, Shapes::ShapeRef.new(shape: ServiceNetworkVpcAssociationList, required: true, location_name: "items"))
     ListServiceNetworkVpcAssociationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListServiceNetworkVpcAssociationsResponse.struct_class = Types::ListServiceNetworkVpcAssociationsResponse
+
+    ListServiceNetworkVpcEndpointAssociationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListServiceNetworkVpcEndpointAssociationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListServiceNetworkVpcEndpointAssociationsRequest.add_member(:service_network_identifier, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifier, required: true, location: "querystring", location_name: "serviceNetworkIdentifier"))
+    ListServiceNetworkVpcEndpointAssociationsRequest.struct_class = Types::ListServiceNetworkVpcEndpointAssociationsRequest
+
+    ListServiceNetworkVpcEndpointAssociationsResponse.add_member(:items, Shapes::ShapeRef.new(shape: ServiceNetworkVpcEndpointAssociationList, required: true, location_name: "items"))
+    ListServiceNetworkVpcEndpointAssociationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListServiceNetworkVpcEndpointAssociationsResponse.struct_class = Types::ListServiceNetworkVpcEndpointAssociationsResponse
 
     ListServiceNetworksRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
     ListServiceNetworksRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
@@ -808,6 +1109,8 @@ module Aws::VPCLattice
     PathMatchType.add_member_subclass(:unknown, Types::PathMatchType::Unknown)
     PathMatchType.struct_class = Types::PathMatchType
 
+    PortRangeList.member = Shapes::ShapeRef.new(shape: PortRange)
+
     PutAuthPolicyRequest.add_member(:policy, Shapes::ShapeRef.new(shape: AuthPolicyString, required: true, location_name: "policy"))
     PutAuthPolicyRequest.add_member(:resource_identifier, Shapes::ShapeRef.new(shape: ResourceIdentifier, required: true, location: "uri", location_name: "resourceIdentifier"))
     PutAuthPolicyRequest.struct_class = Types::PutAuthPolicyRequest
@@ -831,6 +1134,57 @@ module Aws::VPCLattice
     RegisterTargetsResponse.add_member(:successful, Shapes::ShapeRef.new(shape: TargetList, location_name: "successful"))
     RegisterTargetsResponse.add_member(:unsuccessful, Shapes::ShapeRef.new(shape: TargetFailureList, location_name: "unsuccessful"))
     RegisterTargetsResponse.struct_class = Types::RegisterTargetsResponse
+
+    ResourceConfigurationDefinition.add_member(:arn_resource, Shapes::ShapeRef.new(shape: ArnResource, location_name: "arnResource"))
+    ResourceConfigurationDefinition.add_member(:dns_resource, Shapes::ShapeRef.new(shape: DnsResource, location_name: "dnsResource"))
+    ResourceConfigurationDefinition.add_member(:ip_resource, Shapes::ShapeRef.new(shape: IpResource, location_name: "ipResource"))
+    ResourceConfigurationDefinition.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ResourceConfigurationDefinition.add_member_subclass(:arn_resource, Types::ResourceConfigurationDefinition::ArnResource)
+    ResourceConfigurationDefinition.add_member_subclass(:dns_resource, Types::ResourceConfigurationDefinition::DnsResource)
+    ResourceConfigurationDefinition.add_member_subclass(:ip_resource, Types::ResourceConfigurationDefinition::IpResource)
+    ResourceConfigurationDefinition.add_member_subclass(:unknown, Types::ResourceConfigurationDefinition::Unknown)
+    ResourceConfigurationDefinition.struct_class = Types::ResourceConfigurationDefinition
+
+    ResourceConfigurationSummary.add_member(:amazon_managed, Shapes::ShapeRef.new(shape: Boolean, location_name: "amazonManaged"))
+    ResourceConfigurationSummary.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "arn"))
+    ResourceConfigurationSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    ResourceConfigurationSummary.add_member(:id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "id"))
+    ResourceConfigurationSummary.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedAt"))
+    ResourceConfigurationSummary.add_member(:name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, location_name: "name"))
+    ResourceConfigurationSummary.add_member(:resource_configuration_group_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationGroupId"))
+    ResourceConfigurationSummary.add_member(:resource_gateway_id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "resourceGatewayId"))
+    ResourceConfigurationSummary.add_member(:status, Shapes::ShapeRef.new(shape: ResourceConfigurationStatus, location_name: "status"))
+    ResourceConfigurationSummary.add_member(:type, Shapes::ShapeRef.new(shape: ResourceConfigurationType, location_name: "type"))
+    ResourceConfigurationSummary.struct_class = Types::ResourceConfigurationSummary
+
+    ResourceConfigurationSummaryList.member = Shapes::ShapeRef.new(shape: ResourceConfigurationSummary)
+
+    ResourceEndpointAssociationList.member = Shapes::ShapeRef.new(shape: ResourceEndpointAssociationSummary)
+
+    ResourceEndpointAssociationSummary.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceEndpointAssociationArn, location_name: "arn"))
+    ResourceEndpointAssociationSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    ResourceEndpointAssociationSummary.add_member(:created_by, Shapes::ShapeRef.new(shape: AccountId, location_name: "createdBy"))
+    ResourceEndpointAssociationSummary.add_member(:id, Shapes::ShapeRef.new(shape: ResourceEndpointAssociationId, location_name: "id"))
+    ResourceEndpointAssociationSummary.add_member(:resource_configuration_arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "resourceConfigurationArn"))
+    ResourceEndpointAssociationSummary.add_member(:resource_configuration_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationId"))
+    ResourceEndpointAssociationSummary.add_member(:resource_configuration_name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, location_name: "resourceConfigurationName"))
+    ResourceEndpointAssociationSummary.add_member(:vpc_endpoint_id, Shapes::ShapeRef.new(shape: VpcEndpointId, location_name: "vpcEndpointId"))
+    ResourceEndpointAssociationSummary.add_member(:vpc_endpoint_owner, Shapes::ShapeRef.new(shape: VpcEndpointOwner, location_name: "vpcEndpointOwner"))
+    ResourceEndpointAssociationSummary.struct_class = Types::ResourceEndpointAssociationSummary
+
+    ResourceGatewayList.member = Shapes::ShapeRef.new(shape: ResourceGatewaySummary)
+
+    ResourceGatewaySummary.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceGatewayArn, location_name: "arn"))
+    ResourceGatewaySummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    ResourceGatewaySummary.add_member(:id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "id"))
+    ResourceGatewaySummary.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: ResourceGatewayIpAddressType, location_name: "ipAddressType"))
+    ResourceGatewaySummary.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedAt"))
+    ResourceGatewaySummary.add_member(:name, Shapes::ShapeRef.new(shape: ResourceGatewayName, location_name: "name"))
+    ResourceGatewaySummary.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupList, location_name: "securityGroupIds"))
+    ResourceGatewaySummary.add_member(:status, Shapes::ShapeRef.new(shape: ResourceGatewayStatus, location_name: "status"))
+    ResourceGatewaySummary.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetList, location_name: "subnetIds"))
+    ResourceGatewaySummary.add_member(:vpc_identifier, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcIdentifier"))
+    ResourceGatewaySummary.struct_class = Types::ResourceGatewaySummary
 
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     ResourceNotFoundException.add_member(:resource_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceId"))
@@ -894,7 +1248,35 @@ module Aws::VPCLattice
 
     ServiceList.member = Shapes::ShapeRef.new(shape: ServiceSummary)
 
+    ServiceNetworkEndpointAssociation.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    ServiceNetworkEndpointAssociation.add_member(:id, Shapes::ShapeRef.new(shape: String, location_name: "id"))
+    ServiceNetworkEndpointAssociation.add_member(:service_network_arn, Shapes::ShapeRef.new(shape: ServiceNetworkArn, location_name: "serviceNetworkArn"))
+    ServiceNetworkEndpointAssociation.add_member(:state, Shapes::ShapeRef.new(shape: String, location_name: "state"))
+    ServiceNetworkEndpointAssociation.add_member(:vpc_endpoint_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcEndpointId"))
+    ServiceNetworkEndpointAssociation.add_member(:vpc_endpoint_owner_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcEndpointOwnerId"))
+    ServiceNetworkEndpointAssociation.add_member(:vpc_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcId"))
+    ServiceNetworkEndpointAssociation.struct_class = Types::ServiceNetworkEndpointAssociation
+
     ServiceNetworkList.member = Shapes::ShapeRef.new(shape: ServiceNetworkSummary)
+
+    ServiceNetworkResourceAssociationList.member = Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationSummary)
+
+    ServiceNetworkResourceAssociationSummary.add_member(:arn, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationArn, location_name: "arn"))
+    ServiceNetworkResourceAssociationSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    ServiceNetworkResourceAssociationSummary.add_member(:created_by, Shapes::ShapeRef.new(shape: AccountId, location_name: "createdBy"))
+    ServiceNetworkResourceAssociationSummary.add_member(:dns_entry, Shapes::ShapeRef.new(shape: DnsEntry, location_name: "dnsEntry"))
+    ServiceNetworkResourceAssociationSummary.add_member(:failure_code, Shapes::ShapeRef.new(shape: String, location_name: "failureCode"))
+    ServiceNetworkResourceAssociationSummary.add_member(:id, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationId, location_name: "id"))
+    ServiceNetworkResourceAssociationSummary.add_member(:is_managed_association, Shapes::ShapeRef.new(shape: Boolean, location_name: "isManagedAssociation"))
+    ServiceNetworkResourceAssociationSummary.add_member(:private_dns_entry, Shapes::ShapeRef.new(shape: DnsEntry, location_name: "privateDnsEntry"))
+    ServiceNetworkResourceAssociationSummary.add_member(:resource_configuration_arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "resourceConfigurationArn"))
+    ServiceNetworkResourceAssociationSummary.add_member(:resource_configuration_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationId"))
+    ServiceNetworkResourceAssociationSummary.add_member(:resource_configuration_name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, location_name: "resourceConfigurationName"))
+    ServiceNetworkResourceAssociationSummary.add_member(:service_network_arn, Shapes::ShapeRef.new(shape: ServiceNetworkArnWithoutRegex, location_name: "serviceNetworkArn"))
+    ServiceNetworkResourceAssociationSummary.add_member(:service_network_id, Shapes::ShapeRef.new(shape: ServiceNetworkIdentifierWithoutRegex, location_name: "serviceNetworkId"))
+    ServiceNetworkResourceAssociationSummary.add_member(:service_network_name, Shapes::ShapeRef.new(shape: ServiceNetworkNameWithoutRegex, location_name: "serviceNetworkName"))
+    ServiceNetworkResourceAssociationSummary.add_member(:status, Shapes::ShapeRef.new(shape: ServiceNetworkResourceAssociationStatus, location_name: "status"))
+    ServiceNetworkResourceAssociationSummary.struct_class = Types::ServiceNetworkResourceAssociationSummary
 
     ServiceNetworkServiceAssociationList.member = Shapes::ShapeRef.new(shape: ServiceNetworkServiceAssociationSummary)
 
@@ -918,6 +1300,7 @@ module Aws::VPCLattice
     ServiceNetworkSummary.add_member(:id, Shapes::ShapeRef.new(shape: ServiceNetworkId, location_name: "id"))
     ServiceNetworkSummary.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastUpdatedAt"))
     ServiceNetworkSummary.add_member(:name, Shapes::ShapeRef.new(shape: ServiceNetworkName, location_name: "name"))
+    ServiceNetworkSummary.add_member(:number_of_associated_resource_configurations, Shapes::ShapeRef.new(shape: Long, location_name: "numberOfAssociatedResourceConfigurations"))
     ServiceNetworkSummary.add_member(:number_of_associated_services, Shapes::ShapeRef.new(shape: Long, location_name: "numberOfAssociatedServices"))
     ServiceNetworkSummary.add_member(:number_of_associated_vp_cs, Shapes::ShapeRef.new(shape: Long, location_name: "numberOfAssociatedVPCs"))
     ServiceNetworkSummary.struct_class = Types::ServiceNetworkSummary
@@ -936,6 +1319,8 @@ module Aws::VPCLattice
     ServiceNetworkVpcAssociationSummary.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcId"))
     ServiceNetworkVpcAssociationSummary.struct_class = Types::ServiceNetworkVpcAssociationSummary
 
+    ServiceNetworkVpcEndpointAssociationList.member = Shapes::ShapeRef.new(shape: ServiceNetworkEndpointAssociation)
+
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     ServiceQuotaExceededException.add_member(:quota_code, Shapes::ShapeRef.new(shape: String, required: true, location_name: "quotaCode"))
     ServiceQuotaExceededException.add_member(:resource_id, Shapes::ShapeRef.new(shape: String, location_name: "resourceId"))
@@ -952,6 +1337,11 @@ module Aws::VPCLattice
     ServiceSummary.add_member(:name, Shapes::ShapeRef.new(shape: ServiceName, location_name: "name"))
     ServiceSummary.add_member(:status, Shapes::ShapeRef.new(shape: ServiceStatus, location_name: "status"))
     ServiceSummary.struct_class = Types::ServiceSummary
+
+    SharingConfig.add_member(:enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "enabled"))
+    SharingConfig.struct_class = Types::SharingConfig
+
+    SubnetList.member = Shapes::ShapeRef.new(shape: SubnetId)
 
     TagKeys.member = Shapes::ShapeRef.new(shape: TagKey)
 
@@ -1050,6 +1440,41 @@ module Aws::VPCLattice
     UpdateListenerResponse.add_member(:service_id, Shapes::ShapeRef.new(shape: ServiceId, location_name: "serviceId"))
     UpdateListenerResponse.struct_class = Types::UpdateListenerResponse
 
+    UpdateResourceConfigurationRequest.add_member(:allow_association_to_shareable_service_network, Shapes::ShapeRef.new(shape: Boolean, location_name: "allowAssociationToShareableServiceNetwork"))
+    UpdateResourceConfigurationRequest.add_member(:port_ranges, Shapes::ShapeRef.new(shape: PortRangeList, location_name: "portRanges"))
+    UpdateResourceConfigurationRequest.add_member(:resource_configuration_definition, Shapes::ShapeRef.new(shape: ResourceConfigurationDefinition, location_name: "resourceConfigurationDefinition"))
+    UpdateResourceConfigurationRequest.add_member(:resource_configuration_identifier, Shapes::ShapeRef.new(shape: ResourceConfigurationIdentifier, required: true, location: "uri", location_name: "resourceConfigurationIdentifier"))
+    UpdateResourceConfigurationRequest.struct_class = Types::UpdateResourceConfigurationRequest
+
+    UpdateResourceConfigurationResponse.add_member(:allow_association_to_shareable_service_network, Shapes::ShapeRef.new(shape: Boolean, location_name: "allowAssociationToShareableServiceNetwork"))
+    UpdateResourceConfigurationResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceConfigurationArn, location_name: "arn"))
+    UpdateResourceConfigurationResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "id"))
+    UpdateResourceConfigurationResponse.add_member(:name, Shapes::ShapeRef.new(shape: ResourceConfigurationName, location_name: "name"))
+    UpdateResourceConfigurationResponse.add_member(:port_ranges, Shapes::ShapeRef.new(shape: PortRangeList, location_name: "portRanges"))
+    UpdateResourceConfigurationResponse.add_member(:protocol, Shapes::ShapeRef.new(shape: ProtocolType, location_name: "protocol"))
+    UpdateResourceConfigurationResponse.add_member(:resource_configuration_definition, Shapes::ShapeRef.new(shape: ResourceConfigurationDefinition, location_name: "resourceConfigurationDefinition"))
+    UpdateResourceConfigurationResponse.add_member(:resource_configuration_group_id, Shapes::ShapeRef.new(shape: ResourceConfigurationId, location_name: "resourceConfigurationGroupId"))
+    UpdateResourceConfigurationResponse.add_member(:resource_gateway_id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "resourceGatewayId"))
+    UpdateResourceConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: ResourceConfigurationStatus, location_name: "status"))
+    UpdateResourceConfigurationResponse.add_member(:type, Shapes::ShapeRef.new(shape: ResourceConfigurationType, location_name: "type"))
+    UpdateResourceConfigurationResponse.struct_class = Types::UpdateResourceConfigurationResponse
+
+    UpdateResourceGatewayRequest.add_member(:resource_gateway_identifier, Shapes::ShapeRef.new(shape: ResourceGatewayIdentifier, required: true, location: "uri", location_name: "resourceGatewayIdentifier"))
+    UpdateResourceGatewayRequest.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: UpdateResourceGatewayRequestSecurityGroupIdsList, location_name: "securityGroupIds"))
+    UpdateResourceGatewayRequest.struct_class = Types::UpdateResourceGatewayRequest
+
+    UpdateResourceGatewayRequestSecurityGroupIdsList.member = Shapes::ShapeRef.new(shape: SecurityGroupId)
+
+    UpdateResourceGatewayResponse.add_member(:arn, Shapes::ShapeRef.new(shape: ResourceGatewayArn, location_name: "arn"))
+    UpdateResourceGatewayResponse.add_member(:id, Shapes::ShapeRef.new(shape: ResourceGatewayId, location_name: "id"))
+    UpdateResourceGatewayResponse.add_member(:ip_address_type, Shapes::ShapeRef.new(shape: IpAddressType, location_name: "ipAddressType"))
+    UpdateResourceGatewayResponse.add_member(:name, Shapes::ShapeRef.new(shape: ResourceGatewayName, location_name: "name"))
+    UpdateResourceGatewayResponse.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupList, location_name: "securityGroupIds"))
+    UpdateResourceGatewayResponse.add_member(:status, Shapes::ShapeRef.new(shape: ResourceGatewayStatus, location_name: "status"))
+    UpdateResourceGatewayResponse.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetList, location_name: "subnetIds"))
+    UpdateResourceGatewayResponse.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "vpcId"))
+    UpdateResourceGatewayResponse.struct_class = Types::UpdateResourceGatewayResponse
+
     UpdateRuleRequest.add_member(:action, Shapes::ShapeRef.new(shape: RuleAction, location_name: "action"))
     UpdateRuleRequest.add_member(:listener_identifier, Shapes::ShapeRef.new(shape: ListenerIdentifier, required: true, location: "uri", location_name: "listenerIdentifier"))
     UpdateRuleRequest.add_member(:match, Shapes::ShapeRef.new(shape: RuleMatch, location_name: "match"))
@@ -1140,9 +1565,11 @@ module Aws::VPCLattice
 
       api.metadata = {
         "apiVersion" => "2022-11-30",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "vpc-lattice",
         "jsonVersion" => "1.1",
         "protocol" => "rest-json",
+        "protocols" => ["rest-json"],
         "serviceFullName" => "Amazon VPC Lattice",
         "serviceId" => "VPC Lattice",
         "signatureVersion" => "v4",
@@ -1193,6 +1620,36 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:create_resource_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateResourceConfiguration"
+        o.http_method = "POST"
+        o.http_request_uri = "/resourceconfigurations"
+        o.input = Shapes::ShapeRef.new(shape: CreateResourceConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateResourceConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:create_resource_gateway, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateResourceGateway"
+        o.http_method = "POST"
+        o.http_request_uri = "/resourcegateways"
+        o.input = Shapes::ShapeRef.new(shape: CreateResourceGatewayRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateResourceGatewayResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
       api.add_operation(:create_rule, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateRule"
         o.http_method = "POST"
@@ -1229,6 +1686,21 @@ module Aws::VPCLattice
         o.http_request_uri = "/servicenetworks"
         o.input = Shapes::ShapeRef.new(shape: CreateServiceNetworkRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateServiceNetworkResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:create_service_network_resource_association, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateServiceNetworkResourceAssociation"
+        o.http_method = "POST"
+        o.http_request_uri = "/servicenetworkresourceassociations"
+        o.input = Shapes::ShapeRef.new(shape: CreateServiceNetworkResourceAssociationRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateServiceNetworkResourceAssociationResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1323,6 +1795,47 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:delete_resource_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteResourceConfiguration"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/resourceconfigurations/{resourceConfigurationIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteResourceConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteResourceConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:delete_resource_endpoint_association, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteResourceEndpointAssociation"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/resourceendpointassociations/{resourceEndpointAssociationIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteResourceEndpointAssociationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteResourceEndpointAssociationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:delete_resource_gateway, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteResourceGateway"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/resourcegateways/{resourceGatewayIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteResourceGatewayRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteResourceGatewayResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
       api.add_operation(:delete_resource_policy, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteResourcePolicy"
         o.http_method = "DELETE"
@@ -1370,6 +1883,20 @@ module Aws::VPCLattice
         o.http_request_uri = "/servicenetworks/{serviceNetworkIdentifier}"
         o.input = Shapes::ShapeRef.new(shape: DeleteServiceNetworkRequest)
         o.output = Shapes::ShapeRef.new(shape: DeleteServiceNetworkResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:delete_service_network_resource_association, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteServiceNetworkResourceAssociation"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/servicenetworkresourceassociations/{serviceNetworkResourceAssociationIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteServiceNetworkResourceAssociationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteServiceNetworkResourceAssociationResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1472,6 +1999,32 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
+      api.add_operation(:get_resource_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetResourceConfiguration"
+        o.http_method = "GET"
+        o.http_request_uri = "/resourceconfigurations/{resourceConfigurationIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: GetResourceConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetResourceConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:get_resource_gateway, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetResourceGateway"
+        o.http_method = "GET"
+        o.http_request_uri = "/resourcegateways/{resourceGatewayIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: GetResourceGatewayRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetResourceGatewayResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
       api.add_operation(:get_resource_policy, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetResourcePolicy"
         o.http_method = "GET"
@@ -1517,6 +2070,19 @@ module Aws::VPCLattice
         o.http_request_uri = "/servicenetworks/{serviceNetworkIdentifier}"
         o.input = Shapes::ShapeRef.new(shape: GetServiceNetworkRequest)
         o.output = Shapes::ShapeRef.new(shape: GetServiceNetworkResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:get_service_network_resource_association, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetServiceNetworkResourceAssociation"
+        o.http_method = "GET"
+        o.http_request_uri = "/servicenetworkresourceassociations/{serviceNetworkResourceAssociationIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: GetServiceNetworkResourceAssociationRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetServiceNetworkResourceAssociationResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1600,6 +2166,60 @@ module Aws::VPCLattice
         )
       end)
 
+      api.add_operation(:list_resource_configurations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListResourceConfigurations"
+        o.http_method = "GET"
+        o.http_request_uri = "/resourceconfigurations"
+        o.input = Shapes::ShapeRef.new(shape: ListResourceConfigurationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListResourceConfigurationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_resource_endpoint_associations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListResourceEndpointAssociations"
+        o.http_method = "GET"
+        o.http_request_uri = "/resourceendpointassociations"
+        o.input = Shapes::ShapeRef.new(shape: ListResourceEndpointAssociationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListResourceEndpointAssociationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_resource_gateways, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListResourceGateways"
+        o.http_method = "GET"
+        o.http_request_uri = "/resourcegateways"
+        o.input = Shapes::ShapeRef.new(shape: ListResourceGatewaysRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListResourceGatewaysResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_rules, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListRules"
         o.http_method = "GET"
@@ -1610,6 +2230,24 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_service_network_resource_associations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListServiceNetworkResourceAssociations"
+        o.http_method = "GET"
+        o.http_request_uri = "/servicenetworkresourceassociations"
+        o.input = Shapes::ShapeRef.new(shape: ListServiceNetworkResourceAssociationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListServiceNetworkResourceAssociationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
@@ -1643,6 +2281,24 @@ module Aws::VPCLattice
         o.http_request_uri = "/servicenetworkvpcassociations"
         o.input = Shapes::ShapeRef.new(shape: ListServiceNetworkVpcAssociationsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListServiceNetworkVpcAssociationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_service_network_vpc_endpoint_associations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListServiceNetworkVpcEndpointAssociations"
+        o.http_method = "GET"
+        o.http_request_uri = "/servicenetworkvpcendpointassociations"
+        o.input = Shapes::ShapeRef.new(shape: ListServiceNetworkVpcEndpointAssociationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListServiceNetworkVpcEndpointAssociationsResponse)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -1831,6 +2487,34 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:update_resource_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateResourceConfiguration"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/resourceconfigurations/{resourceConfigurationIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateResourceConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateResourceConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+      end)
+
+      api.add_operation(:update_resource_gateway, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateResourceGateway"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/resourcegateways/{resourceGatewayIdentifier}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateResourceGatewayRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateResourceGatewayResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -1845,6 +2529,7 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -1859,6 +2544,7 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
 
@@ -1901,6 +2587,7 @@ module Aws::VPCLattice
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
       end)
     end

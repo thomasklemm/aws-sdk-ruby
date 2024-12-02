@@ -282,7 +282,7 @@ module Aws
                                       tenant_id: ::String?
                                     }
                                   }?,
-                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT"),
+                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM"),
                                   web_configuration: {
                                     crawler_configuration: {
                                       crawler_limits: {
@@ -922,6 +922,29 @@ module Aws
                                  ) -> _DeleteKnowledgeBaseResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteKnowledgeBaseResponseSuccess
 
+      interface _DeleteKnowledgeBaseDocumentsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteKnowledgeBaseDocumentsResponse]
+        def document_details: () -> ::Array[Types::KnowledgeBaseDocumentDetail]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#delete_knowledge_base_documents-instance_method
+      def delete_knowledge_base_documents: (
+                                             ?client_token: ::String,
+                                             data_source_id: ::String,
+                                             document_identifiers: Array[
+                                               {
+                                                 custom: {
+                                                   id: ::String
+                                                 }?,
+                                                 data_source_type: ("CUSTOM" | "S3"),
+                                                 s3: {
+                                                   uri: ::String
+                                                 }?
+                                               },
+                                             ],
+                                             knowledge_base_id: ::String
+                                           ) -> _DeleteKnowledgeBaseDocumentsResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteKnowledgeBaseDocumentsResponseSuccess
+
       interface _DeletePromptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeletePromptResponse]
         def id: () -> ::String
@@ -1093,6 +1116,28 @@ module Aws
                               ) -> _GetKnowledgeBaseResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetKnowledgeBaseResponseSuccess
 
+      interface _GetKnowledgeBaseDocumentsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetKnowledgeBaseDocumentsResponse]
+        def document_details: () -> ::Array[Types::KnowledgeBaseDocumentDetail]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#get_knowledge_base_documents-instance_method
+      def get_knowledge_base_documents: (
+                                          data_source_id: ::String,
+                                          document_identifiers: Array[
+                                            {
+                                              custom: {
+                                                id: ::String
+                                              }?,
+                                              data_source_type: ("CUSTOM" | "S3"),
+                                              s3: {
+                                                uri: ::String
+                                              }?
+                                            },
+                                          ],
+                                          knowledge_base_id: ::String
+                                        ) -> _GetKnowledgeBaseDocumentsResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetKnowledgeBaseDocumentsResponseSuccess
+
       interface _GetPromptResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetPromptResponse]
         def arn: () -> ::String
@@ -1112,6 +1157,69 @@ module Aws
                         ?prompt_version: ::String
                       ) -> _GetPromptResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetPromptResponseSuccess
+
+      interface _IngestKnowledgeBaseDocumentsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::IngestKnowledgeBaseDocumentsResponse]
+        def document_details: () -> ::Array[Types::KnowledgeBaseDocumentDetail]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#ingest_knowledge_base_documents-instance_method
+      def ingest_knowledge_base_documents: (
+                                             ?client_token: ::String,
+                                             data_source_id: ::String,
+                                             documents: Array[
+                                               {
+                                                 content: {
+                                                   custom: {
+                                                     custom_document_identifier: {
+                                                       id: ::String
+                                                     },
+                                                     inline_content: {
+                                                       byte_content: {
+                                                         data: ::String,
+                                                         mime_type: ::String
+                                                       }?,
+                                                       text_content: {
+                                                         data: ::String
+                                                       }?,
+                                                       type: ("BYTE" | "TEXT")
+                                                     }?,
+                                                     s3_location: {
+                                                       bucket_owner_account_id: ::String?,
+                                                       uri: ::String
+                                                     }?,
+                                                     source_type: ("IN_LINE" | "S3_LOCATION")
+                                                   }?,
+                                                   data_source_type: ("CUSTOM" | "S3"),
+                                                   s3: {
+                                                     s3_location: {
+                                                       uri: ::String
+                                                     }
+                                                   }?
+                                                 },
+                                                 metadata: {
+                                                   inline_attributes: Array[
+                                                     {
+                                                       key: ::String,
+                                                       value: {
+                                                         boolean_value: bool?,
+                                                         number_value: ::Float?,
+                                                         string_list_value: Array[::String]?,
+                                                         string_value: ::String?,
+                                                         type: ("BOOLEAN" | "NUMBER" | "STRING" | "STRING_LIST")
+                                                       }
+                                                     },
+                                                   ]?,
+                                                   s3_location: {
+                                                     bucket_owner_account_id: ::String?,
+                                                     uri: ::String
+                                                   }?,
+                                                   type: ("IN_LINE_ATTRIBUTE" | "S3_LOCATION")
+                                                 }?
+                                               },
+                                             ],
+                                             knowledge_base_id: ::String
+                                           ) -> _IngestKnowledgeBaseDocumentsResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _IngestKnowledgeBaseDocumentsResponseSuccess
 
       interface _ListAgentActionGroupsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListAgentActionGroupsResponse]
@@ -1254,6 +1362,20 @@ module Aws
                                  }
                                ) -> _ListIngestionJobsResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListIngestionJobsResponseSuccess
+
+      interface _ListKnowledgeBaseDocumentsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListKnowledgeBaseDocumentsResponse]
+        def document_details: () -> ::Array[Types::KnowledgeBaseDocumentDetail]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#list_knowledge_base_documents-instance_method
+      def list_knowledge_base_documents: (
+                                           data_source_id: ::String,
+                                           knowledge_base_id: ::String,
+                                           ?max_results: ::Integer,
+                                           ?next_token: ::String
+                                         ) -> _ListKnowledgeBaseDocumentsResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListKnowledgeBaseDocumentsResponseSuccess
 
       interface _ListKnowledgeBasesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListKnowledgeBasesResponse]
@@ -1563,7 +1685,7 @@ module Aws
                                       tenant_id: ::String?
                                     }
                                   }?,
-                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT"),
+                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM"),
                                   web_configuration: {
                                     crawler_configuration: {
                                       crawler_limits: {

@@ -1146,6 +1146,35 @@ module Aws::CloudWatchLogs
     #
     class DeleteIndexPolicyResponse < Aws::EmptyStructure; end
 
+    # @!attribute [rw] integration_name
+    #   The name of the integration to delete. To find the name of your
+    #   integration, use [ListIntegrations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListIntegrations.html
+    #   @return [String]
+    #
+    # @!attribute [rw] force
+    #   Specify `true` to force the deletion of the integration even if
+    #   vended logs dashboards currently exist.
+    #
+    #   The default is `false`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteIntegrationRequest AWS API Documentation
+    #
+    class DeleteIntegrationRequest < Struct.new(
+      :integration_name,
+      :force)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DeleteIntegrationResponse AWS API Documentation
+    #
+    class DeleteIntegrationResponse < Aws::EmptyStructure; end
+
     # This processor deletes entries from a log event. These entries are
     # key-value pairs.
     #
@@ -2249,13 +2278,19 @@ module Aws::CloudWatchLogs
     #   after 24 hours.
     #   @return [String]
     #
+    # @!attribute [rw] query_language
+    #   Limits the returned queries to only the queries that use the
+    #   specified query language.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeQueriesRequest AWS API Documentation
     #
     class DescribeQueriesRequest < Struct.new(
       :log_group_name,
       :status,
       :max_results,
-      :next_token)
+      :next_token,
+      :query_language)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2278,6 +2313,16 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] query_language
+    #   The query language used for this query. For more information about
+    #   the query languages that CloudWatch Logs supports, see [Supported
+    #   query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #   @return [String]
+    #
     # @!attribute [rw] query_definition_name_prefix
     #   Use this parameter to filter your results to only the query
     #   definitions that have names that start with the prefix you specify.
@@ -2296,6 +2341,7 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/DescribeQueryDefinitionsRequest AWS API Documentation
     #
     class DescribeQueryDefinitionsRequest < Struct.new(
+      :query_language,
       :query_definition_name_prefix,
       :max_results,
       :next_token)
@@ -2977,6 +3023,54 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] integration_name
+    #   The name of the integration that you want to find information about.
+    #   To find the name of your integration, use [ListIntegrations][1]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListIntegrations.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/GetIntegrationRequest AWS API Documentation
+    #
+    class GetIntegrationRequest < Struct.new(
+      :integration_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] integration_name
+    #   The name of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_type
+    #   The type of integration. Integrations with OpenSearch Service have
+    #   the type `OPENSEARCH`.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_status
+    #   The current status of this integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_details
+    #   A structure that contains information about the integration
+    #   configuration. For an integration with OpenSearch Service, this
+    #   includes information about OpenSearch Service resources such as the
+    #   collection, the workspace, and policies.
+    #   @return [Types::IntegrationDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/GetIntegrationResponse AWS API Documentation
+    #
+    class GetIntegrationResponse < Struct.new(
+      :integration_name,
+      :integration_type,
+      :integration_status,
+      :integration_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] anomaly_detector_arn
     #   The ARN of the anomaly detector to retrieve information about. You
     #   can find the ARNs of log anomaly detectors in your account by using
@@ -3276,6 +3370,16 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] query_language
+    #   The query language used for this query. For more information about
+    #   the query languages that CloudWatch Logs supports, see [Supported
+    #   query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #   @return [String]
+    #
     # @!attribute [rw] results
     #   The log events that matched the query criteria during the most
     #   recent time it ran.
@@ -3316,6 +3420,7 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/GetQueryResultsResponse AWS API Documentation
     #
     class GetQueryResultsResponse < Struct.new(
+      :query_language,
       :results,
       :statistics,
       :status,
@@ -3463,6 +3568,68 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # This structure contains information about the integration
+    # configuration. For an integration with OpenSearch Service, this
+    # includes information about OpenSearch Service resources such as the
+    # collection, the workspace, and policies.
+    #
+    # This structure is returned by a [GetIntegration][1] operation.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetIntegration.html
+    #
+    # @note IntegrationDetails is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of IntegrationDetails corresponding to the set member.
+    #
+    # @!attribute [rw] open_search_integration_details
+    #   This structure contains complete information about one integration
+    #   between CloudWatch Logs and OpenSearch Service.
+    #   @return [Types::OpenSearchIntegrationDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/IntegrationDetails AWS API Documentation
+    #
+    class IntegrationDetails < Struct.new(
+      :open_search_integration_details,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class OpenSearchIntegrationDetails < IntegrationDetails; end
+      class Unknown < IntegrationDetails; end
+    end
+
+    # This structure contains information about one CloudWatch Logs
+    # integration. This structure is returned by a [ListIntegrations][1]
+    # operation.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_ListIntegrations.html
+    #
+    # @!attribute [rw] integration_name
+    #   The name of this integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_type
+    #   The type of integration. Integrations with OpenSearch Service have
+    #   the type `OPENSEARCH`.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_status
+    #   The current status of this integration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/IntegrationSummary AWS API Documentation
+    #
+    class IntegrationSummary < Struct.new(
+      :integration_name,
+      :integration_type,
+      :integration_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The operation is not valid on the specified resource.
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/InvalidOperationException AWS API Documentation
@@ -3547,6 +3714,44 @@ module Aws::CloudWatchLogs
     class ListAnomaliesResponse < Struct.new(
       :anomalies,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] integration_name_prefix
+    #   To limit the results to integrations that start with a certain name
+    #   prefix, specify that name prefix here.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_type
+    #   To limit the results to integrations of a certain type, specify that
+    #   type here.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_status
+    #   To limit the results to integrations with a certain status, specify
+    #   that status here.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ListIntegrationsRequest AWS API Documentation
+    #
+    class ListIntegrationsRequest < Struct.new(
+      :integration_name_prefix,
+      :integration_type,
+      :integration_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] integration_summaries
+    #   An array, where each object in the array contains information about
+    #   one CloudWatch Logs integration in this account.
+    #   @return [Array<Types::IntegrationSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ListIntegrationsResponse AWS API Documentation
+    #
+    class ListIntegrationsResponse < Struct.new(
+      :integration_summaries)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4386,6 +4591,453 @@ module Aws::CloudWatchLogs
     #
     class MoveKeys < Struct.new(
       :entries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service
+    # application used for this integration. An OpenSearch Service
+    # application is the web application created by the integration with
+    # CloudWatch Logs. It hosts the vended logs dashboards.
+    #
+    # @!attribute [rw] application_endpoint
+    #   The endpoint of the application.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_arn
+    #   The Amazon Resource Name (ARN) of the application.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_id
+    #   The ID of the application.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of this
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchApplication AWS API Documentation
+    #
+    class OpenSearchApplication < Struct.new(
+      :application_endpoint,
+      :application_arn,
+      :application_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service
+    # collection used for this integration. An OpenSearch Service collection
+    # is a logical grouping of one or more indexes that represent an
+    # analytics workload. For more information, see [Creating and managing
+    # OpenSearch Service Serverless collections][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-collections.html
+    #
+    # @!attribute [rw] collection_endpoint
+    #   The endpoint of the collection.
+    #   @return [String]
+    #
+    # @!attribute [rw] collection_arn
+    #   The ARN of the collection.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of this
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchCollection AWS API Documentation
+    #
+    class OpenSearchCollection < Struct.new(
+      :collection_endpoint,
+      :collection_arn,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service data
+    # access policy used for this integration. The access policy defines the
+    # access controls for the collection. This data access policy was
+    # automatically created as part of the integration setup. For more
+    # information about OpenSearch Service data access policies, see [Data
+    # access control for Amazon OpenSearch Serverless][1] in the OpenSearch
+    # Service Developer Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html
+    #
+    # @!attribute [rw] policy_name
+    #   The name of the data access policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of this
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchDataAccessPolicy AWS API Documentation
+    #
+    class OpenSearchDataAccessPolicy < Struct.new(
+      :policy_name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service data
+    # source used for this integration. This data source was created as part
+    # of the integration setup. An OpenSearch Service data source defines
+    # the source and destination for OpenSearch Service queries. It includes
+    # the role required to execute queries and write to collections.
+    #
+    # For more information about OpenSearch Service data sources , see
+    # [Creating OpenSearch Service data source integrations with Amazon
+    # S3.][1]
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html
+    #
+    # @!attribute [rw] data_source_name
+    #   The name of the OpenSearch Service data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of this
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchDataSource AWS API Documentation
+    #
+    class OpenSearchDataSource < Struct.new(
+      :data_source_name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service
+    # encryption policy used for this integration. The encryption policy was
+    # created automatically when you created the integration. For more
+    # information, see [Encryption policies][1] in the OpenSearch Service
+    # Developer Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html#serverless-encryption-policies
+    #
+    # @!attribute [rw] policy_name
+    #   The name of the encryption policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of this
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchEncryptionPolicy AWS API Documentation
+    #
+    class OpenSearchEncryptionPolicy < Struct.new(
+      :policy_name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains complete information about one CloudWatch Logs
+    # integration. This structure is returned by a [GetIntegration][1]
+    # operation.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonCloudWatchLogs/latest/APIReference/API_GetIntegration.html
+    #
+    # @!attribute [rw] data_source
+    #   This structure contains information about the OpenSearch Service
+    #   data source used for this integration. This data source was created
+    #   as part of the integration setup. An OpenSearch Service data source
+    #   defines the source and destination for OpenSearch Service queries.
+    #   It includes the role required to execute queries and write to
+    #   collections.
+    #
+    #   For more information about OpenSearch Service data sources , see
+    #   [Creating OpenSearch Service data source integrations with Amazon
+    #   S3.][1]
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html
+    #   @return [Types::OpenSearchDataSource]
+    #
+    # @!attribute [rw] application
+    #   This structure contains information about the OpenSearch Service
+    #   application used for this integration. An OpenSearch Service
+    #   application is the web application that was created by the
+    #   integration with CloudWatch Logs. It hosts the vended logs
+    #   dashboards.
+    #   @return [Types::OpenSearchApplication]
+    #
+    # @!attribute [rw] collection
+    #   This structure contains information about the OpenSearch Service
+    #   collection used for this integration. This collection was created as
+    #   part of the integration setup. An OpenSearch Service collection is a
+    #   logical grouping of one or more indexes that represent an analytics
+    #   workload. For more information, see [Creating and managing
+    #   OpenSearch Service Serverless collections][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-collections.html
+    #   @return [Types::OpenSearchCollection]
+    #
+    # @!attribute [rw] workspace
+    #   This structure contains information about the OpenSearch Service
+    #   workspace used for this integration. An OpenSearch Service workspace
+    #   is the collection of dashboards along with other OpenSearch Service
+    #   tools. This workspace was created automatically as part of the
+    #   integration setup. For more information, see [Centralized OpenSearch
+    #   user interface (Dashboards) with OpenSearch Service][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html
+    #   @return [Types::OpenSearchWorkspace]
+    #
+    # @!attribute [rw] encryption_policy
+    #   This structure contains information about the OpenSearch Service
+    #   encryption policy used for this integration. The encryption policy
+    #   was created automatically when you created the integration. For more
+    #   information, see [Encryption policies][1] in the OpenSearch Service
+    #   Developer Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-encryption.html#serverless-encryption-policies
+    #   @return [Types::OpenSearchEncryptionPolicy]
+    #
+    # @!attribute [rw] network_policy
+    #   This structure contains information about the OpenSearch Service
+    #   network policy used for this integration. The network policy assigns
+    #   network access settings to collections. For more information, see
+    #   [Network policies][1] in the OpenSearch Service Developer Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html#serverless-network-policies
+    #   @return [Types::OpenSearchNetworkPolicy]
+    #
+    # @!attribute [rw] access_policy
+    #   This structure contains information about the OpenSearch Service
+    #   data access policy used for this integration. The access policy
+    #   defines the access controls for the collection. This data access
+    #   policy was automatically created as part of the integration setup.
+    #   For more information about OpenSearch Service data access policies,
+    #   see [Data access control for Amazon OpenSearch Serverless][1] in the
+    #   OpenSearch Service Developer Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-data-access.html
+    #   @return [Types::OpenSearchDataAccessPolicy]
+    #
+    # @!attribute [rw] lifecycle_policy
+    #   This structure contains information about the OpenSearch Service
+    #   data lifecycle policy used for this integration. The lifecycle
+    #   policy determines the lifespan of the data in the collection. It was
+    #   automatically created as part of the integration setup.
+    #
+    #   For more information, see [Using data lifecycle policies with
+    #   OpenSearch Service Serverless][1] in the OpenSearch Service
+    #   Developer Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html
+    #   @return [Types::OpenSearchLifecyclePolicy]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchIntegrationDetails AWS API Documentation
+    #
+    class OpenSearchIntegrationDetails < Struct.new(
+      :data_source,
+      :application,
+      :collection,
+      :workspace,
+      :encryption_policy,
+      :network_policy,
+      :access_policy,
+      :lifecycle_policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service data
+    # lifecycle policy used for this integration. The lifecycle policy
+    # determines the lifespan of the data in the collection. It was
+    # automatically created as part of the integration setup.
+    #
+    # For more information, see [Using data lifecycle policies with
+    # OpenSearch Service Serverless][1] in the OpenSearch Service Developer
+    # Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-lifecycle.html
+    #
+    # @!attribute [rw] policy_name
+    #   The name of the lifecycle policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of this
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchLifecyclePolicy AWS API Documentation
+    #
+    class OpenSearchLifecyclePolicy < Struct.new(
+      :policy_name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service
+    # network policy used for this integration. The network policy assigns
+    # network access settings to collections. For more information, see
+    # [Network policies][1] in the OpenSearch Service Developer Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/serverless-network.html#serverless-network-policies
+    #
+    # @!attribute [rw] policy_name
+    #   The name of the network policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of this
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchNetworkPolicy AWS API Documentation
+    #
+    class OpenSearchNetworkPolicy < Struct.new(
+      :policy_name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains configuration details about an integration
+    # between CloudWatch Logs and OpenSearch Service.
+    #
+    # @!attribute [rw] kms_key_arn
+    #   To have the vended dashboard data encrypted with KMS instead of the
+    #   CloudWatch Logs default encryption method, specify the ARN of the
+    #   KMS key that you want to use.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_source_role_arn
+    #   Specify the ARN of an IAM role that CloudWatch Logs will use to
+    #   create the integration. This role must have the permissions
+    #   necessary to access the OpenSearch Service collection to be able to
+    #   create the dashboards. For more information about the permissions
+    #   needed, see [Create an IAM role to access the OpenSearch Service
+    #   collection][1] in the CloudWatch Logs User Guide.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/OpenSearch-Dashboards-CreateRole
+    #   @return [String]
+    #
+    # @!attribute [rw] dashboard_viewer_principals
+    #   Specify the ARNs of IAM roles and IAM users who you want to grant
+    #   permission to for viewing the dashboards.
+    #
+    #   In addition to specifying these users here, you must also grant them
+    #   the **CloudWatchOpenSearchDashboardsAccess** IAM policy. For more
+    #   information, see
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] application_arn
+    #   If you want to use an existing OpenSearch Service application for
+    #   your integration with OpenSearch Service, specify it here. If you
+    #   omit this, a new application will be created.
+    #   @return [String]
+    #
+    # @!attribute [rw] retention_days
+    #   Specify how many days that you want the data derived by OpenSearch
+    #   Service to be retained in the index that the dashboard refers to.
+    #   This also sets the maximum time period that you can choose when
+    #   viewing data in the dashboard. Choosing a longer time frame will
+    #   incur additional costs.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchResourceConfig AWS API Documentation
+    #
+    class OpenSearchResourceConfig < Struct.new(
+      :kms_key_arn,
+      :data_source_role_arn,
+      :dashboard_viewer_principals,
+      :application_arn,
+      :retention_days)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the status of an OpenSearch
+    # Service resource.
+    #
+    # @!attribute [rw] status
+    #   The current status of this resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   A message with additional information about the status of this
+    #   resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchResourceStatus AWS API Documentation
+    #
+    class OpenSearchResourceStatus < Struct.new(
+      :status,
+      :status_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # This structure contains information about the OpenSearch Service
+    # workspace used for this integration. An OpenSearch Service workspace
+    # is the collection of dashboards along with other OpenSearch Service
+    # tools. This workspace was created automatically as part of the
+    # integration setup. For more information, see [Centralized OpenSearch
+    # user interface (Dashboards) with OpenSearch Service][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/application.html
+    #
+    # @!attribute [rw] workspace_id
+    #   The ID of this workspace.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   This structure contains information about the status of an
+    #   OpenSearch Service resource.
+    #   @return [Types::OpenSearchResourceStatus]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/OpenSearchWorkspace AWS API Documentation
+    #
+    class OpenSearchWorkspace < Struct.new(
+      :workspace_id,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5506,6 +6158,50 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] integration_name
+    #   A name for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_config
+    #   A structure that contains configuration information for the
+    #   integration that you are creating.
+    #   @return [Types::ResourceConfig]
+    #
+    # @!attribute [rw] integration_type
+    #   The type of integration. Currently, the only supported type is
+    #   `OPENSEARCH`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutIntegrationRequest AWS API Documentation
+    #
+    class PutIntegrationRequest < Struct.new(
+      :integration_name,
+      :resource_config,
+      :integration_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] integration_name
+    #   The name of the integration that you just created.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_status
+    #   The status of the integration that you just created.
+    #
+    #   After you create an integration, it takes a few minutes to complete.
+    #   During this time, you'll see the status as `PROVISIONING`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutIntegrationResponse AWS API Documentation
+    #
+    class PutIntegrationResponse < Struct.new(
+      :integration_name,
+      :integration_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] log_group_name
     #   The name of the log group.
     #   @return [String]
@@ -5625,6 +6321,17 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] query_language
+    #   Specify the query language to use for this query. The options are
+    #   Logs Insights QL, OpenSearch PPL, and OpenSearch SQL. For more
+    #   information about the query languages that CloudWatch Logs supports,
+    #   see [Supported query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #   @return [String]
+    #
     # @!attribute [rw] name
     #   A name for the query definition. If you are saving numerous query
     #   definitions, we recommend that you name them. This way, you can find
@@ -5654,9 +6361,12 @@ module Aws::CloudWatchLogs
     #
     # @!attribute [rw] log_group_names
     #   Use this parameter to include specific log groups as part of your
-    #   query definition.
+    #   query definition. If your query uses the OpenSearch Service query
+    #   language, you specify the log group names inside the `querystring`
+    #   instead of here.
     #
-    #   If you are updating a query definition and you omit this parameter,
+    #   If you are updating an existing query definition for the Logs
+    #   Insights QL or OpenSearch Service PPL and you omit this parameter,
     #   then the updated definition will contain no log groups.
     #   @return [Array<String>]
     #
@@ -5680,6 +6390,7 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/PutQueryDefinitionRequest AWS API Documentation
     #
     class PutQueryDefinitionRequest < Struct.new(
+      :query_language,
       :name,
       :query_definition_id,
       :log_group_names,
@@ -5936,6 +6647,16 @@ module Aws::CloudWatchLogs
     # This structure contains details about a saved CloudWatch Logs Insights
     # query definition.
     #
+    # @!attribute [rw] query_language
+    #   The query language used for this query. For more information about
+    #   the query languages that CloudWatch Logs supports, see [Supported
+    #   query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #   @return [String]
+    #
     # @!attribute [rw] query_definition_id
     #   The unique ID of the query definition.
     #   @return [String]
@@ -5965,6 +6686,7 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/QueryDefinition AWS API Documentation
     #
     class QueryDefinition < Struct.new(
+      :query_language,
       :query_definition_id,
       :name,
       :query_string,
@@ -5976,6 +6698,16 @@ module Aws::CloudWatchLogs
 
     # Information about one CloudWatch Logs Insights query that matches the
     # request in a `DescribeQueries` operation.
+    #
+    # @!attribute [rw] query_language
+    #   The query language used for this query. For more information about
+    #   the query languages that CloudWatch Logs supports, see [Supported
+    #   query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #   @return [String]
     #
     # @!attribute [rw] query_id
     #   The unique ID number of this query.
@@ -6001,6 +6733,7 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/QueryInfo AWS API Documentation
     #
     class QueryInfo < Struct.new(
+      :query_language,
       :query_id,
       :query_string,
       :status,
@@ -6211,6 +6944,29 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ResourceAlreadyExistsException AWS API Documentation
     #
     class ResourceAlreadyExistsException < Aws::EmptyStructure; end
+
+    # This structure contains configuration details about an integration
+    # between CloudWatch Logs and another entity.
+    #
+    # @note ResourceConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] open_search_resource_config
+    #   This structure contains configuration details about an integration
+    #   between CloudWatch Logs and OpenSearch Service.
+    #   @return [Types::OpenSearchResourceConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/ResourceConfig AWS API Documentation
+    #
+    class ResourceConfig < Struct.new(
+      :open_search_resource_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class OpenSearchResourceConfig < ResourceConfig; end
+      class Unknown < ResourceConfig; end
+    end
 
     # The specified resource does not exist.
     #
@@ -6484,13 +7240,40 @@ module Aws::CloudWatchLogs
       include Aws::Structure
     end
 
+    # @!attribute [rw] query_language
+    #   Specify the query language to use for this query. The options are
+    #   Logs Insights QL, OpenSearch PPL, and OpenSearch SQL. For more
+    #   information about the query languages that CloudWatch Logs supports,
+    #   see [Supported query languages][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_AnalyzeLogData_Languages.html
+    #   @return [String]
+    #
     # @!attribute [rw] log_group_name
     #   The log group on which to perform the query.
+    #
+    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
+    #   parameters: `logGroupName`, `logGroupNames`, or
+    #   `logGroupIdentifiers`. The exception is queries using the OpenSearch
+    #   Service SQL query language, where you specify the log group names
+    #   inside the `querystring` instead of here.
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] log_group_names
     #   The list of log groups to be queried. You can include up to 50 log
     #   groups.
+    #
+    #   <note markdown="1"> A `StartQuery` operation must include exactly one of the following
+    #   parameters: `logGroupName`, `logGroupNames`, or
+    #   `logGroupIdentifiers`. The exception is queries using the OpenSearch
+    #   Service SQL query language, where you specify the log group names
+    #   inside the `querystring` instead of here.
+    #
+    #    </note>
     #   @return [Array<String>]
     #
     # @!attribute [rw] log_group_identifiers
@@ -6508,7 +7291,9 @@ module Aws::CloudWatchLogs
     #
     #   A `StartQuery` operation must include exactly one of the following
     #   parameters: `logGroupName`, `logGroupNames`, or
-    #   `logGroupIdentifiers`.
+    #   `logGroupIdentifiers`. The exception is queries using the OpenSearch
+    #   Service SQL query language, where you specify the log group names
+    #   inside the `querystring` instead of here.
     #   @return [Array<String>]
     #
     # @!attribute [rw] start_time
@@ -6542,6 +7327,7 @@ module Aws::CloudWatchLogs
     # @see http://docs.aws.amazon.com/goto/WebAPI/logs-2014-03-28/StartQueryRequest AWS API Documentation
     #
     class StartQueryRequest < Struct.new(
+      :query_language,
       :log_group_name,
       :log_group_names,
       :log_group_identifiers,

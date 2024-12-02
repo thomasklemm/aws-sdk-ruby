@@ -116,6 +116,30 @@ module Aws::GuardDuty
 
     # Contains information about the access keys.
     #
+    # @!attribute [rw] principal_id
+    #   Principal ID of the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_name
+    #   Name of the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_type
+    #   Type of the user.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/AccessKey AWS API Documentation
+    #
+    class AccessKey < Struct.new(
+      :principal_id,
+      :user_name,
+      :user_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the access keys.
+    #
     # @!attribute [rw] access_key_id
     #   The access key ID of the user.
     #   @return [String]
@@ -139,6 +163,25 @@ module Aws::GuardDuty
       :principal_id,
       :user_name,
       :user_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the account.
+    #
+    # @!attribute [rw] uid
+    #   ID of the member's Amazon Web Services account
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Name of the member's Amazon Web Services account.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Account AWS API Documentation
+    #
+    class Account < Struct.new(
+      :uid,
+      :name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -290,6 +333,32 @@ module Aws::GuardDuty
       :kubernetes_permission_checked_details,
       :kubernetes_role_binding_details,
       :kubernetes_role_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about the actors involved in an attack sequence.
+    #
+    # @!attribute [rw] id
+    #   ID of the threat actor.
+    #   @return [String]
+    #
+    # @!attribute [rw] user
+    #   Contains information about the user credentials used by the threat
+    #   actor.
+    #   @return [Types::User]
+    #
+    # @!attribute [rw] session
+    #   Contains information about the user session where the activity
+    #   initiated.
+    #   @return [Types::Session]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Actor AWS API Documentation
+    #
+    class Actor < Struct.new(
+      :id,
+      :user,
+      :session)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -466,6 +535,26 @@ module Aws::GuardDuty
     # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/ArchiveFindingsResponse AWS API Documentation
     #
     class ArchiveFindingsResponse < Aws::EmptyStructure; end
+
+    # Contains information about the Autonomous System (AS) associated with
+    # the network endpoints involved in an attack sequence.
+    #
+    # @!attribute [rw] name
+    #   Name associated with the Autonomous System (AS).
+    #   @return [String]
+    #
+    # @!attribute [rw] number
+    #   The unique number that identifies the Autonomous System (AS).
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/AutonomousSystem AWS API Documentation
+    #
+    class AutonomousSystem < Struct.new(
+      :name,
+      :number)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # Contains information about the API action.
     #
@@ -2590,10 +2679,15 @@ module Aws::GuardDuty
     #   generate the finding.
     #   @return [Types::Anomaly]
     #
+    # @!attribute [rw] sequence
+    #   The details about the attack sequence.
+    #   @return [Types::Sequence]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Detection AWS API Documentation
     #
     class Detection < Struct.new(
-      :anomaly)
+      :anomaly,
+      :sequence)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2929,6 +3023,113 @@ module Aws::GuardDuty
     class EbsVolumesResult < Struct.new(
       :status,
       :reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details about the potentially impacted Amazon EC2 instance resource.
+    #
+    # @!attribute [rw] availability_zone
+    #   The availability zone of the Amazon EC2 instance. For more
+    #   information, see [Availability zones][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-availability-zones
+    #   @return [String]
+    #
+    # @!attribute [rw] image_description
+    #   The image description of the Amazon EC2 instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_state
+    #   The state of the Amazon EC2 instance. For more information, see
+    #   [Amazon EC2 instance state changes][1] in the *Amazon EC2 User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html
+    #   @return [String]
+    #
+    # @!attribute [rw] iam_instance_profile
+    #   Contains information about the EC2 instance profile.
+    #   @return [Types::IamInstanceProfile]
+    #
+    # @!attribute [rw] instance_type
+    #   Type of the Amazon EC2 instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] outpost_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services Outpost.
+    #   This shows applicable Amazon Web Services Outposts instances.
+    #   @return [String]
+    #
+    # @!attribute [rw] platform
+    #   The platform of the Amazon EC2 instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] product_codes
+    #   The product code of the Amazon EC2 instance.
+    #   @return [Array<Types::ProductCode>]
+    #
+    # @!attribute [rw] ec2_network_interface_uids
+    #   The ID of the network interface.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Ec2Instance AWS API Documentation
+    #
+    class Ec2Instance < Struct.new(
+      :availability_zone,
+      :image_description,
+      :instance_state,
+      :iam_instance_profile,
+      :instance_type,
+      :outpost_arn,
+      :platform,
+      :product_codes,
+      :ec2_network_interface_uids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the elastic network interface of the Amazon
+    # EC2 instance.
+    #
+    # @!attribute [rw] ipv_6_addresses
+    #   A list of IPv6 addresses for the Amazon EC2 instance.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] private_ip_addresses
+    #   Other private IP address information of the Amazon EC2 instance.
+    #   @return [Array<Types::PrivateIpAddressDetails>]
+    #
+    # @!attribute [rw] public_ip
+    #   The public IP address of the Amazon EC2 instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] security_groups
+    #   The security groups associated with the Amazon EC2 instance.
+    #   @return [Array<Types::SecurityGroup>]
+    #
+    # @!attribute [rw] sub_net_id
+    #   The subnet ID of the Amazon EC2 instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   The VPC ID of the Amazon EC2 instance.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Ec2NetworkInterface AWS API Documentation
+    #
+    class Ec2NetworkInterface < Struct.new(
+      :ipv_6_addresses,
+      :private_ip_addresses,
+      :public_ip,
+      :security_groups,
+      :sub_net_id,
+      :vpc_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3288,6 +3489,11 @@ module Aws::GuardDuty
     #   The time and date when the finding was last updated.
     #   @return [String]
     #
+    # @!attribute [rw] associated_attack_sequence_arn
+    #   Amazon Resource Name (ARN) associated with the attack sequence
+    #   finding.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Finding AWS API Documentation
     #
     class Finding < Struct.new(
@@ -3305,7 +3511,8 @@ module Aws::GuardDuty
       :severity,
       :title,
       :type,
-      :updated_at)
+      :updated_at,
+      :associated_attack_sequence_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4321,6 +4528,37 @@ module Aws::GuardDuty
     class ImpersonatedUser < Struct.new(
       :username,
       :groups)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the indicators that include a set of
+    # signals observed in an attack sequence.
+    #
+    # @!attribute [rw] key
+    #   Specific indicator keys observed in the attack sequence.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   Values associated with each indicator key. For example, if the
+    #   indicator key is `SUSPICIOUS_NETWORK`, then the value will be the
+    #   name of the network. If the indicator key is `ATTACK_TACTIC`, then
+    #   the value will be one of the MITRE tactics.
+    #
+    #   For more information about the values associated with the key, see
+    #   GuardDuty Extended Threat Detection in the *GuardDuty User Guide.*
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] title
+    #   Title describing the indicator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Indicator AWS API Documentation
+    #
+    class Indicator < Struct.new(
+      :key,
+      :values,
+      :title)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6109,6 +6347,20 @@ module Aws::GuardDuty
       include Aws::Structure
     end
 
+    # Contains information about the network connection.
+    #
+    # @!attribute [rw] direction
+    #   The direction in which the network traffic is flowing.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/NetworkConnection AWS API Documentation
+    #
+    class NetworkConnection < Struct.new(
+      :direction)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about the NETWORK\_CONNECTION action described in
     # the finding.
     #
@@ -6157,6 +6409,80 @@ module Aws::GuardDuty
       :local_network_interface,
       :remote_ip_details,
       :remote_port_details)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about network endpoints that were observed in the
+    # attack sequence.
+    #
+    # @!attribute [rw] id
+    #   The ID of the network endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip
+    #   The IP address associated with the network endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain
+    #   The domain information for the network endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port number associated with the network endpoint.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] location
+    #   Information about the location of the network endpoint.
+    #   @return [Types::NetworkGeoLocation]
+    #
+    # @!attribute [rw] autonomous_system
+    #   The Autonomous System (AS) of the network endpoint.
+    #   @return [Types::AutonomousSystem]
+    #
+    # @!attribute [rw] connection
+    #   Information about the network connection.
+    #   @return [Types::NetworkConnection]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/NetworkEndpoint AWS API Documentation
+    #
+    class NetworkEndpoint < Struct.new(
+      :id,
+      :ip,
+      :domain,
+      :port,
+      :location,
+      :autonomous_system,
+      :connection)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about network endpoint location.
+    #
+    # @!attribute [rw] city
+    #   The name of the city.
+    #   @return [String]
+    #
+    # @!attribute [rw] country
+    #   The name of the country.
+    #   @return [String]
+    #
+    # @!attribute [rw] latitude
+    #   The latitude information of the endpoint location.
+    #   @return [Float]
+    #
+    # @!attribute [rw] longitude
+    #   The longitude information of the endpoint location.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/NetworkGeoLocation AWS API Documentation
+    #
+    class NetworkGeoLocation < Struct.new(
+      :city,
+      :country,
+      :latitude,
+      :longitude)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6999,6 +7325,48 @@ module Aws::GuardDuty
       include Aws::Structure
     end
 
+    # Describes public access policies that apply to the Amazon S3 bucket.
+    #
+    # For information about each of the following settings, see [Blocking
+    # public access to your Amazon S3 storage][1] in the *Amazon S3 User
+    # Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
+    #
+    # @!attribute [rw] public_acl_access
+    #   Indicates whether or not there is a setting that allows public
+    #   access to the Amazon S3 buckets through access control lists (ACLs).
+    #   @return [String]
+    #
+    # @!attribute [rw] public_policy_access
+    #   Indicates whether or not there is a setting that allows public
+    #   access to the Amazon S3 bucket policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] public_acl_ignore_behavior
+    #   Indicates whether or not there is a setting that ignores all public
+    #   access control lists (ACLs) on the Amazon S3 bucket and the objects
+    #   that it contains.
+    #   @return [String]
+    #
+    # @!attribute [rw] public_bucket_restrict_behavior
+    #   Indicates whether or not there is a setting that restricts access to
+    #   the bucket with specified policies.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/PublicAccessConfiguration AWS API Documentation
+    #
+    class PublicAccessConfiguration < Struct.new(
+      :public_acl_access,
+      :public_policy_access,
+      :public_acl_ignore_behavior,
+      :public_bucket_restrict_behavior)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about the resource type `RDSDBInstance` involved
     # in a GuardDuty finding.
     #
@@ -7110,7 +7478,7 @@ module Aws::GuardDuty
     #   @return [String]
     #
     # @!attribute [rw] tags
-    #   Information about the tag-key value pair.
+    #   Information about the tag key-value pair.
     #   @return [Array<Types::Tag>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/RdsLimitlessDbDetails AWS API Documentation
@@ -7310,6 +7678,44 @@ module Aws::GuardDuty
       include Aws::Structure
     end
 
+    # Contains information about the Amazon Web Services resource that is
+    # associated with the activity that prompted GuardDuty to generate a
+    # finding.
+    #
+    # @!attribute [rw] s3_bucket
+    #   Contains information about the Amazon S3 bucket.
+    #   @return [Types::S3Bucket]
+    #
+    # @!attribute [rw] ec2_instance
+    #   Contains information about the Amazon EC2 instance.
+    #   @return [Types::Ec2Instance]
+    #
+    # @!attribute [rw] access_key
+    #   Contains information about the IAM access key details of a user that
+    #   involved in the GuardDuty finding.
+    #   @return [Types::AccessKey]
+    #
+    # @!attribute [rw] ec2_network_interface
+    #   Contains information about the elastic network interface of the
+    #   Amazon EC2 instance.
+    #   @return [Types::Ec2NetworkInterface]
+    #
+    # @!attribute [rw] s3_object
+    #   Contains information about the Amazon S3 object.
+    #   @return [Types::S3Object]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/ResourceData AWS API Documentation
+    #
+    class ResourceData < Struct.new(
+      :s3_bucket,
+      :ec2_instance,
+      :access_key,
+      :ec2_network_interface,
+      :s3_object)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents the resources that were scanned in the scan entry.
     #
     # @!attribute [rw] instance_arn
@@ -7400,6 +7806,64 @@ module Aws::GuardDuty
       :resource_id,
       :resource_type,
       :total_findings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the Amazon Web Services resource that is
+    # associated with the GuardDuty finding.
+    #
+    # @!attribute [rw] uid
+    #   The unique identifier of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] account_id
+    #   The Amazon Web Services account ID to which the resource belongs.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_type
+    #   The type of the Amazon Web Services resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] region
+    #   The Amazon Web Services Region where the resource belongs.
+    #   @return [String]
+    #
+    # @!attribute [rw] service
+    #   The Amazon Web Services service of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] cloud_partition
+    #   The cloud partition within the Amazon Web Services Region to which
+    #   the resource belongs.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Contains information about the tags associated with the resource.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] data
+    #   Contains information about the Amazon Web Services resource
+    #   associated with the activity that prompted GuardDuty to generate a
+    #   finding.
+    #   @return [Types::ResourceData]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/ResourceV2 AWS API Documentation
+    #
+    class ResourceV2 < Struct.new(
+      :uid,
+      :name,
+      :account_id,
+      :resource_type,
+      :region,
+      :service,
+      :cloud_partition,
+      :tags,
+      :data)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7570,6 +8034,78 @@ module Aws::GuardDuty
       include Aws::Structure
     end
 
+    # Contains information about the Amazon S3 bucket policies and
+    # encryption.
+    #
+    # @!attribute [rw] owner_id
+    #   The owner ID of the associated S3Amazon S3bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp at which the Amazon S3 bucket was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] encryption_type
+    #   The type of encryption used for the Amazon S3 buckets and its
+    #   objects. For more information, see [Protecting data with server-side
+    #   encryption][1] in the *Amazon S3 User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/serv-side-encryption.html
+    #   @return [String]
+    #
+    # @!attribute [rw] encryption_key_arn
+    #   The Amazon Resource Name (ARN) of the encryption key that is used to
+    #   encrypt the Amazon S3 bucket and its objects.
+    #   @return [String]
+    #
+    # @!attribute [rw] effective_permission
+    #   Describes the effective permissions on this S3 bucket, after
+    #   factoring all the attached policies.
+    #   @return [String]
+    #
+    # @!attribute [rw] public_read_access
+    #   Indicates whether or not the public read access is allowed for an
+    #   Amazon S3 bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] public_write_access
+    #   Indicates whether or not the public write access is allowed for an
+    #   Amazon S3 bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] account_public_access
+    #   Contains information about the public access policies that apply to
+    #   the Amazon S3 bucket at the account level.
+    #   @return [Types::PublicAccessConfiguration]
+    #
+    # @!attribute [rw] bucket_public_access
+    #   Contains information about public access policies that apply to the
+    #   Amazon S3 bucket.
+    #   @return [Types::PublicAccessConfiguration]
+    #
+    # @!attribute [rw] s3_object_uids
+    #   Represents a list of Amazon S3 object identifiers.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/S3Bucket AWS API Documentation
+    #
+    class S3Bucket < Struct.new(
+      :owner_id,
+      :created_at,
+      :encryption_type,
+      :encryption_key_arn,
+      :effective_permission,
+      :public_read_access,
+      :public_write_access,
+      :account_public_access,
+      :bucket_public_access,
+      :s3_object_uids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information on the S3 bucket.
     #
     # @!attribute [rw] arn
@@ -7649,6 +8185,31 @@ module Aws::GuardDuty
     #
     class S3LogsConfigurationResult < Struct.new(
       :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the Amazon S3 object.
+    #
+    # @!attribute [rw] etag
+    #   The entity tag is a hash of the Amazon S3 object. The ETag reflects
+    #   changes only to the contents of an object, and not its metadata.
+    #   @return [String]
+    #
+    # @!attribute [rw] key
+    #   The key of the Amazon S3 object.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_id
+    #   The version Id of the Amazon S3 object.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/S3Object AWS API Documentation
+    #
+    class S3Object < Struct.new(
+      :etag,
+      :key,
+      :version_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8046,6 +8607,55 @@ module Aws::GuardDuty
       include Aws::Structure
     end
 
+    # Contains information about the GuardDuty attack sequence finding.
+    #
+    # @!attribute [rw] uid
+    #   Unique identifier of the attack sequence.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description of the attack sequence.
+    #   @return [String]
+    #
+    # @!attribute [rw] actors
+    #   Contains information about the actors involved in the attack
+    #   sequence.
+    #   @return [Array<Types::Actor>]
+    #
+    # @!attribute [rw] resources
+    #   Contains information about the resources involved in the attack
+    #   sequence.
+    #   @return [Array<Types::ResourceV2>]
+    #
+    # @!attribute [rw] endpoints
+    #   Contains information about the network endpoints that were used in
+    #   the attack sequence.
+    #   @return [Array<Types::NetworkEndpoint>]
+    #
+    # @!attribute [rw] signals
+    #   Contains information about the signals involved in the attack
+    #   sequence.
+    #   @return [Array<Types::Signal>]
+    #
+    # @!attribute [rw] sequence_indicators
+    #   Contains information about the indicators observed in the attack
+    #   sequence.
+    #   @return [Array<Types::Indicator>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Sequence AWS API Documentation
+    #
+    class Sequence < Struct.new(
+      :uid,
+      :description,
+      :actors,
+      :resources,
+      :endpoints,
+      :signals,
+      :sequence_indicators)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains additional information about the generated finding.
     #
     # @!attribute [rw] action
@@ -8159,6 +8769,45 @@ module Aws::GuardDuty
       include Aws::Structure
     end
 
+    # Contains information about the authenticated session.
+    #
+    # @!attribute [rw] uid
+    #   The unique identifier of the session.
+    #   @return [String]
+    #
+    # @!attribute [rw] mfa_status
+    #   Indicates whether or not multi-factor authencation (MFA) was used
+    #   during authentication.
+    #
+    #   In Amazon Web Services CloudTrail, you can find this value as
+    #   `userIdentity.sessionContext.attributes.mfaAuthenticated`.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_time
+    #   The timestamp for when the session was created.
+    #
+    #   In Amazon Web Services CloudTrail, you can find this value as
+    #   `userIdentity.sessionContext.attributes.creationDate`.
+    #   @return [Time]
+    #
+    # @!attribute [rw] issuer
+    #   Identifier of the session issuer.
+    #
+    #   In Amazon Web Services CloudTrail, you can find this value as
+    #   `userIdentity.sessionContext.sessionIssuer.arn`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Session AWS API Documentation
+    #
+    class Session < Struct.new(
+      :uid,
+      :mfa_status,
+      :created_time,
+      :issuer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Information about severity level for each finding type.
     #
     # @!attribute [rw] last_generated_at
@@ -8180,6 +8829,121 @@ module Aws::GuardDuty
       :last_generated_at,
       :severity,
       :total_findings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the signals involved in the attack
+    # sequence.
+    #
+    # @!attribute [rw] uid
+    #   The unique identifier of the signal.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the signal used to identify an attack sequence.
+    #
+    #   Signals can be GuardDuty findings or activities observed in data
+    #   sources that GuardDuty monitors. For more information, see
+    #   [Foundational data sources][1] in the *GuardDuty User Guide*.
+    #
+    #   A signal type can be one of the valid values listed in this API.
+    #   Here are the related descriptions:
+    #
+    #   * `FINDING` - Individually generated GuardDuty finding.
+    #
+    #   * `CLOUD_TRAIL` - Activity observed from CloudTrail logs
+    #
+    #   * `S3_DATA_EVENTS` - Activity observed from CloudTrail data events
+    #     for S3. Activities associated with this type will show up only
+    #     when you have enabled GuardDuty S3 Protection feature in your
+    #     account. For more information about S3 Protection and steps to
+    #     enable it, see [S3 Protection][2] in the *GuardDuty User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html
+    #   [2]: https://docs.aws.amazon.com/guardduty/latest/ug/s3-protection.html
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the signal.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the signal. For example, when signal type is `FINDING`,
+    #   the signal name is the name of the finding.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp when the first finding or activity related to this
+    #   signal was observed.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp when this signal was last observed.
+    #   @return [Time]
+    #
+    # @!attribute [rw] first_seen_at
+    #   The timestamp when the first finding or activity related to this
+    #   signal was observed.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_seen_at
+    #   The timestamp when the last finding or activity related to this
+    #   signal was observed.
+    #   @return [Time]
+    #
+    # @!attribute [rw] severity
+    #   The severity associated with the signal. For more information about
+    #   severity, see [Findings severity levels][1] in the *GuardDuty User
+    #   Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html
+    #   @return [Float]
+    #
+    # @!attribute [rw] count
+    #   The number of times this signal was observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] resource_uids
+    #   Information about the unique identifiers of the resources involved
+    #   in the signal.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] actor_ids
+    #   Information about the IDs of the threat actors involved in the
+    #   signal.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] endpoint_ids
+    #   Information about the endpoint IDs associated with this signal.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] signal_indicators
+    #   Contains information about the indicators associated with the
+    #   signals.
+    #   @return [Array<Types::Indicator>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/Signal AWS API Documentation
+    #
+    class Signal < Struct.new(
+      :uid,
+      :type,
+      :description,
+      :name,
+      :created_at,
+      :updated_at,
+      :first_seen_at,
+      :last_seen_at,
+      :severity,
+      :count,
+      :resource_uids,
+      :actor_ids,
+      :endpoint_ids,
+      :signal_indicators)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9271,6 +10035,40 @@ module Aws::GuardDuty
     class UsageTopAccountsResult < Struct.new(
       :feature,
       :accounts)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the user involved in the attack sequence.
+    #
+    # @!attribute [rw] name
+    #   The name of the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] uid
+    #   The unique identifier of the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] credential_uid
+    #   The credentials of the user ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] account
+    #   Contains information about the Amazon Web Services account.
+    #   @return [Types::Account]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/User AWS API Documentation
+    #
+    class User < Struct.new(
+      :name,
+      :uid,
+      :type,
+      :credential_uid,
+      :account)
       SENSITIVE = []
       include Aws::Structure
     end

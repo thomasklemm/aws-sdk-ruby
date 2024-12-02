@@ -565,6 +565,12 @@ module Aws::RDS
       data[:monitoring_role_arn]
     end
 
+    # The mode of Database Insights that is enabled for the cluster.
+    # @return [String]
+    def database_insights_mode
+      data[:database_insights_mode]
+    end
+
     # Indicates whether Performance Insights is enabled for the DB cluster.
     #
     # This setting is only for non-Aurora Multi-AZ DB clusters.
@@ -932,6 +938,7 @@ module Aws::RDS
     #     auto_minor_version_upgrade: false,
     #     monitoring_interval: 1,
     #     monitoring_role_arn: "String",
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -1596,6 +1603,8 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html#USER_Monitoring.OS.Enabling
+    # @option options [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the cluster.
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #
@@ -1970,6 +1979,7 @@ module Aws::RDS
     #     auto_minor_version_upgrade: false,
     #     monitoring_interval: 1,
     #     monitoring_role_arn: "String",
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -2286,9 +2296,9 @@ module Aws::RDS
     #   Aurora User Guide*.
     #
     #   <note markdown="1"> This parameter applies only to Aurora Serverless v1 DB clusters. To
-    #   enable or disable the HTTP endpoint for an Aurora PostgreSQL
-    #   Serverless v2 or provisioned DB cluster, use the `EnableHttpEndpoint`
-    #   and `DisableHttpEndpoint` operations.
+    #   enable or disable the HTTP endpoint for an Aurora Serverless v2 or
+    #   provisioned DB cluster, use the `EnableHttpEndpoint` and
+    #   `DisableHttpEndpoint` operations.
     #
     #    </note>
     #
@@ -2419,6 +2429,8 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.html#USER_Monitoring.OS.IAMRole
+    # @option options [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the cluster.
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #

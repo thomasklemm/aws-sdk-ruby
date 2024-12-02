@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.98.0 (2024-12-02)
+------------------
+
+* Feature - Amazon S3 introduces support for AWS Dedicated Local Zones
+
 1.97.0 (2024-11-18)
 ------------------
 

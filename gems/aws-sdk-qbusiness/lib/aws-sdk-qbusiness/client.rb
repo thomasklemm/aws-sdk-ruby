@@ -655,6 +655,11 @@ module Aws::QBusiness
     #             role_arn: "RoleArn",
     #           },
     #         },
+    #         media_extraction_configuration: {
+    #           image_extraction_configuration: {
+    #             image_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #           },
+    #         },
     #       },
     #     ],
     #     role_arn: "RoleArn",
@@ -716,22 +721,33 @@ module Aws::QBusiness
     #   on document attributes or metadata fields.
     #
     # @option params [String] :chat_mode
-    #   The chat modes available to an Amazon Q Business end user.
+    #   The `chatMode` parameter determines the chat modes available to Amazon
+    #   Q Business users:
     #
-    #   * `RETRIEVAL_MODE` - The default chat mode for an Amazon Q Business
-    #     application. When this mode is enabled, Amazon Q Business generates
-    #     responses only from data sources connected to an Amazon Q Business
-    #     application.
+    #   * `RETRIEVAL_MODE` - If you choose this mode, Amazon Q generates
+    #     responses solely from the data sources connected and indexed by the
+    #     application. If an answer is not found in the data sources or there
+    #     are no data sources available, Amazon Q will respond with a "*No
+    #     Answer Found*" message, unless LLM knowledge has been enabled. In
+    #     that case, Amazon Q will generate a response from the LLM knowledge
     #
-    #   * `CREATOR_MODE` - By selecting this mode, users can choose to
-    #     generate responses only from the LLM knowledge, without consulting
-    #     connected data sources, for a chat request.
+    #   * `CREATOR_MODE` - By selecting this mode, you can choose to generate
+    #     responses only from the LLM knowledge. You can also attach files and
+    #     have Amazon Q generate a response based on the data in those files.
+    #     If the attached files do not contain an answer for the query, Amazon
+    #     Q will automatically fall back to generating a response from the LLM
+    #     knowledge.
     #
     #   * `PLUGIN_MODE` - By selecting this mode, users can choose to use
-    #     plugins in chat.
+    #     plugins in chat to get their responses.
+    #
+    #   <note markdown="1"> If none of the modes are selected, Amazon Q will only respond using
+    #   the information from the attached files.
+    #
+    #    </note>
     #
     #   For more information, see [Admin controls and guardrails][1],
-    #   [Plugins][2], and [Conversation settings][3].
+    #   [Plugins][2], and [Response sources][3].
     #
     #
     #
@@ -768,8 +784,14 @@ module Aws::QBusiness
     #     user_message: "UserMessage",
     #     attachments: [
     #       {
-    #         name: "AttachmentName", # required
-    #         data: "data", # required
+    #         data: "data",
+    #         name: "AttachmentName",
+    #         copy_from: {
+    #           conversation: {
+    #             conversation_id: "ConversationId", # required
+    #             attachment_id: "AttachmentId", # required
+    #           },
+    #         },
     #       },
     #     ],
     #     action_execution: {
@@ -904,11 +926,15 @@ module Aws::QBusiness
     #   resp.source_attributions[0].text_message_segments[0].begin_offset #=> Integer
     #   resp.source_attributions[0].text_message_segments[0].end_offset #=> Integer
     #   resp.source_attributions[0].text_message_segments[0].snippet_excerpt.text #=> String
+    #   resp.source_attributions[0].text_message_segments[0].media_id #=> String
+    #   resp.source_attributions[0].text_message_segments[0].media_mime_type #=> String
     #   resp.failed_attachments #=> Array
     #   resp.failed_attachments[0].name #=> String
-    #   resp.failed_attachments[0].status #=> String, one of "FAILED", "SUCCEEDED"
+    #   resp.failed_attachments[0].status #=> String, one of "FAILED", "SUCCESS"
     #   resp.failed_attachments[0].error.error_message #=> String
     #   resp.failed_attachments[0].error.error_code #=> String, one of "InternalError", "InvalidRequest", "ResourceInactive", "ResourceNotFound"
+    #   resp.failed_attachments[0].attachment_id #=> String
+    #   resp.failed_attachments[0].conversation_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ChatSync AWS API Documentation
     #
@@ -928,10 +954,15 @@ module Aws::QBusiness
     # You must use the Amazon Q Business console to assign subscription
     # tiers to users.
     #
-    #  A Amazon Q Apps service linked role will be created if it's absent in
-    # the Amazon Web Services account when the QAppsConfiguration is enabled
-    # in the request. For more information, see [ Using service-linked roles
-    # for Q Apps ][2]
+    #  An Amazon Q Apps service linked role will be created if it's absent
+    # in the Amazon Web Services account when `QAppsConfiguration` is
+    # enabled in the request. For more information, see [ Using
+    # service-linked roles for Q Apps][2].
+    #
+    #  When you create an application, Amazon Q Business may securely
+    # transmit data for processing from your selected Amazon Web Services
+    # region, but within your geography. For more information, see [Cross
+    # region inference in Amazon Q Business][3].
     #
     #  </note>
     #
@@ -939,6 +970,7 @@ module Aws::QBusiness
     #
     # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers
     # [2]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html
+    # [3]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html
     #
     # @option params [required, String] :display_name
     #   A name for the Amazon Q Business application.
@@ -1015,7 +1047,7 @@ module Aws::QBusiness
     #     display_name: "ApplicationName", # required
     #     role_arn: "RoleArn",
     #     identity_type: "AWS_IAM_IDP_SAML", # accepts AWS_IAM_IDP_SAML, AWS_IAM_IDP_OIDC, AWS_IAM_IDC
-    #     iam_identity_provider_arn: "IamIdentityProviderArn",
+    #     iam_identity_provider_arn: "IAMIdentityProviderArn",
     #     identity_center_instance_arn: "InstanceArn",
     #     client_ids_for_oidc: ["ClientIdForOIDC"],
     #     description: "Description",
@@ -1156,6 +1188,10 @@ module Aws::QBusiness
     #
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/business-use-dg/custom-document-enrichment.html
     #
+    # @option params [Types::MediaExtractionConfiguration] :media_extraction_configuration
+    #   The configuration for extracting information from media in documents
+    #   during ingestion.
+    #
     # @return [Types::CreateDataSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateDataSourceResponse#data_source_id #data_source_id} => String
@@ -1240,6 +1276,11 @@ module Aws::QBusiness
     #         role_arn: "RoleArn",
     #       },
     #     },
+    #     media_extraction_configuration: {
+    #       image_extraction_configuration: {
+    #         image_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #       },
+    #     },
     #   })
     #
     # @example Response structure
@@ -1276,6 +1317,9 @@ module Aws::QBusiness
     # @option params [required, String] :display_name
     #   A name for the Amazon Q Business index.
     #
+    # @option params [String] :description
+    #   A description for the Amazon Q Business index.
+    #
     # @option params [String] :type
     #   The index type that's suitable for your needs. For more information
     #   on what's included in each type of index, see [Amazon Q Business
@@ -1284,9 +1328,6 @@ module Aws::QBusiness
     #
     #
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#index-tiers
-    #
-    # @option params [String] :description
-    #   A description for the Amazon Q Business index.
     #
     # @option params [Array<Types::Tag>] :tags
     #   A list of key-value pairs that identify or categorize the index. You
@@ -1316,8 +1357,8 @@ module Aws::QBusiness
     #   resp = client.create_index({
     #     application_id: "ApplicationId", # required
     #     display_name: "IndexName", # required
-    #     type: "ENTERPRISE", # accepts ENTERPRISE, STARTER
     #     description: "Description",
+    #     type: "ENTERPRISE", # accepts ENTERPRISE, STARTER
     #     tags: [
     #       {
     #         key: "TagKey", # required
@@ -1638,6 +1679,22 @@ module Aws::QBusiness
     #   Information about the identity provider (IdP) used to authenticate end
     #   users of an Amazon Q Business web experience.
     #
+    # @option params [Types::BrowserExtensionConfiguration] :browser_extension_configuration
+    #   The browser extension configuration for an Amazon Q Business web
+    #   experience.
+    #
+    #   <note markdown="1"> For Amazon Q Business application using external OIDC-compliant
+    #   identity providers (IdPs). The IdP administrator must add the browser
+    #   extension sign-in redirect URLs to the IdP application. For more
+    #   information, see [Configure external OIDC identity provider for your
+    #   browser extensions.][1].
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
+    #
     # @return [Types::CreateWebExperienceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateWebExperienceResponse#web_experience_id #web_experience_id} => String
@@ -1668,6 +1725,9 @@ module Aws::QBusiness
     #         secrets_arn: "SecretArn", # required
     #         secrets_role: "RoleArn", # required
     #       },
+    #     },
+    #     browser_extension_configuration: {
+    #       enabled_browser_extensions: ["FIREFOX"], # required, accepts FIREFOX, CHROME
     #     },
     #   })
     #
@@ -2151,6 +2211,7 @@ module Aws::QBusiness
     #   * {Types::GetDataSourceResponse#role_arn #role_arn} => String
     #   * {Types::GetDataSourceResponse#error #error} => Types::ErrorDetail
     #   * {Types::GetDataSourceResponse#document_enrichment_configuration #document_enrichment_configuration} => Types::DocumentEnrichmentConfiguration
+    #   * {Types::GetDataSourceResponse#media_extraction_configuration #media_extraction_configuration} => Types::MediaExtractionConfiguration
     #
     # @example Request syntax with placeholder values
     #
@@ -2216,6 +2277,7 @@ module Aws::QBusiness
     #   resp.document_enrichment_configuration.post_extraction_hook_configuration.lambda_arn #=> String
     #   resp.document_enrichment_configuration.post_extraction_hook_configuration.s3_bucket_name #=> String
     #   resp.document_enrichment_configuration.post_extraction_hook_configuration.role_arn #=> String
+    #   resp.media_extraction_configuration.image_extraction_configuration.image_extraction_status #=> String, one of "ENABLED", "DISABLED"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetDataSource AWS API Documentation
     #
@@ -2289,9 +2351,9 @@ module Aws::QBusiness
     #   * {Types::GetIndexResponse#application_id #application_id} => String
     #   * {Types::GetIndexResponse#index_id #index_id} => String
     #   * {Types::GetIndexResponse#display_name #display_name} => String
-    #   * {Types::GetIndexResponse#type #type} => String
     #   * {Types::GetIndexResponse#index_arn #index_arn} => String
     #   * {Types::GetIndexResponse#status #status} => String
+    #   * {Types::GetIndexResponse#type #type} => String
     #   * {Types::GetIndexResponse#description #description} => String
     #   * {Types::GetIndexResponse#created_at #created_at} => Time
     #   * {Types::GetIndexResponse#updated_at #updated_at} => Time
@@ -2312,9 +2374,9 @@ module Aws::QBusiness
     #   resp.application_id #=> String
     #   resp.index_id #=> String
     #   resp.display_name #=> String
-    #   resp.type #=> String, one of "ENTERPRISE", "STARTER"
     #   resp.index_arn #=> String
     #   resp.status #=> String, one of "CREATING", "ACTIVE", "DELETING", "FAILED", "UPDATING"
+    #   resp.type #=> String, one of "ENTERPRISE", "STARTER"
     #   resp.description #=> String
     #   resp.created_at #=> Time
     #   resp.updated_at #=> Time
@@ -2334,6 +2396,62 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def get_index(params = {}, options = {})
       req = build_request(:get_index, params)
+      req.send_request(options)
+    end
+
+    # Returns the image bytes corresponding to a media object. If you have
+    # implemented your own application with the Chat and ChatSync APIs, and
+    # have enabled content extraction from visual data in Amazon Q Business,
+    # you use the GetMedia API operation to download the images so you can
+    # show them in your UI with responses.
+    #
+    # For more information, see [Extracting semantic meaning from images and
+    # visuals][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/extracting-meaning-from-images.html
+    #
+    # @option params [required, String] :application_id
+    #   The identifier of the Amazon Q Business which contains the media
+    #   object.
+    #
+    # @option params [required, String] :conversation_id
+    #   The identifier of the Amazon Q Business conversation.
+    #
+    # @option params [required, String] :message_id
+    #   The identifier of the Amazon Q Business message.
+    #
+    # @option params [required, String] :media_id
+    #   The identifier of the media object. You can find this in the
+    #   `sourceAttributions` returned by the `Chat`, `ChatSync`, and
+    #   `ListMessages` API responses.
+    #
+    # @return [Types::GetMediaResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetMediaResponse#media_bytes #media_bytes} => String
+    #   * {Types::GetMediaResponse#media_mime_type #media_mime_type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_media({
+    #     application_id: "ApplicationId", # required
+    #     conversation_id: "ConversationId", # required
+    #     message_id: "MessageId", # required
+    #     media_id: "MediaId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.media_bytes #=> String
+    #   resp.media_mime_type #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetMedia AWS API Documentation
+    #
+    # @overload get_media(params = {})
+    # @param [Hash] params ({})
+    def get_media(params = {}, options = {})
+      req = build_request(:get_media, params)
       req.send_request(options)
     end
 
@@ -2523,6 +2641,7 @@ module Aws::QBusiness
     #   * {Types::GetWebExperienceResponse#identity_provider_configuration #identity_provider_configuration} => Types::IdentityProviderConfiguration
     #   * {Types::GetWebExperienceResponse#authentication_configuration #authentication_configuration} => Types::WebExperienceAuthConfiguration
     #   * {Types::GetWebExperienceResponse#error #error} => Types::ErrorDetail
+    #   * {Types::GetWebExperienceResponse#browser_extension_configuration #browser_extension_configuration} => Types::BrowserExtensionConfiguration
     #
     # @example Request syntax with placeholder values
     #
@@ -2556,6 +2675,8 @@ module Aws::QBusiness
     #   resp.authentication_configuration.saml_configuration.user_group_attribute #=> String
     #   resp.error.error_message #=> String
     #   resp.error.error_code #=> String, one of "InternalError", "InvalidRequest", "ResourceInactive", "ResourceNotFound"
+    #   resp.browser_extension_configuration.enabled_browser_extensions #=> Array
+    #   resp.browser_extension_configuration.enabled_browser_extensions[0] #=> String, one of "FIREFOX", "CHROME"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetWebExperience AWS API Documentation
     #
@@ -2567,6 +2688,17 @@ module Aws::QBusiness
     end
 
     # Lists Amazon Q Business applications.
+    #
+    # <note markdown="1"> Amazon Q Business applications may securely transmit data for
+    # processing across Amazon Web Services Regions within your geography.
+    # For more information, see [Cross region inference in Amazon Q
+    # Business][1].
+    #
+    #  </note>
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html
     #
     # @option params [String] :next_token
     #   If the `maxResults` response was incomplete because there is more data
@@ -2608,6 +2740,72 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def list_applications(params = {}, options = {})
       req = build_request(:list_applications, params)
+      req.send_request(options)
+    end
+
+    # Gets a list of attachments associated with an Amazon Q Business web
+    # experience or a list of attachements associated with a specific Amazon
+    # Q Business conversation.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier for the Amazon Q Business application.
+    #
+    # @option params [String] :conversation_id
+    #   The unique identifier of the Amazon Q Business web experience
+    #   conversation.
+    #
+    # @option params [String] :user_id
+    #   The unique identifier of the user involved in the Amazon Q Business
+    #   web experience conversation.
+    #
+    # @option params [String] :next_token
+    #   If the number of attachments returned exceeds `maxResults`, Amazon Q
+    #   Business returns a next token as a pagination token to retrieve the
+    #   next set of attachments.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of attachements to return.
+    #
+    # @return [Types::ListAttachmentsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAttachmentsResponse#attachments #attachments} => Array&lt;Types::Attachment&gt;
+    #   * {Types::ListAttachmentsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_attachments({
+    #     application_id: "ApplicationId", # required
+    #     conversation_id: "ConversationId",
+    #     user_id: "UserId",
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.attachments #=> Array
+    #   resp.attachments[0].attachment_id #=> String
+    #   resp.attachments[0].conversation_id #=> String
+    #   resp.attachments[0].name #=> String
+    #   resp.attachments[0].copy_from.conversation.conversation_id #=> String
+    #   resp.attachments[0].copy_from.conversation.attachment_id #=> String
+    #   resp.attachments[0].file_type #=> String
+    #   resp.attachments[0].file_size #=> Integer
+    #   resp.attachments[0].md5chksum #=> String
+    #   resp.attachments[0].created_at #=> Time
+    #   resp.attachments[0].status #=> String, one of "FAILED", "SUCCESS"
+    #   resp.attachments[0].error.error_message #=> String
+    #   resp.attachments[0].error.error_code #=> String, one of "InternalError", "InvalidRequest", "ResourceInactive", "ResourceNotFound"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListAttachments AWS API Documentation
+    #
+    # @overload list_attachments(params = {})
+    # @param [Hash] params ({})
+    def list_attachments(params = {}, options = {})
+      req = build_request(:list_attachments, params)
       req.send_request(options)
     end
 
@@ -2977,7 +3175,7 @@ module Aws::QBusiness
     #   experience conversation.
     #
     # @option params [String] :next_token
-    #   If the number of retrievers returned exceeds `maxResults`, Amazon Q
+    #   If the number of messages returned exceeds `maxResults`, Amazon Q
     #   Business returns a next token as a pagination token to retrieve the
     #   next set of messages.
     #
@@ -3010,9 +3208,11 @@ module Aws::QBusiness
     #   resp.messages[0].type #=> String, one of "USER", "SYSTEM"
     #   resp.messages[0].attachments #=> Array
     #   resp.messages[0].attachments[0].name #=> String
-    #   resp.messages[0].attachments[0].status #=> String, one of "FAILED", "SUCCEEDED"
+    #   resp.messages[0].attachments[0].status #=> String, one of "FAILED", "SUCCESS"
     #   resp.messages[0].attachments[0].error.error_message #=> String
     #   resp.messages[0].attachments[0].error.error_code #=> String, one of "InternalError", "InvalidRequest", "ResourceInactive", "ResourceNotFound"
+    #   resp.messages[0].attachments[0].attachment_id #=> String
+    #   resp.messages[0].attachments[0].conversation_id #=> String
     #   resp.messages[0].source_attribution #=> Array
     #   resp.messages[0].source_attribution[0].title #=> String
     #   resp.messages[0].source_attribution[0].snippet #=> String
@@ -3023,6 +3223,8 @@ module Aws::QBusiness
     #   resp.messages[0].source_attribution[0].text_message_segments[0].begin_offset #=> Integer
     #   resp.messages[0].source_attribution[0].text_message_segments[0].end_offset #=> Integer
     #   resp.messages[0].source_attribution[0].text_message_segments[0].snippet_excerpt.text #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].media_id #=> String
+    #   resp.messages[0].source_attribution[0].text_message_segments[0].media_mime_type #=> String
     #   resp.messages[0].action_review.plugin_id #=> String
     #   resp.messages[0].action_review.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
     #   resp.messages[0].action_review.payload #=> Hash
@@ -3505,16 +3707,24 @@ module Aws::QBusiness
 
     # Updates an existing Amazon Q Business application.
     #
-    # <note markdown="1"> A Amazon Q Apps service-linked role will be created if it's absent in
-    # the Amazon Web Services account when the QAppsConfiguration is enabled
-    # in the request. For more information, see [ Using service-linked roles
-    # for Q Apps ][1]
+    # <note markdown="1"> Amazon Q Business applications may securely transmit data for
+    # processing across Amazon Web Services Regions within your geography.
+    # For more information, see [Cross region inference in Amazon Q
+    # Business][1].
+    #
+    #  </note>
+    #
+    # <note markdown="1"> An Amazon Q Apps service-linked role will be created if it's absent
+    # in the Amazon Web Services account when `QAppsConfiguration` is
+    # enabled in the request. For more information, see [Using
+    # service-linked roles for Q Apps][2].
     #
     #  </note>
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html
+    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/cross-region-inference.html
+    # [2]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/using-service-linked-roles-qapps.html
     #
     # @option params [required, String] :application_id
     #   The identifier of the Amazon Q Business application.
@@ -3763,6 +3973,10 @@ module Aws::QBusiness
     #
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/business-use-dg/custom-document-enrichment.html
     #
+    # @option params [Types::MediaExtractionConfiguration] :media_extraction_configuration
+    #   The configuration for extracting information from media in documents
+    #   for your data source.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -3836,6 +4050,11 @@ module Aws::QBusiness
     #         lambda_arn: "LambdaArn",
     #         s3_bucket_name: "S3BucketName",
     #         role_arn: "RoleArn",
+    #       },
+    #     },
+    #     media_extraction_configuration: {
+    #       image_extraction_configuration: {
+    #         image_extraction_status: "ENABLED", # required, accepts ENABLED, DISABLED
     #       },
     #     },
     #   })
@@ -4155,6 +4374,22 @@ module Aws::QBusiness
     #   URL</i> and not a full path. For example,
     #   <code>https://docs.aws.amazon.com</code>.</p> </li> </ul> </note>
     #
+    # @option params [Types::BrowserExtensionConfiguration] :browser_extension_configuration
+    #   The browser extension configuration for an Amazon Q Business web
+    #   experience.
+    #
+    #   <note markdown="1"> For Amazon Q Business application using external OIDC-compliant
+    #   identity providers (IdPs). The IdP administrator must add the browser
+    #   extension sign-in redirect URLs to the IdP application. For more
+    #   information, see [Configure external OIDC identity provider for your
+    #   browser extensions.][1].
+    #
+    #    </note>
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -4185,6 +4420,9 @@ module Aws::QBusiness
     #       },
     #     },
     #     origins: ["Origin"],
+    #     browser_extension_configuration: {
+    #       enabled_browser_extensions: ["FIREFOX"], # required, accepts FIREFOX, CHROME
+    #     },
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateWebExperience AWS API Documentation
@@ -4214,7 +4452,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.22.0'
+      context[:gem_version] = '1.23.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

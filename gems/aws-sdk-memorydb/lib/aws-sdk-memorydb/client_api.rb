@@ -50,6 +50,8 @@ module Aws::MemoryDB
     CreateACLResponse = Shapes::StructureShape.new(name: 'CreateACLResponse')
     CreateClusterRequest = Shapes::StructureShape.new(name: 'CreateClusterRequest')
     CreateClusterResponse = Shapes::StructureShape.new(name: 'CreateClusterResponse')
+    CreateMultiRegionClusterRequest = Shapes::StructureShape.new(name: 'CreateMultiRegionClusterRequest')
+    CreateMultiRegionClusterResponse = Shapes::StructureShape.new(name: 'CreateMultiRegionClusterResponse')
     CreateParameterGroupRequest = Shapes::StructureShape.new(name: 'CreateParameterGroupRequest')
     CreateParameterGroupResponse = Shapes::StructureShape.new(name: 'CreateParameterGroupResponse')
     CreateSnapshotRequest = Shapes::StructureShape.new(name: 'CreateSnapshotRequest')
@@ -64,6 +66,8 @@ module Aws::MemoryDB
     DeleteACLResponse = Shapes::StructureShape.new(name: 'DeleteACLResponse')
     DeleteClusterRequest = Shapes::StructureShape.new(name: 'DeleteClusterRequest')
     DeleteClusterResponse = Shapes::StructureShape.new(name: 'DeleteClusterResponse')
+    DeleteMultiRegionClusterRequest = Shapes::StructureShape.new(name: 'DeleteMultiRegionClusterRequest')
+    DeleteMultiRegionClusterResponse = Shapes::StructureShape.new(name: 'DeleteMultiRegionClusterResponse')
     DeleteParameterGroupRequest = Shapes::StructureShape.new(name: 'DeleteParameterGroupRequest')
     DeleteParameterGroupResponse = Shapes::StructureShape.new(name: 'DeleteParameterGroupResponse')
     DeleteSnapshotRequest = Shapes::StructureShape.new(name: 'DeleteSnapshotRequest')
@@ -80,6 +84,8 @@ module Aws::MemoryDB
     DescribeEngineVersionsResponse = Shapes::StructureShape.new(name: 'DescribeEngineVersionsResponse')
     DescribeEventsRequest = Shapes::StructureShape.new(name: 'DescribeEventsRequest')
     DescribeEventsResponse = Shapes::StructureShape.new(name: 'DescribeEventsResponse')
+    DescribeMultiRegionClustersRequest = Shapes::StructureShape.new(name: 'DescribeMultiRegionClustersRequest')
+    DescribeMultiRegionClustersResponse = Shapes::StructureShape.new(name: 'DescribeMultiRegionClustersResponse')
     DescribeParameterGroupsRequest = Shapes::StructureShape.new(name: 'DescribeParameterGroupsRequest')
     DescribeParameterGroupsResponse = Shapes::StructureShape.new(name: 'DescribeParameterGroupsResponse')
     DescribeParametersRequest = Shapes::StructureShape.new(name: 'DescribeParametersRequest')
@@ -119,6 +125,7 @@ module Aws::MemoryDB
     InvalidClusterStateFault = Shapes::StructureShape.new(name: 'InvalidClusterStateFault')
     InvalidCredentialsException = Shapes::StructureShape.new(name: 'InvalidCredentialsException')
     InvalidKMSKeyFault = Shapes::StructureShape.new(name: 'InvalidKMSKeyFault')
+    InvalidMultiRegionClusterStateFault = Shapes::StructureShape.new(name: 'InvalidMultiRegionClusterStateFault')
     InvalidNodeStateFault = Shapes::StructureShape.new(name: 'InvalidNodeStateFault')
     InvalidParameterCombinationException = Shapes::StructureShape.new(name: 'InvalidParameterCombinationException')
     InvalidParameterGroupStateFault = Shapes::StructureShape.new(name: 'InvalidParameterGroupStateFault')
@@ -129,10 +136,17 @@ module Aws::MemoryDB
     InvalidVPCNetworkStateFault = Shapes::StructureShape.new(name: 'InvalidVPCNetworkStateFault')
     KeyList = Shapes::ListShape.new(name: 'KeyList')
     KmsKeyId = Shapes::StringShape.new(name: 'KmsKeyId')
+    ListAllowedMultiRegionClusterUpdatesRequest = Shapes::StructureShape.new(name: 'ListAllowedMultiRegionClusterUpdatesRequest')
+    ListAllowedMultiRegionClusterUpdatesResponse = Shapes::StructureShape.new(name: 'ListAllowedMultiRegionClusterUpdatesResponse')
     ListAllowedNodeTypeUpdatesRequest = Shapes::StructureShape.new(name: 'ListAllowedNodeTypeUpdatesRequest')
     ListAllowedNodeTypeUpdatesResponse = Shapes::StructureShape.new(name: 'ListAllowedNodeTypeUpdatesResponse')
     ListTagsRequest = Shapes::StructureShape.new(name: 'ListTagsRequest')
     ListTagsResponse = Shapes::StructureShape.new(name: 'ListTagsResponse')
+    MultiRegionCluster = Shapes::StructureShape.new(name: 'MultiRegionCluster')
+    MultiRegionClusterAlreadyExistsFault = Shapes::StructureShape.new(name: 'MultiRegionClusterAlreadyExistsFault')
+    MultiRegionClusterList = Shapes::ListShape.new(name: 'MultiRegionClusterList')
+    MultiRegionClusterNotFoundFault = Shapes::StructureShape.new(name: 'MultiRegionClusterNotFoundFault')
+    MultiRegionParameterGroupNotFoundFault = Shapes::StructureShape.new(name: 'MultiRegionParameterGroupNotFoundFault')
     NoOperationFault = Shapes::StructureShape.new(name: 'NoOperationFault')
     Node = Shapes::StructureShape.new(name: 'Node')
     NodeList = Shapes::ListShape.new(name: 'NodeList')
@@ -156,6 +170,8 @@ module Aws::MemoryDB
     PurchaseReservedNodesOfferingResponse = Shapes::StructureShape.new(name: 'PurchaseReservedNodesOfferingResponse')
     RecurringCharge = Shapes::StructureShape.new(name: 'RecurringCharge')
     RecurringChargeList = Shapes::ListShape.new(name: 'RecurringChargeList')
+    RegionalCluster = Shapes::StructureShape.new(name: 'RegionalCluster')
+    RegionalClusterList = Shapes::ListShape.new(name: 'RegionalClusterList')
     ReplicaConfigurationRequest = Shapes::StructureShape.new(name: 'ReplicaConfigurationRequest')
     ReservedNode = Shapes::StructureShape.new(name: 'ReservedNode')
     ReservedNodeAlreadyExistsFault = Shapes::StructureShape.new(name: 'ReservedNodeAlreadyExistsFault')
@@ -225,8 +241,11 @@ module Aws::MemoryDB
     UpdateACLResponse = Shapes::StructureShape.new(name: 'UpdateACLResponse')
     UpdateClusterRequest = Shapes::StructureShape.new(name: 'UpdateClusterRequest')
     UpdateClusterResponse = Shapes::StructureShape.new(name: 'UpdateClusterResponse')
+    UpdateMultiRegionClusterRequest = Shapes::StructureShape.new(name: 'UpdateMultiRegionClusterRequest')
+    UpdateMultiRegionClusterResponse = Shapes::StructureShape.new(name: 'UpdateMultiRegionClusterResponse')
     UpdateParameterGroupRequest = Shapes::StructureShape.new(name: 'UpdateParameterGroupRequest')
     UpdateParameterGroupResponse = Shapes::StructureShape.new(name: 'UpdateParameterGroupResponse')
+    UpdateStrategy = Shapes::StringShape.new(name: 'UpdateStrategy')
     UpdateSubnetGroupRequest = Shapes::StructureShape.new(name: 'UpdateSubnetGroupRequest')
     UpdateSubnetGroupResponse = Shapes::StructureShape.new(name: 'UpdateSubnetGroupResponse')
     UpdateUserRequest = Shapes::StructureShape.new(name: 'UpdateUserRequest')
@@ -293,6 +312,7 @@ module Aws::MemoryDB
     Cluster.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     Cluster.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "Status"))
     Cluster.add_member(:pending_updates, Shapes::ShapeRef.new(shape: ClusterPendingUpdates, location_name: "PendingUpdates"))
+    Cluster.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionClusterName"))
     Cluster.add_member(:number_of_shards, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "NumberOfShards"))
     Cluster.add_member(:shards, Shapes::ShapeRef.new(shape: ShardList, location_name: "Shards"))
     Cluster.add_member(:availability_mode, Shapes::ShapeRef.new(shape: AZStatus, location_name: "AvailabilityMode"))
@@ -335,6 +355,8 @@ module Aws::MemoryDB
     ClusterConfiguration.add_member(:snapshot_window, Shapes::ShapeRef.new(shape: String, location_name: "SnapshotWindow"))
     ClusterConfiguration.add_member(:num_shards, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "NumShards"))
     ClusterConfiguration.add_member(:shards, Shapes::ShapeRef.new(shape: ShardDetails, location_name: "Shards"))
+    ClusterConfiguration.add_member(:multi_region_parameter_group_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionParameterGroupName"))
+    ClusterConfiguration.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionClusterName"))
     ClusterConfiguration.struct_class = Types::ClusterConfiguration
 
     ClusterList.member = Shapes::ShapeRef.new(shape: Cluster)
@@ -370,6 +392,7 @@ module Aws::MemoryDB
 
     CreateClusterRequest.add_member(:cluster_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClusterName"))
     CreateClusterRequest.add_member(:node_type, Shapes::ShapeRef.new(shape: String, required: true, location_name: "NodeType"))
+    CreateClusterRequest.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionClusterName"))
     CreateClusterRequest.add_member(:parameter_group_name, Shapes::ShapeRef.new(shape: String, location_name: "ParameterGroupName"))
     CreateClusterRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
     CreateClusterRequest.add_member(:num_shards, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "NumShards"))
@@ -395,6 +418,20 @@ module Aws::MemoryDB
 
     CreateClusterResponse.add_member(:cluster, Shapes::ShapeRef.new(shape: Cluster, location_name: "Cluster"))
     CreateClusterResponse.struct_class = Types::CreateClusterResponse
+
+    CreateMultiRegionClusterRequest.add_member(:multi_region_cluster_name_suffix, Shapes::ShapeRef.new(shape: String, required: true, location_name: "MultiRegionClusterNameSuffix"))
+    CreateMultiRegionClusterRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
+    CreateMultiRegionClusterRequest.add_member(:engine, Shapes::ShapeRef.new(shape: String, location_name: "Engine"))
+    CreateMultiRegionClusterRequest.add_member(:engine_version, Shapes::ShapeRef.new(shape: String, location_name: "EngineVersion"))
+    CreateMultiRegionClusterRequest.add_member(:node_type, Shapes::ShapeRef.new(shape: String, required: true, location_name: "NodeType"))
+    CreateMultiRegionClusterRequest.add_member(:multi_region_parameter_group_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionParameterGroupName"))
+    CreateMultiRegionClusterRequest.add_member(:num_shards, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "NumShards"))
+    CreateMultiRegionClusterRequest.add_member(:tls_enabled, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "TLSEnabled"))
+    CreateMultiRegionClusterRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
+    CreateMultiRegionClusterRequest.struct_class = Types::CreateMultiRegionClusterRequest
+
+    CreateMultiRegionClusterResponse.add_member(:multi_region_cluster, Shapes::ShapeRef.new(shape: MultiRegionCluster, location_name: "MultiRegionCluster"))
+    CreateMultiRegionClusterResponse.struct_class = Types::CreateMultiRegionClusterResponse
 
     CreateParameterGroupRequest.add_member(:parameter_group_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ParameterGroupName"))
     CreateParameterGroupRequest.add_member(:family, Shapes::ShapeRef.new(shape: String, required: true, location_name: "Family"))
@@ -441,11 +478,18 @@ module Aws::MemoryDB
     DeleteACLResponse.struct_class = Types::DeleteACLResponse
 
     DeleteClusterRequest.add_member(:cluster_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClusterName"))
+    DeleteClusterRequest.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionClusterName"))
     DeleteClusterRequest.add_member(:final_snapshot_name, Shapes::ShapeRef.new(shape: String, location_name: "FinalSnapshotName"))
     DeleteClusterRequest.struct_class = Types::DeleteClusterRequest
 
     DeleteClusterResponse.add_member(:cluster, Shapes::ShapeRef.new(shape: Cluster, location_name: "Cluster"))
     DeleteClusterResponse.struct_class = Types::DeleteClusterResponse
+
+    DeleteMultiRegionClusterRequest.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "MultiRegionClusterName"))
+    DeleteMultiRegionClusterRequest.struct_class = Types::DeleteMultiRegionClusterRequest
+
+    DeleteMultiRegionClusterResponse.add_member(:multi_region_cluster, Shapes::ShapeRef.new(shape: MultiRegionCluster, location_name: "MultiRegionCluster"))
+    DeleteMultiRegionClusterResponse.struct_class = Types::DeleteMultiRegionClusterResponse
 
     DeleteParameterGroupRequest.add_member(:parameter_group_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ParameterGroupName"))
     DeleteParameterGroupRequest.struct_class = Types::DeleteParameterGroupRequest
@@ -514,6 +558,16 @@ module Aws::MemoryDB
     DescribeEventsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
     DescribeEventsResponse.add_member(:events, Shapes::ShapeRef.new(shape: EventList, location_name: "Events"))
     DescribeEventsResponse.struct_class = Types::DescribeEventsResponse
+
+    DescribeMultiRegionClustersRequest.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionClusterName"))
+    DescribeMultiRegionClustersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "MaxResults"))
+    DescribeMultiRegionClustersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeMultiRegionClustersRequest.add_member(:show_cluster_details, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ShowClusterDetails"))
+    DescribeMultiRegionClustersRequest.struct_class = Types::DescribeMultiRegionClustersRequest
+
+    DescribeMultiRegionClustersResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "NextToken"))
+    DescribeMultiRegionClustersResponse.add_member(:multi_region_clusters, Shapes::ShapeRef.new(shape: MultiRegionClusterList, location_name: "MultiRegionClusters"))
+    DescribeMultiRegionClustersResponse.struct_class = Types::DescribeMultiRegionClustersResponse
 
     DescribeParameterGroupsRequest.add_member(:parameter_group_name, Shapes::ShapeRef.new(shape: String, location_name: "ParameterGroupName"))
     DescribeParameterGroupsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "MaxResults"))
@@ -649,6 +703,8 @@ module Aws::MemoryDB
 
     InvalidKMSKeyFault.struct_class = Types::InvalidKMSKeyFault
 
+    InvalidMultiRegionClusterStateFault.struct_class = Types::InvalidMultiRegionClusterStateFault
+
     InvalidNodeStateFault.struct_class = Types::InvalidNodeStateFault
 
     InvalidParameterCombinationException.add_member(:message, Shapes::ShapeRef.new(shape: AwsQueryErrorMessage, location_name: "message"))
@@ -669,6 +725,13 @@ module Aws::MemoryDB
 
     KeyList.member = Shapes::ShapeRef.new(shape: String)
 
+    ListAllowedMultiRegionClusterUpdatesRequest.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "MultiRegionClusterName"))
+    ListAllowedMultiRegionClusterUpdatesRequest.struct_class = Types::ListAllowedMultiRegionClusterUpdatesRequest
+
+    ListAllowedMultiRegionClusterUpdatesResponse.add_member(:scale_up_node_types, Shapes::ShapeRef.new(shape: NodeTypeList, location_name: "ScaleUpNodeTypes"))
+    ListAllowedMultiRegionClusterUpdatesResponse.add_member(:scale_down_node_types, Shapes::ShapeRef.new(shape: NodeTypeList, location_name: "ScaleDownNodeTypes"))
+    ListAllowedMultiRegionClusterUpdatesResponse.struct_class = Types::ListAllowedMultiRegionClusterUpdatesResponse
+
     ListAllowedNodeTypeUpdatesRequest.add_member(:cluster_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ClusterName"))
     ListAllowedNodeTypeUpdatesRequest.struct_class = Types::ListAllowedNodeTypeUpdatesRequest
 
@@ -681,6 +744,27 @@ module Aws::MemoryDB
 
     ListTagsResponse.add_member(:tag_list, Shapes::ShapeRef.new(shape: TagList, location_name: "TagList"))
     ListTagsResponse.struct_class = Types::ListTagsResponse
+
+    MultiRegionCluster.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionClusterName"))
+    MultiRegionCluster.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
+    MultiRegionCluster.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "Status"))
+    MultiRegionCluster.add_member(:node_type, Shapes::ShapeRef.new(shape: String, location_name: "NodeType"))
+    MultiRegionCluster.add_member(:engine, Shapes::ShapeRef.new(shape: String, location_name: "Engine"))
+    MultiRegionCluster.add_member(:engine_version, Shapes::ShapeRef.new(shape: String, location_name: "EngineVersion"))
+    MultiRegionCluster.add_member(:number_of_shards, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "NumberOfShards"))
+    MultiRegionCluster.add_member(:clusters, Shapes::ShapeRef.new(shape: RegionalClusterList, location_name: "Clusters"))
+    MultiRegionCluster.add_member(:multi_region_parameter_group_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionParameterGroupName"))
+    MultiRegionCluster.add_member(:tls_enabled, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "TLSEnabled"))
+    MultiRegionCluster.add_member(:arn, Shapes::ShapeRef.new(shape: String, location_name: "ARN"))
+    MultiRegionCluster.struct_class = Types::MultiRegionCluster
+
+    MultiRegionClusterAlreadyExistsFault.struct_class = Types::MultiRegionClusterAlreadyExistsFault
+
+    MultiRegionClusterList.member = Shapes::ShapeRef.new(shape: MultiRegionCluster)
+
+    MultiRegionClusterNotFoundFault.struct_class = Types::MultiRegionClusterNotFoundFault
+
+    MultiRegionParameterGroupNotFoundFault.struct_class = Types::MultiRegionParameterGroupNotFoundFault
 
     NoOperationFault.struct_class = Types::NoOperationFault
 
@@ -753,6 +837,14 @@ module Aws::MemoryDB
     RecurringCharge.struct_class = Types::RecurringCharge
 
     RecurringChargeList.member = Shapes::ShapeRef.new(shape: RecurringCharge)
+
+    RegionalCluster.add_member(:cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "ClusterName"))
+    RegionalCluster.add_member(:region, Shapes::ShapeRef.new(shape: String, location_name: "Region"))
+    RegionalCluster.add_member(:status, Shapes::ShapeRef.new(shape: String, location_name: "Status"))
+    RegionalCluster.add_member(:arn, Shapes::ShapeRef.new(shape: String, location_name: "ARN"))
+    RegionalCluster.struct_class = Types::RegionalCluster
+
+    RegionalClusterList.member = Shapes::ShapeRef.new(shape: RegionalCluster)
 
     ReplicaConfigurationRequest.add_member(:replica_count, Shapes::ShapeRef.new(shape: Integer, location_name: "ReplicaCount"))
     ReplicaConfigurationRequest.struct_class = Types::ReplicaConfigurationRequest
@@ -973,6 +1065,18 @@ module Aws::MemoryDB
     UpdateClusterResponse.add_member(:cluster, Shapes::ShapeRef.new(shape: Cluster, location_name: "Cluster"))
     UpdateClusterResponse.struct_class = Types::UpdateClusterResponse
 
+    UpdateMultiRegionClusterRequest.add_member(:multi_region_cluster_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "MultiRegionClusterName"))
+    UpdateMultiRegionClusterRequest.add_member(:node_type, Shapes::ShapeRef.new(shape: String, location_name: "NodeType"))
+    UpdateMultiRegionClusterRequest.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "Description"))
+    UpdateMultiRegionClusterRequest.add_member(:engine_version, Shapes::ShapeRef.new(shape: String, location_name: "EngineVersion"))
+    UpdateMultiRegionClusterRequest.add_member(:shard_configuration, Shapes::ShapeRef.new(shape: ShardConfigurationRequest, location_name: "ShardConfiguration"))
+    UpdateMultiRegionClusterRequest.add_member(:multi_region_parameter_group_name, Shapes::ShapeRef.new(shape: String, location_name: "MultiRegionParameterGroupName"))
+    UpdateMultiRegionClusterRequest.add_member(:update_strategy, Shapes::ShapeRef.new(shape: UpdateStrategy, location_name: "UpdateStrategy"))
+    UpdateMultiRegionClusterRequest.struct_class = Types::UpdateMultiRegionClusterRequest
+
+    UpdateMultiRegionClusterResponse.add_member(:multi_region_cluster, Shapes::ShapeRef.new(shape: MultiRegionCluster, location_name: "MultiRegionCluster"))
+    UpdateMultiRegionClusterResponse.struct_class = Types::UpdateMultiRegionClusterResponse
+
     UpdateParameterGroupRequest.add_member(:parameter_group_name, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ParameterGroupName"))
     UpdateParameterGroupRequest.add_member(:parameter_name_values, Shapes::ShapeRef.new(shape: ParameterNameValueList, required: true, location_name: "ParameterNameValues"))
     UpdateParameterGroupRequest.struct_class = Types::UpdateParameterGroupRequest
@@ -1102,6 +1206,22 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: TagQuotaPerResourceExceeded)
         o.errors << Shapes::ShapeRef.new(shape: ACLNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: InvalidACLStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidMultiRegionClusterStateFault)
+      end)
+
+      api.add_operation(:create_multi_region_cluster, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateMultiRegionCluster"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateMultiRegionClusterRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateMultiRegionClusterResponse)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterAlreadyExistsFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionParameterGroupNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: ClusterQuotaForCustomerExceededFault)
+        o.errors << Shapes::ShapeRef.new(shape: TagQuotaPerResourceExceeded)
       end)
 
       api.add_operation(:create_parameter_group, Seahorse::Model::Operation.new.tap do |o|
@@ -1187,6 +1307,17 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: ServiceLinkedRoleNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
+      end)
+
+      api.add_operation(:delete_multi_region_cluster, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteMultiRegionCluster"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteMultiRegionClusterRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteMultiRegionClusterResponse)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidMultiRegionClusterStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
       end)
 
       api.add_operation(:delete_parameter_group, Seahorse::Model::Operation.new.tap do |o|
@@ -1297,6 +1428,24 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: ServiceLinkedRoleNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:describe_multi_region_clusters, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeMultiRegionClusters"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeMultiRegionClustersRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeMultiRegionClustersResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
           tokens: {
@@ -1459,6 +1608,17 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
       end)
 
+      api.add_operation(:list_allowed_multi_region_cluster_updates, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAllowedMultiRegionClusterUpdates"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListAllowedMultiRegionClusterUpdatesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAllowedMultiRegionClusterUpdatesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+      end)
+
       api.add_operation(:list_allowed_node_type_updates, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListAllowedNodeTypeUpdates"
         o.http_method = "POST"
@@ -1486,6 +1646,8 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: ServiceLinkedRoleNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: UserNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: ACLNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionParameterGroupNotFoundFault)
       end)
 
       api.add_operation(:purchase_reserved_nodes_offering, Seahorse::Model::Operation.new.tap do |o|
@@ -1529,9 +1691,12 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: SnapshotNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: UserNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: ACLNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionParameterGroupNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: TagQuotaPerResourceExceeded)
         o.errors << Shapes::ShapeRef.new(shape: InvalidARNFault)
         o.errors << Shapes::ShapeRef.new(shape: ServiceLinkedRoleNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
       end)
 
       api.add_operation(:untag_resource, Seahorse::Model::Operation.new.tap do |o|
@@ -1550,6 +1715,9 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: ServiceLinkedRoleNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: UserNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: ACLNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionParameterGroupNotFoundFault)
       end)
 
       api.add_operation(:update_acl, Seahorse::Model::Operation.new.tap do |o|
@@ -1589,6 +1757,19 @@ module Aws::MemoryDB
         o.errors << Shapes::ShapeRef.new(shape: ACLNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
+      end)
+
+      api.add_operation(:update_multi_region_cluster, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateMultiRegionCluster"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateMultiRegionClusterRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateMultiRegionClusterResponse)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionClusterNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: MultiRegionParameterGroupNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidMultiRegionClusterStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterCombinationException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
       end)
 
       api.add_operation(:update_parameter_group, Seahorse::Model::Operation.new.tap do |o|

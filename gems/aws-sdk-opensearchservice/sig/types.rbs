@@ -63,6 +63,20 @@ module Aws::OpenSearchService
       SENSITIVE: []
     end
 
+    class AddDirectQueryDataSourceRequest
+      attr_accessor data_source_name: ::String
+      attr_accessor data_source_type: Types::DirectQueryDataSourceType
+      attr_accessor description: ::String
+      attr_accessor open_search_arns: ::Array[::String]
+      attr_accessor tag_list: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class AddDirectQueryDataSourceResponse
+      attr_accessor data_source_arn: ::String
+      SENSITIVE: []
+    end
+
     class AddTagsRequest
       attr_accessor arn: ::String
       attr_accessor tag_list: ::Array[Types::Tag]
@@ -299,6 +313,11 @@ module Aws::OpenSearchService
       SENSITIVE: []
     end
 
+    class CloudWatchDirectQueryDataSource
+      attr_accessor role_arn: ::String
+      SENSITIVE: []
+    end
+
     class ClusterConfig
       attr_accessor instance_type: ("m3.medium.search" | "m3.large.search" | "m3.xlarge.search" | "m3.2xlarge.search" | "m4.large.search" | "m4.xlarge.search" | "m4.2xlarge.search" | "m4.4xlarge.search" | "m4.10xlarge.search" | "m5.large.search" | "m5.xlarge.search" | "m5.2xlarge.search" | "m5.4xlarge.search" | "m5.12xlarge.search" | "m5.24xlarge.search" | "r5.large.search" | "r5.xlarge.search" | "r5.2xlarge.search" | "r5.4xlarge.search" | "r5.12xlarge.search" | "r5.24xlarge.search" | "c5.large.search" | "c5.xlarge.search" | "c5.2xlarge.search" | "c5.4xlarge.search" | "c5.9xlarge.search" | "c5.18xlarge.search" | "t3.nano.search" | "t3.micro.search" | "t3.small.search" | "t3.medium.search" | "t3.large.search" | "t3.xlarge.search" | "t3.2xlarge.search" | "or1.medium.search" | "or1.large.search" | "or1.xlarge.search" | "or1.2xlarge.search" | "or1.4xlarge.search" | "or1.8xlarge.search" | "or1.12xlarge.search" | "or1.16xlarge.search" | "ultrawarm1.medium.search" | "ultrawarm1.large.search" | "ultrawarm1.xlarge.search" | "t2.micro.search" | "t2.small.search" | "t2.medium.search" | "r3.large.search" | "r3.xlarge.search" | "r3.2xlarge.search" | "r3.4xlarge.search" | "r3.8xlarge.search" | "i2.xlarge.search" | "i2.2xlarge.search" | "d2.xlarge.search" | "d2.2xlarge.search" | "d2.4xlarge.search" | "d2.8xlarge.search" | "c4.large.search" | "c4.xlarge.search" | "c4.2xlarge.search" | "c4.4xlarge.search" | "c4.8xlarge.search" | "r4.large.search" | "r4.xlarge.search" | "r4.2xlarge.search" | "r4.4xlarge.search" | "r4.8xlarge.search" | "r4.16xlarge.search" | "i3.large.search" | "i3.xlarge.search" | "i3.2xlarge.search" | "i3.4xlarge.search" | "i3.8xlarge.search" | "i3.16xlarge.search" | "r6g.large.search" | "r6g.xlarge.search" | "r6g.2xlarge.search" | "r6g.4xlarge.search" | "r6g.8xlarge.search" | "r6g.12xlarge.search" | "m6g.large.search" | "m6g.xlarge.search" | "m6g.2xlarge.search" | "m6g.4xlarge.search" | "m6g.8xlarge.search" | "m6g.12xlarge.search" | "c6g.large.search" | "c6g.xlarge.search" | "c6g.2xlarge.search" | "c6g.4xlarge.search" | "c6g.8xlarge.search" | "c6g.12xlarge.search" | "r6gd.large.search" | "r6gd.xlarge.search" | "r6gd.2xlarge.search" | "r6gd.4xlarge.search" | "r6gd.8xlarge.search" | "r6gd.12xlarge.search" | "r6gd.16xlarge.search" | "t4g.small.search" | "t4g.medium.search")
       attr_accessor instance_count: ::Integer
@@ -503,6 +522,11 @@ module Aws::OpenSearchService
 
     class DeleteDataSourceResponse
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDirectQueryDataSourceRequest
+      attr_accessor data_source_name: ::String
       SENSITIVE: []
     end
 
@@ -751,6 +775,30 @@ module Aws::OpenSearchService
       attr_accessor vpc_endpoints: ::Array[Types::VpcEndpoint]
       attr_accessor vpc_endpoint_errors: ::Array[Types::VpcEndpointError]
       SENSITIVE: []
+    end
+
+    class DirectQueryDataSource
+      attr_accessor data_source_name: ::String
+      attr_accessor data_source_type: Types::DirectQueryDataSourceType
+      attr_accessor description: ::String
+      attr_accessor open_search_arns: ::Array[::String]
+      attr_accessor data_source_arn: ::String
+      attr_accessor tag_list: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class DirectQueryDataSourceType
+      attr_accessor cloud_watch_log: Types::CloudWatchDirectQueryDataSource
+      attr_accessor security_lake: Types::SecurityLakeDirectQueryDataSource
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class CloudWatchLog < DirectQueryDataSourceType
+      end
+      class SecurityLake < DirectQueryDataSourceType
+      end
+      class Unknown < DirectQueryDataSourceType
+      end
     end
 
     class DisabledOperationException < Aws::EmptyStructure
@@ -1014,6 +1062,20 @@ module Aws::OpenSearchService
       SENSITIVE: []
     end
 
+    class GetDirectQueryDataSourceRequest
+      attr_accessor data_source_name: ::String
+      SENSITIVE: []
+    end
+
+    class GetDirectQueryDataSourceResponse
+      attr_accessor data_source_name: ::String
+      attr_accessor data_source_type: Types::DirectQueryDataSourceType
+      attr_accessor description: ::String
+      attr_accessor open_search_arns: ::Array[::String]
+      attr_accessor data_source_arn: ::String
+      SENSITIVE: []
+    end
+
     class GetDomainMaintenanceStatusRequest
       attr_accessor domain_name: ::String
       attr_accessor maintenance_id: ::String
@@ -1213,6 +1275,17 @@ module Aws::OpenSearchService
 
     class ListDataSourcesResponse
       attr_accessor data_sources: ::Array[Types::DataSourceDetails]
+      SENSITIVE: []
+    end
+
+    class ListDirectQueryDataSourcesRequest
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListDirectQueryDataSourcesResponse
+      attr_accessor next_token: ::String
+      attr_accessor direct_query_data_sources: ::Array[Types::DirectQueryDataSource]
       SENSITIVE: []
     end
 
@@ -1666,6 +1739,11 @@ module Aws::OpenSearchService
       SENSITIVE: []
     end
 
+    class SecurityLakeDirectQueryDataSource
+      attr_accessor role_arn: ::String
+      SENSITIVE: []
+    end
+
     class ServiceSoftwareOptions
       attr_accessor current_version: ::String
       attr_accessor new_version: ::String
@@ -1778,6 +1856,19 @@ module Aws::OpenSearchService
 
     class UpdateDataSourceResponse
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateDirectQueryDataSourceRequest
+      attr_accessor data_source_name: ::String
+      attr_accessor data_source_type: Types::DirectQueryDataSourceType
+      attr_accessor description: ::String
+      attr_accessor open_search_arns: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UpdateDirectQueryDataSourceResponse
+      attr_accessor data_source_arn: ::String
       SENSITIVE: []
     end
 

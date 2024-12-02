@@ -1,0 +1,212 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::Invoicing
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      attr_accessor resource_name: ::String
+      SENSITIVE: []
+    end
+
+    class BatchGetInvoiceProfileRequest
+      attr_accessor account_ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class BatchGetInvoiceProfileResponse
+      attr_accessor profiles: ::Array[Types::InvoiceProfile]
+      SENSITIVE: []
+    end
+
+    class CreateInvoiceUnitRequest
+      attr_accessor name: ::String
+      attr_accessor invoice_receiver: ::String
+      attr_accessor description: ::String
+      attr_accessor tax_inheritance_disabled: bool
+      attr_accessor rule: Types::InvoiceUnitRule
+      attr_accessor resource_tags: ::Array[Types::ResourceTag]
+      SENSITIVE: []
+    end
+
+    class CreateInvoiceUnitResponse
+      attr_accessor invoice_unit_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteInvoiceUnitRequest
+      attr_accessor invoice_unit_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteInvoiceUnitResponse
+      attr_accessor invoice_unit_arn: ::String
+      SENSITIVE: []
+    end
+
+    class Filters
+      attr_accessor names: ::Array[::String]
+      attr_accessor invoice_receivers: ::Array[::String]
+      attr_accessor accounts: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class GetInvoiceUnitRequest
+      attr_accessor invoice_unit_arn: ::String
+      attr_accessor as_of: ::Time
+      SENSITIVE: []
+    end
+
+    class GetInvoiceUnitResponse
+      attr_accessor invoice_unit_arn: ::String
+      attr_accessor invoice_receiver: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor tax_inheritance_disabled: bool
+      attr_accessor rule: Types::InvoiceUnitRule
+      attr_accessor last_modified: ::Time
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor retry_after_seconds: ::Integer
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class InvoiceProfile
+      attr_accessor account_id: ::String
+      attr_accessor receiver_name: ::String
+      attr_accessor receiver_address: Types::ReceiverAddress
+      attr_accessor receiver_email: ::String
+      attr_accessor issuer: ::String
+      attr_accessor tax_registration_number: ::String
+      SENSITIVE: [:receiver_address, :receiver_email, :tax_registration_number]
+    end
+
+    class InvoiceUnit
+      attr_accessor invoice_unit_arn: ::String
+      attr_accessor invoice_receiver: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor tax_inheritance_disabled: bool
+      attr_accessor rule: Types::InvoiceUnitRule
+      attr_accessor last_modified: ::Time
+      SENSITIVE: []
+    end
+
+    class InvoiceUnitRule
+      attr_accessor linked_accounts: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class ListInvoiceUnitsRequest
+      attr_accessor filters: Types::Filters
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor as_of: ::Time
+      SENSITIVE: []
+    end
+
+    class ListInvoiceUnitsResponse
+      attr_accessor invoice_units: ::Array[Types::InvoiceUnit]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceRequest
+      attr_accessor resource_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListTagsForResourceResponse
+      attr_accessor resource_tags: ::Array[Types::ResourceTag]
+      SENSITIVE: []
+    end
+
+    class ReceiverAddress
+      attr_accessor address_line_1: ::String
+      attr_accessor address_line_2: ::String
+      attr_accessor address_line_3: ::String
+      attr_accessor district_or_county: ::String
+      attr_accessor city: ::String
+      attr_accessor state_or_region: ::String
+      attr_accessor country_code: ::String
+      attr_accessor company_name: ::String
+      attr_accessor postal_code: ::String
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      attr_accessor resource_name: ::String
+      SENSITIVE: []
+    end
+
+    class ResourceTag
+      attr_accessor key: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class TagResourceRequest
+      attr_accessor resource_arn: ::String
+      attr_accessor resource_tags: ::Array[Types::ResourceTag]
+      SENSITIVE: []
+    end
+
+    class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class UntagResourceRequest
+      attr_accessor resource_arn: ::String
+      attr_accessor resource_tag_keys: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UntagResourceResponse < Aws::EmptyStructure
+    end
+
+    class UpdateInvoiceUnitRequest
+      attr_accessor invoice_unit_arn: ::String
+      attr_accessor description: ::String
+      attr_accessor tax_inheritance_disabled: bool
+      attr_accessor rule: Types::InvoiceUnitRule
+      SENSITIVE: []
+    end
+
+    class UpdateInvoiceUnitResponse
+      attr_accessor invoice_unit_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      attr_accessor resource_name: ::String
+      attr_accessor reason: ("nonMemberPresent" | "maxAccountsExceeded" | "maxInvoiceUnitsExceeded" | "duplicateInvoiceUnit" | "mutualExclusionError" | "accountMembershipError" | "taxSettingsError" | "expiredNextToken" | "invalidNextToken" | "invalidInput" | "fieldValidationFailed" | "cannotParse" | "unknownOperation" | "other")
+      attr_accessor field_list: ::Array[Types::ValidationExceptionField]
+      SENSITIVE: []
+    end
+
+    class ValidationExceptionField
+      attr_accessor name: ::String
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+  end
+end

@@ -96,6 +96,7 @@ module Aws::RDS
     #     auto_minor_version_upgrade: false,
     #     monitoring_interval: 1,
     #     monitoring_role_arn: "String",
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -776,6 +777,8 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html#USER_Monitoring.OS.Enabling
+    # @option options [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the cluster.
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB cluster.
     #
@@ -1126,6 +1129,7 @@ module Aws::RDS
     #     promotion_tier: 1,
     #     timezone: "String",
     #     enable_iam_database_authentication: false,
+    #     database_insights_mode: "standard", # accepts standard, advanced
     #     enable_performance_insights: false,
     #     performance_insights_kms_key_id: "String",
     #     performance_insights_retention_period: 1,
@@ -2086,6 +2090,8 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
+    # @option options [String] :database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
     # @option options [Boolean] :enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB instance.
     #   For more information, see [Using Amazon Performance Insights][1] in

@@ -132,7 +132,7 @@ module Aws
       interface _CreateConnectionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateConnectionResponse]
         def connection_arn: () -> ::String
-        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
         def creation_time: () -> ::Time
         def last_modified_time: () -> ::Time
       end
@@ -203,7 +203,17 @@ module Aws
                                        is_value_secret: bool?
                                      },
                                    ]?
+                                 }?,
+                                 connectivity_parameters: {
+                                   resource_parameters: {
+                                     resource_configuration_arn: ::String
+                                   }
                                  }?
+                               },
+                               ?invocation_connectivity_parameters: {
+                                 resource_parameters: {
+                                   resource_configuration_arn: ::String
+                                 }
                                }
                              ) -> _CreateConnectionResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateConnectionResponseSuccess
@@ -289,7 +299,7 @@ module Aws
       interface _DeauthorizeConnectionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeauthorizeConnectionResponse]
         def connection_arn: () -> ::String
-        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
         def creation_time: () -> ::Time
         def last_modified_time: () -> ::Time
         def last_authorized_time: () -> ::Time
@@ -321,7 +331,7 @@ module Aws
       interface _DeleteConnectionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteConnectionResponse]
         def connection_arn: () -> ::String
-        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
         def creation_time: () -> ::Time
         def last_modified_time: () -> ::Time
         def last_authorized_time: () -> ::Time
@@ -406,7 +416,8 @@ module Aws
         def connection_arn: () -> ::String
         def name: () -> ::String
         def description: () -> ::String
-        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+        def invocation_connectivity_parameters: () -> Types::DescribeConnectionConnectivityParameters
+        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
         def state_reason: () -> ::String
         def authorization_type: () -> ("BASIC" | "OAUTH_CLIENT_CREDENTIALS" | "API_KEY")
         def secret_arn: () -> ::String
@@ -579,7 +590,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EventBridge/Client.html#list_connections-instance_method
       def list_connections: (
                               ?name_prefix: ::String,
-                              ?connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING"),
+                              ?connection_state: ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY"),
                               ?next_token: ::String,
                               ?limit: ::Integer
                             ) -> _ListConnectionsResponseSuccess
@@ -1036,7 +1047,7 @@ module Aws
       interface _UpdateConnectionResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateConnectionResponse]
         def connection_arn: () -> ::String
-        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING")
+        def connection_state: () -> ("CREATING" | "UPDATING" | "DELETING" | "AUTHORIZED" | "DEAUTHORIZED" | "AUTHORIZING" | "DEAUTHORIZING" | "ACTIVE" | "FAILED_CONNECTIVITY")
         def creation_time: () -> ::Time
         def last_modified_time: () -> ::Time
         def last_authorized_time: () -> ::Time
@@ -1108,7 +1119,17 @@ module Aws
                                        is_value_secret: bool?
                                      },
                                    ]?
+                                 }?,
+                                 connectivity_parameters: {
+                                   resource_parameters: {
+                                     resource_configuration_arn: ::String
+                                   }
                                  }?
+                               },
+                               ?invocation_connectivity_parameters: {
+                                 resource_parameters: {
+                                   resource_configuration_arn: ::String
+                                 }
                                }
                              ) -> _UpdateConnectionResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateConnectionResponseSuccess

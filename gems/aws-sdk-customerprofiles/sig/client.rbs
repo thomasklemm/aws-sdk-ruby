@@ -269,6 +269,57 @@ module Aws
                                ) -> _CreateEventStreamResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateEventStreamResponseSuccess
 
+      interface _CreateEventTriggerResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateEventTriggerResponse]
+        def event_trigger_name: () -> ::String
+        def object_type_name: () -> ::String
+        def description: () -> ::String
+        def event_trigger_conditions: () -> ::Array[Types::EventTriggerCondition]
+        def segment_filter: () -> ::String
+        def event_trigger_limits: () -> Types::EventTriggerLimits
+        def created_at: () -> ::Time
+        def last_updated_at: () -> ::Time
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CustomerProfiles/Client.html#create_event_trigger-instance_method
+      def create_event_trigger: (
+                                  domain_name: ::String,
+                                  event_trigger_name: ::String,
+                                  object_type_name: ::String,
+                                  ?description: ::String,
+                                  event_trigger_conditions: Array[
+                                    {
+                                      event_trigger_dimensions: Array[
+                                        {
+                                          object_attributes: Array[
+                                            {
+                                              source: ::String?,
+                                              field_name: ::String?,
+                                              comparison_operator: ("INCLUSIVE" | "EXCLUSIVE" | "CONTAINS" | "BEGINS_WITH" | "ENDS_WITH" | "GREATER_THAN" | "LESS_THAN" | "GREATER_THAN_OR_EQUAL" | "LESS_THAN_OR_EQUAL" | "EQUAL" | "BEFORE" | "AFTER" | "ON" | "BETWEEN" | "NOT_BETWEEN"),
+                                              values: Array[::String]
+                                            },
+                                          ]
+                                        },
+                                      ],
+                                      logical_operator: ("ANY" | "ALL" | "NONE")
+                                    },
+                                  ],
+                                  ?segment_filter: ::String,
+                                  ?event_trigger_limits: {
+                                    event_expiration: ::Integer?,
+                                    periods: Array[
+                                      {
+                                        unit: ("HOURS" | "DAYS" | "WEEKS" | "MONTHS"),
+                                        value: ::Integer,
+                                        max_invocations_per_profile: ::Integer?,
+                                        unlimited: bool?
+                                      },
+                                    ]?
+                                  },
+                                  ?tags: Hash[::String, ::String]
+                                ) -> _CreateEventTriggerResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateEventTriggerResponseSuccess
+
       interface _CreateIntegrationWorkflowResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateIntegrationWorkflowResponse]
         def workflow_id: () -> ::String
@@ -914,6 +965,17 @@ module Aws
                                ) -> _DeleteEventStreamResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteEventStreamResponseSuccess
 
+      interface _DeleteEventTriggerResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteEventTriggerResponse]
+        def message: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CustomerProfiles/Client.html#delete_event_trigger-instance_method
+      def delete_event_trigger: (
+                                  domain_name: ::String,
+                                  event_trigger_name: ::String
+                                ) -> _DeleteEventTriggerResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteEventTriggerResponseSuccess
+
       interface _DeleteIntegrationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteIntegrationResponse]
         def message: () -> ::String
@@ -1099,6 +1161,25 @@ module Aws
                             ) -> _GetEventStreamResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetEventStreamResponseSuccess
 
+      interface _GetEventTriggerResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetEventTriggerResponse]
+        def event_trigger_name: () -> ::String
+        def object_type_name: () -> ::String
+        def description: () -> ::String
+        def event_trigger_conditions: () -> ::Array[Types::EventTriggerCondition]
+        def segment_filter: () -> ::String
+        def event_trigger_limits: () -> Types::EventTriggerLimits
+        def created_at: () -> ::Time
+        def last_updated_at: () -> ::Time
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CustomerProfiles/Client.html#get_event_trigger-instance_method
+      def get_event_trigger: (
+                               domain_name: ::String,
+                               event_trigger_name: ::String
+                             ) -> _GetEventTriggerResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetEventTriggerResponseSuccess
+
       interface _GetIdentityResolutionJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetIdentityResolutionJobResponse]
         def domain_name: () -> ::String
@@ -1132,6 +1213,7 @@ module Aws
         def workflow_id: () -> ::String
         def is_unstructured: () -> bool
         def role_arn: () -> ::String
+        def event_trigger_names: () -> ::Array[::String]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CustomerProfiles/Client.html#get_integration-instance_method
       def get_integration: (
@@ -1380,6 +1462,19 @@ module Aws
                               ) -> _ListEventStreamsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListEventStreamsResponseSuccess
 
+      interface _ListEventTriggersResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListEventTriggersResponse]
+        def items: () -> ::Array[Types::EventTriggerSummaryItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CustomerProfiles/Client.html#list_event_triggers-instance_method
+      def list_event_triggers: (
+                                 domain_name: ::String,
+                                 ?next_token: ::String,
+                                 ?max_results: ::Integer
+                               ) -> _ListEventTriggersResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListEventTriggersResponseSuccess
+
       interface _ListIdentityResolutionJobsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListIdentityResolutionJobsResponse]
         def identity_resolution_jobs_list: () -> ::Array[Types::IdentityResolutionJob]
@@ -1579,6 +1674,7 @@ module Aws
         def workflow_id: () -> ::String
         def is_unstructured: () -> bool
         def role_arn: () -> ::String
+        def event_trigger_names: () -> ::Array[::String]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CustomerProfiles/Client.html#put_integration-instance_method
       def put_integration: (
@@ -1648,7 +1744,8 @@ module Aws
                                }
                              },
                              ?object_type_names: Hash[::String, ::String],
-                             ?role_arn: ::String
+                             ?role_arn: ::String,
+                             ?event_trigger_names: Array[::String]
                            ) -> _PutIntegrationResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutIntegrationResponseSuccess
 
@@ -1854,6 +1951,56 @@ module Aws
                            ?tags: Hash[::String, ::String]
                          ) -> _UpdateDomainResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDomainResponseSuccess
+
+      interface _UpdateEventTriggerResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateEventTriggerResponse]
+        def event_trigger_name: () -> ::String
+        def object_type_name: () -> ::String
+        def description: () -> ::String
+        def event_trigger_conditions: () -> ::Array[Types::EventTriggerCondition]
+        def segment_filter: () -> ::String
+        def event_trigger_limits: () -> Types::EventTriggerLimits
+        def created_at: () -> ::Time
+        def last_updated_at: () -> ::Time
+        def tags: () -> ::Hash[::String, ::String]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CustomerProfiles/Client.html#update_event_trigger-instance_method
+      def update_event_trigger: (
+                                  domain_name: ::String,
+                                  event_trigger_name: ::String,
+                                  ?object_type_name: ::String,
+                                  ?description: ::String,
+                                  ?event_trigger_conditions: Array[
+                                    {
+                                      event_trigger_dimensions: Array[
+                                        {
+                                          object_attributes: Array[
+                                            {
+                                              source: ::String?,
+                                              field_name: ::String?,
+                                              comparison_operator: ("INCLUSIVE" | "EXCLUSIVE" | "CONTAINS" | "BEGINS_WITH" | "ENDS_WITH" | "GREATER_THAN" | "LESS_THAN" | "GREATER_THAN_OR_EQUAL" | "LESS_THAN_OR_EQUAL" | "EQUAL" | "BEFORE" | "AFTER" | "ON" | "BETWEEN" | "NOT_BETWEEN"),
+                                              values: Array[::String]
+                                            },
+                                          ]
+                                        },
+                                      ],
+                                      logical_operator: ("ANY" | "ALL" | "NONE")
+                                    },
+                                  ],
+                                  ?segment_filter: ::String,
+                                  ?event_trigger_limits: {
+                                    event_expiration: ::Integer?,
+                                    periods: Array[
+                                      {
+                                        unit: ("HOURS" | "DAYS" | "WEEKS" | "MONTHS"),
+                                        value: ::Integer,
+                                        max_invocations_per_profile: ::Integer?,
+                                        unlimited: bool?
+                                      },
+                                    ]?
+                                  }
+                                ) -> _UpdateEventTriggerResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateEventTriggerResponseSuccess
 
       interface _UpdateProfileResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateProfileResponse]

@@ -468,6 +468,45 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains configurations for an Amazon Bedrock reranker model.
+    #
+    # @!attribute [rw] model_configuration
+    #   Contains configurations for a reranker model.
+    #   @return [Types::BedrockRerankingModelConfiguration]
+    #
+    # @!attribute [rw] number_of_results
+    #   The number of results to return after reranking.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/BedrockRerankingConfiguration AWS API Documentation
+    #
+    class BedrockRerankingConfiguration < Struct.new(
+      :model_configuration,
+      :number_of_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for a reranker model.
+    #
+    # @!attribute [rw] additional_model_request_fields
+    #   A JSON object whose keys are request fields for the model and whose
+    #   values are values for those fields.
+    #   @return [Hash<String,Hash,Array,String,Numeric,Boolean>]
+    #
+    # @!attribute [rw] model_arn
+    #   The ARN of the reranker model.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/BedrockRerankingModelConfiguration AWS API Documentation
+    #
+    class BedrockRerankingModelConfiguration < Struct.new(
+      :additional_model_request_fields,
+      :model_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # This property contains the document to chat with, along with its
     # attributes.
     #
@@ -543,6 +582,21 @@ module Aws::BedrockAgentRuntime
     class Citation < Struct.new(
       :generated_response_part,
       :retrieved_references)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A citation event.
+    #
+    # @!attribute [rw] citation
+    #   The citation.
+    #   @return [Types::Citation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/CitationEvent AWS API Documentation
+    #
+    class CitationEvent < Struct.new(
+      :citation,
+      :event_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -639,7 +693,7 @@ module Aws::BedrockAgentRuntime
     # The trace behavior for the custom orchestration.
     #
     # @!attribute [rw] event
-    #   The trace event details used with the custom orchestration.
+    #   The event details used with the custom orchestration.
     #   @return [Types::CustomOrchestrationTraceEvent]
     #
     # @!attribute [rw] trace_id
@@ -655,7 +709,9 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
-    # The event in the custom orchestration sequence.
+    # The event in the custom orchestration sequence. Events are the
+    # responses which the custom orchestration Lambda function sends as
+    # response to the agent.
     #
     # @!attribute [rw] text
     #   The text that prompted the event at this step.
@@ -821,6 +877,22 @@ module Aws::BedrockAgentRuntime
       :failure_reason,
       :trace_id)
       SENSITIVE = [:failure_reason]
+      include Aws::Structure
+    end
+
+    # Contains information for a metadata field to include in or exclude
+    # from consideration when reranking.
+    #
+    # @!attribute [rw] field_name
+    #   The name of a metadata field to include in or exclude from
+    #   consideration when reranking.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/FieldForReranking AWS API Documentation
+    #
+    class FieldForReranking < Struct.new(
+      :field_name)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -1746,6 +1818,21 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # A guardrail event.
+    #
+    # @!attribute [rw] action
+    #   The guardrail action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GuardrailEvent AWS API Documentation
+    #
+    class GuardrailEvent < Struct.new(
+      :action,
+      :event_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The managed word details for the filter in the Guardrail.
     #
     # @!attribute [rw] action
@@ -1929,6 +2016,26 @@ module Aws::BedrockAgentRuntime
       :custom_words,
       :managed_word_lists)
       SENSITIVE = [:custom_words, :managed_word_lists]
+      include Aws::Structure
+    end
+
+    # Settings for implicit filtering, where a model generates a metadata
+    # filter based on the prompt.
+    #
+    # @!attribute [rw] metadata_attributes
+    #   Metadata that can be used in a filter.
+    #   @return [Array<Types::MetadataAttributeSchema>]
+    #
+    # @!attribute [rw] model_arn
+    #   The model that generates the filter.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ImplicitFilterConfiguration AWS API Documentation
+    #
+    class ImplicitFilterConfiguration < Struct.new(
+      :metadata_attributes,
+      :model_arn)
+      SENSITIVE = [:metadata_attributes]
       include Aws::Structure
     end
 
@@ -2914,6 +3021,10 @@ module Aws::BedrockAgentRuntime
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html
     #   @return [Types::RetrievalFilter]
     #
+    # @!attribute [rw] implicit_filter_configuration
+    #   Settings for implicit filtering.
+    #   @return [Types::ImplicitFilterConfiguration]
+    #
     # @!attribute [rw] number_of_results
     #   The number of source chunks to retrieve.
     #   @return [Integer]
@@ -2933,12 +3044,24 @@ module Aws::BedrockAgentRuntime
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-test.html
     #   @return [String]
     #
+    # @!attribute [rw] reranking_configuration
+    #   Contains configurations for reranking the retrieved results. For
+    #   more information, see [Improve the relevance of query responses with
+    #   a reranker model][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/rerank.html
+    #   @return [Types::VectorSearchRerankingConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/KnowledgeBaseVectorSearchConfiguration AWS API Documentation
     #
     class KnowledgeBaseVectorSearchConfiguration < Struct.new(
       :filter,
+      :implicit_filter_configuration,
       :number_of_results,
-      :override_search_type)
+      :override_search_type,
+      :reranking_configuration)
       SENSITIVE = [:filter]
       include Aws::Structure
     end
@@ -3010,6 +3133,52 @@ module Aws::BedrockAgentRuntime
     class Metadata < Struct.new(
       :usage)
       SENSITIVE = [:usage]
+      include Aws::Structure
+    end
+
+    # Details about a metadata attribute.
+    #
+    # @!attribute [rw] description
+    #   The attribute's description.
+    #   @return [String]
+    #
+    # @!attribute [rw] key
+    #   The attribute's key.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The attribute's type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/MetadataAttributeSchema AWS API Documentation
+    #
+    class MetadataAttributeSchema < Struct.new(
+      :description,
+      :key,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for the metadata to use in reranking.
+    #
+    # @!attribute [rw] selection_mode
+    #   Specifies whether to consider all metadata when reranking, or only
+    #   the metadata that you select. If you specify `SELECTIVE`, include
+    #   the `selectiveModeConfiguration` field.
+    #   @return [String]
+    #
+    # @!attribute [rw] selective_mode_configuration
+    #   Contains configurations for the metadata fields to include or
+    #   exclude when considering reranking.
+    #   @return [Types::RerankingMetadataSelectiveModeConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/MetadataConfigurationForReranking AWS API Documentation
+    #
+    class MetadataConfigurationForReranking < Struct.new(
+      :selection_mode,
+      :selective_mode_configuration)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -3885,6 +4054,213 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains information about a document to rerank. Choose the `type` to
+    # define and include the field that corresponds to the type.
+    #
+    # @!attribute [rw] json_document
+    #   Contains a JSON document to rerank.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @!attribute [rw] text_document
+    #   Contains information about a text document to rerank.
+    #   @return [Types::RerankTextDocument]
+    #
+    # @!attribute [rw] type
+    #   The type of document to rerank.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankDocument AWS API Documentation
+    #
+    class RerankDocument < Struct.new(
+      :json_document,
+      :text_document,
+      :type)
+      SENSITIVE = [:text_document]
+      include Aws::Structure
+    end
+
+    # Contains information about a query to submit to the reranker model.
+    #
+    # @!attribute [rw] text_query
+    #   Contains information about a text query.
+    #   @return [Types::RerankTextDocument]
+    #
+    # @!attribute [rw] type
+    #   The type of the query.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankQuery AWS API Documentation
+    #
+    class RerankQuery < Struct.new(
+      :text_query,
+      :type)
+      SENSITIVE = [:text_query]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the total number of results was greater than could fit in a
+    #   response, a token is returned in the `nextToken` field. You can
+    #   enter that token in this field to return the next batch of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] queries
+    #   An array of objects, each of which contains information about a
+    #   query to submit to the reranker model.
+    #   @return [Array<Types::RerankQuery>]
+    #
+    # @!attribute [rw] reranking_configuration
+    #   Contains configurations for reranking.
+    #   @return [Types::RerankingConfiguration]
+    #
+    # @!attribute [rw] sources
+    #   An array of objects, each of which contains information about the
+    #   sources to rerank.
+    #   @return [Array<Types::RerankSource>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankRequest AWS API Documentation
+    #
+    class RerankRequest < Struct.new(
+      :next_token,
+      :queries,
+      :reranking_configuration,
+      :sources)
+      SENSITIVE = [:queries, :sources]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the total number of results is greater than can fit in the
+    #   response, use this token in the `nextToken` field when making
+    #   another request to return the next batch of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] results
+    #   An array of objects, each of which contains information about the
+    #   results of reranking.
+    #   @return [Array<Types::RerankResult>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankResponse AWS API Documentation
+    #
+    class RerankResponse < Struct.new(
+      :next_token,
+      :results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about a document that was reranked.
+    #
+    # @!attribute [rw] document
+    #   Contains information about the document.
+    #   @return [Types::RerankDocument]
+    #
+    # @!attribute [rw] index
+    #   The ranking of the document. The lower a number, the higher the
+    #   document is ranked.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] relevance_score
+    #   The relevance score of the document.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankResult AWS API Documentation
+    #
+    class RerankResult < Struct.new(
+      :document,
+      :index,
+      :relevance_score)
+      SENSITIVE = [:document]
+      include Aws::Structure
+    end
+
+    # Contains information about a source for reranking.
+    #
+    # @!attribute [rw] inline_document_source
+    #   Contains an inline definition of a source for reranking.
+    #   @return [Types::RerankDocument]
+    #
+    # @!attribute [rw] type
+    #   The type of the source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankSource AWS API Documentation
+    #
+    class RerankSource < Struct.new(
+      :inline_document_source,
+      :type)
+      SENSITIVE = [:inline_document_source]
+      include Aws::Structure
+    end
+
+    # Contains information about a text document to rerank.
+    #
+    # @!attribute [rw] text
+    #   The text of the document.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankTextDocument AWS API Documentation
+    #
+    class RerankTextDocument < Struct.new(
+      :text)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for reranking.
+    #
+    # @!attribute [rw] bedrock_reranking_configuration
+    #   Contains configurations for an Amazon Bedrock reranker.
+    #   @return [Types::BedrockRerankingConfiguration]
+    #
+    # @!attribute [rw] type
+    #   The type of reranker that the configurations apply to.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankingConfiguration AWS API Documentation
+    #
+    class RerankingConfiguration < Struct.new(
+      :bedrock_reranking_configuration,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for the metadata fields to include or exclude
+    # when considering reranking. If you include the `fieldsToExclude`
+    # field, the reranker ignores all the metadata fields that you specify.
+    # If you include the `fieldsToInclude` field, the reranker uses only the
+    # metadata fields that you specify and ignores all others. You can
+    # include only one of these fields.
+    #
+    # @note RerankingMetadataSelectiveModeConfiguration is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] fields_to_exclude
+    #   An array of objects, each of which specifies a metadata field to
+    #   exclude from consideration when reranking.
+    #   @return [Array<Types::FieldForReranking>]
+    #
+    # @!attribute [rw] fields_to_include
+    #   An array of objects, each of which specifies a metadata field to
+    #   include in consideration when reranking. The remaining metadata
+    #   fields are ignored.
+    #   @return [Array<Types::FieldForReranking>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RerankingMetadataSelectiveModeConfiguration AWS API Documentation
+    #
+    class RerankingMetadataSelectiveModeConfiguration < Struct.new(
+      :fields_to_exclude,
+      :fields_to_include,
+      :unknown)
+      SENSITIVE = [:fields_to_exclude, :fields_to_include]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class FieldsToExclude < RerankingMetadataSelectiveModeConfiguration; end
+      class FieldsToInclude < RerankingMetadataSelectiveModeConfiguration; end
+      class Unknown < RerankingMetadataSelectiveModeConfiguration; end
+    end
+
     # The specified resource Amazon Resource Name (ARN) was not found. Check
     # the Amazon Resource Name (ARN) and try your request again.
     #
@@ -4140,6 +4516,21 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains information about the location of a document in a custom data
+    # source.
+    #
+    # @!attribute [rw] id
+    #   The ID of the document.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrievalResultCustomDocumentLocation AWS API Documentation
+    #
+    class RetrievalResultCustomDocumentLocation < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about the data source location.
     #
     # This data type is used in the following API operations:
@@ -4159,6 +4550,10 @@ module Aws::BedrockAgentRuntime
     # @!attribute [rw] confluence_location
     #   The Confluence data source location.
     #   @return [Types::RetrievalResultConfluenceLocation]
+    #
+    # @!attribute [rw] custom_document_location
+    #   Specifies the location of a document in a custom data source.
+    #   @return [Types::RetrievalResultCustomDocumentLocation]
     #
     # @!attribute [rw] s3_location
     #   The S3 data source location.
@@ -4184,6 +4579,7 @@ module Aws::BedrockAgentRuntime
     #
     class RetrievalResultLocation < Struct.new(
       :confluence_location,
+      :custom_document_location,
       :s3_location,
       :salesforce_location,
       :share_point_location,
@@ -4352,6 +4748,21 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # A retrieve and generate output event.
+    #
+    # @!attribute [rw] text
+    #   A text response.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveAndGenerateOutputEvent AWS API Documentation
+    #
+    class RetrieveAndGenerateOutputEvent < Struct.new(
+      :text,
+      :event_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] input
     #   Contains the query to be made to the knowledge base.
     #   @return [Types::RetrieveAndGenerateInput]
@@ -4448,6 +4859,64 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # @!attribute [rw] input
+    #   Contains the query to be made to the knowledge base.
+    #   @return [Types::RetrieveAndGenerateInput]
+    #
+    # @!attribute [rw] retrieve_and_generate_configuration
+    #   Contains configurations for the knowledge base query and retrieval
+    #   process. For more information, see [Query configurations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html
+    #   @return [Types::RetrieveAndGenerateConfiguration]
+    #
+    # @!attribute [rw] session_configuration
+    #   Contains details about the session with the knowledge base.
+    #   @return [Types::RetrieveAndGenerateSessionConfiguration]
+    #
+    # @!attribute [rw] session_id
+    #   The unique identifier of the session. When you first make a
+    #   `RetrieveAndGenerate` request, Amazon Bedrock automatically
+    #   generates this value. You must reuse this value for all subsequent
+    #   requests in the same conversational session. This value allows
+    #   Amazon Bedrock to maintain context and knowledge from previous
+    #   interactions. You can't explicitly set the `sessionId` yourself.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveAndGenerateStreamRequest AWS API Documentation
+    #
+    class RetrieveAndGenerateStreamRequest < Struct.new(
+      :input,
+      :retrieve_and_generate_configuration,
+      :session_configuration,
+      :session_id)
+      SENSITIVE = [:input]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] session_id
+    #   The session ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] stream
+    #   A stream of events from the model.
+    #   @return [Types::RetrieveAndGenerateStreamResponseOutput]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveAndGenerateStreamResponse AWS API Documentation
+    #
+    class RetrieveAndGenerateStreamResponse < Struct.new(
+      :session_id,
+      :stream)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] guardrail_configuration
+    #   Guardrail settings.
+    #   @return [Types::GuardrailConfiguration]
+    #
     # @!attribute [rw] knowledge_base_id
     #   The unique identifier of the knowledge base to query.
     #   @return [String]
@@ -4474,6 +4943,7 @@ module Aws::BedrockAgentRuntime
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveRequest AWS API Documentation
     #
     class RetrieveRequest < Struct.new(
+      :guardrail_configuration,
       :knowledge_base_id,
       :next_token,
       :retrieval_configuration,
@@ -4482,6 +4952,10 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # @!attribute [rw] guardrail_action
+    #   Specifies if there is a guardrail intervention in the response.
+    #   @return [String]
+    #
     # @!attribute [rw] next_token
     #   If there are more results than can fit in the response, the response
     #   returns a `nextToken`. Use this token in the `nextToken` field of
@@ -4495,6 +4969,7 @@ module Aws::BedrockAgentRuntime
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveResponse AWS API Documentation
     #
     class RetrieveResponse < Struct.new(
+      :guardrail_action,
       :next_token,
       :retrieval_results)
       SENSITIVE = [:retrieval_results]
@@ -5036,6 +5511,70 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains configurations for reranking with an Amazon Bedrock reranker
+    # model.
+    #
+    # @!attribute [rw] metadata_configuration
+    #   Contains configurations for the metadata to use in reranking.
+    #   @return [Types::MetadataConfigurationForReranking]
+    #
+    # @!attribute [rw] model_configuration
+    #   Contains configurations for the reranker model.
+    #   @return [Types::VectorSearchBedrockRerankingModelConfiguration]
+    #
+    # @!attribute [rw] number_of_reranked_results
+    #   The number of results to return after reranking.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/VectorSearchBedrockRerankingConfiguration AWS API Documentation
+    #
+    class VectorSearchBedrockRerankingConfiguration < Struct.new(
+      :metadata_configuration,
+      :model_configuration,
+      :number_of_reranked_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for an Amazon Bedrock reranker model.
+    #
+    # @!attribute [rw] additional_model_request_fields
+    #   A JSON object whose keys are request fields for the model and whose
+    #   values are values for those fields.
+    #   @return [Hash<String,Hash,Array,String,Numeric,Boolean>]
+    #
+    # @!attribute [rw] model_arn
+    #   The ARN of the reranker model to use.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/VectorSearchBedrockRerankingModelConfiguration AWS API Documentation
+    #
+    class VectorSearchBedrockRerankingModelConfiguration < Struct.new(
+      :additional_model_request_fields,
+      :model_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for reranking the retrieved results.
+    #
+    # @!attribute [rw] bedrock_reranking_configuration
+    #   Contains configurations for an Amazon Bedrock reranker model.
+    #   @return [Types::VectorSearchBedrockRerankingConfiguration]
+    #
+    # @!attribute [rw] type
+    #   The type of reranker model.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/VectorSearchRerankingConfiguration AWS API Documentation
+    #
+    class VectorSearchRerankingConfiguration < Struct.new(
+      :bedrock_reranking_configuration,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The output of the flow.
     #
     # EventStream is an Enumerator of Events.
@@ -5142,6 +5681,34 @@ module Aws::BedrockAgentRuntime
           :service_quota_exceeded_exception,
           :throttling_exception,
           :trace,
+          :validation_exception
+        ]
+      end
+
+    end
+
+    # A retrieve and generate stream response output.
+    #
+    # EventStream is an Enumerator of Events.
+    #  #event_types #=> Array, returns all modeled event types in the stream
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveAndGenerateStreamResponseOutput AWS API Documentation
+    #
+    class RetrieveAndGenerateStreamResponseOutput < Enumerator
+
+      def event_types
+        [
+          :access_denied_exception,
+          :bad_gateway_exception,
+          :citation,
+          :conflict_exception,
+          :dependency_failed_exception,
+          :guardrail,
+          :internal_server_exception,
+          :output,
+          :resource_not_found_exception,
+          :service_quota_exceeded_exception,
+          :throttling_exception,
           :validation_exception
         ]
       end

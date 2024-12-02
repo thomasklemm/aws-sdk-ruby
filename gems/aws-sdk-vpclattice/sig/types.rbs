@@ -21,6 +21,12 @@ module Aws::VPCLattice
       attr_accessor last_updated_at: ::Time
       attr_accessor resource_arn: ::String
       attr_accessor resource_id: ::String
+      attr_accessor service_network_log_type: ("SERVICE" | "RESOURCE")
+      SENSITIVE: []
+    end
+
+    class ArnResource
+      attr_accessor arn: ::String
       SENSITIVE: []
     end
 
@@ -48,6 +54,7 @@ module Aws::VPCLattice
       attr_accessor client_token: ::String
       attr_accessor destination_arn: ::String
       attr_accessor resource_identifier: ::String
+      attr_accessor service_network_log_type: ("SERVICE" | "RESOURCE")
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
     end
@@ -58,6 +65,7 @@ module Aws::VPCLattice
       attr_accessor id: ::String
       attr_accessor resource_arn: ::String
       attr_accessor resource_id: ::String
+      attr_accessor service_network_log_type: ("SERVICE" | "RESOURCE")
       SENSITIVE: []
     end
 
@@ -81,6 +89,60 @@ module Aws::VPCLattice
       attr_accessor protocol: ("HTTP" | "HTTPS" | "TLS_PASSTHROUGH")
       attr_accessor service_arn: ::String
       attr_accessor service_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateResourceConfigurationRequest
+      attr_accessor allow_association_to_shareable_service_network: bool
+      attr_accessor client_token: ::String
+      attr_accessor name: ::String
+      attr_accessor port_ranges: ::Array[::String]
+      attr_accessor protocol: ("TCP")
+      attr_accessor resource_configuration_definition: Types::ResourceConfigurationDefinition
+      attr_accessor resource_configuration_group_identifier: ::String
+      attr_accessor resource_gateway_identifier: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor type: ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      SENSITIVE: []
+    end
+
+    class CreateResourceConfigurationResponse
+      attr_accessor allow_association_to_shareable_service_network: bool
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor failure_reason: ::String
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor port_ranges: ::Array[::String]
+      attr_accessor protocol: ("TCP")
+      attr_accessor resource_configuration_definition: Types::ResourceConfigurationDefinition
+      attr_accessor resource_configuration_group_id: ::String
+      attr_accessor resource_gateway_id: ::String
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor type: ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      SENSITIVE: []
+    end
+
+    class CreateResourceGatewayRequest
+      attr_accessor client_token: ::String
+      attr_accessor ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK")
+      attr_accessor name: ::String
+      attr_accessor security_group_ids: ::Array[::String]
+      attr_accessor subnet_ids: ::Array[::String]
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor vpc_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class CreateResourceGatewayResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK")
+      attr_accessor name: ::String
+      attr_accessor security_group_ids: ::Array[::String]
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor subnet_ids: ::Array[::String]
+      attr_accessor vpc_identifier: ::String
       SENSITIVE: []
     end
 
@@ -110,7 +172,24 @@ module Aws::VPCLattice
       attr_accessor auth_type: ("NONE" | "AWS_IAM")
       attr_accessor client_token: ::String
       attr_accessor name: ::String
+      attr_accessor sharing_config: Types::SharingConfig
       attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateServiceNetworkResourceAssociationRequest
+      attr_accessor client_token: ::String
+      attr_accessor resource_configuration_identifier: ::String
+      attr_accessor service_network_identifier: ::String
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class CreateServiceNetworkResourceAssociationResponse
+      attr_accessor arn: ::String
+      attr_accessor created_by: ::String
+      attr_accessor id: ::String
+      attr_accessor status: ("CREATE_IN_PROGRESS" | "ACTIVE" | "PARTIAL" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
       SENSITIVE: []
     end
 
@@ -119,6 +198,7 @@ module Aws::VPCLattice
       attr_accessor auth_type: ("NONE" | "AWS_IAM")
       attr_accessor id: ::String
       attr_accessor name: ::String
+      attr_accessor sharing_config: Types::SharingConfig
       SENSITIVE: []
     end
 
@@ -224,6 +304,41 @@ module Aws::VPCLattice
     class DeleteListenerResponse < Aws::EmptyStructure
     end
 
+    class DeleteResourceConfigurationRequest
+      attr_accessor resource_configuration_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteResourceConfigurationResponse < Aws::EmptyStructure
+    end
+
+    class DeleteResourceEndpointAssociationRequest
+      attr_accessor resource_endpoint_association_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteResourceEndpointAssociationResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor resource_configuration_arn: ::String
+      attr_accessor resource_configuration_id: ::String
+      attr_accessor vpc_endpoint_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteResourceGatewayRequest
+      attr_accessor resource_gateway_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteResourceGatewayResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      SENSITIVE: []
+    end
+
     class DeleteResourcePolicyRequest
       attr_accessor resource_arn: ::String
       SENSITIVE: []
@@ -244,6 +359,18 @@ module Aws::VPCLattice
 
     class DeleteServiceNetworkRequest
       attr_accessor service_network_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteServiceNetworkResourceAssociationRequest
+      attr_accessor service_network_resource_association_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteServiceNetworkResourceAssociationResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor status: ("CREATE_IN_PROGRESS" | "ACTIVE" | "PARTIAL" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
       SENSITIVE: []
     end
 
@@ -317,6 +444,12 @@ module Aws::VPCLattice
       SENSITIVE: []
     end
 
+    class DnsResource
+      attr_accessor domain_name: ::String
+      attr_accessor ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK")
+      SENSITIVE: []
+    end
+
     class FixedResponseAction
       attr_accessor status_code: ::Integer
       SENSITIVE: []
@@ -340,6 +473,7 @@ module Aws::VPCLattice
       attr_accessor last_updated_at: ::Time
       attr_accessor resource_arn: ::String
       attr_accessor resource_id: ::String
+      attr_accessor service_network_log_type: ("SERVICE" | "RESOURCE")
       SENSITIVE: []
     end
 
@@ -373,6 +507,50 @@ module Aws::VPCLattice
       attr_accessor protocol: ("HTTP" | "HTTPS" | "TLS_PASSTHROUGH")
       attr_accessor service_arn: ::String
       attr_accessor service_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetResourceConfigurationRequest
+      attr_accessor resource_configuration_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetResourceConfigurationResponse
+      attr_accessor allow_association_to_shareable_service_network: bool
+      attr_accessor amazon_managed: bool
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor custom_domain_name: ::String
+      attr_accessor failure_reason: ::String
+      attr_accessor id: ::String
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor port_ranges: ::Array[::String]
+      attr_accessor protocol: ("TCP")
+      attr_accessor resource_configuration_definition: Types::ResourceConfigurationDefinition
+      attr_accessor resource_configuration_group_id: ::String
+      attr_accessor resource_gateway_id: ::String
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor type: ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      SENSITIVE: []
+    end
+
+    class GetResourceGatewayRequest
+      attr_accessor resource_gateway_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetResourceGatewayResponse
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor id: ::String
+      attr_accessor ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK")
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor security_group_ids: ::Array[::String]
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor subnet_ids: ::Array[::String]
+      attr_accessor vpc_id: ::String
       SENSITIVE: []
     end
 
@@ -411,6 +589,32 @@ module Aws::VPCLattice
       SENSITIVE: []
     end
 
+    class GetServiceNetworkResourceAssociationRequest
+      attr_accessor service_network_resource_association_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetServiceNetworkResourceAssociationResponse
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor dns_entry: Types::DnsEntry
+      attr_accessor failure_code: ::String
+      attr_accessor failure_reason: ::String
+      attr_accessor id: ::String
+      attr_accessor is_managed_association: bool
+      attr_accessor last_updated_at: ::Time
+      attr_accessor private_dns_entry: Types::DnsEntry
+      attr_accessor resource_configuration_arn: ::String
+      attr_accessor resource_configuration_id: ::String
+      attr_accessor resource_configuration_name: ::String
+      attr_accessor service_network_arn: ::String
+      attr_accessor service_network_id: ::String
+      attr_accessor service_network_name: ::String
+      attr_accessor status: ("CREATE_IN_PROGRESS" | "ACTIVE" | "PARTIAL" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
+      SENSITIVE: []
+    end
+
     class GetServiceNetworkResponse
       attr_accessor arn: ::String
       attr_accessor auth_type: ("NONE" | "AWS_IAM")
@@ -420,6 +624,7 @@ module Aws::VPCLattice
       attr_accessor name: ::String
       attr_accessor number_of_associated_services: ::Integer
       attr_accessor number_of_associated_vp_cs: ::Integer
+      attr_accessor sharing_config: Types::SharingConfig
       SENSITIVE: []
     end
 
@@ -561,6 +766,11 @@ module Aws::VPCLattice
       SENSITIVE: []
     end
 
+    class IpResource
+      attr_accessor ip_address: ::String
+      SENSITIVE: []
+    end
+
     class ListAccessLogSubscriptionsRequest
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -587,6 +797,48 @@ module Aws::VPCLattice
       SENSITIVE: []
     end
 
+    class ListResourceConfigurationsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor resource_configuration_group_identifier: ::String
+      attr_accessor resource_gateway_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceConfigurationsResponse
+      attr_accessor items: ::Array[Types::ResourceConfigurationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceEndpointAssociationsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor resource_configuration_identifier: ::String
+      attr_accessor resource_endpoint_association_identifier: ::String
+      attr_accessor vpc_endpoint_id: ::String
+      attr_accessor vpc_endpoint_owner: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceEndpointAssociationsResponse
+      attr_accessor items: ::Array[Types::ResourceEndpointAssociationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceGatewaysRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListResourceGatewaysResponse
+      attr_accessor items: ::Array[Types::ResourceGatewaySummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListRulesRequest
       attr_accessor listener_identifier: ::String
       attr_accessor max_results: ::Integer
@@ -597,6 +849,20 @@ module Aws::VPCLattice
 
     class ListRulesResponse
       attr_accessor items: ::Array[Types::RuleSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListServiceNetworkResourceAssociationsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor resource_configuration_identifier: ::String
+      attr_accessor service_network_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class ListServiceNetworkResourceAssociationsResponse
+      attr_accessor items: ::Array[Types::ServiceNetworkResourceAssociationSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -625,6 +891,19 @@ module Aws::VPCLattice
 
     class ListServiceNetworkVpcAssociationsResponse
       attr_accessor items: ::Array[Types::ServiceNetworkVpcAssociationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListServiceNetworkVpcEndpointAssociationsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor service_network_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class ListServiceNetworkVpcEndpointAssociationsResponse
+      attr_accessor items: ::Array[Types::ServiceNetworkEndpointAssociation]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -766,6 +1045,64 @@ module Aws::VPCLattice
       SENSITIVE: []
     end
 
+    class ResourceConfigurationDefinition
+      attr_accessor arn_resource: Types::ArnResource
+      attr_accessor dns_resource: Types::DnsResource
+      attr_accessor ip_resource: Types::IpResource
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class ArnResource < ResourceConfigurationDefinition
+      end
+      class DnsResource < ResourceConfigurationDefinition
+      end
+      class IpResource < ResourceConfigurationDefinition
+      end
+      class Unknown < ResourceConfigurationDefinition
+      end
+    end
+
+    class ResourceConfigurationSummary
+      attr_accessor amazon_managed: bool
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor id: ::String
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor resource_configuration_group_id: ::String
+      attr_accessor resource_gateway_id: ::String
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor type: ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      SENSITIVE: []
+    end
+
+    class ResourceEndpointAssociationSummary
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor id: ::String
+      attr_accessor resource_configuration_arn: ::String
+      attr_accessor resource_configuration_id: ::String
+      attr_accessor resource_configuration_name: ::String
+      attr_accessor vpc_endpoint_id: ::String
+      attr_accessor vpc_endpoint_owner: ::String
+      SENSITIVE: []
+    end
+
+    class ResourceGatewaySummary
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor id: ::String
+      attr_accessor ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK")
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor security_group_ids: ::Array[::String]
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor subnet_ids: ::Array[::String]
+      attr_accessor vpc_identifier: ::String
+      SENSITIVE: []
+    end
+
     class ResourceNotFoundException
       attr_accessor message: ::String
       attr_accessor resource_id: ::String
@@ -835,6 +1172,36 @@ module Aws::VPCLattice
       SENSITIVE: []
     end
 
+    class ServiceNetworkEndpointAssociation
+      attr_accessor created_at: ::Time
+      attr_accessor id: ::String
+      attr_accessor service_network_arn: ::String
+      attr_accessor state: ::String
+      attr_accessor vpc_endpoint_id: ::String
+      attr_accessor vpc_endpoint_owner_id: ::String
+      attr_accessor vpc_id: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceNetworkResourceAssociationSummary
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor dns_entry: Types::DnsEntry
+      attr_accessor failure_code: ::String
+      attr_accessor id: ::String
+      attr_accessor is_managed_association: bool
+      attr_accessor private_dns_entry: Types::DnsEntry
+      attr_accessor resource_configuration_arn: ::String
+      attr_accessor resource_configuration_id: ::String
+      attr_accessor resource_configuration_name: ::String
+      attr_accessor service_network_arn: ::String
+      attr_accessor service_network_id: ::String
+      attr_accessor service_network_name: ::String
+      attr_accessor status: ("CREATE_IN_PROGRESS" | "ACTIVE" | "PARTIAL" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
+      SENSITIVE: []
+    end
+
     class ServiceNetworkServiceAssociationSummary
       attr_accessor arn: ::String
       attr_accessor created_at: ::Time
@@ -858,6 +1225,7 @@ module Aws::VPCLattice
       attr_accessor id: ::String
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
+      attr_accessor number_of_associated_resource_configurations: ::Integer
       attr_accessor number_of_associated_services: ::Integer
       attr_accessor number_of_associated_vp_cs: ::Integer
       SENSITIVE: []
@@ -895,6 +1263,11 @@ module Aws::VPCLattice
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
       attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
+      SENSITIVE: []
+    end
+
+    class SharingConfig
+      attr_accessor enabled: bool
       SENSITIVE: []
     end
 
@@ -1005,6 +1378,47 @@ module Aws::VPCLattice
       attr_accessor protocol: ("HTTP" | "HTTPS" | "TLS_PASSTHROUGH")
       attr_accessor service_arn: ::String
       attr_accessor service_id: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateResourceConfigurationRequest
+      attr_accessor allow_association_to_shareable_service_network: bool
+      attr_accessor port_ranges: ::Array[::String]
+      attr_accessor resource_configuration_definition: Types::ResourceConfigurationDefinition
+      attr_accessor resource_configuration_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateResourceConfigurationResponse
+      attr_accessor allow_association_to_shareable_service_network: bool
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      attr_accessor port_ranges: ::Array[::String]
+      attr_accessor protocol: ("TCP")
+      attr_accessor resource_configuration_definition: Types::ResourceConfigurationDefinition
+      attr_accessor resource_configuration_group_id: ::String
+      attr_accessor resource_gateway_id: ::String
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor type: ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      SENSITIVE: []
+    end
+
+    class UpdateResourceGatewayRequest
+      attr_accessor resource_gateway_identifier: ::String
+      attr_accessor security_group_ids: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class UpdateResourceGatewayResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor ip_address_type: ("IPV4" | "IPV6")
+      attr_accessor name: ::String
+      attr_accessor security_group_ids: ::Array[::String]
+      attr_accessor status: ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      attr_accessor subnet_ids: ::Array[::String]
+      attr_accessor vpc_id: ::String
       SENSITIVE: []
     end
 

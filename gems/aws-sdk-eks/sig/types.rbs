@@ -100,6 +100,7 @@ module Aws::EKS
     class AddonVersionInfo
       attr_accessor addon_version: ::String
       attr_accessor architecture: ::Array[::String]
+      attr_accessor compute_types: ::Array[::String]
       attr_accessor compatibilities: ::Array[Types::Compatibility]
       attr_accessor requires_configuration: bool
       attr_accessor requires_iam_permissions: bool
@@ -165,6 +166,11 @@ module Aws::EKS
       SENSITIVE: []
     end
 
+    class BlockStorage
+      attr_accessor enabled: bool
+      SENSITIVE: []
+    end
+
     class Certificate
       attr_accessor data: ::String
       SENSITIVE: []
@@ -210,6 +216,9 @@ module Aws::EKS
       attr_accessor access_config: Types::AccessConfigResponse
       attr_accessor upgrade_policy: Types::UpgradePolicyResponse
       attr_accessor zonal_shift_config: Types::ZonalShiftConfigResponse
+      attr_accessor remote_network_config: Types::RemoteNetworkConfigResponse
+      attr_accessor compute_config: Types::ComputeConfigResponse
+      attr_accessor storage_config: Types::StorageConfigResponse
       SENSITIVE: []
     end
 
@@ -229,6 +238,20 @@ module Aws::EKS
       attr_accessor cluster_version: ::String
       attr_accessor platform_versions: ::Array[::String]
       attr_accessor default_version: bool
+      SENSITIVE: []
+    end
+
+    class ComputeConfigRequest
+      attr_accessor enabled: bool
+      attr_accessor node_pools: ::Array[::String]
+      attr_accessor node_role_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ComputeConfigResponse
+      attr_accessor enabled: bool
+      attr_accessor node_pools: ::Array[::String]
+      attr_accessor node_role_arn: ::String
       SENSITIVE: []
     end
 
@@ -312,6 +335,9 @@ module Aws::EKS
       attr_accessor bootstrap_self_managed_addons: bool
       attr_accessor upgrade_policy: Types::UpgradePolicyRequest
       attr_accessor zonal_shift_config: Types::ZonalShiftConfigRequest
+      attr_accessor remote_network_config: Types::RemoteNetworkConfigRequest
+      attr_accessor compute_config: Types::ComputeConfigRequest
+      attr_accessor storage_config: Types::StorageConfigRequest
       SENSITIVE: []
     end
 
@@ -672,6 +698,11 @@ module Aws::EKS
       SENSITIVE: []
     end
 
+    class ElasticLoadBalancing
+      attr_accessor enabled: bool
+      SENSITIVE: []
+    end
+
     class EncryptionConfig
       attr_accessor resources: ::Array[::String]
       attr_accessor provider: Types::Provider
@@ -815,6 +846,7 @@ module Aws::EKS
     class KubernetesNetworkConfigRequest
       attr_accessor service_ipv_4_cidr: ::String
       attr_accessor ip_family: ("ipv4" | "ipv6")
+      attr_accessor elastic_load_balancing: Types::ElasticLoadBalancing
       SENSITIVE: []
     end
 
@@ -822,6 +854,7 @@ module Aws::EKS
       attr_accessor service_ipv_4_cidr: ::String
       attr_accessor service_ipv_6_cidr: ::String
       attr_accessor ip_family: ("ipv4" | "ipv6")
+      attr_accessor elastic_load_balancing: Types::ElasticLoadBalancing
       SENSITIVE: []
     end
 
@@ -1174,6 +1207,28 @@ module Aws::EKS
       SENSITIVE: []
     end
 
+    class RemoteNetworkConfigRequest
+      attr_accessor remote_node_networks: ::Array[Types::RemoteNodeNetwork]
+      attr_accessor remote_pod_networks: ::Array[Types::RemotePodNetwork]
+      SENSITIVE: []
+    end
+
+    class RemoteNetworkConfigResponse
+      attr_accessor remote_node_networks: ::Array[Types::RemoteNodeNetwork]
+      attr_accessor remote_pod_networks: ::Array[Types::RemotePodNetwork]
+      SENSITIVE: []
+    end
+
+    class RemoteNodeNetwork
+      attr_accessor cidrs: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class RemotePodNetwork
+      attr_accessor cidrs: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class ResourceInUseException
       attr_accessor cluster_name: ::String
       attr_accessor nodegroup_name: ::String
@@ -1219,6 +1274,16 @@ module Aws::EKS
       SENSITIVE: []
     end
 
+    class StorageConfigRequest
+      attr_accessor block_storage: Types::BlockStorage
+      SENSITIVE: []
+    end
+
+    class StorageConfigResponse
+      attr_accessor block_storage: Types::BlockStorage
+      SENSITIVE: []
+    end
+
     class TagResourceRequest
       attr_accessor resource_arn: ::String
       attr_accessor tags: ::Hash[::String, ::String]
@@ -1255,7 +1320,7 @@ module Aws::EKS
     class Update
       attr_accessor id: ::String
       attr_accessor status: ("InProgress" | "Failed" | "Cancelled" | "Successful")
-      attr_accessor type: ("VersionUpdate" | "EndpointAccessUpdate" | "LoggingUpdate" | "ConfigUpdate" | "AssociateIdentityProviderConfig" | "DisassociateIdentityProviderConfig" | "AssociateEncryptionConfig" | "AddonUpdate" | "VpcConfigUpdate" | "AccessConfigUpdate" | "UpgradePolicyUpdate" | "ZonalShiftConfigUpdate")
+      attr_accessor type: ("VersionUpdate" | "EndpointAccessUpdate" | "LoggingUpdate" | "ConfigUpdate" | "AssociateIdentityProviderConfig" | "DisassociateIdentityProviderConfig" | "AssociateEncryptionConfig" | "AddonUpdate" | "VpcConfigUpdate" | "AccessConfigUpdate" | "UpgradePolicyUpdate" | "ZonalShiftConfigUpdate" | "AutoModeUpdate")
       attr_accessor params: ::Array[Types::UpdateParam]
       attr_accessor created_at: ::Time
       attr_accessor errors: ::Array[Types::ErrorDetail]
@@ -1306,6 +1371,9 @@ module Aws::EKS
       attr_accessor access_config: Types::UpdateAccessConfigRequest
       attr_accessor upgrade_policy: Types::UpgradePolicyRequest
       attr_accessor zonal_shift_config: Types::ZonalShiftConfigRequest
+      attr_accessor compute_config: Types::ComputeConfigRequest
+      attr_accessor kubernetes_network_config: Types::KubernetesNetworkConfigRequest
+      attr_accessor storage_config: Types::StorageConfigRequest
       SENSITIVE: []
     end
 
@@ -1377,7 +1445,7 @@ module Aws::EKS
     end
 
     class UpdateParam
-      attr_accessor type: ("Version" | "PlatformVersion" | "EndpointPrivateAccess" | "EndpointPublicAccess" | "ClusterLogging" | "DesiredSize" | "LabelsToAdd" | "LabelsToRemove" | "TaintsToAdd" | "TaintsToRemove" | "MaxSize" | "MinSize" | "ReleaseVersion" | "PublicAccessCidrs" | "LaunchTemplateName" | "LaunchTemplateVersion" | "IdentityProviderConfig" | "EncryptionConfig" | "AddonVersion" | "ServiceAccountRoleArn" | "ResolveConflicts" | "MaxUnavailable" | "MaxUnavailablePercentage" | "ConfigurationValues" | "SecurityGroups" | "Subnets" | "AuthenticationMode" | "PodIdentityAssociations" | "UpgradePolicy" | "ZonalShiftConfig")
+      attr_accessor type: ("Version" | "PlatformVersion" | "EndpointPrivateAccess" | "EndpointPublicAccess" | "ClusterLogging" | "DesiredSize" | "LabelsToAdd" | "LabelsToRemove" | "TaintsToAdd" | "TaintsToRemove" | "MaxSize" | "MinSize" | "ReleaseVersion" | "PublicAccessCidrs" | "LaunchTemplateName" | "LaunchTemplateVersion" | "IdentityProviderConfig" | "EncryptionConfig" | "AddonVersion" | "ServiceAccountRoleArn" | "ResolveConflicts" | "MaxUnavailable" | "MaxUnavailablePercentage" | "ConfigurationValues" | "SecurityGroups" | "Subnets" | "AuthenticationMode" | "PodIdentityAssociations" | "UpgradePolicy" | "ZonalShiftConfig" | "ComputeConfig" | "StorageConfig" | "KubernetesNetworkConfig")
       attr_accessor value: ::String
       SENSITIVE: []
     end

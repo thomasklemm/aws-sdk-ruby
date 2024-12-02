@@ -67,6 +67,11 @@ module Aws::CleanRooms
     AnalysisTemplateValidationType = Shapes::StringShape.new(name: 'AnalysisTemplateValidationType')
     AnalysisType = Shapes::StringShape.new(name: 'AnalysisType')
     AnalyticsEngine = Shapes::StringShape.new(name: 'AnalyticsEngine')
+    AthenaDatabaseName = Shapes::StringShape.new(name: 'AthenaDatabaseName')
+    AthenaOutputLocation = Shapes::StringShape.new(name: 'AthenaOutputLocation')
+    AthenaTableName = Shapes::StringShape.new(name: 'AthenaTableName')
+    AthenaTableReference = Shapes::StructureShape.new(name: 'AthenaTableReference')
+    AthenaWorkGroup = Shapes::StringShape.new(name: 'AthenaWorkGroup')
     BatchGetCollaborationAnalysisTemplateError = Shapes::StructureShape.new(name: 'BatchGetCollaborationAnalysisTemplateError')
     BatchGetCollaborationAnalysisTemplateErrorList = Shapes::ListShape.new(name: 'BatchGetCollaborationAnalysisTemplateErrorList')
     BatchGetCollaborationAnalysisTemplateInput = Shapes::StructureShape.new(name: 'BatchGetCollaborationAnalysisTemplateInput')
@@ -432,7 +437,16 @@ module Aws::CleanRooms
     SchemaSummaryList = Shapes::ListShape.new(name: 'SchemaSummaryList')
     SchemaType = Shapes::StringShape.new(name: 'SchemaType')
     SchemaTypeProperties = Shapes::UnionShape.new(name: 'SchemaTypeProperties')
+    SecretsManagerArn = Shapes::StringShape.new(name: 'SecretsManagerArn')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    SnowflakeAccountIdentifier = Shapes::StringShape.new(name: 'SnowflakeAccountIdentifier')
+    SnowflakeDatabaseName = Shapes::StringShape.new(name: 'SnowflakeDatabaseName')
+    SnowflakeSchemaName = Shapes::StringShape.new(name: 'SnowflakeSchemaName')
+    SnowflakeTableName = Shapes::StringShape.new(name: 'SnowflakeTableName')
+    SnowflakeTableReference = Shapes::StructureShape.new(name: 'SnowflakeTableReference')
+    SnowflakeTableSchema = Shapes::UnionShape.new(name: 'SnowflakeTableSchema')
+    SnowflakeTableSchemaList = Shapes::ListShape.new(name: 'SnowflakeTableSchemaList')
+    SnowflakeTableSchemaV1 = Shapes::StructureShape.new(name: 'SnowflakeTableSchemaV1')
     StartProtectedQueryInput = Shapes::StructureShape.new(name: 'StartProtectedQueryInput')
     StartProtectedQueryOutput = Shapes::StructureShape.new(name: 'StartProtectedQueryOutput')
     String = Shapes::StringShape.new(name: 'String')
@@ -636,6 +650,12 @@ module Aws::CleanRooms
     AnalysisTemplateValidationStatusReason.struct_class = Types::AnalysisTemplateValidationStatusReason
 
     AnalysisTemplateValidationStatusReasonList.member = Shapes::ShapeRef.new(shape: AnalysisTemplateValidationStatusReason)
+
+    AthenaTableReference.add_member(:work_group, Shapes::ShapeRef.new(shape: AthenaWorkGroup, required: true, location_name: "workGroup"))
+    AthenaTableReference.add_member(:output_location, Shapes::ShapeRef.new(shape: AthenaOutputLocation, location_name: "outputLocation"))
+    AthenaTableReference.add_member(:database_name, Shapes::ShapeRef.new(shape: AthenaDatabaseName, required: true, location_name: "databaseName"))
+    AthenaTableReference.add_member(:table_name, Shapes::ShapeRef.new(shape: AthenaTableName, required: true, location_name: "tableName"))
+    AthenaTableReference.struct_class = Types::AthenaTableReference
 
     BatchGetCollaborationAnalysisTemplateError.add_member(:arn, Shapes::ShapeRef.new(shape: AnalysisTemplateArn, required: true, location_name: "arn"))
     BatchGetCollaborationAnalysisTemplateError.add_member(:code, Shapes::ShapeRef.new(shape: String, required: true, location_name: "code"))
@@ -2033,6 +2053,26 @@ module Aws::CleanRooms
     ServiceQuotaExceededException.add_member(:quota_value, Shapes::ShapeRef.new(shape: Double, required: true, location_name: "quotaValue"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
 
+    SnowflakeTableReference.add_member(:secret_arn, Shapes::ShapeRef.new(shape: SecretsManagerArn, required: true, location_name: "secretArn"))
+    SnowflakeTableReference.add_member(:account_identifier, Shapes::ShapeRef.new(shape: SnowflakeAccountIdentifier, required: true, location_name: "accountIdentifier"))
+    SnowflakeTableReference.add_member(:database_name, Shapes::ShapeRef.new(shape: SnowflakeDatabaseName, required: true, location_name: "databaseName"))
+    SnowflakeTableReference.add_member(:table_name, Shapes::ShapeRef.new(shape: SnowflakeTableName, required: true, location_name: "tableName"))
+    SnowflakeTableReference.add_member(:schema_name, Shapes::ShapeRef.new(shape: SnowflakeSchemaName, required: true, location_name: "schemaName"))
+    SnowflakeTableReference.add_member(:table_schema, Shapes::ShapeRef.new(shape: SnowflakeTableSchema, required: true, location_name: "tableSchema"))
+    SnowflakeTableReference.struct_class = Types::SnowflakeTableReference
+
+    SnowflakeTableSchema.add_member(:v1, Shapes::ShapeRef.new(shape: SnowflakeTableSchemaList, location_name: "v1"))
+    SnowflakeTableSchema.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    SnowflakeTableSchema.add_member_subclass(:v1, Types::SnowflakeTableSchema::V1)
+    SnowflakeTableSchema.add_member_subclass(:unknown, Types::SnowflakeTableSchema::Unknown)
+    SnowflakeTableSchema.struct_class = Types::SnowflakeTableSchema
+
+    SnowflakeTableSchemaList.member = Shapes::ShapeRef.new(shape: SnowflakeTableSchemaV1)
+
+    SnowflakeTableSchemaV1.add_member(:column_name, Shapes::ShapeRef.new(shape: ColumnName, required: true, location_name: "columnName"))
+    SnowflakeTableSchemaV1.add_member(:column_type, Shapes::ShapeRef.new(shape: ColumnTypeString, required: true, location_name: "columnType"))
+    SnowflakeTableSchemaV1.struct_class = Types::SnowflakeTableSchemaV1
+
     StartProtectedQueryInput.add_member(:type, Shapes::ShapeRef.new(shape: ProtectedQueryType, required: true, location_name: "type"))
     StartProtectedQueryInput.add_member(:membership_identifier, Shapes::ShapeRef.new(shape: MembershipIdentifier, required: true, location: "uri", location_name: "membershipIdentifier"))
     StartProtectedQueryInput.add_member(:sql_parameters, Shapes::ShapeRef.new(shape: ProtectedQuerySQLParameters, required: true, location_name: "sqlParameters"))
@@ -2046,8 +2086,12 @@ module Aws::CleanRooms
     TableAliasList.member = Shapes::ShapeRef.new(shape: TableAlias)
 
     TableReference.add_member(:glue, Shapes::ShapeRef.new(shape: GlueTableReference, location_name: "glue"))
+    TableReference.add_member(:snowflake, Shapes::ShapeRef.new(shape: SnowflakeTableReference, location_name: "snowflake"))
+    TableReference.add_member(:athena, Shapes::ShapeRef.new(shape: AthenaTableReference, location_name: "athena"))
     TableReference.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     TableReference.add_member_subclass(:glue, Types::TableReference::Glue)
+    TableReference.add_member_subclass(:snowflake, Types::TableReference::Snowflake)
+    TableReference.add_member_subclass(:athena, Types::TableReference::Athena)
     TableReference.add_member_subclass(:unknown, Types::TableReference::Unknown)
     TableReference.struct_class = Types::TableReference
 

@@ -1011,7 +1011,9 @@ module Aws::BedrockAgent
       req.send_request(options)
     end
 
-    # Creates a data source connector for a knowledge base.
+    # Connects a knowledge base to a data source. You specify the
+    # configuration for the specific data source service in the
+    # `dataSourceConfiguration` field.
     #
     # You can't change the `chunkingConfiguration` after you create the
     # data source connector.
@@ -1146,7 +1148,7 @@ module Aws::BedrockAgent
     #           tenant_id: "Microsoft365TenantId",
     #         },
     #       },
-    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT
+    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT, CUSTOM
     #       web_configuration: {
     #         crawler_configuration: {
     #           crawler_limits: {
@@ -1266,7 +1268,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls #=> Array
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
-    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
@@ -2730,6 +2732,83 @@ module Aws::BedrockAgent
       req.send_request(options)
     end
 
+    # Deletes documents from a data source and syncs the changes to the
+    # knowledge base that is connected to it. For more information, see
+    # [Ingest documents into a knowledge base in real-time][1] in the Amazon
+    # Bedrock User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-real-time-ingestion.html
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier to ensure that the API request
+    #   completes no more than one time. If this token matches a previous
+    #   request, Amazon Bedrock ignores the request, but does not return an
+    #   error. For more information, see [Ensuring idempotency][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
+    #
+    # @option params [required, String] :data_source_id
+    #   The unique identifier of the data source that contains the documents.
+    #
+    # @option params [required, Array<Types::DocumentIdentifier>] :document_identifiers
+    #   A list of objects, each of which contains information to identify a
+    #   document to delete.
+    #
+    # @option params [required, String] :knowledge_base_id
+    #   The unique identifier of the knowledge base that is connected to the
+    #   data source.
+    #
+    # @return [Types::DeleteKnowledgeBaseDocumentsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteKnowledgeBaseDocumentsResponse#document_details #document_details} => Array&lt;Types::KnowledgeBaseDocumentDetail&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_knowledge_base_documents({
+    #     client_token: "ClientToken",
+    #     data_source_id: "Id", # required
+    #     document_identifiers: [ # required
+    #       {
+    #         custom: {
+    #           id: "CustomDocumentIdentifierIdString", # required
+    #         },
+    #         data_source_type: "CUSTOM", # required, accepts CUSTOM, S3
+    #         s3: {
+    #           uri: "S3BucketUri", # required
+    #         },
+    #       },
+    #     ],
+    #     knowledge_base_id: "Id", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.document_details #=> Array
+    #   resp.document_details[0].data_source_id #=> String
+    #   resp.document_details[0].identifier.custom.id #=> String
+    #   resp.document_details[0].identifier.data_source_type #=> String, one of "CUSTOM", "S3"
+    #   resp.document_details[0].identifier.s3.uri #=> String
+    #   resp.document_details[0].knowledge_base_id #=> String
+    #   resp.document_details[0].status #=> String, one of "INDEXED", "PARTIALLY_INDEXED", "PENDING", "FAILED", "METADATA_PARTIALLY_INDEXED", "METADATA_UPDATE_FAILED", "IGNORED", "NOT_FOUND", "STARTING", "IN_PROGRESS", "DELETING", "DELETE_IN_PROGRESS"
+    #   resp.document_details[0].status_reason #=> String
+    #   resp.document_details[0].updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DeleteKnowledgeBaseDocuments AWS API Documentation
+    #
+    # @overload delete_knowledge_base_documents(params = {})
+    # @param [Hash] params ({})
+    def delete_knowledge_base_documents(params = {}, options = {})
+      req = build_request(:delete_knowledge_base_documents, params)
+      req.send_request(options)
+    end
+
     # Deletes a prompt or a version of it, depending on whether you include
     # the `promptVersion` field or not. For more information, see [Delete
     # prompts from the Prompt management tool][1] and [Delete a version of a
@@ -3154,7 +3233,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls #=> Array
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
-    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
@@ -3642,6 +3721,68 @@ module Aws::BedrockAgent
       req.send_request(options)
     end
 
+    # Retrieves specific documents from a data source that is connected to a
+    # knowledge base. For more information, see [Ingest documents into a
+    # knowledge base in real-time][1] in the Amazon Bedrock User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-real-time-ingestion.html
+    #
+    # @option params [required, String] :data_source_id
+    #   The unique identifier of the data source that contains the documents.
+    #
+    # @option params [required, Array<Types::DocumentIdentifier>] :document_identifiers
+    #   A list of objects, each of which contains information to identify a
+    #   document for which to retrieve information.
+    #
+    # @option params [required, String] :knowledge_base_id
+    #   The unique identifier of the knowledge base that is connected to the
+    #   data source.
+    #
+    # @return [Types::GetKnowledgeBaseDocumentsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetKnowledgeBaseDocumentsResponse#document_details #document_details} => Array&lt;Types::KnowledgeBaseDocumentDetail&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_knowledge_base_documents({
+    #     data_source_id: "Id", # required
+    #     document_identifiers: [ # required
+    #       {
+    #         custom: {
+    #           id: "CustomDocumentIdentifierIdString", # required
+    #         },
+    #         data_source_type: "CUSTOM", # required, accepts CUSTOM, S3
+    #         s3: {
+    #           uri: "S3BucketUri", # required
+    #         },
+    #       },
+    #     ],
+    #     knowledge_base_id: "Id", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.document_details #=> Array
+    #   resp.document_details[0].data_source_id #=> String
+    #   resp.document_details[0].identifier.custom.id #=> String
+    #   resp.document_details[0].identifier.data_source_type #=> String, one of "CUSTOM", "S3"
+    #   resp.document_details[0].identifier.s3.uri #=> String
+    #   resp.document_details[0].knowledge_base_id #=> String
+    #   resp.document_details[0].status #=> String, one of "INDEXED", "PARTIALLY_INDEXED", "PENDING", "FAILED", "METADATA_PARTIALLY_INDEXED", "METADATA_UPDATE_FAILED", "IGNORED", "NOT_FOUND", "STARTING", "IN_PROGRESS", "DELETING", "DELETE_IN_PROGRESS"
+    #   resp.document_details[0].status_reason #=> String
+    #   resp.document_details[0].updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetKnowledgeBaseDocuments AWS API Documentation
+    #
+    # @overload get_knowledge_base_documents(params = {})
+    # @param [Hash] params ({})
+    def get_knowledge_base_documents(params = {}, options = {})
+      req = build_request(:get_knowledge_base_documents, params)
+      req.send_request(options)
+    end
+
     # Retrieves information about the working draft (`DRAFT` version) of a
     # prompt or a version of it, depending on whether you include the
     # `promptVersion` field or not. For more information, see [View
@@ -3728,6 +3869,125 @@ module Aws::BedrockAgent
     # @param [Hash] params ({})
     def get_prompt(params = {}, options = {})
       req = build_request(:get_prompt, params)
+      req.send_request(options)
+    end
+
+    # Ingests documents directly into the knowledge base that is connected
+    # to the data source. The `dataSourceType` specified in the content for
+    # each document must match the type of the data source that you specify
+    # in the header. For more information, see [Ingest documents into a
+    # knowledge base in real-time][1] in the Amazon Bedrock User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-real-time-ingestion.html
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier to ensure that the API request
+    #   completes no more than one time. If this token matches a previous
+    #   request, Amazon Bedrock ignores the request, but does not return an
+    #   error. For more information, see [Ensuring idempotency][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html
+    #
+    # @option params [required, String] :data_source_id
+    #   The unique identifier of the data source connected to the knowledge
+    #   base that you're adding documents to.
+    #
+    # @option params [required, Array<Types::KnowledgeBaseDocument>] :documents
+    #   A list of objects, each of which contains information about the
+    #   documents to add.
+    #
+    # @option params [required, String] :knowledge_base_id
+    #   The unique identifier of the knowledge base to ingest the documents
+    #   into.
+    #
+    # @return [Types::IngestKnowledgeBaseDocumentsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::IngestKnowledgeBaseDocumentsResponse#document_details #document_details} => Array&lt;Types::KnowledgeBaseDocumentDetail&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.ingest_knowledge_base_documents({
+    #     client_token: "ClientToken",
+    #     data_source_id: "Id", # required
+    #     documents: [ # required
+    #       {
+    #         content: { # required
+    #           custom: {
+    #             custom_document_identifier: { # required
+    #               id: "CustomDocumentIdentifierIdString", # required
+    #             },
+    #             inline_content: {
+    #               byte_content: {
+    #                 data: "data", # required
+    #                 mime_type: "ByteContentDocMimeTypeString", # required
+    #               },
+    #               text_content: {
+    #                 data: "Data", # required
+    #               },
+    #               type: "BYTE", # required, accepts BYTE, TEXT
+    #             },
+    #             s3_location: {
+    #               bucket_owner_account_id: "BucketOwnerAccountId",
+    #               uri: "S3ObjectUri", # required
+    #             },
+    #             source_type: "IN_LINE", # required, accepts IN_LINE, S3_LOCATION
+    #           },
+    #           data_source_type: "CUSTOM", # required, accepts CUSTOM, S3
+    #           s3: {
+    #             s3_location: { # required
+    #               uri: "S3BucketUri", # required
+    #             },
+    #           },
+    #         },
+    #         metadata: {
+    #           inline_attributes: [
+    #             {
+    #               key: "Key", # required
+    #               value: { # required
+    #                 boolean_value: false,
+    #                 number_value: 1.0,
+    #                 string_list_value: ["StringValue"],
+    #                 string_value: "StringValue",
+    #                 type: "BOOLEAN", # required, accepts BOOLEAN, NUMBER, STRING, STRING_LIST
+    #               },
+    #             },
+    #           ],
+    #           s3_location: {
+    #             bucket_owner_account_id: "BucketOwnerAccountId",
+    #             uri: "S3ObjectUri", # required
+    #           },
+    #           type: "IN_LINE_ATTRIBUTE", # required, accepts IN_LINE_ATTRIBUTE, S3_LOCATION
+    #         },
+    #       },
+    #     ],
+    #     knowledge_base_id: "Id", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.document_details #=> Array
+    #   resp.document_details[0].data_source_id #=> String
+    #   resp.document_details[0].identifier.custom.id #=> String
+    #   resp.document_details[0].identifier.data_source_type #=> String, one of "CUSTOM", "S3"
+    #   resp.document_details[0].identifier.s3.uri #=> String
+    #   resp.document_details[0].knowledge_base_id #=> String
+    #   resp.document_details[0].status #=> String, one of "INDEXED", "PARTIALLY_INDEXED", "PENDING", "FAILED", "METADATA_PARTIALLY_INDEXED", "METADATA_UPDATE_FAILED", "IGNORED", "NOT_FOUND", "STARTING", "IN_PROGRESS", "DELETING", "DELETE_IN_PROGRESS"
+    #   resp.document_details[0].status_reason #=> String
+    #   resp.document_details[0].updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/IngestKnowledgeBaseDocuments AWS API Documentation
+    #
+    # @overload ingest_knowledge_base_documents(params = {})
+    # @param [Hash] params ({})
+    def ingest_knowledge_base_documents(params = {}, options = {})
+      req = build_request(:ingest_knowledge_base_documents, params)
       req.send_request(options)
     end
 
@@ -4307,6 +4567,72 @@ module Aws::BedrockAgent
     # @param [Hash] params ({})
     def list_ingestion_jobs(params = {}, options = {})
       req = build_request(:list_ingestion_jobs, params)
+      req.send_request(options)
+    end
+
+    # Retrieves all the documents contained in a data source that is
+    # connected to a knowledge base. For more information, see [Ingest
+    # documents into a knowledge base in real-time][1] in the Amazon Bedrock
+    # User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-real-time-ingestion.html
+    #
+    # @option params [required, String] :data_source_id
+    #   The unique identifier of the data source that contains the documents.
+    #
+    # @option params [required, String] :knowledge_base_id
+    #   The unique identifier of the knowledge base that is connected to the
+    #   data source.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in the response. If the total
+    #   number of results is greater than this value, use the token returned
+    #   in the response in the `nextToken` field when making another request
+    #   to return the next batch of results.
+    #
+    # @option params [String] :next_token
+    #   If the total number of results is greater than the `maxResults` value
+    #   provided in the request, enter the token returned in the `nextToken`
+    #   field in the response in this field to return the next batch of
+    #   results.
+    #
+    # @return [Types::ListKnowledgeBaseDocumentsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListKnowledgeBaseDocumentsResponse#document_details #document_details} => Array&lt;Types::KnowledgeBaseDocumentDetail&gt;
+    #   * {Types::ListKnowledgeBaseDocumentsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_knowledge_base_documents({
+    #     data_source_id: "Id", # required
+    #     knowledge_base_id: "Id", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.document_details #=> Array
+    #   resp.document_details[0].data_source_id #=> String
+    #   resp.document_details[0].identifier.custom.id #=> String
+    #   resp.document_details[0].identifier.data_source_type #=> String, one of "CUSTOM", "S3"
+    #   resp.document_details[0].identifier.s3.uri #=> String
+    #   resp.document_details[0].knowledge_base_id #=> String
+    #   resp.document_details[0].status #=> String, one of "INDEXED", "PARTIALLY_INDEXED", "PENDING", "FAILED", "METADATA_PARTIALLY_INDEXED", "METADATA_UPDATE_FAILED", "IGNORED", "NOT_FOUND", "STARTING", "IN_PROGRESS", "DELETING", "DELETE_IN_PROGRESS"
+    #   resp.document_details[0].status_reason #=> String
+    #   resp.document_details[0].updated_at #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListKnowledgeBaseDocuments AWS API Documentation
+    #
+    # @overload list_knowledge_base_documents(params = {})
+    # @param [Hash] params ({})
+    def list_knowledge_base_documents(params = {}, options = {})
+      req = build_request(:list_knowledge_base_documents, params)
       req.send_request(options)
     end
 
@@ -5276,7 +5602,7 @@ module Aws::BedrockAgent
     #           tenant_id: "Microsoft365TenantId",
     #         },
     #       },
-    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT
+    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT, CUSTOM
     #       web_configuration: {
     #         crawler_configuration: {
     #           crawler_limits: {
@@ -5397,7 +5723,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls #=> Array
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
-    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT"
+    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
@@ -6441,7 +6767,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.37.0'
+      context[:gem_version] = '1.38.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

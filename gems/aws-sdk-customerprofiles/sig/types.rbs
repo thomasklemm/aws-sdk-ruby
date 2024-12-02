@@ -292,6 +292,31 @@ module Aws::CustomerProfiles
       SENSITIVE: []
     end
 
+    class CreateEventTriggerRequest
+      attr_accessor domain_name: ::String
+      attr_accessor event_trigger_name: ::String
+      attr_accessor object_type_name: ::String
+      attr_accessor description: ::String
+      attr_accessor event_trigger_conditions: ::Array[Types::EventTriggerCondition]
+      attr_accessor segment_filter: ::String
+      attr_accessor event_trigger_limits: Types::EventTriggerLimits
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:description, :event_trigger_conditions]
+    end
+
+    class CreateEventTriggerResponse
+      attr_accessor event_trigger_name: ::String
+      attr_accessor object_type_name: ::String
+      attr_accessor description: ::String
+      attr_accessor event_trigger_conditions: ::Array[Types::EventTriggerCondition]
+      attr_accessor segment_filter: ::String
+      attr_accessor event_trigger_limits: Types::EventTriggerLimits
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:description, :event_trigger_conditions]
+    end
+
     class CreateIntegrationWorkflowRequest
       attr_accessor domain_name: ::String
       attr_accessor workflow_type: ("APPFLOW_INTEGRATION")
@@ -421,6 +446,17 @@ module Aws::CustomerProfiles
     end
 
     class DeleteEventStreamResponse < Aws::EmptyStructure
+    end
+
+    class DeleteEventTriggerRequest
+      attr_accessor domain_name: ::String
+      attr_accessor event_trigger_name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteEventTriggerResponse
+      attr_accessor message: ::String
+      SENSITIVE: []
     end
 
     class DeleteIntegrationRequest
@@ -564,6 +600,33 @@ module Aws::CustomerProfiles
       attr_accessor state: ("RUNNING" | "STOPPED")
       attr_accessor stopped_since: ::Time
       attr_accessor destination_summary: Types::DestinationSummary
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class EventTriggerCondition
+      attr_accessor event_trigger_dimensions: ::Array[Types::EventTriggerDimension]
+      attr_accessor logical_operator: ("ANY" | "ALL" | "NONE")
+      SENSITIVE: []
+    end
+
+    class EventTriggerDimension
+      attr_accessor object_attributes: ::Array[Types::ObjectAttribute]
+      SENSITIVE: []
+    end
+
+    class EventTriggerLimits
+      attr_accessor event_expiration: ::Integer
+      attr_accessor periods: ::Array[Types::Period]
+      SENSITIVE: []
+    end
+
+    class EventTriggerSummaryItem
+      attr_accessor object_type_name: ::String
+      attr_accessor event_trigger_name: ::String
+      attr_accessor description: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
     end
@@ -735,6 +798,25 @@ module Aws::CustomerProfiles
       SENSITIVE: []
     end
 
+    class GetEventTriggerRequest
+      attr_accessor domain_name: ::String
+      attr_accessor event_trigger_name: ::String
+      SENSITIVE: []
+    end
+
+    class GetEventTriggerResponse
+      attr_accessor event_trigger_name: ::String
+      attr_accessor object_type_name: ::String
+      attr_accessor description: ::String
+      attr_accessor event_trigger_conditions: ::Array[Types::EventTriggerCondition]
+      attr_accessor segment_filter: ::String
+      attr_accessor event_trigger_limits: Types::EventTriggerLimits
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:description, :event_trigger_conditions]
+    end
+
     class GetIdentityResolutionJobRequest
       attr_accessor domain_name: ::String
       attr_accessor job_id: ::String
@@ -773,6 +855,7 @@ module Aws::CustomerProfiles
       attr_accessor workflow_id: ::String
       attr_accessor is_unstructured: bool
       attr_accessor role_arn: ::String
+      attr_accessor event_trigger_names: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -1090,6 +1173,19 @@ module Aws::CustomerProfiles
       SENSITIVE: []
     end
 
+    class ListEventTriggersRequest
+      attr_accessor domain_name: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListEventTriggersResponse
+      attr_accessor items: ::Array[Types::EventTriggerSummaryItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: [:items]
+    end
+
     class ListIdentityResolutionJobsRequest
       attr_accessor domain_name: ::String
       attr_accessor next_token: ::String
@@ -1114,6 +1210,7 @@ module Aws::CustomerProfiles
       attr_accessor workflow_id: ::String
       attr_accessor is_unstructured: bool
       attr_accessor role_arn: ::String
+      attr_accessor event_trigger_names: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -1326,6 +1423,14 @@ module Aws::CustomerProfiles
       SENSITIVE: []
     end
 
+    class ObjectAttribute
+      attr_accessor source: ::String
+      attr_accessor field_name: ::String
+      attr_accessor comparison_operator: ("INCLUSIVE" | "EXCLUSIVE" | "CONTAINS" | "BEGINS_WITH" | "ENDS_WITH" | "GREATER_THAN" | "LESS_THAN" | "GREATER_THAN_OR_EQUAL" | "LESS_THAN_OR_EQUAL" | "EQUAL" | "BEFORE" | "AFTER" | "ON" | "BETWEEN" | "NOT_BETWEEN")
+      attr_accessor values: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class ObjectFilter
       attr_accessor key_name: ::String
       attr_accessor values: ::Array[::String]
@@ -1342,6 +1447,14 @@ module Aws::CustomerProfiles
     class ObjectTypeKey
       attr_accessor standard_identifiers: ::Array[("PROFILE" | "ASSET" | "CASE" | "ORDER" | "COMMUNICATION_RECORD" | "UNIQUE" | "SECONDARY" | "LOOKUP_ONLY" | "NEW_ONLY")]
       attr_accessor field_names: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class Period
+      attr_accessor unit: ("HOURS" | "DAYS" | "WEEKS" | "MONTHS")
+      attr_accessor value: ::Integer
+      attr_accessor max_invocations_per_profile: ::Integer
+      attr_accessor unlimited: bool
       SENSITIVE: []
     end
 
@@ -1441,6 +1554,7 @@ module Aws::CustomerProfiles
       attr_accessor flow_definition: Types::FlowDefinition
       attr_accessor object_type_names: ::Hash[::String, ::String]
       attr_accessor role_arn: ::String
+      attr_accessor event_trigger_names: ::Array[::String]
       SENSITIVE: [:flow_definition]
     end
 
@@ -1455,6 +1569,7 @@ module Aws::CustomerProfiles
       attr_accessor workflow_id: ::String
       attr_accessor is_unstructured: bool
       attr_accessor role_arn: ::String
+      attr_accessor event_trigger_names: ::Array[::String]
       SENSITIVE: []
     end
 
@@ -1754,6 +1869,30 @@ module Aws::CustomerProfiles
       attr_accessor last_updated_at: ::Time
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
+    end
+
+    class UpdateEventTriggerRequest
+      attr_accessor domain_name: ::String
+      attr_accessor event_trigger_name: ::String
+      attr_accessor object_type_name: ::String
+      attr_accessor description: ::String
+      attr_accessor event_trigger_conditions: ::Array[Types::EventTriggerCondition]
+      attr_accessor segment_filter: ::String
+      attr_accessor event_trigger_limits: Types::EventTriggerLimits
+      SENSITIVE: [:description, :event_trigger_conditions]
+    end
+
+    class UpdateEventTriggerResponse
+      attr_accessor event_trigger_name: ::String
+      attr_accessor object_type_name: ::String
+      attr_accessor description: ::String
+      attr_accessor event_trigger_conditions: ::Array[Types::EventTriggerCondition]
+      attr_accessor segment_filter: ::String
+      attr_accessor event_trigger_limits: Types::EventTriggerLimits
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor tags: ::Hash[::String, ::String]
+      SENSITIVE: [:description, :event_trigger_conditions]
     end
 
     class UpdateProfileRequest

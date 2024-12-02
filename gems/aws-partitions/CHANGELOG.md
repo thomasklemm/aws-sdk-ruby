@@ -1,6 +1,15 @@
 Unreleased Changes
 ------------------
 
+1.1015.0 (2024-12-02)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::SecurityIR`.
+
+* Feature - Added support for enumerating regions for  `Aws::NetworkFlowMonitor`.
+
+* Feature - Added support for enumerating regions for  `Aws::Invoicing`.
+
 1.1014.0 (2024-11-27)
 ------------------
 

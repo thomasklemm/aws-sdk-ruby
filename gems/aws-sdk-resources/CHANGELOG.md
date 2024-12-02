@@ -1,6 +1,15 @@
 Unreleased Changes
 ------------------
 
+3.218.0 (2024-12-02)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-securityir` gem.
+
+* Feature - Added a dependency on the new `aws-sdk-networkflowmonitor` gem.
+
+* Feature - Added a dependency on the new `aws-sdk-invoicing` gem.
+
 3.217.0 (2024-11-27)
 ------------------
 

@@ -41,6 +41,8 @@ module Aws
       end
       class InvalidKMSKeyFault < ::Aws::Errors::ServiceError
       end
+      class InvalidMultiRegionClusterStateFault < ::Aws::Errors::ServiceError
+      end
       class InvalidNodeStateFault < ::Aws::Errors::ServiceError
       end
       class InvalidParameterCombinationException < ::Aws::Errors::ServiceError
@@ -58,6 +60,12 @@ module Aws
       class InvalidUserStateFault < ::Aws::Errors::ServiceError
       end
       class InvalidVPCNetworkStateFault < ::Aws::Errors::ServiceError
+      end
+      class MultiRegionClusterAlreadyExistsFault < ::Aws::Errors::ServiceError
+      end
+      class MultiRegionClusterNotFoundFault < ::Aws::Errors::ServiceError
+      end
+      class MultiRegionParameterGroupNotFoundFault < ::Aws::Errors::ServiceError
       end
       class NoOperationFault < ::Aws::Errors::ServiceError
       end

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.261.0 (2024-12-02)
+------------------
+
+* Feature - Amazon RDS supports CloudWatch Database Insights. You can use the SDK to create, modify, and describe the DatabaseInsightsMode for your DB instances and clusters.
+
 1.260.0 (2024-11-20)
 ------------------
 

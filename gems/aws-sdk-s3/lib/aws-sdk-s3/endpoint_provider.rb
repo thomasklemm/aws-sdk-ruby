@@ -94,6 +94,24 @@ module Aws::S3
                 end
                 return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
               end
+              if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 19, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 19, 21, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
+                if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
+                  return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-fips-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+                end
+                return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+              end
+              if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 20, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 20, 22, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
+                if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
+                  return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-fips-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+                end
+                return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+              end
+              if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 26, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 26, 28, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
+                if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
+                  return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-fips-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+                end
+                return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+              end
               raise ArgumentError, "Unrecognized S3Express bucket name format."
             end
             if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 14, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 14, 16, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
@@ -103,6 +121,24 @@ module Aws::S3
               return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
             end
             if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 15, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 15, 17, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
+              if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
+                return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-fips-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+              end
+              return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+            end
+            if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 19, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 19, 21, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
+              if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
+                return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-fips-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+              end
+              return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+            end
+            if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 20, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 20, 22, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
+              if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
+                return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-fips-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+              end
+              return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
+            end
+            if (s3express_availability_zone_id = Aws::Endpoints::Matchers.substring(bucket, 6, 26, true)) && (s3express_availability_zone_delim = Aws::Endpoints::Matchers.substring(bucket, 26, 28, true)) && Aws::Endpoints::Matchers.string_equals?(s3express_availability_zone_delim, "--")
               if Aws::Endpoints::Matchers.boolean_equals?(use_fips, true)
                 return Aws::Endpoints::Endpoint.new(url: "https://#{bucket}.s3express-fips-#{s3express_availability_zone_id}.#{region}.amazonaws.com", headers: {}, properties: {"backend"=>"S3Express", "authSchemes"=>[{"disableDoubleEncoding"=>true, "name"=>"sigv4-s3express", "signingName"=>"s3express", "signingRegion"=>"#{region}"}]})
               end

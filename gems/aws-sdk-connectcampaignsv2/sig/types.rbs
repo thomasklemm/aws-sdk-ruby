@@ -242,9 +242,21 @@ module Aws::ConnectCampaignsV2
       SENSITIVE: []
     end
 
+    class EventTrigger
+      attr_accessor customer_profiles_domain_arn: ::String
+      SENSITIVE: []
+    end
+
     class FailedCampaignStateResponse
       attr_accessor campaign_id: ::String
       attr_accessor failure_code: ("ResourceNotFound" | "UnknownError")
+      SENSITIVE: []
+    end
+
+    class FailedProfileOutboundRequest
+      attr_accessor client_token: ::String
+      attr_accessor id: ::String
+      attr_accessor failure_code: ("UnknownError" | "ResourceNotFound" | "Conflict" | "RequestThrottled" | "InvalidInput")
       SENSITIVE: []
     end
 
@@ -447,6 +459,13 @@ module Aws::ConnectCampaignsV2
       SENSITIVE: []
     end
 
+    class ProfileOutboundRequest
+      attr_accessor client_token: ::String
+      attr_accessor profile_id: ::String
+      attr_accessor expiration_time: ::Time
+      SENSITIVE: []
+    end
+
     class ProgressiveConfig
       attr_accessor bandwidth_allocation: ::Float
       SENSITIVE: []
@@ -467,6 +486,18 @@ module Aws::ConnectCampaignsV2
     class PutOutboundRequestBatchResponse
       attr_accessor successful_requests: ::Array[Types::SuccessfulRequest]
       attr_accessor failed_requests: ::Array[Types::FailedRequest]
+      SENSITIVE: []
+    end
+
+    class PutProfileOutboundRequestBatchRequest
+      attr_accessor id: ::String
+      attr_accessor profile_outbound_requests: ::Array[Types::ProfileOutboundRequest]
+      SENSITIVE: []
+    end
+
+    class PutProfileOutboundRequestBatchResponse
+      attr_accessor successful_requests: ::Array[Types::SuccessfulProfileOutboundRequest]
+      attr_accessor failed_requests: ::Array[Types::FailedProfileOutboundRequest]
       SENSITIVE: []
     end
 
@@ -561,10 +592,13 @@ module Aws::ConnectCampaignsV2
 
     class Source
       attr_accessor customer_profiles_segment_arn: ::String
+      attr_accessor event_trigger: Types::EventTrigger
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class CustomerProfilesSegmentArn < Source
+      end
+      class EventTrigger < Source
       end
       class Unknown < Source
       end
@@ -594,6 +628,12 @@ module Aws::ConnectCampaignsV2
     class SuccessfulCampaignStateResponse
       attr_accessor campaign_id: ::String
       attr_accessor state: ("Initialized" | "Running" | "Paused" | "Stopped" | "Failed" | "Completed")
+      SENSITIVE: []
+    end
+
+    class SuccessfulProfileOutboundRequest
+      attr_accessor client_token: ::String
+      attr_accessor id: ::String
       SENSITIVE: []
     end
 

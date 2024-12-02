@@ -2886,6 +2886,10 @@ module Aws::RDS
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.OS.html#USER_Monitoring.OS.Enabling
     #   @return [String]
     #
+    # @!attribute [rw] database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the cluster.
+    #   @return [String]
+    #
     # @!attribute [rw] enable_performance_insights
     #   Specifies whether to turn on Performance Insights for the DB
     #   cluster.
@@ -3157,6 +3161,7 @@ module Aws::RDS
       :auto_minor_version_upgrade,
       :monitoring_interval,
       :monitoring_role_arn,
+      :database_insights_mode,
       :enable_performance_insights,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,
@@ -4403,6 +4408,10 @@ module Aws::RDS
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
+    #   @return [String]
+    #
     # @!attribute [rw] enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB
     #   instance. For more information, see [Using Amazon Performance
@@ -4791,6 +4800,7 @@ module Aws::RDS
       :promotion_tier,
       :timezone,
       :enable_iam_database_authentication,
+      :database_insights_mode,
       :enable_performance_insights,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,
@@ -5197,6 +5207,10 @@ module Aws::RDS
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] database_insights_mode
+    #   Specifies the mode of Database Insights.
+    #   @return [String]
+    #
     # @!attribute [rw] enable_performance_insights
     #   Specifies whether to enable Performance Insights for the read
     #   replica.
@@ -5562,6 +5576,7 @@ module Aws::RDS
       :kms_key_id,
       :pre_signed_url,
       :enable_iam_database_authentication,
+      :database_insights_mode,
       :enable_performance_insights,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,
@@ -7163,6 +7178,10 @@ module Aws::RDS
     #   This setting is only for non-Aurora Multi-AZ DB clusters.
     #   @return [String]
     #
+    # @!attribute [rw] database_insights_mode
+    #   The mode of Database Insights that is enabled for the cluster.
+    #   @return [String]
+    #
     # @!attribute [rw] performance_insights_enabled
     #   Indicates whether Performance Insights is enabled for the DB
     #   cluster.
@@ -7373,6 +7392,7 @@ module Aws::RDS
       :auto_minor_version_upgrade,
       :monitoring_interval,
       :monitoring_role_arn,
+      :database_insights_mode,
       :performance_insights_enabled,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,
@@ -9036,6 +9056,10 @@ module Aws::RDS
     #   [2]: https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Concepts.Aurora_Fea_Regions_DB-eng.Feature.IAMdbauth.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] database_insights_mode
+    #   The mode of Database Insights that is enabled for the instance.
+    #   @return [String]
+    #
     # @!attribute [rw] performance_insights_enabled
     #   Indicates whether Performance Insights is enabled for the DB
     #   instance.
@@ -9363,6 +9387,7 @@ module Aws::RDS
       :db_instance_arn,
       :timezone,
       :iam_database_authentication_enabled,
+      :database_insights_mode,
       :performance_insights_enabled,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,
@@ -17587,9 +17612,9 @@ module Aws::RDS
     #   Aurora User Guide*.
     #
     #   <note markdown="1"> This parameter applies only to Aurora Serverless v1 DB clusters. To
-    #   enable or disable the HTTP endpoint for an Aurora PostgreSQL
-    #   Serverless v2 or provisioned DB cluster, use the
-    #   `EnableHttpEndpoint` and `DisableHttpEndpoint` operations.
+    #   enable or disable the HTTP endpoint for an Aurora Serverless v2 or
+    #   provisioned DB cluster, use the `EnableHttpEndpoint` and
+    #   `DisableHttpEndpoint` operations.
     #
     #    </note>
     #
@@ -17738,6 +17763,10 @@ module Aws::RDS
     #
     #
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Monitoring.html#USER_Monitoring.OS.IAMRole
+    #   @return [String]
+    #
+    # @!attribute [rw] database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the cluster.
     #   @return [String]
     #
     # @!attribute [rw] enable_performance_insights
@@ -18022,6 +18051,7 @@ module Aws::RDS
       :auto_minor_version_upgrade,
       :monitoring_interval,
       :monitoring_role_arn,
+      :database_insights_mode,
       :enable_performance_insights,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,
@@ -18961,6 +18991,10 @@ module Aws::RDS
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     #   @return [Boolean]
     #
+    # @!attribute [rw] database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
+    #   @return [String]
+    #
     # @!attribute [rw] enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB
     #   instance.
@@ -19381,6 +19415,7 @@ module Aws::RDS
       :disable_domain,
       :promotion_tier,
       :enable_iam_database_authentication,
+      :database_insights_mode,
       :enable_performance_insights,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,
@@ -25444,6 +25479,10 @@ module Aws::RDS
     #   [1]: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/MySQL.Procedural.Importing.html#MySQL.Procedural.Importing.Enabling.IAM
     #   @return [String]
     #
+    # @!attribute [rw] database_insights_mode
+    #   Specifies the mode of Database Insights to enable for the instance.
+    #   @return [String]
+    #
     # @!attribute [rw] enable_performance_insights
     #   Specifies whether to enable Performance Insights for the DB
     #   instance.
@@ -25705,6 +25744,7 @@ module Aws::RDS
       :s3_bucket_name,
       :s3_prefix,
       :s3_ingestion_role_arn,
+      :database_insights_mode,
       :enable_performance_insights,
       :performance_insights_kms_key_id,
       :performance_insights_retention_period,

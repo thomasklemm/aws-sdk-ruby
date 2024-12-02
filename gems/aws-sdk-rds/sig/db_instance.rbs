@@ -171,6 +171,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDS/DBInstance.html#iam_database_authentication_enabled-instance_method
       def iam_database_authentication_enabled: () -> bool
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDS/DBInstance.html#database_insights_mode-instance_method
+      def database_insights_mode: () -> ("standard" | "advanced")
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RDS/DBInstance.html#performance_insights_enabled-instance_method
       def performance_insights_enabled: () -> bool
 
@@ -336,6 +339,7 @@ module Aws
                     ?promotion_tier: ::Integer,
                     ?timezone: ::String,
                     ?enable_iam_database_authentication: bool,
+                    ?database_insights_mode: ("standard" | "advanced"),
                     ?enable_performance_insights: bool,
                     ?performance_insights_kms_key_id: ::String,
                     ?performance_insights_retention_period: ::Integer,
@@ -390,6 +394,7 @@ module Aws
                                  ?kms_key_id: ::String,
                                  ?pre_signed_url: ::String,
                                  ?enable_iam_database_authentication: bool,
+                                 ?database_insights_mode: ("standard" | "advanced"),
                                  ?enable_performance_insights: bool,
                                  ?performance_insights_kms_key_id: ::String,
                                  ?performance_insights_retention_period: ::Integer,
@@ -482,6 +487,7 @@ module Aws
                     ?disable_domain: bool,
                     ?promotion_tier: ::Integer,
                     ?enable_iam_database_authentication: bool,
+                    ?database_insights_mode: ("standard" | "advanced"),
                     ?enable_performance_insights: bool,
                     ?performance_insights_kms_key_id: ::String,
                     ?performance_insights_retention_period: ::Integer,

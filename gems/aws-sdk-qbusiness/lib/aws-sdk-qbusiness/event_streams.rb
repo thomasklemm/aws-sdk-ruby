@@ -66,7 +66,9 @@ module Aws::QBusiness
       end
 
       # @option params [Types::AttachmentInput] :attachment
-      #   A file directly uploaded into a web experience chat.
+      #   This is either a file directly uploaded into a web experience chat or
+      #   a reference to an existing attachment that is part of a web experience
+      #   chat.
       #
       def signal_attachment_event_event(params = {})
         @event_emitter.emit(:attachment_event, params)

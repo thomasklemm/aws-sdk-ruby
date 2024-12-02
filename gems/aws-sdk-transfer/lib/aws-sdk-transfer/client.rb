@@ -1045,7 +1045,8 @@ module Aws::Transfer
     #   `API_GATEWAY`. Accepts an array containing all of the information
     #   required to use a directory in `AWS_DIRECTORY_SERVICE` or invoke a
     #   customer-supplied authentication API, including the API Gateway URL.
-    #   Not required when `IdentityProviderType` is set to `SERVICE_MANAGED`.
+    #   Cannot be specified when `IdentityProviderType` is set to
+    #   `SERVICE_MANAGED`.
     #
     # @option params [String] :identity_provider_type
     #   The mode of authentication for a server. The default value is
@@ -1460,6 +1461,63 @@ module Aws::Transfer
     # @param [Hash] params ({})
     def create_user(params = {}, options = {})
       req = build_request(:create_user, params)
+      req.send_request(options)
+    end
+
+    # Creates a web app based on specified parameters, and returns the ID
+    # for the new web app.
+    #
+    # @option params [required, Types::WebAppIdentityProviderDetails] :identity_provider_details
+    #   You can provide a structure that contains the details for the identity
+    #   provider to use with your web app.
+    #
+    # @option params [String] :access_endpoint
+    #   The `AccessEndpoint` is the URL that you provide to your users for
+    #   them to interact with the Transfer Family web app. You can specify a
+    #   custom URL or use the default value.
+    #
+    # @option params [Types::WebAppUnits] :web_app_units
+    #   A union that contains the value for number of concurrent connections
+    #   or the user sessions on your web app.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   Key-value pairs that can be used to group and search for web apps.
+    #
+    # @return [Types::CreateWebAppResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateWebAppResponse#web_app_id #web_app_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_web_app({
+    #     identity_provider_details: { # required
+    #       identity_center_config: {
+    #         instance_arn: "IdentityCenterInstanceArn",
+    #         role: "Role",
+    #       },
+    #     },
+    #     access_endpoint: "WebAppAccessEndpoint",
+    #     web_app_units: {
+    #       provisioned: 1,
+    #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.web_app_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateWebApp AWS API Documentation
+    #
+    # @overload create_web_app(params = {})
+    # @param [Hash] params ({})
+    def create_web_app(params = {}, options = {})
+      req = build_request(:create_web_app, params)
       req.send_request(options)
     end
 
@@ -1908,6 +1966,52 @@ module Aws::Transfer
     # @param [Hash] params ({})
     def delete_user(params = {}, options = {})
       req = build_request(:delete_user, params)
+      req.send_request(options)
+    end
+
+    # Deletes the specified web app.
+    #
+    # @option params [required, String] :web_app_id
+    #   Provide the unique identifier for the web app that you are deleting.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_web_app({
+    #     web_app_id: "WebAppId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteWebApp AWS API Documentation
+    #
+    # @overload delete_web_app(params = {})
+    # @param [Hash] params ({})
+    def delete_web_app(params = {}, options = {})
+      req = build_request(:delete_web_app, params)
+      req.send_request(options)
+    end
+
+    # Deletes the `WebAppCustomization` object that corresponds to the web
+    # app ID specified.
+    #
+    # @option params [required, String] :web_app_id
+    #   Provide the unique identifier for the web app that contains the
+    #   customizations that you are deleting.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_web_app_customization({
+    #     web_app_id: "WebAppId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteWebAppCustomization AWS API Documentation
+    #
+    # @overload delete_web_app_customization(params = {})
+    # @param [Hash] params ({})
+    def delete_web_app_customization(params = {}, options = {})
+      req = build_request(:delete_web_app_customization, params)
       req.send_request(options)
     end
 
@@ -2486,6 +2590,77 @@ module Aws::Transfer
       req.send_request(options)
     end
 
+    # Describes the web app that's identified by `WebAppId`.
+    #
+    # @option params [required, String] :web_app_id
+    #   Provide the unique identifier for the web app.
+    #
+    # @return [Types::DescribeWebAppResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeWebAppResponse#web_app #web_app} => Types::DescribedWebApp
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_web_app({
+    #     web_app_id: "WebAppId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.web_app.arn #=> String
+    #   resp.web_app.web_app_id #=> String
+    #   resp.web_app.described_identity_provider_details.identity_center_config.application_arn #=> String
+    #   resp.web_app.described_identity_provider_details.identity_center_config.instance_arn #=> String
+    #   resp.web_app.described_identity_provider_details.identity_center_config.role #=> String
+    #   resp.web_app.access_endpoint #=> String
+    #   resp.web_app.web_app_endpoint #=> String
+    #   resp.web_app.web_app_units.provisioned #=> Integer
+    #   resp.web_app.tags #=> Array
+    #   resp.web_app.tags[0].key #=> String
+    #   resp.web_app.tags[0].value #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWebApp AWS API Documentation
+    #
+    # @overload describe_web_app(params = {})
+    # @param [Hash] params ({})
+    def describe_web_app(params = {}, options = {})
+      req = build_request(:describe_web_app, params)
+      req.send_request(options)
+    end
+
+    # Describes the web app customization object that's identified by
+    # `WebAppId`.
+    #
+    # @option params [required, String] :web_app_id
+    #   Provide the unique identifier for the web app.
+    #
+    # @return [Types::DescribeWebAppCustomizationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeWebAppCustomizationResponse#web_app_customization #web_app_customization} => Types::DescribedWebAppCustomization
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_web_app_customization({
+    #     web_app_id: "WebAppId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.web_app_customization.arn #=> String
+    #   resp.web_app_customization.web_app_id #=> String
+    #   resp.web_app_customization.title #=> String
+    #   resp.web_app_customization.logo_file #=> String
+    #   resp.web_app_customization.favicon_file #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWebAppCustomization AWS API Documentation
+    #
+    # @overload describe_web_app_customization(params = {})
+    # @param [Hash] params ({})
+    def describe_web_app_customization(params = {}, options = {})
+      req = build_request(:describe_web_app_customization, params)
+      req.send_request(options)
+    end
+
     # Describes the specified workflow.
     #
     # @option params [required, String] :workflow_id
@@ -2757,7 +2932,7 @@ module Aws::Transfer
     # Lists the details for all the accesses you have on your server.
     #
     # @option params [Integer] :max_results
-    #   Specifies the maximum number of access SIDs to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   When you can get additional results from the `ListAccesses` call, a
@@ -2812,7 +2987,7 @@ module Aws::Transfer
     # left off.
     #
     # @option params [Integer] :max_results
-    #   The maximum number of agreements to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   When you can get additional results from the `ListAgreements` call, a
@@ -2867,7 +3042,7 @@ module Aws::Transfer
     # you left off.
     #
     # @option params [Integer] :max_results
-    #   The maximum number of certificates to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   When you can get additional results from the `ListCertificates` call,
@@ -2914,7 +3089,7 @@ module Aws::Transfer
     # Lists the connectors for the specified Region.
     #
     # @option params [Integer] :max_results
-    #   The maximum number of connectors to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   When you can get additional results from the `ListConnectors` call, a
@@ -2961,7 +3136,7 @@ module Aws::Transfer
     #  </note>
     #
     # @option params [Integer] :max_results
-    #   Specifies the maximum number of executions to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   `ListExecutions` returns the `NextToken` parameter in the output. You
@@ -3101,7 +3276,7 @@ module Aws::Transfer
     # `ServerId` parameter.
     #
     # @option params [Integer] :max_results
-    #   The maximum number of host keys to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   When there are additional results that were not returned, a
@@ -3154,7 +3329,7 @@ module Aws::Transfer
     # from where you left off.
     #
     # @option params [Integer] :max_results
-    #   The maximum number of profiles to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   When there are additional results that were not returned, a
@@ -3402,11 +3577,54 @@ module Aws::Transfer
       req.send_request(options)
     end
 
+    # Lists all web apps associated with your Amazon Web Services account
+    # for your current region.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of items to return.
+    #
+    # @option params [String] :next_token
+    #   Returns the `NextToken` parameter in the output. You can then pass the
+    #   `NextToken` parameter in a subsequent command to continue listing
+    #   additional web apps.
+    #
+    # @return [Types::ListWebAppsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListWebAppsResponse#next_token #next_token} => String
+    #   * {Types::ListWebAppsResponse#web_apps #web_apps} => Array&lt;Types::ListedWebApp&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_web_apps({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.web_apps #=> Array
+    #   resp.web_apps[0].arn #=> String
+    #   resp.web_apps[0].web_app_id #=> String
+    #   resp.web_apps[0].access_endpoint #=> String
+    #   resp.web_apps[0].web_app_endpoint #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListWebApps AWS API Documentation
+    #
+    # @overload list_web_apps(params = {})
+    # @param [Hash] params ({})
+    def list_web_apps(params = {}, options = {})
+      req = build_request(:list_web_apps, params)
+      req.send_request(options)
+    end
+
     # Lists all workflows associated with your Amazon Web Services account
     # for your current region.
     #
     # @option params [Integer] :max_results
-    #   Specifies the maximum number of workflows to return.
+    #   The maximum number of items to return.
     #
     # @option params [String] :next_token
     #   `ListWorkflows` returns the `NextToken` parameter in the output. You
@@ -4901,6 +5119,98 @@ module Aws::Transfer
       req.send_request(options)
     end
 
+    # Assigns new properties to a web app. You can modify the access point,
+    # identity provider details, and the web app units.
+    #
+    # @option params [required, String] :web_app_id
+    #   Provide the identifier of the web app that you are updating.
+    #
+    # @option params [Types::UpdateWebAppIdentityProviderDetails] :identity_provider_details
+    #   Provide updated identity provider values in a
+    #   `WebAppIdentityProviderDetails` object.
+    #
+    # @option params [String] :access_endpoint
+    #   The `AccessEndpoint` is the URL that you provide to your users for
+    #   them to interact with the Transfer Family web app. You can specify a
+    #   custom URL or use the default value.
+    #
+    # @option params [Types::WebAppUnits] :web_app_units
+    #   A union that contains the value for number of concurrent connections
+    #   or the user sessions on your web app.
+    #
+    # @return [Types::UpdateWebAppResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateWebAppResponse#web_app_id #web_app_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_web_app({
+    #     web_app_id: "WebAppId", # required
+    #     identity_provider_details: {
+    #       identity_center_config: {
+    #         role: "Role",
+    #       },
+    #     },
+    #     access_endpoint: "WebAppAccessEndpoint",
+    #     web_app_units: {
+    #       provisioned: 1,
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.web_app_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebApp AWS API Documentation
+    #
+    # @overload update_web_app(params = {})
+    # @param [Hash] params ({})
+    def update_web_app(params = {}, options = {})
+      req = build_request(:update_web_app, params)
+      req.send_request(options)
+    end
+
+    # Assigns new customization properties to a web app. You can modify the
+    # icon file, logo file, and title.
+    #
+    # @option params [required, String] :web_app_id
+    #   Provide the identifier of the web app that you are updating.
+    #
+    # @option params [String] :title
+    #   Provide an updated title.
+    #
+    # @option params [String, StringIO, File] :logo_file
+    #   Specify logo file data string (in base64 encoding).
+    #
+    # @option params [String, StringIO, File] :favicon_file
+    #   Specify icon file data string (in base64 encoding).
+    #
+    # @return [Types::UpdateWebAppCustomizationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateWebAppCustomizationResponse#web_app_id #web_app_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_web_app_customization({
+    #     web_app_id: "WebAppId", # required
+    #     title: "WebAppTitle",
+    #     logo_file: "data",
+    #     favicon_file: "data",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.web_app_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateWebAppCustomization AWS API Documentation
+    #
+    # @overload update_web_app_customization(params = {})
+    # @param [Hash] params ({})
+    def update_web_app_customization(params = {}, options = {})
+      req = build_request(:update_web_app_customization, params)
+      req.send_request(options)
+    end
+
     # @!endgroup
 
     # @param params ({})
@@ -4919,7 +5229,7 @@ module Aws::Transfer
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-transfer'
-      context[:gem_version] = '1.107.0'
+      context[:gem_version] = '1.108.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

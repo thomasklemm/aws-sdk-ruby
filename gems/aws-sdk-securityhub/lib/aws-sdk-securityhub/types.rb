@@ -269,6 +269,137 @@ module Aws::SecurityHub
       include Aws::Structure
     end
 
+    # Information about the threat actor identified in an Amazon GuardDuty
+    # Extended Threat Detection attack sequence. GuardDuty generates an
+    # attack sequence finding when multiple events align to a potentially
+    # suspicious activity. To receive GuardDuty attack sequence findings in
+    # Security Hub, you must have GuardDuty and GuardDuty S3 Protection
+    # enabled. For more information, see [GuardDuty Extended Threat
+    # Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] id
+    #   The ID of the threat actor.
+    #   @return [String]
+    #
+    # @!attribute [rw] user
+    #   Contains information about the user credentials used by the threat
+    #   actor.
+    #   @return [Types::ActorUser]
+    #
+    # @!attribute [rw] session
+    #   Contains information about the user session where the activity
+    #   initiated.
+    #   @return [Types::ActorSession]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/Actor AWS API Documentation
+    #
+    class Actor < Struct.new(
+      :id,
+      :user,
+      :session)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the authenticated session used by the
+    # threat actor identified in an Amazon GuardDuty Extended Threat
+    # Detection attack sequence. GuardDuty generates an attack sequence
+    # finding when multiple events align to a potentially suspicious
+    # activity. To receive GuardDuty attack sequence findings in Security
+    # Hub, you must have GuardDuty and GuardDuty S3 Protection enabled. For
+    # more information, see [GuardDuty Extended Threat Detection ][1] in the
+    # *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] uid
+    #   Unique identifier of the session.
+    #   @return [String]
+    #
+    # @!attribute [rw] mfa_status
+    #   Indicates whether multi-factor authentication (MFA) was used for
+    #   authentication during the session.
+    #
+    #   In CloudTrail, you can find this value as
+    #   `userIdentity.sessionContext.attributes.mfaAuthenticated`.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_time
+    #   The timestamp for when the session was created.
+    #
+    #   In CloudTrail, you can find this value as
+    #   `userIdentity.sessionContext.attributes.creationDate`.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] issuer
+    #   The issuer of the session.
+    #
+    #   In CloudTrail, you can find this value as
+    #   `userIdentity.sessionContext.sessionIssuer.arn`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ActorSession AWS API Documentation
+    #
+    class ActorSession < Struct.new(
+      :uid,
+      :mfa_status,
+      :created_time,
+      :issuer)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the credentials used by the threat actor
+    # identified in an Amazon GuardDuty Extended Threat Detection attack
+    # sequence. GuardDuty generates an attack sequence finding when multiple
+    # events align to a potentially suspicious activity. To receive
+    # GuardDuty attack sequence findings in Security Hub, you must have
+    # GuardDuty and GuardDuty S3 Protection enabled. For more information,
+    # see [GuardDuty Extended Threat Detection ][1] in the *Amazon GuardDuty
+    # User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] name
+    #   The name of the threat actor.
+    #   @return [String]
+    #
+    # @!attribute [rw] uid
+    #   The unique identifier of the threat actor.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of user.
+    #   @return [String]
+    #
+    # @!attribute [rw] credential_uid
+    #   Unique identifier of the threat actor’s user credentials.
+    #   @return [String]
+    #
+    # @!attribute [rw] account
+    #   The account of the threat actor.
+    #   @return [Types::UserAccount]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/ActorUser AWS API Documentation
+    #
+    class ActorUser < Struct.new(
+      :name,
+      :uid,
+      :type,
+      :credential_uid,
+      :account)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An adjustment to the CVSS metric.
     #
     # @!attribute [rw] metric
@@ -19947,6 +20078,20 @@ module Aws::SecurityHub
     #   Length Constraints: Minimum length of 1. Maximum length of 50.
     #   @return [String]
     #
+    # @!attribute [rw] detection
+    #   Provides details about an Amazon GuardDuty Extended Threat Detection
+    #   attack sequence. GuardDuty generates an attack sequence finding when
+    #   multiple events align to a potentially suspicious activity. To
+    #   receive GuardDuty attack sequence findings in Security Hub, you must
+    #   have GuardDuty and GuardDuty S3 Protection enabled. For more
+    #   information, see [GuardDuty Extended Threat Detection ][1] in the
+    #   *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #   @return [Types::Detection]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/AwsSecurityFinding AWS API Documentation
     #
     class AwsSecurityFinding < Struct.new(
@@ -19993,7 +20138,8 @@ module Aws::SecurityHub
       :sample,
       :generator_details,
       :processed_at,
-      :aws_account_name)
+      :aws_account_name,
+      :detection)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -24464,6 +24610,30 @@ module Aws::SecurityHub
       include Aws::Structure
     end
 
+    # A top-level object field that provides details about an Amazon
+    # GuardDuty Extended Threat Detection attack sequence. GuardDuty
+    # generates an attack sequence finding when multiple events align to a
+    # potentially suspicious activity. To receive GuardDuty attack sequence
+    # findings in Security Hub, you must have GuardDuty and GuardDuty S3
+    # Protection enabled. For more information, see [GuardDuty Extended
+    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] sequence
+    #   Provides details about an attack sequence.
+    #   @return [Types::Sequence]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/Detection AWS API Documentation
+    #
+    class Detection < Struct.new(
+      :sequence)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] product_subscription_arn
     #   The ARN of the integrated product to disable the integration for.
     #   @return [String]
@@ -25866,6 +26036,51 @@ module Aws::SecurityHub
       include Aws::Structure
     end
 
+    # Contains information about the indicators observed in an Amazon
+    # GuardDuty Extended Threat Detection attack sequence. Indicators
+    # include a set of signals, which can be API activities or findings that
+    # GuardDuty uses to detect an attack sequence finding. GuardDuty
+    # generates an attack sequence finding when multiple signals align to a
+    # potentially suspicious activity. To receive GuardDuty attack sequence
+    # findings in Security Hub, you must have GuardDuty and GuardDuty S3
+    # Protection enabled. For more information, see [GuardDuty Extended
+    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] key
+    #   The name of the indicator that’s present in the attack sequence
+    #   finding.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   Values associated with each indicator key. For example, if the
+    #   indicator key is `SUSPICIOUS_NETWORK`, then the value will be the
+    #   name of the network. If the indicator key is `ATTACK_TACTIC`, then
+    #   the value will be one of the MITRE tactics.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] title
+    #   The title describing the indicator.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of indicator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/Indicator AWS API Documentation
+    #
+    class Indicator < Struct.new(
+      :key,
+      :values,
+      :title,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about a Security Hub insight.
     #
     # @!attribute [rw] insight_arn
@@ -27024,6 +27239,60 @@ module Aws::SecurityHub
       include Aws::Structure
     end
 
+    # Contains information about the Autonomous System (AS) of the network
+    # endpoints involved in an Amazon GuardDuty Extended Threat Detection
+    # attack sequence. GuardDuty generates an attack sequence finding when
+    # multiple events align to a potentially suspicious activity. To receive
+    # GuardDuty attack sequence findings in Security Hub, you must have
+    # GuardDuty and GuardDuty S3 Protection enabled. For more information,
+    # see [GuardDuty Extended Threat Detection ][1] in the *Amazon GuardDuty
+    # User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] name
+    #   The name associated with the AS.
+    #   @return [String]
+    #
+    # @!attribute [rw] number
+    #   The unique number that identifies the AS.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/NetworkAutonomousSystem AWS API Documentation
+    #
+    class NetworkAutonomousSystem < Struct.new(
+      :name,
+      :number)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the network connection involved in an
+    # Amazon GuardDuty Extended Threat Detection attack sequence. GuardDuty
+    # generates an attack sequence finding when multiple events align to a
+    # potentially suspicious activity. To receive GuardDuty attack sequence
+    # findings in Security Hub, you must have GuardDuty and GuardDuty S3
+    # Protection enabled. For more information, see [GuardDuty Extended
+    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] direction
+    #   The direction in which the network traffic is flowing.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/NetworkConnection AWS API Documentation
+    #
+    class NetworkConnection < Struct.new(
+      :direction)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Provided if `ActionType` is `NETWORK_CONNECTION`. It provides details
     # about the attempted network connection that was detected.
     #
@@ -27063,6 +27332,104 @@ module Aws::SecurityHub
       :local_port_details,
       :protocol,
       :blocked)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about network endpoints involved in an Amazon
+    # GuardDuty Extended Threat Detection attack sequence. GuardDuty
+    # generates an attack sequence finding when multiple events align to a
+    # potentially suspicious activity. To receive GuardDuty attack sequence
+    # findings in Security Hub, you must have GuardDuty and GuardDuty S3
+    # Protection enabled. For more information, see [GuardDuty Extended
+    # Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    # This field can provide information about the network endpoints
+    # associated with the resource in the attack sequence finding, or about
+    # a specific network endpoint used for the attack.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] id
+    #   The identifier of the network endpoint involved in the attack
+    #   sequence.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip
+    #   The IP address used in the network endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] domain
+    #   The domain information for the network endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] port
+    #   The port number associated with the network endpoint.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] location
+    #   Information about the location of the network endpoint.
+    #   @return [Types::NetworkGeoLocation]
+    #
+    # @!attribute [rw] autonomous_system
+    #   The Autonomous System Number (ASN) of the network endpoint.
+    #   @return [Types::NetworkAutonomousSystem]
+    #
+    # @!attribute [rw] connection
+    #   Information about the network connection.
+    #   @return [Types::NetworkConnection]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/NetworkEndpoint AWS API Documentation
+    #
+    class NetworkEndpoint < Struct.new(
+      :id,
+      :ip,
+      :domain,
+      :port,
+      :location,
+      :autonomous_system,
+      :connection)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the location of a network endpoint involved
+    # in an Amazon GuardDuty Extended Threat Detection attack sequence.
+    # GuardDuty generates an attack sequence finding when multiple events
+    # align to a potentially suspicious activity. To receive GuardDuty
+    # attack sequence findings in Security Hub, you must have GuardDuty and
+    # GuardDuty S3 Protection enabled. For more information, see [GuardDuty
+    # Extended Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] city
+    #   The name of the city.
+    #   @return [String]
+    #
+    # @!attribute [rw] country
+    #   The name of the country.
+    #   @return [String]
+    #
+    # @!attribute [rw] lat
+    #   The latitude information of the endpoint location.
+    #   @return [Float]
+    #
+    # @!attribute [rw] lon
+    #   The longitude information of the endpoint location.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/NetworkGeoLocation AWS API Documentation
+    #
+    class NetworkGeoLocation < Struct.new(
+      :city,
+      :country,
+      :lat,
+      :lon)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -29599,6 +29966,60 @@ module Aws::SecurityHub
       include Aws::Structure
     end
 
+    # Contains information about an Amazon GuardDuty Extended Threat
+    # Detection attack sequence finding. GuardDuty generates an attack
+    # sequence finding when multiple events align to a potentially
+    # suspicious activity. To receive GuardDuty attack sequence findings in
+    # Security Hub, you must have GuardDuty and GuardDuty S3 Protection
+    # enabled. For more information, see [GuardDuty Extended Threat
+    # Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] uid
+    #   Unique identifier of the attack sequence.
+    #   @return [String]
+    #
+    # @!attribute [rw] actors
+    #   Provides information about the actors involved in the attack
+    #   sequence.
+    #   @return [Array<Types::Actor>]
+    #
+    # @!attribute [rw] endpoints
+    #   Contains information about the network endpoints that were used in
+    #   the attack sequence.
+    #   @return [Array<Types::NetworkEndpoint>]
+    #
+    # @!attribute [rw] signals
+    #   Contains information about the signals involved in the attack
+    #   sequence.
+    #   @return [Array<Types::Signal>]
+    #
+    # @!attribute [rw] sequence_indicators
+    #   Contains information about the indicators observed in the attack
+    #   sequence. The values for [SignalIndicators][1] are a subset of the
+    #   values for `SequenceIndicators`, but the values for these fields
+    #   don't always match 1:1.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_Signal.html
+    #   @return [Array<Types::Indicator>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/Sequence AWS API Documentation
+    #
+    class Sequence < Struct.new(
+      :uid,
+      :actors,
+      :endpoints,
+      :signals,
+      :sequence_indicators)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The severity of the finding.
     #
     # The finding provider can provide the initial severity. The finding
@@ -29733,6 +30154,142 @@ module Aws::SecurityHub
       :normalized,
       :product,
       :label)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the signals involved in an Amazon GuardDuty
+    # Extended Threat Detection attack sequence. An attack sequence is a
+    # type of threat detected by GuardDuty. GuardDuty generates an attack
+    # sequence finding when multiple events, or signals, align to a
+    # potentially suspicious activity. When GuardDuty and Security Hub are
+    # integrated, GuardDuty sends attack sequence findings to Security Hub.
+    #
+    # A signal can be an API activity or a finding that GuardDuty uses to
+    # detect an attack sequence finding.
+    #
+    # @!attribute [rw] type
+    #   The type of the signal used to identify an attack sequence.
+    #
+    #   Signals can be GuardDuty findings or activities observed in data
+    #   sources that GuardDuty monitors. For more information, see
+    #   [GuardDuty foundational data sources][1] in the *Amazon GuardDuty
+    #   User Guide*.
+    #
+    #   A signal type can be one of the following values. Here are the
+    #   related descriptions:
+    #
+    #   * `FINDING` - Individually generated GuardDuty finding.
+    #
+    #   * `CLOUD_TRAIL` - Activity observed from CloudTrail logs
+    #
+    #   * `S3_DATA_EVENTS` - Activity observed from CloudTrail data events
+    #     for Amazon Simple Storage Service (S3). Activities associated with
+    #     this type will show up only when you have enabled GuardDuty S3
+    #     Protection feature in your account. For more information about S3
+    #     Protection and the steps to enable it, see [S3 Protection][2] in
+    #     the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_data-sources.html
+    #   [2]: https://docs.aws.amazon.com/guardduty/latest/ug/s3-protection.html
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The identifier of the signal.
+    #   @return [String]
+    #
+    # @!attribute [rw] title
+    #   The description of the GuardDuty finding.
+    #   @return [String]
+    #
+    # @!attribute [rw] product_arn
+    #   The Amazon Resource Name (ARN) of the product that generated the
+    #   signal.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_ids
+    #   The ARN or ID of the Amazon Web Services resource associated with
+    #   the signal.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] signal_indicators
+    #   Contains information about the indicators associated with the
+    #   signals in this attack sequence finding. The values for
+    #   `SignalIndicators` are a subset of the values for
+    #   [SequenceIndicators][1], but the values for these fields don't
+    #   always match 1:1.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_Sequence.html
+    #   @return [Array<Types::Indicator>]
+    #
+    # @!attribute [rw] name
+    #   The name of the GuardDuty signal. For example, when signal type is
+    #   `FINDING`, the signal name is the name of the finding.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp when the first finding or activity related to this
+    #   signal was observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp when this signal was last observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] first_seen_at
+    #   The timestamp when the first finding or activity related to this
+    #   signal was observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] last_seen_at
+    #   The timestamp when the last finding or activity related to this
+    #   signal was observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] severity
+    #   The severity associated with the signal. For more information about
+    #   severity, see [Findings severity levels][1] in the *Amazon GuardDuty
+    #   User Guide*.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html
+    #   @return [Float]
+    #
+    # @!attribute [rw] count
+    #   The number of times this signal was observed.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] actor_ids
+    #   The IDs of the threat actors involved in the signal.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] endpoint_ids
+    #   Information about the endpoint IDs associated with this signal.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/Signal AWS API Documentation
+    #
+    class Signal < Struct.new(
+      :type,
+      :id,
+      :title,
+      :product_arn,
+      :resource_ids,
+      :signal_indicators,
+      :name,
+      :created_at,
+      :updated_at,
+      :first_seen_at,
+      :last_seen_at,
+      :severity,
+      :count,
+      :actor_ids,
+      :endpoint_ids)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -30382,12 +30939,12 @@ module Aws::SecurityHub
     #
     # @!attribute [rw] reason_code
     #   A code that represents a reason for the control status. For the list
-    #   of status reason codes and their meanings, see [Standards-related
-    #   information in the ASFF][1] in the *Security Hub User Guide*.
+    #   of status reason codes and their meanings, see [Compliance details
+    #   for control findings][1] in the *Security Hub User Guide*.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/securityhub/latest/userguide/securityhub-standards-results.html#securityhub-standards-results-asff
+    #   [1]: https://docs.aws.amazon.com/securityhub/latest/userguide/controls-findings-create-update.html#control-findings-asff-compliance
     #   @return [String]
     #
     # @!attribute [rw] description
@@ -31409,6 +31966,36 @@ module Aws::SecurityHub
     # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/UpdateStandardsControlResponse AWS API Documentation
     #
     class UpdateStandardsControlResponse < Aws::EmptyStructure; end
+
+    # Provides Amazon Web Services account information of the user involved
+    # in an Amazon GuardDuty Extended Threat Detection attack sequence.
+    # GuardDuty generates an attack sequence finding when multiple events
+    # align to a potentially suspicious activity. To receive GuardDuty
+    # attack sequence findings in Security Hub, you must have GuardDuty and
+    # GuardDuty S3 Protection enabled. For more information, see [GuardDuty
+    # Extended Threat Detection ][1] in the *Amazon GuardDuty User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty-extended-threat-detection.html
+    #
+    # @!attribute [rw] uid
+    #   The unique identifier of the user account involved in the attack
+    #   sequence.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the user account involved in the attack sequence.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/securityhub-2018-10-26/UserAccount AWS API Documentation
+    #
+    class UserAccount < Struct.new(
+      :uid,
+      :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # Describes the mounting of a volume in a container.
     #

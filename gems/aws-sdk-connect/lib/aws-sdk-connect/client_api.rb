@@ -215,6 +215,7 @@ module Aws::Connect
     ContactId = Shapes::StringShape.new(name: 'ContactId')
     ContactInitiationMethod = Shapes::StringShape.new(name: 'ContactInitiationMethod')
     ContactNotFoundException = Shapes::StructureShape.new(name: 'ContactNotFoundException')
+    ContactRecordingType = Shapes::StringShape.new(name: 'ContactRecordingType')
     ContactReferences = Shapes::MapShape.new(name: 'ContactReferences')
     ContactSearchSummary = Shapes::StructureShape.new(name: 'ContactSearchSummary')
     ContactSearchSummaryAgentInfo = Shapes::StructureShape.new(name: 'ContactSearchSummaryAgentInfo')
@@ -673,6 +674,7 @@ module Aws::Connect
     InvisibleTaskTemplateFields = Shapes::ListShape.new(name: 'InvisibleTaskTemplateFields')
     IpCidr = Shapes::StringShape.new(name: 'IpCidr')
     IpCidrList = Shapes::ListShape.new(name: 'IpCidrList')
+    IvrRecordingTrack = Shapes::StringShape.new(name: 'IvrRecordingTrack')
     JoinToken = Shapes::StringShape.new(name: 'JoinToken')
     KeyId = Shapes::StringShape.new(name: 'KeyId')
     KinesisFirehoseConfig = Shapes::StructureShape.new(name: 'KinesisFirehoseConfig')
@@ -939,6 +941,7 @@ module Aws::Connect
     QueueId = Shapes::StringShape.new(name: 'QueueId')
     QueueIdList = Shapes::ListShape.new(name: 'QueueIdList')
     QueueInfo = Shapes::StructureShape.new(name: 'QueueInfo')
+    QueueInfoInput = Shapes::StructureShape.new(name: 'QueueInfoInput')
     QueueMaxContacts = Shapes::IntegerShape.new(name: 'QueueMaxContacts')
     QueueName = Shapes::StringShape.new(name: 'QueueName')
     QueuePriority = Shapes::IntegerShape.new(name: 'QueuePriority')
@@ -4488,6 +4491,9 @@ module Aws::Connect
     QueueInfo.add_member(:enqueue_timestamp, Shapes::ShapeRef.new(shape: timestamp, location_name: "EnqueueTimestamp"))
     QueueInfo.struct_class = Types::QueueInfo
 
+    QueueInfoInput.add_member(:id, Shapes::ShapeRef.new(shape: QueueId, location_name: "Id"))
+    QueueInfoInput.struct_class = Types::QueueInfoInput
+
     QueueQuickConnectConfig.add_member(:queue_id, Shapes::ShapeRef.new(shape: QueueId, required: true, location_name: "QueueId"))
     QueueQuickConnectConfig.add_member(:contact_flow_id, Shapes::ShapeRef.new(shape: ContactFlowId, required: true, location_name: "ContactFlowId"))
     QueueQuickConnectConfig.struct_class = Types::QueueQuickConnectConfig
@@ -4762,6 +4768,7 @@ module Aws::Connect
     ResumeContactRecordingRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
     ResumeContactRecordingRequest.add_member(:contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location_name: "ContactId"))
     ResumeContactRecordingRequest.add_member(:initial_contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location_name: "InitialContactId"))
+    ResumeContactRecordingRequest.add_member(:contact_recording_type, Shapes::ShapeRef.new(shape: ContactRecordingType, location_name: "ContactRecordingType"))
     ResumeContactRecordingRequest.struct_class = Types::ResumeContactRecordingRequest
 
     ResumeContactRecordingResponse.struct_class = Types::ResumeContactRecordingResponse
@@ -5462,6 +5469,7 @@ module Aws::Connect
     StopContactRecordingRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
     StopContactRecordingRequest.add_member(:contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location_name: "ContactId"))
     StopContactRecordingRequest.add_member(:initial_contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location_name: "InitialContactId"))
+    StopContactRecordingRequest.add_member(:contact_recording_type, Shapes::ShapeRef.new(shape: ContactRecordingType, location_name: "ContactRecordingType"))
     StopContactRecordingRequest.struct_class = Types::StopContactRecordingRequest
 
     StopContactRecordingResponse.struct_class = Types::StopContactRecordingResponse
@@ -5513,6 +5521,7 @@ module Aws::Connect
     SuspendContactRecordingRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
     SuspendContactRecordingRequest.add_member(:contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location_name: "ContactId"))
     SuspendContactRecordingRequest.add_member(:initial_contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location_name: "InitialContactId"))
+    SuspendContactRecordingRequest.add_member(:contact_recording_type, Shapes::ShapeRef.new(shape: ContactRecordingType, location_name: "ContactRecordingType"))
     SuspendContactRecordingRequest.struct_class = Types::SuspendContactRecordingRequest
 
     SuspendContactRecordingResponse.struct_class = Types::SuspendContactRecordingResponse
@@ -5768,6 +5777,10 @@ module Aws::Connect
     UpdateContactRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
     UpdateContactRequest.add_member(:references, Shapes::ShapeRef.new(shape: ContactReferences, location_name: "References"))
     UpdateContactRequest.add_member(:segment_attributes, Shapes::ShapeRef.new(shape: SegmentAttributes, location_name: "SegmentAttributes"))
+    UpdateContactRequest.add_member(:queue_info, Shapes::ShapeRef.new(shape: QueueInfoInput, location_name: "QueueInfo"))
+    UpdateContactRequest.add_member(:user_info, Shapes::ShapeRef.new(shape: UserInfo, location_name: "UserInfo"))
+    UpdateContactRequest.add_member(:customer_endpoint, Shapes::ShapeRef.new(shape: Endpoint, location_name: "CustomerEndpoint"))
+    UpdateContactRequest.add_member(:system_endpoint, Shapes::ShapeRef.new(shape: Endpoint, location_name: "SystemEndpoint"))
     UpdateContactRequest.struct_class = Types::UpdateContactRequest
 
     UpdateContactResponse.struct_class = Types::UpdateContactResponse
@@ -6278,6 +6291,7 @@ module Aws::Connect
     VocabularySummaryList.member = Shapes::ShapeRef.new(shape: VocabularySummary)
 
     VoiceRecordingConfiguration.add_member(:voice_recording_track, Shapes::ShapeRef.new(shape: VoiceRecordingTrack, location_name: "VoiceRecordingTrack"))
+    VoiceRecordingConfiguration.add_member(:ivr_recording_track, Shapes::ShapeRef.new(shape: IvrRecordingTrack, location_name: "IvrRecordingTrack"))
     VoiceRecordingConfiguration.struct_class = Types::VoiceRecordingConfiguration
 
     WisdomInfo.add_member(:session_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "SessionArn"))
@@ -9702,6 +9716,8 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
       api.add_operation(:update_contact_attributes, Seahorse::Model::Operation.new.tap do |o|

@@ -989,7 +989,7 @@ module Aws::CleanRooms
     #   A description for the configured table.
     #
     # @option params [required, Types::TableReference] :table_reference
-    #   A reference to the Glue table being configured.
+    #   A reference to the table being configured.
     #
     # @option params [required, Array<String>] :allowed_columns
     #   The columns of the underlying table that can be used by collaborations
@@ -1019,6 +1019,27 @@ module Aws::CleanRooms
     #         table_name: "GlueTableName", # required
     #         database_name: "GlueDatabaseName", # required
     #       },
+    #       snowflake: {
+    #         secret_arn: "SecretsManagerArn", # required
+    #         account_identifier: "SnowflakeAccountIdentifier", # required
+    #         database_name: "SnowflakeDatabaseName", # required
+    #         table_name: "SnowflakeTableName", # required
+    #         schema_name: "SnowflakeSchemaName", # required
+    #         table_schema: { # required
+    #           v1: [
+    #             {
+    #               column_name: "ColumnName", # required
+    #               column_type: "ColumnTypeString", # required
+    #             },
+    #           ],
+    #         },
+    #       },
+    #       athena: {
+    #         work_group: "AthenaWorkGroup", # required
+    #         output_location: "AthenaOutputLocation",
+    #         database_name: "AthenaDatabaseName", # required
+    #         table_name: "AthenaTableName", # required
+    #       },
     #     },
     #     allowed_columns: ["ColumnName"], # required
     #     analysis_method: "DIRECT_QUERY", # required, accepts DIRECT_QUERY
@@ -1035,6 +1056,18 @@ module Aws::CleanRooms
     #   resp.configured_table.description #=> String
     #   resp.configured_table.table_reference.glue.table_name #=> String
     #   resp.configured_table.table_reference.glue.database_name #=> String
+    #   resp.configured_table.table_reference.snowflake.secret_arn #=> String
+    #   resp.configured_table.table_reference.snowflake.account_identifier #=> String
+    #   resp.configured_table.table_reference.snowflake.database_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_name #=> String
+    #   resp.configured_table.table_reference.snowflake.schema_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1 #=> Array
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1[0].column_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1[0].column_type #=> String
+    #   resp.configured_table.table_reference.athena.work_group #=> String
+    #   resp.configured_table.table_reference.athena.output_location #=> String
+    #   resp.configured_table.table_reference.athena.database_name #=> String
+    #   resp.configured_table.table_reference.athena.table_name #=> String
     #   resp.configured_table.create_time #=> Time
     #   resp.configured_table.update_time #=> Time
     #   resp.configured_table.analysis_rule_types #=> Array
@@ -2325,6 +2358,18 @@ module Aws::CleanRooms
     #   resp.configured_table.description #=> String
     #   resp.configured_table.table_reference.glue.table_name #=> String
     #   resp.configured_table.table_reference.glue.database_name #=> String
+    #   resp.configured_table.table_reference.snowflake.secret_arn #=> String
+    #   resp.configured_table.table_reference.snowflake.account_identifier #=> String
+    #   resp.configured_table.table_reference.snowflake.database_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_name #=> String
+    #   resp.configured_table.table_reference.snowflake.schema_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1 #=> Array
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1[0].column_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1[0].column_type #=> String
+    #   resp.configured_table.table_reference.athena.work_group #=> String
+    #   resp.configured_table.table_reference.athena.output_location #=> String
+    #   resp.configured_table.table_reference.athena.database_name #=> String
+    #   resp.configured_table.table_reference.athena.table_name #=> String
     #   resp.configured_table.create_time #=> Time
     #   resp.configured_table.update_time #=> Time
     #   resp.configured_table.analysis_rule_types #=> Array
@@ -4370,6 +4415,18 @@ module Aws::CleanRooms
     #   resp.configured_table.description #=> String
     #   resp.configured_table.table_reference.glue.table_name #=> String
     #   resp.configured_table.table_reference.glue.database_name #=> String
+    #   resp.configured_table.table_reference.snowflake.secret_arn #=> String
+    #   resp.configured_table.table_reference.snowflake.account_identifier #=> String
+    #   resp.configured_table.table_reference.snowflake.database_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_name #=> String
+    #   resp.configured_table.table_reference.snowflake.schema_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1 #=> Array
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1[0].column_name #=> String
+    #   resp.configured_table.table_reference.snowflake.table_schema.v1[0].column_type #=> String
+    #   resp.configured_table.table_reference.athena.work_group #=> String
+    #   resp.configured_table.table_reference.athena.output_location #=> String
+    #   resp.configured_table.table_reference.athena.database_name #=> String
+    #   resp.configured_table.table_reference.athena.table_name #=> String
     #   resp.configured_table.create_time #=> Time
     #   resp.configured_table.update_time #=> Time
     #   resp.configured_table.analysis_rule_types #=> Array
@@ -4967,7 +5024,7 @@ module Aws::CleanRooms
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cleanrooms'
-      context[:gem_version] = '1.36.0'
+      context[:gem_version] = '1.37.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

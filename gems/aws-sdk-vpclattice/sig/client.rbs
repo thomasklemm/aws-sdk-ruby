@@ -136,12 +136,14 @@ module Aws
         def id: () -> ::String
         def resource_arn: () -> ::String
         def resource_id: () -> ::String
+        def service_network_log_type: () -> ("SERVICE" | "RESOURCE")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#create_access_log_subscription-instance_method
       def create_access_log_subscription: (
                                             ?client_token: ::String,
                                             destination_arn: ::String,
                                             resource_identifier: ::String,
+                                            ?service_network_log_type: ("SERVICE" | "RESOURCE"),
                                             ?tags: Hash[::String, ::String]
                                           ) -> _CreateAccessLogSubscriptionResponseSuccess
                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAccessLogSubscriptionResponseSuccess
@@ -180,6 +182,71 @@ module Aws
                              ?tags: Hash[::String, ::String]
                            ) -> _CreateListenerResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateListenerResponseSuccess
+
+      interface _CreateResourceConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateResourceConfigurationResponse]
+        def allow_association_to_shareable_service_network: () -> bool
+        def arn: () -> ::String
+        def created_at: () -> ::Time
+        def failure_reason: () -> ::String
+        def id: () -> ::String
+        def name: () -> ::String
+        def port_ranges: () -> ::Array[::String]
+        def protocol: () -> ("TCP")
+        def resource_configuration_definition: () -> Types::ResourceConfigurationDefinition
+        def resource_configuration_group_id: () -> ::String
+        def resource_gateway_id: () -> ::String
+        def status: () -> ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+        def type: () -> ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#create_resource_configuration-instance_method
+      def create_resource_configuration: (
+                                           ?allow_association_to_shareable_service_network: bool,
+                                           ?client_token: ::String,
+                                           name: ::String,
+                                           ?port_ranges: Array[::String],
+                                           ?protocol: ("TCP"),
+                                           ?resource_configuration_definition: {
+                                             arn_resource: {
+                                               arn: ::String?
+                                             }?,
+                                             dns_resource: {
+                                               domain_name: ::String?,
+                                               ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK")?
+                                             }?,
+                                             ip_resource: {
+                                               ip_address: ::String?
+                                             }?
+                                           },
+                                           ?resource_configuration_group_identifier: ::String,
+                                           ?resource_gateway_identifier: ::String,
+                                           ?tags: Hash[::String, ::String],
+                                           type: ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+                                         ) -> _CreateResourceConfigurationResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateResourceConfigurationResponseSuccess
+
+      interface _CreateResourceGatewayResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateResourceGatewayResponse]
+        def arn: () -> ::String
+        def id: () -> ::String
+        def ip_address_type: () -> ("IPV4" | "IPV6" | "DUALSTACK")
+        def name: () -> ::String
+        def security_group_ids: () -> ::Array[::String]
+        def status: () -> ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+        def subnet_ids: () -> ::Array[::String]
+        def vpc_identifier: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#create_resource_gateway-instance_method
+      def create_resource_gateway: (
+                                     ?client_token: ::String,
+                                     ?ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK"),
+                                     name: ::String,
+                                     ?security_group_ids: Array[::String],
+                                     subnet_ids: Array[::String],
+                                     ?tags: Hash[::String, ::String],
+                                     vpc_identifier: ::String
+                                   ) -> _CreateResourceGatewayResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateResourceGatewayResponseSuccess
 
       interface _CreateRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateRuleResponse]
@@ -265,15 +332,35 @@ module Aws
         def auth_type: () -> ("NONE" | "AWS_IAM")
         def id: () -> ::String
         def name: () -> ::String
+        def sharing_config: () -> Types::SharingConfig
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#create_service_network-instance_method
       def create_service_network: (
                                     ?auth_type: ("NONE" | "AWS_IAM"),
                                     ?client_token: ::String,
                                     name: ::String,
+                                    ?sharing_config: {
+                                      enabled: bool?
+                                    },
                                     ?tags: Hash[::String, ::String]
                                   ) -> _CreateServiceNetworkResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateServiceNetworkResponseSuccess
+
+      interface _CreateServiceNetworkResourceAssociationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateServiceNetworkResourceAssociationResponse]
+        def arn: () -> ::String
+        def created_by: () -> ::String
+        def id: () -> ::String
+        def status: () -> ("CREATE_IN_PROGRESS" | "ACTIVE" | "PARTIAL" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#create_service_network_resource_association-instance_method
+      def create_service_network_resource_association: (
+                                                         ?client_token: ::String,
+                                                         resource_configuration_identifier: ::String,
+                                                         service_network_identifier: ::String,
+                                                         ?tags: Hash[::String, ::String]
+                                                       ) -> _CreateServiceNetworkResourceAssociationResponseSuccess
+                                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateServiceNetworkResourceAssociationResponseSuccess
 
       interface _CreateServiceNetworkServiceAssociationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateServiceNetworkServiceAssociationResponse]
@@ -379,6 +466,42 @@ module Aws
                            ) -> _DeleteListenerResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteListenerResponseSuccess
 
+      interface _DeleteResourceConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteResourceConfigurationResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#delete_resource_configuration-instance_method
+      def delete_resource_configuration: (
+                                           resource_configuration_identifier: ::String
+                                         ) -> _DeleteResourceConfigurationResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteResourceConfigurationResponseSuccess
+
+      interface _DeleteResourceEndpointAssociationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteResourceEndpointAssociationResponse]
+        def arn: () -> ::String
+        def id: () -> ::String
+        def resource_configuration_arn: () -> ::String
+        def resource_configuration_id: () -> ::String
+        def vpc_endpoint_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#delete_resource_endpoint_association-instance_method
+      def delete_resource_endpoint_association: (
+                                                  resource_endpoint_association_identifier: ::String
+                                                ) -> _DeleteResourceEndpointAssociationResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteResourceEndpointAssociationResponseSuccess
+
+      interface _DeleteResourceGatewayResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteResourceGatewayResponse]
+        def arn: () -> ::String
+        def id: () -> ::String
+        def name: () -> ::String
+        def status: () -> ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#delete_resource_gateway-instance_method
+      def delete_resource_gateway: (
+                                     resource_gateway_identifier: ::String
+                                   ) -> _DeleteResourceGatewayResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteResourceGatewayResponseSuccess
+
       interface _DeleteResourcePolicyResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteResourcePolicyResponse]
       end
@@ -420,6 +543,18 @@ module Aws
                                     service_network_identifier: ::String
                                   ) -> _DeleteServiceNetworkResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteServiceNetworkResponseSuccess
+
+      interface _DeleteServiceNetworkResourceAssociationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteServiceNetworkResourceAssociationResponse]
+        def arn: () -> ::String
+        def id: () -> ::String
+        def status: () -> ("CREATE_IN_PROGRESS" | "ACTIVE" | "PARTIAL" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#delete_service_network_resource_association-instance_method
+      def delete_service_network_resource_association: (
+                                                         service_network_resource_association_identifier: ::String
+                                                       ) -> _DeleteServiceNetworkResourceAssociationResponseSuccess
+                                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteServiceNetworkResourceAssociationResponseSuccess
 
       interface _DeleteServiceNetworkServiceAssociationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteServiceNetworkServiceAssociationResponse]
@@ -483,6 +618,7 @@ module Aws
         def last_updated_at: () -> ::Time
         def resource_arn: () -> ::String
         def resource_id: () -> ::String
+        def service_network_log_type: () -> ("SERVICE" | "RESOURCE")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#get_access_log_subscription-instance_method
       def get_access_log_subscription: (
@@ -522,6 +658,50 @@ module Aws
                           service_identifier: ::String
                         ) -> _GetListenerResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetListenerResponseSuccess
+
+      interface _GetResourceConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetResourceConfigurationResponse]
+        def allow_association_to_shareable_service_network: () -> bool
+        def amazon_managed: () -> bool
+        def arn: () -> ::String
+        def created_at: () -> ::Time
+        def custom_domain_name: () -> ::String
+        def failure_reason: () -> ::String
+        def id: () -> ::String
+        def last_updated_at: () -> ::Time
+        def name: () -> ::String
+        def port_ranges: () -> ::Array[::String]
+        def protocol: () -> ("TCP")
+        def resource_configuration_definition: () -> Types::ResourceConfigurationDefinition
+        def resource_configuration_group_id: () -> ::String
+        def resource_gateway_id: () -> ::String
+        def status: () -> ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+        def type: () -> ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#get_resource_configuration-instance_method
+      def get_resource_configuration: (
+                                        resource_configuration_identifier: ::String
+                                      ) -> _GetResourceConfigurationResponseSuccess
+                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetResourceConfigurationResponseSuccess
+
+      interface _GetResourceGatewayResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetResourceGatewayResponse]
+        def arn: () -> ::String
+        def created_at: () -> ::Time
+        def id: () -> ::String
+        def ip_address_type: () -> ("IPV4" | "IPV6" | "DUALSTACK")
+        def last_updated_at: () -> ::Time
+        def name: () -> ::String
+        def security_group_ids: () -> ::Array[::String]
+        def status: () -> ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+        def subnet_ids: () -> ::Array[::String]
+        def vpc_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#get_resource_gateway-instance_method
+      def get_resource_gateway: (
+                                  resource_gateway_identifier: ::String
+                                ) -> _GetResourceGatewayResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetResourceGatewayResponseSuccess
 
       interface _GetResourcePolicyResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetResourcePolicyResponse]
@@ -584,12 +764,39 @@ module Aws
         def name: () -> ::String
         def number_of_associated_services: () -> ::Integer
         def number_of_associated_vp_cs: () -> ::Integer
+        def sharing_config: () -> Types::SharingConfig
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#get_service_network-instance_method
       def get_service_network: (
                                  service_network_identifier: ::String
                                ) -> _GetServiceNetworkResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetServiceNetworkResponseSuccess
+
+      interface _GetServiceNetworkResourceAssociationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetServiceNetworkResourceAssociationResponse]
+        def arn: () -> ::String
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def dns_entry: () -> Types::DnsEntry
+        def failure_code: () -> ::String
+        def failure_reason: () -> ::String
+        def id: () -> ::String
+        def is_managed_association: () -> bool
+        def last_updated_at: () -> ::Time
+        def private_dns_entry: () -> Types::DnsEntry
+        def resource_configuration_arn: () -> ::String
+        def resource_configuration_id: () -> ::String
+        def resource_configuration_name: () -> ::String
+        def service_network_arn: () -> ::String
+        def service_network_id: () -> ::String
+        def service_network_name: () -> ::String
+        def status: () -> ("CREATE_IN_PROGRESS" | "ACTIVE" | "PARTIAL" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "DELETE_FAILED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#get_service_network_resource_association-instance_method
+      def get_service_network_resource_association: (
+                                                      service_network_resource_association_identifier: ::String
+                                                    ) -> _GetServiceNetworkResourceAssociationResponseSuccess
+                                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetServiceNetworkResourceAssociationResponseSuccess
 
       interface _GetServiceNetworkServiceAssociationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetServiceNetworkServiceAssociationResponse]
@@ -683,6 +890,48 @@ module Aws
                           ) -> _ListListenersResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListListenersResponseSuccess
 
+      interface _ListResourceConfigurationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListResourceConfigurationsResponse]
+        def items: () -> ::Array[Types::ResourceConfigurationSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#list_resource_configurations-instance_method
+      def list_resource_configurations: (
+                                          ?max_results: ::Integer,
+                                          ?next_token: ::String,
+                                          ?resource_configuration_group_identifier: ::String,
+                                          ?resource_gateway_identifier: ::String
+                                        ) -> _ListResourceConfigurationsResponseSuccess
+                                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListResourceConfigurationsResponseSuccess
+
+      interface _ListResourceEndpointAssociationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListResourceEndpointAssociationsResponse]
+        def items: () -> ::Array[Types::ResourceEndpointAssociationSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#list_resource_endpoint_associations-instance_method
+      def list_resource_endpoint_associations: (
+                                                 ?max_results: ::Integer,
+                                                 ?next_token: ::String,
+                                                 resource_configuration_identifier: ::String,
+                                                 ?resource_endpoint_association_identifier: ::String,
+                                                 ?vpc_endpoint_id: ::String,
+                                                 ?vpc_endpoint_owner: ::String
+                                               ) -> _ListResourceEndpointAssociationsResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListResourceEndpointAssociationsResponseSuccess
+
+      interface _ListResourceGatewaysResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListResourceGatewaysResponse]
+        def items: () -> ::Array[Types::ResourceGatewaySummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#list_resource_gateways-instance_method
+      def list_resource_gateways: (
+                                    ?max_results: ::Integer,
+                                    ?next_token: ::String
+                                  ) -> _ListResourceGatewaysResponseSuccess
+                                | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListResourceGatewaysResponseSuccess
+
       interface _ListRulesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListRulesResponse]
         def items: () -> ::Array[Types::RuleSummary]
@@ -696,6 +945,20 @@ module Aws
                         service_identifier: ::String
                       ) -> _ListRulesResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListRulesResponseSuccess
+
+      interface _ListServiceNetworkResourceAssociationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListServiceNetworkResourceAssociationsResponse]
+        def items: () -> ::Array[Types::ServiceNetworkResourceAssociationSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#list_service_network_resource_associations-instance_method
+      def list_service_network_resource_associations: (
+                                                        ?max_results: ::Integer,
+                                                        ?next_token: ::String,
+                                                        ?resource_configuration_identifier: ::String,
+                                                        ?service_network_identifier: ::String
+                                                      ) -> _ListServiceNetworkResourceAssociationsResponseSuccess
+                                                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListServiceNetworkResourceAssociationsResponseSuccess
 
       interface _ListServiceNetworkServiceAssociationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListServiceNetworkServiceAssociationsResponse]
@@ -724,6 +987,19 @@ module Aws
                                                    ?vpc_identifier: ::String
                                                  ) -> _ListServiceNetworkVpcAssociationsResponseSuccess
                                                | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListServiceNetworkVpcAssociationsResponseSuccess
+
+      interface _ListServiceNetworkVpcEndpointAssociationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListServiceNetworkVpcEndpointAssociationsResponse]
+        def items: () -> ::Array[Types::ServiceNetworkEndpointAssociation]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#list_service_network_vpc_endpoint_associations-instance_method
+      def list_service_network_vpc_endpoint_associations: (
+                                                            ?max_results: ::Integer,
+                                                            ?next_token: ::String,
+                                                            service_network_identifier: ::String
+                                                          ) -> _ListServiceNetworkVpcEndpointAssociationsResponseSuccess
+                                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListServiceNetworkVpcEndpointAssociationsResponseSuccess
 
       interface _ListServiceNetworksResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListServiceNetworksResponse]
@@ -896,6 +1172,58 @@ module Aws
                              service_identifier: ::String
                            ) -> _UpdateListenerResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateListenerResponseSuccess
+
+      interface _UpdateResourceConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateResourceConfigurationResponse]
+        def allow_association_to_shareable_service_network: () -> bool
+        def arn: () -> ::String
+        def id: () -> ::String
+        def name: () -> ::String
+        def port_ranges: () -> ::Array[::String]
+        def protocol: () -> ("TCP")
+        def resource_configuration_definition: () -> Types::ResourceConfigurationDefinition
+        def resource_configuration_group_id: () -> ::String
+        def resource_gateway_id: () -> ::String
+        def status: () -> ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+        def type: () -> ("GROUP" | "CHILD" | "SINGLE" | "ARN")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#update_resource_configuration-instance_method
+      def update_resource_configuration: (
+                                           ?allow_association_to_shareable_service_network: bool,
+                                           ?port_ranges: Array[::String],
+                                           ?resource_configuration_definition: {
+                                             arn_resource: {
+                                               arn: ::String?
+                                             }?,
+                                             dns_resource: {
+                                               domain_name: ::String?,
+                                               ip_address_type: ("IPV4" | "IPV6" | "DUALSTACK")?
+                                             }?,
+                                             ip_resource: {
+                                               ip_address: ::String?
+                                             }?
+                                           },
+                                           resource_configuration_identifier: ::String
+                                         ) -> _UpdateResourceConfigurationResponseSuccess
+                                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateResourceConfigurationResponseSuccess
+
+      interface _UpdateResourceGatewayResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateResourceGatewayResponse]
+        def arn: () -> ::String
+        def id: () -> ::String
+        def ip_address_type: () -> ("IPV4" | "IPV6")
+        def name: () -> ::String
+        def security_group_ids: () -> ::Array[::String]
+        def status: () -> ("ACTIVE" | "CREATE_IN_PROGRESS" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_FAILED" | "DELETE_FAILED")
+        def subnet_ids: () -> ::Array[::String]
+        def vpc_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/VPCLattice/Client.html#update_resource_gateway-instance_method
+      def update_resource_gateway: (
+                                     resource_gateway_identifier: ::String,
+                                     ?security_group_ids: Array[::String]
+                                   ) -> _UpdateResourceGatewayResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateResourceGatewayResponseSuccess
 
       interface _UpdateRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateRuleResponse]

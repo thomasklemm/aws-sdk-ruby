@@ -25,11 +25,16 @@ module Aws::QConnect
     #   The configuration for AI Agents of type `MANUAL_SEARCH`.
     #   @return [Types::ManualSearchAIAgentConfiguration]
     #
+    # @!attribute [rw] self_service_ai_agent_configuration
+    #   The configuration for AI Agents of type SELF\_SERVICE.
+    #   @return [Types::SelfServiceAIAgentConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIAgentConfiguration AWS API Documentation
     #
     class AIAgentConfiguration < Struct.new(
       :answer_recommendation_ai_agent_configuration,
       :manual_search_ai_agent_configuration,
+      :self_service_ai_agent_configuration,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -37,6 +42,7 @@ module Aws::QConnect
 
       class AnswerRecommendationAiAgentConfiguration < AIAgentConfiguration; end
       class ManualSearchAiAgentConfiguration < AIAgentConfiguration; end
+      class SelfServiceAiAgentConfiguration < AIAgentConfiguration; end
       class Unknown < AIAgentConfiguration; end
     end
 
@@ -227,6 +233,273 @@ module Aws::QConnect
     class AIAgentVersionSummary < Struct.new(
       :ai_agent_summary,
       :version_number)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains details about how to handle harmful content.
+    #
+    # @!attribute [rw] filters_config
+    #   Contains the type of the content filter and how strongly it should
+    #   apply to prompts and model responses.
+    #   @return [Array<Types::GuardrailContentFilterConfig>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailContentPolicyConfig AWS API Documentation
+    #
+    class AIGuardrailContentPolicyConfig < Struct.new(
+      :filters_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The policy configuration details for the AI Guardrail's contextual
+    # grounding policy.
+    #
+    # @!attribute [rw] filters_config
+    #   The filter configuration details for the AI Guardrails contextual
+    #   grounding policy.
+    #   @return [Array<Types::GuardrailContextualGroundingFilterConfig>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailContextualGroundingPolicyConfig AWS API Documentation
+    #
+    class AIGuardrailContextualGroundingPolicyConfig < Struct.new(
+      :filters_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The data for the AI Guardrail
+    #
+    # @!attribute [rw] ai_guardrail_arn
+    #   The Amazon Resource Name (ARN) of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] blocked_input_messaging
+    #   The message to return when the AI Guardrail blocks a prompt.
+    #   @return [String]
+    #
+    # @!attribute [rw] blocked_outputs_messaging
+    #   The message to return when the AI Guardrail blocks a model response.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_policy_config
+    #   Contains details about how to handle harmful content.
+    #   @return [Types::AIGuardrailContentPolicyConfig]
+    #
+    # @!attribute [rw] contextual_grounding_policy_config
+    #   The policy configuration details for the AI Guardrail's contextual
+    #   grounding policy.
+    #   @return [Types::AIGuardrailContextualGroundingPolicyConfig]
+    #
+    # @!attribute [rw] description
+    #   A description of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] modified_time
+    #   The time the AI Guardrail was last modified.
+    #   @return [Time]
+    #
+    # @!attribute [rw] name
+    #   The name of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] sensitive_information_policy_config
+    #   Contains details about PII entities and regular expressions to
+    #   configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailSensitiveInformationPolicyConfig]
+    #
+    # @!attribute [rw] status
+    #   The status of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags used to organize, track, or control access for this
+    #   resource.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] topic_policy_config
+    #   Contains details about topics that the AI Guardrail should identify
+    #   and deny.
+    #   @return [Types::AIGuardrailTopicPolicyConfig]
+    #
+    # @!attribute [rw] visibility_status
+    #   The visibility status of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] word_policy_config
+    #   Contains details about the word policy to configured for the AI
+    #   Guardrail.
+    #   @return [Types::AIGuardrailWordPolicyConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailData AWS API Documentation
+    #
+    class AIGuardrailData < Struct.new(
+      :ai_guardrail_arn,
+      :ai_guardrail_id,
+      :assistant_arn,
+      :assistant_id,
+      :blocked_input_messaging,
+      :blocked_outputs_messaging,
+      :content_policy_config,
+      :contextual_grounding_policy_config,
+      :description,
+      :modified_time,
+      :name,
+      :sensitive_information_policy_config,
+      :status,
+      :tags,
+      :topic_policy_config,
+      :visibility_status,
+      :word_policy_config)
+      SENSITIVE = [:blocked_input_messaging, :blocked_outputs_messaging, :description]
+      include Aws::Structure
+    end
+
+    # Contains details about PII entities and regular expressions to
+    # configure for the AI Guardrail.
+    #
+    # @!attribute [rw] pii_entities_config
+    #   A list of PII entities to configure to the AI Guardrail.
+    #   @return [Array<Types::GuardrailPiiEntityConfig>]
+    #
+    # @!attribute [rw] regexes_config
+    #   A list of regular expressions to configure to the AI Guardrail.
+    #   @return [Array<Types::GuardrailRegexConfig>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailSensitiveInformationPolicyConfig AWS API Documentation
+    #
+    class AIGuardrailSensitiveInformationPolicyConfig < Struct.new(
+      :pii_entities_config,
+      :regexes_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The summary of the AI Guardrail.
+    #
+    # @!attribute [rw] ai_guardrail_arn
+    #   The Amazon Resource Name (ARN) of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_arn
+    #   The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] modified_time
+    #   The time the AI Guardrail was last modified.
+    #   @return [Time]
+    #
+    # @!attribute [rw] name
+    #   The name of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags used to organize, track, or control access for this
+    #   resource.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] visibility_status
+    #   The visibility status of the AI Guardrail.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailSummary AWS API Documentation
+    #
+    class AIGuardrailSummary < Struct.new(
+      :ai_guardrail_arn,
+      :ai_guardrail_id,
+      :assistant_arn,
+      :assistant_id,
+      :description,
+      :modified_time,
+      :name,
+      :status,
+      :tags,
+      :visibility_status)
+      SENSITIVE = [:description]
+      include Aws::Structure
+    end
+
+    # Contains details about topics that the AI Guardrail should identify
+    # and deny.
+    #
+    # @!attribute [rw] topics_config
+    #   A list of policies related to topics that the AI Guardrail should
+    #   deny.
+    #   @return [Array<Types::GuardrailTopicConfig>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailTopicPolicyConfig AWS API Documentation
+    #
+    class AIGuardrailTopicPolicyConfig < Struct.new(
+      :topics_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The summary of the AI Guardrail version.
+    #
+    # @!attribute [rw] ai_guardrail_summary
+    #   The data for the summary of the AI Guardrail version.
+    #   @return [Types::AIGuardrailSummary]
+    #
+    # @!attribute [rw] version_number
+    #   The version number for this AI Guardrail version.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailVersionSummary AWS API Documentation
+    #
+    class AIGuardrailVersionSummary < Struct.new(
+      :ai_guardrail_summary,
+      :version_number)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains details about the word policy to configured for the AI
+    # Guardrail.
+    #
+    # @!attribute [rw] managed_word_lists_config
+    #   A list of managed words to configure for the AI Guardrail.
+    #   @return [Array<Types::GuardrailManagedWordsConfig>]
+    #
+    # @!attribute [rw] words_config
+    #   A list of words to configure for the AI Guardrail.
+    #   @return [Array<Types::GuardrailWordConfig>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AIGuardrailWordPolicyConfig AWS API Documentation
+    #
+    class AIGuardrailWordPolicyConfig < Struct.new(
+      :managed_word_lists_config,
+      :words_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -560,6 +833,11 @@ module Aws::QConnect
 
     # The configuration for the `ANSWER_RECOMMENDATION` AI Agent type.
     #
+    # @!attribute [rw] answer_generation_ai_guardrail_id
+    #   The AI Guardrail identifier for the Answer Generation Guardrail used
+    #   by the `ANSWER_RECOMMENDATION` AI Agent.
+    #   @return [String]
+    #
     # @!attribute [rw] answer_generation_ai_prompt_id
     #   The AI Prompt identifier for the Answer Generation prompt used by
     #   the `ANSWER_RECOMMENDATION` AI Agent.
@@ -583,6 +861,7 @@ module Aws::QConnect
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/AnswerRecommendationAIAgentConfiguration AWS API Documentation
     #
     class AnswerRecommendationAIAgentConfiguration < Struct.new(
+      :answer_generation_ai_guardrail_id,
       :answer_generation_ai_prompt_id,
       :association_configurations,
       :intent_labeling_generation_ai_prompt_id,
@@ -1563,6 +1842,40 @@ module Aws::QConnect
       include Aws::Structure
     end
 
+    # The conversation context to include in SendMessage.
+    #
+    # @!attribute [rw] self_service_conversation_history
+    #   The self service conversation history before the Amazon Q in Connect
+    #   session.
+    #   @return [Array<Types::SelfServiceConversationHistory>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ConversationContext AWS API Documentation
+    #
+    class ConversationContext < Struct.new(
+      :self_service_conversation_history)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The conversation state associated to a message.
+    #
+    # @!attribute [rw] reason
+    #   The reason of the conversation state.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the conversation state.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ConversationState AWS API Documentation
+    #
+    class ConversationState < Struct.new(
+      :reason,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] assistant_id
     #   The identifier of the Amazon Q in Connect assistant. Can be either
     #   the ID or the ARN. URLs cannot contain the ARN.
@@ -1690,6 +2003,158 @@ module Aws::QConnect
     #
     class CreateAIAgentVersionResponse < Struct.new(
       :ai_agent,
+      :version_number)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] blocked_input_messaging
+    #   The message to return when the AI Guardrail blocks a prompt.
+    #   @return [String]
+    #
+    # @!attribute [rw] blocked_outputs_messaging
+    #   The message to return when the AI Guardrail blocks a model response.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1]..
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #   @return [String]
+    #
+    # @!attribute [rw] content_policy_config
+    #   The content filter policies to configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailContentPolicyConfig]
+    #
+    # @!attribute [rw] contextual_grounding_policy_config
+    #   The contextual grounding policy configuration used to create an AI
+    #   Guardrail.
+    #   @return [Types::AIGuardrailContextualGroundingPolicyConfig]
+    #
+    # @!attribute [rw] description
+    #   A description of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] sensitive_information_policy_config
+    #   The sensitive information policy to configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailSensitiveInformationPolicyConfig]
+    #
+    # @!attribute [rw] tags
+    #   The tags used to organize, track, or control access for this
+    #   resource.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] topic_policy_config
+    #   The topic policies to configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailTopicPolicyConfig]
+    #
+    # @!attribute [rw] visibility_status
+    #   The visibility status of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] word_policy_config
+    #   The word policy you configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailWordPolicyConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIGuardrailRequest AWS API Documentation
+    #
+    class CreateAIGuardrailRequest < Struct.new(
+      :assistant_id,
+      :blocked_input_messaging,
+      :blocked_outputs_messaging,
+      :client_token,
+      :content_policy_config,
+      :contextual_grounding_policy_config,
+      :description,
+      :name,
+      :sensitive_information_policy_config,
+      :tags,
+      :topic_policy_config,
+      :visibility_status,
+      :word_policy_config)
+      SENSITIVE = [:blocked_input_messaging, :blocked_outputs_messaging, :description]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail
+    #   The data of the AI Guardrail.
+    #   @return [Types::AIGuardrailData]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIGuardrailResponse AWS API Documentation
+    #
+    class CreateAIGuardrailResponse < Struct.new(
+      :ai_guardrail)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1]..
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #   @return [String]
+    #
+    # @!attribute [rw] modified_time
+    #   The time the AI Guardrail was last modified.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIGuardrailVersionRequest AWS API Documentation
+    #
+    class CreateAIGuardrailVersionRequest < Struct.new(
+      :ai_guardrail_id,
+      :assistant_id,
+      :client_token,
+      :modified_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail
+    #   The data of the AI Guardrail version.
+    #   @return [Types::AIGuardrailData]
+    #
+    # @!attribute [rw] version_number
+    #   The version number of the AI Guardrail version.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateAIGuardrailVersionResponse AWS API Documentation
+    #
+    class CreateAIGuardrailVersionResponse < Struct.new(
+      :ai_guardrail,
       :version_number)
       SENSITIVE = []
       include Aws::Structure
@@ -3060,6 +3525,56 @@ module Aws::QConnect
     #
     class DeleteAIAgentVersionResponse < Aws::EmptyStructure; end
 
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail. Can be
+    #   either the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteAIGuardrailRequest AWS API Documentation
+    #
+    class DeleteAIGuardrailRequest < Struct.new(
+      :ai_guardrail_id,
+      :assistant_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteAIGuardrailResponse AWS API Documentation
+    #
+    class DeleteAIGuardrailResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] version_number
+    #   The version number of the AI Guardrail version to be deleted.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteAIGuardrailVersionRequest AWS API Documentation
+    #
+    class DeleteAIGuardrailVersionRequest < Struct.new(
+      :ai_guardrail_id,
+      :assistant_id,
+      :version_number)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteAIGuardrailVersionResponse AWS API Documentation
+    #
+    class DeleteAIGuardrailVersionResponse < Aws::EmptyStructure; end
+
     # @!attribute [rw] ai_prompt_id
     #   The identifier of the Amazon Q in Connect AI prompt. Can be either
     #   the ID or the ARN. URLs cannot contain the ARN.
@@ -3707,6 +4222,43 @@ module Aws::QConnect
       include Aws::Structure
     end
 
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetAIGuardrailRequest AWS API Documentation
+    #
+    class GetAIGuardrailRequest < Struct.new(
+      :ai_guardrail_id,
+      :assistant_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail
+    #   The data of the AI Guardrail.
+    #   @return [Types::AIGuardrailData]
+    #
+    # @!attribute [rw] version_number
+    #   The version number of the AI Guardrail version (returned if an AI
+    #   Guardrail version was specified via use of a qualifier for the
+    #   `aiGuardrailId` on the request).
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetAIGuardrailResponse AWS API Documentation
+    #
+    class GetAIGuardrailResponse < Struct.new(
+      :ai_guardrail,
+      :version_number)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] ai_prompt_id
     #   The identifier of the Amazon Q in Connect AI prompt.
     #   @return [String]
@@ -3984,6 +4536,67 @@ module Aws::QConnect
       include Aws::Structure
     end
 
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_message_token
+    #   The token for the next message. Use the value returned in the
+    #   SendMessage or previous response in the next request to retrieve the
+    #   next message.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_id
+    #   The identifier of the Amazon Q in Connect session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetNextMessageRequest AWS API Documentation
+    #
+    class GetNextMessageRequest < Struct.new(
+      :assistant_id,
+      :next_message_token,
+      :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] conversation_session_data
+    #   The conversation data stored on an Amazon Q in Connect Session.
+    #   @return [Array<Types::RuntimeSessionData>]
+    #
+    # @!attribute [rw] conversation_state
+    #   The state of current conversation.
+    #   @return [Types::ConversationState]
+    #
+    # @!attribute [rw] next_message_token
+    #   The token for the next message.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_message_id
+    #   The identifier of the submitted message.
+    #   @return [String]
+    #
+    # @!attribute [rw] response
+    #   The message response to the requested message.
+    #   @return [Types::MessageOutput]
+    #
+    # @!attribute [rw] type
+    #   The type of message response.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetNextMessageResponse AWS API Documentation
+    #
+    class GetNextMessageResponse < Struct.new(
+      :conversation_session_data,
+      :conversation_state,
+      :next_message_token,
+      :request_message_id,
+      :response,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] knowledge_base_id
     #   The identifier of the knowledge base. This should be a
     #   QUICK\_RESPONSES type knowledge base.
@@ -4138,6 +4751,416 @@ module Aws::QConnect
       :criteria,
       :values)
       SENSITIVE = [:criteria, :values]
+      include Aws::Structure
+    end
+
+    # Contains filter strengths for harmful content. AI Guardrail's support
+    # the following content filters to detect and filter harmful user inputs
+    # and FM-generated outputs.
+    #
+    # * **Hate**: Describes input prompts and model responses that
+    #   discriminate, criticize, insult, denounce, or dehumanize a person or
+    #   group on the basis of an identity (such as race, ethnicity, gender,
+    #   religion, sexual orientation, ability, and national origin).
+    #
+    # * **Insults**: Describes input prompts and model responses that
+    #   includes demeaning, humiliating, mocking, insulting, or belittling
+    #   language. This type of language is also labeled as bullying.
+    #
+    # * **Sexual**: Describes input prompts and model responses that
+    #   indicates sexual interest, activity, or arousal using direct or
+    #   indirect references to body parts, physical traits, or sex.
+    #
+    # * **Violence**: Describes input prompts and model responses that
+    #   includes glorification of, or threats to inflict physical pain,
+    #   hurt, or injury toward a person, group, or thing.
+    #
+    # Content filtering depends on the confidence classification of user
+    # inputs and FM responses across each of the four harmful categories.
+    # All input and output statements are classified into one of four
+    # confidence levels (NONE, LOW, MEDIUM, HIGH) for each harmful category.
+    # For example, if a statement is classified as *Hate* with HIGH
+    # confidence, the likelihood of the statement representing hateful
+    # content is high. A single statement can be classified across multiple
+    # categories with varying confidence levels. For example, a single
+    # statement can be classified as *Hate* with HIGH confidence, <i>
+    # Insults</i> with LOW confidence, *Sexual* with NONE confidence, and
+    # *Violence* with MEDIUM confidence.
+    #
+    # @!attribute [rw] input_strength
+    #   The strength of the content filter to apply to prompts. As you
+    #   increase the filter strength, the likelihood of filtering harmful
+    #   content increases and the probability of seeing harmful content in
+    #   your application reduces.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_strength
+    #   The strength of the content filter to apply to model responses. As
+    #   you increase the filter strength, the likelihood of filtering
+    #   harmful content increases and the probability of seeing harmful
+    #   content in your application reduces.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The harmful category that the content filter is applied to.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GuardrailContentFilterConfig AWS API Documentation
+    #
+    class GuardrailContentFilterConfig < Struct.new(
+      :input_strength,
+      :output_strength,
+      :type)
+      SENSITIVE = [:input_strength, :output_strength, :type]
+      include Aws::Structure
+    end
+
+    # The filter configuration details for the AI Guardrail's contextual
+    # grounding filter.
+    #
+    # @!attribute [rw] threshold
+    #   The threshold details for the AI Guardrail's contextual grounding
+    #   filter.
+    #   @return [Float]
+    #
+    # @!attribute [rw] type
+    #   The filter type for the AI Guardrail's contextual grounding filter.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GuardrailContextualGroundingFilterConfig AWS API Documentation
+    #
+    class GuardrailContextualGroundingFilterConfig < Struct.new(
+      :threshold,
+      :type)
+      SENSITIVE = [:threshold, :type]
+      include Aws::Structure
+    end
+
+    # The managed word list to configure for the AI Guardrail.
+    #
+    # @!attribute [rw] type
+    #   The managed word type to configure for the AI Guardrail.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GuardrailManagedWordsConfig AWS API Documentation
+    #
+    class GuardrailManagedWordsConfig < Struct.new(
+      :type)
+      SENSITIVE = [:type]
+      include Aws::Structure
+    end
+
+    # The PII entity to configure for the AI Guardrail.
+    #
+    # @!attribute [rw] action
+    #   Configure AI Guardrail's action when the PII entity is detected.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   Configure AI Guardrail type when the PII entity is detected.
+    #
+    #   The following PIIs are used to block or mask sensitive information:
+    #
+    #   * **General**
+    #
+    #     * **ADDRESS**
+    #
+    #       A physical address, such as "100 Main Street, Anytown, USA" or
+    #       "Suite #12, Building 123". An address can include information
+    #       such as the street, building, location, city, state, country,
+    #       county, zip code, precinct, and neighborhood.
+    #
+    #     * **AGE**
+    #
+    #       An individual's age, including the quantity and unit of time.
+    #       For example, in the phrase "I am 40 years old," Guarrails
+    #       recognizes "40 years" as an age.
+    #
+    #     * **NAME**
+    #
+    #       An individual's name. This entity type does not include titles,
+    #       such as Dr., Mr., Mrs., or Miss. AI Guardrail doesn't apply
+    #       this entity type to names that are part of organizations or
+    #       addresses. For example, AI Guardrail recognizes the "John Doe
+    #       Organization" as an organization, and it recognizes "Jane Doe
+    #       Street" as an address.
+    #
+    #     * **EMAIL**
+    #
+    #       An email address, such as *marymajor@email.com*.
+    #
+    #     * **PHONE**
+    #
+    #       A phone number. This entity type also includes fax and pager
+    #       numbers.
+    #
+    #     * **USERNAME**
+    #
+    #       A user name that identifies an account, such as a login name,
+    #       screen name, nick name, or handle.
+    #
+    #     * **PASSWORD**
+    #
+    #       An alphanumeric string that is used as a password, such as
+    #       "*<i> very20special#pass*</i>".
+    #
+    #     * **DRIVER\_ID**
+    #
+    #       The number assigned to a driver's license, which is an official
+    #       document permitting an individual to operate one or more
+    #       motorized vehicles on a public road. A driver's license number
+    #       consists of alphanumeric characters.
+    #
+    #     * **LICENSE\_PLATE**
+    #
+    #       A license plate for a vehicle is issued by the state or country
+    #       where the vehicle is registered. The format for passenger
+    #       vehicles is typically five to eight digits, consisting of
+    #       upper-case letters and numbers. The format varies depending on
+    #       the location of the issuing state or country.
+    #
+    #     * **VEHICLE\_IDENTIFICATION\_NUMBER**
+    #
+    #       A Vehicle Identification Number (VIN) uniquely identifies a
+    #       vehicle. VIN content and format are defined in the *ISO 3779*
+    #       specification. Each country has specific codes and formats for
+    #       VINs.
+    #   * **Finance**
+    #
+    #     * **REDIT\_DEBIT\_CARD\_CVV**
+    #
+    #       A three-digit card verification code (CVV) that is present on
+    #       VISA, MasterCard, and Discover credit and debit cards. For
+    #       American Express credit or debit cards, the CVV is a four-digit
+    #       numeric code.
+    #
+    #     * **CREDIT\_DEBIT\_CARD\_EXPIRY**
+    #
+    #       The expiration date for a credit or debit card. This number is
+    #       usually four digits long and is often formatted as *month/year*
+    #       or *MM/YY*. AI Guardrail recognizes expiration dates such as
+    #       *01/21*, *01/2021*, and *Jan 2021*.
+    #
+    #     * **CREDIT\_DEBIT\_CARD\_NUMBER**
+    #
+    #       The number for a credit or debit card. These numbers can vary
+    #       from 13 to 16 digits in length. However, Amazon Comprehend also
+    #       recognizes credit or debit card numbers when only the last four
+    #       digits are present.
+    #
+    #     * **PIN**
+    #
+    #       A four-digit personal identification number (PIN) with which you
+    #       can access your bank account.
+    #
+    #     * **INTERNATIONAL\_BANK\_ACCOUNT\_NUMBER**
+    #
+    #       An International Bank Account Number has specific formats in
+    #       each country. For more information, see [
+    #       www.iban.com/structure][1].
+    #
+    #     * **SWIFT\_CODE**
+    #
+    #       A SWIFT code is a standard format of Bank Identifier Code (BIC)
+    #       used to specify a particular bank or branch. Banks use these
+    #       codes for money transfers such as international wire transfers.
+    #
+    #       SWIFT codes consist of eight or 11 characters. The 11-digit
+    #       codes refer to specific branches, while eight-digit codes (or
+    #       11-digit codes ending in 'XXX') refer to the head or primary
+    #       office.
+    #   * **IT**
+    #
+    #     * **IP\_ADDRESS**
+    #
+    #       An IPv4 address, such as *198.51.100.0*.
+    #
+    #     * **MAC\_ADDRESS**
+    #
+    #       A *media access control* (MAC) address is a unique identifier
+    #       assigned to a network interface controller (NIC).
+    #
+    #     * **URL**
+    #
+    #       A web address, such as *www.example.com*.
+    #
+    #     * **AWS\_ACCESS\_KEY**
+    #
+    #       A unique identifier that's associated with a secret access key;
+    #       you use the access key ID and secret access key to sign
+    #       programmatic Amazon Web Services requests cryptographically.
+    #
+    #     * **AWS\_SECRET\_KEY**
+    #
+    #       A unique identifier that's associated with an access key. You
+    #       use the access key ID and secret access key to sign programmatic
+    #       Amazon Web Services requests cryptographically.
+    #   * **USA specific**
+    #
+    #     * **US\_BANK\_ACCOUNT\_NUMBER**
+    #
+    #       A US bank account number, which is typically 10 to 12 digits
+    #       long.
+    #
+    #     * **US\_BANK\_ROUTING\_NUMBER**
+    #
+    #       A US bank account routing number. These are typically nine
+    #       digits long,
+    #
+    #     * **US\_INDIVIDUAL\_TAX\_IDENTIFICATION\_NUMBER**
+    #
+    #       A US Individual Taxpayer Identification Number (ITIN) is a
+    #       nine-digit number that starts with a "9" and contain a "7"
+    #       or "8" as the fourth digit. An ITIN can be formatted with a
+    #       space or a dash after the third and forth digits.
+    #
+    #     * **US\_PASSPORT\_NUMBER**
+    #
+    #       A US passport number. Passport numbers range from six to nine
+    #       alphanumeric characters.
+    #
+    #     * **US\_SOCIAL\_SECURITY\_NUMBER**
+    #
+    #       A US Social Security Number (SSN) is a nine-digit number that is
+    #       issued to US citizens, permanent residents, and temporary
+    #       working residents.
+    #   * **Canada specific**
+    #
+    #     * **CA\_HEALTH\_NUMBER**
+    #
+    #       A Canadian Health Service Number is a 10-digit unique
+    #       identifier, required for individuals to access healthcare
+    #       benefits.
+    #
+    #     * **CA\_SOCIAL\_INSURANCE\_NUMBER**
+    #
+    #       A Canadian Social Insurance Number (SIN) is a nine-digit unique
+    #       identifier, required for individuals to access government
+    #       programs and benefits.
+    #
+    #       The SIN is formatted as three groups of three digits, such as
+    #       <i> 123-456-789</i>. A SIN can be validated through a simple
+    #       check-digit process called the [Luhn algorithm][2] .
+    #   * **UK Specific**
+    #
+    #     * **UK\_NATIONAL\_HEALTH\_SERVICE\_NUMBER**
+    #
+    #       A UK National Health Service Number is a 10-17 digit number,
+    #       such as *485 555 3456*. The current system formats the 10-digit
+    #       number with spaces after the third and sixth digits. The final
+    #       digit is an error-detecting checksum.
+    #
+    #     * **UK\_NATIONAL\_INSURANCE\_NUMBER**
+    #
+    #       A UK National Insurance Number (NINO) provides individuals with
+    #       access to National Insurance (social security) benefits. It is
+    #       also used for some purposes in the UK tax system.
+    #
+    #       The number is nine digits long and starts with two letters,
+    #       followed by six numbers and one letter. A NINO can be formatted
+    #       with a space or a dash after the two letters and after the
+    #       second, forth, and sixth digits.
+    #
+    #     * **UK\_UNIQUE\_TAXPAYER\_REFERENCE\_NUMBER**
+    #
+    #       A UK Unique Taxpayer Reference (UTR) is a 10-digit number that
+    #       identifies a taxpayer or a business.
+    #   * **Custom**
+    #
+    #     * **Regex filter** - You can use a regular expressions to define
+    #       patterns for an AI Guardrail to recognize and act upon such as
+    #       serial number, booking ID etc..
+    #
+    #     ^
+    #
+    #
+    #
+    #   [1]: https://www.iban.com/structure
+    #   [2]: https://www.wikipedia.org/wiki/Luhn_algorithm
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GuardrailPiiEntityConfig AWS API Documentation
+    #
+    class GuardrailPiiEntityConfig < Struct.new(
+      :action,
+      :type)
+      SENSITIVE = [:action, :type]
+      include Aws::Structure
+    end
+
+    # The regular expression to configure for the AI Guardrail.
+    #
+    # @!attribute [rw] action
+    #   The AI Guardrail action to configure when matching regular
+    #   expression is detected.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the regular expression to configure for the AI
+    #   Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the regular expression to configure for the AI
+    #   Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] pattern
+    #   The regular expression pattern to configure for the AI Guardrail.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GuardrailRegexConfig AWS API Documentation
+    #
+    class GuardrailRegexConfig < Struct.new(
+      :action,
+      :description,
+      :name,
+      :pattern)
+      SENSITIVE = [:action, :description, :name, :pattern]
+      include Aws::Structure
+    end
+
+    # Details about topics for the AI Guardrail to identify and deny.
+    #
+    # @!attribute [rw] definition
+    #   A definition of the topic to deny.
+    #   @return [String]
+    #
+    # @!attribute [rw] examples
+    #   A list of prompts, each of which is an example of a prompt that can
+    #   be categorized as belonging to the topic.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] name
+    #   The name of the topic to deny.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   Specifies to deny the topic.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GuardrailTopicConfig AWS API Documentation
+    #
+    class GuardrailTopicConfig < Struct.new(
+      :definition,
+      :examples,
+      :name,
+      :type)
+      SENSITIVE = [:definition, :examples, :name, :type]
+      include Aws::Structure
+    end
+
+    # A word to configure for the AI Guardrail.
+    #
+    # @!attribute [rw] text
+    #   Text of the word configured for the AI Guardrail to block.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GuardrailWordConfig AWS API Documentation
+    #
+    class GuardrailWordConfig < Struct.new(
+      :text)
+      SENSITIVE = [:text]
       include Aws::Structure
     end
 
@@ -4705,6 +5728,100 @@ module Aws::QConnect
       include Aws::Structure
     end
 
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail for which
+    #   versions are to be listed.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return per page.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListAIGuardrailVersionsRequest AWS API Documentation
+    #
+    class ListAIGuardrailVersionsRequest < Struct.new(
+      :ai_guardrail_id,
+      :assistant_id,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail_version_summaries
+    #   The summaries of the AI Guardrail versions.
+    #   @return [Array<Types::AIGuardrailVersionSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListAIGuardrailVersionsResponse AWS API Documentation
+    #
+    class ListAIGuardrailVersionsResponse < Struct.new(
+      :ai_guardrail_version_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return per page.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListAIGuardrailsRequest AWS API Documentation
+    #
+    class ListAIGuardrailsRequest < Struct.new(
+      :assistant_id,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail_summaries
+    #   The summaries of the AI Guardrails.
+    #   @return [Array<Types::AIGuardrailSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListAIGuardrailsResponse AWS API Documentation
+    #
+    class ListAIGuardrailsResponse < Struct.new(
+      :ai_guardrail_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] ai_prompt_id
     #   The identifier of the Amazon Q in Connect AI prompt for which
     #   versions are to be listed.
@@ -5157,6 +6274,54 @@ module Aws::QConnect
       include Aws::Structure
     end
 
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return per page.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_id
+    #   The identifier of the Amazon Q in Connect session.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListMessagesRequest AWS API Documentation
+    #
+    class ListMessagesRequest < Struct.new(
+      :assistant_id,
+      :max_results,
+      :next_token,
+      :session_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] messages
+    #   The message information.
+    #   @return [Array<Types::MessageOutput>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListMessagesResponse AWS API Documentation
+    #
+    class ListMessagesResponse < Struct.new(
+      :messages,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] knowledge_base_id
     #   The identifier of the knowledge base. Can be either the ID or the
     #   ARN. URLs cannot contain the ARN.
@@ -5251,6 +6416,11 @@ module Aws::QConnect
 
     # The configuration for the `MANUAL_SEARCH` AI Agent type.
     #
+    # @!attribute [rw] answer_generation_ai_guardrail_id
+    #   The AI Guardrail identifier for the Answer Generation guardrail used
+    #   by the MANUAL\_SEARCH AI Agent.
+    #   @return [String]
+    #
     # @!attribute [rw] answer_generation_ai_prompt_id
     #   The AI Prompt identifier for the Answer Generation prompt used by
     #   the MANUAL\_SEARCH AI Agent.
@@ -5264,8 +6434,75 @@ module Aws::QConnect
     # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ManualSearchAIAgentConfiguration AWS API Documentation
     #
     class ManualSearchAIAgentConfiguration < Struct.new(
+      :answer_generation_ai_guardrail_id,
       :answer_generation_ai_prompt_id,
       :association_configurations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The message data.
+    #
+    # @note MessageData is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note MessageData is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of MessageData corresponding to the set member.
+    #
+    # @!attribute [rw] text
+    #   The message data in text type.
+    #   @return [Types::TextMessage]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/MessageData AWS API Documentation
+    #
+    class MessageData < Struct.new(
+      :text,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Text < MessageData; end
+      class Unknown < MessageData; end
+    end
+
+    # The message input.
+    #
+    # @!attribute [rw] value
+    #   The message input value.
+    #   @return [Types::MessageData]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/MessageInput AWS API Documentation
+    #
+    class MessageInput < Struct.new(
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The message output.
+    #
+    # @!attribute [rw] message_id
+    #   The identifier of a message.
+    #   @return [String]
+    #
+    # @!attribute [rw] participant
+    #   The participant of a message.
+    #   @return [String]
+    #
+    # @!attribute [rw] timestamp
+    #   The timestamp of a message.
+    #   @return [Time]
+    #
+    # @!attribute [rw] value
+    #   The value of a message data.
+    #   @return [Types::MessageData]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/MessageOutput AWS API Documentation
+    #
+    class MessageOutput < Struct.new(
+      :message_id,
+      :participant,
+      :timestamp,
+      :value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7432,6 +8669,63 @@ module Aws::QConnect
       include Aws::Structure
     end
 
+    # The configuration for AI Agents of type SELF\_SERVICE.
+    #
+    # @!attribute [rw] association_configurations
+    #   The association configurations for overriding behavior on this AI
+    #   Agent.
+    #   @return [Array<Types::AssociationConfiguration>]
+    #
+    # @!attribute [rw] self_service_ai_guardrail_id
+    #   The AI Guardrail identifier used by the SELF\_SERVICE AI Agent.
+    #   @return [String]
+    #
+    # @!attribute [rw] self_service_answer_generation_ai_prompt_id
+    #   The AI Prompt identifier for the Self Service Answer Generation
+    #   prompt used by the SELF\_SERVICE AI Agent
+    #   @return [String]
+    #
+    # @!attribute [rw] self_service_pre_processing_ai_prompt_id
+    #   The AI Prompt identifier for the Self Service Pre-Processing prompt
+    #   used by the SELF\_SERVICE AI Agent
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/SelfServiceAIAgentConfiguration AWS API Documentation
+    #
+    class SelfServiceAIAgentConfiguration < Struct.new(
+      :association_configurations,
+      :self_service_ai_guardrail_id,
+      :self_service_answer_generation_ai_prompt_id,
+      :self_service_pre_processing_ai_prompt_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The conversation history data to included in conversation context data
+    # before the the Amazon Q in Connect session..
+    #
+    # @!attribute [rw] bot_response
+    #   The bot response of the conversation history data.
+    #   @return [String]
+    #
+    # @!attribute [rw] input_transcript
+    #   The input transcript of the conversation history data.
+    #   @return [String]
+    #
+    # @!attribute [rw] turn_number
+    #   The number of turn of the conversation history data.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/SelfServiceConversationHistory AWS API Documentation
+    #
+    class SelfServiceConversationHistory < Struct.new(
+      :bot_response,
+      :input_transcript,
+      :turn_number)
+      SENSITIVE = [:bot_response, :input_transcript]
+      include Aws::Structure
+    end
+
     # Settings for semantic document chunking for a data source. Semantic
     # chunking splits a document into smaller documents based on groups of
     # similar content derived from the text with natural language
@@ -7455,6 +8749,66 @@ module Aws::QConnect
       :breakpoint_percentile_threshold,
       :buffer_size,
       :max_tokens)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the AWS SDK populates
+    #   this field.For more information about idempotency, see Making
+    #   retries safe with idempotent APIs.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] conversation_context
+    #   The conversation context before the Amazon Q in Connect session.
+    #   @return [Types::ConversationContext]
+    #
+    # @!attribute [rw] message
+    #   The message data to submit to the Amazon Q in Connect session.
+    #   @return [Types::MessageInput]
+    #
+    # @!attribute [rw] session_id
+    #   The identifier of the Amazon Q in Connect session.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The message type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/SendMessageRequest AWS API Documentation
+    #
+    class SendMessageRequest < Struct.new(
+      :assistant_id,
+      :client_token,
+      :conversation_context,
+      :message,
+      :session_id,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_message_token
+    #   The token for the next message, used by GetNextMessage.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_message_id
+    #   The identifier of the submitted message.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/SendMessageResponse AWS API Documentation
+    #
+    class SendMessageResponse < Struct.new(
+      :next_message_token,
+      :request_message_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7932,6 +9286,20 @@ module Aws::QConnect
       include Aws::Structure
     end
 
+    # The message data in text type.
+    #
+    # @!attribute [rw] value
+    #   The value of the message data in text type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/TextMessage AWS API Documentation
+    #
+    class TextMessage < Struct.new(
+      :value)
+      SENSITIVE = [:value]
+      include Aws::Structure
+    end
+
     # The throttling limit has been exceeded.
     #
     # @!attribute [rw] message
@@ -8041,6 +9409,97 @@ module Aws::QConnect
     #
     class UpdateAIAgentResponse < Struct.new(
       :ai_agent)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail_id
+    #   The identifier of the Amazon Q in Connect AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] assistant_id
+    #   The identifier of the Amazon Q in Connect assistant. Can be either
+    #   the ID or the ARN. URLs cannot contain the ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] blocked_input_messaging
+    #   The message to return when the AI Guardrail blocks a prompt.
+    #   @return [String]
+    #
+    # @!attribute [rw] blocked_outputs_messaging
+    #   The message to return when the AI Guardrail blocks a model response.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1]..
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: http://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #   @return [String]
+    #
+    # @!attribute [rw] content_policy_config
+    #   The content filter policies to configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailContentPolicyConfig]
+    #
+    # @!attribute [rw] contextual_grounding_policy_config
+    #   The contextual grounding policy configuration used to create an AI
+    #   Guardrail.
+    #   @return [Types::AIGuardrailContextualGroundingPolicyConfig]
+    #
+    # @!attribute [rw] description
+    #   A description of the AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] sensitive_information_policy_config
+    #   The sensitive information policy to configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailSensitiveInformationPolicyConfig]
+    #
+    # @!attribute [rw] topic_policy_config
+    #   The topic policies to configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailTopicPolicyConfig]
+    #
+    # @!attribute [rw] visibility_status
+    #   The visibility status of the Amazon Q in Connect AI Guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] word_policy_config
+    #   The word policy you configure for the AI Guardrail.
+    #   @return [Types::AIGuardrailWordPolicyConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateAIGuardrailRequest AWS API Documentation
+    #
+    class UpdateAIGuardrailRequest < Struct.new(
+      :ai_guardrail_id,
+      :assistant_id,
+      :blocked_input_messaging,
+      :blocked_outputs_messaging,
+      :client_token,
+      :content_policy_config,
+      :contextual_grounding_policy_config,
+      :description,
+      :sensitive_information_policy_config,
+      :topic_policy_config,
+      :visibility_status,
+      :word_policy_config)
+      SENSITIVE = [:blocked_input_messaging, :blocked_outputs_messaging, :description]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] ai_guardrail
+    #   The data of the updated Amazon Q in Connect AI Guardrail.
+    #   @return [Types::AIGuardrailData]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateAIGuardrailResponse AWS API Documentation
+    #
+    class UpdateAIGuardrailResponse < Struct.new(
+      :ai_guardrail)
       SENSITIVE = []
       include Aws::Structure
     end

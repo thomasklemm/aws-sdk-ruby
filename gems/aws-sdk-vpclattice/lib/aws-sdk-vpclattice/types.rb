@@ -30,8 +30,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the access log subscription was created,
-    #   specified in ISO-8601 format.
+    #   The date and time that the access log subscription was created, in
+    #   ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] destination_arn
@@ -44,7 +44,7 @@ module Aws::VPCLattice
     #
     # @!attribute [rw] last_updated_at
     #   The date and time that the access log subscription was last updated,
-    #   specified in ISO-8601 format.
+    #   in ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] resource_arn
@@ -53,6 +53,10 @@ module Aws::VPCLattice
     #
     # @!attribute [rw] resource_id
     #   The ID of the service or service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_log_type
+    #   Log type of the service network.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/AccessLogSubscriptionSummary AWS API Documentation
@@ -64,13 +68,28 @@ module Aws::VPCLattice
       :id,
       :last_updated_at,
       :resource_arn,
-      :resource_id)
+      :resource_id,
+      :service_network_log_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The Amazon Resource Name (ARN) of the resource.
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ArnResource AWS API Documentation
+    #
+    class ArnResource < Struct.new(
+      :arn)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] rules
@@ -78,7 +97,7 @@ module Aws::VPCLattice
     #   @return [Array<Types::RuleUpdate>]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/BatchUpdateRuleRequest AWS API Documentation
@@ -150,8 +169,12 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service.
+    #   The ID or ARN of the service network or service.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_log_type
+    #   The type of log that monitors your Amazon VPC Lattice service
+    #   networks.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -164,6 +187,7 @@ module Aws::VPCLattice
       :client_token,
       :destination_arn,
       :resource_identifier,
+      :service_network_log_type,
       :tags)
       SENSITIVE = []
       include Aws::Structure
@@ -189,6 +213,11 @@ module Aws::VPCLattice
     #   The ID of the service network or service.
     #   @return [String]
     #
+    # @!attribute [rw] service_network_log_type
+    #   The type of log that monitors your Amazon VPC Lattice service
+    #   networks.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateAccessLogSubscriptionResponse AWS API Documentation
     #
     class CreateAccessLogSubscriptionResponse < Struct.new(
@@ -196,7 +225,8 @@ module Aws::VPCLattice
       :destination_arn,
       :id,
       :resource_arn,
-      :resource_id)
+      :resource_id,
+      :service_network_log_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -234,7 +264,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -302,6 +332,264 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
+    # @!attribute [rw] allow_association_to_shareable_service_network
+    #   (SINGLE, GROUP, ARN) Specifies whether the resource configuration
+    #   can be associated with a sharable service network. The default is
+    #   false.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If you retry a request that completed
+    #   successfully using the same client token and parameters, the retry
+    #   succeeds without performing any actions. If the parameters aren't
+    #   identical, the retry fails.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource configuration. The name must be unique
+    #   within the account. The valid characters are a-z, 0-9, and hyphens
+    #   (-). You can't use a hyphen as the first or last character, or
+    #   immediately after another hyphen.
+    #   @return [String]
+    #
+    # @!attribute [rw] port_ranges
+    #   (SINGLE, GROUP, CHILD) The TCP port ranges that a consumer can use
+    #   to access a resource configuration (for example: 1-65535). You can
+    #   separate port ranges using commas (for example: 1,2,22-30).
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] protocol
+    #   (SINGLE, GROUP) The protocol accepted by the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_definition
+    #   (SINGLE, CHILD, ARN) The resource configuration.
+    #   @return [Types::ResourceConfigurationDefinition]
+    #
+    # @!attribute [rw] resource_configuration_group_identifier
+    #   (CHILD) The ID or ARN of the parent resource configuration (type is
+    #   `GROUP`). This is used to associate a child resource configuration
+    #   with a group resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_gateway_identifier
+    #   (SINGLE, GROUP, ARN) The ID or ARN of the resource gateway used to
+    #   connect to the resource configuration. For a child resource
+    #   configuration, this value is inherited from the parent resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags for the resource configuration.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] type
+    #   The type of resource configuration.
+    #
+    #   * `SINGLE` - A single resource.
+    #
+    #   * `GROUP` - A group of resources. You must create a group resource
+    #     configuration before you create a child resource configuration.
+    #
+    #   * `CHILD` - A single resource that is part of a group resource
+    #     configuration.
+    #
+    #   * `ARN` - An Amazon Web Services resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateResourceConfigurationRequest AWS API Documentation
+    #
+    class CreateResourceConfigurationRequest < Struct.new(
+      :allow_association_to_shareable_service_network,
+      :client_token,
+      :name,
+      :port_ranges,
+      :protocol,
+      :resource_configuration_definition,
+      :resource_configuration_group_identifier,
+      :resource_gateway_identifier,
+      :tags,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] allow_association_to_shareable_service_network
+    #   Specifies whether the resource configuration can be associated with
+    #   a sharable service network.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the resource configuration was created, in
+    #   ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] failure_reason
+    #   The reason that the request failed.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] port_ranges
+    #   The port range.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] protocol
+    #   The protocol.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_definition
+    #   The resource configuration.
+    #   @return [Types::ResourceConfigurationDefinition]
+    #
+    # @!attribute [rw] resource_configuration_group_id
+    #   The ID of the parent resource configuration (type is GROUP).
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_gateway_id
+    #   The ID of the resource gateway associated with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of resource configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateResourceConfigurationResponse AWS API Documentation
+    #
+    class CreateResourceConfigurationResponse < Struct.new(
+      :allow_association_to_shareable_service_network,
+      :arn,
+      :created_at,
+      :failure_reason,
+      :id,
+      :name,
+      :port_ranges,
+      :protocol,
+      :resource_configuration_definition,
+      :resource_configuration_group_id,
+      :resource_gateway_id,
+      :status,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If you retry a request that completed
+    #   successfully using the same client token and parameters, the retry
+    #   succeeds without performing any actions. If the parameters aren't
+    #   identical, the retry fails.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_address_type
+    #   The type of IP address used by the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] security_group_ids
+    #   The IDs of the security groups to apply to the resource gateway. The
+    #   security groups must be in the same VPC.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the VPC subnets in which to create the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] tags
+    #   The tags for the resource gateway.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] vpc_identifier
+    #   The ID of the VPC for the resource gateway.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateResourceGatewayRequest AWS API Documentation
+    #
+    class CreateResourceGatewayRequest < Struct.new(
+      :client_token,
+      :ip_address_type,
+      :name,
+      :security_group_ids,
+      :subnet_ids,
+      :tags,
+      :vpc_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_address_type
+    #   The type of IP address for the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] security_group_ids
+    #   The IDs of the security groups for the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] status
+    #   The status of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the resource gateway subnets.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] vpc_identifier
+    #   The ID of the VPC.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateResourceGatewayResponse AWS API Documentation
+    #
+    class CreateResourceGatewayResponse < Struct.new(
+      :arn,
+      :id,
+      :ip_address_type,
+      :name,
+      :security_group_ids,
+      :status,
+      :subnet_ids,
+      :vpc_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] action
     #   The action for the default rule.
     #   @return [Types::RuleAction]
@@ -318,7 +606,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] match
@@ -339,7 +627,7 @@ module Aws::VPCLattice
     #   @return [Integer]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -429,6 +717,10 @@ module Aws::VPCLattice
     #   after another hyphen.
     #   @return [String]
     #
+    # @!attribute [rw] sharing_config
+    #   Specify if the service network should be enabled for sharing.
+    #   @return [Types::SharingConfig]
+    #
     # @!attribute [rw] tags
     #   The tags for the service network.
     #   @return [Hash<String,String>]
@@ -439,7 +731,71 @@ module Aws::VPCLattice
       :auth_type,
       :client_token,
       :name,
+      :sharing_config,
       :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If you retry a request that completed
+    #   successfully using the same client token and parameters, the retry
+    #   succeeds without performing any actions. If the parameters aren't
+    #   identical, the retry fails.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_identifier
+    #   The ID of the resource configuration to associate with the service
+    #   network.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_identifier
+    #   The ID of the service network to associate with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags for the association.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateServiceNetworkResourceAssociationRequest AWS API Documentation
+    #
+    class CreateServiceNetworkResourceAssociationRequest < Struct.new(
+      :client_token,
+      :resource_configuration_identifier,
+      :service_network_identifier,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_by
+    #   The ID of the account that created the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateServiceNetworkResourceAssociationResponse AWS API Documentation
+    #
+    class CreateServiceNetworkResourceAssociationResponse < Struct.new(
+      :arn,
+      :created_by,
+      :id,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -460,13 +816,18 @@ module Aws::VPCLattice
     #   The name of the service network.
     #   @return [String]
     #
+    # @!attribute [rw] sharing_config
+    #   Specifies if the service network is enabled for sharing.
+    #   @return [Types::SharingConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/CreateServiceNetworkResponse AWS API Documentation
     #
     class CreateServiceNetworkResponse < Struct.new(
       :arn,
       :auth_type,
       :id,
-      :name)
+      :name,
+      :sharing_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -483,13 +844,12 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @!attribute [rw] service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network. You
-    #   must use the ARN if the resources specified in the operation are in
-    #   different accounts.
+    #   The ID or ARN of the service network. You must use an ARN if the
+    #   resources are in different accounts.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -569,9 +929,8 @@ module Aws::VPCLattice
     #   @return [Array<String>]
     #
     # @!attribute [rw] service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network. You
-    #   must use the ARN when the resources specified in the operation are
-    #   in different accounts.
+    #   The ID or ARN of the service network. You must use an ARN if the
+    #   resources are in different accounts.
     #   @return [String]
     #
     # @!attribute [rw] tags
@@ -809,7 +1168,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] access_log_subscription_identifier
-    #   The ID or Amazon Resource Name (ARN) of the access log subscription.
+    #   The ID or ARN of the access log subscription.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteAccessLogSubscriptionRequest AWS API Documentation
@@ -825,7 +1184,7 @@ module Aws::VPCLattice
     class DeleteAccessLogSubscriptionResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the resource.
+    #   The ID or ARN of the resource.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteAuthPolicyRequest AWS API Documentation
@@ -841,11 +1200,11 @@ module Aws::VPCLattice
     class DeleteAuthPolicyResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteListenerRequest AWS API Documentation
@@ -860,6 +1219,107 @@ module Aws::VPCLattice
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteListenerResponse AWS API Documentation
     #
     class DeleteListenerResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] resource_configuration_identifier
+    #   The ID or ARN of the resource configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceConfigurationRequest AWS API Documentation
+    #
+    class DeleteResourceConfigurationRequest < Struct.new(
+      :resource_configuration_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceConfigurationResponse AWS API Documentation
+    #
+    class DeleteResourceConfigurationResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] resource_endpoint_association_identifier
+    #   The ID or ARN of the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceEndpointAssociationRequest AWS API Documentation
+    #
+    class DeleteResourceEndpointAssociationRequest < Struct.new(
+      :resource_endpoint_association_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of the resource configuration
+    #   associated with the VPC endpoint of type resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_id
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_id
+    #   The ID of the resource VPC endpoint that is associated with the
+    #   resource configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceEndpointAssociationResponse AWS API Documentation
+    #
+    class DeleteResourceEndpointAssociationResponse < Struct.new(
+      :arn,
+      :id,
+      :resource_configuration_arn,
+      :resource_configuration_id,
+      :vpc_endpoint_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_gateway_identifier
+    #   The ID or ARN of the resource gateway.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceGatewayRequest AWS API Documentation
+    #
+    class DeleteResourceGatewayRequest < Struct.new(
+      :resource_gateway_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the resource gateway.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteResourceGatewayResponse AWS API Documentation
+    #
+    class DeleteResourceGatewayResponse < Struct.new(
+      :arn,
+      :id,
+      :name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] resource_arn
     #   The Amazon Resource Name (ARN) of the resource.
@@ -878,15 +1338,15 @@ module Aws::VPCLattice
     class DeleteResourcePolicyResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the rule.
+    #   The ID or ARN of the rule.
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteRuleRequest AWS API Documentation
@@ -904,7 +1364,7 @@ module Aws::VPCLattice
     class DeleteRuleResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] service_network_identifier
-    #   The Amazon Resource Name (ARN) or ID of the service network.
+    #   The ID or ARN of the service network.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceNetworkRequest AWS API Documentation
@@ -915,12 +1375,46 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
+    # @!attribute [rw] service_network_resource_association_identifier
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceNetworkResourceAssociationRequest AWS API Documentation
+    #
+    class DeleteServiceNetworkResourceAssociationRequest < Struct.new(
+      :service_network_resource_association_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceNetworkResourceAssociationResponse AWS API Documentation
+    #
+    class DeleteServiceNetworkResourceAssociationResponse < Struct.new(
+      :arn,
+      :id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceNetworkResponse AWS API Documentation
     #
     class DeleteServiceNetworkResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] service_network_service_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceNetworkServiceAssociationRequest AWS API Documentation
@@ -956,7 +1450,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] service_network_vpc_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceNetworkVpcAssociationRequest AWS API Documentation
@@ -992,7 +1486,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteServiceRequest AWS API Documentation
@@ -1033,7 +1527,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DeleteTargetGroupRequest AWS API Documentation
@@ -1069,7 +1563,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #   @return [String]
     #
     # @!attribute [rw] targets
@@ -1121,6 +1615,25 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
+    # The DNS name of the resource.
+    #
+    # @!attribute [rw] domain_name
+    #   The domain name of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_address_type
+    #   The type of IP address.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/DnsResource AWS API Documentation
+    #
+    class DnsResource < Struct.new(
+      :domain_name,
+      :ip_address_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes an action that returns a custom HTTP response.
     #
     # @!attribute [rw] status_code
@@ -1161,7 +1674,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] access_log_subscription_identifier
-    #   The ID or Amazon Resource Name (ARN) of the access log subscription.
+    #   The ID or ARN of the access log subscription.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetAccessLogSubscriptionRequest AWS API Documentation
@@ -1177,8 +1690,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the access log subscription was created,
-    #   specified in ISO-8601 format.
+    #   The date and time that the access log subscription was created, in
+    #   ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] destination_arn
@@ -1191,7 +1704,7 @@ module Aws::VPCLattice
     #
     # @!attribute [rw] last_updated_at
     #   The date and time that the access log subscription was last updated,
-    #   specified in ISO-8601 format.
+    #   in ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] resource_arn
@@ -1200,6 +1713,10 @@ module Aws::VPCLattice
     #
     # @!attribute [rw] resource_id
     #   The ID of the service network or service.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_log_type
+    #   The log type for the service network.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetAccessLogSubscriptionResponse AWS API Documentation
@@ -1211,14 +1728,14 @@ module Aws::VPCLattice
       :id,
       :last_updated_at,
       :resource_arn,
-      :resource_id)
+      :resource_id,
+      :service_network_log_type)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # @!attribute [rw] resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service.
+    #   The ID or ARN of the service network or service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetAuthPolicyRequest AWS API Documentation
@@ -1230,13 +1747,13 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] created_at
-    #   The date and time that the auth policy was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the auth policy was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the auth policy was last updated, specified
-    #   in ISO-8601 format.
+    #   The date and time that the auth policy was last updated, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] policy
@@ -1269,11 +1786,11 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetListenerRequest AWS API Documentation
@@ -1290,8 +1807,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the listener was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the listener was created, in ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] default_action
@@ -1303,8 +1819,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the listener was last updated, specified in
-    #   ISO-8601 format.
+    #   The date and time that the listener was last updated, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -1344,6 +1860,194 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
+    # @!attribute [rw] resource_configuration_identifier
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetResourceConfigurationRequest AWS API Documentation
+    #
+    class GetResourceConfigurationRequest < Struct.new(
+      :resource_configuration_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] allow_association_to_shareable_service_network
+    #   Specifies whether the resource configuration is associated with a
+    #   sharable service network.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] amazon_managed
+    #   Indicates whether the resource configuration was created and is
+    #   managed by Amazon.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the resource configuration was created, in
+    #   ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] custom_domain_name
+    #   The custom domain name of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_reason
+    #   The reason the create-resource-configuration request failed.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The most recent date and time that the resource configuration was
+    #   updated, in ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] port_ranges
+    #   The TCP port ranges that a consumer can use to access a resource
+    #   configuration. You can separate port ranges with a comma. Example:
+    #   1-65535 or 1,2,22-30
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] protocol
+    #   The TCP protocol accepted by the specified resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_definition
+    #   The resource configuration.
+    #   @return [Types::ResourceConfigurationDefinition]
+    #
+    # @!attribute [rw] resource_configuration_group_id
+    #   The ID of the group resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_gateway_id
+    #   The ID of the resource gateway used to connect to the resource
+    #   configuration in a given VPC. You can specify the resource gateway
+    #   identifier only for resource configurations with type SINGLE, GROUP,
+    #   or ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of resource configuration.
+    #
+    #   * `SINGLE` - A single resource.
+    #
+    #   * `GROUP` - A group of resources.
+    #
+    #   * `CHILD` - A single resource that is part of a group resource
+    #     configuration.
+    #
+    #   * `ARN` - An Amazon Web Services resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetResourceConfigurationResponse AWS API Documentation
+    #
+    class GetResourceConfigurationResponse < Struct.new(
+      :allow_association_to_shareable_service_network,
+      :amazon_managed,
+      :arn,
+      :created_at,
+      :custom_domain_name,
+      :failure_reason,
+      :id,
+      :last_updated_at,
+      :name,
+      :port_ranges,
+      :protocol,
+      :resource_configuration_definition,
+      :resource_configuration_group_id,
+      :resource_gateway_id,
+      :status,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_gateway_identifier
+    #   The ID of the resource gateway.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetResourceGatewayRequest AWS API Documentation
+    #
+    class GetResourceGatewayRequest < Struct.new(
+      :resource_gateway_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the resource gateway was created, in ISO-8601
+    #   format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_address_type
+    #   The type of IP address for the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The date and time that the resource gateway was last updated, in
+    #   ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] security_group_ids
+    #   The security group IDs associated with the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] status
+    #   The status for the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the VPC subnets for resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the VPC for the resource gateway.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetResourceGatewayResponse AWS API Documentation
+    #
+    class GetResourceGatewayResponse < Struct.new(
+      :arn,
+      :created_at,
+      :id,
+      :ip_address_type,
+      :last_updated_at,
+      :name,
+      :security_group_ids,
+      :status,
+      :subnet_ids,
+      :vpc_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   The Amazon Resource Name (ARN) of the service network or service.
     #   @return [String]
@@ -1369,15 +2073,15 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener rule.
+    #   The ID or ARN of the listener rule.
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetRuleRequest AWS API Documentation
@@ -1399,8 +2103,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the listener rule was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the listener rule was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] id
@@ -1412,8 +2116,8 @@ module Aws::VPCLattice
     #   @return [Boolean]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the listener rule was last updated, specified
-    #   in ISO-8601 format.
+    #   The date and time that the listener rule was last updated, in
+    #   ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] match
@@ -1445,13 +2149,124 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetworkRequest AWS API Documentation
     #
     class GetServiceNetworkRequest < Struct.new(
       :service_network_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] service_network_resource_association_identifier
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetworkResourceAssociationRequest AWS API Documentation
+    #
+    class GetServiceNetworkResourceAssociationRequest < Struct.new(
+      :service_network_resource_association_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the association was created, in ISO-8601
+    #   format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   The account that created the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] dns_entry
+    #   The DNS entry for the service.
+    #   @return [Types::DnsEntry]
+    #
+    # @!attribute [rw] failure_code
+    #   The failure code.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_reason
+    #   The reason the association request failed.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] is_managed_association
+    #   Indicates whether the association is managed by Amazon.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The most recent date and time that the association was updated, in
+    #   ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] private_dns_entry
+    #   The private DNS entry for the service.
+    #   @return [Types::DnsEntry]
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_id
+    #   The ID of the resource configuration that is associated with the
+    #   service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_name
+    #   The name of the resource configuration that is associated with the
+    #   service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_arn
+    #   The Amazon Resource Name (ARN) of the service network that is
+    #   associated with the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_id
+    #   The ID of the service network that is associated with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_name
+    #   The name of the service network that is associated with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetworkResourceAssociationResponse AWS API Documentation
+    #
+    class GetServiceNetworkResourceAssociationResponse < Struct.new(
+      :arn,
+      :created_at,
+      :created_by,
+      :dns_entry,
+      :failure_code,
+      :failure_reason,
+      :id,
+      :is_managed_association,
+      :last_updated_at,
+      :private_dns_entry,
+      :resource_configuration_arn,
+      :resource_configuration_id,
+      :resource_configuration_name,
+      :service_network_arn,
+      :service_network_id,
+      :service_network_name,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1465,8 +2280,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the service network was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the service network was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] id
@@ -1474,7 +2289,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time of the last update, specified in ISO-8601 format.
+    #   The date and time of the last update, in ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -1489,6 +2304,10 @@ module Aws::VPCLattice
     #   The number of VPCs associated with the service network.
     #   @return [Integer]
     #
+    # @!attribute [rw] sharing_config
+    #   Specifies if the service network is enabled for sharing.
+    #   @return [Types::SharingConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetworkResponse AWS API Documentation
     #
     class GetServiceNetworkResponse < Struct.new(
@@ -1499,13 +2318,14 @@ module Aws::VPCLattice
       :last_updated_at,
       :name,
       :number_of_associated_services,
-      :number_of_associated_vp_cs)
+      :number_of_associated_vp_cs,
+      :sharing_config)
       SENSITIVE = []
       include Aws::Structure
     end
 
     # @!attribute [rw] service_network_service_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetworkServiceAssociationRequest AWS API Documentation
@@ -1521,8 +2341,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the association was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the association was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] created_by
@@ -1600,7 +2420,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] service_network_vpc_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceNetworkVpcAssociationRequest AWS API Documentation
@@ -1616,8 +2436,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the association was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the association was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] created_by
@@ -1633,13 +2453,12 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] id
-    #   The ID of the specified association between the service network and
-    #   the VPC.
+    #   The ID of the association.
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the association was last updated, specified
-    #   in ISO-8601 format.
+    #   The date and time that the association was last updated, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] security_group_ids
@@ -1687,7 +2506,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetServiceRequest AWS API Documentation
@@ -1711,8 +2530,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the service was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the service was created, in ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] custom_domain_name
@@ -1736,8 +2554,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the service was last updated, specified in
-    #   ISO-8601 format.
+    #   The date and time that the service was last updated, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -1768,7 +2586,7 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/GetTargetGroupRequest AWS API Documentation
@@ -1788,8 +2606,8 @@ module Aws::VPCLattice
     #   @return [Types::TargetGroupConfig]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the target group was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the target group was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] failure_code
@@ -1805,8 +2623,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the target group was last updated, specified
-    #   in ISO-8601 format.
+    #   The date and time that the target group was last updated, in
+    #   ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -2022,6 +2840,20 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
+    # Describes an IP resource.
+    #
+    # @!attribute [rw] ip_address
+    #   The IP address of the IP resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/IpResource AWS API Documentation
+    #
+    class IpResource < Struct.new(
+      :ip_address)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] max_results
     #   The maximum number of results to return.
     #   @return [Integer]
@@ -2031,8 +2863,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service.
+    #   The ID or ARN of the service network or service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListAccessLogSubscriptionsRequest AWS API Documentation
@@ -2071,7 +2902,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListListenersRequest AWS API Documentation
@@ -2102,8 +2933,145 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
+    # @!attribute [rw] max_results
+    #   The maximum page size.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   A pagination token for the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_group_identifier
+    #   The ID of the group resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_gateway_identifier
+    #   The ID of the resource gateway for the resource configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceConfigurationsRequest AWS API Documentation
+    #
+    class ListResourceConfigurationsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :resource_configuration_group_identifier,
+      :resource_gateway_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   Information about the resource configurations.
+    #   @return [Array<Types::ResourceConfigurationSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceConfigurationsResponse AWS API Documentation
+    #
+    class ListResourceConfigurationsResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum page size.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   A pagination token for the next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_identifier
+    #   The ID for the resource configuration associated with the VPC
+    #   endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_endpoint_association_identifier
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_id
+    #   The ID of the VPC endpoint in the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_owner
+    #   The owner of the VPC endpoint in the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceEndpointAssociationsRequest AWS API Documentation
+    #
+    class ListResourceEndpointAssociationsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :resource_configuration_identifier,
+      :resource_endpoint_association_identifier,
+      :vpc_endpoint_id,
+      :vpc_endpoint_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   Information about the VPC endpoint associations.
+    #   @return [Array<Types::ResourceEndpointAssociationSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceEndpointAssociationsResponse AWS API Documentation
+    #
+    class ListResourceEndpointAssociationsResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum page size.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceGatewaysRequest AWS API Documentation
+    #
+    class ListResourceGatewaysRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   Information about the resource gateways.
+    #   @return [Array<Types::ResourceGatewaySummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListResourceGatewaysResponse AWS API Documentation
+    #
+    class ListResourceGatewaysResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] max_results
@@ -2115,7 +3083,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListRulesRequest AWS API Documentation
@@ -2148,6 +3116,52 @@ module Aws::VPCLattice
     end
 
     # @!attribute [rw] max_results
+    #   The maximum page size.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_identifier
+    #   The ID of the resource configurationk.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_identifier
+    #   The ID of the service network.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkResourceAssociationsRequest AWS API Documentation
+    #
+    class ListServiceNetworkResourceAssociationsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :resource_configuration_identifier,
+      :service_network_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   Information about the associations.
+    #   @return [Array<Types::ServiceNetworkResourceAssociationSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkResourceAssociationsResponse AWS API Documentation
+    #
+    class ListServiceNetworkResourceAssociationsResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
     #   The maximum number of results to return.
     #   @return [Integer]
     #
@@ -2156,11 +3170,11 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @!attribute [rw] service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkServiceAssociationsRequest AWS API Documentation
@@ -2201,11 +3215,11 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #   @return [String]
     #
     # @!attribute [rw] vpc_identifier
-    #   The ID or Amazon Resource Name (ARN) of the VPC.
+    #   The ID or ARN of the VPC.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkVpcAssociationsRequest AWS API Documentation
@@ -2231,6 +3245,48 @@ module Aws::VPCLattice
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkVpcAssociationsResponse AWS API Documentation
     #
     class ListServiceNetworkVpcAssociationsResponse < Struct.new(
+      :items,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   The maximum page size.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_identifier
+    #   The ID of the service network associated with the VPC endpoint.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkVpcEndpointAssociationsRequest AWS API Documentation
+    #
+    class ListServiceNetworkVpcEndpointAssociationsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :service_network_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] items
+    #   Information about the association between the VPC endpoint and
+    #   service network.
+    #   @return [Array<Types::ServiceNetworkEndpointAssociation>]
+    #
+    # @!attribute [rw] next_token
+    #   If there are additional results, a pagination token for the next
+    #   page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListServiceNetworkVpcEndpointAssociationsResponse AWS API Documentation
+    #
+    class ListServiceNetworkVpcEndpointAssociationsResponse < Struct.new(
       :items,
       :next_token)
       SENSITIVE = []
@@ -2344,7 +3400,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] vpc_identifier
-    #   The ID or Amazon Resource Name (ARN) of the VPC.
+    #   The ID or ARN of the VPC.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ListTargetGroupsRequest AWS API Documentation
@@ -2385,7 +3441,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #   @return [String]
     #
     # @!attribute [rw] targets
@@ -2428,8 +3484,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the listener was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the listener was created, in ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] id
@@ -2437,8 +3492,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the listener was last updated, specified in
-    #   ISO-8601 format.
+    #   The date and time that the listener was last updated, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -2548,8 +3603,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] resource_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service for which the policy is created.
+    #   The ID or ARN of the service network or service for which the policy
+    #   is created.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/PutAuthPolicyRequest AWS API Documentation
@@ -2595,8 +3650,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] resource_arn
-    #   The ID or Amazon Resource Name (ARN) of the service network or
-    #   service for which the policy is created.
+    #   The ID or ARN of the service network or service for which the policy
+    #   is created.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/PutResourcePolicyRequest AWS API Documentation
@@ -2613,7 +3668,7 @@ module Aws::VPCLattice
     class PutResourcePolicyResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #   @return [String]
     #
     # @!attribute [rw] targets
@@ -2642,6 +3697,228 @@ module Aws::VPCLattice
     class RegisterTargetsResponse < Struct.new(
       :successful,
       :unsuccessful)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a resource configuration.
+    #
+    # @note ResourceConfigurationDefinition is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note ResourceConfigurationDefinition is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of ResourceConfigurationDefinition corresponding to the set member.
+    #
+    # @!attribute [rw] arn_resource
+    #   The Amazon Resource Name (ARN) of the resource.
+    #   @return [Types::ArnResource]
+    #
+    # @!attribute [rw] dns_resource
+    #   The DNS name of the resource.
+    #   @return [Types::DnsResource]
+    #
+    # @!attribute [rw] ip_resource
+    #   The IP resource.
+    #   @return [Types::IpResource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ResourceConfigurationDefinition AWS API Documentation
+    #
+    class ResourceConfigurationDefinition < Struct.new(
+      :arn_resource,
+      :dns_resource,
+      :ip_resource,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class ArnResource < ResourceConfigurationDefinition; end
+      class DnsResource < ResourceConfigurationDefinition; end
+      class IpResource < ResourceConfigurationDefinition; end
+      class Unknown < ResourceConfigurationDefinition; end
+    end
+
+    # Summary information about a resource configuration.
+    #
+    # @!attribute [rw] amazon_managed
+    #   Indicates whether the resource configuration was created and is
+    #   managed by Amazon.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the resource configuration was created, in
+    #   ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The most recent date and time that the resource configuration was
+    #   updated, in ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_group_id
+    #   The ID of the group resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_gateway_id
+    #   The ID of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of resource configuration.
+    #
+    #   * `SINGLE` - A single resource.
+    #
+    #   * `GROUP` - A group of resources.
+    #
+    #   * `CHILD` - A single resource that is part of a group resource
+    #     configuration.
+    #
+    #   * `ARN` - An Amazon Web Services resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ResourceConfigurationSummary AWS API Documentation
+    #
+    class ResourceConfigurationSummary < Struct.new(
+      :amazon_managed,
+      :arn,
+      :created_at,
+      :id,
+      :last_updated_at,
+      :name,
+      :resource_configuration_group_id,
+      :resource_gateway_id,
+      :status,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary information about a VPC endpoint association.
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the VPC endpoint association.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the VPC endpoint association was created, in
+    #   ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   The account that created the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the VPC endpoint association.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_id
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_name
+    #   The name of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_id
+    #   The ID of the VPC endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_owner
+    #   The owner of the VPC endpoint.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ResourceEndpointAssociationSummary AWS API Documentation
+    #
+    class ResourceEndpointAssociationSummary < Struct.new(
+      :arn,
+      :created_at,
+      :created_by,
+      :id,
+      :resource_configuration_arn,
+      :resource_configuration_id,
+      :resource_configuration_name,
+      :vpc_endpoint_id,
+      :vpc_endpoint_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary information about a resource gateway.
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the VPC endpoint association was created, in
+    #   ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_address_type
+    #   The type of IP address used by the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_updated_at
+    #   The most recent date and time that the resource gateway was updated,
+    #   in ISO-8601 format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] security_group_ids
+    #   The IDs of the security groups applied to the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] status
+    #   The name of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the VPC subnets for the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] vpc_identifier
+    #   The ID of the VPC for the resource gateway.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ResourceGatewaySummary AWS API Documentation
+    #
+    class ResourceGatewaySummary < Struct.new(
+      :arn,
+      :created_at,
+      :id,
+      :ip_address_type,
+      :last_updated_at,
+      :name,
+      :security_group_ids,
+      :status,
+      :subnet_ids,
+      :vpc_identifier)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2722,15 +3999,15 @@ module Aws::VPCLattice
       class Unknown < RuleMatch; end
     end
 
-    # Summary information about the listener rule.
+    # Summary information about a listener rule.
     #
     # @!attribute [rw] arn
     #   The Amazon Resource Name (ARN) of the rule.
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the listener rule was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the listener rule was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] id
@@ -2742,8 +4019,8 @@ module Aws::VPCLattice
     #   @return [Boolean]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the listener rule was last updated, specified
-    #   in ISO-8601 format.
+    #   The date and time that the listener rule was last updated, in
+    #   ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -2784,7 +4061,7 @@ module Aws::VPCLattice
     #   @return [Integer]
     #
     # @!attribute [rw] rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the rule.
+    #   The ID or ARN of the rule.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/RuleUpdate AWS API Documentation
@@ -2809,7 +4086,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the rule.
+    #   The ID or ARN of the rule.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/RuleUpdateFailure AWS API Documentation
@@ -2866,16 +4143,155 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
-    # Summary information about the association between a service network
-    # and a service.
+    # Describes the association between a service network and a VPC
+    # endpoint.
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the association was created, in ISO-8601
+    #   format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] id
+    #   The ID of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_arn
+    #   The Amazon Resource Name (ARN) of the service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] state
+    #   The state of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_id
+    #   The ID of the VPC endpoint associated with the service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_endpoint_owner_id
+    #   The owner of the VPC endpoint associated with the service network.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the VPC for the association.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ServiceNetworkEndpointAssociation AWS API Documentation
+    #
+    class ServiceNetworkEndpointAssociation < Struct.new(
+      :created_at,
+      :id,
+      :service_network_arn,
+      :state,
+      :vpc_endpoint_id,
+      :vpc_endpoint_owner_id,
+      :vpc_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary information about an association between a service network and
+    # a resource configuration.
     #
     # @!attribute [rw] arn
     #   The Amazon Resource Name (ARN) of the association.
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the association was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the association was created, in ISO-8601
+    #   format.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   The account that created the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] dns_entry
+    #   The DNS entry for the service.
+    #   @return [Types::DnsEntry]
+    #
+    # @!attribute [rw] failure_code
+    #   The failure code.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the association between the service network and resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] is_managed_association
+    #   Specifies whether the association is managed by Amazon.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] private_dns_entry
+    #   The private DNS entry for the service.
+    #   @return [Types::DnsEntry]
+    #
+    # @!attribute [rw] resource_configuration_arn
+    #   The Amazon Resource Name (ARN) of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_id
+    #   The ID of the resource configuration associated with the service
+    #   network.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_name
+    #   The name of the resource configuration associated with the service
+    #   network.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_arn
+    #   The Amazon Resource Name (ARN) of the service network associated
+    #   with the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_id
+    #   The ID of the service network associated with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] service_network_name
+    #   The name of the service network associated with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the service network associated with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/ServiceNetworkResourceAssociationSummary AWS API Documentation
+    #
+    class ServiceNetworkResourceAssociationSummary < Struct.new(
+      :arn,
+      :created_at,
+      :created_by,
+      :dns_entry,
+      :failure_code,
+      :id,
+      :is_managed_association,
+      :private_dns_entry,
+      :resource_configuration_arn,
+      :resource_configuration_id,
+      :resource_configuration_name,
+      :service_network_arn,
+      :service_network_id,
+      :service_network_name,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary information about an association between a service network and
+    # a service.
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the association.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The date and time that the association was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] created_by
@@ -2949,8 +4365,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the service network was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the service network was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] id
@@ -2958,13 +4374,18 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the service network was last updated,
-    #   specified in ISO-8601 format.
+    #   The date and time that the service network was last updated, in
+    #   ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] name
     #   The name of the service network.
     #   @return [String]
+    #
+    # @!attribute [rw] number_of_associated_resource_configurations
+    #   The number of resource configurations associated with a service
+    #   network.
+    #   @return [Integer]
     #
     # @!attribute [rw] number_of_associated_services
     #   The number of services associated with the service network.
@@ -2982,6 +4403,7 @@ module Aws::VPCLattice
       :id,
       :last_updated_at,
       :name,
+      :number_of_associated_resource_configurations,
       :number_of_associated_services,
       :number_of_associated_vp_cs)
       SENSITIVE = []
@@ -2996,8 +4418,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the association was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the association was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] created_by
@@ -3009,8 +4431,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the association was last updated, specified
-    #   in ISO-8601 format.
+    #   The date and time that the association was last updated, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] service_network_arn
@@ -3090,8 +4512,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the service was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the service was created, in ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] custom_domain_name
@@ -3107,8 +4528,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the service was last updated. The format is
-    #   ISO-8601.
+    #   The date and time that the service was last updated, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -3130,6 +4551,20 @@ module Aws::VPCLattice
       :last_updated_at,
       :name,
       :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies if the service network should be enabled for sharing.
+    #
+    # @!attribute [rw] enabled
+    #   Specifies if the service network is enabled for sharing.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/SharingConfig AWS API Documentation
+    #
+    class SharingConfig < Struct.new(
+      :enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3288,8 +4723,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] created_at
-    #   The date and time that the target group was created, specified in
-    #   ISO-8601 format.
+    #   The date and time that the target group was created, in ISO-8601
+    #   format.
     #   @return [Time]
     #
     # @!attribute [rw] id
@@ -3308,8 +4743,8 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] last_updated_at
-    #   The date and time that the target group was last updated, specified
-    #   in ISO-8601 format.
+    #   The date and time that the target group was last updated, in
+    #   ISO-8601 format.
     #   @return [Time]
     #
     # @!attribute [rw] name
@@ -3458,7 +4893,7 @@ module Aws::VPCLattice
     class UntagResourceResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] access_log_subscription_identifier
-    #   The ID or Amazon Resource Name (ARN) of the access log subscription.
+    #   The ID or ARN of the access log subscription.
     #   @return [String]
     #
     # @!attribute [rw] destination_arn
@@ -3511,11 +4946,11 @@ module Aws::VPCLattice
     #   @return [Types::RuleAction]
     #
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateListenerRequest AWS API Documentation
@@ -3575,12 +5010,181 @@ module Aws::VPCLattice
       include Aws::Structure
     end
 
+    # @!attribute [rw] allow_association_to_shareable_service_network
+    #   Indicates whether to add the resource configuration to service
+    #   networks that are shared with other accounts.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] port_ranges
+    #   The TCP port ranges that a consumer can use to access a resource
+    #   configuration. You can separate port ranges with a comma. Example:
+    #   1-65535 or 1,2,22-30
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] resource_configuration_definition
+    #   The resource configuration.
+    #   @return [Types::ResourceConfigurationDefinition]
+    #
+    # @!attribute [rw] resource_configuration_identifier
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateResourceConfigurationRequest AWS API Documentation
+    #
+    class UpdateResourceConfigurationRequest < Struct.new(
+      :allow_association_to_shareable_service_network,
+      :port_ranges,
+      :resource_configuration_definition,
+      :resource_configuration_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] allow_association_to_shareable_service_network
+    #   Indicates whether to add the resource configuration to service
+    #   networks that are shared with other accounts.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] port_ranges
+    #   The TCP port ranges that a consumer can use to access a resource
+    #   configuration. You can separate port ranges with a comma. Example:
+    #   1-65535 or 1,2,22-30
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] protocol
+    #   The TCP protocol accepted by the specified resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_configuration_definition
+    #   The resource configuration.
+    #   @return [Types::ResourceConfigurationDefinition]
+    #
+    # @!attribute [rw] resource_configuration_group_id
+    #   The ID of the group resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_gateway_id
+    #   The ID of the resource gateway associated with the resource
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the resource configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of resource configuration.
+    #
+    #   * `SINGLE` - A single resource.
+    #
+    #   * `GROUP` - A group of resources.
+    #
+    #   * `CHILD` - A single resource that is part of a group resource
+    #     configuration.
+    #
+    #   * `ARN` - An Amazon Web Services resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateResourceConfigurationResponse AWS API Documentation
+    #
+    class UpdateResourceConfigurationResponse < Struct.new(
+      :allow_association_to_shareable_service_network,
+      :arn,
+      :id,
+      :name,
+      :port_ranges,
+      :protocol,
+      :resource_configuration_definition,
+      :resource_configuration_group_id,
+      :resource_gateway_id,
+      :status,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_gateway_identifier
+    #   The ID or ARN of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] security_group_ids
+    #   The IDs of the security groups associated with the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateResourceGatewayRequest AWS API Documentation
+    #
+    class UpdateResourceGatewayRequest < Struct.new(
+      :resource_gateway_identifier,
+      :security_group_ids)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The Amazon Resource Name (ARN) of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   The ID of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] ip_address_type
+    #   The type of IP address used by the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] security_group_ids
+    #   The IDs of the security groups associated with the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] status
+    #   The status of the resource gateway.
+    #   @return [String]
+    #
+    # @!attribute [rw] subnet_ids
+    #   The IDs of the VPC subnets for the resource gateway.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] vpc_id
+    #   The ID of the VPC for the resource gateway.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateResourceGatewayResponse AWS API Documentation
+    #
+    class UpdateResourceGatewayResponse < Struct.new(
+      :arn,
+      :id,
+      :ip_address_type,
+      :name,
+      :security_group_ids,
+      :status,
+      :subnet_ids,
+      :vpc_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] action
     #   Information about the action for the specified listener rule.
     #   @return [Types::RuleAction]
     #
     # @!attribute [rw] listener_identifier
-    #   The ID or Amazon Resource Name (ARN) of the listener.
+    #   The ID or ARN of the listener.
     #   @return [String]
     #
     # @!attribute [rw] match
@@ -3593,11 +5197,11 @@ module Aws::VPCLattice
     #   @return [Integer]
     #
     # @!attribute [rw] rule_identifier
-    #   The ID or Amazon Resource Name (ARN) of the rule.
+    #   The ID or ARN of the rule.
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateRuleRequest AWS API Documentation
@@ -3666,7 +5270,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_network_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service network.
+    #   The ID or ARN of the service network.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateServiceNetworkRequest AWS API Documentation
@@ -3710,7 +5314,7 @@ module Aws::VPCLattice
     #   @return [Array<String>]
     #
     # @!attribute [rw] service_network_vpc_association_identifier
-    #   The ID or Amazon Resource Name (ARN) of the association.
+    #   The ID or ARN of the association.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateServiceNetworkVpcAssociationRequest AWS API Documentation
@@ -3771,7 +5375,7 @@ module Aws::VPCLattice
     #   @return [String]
     #
     # @!attribute [rw] service_identifier
-    #   The ID or Amazon Resource Name (ARN) of the service.
+    #   The ID or ARN of the service.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateServiceRequest AWS API Documentation
@@ -3826,7 +5430,7 @@ module Aws::VPCLattice
     #   @return [Types::HealthCheckConfig]
     #
     # @!attribute [rw] target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/vpc-lattice-2022-11-30/UpdateTargetGroupRequest AWS API Documentation
@@ -3921,7 +5525,7 @@ module Aws::VPCLattice
     # Describes the weight of a target group.
     #
     # @!attribute [rw] target_group_identifier
-    #   The ID or Amazon Resource Name (ARN) of the target group.
+    #   The ID or ARN of the target group.
     #   @return [String]
     #
     # @!attribute [rw] weight

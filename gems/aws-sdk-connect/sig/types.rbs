@@ -202,7 +202,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor resource_id: ::String
       attr_accessor flow_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
       SENSITIVE: []
     end
 
@@ -437,7 +437,7 @@ module Aws::Connect
     class BatchGetFlowAssociationRequest
       attr_accessor instance_id: ::String
       attr_accessor resource_ids: ::Array[::String]
-      attr_accessor resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+      attr_accessor resource_type: ("WHATSAPP_MESSAGING_PHONE_NUMBER" | "VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR")
       SENSITIVE: []
     end
 
@@ -924,7 +924,7 @@ module Aws::Connect
 
     class CreateIntegrationAssociationRequest
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR")
       attr_accessor integration_arn: ::String
       attr_accessor source_application_url: ::String
       attr_accessor source_application_name: ::String
@@ -1816,7 +1816,7 @@ module Aws::Connect
     class DisassociateFlowRequest
       attr_accessor instance_id: ::String
       attr_accessor resource_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
       SENSITIVE: []
     end
 
@@ -2306,7 +2306,7 @@ module Aws::Connect
     class FlowAssociationSummary
       attr_accessor resource_id: ::String
       attr_accessor flow_id: ::String
-      attr_accessor resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+      attr_accessor resource_type: ("WHATSAPP_MESSAGING_PHONE_NUMBER" | "VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR")
       SENSITIVE: []
     end
 
@@ -2394,14 +2394,14 @@ module Aws::Connect
     class GetFlowAssociationRequest
       attr_accessor instance_id: ::String
       attr_accessor resource_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
       SENSITIVE: []
     end
 
     class GetFlowAssociationResponse
       attr_accessor resource_id: ::String
       attr_accessor flow_id: ::String
-      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+      attr_accessor resource_type: ("SMS_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR" | "WHATSAPP_MESSAGING_PHONE_NUMBER")
       SENSITIVE: []
     end
 
@@ -2742,7 +2742,7 @@ module Aws::Connect
       attr_accessor integration_association_id: ::String
       attr_accessor integration_association_arn: ::String
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR")
       attr_accessor integration_arn: ::String
       attr_accessor source_application_url: ::String
       attr_accessor source_application_name: ::String
@@ -3037,7 +3037,7 @@ module Aws::Connect
 
     class ListFlowAssociationsRequest
       attr_accessor instance_id: ::String
-      attr_accessor resource_type: ("VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL")
+      attr_accessor resource_type: ("WHATSAPP_MESSAGING_PHONE_NUMBER" | "VOICE_PHONE_NUMBER" | "INBOUND_EMAIL" | "OUTBOUND_EMAIL" | "ANALYTICS_CONNECTOR")
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       SENSITIVE: []
@@ -3103,7 +3103,7 @@ module Aws::Connect
 
     class ListIntegrationAssociationsRequest
       attr_accessor instance_id: ::String
-      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY")
+      attr_accessor integration_type: ("EVENT" | "VOICE_ID" | "PINPOINT_APP" | "WISDOM_ASSISTANT" | "WISDOM_KNOWLEDGE_BASE" | "WISDOM_QUICK_RESPONSES" | "Q_MESSAGE_TEMPLATES" | "CASES_DOMAIN" | "APPLICATION" | "FILE_SCANNER" | "SES_IDENTITY" | "ANALYTICS_CONNECTOR" | "CALL_TRANSFER_CONNECTOR")
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
       attr_accessor integration_arn: ::String
@@ -3875,6 +3875,11 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class QueueInfoInput
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
     class QueueQuickConnectConfig
       attr_accessor queue_id: ::String
       attr_accessor contact_flow_id: ::String
@@ -4199,6 +4204,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor contact_id: ::String
       attr_accessor initial_contact_id: ::String
+      attr_accessor contact_recording_type: ("AGENT" | "IVR" | "SCREEN")
       SENSITIVE: []
     end
 
@@ -5053,6 +5059,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor contact_id: ::String
       attr_accessor initial_contact_id: ::String
+      attr_accessor contact_recording_type: ("AGENT" | "IVR" | "SCREEN")
       SENSITIVE: []
     end
 
@@ -5121,6 +5128,7 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor contact_id: ::String
       attr_accessor initial_contact_id: ::String
+      attr_accessor contact_recording_type: ("AGENT" | "IVR" | "SCREEN")
       SENSITIVE: []
     end
 
@@ -5438,6 +5446,10 @@ module Aws::Connect
       attr_accessor description: ::String
       attr_accessor references: ::Hash[::String, Types::Reference]
       attr_accessor segment_attributes: ::Hash[::String, Types::SegmentAttributeValue]
+      attr_accessor queue_info: Types::QueueInfoInput
+      attr_accessor user_info: Types::UserInfo
+      attr_accessor customer_endpoint: Types::Endpoint
+      attr_accessor system_endpoint: Types::Endpoint
       SENSITIVE: [:name, :description]
     end
 
@@ -6071,6 +6083,7 @@ module Aws::Connect
 
     class VoiceRecordingConfiguration
       attr_accessor voice_recording_track: ("FROM_AGENT" | "TO_AGENT" | "ALL")
+      attr_accessor ivr_recording_track: ("ALL")
       SENSITIVE: []
     end
 

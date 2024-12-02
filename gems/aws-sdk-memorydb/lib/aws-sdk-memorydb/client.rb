@@ -493,6 +493,7 @@ module Aws::MemoryDB
     #   resp.processed_clusters[0].pending_updates.service_updates #=> Array
     #   resp.processed_clusters[0].pending_updates.service_updates[0].service_update_name #=> String
     #   resp.processed_clusters[0].pending_updates.service_updates[0].status #=> String, one of "available", "in-progress", "complete", "scheduled"
+    #   resp.processed_clusters[0].multi_region_cluster_name #=> String
     #   resp.processed_clusters[0].number_of_shards #=> Integer
     #   resp.processed_clusters[0].shards #=> Array
     #   resp.processed_clusters[0].shards[0].name #=> String
@@ -619,6 +620,8 @@ module Aws::MemoryDB
     #   resp.snapshot.cluster_configuration.shards[0].configuration.replica_count #=> Integer
     #   resp.snapshot.cluster_configuration.shards[0].size #=> String
     #   resp.snapshot.cluster_configuration.shards[0].snapshot_creation_time #=> Time
+    #   resp.snapshot.cluster_configuration.multi_region_parameter_group_name #=> String
+    #   resp.snapshot.cluster_configuration.multi_region_cluster_name #=> String
     #   resp.snapshot.data_tiering #=> String, one of "true", "false"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CopySnapshot AWS API Documentation
@@ -698,6 +701,9 @@ module Aws::MemoryDB
     #
     # @option params [required, String] :node_type
     #   The compute and memory capacity of the nodes in the cluster.
+    #
+    # @option params [String] :multi_region_cluster_name
+    #   The name of the multi-Region cluster to be created.
     #
     # @option params [String] :parameter_group_name
     #   The name of the parameter group associated with the cluster.
@@ -791,11 +797,10 @@ module Aws::MemoryDB
     #   The name of the Access Control List to associate with the cluster.
     #
     # @option params [String] :engine
-    #   The name of the engine to be used for the nodes in this cluster. The
-    #   value must be set to either Redis or Valkey.
+    #   The name of the engine to be used for the cluster.
     #
     # @option params [String] :engine_version
-    #   The version number of the engine to be used for the cluster.
+    #   The version number of the Redis OSS engine to be used for the cluster.
     #
     # @option params [Boolean] :auto_minor_version_upgrade
     #   When set to true, the cluster will automatically receive minor engine
@@ -819,6 +824,7 @@ module Aws::MemoryDB
     #   resp = client.create_cluster({
     #     cluster_name: "String", # required
     #     node_type: "String", # required
+    #     multi_region_cluster_name: "String",
     #     parameter_group_name: "String",
     #     description: "String",
     #     num_shards: 1,
@@ -857,6 +863,7 @@ module Aws::MemoryDB
     #   resp.cluster.pending_updates.service_updates #=> Array
     #   resp.cluster.pending_updates.service_updates[0].service_update_name #=> String
     #   resp.cluster.pending_updates.service_updates[0].status #=> String, one of "available", "in-progress", "complete", "scheduled"
+    #   resp.cluster.multi_region_cluster_name #=> String
     #   resp.cluster.number_of_shards #=> Integer
     #   resp.cluster.shards #=> Array
     #   resp.cluster.shards[0].name #=> String
@@ -901,6 +908,86 @@ module Aws::MemoryDB
     # @param [Hash] params ({})
     def create_cluster(params = {}, options = {})
       req = build_request(:create_cluster, params)
+      req.send_request(options)
+    end
+
+    # Creates a new multi-Region cluster.
+    #
+    # @option params [required, String] :multi_region_cluster_name_suffix
+    #   A suffix to be added to the multi-Region cluster name.
+    #
+    # @option params [String] :description
+    #   A description for the multi-Region cluster.
+    #
+    # @option params [String] :engine
+    #   The name of the engine to be used for the multi-Region cluster.
+    #
+    # @option params [String] :engine_version
+    #   The version of the engine to be used for the multi-Region cluster.
+    #
+    # @option params [required, String] :node_type
+    #   The node type to be used for the multi-Region cluster.
+    #
+    # @option params [String] :multi_region_parameter_group_name
+    #   The name of the multi-Region parameter group to be associated with the
+    #   cluster.
+    #
+    # @option params [Integer] :num_shards
+    #   The number of shards for the multi-Region cluster.
+    #
+    # @option params [Boolean] :tls_enabled
+    #   Whether to enable TLS encryption for the multi-Region cluster.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   A list of tags to be applied to the multi-Region cluster.
+    #
+    # @return [Types::CreateMultiRegionClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateMultiRegionClusterResponse#multi_region_cluster #multi_region_cluster} => Types::MultiRegionCluster
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_multi_region_cluster({
+    #     multi_region_cluster_name_suffix: "String", # required
+    #     description: "String",
+    #     engine: "String",
+    #     engine_version: "String",
+    #     node_type: "String", # required
+    #     multi_region_parameter_group_name: "String",
+    #     num_shards: 1,
+    #     tls_enabled: false,
+    #     tags: [
+    #       {
+    #         key: "String",
+    #         value: "String",
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.multi_region_cluster.multi_region_cluster_name #=> String
+    #   resp.multi_region_cluster.description #=> String
+    #   resp.multi_region_cluster.status #=> String
+    #   resp.multi_region_cluster.node_type #=> String
+    #   resp.multi_region_cluster.engine #=> String
+    #   resp.multi_region_cluster.engine_version #=> String
+    #   resp.multi_region_cluster.number_of_shards #=> Integer
+    #   resp.multi_region_cluster.clusters #=> Array
+    #   resp.multi_region_cluster.clusters[0].cluster_name #=> String
+    #   resp.multi_region_cluster.clusters[0].region #=> String
+    #   resp.multi_region_cluster.clusters[0].status #=> String
+    #   resp.multi_region_cluster.clusters[0].arn #=> String
+    #   resp.multi_region_cluster.multi_region_parameter_group_name #=> String
+    #   resp.multi_region_cluster.tls_enabled #=> Boolean
+    #   resp.multi_region_cluster.arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateMultiRegionCluster AWS API Documentation
+    #
+    # @overload create_multi_region_cluster(params = {})
+    # @param [Hash] params ({})
+    def create_multi_region_cluster(params = {}, options = {})
+      req = build_request(:create_multi_region_cluster, params)
       req.send_request(options)
     end
 
@@ -1023,6 +1110,8 @@ module Aws::MemoryDB
     #   resp.snapshot.cluster_configuration.shards[0].configuration.replica_count #=> Integer
     #   resp.snapshot.cluster_configuration.shards[0].size #=> String
     #   resp.snapshot.cluster_configuration.shards[0].snapshot_creation_time #=> Time
+    #   resp.snapshot.cluster_configuration.multi_region_parameter_group_name #=> String
+    #   resp.snapshot.cluster_configuration.multi_region_cluster_name #=> String
     #   resp.snapshot.data_tiering #=> String, one of "true", "false"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/CreateSnapshot AWS API Documentation
@@ -1171,7 +1260,7 @@ module Aws::MemoryDB
     # [1]: https://docs.aws.amazon.com/MemoryDB/latest/devguide/clusters.acls.html
     #
     # @option params [required, String] :acl_name
-    #   The name of the Access Control List to delete
+    #   The name of the Access Control List to delete.
     #
     # @return [Types::DeleteACLResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1208,10 +1297,19 @@ module Aws::MemoryDB
     end
 
     # Deletes a cluster. It also deletes all associated nodes and node
-    # endpoints
+    # endpoints.
+    #
+    # <note markdown="1"> `CreateSnapshot` permission is required to create a final snapshot.
+    # Without this permission, the API call will fail with an `Access
+    # Denied` exception.
+    #
+    #  </note>
     #
     # @option params [required, String] :cluster_name
     #   The name of the cluster to be deleted
+    #
+    # @option params [String] :multi_region_cluster_name
+    #   The name of the multi-Region cluster to be deleted.
     #
     # @option params [String] :final_snapshot_name
     #   The user-supplied name of a final cluster snapshot. This is the unique
@@ -1226,6 +1324,7 @@ module Aws::MemoryDB
     #
     #   resp = client.delete_cluster({
     #     cluster_name: "String", # required
+    #     multi_region_cluster_name: "String",
     #     final_snapshot_name: "String",
     #   })
     #
@@ -1239,6 +1338,7 @@ module Aws::MemoryDB
     #   resp.cluster.pending_updates.service_updates #=> Array
     #   resp.cluster.pending_updates.service_updates[0].service_update_name #=> String
     #   resp.cluster.pending_updates.service_updates[0].status #=> String, one of "available", "in-progress", "complete", "scheduled"
+    #   resp.cluster.multi_region_cluster_name #=> String
     #   resp.cluster.number_of_shards #=> Integer
     #   resp.cluster.shards #=> Array
     #   resp.cluster.shards[0].name #=> String
@@ -1286,6 +1386,48 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
+    # Deletes an existing multi-Region cluster.
+    #
+    # @option params [required, String] :multi_region_cluster_name
+    #   The name of the multi-Region cluster to be deleted.
+    #
+    # @return [Types::DeleteMultiRegionClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteMultiRegionClusterResponse#multi_region_cluster #multi_region_cluster} => Types::MultiRegionCluster
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_multi_region_cluster({
+    #     multi_region_cluster_name: "String", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.multi_region_cluster.multi_region_cluster_name #=> String
+    #   resp.multi_region_cluster.description #=> String
+    #   resp.multi_region_cluster.status #=> String
+    #   resp.multi_region_cluster.node_type #=> String
+    #   resp.multi_region_cluster.engine #=> String
+    #   resp.multi_region_cluster.engine_version #=> String
+    #   resp.multi_region_cluster.number_of_shards #=> Integer
+    #   resp.multi_region_cluster.clusters #=> Array
+    #   resp.multi_region_cluster.clusters[0].cluster_name #=> String
+    #   resp.multi_region_cluster.clusters[0].region #=> String
+    #   resp.multi_region_cluster.clusters[0].status #=> String
+    #   resp.multi_region_cluster.clusters[0].arn #=> String
+    #   resp.multi_region_cluster.multi_region_parameter_group_name #=> String
+    #   resp.multi_region_cluster.tls_enabled #=> Boolean
+    #   resp.multi_region_cluster.arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteMultiRegionCluster AWS API Documentation
+    #
+    # @overload delete_multi_region_cluster(params = {})
+    # @param [Hash] params ({})
+    def delete_multi_region_cluster(params = {}, options = {})
+      req = build_request(:delete_multi_region_cluster, params)
+      req.send_request(options)
+    end
+
     # Deletes the specified parameter group. You cannot delete a parameter
     # group if it is associated with any clusters. You cannot delete the
     # default parameter groups in your account.
@@ -1324,7 +1466,7 @@ module Aws::MemoryDB
     # snapshot; you cannot cancel or revert this operation.
     #
     # @option params [required, String] :snapshot_name
-    #   The name of the snapshot to delete
+    #   The name of the snapshot to delete.
     #
     # @return [Types::DeleteSnapshotResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1363,6 +1505,8 @@ module Aws::MemoryDB
     #   resp.snapshot.cluster_configuration.shards[0].configuration.replica_count #=> Integer
     #   resp.snapshot.cluster_configuration.shards[0].size #=> String
     #   resp.snapshot.cluster_configuration.shards[0].snapshot_creation_time #=> Time
+    #   resp.snapshot.cluster_configuration.multi_region_parameter_group_name #=> String
+    #   resp.snapshot.cluster_configuration.multi_region_cluster_name #=> String
     #   resp.snapshot.data_tiering #=> String, one of "true", "false"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DeleteSnapshot AWS API Documentation
@@ -1378,7 +1522,7 @@ module Aws::MemoryDB
     # one that is associated with any clusters.
     #
     # @option params [required, String] :subnet_group_name
-    #   The name of the subnet group to delete
+    #   The name of the subnet group to delete.
     #
     # @return [Types::DeleteSubnetGroupResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1446,10 +1590,10 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
-    # Returns a list of ACLs
+    # Returns a list of ACLs.
     #
     # @option params [String] :acl_name
-    #   The name of the ACL
+    #   The name of the ACL.
     #
     # @option params [Integer] :max_results
     #   The maximum number of records to include in the response. If more
@@ -1509,7 +1653,7 @@ module Aws::MemoryDB
     # is supplied.
     #
     # @option params [String] :cluster_name
-    #   The name of the cluster
+    #   The name of the cluster.
     #
     # @option params [Integer] :max_results
     #   The maximum number of records to include in the response. If more
@@ -1555,6 +1699,7 @@ module Aws::MemoryDB
     #   resp.clusters[0].pending_updates.service_updates #=> Array
     #   resp.clusters[0].pending_updates.service_updates[0].service_update_name #=> String
     #   resp.clusters[0].pending_updates.service_updates[0].status #=> String, one of "available", "in-progress", "complete", "scheduled"
+    #   resp.clusters[0].multi_region_cluster_name #=> String
     #   resp.clusters[0].number_of_shards #=> Integer
     #   resp.clusters[0].shards #=> Array
     #   resp.clusters[0].shards[0].name #=> String
@@ -1602,13 +1747,13 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
-    # Returns a list of the available engine versions.
+    # Returns a list of the available Redis OSS engine versions.
     #
     # @option params [String] :engine
-    #   The engine version to return. Valid values are either valkey or redis.
+    #   The name of the engine for which to list available versions.
     #
     # @option params [String] :engine_version
-    #   The engine version.
+    #   The Redis OSS engine version
     #
     # @option params [String] :parameter_group_family
     #   The name of a specific parameter group family to return details for.
@@ -1737,6 +1882,65 @@ module Aws::MemoryDB
     # @param [Hash] params ({})
     def describe_events(params = {}, options = {})
       req = build_request(:describe_events, params)
+      req.send_request(options)
+    end
+
+    # Returns details about one or more multi-Region clusters.
+    #
+    # @option params [String] :multi_region_cluster_name
+    #   The name of a specific multi-Region cluster to describe.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return.
+    #
+    # @option params [String] :next_token
+    #   A token to specify where to start paginating.
+    #
+    # @option params [Boolean] :show_cluster_details
+    #   Details about the multi-Region cluster.
+    #
+    # @return [Types::DescribeMultiRegionClustersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeMultiRegionClustersResponse#next_token #next_token} => String
+    #   * {Types::DescribeMultiRegionClustersResponse#multi_region_clusters #multi_region_clusters} => Array&lt;Types::MultiRegionCluster&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_multi_region_clusters({
+    #     multi_region_cluster_name: "String",
+    #     max_results: 1,
+    #     next_token: "String",
+    #     show_cluster_details: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.multi_region_clusters #=> Array
+    #   resp.multi_region_clusters[0].multi_region_cluster_name #=> String
+    #   resp.multi_region_clusters[0].description #=> String
+    #   resp.multi_region_clusters[0].status #=> String
+    #   resp.multi_region_clusters[0].node_type #=> String
+    #   resp.multi_region_clusters[0].engine #=> String
+    #   resp.multi_region_clusters[0].engine_version #=> String
+    #   resp.multi_region_clusters[0].number_of_shards #=> Integer
+    #   resp.multi_region_clusters[0].clusters #=> Array
+    #   resp.multi_region_clusters[0].clusters[0].cluster_name #=> String
+    #   resp.multi_region_clusters[0].clusters[0].region #=> String
+    #   resp.multi_region_clusters[0].clusters[0].status #=> String
+    #   resp.multi_region_clusters[0].clusters[0].arn #=> String
+    #   resp.multi_region_clusters[0].multi_region_parameter_group_name #=> String
+    #   resp.multi_region_clusters[0].tls_enabled #=> Boolean
+    #   resp.multi_region_clusters[0].arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeMultiRegionClusters AWS API Documentation
+    #
+    # @overload describe_multi_region_clusters(params = {})
+    # @param [Hash] params ({})
+    def describe_multi_region_clusters(params = {}, options = {})
+      req = build_request(:describe_multi_region_clusters, params)
       req.send_request(options)
     end
 
@@ -2007,16 +2211,16 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
-    # Returns details of the service updates
+    # Returns details of the service updates.
     #
     # @option params [String] :service_update_name
     #   The unique ID of the service update to describe.
     #
     # @option params [Array<String>] :cluster_names
-    #   The list of cluster names to identify service updates to apply
+    #   The list of cluster names to identify service updates to apply.
     #
     # @option params [Array<String>] :status
-    #   The status(es) of the service updates to filter on
+    #   The status(es) of the service updates to filter on.
     #
     # @option params [Integer] :max_results
     #   The maximum number of records to include in the response. If more
@@ -2152,6 +2356,8 @@ module Aws::MemoryDB
     #   resp.snapshots[0].cluster_configuration.shards[0].configuration.replica_count #=> Integer
     #   resp.snapshots[0].cluster_configuration.shards[0].size #=> String
     #   resp.snapshots[0].cluster_configuration.shards[0].snapshot_creation_time #=> Time
+    #   resp.snapshots[0].cluster_configuration.multi_region_parameter_group_name #=> String
+    #   resp.snapshots[0].cluster_configuration.multi_region_cluster_name #=> String
     #   resp.snapshots[0].data_tiering #=> String, one of "true", "false"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/DescribeSnapshots AWS API Documentation
@@ -2220,7 +2426,7 @@ module Aws::MemoryDB
     # Returns a list of users.
     #
     # @option params [String] :user_name
-    #   The name of the user
+    #   The name of the user.
     #
     # @option params [Array<Types::Filter>] :filters
     #   Filter to determine the list of users to return.
@@ -2289,10 +2495,10 @@ module Aws::MemoryDB
     # events, Amazon may block this API.
     #
     # @option params [required, String] :cluster_name
-    #   The cluster being failed over
+    #   The cluster being failed over.
     #
     # @option params [required, String] :shard_name
-    #   The name of the shard
+    #   The name of the shard.
     #
     # @return [Types::FailoverShardResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2315,6 +2521,7 @@ module Aws::MemoryDB
     #   resp.cluster.pending_updates.service_updates #=> Array
     #   resp.cluster.pending_updates.service_updates[0].service_update_name #=> String
     #   resp.cluster.pending_updates.service_updates[0].status #=> String, one of "available", "in-progress", "complete", "scheduled"
+    #   resp.cluster.multi_region_cluster_name #=> String
     #   resp.cluster.number_of_shards #=> Integer
     #   resp.cluster.shards #=> Array
     #   resp.cluster.shards[0].name #=> String
@@ -2362,6 +2569,38 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
+    # Lists the allowed updates for a multi-Region cluster.
+    #
+    # @option params [required, String] :multi_region_cluster_name
+    #   The name of the multi-Region cluster.
+    #
+    # @return [Types::ListAllowedMultiRegionClusterUpdatesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAllowedMultiRegionClusterUpdatesResponse#scale_up_node_types #scale_up_node_types} => Array&lt;String&gt;
+    #   * {Types::ListAllowedMultiRegionClusterUpdatesResponse#scale_down_node_types #scale_down_node_types} => Array&lt;String&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_allowed_multi_region_cluster_updates({
+    #     multi_region_cluster_name: "String", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.scale_up_node_types #=> Array
+    #   resp.scale_up_node_types[0] #=> String
+    #   resp.scale_down_node_types #=> Array
+    #   resp.scale_down_node_types[0] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/ListAllowedMultiRegionClusterUpdates AWS API Documentation
+    #
+    # @overload list_allowed_multi_region_cluster_updates(params = {})
+    # @param [Hash] params ({})
+    def list_allowed_multi_region_cluster_updates(params = {}, options = {})
+      req = build_request(:list_allowed_multi_region_cluster_updates, params)
+      req.send_request(options)
+    end
+
     # Lists all available node types that you can scale to from your
     # cluster's current node type. When you use the UpdateCluster operation
     # to scale your cluster, the value of the NodeType parameter must be one
@@ -2402,7 +2641,7 @@ module Aws::MemoryDB
     # Lists all tags currently on a named resource. A tag is a key-value
     # pair where the key and value are case-sensitive. You can use tags to
     # categorize and track your MemoryDB resources. For more information,
-    # see [Tagging your MemoryDB resources][1]
+    # see [Tagging your MemoryDB resources][1].
     #
     #
     #
@@ -2410,7 +2649,7 @@ module Aws::MemoryDB
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the resource for which you want the
-    #   list of tags
+    #   list of tags.
     #
     # @return [Types::ListTagsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2564,7 +2803,7 @@ module Aws::MemoryDB
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the resource to which the tags are
-    #   to be added
+    #   to be added.
     #
     # @option params [required, Array<Types::Tag>] :tags
     #   A list of tags to be added to this resource. A tag is a key-value
@@ -2602,14 +2841,14 @@ module Aws::MemoryDB
       req.send_request(options)
     end
 
-    # Use this operation to remove tags on a resource
+    # Use this operation to remove tags on a resource.
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the resource to which the tags are
-    #   to be removed
+    #   to be removed.
     #
     # @option params [required, Array<String>] :tag_keys
-    #   The list of keys of the tags that are to be removed
+    #   The list of keys of the tags that are to be removed.
     #
     # @return [Types::UntagResourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2640,13 +2879,13 @@ module Aws::MemoryDB
     # Changes the list of users that belong to the Access Control List.
     #
     # @option params [required, String] :acl_name
-    #   The name of the Access Control List
+    #   The name of the Access Control List.
     #
     # @option params [Array<String>] :user_names_to_add
-    #   The list of users to add to the Access Control List
+    #   The list of users to add to the Access Control List.
     #
     # @option params [Array<String>] :user_names_to_remove
-    #   The list of users to remove from the Access Control List
+    #   The list of users to remove from the Access Control List.
     #
     # @return [Types::UpdateACLResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2689,13 +2928,13 @@ module Aws::MemoryDB
     # settings and the new values.
     #
     # @option params [required, String] :cluster_name
-    #   The name of the cluster to update
+    #   The name of the cluster to update.
     #
     # @option params [String] :description
-    #   The description of the cluster to update
+    #   The description of the cluster to update.
     #
     # @option params [Array<String>] :security_group_ids
-    #   The SecurityGroupIds to update
+    #   The SecurityGroupIds to update.
     #
     # @option params [String] :maintenance_window
     #   Specifies the weekly time range during which maintenance on the
@@ -2722,14 +2961,14 @@ module Aws::MemoryDB
     #   Example: `sun:23:00-mon:01:30`
     #
     # @option params [String] :sns_topic_arn
-    #   The SNS topic ARN to update
+    #   The SNS topic ARN to update.
     #
     # @option params [String] :sns_topic_status
     #   The status of the Amazon SNS notification topic. Notifications are
     #   sent only if the status is active.
     #
     # @option params [String] :parameter_group_name
-    #   The name of the parameter group to update
+    #   The name of the parameter group to update.
     #
     # @option params [String] :snapshot_window
     #   The daily time range (in UTC) during which MemoryDB begins taking a
@@ -2745,8 +2984,7 @@ module Aws::MemoryDB
     #   A valid node type that you want to scale this cluster up or down to.
     #
     # @option params [String] :engine
-    #   The name of the engine to be used for the nodes in this cluster. The
-    #   value must be set to either Redis or Valkey.
+    #   The name of the engine to be used for the cluster.
     #
     # @option params [String] :engine_version
     #   The upgraded version of the engine to be run on the nodes. You can
@@ -2756,13 +2994,13 @@ module Aws::MemoryDB
     #   earlier engine version.
     #
     # @option params [Types::ReplicaConfigurationRequest] :replica_configuration
-    #   The number of replicas that will reside in each shard
+    #   The number of replicas that will reside in each shard.
     #
     # @option params [Types::ShardConfigurationRequest] :shard_configuration
-    #   The number of shards in the cluster
+    #   The number of shards in the cluster.
     #
     # @option params [String] :acl_name
-    #   The Access Control List that is associated with the cluster
+    #   The Access Control List that is associated with the cluster.
     #
     # @return [Types::UpdateClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2802,6 +3040,7 @@ module Aws::MemoryDB
     #   resp.cluster.pending_updates.service_updates #=> Array
     #   resp.cluster.pending_updates.service_updates[0].service_update_name #=> String
     #   resp.cluster.pending_updates.service_updates[0].status #=> String, one of "available", "in-progress", "complete", "scheduled"
+    #   resp.cluster.multi_region_cluster_name #=> String
     #   resp.cluster.number_of_shards #=> Integer
     #   resp.cluster.shards #=> Array
     #   resp.cluster.shards[0].name #=> String
@@ -2846,6 +3085,75 @@ module Aws::MemoryDB
     # @param [Hash] params ({})
     def update_cluster(params = {}, options = {})
       req = build_request(:update_cluster, params)
+      req.send_request(options)
+    end
+
+    # Updates the configuration of an existing multi-Region cluster.
+    #
+    # @option params [required, String] :multi_region_cluster_name
+    #   The name of the multi-Region cluster to be updated.
+    #
+    # @option params [String] :node_type
+    #   The new node type to be used for the multi-Region cluster.
+    #
+    # @option params [String] :description
+    #   A new description for the multi-Region cluster.
+    #
+    # @option params [String] :engine_version
+    #   The new engine version to be used for the multi-Region cluster.
+    #
+    # @option params [Types::ShardConfigurationRequest] :shard_configuration
+    #   A request to configure the sharding properties of a cluster
+    #
+    # @option params [String] :multi_region_parameter_group_name
+    #   The new multi-Region parameter group to be associated with the
+    #   cluster.
+    #
+    # @option params [String] :update_strategy
+    #   Whether to force the update even if it may cause data loss.
+    #
+    # @return [Types::UpdateMultiRegionClusterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateMultiRegionClusterResponse#multi_region_cluster #multi_region_cluster} => Types::MultiRegionCluster
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_multi_region_cluster({
+    #     multi_region_cluster_name: "String", # required
+    #     node_type: "String",
+    #     description: "String",
+    #     engine_version: "String",
+    #     shard_configuration: {
+    #       shard_count: 1,
+    #     },
+    #     multi_region_parameter_group_name: "String",
+    #     update_strategy: "coordinated", # accepts coordinated, uncoordinated
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.multi_region_cluster.multi_region_cluster_name #=> String
+    #   resp.multi_region_cluster.description #=> String
+    #   resp.multi_region_cluster.status #=> String
+    #   resp.multi_region_cluster.node_type #=> String
+    #   resp.multi_region_cluster.engine #=> String
+    #   resp.multi_region_cluster.engine_version #=> String
+    #   resp.multi_region_cluster.number_of_shards #=> Integer
+    #   resp.multi_region_cluster.clusters #=> Array
+    #   resp.multi_region_cluster.clusters[0].cluster_name #=> String
+    #   resp.multi_region_cluster.clusters[0].region #=> String
+    #   resp.multi_region_cluster.clusters[0].status #=> String
+    #   resp.multi_region_cluster.clusters[0].arn #=> String
+    #   resp.multi_region_cluster.multi_region_parameter_group_name #=> String
+    #   resp.multi_region_cluster.tls_enabled #=> Boolean
+    #   resp.multi_region_cluster.arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/memorydb-2021-01-01/UpdateMultiRegionCluster AWS API Documentation
+    #
+    # @overload update_multi_region_cluster(params = {})
+    # @param [Hash] params ({})
+    def update_multi_region_cluster(params = {}, options = {})
+      req = build_request(:update_multi_region_cluster, params)
       req.send_request(options)
     end
 
@@ -3007,7 +3315,7 @@ module Aws::MemoryDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-memorydb'
-      context[:gem_version] = '1.39.0'
+      context[:gem_version] = '1.40.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

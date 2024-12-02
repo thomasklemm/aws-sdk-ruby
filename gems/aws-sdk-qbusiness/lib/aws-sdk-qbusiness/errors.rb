@@ -29,8 +29,10 @@ module Aws::QBusiness
   # ## Error Classes
   # * {AccessDeniedException}
   # * {ConflictException}
+  # * {ExternalResourceException}
   # * {InternalServerException}
   # * {LicenseNotFoundException}
+  # * {MediaTooLargeException}
   # * {ResourceNotFoundException}
   # * {ServiceQuotaExceededException}
   # * {ThrottlingException}
@@ -82,6 +84,21 @@ module Aws::QBusiness
       end
     end
 
+    class ExternalResourceException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::QBusiness::Types::ExternalResourceException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
     class InternalServerException < ServiceError
 
       # @param [Seahorse::Client::RequestContext] context
@@ -102,6 +119,21 @@ module Aws::QBusiness
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::QBusiness::Types::LicenseNotFoundException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class MediaTooLargeException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::QBusiness::Types::MediaTooLargeException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

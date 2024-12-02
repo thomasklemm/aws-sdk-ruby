@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.74.0 (2024-12-02)
+------------------
+
+* Feature - Call private APIs by configuring Connections with VPC connectivity through PrivateLink and VPC Lattice
+
 1.73.0 (2024-11-06)
 ------------------
 

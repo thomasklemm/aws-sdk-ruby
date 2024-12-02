@@ -11,12 +11,15 @@ module Aws::QConnect
     class AIAgentConfiguration
       attr_accessor answer_recommendation_ai_agent_configuration: Types::AnswerRecommendationAIAgentConfiguration
       attr_accessor manual_search_ai_agent_configuration: Types::ManualSearchAIAgentConfiguration
+      attr_accessor self_service_ai_agent_configuration: Types::SelfServiceAIAgentConfiguration
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class AnswerRecommendationAiAgentConfiguration < AIAgentConfiguration
       end
       class ManualSearchAiAgentConfiguration < AIAgentConfiguration
+      end
+      class SelfServiceAiAgentConfiguration < AIAgentConfiguration
       end
       class Unknown < AIAgentConfiguration
       end
@@ -39,7 +42,7 @@ module Aws::QConnect
       attr_accessor origin: ("SYSTEM" | "CUSTOMER")
       attr_accessor status: ("CREATE_IN_PROGRESS" | "CREATE_FAILED" | "ACTIVE" | "DELETE_IN_PROGRESS" | "DELETE_FAILED" | "DELETED")
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION")
+      attr_accessor type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE")
       attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
       SENSITIVE: []
     end
@@ -56,7 +59,7 @@ module Aws::QConnect
       attr_accessor origin: ("SYSTEM" | "CUSTOMER")
       attr_accessor status: ("CREATE_IN_PROGRESS" | "CREATE_FAILED" | "ACTIVE" | "DELETE_IN_PROGRESS" | "DELETE_FAILED" | "DELETED")
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION")
+      attr_accessor type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE")
       attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
       SENSITIVE: []
     end
@@ -64,6 +67,74 @@ module Aws::QConnect
     class AIAgentVersionSummary
       attr_accessor ai_agent_summary: Types::AIAgentSummary
       attr_accessor version_number: ::Integer
+      SENSITIVE: []
+    end
+
+    class AIGuardrailContentPolicyConfig
+      attr_accessor filters_config: ::Array[Types::GuardrailContentFilterConfig]
+      SENSITIVE: []
+    end
+
+    class AIGuardrailContextualGroundingPolicyConfig
+      attr_accessor filters_config: ::Array[Types::GuardrailContextualGroundingFilterConfig]
+      SENSITIVE: []
+    end
+
+    class AIGuardrailData
+      attr_accessor ai_guardrail_arn: ::String
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_arn: ::String
+      attr_accessor assistant_id: ::String
+      attr_accessor blocked_input_messaging: ::String
+      attr_accessor blocked_outputs_messaging: ::String
+      attr_accessor content_policy_config: Types::AIGuardrailContentPolicyConfig
+      attr_accessor contextual_grounding_policy_config: Types::AIGuardrailContextualGroundingPolicyConfig
+      attr_accessor description: ::String
+      attr_accessor modified_time: ::Time
+      attr_accessor name: ::String
+      attr_accessor sensitive_information_policy_config: Types::AIGuardrailSensitiveInformationPolicyConfig
+      attr_accessor status: ("CREATE_IN_PROGRESS" | "CREATE_FAILED" | "ACTIVE" | "DELETE_IN_PROGRESS" | "DELETE_FAILED" | "DELETED")
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor topic_policy_config: Types::AIGuardrailTopicPolicyConfig
+      attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
+      attr_accessor word_policy_config: Types::AIGuardrailWordPolicyConfig
+      SENSITIVE: [:blocked_input_messaging, :blocked_outputs_messaging, :description]
+    end
+
+    class AIGuardrailSensitiveInformationPolicyConfig
+      attr_accessor pii_entities_config: ::Array[Types::GuardrailPiiEntityConfig]
+      attr_accessor regexes_config: ::Array[Types::GuardrailRegexConfig]
+      SENSITIVE: []
+    end
+
+    class AIGuardrailSummary
+      attr_accessor ai_guardrail_arn: ::String
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_arn: ::String
+      attr_accessor assistant_id: ::String
+      attr_accessor description: ::String
+      attr_accessor modified_time: ::Time
+      attr_accessor name: ::String
+      attr_accessor status: ("CREATE_IN_PROGRESS" | "CREATE_FAILED" | "ACTIVE" | "DELETE_IN_PROGRESS" | "DELETE_FAILED" | "DELETED")
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
+      SENSITIVE: [:description]
+    end
+
+    class AIGuardrailTopicPolicyConfig
+      attr_accessor topics_config: ::Array[Types::GuardrailTopicConfig]
+      SENSITIVE: []
+    end
+
+    class AIGuardrailVersionSummary
+      attr_accessor ai_guardrail_summary: Types::AIGuardrailSummary
+      attr_accessor version_number: ::Integer
+      SENSITIVE: []
+    end
+
+    class AIGuardrailWordPolicyConfig
+      attr_accessor managed_word_lists_config: ::Array[Types::GuardrailManagedWordsConfig]
+      attr_accessor words_config: ::Array[Types::GuardrailWordConfig]
       SENSITIVE: []
     end
 
@@ -82,7 +153,7 @@ module Aws::QConnect
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor template_configuration: Types::AIPromptTemplateConfiguration
       attr_accessor template_type: ("TEXT")
-      attr_accessor type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION")
+      attr_accessor type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION" | "SELF_SERVICE_PRE_PROCESSING" | "SELF_SERVICE_ANSWER_GENERATION")
       attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
       SENSITIVE: []
     end
@@ -101,7 +172,7 @@ module Aws::QConnect
       attr_accessor status: ("CREATE_IN_PROGRESS" | "CREATE_FAILED" | "ACTIVE" | "DELETE_IN_PROGRESS" | "DELETE_FAILED" | "DELETED")
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor template_type: ("TEXT")
-      attr_accessor type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION")
+      attr_accessor type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION" | "SELF_SERVICE_PRE_PROCESSING" | "SELF_SERVICE_ANSWER_GENERATION")
       attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
       SENSITIVE: []
     end
@@ -154,6 +225,7 @@ module Aws::QConnect
     end
 
     class AnswerRecommendationAIAgentConfiguration
+      attr_accessor answer_generation_ai_guardrail_id: ::String
       attr_accessor answer_generation_ai_prompt_id: ::String
       attr_accessor association_configurations: ::Array[Types::AssociationConfiguration]
       attr_accessor intent_labeling_generation_ai_prompt_id: ::String
@@ -217,7 +289,7 @@ module Aws::QConnect
     end
 
     class AssistantData
-      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"), Types::AIAgentConfigurationData]
+      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), Types::AIAgentConfigurationData]
       attr_accessor assistant_arn: ::String
       attr_accessor assistant_id: ::String
       attr_accessor capability_configuration: Types::AssistantCapabilityConfiguration
@@ -237,7 +309,7 @@ module Aws::QConnect
     end
 
     class AssistantSummary
-      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"), Types::AIAgentConfigurationData]
+      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), Types::AIAgentConfigurationData]
       attr_accessor assistant_arn: ::String
       attr_accessor assistant_id: ::String
       attr_accessor capability_configuration: Types::AssistantCapabilityConfiguration
@@ -407,6 +479,17 @@ module Aws::QConnect
       SENSITIVE: []
     end
 
+    class ConversationContext
+      attr_accessor self_service_conversation_history: ::Array[Types::SelfServiceConversationHistory]
+      SENSITIVE: []
+    end
+
+    class ConversationState
+      attr_accessor reason: ("SUCCESS" | "FAILED" | "REJECTED")
+      attr_accessor status: ("CLOSED" | "READY" | "PROCESSING")
+      SENSITIVE: []
+    end
+
     class CreateAIAgentRequest
       attr_accessor assistant_id: ::String
       attr_accessor client_token: ::String
@@ -414,7 +497,7 @@ module Aws::QConnect
       attr_accessor description: ::String
       attr_accessor name: ::String
       attr_accessor tags: ::Hash[::String, ::String]
-      attr_accessor type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION")
+      attr_accessor type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE")
       attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
       SENSITIVE: []
     end
@@ -438,6 +521,42 @@ module Aws::QConnect
       SENSITIVE: []
     end
 
+    class CreateAIGuardrailRequest
+      attr_accessor assistant_id: ::String
+      attr_accessor blocked_input_messaging: ::String
+      attr_accessor blocked_outputs_messaging: ::String
+      attr_accessor client_token: ::String
+      attr_accessor content_policy_config: Types::AIGuardrailContentPolicyConfig
+      attr_accessor contextual_grounding_policy_config: Types::AIGuardrailContextualGroundingPolicyConfig
+      attr_accessor description: ::String
+      attr_accessor name: ::String
+      attr_accessor sensitive_information_policy_config: Types::AIGuardrailSensitiveInformationPolicyConfig
+      attr_accessor tags: ::Hash[::String, ::String]
+      attr_accessor topic_policy_config: Types::AIGuardrailTopicPolicyConfig
+      attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
+      attr_accessor word_policy_config: Types::AIGuardrailWordPolicyConfig
+      SENSITIVE: [:blocked_input_messaging, :blocked_outputs_messaging, :description]
+    end
+
+    class CreateAIGuardrailResponse
+      attr_accessor ai_guardrail: Types::AIGuardrailData
+      SENSITIVE: []
+    end
+
+    class CreateAIGuardrailVersionRequest
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_id: ::String
+      attr_accessor client_token: ::String
+      attr_accessor modified_time: ::Time
+      SENSITIVE: []
+    end
+
+    class CreateAIGuardrailVersionResponse
+      attr_accessor ai_guardrail: Types::AIGuardrailData
+      attr_accessor version_number: ::Integer
+      SENSITIVE: []
+    end
+
     class CreateAIPromptRequest
       attr_accessor api_format: ("ANTHROPIC_CLAUDE_MESSAGES" | "ANTHROPIC_CLAUDE_TEXT_COMPLETIONS")
       attr_accessor assistant_id: ::String
@@ -448,7 +567,7 @@ module Aws::QConnect
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor template_configuration: Types::AIPromptTemplateConfiguration
       attr_accessor template_type: ("TEXT")
-      attr_accessor type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION")
+      attr_accessor type: ("ANSWER_GENERATION" | "INTENT_LABELING_GENERATION" | "QUERY_REFORMULATION" | "SELF_SERVICE_PRE_PROCESSING" | "SELF_SERVICE_ANSWER_GENERATION")
       attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
       SENSITIVE: []
     end
@@ -619,7 +738,7 @@ module Aws::QConnect
     end
 
     class CreateSessionRequest
-      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"), Types::AIAgentConfigurationData]
+      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), Types::AIAgentConfigurationData]
       attr_accessor assistant_id: ::String
       attr_accessor client_token: ::String
       attr_accessor description: ::String
@@ -767,6 +886,25 @@ module Aws::QConnect
     end
 
     class DeleteAIAgentVersionResponse < Aws::EmptyStructure
+    end
+
+    class DeleteAIGuardrailRequest
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteAIGuardrailResponse < Aws::EmptyStructure
+    end
+
+    class DeleteAIGuardrailVersionRequest
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_id: ::String
+      attr_accessor version_number: ::Integer
+      SENSITIVE: []
+    end
+
+    class DeleteAIGuardrailVersionResponse < Aws::EmptyStructure
     end
 
     class DeleteAIPromptRequest
@@ -974,6 +1112,18 @@ module Aws::QConnect
       SENSITIVE: []
     end
 
+    class GetAIGuardrailRequest
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetAIGuardrailResponse
+      attr_accessor ai_guardrail: Types::AIGuardrailData
+      attr_accessor version_number: ::Integer
+      SENSITIVE: []
+    end
+
     class GetAIPromptRequest
       attr_accessor ai_prompt_id: ::String
       attr_accessor assistant_id: ::String
@@ -1073,6 +1223,23 @@ module Aws::QConnect
       SENSITIVE: []
     end
 
+    class GetNextMessageRequest
+      attr_accessor assistant_id: ::String
+      attr_accessor next_message_token: ::String
+      attr_accessor session_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetNextMessageResponse
+      attr_accessor conversation_session_data: ::Array[Types::RuntimeSessionData]
+      attr_accessor conversation_state: Types::ConversationState
+      attr_accessor next_message_token: ::String
+      attr_accessor request_message_id: ::String
+      attr_accessor response: Types::MessageOutput
+      attr_accessor type: ("TEXT")
+      SENSITIVE: []
+    end
+
     class GetQuickResponseRequest
       attr_accessor knowledge_base_id: ::String
       attr_accessor quick_response_id: ::String
@@ -1113,6 +1280,51 @@ module Aws::QConnect
       attr_accessor criteria: ::String
       attr_accessor values: ::Array[::String]
       SENSITIVE: [:criteria]
+    end
+
+    class GuardrailContentFilterConfig
+      attr_accessor input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
+      attr_accessor output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
+      attr_accessor type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK")
+      SENSITIVE: [:input_strength, :output_strength, :type]
+    end
+
+    class GuardrailContextualGroundingFilterConfig
+      attr_accessor threshold: ::Float
+      attr_accessor type: ("GROUNDING" | "RELEVANCE")
+      SENSITIVE: [:threshold, :type]
+    end
+
+    class GuardrailManagedWordsConfig
+      attr_accessor type: ("PROFANITY")
+      SENSITIVE: [:type]
+    end
+
+    class GuardrailPiiEntityConfig
+      attr_accessor action: ("BLOCK" | "ANONYMIZE")
+      attr_accessor type: ("ADDRESS" | "AGE" | "AWS_ACCESS_KEY" | "AWS_SECRET_KEY" | "CA_HEALTH_NUMBER" | "CA_SOCIAL_INSURANCE_NUMBER" | "CREDIT_DEBIT_CARD_CVV" | "CREDIT_DEBIT_CARD_EXPIRY" | "CREDIT_DEBIT_CARD_NUMBER" | "DRIVER_ID" | "EMAIL" | "INTERNATIONAL_BANK_ACCOUNT_NUMBER" | "IP_ADDRESS" | "LICENSE_PLATE" | "MAC_ADDRESS" | "NAME" | "PASSWORD" | "PHONE" | "PIN" | "SWIFT_CODE" | "UK_NATIONAL_HEALTH_SERVICE_NUMBER" | "UK_NATIONAL_INSURANCE_NUMBER" | "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER" | "URL" | "USERNAME" | "US_BANK_ACCOUNT_NUMBER" | "US_BANK_ROUTING_NUMBER" | "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER" | "US_PASSPORT_NUMBER" | "US_SOCIAL_SECURITY_NUMBER" | "VEHICLE_IDENTIFICATION_NUMBER")
+      SENSITIVE: [:action, :type]
+    end
+
+    class GuardrailRegexConfig
+      attr_accessor action: ("BLOCK" | "ANONYMIZE")
+      attr_accessor description: ::String
+      attr_accessor name: ::String
+      attr_accessor pattern: ::String
+      SENSITIVE: [:action, :description, :name, :pattern]
+    end
+
+    class GuardrailTopicConfig
+      attr_accessor definition: ::String
+      attr_accessor examples: ::Array[::String]
+      attr_accessor name: ::String
+      attr_accessor type: ("DENY")
+      SENSITIVE: [:definition, :name, :type]
+    end
+
+    class GuardrailWordConfig
+      attr_accessor text: ::String
+      SENSITIVE: [:text]
     end
 
     class HierarchicalChunkingConfiguration
@@ -1245,6 +1457,33 @@ module Aws::QConnect
 
     class ListAIAgentsResponse
       attr_accessor ai_agent_summaries: ::Array[Types::AIAgentSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAIGuardrailVersionsRequest
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAIGuardrailVersionsResponse
+      attr_accessor ai_guardrail_version_summaries: ::Array[Types::AIGuardrailVersionSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAIGuardrailsRequest
+      attr_accessor assistant_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAIGuardrailsResponse
+      attr_accessor ai_guardrail_summaries: ::Array[Types::AIGuardrailSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -1382,6 +1621,20 @@ module Aws::QConnect
       SENSITIVE: []
     end
 
+    class ListMessagesRequest
+      attr_accessor assistant_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor session_id: ::String
+      SENSITIVE: []
+    end
+
+    class ListMessagesResponse
+      attr_accessor messages: ::Array[Types::MessageOutput]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListQuickResponsesRequest
       attr_accessor knowledge_base_id: ::String
       attr_accessor max_results: ::Integer
@@ -1417,8 +1670,33 @@ module Aws::QConnect
     end
 
     class ManualSearchAIAgentConfiguration
+      attr_accessor answer_generation_ai_guardrail_id: ::String
       attr_accessor answer_generation_ai_prompt_id: ::String
       attr_accessor association_configurations: ::Array[Types::AssociationConfiguration]
+      SENSITIVE: []
+    end
+
+    class MessageData
+      attr_accessor text: Types::TextMessage
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Text < MessageData
+      end
+      class Unknown < MessageData
+      end
+    end
+
+    class MessageInput
+      attr_accessor value: Types::MessageData
+      SENSITIVE: []
+    end
+
+    class MessageOutput
+      attr_accessor message_id: ::String
+      attr_accessor participant: ("CUSTOMER" | "AGENT" | "BOT")
+      attr_accessor timestamp: ::Time
+      attr_accessor value: Types::MessageData
       SENSITIVE: []
     end
 
@@ -1848,7 +2126,7 @@ module Aws::QConnect
     end
 
     class RemoveAssistantAIAgentRequest
-      attr_accessor ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION")
+      attr_accessor ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE")
       attr_accessor assistant_id: ::String
       SENSITIVE: []
     end
@@ -1997,10 +2275,41 @@ module Aws::QConnect
       SENSITIVE: []
     end
 
+    class SelfServiceAIAgentConfiguration
+      attr_accessor association_configurations: ::Array[Types::AssociationConfiguration]
+      attr_accessor self_service_ai_guardrail_id: ::String
+      attr_accessor self_service_answer_generation_ai_prompt_id: ::String
+      attr_accessor self_service_pre_processing_ai_prompt_id: ::String
+      SENSITIVE: []
+    end
+
+    class SelfServiceConversationHistory
+      attr_accessor bot_response: ::String
+      attr_accessor input_transcript: ::String
+      attr_accessor turn_number: ::Integer
+      SENSITIVE: [:bot_response, :input_transcript]
+    end
+
     class SemanticChunkingConfiguration
       attr_accessor breakpoint_percentile_threshold: ::Integer
       attr_accessor buffer_size: ::Integer
       attr_accessor max_tokens: ::Integer
+      SENSITIVE: []
+    end
+
+    class SendMessageRequest
+      attr_accessor assistant_id: ::String
+      attr_accessor client_token: ::String
+      attr_accessor conversation_context: Types::ConversationContext
+      attr_accessor message: Types::MessageInput
+      attr_accessor session_id: ::String
+      attr_accessor type: ("TEXT")
+      SENSITIVE: []
+    end
+
+    class SendMessageResponse
+      attr_accessor next_message_token: ::String
+      attr_accessor request_message_id: ::String
       SENSITIVE: []
     end
 
@@ -2015,7 +2324,7 @@ module Aws::QConnect
     end
 
     class SessionData
-      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"), Types::AIAgentConfigurationData]
+      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), Types::AIAgentConfigurationData]
       attr_accessor description: ::String
       attr_accessor integration_configuration: Types::SessionIntegrationConfiguration
       attr_accessor name: ::String
@@ -2147,6 +2456,11 @@ module Aws::QConnect
       SENSITIVE: [:text]
     end
 
+    class TextMessage
+      attr_accessor value: ::String
+      SENSITIVE: [:value]
+    end
+
     class ThrottlingException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -2182,6 +2496,27 @@ module Aws::QConnect
       SENSITIVE: []
     end
 
+    class UpdateAIGuardrailRequest
+      attr_accessor ai_guardrail_id: ::String
+      attr_accessor assistant_id: ::String
+      attr_accessor blocked_input_messaging: ::String
+      attr_accessor blocked_outputs_messaging: ::String
+      attr_accessor client_token: ::String
+      attr_accessor content_policy_config: Types::AIGuardrailContentPolicyConfig
+      attr_accessor contextual_grounding_policy_config: Types::AIGuardrailContextualGroundingPolicyConfig
+      attr_accessor description: ::String
+      attr_accessor sensitive_information_policy_config: Types::AIGuardrailSensitiveInformationPolicyConfig
+      attr_accessor topic_policy_config: Types::AIGuardrailTopicPolicyConfig
+      attr_accessor visibility_status: ("SAVED" | "PUBLISHED")
+      attr_accessor word_policy_config: Types::AIGuardrailWordPolicyConfig
+      SENSITIVE: [:blocked_input_messaging, :blocked_outputs_messaging, :description]
+    end
+
+    class UpdateAIGuardrailResponse
+      attr_accessor ai_guardrail: Types::AIGuardrailData
+      SENSITIVE: []
+    end
+
     class UpdateAIPromptRequest
       attr_accessor ai_prompt_id: ::String
       attr_accessor assistant_id: ::String
@@ -2198,7 +2533,7 @@ module Aws::QConnect
     end
 
     class UpdateAssistantAIAgentRequest
-      attr_accessor ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION")
+      attr_accessor ai_agent_type: ("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE")
       attr_accessor assistant_id: ::String
       attr_accessor configuration: Types::AIAgentConfigurationData
       SENSITIVE: []
@@ -2305,7 +2640,7 @@ module Aws::QConnect
     end
 
     class UpdateSessionRequest
-      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION"), Types::AIAgentConfigurationData]
+      attr_accessor ai_agent_configuration: ::Hash[("MANUAL_SEARCH" | "ANSWER_RECOMMENDATION" | "SELF_SERVICE"), Types::AIAgentConfigurationData]
       attr_accessor assistant_id: ::String
       attr_accessor description: ::String
       attr_accessor session_id: ::String

@@ -386,6 +386,7 @@ module Aws::RDS
       attr_accessor auto_minor_version_upgrade: bool
       attr_accessor monitoring_interval: ::Integer
       attr_accessor monitoring_role_arn: ::String
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor enable_performance_insights: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer
@@ -478,6 +479,7 @@ module Aws::RDS
       attr_accessor promotion_tier: ::Integer
       attr_accessor timezone: ::String
       attr_accessor enable_iam_database_authentication: bool
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor enable_performance_insights: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer
@@ -522,6 +524,7 @@ module Aws::RDS
       attr_accessor kms_key_id: ::String
       attr_accessor pre_signed_url: ::String
       attr_accessor enable_iam_database_authentication: bool
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor enable_performance_insights: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer
@@ -816,6 +819,7 @@ module Aws::RDS
       attr_accessor auto_minor_version_upgrade: bool
       attr_accessor monitoring_interval: ::Integer
       attr_accessor monitoring_role_arn: ::String
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor performance_insights_enabled: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer
@@ -1165,6 +1169,7 @@ module Aws::RDS
       attr_accessor db_instance_arn: ::String
       attr_accessor timezone: ::String
       attr_accessor iam_database_authentication_enabled: bool
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor performance_insights_enabled: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer
@@ -2854,6 +2859,7 @@ module Aws::RDS
       attr_accessor auto_minor_version_upgrade: bool
       attr_accessor monitoring_interval: ::Integer
       attr_accessor monitoring_role_arn: ::String
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor enable_performance_insights: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer
@@ -2934,6 +2940,7 @@ module Aws::RDS
       attr_accessor disable_domain: bool
       attr_accessor promotion_tier: ::Integer
       attr_accessor enable_iam_database_authentication: bool
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor enable_performance_insights: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer
@@ -3863,6 +3870,7 @@ module Aws::RDS
       attr_accessor s3_bucket_name: ::String
       attr_accessor s3_prefix: ::String
       attr_accessor s3_ingestion_role_arn: ::String
+      attr_accessor database_insights_mode: ("standard" | "advanced")
       attr_accessor enable_performance_insights: bool
       attr_accessor performance_insights_kms_key_id: ::String
       attr_accessor performance_insights_retention_period: ::Integer

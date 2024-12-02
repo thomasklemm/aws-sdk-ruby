@@ -45,6 +45,8 @@ module Aws::ChimeSDKVoice
     ClientRequestId = Shapes::StringShape.new(name: 'ClientRequestId')
     ConfidenceScore = Shapes::FloatShape.new(name: 'ConfidenceScore')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
+    ContactCenterSystemType = Shapes::StringShape.new(name: 'ContactCenterSystemType')
+    ContactCenterSystemTypeList = Shapes::ListShape.new(name: 'ContactCenterSystemTypeList')
     Country = Shapes::StringShape.new(name: 'Country')
     CountryList = Shapes::ListShape.new(name: 'CountryList')
     CpsLimit = Shapes::IntegerShape.new(name: 'CpsLimit')
@@ -76,6 +78,7 @@ module Aws::ChimeSDKVoice
     DeleteSipMediaApplicationRequest = Shapes::StructureShape.new(name: 'DeleteSipMediaApplicationRequest')
     DeleteSipRuleRequest = Shapes::StructureShape.new(name: 'DeleteSipRuleRequest')
     DeleteVoiceConnectorEmergencyCallingConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteVoiceConnectorEmergencyCallingConfigurationRequest')
+    DeleteVoiceConnectorExternalSystemsConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteVoiceConnectorExternalSystemsConfigurationRequest')
     DeleteVoiceConnectorGroupRequest = Shapes::StructureShape.new(name: 'DeleteVoiceConnectorGroupRequest')
     DeleteVoiceConnectorOriginationRequest = Shapes::StructureShape.new(name: 'DeleteVoiceConnectorOriginationRequest')
     DeleteVoiceConnectorProxyRequest = Shapes::StructureShape.new(name: 'DeleteVoiceConnectorProxyRequest')
@@ -93,6 +96,7 @@ module Aws::ChimeSDKVoice
     E164PhoneNumberList = Shapes::ListShape.new(name: 'E164PhoneNumberList')
     EmergencyCallingConfiguration = Shapes::StructureShape.new(name: 'EmergencyCallingConfiguration')
     ErrorCode = Shapes::StringShape.new(name: 'ErrorCode')
+    ExternalSystemsConfiguration = Shapes::StructureShape.new(name: 'ExternalSystemsConfiguration')
     ForbiddenException = Shapes::StructureShape.new(name: 'ForbiddenException')
     FunctionArn = Shapes::StringShape.new(name: 'FunctionArn')
     GeoMatchLevel = Shapes::StringShape.new(name: 'GeoMatchLevel')
@@ -117,6 +121,8 @@ module Aws::ChimeSDKVoice
     GetSpeakerSearchTaskResponse = Shapes::StructureShape.new(name: 'GetSpeakerSearchTaskResponse')
     GetVoiceConnectorEmergencyCallingConfigurationRequest = Shapes::StructureShape.new(name: 'GetVoiceConnectorEmergencyCallingConfigurationRequest')
     GetVoiceConnectorEmergencyCallingConfigurationResponse = Shapes::StructureShape.new(name: 'GetVoiceConnectorEmergencyCallingConfigurationResponse')
+    GetVoiceConnectorExternalSystemsConfigurationRequest = Shapes::StructureShape.new(name: 'GetVoiceConnectorExternalSystemsConfigurationRequest')
+    GetVoiceConnectorExternalSystemsConfigurationResponse = Shapes::StructureShape.new(name: 'GetVoiceConnectorExternalSystemsConfigurationResponse')
     GetVoiceConnectorGroupRequest = Shapes::StructureShape.new(name: 'GetVoiceConnectorGroupRequest')
     GetVoiceConnectorGroupResponse = Shapes::StructureShape.new(name: 'GetVoiceConnectorGroupResponse')
     GetVoiceConnectorLoggingConfigurationRequest = Shapes::StructureShape.new(name: 'GetVoiceConnectorLoggingConfigurationRequest')
@@ -225,6 +231,8 @@ module Aws::ChimeSDKVoice
     PutSipMediaApplicationLoggingConfigurationResponse = Shapes::StructureShape.new(name: 'PutSipMediaApplicationLoggingConfigurationResponse')
     PutVoiceConnectorEmergencyCallingConfigurationRequest = Shapes::StructureShape.new(name: 'PutVoiceConnectorEmergencyCallingConfigurationRequest')
     PutVoiceConnectorEmergencyCallingConfigurationResponse = Shapes::StructureShape.new(name: 'PutVoiceConnectorEmergencyCallingConfigurationResponse')
+    PutVoiceConnectorExternalSystemsConfigurationRequest = Shapes::StructureShape.new(name: 'PutVoiceConnectorExternalSystemsConfigurationRequest')
+    PutVoiceConnectorExternalSystemsConfigurationResponse = Shapes::StructureShape.new(name: 'PutVoiceConnectorExternalSystemsConfigurationResponse')
     PutVoiceConnectorLoggingConfigurationRequest = Shapes::StructureShape.new(name: 'PutVoiceConnectorLoggingConfigurationRequest')
     PutVoiceConnectorLoggingConfigurationResponse = Shapes::StructureShape.new(name: 'PutVoiceConnectorLoggingConfigurationResponse')
     PutVoiceConnectorOriginationRequest = Shapes::StructureShape.new(name: 'PutVoiceConnectorOriginationRequest')
@@ -250,6 +258,8 @@ module Aws::ChimeSDKVoice
     ServerSideEncryptionConfiguration = Shapes::StructureShape.new(name: 'ServerSideEncryptionConfiguration')
     ServiceFailureException = Shapes::StructureShape.new(name: 'ServiceFailureException')
     ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
+    SessionBorderControllerType = Shapes::StringShape.new(name: 'SessionBorderControllerType')
+    SessionBorderControllerTypeList = Shapes::ListShape.new(name: 'SessionBorderControllerTypeList')
     SipApplicationPriority = Shapes::IntegerShape.new(name: 'SipApplicationPriority')
     SipHeadersMap = Shapes::MapShape.new(name: 'SipHeadersMap')
     SipMediaApplication = Shapes::StructureShape.new(name: 'SipMediaApplication')
@@ -326,6 +336,7 @@ module Aws::ChimeSDKVoice
     VoiceConnectorGroup = Shapes::StructureShape.new(name: 'VoiceConnectorGroup')
     VoiceConnectorGroupList = Shapes::ListShape.new(name: 'VoiceConnectorGroupList')
     VoiceConnectorGroupName = Shapes::StringShape.new(name: 'VoiceConnectorGroupName')
+    VoiceConnectorIntegrationType = Shapes::StringShape.new(name: 'VoiceConnectorIntegrationType')
     VoiceConnectorItem = Shapes::StructureShape.new(name: 'VoiceConnectorItem')
     VoiceConnectorItemList = Shapes::ListShape.new(name: 'VoiceConnectorItemList')
     VoiceConnectorItemPriority = Shapes::IntegerShape.new(name: 'VoiceConnectorItemPriority')
@@ -410,6 +421,8 @@ module Aws::ChimeSDKVoice
 
     ConflictException.struct_class = Types::ConflictException
 
+    ContactCenterSystemTypeList.member = Shapes::ShapeRef.new(shape: ContactCenterSystemType)
+
     CountryList.member = Shapes::ShapeRef.new(shape: Country)
 
     CreatePhoneNumberOrderRequest.add_member(:product_type, Shapes::ShapeRef.new(shape: PhoneNumberProductType, required: true, location_name: "ProductType"))
@@ -473,6 +486,7 @@ module Aws::ChimeSDKVoice
     CreateVoiceConnectorRequest.add_member(:aws_region, Shapes::ShapeRef.new(shape: VoiceConnectorAwsRegion, location_name: "AwsRegion"))
     CreateVoiceConnectorRequest.add_member(:require_encryption, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "RequireEncryption"))
     CreateVoiceConnectorRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
+    CreateVoiceConnectorRequest.add_member(:integration_type, Shapes::ShapeRef.new(shape: VoiceConnectorIntegrationType, location_name: "IntegrationType"))
     CreateVoiceConnectorRequest.struct_class = Types::CreateVoiceConnectorRequest
 
     CreateVoiceConnectorResponse.add_member(:voice_connector, Shapes::ShapeRef.new(shape: VoiceConnector, location_name: "VoiceConnector"))
@@ -523,6 +537,9 @@ module Aws::ChimeSDKVoice
     DeleteVoiceConnectorEmergencyCallingConfigurationRequest.add_member(:voice_connector_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location: "uri", location_name: "voiceConnectorId"))
     DeleteVoiceConnectorEmergencyCallingConfigurationRequest.struct_class = Types::DeleteVoiceConnectorEmergencyCallingConfigurationRequest
 
+    DeleteVoiceConnectorExternalSystemsConfigurationRequest.add_member(:voice_connector_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location: "uri", location_name: "voiceConnectorId"))
+    DeleteVoiceConnectorExternalSystemsConfigurationRequest.struct_class = Types::DeleteVoiceConnectorExternalSystemsConfigurationRequest
+
     DeleteVoiceConnectorGroupRequest.add_member(:voice_connector_group_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location: "uri", location_name: "voiceConnectorGroupId"))
     DeleteVoiceConnectorGroupRequest.struct_class = Types::DeleteVoiceConnectorGroupRequest
 
@@ -569,6 +586,10 @@ module Aws::ChimeSDKVoice
 
     EmergencyCallingConfiguration.add_member(:dnis, Shapes::ShapeRef.new(shape: DNISEmergencyCallingConfigurationList, location_name: "DNIS"))
     EmergencyCallingConfiguration.struct_class = Types::EmergencyCallingConfiguration
+
+    ExternalSystemsConfiguration.add_member(:session_border_controller_types, Shapes::ShapeRef.new(shape: SessionBorderControllerTypeList, location_name: "SessionBorderControllerTypes"))
+    ExternalSystemsConfiguration.add_member(:contact_center_system_types, Shapes::ShapeRef.new(shape: ContactCenterSystemTypeList, location_name: "ContactCenterSystemTypes"))
+    ExternalSystemsConfiguration.struct_class = Types::ExternalSystemsConfiguration
 
     ForbiddenException.struct_class = Types::ForbiddenException
 
@@ -638,6 +659,12 @@ module Aws::ChimeSDKVoice
 
     GetVoiceConnectorEmergencyCallingConfigurationResponse.add_member(:emergency_calling_configuration, Shapes::ShapeRef.new(shape: EmergencyCallingConfiguration, location_name: "EmergencyCallingConfiguration"))
     GetVoiceConnectorEmergencyCallingConfigurationResponse.struct_class = Types::GetVoiceConnectorEmergencyCallingConfigurationResponse
+
+    GetVoiceConnectorExternalSystemsConfigurationRequest.add_member(:voice_connector_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location: "uri", location_name: "voiceConnectorId"))
+    GetVoiceConnectorExternalSystemsConfigurationRequest.struct_class = Types::GetVoiceConnectorExternalSystemsConfigurationRequest
+
+    GetVoiceConnectorExternalSystemsConfigurationResponse.add_member(:external_systems_configuration, Shapes::ShapeRef.new(shape: ExternalSystemsConfiguration, location_name: "ExternalSystemsConfiguration"))
+    GetVoiceConnectorExternalSystemsConfigurationResponse.struct_class = Types::GetVoiceConnectorExternalSystemsConfigurationResponse
 
     GetVoiceConnectorGroupRequest.add_member(:voice_connector_group_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location: "uri", location_name: "voiceConnectorGroupId"))
     GetVoiceConnectorGroupRequest.struct_class = Types::GetVoiceConnectorGroupRequest
@@ -953,6 +980,14 @@ module Aws::ChimeSDKVoice
     PutVoiceConnectorEmergencyCallingConfigurationResponse.add_member(:emergency_calling_configuration, Shapes::ShapeRef.new(shape: EmergencyCallingConfiguration, location_name: "EmergencyCallingConfiguration"))
     PutVoiceConnectorEmergencyCallingConfigurationResponse.struct_class = Types::PutVoiceConnectorEmergencyCallingConfigurationResponse
 
+    PutVoiceConnectorExternalSystemsConfigurationRequest.add_member(:voice_connector_id, Shapes::ShapeRef.new(shape: NonEmptyString128, required: true, location: "uri", location_name: "voiceConnectorId"))
+    PutVoiceConnectorExternalSystemsConfigurationRequest.add_member(:session_border_controller_types, Shapes::ShapeRef.new(shape: SessionBorderControllerTypeList, location_name: "SessionBorderControllerTypes"))
+    PutVoiceConnectorExternalSystemsConfigurationRequest.add_member(:contact_center_system_types, Shapes::ShapeRef.new(shape: ContactCenterSystemTypeList, location_name: "ContactCenterSystemTypes"))
+    PutVoiceConnectorExternalSystemsConfigurationRequest.struct_class = Types::PutVoiceConnectorExternalSystemsConfigurationRequest
+
+    PutVoiceConnectorExternalSystemsConfigurationResponse.add_member(:external_systems_configuration, Shapes::ShapeRef.new(shape: ExternalSystemsConfiguration, location_name: "ExternalSystemsConfiguration"))
+    PutVoiceConnectorExternalSystemsConfigurationResponse.struct_class = Types::PutVoiceConnectorExternalSystemsConfigurationResponse
+
     PutVoiceConnectorLoggingConfigurationRequest.add_member(:voice_connector_id, Shapes::ShapeRef.new(shape: NonEmptyString, required: true, location: "uri", location_name: "voiceConnectorId"))
     PutVoiceConnectorLoggingConfigurationRequest.add_member(:logging_configuration, Shapes::ShapeRef.new(shape: LoggingConfiguration, required: true, location_name: "LoggingConfiguration"))
     PutVoiceConnectorLoggingConfigurationRequest.struct_class = Types::PutVoiceConnectorLoggingConfigurationRequest
@@ -1031,6 +1066,8 @@ module Aws::ChimeSDKVoice
     ServiceFailureException.struct_class = Types::ServiceFailureException
 
     ServiceUnavailableException.struct_class = Types::ServiceUnavailableException
+
+    SessionBorderControllerTypeList.member = Shapes::ShapeRef.new(shape: SessionBorderControllerType)
 
     SipHeadersMap.key = Shapes::ShapeRef.new(shape: SensitiveString)
     SipHeadersMap.value = Shapes::ShapeRef.new(shape: SensitiveString)
@@ -1284,6 +1321,7 @@ module Aws::ChimeSDKVoice
     VoiceConnector.add_member(:created_timestamp, Shapes::ShapeRef.new(shape: Iso8601Timestamp, location_name: "CreatedTimestamp"))
     VoiceConnector.add_member(:updated_timestamp, Shapes::ShapeRef.new(shape: Iso8601Timestamp, location_name: "UpdatedTimestamp"))
     VoiceConnector.add_member(:voice_connector_arn, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "VoiceConnectorArn"))
+    VoiceConnector.add_member(:integration_type, Shapes::ShapeRef.new(shape: VoiceConnectorIntegrationType, location_name: "IntegrationType"))
     VoiceConnector.struct_class = Types::VoiceConnector
 
     VoiceConnectorAwsRegionList.member = Shapes::ShapeRef.new(shape: VoiceConnectorAwsRegion)
@@ -1678,6 +1716,21 @@ module Aws::ChimeSDKVoice
         o.errors << Shapes::ShapeRef.new(shape: ServiceFailureException)
       end)
 
+      api.add_operation(:delete_voice_connector_external_systems_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteVoiceConnectorExternalSystemsConfiguration"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/voice-connectors/{voiceConnectorId}/external-systems-configuration"
+        o.input = Shapes::ShapeRef.new(shape: DeleteVoiceConnectorExternalSystemsConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedClientException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceFailureException)
+      end)
+
       api.add_operation(:delete_voice_connector_group, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteVoiceConnectorGroup"
         o.http_method = "DELETE"
@@ -2005,6 +2058,21 @@ module Aws::ChimeSDKVoice
         o.http_request_uri = "/voice-connectors/{voiceConnectorId}/emergency-calling-configuration"
         o.input = Shapes::ShapeRef.new(shape: GetVoiceConnectorEmergencyCallingConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: GetVoiceConnectorEmergencyCallingConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedClientException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceFailureException)
+      end)
+
+      api.add_operation(:get_voice_connector_external_systems_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetVoiceConnectorExternalSystemsConfiguration"
+        o.http_method = "GET"
+        o.http_request_uri = "/voice-connectors/{voiceConnectorId}/external-systems-configuration"
+        o.input = Shapes::ShapeRef.new(shape: GetVoiceConnectorExternalSystemsConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetVoiceConnectorExternalSystemsConfigurationResponse)
         o.errors << Shapes::ShapeRef.new(shape: UnauthorizedClientException)
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
@@ -2449,6 +2517,22 @@ module Aws::ChimeSDKVoice
         o.output = Shapes::ShapeRef.new(shape: PutVoiceConnectorEmergencyCallingConfigurationResponse)
         o.errors << Shapes::ShapeRef.new(shape: UnauthorizedClientException)
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottledClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceFailureException)
+      end)
+
+      api.add_operation(:put_voice_connector_external_systems_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PutVoiceConnectorExternalSystemsConfiguration"
+        o.http_method = "PUT"
+        o.http_request_uri = "/voice-connectors/{voiceConnectorId}/external-systems-configuration"
+        o.input = Shapes::ShapeRef.new(shape: PutVoiceConnectorExternalSystemsConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: PutVoiceConnectorExternalSystemsConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedClientException)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottledClientException)

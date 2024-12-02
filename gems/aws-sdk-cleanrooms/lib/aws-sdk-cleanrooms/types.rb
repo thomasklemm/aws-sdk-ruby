@@ -615,6 +615,35 @@ module Aws::CleanRooms
       include Aws::Structure
     end
 
+    # A reference to a table within Athena.
+    #
+    # @!attribute [rw] work_group
+    #   The workgroup of the Athena table reference.
+    #   @return [String]
+    #
+    # @!attribute [rw] output_location
+    #   The output location for the Athena table.
+    #   @return [String]
+    #
+    # @!attribute [rw] database_name
+    #   The database name.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The table reference.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/AthenaTableReference AWS API Documentation
+    #
+    class AthenaTableReference < Struct.new(
+      :work_group,
+      :output_location,
+      :database_name,
+      :table_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Details of errors thrown by the call to retrieve multiple analysis
     # templates within a collaboration by their identifiers.
     #
@@ -1581,8 +1610,7 @@ module Aws::CleanRooms
       include Aws::Structure
     end
 
-    # A column within a schema relation, derived from the underlying Glue
-    # table.
+    # A column within a schema relation, derived from the underlying table.
     #
     # @!attribute [rw] name
     #   The name of the column.
@@ -1818,7 +1846,7 @@ module Aws::CleanRooms
     #   @return [String]
     #
     # @!attribute [rw] table_reference
-    #   The Glue table that this configured table represents.
+    #   The table that this configured table represents.
     #   @return [Types::TableReference]
     #
     # @!attribute [rw] create_time
@@ -2718,7 +2746,7 @@ module Aws::CleanRooms
     #   @return [String]
     #
     # @!attribute [rw] table_reference
-    #   A reference to the Glue table being configured.
+    #   A reference to the table being configured.
     #   @return [Types::TableReference]
     #
     # @!attribute [rw] allowed_columns
@@ -7124,6 +7152,92 @@ module Aws::CleanRooms
       include Aws::Structure
     end
 
+    # A reference to a table within Snowflake.
+    #
+    # @!attribute [rw] secret_arn
+    #   The secret ARN of the Snowflake table reference.
+    #   @return [String]
+    #
+    # @!attribute [rw] account_identifier
+    #   The account identifier for the Snowflake table reference.
+    #   @return [String]
+    #
+    # @!attribute [rw] database_name
+    #   The name of the database the Snowflake table belongs to.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name of the Snowflake table.
+    #   @return [String]
+    #
+    # @!attribute [rw] schema_name
+    #   The schema name of the Snowflake table reference.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_schema
+    #   The schema of the Snowflake table.
+    #   @return [Types::SnowflakeTableSchema]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/SnowflakeTableReference AWS API Documentation
+    #
+    class SnowflakeTableReference < Struct.new(
+      :secret_arn,
+      :account_identifier,
+      :database_name,
+      :table_name,
+      :schema_name,
+      :table_schema)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The schema of a Snowflake table.
+    #
+    # @note SnowflakeTableSchema is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note SnowflakeTableSchema is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of SnowflakeTableSchema corresponding to the set member.
+    #
+    # @!attribute [rw] v1
+    #   The schema of a Snowflake table.
+    #   @return [Array<Types::SnowflakeTableSchemaV1>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/SnowflakeTableSchema AWS API Documentation
+    #
+    class SnowflakeTableSchema < Struct.new(
+      :v1,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class V1 < SnowflakeTableSchema; end
+      class Unknown < SnowflakeTableSchema; end
+    end
+
+    # The Snowflake table schema.
+    #
+    # @!attribute [rw] column_name
+    #   The column name.
+    #   @return [String]
+    #
+    # @!attribute [rw] column_type
+    #   The column's data type. Supported data types: `ARRAY`, `BIGINT`,
+    #   `BOOLEAN`, `CHAR`, `DATE`, `DECIMAL`, `DOUBLE`, `DOUBLE PRECISION`,
+    #   `FLOAT`, `FLOAT4`, `INT`, `INTEGER`, `MAP`, `NUMERIC`, `NUMBER`,
+    #   `REAL`, `SMALLINT`, `STRING`, `TIMESTAMP`, `TIMESTAMP_LTZ`,
+    #   `TIMESTAMP_NTZ`, `DATETIME`, `TINYINT`, `VARCHAR`, `TEXT`,
+    #   `CHARACTER`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/SnowflakeTableSchemaV1 AWS API Documentation
+    #
+    class SnowflakeTableSchemaV1 < Struct.new(
+      :column_name,
+      :column_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] type
     #   The type of the protected query to be started.
     #   @return [String]
@@ -7169,8 +7283,7 @@ module Aws::CleanRooms
       include Aws::Structure
     end
 
-    # A pointer to the dataset that underlies this table. Currently, this
-    # can only be an Glue table.
+    # A pointer to the dataset that underlies this table.
     #
     # @note TableReference is a union - when making an API calls you must set exactly one of the members.
     #
@@ -7181,16 +7294,30 @@ module Aws::CleanRooms
     #   reference.
     #   @return [Types::GlueTableReference]
     #
+    # @!attribute [rw] snowflake
+    #   If present, a reference to the Snowflake table referred to by this
+    #   table reference.
+    #   @return [Types::SnowflakeTableReference]
+    #
+    # @!attribute [rw] athena
+    #   If present, a reference to the Athena table referred to by this
+    #   table reference.
+    #   @return [Types::AthenaTableReference]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/TableReference AWS API Documentation
     #
     class TableReference < Struct.new(
       :glue,
+      :snowflake,
+      :athena,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
       class Glue < TableReference; end
+      class Snowflake < TableReference; end
+      class Athena < TableReference; end
       class Unknown < TableReference; end
     end
 

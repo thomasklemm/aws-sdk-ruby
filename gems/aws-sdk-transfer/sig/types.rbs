@@ -157,6 +157,19 @@ module Aws::Transfer
       SENSITIVE: []
     end
 
+    class CreateWebAppRequest
+      attr_accessor identity_provider_details: Types::WebAppIdentityProviderDetails
+      attr_accessor access_endpoint: ::String
+      attr_accessor web_app_units: Types::WebAppUnits
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class CreateWebAppResponse
+      attr_accessor web_app_id: ::String
+      SENSITIVE: []
+    end
+
     class CreateWorkflowRequest
       attr_accessor description: ::String
       attr_accessor steps: ::Array[Types::WorkflowStep]
@@ -241,6 +254,16 @@ module Aws::Transfer
     class DeleteUserRequest
       attr_accessor server_id: ::String
       attr_accessor user_name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteWebAppCustomizationRequest
+      attr_accessor web_app_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteWebAppRequest
+      attr_accessor web_app_id: ::String
       SENSITIVE: []
     end
 
@@ -357,6 +380,26 @@ module Aws::Transfer
       SENSITIVE: []
     end
 
+    class DescribeWebAppCustomizationRequest
+      attr_accessor web_app_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeWebAppCustomizationResponse
+      attr_accessor web_app_customization: Types::DescribedWebAppCustomization
+      SENSITIVE: []
+    end
+
+    class DescribeWebAppRequest
+      attr_accessor web_app_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeWebAppResponse
+      attr_accessor web_app: Types::DescribedWebApp
+      SENSITIVE: []
+    end
+
     class DescribeWorkflowRequest
       attr_accessor workflow_id: ::String
       SENSITIVE: []
@@ -447,6 +490,13 @@ module Aws::Transfer
       SENSITIVE: []
     end
 
+    class DescribedIdentityCenterConfig
+      attr_accessor application_arn: ::String
+      attr_accessor instance_arn: ::String
+      attr_accessor role: ::String
+      SENSITIVE: []
+    end
+
     class DescribedProfile
       attr_accessor arn: ::String
       attr_accessor profile_id: ::String
@@ -510,6 +560,37 @@ module Aws::Transfer
       SENSITIVE: []
     end
 
+    class DescribedWebApp
+      attr_accessor arn: ::String
+      attr_accessor web_app_id: ::String
+      attr_accessor described_identity_provider_details: Types::DescribedWebAppIdentityProviderDetails
+      attr_accessor access_endpoint: ::String
+      attr_accessor web_app_endpoint: ::String
+      attr_accessor web_app_units: Types::WebAppUnits
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class DescribedWebAppCustomization
+      attr_accessor arn: ::String
+      attr_accessor web_app_id: ::String
+      attr_accessor title: ::String
+      attr_accessor logo_file: ::String
+      attr_accessor favicon_file: ::String
+      SENSITIVE: [:logo_file, :favicon_file]
+    end
+
+    class DescribedWebAppIdentityProviderDetails
+      attr_accessor identity_center_config: Types::DescribedIdentityCenterConfig
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class IdentityCenterConfig < DescribedWebAppIdentityProviderDetails
+      end
+      class Unknown < DescribedWebAppIdentityProviderDetails
+      end
+    end
+
     class DescribedWorkflow
       attr_accessor arn: ::String
       attr_accessor description: ::String
@@ -564,6 +645,12 @@ module Aws::Transfer
       attr_accessor entry: ::String
       attr_accessor target: ::String
       attr_accessor type: ("FILE" | "DIRECTORY")
+      SENSITIVE: []
+    end
+
+    class IdentityCenterConfig
+      attr_accessor instance_arn: ::String
+      attr_accessor role: ::String
       SENSITIVE: []
     end
 
@@ -800,6 +887,18 @@ module Aws::Transfer
       SENSITIVE: []
     end
 
+    class ListWebAppsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListWebAppsResponse
+      attr_accessor next_token: ::String
+      attr_accessor web_apps: ::Array[Types::ListedWebApp]
+      SENSITIVE: []
+    end
+
     class ListWorkflowsRequest
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -895,6 +994,14 @@ module Aws::Transfer
       attr_accessor role: ::String
       attr_accessor ssh_public_key_count: ::Integer
       attr_accessor user_name: ::String
+      SENSITIVE: []
+    end
+
+    class ListedWebApp
+      attr_accessor arn: ::String
+      attr_accessor web_app_id: ::String
+      attr_accessor access_endpoint: ::String
+      attr_accessor web_app_endpoint: ::String
       SENSITIVE: []
     end
 
@@ -1226,11 +1333,75 @@ module Aws::Transfer
       SENSITIVE: []
     end
 
+    class UpdateWebAppCustomizationRequest
+      attr_accessor web_app_id: ::String
+      attr_accessor title: ::String
+      attr_accessor logo_file: ::String
+      attr_accessor favicon_file: ::String
+      SENSITIVE: [:logo_file, :favicon_file]
+    end
+
+    class UpdateWebAppCustomizationResponse
+      attr_accessor web_app_id: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateWebAppIdentityCenterConfig
+      attr_accessor role: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateWebAppIdentityProviderDetails
+      attr_accessor identity_center_config: Types::UpdateWebAppIdentityCenterConfig
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class IdentityCenterConfig < UpdateWebAppIdentityProviderDetails
+      end
+      class Unknown < UpdateWebAppIdentityProviderDetails
+      end
+    end
+
+    class UpdateWebAppRequest
+      attr_accessor web_app_id: ::String
+      attr_accessor identity_provider_details: Types::UpdateWebAppIdentityProviderDetails
+      attr_accessor access_endpoint: ::String
+      attr_accessor web_app_units: Types::WebAppUnits
+      SENSITIVE: []
+    end
+
+    class UpdateWebAppResponse
+      attr_accessor web_app_id: ::String
+      SENSITIVE: []
+    end
+
     class UserDetails
       attr_accessor user_name: ::String
       attr_accessor server_id: ::String
       attr_accessor session_id: ::String
       SENSITIVE: []
+    end
+
+    class WebAppIdentityProviderDetails
+      attr_accessor identity_center_config: Types::IdentityCenterConfig
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class IdentityCenterConfig < WebAppIdentityProviderDetails
+      end
+      class Unknown < WebAppIdentityProviderDetails
+      end
+    end
+
+    class WebAppUnits
+      attr_accessor provisioned: ::Integer
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Provisioned < WebAppUnits
+      end
+      class Unknown < WebAppUnits
+      end
     end
 
     class WorkflowDetail

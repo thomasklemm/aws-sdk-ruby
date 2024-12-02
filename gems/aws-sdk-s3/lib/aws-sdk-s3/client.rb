@@ -577,20 +577,24 @@ module Aws::S3
     # * **Directory buckets** - For directory buckets, you must make
     #   requests for this API operation to the Zonal endpoint. These
     #   endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][2] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][2] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][3] in the *Amazon
+    #   S3 User Guide*.
     #
     #  </note>
     #
     # Permissions
     # : * **General purpose bucket permissions** - For information about
     #     permissions required to use the multipart upload, see [Multipart
-    #     Upload and Permissions][3] in the *Amazon S3 User Guide*.
+    #     Upload and Permissions][4] in the *Amazon S3 User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][4] API operation for session-based
+    #     `CreateSession` ][5] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -601,45 +605,46 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][4].
+    #     authorization, see [ `CreateSession` ][5].
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `AbortMultipartUpload`:
     #
-    # * [CreateMultipartUpload][5]
+    # * [CreateMultipartUpload][6]
     #
-    # * [UploadPart][6]
+    # * [UploadPart][7]
     #
-    # * [CompleteMultipartUpload][7]
+    # * [CompleteMultipartUpload][8]
     #
     # * [ListParts][1]
     #
-    # * [ListMultipartUploads][8]
+    # * [ListMultipartUploads][9]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
     #
     # @option params [required, String] :bucket
     #   The bucket name to which the upload was taking place.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -805,19 +810,23 @@ module Aws::S3
     # <note markdown="1"> **Directory buckets** - For directory buckets, you must make requests
     # for this API operation to the Zonal endpoint. These endpoints support
     # virtual-hosted-style requests in the format
-    # `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name `.
-    # Path-style requests are not supported. For more information, see
-    # [Regional and Zonal endpoints][5] in the *Amazon S3 User Guide*.
+    # `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    # `. Path-style requests are not supported. For more information about
+    # endpoints in Availability Zones, see [Regional and Zonal endpoints for
+    # directory buckets in Availability Zones][5] in the *Amazon S3 User
+    # Guide*. For more information about endpoints in Local Zones, see
+    # [Available Local Zone for directory buckets][6] in the *Amazon S3 User
+    # Guide*.
     #
     #  </note>
     #
     # Permissions
     # : * **General purpose bucket permissions** - For information about
     #     permissions required to use the multipart upload API, see
-    #     [Multipart Upload and Permissions][6] in the *Amazon S3 User
+    #     [Multipart Upload and Permissions][7] in the *Amazon S3 User
     #     Guide*.
     #
-    #     If you provide an [additional checksum value][7] in your
+    #     If you provide an [additional checksum value][8] in your
     #     `MultipartUpload` requests and the object is encrypted with Key
     #     Management Service, you must have permission to use the
     #     `kms:Decrypt` action for the `CompleteMultipartUpload` request to
@@ -825,7 +834,7 @@ module Aws::S3
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][8] API operation for session-based
+    #     `CreateSession` ][9] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -836,7 +845,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][8].
+    #     authorization, see [ `CreateSession` ][9].
     #
     #     If the object is encrypted with SSE-KMS, you must also have the
     #     `kms:GenerateDataKey` and `kms:Decrypt` permissions in IAM
@@ -874,19 +883,19 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `CompleteMultipartUpload`:
     #
-    # * [CreateMultipartUpload][9]
+    # * [CreateMultipartUpload][10]
     #
     # * [UploadPart][1]
     #
-    # * [AbortMultipartUpload][10]
+    # * [AbortMultipartUpload][11]
     #
-    # * [ListParts][11]
+    # * [ListParts][12]
     #
-    # * [ListMultipartUploads][12]
+    # * [ListMultipartUploads][13]
     #
     #
     #
@@ -895,23 +904,24 @@ module Aws::S3
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ErrorBestPractices.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_Checksum.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
     #
     # @option params [required, String] :bucket
     #   Name of the bucket to which the multipart upload was initiated.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -1232,9 +1242,13 @@ module Aws::S3
     # * <b>Directory buckets </b> - For directory buckets, you must make
     #   requests for this API operation to the Zonal endpoint. These
     #   endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][2] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][2] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][3] in the *Amazon
+    #   S3 User Guide*.
     #
     # * VPC endpoints don't support cross-Region requests (including
     #   copies). If you're using VPC endpoints, your source and destination
@@ -1246,13 +1260,13 @@ module Aws::S3
     # Both the Region that you want to copy the object from and the Region
     # that you want to copy the object to must be enabled for your account.
     # For more information about how to enable a Region for your account,
-    # see [Enable or disable a Region for standalone accounts][3] in the
+    # see [Enable or disable a Region for standalone accounts][4] in the
     # *Amazon Web Services Account Management Guide*.
     #
     # Amazon S3 transfer acceleration does not support cross-Region copies.
     # If you request a cross-Region copy using a transfer acceleration
     # endpoint, you get a `400 Bad Request` error. For more information, see
-    # [Transfer Acceleration][4].
+    # [Transfer Acceleration][5].
     #
     # Authentication and authorization
     #
@@ -1260,7 +1274,7 @@ module Aws::S3
     #   IAM credentials (access key ID and secret access key for the IAM
     #   identities). All headers with the `x-amz-` prefix, including
     #   `x-amz-copy-source`, must be signed. For more information, see [REST
-    #   Authentication][5].
+    #   Authentication][6].
     #
     #   **Directory buckets** - You must use the IAM credentials to
     #   authenticate and authorize your access to the `CopyObject` API
@@ -1308,9 +1322,9 @@ module Aws::S3
     #     identity-based policies and KMS key policies for the KMS key.
     #
     #     For example policies, see [Example bucket policies for S3 Express
-    #     One Zone][6] and [Amazon Web Services Identity and Access
+    #     One Zone][7] and [Amazon Web Services Identity and Access
     #     Management (IAM) identity-based policies for S3 Express One
-    #     Zone][7] in the *Amazon S3 User Guide*.
+    #     Zone][8] in the *Amazon S3 User Guide*.
     #
     # Response and special errors
     #
@@ -1333,7 +1347,7 @@ module Aws::S3
     #       response is embedded in the `200 OK` response. For example, in a
     #       cross-region copy, you may encounter throttling and receive a
     #       `200 OK` response. For more information, see [Resolve the Error
-    #       200 response when copying objects to Amazon S3][8]. The `200 OK`
+    #       200 response when copying objects to Amazon S3][9]. The `200 OK`
     #       status code means the copy was accepted, but it doesn't mean
     #       the copy is complete. Another example is when you disconnect
     #       from Amazon S3 before the copy is complete, Amazon S3 might
@@ -1357,32 +1371,33 @@ module Aws::S3
     #   result in a data retrieval charge for the source if the source
     #   storage class bills for data retrieval. If the copy source is in a
     #   different region, the data transfer is billed to the copy source
-    #   account. For pricing information, see [Amazon S3 pricing][9].
+    #   account. For pricing information, see [Amazon S3 pricing][10].
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `CopyObject`:
     #
-    # * [PutObject][10]
+    # * [PutObject][11]
     #
-    # * [GetObject][11]
+    # * [GetObject][12]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/CopyingObjctsUsingRESTMPUapi.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [3]: https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-regions.html#manage-acct-regions-enable-standalone
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
-    # [8]: https://repost.aws/knowledge-center/s3-resolve-200-internalerror
-    # [9]: http://aws.amazon.com/s3/pricing/
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [4]: https://docs.aws.amazon.com/accounts/latest/reference/manage-acct-regions.html#manage-acct-regions-enable-standalone
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/transfer-acceleration.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
+    # [9]: https://repost.aws/knowledge-center/s3-resolve-200-internalerror
+    # [10]: http://aws.amazon.com/s3/pricing/
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
     #
     # @option params [String] :acl
     #   The canned access control list (ACL) to apply to the object.
@@ -1422,13 +1437,21 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
+    #
+    #   <note markdown="1"> Copying objects across different Amazon Web Services Regions isn't
+    #   supported when the source or destination bucket is in Amazon Web
+    #   Services Local Zones. The source and destination buckets must have the
+    #   same parent Amazon Web Services Region. Otherwise, you get an HTTP
+    #   `400 Bad Request` error with the error code `InvalidRequest`.
+    #
+    #    </note>
     #
     #   **Access points** - When you use this action with an access point, you
     #   must provide the alias of the access point in place of the bucket name
@@ -2282,10 +2305,13 @@ module Aws::S3
     # * <b>Directory buckets </b> - For directory buckets, you must make
     #   requests for this API operation to the Regional endpoint. These
     #   endpoints support path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. For more
-    #   information, see [Regional and Zonal endpoints][4] in the *Amazon S3
-    #   User Guide*.
+    #   information about endpoints in Availability Zones, see [Regional and
+    #   Zonal endpoints for directory buckets in Availability Zones][4] in
+    #   the *Amazon S3 User Guide*. For more information about endpoints in
+    #   Local Zones, see [Available Local Zone for directory buckets][5] in
+    #   the *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -2327,17 +2353,17 @@ module Aws::S3
     #       disabled. If you would like to share data with users outside of
     #       your account, you can use bucket policies as needed. For more
     #       information, see [Controlling ownership of objects and disabling
-    #       ACLs for your bucket ][5] and [Blocking public access to your
-    #       Amazon S3 storage ][6] in the *Amazon S3 User Guide*.
+    #       ACLs for your bucket ][6] and [Blocking public access to your
+    #       Amazon S3 storage ][7] in the *Amazon S3 User Guide*.
     #
     #     * **S3 Block Public Access** - If your specific use case requires
     #       granting public access to your S3 resources, you can disable
     #       Block Public Access. Specifically, you can create a new bucket
     #       with Block Public Access enabled, then separately call the [
-    #       `DeletePublicAccessBlock` ][7] API. To use this operation, you
+    #       `DeletePublicAccessBlock` ][8] API. To use this operation, you
     #       must have the `s3:PutBucketPublicAccessBlock` permission. For
     #       more information about S3 Block Public Access, see [Blocking
-    #       public access to your Amazon S3 storage ][6] in the *Amazon S3
+    #       public access to your Amazon S3 storage ][7] in the *Amazon S3
     #       User Guide*.
     #   * **Directory bucket permissions** - You must have the
     #     `s3express:CreateBucket` permission in an IAM identity-based
@@ -2346,7 +2372,7 @@ module Aws::S3
     #     performed by the Amazon Web Services account that owns the
     #     resource. For more information about directory bucket policies and
     #     permissions, see [Amazon Web Services Identity and Access
-    #     Management (IAM) for S3 Express One Zone][8] in the *Amazon S3
+    #     Management (IAM) for S3 Express One Zone][9] in the *Amazon S3
     #     User Guide*.
     #
     #     The permissions for ACLs, Object Lock, S3 Object Ownership, and S3
@@ -2356,21 +2382,21 @@ module Aws::S3
     #     enforced (ACLs disabled). These settings can't be modified.
     #
     #      For more information about permissions for creating and working
-    #     with directory buckets, see [Directory buckets][9] in the *Amazon
+    #     with directory buckets, see [Directory buckets][10] in the *Amazon
     #     S3 User Guide*. For more information about supported S3 features
-    #     for directory buckets, see [Features of S3 Express One Zone][10]
+    #     for directory buckets, see [Features of S3 Express One Zone][11]
     #     in the *Amazon S3 User Guide*.
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following operations are related to `CreateBucket`:
     #
-    # * [PutObject][11]
+    # * [PutObject][12]
     #
-    # * [DeleteBucket][12]
+    # * [DeleteBucket][13]
     #
     #
     #
@@ -2378,14 +2404,15 @@ module Aws::S3
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-buckets-s3.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeletePublicAccessBlock.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-one-zone.html#s3-express-features
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeletePublicAccessBlock.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-one-zone.html#s3-express-features
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html
     #
     # @option params [String] :acl
     #   The canned ACL to apply to the bucket.
@@ -2403,13 +2430,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][2] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][2] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -2506,19 +2534,6 @@ module Aws::S3
     #   * {Types::CreateBucketOutput#location #location} => String
     #
     #
-    # @example Example: To create a bucket 
-    #
-    #   # The following example creates a bucket.
-    #
-    #   resp = client.create_bucket({
-    #     bucket: "examplebucket", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     location: "/examplebucket", 
-    #   }
-    #
     # @example Example: To create a bucket in a specific region
     #
     #   # The following example creates a bucket. The request specifies an AWS region where to create the bucket.
@@ -2535,6 +2550,19 @@ module Aws::S3
     #     location: "http://examplebucket.<Region>.s3.amazonaws.com/", 
     #   }
     #
+    # @example Example: To create a bucket 
+    #
+    #   # The following example creates a bucket.
+    #
+    #   resp = client.create_bucket({
+    #     bucket: "examplebucket", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     location: "/examplebucket", 
+    #   }
+    #
     # @example Request syntax with placeholder values
     #
     #   resp = client.create_bucket({
@@ -2543,11 +2571,11 @@ module Aws::S3
     #     create_bucket_configuration: {
     #       location_constraint: "af-south-1", # accepts af-south-1, ap-east-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-south-1, ap-south-2, ap-southeast-1, ap-southeast-2, ap-southeast-3, ca-central-1, cn-north-1, cn-northwest-1, EU, eu-central-1, eu-north-1, eu-south-1, eu-south-2, eu-west-1, eu-west-2, eu-west-3, me-south-1, sa-east-1, us-east-2, us-gov-east-1, us-gov-west-1, us-west-1, us-west-2
     #       location: {
-    #         type: "AvailabilityZone", # accepts AvailabilityZone
+    #         type: "AvailabilityZone", # accepts AvailabilityZone, LocalZone
     #         name: "LocationNameAsString",
     #       },
     #       bucket: {
-    #         data_redundancy: "SingleAvailabilityZone", # accepts SingleAvailabilityZone
+    #         data_redundancy: "SingleAvailabilityZone", # accepts SingleAvailabilityZone, SingleLocalZone
     #         type: "Directory", # accepts Directory
     #       },
     #     },
@@ -2604,9 +2632,13 @@ module Aws::S3
     # * <b>Directory buckets </b> - For directory buckets, you must make
     #   requests for this API operation to the Zonal endpoint. These
     #   endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][4] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][4] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][5] in the *Amazon
+    #   S3 User Guide*.
     #
     #  </note>
     #
@@ -2618,7 +2650,7 @@ module Aws::S3
     #   sign each request individually. There is nothing special about
     #   signing multipart upload requests. For more information about
     #   signing, see [Authenticating Requests (Amazon Web Services Signature
-    #   Version 4)][5] in the *Amazon S3 User Guide*.
+    #   Version 4)][6] in the *Amazon S3 User Guide*.
     #
     # Permissions
     # : * **General purpose bucket permissions** - To perform a multipart
@@ -2631,13 +2663,13 @@ module Aws::S3
     #     `UploadPartCopy` APIs. These permissions are required because
     #     Amazon S3 must decrypt and read data from the encrypted file parts
     #     before it completes the multipart upload. For more information,
-    #     see [Multipart upload API and permissions][6] and [Protecting data
-    #     using server-side encryption with Amazon Web Services KMS][7] in
+    #     see [Multipart upload API and permissions][7] and [Protecting data
+    #     using server-side encryption with Amazon Web Services KMS][8] in
     #     the *Amazon S3 User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][8] API operation for session-based
+    #     `CreateSession` ][9] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -2648,7 +2680,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][8].
+    #     authorization, see [ `CreateSession` ][9].
     #
     # Encryption
     # : * **General purpose buckets** - Server-side encryption is for data
@@ -2675,7 +2707,7 @@ module Aws::S3
     #     the destination bucket, the encryption setting in your request
     #     takes precedence. If you choose to provide your own encryption
     #     key, the request headers you provide in [UploadPart][1] and
-    #     [UploadPartCopy][9] requests must match the headers you used in
+    #     [UploadPartCopy][10] requests must match the headers you used in
     #     the `CreateMultipartUpload` request.
     #
     #     * Use KMS keys (SSE-KMS) that include the Amazon Web Services
@@ -2700,9 +2732,9 @@ module Aws::S3
     #         actions on the key. These permissions are required because
     #         Amazon S3 must decrypt and read data from the encrypted file
     #         parts before it completes the multipart upload. For more
-    #         information, see [Multipart upload API and permissions][6] and
+    #         information, see [Multipart upload API and permissions][7] and
     #         [Protecting data using server-side encryption with Amazon Web
-    #         Services KMS][7] in the *Amazon S3 User Guide*.
+    #         Services KMS][8] in the *Amazon S3 User Guide*.
     #
     #       * If your Identity and Access Management (IAM) user or role is
     #         in the same Amazon Web Services account as the KMS key, then
@@ -2717,13 +2749,13 @@ module Aws::S3
     #         For information about configuring any of the officially
     #         supported Amazon Web Services SDKs and Amazon Web Services
     #         CLI, see [Specifying the Signature Version in Request
-    #         Authentication][10] in the *Amazon S3 User Guide*.
+    #         Authentication][11] in the *Amazon S3 User Guide*.
     #
     #        </note>
     #
     #       For more information about server-side encryption with KMS keys
     #       (SSE-KMS), see [Protecting Data Using Server-Side Encryption
-    #       with KMS keys][7] in the *Amazon S3 User Guide*.
+    #       with KMS keys][8] in the *Amazon S3 User Guide*.
     #
     #     * Use customer-provided encryption keys (SSE-C) – If you want to
     #       manage your own encryption keys, provide all the following
@@ -2737,7 +2769,7 @@ module Aws::S3
     #       For more information about server-side encryption with
     #       customer-provided encryption keys (SSE-C), see [ Protecting data
     #       using server-side encryption with customer-provided encryption
-    #       keys (SSE-C)][11] in the *Amazon S3 User Guide*.
+    #       keys (SSE-C)][12] in the *Amazon S3 User Guide*.
     #   * **Directory buckets** - For directory buckets, there are only two
     #     supported options for server-side encryption: server-side
     #     encryption with Amazon S3 managed keys (SSE-S3) (`AES256`) and
@@ -2747,13 +2779,13 @@ module Aws::S3
     #     default encryption in your `CreateSession` requests or `PUT`
     #     object requests. Then, new objects are automatically encrypted
     #     with the desired encryption settings. For more information, see
-    #     [Protecting data with server-side encryption][12] in the *Amazon
+    #     [Protecting data with server-side encryption][13] in the *Amazon
     #     S3 User Guide*. For more information about the encryption
     #     overriding behaviors in directory buckets, see [Specifying
-    #     server-side encryption with KMS for new object uploads][13].
+    #     server-side encryption with KMS for new object uploads][14].
     #
-    #     In the Zonal endpoint API calls (except [CopyObject][14] and
-    #     [UploadPartCopy][9]) using the REST API, the encryption request
+    #     In the Zonal endpoint API calls (except [CopyObject][15] and
+    #     [UploadPartCopy][10]) using the REST API, the encryption request
     #     headers must match the encryption settings that are specified in
     #     the `CreateSession` request. You can't override the values of the
     #     encryption settings (`x-amz-server-side-encryption`,
@@ -2773,7 +2805,7 @@ module Aws::S3
     #     configuration for the `CreateSession` request. It's not supported
     #     to override the encryption settings values in the `CreateSession`
     #     request. So in the Zonal endpoint API calls (except
-    #     [CopyObject][14] and [UploadPartCopy][9]), the encryption request
+    #     [CopyObject][15] and [UploadPartCopy][10]), the encryption request
     #     headers must match the default encryption configuration of the
     #     directory bucket.
     #
@@ -2789,19 +2821,19 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `CreateMultipartUpload`:
     #
     # * [UploadPart][1]
     #
-    # * [CompleteMultipartUpload][15]
+    # * [CompleteMultipartUpload][16]
     #
-    # * [AbortMultipartUpload][16]
+    # * [AbortMultipartUpload][17]
     #
-    # * [ListParts][17]
+    # * [ListParts][18]
     #
-    # * [ListMultipartUploads][18]
+    # * [ListMultipartUploads][19]
     #
     #
     #
@@ -2809,20 +2841,21 @@ module Aws::S3
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html#mpu-abort-incomplete-mpu-lifecycle-config
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html#mpuAndPermissions
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html#specify-signature-version
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
-    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
-    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
-    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
-    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
-    # [17]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
-    # [18]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html#mpuAndPermissions
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingAWSSDK.html#specify-signature-version
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerSideEncryptionCustomerKeys.html
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
+    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
+    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
+    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
+    # [17]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
+    # [18]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
+    # [19]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
     #
     # @option params [String] :acl
     #   The canned ACL to apply to the object. Amazon S3 supports a set of
@@ -2855,10 +2888,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -3555,23 +3588,27 @@ module Aws::S3
     #
     # <note markdown="1"> * You must make requests for this API operation to the Zonal endpoint.
     #   These endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com`.
-    #   Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][3] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com`.
+    #   Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][3] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][4] in the *Amazon
+    #   S3 User Guide*.
     #
     # * <b> <code>CopyObject</code> API operation</b> - Unlike other Zonal
     #   endpoint API operations, the `CopyObject` API operation doesn't use
     #   the temporary security credentials returned from the `CreateSession`
     #   API operation for authentication and authorization. For information
     #   about authentication and authorization of the `CopyObject` API
-    #   operation on directory buckets, see [CopyObject][4].
+    #   operation on directory buckets, see [CopyObject][5].
     #
     # * <b> <code>HeadBucket</code> API operation</b> - Unlike other Zonal
     #   endpoint API operations, the `HeadBucket` API operation doesn't use
     #   the temporary security credentials returned from the `CreateSession`
     #   API operation for authentication and authorization. For information
     #   about authentication and authorization of the `HeadBucket` API
-    #   operation on directory buckets, see [HeadBucket][5].
+    #   operation on directory buckets, see [HeadBucket][6].
     #
     #  </note>
     #
@@ -3583,10 +3620,10 @@ module Aws::S3
     #   can have the `s3express:SessionMode` condition key to control who
     #   can create a `ReadWrite` or `ReadOnly` session. For more information
     #   about `ReadWrite` or `ReadOnly` sessions, see [
-    #   `x-amz-create-session-mode` ][6]. For example policies, see [Example
-    #   bucket policies for S3 Express One Zone][7] and [Amazon Web Services
+    #   `x-amz-create-session-mode` ][7]. For example policies, see [Example
+    #   bucket policies for S3 Express One Zone][8] and [Amazon Web Services
     #   Identity and Access Management (IAM) identity-based policies for S3
-    #   Express One Zone][8] in the *Amazon S3 User Guide*.
+    #   Express One Zone][9] in the *Amazon S3 User Guide*.
     #
     #   To grant cross-account access to Zonal endpoint API operations, the
     #   bucket policy should also grant both accounts the
@@ -3607,32 +3644,32 @@ module Aws::S3
     #   requests or `PUT` object requests. Then, new objects are
     #   automatically encrypted with the desired encryption settings. For
     #   more information, see [Protecting data with server-side
-    #   encryption][9] in the *Amazon S3 User Guide*. For more information
+    #   encryption][10] in the *Amazon S3 User Guide*. For more information
     #   about the encryption overriding behaviors in directory buckets, see
     #   [Specifying server-side encryption with KMS for new object
-    #   uploads][10].
+    #   uploads][11].
     #
-    #   For [Zonal endpoint (object-level) API operations][11] except
-    #   [CopyObject][4] and [UploadPartCopy][12], you authenticate and
-    #   authorize requests through [CreateSession][13] for low latency. To
+    #   For [Zonal endpoint (object-level) API operations][12] except
+    #   [CopyObject][5] and [UploadPartCopy][13], you authenticate and
+    #   authorize requests through [CreateSession][14] for low latency. To
     #   encrypt new objects in a directory bucket with SSE-KMS, you must
     #   specify SSE-KMS as the directory bucket's default encryption
     #   configuration with a KMS key (specifically, a [customer managed
-    #   key][14]). Then, when a session is created for Zonal endpoint API
+    #   key][15]). Then, when a session is created for Zonal endpoint API
     #   operations, new objects are automatically encrypted and decrypted
     #   with SSE-KMS and S3 Bucket Keys during the session.
     #
-    #   <note markdown="1"> Only 1 [customer managed key][14] is supported per directory bucket
+    #   <note markdown="1"> Only 1 [customer managed key][15] is supported per directory bucket
     #   for the lifetime of the bucket. The [Amazon Web Services managed
-    #   key][15] (`aws/s3`) isn't supported. After you specify SSE-KMS as
+    #   key][16] (`aws/s3`) isn't supported. After you specify SSE-KMS as
     #   your bucket's default encryption configuration with a customer
     #   managed key, you can't change the customer managed key for the
     #   bucket's SSE-KMS configuration.
     #
     #    </note>
     #
-    #   In the Zonal endpoint API calls (except [CopyObject][4] and
-    #   [UploadPartCopy][12]) using the REST API, you can't override the
+    #   In the Zonal endpoint API calls (except [CopyObject][5] and
+    #   [UploadPartCopy][13]) using the REST API, you can't override the
     #   values of the encryption settings (`x-amz-server-side-encryption`,
     #   `x-amz-server-side-encryption-aws-kms-key-id`,
     #   `x-amz-server-side-encryption-context`, and
@@ -3648,8 +3685,8 @@ module Aws::S3
     #   Web Services SDKs use the bucket's default encryption configuration
     #   for the `CreateSession` request. It's not supported to override the
     #   encryption settings values in the `CreateSession` request. Also, in
-    #   the Zonal endpoint API calls (except [CopyObject][4] and
-    #   [UploadPartCopy][12]), it's not supported to override the values of
+    #   the Zonal endpoint API calls (except [CopyObject][5] and
+    #   [UploadPartCopy][13]), it's not supported to override the values of
     #   the encryption settings from the `CreateSession` request.
     #
     #    </note>
@@ -3657,25 +3694,26 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-APIs.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-optimizing-performance-guidelines-design-patterns.html#s3-express-optimizing-performance-session-authentication
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html#API_CreateSession_RequestParameters
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-differences.html#s3-express-differences-api-operations
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
-    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [14]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk
-    # [15]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html#API_CreateSession_RequestParameters
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-differences.html#s3-express-differences-api-operations
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
+    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [15]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk
+    # [16]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk
     #
     # @option params [String] :session_mode
     #   Specifies the mode of the session that will be created, either
@@ -3817,10 +3855,13 @@ module Aws::S3
     # * <b>Directory buckets </b> - For directory buckets, you must make
     #   requests for this API operation to the Regional endpoint. These
     #   endpoints support path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. For more
-    #   information, see [Regional and Zonal endpoints][1] in the *Amazon S3
-    #   User Guide*.
+    #   information about endpoints in Availability Zones, see [Regional and
+    #   Zonal endpoints for directory buckets in Availability Zones][1] in
+    #   the *Amazon S3 User Guide*. For more information about endpoints in
+    #   Local Zones, see [Available Local Zone for directory buckets][2] in
+    #   the *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -3835,39 +3876,41 @@ module Aws::S3
     #     performed by the Amazon Web Services account that owns the
     #     resource. For more information about directory bucket policies and
     #     permissions, see [Amazon Web Services Identity and Access
-    #     Management (IAM) for S3 Express One Zone][2] in the *Amazon S3
+    #     Management (IAM) for S3 Express One Zone][3] in the *Amazon S3
     #     User Guide*.
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following operations are related to `DeleteBucket`:
     #
-    # * [CreateBucket][3]
+    # * [CreateBucket][4]
     #
-    # * [DeleteObject][4]
+    # * [DeleteObject][5]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
     #
     # @option params [required, String] :bucket
     #   Specifies the bucket being deleted.
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][1] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -4076,7 +4119,7 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following operations are related to `DeleteBucketEncryption`:
     #
@@ -4100,13 +4143,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][1] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -4308,10 +4352,13 @@ module Aws::S3
     #     <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     #     requests for this API operation to the Regional endpoint. These
     #     endpoints support path-style requests in the format
-    #     `https://s3express-control.region_code.amazonaws.com/bucket-name
+    #     `https://s3express-control.region-code.amazonaws.com/bucket-name
     #     `. Virtual-hosted-style requests aren't supported. For more
-    #     information, see [Regional and Zonal endpoints][3] in the *Amazon
-    #     S3 User Guide*.
+    #     information about endpoints in Availability Zones, see [Regional
+    #     and Zonal endpoints for directory buckets in Availability
+    #     Zones][3] in the *Amazon S3 User Guide*. For more information
+    #     about endpoints in Local Zones, see [Available Local Zone for
+    #     directory buckets][4] in the *Amazon S3 User Guide*.
     #
     #      </note>
     # ^
@@ -4322,22 +4369,23 @@ module Aws::S3
     #   `s3express-control.region.amazonaws.com`.
     #
     # For more information about the object expiration, see [Elements to
-    # Describe Lifecycle Actions][4].
+    # Describe Lifecycle Actions][5].
     #
     # Related actions include:
     #
-    # * [PutBucketLifecycleConfiguration][5]
+    # * [PutBucketLifecycleConfiguration][6]
     #
-    # * [GetBucketLifecycleConfiguration][6]
+    # * [GetBucketLifecycleConfiguration][7]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html#intro-lifecycle-rules-actions
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/intro-lifecycle-rules.html#intro-lifecycle-rules-actions
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycleConfiguration.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
     #
     # @option params [required, String] :bucket
     #   The bucket name of the lifecycle to delete.
@@ -4504,9 +4552,13 @@ module Aws::S3
     # <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     # requests for this API operation to the Regional endpoint. These
     # endpoints support path-style requests in the format
-    # `https://s3express-control.region_code.amazonaws.com/bucket-name `.
-    # Virtual-hosted-style requests aren't supported. For more information,
-    # see [Regional and Zonal endpoints][1] in the *Amazon S3 User Guide*.
+    # `https://s3express-control.region-code.amazonaws.com/bucket-name `.
+    # Virtual-hosted-style requests aren't supported. For more information
+    # about endpoints in Availability Zones, see [Regional and Zonal
+    # endpoints for directory buckets in Availability Zones][1] in the
+    # *Amazon S3 User Guide*. For more information about endpoints in Local
+    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -4536,7 +4588,7 @@ module Aws::S3
     #   * **General purpose bucket permissions** - The
     #     `s3:DeleteBucketPolicy` permission is required in a policy. For
     #     more information about general purpose buckets bucket policies,
-    #     see [Using Bucket Policies and User Policies][2] in the *Amazon S3
+    #     see [Using Bucket Policies and User Policies][3] in the *Amazon S3
     #     User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
@@ -4547,39 +4599,41 @@ module Aws::S3
     #     Services account that owns the resource. For more information
     #     about directory bucket policies and permissions, see [Amazon Web
     #     Services Identity and Access Management (IAM) for S3 Express One
-    #     Zone][3] in the *Amazon S3 User Guide*.
+    #     Zone][4] in the *Amazon S3 User Guide*.
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following operations are related to `DeleteBucketPolicy`
     #
-    # * [CreateBucket][4]
+    # * [CreateBucket][5]
     #
-    # * [DeleteObject][5]
+    # * [DeleteObject][6]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
     #
     # @option params [required, String] :bucket
     #   The bucket name.
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][1] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -4818,33 +4872,71 @@ module Aws::S3
     end
 
     # Removes an object from a bucket. The behavior depends on the bucket's
-    # versioning state. For more information, see [Best practices to
-    # consider before deleting an object][1].
+    # versioning state:
+    #
+    # * If bucket versioning is not enabled, the operation permanently
+    #   deletes the object.
+    #
+    # * If bucket versioning is enabled, the operation inserts a delete
+    #   marker, which becomes the current version of the object. To
+    #   permanently delete an object in a versioned bucket, you must include
+    #   the object’s `versionId` in the request. For more information about
+    #   versioning-enabled buckets, see [Deleting object versions from a
+    #   versioning-enabled bucket][1].
+    #
+    # * If bucket versioning is suspended, the operation removes the object
+    #   that has a null `versionId`, if there is one, and inserts a delete
+    #   marker that becomes the current version of the object. If there
+    #   isn't an object with a null `versionId`, and all versions of the
+    #   object have a `versionId`, Amazon S3 does not remove the object and
+    #   only inserts a delete marker. To permanently delete an object that
+    #   has a `versionId`, you must include the object’s `versionId` in the
+    #   request. For more information about versioning-suspended buckets,
+    #   see [Deleting objects from versioning-suspended buckets][2].
+    #
+    # <note markdown="1"> * **Directory buckets** - S3 Versioning isn't enabled and supported
+    #   for directory buckets. For this API operation, only the `null` value
+    #   of the version ID is supported by directory buckets. You can only
+    #   specify `null` to the `versionId` query parameter in the request.
+    #
+    # * **Directory buckets** - For directory buckets, you must make
+    #   requests for this API operation to the Zonal endpoint. These
+    #   endpoints support virtual-hosted-style requests in the format
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][3] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][4] in the *Amazon
+    #   S3 User Guide*.
+    #
+    #  </note>
     #
     # To remove a specific version, you must use the `versionId` query
     # parameter. Using this query parameter permanently deletes the version.
     # If the object deleted is a delete marker, Amazon S3 sets the response
-    # header `x-amz-delete-marker` to true. If the object you want to delete
-    # is in a bucket where the bucket versioning configuration is MFA delete
-    # enabled, you must include the `x-amz-mfa` request header in the DELETE
-    # `versionId` request. Requests that include `x-amz-mfa` must use HTTPS.
-    # For more information about MFA delete and to see example requests, see
-    # [Using MFA delete][2] and [Sample request][3] in the *Amazon S3 User
-    # Guide*.
+    # header `x-amz-delete-marker` to true.
     #
-    # <note markdown="1"> * S3 Versioning isn't enabled and supported for directory buckets.
-    #   For this API operation, only the `null` value of the version ID is
-    #   supported by directory buckets. You can only specify `null` to the
-    #   `versionId` query parameter in the request.
+    # If the object you want to delete is in a bucket where the bucket
+    # versioning configuration is MFA Delete enabled, you must include the
+    # `x-amz-mfa` request header in the DELETE `versionId` request. Requests
+    # that include `x-amz-mfa` must use HTTPS. For more information about
+    # MFA Delete, see [Using MFA Delete][5] in the *Amazon S3 User Guide*.
+    # To see sample requests that use versioning, see [Sample Request][6].
     #
-    # * For directory buckets, you must make requests for this API operation
-    #   to the Zonal endpoint. These endpoints support virtual-hosted-style
-    #   requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][4] in the *Amazon S3 User Guide*.
+    # <note markdown="1"> **Directory buckets** - MFA delete is not supported by directory
+    # buckets.
     #
-    # * MFA delete is not supported by directory buckets.
+    #  </note>
+    #
+    # You can delete objects by explicitly calling DELETE Object or calling
+    # ([PutBucketLifecycle][7]) to enable Amazon S3 to remove them for you.
+    # If you want to block users or accounts from removing or deleting
+    # objects from your bucket, you must deny them the `s3:DeleteObject`,
+    # `s3:DeleteObjectVersion`, and `s3:PutLifeCycleConfiguration` actions.
+    #
+    # <note markdown="1"> **Directory buckets** - S3 Lifecycle is not supported by directory
+    # buckets.
     #
     #  </note>
     #
@@ -4856,51 +4948,56 @@ module Aws::S3
     #     * <b> <code>s3:DeleteObject</code> </b> - To delete an object from
     #       a bucket, you must always have the `s3:DeleteObject` permission.
     #
-    #       <note markdown="1"> You can also use PutBucketLifecycle to delete objects in Amazon
-    #       S3.
-    #
-    #        </note>
-    #
     #     * <b> <code>s3:DeleteObjectVersion</code> </b> - To delete a
     #       specific version of an object from a versioning-enabled bucket,
     #       you must have the `s3:DeleteObjectVersion` permission.
-    #
-    #     * If you want to block users or accounts from removing or deleting
-    #       objects from your bucket, you must deny them the
-    #       `s3:DeleteObject`, `s3:DeleteObjectVersion`, and
-    #       `s3:PutLifeCycleConfiguration` permissions.
-    #   * **Directory buckets permissions** - To grant access to this API
-    #     operation on a directory bucket, we recommend that you use the
-    #     CreateSession API operation for session-based authorization.
+    #   * **Directory bucket permissions** - To grant access to this API
+    #     operation on a directory bucket, we recommend that you use the [
+    #     `CreateSession` ][8] API operation for session-based
+    #     authorization. Specifically, you grant the
+    #     `s3express:CreateSession` permission to the directory bucket in a
+    #     bucket policy or an IAM identity-based policy. Then, you make the
+    #     `CreateSession` API call on the bucket to obtain a session token.
+    #     With the session token in your request header, you can make API
+    #     requests to this operation. After the session token expires, you
+    #     make another `CreateSession` API call to generate a new session
+    #     token for use. Amazon Web Services CLI or SDKs create session and
+    #     refresh the session token automatically to avoid service
+    #     interruptions when a session expires. For more information about
+    #     authorization, see [ `CreateSession` ][8].
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following action is related to `DeleteObject`:
     #
-    # * [PutObject][5]
+    # * [PutObject][9]
     #
     # ^
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjects.html#DeletingObjects-best-practices
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectDELETE.html#ExampleVersionObjectDelete
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectVersions.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/DeletingObjectsfromVersioningSuspendedBuckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectDELETE.html#ExampleVersionObjectDelete
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
     #
     # @option params [required, String] :bucket
     #   The bucket name of the bucket containing the object.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -5038,15 +5135,6 @@ module Aws::S3
     #   * {Types::DeleteObjectOutput#request_charged #request_charged} => String
     #
     #
-    # @example Example: To delete an object (from a non-versioned bucket)
-    #
-    #   # The following example deletes an object from a non-versioned bucket.
-    #
-    #   resp = client.delete_object({
-    #     bucket: "ExampleBucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
     # @example Example: To delete an object
     #
     #   # The following example deletes an object from an S3 bucket.
@@ -5059,6 +5147,15 @@ module Aws::S3
     #   resp.to_h outputs the following:
     #   {
     #   }
+    #
+    # @example Example: To delete an object (from a non-versioned bucket)
+    #
+    #   # The following example deletes an object from a non-versioned bucket.
+    #
+    #   resp = client.delete_object({
+    #     bucket: "ExampleBucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
     #
     # @example Request syntax with placeholder values
     #
@@ -5233,9 +5330,13 @@ module Aws::S3
     # * **Directory buckets** - For directory buckets, you must make
     #   requests for this API operation to the Zonal endpoint. These
     #   endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][1] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][1] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][2] in the *Amazon
+    #   S3 User Guide*.
     #
     #  </note>
     #
@@ -5253,7 +5354,7 @@ module Aws::S3
     # if there are non-versioned objects you are trying to delete. If you
     # provide an invalid token, whether there are versioned keys in the
     # request or not, the entire Multi-Object Delete request will fail. For
-    # information about MFA Delete, see [MFA Delete][2] in the *Amazon S3
+    # information about MFA Delete, see [MFA Delete][3] in the *Amazon S3
     # User Guide*.
     #
     # <note markdown="1"> **Directory buckets** - MFA delete is not supported by directory
@@ -5275,7 +5376,7 @@ module Aws::S3
     #       you must specify the `s3:DeleteObjectVersion` permission.
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][3] API operation for session-based
+    #     `CreateSession` ][4] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -5286,7 +5387,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][3].
+    #     authorization, see [ `CreateSession` ][4].
     #
     # Content-MD5 request header
     # : * **General purpose bucket** - The Content-MD5 request header is
@@ -5303,40 +5404,41 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `DeleteObjects`:
     #
-    # * [CreateMultipartUpload][4]
+    # * [CreateMultipartUpload][5]
     #
-    # * [UploadPart][5]
+    # * [UploadPart][6]
     #
-    # * [CompleteMultipartUpload][6]
+    # * [CompleteMultipartUpload][7]
     #
-    # * [ListParts][7]
+    # * [ListParts][8]
     #
-    # * [AbortMultipartUpload][8]
+    # * [AbortMultipartUpload][9]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html#MultiFactorAuthenticationDelete
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html#MultiFactorAuthenticationDelete
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
     #
     # @option params [required, String] :bucket
     #   The bucket name containing the objects to delete.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -5471,42 +5573,6 @@ module Aws::S3
     #   * {Types::DeleteObjectsOutput#errors #errors} => Array&lt;Types::Error&gt;
     #
     #
-    # @example Example: To delete multiple object versions from a versioned bucket
-    #
-    #   # The following example deletes objects from a bucket. The request specifies object versions. S3 deletes specific object
-    #   # versions and returns the key and versions of deleted objects in the response.
-    #
-    #   resp = client.delete_objects({
-    #     bucket: "examplebucket", 
-    #     delete: {
-    #       objects: [
-    #         {
-    #           key: "HappyFace.jpg", 
-    #           version_id: "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b", 
-    #         }, 
-    #         {
-    #           key: "HappyFace.jpg", 
-    #           version_id: "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd", 
-    #         }, 
-    #       ], 
-    #       quiet: false, 
-    #     }, 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     deleted: [
-    #       {
-    #         key: "HappyFace.jpg", 
-    #         version_id: "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd", 
-    #       }, 
-    #       {
-    #         key: "HappyFace.jpg", 
-    #         version_id: "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b", 
-    #       }, 
-    #     ], 
-    #   }
-    #
     # @example Example: To delete multiple objects from a versioned bucket
     #
     #   # The following example deletes objects from a bucket. The bucket is versioned, and the request does not specify the
@@ -5539,6 +5605,42 @@ module Aws::S3
     #         delete_marker: true, 
     #         delete_marker_version_id: "iOd_ORxhkKe_e8G8_oSGxt2PjsCZKlkt", 
     #         key: "objectkey2", 
+    #       }, 
+    #     ], 
+    #   }
+    #
+    # @example Example: To delete multiple object versions from a versioned bucket
+    #
+    #   # The following example deletes objects from a bucket. The request specifies object versions. S3 deletes specific object
+    #   # versions and returns the key and versions of deleted objects in the response.
+    #
+    #   resp = client.delete_objects({
+    #     bucket: "examplebucket", 
+    #     delete: {
+    #       objects: [
+    #         {
+    #           key: "HappyFace.jpg", 
+    #           version_id: "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b", 
+    #         }, 
+    #         {
+    #           key: "HappyFace.jpg", 
+    #           version_id: "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd", 
+    #         }, 
+    #       ], 
+    #       quiet: false, 
+    #     }, 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     deleted: [
+    #       {
+    #         key: "HappyFace.jpg", 
+    #         version_id: "yoz3HB.ZhCS_tKVEmIOr7qYyyAaZSKVd", 
+    #       }, 
+    #       {
+    #         key: "HappyFace.jpg", 
+    #         version_id: "2LWg7lQLnY41.maGB5Z6SWW.dcq0vx7b", 
     #       }, 
     #     ], 
     #   }
@@ -6083,7 +6185,7 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following operations are related to `GetBucketEncryption`:
     #
@@ -6107,13 +6209,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][1] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -6490,10 +6593,13 @@ module Aws::S3
     #     <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     #     requests for this API operation to the Regional endpoint. These
     #     endpoints support path-style requests in the format
-    #     `https://s3express-control.region_code.amazonaws.com/bucket-name
+    #     `https://s3express-control.region-code.amazonaws.com/bucket-name
     #     `. Virtual-hosted-style requests aren't supported. For more
-    #     information, see [Regional and Zonal endpoints][5] in the *Amazon
-    #     S3 User Guide*.
+    #     information about endpoints in Availability Zones, see [Regional
+    #     and Zonal endpoints for directory buckets in Availability
+    #     Zones][5] in the *Amazon S3 User Guide*. For more information
+    #     about endpoints in Local Zones, see [Available Local Zone for
+    #     directory buckets][6] in the *Amazon S3 User Guide*.
     #
     #      </note>
     #
@@ -6517,9 +6623,9 @@ module Aws::S3
     #
     # * [GetBucketLifecycle][2]
     #
-    # * [PutBucketLifecycle][6]
+    # * [PutBucketLifecycle][7]
     #
-    # * [DeleteBucketLifecycle][7]
+    # * [DeleteBucketLifecycle][8]
     #
     #
     #
@@ -6528,8 +6634,9 @@ module Aws::S3
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketLifecycle.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket for which to get the lifecycle information.
@@ -7174,9 +7281,13 @@ module Aws::S3
     # <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     # requests for this API operation to the Regional endpoint. These
     # endpoints support path-style requests in the format
-    # `https://s3express-control.region_code.amazonaws.com/bucket-name `.
-    # Virtual-hosted-style requests aren't supported. For more information,
-    # see [Regional and Zonal endpoints][1] in the *Amazon S3 User Guide*.
+    # `https://s3express-control.region-code.amazonaws.com/bucket-name `.
+    # Virtual-hosted-style requests aren't supported. For more information
+    # about endpoints in Availability Zones, see [Regional and Zonal
+    # endpoints for directory buckets in Availability Zones][1] in the
+    # *Amazon S3 User Guide*. For more information about endpoints in Local
+    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -7206,7 +7317,7 @@ module Aws::S3
     #   * **General purpose bucket permissions** - The `s3:GetBucketPolicy`
     #     permission is required in a policy. For more information about
     #     general purpose buckets bucket policies, see [Using Bucket
-    #     Policies and User Policies][2] in the *Amazon S3 User Guide*.
+    #     Policies and User Policies][3] in the *Amazon S3 User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation, you must have the `s3express:GetBucketPolicy`
@@ -7216,48 +7327,50 @@ module Aws::S3
     #     Services account that owns the resource. For more information
     #     about directory bucket policies and permissions, see [Amazon Web
     #     Services Identity and Access Management (IAM) for S3 Express One
-    #     Zone][3] in the *Amazon S3 User Guide*.
+    #     Zone][4] in the *Amazon S3 User Guide*.
     #
     # Example bucket policies
     #
     # : **General purpose buckets example bucket policies** - See [Bucket
-    #   policy examples][4] in the *Amazon S3 User Guide*.
+    #   policy examples][5] in the *Amazon S3 User Guide*.
     #
     #   **Directory bucket example bucket policies** - See [Example bucket
-    #   policies for S3 Express One Zone][5] in the *Amazon S3 User Guide*.
+    #   policies for S3 Express One Zone][6] in the *Amazon S3 User Guide*.
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following action is related to `GetBucketPolicy`:
     #
-    # * [GetObject][6]
+    # * [GetObject][7]
     #
     # ^
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
     #
     # @option params [required, String] :bucket
     #   The bucket name to get the bucket policy for.
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][1] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #   **Access points** - When you use this API operation with an access
     #   point, provide the alias of the access point in place of the bucket
@@ -7860,9 +7973,13 @@ module Aws::S3
     # `/photos/2006/February/sample.jpg`. Also, when you make requests to
     # this API operation, your requests are sent to the Zonal endpoint.
     # These endpoints support virtual-hosted-style requests in the format
-    # `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name `.
-    # Path-style requests are not supported. For more information, see
-    # [Regional and Zonal endpoints][2] in the *Amazon S3 User Guide*.
+    # `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    # `. Path-style requests are not supported. For more information about
+    # endpoints in Availability Zones, see [Regional and Zonal endpoints for
+    # directory buckets in Availability Zones][2] in the *Amazon S3 User
+    # Guide*. For more information about endpoints in Local Zones, see
+    # [Available Local Zone for directory buckets][3] in the *Amazon S3 User
+    # Guide*.
     #
     # Permissions
     # : * **General purpose bucket permissions** - You must have the
@@ -7870,7 +7987,7 @@ module Aws::S3
     #     have the `READ` access to the object (or version). If you grant
     #     `READ` access to the anonymous user, the `GetObject` operation
     #     returns the object without using an authorization header. For more
-    #     information, see [Specifying permissions in a policy][3] in the
+    #     information, see [Specifying permissions in a policy][4] in the
     #     *Amazon S3 User Guide*.
     #
     #     If you include a `versionId` in your request header, you must have
@@ -7894,7 +8011,7 @@ module Aws::S3
     #       returns an HTTP status code `403 Access Denied` error.
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][4] API operation for session-based
+    #     `CreateSession` ][5] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -7905,7 +8022,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][4].
+    #     authorization, see [ `CreateSession` ][5].
     #
     #     If the object is encrypted using SSE-KMS, you must also have the
     #     `kms:GenerateDataKey` and `kms:Decrypt` permissions in IAM
@@ -7918,9 +8035,9 @@ module Aws::S3
     #   storage class, the S3 Intelligent-Tiering Archive Access tier, or
     #   the S3 Intelligent-Tiering Deep Archive Access tier, before you can
     #   retrieve the object you must first restore a copy using
-    #   [RestoreObject][5]. Otherwise, this operation returns an
+    #   [RestoreObject][6]. Otherwise, this operation returns an
     #   `InvalidObjectState` error. For information about restoring archived
-    #   objects, see [Restoring Archived Objects][6] in the *Amazon S3 User
+    #   objects, see [Restoring Archived Objects][7] in the *Amazon S3 User
     #   Guide*.
     #
     #   <b>Directory buckets </b> - For directory buckets, only the S3
@@ -7942,7 +8059,7 @@ module Aws::S3
     #   **Directory buckets** - For directory buckets, there are only two
     #   supported options for server-side encryption: SSE-S3 and SSE-KMS.
     #   SSE-C isn't supported. For more information, see [Protecting data
-    #   with server-side encryption][7] in the *Amazon S3 User Guide*.
+    #   with server-side encryption][8] in the *Amazon S3 User Guide*.
     #
     # Overriding response header values through the request
     #
@@ -7987,25 +8104,26 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `GetObject`:
     #
-    # * [ListBuckets][8]
+    # * [ListBuckets][9]
     #
-    # * [GetObjectAcl][9]
+    # * [GetObjectAcl][10]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html#VirtualHostingSpecifyBucket
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/dev/restoring-objects.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_RestoreObject.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/dev/restoring-objects.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html
     #
     # @option params [String, IO] :response_target
     #   Where to write response data, file path, or IO object.
@@ -8015,10 +8133,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -8352,28 +8470,6 @@ module Aws::S3
     #   * {Types::GetObjectOutput#object_lock_legal_hold_status #object_lock_legal_hold_status} => String
     #
     #
-    # @example Example: To retrieve an object
-    #
-    #   # The following example retrieves an object for an S3 bucket.
-    #
-    #   resp = client.get_object({
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     accept_ranges: "bytes", 
-    #     content_length: 3191, 
-    #     content_type: "image/jpeg", 
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     last_modified: Time.parse("2016-12-15T01:19:41.000Z"), 
-    #     metadata: {
-    #     }, 
-    #     tag_count: 2, 
-    #     version_id: "null", 
-    #   }
-    #
     # @example Example: To retrieve a byte range of an object 
     #
     #   # The following example retrieves an object for an S3 bucket. The request specifies the range header to retrieve a
@@ -8395,6 +8491,28 @@ module Aws::S3
     #     last_modified: Time.parse("2014-10-09T22:57:28.000Z"), 
     #     metadata: {
     #     }, 
+    #     version_id: "null", 
+    #   }
+    #
+    # @example Example: To retrieve an object
+    #
+    #   # The following example retrieves an object for an S3 bucket.
+    #
+    #   resp = client.get_object({
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     accept_ranges: "bytes", 
+    #     content_length: 3191, 
+    #     content_type: "image/jpeg", 
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     last_modified: Time.parse("2016-12-15T01:19:41.000Z"), 
+    #     metadata: {
+    #     }, 
+    #     tag_count: 2, 
     #     version_id: "null", 
     #   }
     #
@@ -8698,9 +8816,13 @@ module Aws::S3
     # <note markdown="1"> **Directory buckets** - For directory buckets, you must make requests
     # for this API operation to the Zonal endpoint. These endpoints support
     # virtual-hosted-style requests in the format
-    # `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name `.
-    # Path-style requests are not supported. For more information, see
-    # [Regional and Zonal endpoints][1] in the *Amazon S3 User Guide*.
+    # `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    # `. Path-style requests are not supported. For more information about
+    # endpoints in Availability Zones, see [Regional and Zonal endpoints for
+    # directory buckets in Availability Zones][1] in the *Amazon S3 User
+    # Guide*. For more information about endpoints in Local Zones, see
+    # [Available Local Zone for directory buckets][2] in the *Amazon S3 User
+    # Guide*.
     #
     #  </note>
     #
@@ -8713,7 +8835,7 @@ module Aws::S3
     #     `s3:GetObjectVersionAttributes` permissions for this operation. If
     #     the bucket is not versioned, you need the `s3:GetObject` and
     #     `s3:GetObjectAttributes` permissions. For more information, see
-    #     [Specifying Permissions in a Policy][2] in the *Amazon S3 User
+    #     [Specifying Permissions in a Policy][3] in the *Amazon S3 User
     #     Guide*. If the object that you request does not exist, the error
     #     Amazon S3 returns depends on whether you also have the
     #     `s3:ListBucket` permission.
@@ -8727,7 +8849,7 @@ module Aws::S3
     #       error.
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][3] API operation for session-based
+    #     `CreateSession` ][4] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -8738,7 +8860,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][3].
+    #     authorization, see [ `CreateSession` ][4].
     #
     #     If the object is encrypted with SSE-KMS, you must also have the
     #     `kms:GenerateDataKey` and `kms:Decrypt` permissions in IAM
@@ -8774,7 +8896,7 @@ module Aws::S3
     #   * `x-amz-server-side-encryption-customer-key-MD5`
     #
     #   For more information about SSE-C, see [Server-Side Encryption (Using
-    #   Customer-Provided Encryption Keys)][4] in the *Amazon S3 User
+    #   Customer-Provided Encryption Keys)][5] in the *Amazon S3 User
     #   Guide*.
     #
     #   <note markdown="1"> **Directory bucket permissions** - For directory buckets, there are
@@ -8786,10 +8908,10 @@ module Aws::S3
     #   encryption in your `CreateSession` requests or `PUT` object
     #   requests. Then, new objects are automatically encrypted with the
     #   desired encryption settings. For more information, see [Protecting
-    #   data with server-side encryption][5] in the *Amazon S3 User Guide*.
+    #   data with server-side encryption][6] in the *Amazon S3 User Guide*.
     #   For more information about the encryption overriding behaviors in
     #   directory buckets, see [Specifying server-side encryption with KMS
-    #   for new object uploads][6].
+    #   for new object uploads][7].
     #
     #    </note>
     #
@@ -8812,7 +8934,7 @@ module Aws::S3
     #
     #     * `If-Unmodified-Since` condition evaluates to `false`.
     #     For more information about conditional requests, see [RFC
-    #     7232][7].
+    #     7232][8].
     #
     #   * If both of the `If-None-Match` and `If-Modified-Since` headers are
     #     present in the request as follows, then Amazon S3 returns the HTTP
@@ -8822,58 +8944,59 @@ module Aws::S3
     #
     #     * `If-Modified-Since` condition evaluates to `true`.
     #     For more information about conditional requests, see [RFC
-    #     7232][7].
+    #     7232][8].
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following actions are related to `GetObjectAttributes`:
     #
-    # * [GetObject][8]
+    # * [GetObject][9]
     #
-    # * [GetObjectAcl][9]
+    # * [GetObjectAcl][10]
     #
-    # * [GetObjectLegalHold][10]
+    # * [GetObjectLegalHold][11]
     #
-    # * [GetObjectLockConfiguration][11]
+    # * [GetObjectLockConfiguration][12]
     #
-    # * [GetObjectRetention][12]
+    # * [GetObjectRetention][13]
     #
-    # * [GetObjectTagging][13]
+    # * [GetObjectTagging][14]
     #
-    # * [HeadObject][14]
+    # * [HeadObject][15]
     #
-    # * [ListParts][15]
+    # * [ListParts][16]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
-    # [7]: https://tools.ietf.org/html/rfc7232
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLegalHold.html
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectRetention.html
-    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html
-    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html
-    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-with-s3-actions.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
+    # [8]: https://tools.ietf.org/html/rfc7232
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAcl.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLegalHold.html
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectLockConfiguration.html
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectRetention.html
+    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectTagging.html
+    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html
+    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket that contains the object.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -9407,27 +9530,6 @@ module Aws::S3
     #   * {Types::GetObjectTaggingOutput#tag_set #tag_set} => Array&lt;Types::Tag&gt;
     #
     #
-    # @example Example: To retrieve tag set of a specific object version
-    #
-    #   # The following example retrieves tag set of an object. The request specifies object version.
-    #
-    #   resp = client.get_object_tagging({
-    #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
-    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     tag_set: [
-    #       {
-    #         key: "Key1", 
-    #         value: "Value1", 
-    #       }, 
-    #     ], 
-    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
-    #   }
-    #
     # @example Example: To retrieve tag set of an object
     #
     #   # The following example retrieves tag set of an object.
@@ -9450,6 +9552,27 @@ module Aws::S3
     #       }, 
     #     ], 
     #     version_id: "null", 
+    #   }
+    #
+    # @example Example: To retrieve tag set of a specific object version
+    #
+    #   # The following example retrieves tag set of an object. The request specifies object version.
+    #
+    #   resp = client.get_object_tagging({
+    #     bucket: "examplebucket", 
+    #     key: "exampleobject", 
+    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     tag_set: [
+    #       {
+    #         key: "Key1", 
+    #         value: "Value1", 
+    #       }, 
+    #     ], 
+    #     version_id: "ydlaNkwWm0SfKJR.T1b1fIdPRbldTYRI", 
     #   }
     #
     # @example Request syntax with placeholder values
@@ -9710,13 +9833,17 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     #   <note markdown="1"> You must make requests for this API operation to the Zonal endpoint.
     #   These endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com`.
-    #   Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][5] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com`.
+    #   Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][5] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][6] in the *Amazon
+    #   S3 User Guide*.
     #
     #    </note>
     #
@@ -9727,16 +9854,17 @@ module Aws::S3
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
     #
     # @option params [required, String] :bucket
     #   The bucket name.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -9810,7 +9938,7 @@ module Aws::S3
     #
     # @example Response structure
     #
-    #   resp.bucket_location_type #=> String, one of "AvailabilityZone"
+    #   resp.bucket_location_type #=> String, one of "AvailabilityZone", "LocalZone"
     #   resp.bucket_location_name #=> String
     #   resp.bucket_region #=> String
     #   resp.access_point_alias #=> Boolean
@@ -9955,22 +10083,26 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     #   <note markdown="1"> For directory buckets, you must make requests for this API operation
     #   to the Zonal endpoint. These endpoints support virtual-hosted-style
     #   requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][6] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][6] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][7] in the *Amazon
+    #   S3 User Guide*.
     #
     #    </note>
     #
     # The following actions are related to `HeadObject`:
     #
-    # * [GetObject][7]
+    # * [GetObject][8]
     #
-    # * [GetObjectAttributes][8]
+    # * [GetObjectAttributes][9]
     #
     #
     #
@@ -9980,18 +10112,19 @@ module Aws::S3
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerSideEncryptionCustomerKeys.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket that contains the object.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -10895,9 +11028,13 @@ module Aws::S3
     # <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     # requests for this API operation to the Regional endpoint. These
     # endpoints support path-style requests in the format
-    # `https://s3express-control.region_code.amazonaws.com/bucket-name `.
-    # Virtual-hosted-style requests aren't supported. For more information,
-    # see [Regional and Zonal endpoints][2] in the *Amazon S3 User Guide*.
+    # `https://s3express-control.region-code.amazonaws.com/bucket-name `.
+    # Virtual-hosted-style requests aren't supported. For more information
+    # about endpoints in Availability Zones, see [Regional and Zonal
+    # endpoints for directory buckets in Availability Zones][2] in the
+    # *Amazon S3 User Guide*. For more information about endpoints in Local
+    # Zones, see [Available Local Zone for directory buckets][3] in the
+    # *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -10909,7 +11046,7 @@ module Aws::S3
     #   operation can only be performed by the Amazon Web Services account
     #   that owns the resource. For more information about directory bucket
     #   policies and permissions, see [Amazon Web Services Identity and
-    #   Access Management (IAM) for S3 Express One Zone][3] in the *Amazon
+    #   Access Management (IAM) for S3 Express One Zone][4] in the *Amazon
     #   S3 User Guide*.
     #
     # HTTP Host header syntax
@@ -10926,7 +11063,8 @@ module Aws::S3
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-overview.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
     #
     # @option params [String] :continuation_token
     #   `ContinuationToken` indicates to Amazon S3 that the list is being
@@ -11014,21 +11152,25 @@ module Aws::S3
     # <note markdown="1"> **Directory buckets** - For directory buckets, you must make requests
     # for this API operation to the Zonal endpoint. These endpoints support
     # virtual-hosted-style requests in the format
-    # `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name `.
-    # Path-style requests are not supported. For more information, see
-    # [Regional and Zonal endpoints][2] in the *Amazon S3 User Guide*.
+    # `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    # `. Path-style requests are not supported. For more information about
+    # endpoints in Availability Zones, see [Regional and Zonal endpoints for
+    # directory buckets in Availability Zones][2] in the *Amazon S3 User
+    # Guide*. For more information about endpoints in Local Zones, see
+    # [Available Local Zone for directory buckets][3] in the *Amazon S3 User
+    # Guide*.
     #
     #  </note>
     #
     # Permissions
     # : * **General purpose bucket permissions** - For information about
     #     permissions required to use the multipart upload API, see
-    #     [Multipart Upload and Permissions][3] in the *Amazon S3 User
+    #     [Multipart Upload and Permissions][4] in the *Amazon S3 User
     #     Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][4] API operation for session-based
+    #     `CreateSession` ][5] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -11039,7 +11181,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][4].
+    #     authorization, see [ `CreateSession` ][5].
     #
     # Sorting of multipart uploads in response
     # : * **General purpose bucket** - In the `ListMultipartUploads`
@@ -11060,41 +11202,42 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `ListMultipartUploads`:
     #
-    # * [CreateMultipartUpload][5]
+    # * [CreateMultipartUpload][6]
     #
-    # * [UploadPart][6]
+    # * [UploadPart][7]
     #
-    # * [CompleteMultipartUpload][7]
+    # * [CompleteMultipartUpload][8]
     #
-    # * [ListParts][8]
+    # * [ListParts][9]
     #
-    # * [AbortMultipartUpload][9]
+    # * [AbortMultipartUpload][10]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket to which the multipart upload was initiated.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -11687,10 +11830,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -11902,9 +12045,13 @@ module Aws::S3
     # * **Directory buckets** - For directory buckets, you must make
     #   requests for this API operation to the Zonal endpoint. These
     #   endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][3] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][3] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][4] in the *Amazon
+    #   S3 User Guide*.
     #
     #  </note>
     #
@@ -11914,12 +12061,12 @@ module Aws::S3
     #     to perform the `s3:ListBucket` action. The bucket owner has this
     #     permission by default and can grant this permission to others. For
     #     more information about permissions, see [Permissions Related to
-    #     Bucket Subresource Operations][4] and [Managing Access Permissions
-    #     to Your Amazon S3 Resources][5] in the *Amazon S3 User Guide*.
+    #     Bucket Subresource Operations][5] and [Managing Access Permissions
+    #     to Your Amazon S3 Resources][6] in the *Amazon S3 User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][6] API operation for session-based
+    #     `CreateSession` ][7] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -11930,7 +12077,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][6].
+    #     authorization, see [ `CreateSession` ][7].
     #
     # Sorting order of returned objects
     # : * **General purpose bucket** - For general purpose buckets,
@@ -11943,41 +12090,42 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # This section describes the latest revision of this action. We
     # recommend that you use this revised API operation for application
     # development. For backward compatibility, Amazon S3 continues to
-    # support the prior version of this API operation, [ListObjects][7].
+    # support the prior version of this API operation, [ListObjects][8].
     #
     # The following operations are related to `ListObjectsV2`:
     #
-    # * [GetObject][8]
+    # * [GetObject][9]
     #
-    # * [PutObject][9]
+    # * [PutObject][10]
     #
-    # * [CreateBucket][10]
+    # * [CreateBucket][11]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/ListingKeysUsingAPIs.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
     #
     # @option params [required, String] :bucket
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -12245,16 +12393,20 @@ module Aws::S3
     # <note markdown="1"> **Directory buckets** - For directory buckets, you must make requests
     # for this API operation to the Zonal endpoint. These endpoints support
     # virtual-hosted-style requests in the format
-    # `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name `.
-    # Path-style requests are not supported. For more information, see
-    # [Regional and Zonal endpoints][3] in the *Amazon S3 User Guide*.
+    # `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    # `. Path-style requests are not supported. For more information about
+    # endpoints in Availability Zones, see [Regional and Zonal endpoints for
+    # directory buckets in Availability Zones][3] in the *Amazon S3 User
+    # Guide*. For more information about endpoints in Local Zones, see
+    # [Available Local Zone for directory buckets][4] in the *Amazon S3 User
+    # Guide*.
     #
     #  </note>
     #
     # Permissions
     # : * **General purpose bucket permissions** - For information about
     #     permissions required to use the multipart upload API, see
-    #     [Multipart Upload and Permissions][4] in the *Amazon S3 User
+    #     [Multipart Upload and Permissions][5] in the *Amazon S3 User
     #     Guide*.
     #
     #     If the upload was created using server-side encryption with Key
@@ -12265,7 +12417,7 @@ module Aws::S3
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][5] API operation for session-based
+    #     `CreateSession` ][6] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -12276,49 +12428,50 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][5].
+    #     authorization, see [ `CreateSession` ][6].
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `ListParts`:
     #
     # * [CreateMultipartUpload][1]
     #
-    # * [UploadPart][6]
+    # * [UploadPart][7]
     #
-    # * [CompleteMultipartUpload][7]
+    # * [CompleteMultipartUpload][8]
     #
-    # * [AbortMultipartUpload][8]
+    # * [AbortMultipartUpload][9]
     #
-    # * [GetObjectAttributes][9]
+    # * [GetObjectAttributes][10]
     #
-    # * [ListMultipartUploads][10]
+    # * [ListMultipartUploads][11]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
     # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObjectAttributes.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket to which the parts are being uploaded.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -13255,9 +13408,13 @@ module Aws::S3
     # <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     # requests for this API operation to the Regional endpoint. These
     # endpoints support path-style requests in the format
-    # `https://s3express-control.region_code.amazonaws.com/bucket-name `.
-    # Virtual-hosted-style requests aren't supported. For more information,
-    # see [Regional and Zonal endpoints][1] in the *Amazon S3 User Guide*.
+    # `https://s3express-control.region-code.amazonaws.com/bucket-name `.
+    # Virtual-hosted-style requests aren't supported. For more information
+    # about endpoints in Availability Zones, see [Regional and Zonal
+    # endpoints for directory buckets in Availability Zones][1] in the
+    # *Amazon S3 User Guide*. For more information about endpoints in Local
+    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -13271,12 +13428,12 @@ module Aws::S3
     #     keys (SSE-KMS) or dual-layer server-side encryption with Amazon
     #     Web Services KMS keys (DSSE-KMS). If you specify default
     #     encryption by using SSE-KMS, you can also configure [Amazon S3
-    #     Bucket Keys][2]. For information about the bucket default
-    #     encryption feature, see [Amazon S3 Bucket Default Encryption][3]
+    #     Bucket Keys][3]. For information about the bucket default
+    #     encryption feature, see [Amazon S3 Bucket Default Encryption][4]
     #     in the *Amazon S3 User Guide*.
     #
     #   * If you use PutBucketEncryption to set your [default bucket
-    #     encryption][3] to SSE-KMS, you should verify that your KMS key ID
+    #     encryption][4] to SSE-KMS, you should verify that your KMS key ID
     #     is correct. Amazon S3 doesn't validate the KMS key ID provided in
     #     PutBucketEncryption requests.
     # * <b>Directory buckets </b> - You can optionally configure default
@@ -13290,28 +13447,28 @@ module Aws::S3
     #     encrypted with the desired encryption settings. For more
     #     information about the encryption overriding behaviors in directory
     #     buckets, see [Specifying server-side encryption with KMS for new
-    #     object uploads][4].
+    #     object uploads][5].
     #
     #   * Your SSE-KMS configuration can only support 1 [customer managed
-    #     key][5] per directory bucket for the lifetime of the bucket. The
-    #     [Amazon Web Services managed key][6] (`aws/s3`) isn't supported.
+    #     key][6] per directory bucket for the lifetime of the bucket. The
+    #     [Amazon Web Services managed key][7] (`aws/s3`) isn't supported.
     #
     #   * S3 Bucket Keys are always enabled for `GET` and `PUT` operations
     #     in a directory bucket and can’t be disabled. S3 Bucket Keys
     #     aren't supported, when you copy SSE-KMS encrypted objects from
     #     general purpose buckets to directory buckets, from directory
     #     buckets to general purpose buckets, or between directory buckets,
-    #     through [CopyObject][7], [UploadPartCopy][8], [the Copy operation
-    #     in Batch Operations][9], or [the import jobs][10]. In this case,
+    #     through [CopyObject][8], [UploadPartCopy][9], [the Copy operation
+    #     in Batch Operations][10], or [the import jobs][11]. In this case,
     #     Amazon S3 makes a call to KMS every time a copy request is made
     #     for a KMS-encrypted object.
     #
-    #   * When you specify an [KMS customer managed key][5] for encryption
+    #   * When you specify an [KMS customer managed key][6] for encryption
     #     in your directory bucket, only use the key ID or key ARN. The key
     #     alias format of the KMS key isn't supported.
     #
     #   * For directory buckets, if you use PutBucketEncryption to set your
-    #     [default bucket encryption][3] to SSE-KMS, Amazon S3 validates the
+    #     [default bucket encryption][4] to SSE-KMS, Amazon S3 validates the
     #     KMS key ID provided in PutBucketEncryption requests.
     #
     #  </note>
@@ -13324,7 +13481,7 @@ module Aws::S3
     #
     #  Also, this action requires Amazon Web Services Signature Version 4.
     # For more information, see [ Authenticating Requests (Amazon Web
-    # Services Signature Version 4)][11].
+    # Services Signature Version 4)][12].
     #
     # Permissions
     # : * **General purpose bucket permissions** - The
@@ -13332,8 +13489,8 @@ module Aws::S3
     #     policy. The bucket owner has this permission by default. The
     #     bucket owner can grant this permission to others. For more
     #     information about permissions, see [Permissions Related to Bucket
-    #     Operations][12] and [Managing Access Permissions to Your Amazon S3
-    #     Resources][13] in the *Amazon S3 User Guide*.
+    #     Operations][13] and [Managing Access Permissions to Your Amazon S3
+    #     Resources][14] in the *Amazon S3 User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation, you must have the
@@ -13343,7 +13500,7 @@ module Aws::S3
     #     only be performed by the Amazon Web Services account that owns the
     #     resource. For more information about directory bucket policies and
     #     permissions, see [Amazon Web Services Identity and Access
-    #     Management (IAM) for S3 Express One Zone][14] in the *Amazon S3
+    #     Management (IAM) for S3 Express One Zone][15] in the *Amazon S3
     #     User Guide*.
     #
     #     To set a directory bucket default encryption with SSE-KMS, you
@@ -13354,32 +13511,33 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following operations are related to `PutBucketEncryption`:
     #
-    # * [GetBucketEncryption][15]
+    # * [GetBucketEncryption][16]
     #
-    # * [DeleteBucketEncryption][16]
+    # * [DeleteBucketEncryption][17]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-key.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
-    # [5]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk
-    # [6]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources
-    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
-    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html
-    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketEncryption.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-key.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/bucket-encryption.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-specifying-kms-encryption.html
+    # [6]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#customer-cmk
+    # [7]: https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#aws-managed-cmk
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/directory-buckets-objects-Batch-Ops
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-import-job
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-with-s3-actions.html#using-with-s3-actions-related-to-bucket-subresources
+    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
+    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html
+    # [17]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketEncryption.html
     #
     # @option params [required, String] :bucket
     #   Specifies default encryption for a bucket using server-side encryption
@@ -13387,13 +13545,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][1] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -13912,6 +14071,16 @@ module Aws::S3
     # lifecycle configuration. For information about lifecycle
     # configuration, see [Managing your storage lifecycle][1].
     #
+    # <note markdown="1"> Bucket lifecycle configuration now supports specifying a lifecycle
+    # rule using an object key name prefix, one or more object tags, object
+    # size, or any combination of these. Accordingly, this section describes
+    # the latest API. The previous version of the API supported filtering
+    # based only on an object key name prefix, which is supported for
+    # backward compatibility. For the related API description, see
+    # [PutBucketLifecycle][2].
+    #
+    #  </note>
+    #
     # Rules
     # Permissions
     # HTTP Host header syntax
@@ -13992,10 +14161,13 @@ module Aws::S3
     #     <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     #     requests for this API operation to the Regional endpoint. These
     #     endpoints support path-style requests in the format
-    #     `https://s3express-control.region_code.amazonaws.com/bucket-name
+    #     `https://s3express-control.region-code.amazonaws.com/bucket-name
     #     `. Virtual-hosted-style requests aren't supported. For more
-    #     information, see [Regional and Zonal endpoints][7] in the *Amazon
-    #     S3 User Guide*.
+    #     information about endpoints in Availability Zones, see [Regional
+    #     and Zonal endpoints for directory buckets in Availability
+    #     Zones][7] in the *Amazon S3 User Guide*. For more information
+    #     about endpoints in Local Zones, see [Available Local Zone for
+    #     directory buckets][8] in the *Amazon S3 User Guide*.
     #
     #      </note>
     #
@@ -14005,9 +14177,9 @@ module Aws::S3
     #   The following operations are related to
     #   `PutBucketLifecycleConfiguration`:
     #
-    #   * [GetBucketLifecycleConfiguration][8]
+    #   * [GetBucketLifecycleConfiguration][9]
     #
-    #   * [DeleteBucketLifecycle][9]
+    #   * [DeleteBucketLifecycle][10]
     #
     #
     #
@@ -14018,8 +14190,9 @@ module Aws::S3
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-access-control.html
     # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
     # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLifecycleConfiguration.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketLifecycle.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket for which to set the configuration.
@@ -14816,9 +14989,13 @@ module Aws::S3
     # <note markdown="1"> <b>Directory buckets </b> - For directory buckets, you must make
     # requests for this API operation to the Regional endpoint. These
     # endpoints support path-style requests in the format
-    # `https://s3express-control.region_code.amazonaws.com/bucket-name `.
-    # Virtual-hosted-style requests aren't supported. For more information,
-    # see [Regional and Zonal endpoints][1] in the *Amazon S3 User Guide*.
+    # `https://s3express-control.region-code.amazonaws.com/bucket-name `.
+    # Virtual-hosted-style requests aren't supported. For more information
+    # about endpoints in Availability Zones, see [Regional and Zonal
+    # endpoints for directory buckets in Availability Zones][1] in the
+    # *Amazon S3 User Guide*. For more information about endpoints in Local
+    # Zones, see [Available Local Zone for directory buckets][2] in the
+    # *Amazon S3 User Guide*.
     #
     #  </note>
     #
@@ -14848,7 +15025,7 @@ module Aws::S3
     #   * **General purpose bucket permissions** - The `s3:PutBucketPolicy`
     #     permission is required in a policy. For more information about
     #     general purpose buckets bucket policies, see [Using Bucket
-    #     Policies and User Policies][2] in the *Amazon S3 User Guide*.
+    #     Policies and User Policies][3] in the *Amazon S3 User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation, you must have the `s3express:PutBucketPolicy`
@@ -14858,49 +15035,51 @@ module Aws::S3
     #     Services account that owns the resource. For more information
     #     about directory bucket policies and permissions, see [Amazon Web
     #     Services Identity and Access Management (IAM) for S3 Express One
-    #     Zone][3] in the *Amazon S3 User Guide*.
+    #     Zone][4] in the *Amazon S3 User Guide*.
     #
     # Example bucket policies
     #
     # : **General purpose buckets example bucket policies** - See [Bucket
-    #   policy examples][4] in the *Amazon S3 User Guide*.
+    #   policy examples][5] in the *Amazon S3 User Guide*.
     #
     #   **Directory bucket example bucket policies** - See [Example bucket
-    #   policies for S3 Express One Zone][5] in the *Amazon S3 User Guide*.
+    #   policies for S3 Express One Zone][6] in the *Amazon S3 User Guide*.
     #
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is
-    #   `s3express-control.region.amazonaws.com`.
+    #   `s3express-control.region-code.amazonaws.com`.
     #
     # The following operations are related to `PutBucketPolicy`:
     #
-    # * [CreateBucket][6]
+    # * [CreateBucket][7]
     #
-    # * [DeleteBucket][7]
+    # * [DeleteBucket][8]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/using-iam-policies.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/example-bucket-policies.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucket.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucket.html
     #
     # @option params [required, String] :bucket
     #   The name of the bucket.
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][1] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][1] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #
@@ -15838,9 +16017,13 @@ module Aws::S3
     # * **Directory buckets** - For directory buckets, you must make
     #   requests for this API operation to the Zonal endpoint. These
     #   endpoints support virtual-hosted-style requests in the format
-    #   `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name
-    #   `. Path-style requests are not supported. For more information, see
-    #   [Regional and Zonal endpoints][1] in the *Amazon S3 User Guide*.
+    #   `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    #   `. Path-style requests are not supported. For more information about
+    #   endpoints in Availability Zones, see [Regional and Zonal endpoints
+    #   for directory buckets in Availability Zones][1] in the *Amazon S3
+    #   User Guide*. For more information about endpoints in Local Zones,
+    #   see [Available Local Zone for directory buckets][2] in the *Amazon
+    #   S3 User Guide*.
     #
     #  </note>
     #
@@ -15850,7 +16033,7 @@ module Aws::S3
     # modify this behavior:
     #
     # * **S3 Object Lock** - To prevent objects from being deleted or
-    #   overwritten, you can use [Amazon S3 Object Lock][2] in the *Amazon
+    #   overwritten, you can use [Amazon S3 Object Lock][3] in the *Amazon
     #   S3 User Guide*.
     #
     #   <note markdown="1"> This functionality is not supported for directory buckets.
@@ -15864,9 +16047,9 @@ module Aws::S3
     #   automatically generates a unique version ID of that object being
     #   stored in Amazon S3. You can retrieve, replace, or delete any
     #   version of the object. For more information about versioning, see
-    #   [Adding Objects to Versioning-Enabled Buckets][3] in the *Amazon S3
+    #   [Adding Objects to Versioning-Enabled Buckets][4] in the *Amazon S3
     #   User Guide*. For information about returning the versioning state of
-    #   a bucket, see [GetBucketVersioning][4].
+    #   a bucket, see [GetBucketVersioning][5].
     #
     #   <note markdown="1"> This functionality is not supported for directory buckets.
     #
@@ -15890,7 +16073,7 @@ module Aws::S3
     #       `s3:PutObjectTagging`.
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][5] API operation for session-based
+    #     `CreateSession` ][6] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -15901,7 +16084,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][5].
+    #     authorization, see [ `CreateSession` ][6].
     #
     #     If the object is encrypted with SSE-KMS, you must also have the
     #     `kms:GenerateDataKey` and `kms:Decrypt` permissions in IAM
@@ -15922,23 +16105,24 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # For more information about related Amazon S3 APIs, see the following:
     #
-    # * [CopyObject][6]
+    # * [CopyObject][7]
     #
-    # * [DeleteObject][7]
+    # * [DeleteObject][8]
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html
-    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/AddingObjectstoVersioningEnabledBuckets.html
-    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html
-    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/object-lock.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/AddingObjectstoVersioningEnabledBuckets.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketVersioning.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html
     #
     # @option params [String] :acl
     #   The canned ACL to apply to the object. For more information, see
@@ -15986,10 +16170,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -16593,61 +16777,6 @@ module Aws::S3
     #   * {Types::PutObjectOutput#request_charged #request_charged} => String
     #
     #
-    # @example Example: To upload an object and specify server-side encryption and object tags
-    #
-    #   # The following example uploads an object. The request specifies the optional server-side encryption option. The request
-    #   # also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.
-    #
-    #   resp = client.put_object({
-    #     body: "filetoupload", 
-    #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
-    #     server_side_encryption: "AES256", 
-    #     tagging: "key1=value1&key2=value2", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     server_side_encryption: "AES256", 
-    #     version_id: "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt", 
-    #   }
-    #
-    # @example Example: To upload an object
-    #
-    #   # The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file
-    #   # syntax. S3 returns VersionId of the newly created object.
-    #
-    #   resp = client.put_object({
-    #     body: "HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
-    #   }
-    #
-    # @example Example: To upload an object and specify optional tags
-    #
-    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
-    #   # S3 returns version ID of the newly created object.
-    #
-    #   resp = client.put_object({
-    #     body: "c:\\HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #     tagging: "key1=value1&key2=value2", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
-    #   }
-    #
     # @example Example: To upload object and specify user-defined metadata
     #
     #   # The following example creates an object. The request also specifies optional metadata. If the bucket is versioning
@@ -16669,22 +16798,22 @@ module Aws::S3
     #     version_id: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0", 
     #   }
     #
-    # @example Example: To upload an object and specify canned ACL.
+    # @example Example: To upload an object and specify optional tags
     #
-    #   # The following example uploads and object. The request specifies optional canned ACL (access control list) to all READ
-    #   # access to authenticated users. If the bucket is versioning enabled, S3 returns version ID in response.
+    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
+    #   # S3 returns version ID of the newly created object.
     #
     #   resp = client.put_object({
-    #     acl: "authenticated-read", 
-    #     body: "filetoupload", 
+    #     body: "c:\\HappyFace.jpg", 
     #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
+    #     key: "HappyFace.jpg", 
+    #     tagging: "key1=value1&key2=value2", 
     #   })
     #
     #   resp.to_h outputs the following:
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "Kirh.unyZwjQ69YxcQLA8z4F5j3kJJKr", 
+    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
     #   }
     #
     # @example Example: To upload an object (specify optional headers)
@@ -16705,6 +16834,61 @@ module Aws::S3
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
     #     server_side_encryption: "AES256", 
     #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
+    #   }
+    #
+    # @example Example: To upload an object and specify canned ACL.
+    #
+    #   # The following example uploads and object. The request specifies optional canned ACL (access control list) to all READ
+    #   # access to authenticated users. If the bucket is versioning enabled, S3 returns version ID in response.
+    #
+    #   resp = client.put_object({
+    #     acl: "authenticated-read", 
+    #     body: "filetoupload", 
+    #     bucket: "examplebucket", 
+    #     key: "exampleobject", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "Kirh.unyZwjQ69YxcQLA8z4F5j3kJJKr", 
+    #   }
+    #
+    # @example Example: To upload an object
+    #
+    #   # The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file
+    #   # syntax. S3 returns VersionId of the newly created object.
+    #
+    #   resp = client.put_object({
+    #     body: "HappyFace.jpg", 
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
+    #   }
+    #
+    # @example Example: To upload an object and specify server-side encryption and object tags
+    #
+    #   # The following example uploads an object. The request specifies the optional server-side encryption option. The request
+    #   # also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.
+    #
+    #   resp = client.put_object({
+    #     body: "filetoupload", 
+    #     bucket: "examplebucket", 
+    #     key: "exampleobject", 
+    #     server_side_encryption: "AES256", 
+    #     tagging: "key1=value1&key2=value2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     server_side_encryption: "AES256", 
+    #     version_id: "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt", 
     #   }
     #
     # @example Example: To create an object.
@@ -18684,9 +18868,13 @@ module Aws::S3
     # <note markdown="1"> **Directory buckets** - For directory buckets, you must make requests
     # for this API operation to the Zonal endpoint. These endpoints support
     # virtual-hosted-style requests in the format
-    # `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name `.
-    # Path-style requests are not supported. For more information, see
-    # [Regional and Zonal endpoints][5] in the *Amazon S3 User Guide*.
+    # `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    # `. Path-style requests are not supported. For more information about
+    # endpoints in Availability Zones, see [Regional and Zonal endpoints for
+    # directory buckets in Availability Zones][5] in the *Amazon S3 User
+    # Guide*. For more information about endpoints in Local Zones, see
+    # [Available Local Zone for directory buckets][6] in the *Amazon S3 User
+    # Guide*.
     #
     #  </note>
     #
@@ -18703,15 +18891,15 @@ module Aws::S3
     #     These permissions are required because Amazon S3 must decrypt and
     #     read data from the encrypted file parts before it completes the
     #     multipart upload. For more information about KMS permissions, see
-    #     [Protecting data using server-side encryption with KMS][6] in the
+    #     [Protecting data using server-side encryption with KMS][7] in the
     #     *Amazon S3 User Guide*. For information about the permissions
     #     required to use the multipart upload API, see [Multipart upload
-    #     and permissions][7] and [Multipart upload API and permissions][8]
+    #     and permissions][8] and [Multipart upload API and permissions][9]
     #     in the *Amazon S3 User Guide*.
     #
     #   * **Directory bucket permissions** - To grant access to this API
     #     operation on a directory bucket, we recommend that you use the [
-    #     `CreateSession` ][9] API operation for session-based
+    #     `CreateSession` ][10] API operation for session-based
     #     authorization. Specifically, you grant the
     #     `s3express:CreateSession` permission to the directory bucket in a
     #     bucket policy or an IAM identity-based policy. Then, you make the
@@ -18722,7 +18910,7 @@ module Aws::S3
     #     token for use. Amazon Web Services CLI or SDKs create session and
     #     refresh the session token automatically to avoid service
     #     interruptions when a session expires. For more information about
-    #     authorization, see [ `CreateSession` ][9].
+    #     authorization, see [ `CreateSession` ][10].
     #
     #     If the object is encrypted with SSE-KMS, you must also have the
     #     `kms:GenerateDataKey` and `kms:Decrypt` permissions in IAM
@@ -18738,7 +18926,7 @@ module Aws::S3
     #   then Amazon Web Services S3 uses the `x-amz-content-sha256` header
     #   as a checksum instead of `Content-MD5`. For more information see
     #   [Authenticating Requests: Using the Authorization Header (Amazon Web
-    #   Services Signature Version 4)][10].
+    #   Services Signature Version 4)][11].
     #
     #   <note markdown="1"> **Directory buckets** - MD5 is not supported by directory buckets.
     #   You can use checksum algorithms to check object integrity.
@@ -18778,7 +18966,7 @@ module Aws::S3
     #     * x-amz-server-side-encryption-customer-key
     #
     #     * x-amz-server-side-encryption-customer-key-MD5
-    #     For more information, see [Using Server-Side Encryption][11] in
+    #     For more information, see [Using Server-Side Encryption][12] in
     #     the *Amazon S3 User Guide*.
     #
     #   * <b>Directory buckets </b> - For directory buckets, there are only
@@ -18800,19 +18988,19 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `UploadPart`:
     #
     # * [CreateMultipartUpload][2]
     #
-    # * [CompleteMultipartUpload][12]
+    # * [CompleteMultipartUpload][13]
     #
-    # * [AbortMultipartUpload][13]
+    # * [AbortMultipartUpload][14]
     #
-    # * [ListParts][14]
+    # * [ListParts][15]
     #
-    # * [ListMultipartUploads][15]
+    # * [ListMultipartUploads][16]
     #
     #
     #
@@ -18821,16 +19009,17 @@ module Aws::S3
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/qfacts.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuoverview.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html#mpuAndPermissions
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
-    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
-    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
-    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html#mpuAndPermissions
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateSession.html
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-auth-using-authorization-header.html
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingServerSideEncryption.html
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
+    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
+    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
+    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
     #
     # @option params [String, StringIO, File] :body
     #   Object data.
@@ -18840,10 +19029,10 @@ module Aws::S3
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
@@ -19124,9 +19313,13 @@ module Aws::S3
     # <note markdown="1"> **Directory buckets** - For directory buckets, you must make requests
     # for this API operation to the Zonal endpoint. These endpoints support
     # virtual-hosted-style requests in the format
-    # `https://bucket_name.s3express-az_id.region.amazonaws.com/key-name `.
-    # Path-style requests are not supported. For more information, see
-    # [Regional and Zonal endpoints][5] in the *Amazon S3 User Guide*.
+    # `https://bucket-name.s3express-zone-id.region-code.amazonaws.com/key-name
+    # `. Path-style requests are not supported. For more information about
+    # endpoints in Availability Zones, see [Regional and Zonal endpoints for
+    # directory buckets in Availability Zones][5] in the *Amazon S3 User
+    # Guide*. For more information about endpoints in Local Zones, see
+    # [Available Local Zone for directory buckets][6] in the *Amazon S3 User
+    # Guide*.
     #
     #  </note>
     #
@@ -19136,7 +19329,7 @@ module Aws::S3
     #   using IAM credentials (access key ID and secret access key for the
     #   IAM identities). All headers with the `x-amz-` prefix, including
     #   `x-amz-copy-source`, must be signed. For more information, see [REST
-    #   Authentication][6].
+    #   Authentication][7].
     #
     #   **Directory buckets** - You must use IAM credentials to authenticate
     #   and authorize your access to the `UploadPartCopy` API operation,
@@ -19173,11 +19366,11 @@ module Aws::S3
     #       permissions are required because Amazon S3 must decrypt and read
     #       data from the encrypted file parts before it completes the
     #       multipart upload. For more information about KMS permissions,
-    #       see [Protecting data using server-side encryption with KMS][7]
+    #       see [Protecting data using server-side encryption with KMS][8]
     #       in the *Amazon S3 User Guide*. For information about the
     #       permissions required to use the multipart upload API, see
-    #       [Multipart upload and permissions][8] and [Multipart upload API
-    #       and permissions][9] in the *Amazon S3 User Guide*.
+    #       [Multipart upload and permissions][9] and [Multipart upload API
+    #       and permissions][10] in the *Amazon S3 User Guide*.
     #   * **Directory bucket permissions** - You must have permissions in a
     #     bucket policy or an IAM identity-based policy based on the source
     #     and destination bucket types in an `UploadPartCopy` operation.
@@ -19200,14 +19393,14 @@ module Aws::S3
     #     identity-based policies and KMS key policies for the KMS key.
     #
     #     For example policies, see [Example bucket policies for S3 Express
-    #     One Zone][10] and [Amazon Web Services Identity and Access
+    #     One Zone][11] and [Amazon Web Services Identity and Access
     #     Management (IAM) identity-based policies for S3 Express One
-    #     Zone][11] in the *Amazon S3 User Guide*.
+    #     Zone][12] in the *Amazon S3 User Guide*.
     #
     # Encryption
     # : * <b>General purpose buckets </b> - For information about using
     #     server-side encryption with customer-provided encryption keys with
-    #     the `UploadPartCopy` operation, see [CopyObject][12] and
+    #     the `UploadPartCopy` operation, see [CopyObject][13] and
     #     [UploadPart][2].
     #
     #   * <b>Directory buckets </b> - For directory buckets, there are only
@@ -19215,7 +19408,7 @@ module Aws::S3
     #     encryption with Amazon S3 managed keys (SSE-S3) (`AES256`) and
     #     server-side encryption with KMS keys (SSE-KMS) (`aws:kms`). For
     #     more information, see [Protecting data with server-side
-    #     encryption][13] in the *Amazon S3 User Guide*.
+    #     encryption][14] in the *Amazon S3 User Guide*.
     #
     #     <note markdown="1"> For directory buckets, when you perform a `CreateMultipartUpload`
     #     operation and an `UploadPartCopy` operation, the request headers
@@ -19227,7 +19420,7 @@ module Aws::S3
     #     S3 Bucket Keys aren't supported, when you copy SSE-KMS encrypted
     #     objects from general purpose buckets to directory buckets, from
     #     directory buckets to general purpose buckets, or between directory
-    #     buckets, through [UploadPartCopy][14]. In this case, Amazon S3
+    #     buckets, through [UploadPartCopy][15]. In this case, Amazon S3
     #     makes a call to KMS every time a copy request is made for a
     #     KMS-encrypted object.
     #
@@ -19249,21 +19442,21 @@ module Aws::S3
     # HTTP Host header syntax
     #
     # : <b>Directory buckets </b> - The HTTP Host header syntax is `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`.
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`.
     #
     # The following operations are related to `UploadPartCopy`:
     #
-    # * [CreateMultipartUpload][15]
+    # * [CreateMultipartUpload][16]
     #
     # * [UploadPart][2]
     #
-    # * [CompleteMultipartUpload][16]
+    # * [CompleteMultipartUpload][17]
     #
-    # * [AbortMultipartUpload][17]
+    # * [AbortMultipartUpload][18]
     #
-    # * [ListParts][18]
+    # * [ListParts][19]
     #
-    # * [ListMultipartUploads][19]
+    # * [ListMultipartUploads][20]
     #
     #
     #
@@ -19272,33 +19465,42 @@ module Aws::S3
     # [3]: https://docs.aws.amazon.com/AmazonS3/latest/dev/uploadobjusingmpu.html
     # [4]: https://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectOperations.html
     # [5]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-Regions-and-Zones.html
-    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
-    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
-    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
-    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html#mpuAndPermissions
-    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
-    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
-    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
-    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
-    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
-    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
-    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
-    # [17]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
-    # [18]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
-    # [19]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
+    # [6]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-lzs-for-directory-buckets.html
+    # [7]: https://docs.aws.amazon.com/AmazonS3/latest/dev/RESTAuthentication.html
+    # [8]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html
+    # [9]: https://docs.aws.amazon.com/AmazonS3/latest/dev/mpuAndPermissions.html
+    # [10]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html#mpuAndPermissions
+    # [11]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-example-bucket-policies.html
+    # [12]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-security-iam-identity-policies.html
+    # [13]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
+    # [14]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-express-serv-side-encryption.html
+    # [15]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html
+    # [16]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html
+    # [17]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html
+    # [18]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html
+    # [19]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListParts.html
+    # [20]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListMultipartUploads.html
     #
     # @option params [required, String] :bucket
     #   The bucket name.
     #
     #   **Directory buckets** - When you use this operation with a directory
     #   bucket, you must use virtual-hosted-style requests in the format `
-    #   Bucket_name.s3express-az_id.region.amazonaws.com`. Path-style requests
-    #   are not supported. Directory bucket names must be unique in the chosen
-    #   Availability Zone. Bucket names must follow the format `
-    #   bucket_base_name--az-id--x-s3` (for example, `
+    #   Bucket-name.s3express-zone-id.region-code.amazonaws.com`. Path-style
+    #   requests are not supported. Directory bucket names must be unique in
+    #   the chosen Zone (Availability Zone or Local Zone). Bucket names must
+    #   follow the format ` bucket-base-name--zone-id--x-s3` (for example, `
     #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
     #   naming restrictions, see [Directory bucket naming rules][1] in the
     #   *Amazon S3 User Guide*.
+    #
+    #   <note markdown="1"> Copying objects across different Amazon Web Services Regions isn't
+    #   supported when the source or destination bucket is in Amazon Web
+    #   Services Local Zones. The source and destination buckets must have the
+    #   same parent Amazon Web Services Region. Otherwise, you get an HTTP
+    #   `400 Bad Request` error with the error code `InvalidRequest`.
+    #
+    #    </note>
     #
     #   **Access points** - When you use this action with an access point, you
     #   must provide the alias of the access point in place of the bucket name
@@ -20071,7 +20273,7 @@ module Aws::S3
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3'
-      context[:gem_version] = '1.174.0'
+      context[:gem_version] = '1.175.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

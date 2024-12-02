@@ -192,7 +192,10 @@ module Aws
                             },
                             ?kubernetes_network_config: {
                               service_ipv_4_cidr: ::String?,
-                              ip_family: ("ipv4" | "ipv6")?
+                              ip_family: ("ipv4" | "ipv6")?,
+                              elastic_load_balancing: {
+                                enabled: bool?
+                              }?
                             },
                             ?logging: {
                               cluster_logging: Array[
@@ -229,6 +232,28 @@ module Aws
                             },
                             ?zonal_shift_config: {
                               enabled: bool?
+                            },
+                            ?remote_network_config: {
+                              remote_node_networks: Array[
+                                {
+                                  cidrs: Array[::String]?
+                                },
+                              ]?,
+                              remote_pod_networks: Array[
+                                {
+                                  cidrs: Array[::String]?
+                                },
+                              ]?
+                            },
+                            ?compute_config: {
+                              enabled: bool?,
+                              node_pools: Array[::String]?,
+                              node_role_arn: ::String?
+                            },
+                            ?storage_config: {
+                              block_storage: {
+                                enabled: bool?
+                              }?
                             }
                           ) -> _CreateClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateClusterResponseSuccess
@@ -871,6 +896,23 @@ module Aws
                                    },
                                    ?zonal_shift_config: {
                                      enabled: bool?
+                                   },
+                                   ?compute_config: {
+                                     enabled: bool?,
+                                     node_pools: Array[::String]?,
+                                     node_role_arn: ::String?
+                                   },
+                                   ?kubernetes_network_config: {
+                                     service_ipv_4_cidr: ::String?,
+                                     ip_family: ("ipv4" | "ipv6")?,
+                                     elastic_load_balancing: {
+                                       enabled: bool?
+                                     }?
+                                   },
+                                   ?storage_config: {
+                                     block_storage: {
+                                       enabled: bool?
+                                     }?
                                    }
                                  ) -> _UpdateClusterConfigResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateClusterConfigResponseSuccess

@@ -98,6 +98,7 @@ module Aws::FSx
       attr_accessor source_backup_region: ::String
       attr_accessor resource_type: ("FILE_SYSTEM" | "VOLUME")
       attr_accessor volume: Types::Volume
+      attr_accessor size_in_bytes: ::Integer
       SENSITIVE: []
     end
 
@@ -272,7 +273,7 @@ module Aws::FSx
       attr_accessor tags: ::Array[Types::Tag]
       attr_accessor windows_configuration: Types::CreateFileSystemWindowsConfiguration
       attr_accessor lustre_configuration: Types::CreateFileSystemLustreConfiguration
-      attr_accessor storage_type: ("SSD" | "HDD")
+      attr_accessor storage_type: ("SSD" | "HDD" | "INTELLIGENT_TIERING")
       attr_accessor kms_key_id: ::String
       attr_accessor file_system_type_version: ::String
       attr_accessor open_zfs_configuration: Types::CreateFileSystemOpenZFSConfiguration
@@ -340,6 +341,7 @@ module Aws::FSx
       attr_accessor preferred_subnet_id: ::String
       attr_accessor endpoint_ip_address_range: ::String
       attr_accessor route_table_ids: ::Array[::String]
+      attr_accessor read_cache_configuration: Types::OpenZFSReadCacheConfiguration
       SENSITIVE: []
     end
 
@@ -347,7 +349,7 @@ module Aws::FSx
       attr_accessor client_request_token: ::String
       attr_accessor file_system_type: ("WINDOWS" | "LUSTRE" | "ONTAP" | "OPENZFS")
       attr_accessor storage_capacity: ::Integer
-      attr_accessor storage_type: ("SSD" | "HDD")
+      attr_accessor storage_type: ("SSD" | "HDD" | "INTELLIGENT_TIERING")
       attr_accessor subnet_ids: ::Array[::String]
       attr_accessor security_group_ids: ::Array[::String]
       attr_accessor tags: ::Array[Types::Tag]
@@ -983,7 +985,7 @@ module Aws::FSx
       attr_accessor lifecycle: ("AVAILABLE" | "CREATING" | "FAILED" | "DELETING" | "MISCONFIGURED" | "UPDATING" | "MISCONFIGURED_UNAVAILABLE")
       attr_accessor failure_details: Types::FileSystemFailureDetails
       attr_accessor storage_capacity: ::Integer
-      attr_accessor storage_type: ("SSD" | "HDD")
+      attr_accessor storage_type: ("SSD" | "HDD" | "INTELLIGENT_TIERING")
       attr_accessor vpc_id: ::String
       attr_accessor subnet_ids: ::Array[::String]
       attr_accessor network_interface_ids: ::Array[::String]
@@ -1242,6 +1244,7 @@ module Aws::FSx
       attr_accessor endpoint_ip_address_range: ::String
       attr_accessor route_table_ids: ::Array[::String]
       attr_accessor endpoint_ip_address: ::String
+      attr_accessor read_cache_configuration: Types::OpenZFSReadCacheConfiguration
       SENSITIVE: []
     end
 
@@ -1253,6 +1256,12 @@ module Aws::FSx
     class OpenZFSOriginSnapshotConfiguration
       attr_accessor snapshot_arn: ::String
       attr_accessor copy_strategy: ("CLONE" | "FULL_COPY" | "INCREMENTAL_COPY")
+      SENSITIVE: []
+    end
+
+    class OpenZFSReadCacheConfiguration
+      attr_accessor sizing_mode: ("NO_CACHE" | "USER_PROVISIONED" | "PROPORTIONAL_TO_THROUGHPUT_CAPACITY")
+      attr_accessor size_gi_b: ::Integer
       SENSITIVE: []
     end
 
@@ -1589,6 +1598,7 @@ module Aws::FSx
       attr_accessor disk_iops_configuration: Types::DiskIopsConfiguration
       attr_accessor add_route_table_ids: ::Array[::String]
       attr_accessor remove_route_table_ids: ::Array[::String]
+      attr_accessor read_cache_configuration: Types::OpenZFSReadCacheConfiguration
       SENSITIVE: []
     end
 
@@ -1600,7 +1610,7 @@ module Aws::FSx
       attr_accessor lustre_configuration: Types::UpdateFileSystemLustreConfiguration
       attr_accessor ontap_configuration: Types::UpdateFileSystemOntapConfiguration
       attr_accessor open_zfs_configuration: Types::UpdateFileSystemOpenZFSConfiguration
-      attr_accessor storage_type: ("SSD" | "HDD")
+      attr_accessor storage_type: ("SSD" | "HDD" | "INTELLIGENT_TIERING")
       SENSITIVE: []
     end
 

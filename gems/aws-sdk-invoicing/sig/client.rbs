@@ -1,0 +1,208 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws
+  module Invoicing
+    class Client < ::Seahorse::Client::Base
+      include ::Aws::ClientStubs
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#initialize-instance_method
+      def self.new: (
+                      ?credentials: untyped,
+                      ?region: String,
+                      ?access_key_id: String,
+                      ?account_id: String,
+                      ?active_endpoint_cache: bool,
+                      ?adaptive_retry_wait_to_fill: bool,
+                      ?client_side_monitoring: bool,
+                      ?client_side_monitoring_client_id: String,
+                      ?client_side_monitoring_host: String,
+                      ?client_side_monitoring_port: Integer,
+                      ?client_side_monitoring_publisher: untyped,
+                      ?convert_params: bool,
+                      ?correct_clock_skew: bool,
+                      ?defaults_mode: String,
+                      ?disable_host_prefix_injection: bool,
+                      ?disable_request_compression: bool,
+                      ?endpoint: String,
+                      ?endpoint_cache_max_entries: Integer,
+                      ?endpoint_cache_max_threads: Integer,
+                      ?endpoint_cache_poll_interval: Integer,
+                      ?endpoint_discovery: bool,
+                      ?ignore_configured_endpoint_urls: bool,
+                      ?log_formatter: untyped,
+                      ?log_level: Symbol,
+                      ?logger: untyped,
+                      ?max_attempts: Integer,
+                      ?profile: String,
+                      ?request_min_compression_size_bytes: Integer,
+                      ?retry_backoff: Proc,
+                      ?retry_base_delay: Float,
+                      ?retry_jitter: (:none | :equal | :full | ^(Integer) -> Integer),
+                      ?retry_limit: Integer,
+                      ?retry_max_delay: Integer,
+                      ?retry_mode: ("legacy" | "standard" | "adaptive"),
+                      ?sdk_ua_app_id: String,
+                      ?secret_access_key: String,
+                      ?session_token: String,
+                      ?sigv4a_signing_region_set: Array[String],
+                      ?simple_json: bool,
+                      ?stub_responses: untyped,
+                      ?telemetry_provider: Aws::Telemetry::TelemetryProviderBase,
+                      ?token_provider: untyped,
+                      ?use_dualstack_endpoint: bool,
+                      ?use_fips_endpoint: bool,
+                      ?validate_params: bool,
+                      ?endpoint_provider: untyped,
+                      ?http_proxy: String,
+                      ?http_open_timeout: (Float | Integer),
+                      ?http_read_timeout: (Float | Integer),
+                      ?http_idle_timeout: (Float | Integer),
+                      ?http_continue_timeout: (Float | Integer),
+                      ?ssl_timeout: (Float | Integer | nil),
+                      ?http_wire_trace: bool,
+                      ?ssl_verify_peer: bool,
+                      ?ssl_ca_bundle: String,
+                      ?ssl_ca_directory: String,
+                      ?ssl_ca_store: String,
+                      ?on_chunk_received: Proc,
+                      ?on_chunk_sent: Proc,
+                      ?raise_response_errors: bool
+                    ) -> instance
+                  | (?Hash[Symbol, untyped]) -> instance
+
+
+      interface _BatchGetInvoiceProfileResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::BatchGetInvoiceProfileResponse]
+        def profiles: () -> ::Array[Types::InvoiceProfile]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#batch_get_invoice_profile-instance_method
+      def batch_get_invoice_profile: (
+                                       account_ids: Array[::String]
+                                     ) -> _BatchGetInvoiceProfileResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _BatchGetInvoiceProfileResponseSuccess
+
+      interface _CreateInvoiceUnitResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateInvoiceUnitResponse]
+        def invoice_unit_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#create_invoice_unit-instance_method
+      def create_invoice_unit: (
+                                 name: ::String,
+                                 invoice_receiver: ::String,
+                                 ?description: ::String,
+                                 ?tax_inheritance_disabled: bool,
+                                 rule: {
+                                   linked_accounts: Array[::String]?
+                                 },
+                                 ?resource_tags: Array[
+                                   {
+                                     key: ::String,
+                                     value: ::String
+                                   },
+                                 ]
+                               ) -> _CreateInvoiceUnitResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateInvoiceUnitResponseSuccess
+
+      interface _DeleteInvoiceUnitResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteInvoiceUnitResponse]
+        def invoice_unit_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#delete_invoice_unit-instance_method
+      def delete_invoice_unit: (
+                                 invoice_unit_arn: ::String
+                               ) -> _DeleteInvoiceUnitResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteInvoiceUnitResponseSuccess
+
+      interface _GetInvoiceUnitResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetInvoiceUnitResponse]
+        def invoice_unit_arn: () -> ::String
+        def invoice_receiver: () -> ::String
+        def name: () -> ::String
+        def description: () -> ::String
+        def tax_inheritance_disabled: () -> bool
+        def rule: () -> Types::InvoiceUnitRule
+        def last_modified: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#get_invoice_unit-instance_method
+      def get_invoice_unit: (
+                              invoice_unit_arn: ::String,
+                              ?as_of: ::Time
+                            ) -> _GetInvoiceUnitResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetInvoiceUnitResponseSuccess
+
+      interface _ListInvoiceUnitsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListInvoiceUnitsResponse]
+        def invoice_units: () -> ::Array[Types::InvoiceUnit]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#list_invoice_units-instance_method
+      def list_invoice_units: (
+                                ?filters: {
+                                  names: Array[::String]?,
+                                  invoice_receivers: Array[::String]?,
+                                  accounts: Array[::String]?
+                                },
+                                ?next_token: ::String,
+                                ?max_results: ::Integer,
+                                ?as_of: ::Time
+                              ) -> _ListInvoiceUnitsResponseSuccess
+                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListInvoiceUnitsResponseSuccess
+
+      interface _ListTagsForResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListTagsForResourceResponse]
+        def resource_tags: () -> ::Array[Types::ResourceTag]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#list_tags_for_resource-instance_method
+      def list_tags_for_resource: (
+                                    resource_arn: ::String
+                                  ) -> _ListTagsForResourceResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListTagsForResourceResponseSuccess
+
+      interface _TagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::TagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#tag_resource-instance_method
+      def tag_resource: (
+                          resource_arn: ::String,
+                          resource_tags: Array[
+                            {
+                              key: ::String,
+                              value: ::String
+                            },
+                          ]
+                        ) -> _TagResourceResponseSuccess
+                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _TagResourceResponseSuccess
+
+      interface _UntagResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UntagResourceResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#untag_resource-instance_method
+      def untag_resource: (
+                            resource_arn: ::String,
+                            resource_tag_keys: Array[::String]
+                          ) -> _UntagResourceResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UntagResourceResponseSuccess
+
+      interface _UpdateInvoiceUnitResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateInvoiceUnitResponse]
+        def invoice_unit_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Invoicing/Client.html#update_invoice_unit-instance_method
+      def update_invoice_unit: (
+                                 invoice_unit_arn: ::String,
+                                 ?description: ::String,
+                                 ?tax_inheritance_disabled: bool,
+                                 ?rule: {
+                                   linked_accounts: Array[::String]?
+                                 }
+                               ) -> _UpdateInvoiceUnitResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateInvoiceUnitResponseSuccess
+    end
+  end
+end
+

@@ -755,7 +755,7 @@ module Aws::FSx
     #   resp.backup.file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.backup.file_system.failure_details.message #=> String
     #   resp.backup.file_system.storage_capacity #=> Integer
-    #   resp.backup.file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.backup.file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.backup.file_system.vpc_id #=> String
     #   resp.backup.file_system.subnet_ids #=> Array
     #   resp.backup.file_system.subnet_ids[0] #=> String
@@ -940,6 +940,8 @@ module Aws::FSx
     #   resp.backup.file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.backup.file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.backup.file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.backup.file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.backup.file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.backup.directory_information.domain_name #=> String
     #   resp.backup.directory_information.active_directory_id #=> String
     #   resp.backup.directory_information.resource_arn #=> String
@@ -1000,7 +1002,7 @@ module Aws::FSx
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.backup.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -1098,6 +1100,8 @@ module Aws::FSx
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.backup.volume.administrative_actions[0].failure_details.message #=> String
     #   resp.backup.volume.administrative_actions[0].target_volume_values #=> Types::Volume
     #   resp.backup.volume.administrative_actions[0].target_snapshot_values.resource_arn #=> String
@@ -1139,6 +1143,7 @@ module Aws::FSx
     #   resp.backup.volume.open_zfs_configuration.source_snapshot_arn #=> String
     #   resp.backup.volume.open_zfs_configuration.destination_snapshot #=> String
     #   resp.backup.volume.open_zfs_configuration.copy_strategy #=> String, one of "CLONE", "FULL_COPY", "INCREMENTAL_COPY"
+    #   resp.backup.size_in_bytes #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/CopyBackup AWS API Documentation
     #
@@ -1245,7 +1250,7 @@ module Aws::FSx
     #   resp.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -1343,6 +1348,8 @@ module Aws::FSx
     #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.administrative_actions[0].failure_details.message #=> String
     #   resp.administrative_actions[0].target_volume_values.creation_time #=> Time
     #   resp.administrative_actions[0].target_volume_values.file_system_id #=> String
@@ -1599,7 +1606,7 @@ module Aws::FSx
     #   resp.backup.file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.backup.file_system.failure_details.message #=> String
     #   resp.backup.file_system.storage_capacity #=> Integer
-    #   resp.backup.file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.backup.file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.backup.file_system.vpc_id #=> String
     #   resp.backup.file_system.subnet_ids #=> Array
     #   resp.backup.file_system.subnet_ids[0] #=> String
@@ -1784,6 +1791,8 @@ module Aws::FSx
     #   resp.backup.file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.backup.file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.backup.file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.backup.file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.backup.file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.backup.directory_information.domain_name #=> String
     #   resp.backup.directory_information.active_directory_id #=> String
     #   resp.backup.directory_information.resource_arn #=> String
@@ -1844,7 +1853,7 @@ module Aws::FSx
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.backup.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -1942,6 +1951,8 @@ module Aws::FSx
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.backup.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.backup.volume.administrative_actions[0].failure_details.message #=> String
     #   resp.backup.volume.administrative_actions[0].target_volume_values #=> Types::Volume
     #   resp.backup.volume.administrative_actions[0].target_snapshot_values.resource_arn #=> String
@@ -1983,6 +1994,7 @@ module Aws::FSx
     #   resp.backup.volume.open_zfs_configuration.source_snapshot_arn #=> String
     #   resp.backup.volume.open_zfs_configuration.destination_snapshot #=> String
     #   resp.backup.volume.open_zfs_configuration.copy_strategy #=> String, one of "CLONE", "FULL_COPY", "INCREMENTAL_COPY"
+    #   resp.backup.size_in_bytes #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/CreateBackup AWS API Documentation
     #
@@ -2579,7 +2591,7 @@ module Aws::FSx
     #   The type of Amazon FSx file system to create. Valid values are
     #   `WINDOWS`, `LUSTRE`, `ONTAP`, and `OPENZFS`.
     #
-    # @option params [required, Integer] :storage_capacity
+    # @option params [Integer] :storage_capacity
     #   Sets the storage capacity of the file system that you're creating, in
     #   gibibytes (GiB).
     #
@@ -2615,8 +2627,8 @@ module Aws::FSx
     #   * For HDD storage, valid values are 2000 GiB-65,536 GiB (64 TiB).
     #
     # @option params [String] :storage_type
-    #   Sets the storage type for the file system that you're creating. Valid
-    #   values are `SSD` and `HDD`.
+    #   Sets the storage class for the file system that you're creating.
+    #   Valid values are `SSD`, `HDD`, and `INTELLIGENT_TIERING`.
     #
     #   * Set to `SSD` to use solid state drive storage. SSD is supported on
     #     all Windows, Lustre, ONTAP, and OpenZFS deployment types.
@@ -2625,14 +2637,21 @@ module Aws::FSx
     #     `SINGLE_AZ_2` and `MULTI_AZ_1` Windows file system deployment types,
     #     and on `PERSISTENT_1` Lustre file system deployment types.
     #
+    #   * Set to `INTELLIGENT_TIERING` to use fully elastic,
+    #     intelligently-tiered storage. Intelligent-Tiering is only available
+    #     for OpenZFS file systems with the Multi-AZ deployment type.
+    #
     #   Default value is `SSD`. For more information, see [ Storage type
-    #   options][1] in the *FSx for Windows File Server User Guide* and
-    #   [Multiple storage options][2] in the *FSx for Lustre User Guide*.
+    #   options][1] in the *FSx for Windows File Server User Guide*, [Multiple
+    #   storage options][2] in the *FSx for Lustre User Guide*, and [Working
+    #   with Intelligent-Tiering][3] in the *Amazon FSx for OpenZFS User
+    #   Guide*.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/fsx/latest/WindowsGuide/optimize-fsx-costs.html#storage-type-options
     #   [2]: https://docs.aws.amazon.com/fsx/latest/LustreGuide/what-is.html#storage-options
+    #   [3]: https://docs.aws.amazon.com/fsx/latest/OpenZFSGuide/performance-intelligent-tiering
     #
     # @option params [required, Array<String>] :subnet_ids
     #   Specifies the IDs of the subnets that the file system will be
@@ -2824,8 +2843,8 @@ module Aws::FSx
     #   resp = client.create_file_system({
     #     client_request_token: "ClientRequestToken",
     #     file_system_type: "WINDOWS", # required, accepts WINDOWS, LUSTRE, ONTAP, OPENZFS
-    #     storage_capacity: 1, # required
-    #     storage_type: "SSD", # accepts SSD, HDD
+    #     storage_capacity: 1,
+    #     storage_type: "SSD", # accepts SSD, HDD, INTELLIGENT_TIERING
     #     subnet_ids: ["SubnetId"], # required
     #     security_group_ids: ["SecurityGroupId"],
     #     tags: [
@@ -2946,6 +2965,10 @@ module Aws::FSx
     #       preferred_subnet_id: "SubnetId",
     #       endpoint_ip_address_range: "IpAddressRange",
     #       route_table_ids: ["RouteTableId"],
+    #       read_cache_configuration: {
+    #         sizing_mode: "NO_CACHE", # accepts NO_CACHE, USER_PROVISIONED, PROPORTIONAL_TO_THROUGHPUT_CAPACITY
+    #         size_gi_b: 1,
+    #       },
     #     },
     #   })
     #
@@ -2958,7 +2981,7 @@ module Aws::FSx
     #   resp.file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.file_system.failure_details.message #=> String
     #   resp.file_system.storage_capacity #=> Integer
-    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.file_system.vpc_id #=> String
     #   resp.file_system.subnet_ids #=> Array
     #   resp.file_system.subnet_ids[0] #=> String
@@ -3143,6 +3166,8 @@ module Aws::FSx
     #   resp.file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/CreateFileSystem AWS API Documentation
     #
@@ -3451,7 +3476,7 @@ module Aws::FSx
     #         mode: "AUTOMATIC", # required, accepts AUTOMATIC, USER_PROVISIONED
     #       },
     #     },
-    #     storage_type: "SSD", # accepts SSD, HDD
+    #     storage_type: "SSD", # accepts SSD, HDD, INTELLIGENT_TIERING
     #     kms_key_id: "KmsKeyId",
     #     file_system_type_version: "FileSystemTypeVersion",
     #     open_zfs_configuration: {
@@ -3492,6 +3517,10 @@ module Aws::FSx
     #       preferred_subnet_id: "SubnetId",
     #       endpoint_ip_address_range: "IpAddressRange",
     #       route_table_ids: ["RouteTableId"],
+    #       read_cache_configuration: {
+    #         sizing_mode: "NO_CACHE", # accepts NO_CACHE, USER_PROVISIONED, PROPORTIONAL_TO_THROUGHPUT_CAPACITY
+    #         size_gi_b: 1,
+    #       },
     #     },
     #     storage_capacity: 1,
     #   })
@@ -3505,7 +3534,7 @@ module Aws::FSx
     #   resp.file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.file_system.failure_details.message #=> String
     #   resp.file_system.storage_capacity #=> Integer
-    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.file_system.vpc_id #=> String
     #   resp.file_system.subnet_ids #=> Array
     #   resp.file_system.subnet_ids[0] #=> String
@@ -3690,6 +3719,8 @@ module Aws::FSx
     #   resp.file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/CreateFileSystemFromBackup AWS API Documentation
     #
@@ -3792,7 +3823,7 @@ module Aws::FSx
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.snapshot.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.snapshot.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.snapshot.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.snapshot.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -3890,6 +3921,8 @@ module Aws::FSx
     #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.snapshot.administrative_actions[0].failure_details.message #=> String
     #   resp.snapshot.administrative_actions[0].target_volume_values.creation_time #=> Time
     #   resp.snapshot.administrative_actions[0].target_volume_values.file_system_id #=> String
@@ -4276,7 +4309,7 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.volume.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.volume.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.volume.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -4374,6 +4407,8 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.volume.administrative_actions[0].failure_details.message #=> String
     #   resp.volume.administrative_actions[0].target_volume_values #=> Types::Volume
     #   resp.volume.administrative_actions[0].target_snapshot_values.resource_arn #=> String
@@ -4567,7 +4602,7 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.volume.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.volume.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.volume.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -4665,6 +4700,8 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.volume.administrative_actions[0].failure_details.message #=> String
     #   resp.volume.administrative_actions[0].target_volume_values #=> Types::Volume
     #   resp.volume.administrative_actions[0].target_snapshot_values.resource_arn #=> String
@@ -5327,7 +5364,7 @@ module Aws::FSx
     #   resp.backups[0].file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.backups[0].file_system.failure_details.message #=> String
     #   resp.backups[0].file_system.storage_capacity #=> Integer
-    #   resp.backups[0].file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.backups[0].file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.backups[0].file_system.vpc_id #=> String
     #   resp.backups[0].file_system.subnet_ids #=> Array
     #   resp.backups[0].file_system.subnet_ids[0] #=> String
@@ -5512,6 +5549,8 @@ module Aws::FSx
     #   resp.backups[0].file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.backups[0].file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.backups[0].file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.backups[0].file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.backups[0].file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.backups[0].directory_information.domain_name #=> String
     #   resp.backups[0].directory_information.active_directory_id #=> String
     #   resp.backups[0].directory_information.resource_arn #=> String
@@ -5572,7 +5611,7 @@ module Aws::FSx
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -5670,6 +5709,8 @@ module Aws::FSx
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.backups[0].volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.backups[0].volume.administrative_actions[0].failure_details.message #=> String
     #   resp.backups[0].volume.administrative_actions[0].target_volume_values #=> Types::Volume
     #   resp.backups[0].volume.administrative_actions[0].target_snapshot_values.resource_arn #=> String
@@ -5711,6 +5752,7 @@ module Aws::FSx
     #   resp.backups[0].volume.open_zfs_configuration.source_snapshot_arn #=> String
     #   resp.backups[0].volume.open_zfs_configuration.destination_snapshot #=> String
     #   resp.backups[0].volume.open_zfs_configuration.copy_strategy #=> String, one of "CLONE", "FULL_COPY", "INCREMENTAL_COPY"
+    #   resp.backups[0].size_in_bytes #=> Integer
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/DescribeBackups AWS API Documentation
@@ -6194,7 +6236,7 @@ module Aws::FSx
     #   resp.file_systems[0].lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.file_systems[0].failure_details.message #=> String
     #   resp.file_systems[0].storage_capacity #=> Integer
-    #   resp.file_systems[0].storage_type #=> String, one of "SSD", "HDD"
+    #   resp.file_systems[0].storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.file_systems[0].vpc_id #=> String
     #   resp.file_systems[0].subnet_ids #=> Array
     #   resp.file_systems[0].subnet_ids[0] #=> String
@@ -6379,6 +6421,8 @@ module Aws::FSx
     #   resp.file_systems[0].open_zfs_configuration.route_table_ids #=> Array
     #   resp.file_systems[0].open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.file_systems[0].open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.file_systems[0].open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.file_systems[0].open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/DescribeFileSystems AWS API Documentation
@@ -6515,7 +6559,7 @@ module Aws::FSx
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.snapshots[0].administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.snapshots[0].administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -6613,6 +6657,8 @@ module Aws::FSx
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.snapshots[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.snapshots[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.snapshots[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.snapshots[0].administrative_actions[0].failure_details.message #=> String
     #   resp.snapshots[0].administrative_actions[0].target_volume_values.creation_time #=> Time
     #   resp.snapshots[0].administrative_actions[0].target_volume_values.file_system_id #=> String
@@ -6879,7 +6925,7 @@ module Aws::FSx
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.volumes[0].administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.volumes[0].administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -6977,6 +7023,8 @@ module Aws::FSx
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.volumes[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.volumes[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.volumes[0].administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.volumes[0].administrative_actions[0].failure_details.message #=> String
     #   resp.volumes[0].administrative_actions[0].target_volume_values #=> Types::Volume
     #   resp.volumes[0].administrative_actions[0].target_snapshot_values.resource_arn #=> String
@@ -7211,7 +7259,7 @@ module Aws::FSx
     #   resp.file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.file_system.failure_details.message #=> String
     #   resp.file_system.storage_capacity #=> Integer
-    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.file_system.vpc_id #=> String
     #   resp.file_system.subnet_ids #=> Array
     #   resp.file_system.subnet_ids[0] #=> String
@@ -7396,6 +7444,8 @@ module Aws::FSx
     #   resp.file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/ReleaseFileSystemNfsV3Locks AWS API Documentation
     #
@@ -7469,7 +7519,7 @@ module Aws::FSx
     #   resp.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -7567,6 +7617,8 @@ module Aws::FSx
     #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.administrative_actions[0].failure_details.message #=> String
     #   resp.administrative_actions[0].target_volume_values.creation_time #=> Time
     #   resp.administrative_actions[0].target_volume_values.file_system_id #=> String
@@ -7696,7 +7748,7 @@ module Aws::FSx
     #   resp.file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.file_system.failure_details.message #=> String
     #   resp.file_system.storage_capacity #=> Integer
-    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.file_system.vpc_id #=> String
     #   resp.file_system.subnet_ids #=> Array
     #   resp.file_system.subnet_ids[0] #=> String
@@ -7881,6 +7933,8 @@ module Aws::FSx
     #   resp.file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/StartMisconfiguredStateRecovery AWS API Documentation
     #
@@ -8228,6 +8282,8 @@ module Aws::FSx
     #
     # * `DiskIopsConfiguration`
     #
+    # * `ReadCacheConfiguration`
+    #
     # * `RemoveRouteTableIds`
     #
     # * `StorageCapacity`
@@ -8444,8 +8500,12 @@ module Aws::FSx
     #       },
     #       add_route_table_ids: ["RouteTableId"],
     #       remove_route_table_ids: ["RouteTableId"],
+    #       read_cache_configuration: {
+    #         sizing_mode: "NO_CACHE", # accepts NO_CACHE, USER_PROVISIONED, PROPORTIONAL_TO_THROUGHPUT_CAPACITY
+    #         size_gi_b: 1,
+    #       },
     #     },
-    #     storage_type: "SSD", # accepts SSD, HDD
+    #     storage_type: "SSD", # accepts SSD, HDD, INTELLIGENT_TIERING
     #   })
     #
     # @example Response structure
@@ -8457,7 +8517,7 @@ module Aws::FSx
     #   resp.file_system.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.file_system.failure_details.message #=> String
     #   resp.file_system.storage_capacity #=> Integer
-    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.file_system.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.file_system.vpc_id #=> String
     #   resp.file_system.subnet_ids #=> Array
     #   resp.file_system.subnet_ids[0] #=> String
@@ -8642,6 +8702,8 @@ module Aws::FSx
     #   resp.file_system.open_zfs_configuration.route_table_ids #=> Array
     #   resp.file_system.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.file_system.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.file_system.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/fsx-2018-03-01/UpdateFileSystem AWS API Documentation
     #
@@ -8763,7 +8825,7 @@ module Aws::FSx
     #   resp.snapshot.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.snapshot.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.snapshot.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.snapshot.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.snapshot.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -8861,6 +8923,8 @@ module Aws::FSx
     #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.snapshot.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.snapshot.administrative_actions[0].failure_details.message #=> String
     #   resp.snapshot.administrative_actions[0].target_volume_values.creation_time #=> Time
     #   resp.snapshot.administrative_actions[0].target_volume_values.file_system_id #=> String
@@ -9187,7 +9251,7 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.lifecycle #=> String, one of "AVAILABLE", "CREATING", "FAILED", "DELETING", "MISCONFIGURED", "UPDATING", "MISCONFIGURED_UNAVAILABLE"
     #   resp.volume.administrative_actions[0].target_file_system_values.failure_details.message #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.storage_capacity #=> Integer
-    #   resp.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD"
+    #   resp.volume.administrative_actions[0].target_file_system_values.storage_type #=> String, one of "SSD", "HDD", "INTELLIGENT_TIERING"
     #   resp.volume.administrative_actions[0].target_file_system_values.vpc_id #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.subnet_ids #=> Array
     #   resp.volume.administrative_actions[0].target_file_system_values.subnet_ids[0] #=> String
@@ -9285,6 +9349,8 @@ module Aws::FSx
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids #=> Array
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.route_table_ids[0] #=> String
     #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.endpoint_ip_address #=> String
+    #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.sizing_mode #=> String, one of "NO_CACHE", "USER_PROVISIONED", "PROPORTIONAL_TO_THROUGHPUT_CAPACITY"
+    #   resp.volume.administrative_actions[0].target_file_system_values.open_zfs_configuration.read_cache_configuration.size_gi_b #=> Integer
     #   resp.volume.administrative_actions[0].failure_details.message #=> String
     #   resp.volume.administrative_actions[0].target_volume_values #=> Types::Volume
     #   resp.volume.administrative_actions[0].target_snapshot_values.resource_arn #=> String
@@ -9354,7 +9420,7 @@ module Aws::FSx
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-fsx'
-      context[:gem_version] = '1.105.0'
+      context[:gem_version] = '1.106.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

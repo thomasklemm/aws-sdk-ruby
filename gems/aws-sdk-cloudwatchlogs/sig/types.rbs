@@ -248,6 +248,15 @@ module Aws::CloudWatchLogs
     class DeleteIndexPolicyResponse < Aws::EmptyStructure
     end
 
+    class DeleteIntegrationRequest
+      attr_accessor integration_name: ::String
+      attr_accessor force: bool
+      SENSITIVE: []
+    end
+
+    class DeleteIntegrationResponse < Aws::EmptyStructure
+    end
+
     class DeleteKeys
       attr_accessor with_keys: ::Array[::String]
       SENSITIVE: []
@@ -516,6 +525,7 @@ module Aws::CloudWatchLogs
       attr_accessor status: ("Scheduled" | "Running" | "Complete" | "Failed" | "Cancelled" | "Timeout" | "Unknown")
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
+      attr_accessor query_language: ("CWLI" | "SQL" | "PPL")
       SENSITIVE: []
     end
 
@@ -526,6 +536,7 @@ module Aws::CloudWatchLogs
     end
 
     class DescribeQueryDefinitionsRequest
+      attr_accessor query_language: ("CWLI" | "SQL" | "PPL")
       attr_accessor query_definition_name_prefix: ::String
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -703,6 +714,19 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class GetIntegrationRequest
+      attr_accessor integration_name: ::String
+      SENSITIVE: []
+    end
+
+    class GetIntegrationResponse
+      attr_accessor integration_name: ::String
+      attr_accessor integration_type: ("OPENSEARCH")
+      attr_accessor integration_status: ("PROVISIONING" | "ACTIVE" | "FAILED")
+      attr_accessor integration_details: Types::IntegrationDetails
+      SENSITIVE: []
+    end
+
     class GetLogAnomalyDetectorRequest
       attr_accessor anomaly_detector_arn: ::String
       SENSITIVE: []
@@ -770,6 +794,7 @@ module Aws::CloudWatchLogs
     end
 
     class GetQueryResultsResponse
+      attr_accessor query_language: ("CWLI" | "SQL" | "PPL")
       attr_accessor results: ::Array[::Array[Types::ResultField]]
       attr_accessor statistics: Types::QueryStatistics
       attr_accessor status: ("Scheduled" | "Running" | "Complete" | "Failed" | "Cancelled" | "Timeout" | "Unknown")
@@ -811,6 +836,24 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class IntegrationDetails
+      attr_accessor open_search_integration_details: Types::OpenSearchIntegrationDetails
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class OpenSearchIntegrationDetails < IntegrationDetails
+      end
+      class Unknown < IntegrationDetails
+      end
+    end
+
+    class IntegrationSummary
+      attr_accessor integration_name: ::String
+      attr_accessor integration_type: ("OPENSEARCH")
+      attr_accessor integration_status: ("PROVISIONING" | "ACTIVE" | "FAILED")
+      SENSITIVE: []
+    end
+
     class InvalidOperationException < Aws::EmptyStructure
     end
 
@@ -836,6 +879,18 @@ module Aws::CloudWatchLogs
     class ListAnomaliesResponse
       attr_accessor anomalies: ::Array[Types::Anomaly]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListIntegrationsRequest
+      attr_accessor integration_name_prefix: ::String
+      attr_accessor integration_type: ("OPENSEARCH")
+      attr_accessor integration_status: ("PROVISIONING" | "ACTIVE" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class ListIntegrationsResponse
+      attr_accessor integration_summaries: ::Array[Types::IntegrationSummary]
       SENSITIVE: []
     end
 
@@ -1012,6 +1067,84 @@ module Aws::CloudWatchLogs
 
     class MoveKeys
       attr_accessor entries: ::Array[Types::MoveKeyEntry]
+      SENSITIVE: []
+    end
+
+    class OpenSearchApplication
+      attr_accessor application_endpoint: ::String
+      attr_accessor application_arn: ::String
+      attr_accessor application_id: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
+      SENSITIVE: []
+    end
+
+    class OpenSearchCollection
+      attr_accessor collection_endpoint: ::String
+      attr_accessor collection_arn: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
+      SENSITIVE: []
+    end
+
+    class OpenSearchDataAccessPolicy
+      attr_accessor policy_name: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
+      SENSITIVE: []
+    end
+
+    class OpenSearchDataSource
+      attr_accessor data_source_name: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
+      SENSITIVE: []
+    end
+
+    class OpenSearchEncryptionPolicy
+      attr_accessor policy_name: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
+      SENSITIVE: []
+    end
+
+    class OpenSearchIntegrationDetails
+      attr_accessor data_source: Types::OpenSearchDataSource
+      attr_accessor application: Types::OpenSearchApplication
+      attr_accessor collection: Types::OpenSearchCollection
+      attr_accessor workspace: Types::OpenSearchWorkspace
+      attr_accessor encryption_policy: Types::OpenSearchEncryptionPolicy
+      attr_accessor network_policy: Types::OpenSearchNetworkPolicy
+      attr_accessor access_policy: Types::OpenSearchDataAccessPolicy
+      attr_accessor lifecycle_policy: Types::OpenSearchLifecyclePolicy
+      SENSITIVE: []
+    end
+
+    class OpenSearchLifecyclePolicy
+      attr_accessor policy_name: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
+      SENSITIVE: []
+    end
+
+    class OpenSearchNetworkPolicy
+      attr_accessor policy_name: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
+      SENSITIVE: []
+    end
+
+    class OpenSearchResourceConfig
+      attr_accessor kms_key_arn: ::String
+      attr_accessor data_source_role_arn: ::String
+      attr_accessor dashboard_viewer_principals: ::Array[::String]
+      attr_accessor application_arn: ::String
+      attr_accessor retention_days: ::Integer
+      SENSITIVE: []
+    end
+
+    class OpenSearchResourceStatus
+      attr_accessor status: ("ACTIVE" | "NOT_FOUND" | "ERROR")
+      attr_accessor status_message: ::String
+      SENSITIVE: []
+    end
+
+    class OpenSearchWorkspace
+      attr_accessor workspace_id: ::String
+      attr_accessor status: Types::OpenSearchResourceStatus
       SENSITIVE: []
     end
 
@@ -1202,6 +1335,19 @@ module Aws::CloudWatchLogs
       SENSITIVE: []
     end
 
+    class PutIntegrationRequest
+      attr_accessor integration_name: ::String
+      attr_accessor resource_config: Types::ResourceConfig
+      attr_accessor integration_type: ("OPENSEARCH")
+      SENSITIVE: []
+    end
+
+    class PutIntegrationResponse
+      attr_accessor integration_name: ::String
+      attr_accessor integration_status: ("PROVISIONING" | "ACTIVE" | "FAILED")
+      SENSITIVE: []
+    end
+
     class PutLogEventsRequest
       attr_accessor log_group_name: ::String
       attr_accessor log_stream_name: ::String
@@ -1228,6 +1374,7 @@ module Aws::CloudWatchLogs
     end
 
     class PutQueryDefinitionRequest
+      attr_accessor query_language: ("CWLI" | "SQL" | "PPL")
       attr_accessor name: ::String
       attr_accessor query_definition_id: ::String
       attr_accessor log_group_names: ::Array[::String]
@@ -1288,6 +1435,7 @@ module Aws::CloudWatchLogs
     end
 
     class QueryDefinition
+      attr_accessor query_language: ("CWLI" | "SQL" | "PPL")
       attr_accessor query_definition_id: ::String
       attr_accessor name: ::String
       attr_accessor query_string: ::String
@@ -1297,6 +1445,7 @@ module Aws::CloudWatchLogs
     end
 
     class QueryInfo
+      attr_accessor query_language: ("CWLI" | "SQL" | "PPL")
       attr_accessor query_id: ::String
       attr_accessor query_string: ::String
       attr_accessor status: ("Scheduled" | "Running" | "Complete" | "Failed" | "Cancelled" | "Timeout" | "Unknown")
@@ -1346,6 +1495,17 @@ module Aws::CloudWatchLogs
     end
 
     class ResourceAlreadyExistsException < Aws::EmptyStructure
+    end
+
+    class ResourceConfig
+      attr_accessor open_search_resource_config: Types::OpenSearchResourceConfig
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class OpenSearchResourceConfig < ResourceConfig
+      end
+      class Unknown < ResourceConfig
+      end
     end
 
     class ResourceNotFoundException < Aws::EmptyStructure
@@ -1419,6 +1579,7 @@ module Aws::CloudWatchLogs
     end
 
     class StartQueryRequest
+      attr_accessor query_language: ("CWLI" | "SQL" | "PPL")
       attr_accessor log_group_name: ::String
       attr_accessor log_group_names: ::Array[::String]
       attr_accessor log_group_identifiers: ::Array[::String]

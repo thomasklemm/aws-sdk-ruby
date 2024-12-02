@@ -233,6 +233,12 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class ByteContentDoc
+      attr_accessor data: ::String
+      attr_accessor mime_type: ::String
+      SENSITIVE: [:data]
+    end
+
     class ChatPromptTemplateConfiguration
       attr_accessor input_variables: ::Array[Types::PromptInputVariable]
       attr_accessor messages: ::Array[Types::Message]
@@ -504,8 +510,27 @@ module Aws::BedrockAgent
       SENSITIVE: [:variants]
     end
 
+    class CustomContent
+      attr_accessor custom_document_identifier: Types::CustomDocumentIdentifier
+      attr_accessor inline_content: Types::InlineContent
+      attr_accessor s3_location: Types::CustomS3Location
+      attr_accessor source_type: ("IN_LINE" | "S3_LOCATION")
+      SENSITIVE: []
+    end
+
+    class CustomDocumentIdentifier
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
     class CustomOrchestration
       attr_accessor executor: Types::OrchestrationExecutor
+      SENSITIVE: []
+    end
+
+    class CustomS3Location
+      attr_accessor bucket_owner_account_id: ::String
+      attr_accessor uri: ::String
       SENSITIVE: []
     end
 
@@ -541,7 +566,7 @@ module Aws::BedrockAgent
       attr_accessor s3_configuration: Types::S3DataSourceConfiguration
       attr_accessor salesforce_configuration: Types::SalesforceDataSourceConfiguration
       attr_accessor share_point_configuration: Types::SharePointDataSourceConfiguration
-      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT")
+      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM")
       attr_accessor web_configuration: Types::WebDataSourceConfiguration
       SENSITIVE: []
     end
@@ -655,6 +680,19 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class DeleteKnowledgeBaseDocumentsRequest
+      attr_accessor client_token: ::String
+      attr_accessor data_source_id: ::String
+      attr_accessor document_identifiers: ::Array[Types::DocumentIdentifier]
+      attr_accessor knowledge_base_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteKnowledgeBaseDocumentsResponse
+      attr_accessor document_details: ::Array[Types::KnowledgeBaseDocumentDetail]
+      SENSITIVE: []
+    end
+
     class DeleteKnowledgeBaseRequest
       attr_accessor knowledge_base_id: ::String
       SENSITIVE: []
@@ -686,6 +724,27 @@ module Aws::BedrockAgent
     end
 
     class DisassociateAgentKnowledgeBaseResponse < Aws::EmptyStructure
+    end
+
+    class DocumentContent
+      attr_accessor custom: Types::CustomContent
+      attr_accessor data_source_type: ("CUSTOM" | "S3")
+      attr_accessor s3: Types::S3Content
+      SENSITIVE: []
+    end
+
+    class DocumentIdentifier
+      attr_accessor custom: Types::CustomDocumentIdentifier
+      attr_accessor data_source_type: ("CUSTOM" | "S3")
+      attr_accessor s3: Types::S3Location
+      SENSITIVE: []
+    end
+
+    class DocumentMetadata
+      attr_accessor inline_attributes: ::Array[Types::MetadataAttribute]
+      attr_accessor s3_location: Types::CustomS3Location
+      attr_accessor type: ("IN_LINE_ATTRIBUTE" | "S3_LOCATION")
+      SENSITIVE: []
     end
 
     class DuplicateConditionExpressionFlowValidationDetails
@@ -1109,6 +1168,18 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class GetKnowledgeBaseDocumentsRequest
+      attr_accessor data_source_id: ::String
+      attr_accessor document_identifiers: ::Array[Types::DocumentIdentifier]
+      attr_accessor knowledge_base_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetKnowledgeBaseDocumentsResponse
+      attr_accessor document_details: ::Array[Types::KnowledgeBaseDocumentDetail]
+      SENSITIVE: []
+    end
+
     class GetKnowledgeBaseRequest
       attr_accessor knowledge_base_id: ::String
       SENSITIVE: []
@@ -1170,6 +1241,19 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class IngestKnowledgeBaseDocumentsRequest
+      attr_accessor client_token: ::String
+      attr_accessor data_source_id: ::String
+      attr_accessor documents: ::Array[Types::KnowledgeBaseDocument]
+      attr_accessor knowledge_base_id: ::String
+      SENSITIVE: []
+    end
+
+    class IngestKnowledgeBaseDocumentsResponse
+      attr_accessor document_details: ::Array[Types::KnowledgeBaseDocumentDetail]
+      SENSITIVE: []
+    end
+
     class IngestionJob
       attr_accessor data_source_id: ::String
       attr_accessor description: ::String
@@ -1219,6 +1303,13 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class InlineContent
+      attr_accessor byte_content: Types::ByteContentDoc
+      attr_accessor text_content: Types::TextContentDoc
+      attr_accessor type: ("BYTE" | "TEXT")
+      SENSITIVE: []
+    end
+
     class InputFlowNodeConfiguration < Aws::EmptyStructure
     end
 
@@ -1253,6 +1344,22 @@ module Aws::BedrockAgent
     class KnowledgeBaseConfiguration
       attr_accessor type: ("VECTOR")
       attr_accessor vector_knowledge_base_configuration: Types::VectorKnowledgeBaseConfiguration
+      SENSITIVE: []
+    end
+
+    class KnowledgeBaseDocument
+      attr_accessor content: Types::DocumentContent
+      attr_accessor metadata: Types::DocumentMetadata
+      SENSITIVE: []
+    end
+
+    class KnowledgeBaseDocumentDetail
+      attr_accessor data_source_id: ::String
+      attr_accessor identifier: Types::DocumentIdentifier
+      attr_accessor knowledge_base_id: ::String
+      attr_accessor status: ("INDEXED" | "PARTIALLY_INDEXED" | "PENDING" | "FAILED" | "METADATA_PARTIALLY_INDEXED" | "METADATA_UPDATE_FAILED" | "IGNORED" | "NOT_FOUND" | "STARTING" | "IN_PROGRESS" | "DELETING" | "DELETE_IN_PROGRESS")
+      attr_accessor status_reason: ::String
+      attr_accessor updated_at: ::Time
       SENSITIVE: []
     end
 
@@ -1416,6 +1523,20 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class ListKnowledgeBaseDocumentsRequest
+      attr_accessor data_source_id: ::String
+      attr_accessor knowledge_base_id: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListKnowledgeBaseDocumentsResponse
+      attr_accessor document_details: ::Array[Types::KnowledgeBaseDocumentDetail]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListKnowledgeBasesRequest
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -1475,6 +1596,21 @@ module Aws::BedrockAgent
       attr_accessor content: ::Array[Types::ContentBlock]
       attr_accessor role: ("user" | "assistant")
       SENSITIVE: []
+    end
+
+    class MetadataAttribute
+      attr_accessor key: ::String
+      attr_accessor value: Types::MetadataAttributeValue
+      SENSITIVE: [:key]
+    end
+
+    class MetadataAttributeValue
+      attr_accessor boolean_value: bool
+      attr_accessor number_value: ::Float
+      attr_accessor string_list_value: ::Array[::String]
+      attr_accessor string_value: ::String
+      attr_accessor type: ("BOOLEAN" | "NUMBER" | "STRING" | "STRING_LIST")
+      SENSITIVE: [:number_value, :string_value]
     end
 
     class MismatchedNodeInputTypeFlowValidationDetails
@@ -1835,6 +1971,11 @@ module Aws::BedrockAgent
       end
     end
 
+    class S3Content
+      attr_accessor s3_location: Types::S3Location
+      SENSITIVE: []
+    end
+
     class S3DataSourceConfiguration
       attr_accessor bucket_arn: ::String
       attr_accessor bucket_owner_account_id: ::String
@@ -1993,6 +2134,11 @@ module Aws::BedrockAgent
     end
 
     class TagResourceResponse < Aws::EmptyStructure
+    end
+
+    class TextContentDoc
+      attr_accessor data: ::String
+      SENSITIVE: [:data]
     end
 
     class TextPromptTemplateConfiguration

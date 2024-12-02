@@ -541,18 +541,81 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
-    # Attaches tags to an existing Amazon OpenSearch Service domain. Tags
-    # are a set of case-sensitive key-value pairs. A domain can have up to
-    # 10 tags. For more information, see [Tagging Amazon OpenSearch Service
-    # domains][1].
+    # Adds a new data source in Amazon OpenSearch Service so that you can
+    # perform direct queries on external data.
+    #
+    # @option params [required, String] :data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #
+    # @option params [required, Types::DirectQueryDataSourceType] :data_source_type
+    #   The supported Amazon Web Services service that you want to use as the
+    #   source for direct queries in OpenSearch Service.
+    #
+    # @option params [String] :description
+    #   An optional text field for providing additional context and details
+    #   about the data source.
+    #
+    # @option params [required, Array<String>] :open_search_arns
+    #   A list of Amazon Resource Names (ARNs) for the OpenSearch collections
+    #   that are associated with the direct query data source.
+    #
+    # @option params [Array<Types::Tag>] :tag_list
+    #   A list of tags attached to a domain.
+    #
+    # @return [Types::AddDirectQueryDataSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::AddDirectQueryDataSourceResponse#data_source_arn #data_source_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.add_direct_query_data_source({
+    #     data_source_name: "DirectQueryDataSourceName", # required
+    #     data_source_type: { # required
+    #       cloud_watch_log: {
+    #         role_arn: "DirectQueryDataSourceRoleArn", # required
+    #       },
+    #       security_lake: {
+    #         role_arn: "DirectQueryDataSourceRoleArn", # required
+    #       },
+    #     },
+    #     description: "DirectQueryDataSourceDescription",
+    #     open_search_arns: ["ARN"], # required
+    #     tag_list: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_source_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/AddDirectQueryDataSource AWS API Documentation
+    #
+    # @overload add_direct_query_data_source(params = {})
+    # @param [Hash] params ({})
+    def add_direct_query_data_source(params = {}, options = {})
+      req = build_request(:add_direct_query_data_source, params)
+      req.send_request(options)
+    end
+
+    # Attaches tags to an existing Amazon OpenSearch Service domain, data
+    # source, or application.
+    #
+    # Tags are a set of case-sensitive key-value pairs. A domain, data
+    # source, or application can have up to 10 tags. For more information,
+    # see [Tagging Amazon OpenSearch Service resources][1].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html
     #
     # @option params [required, String] :arn
-    #   Amazon Resource Name (ARN) for the OpenSearch Service domain to which
-    #   you want to attach resource tags.
+    #   Amazon Resource Name (ARN) for the OpenSearch Service domain, data
+    #   source, or application to which you want to attach resource tags.
     #
     # @option params [required, Array<Types::Tag>] :tag_list
     #   List of resource tags.
@@ -1641,6 +1704,30 @@ module Aws::OpenSearchService
     # @param [Hash] params ({})
     def delete_data_source(params = {}, options = {})
       req = build_request(:delete_data_source, params)
+      req.send_request(options)
+    end
+
+    # Deletes a previously configured direct query data source from Amazon
+    # OpenSearch Service.
+    #
+    # @option params [required, String] :data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_direct_query_data_source({
+    #     data_source_name: "DirectQueryDataSourceName", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DeleteDirectQueryDataSource AWS API Documentation
+    #
+    # @overload delete_direct_query_data_source(params = {})
+    # @param [Hash] params ({})
+    def delete_direct_query_data_source(params = {}, options = {})
+      req = build_request(:delete_direct_query_data_source, params)
       req.send_request(options)
     end
 
@@ -3510,6 +3597,46 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
+    # Returns detailed configuration information for a specific direct query
+    # data source in Amazon OpenSearch Service.
+    #
+    # @option params [required, String] :data_source_name
+    #   A unique, user-defined label that identifies the data source within
+    #   your OpenSearch Service environment.
+    #
+    # @return [Types::GetDirectQueryDataSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetDirectQueryDataSourceResponse#data_source_name #data_source_name} => String
+    #   * {Types::GetDirectQueryDataSourceResponse#data_source_type #data_source_type} => Types::DirectQueryDataSourceType
+    #   * {Types::GetDirectQueryDataSourceResponse#description #description} => String
+    #   * {Types::GetDirectQueryDataSourceResponse#open_search_arns #open_search_arns} => Array&lt;String&gt;
+    #   * {Types::GetDirectQueryDataSourceResponse#data_source_arn #data_source_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_direct_query_data_source({
+    #     data_source_name: "DirectQueryDataSourceName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_source_name #=> String
+    #   resp.data_source_type.cloud_watch_log.role_arn #=> String
+    #   resp.data_source_type.security_lake.role_arn #=> String
+    #   resp.description #=> String
+    #   resp.open_search_arns #=> Array
+    #   resp.open_search_arns[0] #=> String
+    #   resp.data_source_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDirectQueryDataSource AWS API Documentation
+    #
+    # @overload get_direct_query_data_source(params = {})
+    # @param [Hash] params ({})
+    def get_direct_query_data_source(params = {}, options = {})
+      req = build_request(:get_direct_query_data_source, params)
+      req.send_request(options)
+    end
+
     # The status of the maintenance action.
     #
     # @option params [required, String] :domain_name
@@ -3791,6 +3918,49 @@ module Aws::OpenSearchService
     # @param [Hash] params ({})
     def list_data_sources(params = {}, options = {})
       req = build_request(:list_data_sources, params)
+      req.send_request(options)
+    end
+
+    # Lists an inventory of all the direct query data sources that you have
+    # configured within Amazon OpenSearch Service.
+    #
+    # @option params [String] :next_token
+    #   When `nextToken` is returned, there are more results available. The
+    #   value of `nextToken` is a unique pagination token for each page. Send
+    #   the request again using the returned token to retrieve the next page.
+    #
+    # @return [Types::ListDirectQueryDataSourcesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDirectQueryDataSourcesResponse#next_token #next_token} => String
+    #   * {Types::ListDirectQueryDataSourcesResponse#direct_query_data_sources #direct_query_data_sources} => Array&lt;Types::DirectQueryDataSource&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_direct_query_data_sources({
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.direct_query_data_sources #=> Array
+    #   resp.direct_query_data_sources[0].data_source_name #=> String
+    #   resp.direct_query_data_sources[0].data_source_type.cloud_watch_log.role_arn #=> String
+    #   resp.direct_query_data_sources[0].data_source_type.security_lake.role_arn #=> String
+    #   resp.direct_query_data_sources[0].description #=> String
+    #   resp.direct_query_data_sources[0].open_search_arns #=> Array
+    #   resp.direct_query_data_sources[0].open_search_arns[0] #=> String
+    #   resp.direct_query_data_sources[0].data_source_arn #=> String
+    #   resp.direct_query_data_sources[0].tag_list #=> Array
+    #   resp.direct_query_data_sources[0].tag_list[0].key #=> String
+    #   resp.direct_query_data_sources[0].tag_list[0].value #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListDirectQueryDataSources AWS API Documentation
+    #
+    # @overload list_direct_query_data_sources(params = {})
+    # @param [Hash] params ({})
+    def list_direct_query_data_sources(params = {}, options = {})
+      req = build_request(:list_direct_query_data_sources, params)
       req.send_request(options)
     end
 
@@ -4145,15 +4315,17 @@ module Aws::OpenSearchService
       req.send_request(options)
     end
 
-    # Returns all resource tags for an Amazon OpenSearch Service domain. For
-    # more information, see [Tagging Amazon OpenSearch Service domains][1].
+    # Returns all resource tags for an Amazon OpenSearch Service domain,
+    # data source, or application. For more information, see [Tagging Amazon
+    # OpenSearch Service resources][1].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains-awsresourcetagging.html
     #
     # @option params [required, String] :arn
-    #   Amazon Resource Name (ARN) for the domain to view tags for.
+    #   Amazon Resource Name (ARN) for the domain, data source, or application
+    #   to view tags for.
     #
     # @return [Types::ListTagsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -4419,19 +4591,20 @@ module Aws::OpenSearchService
     end
 
     # Removes the specified set of tags from an Amazon OpenSearch Service
-    # domain. For more information, see [ Tagging Amazon OpenSearch Service
-    # domains][1].
+    # domain, data source, or application. For more information, see [
+    # Tagging Amazon OpenSearch Service resources][1].
     #
     #
     #
     # [1]: https://docs.aws.amazon.com/opensearch-service/latest/developerguide/managedomains.html#managedomains-awsresorcetagging
     #
     # @option params [required, String] :arn
-    #   The Amazon Resource Name (ARN) of the domain from which you want to
-    #   delete the specified tags.
+    #   The Amazon Resource Name (ARN) of the domain, data source, or
+    #   application from which you want to delete the specified tags.
     #
     # @option params [required, Array<String>] :tag_keys
-    #   The list of tag keys to remove from the domain.
+    #   The list of tag keys to remove from the domain, data source, or
+    #   application.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -4705,6 +4878,58 @@ module Aws::OpenSearchService
     # @param [Hash] params ({})
     def update_data_source(params = {}, options = {})
       req = build_request(:update_data_source, params)
+      req.send_request(options)
+    end
+
+    # Updates the configuration or properties of an existing direct query
+    # data source in Amazon OpenSearch Service.
+    #
+    # @option params [required, String] :data_source_name
+    #   A unique, user-defined label to identify the data source within your
+    #   OpenSearch Service environment.
+    #
+    # @option params [required, Types::DirectQueryDataSourceType] :data_source_type
+    #   The supported Amazon Web Services service that you want to use as the
+    #   source for direct queries in OpenSearch Service.
+    #
+    # @option params [String] :description
+    #   An optional text field for providing additional context and details
+    #   about the data source.
+    #
+    # @option params [required, Array<String>] :open_search_arns
+    #   A list of Amazon Resource Names (ARNs) for the OpenSearch collections
+    #   that are associated with the direct query data source.
+    #
+    # @return [Types::UpdateDirectQueryDataSourceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateDirectQueryDataSourceResponse#data_source_arn #data_source_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_direct_query_data_source({
+    #     data_source_name: "DirectQueryDataSourceName", # required
+    #     data_source_type: { # required
+    #       cloud_watch_log: {
+    #         role_arn: "DirectQueryDataSourceRoleArn", # required
+    #       },
+    #       security_lake: {
+    #         role_arn: "DirectQueryDataSourceRoleArn", # required
+    #       },
+    #     },
+    #     description: "DirectQueryDataSourceDescription",
+    #     open_search_arns: ["ARN"], # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_source_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/UpdateDirectQueryDataSource AWS API Documentation
+    #
+    # @overload update_direct_query_data_source(params = {})
+    # @param [Hash] params ({})
+    def update_direct_query_data_source(params = {}, options = {})
+      req = build_request(:update_direct_query_data_source, params)
       req.send_request(options)
     end
 
@@ -5539,7 +5764,7 @@ module Aws::OpenSearchService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-opensearchservice'
-      context[:gem_version] = '1.61.0'
+      context[:gem_version] = '1.62.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -301,6 +301,8 @@ module Aws::FSx
     OpenZFSNfsExports = Shapes::ListShape.new(name: 'OpenZFSNfsExports')
     OpenZFSOriginSnapshotConfiguration = Shapes::StructureShape.new(name: 'OpenZFSOriginSnapshotConfiguration')
     OpenZFSQuotaType = Shapes::StringShape.new(name: 'OpenZFSQuotaType')
+    OpenZFSReadCacheConfiguration = Shapes::StructureShape.new(name: 'OpenZFSReadCacheConfiguration')
+    OpenZFSReadCacheSizingMode = Shapes::StringShape.new(name: 'OpenZFSReadCacheSizingMode')
     OpenZFSUserAndGroupQuotas = Shapes::ListShape.new(name: 'OpenZFSUserAndGroupQuotas')
     OpenZFSUserOrGroupQuota = Shapes::StructureShape.new(name: 'OpenZFSUserOrGroupQuota')
     OpenZFSVolumeConfiguration = Shapes::StructureShape.new(name: 'OpenZFSVolumeConfiguration')
@@ -342,6 +344,7 @@ module Aws::FSx
     SelfManagedActiveDirectoryConfigurationUpdates = Shapes::StructureShape.new(name: 'SelfManagedActiveDirectoryConfigurationUpdates')
     ServiceLimit = Shapes::StringShape.new(name: 'ServiceLimit')
     ServiceLimitExceeded = Shapes::StructureShape.new(name: 'ServiceLimitExceeded')
+    SizeInBytes = Shapes::IntegerShape.new(name: 'SizeInBytes')
     SnaplockConfiguration = Shapes::StructureShape.new(name: 'SnaplockConfiguration')
     SnaplockRetentionPeriod = Shapes::StructureShape.new(name: 'SnaplockRetentionPeriod')
     SnaplockType = Shapes::StringShape.new(name: 'SnaplockType')
@@ -535,6 +538,7 @@ module Aws::FSx
     Backup.add_member(:source_backup_region, Shapes::ShapeRef.new(shape: Region, location_name: "SourceBackupRegion"))
     Backup.add_member(:resource_type, Shapes::ShapeRef.new(shape: ResourceType, location_name: "ResourceType"))
     Backup.add_member(:volume, Shapes::ShapeRef.new(shape: Volume, location_name: "Volume"))
+    Backup.add_member(:size_in_bytes, Shapes::ShapeRef.new(shape: SizeInBytes, location_name: "SizeInBytes"))
     Backup.struct_class = Types::Backup
 
     BackupBeingCopied.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
@@ -725,11 +729,12 @@ module Aws::FSx
     CreateFileSystemOpenZFSConfiguration.add_member(:preferred_subnet_id, Shapes::ShapeRef.new(shape: SubnetId, location_name: "PreferredSubnetId"))
     CreateFileSystemOpenZFSConfiguration.add_member(:endpoint_ip_address_range, Shapes::ShapeRef.new(shape: IpAddressRange, location_name: "EndpointIpAddressRange"))
     CreateFileSystemOpenZFSConfiguration.add_member(:route_table_ids, Shapes::ShapeRef.new(shape: RouteTableIds, location_name: "RouteTableIds"))
+    CreateFileSystemOpenZFSConfiguration.add_member(:read_cache_configuration, Shapes::ShapeRef.new(shape: OpenZFSReadCacheConfiguration, location_name: "ReadCacheConfiguration"))
     CreateFileSystemOpenZFSConfiguration.struct_class = Types::CreateFileSystemOpenZFSConfiguration
 
     CreateFileSystemRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: ClientRequestToken, location_name: "ClientRequestToken", metadata: {"idempotencyToken"=>true}))
     CreateFileSystemRequest.add_member(:file_system_type, Shapes::ShapeRef.new(shape: FileSystemType, required: true, location_name: "FileSystemType"))
-    CreateFileSystemRequest.add_member(:storage_capacity, Shapes::ShapeRef.new(shape: StorageCapacity, required: true, location_name: "StorageCapacity"))
+    CreateFileSystemRequest.add_member(:storage_capacity, Shapes::ShapeRef.new(shape: StorageCapacity, location_name: "StorageCapacity"))
     CreateFileSystemRequest.add_member(:storage_type, Shapes::ShapeRef.new(shape: StorageType, location_name: "StorageType"))
     CreateFileSystemRequest.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetIds, required: true, location_name: "SubnetIds"))
     CreateFileSystemRequest.add_member(:security_group_ids, Shapes::ShapeRef.new(shape: SecurityGroupIds, location_name: "SecurityGroupIds"))
@@ -1436,6 +1441,7 @@ module Aws::FSx
     OpenZFSFileSystemConfiguration.add_member(:endpoint_ip_address_range, Shapes::ShapeRef.new(shape: IpAddressRange, location_name: "EndpointIpAddressRange"))
     OpenZFSFileSystemConfiguration.add_member(:route_table_ids, Shapes::ShapeRef.new(shape: RouteTableIds, location_name: "RouteTableIds"))
     OpenZFSFileSystemConfiguration.add_member(:endpoint_ip_address, Shapes::ShapeRef.new(shape: IpAddress, location_name: "EndpointIpAddress"))
+    OpenZFSFileSystemConfiguration.add_member(:read_cache_configuration, Shapes::ShapeRef.new(shape: OpenZFSReadCacheConfiguration, location_name: "ReadCacheConfiguration"))
     OpenZFSFileSystemConfiguration.struct_class = Types::OpenZFSFileSystemConfiguration
 
     OpenZFSNfsExport.add_member(:client_configurations, Shapes::ShapeRef.new(shape: OpenZFSClientConfigurations, required: true, location_name: "ClientConfigurations"))
@@ -1448,6 +1454,10 @@ module Aws::FSx
     OpenZFSOriginSnapshotConfiguration.add_member(:snapshot_arn, Shapes::ShapeRef.new(shape: ResourceARN, location_name: "SnapshotARN"))
     OpenZFSOriginSnapshotConfiguration.add_member(:copy_strategy, Shapes::ShapeRef.new(shape: OpenZFSCopyStrategy, location_name: "CopyStrategy"))
     OpenZFSOriginSnapshotConfiguration.struct_class = Types::OpenZFSOriginSnapshotConfiguration
+
+    OpenZFSReadCacheConfiguration.add_member(:sizing_mode, Shapes::ShapeRef.new(shape: OpenZFSReadCacheSizingMode, location_name: "SizingMode"))
+    OpenZFSReadCacheConfiguration.add_member(:size_gi_b, Shapes::ShapeRef.new(shape: StorageCapacity, location_name: "SizeGiB"))
+    OpenZFSReadCacheConfiguration.struct_class = Types::OpenZFSReadCacheConfiguration
 
     OpenZFSUserAndGroupQuotas.member = Shapes::ShapeRef.new(shape: OpenZFSUserOrGroupQuota)
 
@@ -1731,6 +1741,7 @@ module Aws::FSx
     UpdateFileSystemOpenZFSConfiguration.add_member(:disk_iops_configuration, Shapes::ShapeRef.new(shape: DiskIopsConfiguration, location_name: "DiskIopsConfiguration"))
     UpdateFileSystemOpenZFSConfiguration.add_member(:add_route_table_ids, Shapes::ShapeRef.new(shape: RouteTableIds, location_name: "AddRouteTableIds"))
     UpdateFileSystemOpenZFSConfiguration.add_member(:remove_route_table_ids, Shapes::ShapeRef.new(shape: RouteTableIds, location_name: "RemoveRouteTableIds"))
+    UpdateFileSystemOpenZFSConfiguration.add_member(:read_cache_configuration, Shapes::ShapeRef.new(shape: OpenZFSReadCacheConfiguration, location_name: "ReadCacheConfiguration"))
     UpdateFileSystemOpenZFSConfiguration.struct_class = Types::UpdateFileSystemOpenZFSConfiguration
 
     UpdateFileSystemRequest.add_member(:file_system_id, Shapes::ShapeRef.new(shape: FileSystemId, required: true, location_name: "FileSystemId"))

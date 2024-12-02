@@ -276,6 +276,31 @@ module Aws
                        ) -> _CreateUserResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateUserResponseSuccess
 
+      interface _CreateWebAppResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateWebAppResponse]
+        def web_app_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#create_web_app-instance_method
+      def create_web_app: (
+                            identity_provider_details: {
+                              identity_center_config: {
+                                instance_arn: ::String?,
+                                role: ::String?
+                              }?
+                            },
+                            ?access_endpoint: ::String,
+                            ?web_app_units: {
+                              provisioned: ::Integer?
+                            },
+                            ?tags: Array[
+                              {
+                                key: ::String,
+                                value: ::String
+                              },
+                            ]
+                          ) -> _CreateWebAppResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWebAppResponseSuccess
+
       interface _CreateWorkflowResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateWorkflowResponse]
         def workflow_id: () -> ::String
@@ -464,6 +489,18 @@ module Aws
                        ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#delete_web_app-instance_method
+      def delete_web_app: (
+                            web_app_id: ::String
+                          ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#delete_web_app_customization-instance_method
+      def delete_web_app_customization: (
+                                          web_app_id: ::String
+                                        ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#delete_workflow-instance_method
       def delete_workflow: (
                              workflow_id: ::String
@@ -577,6 +614,26 @@ module Aws
                            user_name: ::String
                          ) -> _DescribeUserResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeUserResponseSuccess
+
+      interface _DescribeWebAppResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeWebAppResponse]
+        def web_app: () -> Types::DescribedWebApp
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#describe_web_app-instance_method
+      def describe_web_app: (
+                              web_app_id: ::String
+                            ) -> _DescribeWebAppResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeWebAppResponseSuccess
+
+      interface _DescribeWebAppCustomizationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeWebAppCustomizationResponse]
+        def web_app_customization: () -> Types::DescribedWebAppCustomization
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#describe_web_app_customization-instance_method
+      def describe_web_app_customization: (
+                                            web_app_id: ::String
+                                          ) -> _DescribeWebAppCustomizationResponseSuccess
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeWebAppCustomizationResponseSuccess
 
       interface _DescribeWorkflowResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeWorkflowResponse]
@@ -800,6 +857,18 @@ module Aws
                         server_id: ::String
                       ) -> _ListUsersResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListUsersResponseSuccess
+
+      interface _ListWebAppsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListWebAppsResponse]
+        def next_token: () -> ::String
+        def web_apps: () -> ::Array[Types::ListedWebApp]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#list_web_apps-instance_method
+      def list_web_apps: (
+                           ?max_results: ::Integer,
+                           ?next_token: ::String
+                         ) -> _ListWebAppsResponseSuccess
+                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListWebAppsResponseSuccess
 
       interface _ListWorkflowsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListWorkflowsResponse]
@@ -1107,6 +1176,38 @@ module Aws
                          user_name: ::String
                        ) -> _UpdateUserResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateUserResponseSuccess
+
+      interface _UpdateWebAppResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateWebAppResponse]
+        def web_app_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#update_web_app-instance_method
+      def update_web_app: (
+                            web_app_id: ::String,
+                            ?identity_provider_details: {
+                              identity_center_config: {
+                                role: ::String?
+                              }?
+                            },
+                            ?access_endpoint: ::String,
+                            ?web_app_units: {
+                              provisioned: ::Integer?
+                            }
+                          ) -> _UpdateWebAppResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateWebAppResponseSuccess
+
+      interface _UpdateWebAppCustomizationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateWebAppCustomizationResponse]
+        def web_app_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#update_web_app_customization-instance_method
+      def update_web_app_customization: (
+                                          web_app_id: ::String,
+                                          ?title: ::String,
+                                          ?logo_file: ::String,
+                                          ?favicon_file: ::String
+                                        ) -> _UpdateWebAppCustomizationResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateWebAppCustomizationResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Transfer/Client.html#wait_until-instance_method
       def wait_until: (:server_offline waiter_name, 

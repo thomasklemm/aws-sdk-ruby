@@ -161,6 +161,8 @@ module Aws::Imagebuilder
     GetLifecycleExecutionResponse = Shapes::StructureShape.new(name: 'GetLifecycleExecutionResponse')
     GetLifecyclePolicyRequest = Shapes::StructureShape.new(name: 'GetLifecyclePolicyRequest')
     GetLifecyclePolicyResponse = Shapes::StructureShape.new(name: 'GetLifecyclePolicyResponse')
+    GetMarketplaceResourceRequest = Shapes::StructureShape.new(name: 'GetMarketplaceResourceRequest')
+    GetMarketplaceResourceResponse = Shapes::StructureShape.new(name: 'GetMarketplaceResourceResponse')
     GetWorkflowExecutionRequest = Shapes::StructureShape.new(name: 'GetWorkflowExecutionRequest')
     GetWorkflowExecutionResponse = Shapes::StructureShape.new(name: 'GetWorkflowExecutionResponse')
     GetWorkflowRequest = Shapes::StructureShape.new(name: 'GetWorkflowRequest')
@@ -320,6 +322,8 @@ module Aws::Imagebuilder
     ListWorkflowsRequest = Shapes::StructureShape.new(name: 'ListWorkflowsRequest')
     ListWorkflowsResponse = Shapes::StructureShape.new(name: 'ListWorkflowsResponse')
     Logging = Shapes::StructureShape.new(name: 'Logging')
+    MarketplaceResourceLocation = Shapes::StringShape.new(name: 'MarketplaceResourceLocation')
+    MarketplaceResourceType = Shapes::StringShape.new(name: 'MarketplaceResourceType')
     MaxParallelLaunches = Shapes::IntegerShape.new(name: 'MaxParallelLaunches')
     NonEmptyString = Shapes::StringShape.new(name: 'NonEmptyString')
     NonEmptyStringList = Shapes::ListShape.new(name: 'NonEmptyStringList')
@@ -343,6 +347,10 @@ module Aws::Imagebuilder
     PipelineStatus = Shapes::StringShape.new(name: 'PipelineStatus')
     Placement = Shapes::StructureShape.new(name: 'Placement')
     Platform = Shapes::StringShape.new(name: 'Platform')
+    ProductCodeId = Shapes::StringShape.new(name: 'ProductCodeId')
+    ProductCodeList = Shapes::ListShape.new(name: 'ProductCodeList')
+    ProductCodeListItem = Shapes::StructureShape.new(name: 'ProductCodeListItem')
+    ProductCodeType = Shapes::StringShape.new(name: 'ProductCodeType')
     PutComponentPolicyRequest = Shapes::StructureShape.new(name: 'PutComponentPolicyRequest')
     PutComponentPolicyResponse = Shapes::StructureShape.new(name: 'PutComponentPolicyResponse')
     PutContainerRecipePolicyRequest = Shapes::StructureShape.new(name: 'PutContainerRecipePolicyRequest')
@@ -529,6 +537,7 @@ module Aws::Imagebuilder
     Component.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     Component.add_member(:publisher, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "publisher"))
     Component.add_member(:obfuscate, Shapes::ShapeRef.new(shape: Boolean, location_name: "obfuscate"))
+    Component.add_member(:product_codes, Shapes::ShapeRef.new(shape: ProductCodeList, location_name: "productCodes"))
     Component.struct_class = Types::Component
 
     ComponentConfiguration.add_member(:component_arn, Shapes::ShapeRef.new(shape: ComponentVersionArnOrBuildVersionArn, required: true, location_name: "componentArn"))
@@ -584,6 +593,8 @@ module Aws::Imagebuilder
     ComponentVersion.add_member(:type, Shapes::ShapeRef.new(shape: ComponentType, location_name: "type"))
     ComponentVersion.add_member(:owner, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "owner"))
     ComponentVersion.add_member(:date_created, Shapes::ShapeRef.new(shape: DateTime, location_name: "dateCreated"))
+    ComponentVersion.add_member(:status, Shapes::ShapeRef.new(shape: ComponentStatus, location_name: "status"))
+    ComponentVersion.add_member(:product_codes, Shapes::ShapeRef.new(shape: ProductCodeList, location_name: "productCodes"))
     ComponentVersion.struct_class = Types::ComponentVersion
 
     ComponentVersionList.member = Shapes::ShapeRef.new(shape: ComponentVersion)
@@ -1038,6 +1049,16 @@ module Aws::Imagebuilder
 
     GetLifecyclePolicyResponse.add_member(:lifecycle_policy, Shapes::ShapeRef.new(shape: LifecyclePolicy, location_name: "lifecyclePolicy"))
     GetLifecyclePolicyResponse.struct_class = Types::GetLifecyclePolicyResponse
+
+    GetMarketplaceResourceRequest.add_member(:resource_type, Shapes::ShapeRef.new(shape: MarketplaceResourceType, required: true, location_name: "resourceType"))
+    GetMarketplaceResourceRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ImageBuilderArn, required: true, location_name: "resourceArn"))
+    GetMarketplaceResourceRequest.add_member(:resource_location, Shapes::ShapeRef.new(shape: MarketplaceResourceLocation, location_name: "resourceLocation"))
+    GetMarketplaceResourceRequest.struct_class = Types::GetMarketplaceResourceRequest
+
+    GetMarketplaceResourceResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ImageBuilderArn, location_name: "resourceArn"))
+    GetMarketplaceResourceResponse.add_member(:url, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "url"))
+    GetMarketplaceResourceResponse.add_member(:data, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "data"))
+    GetMarketplaceResourceResponse.struct_class = Types::GetMarketplaceResourceResponse
 
     GetWorkflowExecutionRequest.add_member(:workflow_execution_id, Shapes::ShapeRef.new(shape: WorkflowExecutionId, required: true, location: "querystring", location_name: "workflowExecutionId"))
     GetWorkflowExecutionRequest.struct_class = Types::GetWorkflowExecutionRequest
@@ -1766,6 +1787,12 @@ module Aws::Imagebuilder
     Placement.add_member(:host_id, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "hostId"))
     Placement.add_member(:host_resource_group_arn, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "hostResourceGroupArn"))
     Placement.struct_class = Types::Placement
+
+    ProductCodeList.member = Shapes::ShapeRef.new(shape: ProductCodeListItem)
+
+    ProductCodeListItem.add_member(:product_code_id, Shapes::ShapeRef.new(shape: ProductCodeId, required: true, location_name: "productCodeId"))
+    ProductCodeListItem.add_member(:product_code_type, Shapes::ShapeRef.new(shape: ProductCodeType, required: true, location_name: "productCodeType"))
+    ProductCodeListItem.struct_class = Types::ProductCodeListItem
 
     PutComponentPolicyRequest.add_member(:component_arn, Shapes::ShapeRef.new(shape: ComponentBuildVersionArn, required: true, location_name: "componentArn"))
     PutComponentPolicyRequest.add_member(:policy, Shapes::ShapeRef.new(shape: ResourcePolicyDocument, required: true, location_name: "policy"))
@@ -2650,6 +2677,20 @@ module Aws::Imagebuilder
         o.http_request_uri = "/GetLifecyclePolicy"
         o.input = Shapes::ShapeRef.new(shape: GetLifecyclePolicyRequest)
         o.output = Shapes::ShapeRef.new(shape: GetLifecyclePolicyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: ClientException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ForbiddenException)
+        o.errors << Shapes::ShapeRef.new(shape: CallRateLimitExceededException)
+      end)
+
+      api.add_operation(:get_marketplace_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetMarketplaceResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/GetMarketplaceResource"
+        o.input = Shapes::ShapeRef.new(shape: GetMarketplaceResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetMarketplaceResourceResponse)
         o.errors << Shapes::ShapeRef.new(shape: ServiceException)
         o.errors << Shapes::ShapeRef.new(shape: ClientException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)

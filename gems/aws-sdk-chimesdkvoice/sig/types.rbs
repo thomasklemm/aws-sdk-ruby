@@ -179,6 +179,7 @@ module Aws::ChimeSDKVoice
       attr_accessor aws_region: ("us-east-1" | "us-west-2" | "ca-central-1" | "eu-central-1" | "eu-west-1" | "eu-west-2" | "ap-northeast-2" | "ap-northeast-1" | "ap-southeast-1" | "ap-southeast-2")
       attr_accessor require_encryption: bool
       attr_accessor tags: ::Array[Types::Tag]
+      attr_accessor integration_type: ("CONNECT_CALL_TRANSFER_CONNECTOR" | "CONNECT_ANALYTICS_CONNECTOR")
       SENSITIVE: []
     end
 
@@ -246,6 +247,11 @@ module Aws::ChimeSDKVoice
     end
 
     class DeleteVoiceConnectorEmergencyCallingConfigurationRequest
+      attr_accessor voice_connector_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteVoiceConnectorExternalSystemsConfigurationRequest
       attr_accessor voice_connector_id: ::String
       SENSITIVE: []
     end
@@ -320,6 +326,12 @@ module Aws::ChimeSDKVoice
 
     class EmergencyCallingConfiguration
       attr_accessor dnis: ::Array[Types::DNISEmergencyCallingConfiguration]
+      SENSITIVE: []
+    end
+
+    class ExternalSystemsConfiguration
+      attr_accessor session_border_controller_types: ::Array[("RIBBON_SBC" | "ORACLE_ACME_PACKET_SBC" | "AVAYA_SBCE" | "CISCO_UNIFIED_BORDER_ELEMENT" | "AUDIOCODES_MEDIANT_SBC")]
+      attr_accessor contact_center_system_types: ::Array[("GENESYS_ENGAGE_ON_PREMISES" | "AVAYA_AURA_CALL_CENTER_ELITE" | "AVAYA_AURA_CONTACT_CENTER" | "CISCO_UNIFIED_CONTACT_CENTER_ENTERPRISE")]
       SENSITIVE: []
     end
 
@@ -432,6 +444,16 @@ module Aws::ChimeSDKVoice
 
     class GetVoiceConnectorEmergencyCallingConfigurationResponse
       attr_accessor emergency_calling_configuration: Types::EmergencyCallingConfiguration
+      SENSITIVE: []
+    end
+
+    class GetVoiceConnectorExternalSystemsConfigurationRequest
+      attr_accessor voice_connector_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetVoiceConnectorExternalSystemsConfigurationResponse
+      attr_accessor external_systems_configuration: Types::ExternalSystemsConfiguration
       SENSITIVE: []
     end
 
@@ -858,6 +880,18 @@ module Aws::ChimeSDKVoice
 
     class PutVoiceConnectorEmergencyCallingConfigurationResponse
       attr_accessor emergency_calling_configuration: Types::EmergencyCallingConfiguration
+      SENSITIVE: []
+    end
+
+    class PutVoiceConnectorExternalSystemsConfigurationRequest
+      attr_accessor voice_connector_id: ::String
+      attr_accessor session_border_controller_types: ::Array[("RIBBON_SBC" | "ORACLE_ACME_PACKET_SBC" | "AVAYA_SBCE" | "CISCO_UNIFIED_BORDER_ELEMENT" | "AUDIOCODES_MEDIANT_SBC")]
+      attr_accessor contact_center_system_types: ::Array[("GENESYS_ENGAGE_ON_PREMISES" | "AVAYA_AURA_CALL_CENTER_ELITE" | "AVAYA_AURA_CONTACT_CENTER" | "CISCO_UNIFIED_CONTACT_CENTER_ENTERPRISE")]
+      SENSITIVE: []
+    end
+
+    class PutVoiceConnectorExternalSystemsConfigurationResponse
+      attr_accessor external_systems_configuration: Types::ExternalSystemsConfiguration
       SENSITIVE: []
     end
 
@@ -1292,6 +1326,7 @@ module Aws::ChimeSDKVoice
       attr_accessor created_timestamp: ::Time
       attr_accessor updated_timestamp: ::Time
       attr_accessor voice_connector_arn: ::String
+      attr_accessor integration_type: ("CONNECT_CALL_TRANSFER_CONNECTOR" | "CONNECT_ANALYTICS_CONNECTOR")
       SENSITIVE: []
     end
 

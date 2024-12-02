@@ -447,13 +447,14 @@ module Aws::Bedrock
 
     # @!group API Operations
 
-    # Creates a batch deletion job. A model evaluation job can only be
+    # Deletes a batch of evaluation jobs. An evaluation job can only be
     # deleted if it has following status `FAILED`, `COMPLETED`, and
     # `STOPPED`. You can request up to 25 model evaluation jobs be deleted
     # in a single request.
     #
     # @option params [required, Array<String>] :job_identifiers
-    #   An array of model evaluation job ARNs to be deleted.
+    #   A list of one or more evaluation job Amazon Resource Names (ARNs) you
+    #   want to delete.
     #
     # @return [Types::BatchDeleteEvaluationJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -485,21 +486,14 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
-    # API operation for creating and managing Amazon Bedrock automatic model
-    # evaluation jobs and model evaluation jobs that use human workers. To
-    # learn more about the requirements for creating a model evaluation job
-    # see, [Model evaluation][1].
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation.html
+    # Creates an evaluation job.
     #
     # @option params [required, String] :job_name
-    #   The name of the model evaluation job. Model evaluation job names must
-    #   unique with your AWS account, and your account's AWS region.
+    #   A name for the evaluation job. Names must unique with your Amazon Web
+    #   Services account, and your account's Amazon Web Services region.
     #
     # @option params [String] :job_description
-    #   A description of the model evaluation job.
+    #   A description of the evaluation job.
     #
     # @option params [String] :client_request_token
     #   A unique, case-sensitive identifier to ensure that the API request
@@ -516,41 +510,44 @@ module Aws::Bedrock
     #
     # @option params [required, String] :role_arn
     #   The Amazon Resource Name (ARN) of an IAM service role that Amazon
-    #   Bedrock can assume to perform tasks on your behalf. The service role
-    #   must have Amazon Bedrock as the service principal, and provide access
-    #   to any Amazon S3 buckets specified in the `EvaluationConfig` object.
-    #   To pass this role to Amazon Bedrock, the caller of this API must have
-    #   the `iam:PassRole` permission. To learn more about the required
-    #   permissions, see [Required permissions][1].
+    #   Bedrock can assume to perform tasks on your behalf. To learn more
+    #   about the required permissions, see [Required permissions for model
+    #   evaluations][1].
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation-security.html
     #
     # @option params [String] :customer_encryption_key_id
-    #   Specify your customer managed key ARN that will be used to encrypt
-    #   your model evaluation job.
+    #   Specify your customer managed encryption key Amazon Resource Name
+    #   (ARN) that will be used to encrypt your evaluation job.
     #
     # @option params [Array<Types::Tag>] :job_tags
     #   Tags to attach to the model evaluation job.
     #
+    # @option params [String] :application_type
+    #   Specifies whether the evaluation job is for evaluating a model or
+    #   evaluating a knowledge base (retrieval and response generation).
+    #
     # @option params [required, Types::EvaluationConfig] :evaluation_config
-    #   Specifies whether the model evaluation job is automatic or uses human
-    #   worker.
+    #   Contains the configuration details of either an automated or
+    #   human-based evaluation job.
     #
     # @option params [required, Types::EvaluationInferenceConfig] :inference_config
-    #   Specify the models you want to use in your model evaluation job.
-    #   Automatic model evaluation jobs support a single model or [inference
-    #   profile][1], and model evaluation job that use human workers support
-    #   two models or inference profiles.
+    #   Contains the configuration details of the inference model for the
+    #   evaluation job.
+    #
+    #   For model evaluation jobs, automated jobs support a single model or
+    #   [inference profile][1], and jobs that use human workers support two
+    #   models or inference profiles.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
     #
     # @option params [required, Types::EvaluationOutputDataConfig] :output_data_config
-    #   An object that defines where the results of model evaluation job will
-    #   be saved in Amazon S3.
+    #   Contains the configuration details of the Amazon S3 bucket for storing
+    #   the results of the evaluation job.
     #
     # @return [Types::CreateEvaluationJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -570,6 +567,7 @@ module Aws::Bedrock
     #         value: "TagValue", # required
     #       },
     #     ],
+    #     application_type: "ModelEvaluation", # accepts ModelEvaluation, RagEvaluation
     #     evaluation_config: { # required
     #       automated: {
     #         dataset_metric_configs: [ # required
@@ -584,6 +582,13 @@ module Aws::Bedrock
     #             metric_names: ["EvaluationMetricName"], # required
     #           },
     #         ],
+    #         evaluator_model_config: {
+    #           bedrock_evaluator_models: [
+    #             {
+    #               model_identifier: "EvaluatorModelIdentifier", # required
+    #             },
+    #           ],
+    #         },
     #       },
     #       human: {
     #         human_workflow_config: {
@@ -616,7 +621,232 @@ module Aws::Bedrock
     #         {
     #           bedrock_model: {
     #             model_identifier: "EvaluationModelIdentifier", # required
-    #             inference_params: "EvaluationModelInferenceParams", # required
+    #             inference_params: "EvaluationModelInferenceParams",
+    #           },
+    #         },
+    #       ],
+    #       rag_configs: [
+    #         {
+    #           knowledge_base_config: {
+    #             retrieve_config: {
+    #               knowledge_base_id: "KnowledgeBaseId", # required
+    #               knowledge_base_retrieval_configuration: { # required
+    #                 vector_search_configuration: { # required
+    #                   number_of_results: 1,
+    #                   override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #                   filter: {
+    #                     equals: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     not_equals: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     greater_than: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     greater_than_or_equals: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     less_than: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     less_than_or_equals: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     in: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     not_in: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     starts_with: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     list_contains: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     string_contains: {
+    #                       key: "FilterKey", # required
+    #                       value: { # required
+    #                       },
+    #                     },
+    #                     and_all: [
+    #                       {
+    #                         # recursive RetrievalFilter
+    #                       },
+    #                     ],
+    #                     or_all: [
+    #                       {
+    #                         # recursive RetrievalFilter
+    #                       },
+    #                     ],
+    #                   },
+    #                 },
+    #               },
+    #             },
+    #             retrieve_and_generate_config: {
+    #               type: "KNOWLEDGE_BASE", # required, accepts KNOWLEDGE_BASE, EXTERNAL_SOURCES
+    #               knowledge_base_configuration: {
+    #                 knowledge_base_id: "KnowledgeBaseId", # required
+    #                 model_arn: "BedrockModelArn", # required
+    #                 retrieval_configuration: {
+    #                   vector_search_configuration: { # required
+    #                     number_of_results: 1,
+    #                     override_search_type: "HYBRID", # accepts HYBRID, SEMANTIC
+    #                     filter: {
+    #                       equals: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       not_equals: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       greater_than: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       greater_than_or_equals: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       less_than: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       less_than_or_equals: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       in: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       not_in: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       starts_with: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       list_contains: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       string_contains: {
+    #                         key: "FilterKey", # required
+    #                         value: { # required
+    #                         },
+    #                       },
+    #                       and_all: [
+    #                         {
+    #                           # recursive RetrievalFilter
+    #                         },
+    #                       ],
+    #                       or_all: [
+    #                         {
+    #                           # recursive RetrievalFilter
+    #                         },
+    #                       ],
+    #                     },
+    #                   },
+    #                 },
+    #                 generation_configuration: {
+    #                   prompt_template: {
+    #                     text_prompt_template: "TextPromptTemplate",
+    #                   },
+    #                   guardrail_configuration: {
+    #                     guardrail_id: "GuardrailConfigurationGuardrailIdString", # required
+    #                     guardrail_version: "GuardrailConfigurationGuardrailVersionString", # required
+    #                   },
+    #                   kb_inference_config: {
+    #                     text_inference_config: {
+    #                       temperature: 1.0,
+    #                       top_p: 1.0,
+    #                       max_tokens: 1,
+    #                       stop_sequences: ["RAGStopSequencesMemberString"],
+    #                     },
+    #                   },
+    #                   additional_model_request_fields: {
+    #                     "AdditionalModelRequestFieldsKey" => {
+    #                     },
+    #                   },
+    #                 },
+    #                 orchestration_configuration: {
+    #                   query_transformation_configuration: { # required
+    #                     type: "QUERY_DECOMPOSITION", # required, accepts QUERY_DECOMPOSITION
+    #                   },
+    #                 },
+    #               },
+    #               external_sources_configuration: {
+    #                 model_arn: "BedrockModelArn", # required
+    #                 sources: [ # required
+    #                   {
+    #                     source_type: "S3", # required, accepts S3, BYTE_CONTENT
+    #                     s3_location: {
+    #                       uri: "kBS3Uri", # required
+    #                     },
+    #                     byte_content: {
+    #                       identifier: "Identifier", # required
+    #                       content_type: "ContentType", # required
+    #                       data: "data", # required
+    #                     },
+    #                   },
+    #                 ],
+    #                 generation_configuration: {
+    #                   prompt_template: {
+    #                     text_prompt_template: "TextPromptTemplate",
+    #                   },
+    #                   guardrail_configuration: {
+    #                     guardrail_id: "GuardrailConfigurationGuardrailIdString", # required
+    #                     guardrail_version: "GuardrailConfigurationGuardrailVersionString", # required
+    #                   },
+    #                   kb_inference_config: {
+    #                     text_inference_config: {
+    #                       temperature: 1.0,
+    #                       top_p: 1.0,
+    #                       max_tokens: 1,
+    #                       stop_sequences: ["RAGStopSequencesMemberString"],
+    #                     },
+    #                   },
+    #                   additional_model_request_fields: {
+    #                     "AdditionalModelRequestFieldsKey" => {
+    #                     },
+    #                   },
+    #                 },
+    #               },
+    #             },
     #           },
     #         },
     #       ],
@@ -1723,16 +1953,12 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
-    # Retrieves the properties associated with a model evaluation job,
-    # including the status of the job. For more information, see [Model
-    # evaluation][1].
-    #
-    #
-    #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation.html
+    # Gets information about an evaluation job, such as the status of the
+    # job.
     #
     # @option params [required, String] :job_identifier
-    #   The Amazon Resource Name (ARN) of the model evaluation job.
+    #   The Amazon Resource Name (ARN) of the evaluation job you want get
+    #   information on.
     #
     # @return [Types::GetEvaluationJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1743,6 +1969,7 @@ module Aws::Bedrock
     #   * {Types::GetEvaluationJobResponse#role_arn #role_arn} => String
     #   * {Types::GetEvaluationJobResponse#customer_encryption_key_id #customer_encryption_key_id} => String
     #   * {Types::GetEvaluationJobResponse#job_type #job_type} => String
+    #   * {Types::GetEvaluationJobResponse#application_type #application_type} => String
     #   * {Types::GetEvaluationJobResponse#evaluation_config #evaluation_config} => Types::EvaluationConfig
     #   * {Types::GetEvaluationJobResponse#inference_config #inference_config} => Types::EvaluationInferenceConfig
     #   * {Types::GetEvaluationJobResponse#output_data_config #output_data_config} => Types::EvaluationOutputDataConfig
@@ -1765,12 +1992,15 @@ module Aws::Bedrock
     #   resp.role_arn #=> String
     #   resp.customer_encryption_key_id #=> String
     #   resp.job_type #=> String, one of "Human", "Automated"
+    #   resp.application_type #=> String, one of "ModelEvaluation", "RagEvaluation"
     #   resp.evaluation_config.automated.dataset_metric_configs #=> Array
     #   resp.evaluation_config.automated.dataset_metric_configs[0].task_type #=> String, one of "Summarization", "Classification", "QuestionAndAnswer", "Generation", "Custom"
     #   resp.evaluation_config.automated.dataset_metric_configs[0].dataset.name #=> String
     #   resp.evaluation_config.automated.dataset_metric_configs[0].dataset.dataset_location.s3_uri #=> String
     #   resp.evaluation_config.automated.dataset_metric_configs[0].metric_names #=> Array
     #   resp.evaluation_config.automated.dataset_metric_configs[0].metric_names[0] #=> String
+    #   resp.evaluation_config.automated.evaluator_model_config.bedrock_evaluator_models #=> Array
+    #   resp.evaluation_config.automated.evaluator_model_config.bedrock_evaluator_models[0].model_identifier #=> String
     #   resp.evaluation_config.human.human_workflow_config.flow_definition_arn #=> String
     #   resp.evaluation_config.human.human_workflow_config.instructions #=> String
     #   resp.evaluation_config.human.custom_metrics #=> Array
@@ -1786,6 +2016,71 @@ module Aws::Bedrock
     #   resp.inference_config.models #=> Array
     #   resp.inference_config.models[0].bedrock_model.model_identifier #=> String
     #   resp.inference_config.models[0].bedrock_model.inference_params #=> String
+    #   resp.inference_config.rag_configs #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_id #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.number_of_results #=> Integer
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.override_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.not_equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.greater_than.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.greater_than_or_equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.less_than.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.less_than_or_equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.in.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.not_in.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.starts_with.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.list_contains.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.string_contains.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.and_all #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.and_all[0] #=> Types::RetrievalFilter
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.or_all #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_config.knowledge_base_retrieval_configuration.vector_search_configuration.filter.or_all[0] #=> Types::RetrievalFilter
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.type #=> String, one of "KNOWLEDGE_BASE", "EXTERNAL_SOURCES"
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.knowledge_base_id #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.model_arn #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.number_of_results #=> Integer
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.override_search_type #=> String, one of "HYBRID", "SEMANTIC"
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.not_equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.greater_than.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.greater_than_or_equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.less_than.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.less_than_or_equals.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.in.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.not_in.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.starts_with.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.list_contains.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.string_contains.key #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.and_all #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.and_all[0] #=> Types::RetrievalFilter
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.or_all #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.retrieval_configuration.vector_search_configuration.filter.or_all[0] #=> Types::RetrievalFilter
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.prompt_template.text_prompt_template #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.guardrail_configuration.guardrail_id #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.guardrail_configuration.guardrail_version #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.kb_inference_config.text_inference_config.temperature #=> Float
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.kb_inference_config.text_inference_config.top_p #=> Float
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.kb_inference_config.text_inference_config.max_tokens #=> Integer
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.kb_inference_config.text_inference_config.stop_sequences #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.kb_inference_config.text_inference_config.stop_sequences[0] #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.generation_configuration.additional_model_request_fields #=> Hash
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.knowledge_base_configuration.orchestration_configuration.query_transformation_configuration.type #=> String, one of "QUERY_DECOMPOSITION"
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.model_arn #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.sources #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.sources[0].source_type #=> String, one of "S3", "BYTE_CONTENT"
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.sources[0].s3_location.uri #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.sources[0].byte_content.identifier #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.sources[0].byte_content.content_type #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.sources[0].byte_content.data #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.prompt_template.text_prompt_template #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.guardrail_configuration.guardrail_id #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.guardrail_configuration.guardrail_version #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.kb_inference_config.text_inference_config.temperature #=> Float
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.kb_inference_config.text_inference_config.top_p #=> Float
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.kb_inference_config.text_inference_config.max_tokens #=> Integer
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.kb_inference_config.text_inference_config.stop_sequences #=> Array
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.kb_inference_config.text_inference_config.stop_sequences[0] #=> String
+    #   resp.inference_config.rag_configs[0].knowledge_base_config.retrieve_and_generate_config.external_sources_configuration.generation_configuration.additional_model_request_fields #=> Hash
     #   resp.output_data_config.s3_uri #=> String
     #   resp.creation_time #=> Time
     #   resp.last_modified_time #=> Time
@@ -2475,21 +2770,24 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
-    # Lists model evaluation jobs.
+    # Lists all existing evaluation jobs.
     #
     # @option params [Time,DateTime,Date,Integer,String] :creation_time_after
-    #   A filter that includes model evaluation jobs created after the time
-    #   specified.
+    #   A filter to only list evaluation jobs created after a specified time.
     #
     # @option params [Time,DateTime,Date,Integer,String] :creation_time_before
-    #   A filter that includes model evaluation jobs created prior to the time
-    #   specified.
+    #   A filter to only list evaluation jobs created before a specified time.
     #
     # @option params [String] :status_equals
-    #   Only return jobs where the status condition is met.
+    #   A filter to only list evaluation jobs that are of a certain status.
+    #
+    # @option params [String] :application_type_equals
+    #   A filter to only list evaluation jobs that are either model
+    #   evaluations or knowledge base evaluations.
     #
     # @option params [String] :name_contains
-    #   Query parameter string for model evaluation job names.
+    #   A filter to only list evaluation jobs that contain a specified string
+    #   in the job name.
     #
     # @option params [Integer] :max_results
     #   The maximum number of results to return.
@@ -2499,10 +2797,12 @@ module Aws::Bedrock
     #   list the next set of results.
     #
     # @option params [String] :sort_by
-    #   Allows you to sort model evaluation jobs by when they were created.
+    #   Specifies a creation time to sort the list of evaluation jobs by when
+    #   they were created.
     #
     # @option params [String] :sort_order
-    #   How you want the order of jobs sorted.
+    #   Specifies whether to sort the list of evaluation jobs by either
+    #   ascending or descending order.
     #
     # @return [Types::ListEvaluationJobsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2517,6 +2817,7 @@ module Aws::Bedrock
     #     creation_time_after: Time.now,
     #     creation_time_before: Time.now,
     #     status_equals: "InProgress", # accepts InProgress, Completed, Failed, Stopping, Stopped, Deleting
+    #     application_type_equals: "ModelEvaluation", # accepts ModelEvaluation, RagEvaluation
     #     name_contains: "EvaluationJobName",
     #     max_results: 1,
     #     next_token: "PaginationToken",
@@ -2537,6 +2838,11 @@ module Aws::Bedrock
     #   resp.job_summaries[0].evaluation_task_types[0] #=> String, one of "Summarization", "Classification", "QuestionAndAnswer", "Generation", "Custom"
     #   resp.job_summaries[0].model_identifiers #=> Array
     #   resp.job_summaries[0].model_identifiers[0] #=> String
+    #   resp.job_summaries[0].rag_identifiers #=> Array
+    #   resp.job_summaries[0].rag_identifiers[0] #=> String
+    #   resp.job_summaries[0].evaluator_model_identifiers #=> Array
+    #   resp.job_summaries[0].evaluator_model_identifiers[0] #=> String
+    #   resp.job_summaries[0].application_type #=> String, one of "ModelEvaluation", "RagEvaluation"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListEvaluationJobs AWS API Documentation
     #
@@ -3363,10 +3669,10 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
-    # Stops an in progress model evaluation job.
+    # Stops an evaluation job that is current being created or running.
     #
     # @option params [required, String] :job_identifier
-    #   The ARN of the model evaluation job you want to stop.
+    #   The Amazon Resource Name (ARN) of the evaluation job you want to stop.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
@@ -3737,7 +4043,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.29.0'
+      context[:gem_version] = '1.30.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

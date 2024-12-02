@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.122.0 (2024-12-02)
+------------------
+
+* Feature - Added support for Auto Mode Clusters, Hybrid Nodes, and specifying computeTypes in the DescribeAddonVersions API.
+
 1.121.0 (2024-11-08)
 ------------------
 

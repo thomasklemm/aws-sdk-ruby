@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.109.0 (2024-12-02)
+------------------
+
+* Feature - Add support for policy operations on the DECLARATIVE_POLICY_EC2 policy type.
+
 1.108.0 (2024-11-18)
 ------------------
 

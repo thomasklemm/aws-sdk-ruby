@@ -381,6 +381,7 @@ RubyGems.org page under "LINKS" section.
 | AWS Health Imaging                                    | Aws::MedicalImaging                      | aws-sdk-medicalimaging                      | 2023-07-19  |
 | AWS Identity and Access Management                    | Aws::IAM                                 | aws-sdk-iam                                 | 2010-05-08  |
 | AWS Import/Export                                     | Aws::ImportExport                        | aws-sdk-importexport                        | 2010-06-01  |
+| AWS Invoicing                                         | Aws::Invoicing                           | aws-sdk-invoicing                           | 2024-12-01  |
 | AWS IoT                                               | Aws::IoT                                 | aws-sdk-iot                                 | 2015-05-28  |
 | AWS IoT 1-Click Devices Service                       | Aws::IoT1ClickDevicesService             | aws-sdk-iot1clickdevicesservice             | 2018-05-14  |
 | AWS IoT 1-Click Projects Service                      | Aws::IoT1ClickProjects                   | aws-sdk-iot1clickprojects                   | 2018-05-14  |
@@ -684,6 +685,7 @@ RubyGems.org page under "LINKS" section.
 | Managed Streaming for Kafka                           | Aws::Kafka                               | aws-sdk-kafka                               | 2018-11-14  |
 | Managed Streaming for Kafka Connect                   | Aws::KafkaConnect                        | aws-sdk-kafkaconnect                        | 2021-09-14  |
 | Migration Hub Strategy Recommendations                | Aws::MigrationHubStrategyRecommendations | aws-sdk-migrationhubstrategyrecommendations | 2020-02-19  |
+| Network Flow Monitor                                  | Aws::NetworkFlowMonitor                  | aws-sdk-networkflowmonitor                  | 2023-04-19  |
 | OpenSearch Service Serverless                         | Aws::OpenSearchServerless                | aws-sdk-opensearchserverless                | 2021-11-01  |
 | Partner Central Selling API                           | Aws::PartnerCentralSelling               | aws-sdk-partnercentralselling               | 2022-07-26  |
 | Payment Cryptography Control Plane                    | Aws::PaymentCryptography                 | aws-sdk-paymentcryptography                 | 2021-09-14  |
@@ -697,6 +699,7 @@ RubyGems.org page under "LINKS" section.
 | Route 53 Profiles                                     | Aws::Route53Profiles                     | aws-sdk-route53profiles                     | 2018-05-10  |
 | Route53 Recovery Cluster                              | Aws::Route53RecoveryCluster              | aws-sdk-route53recoverycluster              | 2019-12-02  |
 | Schemas                                               | Aws::Schemas                             | aws-sdk-schemas                             | 2019-12-02  |
+| Security Incident Response                            | Aws::SecurityIR                          | aws-sdk-securityir                          | 2018-05-10  |
 | Service Quotas                                        | Aws::ServiceQuotas                       | aws-sdk-servicequotas                       | 2019-06-24  |
 | Synthetics                                            | Aws::Synthetics                          | aws-sdk-synthetics                          | 2017-10-11  |
 | Tax Settings                                          | Aws::TaxSettings                         | aws-sdk-taxsettings                         | 2018-05-10  |

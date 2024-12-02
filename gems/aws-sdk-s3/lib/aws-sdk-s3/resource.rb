@@ -43,11 +43,11 @@ module Aws::S3
     #     create_bucket_configuration: {
     #       location_constraint: "af-south-1", # accepts af-south-1, ap-east-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-south-1, ap-south-2, ap-southeast-1, ap-southeast-2, ap-southeast-3, ca-central-1, cn-north-1, cn-northwest-1, EU, eu-central-1, eu-north-1, eu-south-1, eu-south-2, eu-west-1, eu-west-2, eu-west-3, me-south-1, sa-east-1, us-east-2, us-gov-east-1, us-gov-west-1, us-west-1, us-west-2
     #       location: {
-    #         type: "AvailabilityZone", # accepts AvailabilityZone
+    #         type: "AvailabilityZone", # accepts AvailabilityZone, LocalZone
     #         name: "LocationNameAsString",
     #       },
     #       bucket: {
-    #         data_redundancy: "SingleAvailabilityZone", # accepts SingleAvailabilityZone
+    #         data_redundancy: "SingleAvailabilityZone", # accepts SingleAvailabilityZone, SingleLocalZone
     #         type: "Directory", # accepts Directory
     #       },
     #     },
@@ -75,13 +75,14 @@ module Aws::S3
     #
     #   <b>Directory buckets </b> - When you use this operation with a
     #   directory bucket, you must use path-style requests in the format
-    #   `https://s3express-control.region_code.amazonaws.com/bucket-name `.
+    #   `https://s3express-control.region-code.amazonaws.com/bucket-name `.
     #   Virtual-hosted-style requests aren't supported. Directory bucket
-    #   names must be unique in the chosen Availability Zone. Bucket names
-    #   must also follow the format ` bucket_base_name--az_id--x-s3` (for
-    #   example, ` DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about
-    #   bucket naming restrictions, see [Directory bucket naming rules][2] in
-    #   the *Amazon S3 User Guide*
+    #   names must be unique in the chosen Zone (Availability Zone or Local
+    #   Zone). Bucket names must also follow the format `
+    #   bucket-base-name--zone-id--x-s3` (for example, `
+    #   DOC-EXAMPLE-BUCKET--usw2-az1--x-s3`). For information about bucket
+    #   naming restrictions, see [Directory bucket naming rules][2] in the
+    #   *Amazon S3 User Guide*
     #
     #
     #

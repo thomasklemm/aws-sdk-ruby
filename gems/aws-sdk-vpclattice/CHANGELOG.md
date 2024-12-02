@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.25.0 (2024-12-02)
+------------------
+
+* Feature - Lattice APIs that allow sharing and access of VPC resources across accounts.
+
 1.24.0 (2024-10-18)
 ------------------
 

@@ -11,6 +11,8 @@ module Aws
       class ServiceError < ::Aws::Errors::ServiceError
       end
 
+      class AccessDeniedException < ::Aws::Errors::ServiceError
+      end
       class ConcurrentModificationException < ::Aws::Errors::ServiceError
       end
       class IllegalStatusException < ::Aws::Errors::ServiceError
@@ -32,6 +34,8 @@ module Aws
       class ResourceAlreadyExistsException < ::Aws::Errors::ServiceError
       end
       class ResourceNotFoundException < ::Aws::Errors::ServiceError
+      end
+      class ThrottlingException < ::Aws::Errors::ServiceError
       end
     end
   end
