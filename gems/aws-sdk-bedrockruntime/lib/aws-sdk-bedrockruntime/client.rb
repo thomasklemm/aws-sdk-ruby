@@ -595,9 +595,24 @@ module Aws::BedrockRuntime
     # This operation requires permission for the `bedrock:InvokeModel`
     # action.
     #
+    # To deny all inference access to resources that you specify in the
+    # modelId field, you need to deny access to the `bedrock:InvokeModel`
+    # and `bedrock:InvokeModelWithResponseStream` actions. Doing this also
+    # denies access to the resource through the base inference actions
+    # ([InvokeModel][2] and [InvokeModelWithResponseStream][3]). For more
+    # information see [Deny access for inference on specific models][4].
+    #
+    # For troubleshooting some of the common errors you might encounter when
+    # using the `Converse` API, see [Troubleshooting Amazon Bedrock API
+    # Error Codes][5] in the Amazon Bedrock User Guide
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html
+    # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html
+    # [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference
+    # [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html
     #
     # @option params [required, String] :model_id
     #   Specifies the model or throughput with which to run inference, or the
@@ -622,10 +637,10 @@ module Aws::BedrockRuntime
     #     more information, see [Use a custom model in Amazon Bedrock][4] in
     #     the Amazon Bedrock User Guide.
     #
-    #   * To include a prompt that was defined in Prompt management, specify
-    #     the ARN of the prompt version to use.
+    #   * To include a prompt that was defined in [Prompt management][5],
+    #     specify the ARN of the prompt version to use.
     #
-    #   The Converse API doesn't support [imported models][5].
+    #   The Converse API doesn't support [imported models][6].
     #
     #
     #
@@ -633,7 +648,8 @@ module Aws::BedrockRuntime
     #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
     #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
     #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
     #
     # @option params [Array<Types::Message>] :messages
     #   The messages that you want to send to the model.
@@ -707,6 +723,9 @@ module Aws::BedrockRuntime
     #
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
     #
+    # @option params [Types::PerformanceConfiguration] :performance_config
+    #   Model performance settings for the request.
+    #
     # @return [Types::ConverseResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ConverseResponse#output #output} => Types::ConverseOutput
@@ -715,6 +734,7 @@ module Aws::BedrockRuntime
     #   * {Types::ConverseResponse#metrics #metrics} => Types::ConverseMetrics
     #   * {Types::ConverseResponse#additional_model_response_fields #additional_model_response_fields} => Hash,Array,String,Numeric,Boolean
     #   * {Types::ConverseResponse#trace #trace} => Types::ConverseTrace
+    #   * {Types::ConverseResponse#performance_config #performance_config} => Types::PerformanceConfiguration
     #
     # @example Request syntax with placeholder values
     #
@@ -832,6 +852,9 @@ module Aws::BedrockRuntime
     #       },
     #     },
     #     additional_model_response_field_paths: ["ConverseRequestAdditionalModelResponseFieldPathsListMemberString"],
+    #     performance_config: {
+    #       latency: "standard", # accepts standard, optimized
+    #     },
     #   })
     #
     # @example Response structure
@@ -946,6 +969,7 @@ module Aws::BedrockRuntime
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.contextual_grounding_policy_units #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.guarded #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
+    #   resp.performance_config.latency #=> String, one of "standard", "optimized"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/Converse AWS API Documentation
     #
@@ -1002,10 +1026,25 @@ module Aws::BedrockRuntime
     # This operation requires permission for the
     # `bedrock:InvokeModelWithResponseStream` action.
     #
+    # To deny all inference access to resources that you specify in the
+    # modelId field, you need to deny access to the `bedrock:InvokeModel`
+    # and `bedrock:InvokeModelWithResponseStream` actions. Doing this also
+    # denies access to the resource through the base inference actions
+    # ([InvokeModel][3] and [InvokeModelWithResponseStream][4]). For more
+    # information see [Deny access for inference on specific models][5].
+    #
+    # For troubleshooting some of the common errors you might encounter when
+    # using the `ConverseStream` API, see [Troubleshooting Amazon Bedrock
+    # API Error Codes][6] in the Amazon Bedrock User Guide
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html
     # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html
+    # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html
+    # [4]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html
+    # [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference
+    # [6]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html
     #
     # @option params [required, String] :model_id
     #   Specifies the model or throughput with which to run inference, or the
@@ -1030,10 +1069,10 @@ module Aws::BedrockRuntime
     #     more information, see [Use a custom model in Amazon Bedrock][4] in
     #     the Amazon Bedrock User Guide.
     #
-    #   * To include a prompt that was defined in Prompt management, specify
-    #     the ARN of the prompt version to use.
+    #   * To include a prompt that was defined in [Prompt management][5],
+    #     specify the ARN of the prompt version to use.
     #
-    #   The Converse API doesn't support [imported models][5].
+    #   The Converse API doesn't support [imported models][6].
     #
     #
     #
@@ -1041,7 +1080,8 @@ module Aws::BedrockRuntime
     #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
     #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
     #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
     #
     # @option params [Array<Types::Message>] :messages
     #   The messages that you want to send to the model.
@@ -1113,6 +1153,9 @@ module Aws::BedrockRuntime
     #
     #
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
+    #
+    # @option params [Types::PerformanceConfiguration] :performance_config
+    #   Model performance settings for the request.
     #
     # @return [Types::ConverseStreamResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1408,6 +1451,9 @@ module Aws::BedrockRuntime
     #       },
     #     },
     #     additional_model_response_field_paths: ["ConverseStreamRequestAdditionalModelResponseFieldPathsListMemberString"],
+    #     performance_config: {
+    #       latency: "standard", # accepts standard, optimized
+    #     },
     #   })
     #
     # @example Response structure
@@ -1523,6 +1569,7 @@ module Aws::BedrockRuntime
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.contextual_grounding_policy_units #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.guarded #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
+    #   event.performance_config.latency #=> String, one of "standard", "optimized"
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -1578,6 +1625,24 @@ module Aws::BedrockRuntime
     # This operation requires permission for the `bedrock:InvokeModel`
     # action.
     #
+    # To deny all inference access to resources that you specify in the
+    # modelId field, you need to deny access to the `bedrock:InvokeModel`
+    # and `bedrock:InvokeModelWithResponseStream` actions. Doing this also
+    # denies access to the resource through the Converse API actions
+    # ([Converse][1] and [ConverseStream][2]). For more information see
+    # [Deny access for inference on specific models][3].
+    #
+    # For troubleshooting some of the common errors you might encounter when
+    # using the `InvokeModel` API, see [Troubleshooting Amazon Bedrock API
+    # Error Codes][4] in the Amazon Bedrock User Guide
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html
+    # [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference
+    # [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html
+    #
     # @option params [String, StringIO, File] :body
     #   The prompt and inference parameters in the format specified in the
     #   `contentType` in the header. You must provide the body in JSON format.
@@ -1601,33 +1666,40 @@ module Aws::BedrockRuntime
     # @option params [required, String] :model_id
     #   The unique identifier of the model to invoke to run inference.
     #
-    #   The `modelId` to provide depends on the type of model that you use:
+    #   The `modelId` to provide depends on the type of model or throughput
+    #   that you use:
     #
     #   * If you use a base model, specify the model ID or its ARN. For a list
     #     of model IDs for base models, see [Amazon Bedrock base model IDs
     #     (on-demand throughput)][1] in the Amazon Bedrock User Guide.
     #
+    #   * If you use an inference profile, specify the inference profile ID or
+    #     its ARN. For a list of inference profile IDs, see [Supported Regions
+    #     and models for cross-region inference][2] in the Amazon Bedrock User
+    #     Guide.
+    #
     #   * If you use a provisioned model, specify the ARN of the Provisioned
     #     Throughput. For more information, see [Run inference using a
-    #     Provisioned Throughput][2] in the Amazon Bedrock User Guide.
+    #     Provisioned Throughput][3] in the Amazon Bedrock User Guide.
     #
     #   * If you use a custom model, first purchase Provisioned Throughput for
     #     it. Then specify the ARN of the resulting provisioned model. For
-    #     more information, see [Use a custom model in Amazon Bedrock][3] in
+    #     more information, see [Use a custom model in Amazon Bedrock][4] in
     #     the Amazon Bedrock User Guide.
     #
-    #   * If you use an [imported model][4], specify the ARN of the imported
+    #   * If you use an [imported model][5], specify the ARN of the imported
     #     model. You can get the model ARN from a successful call to
-    #     [CreateModelImportJob][5] or from the Imported models page in the
+    #     [CreateModelImportJob][6] or from the Imported models page in the
     #     Amazon Bedrock console.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns
-    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
-    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
+    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
+    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
     #
     # @option params [String] :trace
     #   Specifies whether to enable or disable the Bedrock trace. If enabled,
@@ -1651,10 +1723,14 @@ module Aws::BedrockRuntime
     # @option params [String] :guardrail_version
     #   The version number for the guardrail. The value can also be `DRAFT`.
     #
+    # @option params [String] :performance_config_latency
+    #   Model performance settings for the request.
+    #
     # @return [Types::InvokeModelResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::InvokeModelResponse#body #body} => String
     #   * {Types::InvokeModelResponse#content_type #content_type} => String
+    #   * {Types::InvokeModelResponse#performance_config_latency #performance_config_latency} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -1666,12 +1742,14 @@ module Aws::BedrockRuntime
     #     trace: "ENABLED", # accepts ENABLED, DISABLED
     #     guardrail_identifier: "GuardrailIdentifier",
     #     guardrail_version: "GuardrailVersion",
+    #     performance_config_latency: "standard", # accepts standard, optimized
     #   })
     #
     # @example Response structure
     #
     #   resp.body #=> String
     #   resp.content_type #=> String
+    #   resp.performance_config_latency #=> String, one of "standard", "optimized"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModel AWS API Documentation
     #
@@ -1700,9 +1778,24 @@ module Aws::BedrockRuntime
     # This operation requires permissions to perform the
     # `bedrock:InvokeModelWithResponseStream` action.
     #
+    # To deny all inference access to resources that you specify in the
+    # modelId field, you need to deny access to the `bedrock:InvokeModel`
+    # and `bedrock:InvokeModelWithResponseStream` actions. Doing this also
+    # denies access to the resource through the Converse API actions
+    # ([Converse][2] and [ConverseStream][3]). For more information see
+    # [Deny access for inference on specific models][4].
+    #
+    # For troubleshooting some of the common errors you might encounter when
+    # using the `InvokeModelWithResponseStream` API, see [Troubleshooting
+    # Amazon Bedrock API Error Codes][5] in the Amazon Bedrock User Guide
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_GetFoundationModel.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html
+    # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html
+    # [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference
+    # [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html
     #
     # @option params [String, StringIO, File] :body
     #   The prompt and inference parameters in the format specified in the
@@ -1727,33 +1820,40 @@ module Aws::BedrockRuntime
     # @option params [required, String] :model_id
     #   The unique identifier of the model to invoke to run inference.
     #
-    #   The `modelId` to provide depends on the type of model that you use:
+    #   The `modelId` to provide depends on the type of model or throughput
+    #   that you use:
     #
     #   * If you use a base model, specify the model ID or its ARN. For a list
     #     of model IDs for base models, see [Amazon Bedrock base model IDs
     #     (on-demand throughput)][1] in the Amazon Bedrock User Guide.
     #
+    #   * If you use an inference profile, specify the inference profile ID or
+    #     its ARN. For a list of inference profile IDs, see [Supported Regions
+    #     and models for cross-region inference][2] in the Amazon Bedrock User
+    #     Guide.
+    #
     #   * If you use a provisioned model, specify the ARN of the Provisioned
     #     Throughput. For more information, see [Run inference using a
-    #     Provisioned Throughput][2] in the Amazon Bedrock User Guide.
+    #     Provisioned Throughput][3] in the Amazon Bedrock User Guide.
     #
     #   * If you use a custom model, first purchase Provisioned Throughput for
     #     it. Then specify the ARN of the resulting provisioned model. For
-    #     more information, see [Use a custom model in Amazon Bedrock][3] in
+    #     more information, see [Use a custom model in Amazon Bedrock][4] in
     #     the Amazon Bedrock User Guide.
     #
-    #   * If you use an [imported model][4], specify the ARN of the imported
+    #   * If you use an [imported model][5], specify the ARN of the imported
     #     model. You can get the model ARN from a successful call to
-    #     [CreateModelImportJob][5] or from the Imported models page in the
+    #     [CreateModelImportJob][6] or from the Imported models page in the
     #     Amazon Bedrock console.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns
-    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
-    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
+    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
+    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
     #
     # @option params [String] :trace
     #   Specifies whether to enable or disable the Bedrock trace. If enabled,
@@ -1777,10 +1877,14 @@ module Aws::BedrockRuntime
     # @option params [String] :guardrail_version
     #   The version number for the guardrail. The value can also be `DRAFT`.
     #
+    # @option params [String] :performance_config_latency
+    #   Model performance settings for the request.
+    #
     # @return [Types::InvokeModelWithResponseStreamResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::InvokeModelWithResponseStreamResponse#body #body} => Types::ResponseStream
     #   * {Types::InvokeModelWithResponseStreamResponse#content_type #content_type} => String
+    #   * {Types::InvokeModelWithResponseStreamResponse#performance_config_latency #performance_config_latency} => String
     #
     # @example EventStream Operation Example
     #
@@ -1929,6 +2033,7 @@ module Aws::BedrockRuntime
     #     trace: "ENABLED", # accepts ENABLED, DISABLED
     #     guardrail_identifier: "GuardrailIdentifier",
     #     guardrail_version: "GuardrailVersion",
+    #     performance_config_latency: "standard", # accepts standard, optimized
     #   })
     #
     # @example Response structure
@@ -1961,6 +2066,7 @@ module Aws::BedrockRuntime
     #   event.message #=> String
     #
     #   resp.content_type #=> String
+    #   resp.performance_config_latency #=> String, one of "standard", "optimized"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelWithResponseStream AWS API Documentation
     #
@@ -2007,7 +2113,7 @@ module Aws::BedrockRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockruntime'
-      context[:gem_version] = '1.31.0'
+      context[:gem_version] = '1.32.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

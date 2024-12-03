@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.32.0 (2024-12-03)
+------------------
+
+* Feature - Add an API parameter that allows customers to set performance configuration for invoking a model.
+
 1.31.0 (2024-11-07)
 ------------------
 

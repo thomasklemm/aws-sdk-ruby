@@ -150,6 +150,8 @@ module Aws::BedrockRuntime
     NonNegativeInteger = Shapes::IntegerShape.new(name: 'NonNegativeInteger')
     PartBody = Shapes::BlobShape.new(name: 'PartBody')
     PayloadPart = Shapes::StructureShape.new(name: 'PayloadPart')
+    PerformanceConfigLatency = Shapes::StringShape.new(name: 'PerformanceConfigLatency')
+    PerformanceConfiguration = Shapes::StructureShape.new(name: 'PerformanceConfiguration')
     PromptVariableMap = Shapes::MapShape.new(name: 'PromptVariableMap')
     PromptVariableValues = Shapes::UnionShape.new(name: 'PromptVariableValues')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
@@ -268,6 +270,7 @@ module Aws::BedrockRuntime
     ConverseRequest.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: Document, location_name: "additionalModelRequestFields"))
     ConverseRequest.add_member(:prompt_variables, Shapes::ShapeRef.new(shape: PromptVariableMap, location_name: "promptVariables"))
     ConverseRequest.add_member(:additional_model_response_field_paths, Shapes::ShapeRef.new(shape: ConverseRequestAdditionalModelResponseFieldPathsList, location_name: "additionalModelResponseFieldPaths"))
+    ConverseRequest.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     ConverseRequest.struct_class = Types::ConverseRequest
 
     ConverseRequestAdditionalModelResponseFieldPathsList.member = Shapes::ShapeRef.new(shape: ConverseRequestAdditionalModelResponseFieldPathsListMemberString)
@@ -278,11 +281,13 @@ module Aws::BedrockRuntime
     ConverseResponse.add_member(:metrics, Shapes::ShapeRef.new(shape: ConverseMetrics, required: true, location_name: "metrics"))
     ConverseResponse.add_member(:additional_model_response_fields, Shapes::ShapeRef.new(shape: Document, location_name: "additionalModelResponseFields"))
     ConverseResponse.add_member(:trace, Shapes::ShapeRef.new(shape: ConverseTrace, location_name: "trace"))
+    ConverseResponse.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     ConverseResponse.struct_class = Types::ConverseResponse
 
     ConverseStreamMetadataEvent.add_member(:usage, Shapes::ShapeRef.new(shape: TokenUsage, required: true, location_name: "usage"))
     ConverseStreamMetadataEvent.add_member(:metrics, Shapes::ShapeRef.new(shape: ConverseStreamMetrics, required: true, location_name: "metrics"))
     ConverseStreamMetadataEvent.add_member(:trace, Shapes::ShapeRef.new(shape: ConverseStreamTrace, location_name: "trace"))
+    ConverseStreamMetadataEvent.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     ConverseStreamMetadataEvent.struct_class = Types::ConverseStreamMetadataEvent
 
     ConverseStreamMetrics.add_member(:latency_ms, Shapes::ShapeRef.new(shape: Long, required: true, location_name: "latencyMs"))
@@ -310,6 +315,7 @@ module Aws::BedrockRuntime
     ConverseStreamRequest.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: Document, location_name: "additionalModelRequestFields"))
     ConverseStreamRequest.add_member(:prompt_variables, Shapes::ShapeRef.new(shape: PromptVariableMap, location_name: "promptVariables"))
     ConverseStreamRequest.add_member(:additional_model_response_field_paths, Shapes::ShapeRef.new(shape: ConverseStreamRequestAdditionalModelResponseFieldPathsList, location_name: "additionalModelResponseFieldPaths"))
+    ConverseStreamRequest.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     ConverseStreamRequest.struct_class = Types::ConverseStreamRequest
 
     ConverseStreamRequestAdditionalModelResponseFieldPathsList.member = Shapes::ShapeRef.new(shape: ConverseStreamRequestAdditionalModelResponseFieldPathsListMemberString)
@@ -515,12 +521,14 @@ module Aws::BedrockRuntime
     InvokeModelRequest.add_member(:trace, Shapes::ShapeRef.new(shape: Trace, location: "header", location_name: "X-Amzn-Bedrock-Trace"))
     InvokeModelRequest.add_member(:guardrail_identifier, Shapes::ShapeRef.new(shape: GuardrailIdentifier, location: "header", location_name: "X-Amzn-Bedrock-GuardrailIdentifier"))
     InvokeModelRequest.add_member(:guardrail_version, Shapes::ShapeRef.new(shape: GuardrailVersion, location: "header", location_name: "X-Amzn-Bedrock-GuardrailVersion"))
+    InvokeModelRequest.add_member(:performance_config_latency, Shapes::ShapeRef.new(shape: PerformanceConfigLatency, location: "header", location_name: "X-Amzn-Bedrock-PerformanceConfig-Latency"))
     InvokeModelRequest.struct_class = Types::InvokeModelRequest
     InvokeModelRequest[:payload] = :body
     InvokeModelRequest[:payload_member] = InvokeModelRequest.member(:body)
 
     InvokeModelResponse.add_member(:body, Shapes::ShapeRef.new(shape: Body, required: true, location_name: "body"))
     InvokeModelResponse.add_member(:content_type, Shapes::ShapeRef.new(shape: MimeType, required: true, location: "header", location_name: "Content-Type"))
+    InvokeModelResponse.add_member(:performance_config_latency, Shapes::ShapeRef.new(shape: PerformanceConfigLatency, location: "header", location_name: "X-Amzn-Bedrock-PerformanceConfig-Latency"))
     InvokeModelResponse.struct_class = Types::InvokeModelResponse
     InvokeModelResponse[:payload] = :body
     InvokeModelResponse[:payload_member] = InvokeModelResponse.member(:body)
@@ -532,12 +540,14 @@ module Aws::BedrockRuntime
     InvokeModelWithResponseStreamRequest.add_member(:trace, Shapes::ShapeRef.new(shape: Trace, location: "header", location_name: "X-Amzn-Bedrock-Trace"))
     InvokeModelWithResponseStreamRequest.add_member(:guardrail_identifier, Shapes::ShapeRef.new(shape: GuardrailIdentifier, location: "header", location_name: "X-Amzn-Bedrock-GuardrailIdentifier"))
     InvokeModelWithResponseStreamRequest.add_member(:guardrail_version, Shapes::ShapeRef.new(shape: GuardrailVersion, location: "header", location_name: "X-Amzn-Bedrock-GuardrailVersion"))
+    InvokeModelWithResponseStreamRequest.add_member(:performance_config_latency, Shapes::ShapeRef.new(shape: PerformanceConfigLatency, location: "header", location_name: "X-Amzn-Bedrock-PerformanceConfig-Latency"))
     InvokeModelWithResponseStreamRequest.struct_class = Types::InvokeModelWithResponseStreamRequest
     InvokeModelWithResponseStreamRequest[:payload] = :body
     InvokeModelWithResponseStreamRequest[:payload_member] = InvokeModelWithResponseStreamRequest.member(:body)
 
     InvokeModelWithResponseStreamResponse.add_member(:body, Shapes::ShapeRef.new(shape: ResponseStream, required: true, eventstream: true, location_name: "body"))
     InvokeModelWithResponseStreamResponse.add_member(:content_type, Shapes::ShapeRef.new(shape: MimeType, required: true, location: "header", location_name: "X-Amzn-Bedrock-Content-Type"))
+    InvokeModelWithResponseStreamResponse.add_member(:performance_config_latency, Shapes::ShapeRef.new(shape: PerformanceConfigLatency, location: "header", location_name: "X-Amzn-Bedrock-PerformanceConfig-Latency"))
     InvokeModelWithResponseStreamResponse.struct_class = Types::InvokeModelWithResponseStreamResponse
     InvokeModelWithResponseStreamResponse[:payload] = :body
     InvokeModelWithResponseStreamResponse[:payload_member] = InvokeModelWithResponseStreamResponse.member(:body)
@@ -575,6 +585,9 @@ module Aws::BedrockRuntime
 
     PayloadPart.add_member(:bytes, Shapes::ShapeRef.new(shape: PartBody, location_name: "bytes"))
     PayloadPart.struct_class = Types::PayloadPart
+
+    PerformanceConfiguration.add_member(:latency, Shapes::ShapeRef.new(shape: PerformanceConfigLatency, location_name: "latency"))
+    PerformanceConfiguration.struct_class = Types::PerformanceConfiguration
 
     PromptVariableMap.key = Shapes::ShapeRef.new(shape: String)
     PromptVariableMap.value = Shapes::ShapeRef.new(shape: PromptVariableValues)

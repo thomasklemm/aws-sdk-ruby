@@ -490,6 +490,7 @@ module Aws::SocialMessaging
     #         event_destinations: [
     #           {
     #             event_destination_arn: "EventDestinationArn", # required
+    #             role_arn: "RoleArn",
     #           },
     #         ],
     #         tags: [
@@ -516,6 +517,7 @@ module Aws::SocialMessaging
     #   resp.signup_callback_result.linked_accounts_with_incomplete_setup["WhatsAppBusinessAccountId"].unregistered_whats_app_phone_numbers[0].display_phone_number_name #=> String
     #   resp.signup_callback_result.linked_accounts_with_incomplete_setup["WhatsAppBusinessAccountId"].unregistered_whats_app_phone_numbers[0].display_phone_number #=> String
     #   resp.signup_callback_result.linked_accounts_with_incomplete_setup["WhatsAppBusinessAccountId"].unregistered_whats_app_phone_numbers[0].quality_rating #=> String
+    #   resp.signup_callback_result.linked_accounts_with_incomplete_setup["WhatsAppBusinessAccountId"].waba_id #=> String
     #   resp.status_code #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/socialmessaging-2024-01-01/AssociateWhatsAppBusinessAccount AWS API Documentation
@@ -635,6 +637,7 @@ module Aws::SocialMessaging
     #   resp.account.waba_name #=> String
     #   resp.account.event_destinations #=> Array
     #   resp.account.event_destinations[0].event_destination_arn #=> String
+    #   resp.account.event_destinations[0].role_arn #=> String
     #   resp.account.phone_numbers #=> Array
     #   resp.account.phone_numbers[0].arn #=> String
     #   resp.account.phone_numbers[0].phone_number #=> String
@@ -796,6 +799,7 @@ module Aws::SocialMessaging
     #   resp.linked_accounts[0].waba_name #=> String
     #   resp.linked_accounts[0].event_destinations #=> Array
     #   resp.linked_accounts[0].event_destinations[0].event_destination_arn #=> String
+    #   resp.linked_accounts[0].event_destinations[0].role_arn #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/socialmessaging-2024-01-01/ListLinkedWhatsAppBusinessAccounts AWS API Documentation
@@ -928,6 +932,7 @@ module Aws::SocialMessaging
     #     event_destinations: [ # required
     #       {
     #         event_destination_arn: "EventDestinationArn", # required
+    #         role_arn: "RoleArn",
     #       },
     #     ],
     #   })
@@ -1093,7 +1098,7 @@ module Aws::SocialMessaging
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-socialmessaging'
-      context[:gem_version] = '1.2.0'
+      context[:gem_version] = '1.3.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

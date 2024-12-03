@@ -110,6 +110,7 @@ module Aws
         def metrics: () -> Types::ConverseMetrics
         def additional_model_response_fields: () -> untyped
         def trace: () -> Types::ConverseTrace
+        def performance_config: () -> Types::PerformanceConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockRuntime/Client.html#converse-instance_method
       def converse: (
@@ -223,7 +224,10 @@ module Aws
                       ?prompt_variables: Hash[::String, {
                           text: ::String?
                         }],
-                      ?additional_model_response_field_paths: Array[::String]
+                      ?additional_model_response_field_paths: Array[::String],
+                      ?performance_config: {
+                        latency: ("standard" | "optimized")?
+                      }
                     ) -> _ConverseResponseSuccess
                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ConverseResponseSuccess
 
@@ -344,7 +348,10 @@ module Aws
                              ?prompt_variables: Hash[::String, {
                                  text: ::String?
                                }],
-                             ?additional_model_response_field_paths: Array[::String]
+                             ?additional_model_response_field_paths: Array[::String],
+                             ?performance_config: {
+                               latency: ("standard" | "optimized")?
+                             }
                            ) ?{ (*untyped) -> void } -> _ConverseStreamResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _ConverseStreamResponseSuccess
 
@@ -352,6 +359,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::InvokeModelResponse]
         def body: () -> ::String
         def content_type: () -> ::String
+        def performance_config_latency: () -> ("standard" | "optimized")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockRuntime/Client.html#invoke_model-instance_method
       def invoke_model: (
@@ -361,7 +369,8 @@ module Aws
                           model_id: ::String,
                           ?trace: ("ENABLED" | "DISABLED"),
                           ?guardrail_identifier: ::String,
-                          ?guardrail_version: ::String
+                          ?guardrail_version: ::String,
+                          ?performance_config_latency: ("standard" | "optimized")
                         ) -> _InvokeModelResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _InvokeModelResponseSuccess
 
@@ -369,6 +378,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::InvokeModelWithResponseStreamResponse]
         def body: () -> Types::ResponseStream
         def content_type: () -> ::String
+        def performance_config_latency: () -> ("standard" | "optimized")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockRuntime/Client.html#invoke_model_with_response_stream-instance_method
       def invoke_model_with_response_stream: (
@@ -378,7 +388,8 @@ module Aws
                                                model_id: ::String,
                                                ?trace: ("ENABLED" | "DISABLED"),
                                                ?guardrail_identifier: ::String,
-                                               ?guardrail_version: ::String
+                                               ?guardrail_version: ::String,
+                                               ?performance_config_latency: ("standard" | "optimized")
                                              ) ?{ (*untyped) -> void } -> _InvokeModelWithResponseStreamResponseSuccess
                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) ?{ (*untyped) -> void } -> _InvokeModelWithResponseStreamResponseSuccess
     end

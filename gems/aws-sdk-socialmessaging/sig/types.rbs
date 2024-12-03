@@ -116,6 +116,7 @@ module Aws::SocialMessaging
       attr_accessor account_name: ::String
       attr_accessor registration_status: ("COMPLETE" | "INCOMPLETE")
       attr_accessor unregistered_whats_app_phone_numbers: ::Array[Types::WhatsAppPhoneNumberDetail]
+      attr_accessor waba_id: ::String
       SENSITIVE: []
     end
 
@@ -258,6 +259,7 @@ module Aws::SocialMessaging
 
     class WhatsAppBusinessAccountEventDestination
       attr_accessor event_destination_arn: ::String
+      attr_accessor role_arn: ::String
       SENSITIVE: []
     end
 

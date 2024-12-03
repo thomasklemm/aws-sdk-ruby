@@ -1336,7 +1336,7 @@ module Aws::S3Control
     #         object_lock_mode: "COMPLIANCE", # accepts COMPLIANCE, GOVERNANCE
     #         object_lock_retain_until_date: Time.now,
     #         bucket_key_enabled: false,
-    #         checksum_algorithm: "CRC32", # accepts CRC32, CRC32C, SHA1, SHA256
+    #         checksum_algorithm: "CRC32", # accepts CRC32, CRC32C, SHA1, SHA256, CRC64NVME
     #       },
     #       s3_put_object_acl: {
     #         access_control_policy: {
@@ -2847,7 +2847,7 @@ module Aws::S3Control
     #   resp.job.operation.s3_put_object_copy.object_lock_mode #=> String, one of "COMPLIANCE", "GOVERNANCE"
     #   resp.job.operation.s3_put_object_copy.object_lock_retain_until_date #=> Time
     #   resp.job.operation.s3_put_object_copy.bucket_key_enabled #=> Boolean
-    #   resp.job.operation.s3_put_object_copy.checksum_algorithm #=> String, one of "CRC32", "CRC32C", "SHA1", "SHA256"
+    #   resp.job.operation.s3_put_object_copy.checksum_algorithm #=> String, one of "CRC32", "CRC32C", "SHA1", "SHA256", "CRC64NVME"
     #   resp.job.operation.s3_put_object_acl.access_control_policy.access_control_list.owner.id #=> String
     #   resp.job.operation.s3_put_object_acl.access_control_policy.access_control_list.owner.display_name #=> String
     #   resp.job.operation.s3_put_object_acl.access_control_policy.access_control_list.grants #=> Array
@@ -7734,7 +7734,7 @@ module Aws::S3Control
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3control'
-      context[:gem_version] = '1.98.0'
+      context[:gem_version] = '1.99.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

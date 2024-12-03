@@ -293,7 +293,7 @@ module Aws
                             object_lock_mode: ("COMPLIANCE" | "GOVERNANCE")?,
                             object_lock_retain_until_date: ::Time?,
                             bucket_key_enabled: bool?,
-                            checksum_algorithm: ("CRC32" | "CRC32C" | "SHA1" | "SHA256")?
+                            checksum_algorithm: ("CRC32" | "CRC32C" | "SHA1" | "SHA256" | "CRC64NVME")?
                           }?,
                           s3_put_object_acl: {
                             access_control_policy: {

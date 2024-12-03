@@ -10,7 +10,13 @@
 module Aws::BedrockRuntime
   module Types
 
-    # The request is denied because of missing access permissions.
+    # The request is denied because you do not have sufficient permissions
+    # to perform the requested action. For troubleshooting this error, see
+    # [AccessDeniedException][1] in the Amazon Bedrock User Guide
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-access-denied
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -337,10 +343,10 @@ module Aws::BedrockRuntime
     #     For more information, see [Use a custom model in Amazon
     #     Bedrock][4] in the Amazon Bedrock User Guide.
     #
-    #   * To include a prompt that was defined in Prompt management, specify
-    #     the ARN of the prompt version to use.
+    #   * To include a prompt that was defined in [Prompt management][5],
+    #     specify the ARN of the prompt version to use.
     #
-    #   The Converse API doesn't support [imported models][5].
+    #   The Converse API doesn't support [imported models][6].
     #
     #
     #
@@ -348,7 +354,8 @@ module Aws::BedrockRuntime
     #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
     #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
     #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
     #   @return [String]
     #
     # @!attribute [rw] messages
@@ -427,6 +434,10 @@ module Aws::BedrockRuntime
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
     #   @return [Array<String>]
     #
+    # @!attribute [rw] performance_config
+    #   Model performance settings for the request.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ConverseRequest AWS API Documentation
     #
     class ConverseRequest < Struct.new(
@@ -438,7 +449,8 @@ module Aws::BedrockRuntime
       :guardrail_config,
       :additional_model_request_fields,
       :prompt_variables,
-      :additional_model_response_field_paths)
+      :additional_model_response_field_paths,
+      :performance_config)
       SENSITIVE = [:prompt_variables]
       include Aws::Structure
     end
@@ -470,6 +482,10 @@ module Aws::BedrockRuntime
     #   behavior.
     #   @return [Types::ConverseTrace]
     #
+    # @!attribute [rw] performance_config
+    #   Model performance settings for the request.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ConverseResponse AWS API Documentation
     #
     class ConverseResponse < Struct.new(
@@ -478,7 +494,8 @@ module Aws::BedrockRuntime
       :usage,
       :metrics,
       :additional_model_response_fields,
-      :trace)
+      :trace,
+      :performance_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -502,12 +519,18 @@ module Aws::BedrockRuntime
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html
     #   @return [Types::ConverseStreamTrace]
     #
+    # @!attribute [rw] performance_config
+    #   Model performance configuration metadata for the conversation stream
+    #   event.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ConverseStreamMetadataEvent AWS API Documentation
     #
     class ConverseStreamMetadataEvent < Struct.new(
       :usage,
       :metrics,
       :trace,
+      :performance_config,
       :event_type)
       SENSITIVE = []
       include Aws::Structure
@@ -550,10 +573,10 @@ module Aws::BedrockRuntime
     #     For more information, see [Use a custom model in Amazon
     #     Bedrock][4] in the Amazon Bedrock User Guide.
     #
-    #   * To include a prompt that was defined in Prompt management, specify
-    #     the ARN of the prompt version to use.
+    #   * To include a prompt that was defined in [Prompt management][5],
+    #     specify the ARN of the prompt version to use.
     #
-    #   The Converse API doesn't support [imported models][5].
+    #   The Converse API doesn't support [imported models][6].
     #
     #
     #
@@ -561,7 +584,8 @@ module Aws::BedrockRuntime
     #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
     #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
     #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
     #   @return [String]
     #
     # @!attribute [rw] messages
@@ -639,6 +663,10 @@ module Aws::BedrockRuntime
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
     #   @return [Array<String>]
     #
+    # @!attribute [rw] performance_config
+    #   Model performance settings for the request.
+    #   @return [Types::PerformanceConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ConverseStreamRequest AWS API Documentation
     #
     class ConverseStreamRequest < Struct.new(
@@ -650,7 +678,8 @@ module Aws::BedrockRuntime
       :guardrail_config,
       :additional_model_request_fields,
       :prompt_variables,
-      :additional_model_response_field_paths)
+      :additional_model_response_field_paths,
+      :performance_config)
       SENSITIVE = [:prompt_variables]
       include Aws::Structure
     end
@@ -1475,7 +1504,12 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
-    # An internal server error occurred. Retry your request.
+    # An internal server error occurred. For troubleshooting this error, see
+    # [InternalFailure][1] in the Amazon Bedrock User Guide
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-internal-failure
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -1515,33 +1549,40 @@ module Aws::BedrockRuntime
     # @!attribute [rw] model_id
     #   The unique identifier of the model to invoke to run inference.
     #
-    #   The `modelId` to provide depends on the type of model that you use:
+    #   The `modelId` to provide depends on the type of model or throughput
+    #   that you use:
     #
     #   * If you use a base model, specify the model ID or its ARN. For a
     #     list of model IDs for base models, see [Amazon Bedrock base model
     #     IDs (on-demand throughput)][1] in the Amazon Bedrock User Guide.
     #
+    #   * If you use an inference profile, specify the inference profile ID
+    #     or its ARN. For a list of inference profile IDs, see [Supported
+    #     Regions and models for cross-region inference][2] in the Amazon
+    #     Bedrock User Guide.
+    #
     #   * If you use a provisioned model, specify the ARN of the Provisioned
     #     Throughput. For more information, see [Run inference using a
-    #     Provisioned Throughput][2] in the Amazon Bedrock User Guide.
+    #     Provisioned Throughput][3] in the Amazon Bedrock User Guide.
     #
     #   * If you use a custom model, first purchase Provisioned Throughput
     #     for it. Then specify the ARN of the resulting provisioned model.
     #     For more information, see [Use a custom model in Amazon
-    #     Bedrock][3] in the Amazon Bedrock User Guide.
+    #     Bedrock][4] in the Amazon Bedrock User Guide.
     #
-    #   * If you use an [imported model][4], specify the ARN of the imported
+    #   * If you use an [imported model][5], specify the ARN of the imported
     #     model. You can get the model ARN from a successful call to
-    #     [CreateModelImportJob][5] or from the Imported models page in the
+    #     [CreateModelImportJob][6] or from the Imported models page in the
     #     Amazon Bedrock console.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns
-    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
-    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
+    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
+    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
     #   @return [String]
     #
     # @!attribute [rw] trace
@@ -1569,6 +1610,10 @@ module Aws::BedrockRuntime
     #   The version number for the guardrail. The value can also be `DRAFT`.
     #   @return [String]
     #
+    # @!attribute [rw] performance_config_latency
+    #   Model performance settings for the request.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelRequest AWS API Documentation
     #
     class InvokeModelRequest < Struct.new(
@@ -1578,7 +1623,8 @@ module Aws::BedrockRuntime
       :model_id,
       :trace,
       :guardrail_identifier,
-      :guardrail_version)
+      :guardrail_version,
+      :performance_config_latency)
       SENSITIVE = [:body]
       include Aws::Structure
     end
@@ -1598,11 +1644,16 @@ module Aws::BedrockRuntime
     #   The MIME type of the inference result.
     #   @return [String]
     #
+    # @!attribute [rw] performance_config_latency
+    #   Model performance settings for the request.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelResponse AWS API Documentation
     #
     class InvokeModelResponse < Struct.new(
       :body,
-      :content_type)
+      :content_type,
+      :performance_config_latency)
       SENSITIVE = [:body]
       include Aws::Structure
     end
@@ -1633,33 +1684,40 @@ module Aws::BedrockRuntime
     # @!attribute [rw] model_id
     #   The unique identifier of the model to invoke to run inference.
     #
-    #   The `modelId` to provide depends on the type of model that you use:
+    #   The `modelId` to provide depends on the type of model or throughput
+    #   that you use:
     #
     #   * If you use a base model, specify the model ID or its ARN. For a
     #     list of model IDs for base models, see [Amazon Bedrock base model
     #     IDs (on-demand throughput)][1] in the Amazon Bedrock User Guide.
     #
+    #   * If you use an inference profile, specify the inference profile ID
+    #     or its ARN. For a list of inference profile IDs, see [Supported
+    #     Regions and models for cross-region inference][2] in the Amazon
+    #     Bedrock User Guide.
+    #
     #   * If you use a provisioned model, specify the ARN of the Provisioned
     #     Throughput. For more information, see [Run inference using a
-    #     Provisioned Throughput][2] in the Amazon Bedrock User Guide.
+    #     Provisioned Throughput][3] in the Amazon Bedrock User Guide.
     #
     #   * If you use a custom model, first purchase Provisioned Throughput
     #     for it. Then specify the ARN of the resulting provisioned model.
     #     For more information, see [Use a custom model in Amazon
-    #     Bedrock][3] in the Amazon Bedrock User Guide.
+    #     Bedrock][4] in the Amazon Bedrock User Guide.
     #
-    #   * If you use an [imported model][4], specify the ARN of the imported
+    #   * If you use an [imported model][5], specify the ARN of the imported
     #     model. You can get the model ARN from a successful call to
-    #     [CreateModelImportJob][5] or from the Imported models page in the
+    #     [CreateModelImportJob][6] or from the Imported models page in the
     #     Amazon Bedrock console.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns
-    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
-    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
-    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
-    #   [5]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html
+    #   [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html
+    #   [4]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html
+    #   [5]: https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html
+    #   [6]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_CreateModelImportJob.html
     #   @return [String]
     #
     # @!attribute [rw] trace
@@ -1687,6 +1745,10 @@ module Aws::BedrockRuntime
     #   The version number for the guardrail. The value can also be `DRAFT`.
     #   @return [String]
     #
+    # @!attribute [rw] performance_config_latency
+    #   Model performance settings for the request.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelWithResponseStreamRequest AWS API Documentation
     #
     class InvokeModelWithResponseStreamRequest < Struct.new(
@@ -1696,7 +1758,8 @@ module Aws::BedrockRuntime
       :model_id,
       :trace,
       :guardrail_identifier,
-      :guardrail_version)
+      :guardrail_version,
+      :performance_config_latency)
       SENSITIVE = [:body]
       include Aws::Structure
     end
@@ -1715,11 +1778,16 @@ module Aws::BedrockRuntime
     #   The MIME type of the inference result.
     #   @return [String]
     #
+    # @!attribute [rw] performance_config_latency
+    #   Model performance settings for the request.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/InvokeModelWithResponseStreamResponse AWS API Documentation
     #
     class InvokeModelWithResponseStreamResponse < Struct.new(
       :body,
-      :content_type)
+      :content_type,
+      :performance_config_latency)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1893,6 +1961,20 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
+    # Performance settings for a model.
+    #
+    # @!attribute [rw] latency
+    #   To use a latency-optimized version of the model, set to `optimized`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/PerformanceConfiguration AWS API Documentation
+    #
+    class PerformanceConfiguration < Struct.new(
+      :latency)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains a map of variables in a prompt from Prompt management to an
     # object containing the values to fill in for them when running model
     # invocation. For more information, see [How Prompt management
@@ -1921,8 +2003,12 @@ module Aws::BedrockRuntime
       class Unknown < PromptVariableValues; end
     end
 
-    # The specified resource ARN was not found. Check the ARN and try your
-    # request again.
+    # The specified resource ARN was not found. For troubleshooting this
+    # error, see [ResourceNotFound][1] in the Amazon Bedrock User Guide
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-resource-not-found
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -1954,7 +2040,12 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
-    # The service isn't currently available. Try again later.
+    # The service isn't currently available. For troubleshooting this
+    # error, see [ServiceUnavailable][1] in the Amazon Bedrock User Guide
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-service-unavailable
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -2023,14 +2114,13 @@ module Aws::BedrockRuntime
       class Unknown < SystemContentBlock; end
     end
 
-    # Your request was throttled because of service-wide limitations.
-    # Resubmit your request later or in a different region. You can also
-    # purchase [Provisioned Throughput][1] to increase the rate or number of
-    # tokens you can process.
+    # Your request was denied due to exceeding the account quotas for
+    # *Amazon Bedrock*. For troubleshooting this error, see
+    # [ThrottlingException][1] in the Amazon Bedrock User Guide
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/prov-throughput.html
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-throttling-exception
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -2345,8 +2435,13 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
-    # Input validation failed. Check your request parameters and retry the
-    # request.
+    # The input fails to satisfy the constraints specified by *Amazon
+    # Bedrock*. For troubleshooting this error, see [ValidationError][1] in
+    # the Amazon Bedrock User Guide
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html#ts-validation-error
     #
     # @!attribute [rw] message
     #   @return [String]

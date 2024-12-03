@@ -367,12 +367,17 @@ module Aws::SocialMessaging
     #   The details for unregistered WhatsApp phone numbers.
     #   @return [Array<Types::WhatsAppPhoneNumberDetail>]
     #
+    # @!attribute [rw] waba_id
+    #   The Amazon Resource Name (ARN) of the WhatsApp Business Account ID.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/socialmessaging-2024-01-01/LinkedWhatsAppBusinessAccountIdMetaData AWS API Documentation
     #
     class LinkedWhatsAppBusinessAccountIdMetaData < Struct.new(
       :account_name,
       :registration_status,
-      :unregistered_whats_app_phone_numbers)
+      :unregistered_whats_app_phone_numbers,
+      :waba_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -897,10 +902,16 @@ module Aws::SocialMessaging
     #   The ARN of the event destination.
     #   @return [String]
     #
+    # @!attribute [rw] role_arn
+    #   The Amazon Resource Name (ARN) of an Identity and Access Management
+    #   role that is able to import phone numbers and write events.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/socialmessaging-2024-01-01/WhatsAppBusinessAccountEventDestination AWS API Documentation
     #
     class WhatsAppBusinessAccountEventDestination < Struct.new(
-      :event_destination_arn)
+      :event_destination_arn,
+      :role_arn)
       SENSITIVE = []
       include Aws::Structure
     end

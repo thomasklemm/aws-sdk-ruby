@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.99.0 (2024-12-03)
+------------------
+
+* Feature - It allows customers to pass CRC64NVME as a header in S3 Batch Operations copy requests
+
 1.98.0 (2024-12-02)
 ------------------
 

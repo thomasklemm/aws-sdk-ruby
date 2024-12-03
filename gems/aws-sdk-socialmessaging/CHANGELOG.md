@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.3.0 (2024-12-03)
+------------------
+
+* Feature - Added support for passing role arn corresponding to the supported event destination
+
 1.2.0 (2024-11-06)
 ------------------
 

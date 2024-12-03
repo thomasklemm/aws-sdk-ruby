@@ -105,7 +105,8 @@ module Aws
                                                       id: ::String?,
                                                       event_destinations: Array[
                                                         {
-                                                          event_destination_arn: ::String
+                                                          event_destination_arn: ::String,
+                                                          role_arn: ::String?
                                                         },
                                                       ]?,
                                                       tags: Array[
@@ -230,7 +231,8 @@ module Aws
                                                                id: ::String,
                                                                event_destinations: Array[
                                                                  {
-                                                                   event_destination_arn: ::String
+                                                                   event_destination_arn: ::String,
+                                                                   role_arn: ::String?
                                                                  },
                                                                ]
                                                              ) -> _PutWhatsAppBusinessAccountEventDestinationsResponseSuccess

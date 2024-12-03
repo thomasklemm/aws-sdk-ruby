@@ -1646,7 +1646,7 @@ module Aws::S3Control
       attr_accessor object_lock_mode: ("COMPLIANCE" | "GOVERNANCE")
       attr_accessor object_lock_retain_until_date: ::Time
       attr_accessor bucket_key_enabled: bool
-      attr_accessor checksum_algorithm: ("CRC32" | "CRC32C" | "SHA1" | "SHA256")
+      attr_accessor checksum_algorithm: ("CRC32" | "CRC32C" | "SHA1" | "SHA256" | "CRC64NVME")
       SENSITIVE: []
     end
 

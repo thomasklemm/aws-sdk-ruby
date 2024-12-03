@@ -61,6 +61,7 @@ module Aws::SocialMessaging
     PutWhatsAppBusinessAccountEventDestinationsOutput = Shapes::StructureShape.new(name: 'PutWhatsAppBusinessAccountEventDestinationsOutput')
     RegistrationStatus = Shapes::StringShape.new(name: 'RegistrationStatus')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
+    RoleArn = Shapes::StringShape.new(name: 'RoleArn')
     S3File = Shapes::StructureShape.new(name: 'S3File')
     S3FileBucketNameString = Shapes::StringShape.new(name: 'S3FileBucketNameString')
     S3FileKeyString = Shapes::StringShape.new(name: 'S3FileKeyString')
@@ -183,6 +184,7 @@ module Aws::SocialMessaging
     LinkedWhatsAppBusinessAccountIdMetaData.add_member(:account_name, Shapes::ShapeRef.new(shape: WhatsAppBusinessAccountName, location_name: "accountName"))
     LinkedWhatsAppBusinessAccountIdMetaData.add_member(:registration_status, Shapes::ShapeRef.new(shape: RegistrationStatus, location_name: "registrationStatus"))
     LinkedWhatsAppBusinessAccountIdMetaData.add_member(:unregistered_whats_app_phone_numbers, Shapes::ShapeRef.new(shape: WhatsAppPhoneNumberDetailList, location_name: "unregisteredWhatsAppPhoneNumbers"))
+    LinkedWhatsAppBusinessAccountIdMetaData.add_member(:waba_id, Shapes::ShapeRef.new(shape: LinkedWhatsAppBusinessAccountId, location_name: "wabaId"))
     LinkedWhatsAppBusinessAccountIdMetaData.struct_class = Types::LinkedWhatsAppBusinessAccountIdMetaData
 
     LinkedWhatsAppBusinessAccountSummary.add_member(:arn, Shapes::ShapeRef.new(shape: LinkedWhatsAppBusinessAccountArn, required: true, location_name: "arn"))
@@ -286,6 +288,7 @@ module Aws::SocialMessaging
     WabaSetupFinalization.struct_class = Types::WabaSetupFinalization
 
     WhatsAppBusinessAccountEventDestination.add_member(:event_destination_arn, Shapes::ShapeRef.new(shape: EventDestinationArn, required: true, location_name: "eventDestinationArn"))
+    WhatsAppBusinessAccountEventDestination.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     WhatsAppBusinessAccountEventDestination.struct_class = Types::WhatsAppBusinessAccountEventDestination
 
     WhatsAppBusinessAccountEventDestinations.member = Shapes::ShapeRef.new(shape: WhatsAppBusinessAccountEventDestination)
