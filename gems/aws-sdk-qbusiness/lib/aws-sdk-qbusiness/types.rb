@@ -106,6 +106,25 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # Specifies an allowed action and its associated filter configuration.
+    #
+    # @!attribute [rw] action
+    #   The Q Business action that is allowed.
+    #   @return [String]
+    #
+    # @!attribute [rw] filter_configuration
+    #   The filter configuration for the action, if any.
+    #   @return [Types::ActionFilterConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ActionConfiguration AWS API Documentation
+    #
+    class ActionConfiguration < Struct.new(
+      :action,
+      :filter_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Performs an Amazon Q Business plugin action during a non-streaming
     # chat conversation.
     #
@@ -175,6 +194,21 @@ module Aws::QBusiness
     #
     class ActionExecutionPayloadField < Struct.new(
       :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies filters to apply to an allowed action.
+    #
+    # @!attribute [rw] document_attribute_filter
+    #   Enables filtering of responses based on document attributes or
+    #   metadata fields.
+    #   @return [Types::AttributeFilter]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ActionFilterConfiguration AWS API Documentation
+    #
+    class ActionFilterConfiguration < Struct.new(
+      :document_attribute_filter)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -350,6 +384,43 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # Summary information for an Amazon Q Business plugin action.
+    #
+    # @!attribute [rw] action_identifier
+    #   The identifier of an Amazon Q Business plugin action.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   The display name assigned by Amazon Q Business to a plugin action.
+    #   You can't modify this value.
+    #   @return [String]
+    #
+    # @!attribute [rw] instruction_example
+    #   An Amazon Q Business suggested prompt and end user can use to invoke
+    #   a plugin action. This value can be modified and sent as input to
+    #   initiate an action. For example:
+    #
+    #   * Create a Jira task
+    #
+    #   * Create a chat assistant task to find the root cause of a specific
+    #     incident
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of an Amazon Q Business plugin action.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ActionSummary AWS API Documentation
+    #
+    class ActionSummary < Struct.new(
+      :action_identifier,
+      :display_name,
+      :instruction_example,
+      :description)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Summary information for an Amazon Q Business application.
     #
     # @!attribute [rw] display_name
@@ -380,6 +451,11 @@ module Aws::QBusiness
     #   application.
     #   @return [String]
     #
+    # @!attribute [rw] quick_sight_configuration
+    #   The Amazon QuickSight configuration for an Amazon Q Business
+    #   application that uses QuickSight as the identity provider.
+    #   @return [Types::QuickSightConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/Application AWS API Documentation
     #
     class Application < Struct.new(
@@ -388,7 +464,8 @@ module Aws::QBusiness
       :created_at,
       :updated_at,
       :status,
-      :identity_type)
+      :identity_type,
+      :quick_sight_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -430,6 +507,46 @@ module Aws::QBusiness
     #
     class AppliedCreatorModeConfiguration < Struct.new(
       :creator_mode_control)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] statement_id
+    #   A unique identifier for the policy statement.
+    #   @return [String]
+    #
+    # @!attribute [rw] actions
+    #   The list of Q Business actions that the ISV is allowed to perform.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] principal
+    #   The Amazon Resource Name (ARN) of the IAM role for the ISV that is
+    #   being granted permission.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AssociatePermissionRequest AWS API Documentation
+    #
+    class AssociatePermissionRequest < Struct.new(
+      :application_id,
+      :statement_id,
+      :actions,
+      :principal)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] statement
+    #   The JSON representation of the added permission statement.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AssociatePermissionResponse AWS API Documentation
+    #
+    class AssociatePermissionResponse < Struct.new(
+      :statement)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1347,6 +1464,27 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # Specifies the source of content to search in.
+    #
+    # @note ContentSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] retriever
+    #   The retriever to use as the content source.
+    #   @return [Types::RetrieverContentSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ContentSource AWS API Documentation
+    #
+    class ContentSource < Struct.new(
+      :retriever,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Retriever < ContentSource; end
+      class Unknown < ContentSource; end
+    end
+
     # A conversation in an Amazon Q Business application.
     #
     # @!attribute [rw] conversation_id
@@ -1492,6 +1630,18 @@ module Aws::QBusiness
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/personalizing-chat-responses.html
     #   @return [Types::PersonalizationConfiguration]
     #
+    # @!attribute [rw] quick_sight_configuration
+    #   The Amazon QuickSight configuration for an Amazon Q Business
+    #   application that uses QuickSight for authentication. This
+    #   configuration is required if your application uses QuickSight as the
+    #   identity provider. For more information, see [Creating an Amazon
+    #   QuickSight integrated application][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/create-quicksight-integrated-application.html
+    #   @return [Types::QuickSightConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateApplicationRequest AWS API Documentation
     #
     class CreateApplicationRequest < Struct.new(
@@ -1507,7 +1657,8 @@ module Aws::QBusiness
       :client_token,
       :attachments_configuration,
       :q_apps_configuration,
-      :personalization_configuration)
+      :personalization_configuration,
+      :quick_sight_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1525,6 +1676,72 @@ module Aws::QBusiness
     class CreateApplicationResponse < Struct.new(
       :application_id,
       :application_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] principal
+    #   The Amazon Resource Name (ARN) of the IAM role for the ISV that will
+    #   be accessing the data.
+    #   @return [String]
+    #
+    # @!attribute [rw] action_configurations
+    #   A list of action configurations specifying the allowed actions and
+    #   any associated filters.
+    #   @return [Array<Types::ActionConfiguration>]
+    #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier you provide to ensure
+    #   idempotency of the request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] display_name
+    #   A friendly name for the data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   The tags to associate with the data accessor.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateDataAccessorRequest AWS API Documentation
+    #
+    class CreateDataAccessorRequest < Struct.new(
+      :application_id,
+      :principal,
+      :action_configurations,
+      :client_token,
+      :display_name,
+      :tags)
+      SENSITIVE = [:display_name]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_accessor_id
+    #   The unique identifier of the created data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] idc_application_arn
+    #   The Amazon Resource Name (ARN) of the AWS IAM Identity Center
+    #   application created for this data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_arn
+    #   The Amazon Resource Name (ARN) of the created data accessor.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateDataAccessorResponse AWS API Documentation
+    #
+    class CreateDataAccessorResponse < Struct.new(
+      :data_accessor_id,
+      :idc_application_arn,
+      :data_accessor_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2012,6 +2229,11 @@ module Aws::QBusiness
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
     #   @return [Types::BrowserExtensionConfiguration]
     #
+    # @!attribute [rw] customization_configuration
+    #   Sets the custom logo, favicon, font, and color used in the Amazon Q
+    #   web experience.
+    #   @return [Types::CustomizationConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateWebExperienceRequest AWS API Documentation
     #
     class CreateWebExperienceRequest < Struct.new(
@@ -2025,7 +2247,8 @@ module Aws::QBusiness
       :tags,
       :client_token,
       :identity_provider_configuration,
-      :browser_extension_configuration)
+      :browser_extension_configuration,
+      :customization_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2094,6 +2317,87 @@ module Aws::QBusiness
       :api_schema_type,
       :api_schema)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains the configuration information to customize the logo, font,
+    # and color of an Amazon Q Business web experience with individual files
+    # for each property or a CSS file for them all.
+    #
+    # @!attribute [rw] custom_css_url
+    #   Provides the URL where the custom CSS file is hosted for an Amazon Q
+    #   web experience.
+    #   @return [String]
+    #
+    # @!attribute [rw] logo_url
+    #   Provides the URL where the custom logo file is hosted for an Amazon
+    #   Q web experience.
+    #   @return [String]
+    #
+    # @!attribute [rw] font_url
+    #   Provides the URL where the custom font file is hosted for an Amazon
+    #   Q web experience.
+    #   @return [String]
+    #
+    # @!attribute [rw] favicon_url
+    #   Provides the URL where the custom favicon file is hosted for an
+    #   Amazon Q web experience.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CustomizationConfiguration AWS API Documentation
+    #
+    class CustomizationConfiguration < Struct.new(
+      :custom_css_url,
+      :logo_url,
+      :font_url,
+      :favicon_url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provides summary information about a data accessor.
+    #
+    # @!attribute [rw] display_name
+    #   The friendly name of the data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_id
+    #   The unique identifier of the data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_arn
+    #   The Amazon Resource Name (ARN) of the data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] idc_application_arn
+    #   The Amazon Resource Name (ARN) of the associated AWS IAM Identity
+    #   Center application.
+    #   @return [String]
+    #
+    # @!attribute [rw] principal
+    #   The Amazon Resource Name (ARN) of the IAM role for the ISV
+    #   associated with this data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp when the data accessor was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp when the data accessor was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DataAccessor AWS API Documentation
+    #
+    class DataAccessor < Struct.new(
+      :display_name,
+      :data_accessor_id,
+      :data_accessor_arn,
+      :idc_application_arn,
+      :principal,
+      :created_at,
+      :updated_at)
+      SENSITIVE = [:display_name]
       include Aws::Structure
     end
 
@@ -2345,6 +2649,27 @@ module Aws::QBusiness
     class DeleteConversationResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_id
+    #   The unique identifier of the data accessor to delete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DeleteDataAccessorRequest AWS API Documentation
+    #
+    class DeleteDataAccessorRequest < Struct.new(
+      :application_id,
+      :data_accessor_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DeleteDataAccessorResponse AWS API Documentation
+    #
+    class DeleteDataAccessorResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] application_id
     #   The identifier of the Amazon Q Business application used with the
     #   data source connector.
     #   @return [String]
@@ -2537,6 +2862,27 @@ module Aws::QBusiness
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DeleteWebExperienceResponse AWS API Documentation
     #
     class DeleteWebExperienceResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] statement_id
+    #   The statement ID of the permission to remove.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DisassociatePermissionRequest AWS API Documentation
+    #
+    class DisassociatePermissionRequest < Struct.new(
+      :application_id,
+      :statement_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DisassociatePermissionResponse AWS API Documentation
+    #
+    class DisassociatePermissionResponse < Aws::EmptyStructure; end
 
     # A document in an Amazon Q Business application.
     #
@@ -3248,6 +3594,11 @@ module Aws::QBusiness
     #   The OIDC client ID for a Amazon Q Business application.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] quick_sight_configuration
+    #   The Amazon QuickSight authentication configuration for the Amazon Q
+    #   Business application.
+    #   @return [Types::QuickSightConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetApplicationResponse AWS API Documentation
     #
     class GetApplicationResponse < Struct.new(
@@ -3268,7 +3619,8 @@ module Aws::QBusiness
       :q_apps_configuration,
       :personalization_configuration,
       :auto_subscription_configuration,
-      :client_ids_for_oidc)
+      :client_ids_for_oidc,
+      :quick_sight_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3336,6 +3688,79 @@ module Aws::QBusiness
       :creator_mode_configuration,
       :next_token)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_id
+    #   The unique identifier of the data accessor to retrieve.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetDataAccessorRequest AWS API Documentation
+    #
+    class GetDataAccessorRequest < Struct.new(
+      :application_id,
+      :data_accessor_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] display_name
+    #   The friendly name of the data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_id
+    #   The unique identifier of the data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_arn
+    #   The Amazon Resource Name (ARN) of the data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application associated with
+    #   this data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] idc_application_arn
+    #   The Amazon Resource Name (ARN) of the AWS IAM Identity Center
+    #   application associated with this data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] principal
+    #   The Amazon Resource Name (ARN) of the IAM role for the ISV
+    #   associated with this data accessor.
+    #   @return [String]
+    #
+    # @!attribute [rw] action_configurations
+    #   The list of action configurations specifying the allowed actions and
+    #   any associated filters.
+    #   @return [Array<Types::ActionConfiguration>]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp when the data accessor was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp when the data accessor was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetDataAccessorResponse AWS API Documentation
+    #
+    class GetDataAccessorResponse < Struct.new(
+      :display_name,
+      :data_accessor_id,
+      :data_accessor_arn,
+      :application_id,
+      :idc_application_arn,
+      :principal,
+      :action_configurations,
+      :created_at,
+      :updated_at)
+      SENSITIVE = [:display_name]
       include Aws::Structure
     end
 
@@ -3749,6 +4174,30 @@ module Aws::QBusiness
     end
 
     # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetPolicyRequest AWS API Documentation
+    #
+    class GetPolicyRequest < Struct.new(
+      :application_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] policy
+    #   The JSON representation of the permission policy.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetPolicyResponse AWS API Documentation
+    #
+    class GetPolicyResponse < Struct.new(
+      :policy)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
     #   The identifier of the Amazon Q Business application using the
     #   retriever.
     #   @return [String]
@@ -3961,6 +4410,11 @@ module Aws::QBusiness
     #   experience.
     #   @return [Types::BrowserExtensionConfiguration]
     #
+    # @!attribute [rw] customization_configuration
+    #   Gets the custom logo, favicon, font, and color used in the Amazon Q
+    #   web experience.
+    #   @return [Types::CustomizationConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetWebExperienceResponse AWS API Documentation
     #
     class GetWebExperienceResponse < Struct.new(
@@ -3980,7 +4434,8 @@ module Aws::QBusiness
       :identity_provider_configuration,
       :authentication_configuration,
       :error,
-      :browser_extension_configuration)
+      :browser_extension_configuration,
+      :customization_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4116,6 +4571,28 @@ module Aws::QBusiness
       :invocation_condition,
       :lambda_arn,
       :s3_bucket_name,
+      :role_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about the IAM Identity Center Application used to
+    # configure authentication for a plugin.
+    #
+    # @!attribute [rw] idc_application_arn
+    #   The Amazon Resource Name (ARN) of the IAM Identity Center
+    #   Application used to configure authentication.
+    #   @return [String]
+    #
+    # @!attribute [rw] role_arn
+    #   The Amazon Resource Name (ARN) of the IAM role with permissions to
+    #   perform actions on Amazon Web Services services on your behalf.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/IdcAuthConfiguration AWS API Documentation
+    #
+    class IdcAuthConfiguration < Struct.new(
+      :idc_application_arn,
       :role_arn)
       SENSITIVE = []
       include Aws::Structure
@@ -4510,6 +4987,47 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. (You received this token from
+    #   a previous call.)
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return in a single call.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListDataAccessorsRequest AWS API Documentation
+    #
+    class ListDataAccessorsRequest < Struct.new(
+      :application_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] data_accessors
+    #   The list of data accessors.
+    #   @return [Array<Types::DataAccessor>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next set of results, if there are
+    #   any.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListDataAccessorsResponse AWS API Documentation
+    #
+    class ListDataAccessorsResponse < Struct.new(
+      :data_accessors,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] data_source_id
     #   The identifier of the data source connector.
     #   @return [String]
@@ -4848,6 +5366,136 @@ module Aws::QBusiness
     class ListMessagesResponse < Struct.new(
       :messages,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The identifier of the Amazon Q Business application the plugin is
+    #   attached to.
+    #   @return [String]
+    #
+    # @!attribute [rw] plugin_id
+    #   The identifier of the Amazon Q Business plugin.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If the number of plugin actions returned exceeds `maxResults`,
+    #   Amazon Q Business returns a next token as a pagination token to
+    #   retrieve the next set of plugin actions.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of plugin actions to return.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginActionsRequest AWS API Documentation
+    #
+    class ListPluginActionsRequest < Struct.new(
+      :application_id,
+      :plugin_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the response is truncated, Amazon Q Business returns this token,
+    #   which you can use in a later request to list the next set of plugin
+    #   actions.
+    #   @return [String]
+    #
+    # @!attribute [rw] items
+    #   An array of information on one or more plugin actions.
+    #   @return [Array<Types::ActionSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginActionsResponse AWS API Documentation
+    #
+    class ListPluginActionsResponse < Struct.new(
+      :next_token,
+      :items)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] plugin_type
+    #   The type of the plugin.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If the number of plugins returned exceeds `maxResults`, Amazon Q
+    #   Business returns a next token as a pagination token to retrieve the
+    #   next set of plugins.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of plugins to return.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginTypeActionsRequest AWS API Documentation
+    #
+    class ListPluginTypeActionsRequest < Struct.new(
+      :plugin_type,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the response is truncated, Amazon Q Business returns this token,
+    #   which you can use in a later request to list the next set of
+    #   plugins.
+    #   @return [String]
+    #
+    # @!attribute [rw] items
+    #   An array of information on one or more plugins.
+    #   @return [Array<Types::ActionSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginTypeActionsResponse AWS API Documentation
+    #
+    class ListPluginTypeActionsResponse < Struct.new(
+      :next_token,
+      :items)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the metadata returned exceeds `maxResults`, Amazon Q Business
+    #   returns a next token as a pagination token to retrieve the next set
+    #   of metadata.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of plugin metadata items to return.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginTypeMetadataRequest AWS API Documentation
+    #
+    class ListPluginTypeMetadataRequest < Struct.new(
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the response is truncated, Amazon Q Business returns this token,
+    #   which you can use in a later request to list the next set of plugin
+    #   metadata.
+    #   @return [String]
+    #
+    # @!attribute [rw] items
+    #   An array of information on plugin metadata.
+    #   @return [Array<Types::PluginTypeMetadataSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginTypeMetadataResponse AWS API Documentation
+    #
+    class ListPluginTypeMetadataResponse < Struct.new(
+      :next_token,
+      :items)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5279,11 +5927,24 @@ module Aws::QBusiness
     #   2.0 authentication credentials stored in a Secrets Manager secret.
     #   @return [String]
     #
+    # @!attribute [rw] authorization_url
+    #   The redirect URL required by the OAuth 2.0 protocol for Amazon Q
+    #   Business to authenticate a plugin user through a third party
+    #   authentication server.
+    #   @return [String]
+    #
+    # @!attribute [rw] token_url
+    #   The URL required by the OAuth 2.0 protocol to exchange an end user
+    #   authorization code for an access token.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/OAuth2ClientCredentialConfiguration AWS API Documentation
     #
     class OAuth2ClientCredentialConfiguration < Struct.new(
       :secret_arn,
-      :role_arn)
+      :role_arn,
+      :authorization_url,
+      :token_url)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5402,12 +6063,18 @@ module Aws::QBusiness
     #   authentication.
     #   @return [Types::NoAuthConfiguration]
     #
+    # @!attribute [rw] idc_auth_configuration
+    #   Information about the IAM Identity Center Application used to
+    #   configure authentication for a plugin.
+    #   @return [Types::IdcAuthConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/PluginAuthConfiguration AWS API Documentation
     #
     class PluginAuthConfiguration < Struct.new(
       :basic_auth_configuration,
       :o_auth_2_client_credential_configuration,
       :no_auth_configuration,
+      :idc_auth_configuration,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -5416,6 +6083,7 @@ module Aws::QBusiness
       class BasicAuthConfiguration < PluginAuthConfiguration; end
       class OAuth2ClientCredentialConfiguration < PluginAuthConfiguration; end
       class NoAuthConfiguration < PluginAuthConfiguration; end
+      class IdcAuthConfiguration < PluginAuthConfiguration; end
       class Unknown < PluginAuthConfiguration; end
     end
 
@@ -5438,6 +6106,31 @@ module Aws::QBusiness
     #
     class PluginConfiguration < Struct.new(
       :plugin_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary metadata information for a Amazon Q Business plugin.
+    #
+    # @!attribute [rw] type
+    #   The type of the plugin.
+    #   @return [String]
+    #
+    # @!attribute [rw] category
+    #   The category of the plugin type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description assigned by Amazon Q Business to a plugin. You
+    #   can't modify this value.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/PluginTypeMetadataSummary AWS API Documentation
+    #
+    class PluginTypeMetadataSummary < Struct.new(
+      :type,
+      :category,
+      :description)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5635,8 +6328,76 @@ module Aws::QBusiness
       include Aws::Structure
     end
 
-    # The resource you want to use doesn’t exist. Make sure you have
-    # provided the correct resource and try again.
+    # The Amazon QuickSight configuration for an Amazon Q Business
+    # application that uses QuickSight as the identity provider. For more
+    # information, see [Creating an Amazon QuickSight integrated
+    # application][1].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/create-quicksight-integrated-application.html
+    #
+    # @!attribute [rw] client_namespace
+    #   The Amazon QuickSight namespace that is used as the identity
+    #   provider. For more information about QuickSight namespaces, see
+    #   [Namespace operations][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/quicksight/latest/developerguide/namespace-operations.html
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/QuickSightConfiguration AWS API Documentation
+    #
+    class QuickSightConfiguration < Struct.new(
+      :client_namespace)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Represents a piece of content that is relevant to a search query.
+    #
+    # @!attribute [rw] content
+    #   The actual content of the relevant item.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_id
+    #   The unique identifier of the document containing the relevant
+    #   content.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_title
+    #   The title of the document containing the relevant content.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_uri
+    #   The URI of the document containing the relevant content.
+    #   @return [String]
+    #
+    # @!attribute [rw] document_attributes
+    #   Additional attributes of the document containing the relevant
+    #   content.
+    #   @return [Array<Types::DocumentAttribute>]
+    #
+    # @!attribute [rw] score_attributes
+    #   Attributes related to the relevance score of the content.
+    #   @return [Types::ScoreAttributes]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/RelevantContent AWS API Documentation
+    #
+    class RelevantContent < Struct.new(
+      :content,
+      :document_id,
+      :document_title,
+      :document_uri,
+      :document_attributes,
+      :score_attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The application or plugin resource you want to use doesn’t exist. Make
+    # sure you have provided the correct resource and try again.
     #
     # @!attribute [rw] message
     #   The message describing a `ResourceNotFoundException`.
@@ -5727,6 +6488,20 @@ module Aws::QBusiness
       class NativeIndexConfiguration < RetrieverConfiguration; end
       class KendraIndexConfiguration < RetrieverConfiguration; end
       class Unknown < RetrieverConfiguration; end
+    end
+
+    # Specifies a retriever as the content source for a search.
+    #
+    # @!attribute [rw] retriever_id
+    #   The unique identifier of the retriever to use as the content source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/RetrieverContentSource AWS API Documentation
+    #
+    class RetrieverContentSource < Struct.new(
+      :retriever_id)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # Guardrail rules for an Amazon Q Business application. Amazon Q
@@ -5856,6 +6631,87 @@ module Aws::QBusiness
     #
     class SamlProviderConfiguration < Struct.new(
       :authentication_url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provides information about the relevance score of content.
+    #
+    # @!attribute [rw] score_confidence
+    #   The confidence level of the relevance score.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ScoreAttributes AWS API Documentation
+    #
+    class ScoreAttributes < Struct.new(
+      :score_confidence)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application to search.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_id
+    #   The ID of the user performing the search. Used for access control.
+    #   @return [String]
+    #
+    # @!attribute [rw] user_groups
+    #   The groups the user belongs to. Used for access control.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] query_text
+    #   The text to search for.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_source
+    #   The source of content to search in.
+    #   @return [Types::ContentSource]
+    #
+    # @!attribute [rw] attribute_filter
+    #   Enables filtering of responses based on document attributes or
+    #   metadata fields.
+    #   @return [Types::AttributeFilter]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. (You received this token from
+    #   a previous call.)
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/SearchRelevantContentRequest AWS API Documentation
+    #
+    class SearchRelevantContentRequest < Struct.new(
+      :application_id,
+      :user_id,
+      :user_groups,
+      :query_text,
+      :content_source,
+      :attribute_filter,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] relevant_content
+    #   The list of relevant content items found.
+    #   @return [Array<Types::RelevantContent>]
+    #
+    # @!attribute [rw] next_token
+    #   The token to use to retrieve the next set of results, if there are
+    #   any.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/SearchRelevantContentResponse AWS API Documentation
+    #
+    class SearchRelevantContentResponse < Struct.new(
+      :relevant_content,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6430,6 +7286,38 @@ module Aws::QBusiness
     class UpdateChatControlsConfigurationResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] application_id
+    #   The unique identifier of the Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_accessor_id
+    #   The unique identifier of the data accessor to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] action_configurations
+    #   The updated list of action configurations specifying the allowed
+    #   actions and any associated filters.
+    #   @return [Array<Types::ActionConfiguration>]
+    #
+    # @!attribute [rw] display_name
+    #   The updated friendly name for the data accessor.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateDataAccessorRequest AWS API Documentation
+    #
+    class UpdateDataAccessorRequest < Struct.new(
+      :application_id,
+      :data_accessor_id,
+      :action_configurations,
+      :display_name)
+      SENSITIVE = [:display_name]
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateDataAccessorResponse AWS API Documentation
+    #
+    class UpdateDataAccessorResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] application_id
     #   The identifier of the Amazon Q Business application the data source
     #   is attached to.
     #   @return [String]
@@ -6763,6 +7651,11 @@ module Aws::QBusiness
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
     #   @return [Types::BrowserExtensionConfiguration]
     #
+    # @!attribute [rw] customization_configuration
+    #   Updates the custom logo, favicon, font, and color used in the Amazon
+    #   Q web experience.
+    #   @return [Types::CustomizationConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateWebExperienceRequest AWS API Documentation
     #
     class UpdateWebExperienceRequest < Struct.new(
@@ -6776,7 +7669,8 @@ module Aws::QBusiness
       :sample_prompts_control_mode,
       :identity_provider_configuration,
       :origins,
-      :browser_extension_configuration)
+      :browser_extension_configuration,
+      :customization_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

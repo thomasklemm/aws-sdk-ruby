@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.33.0 (2024-12-03)
+------------------
+
+* Feature - Added support for Async Invoke Operations Start, List and Get. Support for invocation logs with `requestMetadata` field in Converse, ConverseStream, Invoke and InvokeStream. Video content blocks in Converse/ConverseStream accept raw bytes or S3 URI.
+
 1.32.0 (2024-12-03)
 ------------------
 

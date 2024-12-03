@@ -313,6 +313,15 @@ module Aws::S3
       SENSITIVE: []
     end
 
+    class CreateBucketMetadataTableConfigurationRequest
+      attr_accessor bucket: ::String
+      attr_accessor content_md5: ::String
+      attr_accessor checksum_algorithm: ("CRC32" | "CRC32C" | "SHA1" | "SHA256")
+      attr_accessor metadata_table_configuration: Types::MetadataTableConfiguration
+      attr_accessor expected_bucket_owner: ::String
+      SENSITIVE: []
+    end
+
     class CreateBucketOutput
       attr_accessor location: ::String
       SENSITIVE: []
@@ -448,6 +457,12 @@ module Aws::S3
     end
 
     class DeleteBucketLifecycleRequest
+      attr_accessor bucket: ::String
+      attr_accessor expected_bucket_owner: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteBucketMetadataTableConfigurationRequest
       attr_accessor bucket: ::String
       attr_accessor expected_bucket_owner: ::String
       SENSITIVE: []
@@ -615,6 +630,12 @@ module Aws::S3
       SENSITIVE: []
     end
 
+    class ErrorDetails
+      attr_accessor error_code: ::String
+      attr_accessor error_message: ::String
+      SENSITIVE: []
+    end
+
     class ErrorDocument
       attr_accessor key: ::String
       SENSITIVE: []
@@ -758,6 +779,24 @@ module Aws::S3
     class GetBucketLoggingRequest
       attr_accessor bucket: ::String
       attr_accessor expected_bucket_owner: ::String
+      SENSITIVE: []
+    end
+
+    class GetBucketMetadataTableConfigurationOutput
+      attr_accessor get_bucket_metadata_table_configuration_result: Types::GetBucketMetadataTableConfigurationResult
+      SENSITIVE: []
+    end
+
+    class GetBucketMetadataTableConfigurationRequest
+      attr_accessor bucket: ::String
+      attr_accessor expected_bucket_owner: ::String
+      SENSITIVE: []
+    end
+
+    class GetBucketMetadataTableConfigurationResult
+      attr_accessor metadata_table_configuration_result: Types::MetadataTableConfigurationResult
+      attr_accessor status: ::String
+      attr_accessor error: Types::ErrorDetails
       SENSITIVE: []
     end
 
@@ -1583,6 +1622,16 @@ module Aws::S3
       SENSITIVE: []
     end
 
+    class MetadataTableConfiguration
+      attr_accessor s3_tables_destination: Types::S3TablesDestination
+      SENSITIVE: []
+    end
+
+    class MetadataTableConfigurationResult
+      attr_accessor s3_tables_destination_result: Types::S3TablesDestinationResult
+      SENSITIVE: []
+    end
+
     class Metrics
       attr_accessor status: ("Enabled" | "Disabled")
       attr_accessor event_threshold: Types::ReplicationTimeValue
@@ -2319,6 +2368,20 @@ module Aws::S3
       attr_accessor tagging: Types::Tagging
       attr_accessor user_metadata: ::Array[Types::MetadataEntry]
       attr_accessor storage_class: ("STANDARD" | "REDUCED_REDUNDANCY" | "STANDARD_IA" | "ONEZONE_IA" | "INTELLIGENT_TIERING" | "GLACIER" | "DEEP_ARCHIVE" | "OUTPOSTS" | "GLACIER_IR" | "SNOW" | "EXPRESS_ONEZONE")
+      SENSITIVE: []
+    end
+
+    class S3TablesDestination
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor table_name: ::String
+      SENSITIVE: []
+    end
+
+    class S3TablesDestinationResult
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor table_name: ::String
+      attr_accessor table_arn: ::String
+      attr_accessor table_namespace: ::String
       SENSITIVE: []
     end
 

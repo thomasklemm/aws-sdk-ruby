@@ -8440,6 +8440,55 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # The QA result that is made from dashboard visual.
+    #
+    # @!attribute [rw] dashboard_id
+    #   The ID of the dashboard.
+    #   @return [String]
+    #
+    # @!attribute [rw] dashboard_name
+    #   The name of the dashboard.
+    #   @return [String]
+    #
+    # @!attribute [rw] sheet_id
+    #   The ID of the sheet.
+    #   @return [String]
+    #
+    # @!attribute [rw] sheet_name
+    #   The name of the sheet.
+    #   @return [String]
+    #
+    # @!attribute [rw] visual_id
+    #   The ID of the visual.
+    #   @return [String]
+    #
+    # @!attribute [rw] visual_title
+    #   The title of the visual.
+    #   @return [String]
+    #
+    # @!attribute [rw] visual_subtitle
+    #   The subtitle of the visual.
+    #   @return [String]
+    #
+    # @!attribute [rw] dashboard_url
+    #   The URL of the dashboard.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DashboardVisualResult AWS API Documentation
+    #
+    class DashboardVisualResult < Struct.new(
+      :dashboard_id,
+      :dashboard_name,
+      :sheet_id,
+      :sheet_name,
+      :visual_id,
+      :visual_title,
+      :visual_subtitle,
+      :dashboard_url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A structure that represents a data aggregation.
     #
     # @!attribute [rw] dataset_row_date_granularity
@@ -10962,6 +11011,45 @@ module Aws::QuickSight
     end
 
     # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon QuickSight account that you want to disconnect
+    #   from a Amazon Q Business application.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The Amazon QuickSight namespace that you want to delete a linked
+    #   Amazon Q Business application from. If this field is left blank, the
+    #   Amazon Q Business application is deleted from the default namespace.
+    #   Currently, the default namespace is the only valid value for this
+    #   parameter.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteDefaultQBusinessApplicationRequest AWS API Documentation
+    #
+    class DeleteDefaultQBusinessApplicationRequest < Struct.new(
+      :aws_account_id,
+      :namespace)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteDefaultQBusinessApplicationResponse AWS API Documentation
+    #
+    class DeleteDefaultQBusinessApplicationResponse < Struct.new(
+      :request_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
     #   The ID for the Amazon Web Services account that contains the folder.
     #   @return [String]
     #
@@ -13337,6 +13425,50 @@ module Aws::QuickSight
     end
 
     # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon QuickSight account that is linked to the Amazon
+    #   Q Business application that you want described.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The Amazon QuickSight namespace that contains the linked Amazon Q
+    #   Business application. If this field is left blank, the default
+    #   namespace is used. Currently, the default namespace is the only
+    #   valid value for this parameter.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDefaultQBusinessApplicationRequest AWS API Documentation
+    #
+    class DescribeDefaultQBusinessApplicationRequest < Struct.new(
+      :aws_account_id,
+      :namespace)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] application_id
+    #   The ID of the Amazon Q Business application that is linked to the
+    #   Amazon QuickSight account.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDefaultQBusinessApplicationResponse AWS API Documentation
+    #
+    class DescribeDefaultQBusinessApplicationResponse < Struct.new(
+      :request_id,
+      :status,
+      :application_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
     #   The ID for the Amazon Web Services account that contains the folder.
     #   @return [String]
     #
@@ -13879,6 +14011,41 @@ module Aws::QuickSight
     #
     class DescribeQPersonalizationConfigurationResponse < Struct.new(
       :personalization_mode,
+      :request_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services account that contains the Amazon
+    #   QuickSight Q Search configuration that the user wants described.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeQuickSightQSearchConfigurationRequest AWS API Documentation
+    #
+    class DescribeQuickSightQSearchConfigurationRequest < Struct.new(
+      :aws_account_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] q_search_status
+    #   The status of Amazon QuickSight Q Search configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeQuickSightQSearchConfigurationResponse AWS API Documentation
+    #
+    class DescribeQuickSightQSearchConfigurationResponse < Struct.new(
+      :q_search_status,
       :request_id,
       :status)
       SENSITIVE = []
@@ -17455,6 +17622,112 @@ module Aws::QuickSight
       :status,
       :request_id)
       SENSITIVE = [:embed_url]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services registered user.
+    #   @return [String]
+    #
+    # @!attribute [rw] session_lifetime_in_minutes
+    #   The validity of the session in minutes.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] experience_configuration
+    #   The type of experience you want to embed. For registered users, you
+    #   can embed Amazon QuickSight dashboards or the Amazon QuickSight
+    #   console.
+    #
+    #   <note markdown="1"> Exactly one of the experience configurations is required. You can
+    #   choose `Dashboard` or `QuickSightConsole`. You cannot choose more
+    #   than one experience configuration.
+    #
+    #    </note>
+    #   @return [Types::RegisteredUserEmbeddingExperienceConfiguration]
+    #
+    # @!attribute [rw] allowed_domains
+    #   A list of domains to be allowed to generate the embed URL.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GenerateEmbedUrlForRegisteredUserWithIdentityRequest AWS API Documentation
+    #
+    class GenerateEmbedUrlForRegisteredUserWithIdentityRequest < Struct.new(
+      :aws_account_id,
+      :session_lifetime_in_minutes,
+      :experience_configuration,
+      :allowed_domains)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] embed_url
+    #   The generated embed URL for the registered user.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GenerateEmbedUrlForRegisteredUserWithIdentityResponse AWS API Documentation
+    #
+    class GenerateEmbedUrlForRegisteredUserWithIdentityResponse < Struct.new(
+      :embed_url,
+      :status,
+      :request_id)
+      SENSITIVE = [:embed_url]
+      include Aws::Structure
+    end
+
+    # The QA result that is made from generated answer.
+    #
+    # @!attribute [rw] question_text
+    #   The question text.
+    #   @return [String]
+    #
+    # @!attribute [rw] answer_status
+    #   The answer status of the generated answer.
+    #   @return [String]
+    #
+    # @!attribute [rw] topic_id
+    #   The ID of the topic.
+    #   @return [String]
+    #
+    # @!attribute [rw] topic_name
+    #   The name of the topic.
+    #   @return [String]
+    #
+    # @!attribute [rw] restatement
+    #   The restatement for the answer.
+    #   @return [String]
+    #
+    # @!attribute [rw] question_id
+    #   The ID of the question.
+    #   @return [String]
+    #
+    # @!attribute [rw] answer_id
+    #   The ID of the answer.
+    #   @return [String]
+    #
+    # @!attribute [rw] question_url
+    #   The URL of the question.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GeneratedAnswerResult AWS API Documentation
+    #
+    class GeneratedAnswerResult < Struct.new(
+      :question_text,
+      :answer_status,
+      :topic_id,
+      :topic_name,
+      :restatement,
+      :question_id,
+      :answer_id,
+      :question_url)
+      SENSITIVE = [:question_text, :restatement]
       include Aws::Structure
     end
 
@@ -26086,6 +26359,66 @@ module Aws::QuickSight
       include Aws::Structure
     end
 
+    # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services account that the user wants to
+    #   execute Predict QA results in.
+    #   @return [String]
+    #
+    # @!attribute [rw] query_text
+    #   The query text to be used to predict QA results.
+    #   @return [String]
+    #
+    # @!attribute [rw] include_quick_sight_q_index
+    #   Indicates whether Q indicies are included or excluded.
+    #   @return [String]
+    #
+    # @!attribute [rw] include_generated_answer
+    #   Indicates whether generated answers are included or excluded.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_topics_to_consider
+    #   The number of maximum topics to be considered to predict QA results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PredictQAResultsRequest AWS API Documentation
+    #
+    class PredictQAResultsRequest < Struct.new(
+      :aws_account_id,
+      :query_text,
+      :include_quick_sight_q_index,
+      :include_generated_answer,
+      :max_topics_to_consider)
+      SENSITIVE = [:query_text]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] primary_result
+    #   The primary visual response.
+    #   @return [Types::QAResult]
+    #
+    # @!attribute [rw] additional_results
+    #   Additional visual responses.
+    #   @return [Array<Types::QAResult>]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PredictQAResultsResponse AWS API Documentation
+    #
+    class PredictQAResultsResponse < Struct.new(
+      :primary_result,
+      :additional_results,
+      :request_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The parameters for Presto.
     #
     # @!attribute [rw] host
@@ -26175,6 +26508,31 @@ module Aws::QuickSight
     class PutDataSetRefreshPropertiesResponse < Struct.new(
       :request_id,
       :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The QA result that is made from the `DashboardVisual` or
+    # `GeneratedAnswer`.
+    #
+    # @!attribute [rw] result_type
+    #   The type of QA result.
+    #   @return [String]
+    #
+    # @!attribute [rw] dashboard_visual
+    #   The representation of a dashboard visual result.
+    #   @return [Types::DashboardVisualResult]
+    #
+    # @!attribute [rw] generated_answer
+    #   The representation of a generated answer result.
+    #   @return [Types::GeneratedAnswerResult]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/QAResult AWS API Documentation
+    #
+    class QAResult < Struct.new(
+      :result_type,
+      :dashboard_visual,
+      :generated_answer)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -35165,6 +35523,41 @@ module Aws::QuickSight
     end
 
     # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services account to be updated with a token
+    #   exchange grant.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The namespace of the Amazon QuickSight application.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateApplicationWithTokenExchangeGrantRequest AWS API Documentation
+    #
+    class UpdateApplicationWithTokenExchangeGrantRequest < Struct.new(
+      :aws_account_id,
+      :namespace)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateApplicationWithTokenExchangeGrantResponse AWS API Documentation
+    #
+    class UpdateApplicationWithTokenExchangeGrantResponse < Struct.new(
+      :status,
+      :request_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
     #   The ID of the Amazon Web Services account that owns the brand
     #   assignment.
     #   @return [String]
@@ -35998,6 +36391,49 @@ module Aws::QuickSight
     end
 
     # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon QuickSight account that is connected to the
+    #   Amazon Q Business application that you want to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] namespace
+    #   The Amazon QuickSight namespace that contains the linked Amazon Q
+    #   Business application. If this field is left blank, the default
+    #   namespace is used. Currently, the default namespace is the only
+    #   valid value for this parameter.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_id
+    #   The ID of the Amazon Q Business application that you want to update.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDefaultQBusinessApplicationRequest AWS API Documentation
+    #
+    class UpdateDefaultQBusinessApplicationRequest < Struct.new(
+      :aws_account_id,
+      :namespace,
+      :application_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDefaultQBusinessApplicationResponse AWS API Documentation
+    #
+    class UpdateDefaultQBusinessApplicationResponse < Struct.new(
+      :request_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
     #   The ID for the Amazon Web Services account that contains the folder
     #   to update.
     #   @return [String]
@@ -36481,6 +36917,47 @@ module Aws::QuickSight
     #
     class UpdateQPersonalizationConfigurationResponse < Struct.new(
       :personalization_mode,
+      :request_id,
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] aws_account_id
+    #   The ID of the Amazon Web Services account that contains the Amazon
+    #   QuickSight Q Search configuration that you want to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] q_search_status
+    #   The status of the Amazon QuickSight Q Search configuration that the
+    #   user wants to update.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateQuickSightQSearchConfigurationRequest AWS API Documentation
+    #
+    class UpdateQuickSightQSearchConfigurationRequest < Struct.new(
+      :aws_account_id,
+      :q_search_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] q_search_status
+    #   The status of the Amazon QuickSight Q Search configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] request_id
+    #   The Amazon Web Services request ID for this operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The HTTP status of the request.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateQuickSightQSearchConfigurationResponse AWS API Documentation
+    #
+    class UpdateQuickSightQSearchConfigurationResponse < Struct.new(
+      :q_search_status,
       :request_id,
       :status)
       SENSITIVE = []

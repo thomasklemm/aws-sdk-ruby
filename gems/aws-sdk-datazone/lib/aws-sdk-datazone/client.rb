@@ -722,6 +722,8 @@ module Aws::DataZone
     #       },
     #       create_environment: {
     #       },
+    #       create_environment_from_blueprint: {
+    #       },
     #       create_environment_profile: {
     #         domain_unit_id: "DomainUnitId",
     #       },
@@ -733,6 +735,10 @@ module Aws::DataZone
     #       },
     #       create_project: {
     #         include_child_domain_units: false,
+    #       },
+    #       create_project_from_project_profile: {
+    #         include_child_domain_units: false,
+    #         project_profiles: ["String"],
     #       },
     #       delegate_create_environment_profile: {
     #       },
@@ -746,7 +752,7 @@ module Aws::DataZone
     #     domain_identifier: "DomainId", # required
     #     entity_identifier: "String", # required
     #     entity_type: "DOMAIN_UNIT", # required, accepts DOMAIN_UNIT, ENVIRONMENT_BLUEPRINT_CONFIGURATION, ENVIRONMENT_PROFILE
-    #     policy_type: "CREATE_DOMAIN_UNIT", # required, accepts CREATE_DOMAIN_UNIT, OVERRIDE_DOMAIN_UNIT_OWNERS, ADD_TO_PROJECT_MEMBER_POOL, OVERRIDE_PROJECT_OWNERS, CREATE_GLOSSARY, CREATE_FORM_TYPE, CREATE_ASSET_TYPE, CREATE_PROJECT, CREATE_ENVIRONMENT_PROFILE, DELEGATE_CREATE_ENVIRONMENT_PROFILE, CREATE_ENVIRONMENT
+    #     policy_type: "CREATE_DOMAIN_UNIT", # required, accepts CREATE_DOMAIN_UNIT, OVERRIDE_DOMAIN_UNIT_OWNERS, ADD_TO_PROJECT_MEMBER_POOL, OVERRIDE_PROJECT_OWNERS, CREATE_GLOSSARY, CREATE_FORM_TYPE, CREATE_ASSET_TYPE, CREATE_PROJECT, CREATE_ENVIRONMENT_PROFILE, DELEGATE_CREATE_ENVIRONMENT_PROFILE, CREATE_ENVIRONMENT, CREATE_ENVIRONMENT_FROM_BLUEPRINT, CREATE_PROJECT_FROM_PROJECT_PROFILE
     #     principal: { # required
     #       domain_unit: {
     #         domain_unit_designation: "OWNER", # required, accepts OWNER
@@ -1439,6 +1445,293 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Creates a new connection. In Amazon DataZone, a connection enables you
+    # to connect your resources (domains, projects, and environments) to
+    # external resources and services.
+    #
+    # @option params [Types::AwsLocation] :aws_location
+    #   The location where the connection is created.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that is provided to ensure the
+    #   idempotency of the request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [String] :description
+    #   A connection description.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where the connection is created.
+    #
+    # @option params [required, String] :environment_identifier
+    #   The ID of the environment where the connection is created.
+    #
+    # @option params [required, String] :name
+    #   The connection name.
+    #
+    # @option params [Types::ConnectionPropertiesInput] :props
+    #   The connection props.
+    #
+    # @return [Types::CreateConnectionOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateConnectionOutput#connection_id #connection_id} => String
+    #   * {Types::CreateConnectionOutput#description #description} => String
+    #   * {Types::CreateConnectionOutput#domain_id #domain_id} => String
+    #   * {Types::CreateConnectionOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::CreateConnectionOutput#environment_id #environment_id} => String
+    #   * {Types::CreateConnectionOutput#name #name} => String
+    #   * {Types::CreateConnectionOutput#physical_endpoints #physical_endpoints} => Array&lt;Types::PhysicalEndpoint&gt;
+    #   * {Types::CreateConnectionOutput#project_id #project_id} => String
+    #   * {Types::CreateConnectionOutput#props #props} => Types::ConnectionPropertiesOutput
+    #   * {Types::CreateConnectionOutput#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_connection({
+    #     aws_location: {
+    #       access_role: "AwsLocationAccessRoleString",
+    #       aws_account_id: "AwsAccountId",
+    #       aws_region: "AwsRegion",
+    #       iam_connection_id: "ConnectionId",
+    #     },
+    #     client_token: "String",
+    #     description: "CreateConnectionInputDescriptionString",
+    #     domain_identifier: "DomainId", # required
+    #     environment_identifier: "EnvironmentId", # required
+    #     name: "ConnectionName", # required
+    #     props: {
+    #       athena_properties: {
+    #         workgroup_name: "AthenaPropertiesInputWorkgroupNameString",
+    #       },
+    #       glue_properties: {
+    #         glue_connection_input: {
+    #           athena_properties: {
+    #             "PropertyMapKeyString" => "PropertyMapValueString",
+    #           },
+    #           authentication_configuration: {
+    #             authentication_type: "BASIC", # accepts BASIC, OAUTH2, CUSTOM
+    #             basic_authentication_credentials: {
+    #               password: "BasicAuthenticationCredentialsPasswordString",
+    #               user_name: "BasicAuthenticationCredentialsUserNameString",
+    #             },
+    #             custom_authentication_credentials: {
+    #               "CredentialMapKeyString" => "CredentialMapValueString",
+    #             },
+    #             kms_key_arn: "AuthenticationConfigurationInputKmsKeyArnString",
+    #             o_auth_2_properties: {
+    #               authorization_code_properties: {
+    #                 authorization_code: "AuthorizationCodePropertiesAuthorizationCodeString",
+    #                 redirect_uri: "AuthorizationCodePropertiesRedirectUriString",
+    #               },
+    #               o_auth_2_client_application: {
+    #                 a_ws_managed_client_application_reference: "OAuth2ClientApplicationAWSManagedClientApplicationReferenceString",
+    #                 user_managed_client_application_client_id: "OAuth2ClientApplicationUserManagedClientApplicationClientIdString",
+    #               },
+    #               o_auth_2_credentials: {
+    #                 access_token: "GlueOAuth2CredentialsAccessTokenString",
+    #                 jwt_token: "GlueOAuth2CredentialsJwtTokenString",
+    #                 refresh_token: "GlueOAuth2CredentialsRefreshTokenString",
+    #                 user_managed_client_application_client_secret: "GlueOAuth2CredentialsUserManagedClientApplicationClientSecretString",
+    #               },
+    #               o_auth_2_grant_type: "AUTHORIZATION_CODE", # accepts AUTHORIZATION_CODE, CLIENT_CREDENTIALS, JWT_BEARER
+    #               token_url: "OAuth2PropertiesTokenUrlString",
+    #               token_url_parameters_map: {
+    #                 "TokenUrlParametersMapKeyString" => "TokenUrlParametersMapValueString",
+    #               },
+    #             },
+    #             secret_arn: "AuthenticationConfigurationInputSecretArnString",
+    #           },
+    #           connection_properties: {
+    #             "String" => "ConnectionPropertiesValueString",
+    #           },
+    #           connection_type: "SNOWFLAKE", # accepts SNOWFLAKE, BIGQUERY, DOCUMENTDB, DYNAMODB, MYSQL, OPENSEARCH, ORACLE, POSTGRESQL, REDSHIFT, SAPHANA, SQLSERVER, TERADATA, VERTICA
+    #           description: "String",
+    #           match_criteria: "GlueConnectionInputMatchCriteriaString",
+    #           name: "GlueConnectionInputNameString",
+    #           physical_connection_requirements: {
+    #             availability_zone: "PhysicalConnectionRequirementsAvailabilityZoneString",
+    #             security_group_id_list: ["SecurityGroupIdListMemberString"],
+    #             subnet_id: "SubnetId",
+    #             subnet_id_list: ["SubnetId"],
+    #           },
+    #           python_properties: {
+    #             "PropertyMapKeyString" => "PropertyMapValueString",
+    #           },
+    #           spark_properties: {
+    #             "PropertyMapKeyString" => "PropertyMapValueString",
+    #           },
+    #           validate_credentials: false,
+    #           validate_for_compute_environments: ["SPARK"], # accepts SPARK, ATHENA, PYTHON
+    #         },
+    #       },
+    #       hyper_pod_properties: {
+    #         cluster_name: "HyperPodPropertiesInputClusterNameString", # required
+    #       },
+    #       iam_properties: {
+    #         glue_lineage_sync_enabled: false,
+    #       },
+    #       redshift_properties: {
+    #         credentials: {
+    #           secret_arn: "RedshiftCredentialsSecretArnString",
+    #           username_password: {
+    #             password: "Password", # required
+    #             username: "Username", # required
+    #           },
+    #         },
+    #         database_name: "RedshiftPropertiesInputDatabaseNameString",
+    #         host: "RedshiftPropertiesInputHostString",
+    #         lineage_sync: {
+    #           enabled: false,
+    #           schedule: {
+    #             schedule: "LineageSyncScheduleScheduleString",
+    #           },
+    #         },
+    #         port: 1,
+    #         storage: {
+    #           cluster_name: "RedshiftStoragePropertiesClusterNameString",
+    #           workgroup_name: "RedshiftStoragePropertiesWorkgroupNameString",
+    #         },
+    #       },
+    #       spark_emr_properties: {
+    #         compute_arn: "SparkEmrPropertiesInputComputeArnString",
+    #         instance_profile_arn: "SparkEmrPropertiesInputInstanceProfileArnString",
+    #         java_virtual_env: "SparkEmrPropertiesInputJavaVirtualEnvString",
+    #         log_uri: "SparkEmrPropertiesInputLogUriString",
+    #         python_virtual_env: "SparkEmrPropertiesInputPythonVirtualEnvString",
+    #         runtime_role: "SparkEmrPropertiesInputRuntimeRoleString",
+    #         trusted_certificates_s3_uri: "SparkEmrPropertiesInputTrustedCertificatesS3UriString",
+    #       },
+    #       spark_glue_properties: {
+    #         additional_args: {
+    #           connection: "String",
+    #         },
+    #         glue_connection_name: "SparkGluePropertiesInputGlueConnectionNameString",
+    #         glue_version: "SparkGluePropertiesInputGlueVersionString",
+    #         idle_timeout: 1,
+    #         java_virtual_env: "SparkGluePropertiesInputJavaVirtualEnvString",
+    #         number_of_workers: 1,
+    #         python_virtual_env: "SparkGluePropertiesInputPythonVirtualEnvString",
+    #         worker_type: "SparkGluePropertiesInputWorkerTypeString",
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.connection_id #=> String
+    #   resp.description #=> String
+    #   resp.domain_id #=> String
+    #   resp.domain_unit_id #=> String
+    #   resp.environment_id #=> String
+    #   resp.name #=> String
+    #   resp.physical_endpoints #=> Array
+    #   resp.physical_endpoints[0].aws_location.access_role #=> String
+    #   resp.physical_endpoints[0].aws_location.aws_account_id #=> String
+    #   resp.physical_endpoints[0].aws_location.aws_region #=> String
+    #   resp.physical_endpoints[0].aws_location.iam_connection_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.athena_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.athena_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM"
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.authorization_code #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.redirect_uri #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.a_ws_managed_client_application_reference #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.user_managed_client_application_client_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.access_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.jwt_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.refresh_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.user_managed_client_application_client_secret #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_grant_type #=> String, one of "AUTHORIZATION_CODE", "CLIENT_CREDENTIALS", "JWT_BEARER"
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map["TokenUrlParametersMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.secret_arn #=> String
+    #   resp.physical_endpoints[0].glue_connection.compatible_compute_environments #=> Array
+    #   resp.physical_endpoints[0].glue_connection.compatible_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.physical_endpoints[0].glue_connection.connection_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.connection_properties["String"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.connection_schema_version #=> Integer
+    #   resp.physical_endpoints[0].glue_connection.connection_type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #   resp.physical_endpoints[0].glue_connection.creation_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.description #=> String
+    #   resp.physical_endpoints[0].glue_connection.last_connection_validation_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.last_updated_by #=> String
+    #   resp.physical_endpoints[0].glue_connection.last_updated_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.match_criteria #=> Array
+    #   resp.physical_endpoints[0].glue_connection.match_criteria[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.name #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.availability_zone #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list #=> Array
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list #=> Array
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.python_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.python_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.spark_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.spark_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.physical_endpoints[0].glue_connection.status_reason #=> String
+    #   resp.physical_endpoints[0].glue_connection_name #=> String
+    #   resp.physical_endpoints[0].host #=> String
+    #   resp.physical_endpoints[0].port #=> Integer
+    #   resp.physical_endpoints[0].protocol #=> String, one of "ATHENA", "GLUE_INTERACTIVE_SESSION", "HTTPS", "JDBC", "LIVY", "ODBC", "PRISM"
+    #   resp.physical_endpoints[0].stage #=> String
+    #   resp.project_id #=> String
+    #   resp.props.athena_properties.workgroup_name #=> String
+    #   resp.props.glue_properties.error_message #=> String
+    #   resp.props.glue_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.props.hyper_pod_properties.cluster_arn #=> String
+    #   resp.props.hyper_pod_properties.cluster_name #=> String
+    #   resp.props.hyper_pod_properties.orchestrator #=> String, one of "EKS", "SLURM"
+    #   resp.props.iam_properties.environment_id #=> String
+    #   resp.props.iam_properties.glue_lineage_sync_enabled #=> Boolean
+    #   resp.props.redshift_properties.credentials.secret_arn #=> String
+    #   resp.props.redshift_properties.credentials.username_password.password #=> String
+    #   resp.props.redshift_properties.credentials.username_password.username #=> String
+    #   resp.props.redshift_properties.database_name #=> String
+    #   resp.props.redshift_properties.is_provisioned_secret #=> Boolean
+    #   resp.props.redshift_properties.jdbc_iam_url #=> String
+    #   resp.props.redshift_properties.jdbc_url #=> String
+    #   resp.props.redshift_properties.lineage_sync.enabled #=> Boolean
+    #   resp.props.redshift_properties.lineage_sync.lineage_job_id #=> String
+    #   resp.props.redshift_properties.lineage_sync.schedule.schedule #=> String
+    #   resp.props.redshift_properties.redshift_temp_dir #=> String
+    #   resp.props.redshift_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.props.redshift_properties.storage.cluster_name #=> String
+    #   resp.props.redshift_properties.storage.workgroup_name #=> String
+    #   resp.props.spark_emr_properties.compute_arn #=> String
+    #   resp.props.spark_emr_properties.credentials.password #=> String
+    #   resp.props.spark_emr_properties.credentials.username #=> String
+    #   resp.props.spark_emr_properties.credentials_expiration #=> Time
+    #   resp.props.spark_emr_properties.governance_type #=> String, one of "AWS_MANAGED", "USER_MANAGED"
+    #   resp.props.spark_emr_properties.instance_profile_arn #=> String
+    #   resp.props.spark_emr_properties.java_virtual_env #=> String
+    #   resp.props.spark_emr_properties.livy_endpoint #=> String
+    #   resp.props.spark_emr_properties.log_uri #=> String
+    #   resp.props.spark_emr_properties.python_virtual_env #=> String
+    #   resp.props.spark_emr_properties.runtime_role #=> String
+    #   resp.props.spark_emr_properties.trusted_certificates_s3_uri #=> String
+    #   resp.props.spark_glue_properties.additional_args.connection #=> String
+    #   resp.props.spark_glue_properties.glue_connection_name #=> String
+    #   resp.props.spark_glue_properties.glue_version #=> String
+    #   resp.props.spark_glue_properties.idle_timeout #=> Integer
+    #   resp.props.spark_glue_properties.java_virtual_env #=> String
+    #   resp.props.spark_glue_properties.number_of_workers #=> Integer
+    #   resp.props.spark_glue_properties.python_virtual_env #=> String
+    #   resp.props.spark_glue_properties.worker_type #=> String
+    #   resp.type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/CreateConnection AWS API Documentation
+    #
+    # @overload create_connection(params = {})
+    # @param [Hash] params ({})
+    def create_connection(params = {}, options = {})
+      req = build_request(:create_connection, params)
+      req.send_request(options)
+    end
+
     # Creates a data product.
     #
     # @option params [String] :client_token
@@ -1676,6 +1969,9 @@ module Aws::DataZone
     #   Specifies the configuration of the data source. It can be set to
     #   either `glueRunConfiguration` or `redshiftRunConfiguration`.
     #
+    # @option params [String] :connection_identifier
+    #   The ID of the connection.
+    #
     # @option params [String] :description
     #   The description of the data source.
     #
@@ -1685,7 +1981,7 @@ module Aws::DataZone
     # @option params [String] :enable_setting
     #   Specifies whether the data source is enabled.
     #
-    # @option params [required, String] :environment_identifier
+    # @option params [String] :environment_identifier
     #   The unique identifier of the Amazon DataZone environment to which the
     #   data source publishes assets.
     #
@@ -1714,6 +2010,7 @@ module Aws::DataZone
     #
     #   * {Types::CreateDataSourceOutput#asset_forms_output #asset_forms_output} => Array&lt;Types::FormOutput&gt;
     #   * {Types::CreateDataSourceOutput#configuration #configuration} => Types::DataSourceConfigurationOutput
+    #   * {Types::CreateDataSourceOutput#connection_id #connection_id} => String
     #   * {Types::CreateDataSourceOutput#created_at #created_at} => Time
     #   * {Types::CreateDataSourceOutput#description #description} => String
     #   * {Types::CreateDataSourceOutput#domain_id #domain_id} => String
@@ -1748,6 +2045,7 @@ module Aws::DataZone
     #     configuration: {
     #       glue_run_configuration: {
     #         auto_import_data_quality_result: false,
+    #         catalog_name: "GlueRunConfigurationInputCatalogNameString",
     #         data_access_role: "GlueRunConfigurationInputDataAccessRoleString",
     #         relational_filter_configurations: [ # required
     #           {
@@ -1764,10 +2062,10 @@ module Aws::DataZone
     #       },
     #       redshift_run_configuration: {
     #         data_access_role: "RedshiftRunConfigurationInputDataAccessRoleString",
-    #         redshift_credential_configuration: { # required
+    #         redshift_credential_configuration: {
     #           secret_manager_arn: "RedshiftCredentialConfigurationSecretManagerArnString", # required
     #         },
-    #         redshift_storage: { # required
+    #         redshift_storage: {
     #           redshift_cluster_source: {
     #             cluster_name: "RedshiftClusterStorageClusterNameString", # required
     #           },
@@ -1788,13 +2086,19 @@ module Aws::DataZone
     #           },
     #         ],
     #       },
+    #       sage_maker_run_configuration: {
+    #         tracking_assets: { # required
+    #           "SageMakerAssetType" => ["SageMakerResourceArn"],
+    #         },
+    #       },
     #     },
+    #     connection_identifier: "CreateDataSourceInputConnectionIdentifierString",
     #     description: "Description",
     #     domain_identifier: "DomainId", # required
     #     enable_setting: "ENABLED", # accepts ENABLED, DISABLED
-    #     environment_identifier: "String", # required
+    #     environment_identifier: "CreateDataSourceInputEnvironmentIdentifierString",
     #     name: "Name", # required
-    #     project_identifier: "String", # required
+    #     project_identifier: "CreateDataSourceInputProjectIdentifierString", # required
     #     publish_on_import: false,
     #     recommendation: {
     #       enable_business_name_generation: false,
@@ -1815,6 +2119,7 @@ module Aws::DataZone
     #   resp.asset_forms_output[0].type_revision #=> String
     #   resp.configuration.glue_run_configuration.account_id #=> String
     #   resp.configuration.glue_run_configuration.auto_import_data_quality_result #=> Boolean
+    #   resp.configuration.glue_run_configuration.catalog_name #=> String
     #   resp.configuration.glue_run_configuration.data_access_role #=> String
     #   resp.configuration.glue_run_configuration.region #=> String
     #   resp.configuration.glue_run_configuration.relational_filter_configurations #=> Array
@@ -1835,6 +2140,12 @@ module Aws::DataZone
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].expression #=> String
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].type #=> String, one of "INCLUDE", "EXCLUDE"
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].schema_name #=> String
+    #   resp.configuration.sage_maker_run_configuration.account_id #=> String
+    #   resp.configuration.sage_maker_run_configuration.region #=> String
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets #=> Hash
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"] #=> Array
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"][0] #=> String
+    #   resp.connection_id #=> String
     #   resp.created_at #=> Time
     #   resp.description #=> String
     #   resp.domain_id #=> String
@@ -1883,6 +2194,9 @@ module Aws::DataZone
     #   domain is created. The domain execution role is created in the Amazon
     #   Web Services account that houses the Amazon DataZone domain.
     #
+    # @option params [String] :domain_version
+    #   The version of the domain that is created.
+    #
     # @option params [String] :kms_key_identifier
     #   The identifier of the Amazon Web Services Key Management Service (KMS)
     #   key that is used to encrypt the Amazon DataZone domain, metadata, and
@@ -1890,6 +2204,9 @@ module Aws::DataZone
     #
     # @option params [required, String] :name
     #   The name of the Amazon DataZone domain.
+    #
+    # @option params [String] :service_role
+    #   The service role of the domain that is created.
     #
     # @option params [Types::SingleSignOn] :single_sign_on
     #   The single-sign on configuration of the Amazon DataZone domain.
@@ -1902,11 +2219,13 @@ module Aws::DataZone
     #   * {Types::CreateDomainOutput#arn #arn} => String
     #   * {Types::CreateDomainOutput#description #description} => String
     #   * {Types::CreateDomainOutput#domain_execution_role #domain_execution_role} => String
+    #   * {Types::CreateDomainOutput#domain_version #domain_version} => String
     #   * {Types::CreateDomainOutput#id #id} => String
     #   * {Types::CreateDomainOutput#kms_key_identifier #kms_key_identifier} => String
     #   * {Types::CreateDomainOutput#name #name} => String
     #   * {Types::CreateDomainOutput#portal_url #portal_url} => String
     #   * {Types::CreateDomainOutput#root_domain_unit_id #root_domain_unit_id} => String
+    #   * {Types::CreateDomainOutput#service_role #service_role} => String
     #   * {Types::CreateDomainOutput#single_sign_on #single_sign_on} => Types::SingleSignOn
     #   * {Types::CreateDomainOutput#status #status} => String
     #   * {Types::CreateDomainOutput#tags #tags} => Hash&lt;String,String&gt;
@@ -1917,8 +2236,10 @@ module Aws::DataZone
     #     client_token: "String",
     #     description: "String",
     #     domain_execution_role: "RoleArn", # required
+    #     domain_version: "V1", # accepts V1, V2
     #     kms_key_identifier: "KmsKeyArn",
     #     name: "String", # required
+    #     service_role: "RoleArn",
     #     single_sign_on: {
     #       type: "IAM_IDC", # accepts IAM_IDC, DISABLED
     #       user_assignment: "AUTOMATIC", # accepts AUTOMATIC, MANUAL
@@ -1933,11 +2254,13 @@ module Aws::DataZone
     #   resp.arn #=> String
     #   resp.description #=> String
     #   resp.domain_execution_role #=> String
+    #   resp.domain_version #=> String, one of "V1", "V2"
     #   resp.id #=> String
     #   resp.kms_key_identifier #=> String
     #   resp.name #=> String
     #   resp.portal_url #=> String
     #   resp.root_domain_unit_id #=> String
+    #   resp.service_role #=> String
     #   resp.single_sign_on.type #=> String, one of "IAM_IDC", "DISABLED"
     #   resp.single_sign_on.user_assignment #=> String, one of "AUTOMATIC", "MANUAL"
     #   resp.status #=> String, one of "CREATING", "AVAILABLE", "CREATION_FAILED", "DELETING", "DELETED", "DELETION_FAILED"
@@ -2022,6 +2345,9 @@ module Aws::DataZone
 
     # Create an Amazon DataZone environment.
     #
+    # @option params [Integer] :deployment_order
+    #   The deployment order of the environment.
+    #
     # @option params [String] :description
     #   The description of the Amazon DataZone environment.
     #
@@ -2037,6 +2363,9 @@ module Aws::DataZone
     #
     # @option params [String] :environment_blueprint_identifier
     #   The ID of the blueprint with which the environment is being created.
+    #
+    # @option params [String] :environment_configuration_id
+    #   The configuration ID of the environment.
     #
     # @option params [required, String] :environment_profile_identifier
     #   The identifier of the environment profile that is used to create this
@@ -2083,11 +2412,13 @@ module Aws::DataZone
     # @example Request syntax with placeholder values
     #
     #   resp = client.create_environment({
+    #     deployment_order: 1,
     #     description: "String",
     #     domain_identifier: "DomainId", # required
     #     environment_account_identifier: "String",
     #     environment_account_region: "String",
     #     environment_blueprint_identifier: "String",
+    #     environment_configuration_id: "String",
     #     environment_profile_identifier: "EnvironmentProfileId", # required
     #     glossary_terms: ["GlossaryTermId"],
     #     name: "String", # required
@@ -2643,6 +2974,12 @@ module Aws::DataZone
     # @option params [required, String] :name
     #   The name of the Amazon DataZone project.
     #
+    # @option params [String] :project_profile_id
+    #   The ID of the project profile.
+    #
+    # @option params [Array<Types::EnvironmentConfigurationUserParameter>] :user_parameters
+    #   The user parameters of the project.
+    #
     # @return [Types::CreateProjectOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateProjectOutput#created_at #created_at} => Time
@@ -2650,12 +2987,15 @@ module Aws::DataZone
     #   * {Types::CreateProjectOutput#description #description} => String
     #   * {Types::CreateProjectOutput#domain_id #domain_id} => String
     #   * {Types::CreateProjectOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::CreateProjectOutput#environment_deployment_details #environment_deployment_details} => Types::EnvironmentDeploymentDetails
     #   * {Types::CreateProjectOutput#failure_reasons #failure_reasons} => Array&lt;Types::ProjectDeletionError&gt;
     #   * {Types::CreateProjectOutput#glossary_terms #glossary_terms} => Array&lt;String&gt;
     #   * {Types::CreateProjectOutput#id #id} => String
     #   * {Types::CreateProjectOutput#last_updated_at #last_updated_at} => Time
     #   * {Types::CreateProjectOutput#name #name} => String
+    #   * {Types::CreateProjectOutput#project_profile_id #project_profile_id} => String
     #   * {Types::CreateProjectOutput#project_status #project_status} => String
+    #   * {Types::CreateProjectOutput#user_parameters #user_parameters} => Array&lt;Types::EnvironmentConfigurationUserParameter&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -2665,6 +3005,18 @@ module Aws::DataZone
     #     domain_unit_id: "DomainUnitId",
     #     glossary_terms: ["GlossaryTermId"],
     #     name: "ProjectName", # required
+    #     project_profile_id: "ProjectProfileId",
+    #     user_parameters: [
+    #       {
+    #         environment_configuration_name: "EnvironmentConfigurationName",
+    #         environment_parameters: [
+    #           {
+    #             name: "String",
+    #             value: "String",
+    #           },
+    #         ],
+    #       },
+    #     ],
     #   })
     #
     # @example Response structure
@@ -2674,6 +3026,11 @@ module Aws::DataZone
     #   resp.description #=> String
     #   resp.domain_id #=> String
     #   resp.domain_unit_id #=> String
+    #   resp.environment_deployment_details.environment_failure_reasons #=> Hash
+    #   resp.environment_deployment_details.environment_failure_reasons["String"] #=> Array
+    #   resp.environment_deployment_details.environment_failure_reasons["String"][0].code #=> String
+    #   resp.environment_deployment_details.environment_failure_reasons["String"][0].message #=> String
+    #   resp.environment_deployment_details.overall_deployment_status #=> String, one of "PENDING_DEPLOYMENT", "IN_PROGRESS", "SUCCESSFUL", "FAILED_VALIDATION", "FAILED_DEPLOYMENT"
     #   resp.failure_reasons #=> Array
     #   resp.failure_reasons[0].code #=> String
     #   resp.failure_reasons[0].message #=> String
@@ -2682,7 +3039,13 @@ module Aws::DataZone
     #   resp.id #=> String
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
+    #   resp.project_profile_id #=> String
     #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED"
+    #   resp.user_parameters #=> Array
+    #   resp.user_parameters[0].environment_configuration_name #=> String
+    #   resp.user_parameters[0].environment_parameters #=> Array
+    #   resp.user_parameters[0].environment_parameters[0].name #=> String
+    #   resp.user_parameters[0].environment_parameters[0].value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/CreateProject AWS API Documentation
     #
@@ -2728,6 +3091,125 @@ module Aws::DataZone
     # @param [Hash] params ({})
     def create_project_membership(params = {}, options = {})
       req = build_request(:create_project_membership, params)
+      req.send_request(options)
+    end
+
+    # Creates a project profile.
+    #
+    # @option params [String] :description
+    #   A description of a project profile.
+    #
+    # @option params [required, String] :domain_identifier
+    #   A domain ID of the project profile.
+    #
+    # @option params [String] :domain_unit_identifier
+    #   A domain unit ID of the project profile.
+    #
+    # @option params [Array<Types::EnvironmentConfiguration>] :environment_configurations
+    #   Environment configurations of the project profile.
+    #
+    # @option params [required, String] :name
+    #   Project profile name.
+    #
+    # @option params [String] :status
+    #   Project profile status.
+    #
+    # @return [Types::CreateProjectProfileOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateProjectProfileOutput#created_at #created_at} => Time
+    #   * {Types::CreateProjectProfileOutput#created_by #created_by} => String
+    #   * {Types::CreateProjectProfileOutput#description #description} => String
+    #   * {Types::CreateProjectProfileOutput#domain_id #domain_id} => String
+    #   * {Types::CreateProjectProfileOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::CreateProjectProfileOutput#environment_configurations #environment_configurations} => Array&lt;Types::EnvironmentConfiguration&gt;
+    #   * {Types::CreateProjectProfileOutput#id #id} => String
+    #   * {Types::CreateProjectProfileOutput#last_updated_at #last_updated_at} => Time
+    #   * {Types::CreateProjectProfileOutput#name #name} => String
+    #   * {Types::CreateProjectProfileOutput#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_project_profile({
+    #     description: "Description",
+    #     domain_identifier: "DomainId", # required
+    #     domain_unit_identifier: "DomainUnitId",
+    #     environment_configurations: [
+    #       {
+    #         aws_account: { # required
+    #           aws_account_id: "AwsAccountId",
+    #           aws_account_id_path: "ParameterStorePath",
+    #         },
+    #         aws_region: { # required
+    #           region_name: "RegionName",
+    #           region_name_path: "ParameterStorePath",
+    #         },
+    #         configuration_parameters: {
+    #           parameter_overrides: [
+    #             {
+    #               is_editable: false,
+    #               name: "EnvironmentConfigurationParameterName",
+    #               value: "String",
+    #             },
+    #           ],
+    #           resolved_parameters: [
+    #             {
+    #               is_editable: false,
+    #               name: "EnvironmentConfigurationParameterName",
+    #               value: "String",
+    #             },
+    #           ],
+    #           ssm_path: "ParameterStorePath",
+    #         },
+    #         deployment_mode: "ON_CREATE", # accepts ON_CREATE, ON_DEMAND
+    #         deployment_order: 1,
+    #         description: "Description",
+    #         environment_blueprint_id: "EnvironmentBlueprintId", # required
+    #         id: "EnvironmentConfigurationId",
+    #         name: "EnvironmentConfigurationName", # required
+    #       },
+    #     ],
+    #     name: "ProjectProfileName", # required
+    #     status: "ENABLED", # accepts ENABLED, DISABLED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.description #=> String
+    #   resp.domain_id #=> String
+    #   resp.domain_unit_id #=> String
+    #   resp.environment_configurations #=> Array
+    #   resp.environment_configurations[0].aws_account.aws_account_id #=> String
+    #   resp.environment_configurations[0].aws_account.aws_account_id_path #=> String
+    #   resp.environment_configurations[0].aws_region.region_name #=> String
+    #   resp.environment_configurations[0].aws_region.region_name_path #=> String
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides #=> Array
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].is_editable #=> Boolean
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].name #=> String
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].value #=> String
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters #=> Array
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].is_editable #=> Boolean
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].name #=> String
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].value #=> String
+    #   resp.environment_configurations[0].configuration_parameters.ssm_path #=> String
+    #   resp.environment_configurations[0].deployment_mode #=> String, one of "ON_CREATE", "ON_DEMAND"
+    #   resp.environment_configurations[0].deployment_order #=> Integer
+    #   resp.environment_configurations[0].description #=> String
+    #   resp.environment_configurations[0].environment_blueprint_id #=> String
+    #   resp.environment_configurations[0].id #=> String
+    #   resp.environment_configurations[0].name #=> String
+    #   resp.id #=> String
+    #   resp.last_updated_at #=> Time
+    #   resp.name #=> String
+    #   resp.status #=> String, one of "ENABLED", "DISABLED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/CreateProjectProfile AWS API Documentation
+    #
+    # @overload create_project_profile(params = {})
+    # @param [Hash] params ({})
+    def create_project_profile(params = {}, options = {})
+      req = build_request(:create_project_profile, params)
       req.send_request(options)
     end
 
@@ -2874,7 +3356,7 @@ module Aws::DataZone
     # @option params [required, Types::GrantedEntityInput] :granted_entity
     #   The entity to which the subscription is to be granted.
     #
-    # @option params [required, String] :subscription_target_identifier
+    # @option params [String] :subscription_target_identifier
     #   The ID of the subscription target for which the subscription grant is
     #   created.
     #
@@ -2910,7 +3392,7 @@ module Aws::DataZone
     #         revision: "Revision", # required
     #       },
     #     },
-    #     subscription_target_identifier: "SubscriptionTargetId", # required
+    #     subscription_target_identifier: "SubscriptionTargetId",
     #   })
     #
     # @example Response structure
@@ -3144,7 +3626,7 @@ module Aws::DataZone
     #     client_token: "String",
     #     domain_identifier: "DomainId", # required
     #     environment_identifier: "EnvironmentId", # required
-    #     manage_access_role: "String", # required
+    #     manage_access_role: "IamRoleArn", # required
     #     name: "SubscriptionTargetName", # required
     #     provider: "String",
     #     subscription_target_config: [ # required
@@ -3326,6 +3808,40 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Deletes and connection. In Amazon DataZone, a connection enables you
+    # to connect your resources (domains, projects, and environments) to
+    # external resources and services.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where the connection is deleted.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the connection that is deleted.
+    #
+    # @return [Types::DeleteConnectionOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteConnectionOutput#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_connection({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "ConnectionId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/DeleteConnection AWS API Documentation
+    #
+    # @overload delete_connection(params = {})
+    # @param [Hash] params ({})
+    def delete_connection(params = {}, options = {})
+      req = build_request(:delete_connection, params)
+      req.send_request(options)
+    end
+
     # Deletes a data product in Amazon DataZone.
     #
     # @option params [required, String] :domain_identifier
@@ -3377,6 +3893,7 @@ module Aws::DataZone
     #
     #   * {Types::DeleteDataSourceOutput#asset_forms_output #asset_forms_output} => Array&lt;Types::FormOutput&gt;
     #   * {Types::DeleteDataSourceOutput#configuration #configuration} => Types::DataSourceConfigurationOutput
+    #   * {Types::DeleteDataSourceOutput#connection_id #connection_id} => String
     #   * {Types::DeleteDataSourceOutput#created_at #created_at} => Time
     #   * {Types::DeleteDataSourceOutput#description #description} => String
     #   * {Types::DeleteDataSourceOutput#domain_id #domain_id} => String
@@ -3415,6 +3932,7 @@ module Aws::DataZone
     #   resp.asset_forms_output[0].type_revision #=> String
     #   resp.configuration.glue_run_configuration.account_id #=> String
     #   resp.configuration.glue_run_configuration.auto_import_data_quality_result #=> Boolean
+    #   resp.configuration.glue_run_configuration.catalog_name #=> String
     #   resp.configuration.glue_run_configuration.data_access_role #=> String
     #   resp.configuration.glue_run_configuration.region #=> String
     #   resp.configuration.glue_run_configuration.relational_filter_configurations #=> Array
@@ -3435,6 +3953,12 @@ module Aws::DataZone
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].expression #=> String
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].type #=> String, one of "INCLUDE", "EXCLUDE"
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].schema_name #=> String
+    #   resp.configuration.sage_maker_run_configuration.account_id #=> String
+    #   resp.configuration.sage_maker_run_configuration.region #=> String
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets #=> Hash
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"] #=> Array
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"][0] #=> String
+    #   resp.connection_id #=> String
     #   resp.created_at #=> Time
     #   resp.description #=> String
     #   resp.domain_id #=> String
@@ -3827,6 +4351,32 @@ module Aws::DataZone
     # @param [Hash] params ({})
     def delete_project_membership(params = {}, options = {})
       req = build_request(:delete_project_membership, params)
+      req.send_request(options)
+    end
+
+    # Deletes a project profile.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where a project profile is deleted.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the project profile that is deleted.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_project_profile({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "ProjectProfileId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/DeleteProjectProfile AWS API Documentation
+    #
+    # @overload delete_project_profile(params = {})
+    # @param [Hash] params ({})
+    def delete_project_profile(params = {}, options = {})
+      req = build_request(:delete_project_profile, params)
       req.send_request(options)
     end
 
@@ -4297,6 +4847,161 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Gets a connection. In Amazon DataZone, a connection enables you to
+    # connect your resources (domains, projects, and environments) to
+    # external resources and services.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where we get the connection.
+    #
+    # @option params [required, String] :identifier
+    #   The connection ID.
+    #
+    # @option params [Boolean] :with_secret
+    #   Specifies whether a connection has a secret.
+    #
+    # @return [Types::GetConnectionOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetConnectionOutput#connection_credentials #connection_credentials} => Types::ConnectionCredentials
+    #   * {Types::GetConnectionOutput#connection_id #connection_id} => String
+    #   * {Types::GetConnectionOutput#description #description} => String
+    #   * {Types::GetConnectionOutput#domain_id #domain_id} => String
+    #   * {Types::GetConnectionOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::GetConnectionOutput#environment_id #environment_id} => String
+    #   * {Types::GetConnectionOutput#environment_user_role #environment_user_role} => String
+    #   * {Types::GetConnectionOutput#name #name} => String
+    #   * {Types::GetConnectionOutput#physical_endpoints #physical_endpoints} => Array&lt;Types::PhysicalEndpoint&gt;
+    #   * {Types::GetConnectionOutput#project_id #project_id} => String
+    #   * {Types::GetConnectionOutput#props #props} => Types::ConnectionPropertiesOutput
+    #   * {Types::GetConnectionOutput#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_connection({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "ConnectionId", # required
+    #     with_secret: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.connection_credentials.access_key_id #=> String
+    #   resp.connection_credentials.expiration #=> Time
+    #   resp.connection_credentials.secret_access_key #=> String
+    #   resp.connection_credentials.session_token #=> String
+    #   resp.connection_id #=> String
+    #   resp.description #=> String
+    #   resp.domain_id #=> String
+    #   resp.domain_unit_id #=> String
+    #   resp.environment_id #=> String
+    #   resp.environment_user_role #=> String
+    #   resp.name #=> String
+    #   resp.physical_endpoints #=> Array
+    #   resp.physical_endpoints[0].aws_location.access_role #=> String
+    #   resp.physical_endpoints[0].aws_location.aws_account_id #=> String
+    #   resp.physical_endpoints[0].aws_location.aws_region #=> String
+    #   resp.physical_endpoints[0].aws_location.iam_connection_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.athena_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.athena_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM"
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.authorization_code #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.redirect_uri #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.a_ws_managed_client_application_reference #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.user_managed_client_application_client_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.access_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.jwt_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.refresh_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.user_managed_client_application_client_secret #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_grant_type #=> String, one of "AUTHORIZATION_CODE", "CLIENT_CREDENTIALS", "JWT_BEARER"
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map["TokenUrlParametersMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.secret_arn #=> String
+    #   resp.physical_endpoints[0].glue_connection.compatible_compute_environments #=> Array
+    #   resp.physical_endpoints[0].glue_connection.compatible_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.physical_endpoints[0].glue_connection.connection_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.connection_properties["String"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.connection_schema_version #=> Integer
+    #   resp.physical_endpoints[0].glue_connection.connection_type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #   resp.physical_endpoints[0].glue_connection.creation_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.description #=> String
+    #   resp.physical_endpoints[0].glue_connection.last_connection_validation_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.last_updated_by #=> String
+    #   resp.physical_endpoints[0].glue_connection.last_updated_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.match_criteria #=> Array
+    #   resp.physical_endpoints[0].glue_connection.match_criteria[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.name #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.availability_zone #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list #=> Array
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list #=> Array
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.python_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.python_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.spark_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.spark_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.physical_endpoints[0].glue_connection.status_reason #=> String
+    #   resp.physical_endpoints[0].glue_connection_name #=> String
+    #   resp.physical_endpoints[0].host #=> String
+    #   resp.physical_endpoints[0].port #=> Integer
+    #   resp.physical_endpoints[0].protocol #=> String, one of "ATHENA", "GLUE_INTERACTIVE_SESSION", "HTTPS", "JDBC", "LIVY", "ODBC", "PRISM"
+    #   resp.physical_endpoints[0].stage #=> String
+    #   resp.project_id #=> String
+    #   resp.props.athena_properties.workgroup_name #=> String
+    #   resp.props.glue_properties.error_message #=> String
+    #   resp.props.glue_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.props.hyper_pod_properties.cluster_arn #=> String
+    #   resp.props.hyper_pod_properties.cluster_name #=> String
+    #   resp.props.hyper_pod_properties.orchestrator #=> String, one of "EKS", "SLURM"
+    #   resp.props.iam_properties.environment_id #=> String
+    #   resp.props.iam_properties.glue_lineage_sync_enabled #=> Boolean
+    #   resp.props.redshift_properties.credentials.secret_arn #=> String
+    #   resp.props.redshift_properties.credentials.username_password.password #=> String
+    #   resp.props.redshift_properties.credentials.username_password.username #=> String
+    #   resp.props.redshift_properties.database_name #=> String
+    #   resp.props.redshift_properties.is_provisioned_secret #=> Boolean
+    #   resp.props.redshift_properties.jdbc_iam_url #=> String
+    #   resp.props.redshift_properties.jdbc_url #=> String
+    #   resp.props.redshift_properties.lineage_sync.enabled #=> Boolean
+    #   resp.props.redshift_properties.lineage_sync.lineage_job_id #=> String
+    #   resp.props.redshift_properties.lineage_sync.schedule.schedule #=> String
+    #   resp.props.redshift_properties.redshift_temp_dir #=> String
+    #   resp.props.redshift_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.props.redshift_properties.storage.cluster_name #=> String
+    #   resp.props.redshift_properties.storage.workgroup_name #=> String
+    #   resp.props.spark_emr_properties.compute_arn #=> String
+    #   resp.props.spark_emr_properties.credentials.password #=> String
+    #   resp.props.spark_emr_properties.credentials.username #=> String
+    #   resp.props.spark_emr_properties.credentials_expiration #=> Time
+    #   resp.props.spark_emr_properties.governance_type #=> String, one of "AWS_MANAGED", "USER_MANAGED"
+    #   resp.props.spark_emr_properties.instance_profile_arn #=> String
+    #   resp.props.spark_emr_properties.java_virtual_env #=> String
+    #   resp.props.spark_emr_properties.livy_endpoint #=> String
+    #   resp.props.spark_emr_properties.log_uri #=> String
+    #   resp.props.spark_emr_properties.python_virtual_env #=> String
+    #   resp.props.spark_emr_properties.runtime_role #=> String
+    #   resp.props.spark_emr_properties.trusted_certificates_s3_uri #=> String
+    #   resp.props.spark_glue_properties.additional_args.connection #=> String
+    #   resp.props.spark_glue_properties.glue_connection_name #=> String
+    #   resp.props.spark_glue_properties.glue_version #=> String
+    #   resp.props.spark_glue_properties.idle_timeout #=> Integer
+    #   resp.props.spark_glue_properties.java_virtual_env #=> String
+    #   resp.props.spark_glue_properties.number_of_workers #=> Integer
+    #   resp.props.spark_glue_properties.python_virtual_env #=> String
+    #   resp.props.spark_glue_properties.worker_type #=> String
+    #   resp.type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetConnection AWS API Documentation
+    #
+    # @overload get_connection(params = {})
+    # @param [Hash] params ({})
+    def get_connection(params = {}, options = {})
+      req = build_request(:get_connection, params)
+      req.send_request(options)
+    end
+
     # Gets the data product.
     #
     # @option params [required, String] :domain_identifier
@@ -4381,6 +5086,7 @@ module Aws::DataZone
     #
     #   * {Types::GetDataSourceOutput#asset_forms_output #asset_forms_output} => Array&lt;Types::FormOutput&gt;
     #   * {Types::GetDataSourceOutput#configuration #configuration} => Types::DataSourceConfigurationOutput
+    #   * {Types::GetDataSourceOutput#connection_id #connection_id} => String
     #   * {Types::GetDataSourceOutput#created_at #created_at} => Time
     #   * {Types::GetDataSourceOutput#description #description} => String
     #   * {Types::GetDataSourceOutput#domain_id #domain_id} => String
@@ -4418,6 +5124,7 @@ module Aws::DataZone
     #   resp.asset_forms_output[0].type_revision #=> String
     #   resp.configuration.glue_run_configuration.account_id #=> String
     #   resp.configuration.glue_run_configuration.auto_import_data_quality_result #=> Boolean
+    #   resp.configuration.glue_run_configuration.catalog_name #=> String
     #   resp.configuration.glue_run_configuration.data_access_role #=> String
     #   resp.configuration.glue_run_configuration.region #=> String
     #   resp.configuration.glue_run_configuration.relational_filter_configurations #=> Array
@@ -4438,6 +5145,12 @@ module Aws::DataZone
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].expression #=> String
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].type #=> String, one of "INCLUDE", "EXCLUDE"
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].schema_name #=> String
+    #   resp.configuration.sage_maker_run_configuration.account_id #=> String
+    #   resp.configuration.sage_maker_run_configuration.region #=> String
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets #=> Hash
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"] #=> Array
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"][0] #=> String
+    #   resp.connection_id #=> String
     #   resp.created_at #=> Time
     #   resp.description #=> String
     #   resp.domain_id #=> String
@@ -4496,6 +5209,7 @@ module Aws::DataZone
     #   * {Types::GetDataSourceRunOutput#domain_id #domain_id} => String
     #   * {Types::GetDataSourceRunOutput#error_message #error_message} => Types::DataSourceErrorMessage
     #   * {Types::GetDataSourceRunOutput#id #id} => String
+    #   * {Types::GetDataSourceRunOutput#lineage_summary #lineage_summary} => Types::DataSourceRunLineageSummary
     #   * {Types::GetDataSourceRunOutput#project_id #project_id} => String
     #   * {Types::GetDataSourceRunOutput#run_statistics_for_assets #run_statistics_for_assets} => Types::RunStatisticsForAssets
     #   * {Types::GetDataSourceRunOutput#started_at #started_at} => Time
@@ -4520,6 +5234,7 @@ module Aws::DataZone
     #   resp.error_message.error_detail #=> String
     #   resp.error_message.error_type #=> String, one of "ACCESS_DENIED_EXCEPTION", "CONFLICT_EXCEPTION", "INTERNAL_SERVER_EXCEPTION", "RESOURCE_NOT_FOUND_EXCEPTION", "SERVICE_QUOTA_EXCEEDED_EXCEPTION", "THROTTLING_EXCEPTION", "VALIDATION_EXCEPTION"
     #   resp.id #=> String
+    #   resp.lineage_summary.import_status #=> String, one of "IN_PROGRESS", "SUCCESS", "FAILED", "PARTIALLY_SUCCEEDED"
     #   resp.project_id #=> String
     #   resp.run_statistics_for_assets.added #=> Integer
     #   resp.run_statistics_for_assets.failed #=> Integer
@@ -4552,12 +5267,14 @@ module Aws::DataZone
     #   * {Types::GetDomainOutput#created_at #created_at} => Time
     #   * {Types::GetDomainOutput#description #description} => String
     #   * {Types::GetDomainOutput#domain_execution_role #domain_execution_role} => String
+    #   * {Types::GetDomainOutput#domain_version #domain_version} => String
     #   * {Types::GetDomainOutput#id #id} => String
     #   * {Types::GetDomainOutput#kms_key_identifier #kms_key_identifier} => String
     #   * {Types::GetDomainOutput#last_updated_at #last_updated_at} => Time
     #   * {Types::GetDomainOutput#name #name} => String
     #   * {Types::GetDomainOutput#portal_url #portal_url} => String
     #   * {Types::GetDomainOutput#root_domain_unit_id #root_domain_unit_id} => String
+    #   * {Types::GetDomainOutput#service_role #service_role} => String
     #   * {Types::GetDomainOutput#single_sign_on #single_sign_on} => Types::SingleSignOn
     #   * {Types::GetDomainOutput#status #status} => String
     #   * {Types::GetDomainOutput#tags #tags} => Hash&lt;String,String&gt;
@@ -4574,12 +5291,14 @@ module Aws::DataZone
     #   resp.created_at #=> Time
     #   resp.description #=> String
     #   resp.domain_execution_role #=> String
+    #   resp.domain_version #=> String, one of "V1", "V2"
     #   resp.id #=> String
     #   resp.kms_key_identifier #=> String
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
     #   resp.portal_url #=> String
     #   resp.root_domain_unit_id #=> String
+    #   resp.service_role #=> String
     #   resp.single_sign_on.type #=> String, one of "IAM_IDC", "DISABLED"
     #   resp.single_sign_on.user_assignment #=> String, one of "AUTOMATIC", "MANUAL"
     #   resp.status #=> String, one of "CREATING", "AVAILABLE", "CREATION_FAILED", "DELETING", "DELETED", "DELETION_FAILED"
@@ -4862,6 +5581,7 @@ module Aws::DataZone
     #   * {Types::GetEnvironmentBlueprintConfigurationOutput#domain_id #domain_id} => String
     #   * {Types::GetEnvironmentBlueprintConfigurationOutput#enabled_regions #enabled_regions} => Array&lt;String&gt;
     #   * {Types::GetEnvironmentBlueprintConfigurationOutput#environment_blueprint_id #environment_blueprint_id} => String
+    #   * {Types::GetEnvironmentBlueprintConfigurationOutput#environment_role_permission_boundary #environment_role_permission_boundary} => String
     #   * {Types::GetEnvironmentBlueprintConfigurationOutput#manage_access_role_arn #manage_access_role_arn} => String
     #   * {Types::GetEnvironmentBlueprintConfigurationOutput#provisioning_configurations #provisioning_configurations} => Array&lt;Types::ProvisioningConfiguration&gt;
     #   * {Types::GetEnvironmentBlueprintConfigurationOutput#provisioning_role_arn #provisioning_role_arn} => String
@@ -4882,6 +5602,7 @@ module Aws::DataZone
     #   resp.enabled_regions #=> Array
     #   resp.enabled_regions[0] #=> String
     #   resp.environment_blueprint_id #=> String
+    #   resp.environment_role_permission_boundary #=> String
     #   resp.manage_access_role_arn #=> String
     #   resp.provisioning_configurations #=> Array
     #   resp.provisioning_configurations[0].lake_formation_configuration.location_registration_exclude_s3_locations #=> Array
@@ -5242,6 +5963,109 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # The details of the job run.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the job run.
+    #
+    # @return [Types::GetJobRunOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetJobRunOutput#created_at #created_at} => Time
+    #   * {Types::GetJobRunOutput#created_by #created_by} => String
+    #   * {Types::GetJobRunOutput#details #details} => Types::JobRunDetails
+    #   * {Types::GetJobRunOutput#domain_id #domain_id} => String
+    #   * {Types::GetJobRunOutput#end_time #end_time} => Time
+    #   * {Types::GetJobRunOutput#error #error} => Types::JobRunError
+    #   * {Types::GetJobRunOutput#id #id} => String
+    #   * {Types::GetJobRunOutput#job_id #job_id} => String
+    #   * {Types::GetJobRunOutput#job_type #job_type} => String
+    #   * {Types::GetJobRunOutput#run_mode #run_mode} => String
+    #   * {Types::GetJobRunOutput#start_time #start_time} => Time
+    #   * {Types::GetJobRunOutput#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_job_run({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "RunIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.details.lineage_run_details.sql_query_run_details.error_messages #=> Array
+    #   resp.details.lineage_run_details.sql_query_run_details.error_messages[0] #=> String
+    #   resp.details.lineage_run_details.sql_query_run_details.num_queries_failed #=> Integer
+    #   resp.details.lineage_run_details.sql_query_run_details.query_end_time #=> Time
+    #   resp.details.lineage_run_details.sql_query_run_details.query_start_time #=> Time
+    #   resp.details.lineage_run_details.sql_query_run_details.total_queries_processed #=> Integer
+    #   resp.domain_id #=> String
+    #   resp.end_time #=> Time
+    #   resp.error.message #=> String
+    #   resp.id #=> String
+    #   resp.job_id #=> String
+    #   resp.job_type #=> String, one of "LINEAGE"
+    #   resp.run_mode #=> String, one of "SCHEDULED", "ON_DEMAND"
+    #   resp.start_time #=> Time
+    #   resp.status #=> String, one of "SCHEDULED", "IN_PROGRESS", "SUCCESS", "PARTIALLY_SUCCEEDED", "FAILED", "ABORTED", "TIMED_OUT", "CANCELED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetJobRun AWS API Documentation
+    #
+    # @overload get_job_run(params = {})
+    # @param [Hash] params ({})
+    def get_job_run(params = {}, options = {})
+      req = build_request(:get_job_run, params)
+      req.send_request(options)
+    end
+
+    # Describes the lineage event.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the lineage event.
+    #
+    # @return [Types::GetLineageEventOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetLineageEventOutput#created_at #created_at} => Time
+    #   * {Types::GetLineageEventOutput#created_by #created_by} => String
+    #   * {Types::GetLineageEventOutput#domain_id #domain_id} => String
+    #   * {Types::GetLineageEventOutput#event #event} => String
+    #   * {Types::GetLineageEventOutput#event_time #event_time} => Time
+    #   * {Types::GetLineageEventOutput#id #id} => String
+    #   * {Types::GetLineageEventOutput#processing_status #processing_status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_lineage_event({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "LineageEventIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.domain_id #=> String
+    #   resp.event #=> String
+    #   resp.event_time #=> Time
+    #   resp.id #=> String
+    #   resp.processing_status #=> String, one of "REQUESTED", "PROCESSING", "SUCCESS", "FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetLineageEvent AWS API Documentation
+    #
+    # @overload get_lineage_event(params = {})
+    # @param [Hash] params ({})
+    def get_lineage_event(params = {}, options = {})
+      req = build_request(:get_lineage_event, params)
+      req.send_request(options)
+    end
+
     # Gets the data lineage node.
     #
     # @option params [required, String] :domain_identifier
@@ -5471,12 +6295,15 @@ module Aws::DataZone
     #   * {Types::GetProjectOutput#description #description} => String
     #   * {Types::GetProjectOutput#domain_id #domain_id} => String
     #   * {Types::GetProjectOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::GetProjectOutput#environment_deployment_details #environment_deployment_details} => Types::EnvironmentDeploymentDetails
     #   * {Types::GetProjectOutput#failure_reasons #failure_reasons} => Array&lt;Types::ProjectDeletionError&gt;
     #   * {Types::GetProjectOutput#glossary_terms #glossary_terms} => Array&lt;String&gt;
     #   * {Types::GetProjectOutput#id #id} => String
     #   * {Types::GetProjectOutput#last_updated_at #last_updated_at} => Time
     #   * {Types::GetProjectOutput#name #name} => String
+    #   * {Types::GetProjectOutput#project_profile_id #project_profile_id} => String
     #   * {Types::GetProjectOutput#project_status #project_status} => String
+    #   * {Types::GetProjectOutput#user_parameters #user_parameters} => Array&lt;Types::EnvironmentConfigurationUserParameter&gt;
     #
     # @example Request syntax with placeholder values
     #
@@ -5492,6 +6319,11 @@ module Aws::DataZone
     #   resp.description #=> String
     #   resp.domain_id #=> String
     #   resp.domain_unit_id #=> String
+    #   resp.environment_deployment_details.environment_failure_reasons #=> Hash
+    #   resp.environment_deployment_details.environment_failure_reasons["String"] #=> Array
+    #   resp.environment_deployment_details.environment_failure_reasons["String"][0].code #=> String
+    #   resp.environment_deployment_details.environment_failure_reasons["String"][0].message #=> String
+    #   resp.environment_deployment_details.overall_deployment_status #=> String, one of "PENDING_DEPLOYMENT", "IN_PROGRESS", "SUCCESSFUL", "FAILED_VALIDATION", "FAILED_DEPLOYMENT"
     #   resp.failure_reasons #=> Array
     #   resp.failure_reasons[0].code #=> String
     #   resp.failure_reasons[0].message #=> String
@@ -5500,7 +6332,13 @@ module Aws::DataZone
     #   resp.id #=> String
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
+    #   resp.project_profile_id #=> String
     #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED"
+    #   resp.user_parameters #=> Array
+    #   resp.user_parameters[0].environment_configuration_name #=> String
+    #   resp.user_parameters[0].environment_parameters #=> Array
+    #   resp.user_parameters[0].environment_parameters[0].name #=> String
+    #   resp.user_parameters[0].environment_parameters[0].value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetProject AWS API Documentation
     #
@@ -5508,6 +6346,75 @@ module Aws::DataZone
     # @param [Hash] params ({})
     def get_project(params = {}, options = {})
       req = build_request(:get_project, params)
+      req.send_request(options)
+    end
+
+    # The details of the project profile.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the project profile.
+    #
+    # @return [Types::GetProjectProfileOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetProjectProfileOutput#created_at #created_at} => Time
+    #   * {Types::GetProjectProfileOutput#created_by #created_by} => String
+    #   * {Types::GetProjectProfileOutput#description #description} => String
+    #   * {Types::GetProjectProfileOutput#domain_id #domain_id} => String
+    #   * {Types::GetProjectProfileOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::GetProjectProfileOutput#environment_configurations #environment_configurations} => Array&lt;Types::EnvironmentConfiguration&gt;
+    #   * {Types::GetProjectProfileOutput#id #id} => String
+    #   * {Types::GetProjectProfileOutput#last_updated_at #last_updated_at} => Time
+    #   * {Types::GetProjectProfileOutput#name #name} => String
+    #   * {Types::GetProjectProfileOutput#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_project_profile({
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "ProjectProfileId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.description #=> String
+    #   resp.domain_id #=> String
+    #   resp.domain_unit_id #=> String
+    #   resp.environment_configurations #=> Array
+    #   resp.environment_configurations[0].aws_account.aws_account_id #=> String
+    #   resp.environment_configurations[0].aws_account.aws_account_id_path #=> String
+    #   resp.environment_configurations[0].aws_region.region_name #=> String
+    #   resp.environment_configurations[0].aws_region.region_name_path #=> String
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides #=> Array
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].is_editable #=> Boolean
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].name #=> String
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].value #=> String
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters #=> Array
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].is_editable #=> Boolean
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].name #=> String
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].value #=> String
+    #   resp.environment_configurations[0].configuration_parameters.ssm_path #=> String
+    #   resp.environment_configurations[0].deployment_mode #=> String, one of "ON_CREATE", "ON_DEMAND"
+    #   resp.environment_configurations[0].deployment_order #=> Integer
+    #   resp.environment_configurations[0].description #=> String
+    #   resp.environment_configurations[0].environment_blueprint_id #=> String
+    #   resp.environment_configurations[0].id #=> String
+    #   resp.environment_configurations[0].name #=> String
+    #   resp.id #=> String
+    #   resp.last_updated_at #=> Time
+    #   resp.name #=> String
+    #   resp.status #=> String, one of "ENABLED", "DISABLED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/GetProjectProfile AWS API Documentation
+    #
+    # @overload get_project_profile(params = {})
+    # @param [Hash] params ({})
+    def get_project_profile(params = {}, options = {})
+      req = build_request(:get_project_profile, params)
       req.send_request(options)
     end
 
@@ -6134,6 +7041,182 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Lists connections. In Amazon DataZone, a connection enables you to
+    # connect your resources (domains, projects, and environments) to
+    # external resources and services.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where you want to list connections.
+    #
+    # @option params [String] :environment_identifier
+    #   The ID of the environment where you want to list connections.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of connections to return in a single call to
+    #   ListConnections. When the number of connections to be listed is
+    #   greater than the value of MaxResults, the response contains a
+    #   NextToken value that you can use in a subsequent call to
+    #   ListConnections to list the next set of connections.
+    #
+    # @option params [String] :name
+    #   The name of the connection.
+    #
+    # @option params [String] :next_token
+    #   When the number of connections is greater than the default value for
+    #   the MaxResults parameter, or if you explicitly specify a value for
+    #   MaxResults that is less than the number of connections, the response
+    #   includes a pagination token named NextToken. You can specify this
+    #   NextToken value in a subsequent call to ListConnections to list the
+    #   next set of connections.
+    #
+    # @option params [required, String] :project_identifier
+    #   The ID of the project where you want to list connections.
+    #
+    # @option params [String] :sort_by
+    #   Specifies how you want to sort the listed connections.
+    #
+    # @option params [String] :sort_order
+    #   Specifies the sort order for the listed connections.
+    #
+    # @option params [String] :type
+    #   The type of connection.
+    #
+    # @return [Types::ListConnectionsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListConnectionsOutput#items #items} => Array&lt;Types::ConnectionSummary&gt;
+    #   * {Types::ListConnectionsOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_connections({
+    #     domain_identifier: "DomainId", # required
+    #     environment_identifier: "EnvironmentId",
+    #     max_results: 1,
+    #     name: "ConnectionName",
+    #     next_token: "PaginationToken",
+    #     project_identifier: "ProjectId", # required
+    #     sort_by: "NAME", # accepts NAME
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     type: "ATHENA", # accepts ATHENA, BIGQUERY, DATABRICKS, DOCUMENTDB, DYNAMODB, HYPERPOD, IAM, MYSQL, OPENSEARCH, ORACLE, POSTGRESQL, REDSHIFT, SAPHANA, SNOWFLAKE, SPARK, SQLSERVER, TERADATA, VERTICA, WORKFLOWS_MWAA
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].connection_id #=> String
+    #   resp.items[0].domain_id #=> String
+    #   resp.items[0].domain_unit_id #=> String
+    #   resp.items[0].environment_id #=> String
+    #   resp.items[0].name #=> String
+    #   resp.items[0].physical_endpoints #=> Array
+    #   resp.items[0].physical_endpoints[0].aws_location.access_role #=> String
+    #   resp.items[0].physical_endpoints[0].aws_location.aws_account_id #=> String
+    #   resp.items[0].physical_endpoints[0].aws_location.aws_region #=> String
+    #   resp.items[0].physical_endpoints[0].aws_location.iam_connection_id #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.athena_properties #=> Hash
+    #   resp.items[0].physical_endpoints[0].glue_connection.athena_properties["PropertyMapKeyString"] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM"
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.authorization_code #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.redirect_uri #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.a_ws_managed_client_application_reference #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.user_managed_client_application_client_id #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.access_token #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.jwt_token #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.refresh_token #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.user_managed_client_application_client_secret #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_grant_type #=> String, one of "AUTHORIZATION_CODE", "CLIENT_CREDENTIALS", "JWT_BEARER"
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map #=> Hash
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map["TokenUrlParametersMapKeyString"] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.authentication_configuration.secret_arn #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.compatible_compute_environments #=> Array
+    #   resp.items[0].physical_endpoints[0].glue_connection.compatible_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.items[0].physical_endpoints[0].glue_connection.connection_properties #=> Hash
+    #   resp.items[0].physical_endpoints[0].glue_connection.connection_properties["String"] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.connection_schema_version #=> Integer
+    #   resp.items[0].physical_endpoints[0].glue_connection.connection_type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #   resp.items[0].physical_endpoints[0].glue_connection.creation_time #=> Time
+    #   resp.items[0].physical_endpoints[0].glue_connection.description #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.last_connection_validation_time #=> Time
+    #   resp.items[0].physical_endpoints[0].glue_connection.last_updated_by #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.last_updated_time #=> Time
+    #   resp.items[0].physical_endpoints[0].glue_connection.match_criteria #=> Array
+    #   resp.items[0].physical_endpoints[0].glue_connection.match_criteria[0] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.name #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.physical_connection_requirements.availability_zone #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list #=> Array
+    #   resp.items[0].physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list[0] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list #=> Array
+    #   resp.items[0].physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list[0] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.python_properties #=> Hash
+    #   resp.items[0].physical_endpoints[0].glue_connection.python_properties["PropertyMapKeyString"] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.spark_properties #=> Hash
+    #   resp.items[0].physical_endpoints[0].glue_connection.spark_properties["PropertyMapKeyString"] #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.items[0].physical_endpoints[0].glue_connection.status_reason #=> String
+    #   resp.items[0].physical_endpoints[0].glue_connection_name #=> String
+    #   resp.items[0].physical_endpoints[0].host #=> String
+    #   resp.items[0].physical_endpoints[0].port #=> Integer
+    #   resp.items[0].physical_endpoints[0].protocol #=> String, one of "ATHENA", "GLUE_INTERACTIVE_SESSION", "HTTPS", "JDBC", "LIVY", "ODBC", "PRISM"
+    #   resp.items[0].physical_endpoints[0].stage #=> String
+    #   resp.items[0].project_id #=> String
+    #   resp.items[0].props.athena_properties.workgroup_name #=> String
+    #   resp.items[0].props.glue_properties.error_message #=> String
+    #   resp.items[0].props.glue_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.items[0].props.hyper_pod_properties.cluster_arn #=> String
+    #   resp.items[0].props.hyper_pod_properties.cluster_name #=> String
+    #   resp.items[0].props.hyper_pod_properties.orchestrator #=> String, one of "EKS", "SLURM"
+    #   resp.items[0].props.iam_properties.environment_id #=> String
+    #   resp.items[0].props.iam_properties.glue_lineage_sync_enabled #=> Boolean
+    #   resp.items[0].props.redshift_properties.credentials.secret_arn #=> String
+    #   resp.items[0].props.redshift_properties.credentials.username_password.password #=> String
+    #   resp.items[0].props.redshift_properties.credentials.username_password.username #=> String
+    #   resp.items[0].props.redshift_properties.database_name #=> String
+    #   resp.items[0].props.redshift_properties.is_provisioned_secret #=> Boolean
+    #   resp.items[0].props.redshift_properties.jdbc_iam_url #=> String
+    #   resp.items[0].props.redshift_properties.jdbc_url #=> String
+    #   resp.items[0].props.redshift_properties.lineage_sync.enabled #=> Boolean
+    #   resp.items[0].props.redshift_properties.lineage_sync.lineage_job_id #=> String
+    #   resp.items[0].props.redshift_properties.lineage_sync.schedule.schedule #=> String
+    #   resp.items[0].props.redshift_properties.redshift_temp_dir #=> String
+    #   resp.items[0].props.redshift_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.items[0].props.redshift_properties.storage.cluster_name #=> String
+    #   resp.items[0].props.redshift_properties.storage.workgroup_name #=> String
+    #   resp.items[0].props.spark_emr_properties.compute_arn #=> String
+    #   resp.items[0].props.spark_emr_properties.credentials.password #=> String
+    #   resp.items[0].props.spark_emr_properties.credentials.username #=> String
+    #   resp.items[0].props.spark_emr_properties.credentials_expiration #=> Time
+    #   resp.items[0].props.spark_emr_properties.governance_type #=> String, one of "AWS_MANAGED", "USER_MANAGED"
+    #   resp.items[0].props.spark_emr_properties.instance_profile_arn #=> String
+    #   resp.items[0].props.spark_emr_properties.java_virtual_env #=> String
+    #   resp.items[0].props.spark_emr_properties.livy_endpoint #=> String
+    #   resp.items[0].props.spark_emr_properties.log_uri #=> String
+    #   resp.items[0].props.spark_emr_properties.python_virtual_env #=> String
+    #   resp.items[0].props.spark_emr_properties.runtime_role #=> String
+    #   resp.items[0].props.spark_emr_properties.trusted_certificates_s3_uri #=> String
+    #   resp.items[0].props.spark_glue_properties.additional_args.connection #=> String
+    #   resp.items[0].props.spark_glue_properties.glue_connection_name #=> String
+    #   resp.items[0].props.spark_glue_properties.glue_version #=> String
+    #   resp.items[0].props.spark_glue_properties.idle_timeout #=> Integer
+    #   resp.items[0].props.spark_glue_properties.java_virtual_env #=> String
+    #   resp.items[0].props.spark_glue_properties.number_of_workers #=> Integer
+    #   resp.items[0].props.spark_glue_properties.python_virtual_env #=> String
+    #   resp.items[0].props.spark_glue_properties.worker_type #=> String
+    #   resp.items[0].type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ListConnections AWS API Documentation
+    #
+    # @overload list_connections(params = {})
+    # @param [Hash] params ({})
+    def list_connections(params = {}, options = {})
+      req = build_request(:list_connections, params)
+      req.send_request(options)
+    end
+
     # Lists data product revisions.
     #
     # @option params [required, String] :domain_identifier
@@ -6249,6 +7332,9 @@ module Aws::DataZone
     #   resp.items[0].database #=> String
     #   resp.items[0].error_message.error_detail #=> String
     #   resp.items[0].error_message.error_type #=> String, one of "ACCESS_DENIED_EXCEPTION", "CONFLICT_EXCEPTION", "INTERNAL_SERVER_EXCEPTION", "RESOURCE_NOT_FOUND_EXCEPTION", "SERVICE_QUOTA_EXCEEDED_EXCEPTION", "THROTTLING_EXCEPTION", "VALIDATION_EXCEPTION"
+    #   resp.items[0].lineage_summary.error_message #=> String
+    #   resp.items[0].lineage_summary.event_id #=> String
+    #   resp.items[0].lineage_summary.event_status #=> String, one of "REQUESTED", "PROCESSING", "SUCCESS", "FAILED"
     #   resp.items[0].project_id #=> String
     #   resp.items[0].technical_description #=> String
     #   resp.items[0].technical_name #=> String
@@ -6316,6 +7402,7 @@ module Aws::DataZone
     #   resp.items[0].error_message.error_detail #=> String
     #   resp.items[0].error_message.error_type #=> String, one of "ACCESS_DENIED_EXCEPTION", "CONFLICT_EXCEPTION", "INTERNAL_SERVER_EXCEPTION", "RESOURCE_NOT_FOUND_EXCEPTION", "SERVICE_QUOTA_EXCEEDED_EXCEPTION", "THROTTLING_EXCEPTION", "VALIDATION_EXCEPTION"
     #   resp.items[0].id #=> String
+    #   resp.items[0].lineage_summary.import_status #=> String, one of "IN_PROGRESS", "SUCCESS", "FAILED", "PARTIALLY_SUCCEEDED"
     #   resp.items[0].project_id #=> String
     #   resp.items[0].run_statistics_for_assets.added #=> Integer
     #   resp.items[0].run_statistics_for_assets.failed #=> Integer
@@ -6339,6 +7426,9 @@ module Aws::DataZone
     end
 
     # Lists data sources in Amazon DataZone.
+    #
+    # @option params [String] :connection_identifier
+    #   The ID of the connection.
     #
     # @option params [required, String] :domain_identifier
     #   The identifier of the Amazon DataZone domain in which to list the data
@@ -6384,6 +7474,7 @@ module Aws::DataZone
     # @example Request syntax with placeholder values
     #
     #   resp = client.list_data_sources({
+    #     connection_identifier: "String",
     #     domain_identifier: "DomainId", # required
     #     environment_identifier: "String",
     #     max_results: 1,
@@ -6397,8 +7488,10 @@ module Aws::DataZone
     # @example Response structure
     #
     #   resp.items #=> Array
+    #   resp.items[0].connection_id #=> String
     #   resp.items[0].created_at #=> Time
     #   resp.items[0].data_source_id #=> String
+    #   resp.items[0].description #=> String
     #   resp.items[0].domain_id #=> String
     #   resp.items[0].enable_setting #=> String, one of "ENABLED", "DISABLED"
     #   resp.items[0].environment_id #=> String
@@ -6521,6 +7614,7 @@ module Aws::DataZone
     #   resp.items[0].arn #=> String
     #   resp.items[0].created_at #=> Time
     #   resp.items[0].description #=> String
+    #   resp.items[0].domain_version #=> String, one of "V1", "V2"
     #   resp.items[0].id #=> String
     #   resp.items[0].last_updated_at #=> Time
     #   resp.items[0].managed_account_id #=> String
@@ -6702,6 +7796,7 @@ module Aws::DataZone
     #   resp.items[0].enabled_regions #=> Array
     #   resp.items[0].enabled_regions[0] #=> String
     #   resp.items[0].environment_blueprint_id #=> String
+    #   resp.items[0].environment_role_permission_boundary #=> String
     #   resp.items[0].manage_access_role_arn #=> String
     #   resp.items[0].provisioning_configurations #=> Array
     #   resp.items[0].provisioning_configurations[0].lake_formation_configuration.location_registration_exclude_s3_locations #=> Array
@@ -6965,6 +8060,159 @@ module Aws::DataZone
     # @param [Hash] params ({})
     def list_environments(params = {}, options = {})
       req = build_request(:list_environments, params)
+      req.send_request(options)
+    end
+
+    # Lists job runs.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where you want to list job runs.
+    #
+    # @option params [required, String] :job_identifier
+    #   The ID of the job run.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of job runs to return in a single call to
+    #   ListJobRuns. When the number of job runs to be listed is greater than
+    #   the value of MaxResults, the response contains a NextToken value that
+    #   you can use in a subsequent call to ListJobRuns to list the next set
+    #   of job runs.
+    #
+    # @option params [String] :next_token
+    #   When the number of job runs is greater than the default value for the
+    #   MaxResults parameter, or if you explicitly specify a value for
+    #   MaxResults that is less than the number of job runs, the response
+    #   includes a pagination token named NextToken. You can specify this
+    #   NextToken value in a subsequent call to ListJobRuns to list the next
+    #   set of job runs.
+    #
+    # @option params [String] :sort_order
+    #   Specifies the order in which job runs are to be sorted.
+    #
+    # @option params [String] :status
+    #   The status of a job run.
+    #
+    # @return [Types::ListJobRunsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListJobRunsOutput#items #items} => Array&lt;Types::JobRunSummary&gt;
+    #   * {Types::ListJobRunsOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_job_runs({
+    #     domain_identifier: "DomainId", # required
+    #     job_identifier: "ListJobRunsInputJobIdentifierString", # required
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     status: "SCHEDULED", # accepts SCHEDULED, IN_PROGRESS, SUCCESS, PARTIALLY_SUCCEEDED, FAILED, ABORTED, TIMED_OUT, CANCELED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].created_by #=> String
+    #   resp.items[0].domain_id #=> String
+    #   resp.items[0].end_time #=> Time
+    #   resp.items[0].error.message #=> String
+    #   resp.items[0].job_id #=> String
+    #   resp.items[0].job_type #=> String, one of "LINEAGE"
+    #   resp.items[0].run_id #=> String
+    #   resp.items[0].run_mode #=> String, one of "SCHEDULED", "ON_DEMAND"
+    #   resp.items[0].start_time #=> Time
+    #   resp.items[0].status #=> String, one of "SCHEDULED", "IN_PROGRESS", "SUCCESS", "PARTIALLY_SUCCEEDED", "FAILED", "ABORTED", "TIMED_OUT", "CANCELED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ListJobRuns AWS API Documentation
+    #
+    # @overload list_job_runs(params = {})
+    # @param [Hash] params ({})
+    def list_job_runs(params = {}, options = {})
+      req = build_request(:list_job_runs, params)
+      req.send_request(options)
+    end
+
+    # Lists lineage events.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where you want to list lineage events.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of lineage events to return in a single call to
+    #   ListLineageEvents. When the number of lineage events to be listed is
+    #   greater than the value of MaxResults, the response contains a
+    #   NextToken value that you can use in a subsequent call to
+    #   ListLineageEvents to list the next set of lineage events.
+    #
+    # @option params [String] :next_token
+    #   When the number of lineage events is greater than the default value
+    #   for the MaxResults parameter, or if you explicitly specify a value for
+    #   MaxResults that is less than the number of lineage events, the
+    #   response includes a pagination token named NextToken. You can specify
+    #   this NextToken value in a subsequent call to ListLineageEvents to list
+    #   the next set of lineage events.
+    #
+    # @option params [String] :processing_status
+    #   The processing status of a lineage event.
+    #
+    # @option params [String] :sort_order
+    #   The sort order of the lineage events.
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :timestamp_after
+    #   The after timestamp of a lineage event.
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :timestamp_before
+    #   The before timestamp of a lineage event.
+    #
+    # @return [Types::ListLineageEventsOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListLineageEventsOutput#items #items} => Array&lt;Types::LineageEventSummary&gt;
+    #   * {Types::ListLineageEventsOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_lineage_events({
+    #     domain_identifier: "DomainId", # required
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #     processing_status: "REQUESTED", # accepts REQUESTED, PROCESSING, SUCCESS, FAILED
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     timestamp_after: Time.now,
+    #     timestamp_before: Time.now,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].created_by #=> String
+    #   resp.items[0].domain_id #=> String
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.event_type #=> String, one of "START", "RUNNING", "COMPLETE", "ABORT", "FAIL", "OTHER"
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.inputs #=> Array
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.inputs[0].name #=> String
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.inputs[0].namespace #=> String
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.job.name #=> String
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.job.namespace #=> String
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.outputs #=> Array
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.outputs[0].name #=> String
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.outputs[0].namespace #=> String
+    #   resp.items[0].event_summary.open_lineage_run_event_summary.run_id #=> String
+    #   resp.items[0].event_time #=> Time
+    #   resp.items[0].id #=> String
+    #   resp.items[0].processing_status #=> String, one of "REQUESTED", "PROCESSING", "SUCCESS", "FAILED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ListLineageEvents AWS API Documentation
+    #
+    # @overload list_lineage_events(params = {})
+    # @param [Hash] params ({})
+    def list_lineage_events(params = {}, options = {})
+      req = build_request(:list_lineage_events, params)
       req.send_request(options)
     end
 
@@ -7253,7 +8501,7 @@ module Aws::DataZone
     #     entity_type: "DOMAIN_UNIT", # required, accepts DOMAIN_UNIT, ENVIRONMENT_BLUEPRINT_CONFIGURATION, ENVIRONMENT_PROFILE
     #     max_results: 1,
     #     next_token: "PaginationToken",
-    #     policy_type: "CREATE_DOMAIN_UNIT", # required, accepts CREATE_DOMAIN_UNIT, OVERRIDE_DOMAIN_UNIT_OWNERS, ADD_TO_PROJECT_MEMBER_POOL, OVERRIDE_PROJECT_OWNERS, CREATE_GLOSSARY, CREATE_FORM_TYPE, CREATE_ASSET_TYPE, CREATE_PROJECT, CREATE_ENVIRONMENT_PROFILE, DELEGATE_CREATE_ENVIRONMENT_PROFILE, CREATE_ENVIRONMENT
+    #     policy_type: "CREATE_DOMAIN_UNIT", # required, accepts CREATE_DOMAIN_UNIT, OVERRIDE_DOMAIN_UNIT_OWNERS, ADD_TO_PROJECT_MEMBER_POOL, OVERRIDE_PROJECT_OWNERS, CREATE_GLOSSARY, CREATE_FORM_TYPE, CREATE_ASSET_TYPE, CREATE_PROJECT, CREATE_ENVIRONMENT_PROFILE, DELEGATE_CREATE_ENVIRONMENT_PROFILE, CREATE_ENVIRONMENT, CREATE_ENVIRONMENT_FROM_BLUEPRINT, CREATE_PROJECT_FROM_PROJECT_PROFILE
     #   })
     #
     # @example Response structure
@@ -7268,6 +8516,9 @@ module Aws::DataZone
     #   resp.grant_list[0].detail.create_form_type.include_child_domain_units #=> Boolean
     #   resp.grant_list[0].detail.create_glossary.include_child_domain_units #=> Boolean
     #   resp.grant_list[0].detail.create_project.include_child_domain_units #=> Boolean
+    #   resp.grant_list[0].detail.create_project_from_project_profile.include_child_domain_units #=> Boolean
+    #   resp.grant_list[0].detail.create_project_from_project_profile.project_profiles #=> Array
+    #   resp.grant_list[0].detail.create_project_from_project_profile.project_profiles[0] #=> String
     #   resp.grant_list[0].detail.override_domain_unit_owners.include_child_domain_units #=> Boolean
     #   resp.grant_list[0].detail.override_project_owners.include_child_domain_units #=> Boolean
     #   resp.grant_list[0].principal.domain_unit.domain_unit_designation #=> String, one of "OWNER"
@@ -7351,6 +8602,76 @@ module Aws::DataZone
     # @param [Hash] params ({})
     def list_project_memberships(params = {}, options = {})
       req = build_request(:list_project_memberships, params)
+      req.send_request(options)
+    end
+
+    # Lists project profiles.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where you want to list project profiles.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of project profiles to return in a single call to
+    #   ListProjectProfiles. When the number of project profiles to be listed
+    #   is greater than the value of MaxResults, the response contains a
+    #   NextToken value that you can use in a subsequent call to
+    #   ListProjectProfiles to list the next set of project profiles.
+    #
+    # @option params [String] :name
+    #   The name of a project profile.
+    #
+    # @option params [String] :next_token
+    #   When the number of project profiles is greater than the default value
+    #   for the MaxResults parameter, or if you explicitly specify a value for
+    #   MaxResults that is less than the number of project profiles, the
+    #   response includes a pagination token named NextToken. You can specify
+    #   this NextToken value in a subsequent call to ListProjectProfiles to
+    #   list the next set of project profiles.
+    #
+    # @option params [String] :sort_by
+    #   Specifies by what to sort project profiles.
+    #
+    # @option params [String] :sort_order
+    #   Specifies the sort order of the project profiles.
+    #
+    # @return [Types::ListProjectProfilesOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListProjectProfilesOutput#items #items} => Array&lt;Types::ProjectProfileSummary&gt;
+    #   * {Types::ListProjectProfilesOutput#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_project_profiles({
+    #     domain_identifier: "DomainId", # required
+    #     max_results: 1,
+    #     name: "ProjectProfileName",
+    #     next_token: "PaginationToken",
+    #     sort_by: "NAME", # accepts NAME
+    #     sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.items #=> Array
+    #   resp.items[0].created_at #=> Time
+    #   resp.items[0].created_by #=> String
+    #   resp.items[0].description #=> String
+    #   resp.items[0].domain_id #=> String
+    #   resp.items[0].domain_unit_id #=> String
+    #   resp.items[0].id #=> String
+    #   resp.items[0].last_updated_at #=> Time
+    #   resp.items[0].name #=> String
+    #   resp.items[0].status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/ListProjectProfiles AWS API Documentation
+    #
+    # @overload list_project_profiles(params = {})
+    # @param [Hash] params ({})
+    def list_project_profiles(params = {}, options = {})
+      req = build_request(:list_project_profiles, params)
       req.send_request(options)
     end
 
@@ -8092,7 +9413,10 @@ module Aws::DataZone
     #   The data lineage event that you want to post. Only open-lineage run
     #   event are supported as events.
     #
-    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    # @return [Types::PostLineageEventOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PostLineageEventOutput#domain_id #domain_id} => String
+    #   * {Types::PostLineageEventOutput#id #id} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -8101,6 +9425,11 @@ module Aws::DataZone
     #     domain_identifier: "DomainId", # required
     #     event: "data", # required
     #   })
+    #
+    # @example Response structure
+    #
+    #   resp.domain_id #=> String
+    #   resp.id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/PostLineageEvent AWS API Documentation
     #
@@ -8194,6 +9523,9 @@ module Aws::DataZone
     # @option params [required, String] :environment_blueprint_identifier
     #   The identifier of the environment blueprint.
     #
+    # @option params [String] :environment_role_permission_boundary
+    #   The environment role permissions boundary.
+    #
     # @option params [String] :manage_access_role_arn
     #   The ARN of the manage access role.
     #
@@ -8212,6 +9544,7 @@ module Aws::DataZone
     #   * {Types::PutEnvironmentBlueprintConfigurationOutput#domain_id #domain_id} => String
     #   * {Types::PutEnvironmentBlueprintConfigurationOutput#enabled_regions #enabled_regions} => Array&lt;String&gt;
     #   * {Types::PutEnvironmentBlueprintConfigurationOutput#environment_blueprint_id #environment_blueprint_id} => String
+    #   * {Types::PutEnvironmentBlueprintConfigurationOutput#environment_role_permission_boundary #environment_role_permission_boundary} => String
     #   * {Types::PutEnvironmentBlueprintConfigurationOutput#manage_access_role_arn #manage_access_role_arn} => String
     #   * {Types::PutEnvironmentBlueprintConfigurationOutput#provisioning_configurations #provisioning_configurations} => Array&lt;Types::ProvisioningConfiguration&gt;
     #   * {Types::PutEnvironmentBlueprintConfigurationOutput#provisioning_role_arn #provisioning_role_arn} => String
@@ -8224,6 +9557,7 @@ module Aws::DataZone
     #     domain_identifier: "DomainId", # required
     #     enabled_regions: ["RegionName"], # required
     #     environment_blueprint_identifier: "EnvironmentBlueprintId", # required
+    #     environment_role_permission_boundary: "PolicyArn",
     #     manage_access_role_arn: "RoleArn",
     #     provisioning_configurations: [
     #       {
@@ -8248,6 +9582,7 @@ module Aws::DataZone
     #   resp.enabled_regions #=> Array
     #   resp.enabled_regions[0] #=> String
     #   resp.environment_blueprint_id #=> String
+    #   resp.environment_role_permission_boundary #=> String
     #   resp.manage_access_role_arn #=> String
     #   resp.provisioning_configurations #=> Array
     #   resp.provisioning_configurations[0].lake_formation_configuration.location_registration_exclude_s3_locations #=> Array
@@ -8516,7 +9851,7 @@ module Aws::DataZone
     #     domain_identifier: "DomainId", # required
     #     entity_identifier: "String", # required
     #     entity_type: "DOMAIN_UNIT", # required, accepts DOMAIN_UNIT, ENVIRONMENT_BLUEPRINT_CONFIGURATION, ENVIRONMENT_PROFILE
-    #     policy_type: "CREATE_DOMAIN_UNIT", # required, accepts CREATE_DOMAIN_UNIT, OVERRIDE_DOMAIN_UNIT_OWNERS, ADD_TO_PROJECT_MEMBER_POOL, OVERRIDE_PROJECT_OWNERS, CREATE_GLOSSARY, CREATE_FORM_TYPE, CREATE_ASSET_TYPE, CREATE_PROJECT, CREATE_ENVIRONMENT_PROFILE, DELEGATE_CREATE_ENVIRONMENT_PROFILE, CREATE_ENVIRONMENT
+    #     policy_type: "CREATE_DOMAIN_UNIT", # required, accepts CREATE_DOMAIN_UNIT, OVERRIDE_DOMAIN_UNIT_OWNERS, ADD_TO_PROJECT_MEMBER_POOL, OVERRIDE_PROJECT_OWNERS, CREATE_GLOSSARY, CREATE_FORM_TYPE, CREATE_ASSET_TYPE, CREATE_PROJECT, CREATE_ENVIRONMENT_PROFILE, DELEGATE_CREATE_ENVIRONMENT_PROFILE, CREATE_ENVIRONMENT, CREATE_ENVIRONMENT_FROM_BLUEPRINT, CREATE_PROJECT_FROM_PROJECT_PROFILE
     #     principal: { # required
     #       domain_unit: {
     #         domain_unit_designation: "OWNER", # required, accepts OWNER
@@ -9569,6 +10904,220 @@ module Aws::DataZone
       req.send_request(options)
     end
 
+    # Updates a connection. In Amazon DataZone, a connection enables you to
+    # connect your resources (domains, projects, and environments) to
+    # external resources and services.
+    #
+    # @option params [Types::AwsLocation] :aws_location
+    #   The location where a connection is to be updated.
+    #
+    # @option params [String] :description
+    #   The description of a connection.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where a connection is to be updated.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of the connection to be updated.
+    #
+    # @option params [Types::ConnectionPropertiesPatch] :props
+    #   The connection props.
+    #
+    # @return [Types::UpdateConnectionOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateConnectionOutput#connection_id #connection_id} => String
+    #   * {Types::UpdateConnectionOutput#description #description} => String
+    #   * {Types::UpdateConnectionOutput#domain_id #domain_id} => String
+    #   * {Types::UpdateConnectionOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::UpdateConnectionOutput#environment_id #environment_id} => String
+    #   * {Types::UpdateConnectionOutput#name #name} => String
+    #   * {Types::UpdateConnectionOutput#physical_endpoints #physical_endpoints} => Array&lt;Types::PhysicalEndpoint&gt;
+    #   * {Types::UpdateConnectionOutput#project_id #project_id} => String
+    #   * {Types::UpdateConnectionOutput#props #props} => Types::ConnectionPropertiesOutput
+    #   * {Types::UpdateConnectionOutput#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_connection({
+    #     aws_location: {
+    #       access_role: "AwsLocationAccessRoleString",
+    #       aws_account_id: "AwsAccountId",
+    #       aws_region: "AwsRegion",
+    #       iam_connection_id: "ConnectionId",
+    #     },
+    #     description: "UpdateConnectionInputDescriptionString",
+    #     domain_identifier: "DomainId", # required
+    #     identifier: "ConnectionId", # required
+    #     props: {
+    #       athena_properties: {
+    #         workgroup_name: "AthenaPropertiesPatchWorkgroupNameString",
+    #       },
+    #       glue_properties: {
+    #         glue_connection_input: {
+    #           authentication_configuration: {
+    #             basic_authentication_credentials: {
+    #               password: "BasicAuthenticationCredentialsPasswordString",
+    #               user_name: "BasicAuthenticationCredentialsUserNameString",
+    #             },
+    #             secret_arn: "AuthenticationConfigurationPatchSecretArnString",
+    #           },
+    #           connection_properties: {
+    #             "String" => "ConnectionPropertiesValueString",
+    #           },
+    #           description: "String",
+    #         },
+    #       },
+    #       iam_properties: {
+    #         glue_lineage_sync_enabled: false,
+    #       },
+    #       redshift_properties: {
+    #         credentials: {
+    #           secret_arn: "RedshiftCredentialsSecretArnString",
+    #           username_password: {
+    #             password: "Password", # required
+    #             username: "Username", # required
+    #           },
+    #         },
+    #         database_name: "RedshiftPropertiesPatchDatabaseNameString",
+    #         host: "RedshiftPropertiesPatchHostString",
+    #         lineage_sync: {
+    #           enabled: false,
+    #           schedule: {
+    #             schedule: "LineageSyncScheduleScheduleString",
+    #           },
+    #         },
+    #         port: 1,
+    #         storage: {
+    #           cluster_name: "RedshiftStoragePropertiesClusterNameString",
+    #           workgroup_name: "RedshiftStoragePropertiesWorkgroupNameString",
+    #         },
+    #       },
+    #       spark_emr_properties: {
+    #         compute_arn: "SparkEmrPropertiesPatchComputeArnString",
+    #         instance_profile_arn: "SparkEmrPropertiesPatchInstanceProfileArnString",
+    #         java_virtual_env: "SparkEmrPropertiesPatchJavaVirtualEnvString",
+    #         log_uri: "SparkEmrPropertiesPatchLogUriString",
+    #         python_virtual_env: "SparkEmrPropertiesPatchPythonVirtualEnvString",
+    #         runtime_role: "SparkEmrPropertiesPatchRuntimeRoleString",
+    #         trusted_certificates_s3_uri: "SparkEmrPropertiesPatchTrustedCertificatesS3UriString",
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.connection_id #=> String
+    #   resp.description #=> String
+    #   resp.domain_id #=> String
+    #   resp.domain_unit_id #=> String
+    #   resp.environment_id #=> String
+    #   resp.name #=> String
+    #   resp.physical_endpoints #=> Array
+    #   resp.physical_endpoints[0].aws_location.access_role #=> String
+    #   resp.physical_endpoints[0].aws_location.aws_account_id #=> String
+    #   resp.physical_endpoints[0].aws_location.aws_region #=> String
+    #   resp.physical_endpoints[0].aws_location.iam_connection_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.athena_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.athena_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM"
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.authorization_code #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.authorization_code_properties.redirect_uri #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.a_ws_managed_client_application_reference #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.user_managed_client_application_client_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.access_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.jwt_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.refresh_token #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_credentials.user_managed_client_application_client_secret #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.o_auth_2_grant_type #=> String, one of "AUTHORIZATION_CODE", "CLIENT_CREDENTIALS", "JWT_BEARER"
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map["TokenUrlParametersMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.authentication_configuration.secret_arn #=> String
+    #   resp.physical_endpoints[0].glue_connection.compatible_compute_environments #=> Array
+    #   resp.physical_endpoints[0].glue_connection.compatible_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.physical_endpoints[0].glue_connection.connection_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.connection_properties["String"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.connection_schema_version #=> Integer
+    #   resp.physical_endpoints[0].glue_connection.connection_type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #   resp.physical_endpoints[0].glue_connection.creation_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.description #=> String
+    #   resp.physical_endpoints[0].glue_connection.last_connection_validation_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.last_updated_by #=> String
+    #   resp.physical_endpoints[0].glue_connection.last_updated_time #=> Time
+    #   resp.physical_endpoints[0].glue_connection.match_criteria #=> Array
+    #   resp.physical_endpoints[0].glue_connection.match_criteria[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.name #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.availability_zone #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list #=> Array
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.security_group_id_list[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id #=> String
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list #=> Array
+    #   resp.physical_endpoints[0].glue_connection.physical_connection_requirements.subnet_id_list[0] #=> String
+    #   resp.physical_endpoints[0].glue_connection.python_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.python_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.spark_properties #=> Hash
+    #   resp.physical_endpoints[0].glue_connection.spark_properties["PropertyMapKeyString"] #=> String
+    #   resp.physical_endpoints[0].glue_connection.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.physical_endpoints[0].glue_connection.status_reason #=> String
+    #   resp.physical_endpoints[0].glue_connection_name #=> String
+    #   resp.physical_endpoints[0].host #=> String
+    #   resp.physical_endpoints[0].port #=> Integer
+    #   resp.physical_endpoints[0].protocol #=> String, one of "ATHENA", "GLUE_INTERACTIVE_SESSION", "HTTPS", "JDBC", "LIVY", "ODBC", "PRISM"
+    #   resp.physical_endpoints[0].stage #=> String
+    #   resp.project_id #=> String
+    #   resp.props.athena_properties.workgroup_name #=> String
+    #   resp.props.glue_properties.error_message #=> String
+    #   resp.props.glue_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.props.hyper_pod_properties.cluster_arn #=> String
+    #   resp.props.hyper_pod_properties.cluster_name #=> String
+    #   resp.props.hyper_pod_properties.orchestrator #=> String, one of "EKS", "SLURM"
+    #   resp.props.iam_properties.environment_id #=> String
+    #   resp.props.iam_properties.glue_lineage_sync_enabled #=> Boolean
+    #   resp.props.redshift_properties.credentials.secret_arn #=> String
+    #   resp.props.redshift_properties.credentials.username_password.password #=> String
+    #   resp.props.redshift_properties.credentials.username_password.username #=> String
+    #   resp.props.redshift_properties.database_name #=> String
+    #   resp.props.redshift_properties.is_provisioned_secret #=> Boolean
+    #   resp.props.redshift_properties.jdbc_iam_url #=> String
+    #   resp.props.redshift_properties.jdbc_url #=> String
+    #   resp.props.redshift_properties.lineage_sync.enabled #=> Boolean
+    #   resp.props.redshift_properties.lineage_sync.lineage_job_id #=> String
+    #   resp.props.redshift_properties.lineage_sync.schedule.schedule #=> String
+    #   resp.props.redshift_properties.redshift_temp_dir #=> String
+    #   resp.props.redshift_properties.status #=> String, one of "CREATING", "CREATE_FAILED", "DELETING", "DELETE_FAILED", "READY", "UPDATING", "UPDATE_FAILED", "DELETED"
+    #   resp.props.redshift_properties.storage.cluster_name #=> String
+    #   resp.props.redshift_properties.storage.workgroup_name #=> String
+    #   resp.props.spark_emr_properties.compute_arn #=> String
+    #   resp.props.spark_emr_properties.credentials.password #=> String
+    #   resp.props.spark_emr_properties.credentials.username #=> String
+    #   resp.props.spark_emr_properties.credentials_expiration #=> Time
+    #   resp.props.spark_emr_properties.governance_type #=> String, one of "AWS_MANAGED", "USER_MANAGED"
+    #   resp.props.spark_emr_properties.instance_profile_arn #=> String
+    #   resp.props.spark_emr_properties.java_virtual_env #=> String
+    #   resp.props.spark_emr_properties.livy_endpoint #=> String
+    #   resp.props.spark_emr_properties.log_uri #=> String
+    #   resp.props.spark_emr_properties.python_virtual_env #=> String
+    #   resp.props.spark_emr_properties.runtime_role #=> String
+    #   resp.props.spark_emr_properties.trusted_certificates_s3_uri #=> String
+    #   resp.props.spark_glue_properties.additional_args.connection #=> String
+    #   resp.props.spark_glue_properties.glue_connection_name #=> String
+    #   resp.props.spark_glue_properties.glue_version #=> String
+    #   resp.props.spark_glue_properties.idle_timeout #=> Integer
+    #   resp.props.spark_glue_properties.java_virtual_env #=> String
+    #   resp.props.spark_glue_properties.number_of_workers #=> Integer
+    #   resp.props.spark_glue_properties.python_virtual_env #=> String
+    #   resp.props.spark_glue_properties.worker_type #=> String
+    #   resp.type #=> String, one of "ATHENA", "BIGQUERY", "DATABRICKS", "DOCUMENTDB", "DYNAMODB", "HYPERPOD", "IAM", "MYSQL", "OPENSEARCH", "ORACLE", "POSTGRESQL", "REDSHIFT", "SAPHANA", "SNOWFLAKE", "SPARK", "SQLSERVER", "TERADATA", "VERTICA", "WORKFLOWS_MWAA"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateConnection AWS API Documentation
+    #
+    # @overload update_connection(params = {})
+    # @param [Hash] params ({})
+    def update_connection(params = {}, options = {})
+      req = build_request(:update_connection, params)
+      req.send_request(options)
+    end
+
     # Updates the specified data source in Amazon DataZone.
     #
     # @option params [Array<Types::FormInput>] :asset_forms_input
@@ -9615,6 +11164,7 @@ module Aws::DataZone
     #
     #   * {Types::UpdateDataSourceOutput#asset_forms_output #asset_forms_output} => Array&lt;Types::FormOutput&gt;
     #   * {Types::UpdateDataSourceOutput#configuration #configuration} => Types::DataSourceConfigurationOutput
+    #   * {Types::UpdateDataSourceOutput#connection_id #connection_id} => String
     #   * {Types::UpdateDataSourceOutput#created_at #created_at} => Time
     #   * {Types::UpdateDataSourceOutput#description #description} => String
     #   * {Types::UpdateDataSourceOutput#domain_id #domain_id} => String
@@ -9650,6 +11200,7 @@ module Aws::DataZone
     #     configuration: {
     #       glue_run_configuration: {
     #         auto_import_data_quality_result: false,
+    #         catalog_name: "GlueRunConfigurationInputCatalogNameString",
     #         data_access_role: "GlueRunConfigurationInputDataAccessRoleString",
     #         relational_filter_configurations: [ # required
     #           {
@@ -9666,10 +11217,10 @@ module Aws::DataZone
     #       },
     #       redshift_run_configuration: {
     #         data_access_role: "RedshiftRunConfigurationInputDataAccessRoleString",
-    #         redshift_credential_configuration: { # required
+    #         redshift_credential_configuration: {
     #           secret_manager_arn: "RedshiftCredentialConfigurationSecretManagerArnString", # required
     #         },
-    #         redshift_storage: { # required
+    #         redshift_storage: {
     #           redshift_cluster_source: {
     #             cluster_name: "RedshiftClusterStorageClusterNameString", # required
     #           },
@@ -9689,6 +11240,11 @@ module Aws::DataZone
     #             schema_name: "RelationalFilterConfigurationSchemaNameString",
     #           },
     #         ],
+    #       },
+    #       sage_maker_run_configuration: {
+    #         tracking_assets: { # required
+    #           "SageMakerAssetType" => ["SageMakerResourceArn"],
+    #         },
     #       },
     #     },
     #     description: "Description",
@@ -9716,6 +11272,7 @@ module Aws::DataZone
     #   resp.asset_forms_output[0].type_revision #=> String
     #   resp.configuration.glue_run_configuration.account_id #=> String
     #   resp.configuration.glue_run_configuration.auto_import_data_quality_result #=> Boolean
+    #   resp.configuration.glue_run_configuration.catalog_name #=> String
     #   resp.configuration.glue_run_configuration.data_access_role #=> String
     #   resp.configuration.glue_run_configuration.region #=> String
     #   resp.configuration.glue_run_configuration.relational_filter_configurations #=> Array
@@ -9736,6 +11293,12 @@ module Aws::DataZone
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].expression #=> String
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].filter_expressions[0].type #=> String, one of "INCLUDE", "EXCLUDE"
     #   resp.configuration.redshift_run_configuration.relational_filter_configurations[0].schema_name #=> String
+    #   resp.configuration.sage_maker_run_configuration.account_id #=> String
+    #   resp.configuration.sage_maker_run_configuration.region #=> String
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets #=> Hash
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"] #=> Array
+    #   resp.configuration.sage_maker_run_configuration.tracking_assets["SageMakerAssetType"][0] #=> String
+    #   resp.connection_id #=> String
     #   resp.created_at #=> Time
     #   resp.description #=> String
     #   resp.domain_id #=> String
@@ -9800,6 +11363,9 @@ module Aws::DataZone
     # @option params [String] :name
     #   The name to be updated as part of the `UpdateDomain` action.
     #
+    # @option params [String] :service_role
+    #   The service role of the domain.
+    #
     # @option params [Types::SingleSignOn] :single_sign_on
     #   The single sign-on option to be updated as part of the `UpdateDomain`
     #   action.
@@ -9812,6 +11378,7 @@ module Aws::DataZone
     #   * {Types::UpdateDomainOutput#last_updated_at #last_updated_at} => Time
     #   * {Types::UpdateDomainOutput#name #name} => String
     #   * {Types::UpdateDomainOutput#root_domain_unit_id #root_domain_unit_id} => String
+    #   * {Types::UpdateDomainOutput#service_role #service_role} => String
     #   * {Types::UpdateDomainOutput#single_sign_on #single_sign_on} => Types::SingleSignOn
     #
     # @example Request syntax with placeholder values
@@ -9822,6 +11389,7 @@ module Aws::DataZone
     #     domain_execution_role: "RoleArn",
     #     identifier: "DomainId", # required
     #     name: "String",
+    #     service_role: "RoleArn",
     #     single_sign_on: {
     #       type: "IAM_IDC", # accepts IAM_IDC, DISABLED
     #       user_assignment: "AUTOMATIC", # accepts AUTOMATIC, MANUAL
@@ -9836,6 +11404,7 @@ module Aws::DataZone
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
     #   resp.root_domain_unit_id #=> String
+    #   resp.service_role #=> String
     #   resp.single_sign_on.type #=> String, one of "IAM_IDC", "DISABLED"
     #   resp.single_sign_on.user_assignment #=> String, one of "AUTOMATIC", "MANUAL"
     #
@@ -10367,6 +11936,9 @@ module Aws::DataZone
     # @option params [required, String] :domain_identifier
     #   The ID of the Amazon DataZone domain where a project is being updated.
     #
+    # @option params [Types::EnvironmentDeploymentDetails] :environment_deployment_details
+    #   The environment deployment details of the project.
+    #
     # @option params [Array<String>] :glossary_terms
     #   The glossary terms to be updated as part of the `UpdateProject`
     #   action.
@@ -10384,18 +11956,32 @@ module Aws::DataZone
     #   * {Types::UpdateProjectOutput#description #description} => String
     #   * {Types::UpdateProjectOutput#domain_id #domain_id} => String
     #   * {Types::UpdateProjectOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::UpdateProjectOutput#environment_deployment_details #environment_deployment_details} => Types::EnvironmentDeploymentDetails
     #   * {Types::UpdateProjectOutput#failure_reasons #failure_reasons} => Array&lt;Types::ProjectDeletionError&gt;
     #   * {Types::UpdateProjectOutput#glossary_terms #glossary_terms} => Array&lt;String&gt;
     #   * {Types::UpdateProjectOutput#id #id} => String
     #   * {Types::UpdateProjectOutput#last_updated_at #last_updated_at} => Time
     #   * {Types::UpdateProjectOutput#name #name} => String
+    #   * {Types::UpdateProjectOutput#project_profile_id #project_profile_id} => String
     #   * {Types::UpdateProjectOutput#project_status #project_status} => String
+    #   * {Types::UpdateProjectOutput#user_parameters #user_parameters} => Array&lt;Types::EnvironmentConfigurationUserParameter&gt;
     #
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_project({
     #     description: "Description",
     #     domain_identifier: "DomainId", # required
+    #     environment_deployment_details: {
+    #       environment_failure_reasons: {
+    #         "String" => [
+    #           {
+    #             code: "String",
+    #             message: "String", # required
+    #           },
+    #         ],
+    #       },
+    #       overall_deployment_status: "PENDING_DEPLOYMENT", # accepts PENDING_DEPLOYMENT, IN_PROGRESS, SUCCESSFUL, FAILED_VALIDATION, FAILED_DEPLOYMENT
+    #     },
     #     glossary_terms: ["GlossaryTermId"],
     #     identifier: "ProjectId", # required
     #     name: "ProjectName",
@@ -10408,6 +11994,11 @@ module Aws::DataZone
     #   resp.description #=> String
     #   resp.domain_id #=> String
     #   resp.domain_unit_id #=> String
+    #   resp.environment_deployment_details.environment_failure_reasons #=> Hash
+    #   resp.environment_deployment_details.environment_failure_reasons["String"] #=> Array
+    #   resp.environment_deployment_details.environment_failure_reasons["String"][0].code #=> String
+    #   resp.environment_deployment_details.environment_failure_reasons["String"][0].message #=> String
+    #   resp.environment_deployment_details.overall_deployment_status #=> String, one of "PENDING_DEPLOYMENT", "IN_PROGRESS", "SUCCESSFUL", "FAILED_VALIDATION", "FAILED_DEPLOYMENT"
     #   resp.failure_reasons #=> Array
     #   resp.failure_reasons[0].code #=> String
     #   resp.failure_reasons[0].message #=> String
@@ -10416,7 +12007,13 @@ module Aws::DataZone
     #   resp.id #=> String
     #   resp.last_updated_at #=> Time
     #   resp.name #=> String
+    #   resp.project_profile_id #=> String
     #   resp.project_status #=> String, one of "ACTIVE", "DELETING", "DELETE_FAILED"
+    #   resp.user_parameters #=> Array
+    #   resp.user_parameters[0].environment_configuration_name #=> String
+    #   resp.user_parameters[0].environment_parameters #=> Array
+    #   resp.user_parameters[0].environment_parameters[0].name #=> String
+    #   resp.user_parameters[0].environment_parameters[0].value #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateProject AWS API Documentation
     #
@@ -10424,6 +12021,129 @@ module Aws::DataZone
     # @param [Hash] params ({})
     def update_project(params = {}, options = {})
       req = build_request(:update_project, params)
+      req.send_request(options)
+    end
+
+    # Updates a project profile.
+    #
+    # @option params [String] :description
+    #   The description of a project profile.
+    #
+    # @option params [required, String] :domain_identifier
+    #   The ID of the domain where a project profile is to be updated.
+    #
+    # @option params [String] :domain_unit_identifier
+    #   The ID of the domain unit where a project profile is to be updated.
+    #
+    # @option params [Array<Types::EnvironmentConfiguration>] :environment_configurations
+    #   The environment configurations of a project profile.
+    #
+    # @option params [required, String] :identifier
+    #   The ID of a project profile that is to be updated.
+    #
+    # @option params [String] :name
+    #   The name of a project profile.
+    #
+    # @option params [String] :status
+    #   The status of a project profile.
+    #
+    # @return [Types::UpdateProjectProfileOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateProjectProfileOutput#created_at #created_at} => Time
+    #   * {Types::UpdateProjectProfileOutput#created_by #created_by} => String
+    #   * {Types::UpdateProjectProfileOutput#description #description} => String
+    #   * {Types::UpdateProjectProfileOutput#domain_id #domain_id} => String
+    #   * {Types::UpdateProjectProfileOutput#domain_unit_id #domain_unit_id} => String
+    #   * {Types::UpdateProjectProfileOutput#environment_configurations #environment_configurations} => Array&lt;Types::EnvironmentConfiguration&gt;
+    #   * {Types::UpdateProjectProfileOutput#id #id} => String
+    #   * {Types::UpdateProjectProfileOutput#last_updated_at #last_updated_at} => Time
+    #   * {Types::UpdateProjectProfileOutput#name #name} => String
+    #   * {Types::UpdateProjectProfileOutput#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_project_profile({
+    #     description: "Description",
+    #     domain_identifier: "DomainId", # required
+    #     domain_unit_identifier: "DomainUnitId",
+    #     environment_configurations: [
+    #       {
+    #         aws_account: { # required
+    #           aws_account_id: "AwsAccountId",
+    #           aws_account_id_path: "ParameterStorePath",
+    #         },
+    #         aws_region: { # required
+    #           region_name: "RegionName",
+    #           region_name_path: "ParameterStorePath",
+    #         },
+    #         configuration_parameters: {
+    #           parameter_overrides: [
+    #             {
+    #               is_editable: false,
+    #               name: "EnvironmentConfigurationParameterName",
+    #               value: "String",
+    #             },
+    #           ],
+    #           resolved_parameters: [
+    #             {
+    #               is_editable: false,
+    #               name: "EnvironmentConfigurationParameterName",
+    #               value: "String",
+    #             },
+    #           ],
+    #           ssm_path: "ParameterStorePath",
+    #         },
+    #         deployment_mode: "ON_CREATE", # accepts ON_CREATE, ON_DEMAND
+    #         deployment_order: 1,
+    #         description: "Description",
+    #         environment_blueprint_id: "EnvironmentBlueprintId", # required
+    #         id: "EnvironmentConfigurationId",
+    #         name: "EnvironmentConfigurationName", # required
+    #       },
+    #     ],
+    #     identifier: "ProjectProfileId", # required
+    #     name: "ProjectProfileName",
+    #     status: "ENABLED", # accepts ENABLED, DISABLED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.description #=> String
+    #   resp.domain_id #=> String
+    #   resp.domain_unit_id #=> String
+    #   resp.environment_configurations #=> Array
+    #   resp.environment_configurations[0].aws_account.aws_account_id #=> String
+    #   resp.environment_configurations[0].aws_account.aws_account_id_path #=> String
+    #   resp.environment_configurations[0].aws_region.region_name #=> String
+    #   resp.environment_configurations[0].aws_region.region_name_path #=> String
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides #=> Array
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].is_editable #=> Boolean
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].name #=> String
+    #   resp.environment_configurations[0].configuration_parameters.parameter_overrides[0].value #=> String
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters #=> Array
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].is_editable #=> Boolean
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].name #=> String
+    #   resp.environment_configurations[0].configuration_parameters.resolved_parameters[0].value #=> String
+    #   resp.environment_configurations[0].configuration_parameters.ssm_path #=> String
+    #   resp.environment_configurations[0].deployment_mode #=> String, one of "ON_CREATE", "ON_DEMAND"
+    #   resp.environment_configurations[0].deployment_order #=> Integer
+    #   resp.environment_configurations[0].description #=> String
+    #   resp.environment_configurations[0].environment_blueprint_id #=> String
+    #   resp.environment_configurations[0].id #=> String
+    #   resp.environment_configurations[0].name #=> String
+    #   resp.id #=> String
+    #   resp.last_updated_at #=> Time
+    #   resp.name #=> String
+    #   resp.status #=> String, one of "ENABLED", "DISABLED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/datazone-2018-05-10/UpdateProjectProfile AWS API Documentation
+    #
+    # @overload update_project_profile(params = {})
+    # @param [Hash] params ({})
+    def update_project_profile(params = {}, options = {})
+      req = build_request(:update_project_profile, params)
       req.send_request(options)
     end
 
@@ -10790,7 +12510,7 @@ module Aws::DataZone
     #     domain_identifier: "DomainId", # required
     #     environment_identifier: "EnvironmentId", # required
     #     identifier: "SubscriptionTargetId", # required
-    #     manage_access_role: "String",
+    #     manage_access_role: "IamRoleArn",
     #     name: "SubscriptionTargetName",
     #     provider: "String",
     #     subscription_target_config: [
@@ -10902,7 +12622,7 @@ module Aws::DataZone
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-datazone'
-      context[:gem_version] = '1.28.0'
+      context[:gem_version] = '1.29.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

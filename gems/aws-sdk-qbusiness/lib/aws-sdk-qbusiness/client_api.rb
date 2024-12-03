@@ -20,10 +20,13 @@ module Aws::QBusiness
     AccessControl = Shapes::StructureShape.new(name: 'AccessControl')
     AccessControls = Shapes::ListShape.new(name: 'AccessControls')
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
+    ActionConfiguration = Shapes::StructureShape.new(name: 'ActionConfiguration')
+    ActionConfigurationList = Shapes::ListShape.new(name: 'ActionConfigurationList')
     ActionExecution = Shapes::StructureShape.new(name: 'ActionExecution')
     ActionExecutionEvent = Shapes::StructureShape.new(name: 'ActionExecutionEvent')
     ActionExecutionPayload = Shapes::MapShape.new(name: 'ActionExecutionPayload')
     ActionExecutionPayloadField = Shapes::StructureShape.new(name: 'ActionExecutionPayloadField')
+    ActionFilterConfiguration = Shapes::StructureShape.new(name: 'ActionFilterConfiguration')
     ActionPayloadFieldKey = Shapes::StringShape.new(name: 'ActionPayloadFieldKey')
     ActionPayloadFieldNameSeparator = Shapes::StringShape.new(name: 'ActionPayloadFieldNameSeparator')
     ActionPayloadFieldType = Shapes::StringShape.new(name: 'ActionPayloadFieldType')
@@ -35,6 +38,8 @@ module Aws::QBusiness
     ActionReviewPayloadFieldAllowedValue = Shapes::StructureShape.new(name: 'ActionReviewPayloadFieldAllowedValue')
     ActionReviewPayloadFieldAllowedValues = Shapes::ListShape.new(name: 'ActionReviewPayloadFieldAllowedValues')
     ActionReviewPayloadFieldArrayItemJsonSchema = Shapes::DocumentShape.new(name: 'ActionReviewPayloadFieldArrayItemJsonSchema', document: true)
+    ActionSummary = Shapes::StructureShape.new(name: 'ActionSummary')
+    Actions = Shapes::ListShape.new(name: 'Actions')
     AmazonResourceName = Shapes::StringShape.new(name: 'AmazonResourceName')
     Application = Shapes::StructureShape.new(name: 'Application')
     ApplicationArn = Shapes::StringShape.new(name: 'ApplicationArn')
@@ -44,6 +49,8 @@ module Aws::QBusiness
     Applications = Shapes::ListShape.new(name: 'Applications')
     AppliedAttachmentsConfiguration = Shapes::StructureShape.new(name: 'AppliedAttachmentsConfiguration')
     AppliedCreatorModeConfiguration = Shapes::StructureShape.new(name: 'AppliedCreatorModeConfiguration')
+    AssociatePermissionRequest = Shapes::StructureShape.new(name: 'AssociatePermissionRequest')
+    AssociatePermissionResponse = Shapes::StructureShape.new(name: 'AssociatePermissionResponse')
     Attachment = Shapes::StructureShape.new(name: 'Attachment')
     AttachmentId = Shapes::StringShape.new(name: 'AttachmentId')
     AttachmentInput = Shapes::StructureShape.new(name: 'AttachmentInput')
@@ -94,11 +101,13 @@ module Aws::QBusiness
     ChatSyncOutput = Shapes::StructureShape.new(name: 'ChatSyncOutput')
     ClientIdForOIDC = Shapes::StringShape.new(name: 'ClientIdForOIDC')
     ClientIdsForOIDC = Shapes::ListShape.new(name: 'ClientIdsForOIDC')
+    ClientNamespace = Shapes::StringShape.new(name: 'ClientNamespace')
     ClientToken = Shapes::StringShape.new(name: 'ClientToken')
     ConfigurationEvent = Shapes::StructureShape.new(name: 'ConfigurationEvent')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ContentBlockerRule = Shapes::StructureShape.new(name: 'ContentBlockerRule')
     ContentRetrievalRule = Shapes::StructureShape.new(name: 'ContentRetrievalRule')
+    ContentSource = Shapes::UnionShape.new(name: 'ContentSource')
     ContentType = Shapes::StringShape.new(name: 'ContentType')
     Conversation = Shapes::StructureShape.new(name: 'Conversation')
     ConversationId = Shapes::StringShape.new(name: 'ConversationId')
@@ -108,6 +117,8 @@ module Aws::QBusiness
     CopyFromSource = Shapes::UnionShape.new(name: 'CopyFromSource')
     CreateApplicationRequest = Shapes::StructureShape.new(name: 'CreateApplicationRequest')
     CreateApplicationResponse = Shapes::StructureShape.new(name: 'CreateApplicationResponse')
+    CreateDataAccessorRequest = Shapes::StructureShape.new(name: 'CreateDataAccessorRequest')
+    CreateDataAccessorResponse = Shapes::StructureShape.new(name: 'CreateDataAccessorResponse')
     CreateDataSourceRequest = Shapes::StructureShape.new(name: 'CreateDataSourceRequest')
     CreateDataSourceResponse = Shapes::StructureShape.new(name: 'CreateDataSourceResponse')
     CreateIndexRequest = Shapes::StructureShape.new(name: 'CreateIndexRequest')
@@ -123,7 +134,14 @@ module Aws::QBusiness
     CreateWebExperienceResponse = Shapes::StructureShape.new(name: 'CreateWebExperienceResponse')
     CreatorModeConfiguration = Shapes::StructureShape.new(name: 'CreatorModeConfiguration')
     CreatorModeControl = Shapes::StringShape.new(name: 'CreatorModeControl')
+    CustomCSSUrl = Shapes::StringShape.new(name: 'CustomCSSUrl')
     CustomPluginConfiguration = Shapes::StructureShape.new(name: 'CustomPluginConfiguration')
+    CustomizationConfiguration = Shapes::StructureShape.new(name: 'CustomizationConfiguration')
+    DataAccessor = Shapes::StructureShape.new(name: 'DataAccessor')
+    DataAccessorArn = Shapes::StringShape.new(name: 'DataAccessorArn')
+    DataAccessorId = Shapes::StringShape.new(name: 'DataAccessorId')
+    DataAccessorName = Shapes::StringShape.new(name: 'DataAccessorName')
+    DataAccessors = Shapes::ListShape.new(name: 'DataAccessors')
     DataSource = Shapes::StructureShape.new(name: 'DataSource')
     DataSourceArn = Shapes::StringShape.new(name: 'DataSourceArn')
     DataSourceConfiguration = Shapes::DocumentShape.new(name: 'DataSourceConfiguration', document: true)
@@ -145,6 +163,8 @@ module Aws::QBusiness
     DeleteChatControlsConfigurationResponse = Shapes::StructureShape.new(name: 'DeleteChatControlsConfigurationResponse')
     DeleteConversationRequest = Shapes::StructureShape.new(name: 'DeleteConversationRequest')
     DeleteConversationResponse = Shapes::StructureShape.new(name: 'DeleteConversationResponse')
+    DeleteDataAccessorRequest = Shapes::StructureShape.new(name: 'DeleteDataAccessorRequest')
+    DeleteDataAccessorResponse = Shapes::StructureShape.new(name: 'DeleteDataAccessorResponse')
     DeleteDataSourceRequest = Shapes::StructureShape.new(name: 'DeleteDataSourceRequest')
     DeleteDataSourceResponse = Shapes::StructureShape.new(name: 'DeleteDataSourceResponse')
     DeleteDocument = Shapes::StructureShape.new(name: 'DeleteDocument')
@@ -162,6 +182,8 @@ module Aws::QBusiness
     DeleteWebExperienceRequest = Shapes::StructureShape.new(name: 'DeleteWebExperienceRequest')
     DeleteWebExperienceResponse = Shapes::StructureShape.new(name: 'DeleteWebExperienceResponse')
     Description = Shapes::StringShape.new(name: 'Description')
+    DisassociatePermissionRequest = Shapes::StructureShape.new(name: 'DisassociatePermissionRequest')
+    DisassociatePermissionResponse = Shapes::StructureShape.new(name: 'DisassociatePermissionResponse')
     Document = Shapes::StructureShape.new(name: 'Document')
     DocumentAttribute = Shapes::StructureShape.new(name: 'DocumentAttribute')
     DocumentAttributeBoostingConfiguration = Shapes::UnionShape.new(name: 'DocumentAttributeBoostingConfiguration')
@@ -200,10 +222,14 @@ module Aws::QBusiness
     FailedAttachmentEvent = Shapes::StructureShape.new(name: 'FailedAttachmentEvent')
     FailedDocument = Shapes::StructureShape.new(name: 'FailedDocument')
     FailedDocuments = Shapes::ListShape.new(name: 'FailedDocuments')
+    FaviconUrl = Shapes::StringShape.new(name: 'FaviconUrl')
+    FontUrl = Shapes::StringShape.new(name: 'FontUrl')
     GetApplicationRequest = Shapes::StructureShape.new(name: 'GetApplicationRequest')
     GetApplicationResponse = Shapes::StructureShape.new(name: 'GetApplicationResponse')
     GetChatControlsConfigurationRequest = Shapes::StructureShape.new(name: 'GetChatControlsConfigurationRequest')
     GetChatControlsConfigurationResponse = Shapes::StructureShape.new(name: 'GetChatControlsConfigurationResponse')
+    GetDataAccessorRequest = Shapes::StructureShape.new(name: 'GetDataAccessorRequest')
+    GetDataAccessorResponse = Shapes::StructureShape.new(name: 'GetDataAccessorResponse')
     GetDataSourceRequest = Shapes::StructureShape.new(name: 'GetDataSourceRequest')
     GetDataSourceResponse = Shapes::StructureShape.new(name: 'GetDataSourceResponse')
     GetGroupRequest = Shapes::StructureShape.new(name: 'GetGroupRequest')
@@ -214,6 +240,8 @@ module Aws::QBusiness
     GetMediaResponse = Shapes::StructureShape.new(name: 'GetMediaResponse')
     GetPluginRequest = Shapes::StructureShape.new(name: 'GetPluginRequest')
     GetPluginResponse = Shapes::StructureShape.new(name: 'GetPluginResponse')
+    GetPolicyRequest = Shapes::StructureShape.new(name: 'GetPolicyRequest')
+    GetPolicyResponse = Shapes::StructureShape.new(name: 'GetPolicyResponse')
     GetRetrieverRequest = Shapes::StructureShape.new(name: 'GetRetrieverRequest')
     GetRetrieverResponse = Shapes::StructureShape.new(name: 'GetRetrieverResponse')
     GetUserRequest = Shapes::StructureShape.new(name: 'GetUserRequest')
@@ -230,6 +258,7 @@ module Aws::QBusiness
     HookConfiguration = Shapes::StructureShape.new(name: 'HookConfiguration')
     IAMIdentityProviderArn = Shapes::StringShape.new(name: 'IAMIdentityProviderArn')
     IdcApplicationArn = Shapes::StringShape.new(name: 'IdcApplicationArn')
+    IdcAuthConfiguration = Shapes::StructureShape.new(name: 'IdcAuthConfiguration')
     IdentityProviderConfiguration = Shapes::UnionShape.new(name: 'IdentityProviderConfiguration')
     IdentityType = Shapes::StringShape.new(name: 'IdentityType')
     ImageExtractionConfiguration = Shapes::StructureShape.new(name: 'ImageExtractionConfiguration')
@@ -262,6 +291,8 @@ module Aws::QBusiness
     ListAttachmentsResponse = Shapes::StructureShape.new(name: 'ListAttachmentsResponse')
     ListConversationsRequest = Shapes::StructureShape.new(name: 'ListConversationsRequest')
     ListConversationsResponse = Shapes::StructureShape.new(name: 'ListConversationsResponse')
+    ListDataAccessorsRequest = Shapes::StructureShape.new(name: 'ListDataAccessorsRequest')
+    ListDataAccessorsResponse = Shapes::StructureShape.new(name: 'ListDataAccessorsResponse')
     ListDataSourceSyncJobsRequest = Shapes::StructureShape.new(name: 'ListDataSourceSyncJobsRequest')
     ListDataSourceSyncJobsResponse = Shapes::StructureShape.new(name: 'ListDataSourceSyncJobsResponse')
     ListDataSourcesRequest = Shapes::StructureShape.new(name: 'ListDataSourcesRequest')
@@ -274,6 +305,13 @@ module Aws::QBusiness
     ListIndicesResponse = Shapes::StructureShape.new(name: 'ListIndicesResponse')
     ListMessagesRequest = Shapes::StructureShape.new(name: 'ListMessagesRequest')
     ListMessagesResponse = Shapes::StructureShape.new(name: 'ListMessagesResponse')
+    ListPluginActionsRequest = Shapes::StructureShape.new(name: 'ListPluginActionsRequest')
+    ListPluginActionsResponse = Shapes::StructureShape.new(name: 'ListPluginActionsResponse')
+    ListPluginTypeActionsRequest = Shapes::StructureShape.new(name: 'ListPluginTypeActionsRequest')
+    ListPluginTypeActionsResponse = Shapes::StructureShape.new(name: 'ListPluginTypeActionsResponse')
+    ListPluginTypeMetadataRequest = Shapes::StructureShape.new(name: 'ListPluginTypeMetadataRequest')
+    ListPluginTypeMetadataResponse = Shapes::StructureShape.new(name: 'ListPluginTypeMetadataResponse')
+    ListPluginTypeMetadataSummaries = Shapes::ListShape.new(name: 'ListPluginTypeMetadataSummaries')
     ListPluginsRequest = Shapes::StructureShape.new(name: 'ListPluginsRequest')
     ListPluginsResponse = Shapes::StructureShape.new(name: 'ListPluginsResponse')
     ListRetrieversRequest = Shapes::StructureShape.new(name: 'ListRetrieversRequest')
@@ -282,17 +320,23 @@ module Aws::QBusiness
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     ListWebExperiencesRequest = Shapes::StructureShape.new(name: 'ListWebExperiencesRequest')
     ListWebExperiencesResponse = Shapes::StructureShape.new(name: 'ListWebExperiencesResponse')
+    LogoUrl = Shapes::StringShape.new(name: 'LogoUrl')
     Long = Shapes::IntegerShape.new(name: 'Long')
+    MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     MaxResultsIntegerForGetTopicConfigurations = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForGetTopicConfigurations')
     MaxResultsIntegerForListApplications = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListApplications')
     MaxResultsIntegerForListAttachments = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListAttachments')
     MaxResultsIntegerForListConversations = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListConversations')
+    MaxResultsIntegerForListDataAccessors = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListDataAccessors')
     MaxResultsIntegerForListDataSources = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListDataSources')
     MaxResultsIntegerForListDataSourcesSyncJobs = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListDataSourcesSyncJobs')
     MaxResultsIntegerForListDocuments = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListDocuments')
     MaxResultsIntegerForListGroupsRequest = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListGroupsRequest')
     MaxResultsIntegerForListIndices = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListIndices')
     MaxResultsIntegerForListMessages = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListMessages')
+    MaxResultsIntegerForListPluginActions = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListPluginActions')
+    MaxResultsIntegerForListPluginTypeActions = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListPluginTypeActions')
+    MaxResultsIntegerForListPluginTypeMetadata = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListPluginTypeMetadata')
     MaxResultsIntegerForListPlugins = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListPlugins')
     MaxResultsIntegerForListRetrieversRequest = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListRetrieversRequest')
     MaxResultsIntegerForListWebExperiencesRequest = Shapes::IntegerShape.new(name: 'MaxResultsIntegerForListWebExperiencesRequest')
@@ -318,6 +362,7 @@ module Aws::QBusiness
     MetricValue = Shapes::StringShape.new(name: 'MetricValue')
     NativeIndexConfiguration = Shapes::StructureShape.new(name: 'NativeIndexConfiguration')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
+    NextToken1500 = Shapes::StringShape.new(name: 'NextToken1500')
     NoAuthConfiguration = Shapes::StructureShape.new(name: 'NoAuthConfiguration')
     NumberAttributeBoostingConfiguration = Shapes::StructureShape.new(name: 'NumberAttributeBoostingConfiguration')
     NumberAttributeBoostingType = Shapes::StringShape.new(name: 'NumberAttributeBoostingType')
@@ -337,9 +382,12 @@ module Aws::QBusiness
     PluginName = Shapes::StringShape.new(name: 'PluginName')
     PluginState = Shapes::StringShape.new(name: 'PluginState')
     PluginType = Shapes::StringShape.new(name: 'PluginType')
+    PluginTypeCategory = Shapes::StringShape.new(name: 'PluginTypeCategory')
+    PluginTypeMetadataSummary = Shapes::StructureShape.new(name: 'PluginTypeMetadataSummary')
     Plugins = Shapes::ListShape.new(name: 'Plugins')
     Principal = Shapes::UnionShape.new(name: 'Principal')
     PrincipalGroup = Shapes::StructureShape.new(name: 'PrincipalGroup')
+    PrincipalRoleArn = Shapes::StringShape.new(name: 'PrincipalRoleArn')
     PrincipalUser = Shapes::StructureShape.new(name: 'PrincipalUser')
     Principals = Shapes::ListShape.new(name: 'Principals')
     PutFeedbackRequest = Shapes::StructureShape.new(name: 'PutFeedbackRequest')
@@ -347,12 +395,19 @@ module Aws::QBusiness
     PutGroupResponse = Shapes::StructureShape.new(name: 'PutGroupResponse')
     QAppsConfiguration = Shapes::StructureShape.new(name: 'QAppsConfiguration')
     QAppsControlMode = Shapes::StringShape.new(name: 'QAppsControlMode')
+    QIamAction = Shapes::StringShape.new(name: 'QIamAction')
+    QIamActions = Shapes::ListShape.new(name: 'QIamActions')
+    QueryText = Shapes::StringShape.new(name: 'QueryText')
+    QuickSightConfiguration = Shapes::StructureShape.new(name: 'QuickSightConfiguration')
     ReadAccessType = Shapes::StringShape.new(name: 'ReadAccessType')
+    RelevantContent = Shapes::StructureShape.new(name: 'RelevantContent')
+    RelevantContentList = Shapes::ListShape.new(name: 'RelevantContentList')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResponseScope = Shapes::StringShape.new(name: 'ResponseScope')
     Retriever = Shapes::StructureShape.new(name: 'Retriever')
     RetrieverArn = Shapes::StringShape.new(name: 'RetrieverArn')
     RetrieverConfiguration = Shapes::UnionShape.new(name: 'RetrieverConfiguration')
+    RetrieverContentSource = Shapes::StructureShape.new(name: 'RetrieverContentSource')
     RetrieverId = Shapes::StringShape.new(name: 'RetrieverId')
     RetrieverName = Shapes::StringShape.new(name: 'RetrieverName')
     RetrieverStatus = Shapes::StringShape.new(name: 'RetrieverStatus')
@@ -371,6 +426,10 @@ module Aws::QBusiness
     SamlConfiguration = Shapes::StructureShape.new(name: 'SamlConfiguration')
     SamlMetadataXML = Shapes::StringShape.new(name: 'SamlMetadataXML')
     SamlProviderConfiguration = Shapes::StructureShape.new(name: 'SamlProviderConfiguration')
+    ScoreAttributes = Shapes::StructureShape.new(name: 'ScoreAttributes')
+    ScoreConfidence = Shapes::StringShape.new(name: 'ScoreConfidence')
+    SearchRelevantContentRequest = Shapes::StructureShape.new(name: 'SearchRelevantContentRequest')
+    SearchRelevantContentResponse = Shapes::StructureShape.new(name: 'SearchRelevantContentResponse')
     SecretArn = Shapes::StringShape.new(name: 'SecretArn')
     SecurityGroupId = Shapes::StringShape.new(name: 'SecurityGroupId')
     SecurityGroupIds = Shapes::ListShape.new(name: 'SecurityGroupIds')
@@ -382,6 +441,7 @@ module Aws::QBusiness
     SourceAttributions = Shapes::ListShape.new(name: 'SourceAttributions')
     StartDataSourceSyncJobRequest = Shapes::StructureShape.new(name: 'StartDataSourceSyncJobRequest')
     StartDataSourceSyncJobResponse = Shapes::StructureShape.new(name: 'StartDataSourceSyncJobResponse')
+    StatementId = Shapes::StringShape.new(name: 'StatementId')
     Status = Shapes::StringShape.new(name: 'Status')
     StopDataSourceSyncJobRequest = Shapes::StructureShape.new(name: 'StopDataSourceSyncJobRequest')
     StopDataSourceSyncJobResponse = Shapes::StructureShape.new(name: 'StopDataSourceSyncJobResponse')
@@ -421,6 +481,8 @@ module Aws::QBusiness
     UpdateApplicationResponse = Shapes::StructureShape.new(name: 'UpdateApplicationResponse')
     UpdateChatControlsConfigurationRequest = Shapes::StructureShape.new(name: 'UpdateChatControlsConfigurationRequest')
     UpdateChatControlsConfigurationResponse = Shapes::StructureShape.new(name: 'UpdateChatControlsConfigurationResponse')
+    UpdateDataAccessorRequest = Shapes::StructureShape.new(name: 'UpdateDataAccessorRequest')
+    UpdateDataAccessorResponse = Shapes::StructureShape.new(name: 'UpdateDataAccessorResponse')
     UpdateDataSourceRequest = Shapes::StructureShape.new(name: 'UpdateDataSourceRequest')
     UpdateDataSourceResponse = Shapes::StructureShape.new(name: 'UpdateDataSourceResponse')
     UpdateIndexRequest = Shapes::StructureShape.new(name: 'UpdateIndexRequest')
@@ -478,6 +540,12 @@ module Aws::QBusiness
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
 
+    ActionConfiguration.add_member(:action, Shapes::ShapeRef.new(shape: QIamAction, required: true, location_name: "action"))
+    ActionConfiguration.add_member(:filter_configuration, Shapes::ShapeRef.new(shape: ActionFilterConfiguration, location_name: "filterConfiguration"))
+    ActionConfiguration.struct_class = Types::ActionConfiguration
+
+    ActionConfigurationList.member = Shapes::ShapeRef.new(shape: ActionConfiguration)
+
     ActionExecution.add_member(:plugin_id, Shapes::ShapeRef.new(shape: PluginId, required: true, location_name: "pluginId"))
     ActionExecution.add_member(:payload, Shapes::ShapeRef.new(shape: ActionExecutionPayload, required: true, location_name: "payload"))
     ActionExecution.add_member(:payload_field_name_separator, Shapes::ShapeRef.new(shape: ActionPayloadFieldNameSeparator, required: true, location_name: "payloadFieldNameSeparator"))
@@ -493,6 +561,9 @@ module Aws::QBusiness
 
     ActionExecutionPayloadField.add_member(:value, Shapes::ShapeRef.new(shape: ActionPayloadFieldValue, required: true, location_name: "value"))
     ActionExecutionPayloadField.struct_class = Types::ActionExecutionPayloadField
+
+    ActionFilterConfiguration.add_member(:document_attribute_filter, Shapes::ShapeRef.new(shape: AttributeFilter, required: true, location_name: "documentAttributeFilter"))
+    ActionFilterConfiguration.struct_class = Types::ActionFilterConfiguration
 
     ActionReview.add_member(:plugin_id, Shapes::ShapeRef.new(shape: PluginId, location_name: "pluginId"))
     ActionReview.add_member(:plugin_type, Shapes::ShapeRef.new(shape: PluginType, location_name: "pluginType"))
@@ -529,12 +600,21 @@ module Aws::QBusiness
 
     ActionReviewPayloadFieldAllowedValues.member = Shapes::ShapeRef.new(shape: ActionReviewPayloadFieldAllowedValue)
 
+    ActionSummary.add_member(:action_identifier, Shapes::ShapeRef.new(shape: String, location_name: "actionIdentifier"))
+    ActionSummary.add_member(:display_name, Shapes::ShapeRef.new(shape: String, location_name: "displayName"))
+    ActionSummary.add_member(:instruction_example, Shapes::ShapeRef.new(shape: String, location_name: "instructionExample"))
+    ActionSummary.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "description"))
+    ActionSummary.struct_class = Types::ActionSummary
+
+    Actions.member = Shapes::ShapeRef.new(shape: ActionSummary)
+
     Application.add_member(:display_name, Shapes::ShapeRef.new(shape: ApplicationName, location_name: "displayName"))
     Application.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, location_name: "applicationId"))
     Application.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
     Application.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "updatedAt"))
     Application.add_member(:status, Shapes::ShapeRef.new(shape: ApplicationStatus, location_name: "status"))
     Application.add_member(:identity_type, Shapes::ShapeRef.new(shape: IdentityType, location_name: "identityType"))
+    Application.add_member(:quick_sight_configuration, Shapes::ShapeRef.new(shape: QuickSightConfiguration, location_name: "quickSightConfiguration"))
     Application.struct_class = Types::Application
 
     Applications.member = Shapes::ShapeRef.new(shape: Application)
@@ -544,6 +624,15 @@ module Aws::QBusiness
 
     AppliedCreatorModeConfiguration.add_member(:creator_mode_control, Shapes::ShapeRef.new(shape: CreatorModeControl, required: true, location_name: "creatorModeControl"))
     AppliedCreatorModeConfiguration.struct_class = Types::AppliedCreatorModeConfiguration
+
+    AssociatePermissionRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    AssociatePermissionRequest.add_member(:statement_id, Shapes::ShapeRef.new(shape: StatementId, required: true, location_name: "statementId"))
+    AssociatePermissionRequest.add_member(:actions, Shapes::ShapeRef.new(shape: QIamActions, required: true, location_name: "actions"))
+    AssociatePermissionRequest.add_member(:principal, Shapes::ShapeRef.new(shape: PrincipalRoleArn, required: true, location_name: "principal"))
+    AssociatePermissionRequest.struct_class = Types::AssociatePermissionRequest
+
+    AssociatePermissionResponse.add_member(:statement, Shapes::ShapeRef.new(shape: String, location_name: "statement"))
+    AssociatePermissionResponse.struct_class = Types::AssociatePermissionResponse
 
     Attachment.add_member(:attachment_id, Shapes::ShapeRef.new(shape: AttachmentId, location_name: "attachmentId"))
     Attachment.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location_name: "conversationId"))
@@ -733,6 +822,12 @@ module Aws::QBusiness
     ContentRetrievalRule.add_member(:eligible_data_sources, Shapes::ShapeRef.new(shape: EligibleDataSources, location_name: "eligibleDataSources"))
     ContentRetrievalRule.struct_class = Types::ContentRetrievalRule
 
+    ContentSource.add_member(:retriever, Shapes::ShapeRef.new(shape: RetrieverContentSource, location_name: "retriever"))
+    ContentSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ContentSource.add_member_subclass(:retriever, Types::ContentSource::Retriever)
+    ContentSource.add_member_subclass(:unknown, Types::ContentSource::Unknown)
+    ContentSource.struct_class = Types::ContentSource
+
     Conversation.add_member(:conversation_id, Shapes::ShapeRef.new(shape: ConversationId, location_name: "conversationId"))
     Conversation.add_member(:title, Shapes::ShapeRef.new(shape: ConversationTitle, location_name: "title"))
     Conversation.add_member(:start_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "startTime"))
@@ -763,11 +858,25 @@ module Aws::QBusiness
     CreateApplicationRequest.add_member(:attachments_configuration, Shapes::ShapeRef.new(shape: AttachmentsConfiguration, location_name: "attachmentsConfiguration"))
     CreateApplicationRequest.add_member(:q_apps_configuration, Shapes::ShapeRef.new(shape: QAppsConfiguration, location_name: "qAppsConfiguration"))
     CreateApplicationRequest.add_member(:personalization_configuration, Shapes::ShapeRef.new(shape: PersonalizationConfiguration, location_name: "personalizationConfiguration"))
+    CreateApplicationRequest.add_member(:quick_sight_configuration, Shapes::ShapeRef.new(shape: QuickSightConfiguration, location_name: "quickSightConfiguration"))
     CreateApplicationRequest.struct_class = Types::CreateApplicationRequest
 
     CreateApplicationResponse.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, location_name: "applicationId"))
     CreateApplicationResponse.add_member(:application_arn, Shapes::ShapeRef.new(shape: ApplicationArn, location_name: "applicationArn"))
     CreateApplicationResponse.struct_class = Types::CreateApplicationResponse
+
+    CreateDataAccessorRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    CreateDataAccessorRequest.add_member(:principal, Shapes::ShapeRef.new(shape: PrincipalRoleArn, required: true, location_name: "principal"))
+    CreateDataAccessorRequest.add_member(:action_configurations, Shapes::ShapeRef.new(shape: ActionConfigurationList, required: true, location_name: "actionConfigurations"))
+    CreateDataAccessorRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    CreateDataAccessorRequest.add_member(:display_name, Shapes::ShapeRef.new(shape: DataAccessorName, required: true, location_name: "displayName"))
+    CreateDataAccessorRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
+    CreateDataAccessorRequest.struct_class = Types::CreateDataAccessorRequest
+
+    CreateDataAccessorResponse.add_member(:data_accessor_id, Shapes::ShapeRef.new(shape: DataAccessorId, required: true, location_name: "dataAccessorId"))
+    CreateDataAccessorResponse.add_member(:idc_application_arn, Shapes::ShapeRef.new(shape: IdcApplicationArn, required: true, location_name: "idcApplicationArn"))
+    CreateDataAccessorResponse.add_member(:data_accessor_arn, Shapes::ShapeRef.new(shape: DataAccessorArn, required: true, location_name: "dataAccessorArn"))
+    CreateDataAccessorResponse.struct_class = Types::CreateDataAccessorResponse
 
     CreateDataSourceRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     CreateDataSourceRequest.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, required: true, location: "uri", location_name: "indexId"))
@@ -849,6 +958,7 @@ module Aws::QBusiness
     CreateWebExperienceRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     CreateWebExperienceRequest.add_member(:identity_provider_configuration, Shapes::ShapeRef.new(shape: IdentityProviderConfiguration, location_name: "identityProviderConfiguration"))
     CreateWebExperienceRequest.add_member(:browser_extension_configuration, Shapes::ShapeRef.new(shape: BrowserExtensionConfiguration, location_name: "browserExtensionConfiguration"))
+    CreateWebExperienceRequest.add_member(:customization_configuration, Shapes::ShapeRef.new(shape: CustomizationConfiguration, location_name: "customizationConfiguration"))
     CreateWebExperienceRequest.struct_class = Types::CreateWebExperienceRequest
 
     CreateWebExperienceResponse.add_member(:web_experience_id, Shapes::ShapeRef.new(shape: WebExperienceId, location_name: "webExperienceId"))
@@ -862,6 +972,23 @@ module Aws::QBusiness
     CustomPluginConfiguration.add_member(:api_schema_type, Shapes::ShapeRef.new(shape: APISchemaType, required: true, location_name: "apiSchemaType"))
     CustomPluginConfiguration.add_member(:api_schema, Shapes::ShapeRef.new(shape: APISchema, required: true, location_name: "apiSchema"))
     CustomPluginConfiguration.struct_class = Types::CustomPluginConfiguration
+
+    CustomizationConfiguration.add_member(:custom_css_url, Shapes::ShapeRef.new(shape: CustomCSSUrl, location_name: "customCSSUrl"))
+    CustomizationConfiguration.add_member(:logo_url, Shapes::ShapeRef.new(shape: LogoUrl, location_name: "logoUrl"))
+    CustomizationConfiguration.add_member(:font_url, Shapes::ShapeRef.new(shape: FontUrl, location_name: "fontUrl"))
+    CustomizationConfiguration.add_member(:favicon_url, Shapes::ShapeRef.new(shape: FaviconUrl, location_name: "faviconUrl"))
+    CustomizationConfiguration.struct_class = Types::CustomizationConfiguration
+
+    DataAccessor.add_member(:display_name, Shapes::ShapeRef.new(shape: DataAccessorName, location_name: "displayName"))
+    DataAccessor.add_member(:data_accessor_id, Shapes::ShapeRef.new(shape: DataAccessorId, location_name: "dataAccessorId"))
+    DataAccessor.add_member(:data_accessor_arn, Shapes::ShapeRef.new(shape: DataAccessorArn, location_name: "dataAccessorArn"))
+    DataAccessor.add_member(:idc_application_arn, Shapes::ShapeRef.new(shape: IdcApplicationArn, location_name: "idcApplicationArn"))
+    DataAccessor.add_member(:principal, Shapes::ShapeRef.new(shape: PrincipalRoleArn, location_name: "principal"))
+    DataAccessor.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    DataAccessor.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "updatedAt"))
+    DataAccessor.struct_class = Types::DataAccessor
+
+    DataAccessors.member = Shapes::ShapeRef.new(shape: DataAccessor)
 
     DataSource.add_member(:display_name, Shapes::ShapeRef.new(shape: DataSourceName, location_name: "displayName"))
     DataSource.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, location_name: "dataSourceId"))
@@ -918,6 +1045,12 @@ module Aws::QBusiness
 
     DeleteConversationResponse.struct_class = Types::DeleteConversationResponse
 
+    DeleteDataAccessorRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    DeleteDataAccessorRequest.add_member(:data_accessor_id, Shapes::ShapeRef.new(shape: DataAccessorId, required: true, location: "uri", location_name: "dataAccessorId"))
+    DeleteDataAccessorRequest.struct_class = Types::DeleteDataAccessorRequest
+
+    DeleteDataAccessorResponse.struct_class = Types::DeleteDataAccessorResponse
+
     DeleteDataSourceRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     DeleteDataSourceRequest.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, required: true, location: "uri", location_name: "indexId"))
     DeleteDataSourceRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, required: true, location: "uri", location_name: "dataSourceId"))
@@ -967,6 +1100,12 @@ module Aws::QBusiness
     DeleteWebExperienceRequest.struct_class = Types::DeleteWebExperienceRequest
 
     DeleteWebExperienceResponse.struct_class = Types::DeleteWebExperienceResponse
+
+    DisassociatePermissionRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    DisassociatePermissionRequest.add_member(:statement_id, Shapes::ShapeRef.new(shape: String, required: true, location: "uri", location_name: "statementId"))
+    DisassociatePermissionRequest.struct_class = Types::DisassociatePermissionRequest
+
+    DisassociatePermissionResponse.struct_class = Types::DisassociatePermissionResponse
 
     Document.add_member(:id, Shapes::ShapeRef.new(shape: DocumentId, required: true, location_name: "id"))
     Document.add_member(:attributes, Shapes::ShapeRef.new(shape: DocumentAttributes, location_name: "attributes"))
@@ -1108,6 +1247,7 @@ module Aws::QBusiness
     GetApplicationResponse.add_member(:personalization_configuration, Shapes::ShapeRef.new(shape: PersonalizationConfiguration, location_name: "personalizationConfiguration"))
     GetApplicationResponse.add_member(:auto_subscription_configuration, Shapes::ShapeRef.new(shape: AutoSubscriptionConfiguration, location_name: "autoSubscriptionConfiguration"))
     GetApplicationResponse.add_member(:client_ids_for_oidc, Shapes::ShapeRef.new(shape: ClientIdsForOIDC, location_name: "clientIdsForOIDC"))
+    GetApplicationResponse.add_member(:quick_sight_configuration, Shapes::ShapeRef.new(shape: QuickSightConfiguration, location_name: "quickSightConfiguration"))
     GetApplicationResponse.struct_class = Types::GetApplicationResponse
 
     GetChatControlsConfigurationRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
@@ -1121,6 +1261,21 @@ module Aws::QBusiness
     GetChatControlsConfigurationResponse.add_member(:creator_mode_configuration, Shapes::ShapeRef.new(shape: AppliedCreatorModeConfiguration, location_name: "creatorModeConfiguration"))
     GetChatControlsConfigurationResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     GetChatControlsConfigurationResponse.struct_class = Types::GetChatControlsConfigurationResponse
+
+    GetDataAccessorRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    GetDataAccessorRequest.add_member(:data_accessor_id, Shapes::ShapeRef.new(shape: DataAccessorId, required: true, location: "uri", location_name: "dataAccessorId"))
+    GetDataAccessorRequest.struct_class = Types::GetDataAccessorRequest
+
+    GetDataAccessorResponse.add_member(:display_name, Shapes::ShapeRef.new(shape: DataAccessorName, location_name: "displayName"))
+    GetDataAccessorResponse.add_member(:data_accessor_id, Shapes::ShapeRef.new(shape: DataAccessorId, location_name: "dataAccessorId"))
+    GetDataAccessorResponse.add_member(:data_accessor_arn, Shapes::ShapeRef.new(shape: DataAccessorArn, location_name: "dataAccessorArn"))
+    GetDataAccessorResponse.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, location_name: "applicationId"))
+    GetDataAccessorResponse.add_member(:idc_application_arn, Shapes::ShapeRef.new(shape: IdcApplicationArn, location_name: "idcApplicationArn"))
+    GetDataAccessorResponse.add_member(:principal, Shapes::ShapeRef.new(shape: PrincipalRoleArn, location_name: "principal"))
+    GetDataAccessorResponse.add_member(:action_configurations, Shapes::ShapeRef.new(shape: ActionConfigurationList, location_name: "actionConfigurations"))
+    GetDataAccessorResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    GetDataAccessorResponse.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "updatedAt"))
+    GetDataAccessorResponse.struct_class = Types::GetDataAccessorResponse
 
     GetDataSourceRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     GetDataSourceRequest.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, required: true, location: "uri", location_name: "indexId"))
@@ -1203,6 +1358,12 @@ module Aws::QBusiness
     GetPluginResponse.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "updatedAt"))
     GetPluginResponse.struct_class = Types::GetPluginResponse
 
+    GetPolicyRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    GetPolicyRequest.struct_class = Types::GetPolicyRequest
+
+    GetPolicyResponse.add_member(:policy, Shapes::ShapeRef.new(shape: String, location_name: "policy"))
+    GetPolicyResponse.struct_class = Types::GetPolicyResponse
+
     GetRetrieverRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     GetRetrieverRequest.add_member(:retriever_id, Shapes::ShapeRef.new(shape: RetrieverId, required: true, location: "uri", location_name: "retrieverId"))
     GetRetrieverRequest.struct_class = Types::GetRetrieverRequest
@@ -1247,6 +1408,7 @@ module Aws::QBusiness
     GetWebExperienceResponse.add_member(:authentication_configuration, Shapes::ShapeRef.new(shape: WebExperienceAuthConfiguration, deprecated: true, location_name: "authenticationConfiguration", metadata: {"deprecatedMessage"=>"Property associated with legacy SAML IdP flow. Deprecated in favor of using AWS IAM Identity Center for user management."}))
     GetWebExperienceResponse.add_member(:error, Shapes::ShapeRef.new(shape: ErrorDetail, location_name: "error"))
     GetWebExperienceResponse.add_member(:browser_extension_configuration, Shapes::ShapeRef.new(shape: BrowserExtensionConfiguration, location_name: "browserExtensionConfiguration"))
+    GetWebExperienceResponse.add_member(:customization_configuration, Shapes::ShapeRef.new(shape: CustomizationConfiguration, location_name: "customizationConfiguration"))
     GetWebExperienceResponse.struct_class = Types::GetWebExperienceResponse
 
     GroupMembers.add_member(:member_groups, Shapes::ShapeRef.new(shape: MemberGroups, location_name: "memberGroups"))
@@ -1271,6 +1433,10 @@ module Aws::QBusiness
     HookConfiguration.add_member(:s3_bucket_name, Shapes::ShapeRef.new(shape: S3BucketName, location_name: "s3BucketName"))
     HookConfiguration.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "roleArn"))
     HookConfiguration.struct_class = Types::HookConfiguration
+
+    IdcAuthConfiguration.add_member(:idc_application_arn, Shapes::ShapeRef.new(shape: IdcApplicationArn, required: true, location_name: "idcApplicationArn"))
+    IdcAuthConfiguration.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    IdcAuthConfiguration.struct_class = Types::IdcAuthConfiguration
 
     IdentityProviderConfiguration.add_member(:saml_configuration, Shapes::ShapeRef.new(shape: SamlProviderConfiguration, location_name: "samlConfiguration"))
     IdentityProviderConfiguration.add_member(:open_id_connect_configuration, Shapes::ShapeRef.new(shape: OpenIDConnectProviderConfiguration, location_name: "openIDConnectConfiguration"))
@@ -1343,6 +1509,15 @@ module Aws::QBusiness
     ListConversationsResponse.add_member(:conversations, Shapes::ShapeRef.new(shape: Conversations, location_name: "conversations"))
     ListConversationsResponse.struct_class = Types::ListConversationsResponse
 
+    ListDataAccessorsRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    ListDataAccessorsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken1500, location: "querystring", location_name: "nextToken"))
+    ListDataAccessorsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsIntegerForListDataAccessors, location: "querystring", location_name: "maxResults"))
+    ListDataAccessorsRequest.struct_class = Types::ListDataAccessorsRequest
+
+    ListDataAccessorsResponse.add_member(:data_accessors, Shapes::ShapeRef.new(shape: DataAccessors, location_name: "dataAccessors"))
+    ListDataAccessorsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken1500, location_name: "nextToken"))
+    ListDataAccessorsResponse.struct_class = Types::ListDataAccessorsResponse
+
     ListDataSourceSyncJobsRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, required: true, location: "uri", location_name: "dataSourceId"))
     ListDataSourceSyncJobsRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     ListDataSourceSyncJobsRequest.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, required: true, location: "uri", location_name: "indexId"))
@@ -1409,6 +1584,35 @@ module Aws::QBusiness
     ListMessagesResponse.add_member(:messages, Shapes::ShapeRef.new(shape: Messages, location_name: "messages"))
     ListMessagesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListMessagesResponse.struct_class = Types::ListMessagesResponse
+
+    ListPluginActionsRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    ListPluginActionsRequest.add_member(:plugin_id, Shapes::ShapeRef.new(shape: PluginId, required: true, location: "uri", location_name: "pluginId"))
+    ListPluginActionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListPluginActionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsIntegerForListPluginActions, location: "querystring", location_name: "maxResults"))
+    ListPluginActionsRequest.struct_class = Types::ListPluginActionsRequest
+
+    ListPluginActionsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListPluginActionsResponse.add_member(:items, Shapes::ShapeRef.new(shape: Actions, location_name: "items"))
+    ListPluginActionsResponse.struct_class = Types::ListPluginActionsResponse
+
+    ListPluginTypeActionsRequest.add_member(:plugin_type, Shapes::ShapeRef.new(shape: PluginType, required: true, location: "uri", location_name: "pluginType"))
+    ListPluginTypeActionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListPluginTypeActionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsIntegerForListPluginTypeActions, location: "querystring", location_name: "maxResults"))
+    ListPluginTypeActionsRequest.struct_class = Types::ListPluginTypeActionsRequest
+
+    ListPluginTypeActionsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListPluginTypeActionsResponse.add_member(:items, Shapes::ShapeRef.new(shape: Actions, location_name: "items"))
+    ListPluginTypeActionsResponse.struct_class = Types::ListPluginTypeActionsResponse
+
+    ListPluginTypeMetadataRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListPluginTypeMetadataRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsIntegerForListPluginTypeMetadata, location: "querystring", location_name: "maxResults"))
+    ListPluginTypeMetadataRequest.struct_class = Types::ListPluginTypeMetadataRequest
+
+    ListPluginTypeMetadataResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListPluginTypeMetadataResponse.add_member(:items, Shapes::ShapeRef.new(shape: ListPluginTypeMetadataSummaries, location_name: "items"))
+    ListPluginTypeMetadataResponse.struct_class = Types::ListPluginTypeMetadataResponse
+
+    ListPluginTypeMetadataSummaries.member = Shapes::ShapeRef.new(shape: PluginTypeMetadataSummary)
 
     ListPluginsRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     ListPluginsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
@@ -1498,6 +1702,8 @@ module Aws::QBusiness
 
     OAuth2ClientCredentialConfiguration.add_member(:secret_arn, Shapes::ShapeRef.new(shape: SecretArn, required: true, location_name: "secretArn"))
     OAuth2ClientCredentialConfiguration.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "roleArn"))
+    OAuth2ClientCredentialConfiguration.add_member(:authorization_url, Shapes::ShapeRef.new(shape: Url, location_name: "authorizationUrl"))
+    OAuth2ClientCredentialConfiguration.add_member(:token_url, Shapes::ShapeRef.new(shape: Url, location_name: "tokenUrl"))
     OAuth2ClientCredentialConfiguration.struct_class = Types::OAuth2ClientCredentialConfiguration
 
     OpenIDConnectProviderConfiguration.add_member(:secrets_arn, Shapes::ShapeRef.new(shape: SecretArn, required: true, location_name: "secretsArn"))
@@ -1520,15 +1726,22 @@ module Aws::QBusiness
     PluginAuthConfiguration.add_member(:basic_auth_configuration, Shapes::ShapeRef.new(shape: BasicAuthConfiguration, location_name: "basicAuthConfiguration"))
     PluginAuthConfiguration.add_member(:o_auth_2_client_credential_configuration, Shapes::ShapeRef.new(shape: OAuth2ClientCredentialConfiguration, location_name: "oAuth2ClientCredentialConfiguration"))
     PluginAuthConfiguration.add_member(:no_auth_configuration, Shapes::ShapeRef.new(shape: NoAuthConfiguration, location_name: "noAuthConfiguration"))
+    PluginAuthConfiguration.add_member(:idc_auth_configuration, Shapes::ShapeRef.new(shape: IdcAuthConfiguration, location_name: "idcAuthConfiguration"))
     PluginAuthConfiguration.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     PluginAuthConfiguration.add_member_subclass(:basic_auth_configuration, Types::PluginAuthConfiguration::BasicAuthConfiguration)
     PluginAuthConfiguration.add_member_subclass(:o_auth_2_client_credential_configuration, Types::PluginAuthConfiguration::OAuth2ClientCredentialConfiguration)
     PluginAuthConfiguration.add_member_subclass(:no_auth_configuration, Types::PluginAuthConfiguration::NoAuthConfiguration)
+    PluginAuthConfiguration.add_member_subclass(:idc_auth_configuration, Types::PluginAuthConfiguration::IdcAuthConfiguration)
     PluginAuthConfiguration.add_member_subclass(:unknown, Types::PluginAuthConfiguration::Unknown)
     PluginAuthConfiguration.struct_class = Types::PluginAuthConfiguration
 
     PluginConfiguration.add_member(:plugin_id, Shapes::ShapeRef.new(shape: PluginId, required: true, location_name: "pluginId"))
     PluginConfiguration.struct_class = Types::PluginConfiguration
+
+    PluginTypeMetadataSummary.add_member(:type, Shapes::ShapeRef.new(shape: PluginType, location_name: "type"))
+    PluginTypeMetadataSummary.add_member(:category, Shapes::ShapeRef.new(shape: PluginTypeCategory, location_name: "category"))
+    PluginTypeMetadataSummary.add_member(:description, Shapes::ShapeRef.new(shape: String, location_name: "description"))
+    PluginTypeMetadataSummary.struct_class = Types::PluginTypeMetadataSummary
 
     Plugins.member = Shapes::ShapeRef.new(shape: Plugin)
 
@@ -1574,6 +1787,21 @@ module Aws::QBusiness
     QAppsConfiguration.add_member(:q_apps_control_mode, Shapes::ShapeRef.new(shape: QAppsControlMode, required: true, location_name: "qAppsControlMode"))
     QAppsConfiguration.struct_class = Types::QAppsConfiguration
 
+    QIamActions.member = Shapes::ShapeRef.new(shape: QIamAction)
+
+    QuickSightConfiguration.add_member(:client_namespace, Shapes::ShapeRef.new(shape: ClientNamespace, required: true, location_name: "clientNamespace"))
+    QuickSightConfiguration.struct_class = Types::QuickSightConfiguration
+
+    RelevantContent.add_member(:content, Shapes::ShapeRef.new(shape: String, location_name: "content"))
+    RelevantContent.add_member(:document_id, Shapes::ShapeRef.new(shape: DocumentId, location_name: "documentId"))
+    RelevantContent.add_member(:document_title, Shapes::ShapeRef.new(shape: Title, location_name: "documentTitle"))
+    RelevantContent.add_member(:document_uri, Shapes::ShapeRef.new(shape: Url, location_name: "documentUri"))
+    RelevantContent.add_member(:document_attributes, Shapes::ShapeRef.new(shape: DocumentAttributes, location_name: "documentAttributes"))
+    RelevantContent.add_member(:score_attributes, Shapes::ShapeRef.new(shape: ScoreAttributes, location_name: "scoreAttributes"))
+    RelevantContent.struct_class = Types::RelevantContent
+
+    RelevantContentList.member = Shapes::ShapeRef.new(shape: RelevantContent)
+
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, required: true, location_name: "message"))
     ResourceNotFoundException.add_member(:resource_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceId"))
     ResourceNotFoundException.add_member(:resource_type, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceType"))
@@ -1593,6 +1821,9 @@ module Aws::QBusiness
     RetrieverConfiguration.add_member_subclass(:kendra_index_configuration, Types::RetrieverConfiguration::KendraIndexConfiguration)
     RetrieverConfiguration.add_member_subclass(:unknown, Types::RetrieverConfiguration::Unknown)
     RetrieverConfiguration.struct_class = Types::RetrieverConfiguration
+
+    RetrieverContentSource.add_member(:retriever_id, Shapes::ShapeRef.new(shape: RetrieverId, required: true, location_name: "retrieverId"))
+    RetrieverContentSource.struct_class = Types::RetrieverContentSource
 
     Retrievers.member = Shapes::ShapeRef.new(shape: Retriever)
 
@@ -1624,6 +1855,23 @@ module Aws::QBusiness
 
     SamlProviderConfiguration.add_member(:authentication_url, Shapes::ShapeRef.new(shape: SamlAuthenticationUrl, required: true, location_name: "authenticationUrl"))
     SamlProviderConfiguration.struct_class = Types::SamlProviderConfiguration
+
+    ScoreAttributes.add_member(:score_confidence, Shapes::ShapeRef.new(shape: ScoreConfidence, location_name: "scoreConfidence"))
+    ScoreAttributes.struct_class = Types::ScoreAttributes
+
+    SearchRelevantContentRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    SearchRelevantContentRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location: "querystring", location_name: "userId"))
+    SearchRelevantContentRequest.add_member(:user_groups, Shapes::ShapeRef.new(shape: UserGroups, location: "querystring", location_name: "userGroups"))
+    SearchRelevantContentRequest.add_member(:query_text, Shapes::ShapeRef.new(shape: QueryText, required: true, location_name: "queryText"))
+    SearchRelevantContentRequest.add_member(:content_source, Shapes::ShapeRef.new(shape: ContentSource, required: true, location_name: "contentSource"))
+    SearchRelevantContentRequest.add_member(:attribute_filter, Shapes::ShapeRef.new(shape: AttributeFilter, location_name: "attributeFilter"))
+    SearchRelevantContentRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
+    SearchRelevantContentRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    SearchRelevantContentRequest.struct_class = Types::SearchRelevantContentRequest
+
+    SearchRelevantContentResponse.add_member(:relevant_content, Shapes::ShapeRef.new(shape: RelevantContentList, location_name: "relevantContent"))
+    SearchRelevantContentResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    SearchRelevantContentResponse.struct_class = Types::SearchRelevantContentResponse
 
     SecurityGroupIds.member = Shapes::ShapeRef.new(shape: SecurityGroupId)
 
@@ -1749,6 +1997,14 @@ module Aws::QBusiness
 
     UpdateChatControlsConfigurationResponse.struct_class = Types::UpdateChatControlsConfigurationResponse
 
+    UpdateDataAccessorRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
+    UpdateDataAccessorRequest.add_member(:data_accessor_id, Shapes::ShapeRef.new(shape: DataAccessorId, required: true, location: "uri", location_name: "dataAccessorId"))
+    UpdateDataAccessorRequest.add_member(:action_configurations, Shapes::ShapeRef.new(shape: ActionConfigurationList, required: true, location_name: "actionConfigurations"))
+    UpdateDataAccessorRequest.add_member(:display_name, Shapes::ShapeRef.new(shape: DataAccessorName, location_name: "displayName"))
+    UpdateDataAccessorRequest.struct_class = Types::UpdateDataAccessorRequest
+
+    UpdateDataAccessorResponse.struct_class = Types::UpdateDataAccessorResponse
+
     UpdateDataSourceRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     UpdateDataSourceRequest.add_member(:index_id, Shapes::ShapeRef.new(shape: IndexId, required: true, location: "uri", location_name: "indexId"))
     UpdateDataSourceRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, required: true, location: "uri", location_name: "dataSourceId"))
@@ -1816,6 +2072,7 @@ module Aws::QBusiness
     UpdateWebExperienceRequest.add_member(:identity_provider_configuration, Shapes::ShapeRef.new(shape: IdentityProviderConfiguration, location_name: "identityProviderConfiguration"))
     UpdateWebExperienceRequest.add_member(:origins, Shapes::ShapeRef.new(shape: WebExperienceOrigins, location_name: "origins"))
     UpdateWebExperienceRequest.add_member(:browser_extension_configuration, Shapes::ShapeRef.new(shape: BrowserExtensionConfiguration, location_name: "browserExtensionConfiguration"))
+    UpdateWebExperienceRequest.add_member(:customization_configuration, Shapes::ShapeRef.new(shape: CustomizationConfiguration, location_name: "customizationConfiguration"))
     UpdateWebExperienceRequest.struct_class = Types::UpdateWebExperienceRequest
 
     UpdateWebExperienceResponse.struct_class = Types::UpdateWebExperienceResponse
@@ -1882,6 +2139,21 @@ module Aws::QBusiness
         "signingName" => "qbusiness",
         "uid" => "qbusiness-2023-11-27",
       }
+
+      api.add_operation(:associate_permission, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "AssociatePermission"
+        o.http_method = "POST"
+        o.http_request_uri = "/applications/{applicationId}/policy"
+        o.input = Shapes::ShapeRef.new(shape: AssociatePermissionRequest)
+        o.output = Shapes::ShapeRef.new(shape: AssociatePermissionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
 
       api.add_operation(:batch_delete_document, Seahorse::Model::Operation.new.tap do |o|
         o.name = "BatchDeleteDocument"
@@ -1951,6 +2223,21 @@ module Aws::QBusiness
         o.http_request_uri = "/applications"
         o.input = Shapes::ShapeRef.new(shape: CreateApplicationRequest)
         o.output = Shapes::ShapeRef.new(shape: CreateApplicationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:create_data_accessor, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateDataAccessor"
+        o.http_method = "POST"
+        o.http_request_uri = "/applications/{applicationId}/dataaccessors"
+        o.input = Shapes::ShapeRef.new(shape: CreateDataAccessorRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateDataAccessorResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
@@ -2091,6 +2378,20 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
+      api.add_operation(:delete_data_accessor, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteDataAccessor"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/applications/{applicationId}/dataaccessors/{dataAccessorId}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteDataAccessorRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteDataAccessorResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
       api.add_operation(:delete_data_source, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteDataSource"
         o.http_method = "DELETE"
@@ -2189,6 +2490,20 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
+      api.add_operation(:disassociate_permission, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DisassociatePermission"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/applications/{applicationId}/policy/{statementId}"
+        o.input = Shapes::ShapeRef.new(shape: DisassociatePermissionRequest)
+        o.output = Shapes::ShapeRef.new(shape: DisassociatePermissionResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
       api.add_operation(:get_application, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetApplication"
         o.http_method = "GET"
@@ -2219,6 +2534,19 @@ module Aws::QBusiness
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:get_data_accessor, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetDataAccessor"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/dataaccessors/{dataAccessorId}"
+        o.input = Shapes::ShapeRef.new(shape: GetDataAccessorRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetDataAccessorResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:get_data_source, Seahorse::Model::Operation.new.tap do |o|
@@ -2282,6 +2610,19 @@ module Aws::QBusiness
         o.http_request_uri = "/applications/{applicationId}/plugins/{pluginId}"
         o.input = Shapes::ShapeRef.new(shape: GetPluginRequest)
         o.output = Shapes::ShapeRef.new(shape: GetPluginResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:get_policy, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetPolicy"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/policy"
+        o.input = Shapes::ShapeRef.new(shape: GetPolicyRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetPolicyResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
@@ -2376,6 +2717,25 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_data_accessors, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListDataAccessors"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/dataaccessors"
+        o.input = Shapes::ShapeRef.new(shape: ListDataAccessorsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListDataAccessorsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
@@ -2504,6 +2864,61 @@ module Aws::QBusiness
         )
       end)
 
+      api.add_operation(:list_plugin_actions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListPluginActions"
+        o.http_method = "GET"
+        o.http_request_uri = "/applications/{applicationId}/plugins/{pluginId}/actions"
+        o.input = Shapes::ShapeRef.new(shape: ListPluginActionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListPluginActionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_plugin_type_actions, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListPluginTypeActions"
+        o.http_method = "GET"
+        o.http_request_uri = "/pluginTypes/{pluginType}/actions"
+        o.input = Shapes::ShapeRef.new(shape: ListPluginTypeActionsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListPluginTypeActionsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_plugin_type_metadata, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListPluginTypeMetadata"
+        o.http_method = "GET"
+        o.http_request_uri = "/pluginTypeMetadata"
+        o.input = Shapes::ShapeRef.new(shape: ListPluginTypeMetadataRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListPluginTypeMetadataResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_plugins, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListPlugins"
         o.http_method = "GET"
@@ -2602,6 +3017,26 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
       end)
 
+      api.add_operation(:search_relevant_content, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "SearchRelevantContent"
+        o.http_method = "POST"
+        o.http_request_uri = "/applications/{applicationId}/relevant-content"
+        o.input = Shapes::ShapeRef.new(shape: SearchRelevantContentRequest)
+        o.output = Shapes::ShapeRef.new(shape: SearchRelevantContentResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: LicenseNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:start_data_source_sync_job, Seahorse::Model::Operation.new.tap do |o|
         o.name = "StartDataSourceSyncJob"
         o.http_method = "POST"
@@ -2685,6 +3120,20 @@ module Aws::QBusiness
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:update_data_accessor, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateDataAccessor"
+        o.http_method = "PUT"
+        o.http_request_uri = "/applications/{applicationId}/dataaccessors/{dataAccessorId}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateDataAccessorRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateDataAccessorResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:update_data_source, Seahorse::Model::Operation.new.tap do |o|

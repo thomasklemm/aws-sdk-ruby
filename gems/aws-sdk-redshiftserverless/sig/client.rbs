@@ -504,6 +504,19 @@ module Aws
                                 ) -> _ListEndpointAccessResponseSuccess
                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListEndpointAccessResponseSuccess
 
+      interface _ListManagedWorkgroupsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListManagedWorkgroupsResponse]
+        def managed_workgroups: () -> ::Array[Types::ManagedWorkgroupListItem]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/RedshiftServerless/Client.html#list_managed_workgroups-instance_method
+      def list_managed_workgroups: (
+                                     ?max_results: ::Integer,
+                                     ?next_token: ::String,
+                                     ?source_arn: ::String
+                                   ) -> _ListManagedWorkgroupsResponseSuccess
+                                 | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListManagedWorkgroupsResponseSuccess
+
       interface _ListNamespacesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListNamespacesResponse]
         def namespaces: () -> ::Array[Types::Namespace]

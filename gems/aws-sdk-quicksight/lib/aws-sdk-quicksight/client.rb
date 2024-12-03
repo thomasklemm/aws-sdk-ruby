@@ -4617,6 +4617,46 @@ module Aws::QuickSight
       req.send_request(options)
     end
 
+    # Deletes a linked Amazon Q Business application from an Amazon
+    # QuickSight account
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon QuickSight account that you want to disconnect
+    #   from a Amazon Q Business application.
+    #
+    # @option params [String] :namespace
+    #   The Amazon QuickSight namespace that you want to delete a linked
+    #   Amazon Q Business application from. If this field is left blank, the
+    #   Amazon Q Business application is deleted from the default namespace.
+    #   Currently, the default namespace is the only valid value for this
+    #   parameter.
+    #
+    # @return [Types::DeleteDefaultQBusinessApplicationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteDefaultQBusinessApplicationResponse#request_id #request_id} => String
+    #   * {Types::DeleteDefaultQBusinessApplicationResponse#status #status} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_default_q_business_application({
+    #     aws_account_id: "AwsAccountId", # required
+    #     namespace: "Namespace",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteDefaultQBusinessApplication AWS API Documentation
+    #
+    # @overload delete_default_q_business_application(params = {})
+    # @param [Hash] params ({})
+    def delete_default_q_business_application(params = {}, options = {})
+      req = build_request(:delete_default_q_business_application, params)
+      req.send_request(options)
+    end
+
     # Deletes an empty folder.
     #
     # @option params [required, String] :aws_account_id
@@ -4849,7 +4889,7 @@ module Aws::QuickSight
     #
     #   resp = client.delete_identity_propagation_config({
     #     aws_account_id: "AwsAccountId", # required
-    #     service: "REDSHIFT", # required, accepts REDSHIFT
+    #     service: "REDSHIFT", # required, accepts REDSHIFT, QBUSINESS
     #   })
     #
     # @example Response structure
@@ -7438,6 +7478,47 @@ module Aws::QuickSight
       req.send_request(options)
     end
 
+    # Describes a Amazon Q Business application that is linked to an Amazon
+    # QuickSight account.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon QuickSight account that is linked to the Amazon Q
+    #   Business application that you want described.
+    #
+    # @option params [String] :namespace
+    #   The Amazon QuickSight namespace that contains the linked Amazon Q
+    #   Business application. If this field is left blank, the default
+    #   namespace is used. Currently, the default namespace is the only valid
+    #   value for this parameter.
+    #
+    # @return [Types::DescribeDefaultQBusinessApplicationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeDefaultQBusinessApplicationResponse#request_id #request_id} => String
+    #   * {Types::DescribeDefaultQBusinessApplicationResponse#status #status} => Integer
+    #   * {Types::DescribeDefaultQBusinessApplicationResponse#application_id #application_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_default_q_business_application({
+    #     aws_account_id: "AwsAccountId", # required
+    #     namespace: "Namespace",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #   resp.application_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDefaultQBusinessApplication AWS API Documentation
+    #
+    # @overload describe_default_q_business_application(params = {})
+    # @param [Hash] params ({})
+    def describe_default_q_business_application(params = {}, options = {})
+      req = build_request(:describe_default_q_business_application, params)
+      req.send_request(options)
+    end
+
     # Describes a folder.
     #
     # @option params [required, String] :aws_account_id
@@ -7960,6 +8041,39 @@ module Aws::QuickSight
     # @param [Hash] params ({})
     def describe_q_personalization_configuration(params = {}, options = {})
       req = build_request(:describe_q_personalization_configuration, params)
+      req.send_request(options)
+    end
+
+    # Describes the state of a Amazon QuickSight Q Search configuration.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services account that contains the Amazon
+    #   QuickSight Q Search configuration that the user wants described.
+    #
+    # @return [Types::DescribeQuickSightQSearchConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeQuickSightQSearchConfigurationResponse#q_search_status #q_search_status} => String
+    #   * {Types::DescribeQuickSightQSearchConfigurationResponse#request_id #request_id} => String
+    #   * {Types::DescribeQuickSightQSearchConfigurationResponse#status #status} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_quick_sight_q_search_configuration({
+    #     aws_account_id: "AwsAccountId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.q_search_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeQuickSightQSearchConfiguration AWS API Documentation
+    #
+    # @overload describe_quick_sight_q_search_configuration(params = {})
+    # @param [Hash] params ({})
+    def describe_quick_sight_q_search_configuration(params = {}, options = {})
+      req = build_request(:describe_quick_sight_q_search_configuration, params)
       req.send_request(options)
     end
 
@@ -9227,6 +9341,116 @@ module Aws::QuickSight
     # @param [Hash] params ({})
     def generate_embed_url_for_registered_user(params = {}, options = {})
       req = build_request(:generate_embed_url_for_registered_user, params)
+      req.send_request(options)
+    end
+
+    # Generates an embed URL that you can use to embed an Amazon QuickSight
+    # experience in your website. This action can be used for any type of
+    # user that is registered in an Amazon QuickSight account that uses IAM
+    # Identity Center for authentication. This API requires
+    # [identity-enhanced IAM Role sessions][1] for the authenticated user
+    # that the API call is being made for.
+    #
+    # This API uses [trusted identity propagation][2] to ensure that an end
+    # user is authenticated and receives the embed URL that is specific to
+    # that user. The IAM Identity Center application that the user has
+    # logged into needs to have [trusted Identity Propagation enabled for
+    # Amazon QuickSight][3] with the scope value set to `quicksight:read`.
+    # Before you use this action, make sure that you have configured the
+    # relevant Amazon QuickSight resource and permissions.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-overview.html#types-identity-enhanced-iam-role-sessions
+    # [2]: https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation.html
+    # [3]: https://docs.aws.amazon.com/singlesignon/latest/userguide/trustedidentitypropagation-using-customermanagedapps-specify-trusted-apps.html
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services registered user.
+    #
+    # @option params [Integer] :session_lifetime_in_minutes
+    #   The validity of the session in minutes.
+    #
+    # @option params [required, Types::RegisteredUserEmbeddingExperienceConfiguration] :experience_configuration
+    #   The type of experience you want to embed. For registered users, you
+    #   can embed Amazon QuickSight dashboards or the Amazon QuickSight
+    #   console.
+    #
+    #   <note markdown="1"> Exactly one of the experience configurations is required. You can
+    #   choose `Dashboard` or `QuickSightConsole`. You cannot choose more than
+    #   one experience configuration.
+    #
+    #    </note>
+    #
+    # @option params [Array<String>] :allowed_domains
+    #   A list of domains to be allowed to generate the embed URL.
+    #
+    # @return [Types::GenerateEmbedUrlForRegisteredUserWithIdentityResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GenerateEmbedUrlForRegisteredUserWithIdentityResponse#embed_url #embed_url} => String
+    #   * {Types::GenerateEmbedUrlForRegisteredUserWithIdentityResponse#status #status} => Integer
+    #   * {Types::GenerateEmbedUrlForRegisteredUserWithIdentityResponse#request_id #request_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.generate_embed_url_for_registered_user_with_identity({
+    #     aws_account_id: "AwsAccountId", # required
+    #     session_lifetime_in_minutes: 1,
+    #     experience_configuration: { # required
+    #       dashboard: {
+    #         initial_dashboard_id: "ShortRestrictiveResourceId", # required
+    #         feature_configurations: {
+    #           state_persistence: {
+    #             enabled: false, # required
+    #           },
+    #           shared_view: {
+    #             enabled: false, # required
+    #           },
+    #           bookmarks: {
+    #             enabled: false, # required
+    #           },
+    #         },
+    #       },
+    #       quick_sight_console: {
+    #         initial_path: "EntryPath",
+    #         feature_configurations: {
+    #           state_persistence: {
+    #             enabled: false, # required
+    #           },
+    #           shared_view: {
+    #             enabled: false, # required
+    #           },
+    #         },
+    #       },
+    #       q_search_bar: {
+    #         initial_topic_id: "RestrictiveResourceId",
+    #       },
+    #       dashboard_visual: {
+    #         initial_dashboard_visual_id: { # required
+    #           dashboard_id: "ShortRestrictiveResourceId", # required
+    #           sheet_id: "ShortRestrictiveResourceId", # required
+    #           visual_id: "ShortRestrictiveResourceId", # required
+    #         },
+    #       },
+    #       generative_qn_a: {
+    #         initial_topic_id: "RestrictiveResourceId",
+    #       },
+    #     },
+    #     allowed_domains: ["String"],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.embed_url #=> String
+    #   resp.status #=> Integer
+    #   resp.request_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/GenerateEmbedUrlForRegisteredUserWithIdentity AWS API Documentation
+    #
+    # @overload generate_embed_url_for_registered_user_with_identity(params = {})
+    # @param [Hash] params ({})
+    def generate_embed_url_for_registered_user_with_identity(params = {}, options = {})
+      req = build_request(:generate_embed_url_for_registered_user_with_identity, params)
       req.send_request(options)
     end
 
@@ -10545,7 +10769,7 @@ module Aws::QuickSight
     # @example Response structure
     #
     #   resp.services #=> Array
-    #   resp.services[0].service #=> String, one of "REDSHIFT"
+    #   resp.services[0].service #=> String, one of "REDSHIFT", "QBUSINESS"
     #   resp.services[0].authorized_targets #=> Array
     #   resp.services[0].authorized_targets[0] #=> String
     #   resp.next_token #=> String
@@ -11916,6 +12140,91 @@ module Aws::QuickSight
     # @param [Hash] params ({})
     def list_vpc_connections(params = {}, options = {})
       req = build_request(:list_vpc_connections, params)
+      req.send_request(options)
+    end
+
+    # Predicts existing visuals or generates new visuals to answer a given
+    # query.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services account that the user wants to
+    #   execute Predict QA results in.
+    #
+    # @option params [required, String] :query_text
+    #   The query text to be used to predict QA results.
+    #
+    # @option params [String] :include_quick_sight_q_index
+    #   Indicates whether Q indicies are included or excluded.
+    #
+    # @option params [String] :include_generated_answer
+    #   Indicates whether generated answers are included or excluded.
+    #
+    # @option params [Integer] :max_topics_to_consider
+    #   The number of maximum topics to be considered to predict QA results.
+    #
+    # @return [Types::PredictQAResultsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PredictQAResultsResponse#primary_result #primary_result} => Types::QAResult
+    #   * {Types::PredictQAResultsResponse#additional_results #additional_results} => Array&lt;Types::QAResult&gt;
+    #   * {Types::PredictQAResultsResponse#request_id #request_id} => String
+    #   * {Types::PredictQAResultsResponse#status #status} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.predict_qa_results({
+    #     aws_account_id: "AwsAccountId", # required
+    #     query_text: "QAQueryText", # required
+    #     include_quick_sight_q_index: "INCLUDE", # accepts INCLUDE, EXCLUDE
+    #     include_generated_answer: "INCLUDE", # accepts INCLUDE, EXCLUDE
+    #     max_topics_to_consider: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.primary_result.result_type #=> String, one of "DASHBOARD_VISUAL", "GENERATED_ANSWER", "NO_ANSWER"
+    #   resp.primary_result.dashboard_visual.dashboard_id #=> String
+    #   resp.primary_result.dashboard_visual.dashboard_name #=> String
+    #   resp.primary_result.dashboard_visual.sheet_id #=> String
+    #   resp.primary_result.dashboard_visual.sheet_name #=> String
+    #   resp.primary_result.dashboard_visual.visual_id #=> String
+    #   resp.primary_result.dashboard_visual.visual_title #=> String
+    #   resp.primary_result.dashboard_visual.visual_subtitle #=> String
+    #   resp.primary_result.dashboard_visual.dashboard_url #=> String
+    #   resp.primary_result.generated_answer.question_text #=> String
+    #   resp.primary_result.generated_answer.answer_status #=> String, one of "ANSWER_GENERATED", "ANSWER_RETRIEVED", "ANSWER_DOWNGRADE"
+    #   resp.primary_result.generated_answer.topic_id #=> String
+    #   resp.primary_result.generated_answer.topic_name #=> String
+    #   resp.primary_result.generated_answer.restatement #=> String
+    #   resp.primary_result.generated_answer.question_id #=> String
+    #   resp.primary_result.generated_answer.answer_id #=> String
+    #   resp.primary_result.generated_answer.question_url #=> String
+    #   resp.additional_results #=> Array
+    #   resp.additional_results[0].result_type #=> String, one of "DASHBOARD_VISUAL", "GENERATED_ANSWER", "NO_ANSWER"
+    #   resp.additional_results[0].dashboard_visual.dashboard_id #=> String
+    #   resp.additional_results[0].dashboard_visual.dashboard_name #=> String
+    #   resp.additional_results[0].dashboard_visual.sheet_id #=> String
+    #   resp.additional_results[0].dashboard_visual.sheet_name #=> String
+    #   resp.additional_results[0].dashboard_visual.visual_id #=> String
+    #   resp.additional_results[0].dashboard_visual.visual_title #=> String
+    #   resp.additional_results[0].dashboard_visual.visual_subtitle #=> String
+    #   resp.additional_results[0].dashboard_visual.dashboard_url #=> String
+    #   resp.additional_results[0].generated_answer.question_text #=> String
+    #   resp.additional_results[0].generated_answer.answer_status #=> String, one of "ANSWER_GENERATED", "ANSWER_RETRIEVED", "ANSWER_DOWNGRADE"
+    #   resp.additional_results[0].generated_answer.topic_id #=> String
+    #   resp.additional_results[0].generated_answer.topic_name #=> String
+    #   resp.additional_results[0].generated_answer.restatement #=> String
+    #   resp.additional_results[0].generated_answer.question_id #=> String
+    #   resp.additional_results[0].generated_answer.answer_id #=> String
+    #   resp.additional_results[0].generated_answer.question_url #=> String
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/PredictQAResults AWS API Documentation
+    #
+    # @overload predict_qa_results(params = {})
+    # @param [Hash] params ({})
+    def predict_qa_results(params = {}, options = {})
+      req = build_request(:predict_qa_results, params)
       req.send_request(options)
     end
 
@@ -13920,6 +14229,43 @@ module Aws::QuickSight
       req.send_request(options)
     end
 
+    # Updates an Amazon QuickSight application with a token exchange grant.
+    # This operation only supports Amazon QuickSight applications that are
+    # registered with IAM Identity Center.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services account to be updated with a token
+    #   exchange grant.
+    #
+    # @option params [required, String] :namespace
+    #   The namespace of the Amazon QuickSight application.
+    #
+    # @return [Types::UpdateApplicationWithTokenExchangeGrantResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateApplicationWithTokenExchangeGrantResponse#status #status} => Integer
+    #   * {Types::UpdateApplicationWithTokenExchangeGrantResponse#request_id #request_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_application_with_token_exchange_grant({
+    #     aws_account_id: "AwsAccountId", # required
+    #     namespace: "Namespace", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status #=> Integer
+    #   resp.request_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateApplicationWithTokenExchangeGrant AWS API Documentation
+    #
+    # @overload update_application_with_token_exchange_grant(params = {})
+    # @param [Hash] params ({})
+    def update_application_with_token_exchange_grant(params = {}, options = {})
+      req = build_request(:update_application_with_token_exchange_grant, params)
+      req.send_request(options)
+    end
+
     # Updates a brand.
     #
     # @option params [required, String] :aws_account_id
@@ -15325,6 +15671,49 @@ module Aws::QuickSight
       req.send_request(options)
     end
 
+    # Updates a Amazon Q Business application that is linked to a Amazon
+    # QuickSight account.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon QuickSight account that is connected to the
+    #   Amazon Q Business application that you want to update.
+    #
+    # @option params [String] :namespace
+    #   The Amazon QuickSight namespace that contains the linked Amazon Q
+    #   Business application. If this field is left blank, the default
+    #   namespace is used. Currently, the default namespace is the only valid
+    #   value for this parameter.
+    #
+    # @option params [required, String] :application_id
+    #   The ID of the Amazon Q Business application that you want to update.
+    #
+    # @return [Types::UpdateDefaultQBusinessApplicationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateDefaultQBusinessApplicationResponse#request_id #request_id} => String
+    #   * {Types::UpdateDefaultQBusinessApplicationResponse#status #status} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_default_q_business_application({
+    #     aws_account_id: "AwsAccountId", # required
+    #     namespace: "Namespace",
+    #     application_id: "LimitedString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDefaultQBusinessApplication AWS API Documentation
+    #
+    # @overload update_default_q_business_application(params = {})
+    # @param [Hash] params ({})
+    def update_default_q_business_application(params = {}, options = {})
+      req = build_request(:update_default_q_business_application, params)
+      req.send_request(options)
+    end
+
     # Updates the name of a folder.
     #
     # @option params [required, String] :aws_account_id
@@ -15587,7 +15976,7 @@ module Aws::QuickSight
     #
     #   resp = client.update_identity_propagation_config({
     #     aws_account_id: "AwsAccountId", # required
-    #     service: "REDSHIFT", # required, accepts REDSHIFT
+    #     service: "REDSHIFT", # required, accepts REDSHIFT, QBUSINESS
     #     authorized_targets: ["String"],
     #   })
     #
@@ -15802,6 +16191,44 @@ module Aws::QuickSight
     # @param [Hash] params ({})
     def update_q_personalization_configuration(params = {}, options = {})
       req = build_request(:update_q_personalization_configuration, params)
+      req.send_request(options)
+    end
+
+    # Updates the state of a Amazon QuickSight Q Search configuration.
+    #
+    # @option params [required, String] :aws_account_id
+    #   The ID of the Amazon Web Services account that contains the Amazon
+    #   QuickSight Q Search configuration that you want to update.
+    #
+    # @option params [required, String] :q_search_status
+    #   The status of the Amazon QuickSight Q Search configuration that the
+    #   user wants to update.
+    #
+    # @return [Types::UpdateQuickSightQSearchConfigurationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateQuickSightQSearchConfigurationResponse#q_search_status #q_search_status} => String
+    #   * {Types::UpdateQuickSightQSearchConfigurationResponse#request_id #request_id} => String
+    #   * {Types::UpdateQuickSightQSearchConfigurationResponse#status #status} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_quick_sight_q_search_configuration({
+    #     aws_account_id: "AwsAccountId", # required
+    #     q_search_status: "ENABLED", # required, accepts ENABLED, DISABLED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.q_search_status #=> String, one of "ENABLED", "DISABLED"
+    #   resp.request_id #=> String
+    #   resp.status #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateQuickSightQSearchConfiguration AWS API Documentation
+    #
+    # @overload update_quick_sight_q_search_configuration(params = {})
+    # @param [Hash] params ({})
+    def update_quick_sight_q_search_configuration(params = {}, options = {})
+      req = build_request(:update_quick_sight_q_search_configuration, params)
       req.send_request(options)
     end
 
@@ -17063,7 +17490,7 @@ module Aws::QuickSight
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-quicksight'
-      context[:gem_version] = '1.138.0'
+      context[:gem_version] = '1.139.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

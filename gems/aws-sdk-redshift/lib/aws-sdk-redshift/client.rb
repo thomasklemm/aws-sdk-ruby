@@ -576,6 +576,7 @@ module Aws::Redshift
     #   * {Types::DataShare#allow_publicly_accessible_consumers #allow_publicly_accessible_consumers} => Boolean
     #   * {Types::DataShare#data_share_associations #data_share_associations} => Array&lt;Types::DataShareAssociation&gt;
     #   * {Types::DataShare#managed_by #managed_by} => String
+    #   * {Types::DataShare#data_share_type #data_share_type} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -601,6 +602,7 @@ module Aws::Redshift
     #   resp.data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.managed_by #=> String
+    #   resp.data_share_type #=> String, one of "INTERNAL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/AssociateDataShareConsumer AWS API Documentation
     #
@@ -721,6 +723,7 @@ module Aws::Redshift
     #   * {Types::DataShare#allow_publicly_accessible_consumers #allow_publicly_accessible_consumers} => Boolean
     #   * {Types::DataShare#data_share_associations #data_share_associations} => Array&lt;Types::DataShareAssociation&gt;
     #   * {Types::DataShare#managed_by #managed_by} => String
+    #   * {Types::DataShare#data_share_type #data_share_type} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -744,6 +747,7 @@ module Aws::Redshift
     #   resp.data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.managed_by #=> String
+    #   resp.data_share_type #=> String, one of "INTERNAL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/AuthorizeDataShare AWS API Documentation
     #
@@ -1240,9 +1244,28 @@ module Aws::Redshift
     # Redshift Clusters][1] in the *Amazon Redshift Cluster Management
     # Guide*.
     #
+    # VPC Block Public Access (BPA) enables you to block resources in VPCs
+    # and subnets that you own in a Region from reaching or being reached
+    # from the internet through internet gateways and egress-only internet
+    # gateways. If a subnet group for a provisioned cluster is in an account
+    # with VPC BPA turned on, the following capabilities are blocked:
+    #
+    # * Creating a public cluster
+    #
+    # * Restoring a public cluster
+    #
+    # * Modifying a private cluster to be public
+    #
+    # * Adding a subnet with VPC BPA turned on to the subnet group when
+    #   there's at least one public cluster within the group
+    #
+    # For more information about VPC BPA, see [Block public access to VPCs
+    # and subnets][2] in the *Amazon VPC User Guide*.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html
+    # [2]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
     #
     # @option params [String] :db_name
     #   The name of the first database to be created when the cluster is
@@ -3181,6 +3204,7 @@ module Aws::Redshift
     #   * {Types::DataShare#allow_publicly_accessible_consumers #allow_publicly_accessible_consumers} => Boolean
     #   * {Types::DataShare#data_share_associations #data_share_associations} => Array&lt;Types::DataShareAssociation&gt;
     #   * {Types::DataShare#managed_by #managed_by} => String
+    #   * {Types::DataShare#data_share_type #data_share_type} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -3203,6 +3227,7 @@ module Aws::Redshift
     #   resp.data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.managed_by #=> String
+    #   resp.data_share_type #=> String, one of "INTERNAL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeauthorizeDataShare AWS API Documentation
     #
@@ -4055,6 +4080,49 @@ module Aws::Redshift
     # @param [Hash] params ({})
     def delete_usage_limit(params = {}, options = {})
       req = build_request(:delete_usage_limit, params)
+      req.send_request(options)
+    end
+
+    # Deregisters a cluster or serverless namespace from the Amazon Web
+    # Services Glue Data Catalog.
+    #
+    # @option params [required, Types::NamespaceIdentifierUnion] :namespace_identifier
+    #   The unique identifier of the cluster or serverless namespace that you
+    #   want to deregister.
+    #
+    # @option params [required, Array<String>] :consumer_identifiers
+    #   An array containing the ID of the consumer account that you want to
+    #   deregister the cluster or serverless namespace from.
+    #
+    # @return [Types::DeregisterNamespaceOutputMessage] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeregisterNamespaceOutputMessage#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.deregister_namespace({
+    #     namespace_identifier: { # required
+    #       serverless_identifier: {
+    #         namespace_identifier: "String", # required
+    #         workgroup_identifier: "String", # required
+    #       },
+    #       provisioned_identifier: {
+    #         cluster_identifier: "String", # required
+    #       },
+    #     },
+    #     consumer_identifiers: ["String"], # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status #=> String, one of "Registering", "Deregistering"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeregisterNamespace AWS API Documentation
+    #
+    # @overload deregister_namespace(params = {})
+    # @param [Hash] params ({})
+    def deregister_namespace(params = {}, options = {})
+      req = build_request(:deregister_namespace, params)
       req.send_request(options)
     end
 
@@ -5292,6 +5360,7 @@ module Aws::Redshift
     #   resp.data_shares[0].data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_shares[0].data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.data_shares[0].managed_by #=> String
+    #   resp.data_shares[0].data_share_type #=> String, one of "INTERNAL"
     #   resp.marker #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeDataShares AWS API Documentation
@@ -5362,6 +5431,7 @@ module Aws::Redshift
     #   resp.data_shares[0].data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_shares[0].data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.data_shares[0].managed_by #=> String
+    #   resp.data_shares[0].data_share_type #=> String, one of "INTERNAL"
     #   resp.marker #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeDataSharesForConsumer AWS API Documentation
@@ -5432,6 +5502,7 @@ module Aws::Redshift
     #   resp.data_shares[0].data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_shares[0].data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.data_shares[0].managed_by #=> String
+    #   resp.data_shares[0].data_share_type #=> String, one of "INTERNAL"
     #   resp.marker #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeDataSharesForProducer AWS API Documentation
@@ -7756,6 +7827,7 @@ module Aws::Redshift
     #   * {Types::DataShare#allow_publicly_accessible_consumers #allow_publicly_accessible_consumers} => Boolean
     #   * {Types::DataShare#data_share_associations #data_share_associations} => Array&lt;Types::DataShareAssociation&gt;
     #   * {Types::DataShare#managed_by #managed_by} => String
+    #   * {Types::DataShare#data_share_type #data_share_type} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -7780,6 +7852,7 @@ module Aws::Redshift
     #   resp.data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.managed_by #=> String
+    #   resp.data_share_type #=> String, one of "INTERNAL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DisassociateDataShareConsumer AWS API Documentation
     #
@@ -8800,9 +8873,28 @@ module Aws::Redshift
     # Redshift Clusters][1] in the *Amazon Redshift Cluster Management
     # Guide*.
     #
+    # VPC Block Public Access (BPA) enables you to block resources in VPCs
+    # and subnets that you own in a Region from reaching or being reached
+    # from the internet through internet gateways and egress-only internet
+    # gateways. If a subnet group for a provisioned cluster is in an account
+    # with VPC BPA turned on, the following capabilities are blocked:
+    #
+    # * Creating a public cluster
+    #
+    # * Restoring a public cluster
+    #
+    # * Modifying a private cluster to be public
+    #
+    # * Adding a subnet with VPC BPA turned on to the subnet group when
+    #   there's at least one public cluster within the group
+    #
+    # For more information about VPC BPA, see [Block public access to VPCs
+    # and subnets][2] in the *Amazon VPC User Guide*.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html
+    # [2]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
     #
     # @option params [required, String] :cluster_identifier
     #   The unique identifier of the cluster to be modified.
@@ -10000,6 +10092,28 @@ module Aws::Redshift
     # Modifies a cluster subnet group to include the specified list of VPC
     # subnets. The operation replaces the existing list of subnets with the
     # new list of subnets.
+    #
+    # VPC Block Public Access (BPA) enables you to block resources in VPCs
+    # and subnets that you own in a Region from reaching or being reached
+    # from the internet through internet gateways and egress-only internet
+    # gateways. If a subnet group for a provisioned cluster is in an account
+    # with VPC BPA turned on, the following capabilities are blocked:
+    #
+    # * Creating a public cluster
+    #
+    # * Restoring a public cluster
+    #
+    # * Modifying a private cluster to be public
+    #
+    # * Adding a subnet with VPC BPA turned on to the subnet group when
+    #   there's at least one public cluster within the group
+    #
+    # For more information about VPC BPA, see [Block public access to VPCs
+    # and subnets][1] in the *Amazon VPC User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
     #
     # @option params [required, String] :cluster_subnet_group_name
     #   The name of the subnet group to be modified.
@@ -11235,6 +11349,49 @@ module Aws::Redshift
       req.send_request(options)
     end
 
+    # Registers a cluster or serverless namespace to the Amazon Web Services
+    # Glue Data Catalog.
+    #
+    # @option params [required, Types::NamespaceIdentifierUnion] :namespace_identifier
+    #   The unique identifier of the cluster or serverless namespace that you
+    #   want to register.
+    #
+    # @option params [required, Array<String>] :consumer_identifiers
+    #   An array containing the ID of the consumer account that you want to
+    #   register the namespace to.
+    #
+    # @return [Types::RegisterNamespaceOutputMessage] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::RegisterNamespaceOutputMessage#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.register_namespace({
+    #     namespace_identifier: { # required
+    #       serverless_identifier: {
+    #         namespace_identifier: "String", # required
+    #         workgroup_identifier: "String", # required
+    #       },
+    #       provisioned_identifier: {
+    #         cluster_identifier: "String", # required
+    #       },
+    #     },
+    #     consumer_identifiers: ["String"], # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status #=> String, one of "Registering", "Deregistering"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/RegisterNamespace AWS API Documentation
+    #
+    # @overload register_namespace(params = {})
+    # @param [Hash] params ({})
+    def register_namespace(params = {}, options = {})
+      req = build_request(:register_namespace, params)
+      req.send_request(options)
+    end
+
     # From a datashare consumer account, rejects the specified datashare.
     #
     # @option params [required, String] :data_share_arn
@@ -11247,6 +11404,7 @@ module Aws::Redshift
     #   * {Types::DataShare#allow_publicly_accessible_consumers #allow_publicly_accessible_consumers} => Boolean
     #   * {Types::DataShare#data_share_associations #data_share_associations} => Array&lt;Types::DataShareAssociation&gt;
     #   * {Types::DataShare#managed_by #managed_by} => String
+    #   * {Types::DataShare#data_share_type #data_share_type} => String
     #
     # @example Request syntax with placeholder values
     #
@@ -11268,6 +11426,7 @@ module Aws::Redshift
     #   resp.data_share_associations[0].producer_allowed_writes #=> Boolean
     #   resp.data_share_associations[0].consumer_accepted_writes #=> Boolean
     #   resp.managed_by #=> String
+    #   resp.data_share_type #=> String, one of "INTERNAL"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/RejectDataShare AWS API Documentation
     #
@@ -11560,13 +11719,32 @@ module Aws::Redshift
     # If you restore a cluster into a VPC, you must provide a cluster subnet
     # group where you want the cluster restored.
     #
+    # VPC Block Public Access (BPA) enables you to block resources in VPCs
+    # and subnets that you own in a Region from reaching or being reached
+    # from the internet through internet gateways and egress-only internet
+    # gateways. If a subnet group for a provisioned cluster is in an account
+    # with VPC BPA turned on, the following capabilities are blocked:
+    #
+    # * Creating a public cluster
+    #
+    # * Restoring a public cluster
+    #
+    # * Modifying a private cluster to be public
+    #
+    # * Adding a subnet with VPC BPA turned on to the subnet group when
+    #   there's at least one public cluster within the group
+    #
+    # For more information about VPC BPA, see [Block public access to VPCs
+    # and subnets][1] in the *Amazon VPC User Guide*.
+    #
     # For more information about working with snapshots, go to [Amazon
-    # Redshift Snapshots][1] in the *Amazon Redshift Cluster Management
+    # Redshift Snapshots][2] in the *Amazon Redshift Cluster Management
     # Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html
+    # [1]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
+    # [2]: https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-snapshots.html
     #
     # @option params [required, String] :cluster_identifier
     #   The identifier of the cluster that will be created from restoring the
@@ -12754,7 +12932,7 @@ module Aws::Redshift
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-redshift'
-      context[:gem_version] = '1.132.0'
+      context[:gem_version] = '1.133.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

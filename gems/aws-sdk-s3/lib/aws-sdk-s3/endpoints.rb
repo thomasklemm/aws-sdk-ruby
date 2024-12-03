@@ -63,6 +63,18 @@ module Aws::S3
       end
     end
 
+    class CreateBucketMetadataTableConfiguration
+      def self.build(context)
+        Aws::S3::EndpointParameters.create(
+          context.config,
+          bucket: context.params[:bucket],
+          use_dual_stack: context[:use_dualstack_endpoint],
+          accelerate: context[:use_accelerate_endpoint],
+          use_s3_express_control_endpoint: true,
+        )
+      end
+    end
+
     class CreateMultipartUpload
       def self.build(context)
         Aws::S3::EndpointParameters.create(
@@ -160,6 +172,18 @@ module Aws::S3
     end
 
     class DeleteBucketLifecycle
+      def self.build(context)
+        Aws::S3::EndpointParameters.create(
+          context.config,
+          bucket: context.params[:bucket],
+          use_dual_stack: context[:use_dualstack_endpoint],
+          accelerate: context[:use_accelerate_endpoint],
+          use_s3_express_control_endpoint: true,
+        )
+      end
+    end
+
+    class DeleteBucketMetadataTableConfiguration
       def self.build(context)
         Aws::S3::EndpointParameters.create(
           context.config,
@@ -410,6 +434,18 @@ module Aws::S3
     end
 
     class GetBucketLogging
+      def self.build(context)
+        Aws::S3::EndpointParameters.create(
+          context.config,
+          bucket: context.params[:bucket],
+          use_dual_stack: context[:use_dualstack_endpoint],
+          accelerate: context[:use_accelerate_endpoint],
+          use_s3_express_control_endpoint: true,
+        )
+      end
+    end
+
+    class GetBucketMetadataTableConfiguration
       def self.build(context)
         Aws::S3::EndpointParameters.create(
           context.config,
@@ -1194,6 +1230,8 @@ module Aws::S3
         CopyObject.build(context)
       when :create_bucket
         CreateBucket.build(context)
+      when :create_bucket_metadata_table_configuration
+        CreateBucketMetadataTableConfiguration.build(context)
       when :create_multipart_upload
         CreateMultipartUpload.build(context)
       when :create_session
@@ -1212,6 +1250,8 @@ module Aws::S3
         DeleteBucketInventoryConfiguration.build(context)
       when :delete_bucket_lifecycle
         DeleteBucketLifecycle.build(context)
+      when :delete_bucket_metadata_table_configuration
+        DeleteBucketMetadataTableConfiguration.build(context)
       when :delete_bucket_metrics_configuration
         DeleteBucketMetricsConfiguration.build(context)
       when :delete_bucket_ownership_controls
@@ -1254,6 +1294,8 @@ module Aws::S3
         GetBucketLocation.build(context)
       when :get_bucket_logging
         GetBucketLogging.build(context)
+      when :get_bucket_metadata_table_configuration
+        GetBucketMetadataTableConfiguration.build(context)
       when :get_bucket_metrics_configuration
         GetBucketMetricsConfiguration.build(context)
       when :get_bucket_notification

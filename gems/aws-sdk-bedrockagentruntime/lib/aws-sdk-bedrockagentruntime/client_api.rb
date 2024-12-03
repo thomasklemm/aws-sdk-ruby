@@ -15,6 +15,7 @@ module Aws::BedrockAgentRuntime
     include Seahorse::Model
 
     APISchema = Shapes::UnionShape.new(name: 'APISchema')
+    AWSResourceARN = Shapes::StringShape.new(name: 'AWSResourceARN')
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     ActionGroupExecutor = Shapes::UnionShape.new(name: 'ActionGroupExecutor')
     ActionGroupInvocationInput = Shapes::StructureShape.new(name: 'ActionGroupInvocationInput')
@@ -28,7 +29,13 @@ module Aws::BedrockAgentRuntime
     AdditionalModelRequestFieldsValue = Shapes::DocumentShape.new(name: 'AdditionalModelRequestFieldsValue', document: true)
     AgentActionGroup = Shapes::StructureShape.new(name: 'AgentActionGroup')
     AgentActionGroups = Shapes::ListShape.new(name: 'AgentActionGroups')
+    AgentAliasArn = Shapes::StringShape.new(name: 'AgentAliasArn')
     AgentAliasId = Shapes::StringShape.new(name: 'AgentAliasId')
+    AgentCollaboratorInputPayload = Shapes::StructureShape.new(name: 'AgentCollaboratorInputPayload')
+    AgentCollaboratorInvocationInput = Shapes::StructureShape.new(name: 'AgentCollaboratorInvocationInput')
+    AgentCollaboratorInvocationOutput = Shapes::StructureShape.new(name: 'AgentCollaboratorInvocationOutput')
+    AgentCollaboratorOutputPayload = Shapes::StructureShape.new(name: 'AgentCollaboratorOutputPayload')
+    AgentCollaboratorPayloadString = Shapes::StringShape.new(name: 'AgentCollaboratorPayloadString')
     AgentId = Shapes::StringShape.new(name: 'AgentId')
     AgentVersion = Shapes::StringShape.new(name: 'AgentVersion')
     AnalyzePromptEvent = Shapes::StructureShape.new(name: 'AnalyzePromptEvent')
@@ -52,6 +59,8 @@ module Aws::BedrockAgentRuntime
     ByteContentBlob = Shapes::BlobShape.new(name: 'ByteContentBlob')
     ByteContentDoc = Shapes::StructureShape.new(name: 'ByteContentDoc')
     ByteContentFile = Shapes::StructureShape.new(name: 'ByteContentFile')
+    Caller = Shapes::UnionShape.new(name: 'Caller')
+    CallerChain = Shapes::ListShape.new(name: 'CallerChain')
     Citation = Shapes::StructureShape.new(name: 'Citation')
     CitationEvent = Shapes::StructureShape.new(name: 'CitationEvent')
     Citations = Shapes::ListShape.new(name: 'Citations')
@@ -59,9 +68,13 @@ module Aws::BedrockAgentRuntime
     CodeInterpreterInvocationOutput = Shapes::StructureShape.new(name: 'CodeInterpreterInvocationOutput')
     ConfirmationState = Shapes::StringShape.new(name: 'ConfirmationState')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
+    ContentBlock = Shapes::UnionShape.new(name: 'ContentBlock')
+    ContentBlocks = Shapes::ListShape.new(name: 'ContentBlocks')
     ContentBody = Shapes::StructureShape.new(name: 'ContentBody')
     ContentMap = Shapes::MapShape.new(name: 'ContentMap')
     ContentType = Shapes::StringShape.new(name: 'ContentType')
+    ConversationHistory = Shapes::StructureShape.new(name: 'ConversationHistory')
+    ConversationRole = Shapes::StringShape.new(name: 'ConversationRole')
     CreationMode = Shapes::StringShape.new(name: 'CreationMode')
     CustomControlMethod = Shapes::StringShape.new(name: 'CustomControlMethod')
     CustomOrchestrationTrace = Shapes::StructureShape.new(name: 'CustomOrchestrationTrace')
@@ -223,6 +236,8 @@ module Aws::BedrockAgentRuntime
     MemoryId = Shapes::StringShape.new(name: 'MemoryId')
     MemorySessionSummary = Shapes::StructureShape.new(name: 'MemorySessionSummary')
     MemoryType = Shapes::StringShape.new(name: 'MemoryType')
+    Message = Shapes::StructureShape.new(name: 'Message')
+    Messages = Shapes::ListShape.new(name: 'Messages')
     Metadata = Shapes::StructureShape.new(name: 'Metadata')
     MetadataAttributeSchema = Shapes::StructureShape.new(name: 'MetadataAttributeSchema')
     MetadataAttributeSchemaDescriptionString = Shapes::StringShape.new(name: 'MetadataAttributeSchemaDescriptionString')
@@ -232,6 +247,7 @@ module Aws::BedrockAgentRuntime
     MimeType = Shapes::StringShape.new(name: 'MimeType')
     ModelIdentifier = Shapes::StringShape.new(name: 'ModelIdentifier')
     ModelInvocationInput = Shapes::StructureShape.new(name: 'ModelInvocationInput')
+    Name = Shapes::StringShape.new(name: 'Name')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NodeInputName = Shapes::StringShape.new(name: 'NodeInputName')
     NodeName = Shapes::StringShape.new(name: 'NodeName')
@@ -262,6 +278,7 @@ module Aws::BedrockAgentRuntime
     PartBody = Shapes::BlobShape.new(name: 'PartBody')
     Payload = Shapes::StringShape.new(name: 'Payload')
     PayloadPart = Shapes::StructureShape.new(name: 'PayloadPart')
+    PayloadType = Shapes::StringShape.new(name: 'PayloadType')
     PostProcessingModelInvocationOutput = Shapes::StructureShape.new(name: 'PostProcessingModelInvocationOutput')
     PostProcessingParsedResponse = Shapes::StructureShape.new(name: 'PostProcessingParsedResponse')
     PostProcessingTrace = Shapes::UnionShape.new(name: 'PostProcessingTrace')
@@ -344,6 +361,9 @@ module Aws::BedrockAgentRuntime
     RetrievedReferences = Shapes::ListShape.new(name: 'RetrievedReferences')
     ReturnControlInvocationResults = Shapes::ListShape.new(name: 'ReturnControlInvocationResults')
     ReturnControlPayload = Shapes::StructureShape.new(name: 'ReturnControlPayload')
+    ReturnControlResults = Shapes::StructureShape.new(name: 'ReturnControlResults')
+    RoutingClassifierModelInvocationOutput = Shapes::StructureShape.new(name: 'RoutingClassifierModelInvocationOutput')
+    RoutingClassifierTrace = Shapes::UnionShape.new(name: 'RoutingClassifierTrace')
     S3BucketName = Shapes::StringShape.new(name: 'S3BucketName')
     S3Identifier = Shapes::StructureShape.new(name: 'S3Identifier')
     S3ObjectDoc = Shapes::StructureShape.new(name: 'S3ObjectDoc')
@@ -433,6 +453,26 @@ module Aws::BedrockAgentRuntime
 
     AgentActionGroups.member = Shapes::ShapeRef.new(shape: AgentActionGroup)
 
+    AgentCollaboratorInputPayload.add_member(:return_control_results, Shapes::ShapeRef.new(shape: ReturnControlResults, location_name: "returnControlResults"))
+    AgentCollaboratorInputPayload.add_member(:text, Shapes::ShapeRef.new(shape: AgentCollaboratorPayloadString, location_name: "text"))
+    AgentCollaboratorInputPayload.add_member(:type, Shapes::ShapeRef.new(shape: PayloadType, location_name: "type"))
+    AgentCollaboratorInputPayload.struct_class = Types::AgentCollaboratorInputPayload
+
+    AgentCollaboratorInvocationInput.add_member(:agent_collaborator_alias_arn, Shapes::ShapeRef.new(shape: AgentAliasArn, location_name: "agentCollaboratorAliasArn"))
+    AgentCollaboratorInvocationInput.add_member(:agent_collaborator_name, Shapes::ShapeRef.new(shape: String, location_name: "agentCollaboratorName"))
+    AgentCollaboratorInvocationInput.add_member(:input, Shapes::ShapeRef.new(shape: AgentCollaboratorInputPayload, location_name: "input"))
+    AgentCollaboratorInvocationInput.struct_class = Types::AgentCollaboratorInvocationInput
+
+    AgentCollaboratorInvocationOutput.add_member(:agent_collaborator_alias_arn, Shapes::ShapeRef.new(shape: AgentAliasArn, location_name: "agentCollaboratorAliasArn"))
+    AgentCollaboratorInvocationOutput.add_member(:agent_collaborator_name, Shapes::ShapeRef.new(shape: String, location_name: "agentCollaboratorName"))
+    AgentCollaboratorInvocationOutput.add_member(:output, Shapes::ShapeRef.new(shape: AgentCollaboratorOutputPayload, location_name: "output"))
+    AgentCollaboratorInvocationOutput.struct_class = Types::AgentCollaboratorInvocationOutput
+
+    AgentCollaboratorOutputPayload.add_member(:return_control_payload, Shapes::ShapeRef.new(shape: ReturnControlPayload, event: true, location_name: "returnControlPayload"))
+    AgentCollaboratorOutputPayload.add_member(:text, Shapes::ShapeRef.new(shape: AgentCollaboratorPayloadString, location_name: "text"))
+    AgentCollaboratorOutputPayload.add_member(:type, Shapes::ShapeRef.new(shape: PayloadType, location_name: "type"))
+    AgentCollaboratorOutputPayload.struct_class = Types::AgentCollaboratorOutputPayload
+
     AnalyzePromptEvent.add_member(:message, Shapes::ShapeRef.new(shape: String, location_name: "message"))
     AnalyzePromptEvent.struct_class = Types::AnalyzePromptEvent
 
@@ -441,7 +481,9 @@ module Aws::BedrockAgentRuntime
 
     ApiInvocationInput.add_member(:action_group, Shapes::ShapeRef.new(shape: String, required: true, location_name: "actionGroup"))
     ApiInvocationInput.add_member(:action_invocation_type, Shapes::ShapeRef.new(shape: ActionInvocationType, location_name: "actionInvocationType"))
+    ApiInvocationInput.add_member(:agent_id, Shapes::ShapeRef.new(shape: String, location_name: "agentId"))
     ApiInvocationInput.add_member(:api_path, Shapes::ShapeRef.new(shape: ApiPath, location_name: "apiPath"))
+    ApiInvocationInput.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, location_name: "collaboratorName"))
     ApiInvocationInput.add_member(:http_method, Shapes::ShapeRef.new(shape: String, location_name: "httpMethod"))
     ApiInvocationInput.add_member(:parameters, Shapes::ShapeRef.new(shape: ApiParameters, location_name: "parameters"))
     ApiInvocationInput.add_member(:request_body, Shapes::ShapeRef.new(shape: ApiRequestBody, location_name: "requestBody"))
@@ -458,6 +500,7 @@ module Aws::BedrockAgentRuntime
     ApiRequestBody.struct_class = Types::ApiRequestBody
 
     ApiResult.add_member(:action_group, Shapes::ShapeRef.new(shape: String, required: true, location_name: "actionGroup"))
+    ApiResult.add_member(:agent_id, Shapes::ShapeRef.new(shape: String, location_name: "agentId"))
     ApiResult.add_member(:api_path, Shapes::ShapeRef.new(shape: ApiPath, location_name: "apiPath"))
     ApiResult.add_member(:confirmation_state, Shapes::ShapeRef.new(shape: ConfirmationState, location_name: "confirmationState"))
     ApiResult.add_member(:http_method, Shapes::ShapeRef.new(shape: String, location_name: "httpMethod"))
@@ -490,6 +533,14 @@ module Aws::BedrockAgentRuntime
     ByteContentFile.add_member(:media_type, Shapes::ShapeRef.new(shape: MimeType, required: true, location_name: "mediaType"))
     ByteContentFile.struct_class = Types::ByteContentFile
 
+    Caller.add_member(:agent_alias_arn, Shapes::ShapeRef.new(shape: AgentAliasArn, location_name: "agentAliasArn"))
+    Caller.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    Caller.add_member_subclass(:agent_alias_arn, Types::Caller::AgentAliasArn)
+    Caller.add_member_subclass(:unknown, Types::Caller::Unknown)
+    Caller.struct_class = Types::Caller
+
+    CallerChain.member = Shapes::ShapeRef.new(shape: Caller)
+
     Citation.add_member(:generated_response_part, Shapes::ShapeRef.new(shape: GeneratedResponsePart, location_name: "generatedResponsePart"))
     Citation.add_member(:retrieved_references, Shapes::ShapeRef.new(shape: RetrievedReferences, location_name: "retrievedReferences"))
     Citation.struct_class = Types::Citation
@@ -512,11 +563,22 @@ module Aws::BedrockAgentRuntime
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ConflictException.struct_class = Types::ConflictException
 
+    ContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))
+    ContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    ContentBlock.add_member_subclass(:text, Types::ContentBlock::Text)
+    ContentBlock.add_member_subclass(:unknown, Types::ContentBlock::Unknown)
+    ContentBlock.struct_class = Types::ContentBlock
+
+    ContentBlocks.member = Shapes::ShapeRef.new(shape: ContentBlock)
+
     ContentBody.add_member(:body, Shapes::ShapeRef.new(shape: String, location_name: "body"))
     ContentBody.struct_class = Types::ContentBody
 
     ContentMap.key = Shapes::ShapeRef.new(shape: String)
     ContentMap.value = Shapes::ShapeRef.new(shape: Parameters)
+
+    ConversationHistory.add_member(:messages, Shapes::ShapeRef.new(shape: Messages, location_name: "messages"))
+    ConversationHistory.struct_class = Types::ConversationHistory
 
     CustomOrchestrationTrace.add_member(:event, Shapes::ShapeRef.new(shape: CustomOrchestrationTraceEvent, location_name: "event"))
     CustomOrchestrationTrace.add_member(:trace_id, Shapes::ShapeRef.new(shape: TraceId, location_name: "traceId"))
@@ -686,6 +748,8 @@ module Aws::BedrockAgentRuntime
 
     FunctionInvocationInput.add_member(:action_group, Shapes::ShapeRef.new(shape: String, required: true, location_name: "actionGroup"))
     FunctionInvocationInput.add_member(:action_invocation_type, Shapes::ShapeRef.new(shape: ActionInvocationType, location_name: "actionInvocationType"))
+    FunctionInvocationInput.add_member(:agent_id, Shapes::ShapeRef.new(shape: String, location_name: "agentId"))
+    FunctionInvocationInput.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, location_name: "collaboratorName"))
     FunctionInvocationInput.add_member(:function, Shapes::ShapeRef.new(shape: String, location_name: "function"))
     FunctionInvocationInput.add_member(:parameters, Shapes::ShapeRef.new(shape: FunctionParameters, location_name: "parameters"))
     FunctionInvocationInput.struct_class = Types::FunctionInvocationInput
@@ -698,6 +762,7 @@ module Aws::BedrockAgentRuntime
     FunctionParameters.member = Shapes::ShapeRef.new(shape: FunctionParameter)
 
     FunctionResult.add_member(:action_group, Shapes::ShapeRef.new(shape: String, required: true, location_name: "actionGroup"))
+    FunctionResult.add_member(:agent_id, Shapes::ShapeRef.new(shape: String, location_name: "agentId"))
     FunctionResult.add_member(:confirmation_state, Shapes::ShapeRef.new(shape: ConfirmationState, location_name: "confirmationState"))
     FunctionResult.add_member(:function, Shapes::ShapeRef.new(shape: String, location_name: "function"))
     FunctionResult.add_member(:response_body, Shapes::ShapeRef.new(shape: ResponseBody, location_name: "responseBody"))
@@ -882,6 +947,7 @@ module Aws::BedrockAgentRuntime
     InternalServerException.struct_class = Types::InternalServerException
 
     InvocationInput.add_member(:action_group_invocation_input, Shapes::ShapeRef.new(shape: ActionGroupInvocationInput, location_name: "actionGroupInvocationInput"))
+    InvocationInput.add_member(:agent_collaborator_invocation_input, Shapes::ShapeRef.new(shape: AgentCollaboratorInvocationInput, location_name: "agentCollaboratorInvocationInput"))
     InvocationInput.add_member(:code_interpreter_invocation_input, Shapes::ShapeRef.new(shape: CodeInterpreterInvocationInput, location_name: "codeInterpreterInvocationInput"))
     InvocationInput.add_member(:invocation_type, Shapes::ShapeRef.new(shape: InvocationType, location_name: "invocationType"))
     InvocationInput.add_member(:knowledge_base_lookup_input, Shapes::ShapeRef.new(shape: KnowledgeBaseLookupInput, location_name: "knowledgeBaseLookupInput"))
@@ -914,6 +980,7 @@ module Aws::BedrockAgentRuntime
     InvokeAgentRequest.add_member(:memory_id, Shapes::ShapeRef.new(shape: MemoryId, location_name: "memoryId"))
     InvokeAgentRequest.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, required: true, location: "uri", location_name: "sessionId"))
     InvokeAgentRequest.add_member(:session_state, Shapes::ShapeRef.new(shape: SessionState, location_name: "sessionState"))
+    InvokeAgentRequest.add_member(:source_arn, Shapes::ShapeRef.new(shape: AWSResourceARN, location: "header", location_name: "x-amz-source-arn"))
     InvokeAgentRequest.add_member(:streaming_configurations, Shapes::ShapeRef.new(shape: StreamingConfigurations, location_name: "streamingConfigurations"))
     InvokeAgentRequest.struct_class = Types::InvokeAgentRequest
 
@@ -1021,6 +1088,12 @@ module Aws::BedrockAgentRuntime
     MemorySessionSummary.add_member(:summary_text, Shapes::ShapeRef.new(shape: SummaryText, location_name: "summaryText"))
     MemorySessionSummary.struct_class = Types::MemorySessionSummary
 
+    Message.add_member(:content, Shapes::ShapeRef.new(shape: ContentBlocks, required: true, location_name: "content"))
+    Message.add_member(:role, Shapes::ShapeRef.new(shape: ConversationRole, required: true, location_name: "role"))
+    Message.struct_class = Types::Message
+
+    Messages.member = Shapes::ShapeRef.new(shape: Message)
+
     Metadata.add_member(:usage, Shapes::ShapeRef.new(shape: Usage, location_name: "usage"))
     Metadata.struct_class = Types::Metadata
 
@@ -1035,6 +1108,7 @@ module Aws::BedrockAgentRuntime
     MetadataConfigurationForReranking.add_member(:selective_mode_configuration, Shapes::ShapeRef.new(shape: RerankingMetadataSelectiveModeConfiguration, location_name: "selectiveModeConfiguration"))
     MetadataConfigurationForReranking.struct_class = Types::MetadataConfigurationForReranking
 
+    ModelInvocationInput.add_member(:foundation_model, Shapes::ShapeRef.new(shape: ModelIdentifier, location_name: "foundationModel"))
     ModelInvocationInput.add_member(:inference_configuration, Shapes::ShapeRef.new(shape: InferenceConfiguration, location_name: "inferenceConfiguration"))
     ModelInvocationInput.add_member(:override_lambda, Shapes::ShapeRef.new(shape: LambdaArn, location_name: "overrideLambda"))
     ModelInvocationInput.add_member(:parser_mode, Shapes::ShapeRef.new(shape: CreationMode, location_name: "parserMode"))
@@ -1045,6 +1119,7 @@ module Aws::BedrockAgentRuntime
     ModelInvocationInput.struct_class = Types::ModelInvocationInput
 
     Observation.add_member(:action_group_invocation_output, Shapes::ShapeRef.new(shape: ActionGroupInvocationOutput, location_name: "actionGroupInvocationOutput"))
+    Observation.add_member(:agent_collaborator_invocation_output, Shapes::ShapeRef.new(shape: AgentCollaboratorInvocationOutput, location_name: "agentCollaboratorInvocationOutput"))
     Observation.add_member(:code_interpreter_invocation_output, Shapes::ShapeRef.new(shape: CodeInterpreterInvocationOutput, location_name: "codeInterpreterInvocationOutput"))
     Observation.add_member(:final_response, Shapes::ShapeRef.new(shape: FinalResponse, location_name: "finalResponse"))
     Observation.add_member(:knowledge_base_lookup_output, Shapes::ShapeRef.new(shape: KnowledgeBaseLookupOutput, location_name: "knowledgeBaseLookupOutput"))
@@ -1426,6 +1501,27 @@ module Aws::BedrockAgentRuntime
     ReturnControlPayload.add_member(:invocation_inputs, Shapes::ShapeRef.new(shape: InvocationInputs, location_name: "invocationInputs"))
     ReturnControlPayload.struct_class = Types::ReturnControlPayload
 
+    ReturnControlResults.add_member(:invocation_id, Shapes::ShapeRef.new(shape: String, location_name: "invocationId"))
+    ReturnControlResults.add_member(:return_control_invocation_results, Shapes::ShapeRef.new(shape: ReturnControlInvocationResults, location_name: "returnControlInvocationResults"))
+    ReturnControlResults.struct_class = Types::ReturnControlResults
+
+    RoutingClassifierModelInvocationOutput.add_member(:metadata, Shapes::ShapeRef.new(shape: Metadata, location_name: "metadata"))
+    RoutingClassifierModelInvocationOutput.add_member(:raw_response, Shapes::ShapeRef.new(shape: RawResponse, location_name: "rawResponse"))
+    RoutingClassifierModelInvocationOutput.add_member(:trace_id, Shapes::ShapeRef.new(shape: TraceId, location_name: "traceId"))
+    RoutingClassifierModelInvocationOutput.struct_class = Types::RoutingClassifierModelInvocationOutput
+
+    RoutingClassifierTrace.add_member(:invocation_input, Shapes::ShapeRef.new(shape: InvocationInput, location_name: "invocationInput"))
+    RoutingClassifierTrace.add_member(:model_invocation_input, Shapes::ShapeRef.new(shape: ModelInvocationInput, location_name: "modelInvocationInput"))
+    RoutingClassifierTrace.add_member(:model_invocation_output, Shapes::ShapeRef.new(shape: RoutingClassifierModelInvocationOutput, location_name: "modelInvocationOutput"))
+    RoutingClassifierTrace.add_member(:observation, Shapes::ShapeRef.new(shape: Observation, location_name: "observation"))
+    RoutingClassifierTrace.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    RoutingClassifierTrace.add_member_subclass(:invocation_input, Types::RoutingClassifierTrace::InvocationInput)
+    RoutingClassifierTrace.add_member_subclass(:model_invocation_input, Types::RoutingClassifierTrace::ModelInvocationInput)
+    RoutingClassifierTrace.add_member_subclass(:model_invocation_output, Types::RoutingClassifierTrace::ModelInvocationOutput)
+    RoutingClassifierTrace.add_member_subclass(:observation, Types::RoutingClassifierTrace::Observation)
+    RoutingClassifierTrace.add_member_subclass(:unknown, Types::RoutingClassifierTrace::Unknown)
+    RoutingClassifierTrace.struct_class = Types::RoutingClassifierTrace
+
     S3Identifier.add_member(:s3_bucket_name, Shapes::ShapeRef.new(shape: S3BucketName, location_name: "s3BucketName"))
     S3Identifier.add_member(:s3_object_key, Shapes::ShapeRef.new(shape: S3ObjectKey, location_name: "s3ObjectKey"))
     S3Identifier.struct_class = Types::S3Identifier
@@ -1442,6 +1538,7 @@ module Aws::BedrockAgentRuntime
     SessionAttributesMap.key = Shapes::ShapeRef.new(shape: String)
     SessionAttributesMap.value = Shapes::ShapeRef.new(shape: String)
 
+    SessionState.add_member(:conversation_history, Shapes::ShapeRef.new(shape: ConversationHistory, location_name: "conversationHistory"))
     SessionState.add_member(:files, Shapes::ShapeRef.new(shape: InputFiles, location_name: "files"))
     SessionState.add_member(:invocation_id, Shapes::ShapeRef.new(shape: String, location_name: "invocationId"))
     SessionState.add_member(:knowledge_base_configurations, Shapes::ShapeRef.new(shape: KnowledgeBaseConfigurations, location_name: "knowledgeBaseConfigurations"))
@@ -1482,6 +1579,7 @@ module Aws::BedrockAgentRuntime
     Trace.add_member(:orchestration_trace, Shapes::ShapeRef.new(shape: OrchestrationTrace, location_name: "orchestrationTrace"))
     Trace.add_member(:post_processing_trace, Shapes::ShapeRef.new(shape: PostProcessingTrace, location_name: "postProcessingTrace"))
     Trace.add_member(:pre_processing_trace, Shapes::ShapeRef.new(shape: PreProcessingTrace, location_name: "preProcessingTrace"))
+    Trace.add_member(:routing_classifier_trace, Shapes::ShapeRef.new(shape: RoutingClassifierTrace, location_name: "routingClassifierTrace"))
     Trace.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     Trace.add_member_subclass(:custom_orchestration_trace, Types::Trace::CustomOrchestrationTrace)
     Trace.add_member_subclass(:failure_trace, Types::Trace::FailureTrace)
@@ -1489,12 +1587,15 @@ module Aws::BedrockAgentRuntime
     Trace.add_member_subclass(:orchestration_trace, Types::Trace::OrchestrationTrace)
     Trace.add_member_subclass(:post_processing_trace, Types::Trace::PostProcessingTrace)
     Trace.add_member_subclass(:pre_processing_trace, Types::Trace::PreProcessingTrace)
+    Trace.add_member_subclass(:routing_classifier_trace, Types::Trace::RoutingClassifierTrace)
     Trace.add_member_subclass(:unknown, Types::Trace::Unknown)
     Trace.struct_class = Types::Trace
 
     TracePart.add_member(:agent_alias_id, Shapes::ShapeRef.new(shape: AgentAliasId, location_name: "agentAliasId"))
     TracePart.add_member(:agent_id, Shapes::ShapeRef.new(shape: AgentId, location_name: "agentId"))
     TracePart.add_member(:agent_version, Shapes::ShapeRef.new(shape: AgentVersion, location_name: "agentVersion"))
+    TracePart.add_member(:caller_chain, Shapes::ShapeRef.new(shape: CallerChain, location_name: "callerChain"))
+    TracePart.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, location_name: "collaboratorName"))
     TracePart.add_member(:session_id, Shapes::ShapeRef.new(shape: SessionId, location_name: "sessionId"))
     TracePart.add_member(:trace, Shapes::ShapeRef.new(shape: Trace, location_name: "trace"))
     TracePart.struct_class = Types::TracePart

@@ -104,7 +104,7 @@ module Aws::DataZone
       attr_accessor domain_identifier: ::String
       attr_accessor entity_identifier: ::String
       attr_accessor entity_type: ("DOMAIN_UNIT" | "ENVIRONMENT_BLUEPRINT_CONFIGURATION" | "ENVIRONMENT_PROFILE")
-      attr_accessor policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT")
+      attr_accessor policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT" | "CREATE_ENVIRONMENT_FROM_BLUEPRINT" | "CREATE_PROJECT_FROM_PROJECT_PROFILE")
       attr_accessor principal: Types::PolicyGrantPrincipal
       SENSITIVE: []
     end
@@ -173,7 +173,7 @@ module Aws::DataZone
       attr_accessor owning_project_id: ::String
       attr_accessor type_identifier: ::String
       attr_accessor type_revision: ::String
-      SENSITIVE: [:description, :external_identifier, :name]
+      SENSITIVE: [:description, :name]
     end
 
     class AssetItemAdditionalAttributes
@@ -279,8 +279,80 @@ module Aws::DataZone
     class AssociateEnvironmentRoleOutput < Aws::EmptyStructure
     end
 
+    class AthenaPropertiesInput
+      attr_accessor workgroup_name: ::String
+      SENSITIVE: []
+    end
+
+    class AthenaPropertiesOutput
+      attr_accessor workgroup_name: ::String
+      SENSITIVE: []
+    end
+
+    class AthenaPropertiesPatch
+      attr_accessor workgroup_name: ::String
+      SENSITIVE: []
+    end
+
+    class AuthenticationConfiguration
+      attr_accessor authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM")
+      attr_accessor o_auth_2_properties: Types::OAuth2Properties
+      attr_accessor secret_arn: ::String
+      SENSITIVE: []
+    end
+
+    class AuthenticationConfigurationInput
+      attr_accessor authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM")
+      attr_accessor basic_authentication_credentials: Types::BasicAuthenticationCredentials
+      attr_accessor custom_authentication_credentials: ::Hash[::String, ::String]
+      attr_accessor kms_key_arn: ::String
+      attr_accessor o_auth_2_properties: Types::OAuth2Properties
+      attr_accessor secret_arn: ::String
+      SENSITIVE: [:basic_authentication_credentials, :custom_authentication_credentials]
+    end
+
+    class AuthenticationConfigurationPatch
+      attr_accessor basic_authentication_credentials: Types::BasicAuthenticationCredentials
+      attr_accessor secret_arn: ::String
+      SENSITIVE: [:basic_authentication_credentials]
+    end
+
+    class AuthorizationCodeProperties
+      attr_accessor authorization_code: ::String
+      attr_accessor redirect_uri: ::String
+      SENSITIVE: []
+    end
+
+    class AwsAccount
+      attr_accessor aws_account_id: ::String
+      attr_accessor aws_account_id_path: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AwsAccountId < AwsAccount
+      end
+      class AwsAccountIdPath < AwsAccount
+      end
+      class Unknown < AwsAccount
+      end
+    end
+
     class AwsConsoleLinkParameters
       attr_accessor uri: ::String
+      SENSITIVE: []
+    end
+
+    class AwsLocation
+      attr_accessor access_role: ::String
+      attr_accessor aws_account_id: ::String
+      attr_accessor aws_region: ::String
+      attr_accessor iam_connection_id: ::String
+      SENSITIVE: []
+    end
+
+    class BasicAuthenticationCredentials
+      attr_accessor password: ::String
+      attr_accessor user_name: ::String
       SENSITIVE: []
     end
 
@@ -347,6 +419,108 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class ConnectionCredentials
+      attr_accessor access_key_id: ::String
+      attr_accessor expiration: ::Time
+      attr_accessor secret_access_key: ::String
+      attr_accessor session_token: ::String
+      SENSITIVE: []
+    end
+
+    class ConnectionPropertiesInput
+      attr_accessor athena_properties: Types::AthenaPropertiesInput
+      attr_accessor glue_properties: Types::GluePropertiesInput
+      attr_accessor hyper_pod_properties: Types::HyperPodPropertiesInput
+      attr_accessor iam_properties: Types::IamPropertiesInput
+      attr_accessor redshift_properties: Types::RedshiftPropertiesInput
+      attr_accessor spark_emr_properties: Types::SparkEmrPropertiesInput
+      attr_accessor spark_glue_properties: Types::SparkGluePropertiesInput
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AthenaProperties < ConnectionPropertiesInput
+      end
+      class GlueProperties < ConnectionPropertiesInput
+      end
+      class HyperPodProperties < ConnectionPropertiesInput
+      end
+      class IamProperties < ConnectionPropertiesInput
+      end
+      class RedshiftProperties < ConnectionPropertiesInput
+      end
+      class SparkEmrProperties < ConnectionPropertiesInput
+      end
+      class SparkGlueProperties < ConnectionPropertiesInput
+      end
+      class Unknown < ConnectionPropertiesInput
+      end
+    end
+
+    class ConnectionPropertiesOutput
+      attr_accessor athena_properties: Types::AthenaPropertiesOutput
+      attr_accessor glue_properties: Types::GluePropertiesOutput
+      attr_accessor hyper_pod_properties: Types::HyperPodPropertiesOutput
+      attr_accessor iam_properties: Types::IamPropertiesOutput
+      attr_accessor redshift_properties: Types::RedshiftPropertiesOutput
+      attr_accessor spark_emr_properties: Types::SparkEmrPropertiesOutput
+      attr_accessor spark_glue_properties: Types::SparkGluePropertiesOutput
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AthenaProperties < ConnectionPropertiesOutput
+      end
+      class GlueProperties < ConnectionPropertiesOutput
+      end
+      class HyperPodProperties < ConnectionPropertiesOutput
+      end
+      class IamProperties < ConnectionPropertiesOutput
+      end
+      class RedshiftProperties < ConnectionPropertiesOutput
+      end
+      class SparkEmrProperties < ConnectionPropertiesOutput
+      end
+      class SparkGlueProperties < ConnectionPropertiesOutput
+      end
+      class Unknown < ConnectionPropertiesOutput
+      end
+    end
+
+    class ConnectionPropertiesPatch
+      attr_accessor athena_properties: Types::AthenaPropertiesPatch
+      attr_accessor glue_properties: Types::GluePropertiesPatch
+      attr_accessor iam_properties: Types::IamPropertiesPatch
+      attr_accessor redshift_properties: Types::RedshiftPropertiesPatch
+      attr_accessor spark_emr_properties: Types::SparkEmrPropertiesPatch
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AthenaProperties < ConnectionPropertiesPatch
+      end
+      class GlueProperties < ConnectionPropertiesPatch
+      end
+      class IamProperties < ConnectionPropertiesPatch
+      end
+      class RedshiftProperties < ConnectionPropertiesPatch
+      end
+      class SparkEmrProperties < ConnectionPropertiesPatch
+      end
+      class Unknown < ConnectionPropertiesPatch
+      end
+    end
+
+    class ConnectionSummary
+      attr_accessor connection_id: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor environment_id: ::String
+      attr_accessor name: ::String
+      attr_accessor physical_endpoints: ::Array[Types::PhysicalEndpoint]
+      attr_accessor project_id: ::String
+      attr_accessor props: Types::ConnectionPropertiesOutput
+      attr_accessor type: ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      SENSITIVE: []
+    end
+
     class CreateAssetFilterInput
       attr_accessor asset_identifier: ::String
       attr_accessor client_token: ::String
@@ -384,7 +558,7 @@ module Aws::DataZone
       attr_accessor prediction_configuration: Types::PredictionConfiguration
       attr_accessor type_identifier: ::String
       attr_accessor type_revision: ::String
-      SENSITIVE: [:description, :external_identifier, :forms_input, :name]
+      SENSITIVE: [:description, :forms_input, :name]
     end
 
     class CreateAssetOutput
@@ -407,7 +581,7 @@ module Aws::DataZone
       attr_accessor revision: ::String
       attr_accessor type_identifier: ::String
       attr_accessor type_revision: ::String
-      SENSITIVE: [:description, :external_identifier, :name]
+      SENSITIVE: [:description, :name]
     end
 
     class CreateAssetRevisionInput
@@ -443,7 +617,7 @@ module Aws::DataZone
       attr_accessor revision: ::String
       attr_accessor type_identifier: ::String
       attr_accessor type_revision: ::String
-      SENSITIVE: [:description, :external_identifier, :name]
+      SENSITIVE: [:description, :name]
     end
 
     class CreateAssetTypeInput
@@ -474,6 +648,31 @@ module Aws::DataZone
     class CreateAssetTypePolicyGrantDetail
       attr_accessor include_child_domain_units: bool
       SENSITIVE: []
+    end
+
+    class CreateConnectionInput
+      attr_accessor aws_location: Types::AwsLocation
+      attr_accessor client_token: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_identifier: ::String
+      attr_accessor environment_identifier: ::String
+      attr_accessor name: ::String
+      attr_accessor props: Types::ConnectionPropertiesInput
+      SENSITIVE: [:description]
+    end
+
+    class CreateConnectionOutput
+      attr_accessor connection_id: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor environment_id: ::String
+      attr_accessor name: ::String
+      attr_accessor physical_endpoints: ::Array[Types::PhysicalEndpoint]
+      attr_accessor project_id: ::String
+      attr_accessor props: Types::ConnectionPropertiesOutput
+      attr_accessor type: ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      SENSITIVE: [:description]
     end
 
     class CreateDataProductInput
@@ -540,6 +739,7 @@ module Aws::DataZone
       attr_accessor asset_forms_input: ::Array[Types::FormInput]
       attr_accessor client_token: ::String
       attr_accessor configuration: Types::DataSourceConfigurationInput
+      attr_accessor connection_identifier: ::String
       attr_accessor description: ::String
       attr_accessor domain_identifier: ::String
       attr_accessor enable_setting: ("ENABLED" | "DISABLED")
@@ -556,6 +756,7 @@ module Aws::DataZone
     class CreateDataSourceOutput
       attr_accessor asset_forms_output: ::Array[Types::FormOutput]
       attr_accessor configuration: Types::DataSourceConfigurationOutput
+      attr_accessor connection_id: ::String
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
@@ -581,8 +782,10 @@ module Aws::DataZone
       attr_accessor client_token: ::String
       attr_accessor description: ::String
       attr_accessor domain_execution_role: ::String
+      attr_accessor domain_version: ("V1" | "V2")
       attr_accessor kms_key_identifier: ::String
       attr_accessor name: ::String
+      attr_accessor service_role: ::String
       attr_accessor single_sign_on: Types::SingleSignOn
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
@@ -592,11 +795,13 @@ module Aws::DataZone
       attr_accessor arn: ::String
       attr_accessor description: ::String
       attr_accessor domain_execution_role: ::String
+      attr_accessor domain_version: ("V1" | "V2")
       attr_accessor id: ::String
       attr_accessor kms_key_identifier: ::String
       attr_accessor name: ::String
       attr_accessor portal_url: ::String
       attr_accessor root_domain_unit_id: ::String
+      attr_accessor service_role: ::String
       attr_accessor single_sign_on: Types::SingleSignOn
       attr_accessor status: ("CREATING" | "AVAILABLE" | "CREATION_FAILED" | "DELETING" | "DELETED" | "DELETION_FAILED")
       attr_accessor tags: ::Hash[::String, ::String]
@@ -650,11 +855,13 @@ module Aws::DataZone
     end
 
     class CreateEnvironmentInput
+      attr_accessor deployment_order: ::Integer
       attr_accessor description: ::String
       attr_accessor domain_identifier: ::String
       attr_accessor environment_account_identifier: ::String
       attr_accessor environment_account_region: ::String
       attr_accessor environment_blueprint_identifier: ::String
+      attr_accessor environment_configuration_id: ::String
       attr_accessor environment_profile_identifier: ::String
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor name: ::String
@@ -828,12 +1035,20 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class CreateProjectFromProjectProfilePolicyGrantDetail
+      attr_accessor include_child_domain_units: bool
+      attr_accessor project_profiles: ::Array[::String]
+      SENSITIVE: []
+    end
+
     class CreateProjectInput
       attr_accessor description: ::String
       attr_accessor domain_identifier: ::String
       attr_accessor domain_unit_id: ::String
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor name: ::String
+      attr_accessor project_profile_id: ::String
+      attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
       SENSITIVE: [:description, :name]
     end
 
@@ -854,18 +1069,45 @@ module Aws::DataZone
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
       attr_accessor domain_unit_id: ::String
+      attr_accessor environment_deployment_details: Types::EnvironmentDeploymentDetails
       attr_accessor failure_reasons: ::Array[Types::ProjectDeletionError]
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor id: ::String
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
+      attr_accessor project_profile_id: ::String
       attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+      attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
       SENSITIVE: [:description, :name]
     end
 
     class CreateProjectPolicyGrantDetail
       attr_accessor include_child_domain_units: bool
       SENSITIVE: []
+    end
+
+    class CreateProjectProfileInput
+      attr_accessor description: ::String
+      attr_accessor domain_identifier: ::String
+      attr_accessor domain_unit_identifier: ::String
+      attr_accessor environment_configurations: ::Array[Types::EnvironmentConfiguration]
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
+      SENSITIVE: [:description, :name]
+    end
+
+    class CreateProjectProfileOutput
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor environment_configurations: ::Array[Types::EnvironmentConfiguration]
+      attr_accessor id: ::String
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
+      SENSITIVE: [:description, :name]
     end
 
     class CreateRuleInput
@@ -1075,12 +1317,15 @@ module Aws::DataZone
     class DataSourceConfigurationInput
       attr_accessor glue_run_configuration: Types::GlueRunConfigurationInput
       attr_accessor redshift_run_configuration: Types::RedshiftRunConfigurationInput
+      attr_accessor sage_maker_run_configuration: Types::SageMakerRunConfigurationInput
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class GlueRunConfiguration < DataSourceConfigurationInput
       end
       class RedshiftRunConfiguration < DataSourceConfigurationInput
+      end
+      class SageMakerRunConfiguration < DataSourceConfigurationInput
       end
       class Unknown < DataSourceConfigurationInput
       end
@@ -1089,12 +1334,15 @@ module Aws::DataZone
     class DataSourceConfigurationOutput
       attr_accessor glue_run_configuration: Types::GlueRunConfigurationOutput
       attr_accessor redshift_run_configuration: Types::RedshiftRunConfigurationOutput
+      attr_accessor sage_maker_run_configuration: Types::SageMakerRunConfigurationOutput
       attr_accessor unknown: untyped
       SENSITIVE: []
 
       class GlueRunConfiguration < DataSourceConfigurationOutput
       end
       class RedshiftRunConfiguration < DataSourceConfigurationOutput
+      end
+      class SageMakerRunConfiguration < DataSourceConfigurationOutput
       end
       class Unknown < DataSourceConfigurationOutput
       end
@@ -1113,6 +1361,7 @@ module Aws::DataZone
       attr_accessor data_source_run_id: ::String
       attr_accessor database: ::String
       attr_accessor error_message: Types::DataSourceErrorMessage
+      attr_accessor lineage_summary: Types::LineageInfo
       attr_accessor project_id: ::String
       attr_accessor technical_description: ::String
       attr_accessor technical_name: ::String
@@ -1120,11 +1369,17 @@ module Aws::DataZone
       SENSITIVE: [:database, :technical_description, :technical_name]
     end
 
+    class DataSourceRunLineageSummary
+      attr_accessor import_status: ("IN_PROGRESS" | "SUCCESS" | "FAILED" | "PARTIALLY_SUCCEEDED")
+      SENSITIVE: []
+    end
+
     class DataSourceRunSummary
       attr_accessor created_at: ::Time
       attr_accessor data_source_id: ::String
       attr_accessor error_message: Types::DataSourceErrorMessage
       attr_accessor id: ::String
+      attr_accessor lineage_summary: Types::DataSourceRunLineageSummary
       attr_accessor project_id: ::String
       attr_accessor run_statistics_for_assets: Types::RunStatisticsForAssets
       attr_accessor started_at: ::Time
@@ -1136,8 +1391,10 @@ module Aws::DataZone
     end
 
     class DataSourceSummary
+      attr_accessor connection_id: ::String
       attr_accessor created_at: ::Time
       attr_accessor data_source_id: ::String
+      attr_accessor description: ::String
       attr_accessor domain_id: ::String
       attr_accessor enable_setting: ("ENABLED" | "DISABLED")
       attr_accessor environment_id: ::String
@@ -1150,7 +1407,7 @@ module Aws::DataZone
       attr_accessor status: ("CREATING" | "FAILED_CREATION" | "READY" | "UPDATING" | "FAILED_UPDATE" | "RUNNING" | "DELETING" | "FAILED_DELETION")
       attr_accessor type: ::String
       attr_accessor updated_at: ::Time
-      SENSITIVE: [:name, :schedule]
+      SENSITIVE: [:description, :name, :schedule]
     end
 
     class DeleteAssetFilterInput
@@ -1178,6 +1435,17 @@ module Aws::DataZone
     class DeleteAssetTypeOutput < Aws::EmptyStructure
     end
 
+    class DeleteConnectionInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteConnectionOutput
+      attr_accessor status: ::String
+      SENSITIVE: []
+    end
+
     class DeleteDataProductInput
       attr_accessor domain_identifier: ::String
       attr_accessor identifier: ::String
@@ -1198,6 +1466,7 @@ module Aws::DataZone
     class DeleteDataSourceOutput
       attr_accessor asset_forms_output: ::Array[Types::FormOutput]
       attr_accessor configuration: Types::DataSourceConfigurationOutput
+      attr_accessor connection_id: ::String
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
@@ -1325,6 +1594,15 @@ module Aws::DataZone
     class DeleteProjectOutput < Aws::EmptyStructure
     end
 
+    class DeleteProjectProfileInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteProjectProfileOutput < Aws::EmptyStructure
+    end
+
     class DeleteRuleInput
       attr_accessor domain_identifier: ::String
       attr_accessor identifier: ::String
@@ -1416,6 +1694,7 @@ module Aws::DataZone
       attr_accessor arn: ::String
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
+      attr_accessor domain_version: ("V1" | "V2")
       attr_accessor id: ::String
       attr_accessor last_updated_at: ::Time
       attr_accessor managed_account_id: ::String
@@ -1500,6 +1779,7 @@ module Aws::DataZone
       attr_accessor domain_id: ::String
       attr_accessor enabled_regions: ::Array[::String]
       attr_accessor environment_blueprint_id: ::String
+      attr_accessor environment_role_permission_boundary: ::String
       attr_accessor manage_access_role_arn: ::String
       attr_accessor provisioning_configurations: ::Array[Types::ProvisioningConfiguration]
       attr_accessor provisioning_role_arn: ::String
@@ -1517,6 +1797,45 @@ module Aws::DataZone
       attr_accessor provisioning_properties: Types::ProvisioningProperties
       attr_accessor updated_at: ::Time
       SENSITIVE: [:description]
+    end
+
+    class EnvironmentConfiguration
+      attr_accessor aws_account: Types::AwsAccount
+      attr_accessor aws_region: Types::Region
+      attr_accessor configuration_parameters: Types::EnvironmentConfigurationParametersDetails
+      attr_accessor deployment_mode: ("ON_CREATE" | "ON_DEMAND")
+      attr_accessor deployment_order: ::Integer
+      attr_accessor description: ::String
+      attr_accessor environment_blueprint_id: ::String
+      attr_accessor id: ::String
+      attr_accessor name: ::String
+      SENSITIVE: [:description, :id, :name]
+    end
+
+    class EnvironmentConfigurationParameter
+      attr_accessor is_editable: bool
+      attr_accessor name: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class EnvironmentConfigurationParametersDetails
+      attr_accessor parameter_overrides: ::Array[Types::EnvironmentConfigurationParameter]
+      attr_accessor resolved_parameters: ::Array[Types::EnvironmentConfigurationParameter]
+      attr_accessor ssm_path: ::String
+      SENSITIVE: []
+    end
+
+    class EnvironmentConfigurationUserParameter
+      attr_accessor environment_configuration_name: ::String
+      attr_accessor environment_parameters: ::Array[Types::EnvironmentParameter]
+      SENSITIVE: [:environment_configuration_name]
+    end
+
+    class EnvironmentDeploymentDetails
+      attr_accessor environment_failure_reasons: ::Hash[::String, ::Array[Types::EnvironmentError]]
+      attr_accessor overall_deployment_status: ("PENDING_DEPLOYMENT" | "IN_PROGRESS" | "SUCCESSFUL" | "FAILED_VALIDATION" | "FAILED_DEPLOYMENT")
+      SENSITIVE: []
     end
 
     class EnvironmentError
@@ -1567,6 +1886,17 @@ module Aws::DataZone
       attr_accessor column_name: ::String
       attr_accessor value: ::String
       SENSITIVE: []
+    end
+
+    class EventSummary
+      attr_accessor open_lineage_run_event_summary: Types::OpenLineageRunEventSummary
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class OpenLineageRunEventSummary < EventSummary
+      end
+      class Unknown < EventSummary
+      end
     end
 
     class FailureCause
@@ -1697,7 +2027,7 @@ module Aws::DataZone
       attr_accessor revision: ::String
       attr_accessor type_identifier: ::String
       attr_accessor type_revision: ::String
-      SENSITIVE: [:description, :external_identifier, :name]
+      SENSITIVE: [:description, :name]
     end
 
     class GetAssetTypeInput
@@ -1721,6 +2051,29 @@ module Aws::DataZone
       attr_accessor updated_at: ::Time
       attr_accessor updated_by: ::String
       SENSITIVE: [:description]
+    end
+
+    class GetConnectionInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      attr_accessor with_secret: bool
+      SENSITIVE: []
+    end
+
+    class GetConnectionOutput
+      attr_accessor connection_credentials: Types::ConnectionCredentials
+      attr_accessor connection_id: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor environment_id: ::String
+      attr_accessor environment_user_role: ::String
+      attr_accessor name: ::String
+      attr_accessor physical_endpoints: ::Array[Types::PhysicalEndpoint]
+      attr_accessor project_id: ::String
+      attr_accessor props: Types::ConnectionPropertiesOutput
+      attr_accessor type: ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      SENSITIVE: [:connection_credentials, :description]
     end
 
     class GetDataProductInput
@@ -1757,6 +2110,7 @@ module Aws::DataZone
     class GetDataSourceOutput
       attr_accessor asset_forms_output: ::Array[Types::FormOutput]
       attr_accessor configuration: Types::DataSourceConfigurationOutput
+      attr_accessor connection_id: ::String
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
@@ -1793,6 +2147,7 @@ module Aws::DataZone
       attr_accessor domain_id: ::String
       attr_accessor error_message: Types::DataSourceErrorMessage
       attr_accessor id: ::String
+      attr_accessor lineage_summary: Types::DataSourceRunLineageSummary
       attr_accessor project_id: ::String
       attr_accessor run_statistics_for_assets: Types::RunStatisticsForAssets
       attr_accessor started_at: ::Time
@@ -1813,12 +2168,14 @@ module Aws::DataZone
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
       attr_accessor domain_execution_role: ::String
+      attr_accessor domain_version: ("V1" | "V2")
       attr_accessor id: ::String
       attr_accessor kms_key_identifier: ::String
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
       attr_accessor portal_url: ::String
       attr_accessor root_domain_unit_id: ::String
+      attr_accessor service_role: ::String
       attr_accessor single_sign_on: Types::SingleSignOn
       attr_accessor status: ("CREATING" | "AVAILABLE" | "CREATION_FAILED" | "DELETING" | "DELETED" | "DELETION_FAILED")
       attr_accessor tags: ::Hash[::String, ::String]
@@ -1873,6 +2230,7 @@ module Aws::DataZone
       attr_accessor domain_id: ::String
       attr_accessor enabled_regions: ::Array[::String]
       attr_accessor environment_blueprint_id: ::String
+      attr_accessor environment_role_permission_boundary: ::String
       attr_accessor manage_access_role_arn: ::String
       attr_accessor provisioning_configurations: ::Array[Types::ProvisioningConfiguration]
       attr_accessor provisioning_role_arn: ::String
@@ -2058,6 +2416,45 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class GetJobRunInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetJobRunOutput
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor details: Types::JobRunDetails
+      attr_accessor domain_id: ::String
+      attr_accessor end_time: ::Time
+      attr_accessor error: Types::JobRunError
+      attr_accessor id: ::String
+      attr_accessor job_id: ::String
+      attr_accessor job_type: ("LINEAGE")
+      attr_accessor run_mode: ("SCHEDULED" | "ON_DEMAND")
+      attr_accessor start_time: ::Time
+      attr_accessor status: ("SCHEDULED" | "IN_PROGRESS" | "SUCCESS" | "PARTIALLY_SUCCEEDED" | "FAILED" | "ABORTED" | "TIMED_OUT" | "CANCELED")
+      SENSITIVE: []
+    end
+
+    class GetLineageEventInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetLineageEventOutput
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor event: ::String
+      attr_accessor event_time: ::Time
+      attr_accessor id: ::String
+      attr_accessor processing_status: ("REQUESTED" | "PROCESSING" | "SUCCESS" | "FAILED")
+      SENSITIVE: [:event]
+    end
+
     class GetLineageNodeInput
       attr_accessor domain_identifier: ::String
       attr_accessor event_timestamp: ::Time
@@ -2136,12 +2533,35 @@ module Aws::DataZone
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
       attr_accessor domain_unit_id: ::String
+      attr_accessor environment_deployment_details: Types::EnvironmentDeploymentDetails
       attr_accessor failure_reasons: ::Array[Types::ProjectDeletionError]
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor id: ::String
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
+      attr_accessor project_profile_id: ::String
       attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+      attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
+      SENSITIVE: [:description, :name]
+    end
+
+    class GetProjectProfileInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetProjectProfileOutput
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor environment_configurations: ::Array[Types::EnvironmentConfiguration]
+      attr_accessor id: ::String
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
       SENSITIVE: [:description, :name]
     end
 
@@ -2326,8 +2746,78 @@ module Aws::DataZone
       SENSITIVE: [:long_description, :name, :short_description]
     end
 
+    class GlueConnection
+      attr_accessor athena_properties: ::Hash[::String, ::String]
+      attr_accessor authentication_configuration: Types::AuthenticationConfiguration
+      attr_accessor compatible_compute_environments: ::Array[("SPARK" | "ATHENA" | "PYTHON")]
+      attr_accessor connection_properties: ::Hash[::String, ::String]
+      attr_accessor connection_schema_version: ::Integer
+      attr_accessor connection_type: ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      attr_accessor creation_time: ::Time
+      attr_accessor description: ::String
+      attr_accessor last_connection_validation_time: ::Time
+      attr_accessor last_updated_by: ::String
+      attr_accessor last_updated_time: ::Time
+      attr_accessor match_criteria: ::Array[::String]
+      attr_accessor name: ::String
+      attr_accessor physical_connection_requirements: Types::PhysicalConnectionRequirements
+      attr_accessor python_properties: ::Hash[::String, ::String]
+      attr_accessor spark_properties: ::Hash[::String, ::String]
+      attr_accessor status: ("CREATING" | "CREATE_FAILED" | "DELETING" | "DELETE_FAILED" | "READY" | "UPDATING" | "UPDATE_FAILED" | "DELETED")
+      attr_accessor status_reason: ::String
+      SENSITIVE: []
+    end
+
+    class GlueConnectionInput
+      attr_accessor athena_properties: ::Hash[::String, ::String]
+      attr_accessor authentication_configuration: Types::AuthenticationConfigurationInput
+      attr_accessor connection_properties: ::Hash[::String, ::String]
+      attr_accessor connection_type: ("SNOWFLAKE" | "BIGQUERY" | "DOCUMENTDB" | "DYNAMODB" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SQLSERVER" | "TERADATA" | "VERTICA")
+      attr_accessor description: ::String
+      attr_accessor match_criteria: ::String
+      attr_accessor name: ::String
+      attr_accessor physical_connection_requirements: Types::PhysicalConnectionRequirements
+      attr_accessor python_properties: ::Hash[::String, ::String]
+      attr_accessor spark_properties: ::Hash[::String, ::String]
+      attr_accessor validate_credentials: bool
+      attr_accessor validate_for_compute_environments: ::Array[("SPARK" | "ATHENA" | "PYTHON")]
+      SENSITIVE: []
+    end
+
+    class GlueConnectionPatch
+      attr_accessor authentication_configuration: Types::AuthenticationConfigurationPatch
+      attr_accessor connection_properties: ::Hash[::String, ::String]
+      attr_accessor description: ::String
+      SENSITIVE: []
+    end
+
+    class GlueOAuth2Credentials
+      attr_accessor access_token: ::String
+      attr_accessor jwt_token: ::String
+      attr_accessor refresh_token: ::String
+      attr_accessor user_managed_client_application_client_secret: ::String
+      SENSITIVE: []
+    end
+
+    class GluePropertiesInput
+      attr_accessor glue_connection_input: Types::GlueConnectionInput
+      SENSITIVE: []
+    end
+
+    class GluePropertiesOutput
+      attr_accessor error_message: ::String
+      attr_accessor status: ("CREATING" | "CREATE_FAILED" | "DELETING" | "DELETE_FAILED" | "READY" | "UPDATING" | "UPDATE_FAILED" | "DELETED")
+      SENSITIVE: []
+    end
+
+    class GluePropertiesPatch
+      attr_accessor glue_connection_input: Types::GlueConnectionPatch
+      SENSITIVE: []
+    end
+
     class GlueRunConfigurationInput
       attr_accessor auto_import_data_quality_result: bool
+      attr_accessor catalog_name: ::String
       attr_accessor data_access_role: ::String
       attr_accessor relational_filter_configurations: ::Array[Types::RelationalFilterConfiguration]
       SENSITIVE: []
@@ -2336,6 +2826,7 @@ module Aws::DataZone
     class GlueRunConfigurationOutput
       attr_accessor account_id: ::String
       attr_accessor auto_import_data_quality_result: bool
+      attr_accessor catalog_name: ::String
       attr_accessor data_access_role: ::String
       attr_accessor region: ::String
       attr_accessor relational_filter_configurations: ::Array[Types::RelationalFilterConfiguration]
@@ -2405,6 +2896,34 @@ module Aws::DataZone
       SENSITIVE: [:group_name]
     end
 
+    class HyperPodPropertiesInput
+      attr_accessor cluster_name: ::String
+      SENSITIVE: []
+    end
+
+    class HyperPodPropertiesOutput
+      attr_accessor cluster_arn: ::String
+      attr_accessor cluster_name: ::String
+      attr_accessor orchestrator: ("EKS" | "SLURM")
+      SENSITIVE: []
+    end
+
+    class IamPropertiesInput
+      attr_accessor glue_lineage_sync_enabled: bool
+      SENSITIVE: []
+    end
+
+    class IamPropertiesOutput
+      attr_accessor environment_id: ::String
+      attr_accessor glue_lineage_sync_enabled: bool
+      SENSITIVE: []
+    end
+
+    class IamPropertiesPatch
+      attr_accessor glue_lineage_sync_enabled: bool
+      SENSITIVE: []
+    end
+
     class IamUserProfileDetails
       attr_accessor arn: ::String
       SENSITIVE: []
@@ -2437,6 +2956,37 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class JobRunDetails
+      attr_accessor lineage_run_details: Types::LineageRunDetails
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class LineageRunDetails < JobRunDetails
+      end
+      class Unknown < JobRunDetails
+      end
+    end
+
+    class JobRunError
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class JobRunSummary
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor end_time: ::Time
+      attr_accessor error: Types::JobRunError
+      attr_accessor job_id: ::String
+      attr_accessor job_type: ("LINEAGE")
+      attr_accessor run_id: ::String
+      attr_accessor run_mode: ("SCHEDULED" | "ON_DEMAND")
+      attr_accessor start_time: ::Time
+      attr_accessor status: ("SCHEDULED" | "IN_PROGRESS" | "SUCCESS" | "PARTIALLY_SUCCEEDED" | "FAILED" | "ABORTED" | "TIMED_OUT" | "CANCELED")
+      SENSITIVE: []
+    end
+
     class LakeFormationConfiguration
       attr_accessor location_registration_exclude_s3_locations: ::Array[::String]
       attr_accessor location_registration_role: ::String
@@ -2458,6 +3008,24 @@ module Aws::DataZone
     class LikeExpression
       attr_accessor column_name: ::String
       attr_accessor value: ::String
+      SENSITIVE: []
+    end
+
+    class LineageEventSummary
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor event_summary: Types::EventSummary
+      attr_accessor event_time: ::Time
+      attr_accessor id: ::String
+      attr_accessor processing_status: ("REQUESTED" | "PROCESSING" | "SUCCESS" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class LineageInfo
+      attr_accessor error_message: ::String
+      attr_accessor event_id: ::String
+      attr_accessor event_status: ("REQUESTED" | "PROCESSING" | "SUCCESS" | "FAILED")
       SENSITIVE: []
     end
 
@@ -2496,6 +3064,25 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class LineageRunDetails
+      attr_accessor sql_query_run_details: Types::LineageSqlQueryRunDetails
+      SENSITIVE: []
+    end
+
+    class LineageSqlQueryRunDetails
+      attr_accessor error_messages: ::Array[::String]
+      attr_accessor num_queries_failed: ::Integer
+      attr_accessor query_end_time: ::Time
+      attr_accessor query_start_time: ::Time
+      attr_accessor total_queries_processed: ::Integer
+      SENSITIVE: []
+    end
+
+    class LineageSyncSchedule
+      attr_accessor schedule: ::String
+      SENSITIVE: []
+    end
+
     class ListAssetFiltersInput
       attr_accessor asset_identifier: ::String
       attr_accessor domain_identifier: ::String
@@ -2521,6 +3108,25 @@ module Aws::DataZone
 
     class ListAssetRevisionsOutput
       attr_accessor items: ::Array[Types::AssetRevision]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListConnectionsInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor environment_identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor name: ::String
+      attr_accessor next_token: ::String
+      attr_accessor project_identifier: ::String
+      attr_accessor sort_by: ("NAME")
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      attr_accessor type: ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      SENSITIVE: []
+    end
+
+    class ListConnectionsOutput
+      attr_accessor items: ::Array[Types::ConnectionSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -2570,6 +3176,7 @@ module Aws::DataZone
     end
 
     class ListDataSourcesInput
+      attr_accessor connection_identifier: ::String
       attr_accessor domain_identifier: ::String
       attr_accessor environment_identifier: ::String
       attr_accessor max_results: ::Integer
@@ -2710,6 +3317,39 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class ListJobRunsInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor job_identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      attr_accessor status: ("SCHEDULED" | "IN_PROGRESS" | "SUCCESS" | "PARTIALLY_SUCCEEDED" | "FAILED" | "ABORTED" | "TIMED_OUT" | "CANCELED")
+      SENSITIVE: []
+    end
+
+    class ListJobRunsOutput
+      attr_accessor items: ::Array[Types::JobRunSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListLineageEventsInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor processing_status: ("REQUESTED" | "PROCESSING" | "SUCCESS" | "FAILED")
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      attr_accessor timestamp_after: ::Time
+      attr_accessor timestamp_before: ::Time
+      SENSITIVE: []
+    end
+
+    class ListLineageEventsOutput
+      attr_accessor items: ::Array[Types::LineageEventSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListLineageNodeHistoryInput
       attr_accessor direction: ("UPSTREAM" | "DOWNSTREAM")
       attr_accessor domain_identifier: ::String
@@ -2767,7 +3407,7 @@ module Aws::DataZone
       attr_accessor entity_type: ("DOMAIN_UNIT" | "ENVIRONMENT_BLUEPRINT_CONFIGURATION" | "ENVIRONMENT_PROFILE")
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
-      attr_accessor policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT")
+      attr_accessor policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT" | "CREATE_ENVIRONMENT_FROM_BLUEPRINT" | "CREATE_PROJECT_FROM_PROJECT_PROFILE")
       SENSITIVE: []
     end
 
@@ -2789,6 +3429,22 @@ module Aws::DataZone
 
     class ListProjectMembershipsOutput
       attr_accessor members: ::Array[Types::ProjectMember]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListProjectProfilesInput
+      attr_accessor domain_identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor name: ::String
+      attr_accessor next_token: ::String
+      attr_accessor sort_by: ("NAME")
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      SENSITIVE: [:name]
+    end
+
+    class ListProjectProfilesOutput
+      attr_accessor items: ::Array[Types::ProjectProfileSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -3049,6 +3705,12 @@ module Aws::DataZone
       end
     end
 
+    class NameIdentifier
+      attr_accessor name: ::String
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
     class NotEqualToExpression
       attr_accessor column_name: ::String
       attr_accessor value: ::String
@@ -3086,6 +3748,31 @@ module Aws::DataZone
       attr_accessor id: ::String
       attr_accessor name: ::String
       attr_accessor type: ("PROJECT")
+      SENSITIVE: []
+    end
+
+    class OAuth2ClientApplication
+      attr_accessor a_ws_managed_client_application_reference: ::String
+      attr_accessor user_managed_client_application_client_id: ::String
+      SENSITIVE: []
+    end
+
+    class OAuth2Properties
+      attr_accessor authorization_code_properties: Types::AuthorizationCodeProperties
+      attr_accessor o_auth_2_client_application: Types::OAuth2ClientApplication
+      attr_accessor o_auth_2_credentials: Types::GlueOAuth2Credentials
+      attr_accessor o_auth_2_grant_type: ("AUTHORIZATION_CODE" | "CLIENT_CREDENTIALS" | "JWT_BEARER")
+      attr_accessor token_url: ::String
+      attr_accessor token_url_parameters_map: ::Hash[::String, ::String]
+      SENSITIVE: [:o_auth_2_credentials]
+    end
+
+    class OpenLineageRunEventSummary
+      attr_accessor event_type: ("START" | "RUNNING" | "COMPLETE" | "ABORT" | "FAIL" | "OTHER")
+      attr_accessor inputs: ::Array[Types::NameIdentifier]
+      attr_accessor job: Types::NameIdentifier
+      attr_accessor outputs: ::Array[Types::NameIdentifier]
+      attr_accessor run_id: ::String
       SENSITIVE: []
     end
 
@@ -3147,15 +3834,36 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class PhysicalConnectionRequirements
+      attr_accessor availability_zone: ::String
+      attr_accessor security_group_id_list: ::Array[::String]
+      attr_accessor subnet_id: ::String
+      attr_accessor subnet_id_list: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class PhysicalEndpoint
+      attr_accessor aws_location: Types::AwsLocation
+      attr_accessor glue_connection: Types::GlueConnection
+      attr_accessor glue_connection_name: ::String
+      attr_accessor host: ::String
+      attr_accessor port: ::Integer
+      attr_accessor protocol: ("ATHENA" | "GLUE_INTERACTIVE_SESSION" | "HTTPS" | "JDBC" | "LIVY" | "ODBC" | "PRISM")
+      attr_accessor stage: ::String
+      SENSITIVE: []
+    end
+
     class PolicyGrantDetail
       attr_accessor add_to_project_member_pool: Types::AddToProjectMemberPoolPolicyGrantDetail
       attr_accessor create_asset_type: Types::CreateAssetTypePolicyGrantDetail
       attr_accessor create_domain_unit: Types::CreateDomainUnitPolicyGrantDetail
       attr_accessor create_environment: Types::Unit
+      attr_accessor create_environment_from_blueprint: Types::Unit
       attr_accessor create_environment_profile: Types::CreateEnvironmentProfilePolicyGrantDetail
       attr_accessor create_form_type: Types::CreateFormTypePolicyGrantDetail
       attr_accessor create_glossary: Types::CreateGlossaryPolicyGrantDetail
       attr_accessor create_project: Types::CreateProjectPolicyGrantDetail
+      attr_accessor create_project_from_project_profile: Types::CreateProjectFromProjectProfilePolicyGrantDetail
       attr_accessor delegate_create_environment_profile: Types::Unit
       attr_accessor override_domain_unit_owners: Types::OverrideDomainUnitOwnersPolicyGrantDetail
       attr_accessor override_project_owners: Types::OverrideProjectOwnersPolicyGrantDetail
@@ -3170,6 +3878,8 @@ module Aws::DataZone
       end
       class CreateEnvironment < PolicyGrantDetail
       end
+      class CreateEnvironmentFromBlueprint < PolicyGrantDetail
+      end
       class CreateEnvironmentProfile < PolicyGrantDetail
       end
       class CreateFormType < PolicyGrantDetail
@@ -3177,6 +3887,8 @@ module Aws::DataZone
       class CreateGlossary < PolicyGrantDetail
       end
       class CreateProject < PolicyGrantDetail
+      end
+      class CreateProjectFromProjectProfile < PolicyGrantDetail
       end
       class DelegateCreateEnvironmentProfile < PolicyGrantDetail
       end
@@ -3223,7 +3935,10 @@ module Aws::DataZone
       SENSITIVE: [:event]
     end
 
-    class PostLineageEventOutput < Aws::EmptyStructure
+    class PostLineageEventOutput
+      attr_accessor domain_id: ::String
+      attr_accessor id: ::String
+      SENSITIVE: []
     end
 
     class PostTimeSeriesDataPointsInput
@@ -3278,6 +3993,19 @@ module Aws::DataZone
       SENSITIVE: []
     end
 
+    class ProjectProfileSummary
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor id: ::String
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
+      SENSITIVE: [:description, :name]
+    end
+
     class ProjectSummary
       attr_accessor created_at: ::Time
       attr_accessor created_by: ::String
@@ -3324,6 +4052,7 @@ module Aws::DataZone
       attr_accessor domain_identifier: ::String
       attr_accessor enabled_regions: ::Array[::String]
       attr_accessor environment_blueprint_identifier: ::String
+      attr_accessor environment_role_permission_boundary: ::String
       attr_accessor manage_access_role_arn: ::String
       attr_accessor provisioning_configurations: ::Array[Types::ProvisioningConfiguration]
       attr_accessor provisioning_role_arn: ::String
@@ -3336,6 +4065,7 @@ module Aws::DataZone
       attr_accessor domain_id: ::String
       attr_accessor enabled_regions: ::Array[::String]
       attr_accessor environment_blueprint_id: ::String
+      attr_accessor environment_role_permission_boundary: ::String
       attr_accessor manage_access_role_arn: ::String
       attr_accessor provisioning_configurations: ::Array[Types::ProvisioningConfiguration]
       attr_accessor provisioning_role_arn: ::String
@@ -3357,6 +4087,66 @@ module Aws::DataZone
     class RedshiftCredentialConfiguration
       attr_accessor secret_manager_arn: ::String
       SENSITIVE: []
+    end
+
+    class RedshiftCredentials
+      attr_accessor secret_arn: ::String
+      attr_accessor username_password: Types::UsernamePassword
+      attr_accessor unknown: untyped
+      SENSITIVE: [:username_password]
+
+      class SecretArn < RedshiftCredentials
+      end
+      class UsernamePassword < RedshiftCredentials
+      end
+      class Unknown < RedshiftCredentials
+      end
+    end
+
+    class RedshiftLineageSyncConfigurationInput
+      attr_accessor enabled: bool
+      attr_accessor schedule: Types::LineageSyncSchedule
+      SENSITIVE: []
+    end
+
+    class RedshiftLineageSyncConfigurationOutput
+      attr_accessor enabled: bool
+      attr_accessor lineage_job_id: ::String
+      attr_accessor schedule: Types::LineageSyncSchedule
+      SENSITIVE: []
+    end
+
+    class RedshiftPropertiesInput
+      attr_accessor credentials: Types::RedshiftCredentials
+      attr_accessor database_name: ::String
+      attr_accessor host: ::String
+      attr_accessor lineage_sync: Types::RedshiftLineageSyncConfigurationInput
+      attr_accessor port: ::Integer
+      attr_accessor storage: Types::RedshiftStorageProperties
+      SENSITIVE: [:credentials]
+    end
+
+    class RedshiftPropertiesOutput
+      attr_accessor credentials: Types::RedshiftCredentials
+      attr_accessor database_name: ::String
+      attr_accessor is_provisioned_secret: bool
+      attr_accessor jdbc_iam_url: ::String
+      attr_accessor jdbc_url: ::String
+      attr_accessor lineage_sync: Types::RedshiftLineageSyncConfigurationOutput
+      attr_accessor redshift_temp_dir: ::String
+      attr_accessor status: ("CREATING" | "CREATE_FAILED" | "DELETING" | "DELETE_FAILED" | "READY" | "UPDATING" | "UPDATE_FAILED" | "DELETED")
+      attr_accessor storage: Types::RedshiftStorageProperties
+      SENSITIVE: [:credentials]
+    end
+
+    class RedshiftPropertiesPatch
+      attr_accessor credentials: Types::RedshiftCredentials
+      attr_accessor database_name: ::String
+      attr_accessor host: ::String
+      attr_accessor lineage_sync: Types::RedshiftLineageSyncConfigurationInput
+      attr_accessor port: ::Integer
+      attr_accessor storage: Types::RedshiftStorageProperties
+      SENSITIVE: [:credentials]
     end
 
     class RedshiftRunConfigurationInput
@@ -3398,6 +4188,34 @@ module Aws::DataZone
       class RedshiftServerlessSource < RedshiftStorage
       end
       class Unknown < RedshiftStorage
+      end
+    end
+
+    class RedshiftStorageProperties
+      attr_accessor cluster_name: ::String
+      attr_accessor workgroup_name: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class ClusterName < RedshiftStorageProperties
+      end
+      class WorkgroupName < RedshiftStorageProperties
+      end
+      class Unknown < RedshiftStorageProperties
+      end
+    end
+
+    class Region
+      attr_accessor region_name: ::String
+      attr_accessor region_name_path: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class RegionName < Region
+      end
+      class RegionNamePath < Region
+      end
+      class Unknown < Region
       end
     end
 
@@ -3479,7 +4297,7 @@ module Aws::DataZone
       attr_accessor domain_identifier: ::String
       attr_accessor entity_identifier: ::String
       attr_accessor entity_type: ("DOMAIN_UNIT" | "ENVIRONMENT_BLUEPRINT_CONFIGURATION" | "ENVIRONMENT_PROFILE")
-      attr_accessor policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT")
+      attr_accessor policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT" | "CREATE_ENVIRONMENT_FROM_BLUEPRINT" | "CREATE_PROJECT_FROM_PROJECT_PROFILE")
       attr_accessor principal: Types::PolicyGrantPrincipal
       SENSITIVE: []
     end
@@ -3638,6 +4456,18 @@ module Aws::DataZone
       attr_accessor skipped: ::Integer
       attr_accessor unchanged: ::Integer
       attr_accessor updated: ::Integer
+      SENSITIVE: []
+    end
+
+    class SageMakerRunConfigurationInput
+      attr_accessor tracking_assets: ::Hash[::String, ::Array[::String]]
+      SENSITIVE: []
+    end
+
+    class SageMakerRunConfigurationOutput
+      attr_accessor account_id: ::String
+      attr_accessor region: ::String
+      attr_accessor tracking_assets: ::Hash[::String, ::Array[::String]]
       SENSITIVE: []
     end
 
@@ -3829,6 +4659,72 @@ module Aws::DataZone
     class SingleSignOn
       attr_accessor type: ("IAM_IDC" | "DISABLED")
       attr_accessor user_assignment: ("AUTOMATIC" | "MANUAL")
+      SENSITIVE: []
+    end
+
+    class SparkEmrPropertiesInput
+      attr_accessor compute_arn: ::String
+      attr_accessor instance_profile_arn: ::String
+      attr_accessor java_virtual_env: ::String
+      attr_accessor log_uri: ::String
+      attr_accessor python_virtual_env: ::String
+      attr_accessor runtime_role: ::String
+      attr_accessor trusted_certificates_s3_uri: ::String
+      SENSITIVE: []
+    end
+
+    class SparkEmrPropertiesOutput
+      attr_accessor compute_arn: ::String
+      attr_accessor credentials: Types::UsernamePassword
+      attr_accessor credentials_expiration: ::Time
+      attr_accessor governance_type: ("AWS_MANAGED" | "USER_MANAGED")
+      attr_accessor instance_profile_arn: ::String
+      attr_accessor java_virtual_env: ::String
+      attr_accessor livy_endpoint: ::String
+      attr_accessor log_uri: ::String
+      attr_accessor python_virtual_env: ::String
+      attr_accessor runtime_role: ::String
+      attr_accessor trusted_certificates_s3_uri: ::String
+      SENSITIVE: [:credentials]
+    end
+
+    class SparkEmrPropertiesPatch
+      attr_accessor compute_arn: ::String
+      attr_accessor instance_profile_arn: ::String
+      attr_accessor java_virtual_env: ::String
+      attr_accessor log_uri: ::String
+      attr_accessor python_virtual_env: ::String
+      attr_accessor runtime_role: ::String
+      attr_accessor trusted_certificates_s3_uri: ::String
+      SENSITIVE: []
+    end
+
+    class SparkGlueArgs
+      attr_accessor connection: ::String
+      SENSITIVE: []
+    end
+
+    class SparkGluePropertiesInput
+      attr_accessor additional_args: Types::SparkGlueArgs
+      attr_accessor glue_connection_name: ::String
+      attr_accessor glue_version: ::String
+      attr_accessor idle_timeout: ::Integer
+      attr_accessor java_virtual_env: ::String
+      attr_accessor number_of_workers: ::Integer
+      attr_accessor python_virtual_env: ::String
+      attr_accessor worker_type: ::String
+      SENSITIVE: []
+    end
+
+    class SparkGluePropertiesOutput
+      attr_accessor additional_args: Types::SparkGlueArgs
+      attr_accessor glue_connection_name: ::String
+      attr_accessor glue_version: ::String
+      attr_accessor idle_timeout: ::Integer
+      attr_accessor java_virtual_env: ::String
+      attr_accessor number_of_workers: ::Integer
+      attr_accessor python_virtual_env: ::String
+      attr_accessor worker_type: ::String
       SENSITIVE: []
     end
 
@@ -4149,6 +5045,29 @@ module Aws::DataZone
       SENSITIVE: [:description, :name]
     end
 
+    class UpdateConnectionInput
+      attr_accessor aws_location: Types::AwsLocation
+      attr_accessor description: ::String
+      attr_accessor domain_identifier: ::String
+      attr_accessor identifier: ::String
+      attr_accessor props: Types::ConnectionPropertiesPatch
+      SENSITIVE: [:description]
+    end
+
+    class UpdateConnectionOutput
+      attr_accessor connection_id: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor environment_id: ::String
+      attr_accessor name: ::String
+      attr_accessor physical_endpoints: ::Array[Types::PhysicalEndpoint]
+      attr_accessor project_id: ::String
+      attr_accessor props: Types::ConnectionPropertiesOutput
+      attr_accessor type: ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      SENSITIVE: [:description]
+    end
+
     class UpdateDataSourceInput
       attr_accessor asset_forms_input: ::Array[Types::FormInput]
       attr_accessor configuration: Types::DataSourceConfigurationInput
@@ -4167,6 +5086,7 @@ module Aws::DataZone
     class UpdateDataSourceOutput
       attr_accessor asset_forms_output: ::Array[Types::FormOutput]
       attr_accessor configuration: Types::DataSourceConfigurationOutput
+      attr_accessor connection_id: ::String
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
@@ -4196,6 +5116,7 @@ module Aws::DataZone
       attr_accessor domain_execution_role: ::String
       attr_accessor identifier: ::String
       attr_accessor name: ::String
+      attr_accessor service_role: ::String
       attr_accessor single_sign_on: Types::SingleSignOn
       SENSITIVE: []
     end
@@ -4207,6 +5128,7 @@ module Aws::DataZone
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
       attr_accessor root_domain_unit_id: ::String
+      attr_accessor service_role: ::String
       attr_accessor single_sign_on: Types::SingleSignOn
       SENSITIVE: []
     end
@@ -4376,6 +5298,7 @@ module Aws::DataZone
     class UpdateProjectInput
       attr_accessor description: ::String
       attr_accessor domain_identifier: ::String
+      attr_accessor environment_deployment_details: Types::EnvironmentDeploymentDetails
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor identifier: ::String
       attr_accessor name: ::String
@@ -4388,12 +5311,40 @@ module Aws::DataZone
       attr_accessor description: ::String
       attr_accessor domain_id: ::String
       attr_accessor domain_unit_id: ::String
+      attr_accessor environment_deployment_details: Types::EnvironmentDeploymentDetails
       attr_accessor failure_reasons: ::Array[Types::ProjectDeletionError]
       attr_accessor glossary_terms: ::Array[::String]
       attr_accessor id: ::String
       attr_accessor last_updated_at: ::Time
       attr_accessor name: ::String
+      attr_accessor project_profile_id: ::String
       attr_accessor project_status: ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+      attr_accessor user_parameters: ::Array[Types::EnvironmentConfigurationUserParameter]
+      SENSITIVE: [:description, :name]
+    end
+
+    class UpdateProjectProfileInput
+      attr_accessor description: ::String
+      attr_accessor domain_identifier: ::String
+      attr_accessor domain_unit_identifier: ::String
+      attr_accessor environment_configurations: ::Array[Types::EnvironmentConfiguration]
+      attr_accessor identifier: ::String
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
+      SENSITIVE: [:description, :name]
+    end
+
+    class UpdateProjectProfileOutput
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor domain_id: ::String
+      attr_accessor domain_unit_id: ::String
+      attr_accessor environment_configurations: ::Array[Types::EnvironmentConfiguration]
+      attr_accessor id: ::String
+      attr_accessor last_updated_at: ::Time
+      attr_accessor name: ::String
+      attr_accessor status: ("ENABLED" | "DISABLED")
       SENSITIVE: [:description, :name]
     end
 
@@ -4564,6 +5515,12 @@ module Aws::DataZone
       attr_accessor status: ("ASSIGNED" | "NOT_ASSIGNED" | "ACTIVATED" | "DEACTIVATED")
       attr_accessor type: ("IAM" | "SSO")
       SENSITIVE: []
+    end
+
+    class UsernamePassword
+      attr_accessor password: ::String
+      attr_accessor username: ::String
+      SENSITIVE: [:password]
     end
 
     class ValidationException

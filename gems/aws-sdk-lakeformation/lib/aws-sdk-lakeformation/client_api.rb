@@ -50,6 +50,7 @@ module Aws::LakeFormation
     CommitTransactionResponse = Shapes::StructureShape.new(name: 'CommitTransactionResponse')
     ComparisonOperator = Shapes::StringShape.new(name: 'ComparisonOperator')
     ConcurrentModificationException = Shapes::StructureShape.new(name: 'ConcurrentModificationException')
+    Condition = Shapes::StructureShape.new(name: 'Condition')
     ContextKey = Shapes::StringShape.new(name: 'ContextKey')
     ContextValue = Shapes::StringShape.new(name: 'ContextValue')
     CreateDataCellsFilterRequest = Shapes::StructureShape.new(name: 'CreateDataCellsFilterRequest')
@@ -107,6 +108,7 @@ module Aws::LakeFormation
     ExpirationTimestamp = Shapes::TimestampShape.new(name: 'ExpirationTimestamp')
     ExpiredException = Shapes::StructureShape.new(name: 'ExpiredException')
     Expression = Shapes::ListShape.new(name: 'Expression')
+    ExpressionString = Shapes::StringShape.new(name: 'ExpressionString')
     ExtendTransactionRequest = Shapes::StructureShape.new(name: 'ExtendTransactionRequest')
     ExtendTransactionResponse = Shapes::StructureShape.new(name: 'ExtendTransactionResponse')
     ExternalFilteringConfiguration = Shapes::StructureShape.new(name: 'ExternalFilteringConfiguration')
@@ -402,6 +404,7 @@ module Aws::LakeFormation
 
     CancelTransactionResponse.struct_class = Types::CancelTransactionResponse
 
+    CatalogResource.add_member(:id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "Id"))
     CatalogResource.struct_class = Types::CatalogResource
 
     ColumnLFTag.add_member(:name, Shapes::ShapeRef.new(shape: NameString, location_name: "Name"))
@@ -423,6 +426,9 @@ module Aws::LakeFormation
 
     ConcurrentModificationException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     ConcurrentModificationException.struct_class = Types::ConcurrentModificationException
+
+    Condition.add_member(:expression, Shapes::ShapeRef.new(shape: ExpressionString, location_name: "Expression"))
+    Condition.struct_class = Types::Condition
 
     CreateDataCellsFilterRequest.add_member(:table_data, Shapes::ShapeRef.new(shape: DataCellsFilter, required: true, location_name: "TableData"))
     CreateDataCellsFilterRequest.struct_class = Types::CreateDataCellsFilterRequest
@@ -811,6 +817,7 @@ module Aws::LakeFormation
 
     LakeFormationOptInsInfo.add_member(:resource, Shapes::ShapeRef.new(shape: Resource, location_name: "Resource"))
     LakeFormationOptInsInfo.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, location_name: "Principal"))
+    LakeFormationOptInsInfo.add_member(:condition, Shapes::ShapeRef.new(shape: Condition, location_name: "Condition"))
     LakeFormationOptInsInfo.add_member(:last_modified, Shapes::ShapeRef.new(shape: LastModifiedTimestamp, location_name: "LastModified"))
     LakeFormationOptInsInfo.add_member(:last_updated_by, Shapes::ShapeRef.new(shape: NameString, location_name: "LastUpdatedBy"))
     LakeFormationOptInsInfo.struct_class = Types::LakeFormationOptInsInfo
@@ -939,6 +946,7 @@ module Aws::LakeFormation
 
     PrincipalResourcePermissions.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, location_name: "Principal"))
     PrincipalResourcePermissions.add_member(:resource, Shapes::ShapeRef.new(shape: Resource, location_name: "Resource"))
+    PrincipalResourcePermissions.add_member(:condition, Shapes::ShapeRef.new(shape: Condition, location_name: "Condition"))
     PrincipalResourcePermissions.add_member(:permissions, Shapes::ShapeRef.new(shape: PermissionList, location_name: "Permissions"))
     PrincipalResourcePermissions.add_member(:permissions_with_grant_option, Shapes::ShapeRef.new(shape: PermissionList, location_name: "PermissionsWithGrantOption"))
     PrincipalResourcePermissions.add_member(:additional_details, Shapes::ShapeRef.new(shape: DetailsMap, location_name: "AdditionalDetails"))

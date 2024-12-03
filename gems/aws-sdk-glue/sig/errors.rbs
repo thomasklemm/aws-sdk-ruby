@@ -77,6 +77,18 @@ module Aws
       class IllegalWorkflowStateException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class IntegrationConflictOperationFault < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class IntegrationNotFoundFault < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class IntegrationQuotaExceededFault < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class InternalServerException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class InternalServiceException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
@@ -84,7 +96,13 @@ module Aws
         def message: () -> ::String
         def from_federation_source: () -> ::String
       end
+      class InvalidIntegrationStateFault < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class InvalidStateException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class KMSKeyNotAccessibleFault < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
       class MLTransformNotReadyException < ::Aws::Errors::ServiceError
@@ -102,6 +120,9 @@ module Aws
       class PermissionTypeMismatchException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class ResourceNotFoundException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class ResourceNotReadyException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
@@ -115,6 +136,9 @@ module Aws
         def message: () -> ::String
       end
       class SchedulerTransitioningException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
+      class TargetResourceNotFound < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
       class ThrottlingException < ::Aws::Errors::ServiceError

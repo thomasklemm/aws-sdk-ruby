@@ -2601,6 +2601,90 @@ module Aws::S3
       req.send_request(options)
     end
 
+    # Creates a metadata table configuration for a general purpose bucket.
+    # For more information, see [Accelerating data discovery with S3
+    # Metadata][1] in the *Amazon S3 User Guide*.
+    #
+    # Permissions
+    #
+    # : To use this operation, you must have the following permissions. For
+    #   more information, see [Setting up permissions for configuring
+    #   metadata tables][2] in the *Amazon S3 User Guide*.
+    #
+    #   If you also want to integrate your table bucket with Amazon Web
+    #   Services analytics services so that you can query your metadata
+    #   table, you need additional permissions. For more information, see [
+    #   Integrating Amazon S3 Tables with Amazon Web Services analytics
+    #   services][3] in the *Amazon S3 User Guide*.
+    #
+    #   * `s3:CreateBucketMetadataTableConfiguration`
+    #
+    #   * `s3tables:CreateNamespace`
+    #
+    #   * `s3tables:GetTable`
+    #
+    #   * `s3tables:CreateTable`
+    #
+    #   * `s3tables:PutTablePolicy`
+    #
+    # The following operations are related to
+    # `CreateBucketMetadataTableConfiguration`:
+    #
+    # * [DeleteBucketMetadataTableConfiguration][4]
+    #
+    # * [GetBucketMetadataTableConfiguration][5]
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-overview.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-permissions.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables-integrating-aws.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetadataTableConfiguration.html
+    # [5]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetadataTableConfiguration.html
+    #
+    # @option params [required, String] :bucket
+    #   The general purpose bucket that you want to create the metadata table
+    #   configuration in.
+    #
+    # @option params [String] :content_md5
+    #   The `Content-MD5` header for the metadata table configuration.
+    #
+    # @option params [String] :checksum_algorithm
+    #   The checksum algorithm to use with your metadata table configuration.
+    #
+    # @option params [required, Types::MetadataTableConfiguration] :metadata_table_configuration
+    #   The contents of your metadata table configuration.
+    #
+    # @option params [String] :expected_bucket_owner
+    #   The expected owner of the general purpose bucket that contains your
+    #   metadata table configuration.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_bucket_metadata_table_configuration({
+    #     bucket: "BucketName", # required
+    #     content_md5: "ContentMD5",
+    #     checksum_algorithm: "CRC32", # accepts CRC32, CRC32C, SHA1, SHA256
+    #     metadata_table_configuration: { # required
+    #       s3_tables_destination: { # required
+    #         table_bucket_arn: "S3TablesBucketArn", # required
+    #         table_name: "S3TablesName", # required
+    #       },
+    #     },
+    #     expected_bucket_owner: "AccountId",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/CreateBucketMetadataTableConfiguration AWS API Documentation
+    #
+    # @overload create_bucket_metadata_table_configuration(params = {})
+    # @param [Hash] params ({})
+    def create_bucket_metadata_table_configuration(params = {}, options = {})
+      req = build_request(:create_bucket_metadata_table_configuration, params)
+      req.send_request(options)
+    end
+
     # This action initiates a multipart upload and returns an upload ID.
     # This upload ID is used to associate all of the parts in the specific
     # multipart upload. You specify this upload ID in each of your
@@ -4424,6 +4508,57 @@ module Aws::S3
     # @param [Hash] params ({})
     def delete_bucket_lifecycle(params = {}, options = {})
       req = build_request(:delete_bucket_lifecycle, params)
+      req.send_request(options)
+    end
+
+    # Deletes a metadata table configuration from a general purpose bucket.
+    # For more information, see [Accelerating data discovery with S3
+    # Metadata][1] in the *Amazon S3 User Guide*.
+    #
+    # Permissions
+    #
+    # : To use this operation, you must have the
+    #   `s3:DeleteBucketMetadataTableConfiguration` permission. For more
+    #   information, see [Setting up permissions for configuring metadata
+    #   tables][2] in the *Amazon S3 User Guide*.
+    #
+    # The following operations are related to
+    # `DeleteBucketMetadataTableConfiguration`:
+    #
+    # * [CreateBucketMetadataTableConfiguration][3]
+    #
+    # * [GetBucketMetadataTableConfiguration][4]
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-overview.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-permissions.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucketMetadataTableConfiguration.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetadataTableConfiguration.html
+    #
+    # @option params [required, String] :bucket
+    #   The general purpose bucket that you want to remove the metadata table
+    #   configuration from.
+    #
+    # @option params [String] :expected_bucket_owner
+    #   The expected bucket owner of the general purpose bucket that you want
+    #   to remove the metadata table configuration from.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_bucket_metadata_table_configuration({
+    #     bucket: "BucketName", # required
+    #     expected_bucket_owner: "AccountId",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/DeleteBucketMetadataTableConfiguration AWS API Documentation
+    #
+    # @overload delete_bucket_metadata_table_configuration(params = {})
+    # @param [Hash] params ({})
+    def delete_bucket_metadata_table_configuration(params = {}, options = {})
+      req = build_request(:delete_bucket_metadata_table_configuration, params)
       req.send_request(options)
     end
 
@@ -6884,6 +7019,69 @@ module Aws::S3
     # @param [Hash] params ({})
     def get_bucket_logging(params = {}, options = {})
       req = build_request(:get_bucket_logging, params)
+      req.send_request(options)
+    end
+
+    # Retrieves the metadata table configuration for a general purpose
+    # bucket. For more information, see [Accelerating data discovery with S3
+    # Metadata][1] in the *Amazon S3 User Guide*.
+    #
+    # Permissions
+    #
+    # : To use this operation, you must have the
+    #   `s3:GetBucketMetadataTableConfiguration` permission. For more
+    #   information, see [Setting up permissions for configuring metadata
+    #   tables][2] in the *Amazon S3 User Guide*.
+    #
+    # The following operations are related to
+    # `GetBucketMetadataTableConfiguration`:
+    #
+    # * [CreateBucketMetadataTableConfiguration][3]
+    #
+    # * [DeleteBucketMetadataTableConfiguration][4]
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-overview.html
+    # [2]: https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-permissions.html
+    # [3]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucketMetadataTableConfiguration.html
+    # [4]: https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetadataTableConfiguration.html
+    #
+    # @option params [required, String] :bucket
+    #   The general purpose bucket that contains the metadata table
+    #   configuration that you want to retrieve.
+    #
+    # @option params [String] :expected_bucket_owner
+    #   The expected owner of the general purpose bucket that you want to
+    #   retrieve the metadata table configuration from.
+    #
+    # @return [Types::GetBucketMetadataTableConfigurationOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetBucketMetadataTableConfigurationOutput#get_bucket_metadata_table_configuration_result #get_bucket_metadata_table_configuration_result} => Types::GetBucketMetadataTableConfigurationResult
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_bucket_metadata_table_configuration({
+    #     bucket: "BucketName", # required
+    #     expected_bucket_owner: "AccountId",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.get_bucket_metadata_table_configuration_result.metadata_table_configuration_result.s3_tables_destination_result.table_bucket_arn #=> String
+    #   resp.get_bucket_metadata_table_configuration_result.metadata_table_configuration_result.s3_tables_destination_result.table_name #=> String
+    #   resp.get_bucket_metadata_table_configuration_result.metadata_table_configuration_result.s3_tables_destination_result.table_arn #=> String
+    #   resp.get_bucket_metadata_table_configuration_result.metadata_table_configuration_result.s3_tables_destination_result.table_namespace #=> String
+    #   resp.get_bucket_metadata_table_configuration_result.status #=> String
+    #   resp.get_bucket_metadata_table_configuration_result.error.error_code #=> String
+    #   resp.get_bucket_metadata_table_configuration_result.error.error_message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/GetBucketMetadataTableConfiguration AWS API Documentation
+    #
+    # @overload get_bucket_metadata_table_configuration(params = {})
+    # @param [Hash] params ({})
+    def get_bucket_metadata_table_configuration(params = {}, options = {})
+      req = build_request(:get_bucket_metadata_table_configuration, params)
       req.send_request(options)
     end
 
@@ -16777,6 +16975,46 @@ module Aws::S3
     #   * {Types::PutObjectOutput#request_charged #request_charged} => String
     #
     #
+    # @example Example: To upload an object (specify optional headers)
+    #
+    #   # The following example uploads an object. The request specifies optional request headers to directs S3 to use specific
+    #   # storage class and use server-side encryption.
+    #
+    #   resp = client.put_object({
+    #     body: "HappyFace.jpg", 
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #     server_side_encryption: "AES256", 
+    #     storage_class: "STANDARD_IA", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     server_side_encryption: "AES256", 
+    #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
+    #   }
+    #
+    # @example Example: To upload an object and specify server-side encryption and object tags
+    #
+    #   # The following example uploads an object. The request specifies the optional server-side encryption option. The request
+    #   # also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.
+    #
+    #   resp = client.put_object({
+    #     body: "filetoupload", 
+    #     bucket: "examplebucket", 
+    #     key: "exampleobject", 
+    #     server_side_encryption: "AES256", 
+    #     tagging: "key1=value1&key2=value2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     server_side_encryption: "AES256", 
+    #     version_id: "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt", 
+    #   }
+    #
     # @example Example: To upload object and specify user-defined metadata
     #
     #   # The following example creates an object. The request also specifies optional metadata. If the bucket is versioning
@@ -16798,44 +17036,6 @@ module Aws::S3
     #     version_id: "pSKidl4pHBiNwukdbcPXAIs.sshFFOc0", 
     #   }
     #
-    # @example Example: To upload an object and specify optional tags
-    #
-    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
-    #   # S3 returns version ID of the newly created object.
-    #
-    #   resp = client.put_object({
-    #     body: "c:\\HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #     tagging: "key1=value1&key2=value2", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
-    #   }
-    #
-    # @example Example: To upload an object (specify optional headers)
-    #
-    #   # The following example uploads an object. The request specifies optional request headers to directs S3 to use specific
-    #   # storage class and use server-side encryption.
-    #
-    #   resp = client.put_object({
-    #     body: "HappyFace.jpg", 
-    #     bucket: "examplebucket", 
-    #     key: "HappyFace.jpg", 
-    #     server_side_encryption: "AES256", 
-    #     storage_class: "STANDARD_IA", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     server_side_encryption: "AES256", 
-    #     version_id: "CG612hodqujkf8FaaNfp8U..FIhLROcp", 
-    #   }
-    #
     # @example Example: To upload an object and specify canned ACL.
     #
     #   # The following example uploads and object. The request specifies optional canned ACL (access control list) to all READ
@@ -16854,6 +17054,24 @@ module Aws::S3
     #     version_id: "Kirh.unyZwjQ69YxcQLA8z4F5j3kJJKr", 
     #   }
     #
+    # @example Example: To upload an object and specify optional tags
+    #
+    #   # The following example uploads an object. The request specifies optional object tags. The bucket is versioned, therefore
+    #   # S3 returns version ID of the newly created object.
+    #
+    #   resp = client.put_object({
+    #     body: "c:\\HappyFace.jpg", 
+    #     bucket: "examplebucket", 
+    #     key: "HappyFace.jpg", 
+    #     tagging: "key1=value1&key2=value2", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
+    #     version_id: "psM2sYY4.o1501dSx8wMvnkOzSBB.V4a", 
+    #   }
+    #
     # @example Example: To upload an object
     #
     #   # The following example uploads an object to a versioning-enabled bucket. The source file is specified using Windows file
@@ -16869,26 +17087,6 @@ module Aws::S3
     #   {
     #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
     #     version_id: "tpf3zF08nBplQK1XLOefGskR7mGDwcDk", 
-    #   }
-    #
-    # @example Example: To upload an object and specify server-side encryption and object tags
-    #
-    #   # The following example uploads an object. The request specifies the optional server-side encryption option. The request
-    #   # also specifies optional object tags. If the bucket is versioning enabled, S3 returns version ID in response.
-    #
-    #   resp = client.put_object({
-    #     body: "filetoupload", 
-    #     bucket: "examplebucket", 
-    #     key: "exampleobject", 
-    #     server_side_encryption: "AES256", 
-    #     tagging: "key1=value1&key2=value2", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     etag: "\"6805f2cfc46c0f04559748bb039d69ae\"", 
-    #     server_side_encryption: "AES256", 
-    #     version_id: "Ri.vC6qVlA4dEnjgRV4ZHsHoFIjqEMNt", 
     #   }
     #
     # @example Example: To create an object.
@@ -19773,26 +19971,6 @@ module Aws::S3
     #   * {Types::UploadPartCopyOutput#request_charged #request_charged} => String
     #
     #
-    # @example Example: To upload a part by copying data from an existing object as data source
-    #
-    #   # The following example uploads a part of a multipart upload by copying data from an existing object as data source.
-    #
-    #   resp = client.upload_part_copy({
-    #     bucket: "examplebucket", 
-    #     copy_source: "/bucketname/sourceobjectkey", 
-    #     key: "examplelargeobject", 
-    #     part_number: 1, 
-    #     upload_id: "exampleuoh_10OhKhT7YukE9bjzTPRiuaCotmZM_pFngJFir9OZNrSr5cWa3cq3LZSUsfjI4FI7PkP91We7Nrw--", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     copy_part_result: {
-    #       etag: "\"b0c6f0e7e054ab8fa2536a2677f8734d\"", 
-    #       last_modified: Time.parse("2016-12-29T21:24:43.000Z"), 
-    #     }, 
-    #   }
-    #
     # @example Example: To upload a part by copying byte range from an existing object as data source
     #
     #   # The following example uploads a part of a multipart upload by copying a specified byte range from an existing object as
@@ -19812,6 +19990,26 @@ module Aws::S3
     #     copy_part_result: {
     #       etag: "\"65d16d19e65a7508a51f043180edcc36\"", 
     #       last_modified: Time.parse("2016-12-29T21:44:28.000Z"), 
+    #     }, 
+    #   }
+    #
+    # @example Example: To upload a part by copying data from an existing object as data source
+    #
+    #   # The following example uploads a part of a multipart upload by copying data from an existing object as data source.
+    #
+    #   resp = client.upload_part_copy({
+    #     bucket: "examplebucket", 
+    #     copy_source: "/bucketname/sourceobjectkey", 
+    #     key: "examplelargeobject", 
+    #     part_number: 1, 
+    #     upload_id: "exampleuoh_10OhKhT7YukE9bjzTPRiuaCotmZM_pFngJFir9OZNrSr5cWa3cq3LZSUsfjI4FI7PkP91We7Nrw--", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     copy_part_result: {
+    #       etag: "\"b0c6f0e7e054ab8fa2536a2677f8734d\"", 
+    #       last_modified: Time.parse("2016-12-29T21:24:43.000Z"), 
     #     }, 
     #   }
     #
@@ -20273,7 +20471,7 @@ module Aws::S3
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-s3'
-      context[:gem_version] = '1.175.0'
+      context[:gem_version] = '1.176.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

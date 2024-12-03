@@ -2077,6 +2077,11 @@ module Aws::QApps
     #   The unique identifier of the plugin used by the card.
     #   @return [String]
     #
+    # @!attribute [rw] action_identifier
+    #   The action identifier of the action to be performed by the plugin
+    #   card.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/QPluginCard AWS API Documentation
     #
     class QPluginCard < Struct.new(
@@ -2086,7 +2091,8 @@ module Aws::QApps
       :type,
       :prompt,
       :plugin_type,
-      :plugin_id)
+      :plugin_id,
+      :action_identifier)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2113,6 +2119,11 @@ module Aws::QApps
     #   The unique identifier of the plugin used by the card.
     #   @return [String]
     #
+    # @!attribute [rw] action_identifier
+    #   The action identifier of the action to be performed by the plugin
+    #   card.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qapps-2023-11-27/QPluginCardInput AWS API Documentation
     #
     class QPluginCardInput < Struct.new(
@@ -2120,7 +2131,8 @@ module Aws::QApps
       :id,
       :type,
       :prompt,
-      :plugin_id)
+      :plugin_id,
+      :action_identifier)
       SENSITIVE = []
       include Aws::Structure
     end

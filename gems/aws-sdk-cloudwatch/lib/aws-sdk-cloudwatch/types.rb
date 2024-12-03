@@ -1095,7 +1095,7 @@ module Aws::CloudWatch
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/adding-your-own-related-telemetry.html
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/adding-your-own-related-telemetry.html
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] attributes
@@ -1107,7 +1107,7 @@ module Aws::CloudWatch
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/adding-your-own-related-telemetry.html
+    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/adding-your-own-related-telemetry.html
     #   @return [Hash<String,String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/monitoring-2010-08-01/Entity AWS API Documentation
@@ -3377,6 +3377,11 @@ module Aws::CloudWatch
     #   **Systems Manager actions:**
     #
     #   `arn:aws:ssm:region:account-id:opsitem:severity `
+    #
+    #   **Start a Amazon Q Developer operational investigation**
+    #
+    #   `arn:aws:aiops:region:account-id:investigation-group:ingestigation-group-id
+    #   `
     #   @return [Array<String>]
     #
     # @!attribute [rw] alarm_description
@@ -3817,6 +3822,11 @@ module Aws::CloudWatch
     #
     #   * `arn:aws:ssm-incidents::account-id:responseplan/response-plan-name
     #     `
+    #
+    #   **Start a Amazon Q Developer operational investigation**
+    #
+    #   `arn:aws:aiops:region:account-id:investigation-group:ingestigation-group-id
+    #   `
     #   @return [Array<String>]
     #
     # @!attribute [rw] insufficient_data_actions

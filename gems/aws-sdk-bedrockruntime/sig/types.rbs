@@ -33,13 +33,50 @@ module Aws::BedrockRuntime
       SENSITIVE: []
     end
 
+    class AsyncInvokeOutputDataConfig
+      attr_accessor s3_output_data_config: Types::AsyncInvokeS3OutputDataConfig
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class S3OutputDataConfig < AsyncInvokeOutputDataConfig
+      end
+      class Unknown < AsyncInvokeOutputDataConfig
+      end
+    end
+
+    class AsyncInvokeS3OutputDataConfig
+      attr_accessor s3_uri: ::String
+      attr_accessor kms_key_id: ::String
+      attr_accessor bucket_owner: ::String
+      SENSITIVE: []
+    end
+
+    class AsyncInvokeSummary
+      attr_accessor invocation_arn: ::String
+      attr_accessor model_arn: ::String
+      attr_accessor client_request_token: ::String
+      attr_accessor status: ("InProgress" | "Completed" | "Failed")
+      attr_accessor failure_message: ::String
+      attr_accessor submit_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor output_data_config: Types::AsyncInvokeOutputDataConfig
+      SENSITIVE: [:failure_message]
+    end
+
     class AutoToolChoice < Aws::EmptyStructure
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      SENSITIVE: []
     end
 
     class ContentBlock
       attr_accessor text: ::String
       attr_accessor image: Types::ImageBlock
       attr_accessor document: Types::DocumentBlock
+      attr_accessor video: Types::VideoBlock
       attr_accessor tool_use: Types::ToolUseBlock
       attr_accessor tool_result: Types::ToolResultBlock
       attr_accessor guard_content: Types::GuardrailConverseContentBlock
@@ -51,6 +88,8 @@ module Aws::BedrockRuntime
       class Image < ContentBlock
       end
       class Document < ContentBlock
+      end
+      class Video < ContentBlock
       end
       class ToolUse < ContentBlock
       end
@@ -133,8 +172,9 @@ module Aws::BedrockRuntime
       attr_accessor additional_model_request_fields: untyped
       attr_accessor prompt_variables: ::Hash[::String, Types::PromptVariableValues]
       attr_accessor additional_model_response_field_paths: ::Array[::String]
+      attr_accessor request_metadata: ::Hash[::String, ::String]
       attr_accessor performance_config: Types::PerformanceConfiguration
-      SENSITIVE: [:prompt_variables]
+      SENSITIVE: [:prompt_variables, :request_metadata]
     end
 
     class ConverseResponse
@@ -172,8 +212,9 @@ module Aws::BedrockRuntime
       attr_accessor additional_model_request_fields: untyped
       attr_accessor prompt_variables: ::Hash[::String, Types::PromptVariableValues]
       attr_accessor additional_model_response_field_paths: ::Array[::String]
+      attr_accessor request_metadata: ::Hash[::String, ::String]
       attr_accessor performance_config: Types::PerformanceConfiguration
-      SENSITIVE: [:prompt_variables]
+      SENSITIVE: [:prompt_variables, :request_metadata]
     end
 
     class ConverseStreamResponse
@@ -207,6 +248,24 @@ module Aws::BedrockRuntime
       end
       class Unknown < DocumentSource
       end
+    end
+
+    class GetAsyncInvokeRequest
+      attr_accessor invocation_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetAsyncInvokeResponse
+      attr_accessor invocation_arn: ::String
+      attr_accessor model_arn: ::String
+      attr_accessor client_request_token: ::String
+      attr_accessor status: ("InProgress" | "Completed" | "Failed")
+      attr_accessor failure_message: ::String
+      attr_accessor submit_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      attr_accessor end_time: ::Time
+      attr_accessor output_data_config: Types::AsyncInvokeOutputDataConfig
+      SENSITIVE: [:failure_message]
     end
 
     class GuardrailAssessment
@@ -455,6 +514,23 @@ module Aws::BedrockRuntime
       SENSITIVE: []
     end
 
+    class ListAsyncInvokesRequest
+      attr_accessor submit_time_after: ::Time
+      attr_accessor submit_time_before: ::Time
+      attr_accessor status_equals: ("InProgress" | "Completed" | "Failed")
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor sort_by: ("SubmissionTime")
+      attr_accessor sort_order: ("Ascending" | "Descending")
+      SENSITIVE: []
+    end
+
+    class ListAsyncInvokesResponse
+      attr_accessor next_token: ::String
+      attr_accessor async_invoke_summaries: ::Array[Types::AsyncInvokeSummary]
+      SENSITIVE: []
+    end
+
     class Message
       attr_accessor role: ("user" | "assistant")
       attr_accessor content: ::Array[Types::ContentBlock]
@@ -527,6 +603,12 @@ module Aws::BedrockRuntime
       SENSITIVE: []
     end
 
+    class S3Location
+      attr_accessor uri: ::String
+      attr_accessor bucket_owner: ::String
+      SENSITIVE: []
+    end
+
     class ServiceQuotaExceededException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -543,6 +625,20 @@ module Aws::BedrockRuntime
       SENSITIVE: []
     end
 
+    class StartAsyncInvokeRequest
+      attr_accessor client_request_token: ::String
+      attr_accessor model_id: ::String
+      attr_accessor model_input: untyped
+      attr_accessor output_data_config: Types::AsyncInvokeOutputDataConfig
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: [:model_input]
+    end
+
+    class StartAsyncInvokeResponse
+      attr_accessor invocation_arn: ::String
+      SENSITIVE: []
+    end
+
     class SystemContentBlock
       attr_accessor text: ::String
       attr_accessor guard_content: Types::GuardrailConverseContentBlock
@@ -555,6 +651,12 @@ module Aws::BedrockRuntime
       end
       class Unknown < SystemContentBlock
       end
+    end
+
+    class Tag
+      attr_accessor key: ::String
+      attr_accessor value: ::String
+      SENSITIVE: []
     end
 
     class ThrottlingException
@@ -627,6 +729,7 @@ module Aws::BedrockRuntime
       attr_accessor text: ::String
       attr_accessor image: Types::ImageBlock
       attr_accessor document: Types::DocumentBlock
+      attr_accessor video: Types::VideoBlock
       attr_accessor unknown: untyped
       SENSITIVE: []
 
@@ -637,6 +740,8 @@ module Aws::BedrockRuntime
       class Image < ToolResultContentBlock
       end
       class Document < ToolResultContentBlock
+      end
+      class Video < ToolResultContentBlock
       end
       class Unknown < ToolResultContentBlock
       end
@@ -671,6 +776,26 @@ module Aws::BedrockRuntime
       attr_accessor message: ::String
       attr_accessor event_type: untyped
       SENSITIVE: []
+    end
+
+    class VideoBlock
+      attr_accessor format: ("mkv" | "mov" | "mp4" | "webm" | "flv" | "mpeg" | "mpg" | "wmv" | "three_gp")
+      attr_accessor source: Types::VideoSource
+      SENSITIVE: []
+    end
+
+    class VideoSource
+      attr_accessor bytes: ::String
+      attr_accessor s3_location: Types::S3Location
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Bytes < VideoSource
+      end
+      class S3Location < VideoSource
+      end
+      class Unknown < VideoSource
+      end
     end
 
     class ConverseStreamOutput < Enumerator[untyped, untyped]

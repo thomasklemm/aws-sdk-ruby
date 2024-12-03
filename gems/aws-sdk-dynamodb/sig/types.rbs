@@ -1347,6 +1347,11 @@ module Aws::DynamoDB
       SENSITIVE: []
     end
 
+    class ReplicatedWriteConflictException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
     class ReplicationGroupUpdate
       attr_accessor create: Types::CreateReplicationGroupMemberAction
       attr_accessor update: Types::UpdateReplicationGroupMemberAction
@@ -1550,6 +1555,7 @@ module Aws::DynamoDB
       attr_accessor deletion_protection_enabled: bool
       attr_accessor on_demand_throughput: Types::OnDemandThroughput
       attr_accessor warm_throughput: Types::TableWarmThroughputDescription
+      attr_accessor multi_region_consistency: ("EVENTUAL" | "STRONG")
       SENSITIVE: []
     end
 
@@ -1791,6 +1797,7 @@ module Aws::DynamoDB
       attr_accessor replica_updates: ::Array[Types::ReplicationGroupUpdate]
       attr_accessor table_class: ("STANDARD" | "STANDARD_INFREQUENT_ACCESS")
       attr_accessor deletion_protection_enabled: bool
+      attr_accessor multi_region_consistency: ("EVENTUAL" | "STRONG")
       attr_accessor on_demand_throughput: Types::OnDemandThroughput
       attr_accessor warm_throughput: Types::WarmThroughput
       SENSITIVE: []

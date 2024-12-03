@@ -484,6 +484,52 @@ module Aws
                             ) -> _CreateBlueprintResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBlueprintResponseSuccess
 
+      interface _CreateCatalogResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateCatalogResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#create_catalog-instance_method
+      def create_catalog: (
+                            name: ::String,
+                            catalog_input: {
+                              description: ::String?,
+                              federated_catalog: {
+                                identifier: ::String?,
+                                connection_name: ::String?
+                              }?,
+                              parameters: Hash[::String, ::String]?,
+                              target_redshift_catalog: {
+                                catalog_arn: ::String
+                              }?,
+                              catalog_properties: {
+                                data_lake_access_properties: {
+                                  data_lake_access: bool?,
+                                  data_transfer_role: ::String?,
+                                  kms_key: ::String?,
+                                  catalog_type: ::String?
+                                }?,
+                                custom_properties: Hash[::String, ::String]?
+                              }?,
+                              create_table_default_permissions: Array[
+                                {
+                                  principal: {
+                                    data_lake_principal_identifier: ::String?
+                                  }?,
+                                  permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS")]?
+                                },
+                              ]?,
+                              create_database_default_permissions: Array[
+                                {
+                                  principal: {
+                                    data_lake_principal_identifier: ::String?
+                                  }?,
+                                  permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS")]?
+                                },
+                              ]?
+                            },
+                            ?tags: Hash[::String, ::String]
+                          ) -> _CreateCatalogResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateCatalogResponseSuccess
+
       interface _CreateClassifierResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateClassifierResponse]
       end
@@ -546,17 +592,19 @@ module Aws
                                connection_input: {
                                  name: ::String,
                                  description: ::String?,
-                                 connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA"),
+                                 connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA" | "GOOGLEADS" | "GOOGLESHEETS" | "GOOGLEANALYTICS4" | "SERVICENOW" | "MARKETO" | "SAPODATA" | "ZENDESK" | "JIRACLOUD" | "NETSUITEERP" | "HUBSPOT" | "FACEBOOKADS" | "INSTAGRAMADS" | "ZOHOCRM" | "SALESFORCEPARDOT" | "SALESFORCEMARKETINGCLOUD" | "SLACK" | "STRIPE" | "INTERCOM" | "SNAPCHATADS"),
                                  match_criteria: Array[::String]?,
-                                 connection_properties: Hash[("HOST" | "PORT" | "USERNAME" | "PASSWORD" | "ENCRYPTED_PASSWORD" | "JDBC_DRIVER_JAR_URI" | "JDBC_DRIVER_CLASS_NAME" | "JDBC_ENGINE" | "JDBC_ENGINE_VERSION" | "CONFIG_FILES" | "INSTANCE_ID" | "JDBC_CONNECTION_URL" | "JDBC_ENFORCE_SSL" | "CUSTOM_JDBC_CERT" | "SKIP_CUSTOM_JDBC_CERT_VALIDATION" | "CUSTOM_JDBC_CERT_STRING" | "CONNECTION_URL" | "KAFKA_BOOTSTRAP_SERVERS" | "KAFKA_SSL_ENABLED" | "KAFKA_CUSTOM_CERT" | "KAFKA_SKIP_CUSTOM_CERT_VALIDATION" | "KAFKA_CLIENT_KEYSTORE" | "KAFKA_CLIENT_KEYSTORE_PASSWORD" | "KAFKA_CLIENT_KEY_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD" | "SECRET_ID" | "CONNECTOR_URL" | "CONNECTOR_TYPE" | "CONNECTOR_CLASS_NAME" | "KAFKA_SASL_MECHANISM" | "KAFKA_SASL_PLAIN_USERNAME" | "KAFKA_SASL_PLAIN_PASSWORD" | "ENCRYPTED_KAFKA_SASL_PLAIN_PASSWORD" | "KAFKA_SASL_SCRAM_USERNAME" | "KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_SCRAM_SECRETS_ARN" | "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_GSSAPI_KEYTAB" | "KAFKA_SASL_GSSAPI_KRB5_CONF" | "KAFKA_SASL_GSSAPI_SERVICE" | "KAFKA_SASL_GSSAPI_PRINCIPAL" | "ROLE_ARN" | "REGION" | "WORKGROUP_NAME" | "CLUSTER_IDENTIFIER" | "DATABASE"), ::String],
+                                 connection_properties: Hash[("HOST" | "PORT" | "USERNAME" | "PASSWORD" | "ENCRYPTED_PASSWORD" | "JDBC_DRIVER_JAR_URI" | "JDBC_DRIVER_CLASS_NAME" | "JDBC_ENGINE" | "JDBC_ENGINE_VERSION" | "CONFIG_FILES" | "INSTANCE_ID" | "JDBC_CONNECTION_URL" | "JDBC_ENFORCE_SSL" | "CUSTOM_JDBC_CERT" | "SKIP_CUSTOM_JDBC_CERT_VALIDATION" | "CUSTOM_JDBC_CERT_STRING" | "CONNECTION_URL" | "KAFKA_BOOTSTRAP_SERVERS" | "KAFKA_SSL_ENABLED" | "KAFKA_CUSTOM_CERT" | "KAFKA_SKIP_CUSTOM_CERT_VALIDATION" | "KAFKA_CLIENT_KEYSTORE" | "KAFKA_CLIENT_KEYSTORE_PASSWORD" | "KAFKA_CLIENT_KEY_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD" | "KAFKA_SASL_MECHANISM" | "KAFKA_SASL_PLAIN_USERNAME" | "KAFKA_SASL_PLAIN_PASSWORD" | "ENCRYPTED_KAFKA_SASL_PLAIN_PASSWORD" | "KAFKA_SASL_SCRAM_USERNAME" | "KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_SCRAM_SECRETS_ARN" | "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_GSSAPI_KEYTAB" | "KAFKA_SASL_GSSAPI_KRB5_CONF" | "KAFKA_SASL_GSSAPI_SERVICE" | "KAFKA_SASL_GSSAPI_PRINCIPAL" | "SECRET_ID" | "CONNECTOR_URL" | "CONNECTOR_TYPE" | "CONNECTOR_CLASS_NAME" | "ENDPOINT" | "ENDPOINT_TYPE" | "ROLE_ARN" | "REGION" | "WORKGROUP_NAME" | "CLUSTER_IDENTIFIER" | "DATABASE"), ::String],
+                                 spark_properties: Hash[::String, ::String]?,
                                  athena_properties: Hash[::String, ::String]?,
+                                 python_properties: Hash[::String, ::String]?,
                                  physical_connection_requirements: {
                                    subnet_id: ::String?,
                                    security_group_id_list: Array[::String]?,
                                    availability_zone: ::String?
                                  }?,
                                  authentication_configuration: {
-                                   authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM")?,
+                                   authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM" | "IAM")?,
                                    o_auth_2_properties: {
                                      o_auth_2_grant_type: ("AUTHORIZATION_CODE" | "CLIENT_CREDENTIALS" | "JWT_BEARER")?,
                                      o_auth_2_client_application: {
@@ -568,11 +616,24 @@ module Aws
                                      authorization_code_properties: {
                                        authorization_code: ::String?,
                                        redirect_uri: ::String?
+                                     }?,
+                                     o_auth_2_credentials: {
+                                       user_managed_client_application_client_secret: ::String?,
+                                       access_token: ::String?,
+                                       refresh_token: ::String?,
+                                       jwt_token: ::String?
                                      }?
                                    }?,
-                                   secret_arn: ::String?
+                                   secret_arn: ::String?,
+                                   kms_key_arn: ::String?,
+                                   basic_authentication_credentials: {
+                                     username: ::String?,
+                                     password: ::String?
+                                   }?,
+                                   custom_authentication_credentials: Hash[::String, ::String]?
                                  }?,
-                                 validate_credentials: bool?
+                                 validate_credentials: bool?,
+                                 validate_for_compute_environments: Array[("SPARK" | "ATHENA" | "PYTHON")]?
                                },
                                ?tags: Hash[::String, ::String]
                              ) -> _CreateConnectionResponseSuccess
@@ -784,6 +845,86 @@ module Aws
                                  ?arguments: Hash[::String, ::String]
                                ) -> _CreateDevEndpointResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDevEndpointResponseSuccess
+
+      interface _CreateIntegrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateIntegrationResponse]
+        def source_arn: () -> ::String
+        def target_arn: () -> ::String
+        def integration_name: () -> ::String
+        def description: () -> ::String
+        def integration_arn: () -> ::String
+        def kms_key_id: () -> ::String
+        def additional_encryption_context: () -> ::Hash[::String, ::String]
+        def tags: () -> ::Array[Types::Tag]
+        def status: () -> ("CREATING" | "ACTIVE" | "MODIFYING" | "FAILED" | "DELETING" | "SYNCING" | "NEEDS_ATTENTION")
+        def create_time: () -> ::Time
+        def errors: () -> ::Array[Types::IntegrationError]
+        def data_filter: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#create_integration-instance_method
+      def create_integration: (
+                                integration_name: ::String,
+                                source_arn: ::String,
+                                target_arn: ::String,
+                                ?description: ::String,
+                                ?data_filter: ::String,
+                                ?kms_key_id: ::String,
+                                ?additional_encryption_context: Hash[::String, ::String],
+                                ?tags: Array[
+                                  {
+                                    key: ::String?,
+                                    value: ::String?
+                                  },
+                                ]
+                              ) -> _CreateIntegrationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateIntegrationResponseSuccess
+
+      interface _CreateIntegrationResourcePropertyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateIntegrationResourcePropertyResponse]
+        def resource_arn: () -> ::String
+        def source_processing_properties: () -> Types::SourceProcessingProperties
+        def target_processing_properties: () -> Types::TargetProcessingProperties
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#create_integration_resource_property-instance_method
+      def create_integration_resource_property: (
+                                                  resource_arn: ::String,
+                                                  ?source_processing_properties: {
+                                                    role_arn: ::String?
+                                                  },
+                                                  ?target_processing_properties: {
+                                                    role_arn: ::String?,
+                                                    kms_arn: ::String?,
+                                                    connection_name: ::String?,
+                                                    event_bus_arn: ::String?
+                                                  }
+                                                ) -> _CreateIntegrationResourcePropertyResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateIntegrationResourcePropertyResponseSuccess
+
+      interface _CreateIntegrationTablePropertiesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateIntegrationTablePropertiesResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#create_integration_table_properties-instance_method
+      def create_integration_table_properties: (
+                                                 resource_arn: ::String,
+                                                 table_name: ::String,
+                                                 ?source_table_config: {
+                                                   fields: Array[::String]?,
+                                                   filter_predicate: ::String?,
+                                                   primary_key: Array[::String]?,
+                                                   record_update_field: ::String?
+                                                 },
+                                                 ?target_table_config: {
+                                                   unnest_spec: ("TOPLEVEL" | "FULL" | "NOUNNEST")?,
+                                                   partition_spec: Array[
+                                                     {
+                                                       field_name: ::String?,
+                                                       function_spec: ::String?
+                                                     },
+                                                   ]?,
+                                                   target_table_name: ::String?
+                                                 }
+                                               ) -> _CreateIntegrationTablePropertiesResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateIntegrationTablePropertiesResponseSuccess
 
       interface _CreateJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateJobResponse]
@@ -2549,6 +2690,15 @@ module Aws
                             ) -> _DeleteBlueprintResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteBlueprintResponseSuccess
 
+      interface _DeleteCatalogResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteCatalogResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#delete_catalog-instance_method
+      def delete_catalog: (
+                            catalog_id: ::String
+                          ) -> _DeleteCatalogResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteCatalogResponseSuccess
+
       interface _DeleteClassifierResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteClassifierResponse]
       end
@@ -2649,6 +2799,37 @@ module Aws
                                  endpoint_name: ::String
                                ) -> _DeleteDevEndpointResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteDevEndpointResponseSuccess
+
+      interface _DeleteIntegrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteIntegrationResponse]
+        def source_arn: () -> ::String
+        def target_arn: () -> ::String
+        def integration_name: () -> ::String
+        def description: () -> ::String
+        def integration_arn: () -> ::String
+        def kms_key_id: () -> ::String
+        def additional_encryption_context: () -> ::Hash[::String, ::String]
+        def tags: () -> ::Array[Types::Tag]
+        def status: () -> ("CREATING" | "ACTIVE" | "MODIFYING" | "FAILED" | "DELETING" | "SYNCING" | "NEEDS_ATTENTION")
+        def create_time: () -> ::Time
+        def errors: () -> ::Array[Types::IntegrationError]
+        def data_filter: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#delete_integration-instance_method
+      def delete_integration: (
+                                integration_identifier: ::String
+                              ) -> _DeleteIntegrationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteIntegrationResponseSuccess
+
+      interface _DeleteIntegrationTablePropertiesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteIntegrationTablePropertiesResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#delete_integration_table_properties-instance_method
+      def delete_integration_table_properties: (
+                                                 resource_arn: ::String,
+                                                 table_name: ::String
+                                               ) -> _DeleteIntegrationTablePropertiesResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteIntegrationTablePropertiesResponseSuccess
 
       interface _DeleteJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteJobResponse]
@@ -2846,6 +3027,74 @@ module Aws
                            ) -> _DeleteWorkflowResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteWorkflowResponseSuccess
 
+      interface _DescribeConnectionTypeResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeConnectionTypeResponse]
+        def connection_type: () -> ::String
+        def description: () -> ::String
+        def capabilities: () -> Types::Capabilities
+        def connection_properties: () -> ::Hash[::String, Types::Property]
+        def connection_options: () -> ::Hash[::String, Types::Property]
+        def authentication_configuration: () -> Types::AuthConfiguration
+        def compute_environment_configurations: () -> ::Hash[::String, Types::ComputeEnvironmentConfiguration]
+        def physical_connection_requirements: () -> ::Hash[::String, Types::Property]
+        def athena_connection_properties: () -> ::Hash[::String, Types::Property]
+        def python_connection_properties: () -> ::Hash[::String, Types::Property]
+        def spark_connection_properties: () -> ::Hash[::String, Types::Property]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#describe_connection_type-instance_method
+      def describe_connection_type: (
+                                      connection_type: ::String
+                                    ) -> _DescribeConnectionTypeResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeConnectionTypeResponseSuccess
+
+      interface _DescribeEntityResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeEntityResponse]
+        def fields: () -> ::Array[Types::Field]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#describe_entity-instance_method
+      def describe_entity: (
+                             connection_name: ::String,
+                             ?catalog_id: ::String,
+                             entity_name: ::String,
+                             ?next_token: ::String,
+                             ?data_store_api_version: ::String
+                           ) -> _DescribeEntityResponseSuccess
+                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeEntityResponseSuccess
+
+      interface _DescribeInboundIntegrationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeInboundIntegrationsResponse]
+        def inbound_integrations: () -> ::Array[Types::InboundIntegration]
+        def marker: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#describe_inbound_integrations-instance_method
+      def describe_inbound_integrations: (
+                                           ?integration_arn: ::String,
+                                           ?marker: ::String,
+                                           ?max_records: ::Integer,
+                                           ?target_arn: ::String
+                                         ) -> _DescribeInboundIntegrationsResponseSuccess
+                                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeInboundIntegrationsResponseSuccess
+
+      interface _DescribeIntegrationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeIntegrationsResponse]
+        def integrations: () -> ::Array[Types::Integration]
+        def marker: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#describe_integrations-instance_method
+      def describe_integrations: (
+                                   ?integration_identifier: ::String,
+                                   ?marker: ::String,
+                                   ?max_records: ::Integer,
+                                   ?filters: Array[
+                                     {
+                                       name: ::String?,
+                                       values: Array[::String]?
+                                     },
+                                   ]
+                                 ) -> _DescribeIntegrationsResponseSuccess
+                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeIntegrationsResponseSuccess
+
       interface _GetBlueprintResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetBlueprintResponse]
         def blueprint: () -> Types::Blueprint
@@ -2882,6 +3131,16 @@ module Aws
                               ) -> _GetBlueprintRunsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBlueprintRunsResponseSuccess
 
+      interface _GetCatalogResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCatalogResponse]
+        def catalog: () -> Types::Catalog
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#get_catalog-instance_method
+      def get_catalog: (
+                         catalog_id: ::String
+                       ) -> _GetCatalogResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCatalogResponseSuccess
+
       interface _GetCatalogImportStatusResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetCatalogImportStatusResponse]
         def import_status: () -> Types::CatalogImportStatus
@@ -2891,6 +3150,20 @@ module Aws
                                        ?catalog_id: ::String
                                      ) -> _GetCatalogImportStatusResponseSuccess
                                    | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCatalogImportStatusResponseSuccess
+
+      interface _GetCatalogsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetCatalogsResponse]
+        def catalog_list: () -> ::Array[Types::Catalog]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#get_catalogs-instance_method
+      def get_catalogs: (
+                          ?parent_catalog_id: ::String,
+                          ?next_token: ::String,
+                          ?max_results: ::Integer,
+                          ?recursive: bool
+                        ) -> _GetCatalogsResponseSuccess
+                      | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCatalogsResponseSuccess
 
       interface _GetClassifierResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetClassifierResponse]
@@ -2986,7 +3259,8 @@ module Aws
       def get_connection: (
                             ?catalog_id: ::String,
                             name: ::String,
-                            ?hide_password: bool
+                            ?hide_password: bool,
+                            ?apply_override_for_compute_environment: ("SPARK" | "ATHENA" | "PYTHON")
                           ) -> _GetConnectionResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetConnectionResponseSuccess
 
@@ -3000,7 +3274,8 @@ module Aws
                              ?catalog_id: ::String,
                              ?filter: {
                                match_criteria: Array[::String]?,
-                               connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA")?
+                               connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA" | "GOOGLEADS" | "GOOGLESHEETS" | "GOOGLEANALYTICS4" | "SERVICENOW" | "MARKETO" | "SAPODATA" | "ZENDESK" | "JIRACLOUD" | "NETSUITEERP" | "HUBSPOT" | "FACEBOOKADS" | "INSTAGRAMADS" | "ZOHOCRM" | "SALESFORCEPARDOT" | "SALESFORCEMARKETINGCLOUD" | "SLACK" | "STRIPE" | "INTERCOM" | "SNAPCHATADS")?,
+                               connection_schema_version: ::Integer?
                              },
                              ?hide_password: bool,
                              ?next_token: ::String,
@@ -3236,6 +3511,52 @@ module Aws
                                ?next_token: ::String
                              ) -> _GetDevEndpointsResponseSuccess
                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDevEndpointsResponseSuccess
+
+      interface _GetEntityRecordsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetEntityRecordsResponse]
+        def records: () -> ::Array[untyped]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#get_entity_records-instance_method
+      def get_entity_records: (
+                                ?connection_name: ::String,
+                                ?catalog_id: ::String,
+                                entity_name: ::String,
+                                ?next_token: ::String,
+                                ?data_store_api_version: ::String,
+                                ?connection_options: Hash[::String, ::String],
+                                ?filter_predicate: ::String,
+                                limit: ::Integer,
+                                ?order_by: ::String,
+                                ?selected_fields: Array[::String]
+                              ) -> _GetEntityRecordsResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetEntityRecordsResponseSuccess
+
+      interface _GetIntegrationResourcePropertyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetIntegrationResourcePropertyResponse]
+        def resource_arn: () -> ::String
+        def source_processing_properties: () -> Types::SourceProcessingProperties
+        def target_processing_properties: () -> Types::TargetProcessingProperties
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#get_integration_resource_property-instance_method
+      def get_integration_resource_property: (
+                                               resource_arn: ::String
+                                             ) -> _GetIntegrationResourcePropertyResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetIntegrationResourcePropertyResponseSuccess
+
+      interface _GetIntegrationTablePropertiesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetIntegrationTablePropertiesResponse]
+        def resource_arn: () -> ::String
+        def table_name: () -> ::String
+        def source_table_config: () -> Types::SourceTableConfig
+        def target_table_config: () -> Types::TargetTableConfig
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#get_integration_table_properties-instance_method
+      def get_integration_table_properties: (
+                                              resource_arn: ::String,
+                                              table_name: ::String
+                                            ) -> _GetIntegrationTablePropertiesResponseSuccess
+                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetIntegrationTablePropertiesResponseSuccess
 
       interface _GetJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetJobResponse]
@@ -4065,6 +4386,18 @@ module Aws
                                             ) -> _ListColumnStatisticsTaskRunsResponseSuccess
                                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListColumnStatisticsTaskRunsResponseSuccess
 
+      interface _ListConnectionTypesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListConnectionTypesResponse]
+        def connection_types: () -> ::Array[Types::ConnectionTypeBrief]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#list_connection_types-instance_method
+      def list_connection_types: (
+                                   ?max_results: ::Integer,
+                                   ?next_token: ::String
+                                 ) -> _ListConnectionTypesResponseSuccess
+                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListConnectionTypesResponseSuccess
+
       interface _ListCrawlersResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListCrawlersResponse]
         def crawler_names: () -> ::Array[::String]
@@ -4263,6 +4596,21 @@ module Aws
                               ) -> _ListDevEndpointsResponseSuccess
                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDevEndpointsResponseSuccess
 
+      interface _ListEntitiesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListEntitiesResponse]
+        def entities: () -> ::Array[Types::Entity]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#list_entities-instance_method
+      def list_entities: (
+                           ?connection_name: ::String,
+                           ?catalog_id: ::String,
+                           ?parent_entity_name: ::String,
+                           ?next_token: ::String,
+                           ?data_store_api_version: ::String
+                         ) -> _ListEntitiesResponseSuccess
+                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListEntitiesResponseSuccess
+
       interface _ListJobsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListJobsResponse]
         def job_names: () -> ::Array[::String]
@@ -4438,6 +4786,30 @@ module Aws
                             ?max_results: ::Integer
                           ) -> _ListWorkflowsResponseSuccess
                         | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListWorkflowsResponseSuccess
+
+      interface _ModifyIntegrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ModifyIntegrationResponse]
+        def source_arn: () -> ::String
+        def target_arn: () -> ::String
+        def integration_name: () -> ::String
+        def description: () -> ::String
+        def integration_arn: () -> ::String
+        def kms_key_id: () -> ::String
+        def additional_encryption_context: () -> ::Hash[::String, ::String]
+        def tags: () -> ::Array[Types::Tag]
+        def status: () -> ("CREATING" | "ACTIVE" | "MODIFYING" | "FAILED" | "DELETING" | "SYNCING" | "NEEDS_ATTENTION")
+        def create_time: () -> ::Time
+        def errors: () -> ::Array[Types::IntegrationError]
+        def data_filter: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#modify_integration-instance_method
+      def modify_integration: (
+                                integration_identifier: ::String,
+                                ?description: ::String,
+                                ?data_filter: ::String,
+                                ?integration_name: ::String
+                              ) -> _ModifyIntegrationResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyIntegrationResponseSuccess
 
       interface _PutDataCatalogEncryptionSettingsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PutDataCatalogEncryptionSettingsResponse]
@@ -4955,11 +5327,12 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#test_connection-instance_method
       def test_connection: (
                              ?connection_name: ::String,
+                             ?catalog_id: ::String,
                              ?test_connection_input: {
-                               connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA"),
-                               connection_properties: Hash[("HOST" | "PORT" | "USERNAME" | "PASSWORD" | "ENCRYPTED_PASSWORD" | "JDBC_DRIVER_JAR_URI" | "JDBC_DRIVER_CLASS_NAME" | "JDBC_ENGINE" | "JDBC_ENGINE_VERSION" | "CONFIG_FILES" | "INSTANCE_ID" | "JDBC_CONNECTION_URL" | "JDBC_ENFORCE_SSL" | "CUSTOM_JDBC_CERT" | "SKIP_CUSTOM_JDBC_CERT_VALIDATION" | "CUSTOM_JDBC_CERT_STRING" | "CONNECTION_URL" | "KAFKA_BOOTSTRAP_SERVERS" | "KAFKA_SSL_ENABLED" | "KAFKA_CUSTOM_CERT" | "KAFKA_SKIP_CUSTOM_CERT_VALIDATION" | "KAFKA_CLIENT_KEYSTORE" | "KAFKA_CLIENT_KEYSTORE_PASSWORD" | "KAFKA_CLIENT_KEY_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD" | "SECRET_ID" | "CONNECTOR_URL" | "CONNECTOR_TYPE" | "CONNECTOR_CLASS_NAME" | "KAFKA_SASL_MECHANISM" | "KAFKA_SASL_PLAIN_USERNAME" | "KAFKA_SASL_PLAIN_PASSWORD" | "ENCRYPTED_KAFKA_SASL_PLAIN_PASSWORD" | "KAFKA_SASL_SCRAM_USERNAME" | "KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_SCRAM_SECRETS_ARN" | "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_GSSAPI_KEYTAB" | "KAFKA_SASL_GSSAPI_KRB5_CONF" | "KAFKA_SASL_GSSAPI_SERVICE" | "KAFKA_SASL_GSSAPI_PRINCIPAL" | "ROLE_ARN" | "REGION" | "WORKGROUP_NAME" | "CLUSTER_IDENTIFIER" | "DATABASE"), ::String],
+                               connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA" | "GOOGLEADS" | "GOOGLESHEETS" | "GOOGLEANALYTICS4" | "SERVICENOW" | "MARKETO" | "SAPODATA" | "ZENDESK" | "JIRACLOUD" | "NETSUITEERP" | "HUBSPOT" | "FACEBOOKADS" | "INSTAGRAMADS" | "ZOHOCRM" | "SALESFORCEPARDOT" | "SALESFORCEMARKETINGCLOUD" | "SLACK" | "STRIPE" | "INTERCOM" | "SNAPCHATADS"),
+                               connection_properties: Hash[("HOST" | "PORT" | "USERNAME" | "PASSWORD" | "ENCRYPTED_PASSWORD" | "JDBC_DRIVER_JAR_URI" | "JDBC_DRIVER_CLASS_NAME" | "JDBC_ENGINE" | "JDBC_ENGINE_VERSION" | "CONFIG_FILES" | "INSTANCE_ID" | "JDBC_CONNECTION_URL" | "JDBC_ENFORCE_SSL" | "CUSTOM_JDBC_CERT" | "SKIP_CUSTOM_JDBC_CERT_VALIDATION" | "CUSTOM_JDBC_CERT_STRING" | "CONNECTION_URL" | "KAFKA_BOOTSTRAP_SERVERS" | "KAFKA_SSL_ENABLED" | "KAFKA_CUSTOM_CERT" | "KAFKA_SKIP_CUSTOM_CERT_VALIDATION" | "KAFKA_CLIENT_KEYSTORE" | "KAFKA_CLIENT_KEYSTORE_PASSWORD" | "KAFKA_CLIENT_KEY_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD" | "KAFKA_SASL_MECHANISM" | "KAFKA_SASL_PLAIN_USERNAME" | "KAFKA_SASL_PLAIN_PASSWORD" | "ENCRYPTED_KAFKA_SASL_PLAIN_PASSWORD" | "KAFKA_SASL_SCRAM_USERNAME" | "KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_SCRAM_SECRETS_ARN" | "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_GSSAPI_KEYTAB" | "KAFKA_SASL_GSSAPI_KRB5_CONF" | "KAFKA_SASL_GSSAPI_SERVICE" | "KAFKA_SASL_GSSAPI_PRINCIPAL" | "SECRET_ID" | "CONNECTOR_URL" | "CONNECTOR_TYPE" | "CONNECTOR_CLASS_NAME" | "ENDPOINT" | "ENDPOINT_TYPE" | "ROLE_ARN" | "REGION" | "WORKGROUP_NAME" | "CLUSTER_IDENTIFIER" | "DATABASE"), ::String],
                                authentication_configuration: {
-                                 authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM")?,
+                                 authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM" | "IAM")?,
                                  o_auth_2_properties: {
                                    o_auth_2_grant_type: ("AUTHORIZATION_CODE" | "CLIENT_CREDENTIALS" | "JWT_BEARER")?,
                                    o_auth_2_client_application: {
@@ -4971,9 +5344,21 @@ module Aws
                                    authorization_code_properties: {
                                      authorization_code: ::String?,
                                      redirect_uri: ::String?
+                                   }?,
+                                   o_auth_2_credentials: {
+                                     user_managed_client_application_client_secret: ::String?,
+                                     access_token: ::String?,
+                                     refresh_token: ::String?,
+                                     jwt_token: ::String?
                                    }?
                                  }?,
-                                 secret_arn: ::String?
+                                 secret_arn: ::String?,
+                                 kms_key_arn: ::String?,
+                                 basic_authentication_credentials: {
+                                   username: ::String?,
+                                   password: ::String?
+                                 }?,
+                                 custom_authentication_credentials: Hash[::String, ::String]?
                                }?
                              }
                            ) -> _TestConnectionResponseSuccess
@@ -5000,6 +5385,51 @@ module Aws
                               blueprint_location: ::String
                             ) -> _UpdateBlueprintResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateBlueprintResponseSuccess
+
+      interface _UpdateCatalogResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateCatalogResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#update_catalog-instance_method
+      def update_catalog: (
+                            catalog_id: ::String,
+                            catalog_input: {
+                              description: ::String?,
+                              federated_catalog: {
+                                identifier: ::String?,
+                                connection_name: ::String?
+                              }?,
+                              parameters: Hash[::String, ::String]?,
+                              target_redshift_catalog: {
+                                catalog_arn: ::String
+                              }?,
+                              catalog_properties: {
+                                data_lake_access_properties: {
+                                  data_lake_access: bool?,
+                                  data_transfer_role: ::String?,
+                                  kms_key: ::String?,
+                                  catalog_type: ::String?
+                                }?,
+                                custom_properties: Hash[::String, ::String]?
+                              }?,
+                              create_table_default_permissions: Array[
+                                {
+                                  principal: {
+                                    data_lake_principal_identifier: ::String?
+                                  }?,
+                                  permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS")]?
+                                },
+                              ]?,
+                              create_database_default_permissions: Array[
+                                {
+                                  principal: {
+                                    data_lake_principal_identifier: ::String?
+                                  }?,
+                                  permissions: Array[("ALL" | "SELECT" | "ALTER" | "DROP" | "DELETE" | "INSERT" | "CREATE_DATABASE" | "CREATE_TABLE" | "DATA_LOCATION_ACCESS")]?
+                                },
+                              ]?
+                            }
+                          ) -> _UpdateCatalogResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateCatalogResponseSuccess
 
       interface _UpdateClassifierResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateClassifierResponse]
@@ -5199,17 +5629,19 @@ module Aws
                                connection_input: {
                                  name: ::String,
                                  description: ::String?,
-                                 connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA"),
+                                 connection_type: ("JDBC" | "SFTP" | "MONGODB" | "KAFKA" | "NETWORK" | "MARKETPLACE" | "CUSTOM" | "SALESFORCE" | "VIEW_VALIDATION_REDSHIFT" | "VIEW_VALIDATION_ATHENA" | "GOOGLEADS" | "GOOGLESHEETS" | "GOOGLEANALYTICS4" | "SERVICENOW" | "MARKETO" | "SAPODATA" | "ZENDESK" | "JIRACLOUD" | "NETSUITEERP" | "HUBSPOT" | "FACEBOOKADS" | "INSTAGRAMADS" | "ZOHOCRM" | "SALESFORCEPARDOT" | "SALESFORCEMARKETINGCLOUD" | "SLACK" | "STRIPE" | "INTERCOM" | "SNAPCHATADS"),
                                  match_criteria: Array[::String]?,
-                                 connection_properties: Hash[("HOST" | "PORT" | "USERNAME" | "PASSWORD" | "ENCRYPTED_PASSWORD" | "JDBC_DRIVER_JAR_URI" | "JDBC_DRIVER_CLASS_NAME" | "JDBC_ENGINE" | "JDBC_ENGINE_VERSION" | "CONFIG_FILES" | "INSTANCE_ID" | "JDBC_CONNECTION_URL" | "JDBC_ENFORCE_SSL" | "CUSTOM_JDBC_CERT" | "SKIP_CUSTOM_JDBC_CERT_VALIDATION" | "CUSTOM_JDBC_CERT_STRING" | "CONNECTION_URL" | "KAFKA_BOOTSTRAP_SERVERS" | "KAFKA_SSL_ENABLED" | "KAFKA_CUSTOM_CERT" | "KAFKA_SKIP_CUSTOM_CERT_VALIDATION" | "KAFKA_CLIENT_KEYSTORE" | "KAFKA_CLIENT_KEYSTORE_PASSWORD" | "KAFKA_CLIENT_KEY_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD" | "SECRET_ID" | "CONNECTOR_URL" | "CONNECTOR_TYPE" | "CONNECTOR_CLASS_NAME" | "KAFKA_SASL_MECHANISM" | "KAFKA_SASL_PLAIN_USERNAME" | "KAFKA_SASL_PLAIN_PASSWORD" | "ENCRYPTED_KAFKA_SASL_PLAIN_PASSWORD" | "KAFKA_SASL_SCRAM_USERNAME" | "KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_SCRAM_SECRETS_ARN" | "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_GSSAPI_KEYTAB" | "KAFKA_SASL_GSSAPI_KRB5_CONF" | "KAFKA_SASL_GSSAPI_SERVICE" | "KAFKA_SASL_GSSAPI_PRINCIPAL" | "ROLE_ARN" | "REGION" | "WORKGROUP_NAME" | "CLUSTER_IDENTIFIER" | "DATABASE"), ::String],
+                                 connection_properties: Hash[("HOST" | "PORT" | "USERNAME" | "PASSWORD" | "ENCRYPTED_PASSWORD" | "JDBC_DRIVER_JAR_URI" | "JDBC_DRIVER_CLASS_NAME" | "JDBC_ENGINE" | "JDBC_ENGINE_VERSION" | "CONFIG_FILES" | "INSTANCE_ID" | "JDBC_CONNECTION_URL" | "JDBC_ENFORCE_SSL" | "CUSTOM_JDBC_CERT" | "SKIP_CUSTOM_JDBC_CERT_VALIDATION" | "CUSTOM_JDBC_CERT_STRING" | "CONNECTION_URL" | "KAFKA_BOOTSTRAP_SERVERS" | "KAFKA_SSL_ENABLED" | "KAFKA_CUSTOM_CERT" | "KAFKA_SKIP_CUSTOM_CERT_VALIDATION" | "KAFKA_CLIENT_KEYSTORE" | "KAFKA_CLIENT_KEYSTORE_PASSWORD" | "KAFKA_CLIENT_KEY_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEYSTORE_PASSWORD" | "ENCRYPTED_KAFKA_CLIENT_KEY_PASSWORD" | "KAFKA_SASL_MECHANISM" | "KAFKA_SASL_PLAIN_USERNAME" | "KAFKA_SASL_PLAIN_PASSWORD" | "ENCRYPTED_KAFKA_SASL_PLAIN_PASSWORD" | "KAFKA_SASL_SCRAM_USERNAME" | "KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_SCRAM_SECRETS_ARN" | "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD" | "KAFKA_SASL_GSSAPI_KEYTAB" | "KAFKA_SASL_GSSAPI_KRB5_CONF" | "KAFKA_SASL_GSSAPI_SERVICE" | "KAFKA_SASL_GSSAPI_PRINCIPAL" | "SECRET_ID" | "CONNECTOR_URL" | "CONNECTOR_TYPE" | "CONNECTOR_CLASS_NAME" | "ENDPOINT" | "ENDPOINT_TYPE" | "ROLE_ARN" | "REGION" | "WORKGROUP_NAME" | "CLUSTER_IDENTIFIER" | "DATABASE"), ::String],
+                                 spark_properties: Hash[::String, ::String]?,
                                  athena_properties: Hash[::String, ::String]?,
+                                 python_properties: Hash[::String, ::String]?,
                                  physical_connection_requirements: {
                                    subnet_id: ::String?,
                                    security_group_id_list: Array[::String]?,
                                    availability_zone: ::String?
                                  }?,
                                  authentication_configuration: {
-                                   authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM")?,
+                                   authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM" | "IAM")?,
                                    o_auth_2_properties: {
                                      o_auth_2_grant_type: ("AUTHORIZATION_CODE" | "CLIENT_CREDENTIALS" | "JWT_BEARER")?,
                                      o_auth_2_client_application: {
@@ -5221,11 +5653,24 @@ module Aws
                                      authorization_code_properties: {
                                        authorization_code: ::String?,
                                        redirect_uri: ::String?
+                                     }?,
+                                     o_auth_2_credentials: {
+                                       user_managed_client_application_client_secret: ::String?,
+                                       access_token: ::String?,
+                                       refresh_token: ::String?,
+                                       jwt_token: ::String?
                                      }?
                                    }?,
-                                   secret_arn: ::String?
+                                   secret_arn: ::String?,
+                                   kms_key_arn: ::String?,
+                                   basic_authentication_credentials: {
+                                     username: ::String?,
+                                     password: ::String?
+                                   }?,
+                                   custom_authentication_credentials: Hash[::String, ::String]?
                                  }?,
-                                 validate_credentials: bool?
+                                 validate_credentials: bool?,
+                                 validate_for_compute_environments: Array[("SPARK" | "ATHENA" | "PYTHON")]?
                                }
                              ) -> _UpdateConnectionResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateConnectionResponseSuccess
@@ -5403,6 +5848,53 @@ module Aws
                                  ?add_arguments: Hash[::String, ::String]
                                ) -> _UpdateDevEndpointResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDevEndpointResponseSuccess
+
+      interface _UpdateIntegrationResourcePropertyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateIntegrationResourcePropertyResponse]
+        def resource_arn: () -> ::String
+        def source_processing_properties: () -> Types::SourceProcessingProperties
+        def target_processing_properties: () -> Types::TargetProcessingProperties
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#update_integration_resource_property-instance_method
+      def update_integration_resource_property: (
+                                                  resource_arn: ::String,
+                                                  ?source_processing_properties: {
+                                                    role_arn: ::String?
+                                                  },
+                                                  ?target_processing_properties: {
+                                                    role_arn: ::String?,
+                                                    kms_arn: ::String?,
+                                                    connection_name: ::String?,
+                                                    event_bus_arn: ::String?
+                                                  }
+                                                ) -> _UpdateIntegrationResourcePropertyResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateIntegrationResourcePropertyResponseSuccess
+
+      interface _UpdateIntegrationTablePropertiesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateIntegrationTablePropertiesResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Glue/Client.html#update_integration_table_properties-instance_method
+      def update_integration_table_properties: (
+                                                 resource_arn: ::String,
+                                                 table_name: ::String,
+                                                 ?source_table_config: {
+                                                   fields: Array[::String]?,
+                                                   filter_predicate: ::String?,
+                                                   primary_key: Array[::String]?,
+                                                   record_update_field: ::String?
+                                                 },
+                                                 ?target_table_config: {
+                                                   unnest_spec: ("TOPLEVEL" | "FULL" | "NOUNNEST")?,
+                                                   partition_spec: Array[
+                                                     {
+                                                       field_name: ::String?,
+                                                       function_spec: ::String?
+                                                     },
+                                                   ]?,
+                                                   target_table_name: ::String?
+                                                 }
+                                               ) -> _UpdateIntegrationTablePropertiesResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateIntegrationTablePropertiesResponseSuccess
 
       interface _UpdateJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateJobResponse]

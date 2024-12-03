@@ -141,6 +141,25 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # An object representing a value allowed for a property.
+    #
+    # @!attribute [rw] description
+    #   A description of the allowed value.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value allowed for the property.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/AllowedValue AWS API Documentation
+    #
+    class AllowedValue < Struct.new(
+      :description,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A resource to be created or added already exists.
     #
     # @!attribute [rw] message
@@ -491,6 +510,44 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The authentication configuration for a connection returned by the
+    # `DescribeConnectionType` API.
+    #
+    # @!attribute [rw] authentication_type
+    #   The type of authentication for a connection.
+    #   @return [Types::Property]
+    #
+    # @!attribute [rw] secret_arn
+    #   The Amazon Resource Name (ARN) for the Secrets Manager.
+    #   @return [Types::Property]
+    #
+    # @!attribute [rw] o_auth_2_properties
+    #   A map of key-value pairs for the OAuth2 properties. Each value is a
+    #   a `Property` object.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] basic_authentication_properties
+    #   A map of key-value pairs for the OAuth2 properties. Each value is a
+    #   a `Property` object.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] custom_authentication_properties
+    #   A map of key-value pairs for the custom authentication properties.
+    #   Each value is a a `Property` object.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/AuthConfiguration AWS API Documentation
+    #
+    class AuthConfiguration < Struct.new(
+      :authentication_type,
+      :secret_arn,
+      :o_auth_2_properties,
+      :basic_authentication_properties,
+      :custom_authentication_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A structure containing the authentication configuration.
     #
     # @!attribute [rw] authentication_type
@@ -533,13 +590,31 @@ module Aws::Glue
     #   request.
     #   @return [String]
     #
+    # @!attribute [rw] kms_key_arn
+    #   The ARN of the KMS key used to encrypt the connection. Only taken an
+    #   as input in the request and stored in the Secret Manager.
+    #   @return [String]
+    #
+    # @!attribute [rw] basic_authentication_credentials
+    #   The credentials used when the authentication type is basic
+    #   authentication.
+    #   @return [Types::BasicAuthenticationCredentials]
+    #
+    # @!attribute [rw] custom_authentication_credentials
+    #   The credentials used when the authentication type is custom
+    #   authentication.
+    #   @return [Hash<String,String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/AuthenticationConfigurationInput AWS API Documentation
     #
     class AuthenticationConfigurationInput < Struct.new(
       :authentication_type,
       :o_auth_2_properties,
-      :secret_arn)
-      SENSITIVE = []
+      :secret_arn,
+      :kms_key_arn,
+      :basic_authentication_credentials,
+      :custom_authentication_credentials)
+      SENSITIVE = [:custom_authentication_credentials]
       include Aws::Structure
     end
 
@@ -604,6 +679,26 @@ module Aws::Glue
       :code,
       :partitions)
       SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # For supplying basic auth credentials when not providing a `SecretArn`
+    # value.
+    #
+    # @!attribute [rw] username
+    #   The username to connect to the data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] password
+    #   The password to connect to the data source.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BasicAuthenticationCredentials AWS API Documentation
+    #
+    class BasicAuthenticationCredentials < Struct.new(
+      :username,
+      :password)
+      SENSITIVE = [:password]
       include Aws::Structure
     end
 
@@ -1792,6 +1887,115 @@ module Aws::Glue
     #
     class CancelStatementResponse < Aws::EmptyStructure; end
 
+    # Specifies the supported authentication types returned by the
+    # `DescribeConnectionType` API.
+    #
+    # @!attribute [rw] supported_authentication_types
+    #   A list of supported authentication types.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] supported_data_operations
+    #   A list of supported data operations.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] supported_compute_environments
+    #   A list of supported compute environments.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Capabilities AWS API Documentation
+    #
+    class Capabilities < Struct.new(
+      :supported_authentication_types,
+      :supported_data_operations,
+      :supported_compute_environments)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The catalog object represents a logical grouping of databases in the
+    # Glue Data Catalog or a federated source. You can now create a
+    # Redshift-federated catalog or a catalog containing resource links to
+    # Redshift databases in another account or region.
+    #
+    # @!attribute [rw] catalog_id
+    #   The ID of the catalog. To grant access to the default catalog, this
+    #   field should not be provided.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the catalog. Cannot be the same as the account ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] resource_arn
+    #   The Amazon Resource Name (ARN) assigned to the catalog resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description string, not more than 2048 bytes long, matching the URI
+    #   address multi-line string pattern. A description of the catalog.
+    #   @return [String]
+    #
+    # @!attribute [rw] parameters
+    #   A map array of key-value pairs that define parameters and properties
+    #   of the catalog.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] create_time
+    #   The time at which the catalog was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] update_time
+    #   The time at which the catalog was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] target_redshift_catalog
+    #   A `TargetRedshiftCatalog` object that describes a target catalog for
+    #   database resource linking.
+    #   @return [Types::TargetRedshiftCatalog]
+    #
+    # @!attribute [rw] federated_catalog
+    #   A `FederatedCatalog` object that points to an entity outside the
+    #   Glue Data Catalog.
+    #   @return [Types::FederatedCatalog]
+    #
+    # @!attribute [rw] catalog_properties
+    #   A `CatalogProperties` object that specifies data lake access
+    #   properties and other custom properties.
+    #   @return [Types::CatalogPropertiesOutput]
+    #
+    # @!attribute [rw] create_table_default_permissions
+    #   An array of `PrincipalPermissions` objects. Creates a set of default
+    #   permissions on the table(s) for principals. Used by Amazon Web
+    #   Services Lake Formation. Not used in the normal course of Glue
+    #   operations.
+    #   @return [Array<Types::PrincipalPermissions>]
+    #
+    # @!attribute [rw] create_database_default_permissions
+    #   An array of `PrincipalPermissions` objects. Creates a set of default
+    #   permissions on the database(s) for principals. Used by Amazon Web
+    #   Services Lake Formation. Not used in the normal course of Glue
+    #   operations.
+    #   @return [Array<Types::PrincipalPermissions>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Catalog AWS API Documentation
+    #
+    class Catalog < Struct.new(
+      :catalog_id,
+      :name,
+      :resource_arn,
+      :description,
+      :parameters,
+      :create_time,
+      :update_time,
+      :target_redshift_catalog,
+      :federated_catalog,
+      :catalog_properties,
+      :create_table_default_permissions,
+      :create_database_default_permissions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifies a Delta Lake data source that is registered in the Glue Data
     # Catalog.
     #
@@ -1905,6 +2109,62 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # A structure that describes catalog properties.
+    #
+    # @!attribute [rw] description
+    #   Description string, not more than 2048 bytes long, matching the URI
+    #   address multi-line string pattern. A description of the catalog.
+    #   @return [String]
+    #
+    # @!attribute [rw] federated_catalog
+    #   A `FederatedCatalog` object. A `FederatedCatalog` structure that
+    #   references an entity outside the Glue Data Catalog, for example a
+    #   Redshift database.
+    #   @return [Types::FederatedCatalog]
+    #
+    # @!attribute [rw] parameters
+    #   A map array of key-value pairs that define the parameters and
+    #   properties of the catalog.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] target_redshift_catalog
+    #   A `TargetRedshiftCatalog` object that describes a target catalog for
+    #   resource linking.
+    #   @return [Types::TargetRedshiftCatalog]
+    #
+    # @!attribute [rw] catalog_properties
+    #   A `CatalogProperties` object that specifies data lake access
+    #   properties and other custom properties.
+    #   @return [Types::CatalogProperties]
+    #
+    # @!attribute [rw] create_table_default_permissions
+    #   An array of `PrincipalPermissions` objects. Creates a set of default
+    #   permissions on the table(s) for principals. Used by Amazon Web
+    #   Services Lake Formation. Typically should be explicitly set as an
+    #   empty list.
+    #   @return [Array<Types::PrincipalPermissions>]
+    #
+    # @!attribute [rw] create_database_default_permissions
+    #   An array of `PrincipalPermissions` objects. Creates a set of default
+    #   permissions on the database(s) for principals. Used by Amazon Web
+    #   Services Lake Formation. Typically should be explicitly set as an
+    #   empty list.
+    #   @return [Array<Types::PrincipalPermissions>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CatalogInput AWS API Documentation
+    #
+    class CatalogInput < Struct.new(
+      :description,
+      :federated_catalog,
+      :parameters,
+      :target_redshift_catalog,
+      :catalog_properties,
+      :create_table_default_permissions,
+      :create_database_default_permissions)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifies an Apache Kafka data store in the Data Catalog.
     #
     # @!attribute [rw] name
@@ -1992,6 +2252,52 @@ module Aws::Glue
       :database,
       :streaming_options,
       :data_preview_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A structure that specifies data lake access properties and other
+    # custom properties.
+    #
+    # @!attribute [rw] data_lake_access_properties
+    #   A `DataLakeAccessProperties` object that specifies properties to
+    #   configure data lake access for your catalog resource in the Glue
+    #   Data Catalog.
+    #   @return [Types::DataLakeAccessProperties]
+    #
+    # @!attribute [rw] custom_properties
+    #   Additional key-value properties for the catalog, such as column
+    #   statistics optimizations.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CatalogProperties AWS API Documentation
+    #
+    class CatalogProperties < Struct.new(
+      :data_lake_access_properties,
+      :custom_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Property attributes that include configuration properties for the
+    # catalog resource.
+    #
+    # @!attribute [rw] data_lake_access_properties
+    #   A `DataLakeAccessProperties` object with input properties to
+    #   configure data lake access for your catalog resource in the Glue
+    #   Data Catalog.
+    #   @return [Types::DataLakeAccessPropertiesOutput]
+    #
+    # @!attribute [rw] custom_properties
+    #   Additional key-value properties for the catalog, such as column
+    #   statistics optimizations.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CatalogPropertiesOutput AWS API Documentation
+    #
+    class CatalogPropertiesOutput < Struct.new(
+      :data_lake_access_properties,
+      :custom_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3027,6 +3333,20 @@ module Aws::Glue
     #   CloudWatch logs.
     #   @return [String]
     #
+    # @!attribute [rw] schedule_type
+    #   The type of schedule for a column statistics task. Possible values
+    #   may be `CRON` or `AUTO`.
+    #   @return [String]
+    #
+    # @!attribute [rw] setting_source
+    #   The source of setting the column statistics task. Possible values
+    #   may be `CATALOG` or `TABLE`.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_execution_attempt
+    #   The last `ExecutionAttempt` for the column statistics task run.
+    #   @return [Types::ExecutionAttempt]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ColumnStatisticsTaskSettings AWS API Documentation
     #
     class ColumnStatisticsTaskSettings < Struct.new(
@@ -3037,7 +3357,10 @@ module Aws::Glue
       :catalog_id,
       :role,
       :sample_size,
-      :security_configuration)
+      :security_configuration,
+      :schedule_type,
+      :setting_source,
+      :last_execution_attempt)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3067,6 +3390,64 @@ module Aws::Glue
     #
     class CompactionMetrics < Struct.new(
       :iceberg_metrics)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object containing configuration for a compute environment (such as
+    # Spark, Python or Athena) returned by the `DescribeConnectionType` API.
+    #
+    # @!attribute [rw] name
+    #   A name for the compute environment configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the compute environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_environment
+    #   The type of compute environment.
+    #   @return [String]
+    #
+    # @!attribute [rw] supported_authentication_types
+    #   The supported authentication types for the compute environment.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] connection_options
+    #   The parameters used as connection options for the compute
+    #   environment.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] connection_property_name_overrides
+    #   The connection property name overrides for the compute environment.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] connection_option_name_overrides
+    #   The connection option name overrides for the compute environment.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] connection_properties_required_overrides
+    #   The connection properties that are required as overrides for the
+    #   compute environment.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] physical_connection_properties_required
+    #   Indicates whether `PhysicalConnectionProperties` are required for
+    #   the compute environment.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ComputeEnvironmentConfiguration AWS API Documentation
+    #
+    class ComputeEnvironmentConfiguration < Struct.new(
+      :name,
+      :description,
+      :compute_environment,
+      :supported_authentication_types,
+      :connection_options,
+      :connection_property_name_overrides,
+      :connection_option_name_overrides,
+      :connection_properties_required_overrides,
+      :physical_connection_properties_required)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3280,7 +3661,8 @@ module Aws::Glue
     #   @return [Array<String>]
     #
     # @!attribute [rw] connection_properties
-    #   These key-value pairs define parameters for the connection:
+    #   These key-value pairs define parameters for the connection when
+    #   using the version 1 Connection schema:
     #
     #   * `HOST` - The host URI: either the fully qualified domain name
     #     (FQDN) or the IPv4 address of the database host.
@@ -3459,8 +3841,16 @@ module Aws::Glue
     #   [5]: https://kafka.apache.org/documentation/#security_sasl_kerberos_clientconfig
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] spark_properties
+    #   Connection properties specific to the Spark compute environment.
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] athena_properties
-    #   This field is not currently used.
+    #   Connection properties specific to the Athena compute environment.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] python_properties
+    #   Connection properties specific to the Python compute environment.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] physical_connection_requirements
@@ -3501,6 +3891,15 @@ module Aws::Glue
     #   The authentication properties of the connection.
     #   @return [Types::AuthenticationConfiguration]
     #
+    # @!attribute [rw] connection_schema_version
+    #   The version of the connection schema for this connection. Version 2
+    #   supports properties for specific compute environments.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] compatible_compute_environments
+    #   A list of compute environments compatible with the connection.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Connection AWS API Documentation
     #
     class Connection < Struct.new(
@@ -3509,7 +3908,9 @@ module Aws::Glue
       :connection_type,
       :match_criteria,
       :connection_properties,
+      :spark_properties,
       :athena_properties,
+      :python_properties,
       :physical_connection_requirements,
       :creation_time,
       :last_updated_time,
@@ -3517,7 +3918,9 @@ module Aws::Glue
       :status,
       :status_reason,
       :last_connection_validation_time,
-      :authentication_configuration)
+      :authentication_configuration,
+      :connection_schema_version,
+      :compatible_compute_environments)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3585,13 +3988,6 @@ module Aws::Glue
     #     * Required: `CONNECTION_URL`.
     #
     #     * Required: All of (`USERNAME`, `PASSWORD`) or `SECRET_ID`.
-    #   * `SALESFORCE` - Designates a connection to Salesforce using OAuth
-    #     authencation.
-    #
-    #     * Requires the `AuthenticationConfiguration` member to be
-    #       configured.
-    #
-    #     ^
     #   * `VIEW_VALIDATION_REDSHIFT` - Designates a connection used for view
     #     validation by Amazon Redshift.
     #
@@ -3620,20 +4016,72 @@ module Aws::Glue
     #     connector to read from and write to data stores that are not
     #     natively supported by Glue.
     #
+    #   Additionally, a `ConnectionType` for the following SaaS connectors
+    #   is supported:
+    #
+    #   * `FACEBOOKADS` - Designates a connection to Facebook Ads.
+    #
+    #   * `GOOGLEADS` - Designates a connection to Google Ads.
+    #
+    #   * `GOOGLESHEETS` - Designates a connection to Google Sheets.
+    #
+    #   * `GOOGLEANALYTICS4` - Designates a connection to Google Analytics
+    #     4.
+    #
+    #   * `HUBSPOT` - Designates a connection to HubSpot.
+    #
+    #   * `INSTAGRAMADS` - Designates a connection to Instagram Ads.
+    #
+    #   * `INTERCOM` - Designates a connection to Intercom.
+    #
+    #   * `JIRACLOUD` - Designates a connection to Jira Cloud.
+    #
+    #   * `MARKETO` - Designates a connection to Adobe Marketo Engage.
+    #
+    #   * `NETSUITEERP` - Designates a connection to Oracle NetSuite.
+    #
+    #   * `SALESFORCE` - Designates a connection to Salesforce using OAuth
+    #     authentication.
+    #
+    #   * `SALESFORCEMARKETINGCLOUD` - Designates a connection to Salesforce
+    #     Marketing Cloud.
+    #
+    #   * `SALESFORCEPARDOT` - Designates a connection to Salesforce
+    #     Marketing Cloud Account Engagement (MCAE).
+    #
+    #   * `SAPODATA` - Designates a connection to SAP OData.
+    #
+    #   * `SERVICENOW` - Designates a connection to ServiceNow.
+    #
+    #   * `SLACK` - Designates a connection to Slack.
+    #
+    #   * `SNAPCHATADS` - Designates a connection to Snapchat Ads.
+    #
+    #   * `STRIPE` - Designates a connection to Stripe.
+    #
+    #   * `ZENDESK` - Designates a connection to Zendesk.
+    #
+    #   * `ZOHOCRM` - Designates a connection to Zoho CRM.
+    #
+    #   For more information on the connection parameters needed for a
+    #   particular connector, see the documentation for the connector in
+    #   [Adding an Glue connection][1]in the Glue User Guide.
+    #
     #   `SFTP` is not supported.
     #
     #   For more information about how optional ConnectionProperties are
     #   used to configure features in Glue, consult [Glue connection
-    #   properties][1].
+    #   properties][2].
     #
     #   For more information about how optional ConnectionProperties are
     #   used to configure features in Glue Studio, consult [Using connectors
-    #   and connections][2].
+    #   and connections][3].
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html
-    #   [2]: https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html
+    #   [1]: https://docs.aws.amazon.com/glue/latest/dg/console-connections.html
+    #   [2]: https://docs.aws.amazon.com/glue/latest/dg/connection-defining.html
+    #   [3]: https://docs.aws.amazon.com/glue/latest/ug/connectors-chapter.html
     #   @return [String]
     #
     # @!attribute [rw] match_criteria
@@ -3644,8 +4092,16 @@ module Aws::Glue
     #   These key-value pairs define parameters for the connection.
     #   @return [Hash<String,String>]
     #
+    # @!attribute [rw] spark_properties
+    #   Connection properties specific to the Spark compute environment.
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] athena_properties
-    #   This field is not currently used.
+    #   Connection properties specific to the Athena compute environment.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] python_properties
+    #   Connection properties specific to the Python compute environment.
     #   @return [Hash<String,String>]
     #
     # @!attribute [rw] physical_connection_requirements
@@ -3655,14 +4111,18 @@ module Aws::Glue
     #   @return [Types::PhysicalConnectionRequirements]
     #
     # @!attribute [rw] authentication_configuration
-    #   The authentication properties of the connection. Used for a
-    #   Salesforce connection.
+    #   The authentication properties of the connection.
     #   @return [Types::AuthenticationConfigurationInput]
     #
     # @!attribute [rw] validate_credentials
-    #   A flag to validate the credentials during create connection. Used
-    #   for a Salesforce connection. Default is true.
+    #   A flag to validate the credentials during create connection. Default
+    #   is true.
     #   @return [Boolean]
+    #
+    # @!attribute [rw] validate_for_compute_environments
+    #   The compute environments that the specified connection properties
+    #   are validated against.
+    #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ConnectionInput AWS API Documentation
     #
@@ -3672,10 +4132,13 @@ module Aws::Glue
       :connection_type,
       :match_criteria,
       :connection_properties,
+      :spark_properties,
       :athena_properties,
+      :python_properties,
       :physical_connection_requirements,
       :authentication_configuration,
-      :validate_credentials)
+      :validate_credentials,
+      :validate_for_compute_environments)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3719,6 +4182,32 @@ module Aws::Glue
     class ConnectionPasswordEncryption < Struct.new(
       :return_connection_password_encrypted,
       :aws_kms_key_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Brief information about a supported connection type returned by the
+    # `ListConnectionTypes` API.
+    #
+    # @!attribute [rw] connection_type
+    #   The name of the connection type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the connection type.
+    #   @return [String]
+    #
+    # @!attribute [rw] capabilities
+    #   The supported authentication types, data interface types (compute
+    #   environments), and data operations of the connector.
+    #   @return [Types::Capabilities]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ConnectionTypeBrief AWS API Documentation
+    #
+    class ConnectionTypeBrief < Struct.new(
+      :connection_type,
+      :description,
+      :capabilities)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4307,6 +4796,35 @@ module Aws::Glue
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # @!attribute [rw] name
+    #   The name of the catalog to create.
+    #   @return [String]
+    #
+    # @!attribute [rw] catalog_input
+    #   A `CatalogInput` object that defines the metadata for the catalog.
+    #   @return [Types::CatalogInput]
+    #
+    # @!attribute [rw] tags
+    #   A map array of key-value pairs, not more than 50 pairs. Each key is
+    #   a UTF-8 string, not less than 1 or more than 128 bytes long. Each
+    #   value is a UTF-8 string, not more than 256 bytes long. The tags you
+    #   assign to the catalog.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateCatalogRequest AWS API Documentation
+    #
+    class CreateCatalogRequest < Struct.new(
+      :name,
+      :catalog_input,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateCatalogResponse AWS API Documentation
+    #
+    class CreateCatalogResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] grok_classifier
     #   A `GrokClassifier` object specifying the classifier to create.
@@ -5058,6 +5576,219 @@ module Aws::Glue
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # @!attribute [rw] integration_name
+    #   A unique name for an integration in Glue.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_arn
+    #   The ARN of the source resource for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The ARN of the target resource for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_filter
+    #   Selects source tables for the integration using Maxwell filter
+    #   syntax.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The ARN of a KMS key used for encrypting the channel.
+    #   @return [String]
+    #
+    # @!attribute [rw] additional_encryption_context
+    #   An optional set of non-secret key–value pairs that contains
+    #   additional contextual information for encryption. This can only be
+    #   provided if `KMSKeyId` is provided.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] tags
+    #   Metadata assigned to the resource consisting of a list of key-value
+    #   pairs.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationRequest AWS API Documentation
+    #
+    class CreateIntegrationRequest < Struct.new(
+      :integration_name,
+      :source_arn,
+      :target_arn,
+      :description,
+      :data_filter,
+      :kms_key_id,
+      :additional_encryption_context,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_processing_properties
+    #   The resource properties associated with the integration source.
+    #   @return [Types::SourceProcessingProperties]
+    #
+    # @!attribute [rw] target_processing_properties
+    #   The resource properties associated with the integration target.
+    #   @return [Types::TargetProcessingProperties]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationResourcePropertyRequest AWS API Documentation
+    #
+    class CreateIntegrationResourcePropertyRequest < Struct.new(
+      :resource_arn,
+      :source_processing_properties,
+      :target_processing_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_processing_properties
+    #   The resource properties associated with the integration source.
+    #   @return [Types::SourceProcessingProperties]
+    #
+    # @!attribute [rw] target_processing_properties
+    #   The resource properties associated with the integration target.
+    #   @return [Types::TargetProcessingProperties]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationResourcePropertyResponse AWS API Documentation
+    #
+    class CreateIntegrationResourcePropertyResponse < Struct.new(
+      :resource_arn,
+      :source_processing_properties,
+      :target_processing_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] source_arn
+    #   The ARN of the source resource for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The ARN of the target resource for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_name
+    #   A unique name for an integration in Glue.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_arn
+    #   The Amazon Resource Name (ARN) for the created integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The ARN of a KMS key used for encrypting the channel.
+    #   @return [String]
+    #
+    # @!attribute [rw] additional_encryption_context
+    #   An optional set of non-secret key–value pairs that contains
+    #   additional contextual information for encryption.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] tags
+    #   Metadata assigned to the resource consisting of a list of key-value
+    #   pairs.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] status
+    #   The status of the integration being created.
+    #
+    #   The possible statuses are:
+    #
+    #   * CREATING: The integration is being created.
+    #
+    #   * ACTIVE: The integration creation succeeds.
+    #
+    #   * MODIFYING: The integration is being modified.
+    #
+    #   * FAILED: The integration creation fails.
+    #
+    #   * DELETING: The integration is deleted.
+    #
+    #   * SYNCING: The integration is synchronizing.
+    #
+    #   * NEEDS\_ATTENTION: The integration needs attention, such as
+    #     synchronization.
+    #   @return [String]
+    #
+    # @!attribute [rw] create_time
+    #   The time when the integration was created, in UTC.
+    #   @return [Time]
+    #
+    # @!attribute [rw] errors
+    #   A list of errors associated with the integration creation.
+    #   @return [Array<Types::IntegrationError>]
+    #
+    # @!attribute [rw] data_filter
+    #   Selects source tables for the integration using Maxwell filter
+    #   syntax.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationResponse AWS API Documentation
+    #
+    class CreateIntegrationResponse < Struct.new(
+      :source_arn,
+      :target_arn,
+      :integration_name,
+      :description,
+      :integration_arn,
+      :kms_key_id,
+      :additional_encryption_context,
+      :tags,
+      :status,
+      :create_time,
+      :errors,
+      :data_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name of the table to be replicated.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_table_config
+    #   A structure for the source table configuration.
+    #   @return [Types::SourceTableConfig]
+    #
+    # @!attribute [rw] target_table_config
+    #   A structure for the target table configuration.
+    #   @return [Types::TargetTableConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationTablePropertiesRequest AWS API Documentation
+    #
+    class CreateIntegrationTablePropertiesRequest < Struct.new(
+      :resource_arn,
+      :table_name,
+      :source_table_config,
+      :target_table_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationTablePropertiesResponse AWS API Documentation
+    #
+    class CreateIntegrationTablePropertiesResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] name
     #   The name you assign to this job definition. It must be unique in
@@ -6648,6 +7379,97 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # Input properties to configure data lake access for your catalog
+    # resource in the Glue Data Catalog.
+    #
+    # @!attribute [rw] data_lake_access
+    #   Turns on or off data lake access for Apache Spark applications that
+    #   access Amazon Redshift databases in the Data Catalog from any
+    #   non-Redshift engine, such as Amazon Athena, Amazon EMR, or Glue ETL.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] data_transfer_role
+    #   A role that will be assumed by Glue for transferring data into/out
+    #   of the staging bucket during a query.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key
+    #   An encryption key that will be used for the staging bucket that will
+    #   be created along with the catalog.
+    #   @return [String]
+    #
+    # @!attribute [rw] catalog_type
+    #   Specifies a federated catalog type for the native catalog resource.
+    #   The currently supported type is `aws:redshift`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DataLakeAccessProperties AWS API Documentation
+    #
+    class DataLakeAccessProperties < Struct.new(
+      :data_lake_access,
+      :data_transfer_role,
+      :kms_key,
+      :catalog_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The output properties of the data lake access configuration for your
+    # catalog resource in the Glue Data Catalog.
+    #
+    # @!attribute [rw] data_lake_access
+    #   Turns on or off data lake access for Apache Spark applications that
+    #   access Amazon Redshift databases in the Data Catalog.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] data_transfer_role
+    #   A role that will be assumed by Glue for transferring data into/out
+    #   of the staging bucket during a query.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key
+    #   An encryption key that will be used for the staging bucket that will
+    #   be created along with the catalog.
+    #   @return [String]
+    #
+    # @!attribute [rw] managed_workgroup_name
+    #   The managed Redshift Serverless compute name that is created for
+    #   your catalog resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] managed_workgroup_status
+    #   The managed Redshift Serverless compute status.
+    #   @return [String]
+    #
+    # @!attribute [rw] redshift_database_name
+    #   The default Redshift database resource name in the managed compute.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   A message that gives more detailed information about the managed
+    #   workgroup status.
+    #   @return [String]
+    #
+    # @!attribute [rw] catalog_type
+    #   Specifies a federated catalog type for the native catalog resource.
+    #   The currently supported type is `aws:redshift`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DataLakeAccessPropertiesOutput AWS API Documentation
+    #
+    class DataLakeAccessPropertiesOutput < Struct.new(
+      :data_lake_access,
+      :data_transfer_role,
+      :kms_key,
+      :managed_workgroup_name,
+      :managed_workgroup_status,
+      :redshift_database_name,
+      :status_message,
+      :catalog_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The Lake Formation principal.
     #
     # @!attribute [rw] data_lake_principal_identifier
@@ -7483,6 +8305,22 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # @!attribute [rw] catalog_id
+    #   The ID of the catalog.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteCatalogRequest AWS API Documentation
+    #
+    class DeleteCatalogRequest < Struct.new(
+      :catalog_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteCatalogResponse AWS API Documentation
+    #
+    class DeleteCatalogResponse < Aws::EmptyStructure; end
+
     # @!attribute [rw] name
     #   Name of the classifier to remove.
     #   @return [String]
@@ -7707,6 +8545,126 @@ module Aws::Glue
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteDevEndpointResponse AWS API Documentation
     #
     class DeleteDevEndpointResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] integration_identifier
+    #   The Amazon Resource Name (ARN) for the integration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteIntegrationRequest AWS API Documentation
+    #
+    class DeleteIntegrationRequest < Struct.new(
+      :integration_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] source_arn
+    #   The ARN of the source for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The ARN of the target for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_name
+    #   A unique name for an integration in Glue.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_arn
+    #   The Amazon Resource Name (ARN) for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The ARN of a KMS key used for encrypting the channel.
+    #   @return [String]
+    #
+    # @!attribute [rw] additional_encryption_context
+    #   An optional set of non-secret key–value pairs that contains
+    #   additional contextual information for encryption.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] tags
+    #   Metadata assigned to the resource consisting of a list of key-value
+    #   pairs.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] status
+    #   The status of the integration being deleted.
+    #
+    #   The possible statuses are:
+    #
+    #   * CREATING: The integration is being created.
+    #
+    #   * ACTIVE: The integration creation succeeds.
+    #
+    #   * MODIFYING: The integration is being modified.
+    #
+    #   * FAILED: The integration creation fails.
+    #
+    #   * DELETING: The integration is deleted.
+    #
+    #   * SYNCING: The integration is synchronizing.
+    #
+    #   * NEEDS\_ATTENTION: The integration needs attention, such as
+    #     synchronization.
+    #   @return [String]
+    #
+    # @!attribute [rw] create_time
+    #   The time when the integration was created, in UTC.
+    #   @return [Time]
+    #
+    # @!attribute [rw] errors
+    #   A list of errors associated with the integration.
+    #   @return [Array<Types::IntegrationError>]
+    #
+    # @!attribute [rw] data_filter
+    #   Selects source tables for the integration using Maxwell filter
+    #   syntax.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteIntegrationResponse AWS API Documentation
+    #
+    class DeleteIntegrationResponse < Struct.new(
+      :source_arn,
+      :target_arn,
+      :integration_name,
+      :description,
+      :integration_arn,
+      :kms_key_id,
+      :additional_encryption_context,
+      :tags,
+      :status,
+      :create_time,
+      :errors,
+      :data_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name of the table to be replicated.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteIntegrationTablePropertiesRequest AWS API Documentation
+    #
+    class DeleteIntegrationTablePropertiesRequest < Struct.new(
+      :resource_arn,
+      :table_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteIntegrationTablePropertiesResponse AWS API Documentation
+    #
+    class DeleteIntegrationTablePropertiesResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] job_name
     #   The name of the job definition to delete.
@@ -8216,6 +9174,237 @@ module Aws::Glue
       :connection_name,
       :write_manifest,
       :create_native_delta_table)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connection_type
+    #   The name of the connection type to be described.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeConnectionTypeRequest AWS API Documentation
+    #
+    class DescribeConnectionTypeRequest < Struct.new(
+      :connection_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connection_type
+    #   The name of the connection type.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the connection type.
+    #   @return [String]
+    #
+    # @!attribute [rw] capabilities
+    #   The supported authentication types, data interface types (compute
+    #   environments), and data operations of the connector.
+    #   @return [Types::Capabilities]
+    #
+    # @!attribute [rw] connection_properties
+    #   Connection properties which are common across compute environments.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] connection_options
+    #   Returns properties that can be set when creating a connection in the
+    #   `ConnectionInput.ConnectionProperties`. `ConnectionOptions` defines
+    #   parameters that can be set in a Spark ETL script in the connection
+    #   options map passed to a dataframe.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] authentication_configuration
+    #   The type of authentication used for the connection.
+    #   @return [Types::AuthConfiguration]
+    #
+    # @!attribute [rw] compute_environment_configurations
+    #   The compute environments that are supported by the connection.
+    #   @return [Hash<String,Types::ComputeEnvironmentConfiguration>]
+    #
+    # @!attribute [rw] physical_connection_requirements
+    #   Physical requirements for a connection, such as VPC, Subnet and
+    #   Security Group specifications.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] athena_connection_properties
+    #   Connection properties specific to the Athena compute environment.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] python_connection_properties
+    #   Connection properties specific to the Python compute environment.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @!attribute [rw] spark_connection_properties
+    #   Connection properties specific to the Spark compute environment.
+    #   @return [Hash<String,Types::Property>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeConnectionTypeResponse AWS API Documentation
+    #
+    class DescribeConnectionTypeResponse < Struct.new(
+      :connection_type,
+      :description,
+      :capabilities,
+      :connection_properties,
+      :connection_options,
+      :authentication_configuration,
+      :compute_environment_configurations,
+      :physical_connection_requirements,
+      :athena_connection_properties,
+      :python_connection_properties,
+      :spark_connection_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connection_name
+    #   The name of the connection that contains the connection type
+    #   credentials.
+    #   @return [String]
+    #
+    # @!attribute [rw] catalog_id
+    #   The catalog ID of the catalog that contains the connection. This can
+    #   be null, By default, the Amazon Web Services Account ID is the
+    #   catalog ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] entity_name
+    #   The name of the entity that you want to describe from the connection
+    #   type.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, included if this is a continuation call.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_store_api_version
+    #   The version of the API used for the data store.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeEntityRequest AWS API Documentation
+    #
+    class DescribeEntityRequest < Struct.new(
+      :connection_name,
+      :catalog_id,
+      :entity_name,
+      :next_token,
+      :data_store_api_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] fields
+    #   Describes the fields for that connector entity. This is the list of
+    #   `Field` objects. `Field` is very similar to column in a database.
+    #   The `Field` object has information about different properties
+    #   associated with fields in the connector.
+    #   @return [Array<Types::Field>]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, present if the current segment is not the
+    #   last.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeEntityResponse AWS API Documentation
+    #
+    class DescribeEntityResponse < Struct.new(
+      :fields,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] integration_arn
+    #   The Amazon Resource Name (ARN) of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] marker
+    #   A token to specify where to start paginating. This is the marker
+    #   from a previously truncated response.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_records
+    #   The total number of items to return in the output.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] target_arn
+    #   The Amazon Resource Name (ARN) of the target resource in the
+    #   integration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeInboundIntegrationsRequest AWS API Documentation
+    #
+    class DescribeInboundIntegrationsRequest < Struct.new(
+      :integration_arn,
+      :marker,
+      :max_records,
+      :target_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] inbound_integrations
+    #   A list of inbound integrations.
+    #   @return [Array<Types::InboundIntegration>]
+    #
+    # @!attribute [rw] marker
+    #   A value that indicates the starting point for the next set of
+    #   response records in a subsequent request.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeInboundIntegrationsResponse AWS API Documentation
+    #
+    class DescribeInboundIntegrationsResponse < Struct.new(
+      :inbound_integrations,
+      :marker)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] integration_identifier
+    #   The Amazon Resource Name (ARN) for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] marker
+    #   A value that indicates the starting point for the next set of
+    #   response records in a subsequent request.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_records
+    #   The total number of items to return in the output.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] filters
+    #   A list of key and values, to filter down the results. Supported keys
+    #   are "Status", "IntegrationName", and "SourceArn".
+    #   IntegrationName is limited to only one value.
+    #   @return [Array<Types::IntegrationFilter>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeIntegrationsRequest AWS API Documentation
+    #
+    class DescribeIntegrationsRequest < Struct.new(
+      :integration_identifier,
+      :marker,
+      :max_records,
+      :filters)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] integrations
+    #   A list of zero-ETL integrations.
+    #   @return [Array<Types::Integration>]
+    #
+    # @!attribute [rw] marker
+    #   A value that indicates the starting point for the next set of
+    #   response records in a subsequent request.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeIntegrationsResponse AWS API Documentation
+    #
+    class DescribeIntegrationsResponse < Struct.new(
+      :integrations,
+      :marker)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8925,6 +10114,50 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # An entity supported by a given `ConnectionType`.
+    #
+    # @!attribute [rw] entity_name
+    #   The name of the entity.
+    #   @return [String]
+    #
+    # @!attribute [rw] label
+    #   Label used for the entity.
+    #   @return [String]
+    #
+    # @!attribute [rw] is_parent_entity
+    #   A Boolean value which helps to determine whether there are sub
+    #   objects that can be listed.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] description
+    #   A description of the entity.
+    #   @return [String]
+    #
+    # @!attribute [rw] category
+    #   The type of entities that are present in the response. This value
+    #   depends on the source connection. For example this is `SObjects` for
+    #   Salesforce and `databases` or `schemas` or `tables` for sources like
+    #   Amazon Redshift.
+    #   @return [String]
+    #
+    # @!attribute [rw] custom_properties
+    #   An optional map of keys which may be returned for an entity by a
+    #   connector.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Entity AWS API Documentation
+    #
+    class Entity < Struct.new(
+      :entity_name,
+      :label,
+      :is_parent_entity,
+      :description,
+      :category,
+      :custom_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A specified entity does not exist
     #
     # @!attribute [rw] message
@@ -9111,6 +10344,36 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # A run attempt for a column statistics task run.
+    #
+    # @!attribute [rw] status
+    #   The status of the last column statistics task run.
+    #   @return [String]
+    #
+    # @!attribute [rw] column_statistics_task_run_id
+    #   A task run ID for the last column statistics task run.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_timestamp
+    #   A timestamp when the last column statistics task run occurred.
+    #   @return [Time]
+    #
+    # @!attribute [rw] error_message
+    #   An error message associated with the last column statistics task
+    #   run.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ExecutionAttempt AWS API Documentation
+    #
+    class ExecutionAttempt < Struct.new(
+      :status,
+      :column_statistics_task_run_id,
+      :execution_timestamp,
+      :error_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An execution property of a job.
     #
     # @!attribute [rw] max_concurrent_runs
@@ -9138,6 +10401,26 @@ module Aws::Glue
     #
     class ExportLabelsTaskRunProperties < Struct.new(
       :output_s3_path)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A catalog that points to an entity outside the Glue Data Catalog.
+    #
+    # @!attribute [rw] identifier
+    #   A unique identifier for the federated catalog.
+    #   @return [String]
+    #
+    # @!attribute [rw] connection_name
+    #   The name of the connection to an external data source, for example a
+    #   Redshift-federated catalog.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/FederatedCatalog AWS API Documentation
+    #
+    class FederatedCatalog < Struct.new(
+      :identifier,
+      :connection_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9233,6 +10516,115 @@ module Aws::Glue
     #
     class FederationSourceRetryableException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The `Field` object has information about the different properties
+    # associated with a field in the connector.
+    #
+    # @!attribute [rw] field_name
+    #   A unique identifier for the field.
+    #   @return [String]
+    #
+    # @!attribute [rw] label
+    #   A readable label used for the field.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the field.
+    #   @return [String]
+    #
+    # @!attribute [rw] field_type
+    #   The type of data in the field.
+    #   @return [String]
+    #
+    # @!attribute [rw] is_primary_key
+    #   Indicates whether this field can used as a primary key for the given
+    #   entity.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_nullable
+    #   Indicates whether this field can be nullable or not.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_retrievable
+    #   Indicates whether this field can be added in Select clause of SQL
+    #   query or whether it is retrievable or not.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_filterable
+    #   Indicates whether this field can used in a filter clause (`WHERE`
+    #   clause) of a SQL statement when querying data.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_partitionable
+    #   Indicates whether a given field can be used in partitioning the
+    #   query made to SaaS.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_createable
+    #   Indicates whether this field can be created as part of a destination
+    #   write.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_updateable
+    #   Indicates whether this field can be updated as part of a destination
+    #   write.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_upsertable
+    #   Indicates whether this field can be upserted as part of a
+    #   destination write.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] is_default_on_create
+    #   Indicates whether this field is populated automatically when the
+    #   object is created, such as a created at timestamp.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] supported_values
+    #   A list of supported values for the field.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] supported_filter_operators
+    #   Indicates the support filter operators for this field.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] parent_field
+    #   A parent field name for a nested field.
+    #   @return [String]
+    #
+    # @!attribute [rw] native_data_type
+    #   The data type returned by the SaaS API, such as “picklist” or
+    #   “textarea” from Salesforce.
+    #   @return [String]
+    #
+    # @!attribute [rw] custom_properties
+    #   Optional map of keys which may be returned.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Field AWS API Documentation
+    #
+    class Field < Struct.new(
+      :field_name,
+      :label,
+      :description,
+      :field_type,
+      :is_primary_key,
+      :is_nullable,
+      :is_retrievable,
+      :is_filterable,
+      :is_partitionable,
+      :is_createable,
+      :is_updateable,
+      :is_upsertable,
+      :is_default_on_create,
+      :supported_values,
+      :supported_filter_operators,
+      :parent_field,
+      :native_data_type,
+      :custom_properties)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9644,6 +11036,83 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # @!attribute [rw] catalog_id
+    #   The ID of the parent catalog in which the catalog resides. If none
+    #   is provided, the Amazon Web Services Account Number is used by
+    #   default.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalogRequest AWS API Documentation
+    #
+    class GetCatalogRequest < Struct.new(
+      :catalog_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] catalog
+    #   A `Catalog` object. The definition of the specified catalog in the
+    #   Glue Data Catalog.
+    #   @return [Types::Catalog]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalogResponse AWS API Documentation
+    #
+    class GetCatalogResponse < Struct.new(
+      :catalog)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] parent_catalog_id
+    #   The ID of the parent catalog in which the catalog resides. If none
+    #   is provided, the Amazon Web Services Account Number is used by
+    #   default.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, if this is a continuation call.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of catalogs to return in one response.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] recursive
+    #   When specified as true, iterates through the account and returns all
+    #   catalog resources (including top-level resources and child
+    #   resources)
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalogsRequest AWS API Documentation
+    #
+    class GetCatalogsRequest < Struct.new(
+      :parent_catalog_id,
+      :next_token,
+      :max_results,
+      :recursive)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] catalog_list
+    #   An array of `Catalog` objects. A list of `Catalog` objects from the
+    #   specified parent catalog.
+    #   @return [Array<Types::Catalog>]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token for paginating the returned list of tokens,
+    #   returned if the current segment of the list is not the last.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalogsResponse AWS API Documentation
+    #
+    class GetCatalogsResponse < Struct.new(
+      :catalog_list,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] name
     #   Name of the classifier to retrieve.
     #   @return [String]
@@ -9916,12 +11385,18 @@ module Aws::Glue
     #   the rest of the connection properties.
     #   @return [Boolean]
     #
+    # @!attribute [rw] apply_override_for_compute_environment
+    #   For connections that may be used in multiple services, specifies
+    #   returning properties for the specified compute environment.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetConnectionRequest AWS API Documentation
     #
     class GetConnectionRequest < Struct.new(
       :catalog_id,
       :name,
-      :hide_password)
+      :hide_password,
+      :apply_override_for_compute_environment)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9950,11 +11425,16 @@ module Aws::Glue
     #   The type of connections to return. Currently, SFTP is not supported.
     #   @return [String]
     #
+    # @!attribute [rw] connection_schema_version
+    #   Denotes if the connection was created with schema version 1 or 2.
+    #   @return [Integer]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetConnectionsFilter AWS API Documentation
     #
     class GetConnectionsFilter < Struct.new(
       :match_criteria,
-      :connection_type)
+      :connection_type,
+      :connection_schema_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -10793,6 +12273,163 @@ module Aws::Glue
     class GetDevEndpointsResponse < Struct.new(
       :dev_endpoints,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connection_name
+    #   The name of the connection that contains the connection type
+    #   credentials.
+    #   @return [String]
+    #
+    # @!attribute [rw] catalog_id
+    #   The catalog ID of the catalog that contains the connection. This can
+    #   be null, By default, the Amazon Web Services Account ID is the
+    #   catalog ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] entity_name
+    #   Name of the entity that we want to query the preview data from the
+    #   given connection type.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, included if this is a continuation call.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_store_api_version
+    #   The API version of the SaaS connector.
+    #   @return [String]
+    #
+    # @!attribute [rw] connection_options
+    #   Connector options that are required to query the data.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] filter_predicate
+    #   A filter predicate that you can apply in the query request.
+    #   @return [String]
+    #
+    # @!attribute [rw] limit
+    #   Limits the number of records fetched with the request.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] order_by
+    #   A parameter that orders the response preview data.
+    #   @return [String]
+    #
+    # @!attribute [rw] selected_fields
+    #   List of fields that we want to fetch as part of preview data.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetEntityRecordsRequest AWS API Documentation
+    #
+    class GetEntityRecordsRequest < Struct.new(
+      :connection_name,
+      :catalog_id,
+      :entity_name,
+      :next_token,
+      :data_store_api_version,
+      :connection_options,
+      :filter_predicate,
+      :limit,
+      :order_by,
+      :selected_fields)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] records
+    #   A list of the requested objects.
+    #   @return [Array<Hash,Array,String,Numeric,Boolean>]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, present if the current segment is not the
+    #   last.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetEntityRecordsResponse AWS API Documentation
+    #
+    class GetEntityRecordsResponse < Struct.new(
+      :records,
+      :next_token)
+      SENSITIVE = [:records]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetIntegrationResourcePropertyRequest AWS API Documentation
+    #
+    class GetIntegrationResourcePropertyRequest < Struct.new(
+      :resource_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_processing_properties
+    #   The resource properties associated with the integration source.
+    #   @return [Types::SourceProcessingProperties]
+    #
+    # @!attribute [rw] target_processing_properties
+    #   The resource properties associated with the integration target.
+    #   @return [Types::TargetProcessingProperties]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetIntegrationResourcePropertyResponse AWS API Documentation
+    #
+    class GetIntegrationResourcePropertyResponse < Struct.new(
+      :resource_arn,
+      :source_processing_properties,
+      :target_processing_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name of the table to be replicated.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetIntegrationTablePropertiesRequest AWS API Documentation
+    #
+    class GetIntegrationTablePropertiesRequest < Struct.new(
+      :resource_arn,
+      :table_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name of the table to be replicated.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_table_config
+    #   A structure for the source table configuration.
+    #   @return [Types::SourceTableConfig]
+    #
+    # @!attribute [rw] target_table_config
+    #   A structure for the target table configuration.
+    #   @return [Types::TargetTableConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetIntegrationTablePropertiesResponse AWS API Documentation
+    #
+    class GetIntegrationTablePropertiesResponse < Struct.new(
+      :resource_arn,
+      :table_name,
+      :source_table_config,
+      :target_table_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13837,6 +15474,262 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # A structure for an integration that writes data into a resource.
+    #
+    # @!attribute [rw] source_arn
+    #   The ARN of the source resource for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The ARN of the target resource for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_arn
+    #   The ARN of the zero-ETL integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The possible statuses are:
+    #
+    #   * CREATING: The integration is being created.
+    #
+    #   * ACTIVE: The integration creation succeeds.
+    #
+    #   * MODIFYING: The integration is being modified.
+    #
+    #   * FAILED: The integration creation fails.
+    #
+    #   * DELETING: The integration is deleted.
+    #
+    #   * SYNCING: The integration is synchronizing.
+    #
+    #   * NEEDS\_ATTENTION: The integration needs attention, such as
+    #     synchronization.
+    #   @return [String]
+    #
+    # @!attribute [rw] create_time
+    #   The time that the integration was created, in UTC.
+    #   @return [Time]
+    #
+    # @!attribute [rw] errors
+    #   A list of errors associated with the integration.
+    #   @return [Array<Types::IntegrationError>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/InboundIntegration AWS API Documentation
+    #
+    class InboundIntegration < Struct.new(
+      :source_arn,
+      :target_arn,
+      :integration_arn,
+      :status,
+      :create_time,
+      :errors)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Describes a zero-ETL integration.
+    #
+    # @!attribute [rw] source_arn
+    #   The ARN for the source of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The ARN for the target of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_name
+    #   A unique name for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_arn
+    #   The Amazon Resource Name (ARN) for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The ARN of a KMS key used for encrypting the channel.
+    #   @return [String]
+    #
+    # @!attribute [rw] additional_encryption_context
+    #   An optional set of non-secret key–value pairs that contains
+    #   additional contextual information for encryption. This can only be
+    #   provided if `KMSKeyId` is provided.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] tags
+    #   Metadata assigned to the resource consisting of a list of key-value
+    #   pairs.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] status
+    #   The possible statuses are:
+    #
+    #   * CREATING: The integration is being created.
+    #
+    #   * ACTIVE: The integration creation succeeds.
+    #
+    #   * MODIFYING: The integration is being modified.
+    #
+    #   * FAILED: The integration creation fails.
+    #
+    #   * DELETING: The integration is deleted.
+    #
+    #   * SYNCING: The integration is synchronizing.
+    #
+    #   * NEEDS\_ATTENTION: The integration needs attention, such as
+    #     synchronization.
+    #   @return [String]
+    #
+    # @!attribute [rw] create_time
+    #   The time that the integration was created, in UTC.
+    #   @return [Time]
+    #
+    # @!attribute [rw] errors
+    #   A list of errors associated with the integration.
+    #   @return [Array<Types::IntegrationError>]
+    #
+    # @!attribute [rw] data_filter
+    #   Selects source tables for the integration using Maxwell filter
+    #   syntax.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Integration AWS API Documentation
+    #
+    class Integration < Struct.new(
+      :source_arn,
+      :target_arn,
+      :description,
+      :integration_name,
+      :integration_arn,
+      :kms_key_id,
+      :additional_encryption_context,
+      :tags,
+      :status,
+      :create_time,
+      :errors,
+      :data_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The requested operation conflicts with another operation.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/IntegrationConflictOperationFault AWS API Documentation
+    #
+    class IntegrationConflictOperationFault < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An error associated with a zero-ETL integration.
+    #
+    # @!attribute [rw] error_code
+    #   The code associated with this error.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_message
+    #   A message describing the error.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/IntegrationError AWS API Documentation
+    #
+    class IntegrationError < Struct.new(
+      :error_code,
+      :error_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A filter that can be used when invoking a `DescribeIntegrations`
+    # request.
+    #
+    # @!attribute [rw] name
+    #   The name of the filter.
+    #   @return [String]
+    #
+    # @!attribute [rw] values
+    #   A list of filter values.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/IntegrationFilter AWS API Documentation
+    #
+    class IntegrationFilter < Struct.new(
+      :name,
+      :values)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The specified integration could not be found.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/IntegrationNotFoundFault AWS API Documentation
+    #
+    class IntegrationNotFoundFault < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A structure that describes how data is partitioned on the target.
+    #
+    # @!attribute [rw] field_name
+    #   The field name used to partition data on the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] function_spec
+    #   Specifies a function used to partition data on the target.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/IntegrationPartition AWS API Documentation
+    #
+    class IntegrationPartition < Struct.new(
+      :field_name,
+      :function_spec)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The data processed through your integration exceeded your quota.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/IntegrationQuotaExceededFault AWS API Documentation
+    #
+    class IntegrationQuotaExceededFault < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An internal server error occurred.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/InternalServerException AWS API Documentation
+    #
+    class InternalServerException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An internal service error occurred.
     #
     # @!attribute [rw] message
@@ -13867,6 +15760,20 @@ module Aws::Glue
     class InvalidInputException < Struct.new(
       :message,
       :from_federation_source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The integration is in an invalid state.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/InvalidIntegrationStateFault AWS API Documentation
+    #
+    class InvalidIntegrationStateFault < Struct.new(
+      :message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -15296,6 +17203,20 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The KMS key specified is not accessible.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/KMSKeyNotAccessibleFault AWS API Documentation
+    #
+    class KMSKeyNotAccessibleFault < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Additional options for streaming.
     #
     # @!attribute [rw] bootstrap_servers
@@ -15829,6 +17750,41 @@ module Aws::Glue
     end
 
     # @!attribute [rw] max_results
+    #   The maximum number of results to return.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, if this is a continuation call.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListConnectionTypesRequest AWS API Documentation
+    #
+    class ListConnectionTypesRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connection_types
+    #   A list of `ConnectionTypeBrief` objects containing brief information
+    #   about the supported connection types.
+    #   @return [Array<Types::ConnectionTypeBrief>]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, if the current list segment is not the last.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListConnectionTypesResponse AWS API Documentation
+    #
+    class ListConnectionTypesResponse < Struct.new(
+      :connection_types,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
     #   The maximum size of a list to return.
     #   @return [Integer]
     #
@@ -16252,6 +18208,61 @@ module Aws::Glue
     #
     class ListDevEndpointsResponse < Struct.new(
       :dev_endpoint_names,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] connection_name
+    #   A name for the connection that has required credentials to query any
+    #   connection type.
+    #   @return [String]
+    #
+    # @!attribute [rw] catalog_id
+    #   The catalog ID of the catalog that contains the connection. This can
+    #   be null, By default, the Amazon Web Services Account ID is the
+    #   catalog ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] parent_entity_name
+    #   Name of the parent entity for which you want to list the children.
+    #   This parameter takes a fully-qualified path of the entity in order
+    #   to list the child entities.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, included if this is a continuation call.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_store_api_version
+    #   The API version of the SaaS connector.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListEntitiesRequest AWS API Documentation
+    #
+    class ListEntitiesRequest < Struct.new(
+      :connection_name,
+      :catalog_id,
+      :parent_entity_name,
+      :next_token,
+      :data_store_api_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] entities
+    #   A list of `Entity` objects.
+    #   @return [Array<Types::Entity>]
+    #
+    # @!attribute [rw] next_token
+    #   A continuation token, present if the current segment is not the
+    #   last.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListEntitiesResponse AWS API Documentation
+    #
+    class ListEntitiesResponse < Struct.new(
+      :entities,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -17306,6 +19317,121 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # @!attribute [rw] integration_identifier
+    #   The Amazon Resource Name (ARN) for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] data_filter
+    #   Selects source tables for the integration using Maxwell filter
+    #   syntax.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_name
+    #   A unique name for an integration in Glue.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ModifyIntegrationRequest AWS API Documentation
+    #
+    class ModifyIntegrationRequest < Struct.new(
+      :integration_identifier,
+      :description,
+      :data_filter,
+      :integration_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] source_arn
+    #   The ARN of the source for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_arn
+    #   The ARN of the target for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_name
+    #   A unique name for an integration in Glue.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] integration_arn
+    #   The Amazon Resource Name (ARN) for the integration.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   The ARN of a KMS key used for encrypting the channel.
+    #   @return [String]
+    #
+    # @!attribute [rw] additional_encryption_context
+    #   An optional set of non-secret key–value pairs that contains
+    #   additional contextual information for encryption.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] tags
+    #   Metadata assigned to the resource consisting of a list of key-value
+    #   pairs.
+    #   @return [Array<Types::Tag>]
+    #
+    # @!attribute [rw] status
+    #   The status of the integration being modified.
+    #
+    #   The possible statuses are:
+    #
+    #   * CREATING: The integration is being created.
+    #
+    #   * ACTIVE: The integration creation succeeds.
+    #
+    #   * MODIFYING: The integration is being modified.
+    #
+    #   * FAILED: The integration creation fails.
+    #
+    #   * DELETING: The integration is deleted.
+    #
+    #   * SYNCING: The integration is synchronizing.
+    #
+    #   * NEEDS\_ATTENTION: The integration needs attention, such as
+    #     synchronization.
+    #   @return [String]
+    #
+    # @!attribute [rw] create_time
+    #   The time when the integration was created, in UTC.
+    #   @return [Time]
+    #
+    # @!attribute [rw] errors
+    #   A list of errors associated with the integration modification.
+    #   @return [Array<Types::IntegrationError>]
+    #
+    # @!attribute [rw] data_filter
+    #   Selects source tables for the integration using Maxwell filter
+    #   syntax.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ModifyIntegrationResponse AWS API Documentation
+    #
+    class ModifyIntegrationResponse < Struct.new(
+      :source_arn,
+      :target_arn,
+      :integration_name,
+      :description,
+      :integration_arn,
+      :kms_key_id,
+      :additional_encryption_context,
+      :tags,
+      :status,
+      :create_time,
+      :errors,
+      :data_filter)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifies an Amazon DocumentDB or MongoDB data store to crawl.
     #
     # @!attribute [rw] connection_name
@@ -17527,6 +19653,38 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The credentials used when the authentication type is OAuth2
+    # authentication.
+    #
+    # @!attribute [rw] user_managed_client_application_client_secret
+    #   The client application client secret if the client application is
+    #   user managed.
+    #   @return [String]
+    #
+    # @!attribute [rw] access_token
+    #   The access token used when the authentication type is OAuth2.
+    #   @return [String]
+    #
+    # @!attribute [rw] refresh_token
+    #   The refresh token used when the authentication type is OAuth2.
+    #   @return [String]
+    #
+    # @!attribute [rw] jwt_token
+    #   The JSON Web Token (JWT) used when the authentication type is
+    #   OAuth2.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/OAuth2Credentials AWS API Documentation
+    #
+    class OAuth2Credentials < Struct.new(
+      :user_managed_client_application_client_secret,
+      :access_token,
+      :refresh_token,
+      :jwt_token)
+      SENSITIVE = [:user_managed_client_application_client_secret, :access_token, :refresh_token, :jwt_token]
+      include Aws::Structure
+    end
+
     # A structure containing properties for OAuth2 authentication.
     #
     # @!attribute [rw] o_auth_2_grant_type
@@ -17586,6 +19744,11 @@ module Aws::Glue
     #   `AUTHORIZATION_CODE` grant type.
     #   @return [Types::AuthorizationCodeProperties]
     #
+    # @!attribute [rw] o_auth_2_credentials
+    #   The credentials used when the authentication type is OAuth2
+    #   authentication.
+    #   @return [Types::OAuth2Credentials]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/OAuth2PropertiesInput AWS API Documentation
     #
     class OAuth2PropertiesInput < Struct.new(
@@ -17593,7 +19756,8 @@ module Aws::Glue
       :o_auth_2_client_application,
       :token_url,
       :token_url_parameters_map,
-      :authorization_code_properties)
+      :authorization_code_properties,
+      :o_auth_2_credentials)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -18207,6 +20371,51 @@ module Aws::Glue
     class ProfileConfiguration < Struct.new(
       :session_configuration,
       :job_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object that defines a connection type for a compute environment.
+    #
+    # @!attribute [rw] name
+    #   The name of the property.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description of the property.
+    #   @return [String]
+    #
+    # @!attribute [rw] required
+    #   Indicates whether the property is required.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] default_value
+    #   The default value for the property.
+    #   @return [String]
+    #
+    # @!attribute [rw] property_types
+    #   Describes the type of property.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] allowed_values
+    #   A list of `AllowedValue` objects representing the values allowed for
+    #   the property.
+    #   @return [Array<Types::AllowedValue>]
+    #
+    # @!attribute [rw] data_operation_scopes
+    #   Indicates which data operations are applicable to the property.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Property AWS API Documentation
+    #
+    class Property < Struct.new(
+      :name,
+      :description,
+      :required,
+      :default_value,
+      :property_types,
+      :allowed_values,
+      :data_operation_scopes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19006,6 +21215,20 @@ module Aws::Glue
     #
     class ResetJobBookmarkResponse < Struct.new(
       :job_bookmark_entry)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The resource could not be found.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ResourceNotFoundException AWS API Documentation
+    #
+    class ResourceNotFoundException < Struct.new(
+      :message)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -21058,6 +23281,49 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The resource properties associated with the integration source.
+    #
+    # @!attribute [rw] role_arn
+    #   The IAM role to access the Glue connection.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/SourceProcessingProperties AWS API Documentation
+    #
+    class SourceProcessingProperties < Struct.new(
+      :role_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Properties used by the source leg to process data from the source.
+    #
+    # @!attribute [rw] fields
+    #   A list of fields used for column-level filtering.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] filter_predicate
+    #   A condition clause used for row-level filtering.
+    #   @return [String]
+    #
+    # @!attribute [rw] primary_key
+    #   Unique identifier of a record.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] record_update_field
+    #   Incremental pull timestamp-based field.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/SourceTableConfig AWS API Documentation
+    #
+    class SourceTableConfig < Struct.new(
+      :fields,
+      :filter_predicate,
+      :primary_key,
+      :record_update_field)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Specifies a connector to an Apache Spark data source.
     #
     # @!attribute [rw] name
@@ -23094,6 +25360,39 @@ module Aws::Glue
       include Aws::Structure
     end
 
+    # The `Tag` object represents a label that you can assign to an Amazon
+    # Web Services resource. Each tag consists of a key and an optional
+    # value, both of which you define.
+    #
+    # For more information about tags, and controlling access to resources
+    # in Glue, see [Amazon Web Services Tags in Glue][1] and [Specifying
+    # Glue Resource ARNs][2] in the developer guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/glue/latest/dg/monitor-tags.html
+    # [2]: https://docs.aws.amazon.com/glue/latest/dg/glue-specifying-resource-arns.html
+    #
+    # @!attribute [rw] key
+    #   The tag key. The key is required when you create a tag on an object.
+    #   The key is case-sensitive, and must not contain the prefix aws.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The tag value. The value is optional when you create a tag on an
+    #   object. The value is case-sensitive, and must not contain the prefix
+    #   aws.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/Tag AWS API Documentation
+    #
+    class Tag < Struct.new(
+      :key,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] resource_arn
     #   The ARN of the Glue resource to which to add the tags. For more
     #   information about Glue resource ARNs, see the [Glue ARN string
@@ -23120,6 +25419,90 @@ module Aws::Glue
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TagResourceResponse AWS API Documentation
     #
     class TagResourceResponse < Aws::EmptyStructure; end
+
+    # The resource properties associated with the integration target.
+    #
+    # @!attribute [rw] role_arn
+    #   The IAM role to access the Glue database.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_arn
+    #   The ARN of the KMS key used for encryption.
+    #   @return [String]
+    #
+    # @!attribute [rw] connection_name
+    #   The Glue network connection to configure the Glue job running in the
+    #   customer VPC.
+    #   @return [String]
+    #
+    # @!attribute [rw] event_bus_arn
+    #   The ARN of an Eventbridge event bus to receive the integration
+    #   status notification.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TargetProcessingProperties AWS API Documentation
+    #
+    class TargetProcessingProperties < Struct.new(
+      :role_arn,
+      :kms_arn,
+      :connection_name,
+      :event_bus_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A structure that describes a target catalog for resource linking.
+    #
+    # @!attribute [rw] catalog_arn
+    #   The Amazon Resource Name (ARN) of the catalog resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TargetRedshiftCatalog AWS API Documentation
+    #
+    class TargetRedshiftCatalog < Struct.new(
+      :catalog_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The target resource could not be found.
+    #
+    # @!attribute [rw] message
+    #   A message describing the problem.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TargetResourceNotFound AWS API Documentation
+    #
+    class TargetResourceNotFound < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Properties used by the target leg to partition the data on the target.
+    #
+    # @!attribute [rw] unnest_spec
+    #   Specifies how nested objects are flattened to top-level elements.
+    #   Valid values are: "TOPLEVEL", "FULL", or "NOUNNEST".
+    #   @return [String]
+    #
+    # @!attribute [rw] partition_spec
+    #   Determines the file layout on the target.
+    #   @return [Array<Types::IntegrationPartition>]
+    #
+    # @!attribute [rw] target_table_name
+    #   The optional name of a target table.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/TargetTableConfig AWS API Documentation
+    #
+    class TargetTableConfig < Struct.new(
+      :unnest_spec,
+      :partition_spec,
+      :target_table_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # The sampling parameters that are associated with the machine learning
     # transform.
@@ -23316,6 +25699,10 @@ module Aws::Glue
     #   testing.
     #   @return [String]
     #
+    # @!attribute [rw] catalog_id
+    #   The catalog ID where the connection resides.
+    #   @return [String]
+    #
     # @!attribute [rw] test_connection_input
     #   A structure that is used to specify testing a connection to a
     #   service.
@@ -23325,6 +25712,7 @@ module Aws::Glue
     #
     class TestConnectionRequest < Struct.new(
       :connection_name,
+      :catalog_id,
       :test_connection_input)
       SENSITIVE = []
       include Aws::Structure
@@ -23824,6 +26212,28 @@ module Aws::Glue
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # @!attribute [rw] catalog_id
+    #   The ID of the catalog.
+    #   @return [String]
+    #
+    # @!attribute [rw] catalog_input
+    #   A `CatalogInput` object specifying the new properties of an existing
+    #   catalog.
+    #   @return [Types::CatalogInput]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateCatalogRequest AWS API Documentation
+    #
+    class UpdateCatalogRequest < Struct.new(
+      :catalog_id,
+      :catalog_input)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateCatalogResponse AWS API Documentation
+    #
+    class UpdateCatalogResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] grok_classifier
     #   A `GrokClassifier` object with updated fields.
@@ -24388,6 +26798,81 @@ module Aws::Glue
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_processing_properties
+    #   The resource properties associated with the integration source.
+    #   @return [Types::SourceProcessingProperties]
+    #
+    # @!attribute [rw] target_processing_properties
+    #   The resource properties associated with the integration target.
+    #   @return [Types::TargetProcessingProperties]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateIntegrationResourcePropertyRequest AWS API Documentation
+    #
+    class UpdateIntegrationResourcePropertyRequest < Struct.new(
+      :resource_arn,
+      :source_processing_properties,
+      :target_processing_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_processing_properties
+    #   The resource properties associated with the integration source.
+    #   @return [Types::SourceProcessingProperties]
+    #
+    # @!attribute [rw] target_processing_properties
+    #   The resource properties associated with the integration target.
+    #   @return [Types::TargetProcessingProperties]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateIntegrationResourcePropertyResponse AWS API Documentation
+    #
+    class UpdateIntegrationResourcePropertyResponse < Struct.new(
+      :resource_arn,
+      :source_processing_properties,
+      :target_processing_properties)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name of the table to be replicated.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_table_config
+    #   A structure for the source table configuration.
+    #   @return [Types::SourceTableConfig]
+    #
+    # @!attribute [rw] target_table_config
+    #   A structure for the target table configuration.
+    #   @return [Types::TargetTableConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateIntegrationTablePropertiesRequest AWS API Documentation
+    #
+    class UpdateIntegrationTablePropertiesRequest < Struct.new(
+      :resource_arn,
+      :table_name,
+      :source_table_config,
+      :target_table_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateIntegrationTablePropertiesResponse AWS API Documentation
+    #
+    class UpdateIntegrationTablePropertiesResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] job_name
     #   The name of the Glue job to be synchronized to or from the remote

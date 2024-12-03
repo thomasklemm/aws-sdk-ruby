@@ -170,6 +170,8 @@ module Aws
                                 }?,
                                 create_environment: {
                                 }?,
+                                create_environment_from_blueprint: {
+                                }?,
                                 create_environment_profile: {
                                   domain_unit_id: ::String?
                                 }?,
@@ -181,6 +183,10 @@ module Aws
                                 }?,
                                 create_project: {
                                   include_child_domain_units: bool?
+                                }?,
+                                create_project_from_project_profile: {
+                                  include_child_domain_units: bool?,
+                                  project_profiles: Array[::String]?
                                 }?,
                                 delegate_create_environment_profile: {
                                 }?,
@@ -194,7 +200,7 @@ module Aws
                               domain_identifier: ::String,
                               entity_identifier: ::String,
                               entity_type: ("DOMAIN_UNIT" | "ENVIRONMENT_BLUEPRINT_CONFIGURATION" | "ENVIRONMENT_PROFILE"),
-                              policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT"),
+                              policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT" | "CREATE_ENVIRONMENT_FROM_BLUEPRINT" | "CREATE_PROJECT_FROM_PROJECT_PROFILE"),
                               principal: {
                                 domain_unit: {
                                   domain_unit_designation: ("OWNER"),
@@ -481,6 +487,138 @@ module Aws
                              ) -> _CreateAssetTypeResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateAssetTypeResponseSuccess
 
+      interface _CreateConnectionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateConnectionOutput]
+        def connection_id: () -> ::String
+        def description: () -> ::String
+        def domain_id: () -> ::String
+        def domain_unit_id: () -> ::String
+        def environment_id: () -> ::String
+        def name: () -> ::String
+        def physical_endpoints: () -> ::Array[Types::PhysicalEndpoint]
+        def project_id: () -> ::String
+        def props: () -> Types::ConnectionPropertiesOutput
+        def type: () -> ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#create_connection-instance_method
+      def create_connection: (
+                               ?aws_location: {
+                                 access_role: ::String?,
+                                 aws_account_id: ::String?,
+                                 aws_region: ::String?,
+                                 iam_connection_id: ::String?
+                               },
+                               ?client_token: ::String,
+                               ?description: ::String,
+                               domain_identifier: ::String,
+                               environment_identifier: ::String,
+                               name: ::String,
+                               ?props: {
+                                 athena_properties: {
+                                   workgroup_name: ::String?
+                                 }?,
+                                 glue_properties: {
+                                   glue_connection_input: {
+                                     athena_properties: Hash[::String, ::String]?,
+                                     authentication_configuration: {
+                                       authentication_type: ("BASIC" | "OAUTH2" | "CUSTOM")?,
+                                       basic_authentication_credentials: {
+                                         password: ::String?,
+                                         user_name: ::String?
+                                       }?,
+                                       custom_authentication_credentials: Hash[::String, ::String]?,
+                                       kms_key_arn: ::String?,
+                                       o_auth_2_properties: {
+                                         authorization_code_properties: {
+                                           authorization_code: ::String?,
+                                           redirect_uri: ::String?
+                                         }?,
+                                         o_auth_2_client_application: {
+                                           a_ws_managed_client_application_reference: ::String?,
+                                           user_managed_client_application_client_id: ::String?
+                                         }?,
+                                         o_auth_2_credentials: {
+                                           access_token: ::String?,
+                                           jwt_token: ::String?,
+                                           refresh_token: ::String?,
+                                           user_managed_client_application_client_secret: ::String?
+                                         }?,
+                                         o_auth_2_grant_type: ("AUTHORIZATION_CODE" | "CLIENT_CREDENTIALS" | "JWT_BEARER")?,
+                                         token_url: ::String?,
+                                         token_url_parameters_map: Hash[::String, ::String]?
+                                       }?,
+                                       secret_arn: ::String?
+                                     }?,
+                                     connection_properties: Hash[::String, ::String]?,
+                                     connection_type: ("SNOWFLAKE" | "BIGQUERY" | "DOCUMENTDB" | "DYNAMODB" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SQLSERVER" | "TERADATA" | "VERTICA")?,
+                                     description: ::String?,
+                                     match_criteria: ::String?,
+                                     name: ::String?,
+                                     physical_connection_requirements: {
+                                       availability_zone: ::String?,
+                                       security_group_id_list: Array[::String]?,
+                                       subnet_id: ::String?,
+                                       subnet_id_list: Array[::String]?
+                                     }?,
+                                     python_properties: Hash[::String, ::String]?,
+                                     spark_properties: Hash[::String, ::String]?,
+                                     validate_credentials: bool?,
+                                     validate_for_compute_environments: Array[("SPARK" | "ATHENA" | "PYTHON")]?
+                                   }?
+                                 }?,
+                                 hyper_pod_properties: {
+                                   cluster_name: ::String
+                                 }?,
+                                 iam_properties: {
+                                   glue_lineage_sync_enabled: bool?
+                                 }?,
+                                 redshift_properties: {
+                                   credentials: {
+                                     secret_arn: ::String?,
+                                     username_password: {
+                                       password: ::String,
+                                       username: ::String
+                                     }?
+                                   }?,
+                                   database_name: ::String?,
+                                   host: ::String?,
+                                   lineage_sync: {
+                                     enabled: bool?,
+                                     schedule: {
+                                       schedule: ::String?
+                                     }?
+                                   }?,
+                                   port: ::Integer?,
+                                   storage: {
+                                     cluster_name: ::String?,
+                                     workgroup_name: ::String?
+                                   }?
+                                 }?,
+                                 spark_emr_properties: {
+                                   compute_arn: ::String?,
+                                   instance_profile_arn: ::String?,
+                                   java_virtual_env: ::String?,
+                                   log_uri: ::String?,
+                                   python_virtual_env: ::String?,
+                                   runtime_role: ::String?,
+                                   trusted_certificates_s3_uri: ::String?
+                                 }?,
+                                 spark_glue_properties: {
+                                   additional_args: {
+                                     connection: ::String?
+                                   }?,
+                                   glue_connection_name: ::String?,
+                                   glue_version: ::String?,
+                                   idle_timeout: ::Integer?,
+                                   java_virtual_env: ::String?,
+                                   number_of_workers: ::Integer?,
+                                   python_virtual_env: ::String?,
+                                   worker_type: ::String?
+                                 }?
+                               }
+                             ) -> _CreateConnectionResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateConnectionResponseSuccess
+
       interface _CreateDataProductResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateDataProductOutput]
         def created_at: () -> ::Time
@@ -573,6 +711,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateDataSourceOutput]
         def asset_forms_output: () -> ::Array[Types::FormOutput]
         def configuration: () -> Types::DataSourceConfigurationOutput
+        def connection_id: () -> ::String
         def created_at: () -> ::Time
         def description: () -> ::String
         def domain_id: () -> ::String
@@ -606,6 +745,7 @@ module Aws
                                 ?configuration: {
                                   glue_run_configuration: {
                                     auto_import_data_quality_result: bool?,
+                                    catalog_name: ::String?,
                                     data_access_role: ::String?,
                                     relational_filter_configurations: Array[
                                       {
@@ -624,7 +764,7 @@ module Aws
                                     data_access_role: ::String?,
                                     redshift_credential_configuration: {
                                       secret_manager_arn: ::String
-                                    },
+                                    }?,
                                     redshift_storage: {
                                       redshift_cluster_source: {
                                         cluster_name: ::String
@@ -632,7 +772,7 @@ module Aws
                                       redshift_serverless_source: {
                                         workgroup_name: ::String
                                       }?
-                                    },
+                                    }?,
                                     relational_filter_configurations: Array[
                                       {
                                         database_name: ::String,
@@ -645,12 +785,16 @@ module Aws
                                         schema_name: ::String?
                                       },
                                     ]
+                                  }?,
+                                  sage_maker_run_configuration: {
+                                    tracking_assets: Hash[::String, Array[::String]]
                                   }?
                                 },
+                                ?connection_identifier: ::String,
                                 ?description: ::String,
                                 domain_identifier: ::String,
                                 ?enable_setting: ("ENABLED" | "DISABLED"),
-                                environment_identifier: ::String,
+                                ?environment_identifier: ::String,
                                 name: ::String,
                                 project_identifier: ::String,
                                 ?publish_on_import: bool,
@@ -670,11 +814,13 @@ module Aws
         def arn: () -> ::String
         def description: () -> ::String
         def domain_execution_role: () -> ::String
+        def domain_version: () -> ("V1" | "V2")
         def id: () -> ::String
         def kms_key_identifier: () -> ::String
         def name: () -> ::String
         def portal_url: () -> ::String
         def root_domain_unit_id: () -> ::String
+        def service_role: () -> ::String
         def single_sign_on: () -> Types::SingleSignOn
         def status: () -> ("CREATING" | "AVAILABLE" | "CREATION_FAILED" | "DELETING" | "DELETED" | "DELETION_FAILED")
         def tags: () -> ::Hash[::String, ::String]
@@ -684,8 +830,10 @@ module Aws
                            ?client_token: ::String,
                            ?description: ::String,
                            domain_execution_role: ::String,
+                           ?domain_version: ("V1" | "V2"),
                            ?kms_key_identifier: ::String,
                            name: ::String,
+                           ?service_role: ::String,
                            ?single_sign_on: {
                              type: ("IAM_IDC" | "DISABLED")?,
                              user_assignment: ("AUTOMATIC" | "MANUAL")?
@@ -742,11 +890,13 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#create_environment-instance_method
       def create_environment: (
+                                ?deployment_order: ::Integer,
                                 ?description: ::String,
                                 domain_identifier: ::String,
                                 ?environment_account_identifier: ::String,
                                 ?environment_account_region: ::String,
                                 ?environment_blueprint_identifier: ::String,
+                                ?environment_configuration_id: ::String,
                                 environment_profile_identifier: ::String,
                                 ?glossary_terms: Array[::String],
                                 name: ::String,
@@ -925,12 +1075,15 @@ module Aws
         def description: () -> ::String
         def domain_id: () -> ::String
         def domain_unit_id: () -> ::String
+        def environment_deployment_details: () -> Types::EnvironmentDeploymentDetails
         def failure_reasons: () -> ::Array[Types::ProjectDeletionError]
         def glossary_terms: () -> ::Array[::String]
         def id: () -> ::String
         def last_updated_at: () -> ::Time
         def name: () -> ::String
+        def project_profile_id: () -> ::String
         def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+        def user_parameters: () -> ::Array[Types::EnvironmentConfigurationUserParameter]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#create_project-instance_method
       def create_project: (
@@ -938,7 +1091,19 @@ module Aws
                             domain_identifier: ::String,
                             ?domain_unit_id: ::String,
                             ?glossary_terms: Array[::String],
-                            name: ::String
+                            name: ::String,
+                            ?project_profile_id: ::String,
+                            ?user_parameters: Array[
+                              {
+                                environment_configuration_name: ::String?,
+                                environment_parameters: Array[
+                                  {
+                                    name: ::String?,
+                                    value: ::String?
+                                  },
+                                ]?
+                              },
+                            ]
                           ) -> _CreateProjectResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateProjectResponseSuccess
 
@@ -956,6 +1121,64 @@ module Aws
                                        project_identifier: ::String
                                      ) -> _CreateProjectMembershipResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateProjectMembershipResponseSuccess
+
+      interface _CreateProjectProfileResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateProjectProfileOutput]
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def description: () -> ::String
+        def domain_id: () -> ::String
+        def domain_unit_id: () -> ::String
+        def environment_configurations: () -> ::Array[Types::EnvironmentConfiguration]
+        def id: () -> ::String
+        def last_updated_at: () -> ::Time
+        def name: () -> ::String
+        def status: () -> ("ENABLED" | "DISABLED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#create_project_profile-instance_method
+      def create_project_profile: (
+                                    ?description: ::String,
+                                    domain_identifier: ::String,
+                                    ?domain_unit_identifier: ::String,
+                                    ?environment_configurations: Array[
+                                      {
+                                        aws_account: {
+                                          aws_account_id: ::String?,
+                                          aws_account_id_path: ::String?
+                                        },
+                                        aws_region: {
+                                          region_name: ::String?,
+                                          region_name_path: ::String?
+                                        },
+                                        configuration_parameters: {
+                                          parameter_overrides: Array[
+                                            {
+                                              is_editable: bool?,
+                                              name: ::String?,
+                                              value: ::String?
+                                            },
+                                          ]?,
+                                          resolved_parameters: Array[
+                                            {
+                                              is_editable: bool?,
+                                              name: ::String?,
+                                              value: ::String?
+                                            },
+                                          ]?,
+                                          ssm_path: ::String?
+                                        }?,
+                                        deployment_mode: ("ON_CREATE" | "ON_DEMAND")?,
+                                        deployment_order: ::Integer?,
+                                        description: ::String?,
+                                        environment_blueprint_id: ::String,
+                                        id: ::String?,
+                                        name: ::String
+                                      },
+                                    ],
+                                    name: ::String,
+                                    ?status: ("ENABLED" | "DISABLED")
+                                  ) -> _CreateProjectProfileResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateProjectProfileResponseSuccess
 
       interface _CreateRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateRuleOutput]
@@ -1039,7 +1262,7 @@ module Aws
                                            revision: ::String
                                          }?
                                        },
-                                       subscription_target_identifier: ::String
+                                       ?subscription_target_identifier: ::String
                                      ) -> _CreateSubscriptionGrantResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateSubscriptionGrantResponseSuccess
 
@@ -1171,6 +1394,17 @@ module Aws
                              ) -> _DeleteAssetTypeResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAssetTypeResponseSuccess
 
+      interface _DeleteConnectionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteConnectionOutput]
+        def status: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#delete_connection-instance_method
+      def delete_connection: (
+                               domain_identifier: ::String,
+                               identifier: ::String
+                             ) -> _DeleteConnectionResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteConnectionResponseSuccess
+
       interface _DeleteDataProductResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDataProductOutput]
       end
@@ -1185,6 +1419,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDataSourceOutput]
         def asset_forms_output: () -> ::Array[Types::FormOutput]
         def configuration: () -> Types::DataSourceConfigurationOutput
+        def connection_id: () -> ::String
         def created_at: () -> ::Time
         def description: () -> ::String
         def domain_id: () -> ::String
@@ -1333,6 +1568,16 @@ module Aws
                                      ) -> _DeleteProjectMembershipResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteProjectMembershipResponseSuccess
 
+      interface _DeleteProjectProfileResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteProjectProfileOutput]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#delete_project_profile-instance_method
+      def delete_project_profile: (
+                                    domain_identifier: ::String,
+                                    identifier: ::String
+                                  ) -> _DeleteProjectProfileResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteProjectProfileResponseSuccess
+
       interface _DeleteRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteRuleOutput]
       end
@@ -1477,6 +1722,29 @@ module Aws
                           ) -> _GetAssetTypeResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAssetTypeResponseSuccess
 
+      interface _GetConnectionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetConnectionOutput]
+        def connection_credentials: () -> Types::ConnectionCredentials
+        def connection_id: () -> ::String
+        def description: () -> ::String
+        def domain_id: () -> ::String
+        def domain_unit_id: () -> ::String
+        def environment_id: () -> ::String
+        def environment_user_role: () -> ::String
+        def name: () -> ::String
+        def physical_endpoints: () -> ::Array[Types::PhysicalEndpoint]
+        def project_id: () -> ::String
+        def props: () -> Types::ConnectionPropertiesOutput
+        def type: () -> ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#get_connection-instance_method
+      def get_connection: (
+                            domain_identifier: ::String,
+                            identifier: ::String,
+                            ?with_secret: bool
+                          ) -> _GetConnectionResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetConnectionResponseSuccess
+
       interface _GetDataProductResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetDataProductOutput]
         def created_at: () -> ::Time
@@ -1506,6 +1774,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::GetDataSourceOutput]
         def asset_forms_output: () -> ::Array[Types::FormOutput]
         def configuration: () -> Types::DataSourceConfigurationOutput
+        def connection_id: () -> ::String
         def created_at: () -> ::Time
         def description: () -> ::String
         def domain_id: () -> ::String
@@ -1542,6 +1811,7 @@ module Aws
         def domain_id: () -> ::String
         def error_message: () -> Types::DataSourceErrorMessage
         def id: () -> ::String
+        def lineage_summary: () -> Types::DataSourceRunLineageSummary
         def project_id: () -> ::String
         def run_statistics_for_assets: () -> Types::RunStatisticsForAssets
         def started_at: () -> ::Time
@@ -1563,12 +1833,14 @@ module Aws
         def created_at: () -> ::Time
         def description: () -> ::String
         def domain_execution_role: () -> ::String
+        def domain_version: () -> ("V1" | "V2")
         def id: () -> ::String
         def kms_key_identifier: () -> ::String
         def last_updated_at: () -> ::Time
         def name: () -> ::String
         def portal_url: () -> ::String
         def root_domain_unit_id: () -> ::String
+        def service_role: () -> ::String
         def single_sign_on: () -> Types::SingleSignOn
         def status: () -> ("CREATING" | "AVAILABLE" | "CREATION_FAILED" | "DELETING" | "DELETED" | "DELETION_FAILED")
         def tags: () -> ::Hash[::String, ::String]
@@ -1673,6 +1945,7 @@ module Aws
         def domain_id: () -> ::String
         def enabled_regions: () -> ::Array[::String]
         def environment_blueprint_id: () -> ::String
+        def environment_role_permission_boundary: () -> ::String
         def manage_access_role_arn: () -> ::String
         def provisioning_configurations: () -> ::Array[Types::ProvisioningConfiguration]
         def provisioning_role_arn: () -> ::String
@@ -1812,6 +2085,44 @@ module Aws
                                     ) -> _GetIamPortalLoginUrlResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetIamPortalLoginUrlResponseSuccess
 
+      interface _GetJobRunResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetJobRunOutput]
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def details: () -> Types::JobRunDetails
+        def domain_id: () -> ::String
+        def end_time: () -> ::Time
+        def id: () -> ::String
+        def job_id: () -> ::String
+        def job_type: () -> ("LINEAGE")
+        def run_mode: () -> ("SCHEDULED" | "ON_DEMAND")
+        def start_time: () -> ::Time
+        def status: () -> ("SCHEDULED" | "IN_PROGRESS" | "SUCCESS" | "PARTIALLY_SUCCEEDED" | "FAILED" | "ABORTED" | "TIMED_OUT" | "CANCELED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#get_job_run-instance_method
+      def get_job_run: (
+                         domain_identifier: ::String,
+                         identifier: ::String
+                       ) -> _GetJobRunResponseSuccess
+                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetJobRunResponseSuccess
+
+      interface _GetLineageEventResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetLineageEventOutput]
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def domain_id: () -> ::String
+        def event: () -> ::String
+        def event_time: () -> ::Time
+        def id: () -> ::String
+        def processing_status: () -> ("REQUESTED" | "PROCESSING" | "SUCCESS" | "FAILED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#get_lineage_event-instance_method
+      def get_lineage_event: (
+                               domain_identifier: ::String,
+                               identifier: ::String
+                             ) -> _GetLineageEventResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetLineageEventResponseSuccess
+
       interface _GetLineageNodeResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetLineageNodeOutput]
         def created_at: () -> ::Time
@@ -1885,12 +2196,15 @@ module Aws
         def description: () -> ::String
         def domain_id: () -> ::String
         def domain_unit_id: () -> ::String
+        def environment_deployment_details: () -> Types::EnvironmentDeploymentDetails
         def failure_reasons: () -> ::Array[Types::ProjectDeletionError]
         def glossary_terms: () -> ::Array[::String]
         def id: () -> ::String
         def last_updated_at: () -> ::Time
         def name: () -> ::String
+        def project_profile_id: () -> ::String
         def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+        def user_parameters: () -> ::Array[Types::EnvironmentConfigurationUserParameter]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#get_project-instance_method
       def get_project: (
@@ -1898,6 +2212,26 @@ module Aws
                          identifier: ::String
                        ) -> _GetProjectResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetProjectResponseSuccess
+
+      interface _GetProjectProfileResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetProjectProfileOutput]
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def description: () -> ::String
+        def domain_id: () -> ::String
+        def domain_unit_id: () -> ::String
+        def environment_configurations: () -> ::Array[Types::EnvironmentConfiguration]
+        def id: () -> ::String
+        def last_updated_at: () -> ::Time
+        def name: () -> ::String
+        def status: () -> ("ENABLED" | "DISABLED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#get_project_profile-instance_method
+      def get_project_profile: (
+                                 domain_identifier: ::String,
+                                 identifier: ::String
+                               ) -> _GetProjectProfileResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetProjectProfileResponseSuccess
 
       interface _GetRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetRuleOutput]
@@ -2079,6 +2413,25 @@ module Aws
                                 ) -> _ListAssetRevisionsResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAssetRevisionsResponseSuccess
 
+      interface _ListConnectionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListConnectionsOutput]
+        def items: () -> ::Array[Types::ConnectionSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#list_connections-instance_method
+      def list_connections: (
+                              domain_identifier: ::String,
+                              ?environment_identifier: ::String,
+                              ?max_results: ::Integer,
+                              ?name: ::String,
+                              ?next_token: ::String,
+                              project_identifier: ::String,
+                              ?sort_by: ("NAME"),
+                              ?sort_order: ("ASCENDING" | "DESCENDING"),
+                              ?type: ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+                            ) -> _ListConnectionsResponseSuccess
+                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListConnectionsResponseSuccess
+
       interface _ListDataProductRevisionsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDataProductRevisionsOutput]
         def items: () -> ::Array[Types::DataProductRevision]
@@ -2130,6 +2483,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#list_data_sources-instance_method
       def list_data_sources: (
+                               ?connection_identifier: ::String,
                                domain_identifier: ::String,
                                ?environment_identifier: ::String,
                                ?max_results: ::Integer,
@@ -2264,6 +2618,39 @@ module Aws
                              ) -> _ListEnvironmentsResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListEnvironmentsResponseSuccess
 
+      interface _ListJobRunsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListJobRunsOutput]
+        def items: () -> ::Array[Types::JobRunSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#list_job_runs-instance_method
+      def list_job_runs: (
+                           domain_identifier: ::String,
+                           job_identifier: ::String,
+                           ?max_results: ::Integer,
+                           ?next_token: ::String,
+                           ?sort_order: ("ASCENDING" | "DESCENDING"),
+                           ?status: ("SCHEDULED" | "IN_PROGRESS" | "SUCCESS" | "PARTIALLY_SUCCEEDED" | "FAILED" | "ABORTED" | "TIMED_OUT" | "CANCELED")
+                         ) -> _ListJobRunsResponseSuccess
+                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListJobRunsResponseSuccess
+
+      interface _ListLineageEventsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListLineageEventsOutput]
+        def items: () -> ::Array[Types::LineageEventSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#list_lineage_events-instance_method
+      def list_lineage_events: (
+                                 domain_identifier: ::String,
+                                 ?max_results: ::Integer,
+                                 ?next_token: ::String,
+                                 ?processing_status: ("REQUESTED" | "PROCESSING" | "SUCCESS" | "FAILED"),
+                                 ?sort_order: ("ASCENDING" | "DESCENDING"),
+                                 ?timestamp_after: ::Time,
+                                 ?timestamp_before: ::Time
+                               ) -> _ListLineageEventsResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListLineageEventsResponseSuccess
+
       interface _ListLineageNodeHistoryResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListLineageNodeHistoryOutput]
         def next_token: () -> ::String
@@ -2327,7 +2714,7 @@ module Aws
                                 entity_type: ("DOMAIN_UNIT" | "ENVIRONMENT_BLUEPRINT_CONFIGURATION" | "ENVIRONMENT_PROFILE"),
                                 ?max_results: ::Integer,
                                 ?next_token: ::String,
-                                policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT")
+                                policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT" | "CREATE_ENVIRONMENT_FROM_BLUEPRINT" | "CREATE_PROJECT_FROM_PROJECT_PROFILE")
                               ) -> _ListPolicyGrantsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListPolicyGrantsResponseSuccess
 
@@ -2346,6 +2733,22 @@ module Aws
                                       ?sort_order: ("ASCENDING" | "DESCENDING")
                                     ) -> _ListProjectMembershipsResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListProjectMembershipsResponseSuccess
+
+      interface _ListProjectProfilesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListProjectProfilesOutput]
+        def items: () -> ::Array[Types::ProjectProfileSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#list_project_profiles-instance_method
+      def list_project_profiles: (
+                                   domain_identifier: ::String,
+                                   ?max_results: ::Integer,
+                                   ?name: ::String,
+                                   ?next_token: ::String,
+                                   ?sort_by: ("NAME"),
+                                   ?sort_order: ("ASCENDING" | "DESCENDING")
+                                 ) -> _ListProjectProfilesResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListProjectProfilesResponseSuccess
 
       interface _ListProjectsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListProjectsOutput]
@@ -2489,6 +2892,8 @@ module Aws
 
       interface _PostLineageEventResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::PostLineageEventOutput]
+        def domain_id: () -> ::String
+        def id: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#post_lineage_event-instance_method
       def post_lineage_event: (
@@ -2529,6 +2934,7 @@ module Aws
         def domain_id: () -> ::String
         def enabled_regions: () -> ::Array[::String]
         def environment_blueprint_id: () -> ::String
+        def environment_role_permission_boundary: () -> ::String
         def manage_access_role_arn: () -> ::String
         def provisioning_configurations: () -> ::Array[Types::ProvisioningConfiguration]
         def provisioning_role_arn: () -> ::String
@@ -2540,6 +2946,7 @@ module Aws
                                                      domain_identifier: ::String,
                                                      enabled_regions: Array[::String],
                                                      environment_blueprint_identifier: ::String,
+                                                     ?environment_role_permission_boundary: ::String,
                                                      ?manage_access_role_arn: ::String,
                                                      ?provisioning_configurations: Array[
                                                        {
@@ -2633,7 +3040,7 @@ module Aws
                                  domain_identifier: ::String,
                                  entity_identifier: ::String,
                                  entity_type: ("DOMAIN_UNIT" | "ENVIRONMENT_BLUEPRINT_CONFIGURATION" | "ENVIRONMENT_PROFILE"),
-                                 policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT"),
+                                 policy_type: ("CREATE_DOMAIN_UNIT" | "OVERRIDE_DOMAIN_UNIT_OWNERS" | "ADD_TO_PROJECT_MEMBER_POOL" | "OVERRIDE_PROJECT_OWNERS" | "CREATE_GLOSSARY" | "CREATE_FORM_TYPE" | "CREATE_ASSET_TYPE" | "CREATE_PROJECT" | "CREATE_ENVIRONMENT_PROFILE" | "DELEGATE_CREATE_ENVIRONMENT_PROFILE" | "CREATE_ENVIRONMENT" | "CREATE_ENVIRONMENT_FROM_BLUEPRINT" | "CREATE_PROJECT_FROM_PROJECT_PROFILE"),
                                  principal: {
                                    domain_unit: {
                                      domain_unit_designation: ("OWNER"),
@@ -2987,10 +3394,90 @@ module Aws
                                ) -> _UpdateAssetFilterResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAssetFilterResponseSuccess
 
+      interface _UpdateConnectionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateConnectionOutput]
+        def connection_id: () -> ::String
+        def description: () -> ::String
+        def domain_id: () -> ::String
+        def domain_unit_id: () -> ::String
+        def environment_id: () -> ::String
+        def name: () -> ::String
+        def physical_endpoints: () -> ::Array[Types::PhysicalEndpoint]
+        def project_id: () -> ::String
+        def props: () -> Types::ConnectionPropertiesOutput
+        def type: () -> ("ATHENA" | "BIGQUERY" | "DATABRICKS" | "DOCUMENTDB" | "DYNAMODB" | "HYPERPOD" | "IAM" | "MYSQL" | "OPENSEARCH" | "ORACLE" | "POSTGRESQL" | "REDSHIFT" | "SAPHANA" | "SNOWFLAKE" | "SPARK" | "SQLSERVER" | "TERADATA" | "VERTICA" | "WORKFLOWS_MWAA")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#update_connection-instance_method
+      def update_connection: (
+                               ?aws_location: {
+                                 access_role: ::String?,
+                                 aws_account_id: ::String?,
+                                 aws_region: ::String?,
+                                 iam_connection_id: ::String?
+                               },
+                               ?description: ::String,
+                               domain_identifier: ::String,
+                               identifier: ::String,
+                               ?props: {
+                                 athena_properties: {
+                                   workgroup_name: ::String?
+                                 }?,
+                                 glue_properties: {
+                                   glue_connection_input: {
+                                     authentication_configuration: {
+                                       basic_authentication_credentials: {
+                                         password: ::String?,
+                                         user_name: ::String?
+                                       }?,
+                                       secret_arn: ::String?
+                                     }?,
+                                     connection_properties: Hash[::String, ::String]?,
+                                     description: ::String?
+                                   }?
+                                 }?,
+                                 iam_properties: {
+                                   glue_lineage_sync_enabled: bool?
+                                 }?,
+                                 redshift_properties: {
+                                   credentials: {
+                                     secret_arn: ::String?,
+                                     username_password: {
+                                       password: ::String,
+                                       username: ::String
+                                     }?
+                                   }?,
+                                   database_name: ::String?,
+                                   host: ::String?,
+                                   lineage_sync: {
+                                     enabled: bool?,
+                                     schedule: {
+                                       schedule: ::String?
+                                     }?
+                                   }?,
+                                   port: ::Integer?,
+                                   storage: {
+                                     cluster_name: ::String?,
+                                     workgroup_name: ::String?
+                                   }?
+                                 }?,
+                                 spark_emr_properties: {
+                                   compute_arn: ::String?,
+                                   instance_profile_arn: ::String?,
+                                   java_virtual_env: ::String?,
+                                   log_uri: ::String?,
+                                   python_virtual_env: ::String?,
+                                   runtime_role: ::String?,
+                                   trusted_certificates_s3_uri: ::String?
+                                 }?
+                               }
+                             ) -> _UpdateConnectionResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateConnectionResponseSuccess
+
       interface _UpdateDataSourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDataSourceOutput]
         def asset_forms_output: () -> ::Array[Types::FormOutput]
         def configuration: () -> Types::DataSourceConfigurationOutput
+        def connection_id: () -> ::String
         def created_at: () -> ::Time
         def description: () -> ::String
         def domain_id: () -> ::String
@@ -3025,6 +3512,7 @@ module Aws
                                 ?configuration: {
                                   glue_run_configuration: {
                                     auto_import_data_quality_result: bool?,
+                                    catalog_name: ::String?,
                                     data_access_role: ::String?,
                                     relational_filter_configurations: Array[
                                       {
@@ -3043,7 +3531,7 @@ module Aws
                                     data_access_role: ::String?,
                                     redshift_credential_configuration: {
                                       secret_manager_arn: ::String
-                                    },
+                                    }?,
                                     redshift_storage: {
                                       redshift_cluster_source: {
                                         cluster_name: ::String
@@ -3051,7 +3539,7 @@ module Aws
                                       redshift_serverless_source: {
                                         workgroup_name: ::String
                                       }?
-                                    },
+                                    }?,
                                     relational_filter_configurations: Array[
                                       {
                                         database_name: ::String,
@@ -3064,6 +3552,9 @@ module Aws
                                         schema_name: ::String?
                                       },
                                     ]
+                                  }?,
+                                  sage_maker_run_configuration: {
+                                    tracking_assets: Hash[::String, Array[::String]]
                                   }?
                                 },
                                 ?description: ::String,
@@ -3091,6 +3582,7 @@ module Aws
         def last_updated_at: () -> ::Time
         def name: () -> ::String
         def root_domain_unit_id: () -> ::String
+        def service_role: () -> ::String
         def single_sign_on: () -> Types::SingleSignOn
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#update_domain-instance_method
@@ -3100,6 +3592,7 @@ module Aws
                            ?domain_execution_role: ::String,
                            identifier: ::String,
                            ?name: ::String,
+                           ?service_role: ::String,
                            ?single_sign_on: {
                              type: ("IAM_IDC" | "DISABLED")?,
                              user_assignment: ("AUTOMATIC" | "MANUAL")?
@@ -3288,22 +3781,93 @@ module Aws
         def description: () -> ::String
         def domain_id: () -> ::String
         def domain_unit_id: () -> ::String
+        def environment_deployment_details: () -> Types::EnvironmentDeploymentDetails
         def failure_reasons: () -> ::Array[Types::ProjectDeletionError]
         def glossary_terms: () -> ::Array[::String]
         def id: () -> ::String
         def last_updated_at: () -> ::Time
         def name: () -> ::String
+        def project_profile_id: () -> ::String
         def project_status: () -> ("ACTIVE" | "DELETING" | "DELETE_FAILED")
+        def user_parameters: () -> ::Array[Types::EnvironmentConfigurationUserParameter]
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#update_project-instance_method
       def update_project: (
                             ?description: ::String,
                             domain_identifier: ::String,
+                            ?environment_deployment_details: {
+                              environment_failure_reasons: Hash[::String, Array[
+                                  {
+                                    code: ::String?,
+                                    message: ::String
+                                  },
+                                ]]?,
+                              overall_deployment_status: ("PENDING_DEPLOYMENT" | "IN_PROGRESS" | "SUCCESSFUL" | "FAILED_VALIDATION" | "FAILED_DEPLOYMENT")?
+                            },
                             ?glossary_terms: Array[::String],
                             identifier: ::String,
                             ?name: ::String
                           ) -> _UpdateProjectResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateProjectResponseSuccess
+
+      interface _UpdateProjectProfileResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateProjectProfileOutput]
+        def created_at: () -> ::Time
+        def created_by: () -> ::String
+        def description: () -> ::String
+        def domain_id: () -> ::String
+        def domain_unit_id: () -> ::String
+        def environment_configurations: () -> ::Array[Types::EnvironmentConfiguration]
+        def id: () -> ::String
+        def last_updated_at: () -> ::Time
+        def name: () -> ::String
+        def status: () -> ("ENABLED" | "DISABLED")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DataZone/Client.html#update_project_profile-instance_method
+      def update_project_profile: (
+                                    ?description: ::String,
+                                    domain_identifier: ::String,
+                                    ?domain_unit_identifier: ::String,
+                                    ?environment_configurations: Array[
+                                      {
+                                        aws_account: {
+                                          aws_account_id: ::String?,
+                                          aws_account_id_path: ::String?
+                                        },
+                                        aws_region: {
+                                          region_name: ::String?,
+                                          region_name_path: ::String?
+                                        },
+                                        configuration_parameters: {
+                                          parameter_overrides: Array[
+                                            {
+                                              is_editable: bool?,
+                                              name: ::String?,
+                                              value: ::String?
+                                            },
+                                          ]?,
+                                          resolved_parameters: Array[
+                                            {
+                                              is_editable: bool?,
+                                              name: ::String?,
+                                              value: ::String?
+                                            },
+                                          ]?,
+                                          ssm_path: ::String?
+                                        }?,
+                                        deployment_mode: ("ON_CREATE" | "ON_DEMAND")?,
+                                        deployment_order: ::Integer?,
+                                        description: ::String?,
+                                        environment_blueprint_id: ::String,
+                                        id: ::String?,
+                                        name: ::String
+                                      },
+                                    ],
+                                    identifier: ::String,
+                                    ?name: ::String,
+                                    ?status: ("ENABLED" | "DISABLED")
+                                  ) -> _UpdateProjectProfileResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateProjectProfileResponseSuccess
 
       interface _UpdateRuleResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateRuleOutput]

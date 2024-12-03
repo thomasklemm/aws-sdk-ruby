@@ -302,6 +302,7 @@ module Aws::DynamoDB
     Long = Shapes::IntegerShape.new(name: 'Long')
     LongObject = Shapes::IntegerShape.new(name: 'LongObject')
     MapAttributeValue = Shapes::MapShape.new(name: 'MapAttributeValue')
+    MultiRegionConsistency = Shapes::StringShape.new(name: 'MultiRegionConsistency')
     NextTokenString = Shapes::StringShape.new(name: 'NextTokenString')
     NonKeyAttributeName = Shapes::StringShape.new(name: 'NonKeyAttributeName')
     NonKeyAttributeNameList = Shapes::ListShape.new(name: 'NonKeyAttributeNameList')
@@ -375,6 +376,7 @@ module Aws::DynamoDB
     ReplicaStatusPercentProgress = Shapes::StringShape.new(name: 'ReplicaStatusPercentProgress')
     ReplicaUpdate = Shapes::StructureShape.new(name: 'ReplicaUpdate')
     ReplicaUpdateList = Shapes::ListShape.new(name: 'ReplicaUpdateList')
+    ReplicatedWriteConflictException = Shapes::StructureShape.new(name: 'ReplicatedWriteConflictException')
     ReplicationGroupUpdate = Shapes::StructureShape.new(name: 'ReplicationGroupUpdate')
     ReplicationGroupUpdateList = Shapes::ListShape.new(name: 'ReplicationGroupUpdateList')
     RequestLimitExceeded = Shapes::StructureShape.new(name: 'RequestLimitExceeded')
@@ -1598,6 +1600,9 @@ module Aws::DynamoDB
 
     ReplicaUpdateList.member = Shapes::ShapeRef.new(shape: ReplicaUpdate)
 
+    ReplicatedWriteConflictException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
+    ReplicatedWriteConflictException.struct_class = Types::ReplicatedWriteConflictException
+
     ReplicationGroupUpdate.add_member(:create, Shapes::ShapeRef.new(shape: CreateReplicationGroupMemberAction, location_name: "Create"))
     ReplicationGroupUpdate.add_member(:update, Shapes::ShapeRef.new(shape: UpdateReplicationGroupMemberAction, location_name: "Update"))
     ReplicationGroupUpdate.add_member(:delete, Shapes::ShapeRef.new(shape: DeleteReplicationGroupMemberAction, location_name: "Delete"))
@@ -1765,6 +1770,7 @@ module Aws::DynamoDB
     TableDescription.add_member(:deletion_protection_enabled, Shapes::ShapeRef.new(shape: DeletionProtectionEnabled, location_name: "DeletionProtectionEnabled"))
     TableDescription.add_member(:on_demand_throughput, Shapes::ShapeRef.new(shape: OnDemandThroughput, location_name: "OnDemandThroughput"))
     TableDescription.add_member(:warm_throughput, Shapes::ShapeRef.new(shape: TableWarmThroughputDescription, location_name: "WarmThroughput"))
+    TableDescription.add_member(:multi_region_consistency, Shapes::ShapeRef.new(shape: MultiRegionConsistency, location_name: "MultiRegionConsistency"))
     TableDescription.struct_class = Types::TableDescription
 
     TableInUseException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "message"))
@@ -1948,6 +1954,7 @@ module Aws::DynamoDB
     UpdateTableInput.add_member(:replica_updates, Shapes::ShapeRef.new(shape: ReplicationGroupUpdateList, location_name: "ReplicaUpdates"))
     UpdateTableInput.add_member(:table_class, Shapes::ShapeRef.new(shape: TableClass, location_name: "TableClass"))
     UpdateTableInput.add_member(:deletion_protection_enabled, Shapes::ShapeRef.new(shape: DeletionProtectionEnabled, location_name: "DeletionProtectionEnabled"))
+    UpdateTableInput.add_member(:multi_region_consistency, Shapes::ShapeRef.new(shape: MultiRegionConsistency, location_name: "MultiRegionConsistency"))
     UpdateTableInput.add_member(:on_demand_throughput, Shapes::ShapeRef.new(shape: OnDemandThroughput, location_name: "OnDemandThroughput"))
     UpdateTableInput.add_member(:warm_throughput, Shapes::ShapeRef.new(shape: WarmThroughput, location_name: "WarmThroughput"))
     UpdateTableInput.struct_class = Types::UpdateTableInput
@@ -2119,6 +2126,7 @@ module Aws::DynamoDB
         o.errors << Shapes::ShapeRef.new(shape: TransactionConflictException)
         o.errors << Shapes::ShapeRef.new(shape: RequestLimitExceeded)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ReplicatedWriteConflictException)
       end)
 
       api.add_operation(:delete_resource_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -2518,6 +2526,7 @@ module Aws::DynamoDB
         o.errors << Shapes::ShapeRef.new(shape: TransactionConflictException)
         o.errors << Shapes::ShapeRef.new(shape: RequestLimitExceeded)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ReplicatedWriteConflictException)
       end)
 
       api.add_operation(:put_resource_policy, Seahorse::Model::Operation.new.tap do |o|
@@ -2737,6 +2746,7 @@ module Aws::DynamoDB
         o.errors << Shapes::ShapeRef.new(shape: TransactionConflictException)
         o.errors << Shapes::ShapeRef.new(shape: RequestLimitExceeded)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ReplicatedWriteConflictException)
       end)
 
       api.add_operation(:update_kinesis_streaming_destination, Seahorse::Model::Operation.new.tap do |o|

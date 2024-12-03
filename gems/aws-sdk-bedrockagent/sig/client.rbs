@@ -75,6 +75,24 @@ module Aws
                   | (?Hash[Symbol, untyped]) -> instance
 
 
+      interface _AssociateAgentCollaboratorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::AssociateAgentCollaboratorResponse]
+        def agent_collaborator: () -> Types::AgentCollaborator
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#associate_agent_collaborator-instance_method
+      def associate_agent_collaborator: (
+                                          agent_descriptor: {
+                                            alias_arn: ::String?
+                                          },
+                                          agent_id: ::String,
+                                          agent_version: ::String,
+                                          ?client_token: ::String,
+                                          collaboration_instruction: ::String,
+                                          collaborator_name: ::String,
+                                          ?relay_conversation_history: ("TO_COLLABORATOR" | "DISABLED")
+                                        ) -> _AssociateAgentCollaboratorResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateAgentCollaboratorResponseSuccess
+
       interface _AssociateAgentKnowledgeBaseResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::AssociateAgentKnowledgeBaseResponse]
         def agent_knowledge_base: () -> Types::AgentKnowledgeBase
@@ -95,6 +113,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#create_agent-instance_method
       def create_agent: (
+                          ?agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED"),
                           agent_name: ::String,
                           ?agent_resource_role_arn: ::String,
                           ?client_token: ::String,
@@ -122,6 +141,7 @@ module Aws
                             prompt_configurations: Array[
                               {
                                 base_prompt_template: ::String?,
+                                foundation_model: ::String?,
                                 inference_configuration: {
                                   maximum_length: ::Integer?,
                                   stop_sequences: Array[::String]?,
@@ -957,6 +977,17 @@ module Aws
                          ) -> _DeletePromptResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeletePromptResponseSuccess
 
+      interface _DisassociateAgentCollaboratorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DisassociateAgentCollaboratorResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#disassociate_agent_collaborator-instance_method
+      def disassociate_agent_collaborator: (
+                                             agent_id: ::String,
+                                             agent_version: ::String,
+                                             collaborator_id: ::String
+                                           ) -> _DisassociateAgentCollaboratorResponseSuccess
+                                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateAgentCollaboratorResponseSuccess
+
       interface _DisassociateAgentKnowledgeBaseResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DisassociateAgentKnowledgeBaseResponse]
       end
@@ -1000,6 +1031,18 @@ module Aws
                              agent_id: ::String
                            ) -> _GetAgentAliasResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAgentAliasResponseSuccess
+
+      interface _GetAgentCollaboratorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetAgentCollaboratorResponse]
+        def agent_collaborator: () -> Types::AgentCollaborator
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#get_agent_collaborator-instance_method
+      def get_agent_collaborator: (
+                                    agent_id: ::String,
+                                    agent_version: ::String,
+                                    collaborator_id: ::String
+                                  ) -> _GetAgentCollaboratorResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetAgentCollaboratorResponseSuccess
 
       interface _GetAgentKnowledgeBaseResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetAgentKnowledgeBaseResponse]
@@ -1248,6 +1291,20 @@ module Aws
                               ) -> _ListAgentAliasesResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAgentAliasesResponseSuccess
 
+      interface _ListAgentCollaboratorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListAgentCollaboratorsResponse]
+        def agent_collaborator_summaries: () -> ::Array[Types::AgentCollaboratorSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#list_agent_collaborators-instance_method
+      def list_agent_collaborators: (
+                                      agent_id: ::String,
+                                      agent_version: ::String,
+                                      ?max_results: ::Integer,
+                                      ?next_token: ::String
+                                    ) -> _ListAgentCollaboratorsResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListAgentCollaboratorsResponseSuccess
+
       interface _ListAgentKnowledgeBasesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListAgentKnowledgeBasesResponse]
         def agent_knowledge_base_summaries: () -> ::Array[Types::AgentKnowledgeBaseSummary]
@@ -1487,6 +1544,7 @@ module Aws
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#update_agent-instance_method
       def update_agent: (
+                          ?agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED"),
                           agent_id: ::String,
                           agent_name: ::String,
                           agent_resource_role_arn: ::String,
@@ -1514,6 +1572,7 @@ module Aws
                             prompt_configurations: Array[
                               {
                                 base_prompt_template: ::String?,
+                                foundation_model: ::String?,
                                 inference_configuration: {
                                   maximum_length: ::Integer?,
                                   stop_sequences: Array[::String]?,
@@ -1590,6 +1649,24 @@ module Aws
                                 ]
                               ) -> _UpdateAgentAliasResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAgentAliasResponseSuccess
+
+      interface _UpdateAgentCollaboratorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateAgentCollaboratorResponse]
+        def agent_collaborator: () -> Types::AgentCollaborator
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgent/Client.html#update_agent_collaborator-instance_method
+      def update_agent_collaborator: (
+                                       agent_descriptor: {
+                                         alias_arn: ::String?
+                                       },
+                                       agent_id: ::String,
+                                       agent_version: ::String,
+                                       collaboration_instruction: ::String,
+                                       collaborator_id: ::String,
+                                       collaborator_name: ::String,
+                                       ?relay_conversation_history: ("TO_COLLABORATOR" | "DISABLED")
+                                     ) -> _UpdateAgentCollaboratorResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateAgentCollaboratorResponseSuccess
 
       interface _UpdateAgentKnowledgeBaseResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateAgentKnowledgeBaseResponse]

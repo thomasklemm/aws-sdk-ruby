@@ -534,7 +534,7 @@ module Aws::QBusiness
     #   event.user_message_id #=> String
     #   event.system_message_id #=> String
     #   event.plugin_id #=> String
-    #   event.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
+    #   event.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "QUICKSIGHT", "SERVICENOW_NOW_PLATFORM", "JIRA_CLOUD", "SALESFORCE_CRM", "ZENDESK_SUITE", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "MICROSOFT_TEAMS", "MICROSOFT_EXCHANGE", "PAGERDUTY_ADVANCE", "SMARTSHEET", "ASANA"
     #   event.payload #=> Hash
     #   event.payload["ActionPayloadFieldKey"].display_name #=> String
     #   event.payload["ActionPayloadFieldKey"].display_order #=> Integer
@@ -607,7 +607,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.23.0'
+      context[:gem_version] = '1.24.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

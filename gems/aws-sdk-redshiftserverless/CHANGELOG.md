@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.43.0 (2024-12-03)
+------------------
+
+* Feature - Adds support for the ListManagedWorkgroups API to get an overview of existing managed workgroups.
+
 1.42.0 (2024-11-06)
 ------------------
 

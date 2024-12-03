@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:qbusiness)
 # structure.
 #
 #     q_business = Aws::QBusiness::Client.new
-#     resp = q_business.batch_delete_document(params)
+#     resp = q_business.associate_permission(params)
 #
 # See {Client} for more information.
 #
@@ -57,7 +57,7 @@ module Aws::QBusiness
   autoload :AsyncClient, 'aws-sdk-qbusiness/async_client'
   autoload :EventStreams, 'aws-sdk-qbusiness/event_streams'
 
-  GEM_VERSION = '1.23.0'
+  GEM_VERSION = '1.24.0'
 
 end
 

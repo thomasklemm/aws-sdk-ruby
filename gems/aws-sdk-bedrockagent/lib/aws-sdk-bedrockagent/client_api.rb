@@ -34,6 +34,11 @@ module Aws::BedrockAgent
     AgentAliasSummaries = Shapes::ListShape.new(name: 'AgentAliasSummaries')
     AgentAliasSummary = Shapes::StructureShape.new(name: 'AgentAliasSummary')
     AgentArn = Shapes::StringShape.new(name: 'AgentArn')
+    AgentCollaboration = Shapes::StringShape.new(name: 'AgentCollaboration')
+    AgentCollaborator = Shapes::StructureShape.new(name: 'AgentCollaborator')
+    AgentCollaboratorSummaries = Shapes::ListShape.new(name: 'AgentCollaboratorSummaries')
+    AgentCollaboratorSummary = Shapes::StructureShape.new(name: 'AgentCollaboratorSummary')
+    AgentDescriptor = Shapes::StructureShape.new(name: 'AgentDescriptor')
     AgentFlowNodeConfiguration = Shapes::StructureShape.new(name: 'AgentFlowNodeConfiguration')
     AgentKnowledgeBase = Shapes::StructureShape.new(name: 'AgentKnowledgeBase')
     AgentKnowledgeBaseSummaries = Shapes::ListShape.new(name: 'AgentKnowledgeBaseSummaries')
@@ -46,6 +51,8 @@ module Aws::BedrockAgent
     AgentVersionSummaries = Shapes::ListShape.new(name: 'AgentVersionSummaries')
     AgentVersionSummary = Shapes::StructureShape.new(name: 'AgentVersionSummary')
     AnyToolChoice = Shapes::StructureShape.new(name: 'AnyToolChoice')
+    AssociateAgentCollaboratorRequest = Shapes::StructureShape.new(name: 'AssociateAgentCollaboratorRequest')
+    AssociateAgentCollaboratorResponse = Shapes::StructureShape.new(name: 'AssociateAgentCollaboratorResponse')
     AssociateAgentKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'AssociateAgentKnowledgeBaseRequest')
     AssociateAgentKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'AssociateAgentKnowledgeBaseResponse')
     AutoToolChoice = Shapes::StructureShape.new(name: 'AutoToolChoice')
@@ -63,6 +70,7 @@ module Aws::BedrockAgent
     ChunkingConfiguration = Shapes::StructureShape.new(name: 'ChunkingConfiguration')
     ChunkingStrategy = Shapes::StringShape.new(name: 'ChunkingStrategy')
     ClientToken = Shapes::StringShape.new(name: 'ClientToken')
+    CollaborationInstruction = Shapes::StringShape.new(name: 'CollaborationInstruction')
     CollectorFlowNodeConfiguration = Shapes::StructureShape.new(name: 'CollectorFlowNodeConfiguration')
     ColumnName = Shapes::StringShape.new(name: 'ColumnName')
     ConditionFlowNodeConfiguration = Shapes::StructureShape.new(name: 'ConditionFlowNodeConfiguration')
@@ -141,6 +149,8 @@ module Aws::BedrockAgent
     DeletePromptResponse = Shapes::StructureShape.new(name: 'DeletePromptResponse')
     Description = Shapes::StringShape.new(name: 'Description')
     Dimensions = Shapes::IntegerShape.new(name: 'Dimensions')
+    DisassociateAgentCollaboratorRequest = Shapes::StructureShape.new(name: 'DisassociateAgentCollaboratorRequest')
+    DisassociateAgentCollaboratorResponse = Shapes::StructureShape.new(name: 'DisassociateAgentCollaboratorResponse')
     DisassociateAgentKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'DisassociateAgentKnowledgeBaseRequest')
     DisassociateAgentKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'DisassociateAgentKnowledgeBaseResponse')
     Document = Shapes::DocumentShape.new(name: 'Document', document: true)
@@ -222,6 +232,8 @@ module Aws::BedrockAgent
     GetAgentActionGroupResponse = Shapes::StructureShape.new(name: 'GetAgentActionGroupResponse')
     GetAgentAliasRequest = Shapes::StructureShape.new(name: 'GetAgentAliasRequest')
     GetAgentAliasResponse = Shapes::StructureShape.new(name: 'GetAgentAliasResponse')
+    GetAgentCollaboratorRequest = Shapes::StructureShape.new(name: 'GetAgentCollaboratorRequest')
+    GetAgentCollaboratorResponse = Shapes::StructureShape.new(name: 'GetAgentCollaboratorResponse')
     GetAgentKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'GetAgentKnowledgeBaseRequest')
     GetAgentKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'GetAgentKnowledgeBaseResponse')
     GetAgentRequest = Shapes::StructureShape.new(name: 'GetAgentRequest')
@@ -306,6 +318,8 @@ module Aws::BedrockAgent
     ListAgentActionGroupsResponse = Shapes::StructureShape.new(name: 'ListAgentActionGroupsResponse')
     ListAgentAliasesRequest = Shapes::StructureShape.new(name: 'ListAgentAliasesRequest')
     ListAgentAliasesResponse = Shapes::StructureShape.new(name: 'ListAgentAliasesResponse')
+    ListAgentCollaboratorsRequest = Shapes::StructureShape.new(name: 'ListAgentCollaboratorsRequest')
+    ListAgentCollaboratorsResponse = Shapes::StructureShape.new(name: 'ListAgentCollaboratorsResponse')
     ListAgentKnowledgeBasesRequest = Shapes::StructureShape.new(name: 'ListAgentKnowledgeBasesRequest')
     ListAgentKnowledgeBasesResponse = Shapes::StructureShape.new(name: 'ListAgentKnowledgeBasesResponse')
     ListAgentVersionsRequest = Shapes::StructureShape.new(name: 'ListAgentVersionsRequest')
@@ -440,6 +454,7 @@ module Aws::BedrockAgent
     RedisEnterpriseCloudEndpoint = Shapes::StringShape.new(name: 'RedisEnterpriseCloudEndpoint')
     RedisEnterpriseCloudFieldMapping = Shapes::StructureShape.new(name: 'RedisEnterpriseCloudFieldMapping')
     RedisEnterpriseCloudIndexName = Shapes::StringShape.new(name: 'RedisEnterpriseCloudIndexName')
+    RelayConversationHistory = Shapes::StringShape.new(name: 'RelayConversationHistory')
     RequireConfirmation = Shapes::StringShape.new(name: 'RequireConfirmation')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     RetrievalFlowNodeConfiguration = Shapes::StructureShape.new(name: 'RetrievalFlowNodeConfiguration')
@@ -535,6 +550,8 @@ module Aws::BedrockAgent
     UpdateAgentActionGroupResponse = Shapes::StructureShape.new(name: 'UpdateAgentActionGroupResponse')
     UpdateAgentAliasRequest = Shapes::StructureShape.new(name: 'UpdateAgentAliasRequest')
     UpdateAgentAliasResponse = Shapes::StructureShape.new(name: 'UpdateAgentAliasResponse')
+    UpdateAgentCollaboratorRequest = Shapes::StructureShape.new(name: 'UpdateAgentCollaboratorRequest')
+    UpdateAgentCollaboratorResponse = Shapes::StructureShape.new(name: 'UpdateAgentCollaboratorResponse')
     UpdateAgentKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'UpdateAgentKnowledgeBaseRequest')
     UpdateAgentKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'UpdateAgentKnowledgeBaseResponse')
     UpdateAgentRequest = Shapes::StructureShape.new(name: 'UpdateAgentRequest')
@@ -595,6 +612,7 @@ module Aws::BedrockAgent
     ActionGroupSummary.struct_class = Types::ActionGroupSummary
 
     Agent.add_member(:agent_arn, Shapes::ShapeRef.new(shape: AgentArn, required: true, location_name: "agentArn"))
+    Agent.add_member(:agent_collaboration, Shapes::ShapeRef.new(shape: AgentCollaboration, location_name: "agentCollaboration"))
     Agent.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "agentId"))
     Agent.add_member(:agent_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "agentName"))
     Agent.add_member(:agent_resource_role_arn, Shapes::ShapeRef.new(shape: AgentRoleArn, required: true, location_name: "agentResourceRoleArn"))
@@ -671,6 +689,34 @@ module Aws::BedrockAgent
     AgentAliasSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "updatedAt"))
     AgentAliasSummary.struct_class = Types::AgentAliasSummary
 
+    AgentCollaborator.add_member(:agent_descriptor, Shapes::ShapeRef.new(shape: AgentDescriptor, required: true, location_name: "agentDescriptor"))
+    AgentCollaborator.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "agentId"))
+    AgentCollaborator.add_member(:agent_version, Shapes::ShapeRef.new(shape: Version, required: true, location_name: "agentVersion"))
+    AgentCollaborator.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken"))
+    AgentCollaborator.add_member(:collaboration_instruction, Shapes::ShapeRef.new(shape: CollaborationInstruction, required: true, location_name: "collaborationInstruction"))
+    AgentCollaborator.add_member(:collaborator_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "collaboratorId"))
+    AgentCollaborator.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "collaboratorName"))
+    AgentCollaborator.add_member(:created_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "createdAt"))
+    AgentCollaborator.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "lastUpdatedAt"))
+    AgentCollaborator.add_member(:relay_conversation_history, Shapes::ShapeRef.new(shape: RelayConversationHistory, location_name: "relayConversationHistory"))
+    AgentCollaborator.struct_class = Types::AgentCollaborator
+
+    AgentCollaboratorSummaries.member = Shapes::ShapeRef.new(shape: AgentCollaboratorSummary)
+
+    AgentCollaboratorSummary.add_member(:agent_descriptor, Shapes::ShapeRef.new(shape: AgentDescriptor, required: true, location_name: "agentDescriptor"))
+    AgentCollaboratorSummary.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "agentId"))
+    AgentCollaboratorSummary.add_member(:agent_version, Shapes::ShapeRef.new(shape: Version, required: true, location_name: "agentVersion"))
+    AgentCollaboratorSummary.add_member(:collaboration_instruction, Shapes::ShapeRef.new(shape: CollaborationInstruction, required: true, location_name: "collaborationInstruction"))
+    AgentCollaboratorSummary.add_member(:collaborator_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "collaboratorId"))
+    AgentCollaboratorSummary.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "collaboratorName"))
+    AgentCollaboratorSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "createdAt"))
+    AgentCollaboratorSummary.add_member(:last_updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "lastUpdatedAt"))
+    AgentCollaboratorSummary.add_member(:relay_conversation_history, Shapes::ShapeRef.new(shape: RelayConversationHistory, required: true, location_name: "relayConversationHistory"))
+    AgentCollaboratorSummary.struct_class = Types::AgentCollaboratorSummary
+
+    AgentDescriptor.add_member(:alias_arn, Shapes::ShapeRef.new(shape: AgentAliasArn, location_name: "aliasArn"))
+    AgentDescriptor.struct_class = Types::AgentDescriptor
+
     AgentFlowNodeConfiguration.add_member(:agent_alias_arn, Shapes::ShapeRef.new(shape: AgentAliasArn, required: true, location_name: "agentAliasArn"))
     AgentFlowNodeConfiguration.struct_class = Types::AgentFlowNodeConfiguration
 
@@ -703,6 +749,7 @@ module Aws::BedrockAgent
     AgentSummary.struct_class = Types::AgentSummary
 
     AgentVersion.add_member(:agent_arn, Shapes::ShapeRef.new(shape: AgentArn, required: true, location_name: "agentArn"))
+    AgentVersion.add_member(:agent_collaboration, Shapes::ShapeRef.new(shape: AgentCollaboration, location_name: "agentCollaboration"))
     AgentVersion.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location_name: "agentId"))
     AgentVersion.add_member(:agent_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "agentName"))
     AgentVersion.add_member(:agent_resource_role_arn, Shapes::ShapeRef.new(shape: AgentRoleArn, required: true, location_name: "agentResourceRoleArn"))
@@ -734,6 +781,18 @@ module Aws::BedrockAgent
     AgentVersionSummary.struct_class = Types::AgentVersionSummary
 
     AnyToolChoice.struct_class = Types::AnyToolChoice
+
+    AssociateAgentCollaboratorRequest.add_member(:agent_descriptor, Shapes::ShapeRef.new(shape: AgentDescriptor, required: true, location_name: "agentDescriptor"))
+    AssociateAgentCollaboratorRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
+    AssociateAgentCollaboratorRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: DraftVersion, required: true, location: "uri", location_name: "agentVersion"))
+    AssociateAgentCollaboratorRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
+    AssociateAgentCollaboratorRequest.add_member(:collaboration_instruction, Shapes::ShapeRef.new(shape: CollaborationInstruction, required: true, location_name: "collaborationInstruction"))
+    AssociateAgentCollaboratorRequest.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "collaboratorName"))
+    AssociateAgentCollaboratorRequest.add_member(:relay_conversation_history, Shapes::ShapeRef.new(shape: RelayConversationHistory, location_name: "relayConversationHistory"))
+    AssociateAgentCollaboratorRequest.struct_class = Types::AssociateAgentCollaboratorRequest
+
+    AssociateAgentCollaboratorResponse.add_member(:agent_collaborator, Shapes::ShapeRef.new(shape: AgentCollaborator, required: true, location_name: "agentCollaborator"))
+    AssociateAgentCollaboratorResponse.struct_class = Types::AssociateAgentCollaboratorResponse
 
     AssociateAgentKnowledgeBaseRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
     AssociateAgentKnowledgeBaseRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: DraftVersion, required: true, location: "uri", location_name: "agentVersion"))
@@ -830,6 +889,7 @@ module Aws::BedrockAgent
     CreateAgentAliasResponse.add_member(:agent_alias, Shapes::ShapeRef.new(shape: AgentAlias, required: true, location_name: "agentAlias"))
     CreateAgentAliasResponse.struct_class = Types::CreateAgentAliasResponse
 
+    CreateAgentRequest.add_member(:agent_collaboration, Shapes::ShapeRef.new(shape: AgentCollaboration, location_name: "agentCollaboration"))
     CreateAgentRequest.add_member(:agent_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "agentName"))
     CreateAgentRequest.add_member(:agent_resource_role_arn, Shapes::ShapeRef.new(shape: AgentRoleArn, location_name: "agentResourceRoleArn"))
     CreateAgentRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
@@ -1117,6 +1177,13 @@ module Aws::BedrockAgent
     DeletePromptResponse.add_member(:version, Shapes::ShapeRef.new(shape: NumericalVersion, location_name: "version"))
     DeletePromptResponse.struct_class = Types::DeletePromptResponse
 
+    DisassociateAgentCollaboratorRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
+    DisassociateAgentCollaboratorRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: DraftVersion, required: true, location: "uri", location_name: "agentVersion"))
+    DisassociateAgentCollaboratorRequest.add_member(:collaborator_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "collaboratorId"))
+    DisassociateAgentCollaboratorRequest.struct_class = Types::DisassociateAgentCollaboratorRequest
+
+    DisassociateAgentCollaboratorResponse.struct_class = Types::DisassociateAgentCollaboratorResponse
+
     DisassociateAgentKnowledgeBaseRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
     DisassociateAgentKnowledgeBaseRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: DraftVersion, required: true, location: "uri", location_name: "agentVersion"))
     DisassociateAgentKnowledgeBaseRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
@@ -1376,6 +1443,14 @@ module Aws::BedrockAgent
 
     GetAgentAliasResponse.add_member(:agent_alias, Shapes::ShapeRef.new(shape: AgentAlias, required: true, location_name: "agentAlias"))
     GetAgentAliasResponse.struct_class = Types::GetAgentAliasResponse
+
+    GetAgentCollaboratorRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
+    GetAgentCollaboratorRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: Version, required: true, location: "uri", location_name: "agentVersion"))
+    GetAgentCollaboratorRequest.add_member(:collaborator_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "collaboratorId"))
+    GetAgentCollaboratorRequest.struct_class = Types::GetAgentCollaboratorRequest
+
+    GetAgentCollaboratorResponse.add_member(:agent_collaborator, Shapes::ShapeRef.new(shape: AgentCollaborator, required: true, location_name: "agentCollaborator"))
+    GetAgentCollaboratorResponse.struct_class = Types::GetAgentCollaboratorResponse
 
     GetAgentKnowledgeBaseRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
     GetAgentKnowledgeBaseRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: Version, required: true, location: "uri", location_name: "agentVersion"))
@@ -1655,6 +1730,16 @@ module Aws::BedrockAgent
     ListAgentAliasesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
     ListAgentAliasesResponse.struct_class = Types::ListAgentAliasesResponse
 
+    ListAgentCollaboratorsRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
+    ListAgentCollaboratorsRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: Version, required: true, location: "uri", location_name: "agentVersion"))
+    ListAgentCollaboratorsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
+    ListAgentCollaboratorsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListAgentCollaboratorsRequest.struct_class = Types::ListAgentCollaboratorsRequest
+
+    ListAgentCollaboratorsResponse.add_member(:agent_collaborator_summaries, Shapes::ShapeRef.new(shape: AgentCollaboratorSummaries, required: true, location_name: "agentCollaboratorSummaries"))
+    ListAgentCollaboratorsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "nextToken"))
+    ListAgentCollaboratorsResponse.struct_class = Types::ListAgentCollaboratorsResponse
+
     ListAgentKnowledgeBasesRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
     ListAgentKnowledgeBasesRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: Version, required: true, location: "uri", location_name: "agentVersion"))
     ListAgentKnowledgeBasesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "maxResults"))
@@ -1917,6 +2002,7 @@ module Aws::BedrockAgent
     PromptAgentResource.struct_class = Types::PromptAgentResource
 
     PromptConfiguration.add_member(:base_prompt_template, Shapes::ShapeRef.new(shape: BasePromptTemplate, location_name: "basePromptTemplate"))
+    PromptConfiguration.add_member(:foundation_model, Shapes::ShapeRef.new(shape: ModelIdentifier, location_name: "foundationModel"))
     PromptConfiguration.add_member(:inference_configuration, Shapes::ShapeRef.new(shape: InferenceConfiguration, location_name: "inferenceConfiguration"))
     PromptConfiguration.add_member(:parser_mode, Shapes::ShapeRef.new(shape: CreationMode, location_name: "parserMode"))
     PromptConfiguration.add_member(:prompt_creation_mode, Shapes::ShapeRef.new(shape: CreationMode, location_name: "promptCreationMode"))
@@ -2289,6 +2375,18 @@ module Aws::BedrockAgent
     UpdateAgentAliasResponse.add_member(:agent_alias, Shapes::ShapeRef.new(shape: AgentAlias, required: true, location_name: "agentAlias"))
     UpdateAgentAliasResponse.struct_class = Types::UpdateAgentAliasResponse
 
+    UpdateAgentCollaboratorRequest.add_member(:agent_descriptor, Shapes::ShapeRef.new(shape: AgentDescriptor, required: true, location_name: "agentDescriptor"))
+    UpdateAgentCollaboratorRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
+    UpdateAgentCollaboratorRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: DraftVersion, required: true, location: "uri", location_name: "agentVersion"))
+    UpdateAgentCollaboratorRequest.add_member(:collaboration_instruction, Shapes::ShapeRef.new(shape: CollaborationInstruction, required: true, location_name: "collaborationInstruction"))
+    UpdateAgentCollaboratorRequest.add_member(:collaborator_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "collaboratorId"))
+    UpdateAgentCollaboratorRequest.add_member(:collaborator_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "collaboratorName"))
+    UpdateAgentCollaboratorRequest.add_member(:relay_conversation_history, Shapes::ShapeRef.new(shape: RelayConversationHistory, location_name: "relayConversationHistory"))
+    UpdateAgentCollaboratorRequest.struct_class = Types::UpdateAgentCollaboratorRequest
+
+    UpdateAgentCollaboratorResponse.add_member(:agent_collaborator, Shapes::ShapeRef.new(shape: AgentCollaborator, required: true, location_name: "agentCollaborator"))
+    UpdateAgentCollaboratorResponse.struct_class = Types::UpdateAgentCollaboratorResponse
+
     UpdateAgentKnowledgeBaseRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
     UpdateAgentKnowledgeBaseRequest.add_member(:agent_version, Shapes::ShapeRef.new(shape: DraftVersion, required: true, location: "uri", location_name: "agentVersion"))
     UpdateAgentKnowledgeBaseRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -2299,6 +2397,7 @@ module Aws::BedrockAgent
     UpdateAgentKnowledgeBaseResponse.add_member(:agent_knowledge_base, Shapes::ShapeRef.new(shape: AgentKnowledgeBase, required: true, location_name: "agentKnowledgeBase"))
     UpdateAgentKnowledgeBaseResponse.struct_class = Types::UpdateAgentKnowledgeBaseResponse
 
+    UpdateAgentRequest.add_member(:agent_collaboration, Shapes::ShapeRef.new(shape: AgentCollaboration, location_name: "agentCollaboration"))
     UpdateAgentRequest.add_member(:agent_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "agentId"))
     UpdateAgentRequest.add_member(:agent_name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "agentName"))
     UpdateAgentRequest.add_member(:agent_resource_role_arn, Shapes::ShapeRef.new(shape: AgentRoleArn, required: true, location_name: "agentResourceRoleArn"))
@@ -2462,6 +2561,21 @@ module Aws::BedrockAgent
         "signingName" => "bedrock",
         "uid" => "bedrock-agent-2023-06-05",
       }
+
+      api.add_operation(:associate_agent_collaborator, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "AssociateAgentCollaborator"
+        o.http_method = "PUT"
+        o.http_request_uri = "/agents/{agentId}/agentversions/{agentVersion}/agentcollaborators/"
+        o.input = Shapes::ShapeRef.new(shape: AssociateAgentCollaboratorRequest)
+        o.output = Shapes::ShapeRef.new(shape: AssociateAgentCollaboratorResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
 
       api.add_operation(:associate_agent_knowledge_base, Seahorse::Model::Operation.new.tap do |o|
         o.name = "AssociateAgentKnowledgeBase"
@@ -2777,6 +2891,20 @@ module Aws::BedrockAgent
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
 
+      api.add_operation(:disassociate_agent_collaborator, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DisassociateAgentCollaborator"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/agents/{agentId}/agentversions/{agentVersion}/agentcollaborators/{collaboratorId}/"
+        o.input = Shapes::ShapeRef.new(shape: DisassociateAgentCollaboratorRequest)
+        o.output = Shapes::ShapeRef.new(shape: DisassociateAgentCollaboratorResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+      end)
+
       api.add_operation(:disassociate_agent_knowledge_base, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DisassociateAgentKnowledgeBase"
         o.http_method = "DELETE"
@@ -2823,6 +2951,19 @@ module Aws::BedrockAgent
         o.http_request_uri = "/agents/{agentId}/agentaliases/{agentAliasId}/"
         o.input = Shapes::ShapeRef.new(shape: GetAgentAliasRequest)
         o.output = Shapes::ShapeRef.new(shape: GetAgentAliasResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
+      api.add_operation(:get_agent_collaborator, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetAgentCollaborator"
+        o.http_method = "GET"
+        o.http_request_uri = "/agents/{agentId}/agentversions/{agentVersion}/agentcollaborators/{collaboratorId}/"
+        o.input = Shapes::ShapeRef.new(shape: GetAgentCollaboratorRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetAgentCollaboratorResponse)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3000,6 +3141,25 @@ module Aws::BedrockAgent
         o.http_request_uri = "/agents/{agentId}/agentaliases/"
         o.input = Shapes::ShapeRef.new(shape: ListAgentAliasesRequest)
         o.output = Shapes::ShapeRef.new(shape: ListAgentAliasesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_agent_collaborators, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAgentCollaborators"
+        o.http_method = "POST"
+        o.http_request_uri = "/agents/{agentId}/agentversions/{agentVersion}/agentcollaborators/"
+        o.input = Shapes::ShapeRef.new(shape: ListAgentCollaboratorsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAgentCollaboratorsResponse)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
@@ -3355,6 +3515,21 @@ module Aws::BedrockAgent
         o.http_request_uri = "/agents/{agentId}/agentaliases/{agentAliasId}/"
         o.input = Shapes::ShapeRef.new(shape: UpdateAgentAliasRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateAgentAliasResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:update_agent_collaborator, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateAgentCollaborator"
+        o.http_method = "PUT"
+        o.http_request_uri = "/agents/{agentId}/agentversions/{agentVersion}/agentcollaborators/{collaboratorId}/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateAgentCollaboratorRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateAgentCollaboratorResponse)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)

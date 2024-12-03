@@ -637,6 +637,9 @@ module Aws::BedrockAgentRuntime
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
     #
+    # @option params [String] :source_arn
+    #   The ARN of the resource making the request.
+    #
     # @option params [Types::StreamingConfigurations] :streaming_configurations
     #   Specifies the configurations for streaming.
     #
@@ -849,6 +852,18 @@ module Aws::BedrockAgentRuntime
     #     memory_id: "MemoryId",
     #     session_id: "SessionId", # required
     #     session_state: {
+    #       conversation_history: {
+    #         messages: [
+    #           {
+    #             content: [ # required
+    #               {
+    #                 text: "String",
+    #               },
+    #             ],
+    #             role: "user", # required, accepts user, assistant
+    #           },
+    #         ],
+    #       },
     #       files: [
     #         {
     #           name: "String", # required
@@ -989,6 +1004,7 @@ module Aws::BedrockAgentRuntime
     #         {
     #           api_result: {
     #             action_group: "String", # required
+    #             agent_id: "String",
     #             api_path: "ApiPath",
     #             confirmation_state: "CONFIRM", # accepts CONFIRM, DENY
     #             http_method: "String",
@@ -1002,6 +1018,7 @@ module Aws::BedrockAgentRuntime
     #           },
     #           function_result: {
     #             action_group: "String", # required
+    #             agent_id: "String",
     #             confirmation_state: "CONFIRM", # accepts CONFIRM, DENY
     #             function: "String",
     #             response_body: {
@@ -1017,6 +1034,7 @@ module Aws::BedrockAgentRuntime
     #         "String" => "String",
     #       },
     #     },
+    #     source_arn: "AWSResourceARN",
     #     streaming_configurations: {
     #       apply_guardrail_interval: 1,
     #       stream_final_response: false,
@@ -1077,7 +1095,9 @@ module Aws::BedrockAgentRuntime
     #   event.invocation_inputs #=> Array
     #   event.invocation_inputs[0].api_invocation_input.action_group #=> String
     #   event.invocation_inputs[0].api_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.invocation_inputs[0].api_invocation_input.agent_id #=> String
     #   event.invocation_inputs[0].api_invocation_input.api_path #=> String
+    #   event.invocation_inputs[0].api_invocation_input.collaborator_name #=> String
     #   event.invocation_inputs[0].api_invocation_input.http_method #=> String
     #   event.invocation_inputs[0].api_invocation_input.parameters #=> Array
     #   event.invocation_inputs[0].api_invocation_input.parameters[0].name #=> String
@@ -1090,6 +1110,8 @@ module Aws::BedrockAgentRuntime
     #   event.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].value #=> String
     #   event.invocation_inputs[0].function_invocation_input.action_group #=> String
     #   event.invocation_inputs[0].function_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.invocation_inputs[0].function_invocation_input.agent_id #=> String
+    #   event.invocation_inputs[0].function_invocation_input.collaborator_name #=> String
     #   event.invocation_inputs[0].function_invocation_input.function #=> String
     #   event.invocation_inputs[0].function_invocation_input.parameters #=> Array
     #   event.invocation_inputs[0].function_invocation_input.parameters[0].name #=> String
@@ -1106,6 +1128,9 @@ module Aws::BedrockAgentRuntime
     #   event.agent_alias_id #=> String
     #   event.agent_id #=> String
     #   event.agent_version #=> String
+    #   event.caller_chain #=> Array
+    #   event.caller_chain[0].agent_alias_arn #=> String
+    #   event.collaborator_name #=> String
     #   event.session_id #=> String
     #   event.trace.custom_orchestration_trace.event.text #=> String
     #   event.trace.custom_orchestration_trace.trace_id #=> String
@@ -1178,13 +1203,36 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].type #=> String
     #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].value #=> String
     #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.verb #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_alias_arn #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_name #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.invocation_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results #=> Array
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.action_group #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.agent_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.api_path #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_method #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
     #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.code #=> String
     #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.files #=> Array
     #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.files[0] #=> String
-    #   event.trace.orchestration_trace.invocation_input.invocation_type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ACTION_GROUP_CODE_INTERPRETER"
+    #   event.trace.orchestration_trace.invocation_input.invocation_type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ACTION_GROUP_CODE_INTERPRETER", "AGENT_COLLABORATOR"
     #   event.trace.orchestration_trace.invocation_input.knowledge_base_lookup_input.knowledge_base_id #=> String
     #   event.trace.orchestration_trace.invocation_input.knowledge_base_lookup_input.text #=> String
     #   event.trace.orchestration_trace.invocation_input.trace_id #=> String
+    #   event.trace.orchestration_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
     #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
     #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
@@ -1202,6 +1250,36 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.model_invocation_output.raw_response.content #=> String
     #   event.trace.orchestration_trace.model_invocation_output.trace_id #=> String
     #   event.trace.orchestration_trace.observation.action_group_invocation_output.text #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.agent_collaborator_alias_arn #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.agent_collaborator_name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_id #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_group #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.agent_id #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.api_path #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.collaborator_name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.http_method #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].type #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].value #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content #=> Hash
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].type #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].value #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_group #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.agent_id #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.collaborator_name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.function #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].type #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].value #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.text #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.type #=> String, one of "TEXT", "RETURN_CONTROL"
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_error #=> String
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_output #=> String
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_timeout #=> Boolean
@@ -1221,9 +1299,10 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
     #   event.trace.orchestration_trace.observation.reprompt_response.text #=> String
     #   event.trace.orchestration_trace.observation.trace_id #=> String
-    #   event.trace.orchestration_trace.observation.type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ASK_USER", "REPROMPT"
+    #   event.trace.orchestration_trace.observation.type #=> String, one of "ACTION_GROUP", "AGENT_COLLABORATOR", "KNOWLEDGE_BASE", "FINISH", "ASK_USER", "REPROMPT"
     #   event.trace.orchestration_trace.rationale.text #=> String
     #   event.trace.orchestration_trace.rationale.trace_id #=> String
+    #   event.trace.post_processing_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
     #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
     #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
@@ -1241,6 +1320,7 @@ module Aws::BedrockAgentRuntime
     #   event.trace.post_processing_trace.model_invocation_output.parsed_response.text #=> String
     #   event.trace.post_processing_trace.model_invocation_output.raw_response.content #=> String
     #   event.trace.post_processing_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.pre_processing_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
@@ -1259,6 +1339,118 @@ module Aws::BedrockAgentRuntime
     #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.rationale #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.raw_response.content #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.action_group_name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.api_path #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.execution_type #=> String, one of "LAMBDA", "RETURN_CONTROL"
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.function #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.invocation_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters[0].name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters[0].type #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters[0].value #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content #=> Hash
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"] #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].type #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].value #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.verb #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_alias_arn #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.invocation_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.action_group #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.agent_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.api_path #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_method #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
+    #   event.trace.routing_classifier_trace.invocation_input.code_interpreter_invocation_input.code #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.code_interpreter_invocation_input.files #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.code_interpreter_invocation_input.files[0] #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.invocation_type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ACTION_GROUP_CODE_INTERPRETER", "AGENT_COLLABORATOR"
+    #   event.trace.routing_classifier_trace.invocation_input.knowledge_base_lookup_input.knowledge_base_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.knowledge_base_lookup_input.text #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.trace_id #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.foundation_model #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.temperature #=> Float
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.top_k #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.top_p #=> Float
+    #   event.trace.routing_classifier_trace.model_invocation_input.override_lambda #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.routing_classifier_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.routing_classifier_trace.model_invocation_input.text #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.trace_id #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
+    #   event.trace.routing_classifier_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.routing_classifier_trace.observation.action_group_invocation_output.text #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.agent_collaborator_alias_arn #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.agent_collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_id #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_group #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.agent_id #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.api_path #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.http_method #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].type #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].value #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content #=> Hash
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].type #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].value #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_group #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.agent_id #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.function #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].type #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].value #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.text #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.type #=> String, one of "TEXT", "RETURN_CONTROL"
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.execution_error #=> String
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.execution_output #=> String
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.execution_timeout #=> Boolean
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.files #=> Array
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.files[0] #=> String
+    #   event.trace.routing_classifier_trace.observation.final_response.text #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
+    #   event.trace.routing_classifier_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
+    #   event.trace.routing_classifier_trace.observation.reprompt_response.text #=> String
+    #   event.trace.routing_classifier_trace.observation.trace_id #=> String
+    #   event.trace.routing_classifier_trace.observation.type #=> String, one of "ACTION_GROUP", "AGENT_COLLABORATOR", "KNOWLEDGE_BASE", "FINISH", "ASK_USER", "REPROMPT"
     #
     #   For :validation_exception event available at #on_validation_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -1995,6 +2187,7 @@ module Aws::BedrockAgentRuntime
     #         {
     #           api_result: {
     #             action_group: "String", # required
+    #             agent_id: "String",
     #             api_path: "ApiPath",
     #             confirmation_state: "CONFIRM", # accepts CONFIRM, DENY
     #             http_method: "String",
@@ -2008,6 +2201,7 @@ module Aws::BedrockAgentRuntime
     #           },
     #           function_result: {
     #             action_group: "String", # required
+    #             agent_id: "String",
     #             confirmation_state: "CONFIRM", # accepts CONFIRM, DENY
     #             function: "String",
     #             response_body: {
@@ -2218,7 +2412,9 @@ module Aws::BedrockAgentRuntime
     #   event.invocation_inputs #=> Array
     #   event.invocation_inputs[0].api_invocation_input.action_group #=> String
     #   event.invocation_inputs[0].api_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.invocation_inputs[0].api_invocation_input.agent_id #=> String
     #   event.invocation_inputs[0].api_invocation_input.api_path #=> String
+    #   event.invocation_inputs[0].api_invocation_input.collaborator_name #=> String
     #   event.invocation_inputs[0].api_invocation_input.http_method #=> String
     #   event.invocation_inputs[0].api_invocation_input.parameters #=> Array
     #   event.invocation_inputs[0].api_invocation_input.parameters[0].name #=> String
@@ -2231,6 +2427,8 @@ module Aws::BedrockAgentRuntime
     #   event.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].value #=> String
     #   event.invocation_inputs[0].function_invocation_input.action_group #=> String
     #   event.invocation_inputs[0].function_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.invocation_inputs[0].function_invocation_input.agent_id #=> String
+    #   event.invocation_inputs[0].function_invocation_input.collaborator_name #=> String
     #   event.invocation_inputs[0].function_invocation_input.function #=> String
     #   event.invocation_inputs[0].function_invocation_input.parameters #=> Array
     #   event.invocation_inputs[0].function_invocation_input.parameters[0].name #=> String
@@ -2316,13 +2514,36 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].type #=> String
     #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].value #=> String
     #   event.trace.orchestration_trace.invocation_input.action_group_invocation_input.verb #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_alias_arn #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_name #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.invocation_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results #=> Array
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.action_group #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.agent_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.api_path #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_method #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
+    #   event.trace.orchestration_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
     #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.code #=> String
     #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.files #=> Array
     #   event.trace.orchestration_trace.invocation_input.code_interpreter_invocation_input.files[0] #=> String
-    #   event.trace.orchestration_trace.invocation_input.invocation_type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ACTION_GROUP_CODE_INTERPRETER"
+    #   event.trace.orchestration_trace.invocation_input.invocation_type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ACTION_GROUP_CODE_INTERPRETER", "AGENT_COLLABORATOR"
     #   event.trace.orchestration_trace.invocation_input.knowledge_base_lookup_input.knowledge_base_id #=> String
     #   event.trace.orchestration_trace.invocation_input.knowledge_base_lookup_input.text #=> String
     #   event.trace.orchestration_trace.invocation_input.trace_id #=> String
+    #   event.trace.orchestration_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
     #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
     #   event.trace.orchestration_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
@@ -2340,6 +2561,36 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.model_invocation_output.raw_response.content #=> String
     #   event.trace.orchestration_trace.model_invocation_output.trace_id #=> String
     #   event.trace.orchestration_trace.observation.action_group_invocation_output.text #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.agent_collaborator_alias_arn #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.agent_collaborator_name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_id #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_group #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.agent_id #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.api_path #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.collaborator_name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.http_method #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].type #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].value #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content #=> Hash
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].type #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].value #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_group #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.agent_id #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.collaborator_name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.function #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters #=> Array
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].name #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].type #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].value #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.text #=> String
+    #   event.trace.orchestration_trace.observation.agent_collaborator_invocation_output.output.type #=> String, one of "TEXT", "RETURN_CONTROL"
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_error #=> String
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_output #=> String
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.execution_timeout #=> Boolean
@@ -2359,9 +2610,10 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
     #   event.trace.orchestration_trace.observation.reprompt_response.text #=> String
     #   event.trace.orchestration_trace.observation.trace_id #=> String
-    #   event.trace.orchestration_trace.observation.type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ASK_USER", "REPROMPT"
+    #   event.trace.orchestration_trace.observation.type #=> String, one of "ACTION_GROUP", "AGENT_COLLABORATOR", "KNOWLEDGE_BASE", "FINISH", "ASK_USER", "REPROMPT"
     #   event.trace.orchestration_trace.rationale.text #=> String
     #   event.trace.orchestration_trace.rationale.trace_id #=> String
+    #   event.trace.post_processing_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
     #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
     #   event.trace.post_processing_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
@@ -2379,6 +2631,7 @@ module Aws::BedrockAgentRuntime
     #   event.trace.post_processing_trace.model_invocation_output.parsed_response.text #=> String
     #   event.trace.post_processing_trace.model_invocation_output.raw_response.content #=> String
     #   event.trace.post_processing_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.pre_processing_trace.model_invocation_input.foundation_model #=> String
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
     #   event.trace.pre_processing_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
@@ -2397,6 +2650,118 @@ module Aws::BedrockAgentRuntime
     #   event.trace.pre_processing_trace.model_invocation_output.parsed_response.rationale #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.raw_response.content #=> String
     #   event.trace.pre_processing_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.action_group_name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.api_path #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.execution_type #=> String, one of "LAMBDA", "RETURN_CONTROL"
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.function #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.invocation_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters[0].name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters[0].type #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.parameters[0].value #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content #=> Hash
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"] #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].type #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.request_body.content["String"][0].value #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.action_group_invocation_input.verb #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_alias_arn #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.agent_collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.invocation_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.action_group #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.agent_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.api_path #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_method #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.http_status_code #=> Integer
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body #=> Hash
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].api_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.action_group #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.agent_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.confirmation_state #=> String, one of "CONFIRM", "DENY"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.function #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body #=> Hash
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_body["String"].body #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.return_control_results.return_control_invocation_results[0].function_result.response_state #=> String, one of "FAILURE", "REPROMPT"
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.text #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.agent_collaborator_invocation_input.input.type #=> String, one of "TEXT", "RETURN_CONTROL"
+    #   event.trace.routing_classifier_trace.invocation_input.code_interpreter_invocation_input.code #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.code_interpreter_invocation_input.files #=> Array
+    #   event.trace.routing_classifier_trace.invocation_input.code_interpreter_invocation_input.files[0] #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.invocation_type #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "FINISH", "ACTION_GROUP_CODE_INTERPRETER", "AGENT_COLLABORATOR"
+    #   event.trace.routing_classifier_trace.invocation_input.knowledge_base_lookup_input.knowledge_base_id #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.knowledge_base_lookup_input.text #=> String
+    #   event.trace.routing_classifier_trace.invocation_input.trace_id #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.foundation_model #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.maximum_length #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.stop_sequences #=> Array
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.stop_sequences[0] #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.temperature #=> Float
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.top_k #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_input.inference_configuration.top_p #=> Float
+    #   event.trace.routing_classifier_trace.model_invocation_input.override_lambda #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.parser_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.routing_classifier_trace.model_invocation_input.prompt_creation_mode #=> String, one of "DEFAULT", "OVERRIDDEN"
+    #   event.trace.routing_classifier_trace.model_invocation_input.text #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.trace_id #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_input.type #=> String, one of "PRE_PROCESSING", "ORCHESTRATION", "KNOWLEDGE_BASE_RESPONSE_GENERATION", "POST_PROCESSING", "ROUTING_CLASSIFIER"
+    #   event.trace.routing_classifier_trace.model_invocation_output.metadata.usage.input_tokens #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_output.metadata.usage.output_tokens #=> Integer
+    #   event.trace.routing_classifier_trace.model_invocation_output.raw_response.content #=> String
+    #   event.trace.routing_classifier_trace.model_invocation_output.trace_id #=> String
+    #   event.trace.routing_classifier_trace.observation.action_group_invocation_output.text #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.agent_collaborator_alias_arn #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.agent_collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_id #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_group #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.agent_id #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.api_path #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.http_method #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].type #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.parameters[0].value #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content #=> Hash
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].type #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].api_invocation_input.request_body.content["String"].properties[0].value #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_group #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.action_invocation_type #=> String, one of "RESULT", "USER_CONFIRMATION", "USER_CONFIRMATION_AND_RESULT"
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.agent_id #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.collaborator_name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.function #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters #=> Array
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].name #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].type #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.return_control_payload.invocation_inputs[0].function_invocation_input.parameters[0].value #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.text #=> String
+    #   event.trace.routing_classifier_trace.observation.agent_collaborator_invocation_output.output.type #=> String, one of "TEXT", "RETURN_CONTROL"
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.execution_error #=> String
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.execution_output #=> String
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.execution_timeout #=> Boolean
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.files #=> Array
+    #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.files[0] #=> String
+    #   event.trace.routing_classifier_trace.observation.final_response.text #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
+    #   event.trace.routing_classifier_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
+    #   event.trace.routing_classifier_trace.observation.reprompt_response.text #=> String
+    #   event.trace.routing_classifier_trace.observation.trace_id #=> String
+    #   event.trace.routing_classifier_trace.observation.type #=> String, one of "ACTION_GROUP", "AGENT_COLLABORATOR", "KNOWLEDGE_BASE", "FINISH", "ASK_USER", "REPROMPT"
     #
     #   For :validation_exception event available at #on_validation_exception_event callback and response eventstream enumerator:
     #   event.message #=> String
@@ -3740,7 +4105,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.35.0'
+      context[:gem_version] = '1.36.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

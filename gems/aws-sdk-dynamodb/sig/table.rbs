@@ -90,6 +90,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DynamoDB/Table.html#warm_throughput-instance_method
       def warm_throughput: () -> Types::TableWarmThroughputDescription
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DynamoDB/Table.html#multi_region_consistency-instance_method
+      def multi_region_consistency: () -> ("EVENTUAL" | "STRONG")
+
       def client: () -> Client
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/DynamoDB/Table.html#load-instance_method
@@ -331,6 +334,7 @@ module Aws
                     ],
                     ?table_class: ("STANDARD" | "STANDARD_INFREQUENT_ACCESS"),
                     ?deletion_protection_enabled: bool,
+                    ?multi_region_consistency: ("EVENTUAL" | "STRONG"),
                     ?on_demand_throughput: {
                       max_read_request_units: ::Integer?,
                       max_write_request_units: ::Integer?

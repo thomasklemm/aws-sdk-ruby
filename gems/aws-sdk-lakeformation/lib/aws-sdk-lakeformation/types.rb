@@ -338,11 +338,17 @@ module Aws::LakeFormation
 
     # A structure for the catalog object.
     #
-    # @api private
+    # @!attribute [rw] id
+    #   An identifier for the catalog resource.
+    #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/CatalogResource AWS API Documentation
     #
-    class CatalogResource < Aws::EmptyStructure; end
+    class CatalogResource < Struct.new(
+      :id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # A structure containing the name of a column resource and the LF-tags
     # attached to it.
@@ -413,6 +419,22 @@ module Aws::LakeFormation
     #
     class ConcurrentModificationException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A Lake Formation condition, which applies to permissions and opt-ins
+    # that contain an expression.
+    #
+    # @!attribute [rw] expression
+    #   An expression written based on the Cedar Policy Language used to
+    #   match the principal attributes.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/Condition AWS API Documentation
+    #
+    class Condition < Struct.new(
+      :expression)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2284,6 +2306,11 @@ module Aws::LakeFormation
     #   IAM roles.
     #   @return [Types::DataLakePrincipal]
     #
+    # @!attribute [rw] condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #   @return [Types::Condition]
+    #
     # @!attribute [rw] last_modified
     #   The last modified date and time of the record.
     #   @return [Time]
@@ -2297,6 +2324,7 @@ module Aws::LakeFormation
     class LakeFormationOptInsInfo < Struct.new(
       :resource,
       :principal,
+      :condition,
       :last_modified,
       :last_updated_by)
       SENSITIVE = []
@@ -2827,6 +2855,11 @@ module Aws::LakeFormation
     #   The resource where permissions are to be granted or revoked.
     #   @return [Types::Resource]
     #
+    # @!attribute [rw] condition
+    #   A Lake Formation condition, which applies to permissions and opt-ins
+    #   that contain an expression.
+    #   @return [Types::Condition]
+    #
     # @!attribute [rw] permissions
     #   The permissions to be granted or revoked on the resource.
     #   @return [Array<String>]
@@ -2855,6 +2888,7 @@ module Aws::LakeFormation
     class PrincipalResourcePermissions < Struct.new(
       :principal,
       :resource,
+      :condition,
       :permissions,
       :permissions_with_grant_option,
       :additional_details,

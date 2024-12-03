@@ -69,6 +69,34 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: [:action_group_name, :description]
     end
 
+    class AgentCollaboratorInputPayload
+      attr_accessor return_control_results: Types::ReturnControlResults
+      attr_accessor text: ::String
+      attr_accessor type: ("TEXT" | "RETURN_CONTROL")
+      SENSITIVE: [:text]
+    end
+
+    class AgentCollaboratorInvocationInput
+      attr_accessor agent_collaborator_alias_arn: ::String
+      attr_accessor agent_collaborator_name: ::String
+      attr_accessor input: Types::AgentCollaboratorInputPayload
+      SENSITIVE: []
+    end
+
+    class AgentCollaboratorInvocationOutput
+      attr_accessor agent_collaborator_alias_arn: ::String
+      attr_accessor agent_collaborator_name: ::String
+      attr_accessor output: Types::AgentCollaboratorOutputPayload
+      SENSITIVE: []
+    end
+
+    class AgentCollaboratorOutputPayload
+      attr_accessor return_control_payload: Types::ReturnControlPayload
+      attr_accessor text: ::String
+      attr_accessor type: ("TEXT" | "RETURN_CONTROL")
+      SENSITIVE: [:return_control_payload, :text]
+    end
+
     class AnalyzePromptEvent
       attr_accessor message: ::String
       attr_accessor event_type: untyped
@@ -78,11 +106,13 @@ module Aws::BedrockAgentRuntime
     class ApiInvocationInput
       attr_accessor action_group: ::String
       attr_accessor action_invocation_type: ("RESULT" | "USER_CONFIRMATION" | "USER_CONFIRMATION_AND_RESULT")
+      attr_accessor agent_id: ::String
       attr_accessor api_path: ::String
+      attr_accessor collaborator_name: ::String
       attr_accessor http_method: ::String
       attr_accessor parameters: ::Array[Types::ApiParameter]
       attr_accessor request_body: Types::ApiRequestBody
-      SENSITIVE: [:api_path]
+      SENSITIVE: [:api_path, :collaborator_name]
     end
 
     class ApiParameter
@@ -99,6 +129,7 @@ module Aws::BedrockAgentRuntime
 
     class ApiResult
       attr_accessor action_group: ::String
+      attr_accessor agent_id: ::String
       attr_accessor api_path: ::String
       attr_accessor confirmation_state: ("CONFIRM" | "DENY")
       attr_accessor http_method: ::String
@@ -145,6 +176,17 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: [:data]
     end
 
+    class Caller
+      attr_accessor agent_alias_arn: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class AgentAliasArn < Caller
+      end
+      class Unknown < Caller
+      end
+    end
+
     class Citation
       attr_accessor generated_response_part: Types::GeneratedResponsePart
       attr_accessor retrieved_references: ::Array[Types::RetrievedReference]
@@ -177,8 +219,24 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class ContentBlock
+      attr_accessor text: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Text < ContentBlock
+      end
+      class Unknown < ContentBlock
+      end
+    end
+
     class ContentBody
       attr_accessor body: ::String
+      SENSITIVE: []
+    end
+
+    class ConversationHistory
+      attr_accessor messages: ::Array[Types::Message]
       SENSITIVE: []
     end
 
@@ -404,9 +462,11 @@ module Aws::BedrockAgentRuntime
     class FunctionInvocationInput
       attr_accessor action_group: ::String
       attr_accessor action_invocation_type: ("RESULT" | "USER_CONFIRMATION" | "USER_CONFIRMATION_AND_RESULT")
+      attr_accessor agent_id: ::String
+      attr_accessor collaborator_name: ::String
       attr_accessor function: ::String
       attr_accessor parameters: ::Array[Types::FunctionParameter]
-      SENSITIVE: []
+      SENSITIVE: [:collaborator_name]
     end
 
     class FunctionParameter
@@ -418,6 +478,7 @@ module Aws::BedrockAgentRuntime
 
     class FunctionResult
       attr_accessor action_group: ::String
+      attr_accessor agent_id: ::String
       attr_accessor confirmation_state: ("CONFIRM" | "DENY")
       attr_accessor function: ::String
       attr_accessor response_body: ::Hash[::String, Types::ContentBody]
@@ -645,8 +706,9 @@ module Aws::BedrockAgentRuntime
 
     class InvocationInput
       attr_accessor action_group_invocation_input: Types::ActionGroupInvocationInput
+      attr_accessor agent_collaborator_invocation_input: Types::AgentCollaboratorInvocationInput
       attr_accessor code_interpreter_invocation_input: Types::CodeInterpreterInvocationInput
-      attr_accessor invocation_type: ("ACTION_GROUP" | "KNOWLEDGE_BASE" | "FINISH" | "ACTION_GROUP_CODE_INTERPRETER")
+      attr_accessor invocation_type: ("ACTION_GROUP" | "KNOWLEDGE_BASE" | "FINISH" | "ACTION_GROUP_CODE_INTERPRETER" | "AGENT_COLLABORATOR")
       attr_accessor knowledge_base_lookup_input: Types::KnowledgeBaseLookupInput
       attr_accessor trace_id: ::String
       SENSITIVE: []
@@ -689,6 +751,7 @@ module Aws::BedrockAgentRuntime
       attr_accessor memory_id: ::String
       attr_accessor session_id: ::String
       attr_accessor session_state: Types::SessionState
+      attr_accessor source_arn: ::String
       attr_accessor streaming_configurations: Types::StreamingConfigurations
       SENSITIVE: [:input_text]
     end
@@ -818,6 +881,12 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class Message
+      attr_accessor content: ::Array[Types::ContentBlock]
+      attr_accessor role: ("user" | "assistant")
+      SENSITIVE: []
+    end
+
     class Metadata
       attr_accessor usage: Types::Usage
       SENSITIVE: [:usage]
@@ -837,6 +906,7 @@ module Aws::BedrockAgentRuntime
     end
 
     class ModelInvocationInput
+      attr_accessor foundation_model: ::String
       attr_accessor inference_configuration: Types::InferenceConfiguration
       attr_accessor override_lambda: ::String
       attr_accessor parser_mode: ("DEFAULT" | "OVERRIDDEN")
@@ -849,12 +919,13 @@ module Aws::BedrockAgentRuntime
 
     class Observation
       attr_accessor action_group_invocation_output: Types::ActionGroupInvocationOutput
+      attr_accessor agent_collaborator_invocation_output: Types::AgentCollaboratorInvocationOutput
       attr_accessor code_interpreter_invocation_output: Types::CodeInterpreterInvocationOutput
       attr_accessor final_response: Types::FinalResponse
       attr_accessor knowledge_base_lookup_output: Types::KnowledgeBaseLookupOutput
       attr_accessor reprompt_response: Types::RepromptResponse
       attr_accessor trace_id: ::String
-      attr_accessor type: ("ACTION_GROUP" | "KNOWLEDGE_BASE" | "FINISH" | "ASK_USER" | "REPROMPT")
+      attr_accessor type: ("ACTION_GROUP" | "AGENT_COLLABORATOR" | "KNOWLEDGE_BASE" | "FINISH" | "ASK_USER" | "REPROMPT")
       SENSITIVE: [:reprompt_response]
     end
 
@@ -1312,6 +1383,39 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class ReturnControlResults
+      attr_accessor invocation_id: ::String
+      attr_accessor return_control_invocation_results: ::Array[Types::InvocationResultMember]
+      SENSITIVE: []
+    end
+
+    class RoutingClassifierModelInvocationOutput
+      attr_accessor metadata: Types::Metadata
+      attr_accessor raw_response: Types::RawResponse
+      attr_accessor trace_id: ::String
+      SENSITIVE: [:metadata, :raw_response]
+    end
+
+    class RoutingClassifierTrace
+      attr_accessor invocation_input: Types::InvocationInput
+      attr_accessor model_invocation_input: Types::ModelInvocationInput
+      attr_accessor model_invocation_output: Types::RoutingClassifierModelInvocationOutput
+      attr_accessor observation: Types::Observation
+      attr_accessor unknown: untyped
+      SENSITIVE: [:invocation_input, :model_invocation_input, :model_invocation_output, :observation]
+
+      class InvocationInput < RoutingClassifierTrace
+      end
+      class ModelInvocationInput < RoutingClassifierTrace
+      end
+      class ModelInvocationOutput < RoutingClassifierTrace
+      end
+      class Observation < RoutingClassifierTrace
+      end
+      class Unknown < RoutingClassifierTrace
+      end
+    end
+
     class S3Identifier
       attr_accessor s3_bucket_name: ::String
       attr_accessor s3_object_key: ::String
@@ -1335,6 +1439,7 @@ module Aws::BedrockAgentRuntime
     end
 
     class SessionState
+      attr_accessor conversation_history: Types::ConversationHistory
       attr_accessor files: ::Array[Types::InputFile]
       attr_accessor invocation_id: ::String
       attr_accessor knowledge_base_configurations: ::Array[Types::KnowledgeBaseConfiguration]
@@ -1388,8 +1493,9 @@ module Aws::BedrockAgentRuntime
       attr_accessor orchestration_trace: Types::OrchestrationTrace
       attr_accessor post_processing_trace: Types::PostProcessingTrace
       attr_accessor pre_processing_trace: Types::PreProcessingTrace
+      attr_accessor routing_classifier_trace: Types::RoutingClassifierTrace
       attr_accessor unknown: untyped
-      SENSITIVE: [:custom_orchestration_trace, :failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace]
+      SENSITIVE: [:custom_orchestration_trace, :failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace, :routing_classifier_trace]
 
       class CustomOrchestrationTrace < Trace
       end
@@ -1403,6 +1509,8 @@ module Aws::BedrockAgentRuntime
       end
       class PreProcessingTrace < Trace
       end
+      class RoutingClassifierTrace < Trace
+      end
       class Unknown < Trace
       end
     end
@@ -1411,10 +1519,12 @@ module Aws::BedrockAgentRuntime
       attr_accessor agent_alias_id: ::String
       attr_accessor agent_id: ::String
       attr_accessor agent_version: ::String
+      attr_accessor caller_chain: ::Array[Types::Caller]
+      attr_accessor collaborator_name: ::String
       attr_accessor session_id: ::String
       attr_accessor trace: Types::Trace
       attr_accessor event_type: untyped
-      SENSITIVE: [:trace]
+      SENSITIVE: [:collaborator_name, :trace]
     end
 
     class Usage

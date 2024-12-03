@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.24.0 (2024-12-03)
+------------------
+
+* Feature - Amazon Q Business now supports customization options for your web experience, 11 new Plugins, and QuickSight support. Amazon Q index allows software providers to enrich their native generative AI experiences with their customer's enterprise knowledge and user context spanning multiple applications.
+
 1.23.0 (2024-12-02)
 ------------------
 

@@ -895,7 +895,7 @@ module Aws::Bedrock
     # to be returned to the user if a user input or model response is in
     # violation of the policies defined in the guardrail.
     #
-    # For more information, see [Guardrails for Amazon Bedrock][1] in the
+    # For more information, see [Amazon Bedrock Guardrails][1] in the
     # *Amazon Bedrock User Guide*.
     #
     #
@@ -1326,7 +1326,7 @@ module Aws::Bedrock
     # @option params [required, Types::OutputDataConfig] :output_data_config
     #   S3 location for the output data.
     #
-    # @option params [required, Hash<String,String>] :hyper_parameters
+    # @option params [Hash<String,String>] :hyper_parameters
     #   Parameters related to tuning the model. For details on the format for
     #   different models, see [Custom model hyperparameters][1].
     #
@@ -1343,6 +1343,9 @@ module Aws::Bedrock
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/vpc-model-customization.html
     #
+    # @option params [Types::CustomizationConfig] :customization_config
+    #   The customization configuration for the model customization job.
+    #
     # @return [Types::CreateModelCustomizationJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateModelCustomizationJobResponse#job_arn #job_arn} => String
@@ -1355,7 +1358,7 @@ module Aws::Bedrock
     #     role_arn: "RoleArn", # required
     #     client_request_token: "IdempotencyToken",
     #     base_model_identifier: "BaseModelIdentifier", # required
-    #     customization_type: "FINE_TUNING", # accepts FINE_TUNING, CONTINUED_PRE_TRAINING
+    #     customization_type: "FINE_TUNING", # accepts FINE_TUNING, CONTINUED_PRE_TRAINING, DISTILLATION
     #     custom_model_kms_key_id: "KmsKeyId",
     #     job_tags: [
     #       {
@@ -1370,7 +1373,41 @@ module Aws::Bedrock
     #       },
     #     ],
     #     training_data_config: { # required
-    #       s3_uri: "S3Uri", # required
+    #       s3_uri: "S3Uri",
+    #       invocation_logs_config: {
+    #         use_prompt_response: false,
+    #         invocation_log_source: { # required
+    #           s3_uri: "S3Uri",
+    #         },
+    #         request_metadata_filters: {
+    #           equals: {
+    #             "RequestMetadataMapKeyString" => "RequestMetadataMapValueString",
+    #           },
+    #           not_equals: {
+    #             "RequestMetadataMapKeyString" => "RequestMetadataMapValueString",
+    #           },
+    #           and_all: [
+    #             {
+    #               equals: {
+    #                 "RequestMetadataMapKeyString" => "RequestMetadataMapValueString",
+    #               },
+    #               not_equals: {
+    #                 "RequestMetadataMapKeyString" => "RequestMetadataMapValueString",
+    #               },
+    #             },
+    #           ],
+    #           or_all: [
+    #             {
+    #               equals: {
+    #                 "RequestMetadataMapKeyString" => "RequestMetadataMapValueString",
+    #               },
+    #               not_equals: {
+    #                 "RequestMetadataMapKeyString" => "RequestMetadataMapValueString",
+    #               },
+    #             },
+    #           ],
+    #         },
+    #       },
     #     },
     #     validation_data_config: {
     #       validators: [ # required
@@ -1382,12 +1419,20 @@ module Aws::Bedrock
     #     output_data_config: { # required
     #       s3_uri: "S3Uri", # required
     #     },
-    #     hyper_parameters: { # required
+    #     hyper_parameters: {
     #       "String" => "String",
     #     },
     #     vpc_config: {
     #       subnet_ids: ["SubnetId"], # required
     #       security_group_ids: ["SecurityGroupId"], # required
+    #     },
+    #     customization_config: {
+    #       distillation_config: {
+    #         teacher_model_config: { # required
+    #           teacher_model_identifier: "TeacherModelIdentifier", # required
+    #           max_response_length_for_inference: 1,
+    #         },
+    #       },
     #     },
     #   })
     #
@@ -1551,7 +1596,7 @@ module Aws::Bedrock
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc
     #
     # @option params [Integer] :timeout_duration_in_hours
     #   The number of hours after which to force the batch inference job to
@@ -1917,6 +1962,7 @@ module Aws::Bedrock
     #   * {Types::GetCustomModelResponse#training_metrics #training_metrics} => Types::TrainingMetrics
     #   * {Types::GetCustomModelResponse#validation_metrics #validation_metrics} => Array&lt;Types::ValidatorMetric&gt;
     #   * {Types::GetCustomModelResponse#creation_time #creation_time} => Time
+    #   * {Types::GetCustomModelResponse#customization_config #customization_config} => Types::CustomizationConfig
     #
     # @example Request syntax with placeholder values
     #
@@ -1931,11 +1977,27 @@ module Aws::Bedrock
     #   resp.job_name #=> String
     #   resp.job_arn #=> String
     #   resp.base_model_arn #=> String
-    #   resp.customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING"
+    #   resp.customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING", "DISTILLATION"
     #   resp.model_kms_key_arn #=> String
     #   resp.hyper_parameters #=> Hash
     #   resp.hyper_parameters["String"] #=> String
     #   resp.training_data_config.s3_uri #=> String
+    #   resp.training_data_config.invocation_logs_config.use_prompt_response #=> Boolean
+    #   resp.training_data_config.invocation_logs_config.invocation_log_source.s3_uri #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.not_equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.not_equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all #=> Array
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].not_equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].not_equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all #=> Array
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].not_equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].not_equals["RequestMetadataMapKeyString"] #=> String
     #   resp.validation_data_config.validators #=> Array
     #   resp.validation_data_config.validators[0].s3_uri #=> String
     #   resp.output_data_config.s3_uri #=> String
@@ -1943,6 +2005,8 @@ module Aws::Bedrock
     #   resp.validation_metrics #=> Array
     #   resp.validation_metrics[0].validation_loss #=> Float
     #   resp.creation_time #=> Time
+    #   resp.customization_config.distillation_config.teacher_model_config.teacher_model_identifier #=> String
+    #   resp.customization_config.distillation_config.teacher_model_config.max_response_length_for_inference #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetCustomModel AWS API Documentation
     #
@@ -2123,7 +2187,7 @@ module Aws::Bedrock
     #   resp.model_details.output_modalities[0] #=> String, one of "TEXT", "IMAGE", "EMBEDDING"
     #   resp.model_details.response_streaming_supported #=> Boolean
     #   resp.model_details.customizations_supported #=> Array
-    #   resp.model_details.customizations_supported[0] #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING"
+    #   resp.model_details.customizations_supported[0] #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING", "DISTILLATION"
     #   resp.model_details.inference_types_supported #=> Array
     #   resp.model_details.inference_types_supported[0] #=> String, one of "ON_DEMAND", "PROVISIONED"
     #   resp.model_details.model_lifecycle.status #=> String, one of "ACTIVE", "LEGACY"
@@ -2416,6 +2480,7 @@ module Aws::Bedrock
     #   * {Types::GetModelCustomizationJobResponse#training_metrics #training_metrics} => Types::TrainingMetrics
     #   * {Types::GetModelCustomizationJobResponse#validation_metrics #validation_metrics} => Array&lt;Types::ValidatorMetric&gt;
     #   * {Types::GetModelCustomizationJobResponse#vpc_config #vpc_config} => Types::VpcConfig
+    #   * {Types::GetModelCustomizationJobResponse#customization_config #customization_config} => Types::CustomizationConfig
     #
     # @example Request syntax with placeholder values
     #
@@ -2440,10 +2505,26 @@ module Aws::Bedrock
     #   resp.hyper_parameters #=> Hash
     #   resp.hyper_parameters["String"] #=> String
     #   resp.training_data_config.s3_uri #=> String
+    #   resp.training_data_config.invocation_logs_config.use_prompt_response #=> Boolean
+    #   resp.training_data_config.invocation_logs_config.invocation_log_source.s3_uri #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.not_equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.not_equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all #=> Array
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].not_equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.and_all[0].not_equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all #=> Array
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].equals["RequestMetadataMapKeyString"] #=> String
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].not_equals #=> Hash
+    #   resp.training_data_config.invocation_logs_config.request_metadata_filters.or_all[0].not_equals["RequestMetadataMapKeyString"] #=> String
     #   resp.validation_data_config.validators #=> Array
     #   resp.validation_data_config.validators[0].s3_uri #=> String
     #   resp.output_data_config.s3_uri #=> String
-    #   resp.customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING"
+    #   resp.customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING", "DISTILLATION"
     #   resp.output_model_kms_key_arn #=> String
     #   resp.training_metrics.training_loss #=> Float
     #   resp.validation_metrics #=> Array
@@ -2452,6 +2533,8 @@ module Aws::Bedrock
     #   resp.vpc_config.subnet_ids[0] #=> String
     #   resp.vpc_config.security_group_ids #=> Array
     #   resp.vpc_config.security_group_ids[0] #=> String
+    #   resp.customization_config.distillation_config.teacher_model_config.teacher_model_identifier #=> String
+    #   resp.customization_config.distillation_config.teacher_model_config.max_response_length_for_inference #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetModelCustomizationJob AWS API Documentation
     #
@@ -2525,11 +2608,11 @@ module Aws::Bedrock
     end
 
     # Gets details about a batch inference job. For more information, see
-    # [View details about a batch inference job][1]
+    # [Monitor batch inference jobs][1]
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-manage.html#batch-inference-view
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-monitor
     #
     # @option params [required, String] :job_identifier
     #   The Amazon Resource Name (ARN) of the batch inference job.
@@ -2609,6 +2692,7 @@ module Aws::Bedrock
     #   resp.logging_config.text_data_delivery_enabled #=> Boolean
     #   resp.logging_config.image_data_delivery_enabled #=> Boolean
     #   resp.logging_config.embedding_data_delivery_enabled #=> Boolean
+    #   resp.logging_config.video_data_delivery_enabled #=> Boolean
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetModelInvocationLoggingConfiguration AWS API Documentation
     #
@@ -2758,7 +2842,7 @@ module Aws::Bedrock
     #   resp.model_summaries[0].creation_time #=> Time
     #   resp.model_summaries[0].base_model_arn #=> String
     #   resp.model_summaries[0].base_model_name #=> String
-    #   resp.model_summaries[0].customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING"
+    #   resp.model_summaries[0].customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING", "DISTILLATION"
     #   resp.model_summaries[0].owner_account_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListCustomModels AWS API Documentation
@@ -2896,7 +2980,7 @@ module Aws::Bedrock
     #
     #   resp = client.list_foundation_models({
     #     by_provider: "Provider",
-    #     by_customization_type: "FINE_TUNING", # accepts FINE_TUNING, CONTINUED_PRE_TRAINING
+    #     by_customization_type: "FINE_TUNING", # accepts FINE_TUNING, CONTINUED_PRE_TRAINING, DISTILLATION
     #     by_output_modality: "TEXT", # accepts TEXT, IMAGE, EMBEDDING
     #     by_inference_type: "ON_DEMAND", # accepts ON_DEMAND, PROVISIONED
     #   })
@@ -2914,7 +2998,7 @@ module Aws::Bedrock
     #   resp.model_summaries[0].output_modalities[0] #=> String, one of "TEXT", "IMAGE", "EMBEDDING"
     #   resp.model_summaries[0].response_streaming_supported #=> Boolean
     #   resp.model_summaries[0].customizations_supported #=> Array
-    #   resp.model_summaries[0].customizations_supported[0] #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING"
+    #   resp.model_summaries[0].customizations_supported[0] #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING", "DISTILLATION"
     #   resp.model_summaries[0].inference_types_supported #=> Array
     #   resp.model_summaries[0].inference_types_supported[0] #=> String, one of "ON_DEMAND", "PROVISIONED"
     #   resp.model_summaries[0].model_lifecycle.status #=> String, one of "ACTIVE", "LEGACY"
@@ -3308,7 +3392,7 @@ module Aws::Bedrock
     #   resp.model_customization_job_summaries[0].end_time #=> Time
     #   resp.model_customization_job_summaries[0].custom_model_arn #=> String
     #   resp.model_customization_job_summaries[0].custom_model_name #=> String
-    #   resp.model_customization_job_summaries[0].customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING"
+    #   resp.model_customization_job_summaries[0].customization_type #=> String, one of "FINE_TUNING", "CONTINUED_PRE_TRAINING", "DISTILLATION"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListModelCustomizationJobs AWS API Documentation
     #
@@ -3407,7 +3491,7 @@ module Aws::Bedrock
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-manage.html#batch-inference-view
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-view.html
     #
     # @option params [Time,DateTime,Date,Integer,String] :submit_time_after
     #   Specify a time to filter for batch inference jobs that were submitted
@@ -3420,6 +3504,53 @@ module Aws::Bedrock
     # @option params [String] :status_equals
     #   Specify a status to filter for batch inference jobs whose statuses
     #   match the string you specify.
+    #
+    #   The following statuses are possible:
+    #
+    #   * Submitted – This job has been submitted to a queue for validation.
+    #
+    #   * Validating – This job is being validated for the requirements
+    #     described in [Format and upload your batch inference data][1]. The
+    #     criteria include the following:
+    #
+    #     * Your IAM service role has access to the Amazon S3 buckets
+    #       containing your files.
+    #
+    #     * Your files are .jsonl files and each individual record is a JSON
+    #       object in the correct format. Note that validation doesn't check
+    #       if the `modelInput` value matches the request body for the model.
+    #
+    #     * Your files fulfill the requirements for file size and number of
+    #       records. For more information, see [Quotas for Amazon Bedrock][2].
+    #   * Scheduled – This job has been validated and is now in a queue. The
+    #     job will automatically start when it reaches its turn.
+    #
+    #   * Expired – This job timed out because it was scheduled but didn't
+    #     begin before the set timeout duration. Submit a new job request.
+    #
+    #   * InProgress – This job has begun. You can start viewing the results
+    #     in the output S3 location.
+    #
+    #   * Completed – This job has successfully completed. View the output
+    #     files in the output S3 location.
+    #
+    #   * PartiallyCompleted – This job has partially completed. Not all of
+    #     your records could be processed in time. View the output files in
+    #     the output S3 location.
+    #
+    #   * Failed – This job has failed. Check the failure message for any
+    #     further details. For further assistance, reach out to the [Amazon
+    #     Web Services Support Center][3].
+    #
+    #   * Stopped – This job was stopped by a user.
+    #
+    #   * Stopping – This job is being stopped by a user.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html
+    #   [3]: https://console.aws.amazon.com/support/home/
     #
     # @option params [String] :name_contains
     #   Specify a string to filter for batch inference jobs whose names
@@ -3657,6 +3788,7 @@ module Aws::Bedrock
     #       text_data_delivery_enabled: false,
     #       image_data_delivery_enabled: false,
     #       embedding_data_delivery_enabled: false,
+    #       video_data_delivery_enabled: false,
     #     },
     #   })
     #
@@ -3725,7 +3857,7 @@ module Aws::Bedrock
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-manage.html#batch-inference-stop
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-stop.html
     #
     # @option params [required, String] :job_identifier
     #   The Amazon Resource Name (ARN) of the batch inference job to stop.
@@ -4043,7 +4175,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.30.0'
+      context[:gem_version] = '1.31.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

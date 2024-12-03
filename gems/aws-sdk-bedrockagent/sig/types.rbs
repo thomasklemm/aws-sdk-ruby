@@ -52,6 +52,7 @@ module Aws::BedrockAgent
 
     class Agent
       attr_accessor agent_arn: ::String
+      attr_accessor agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED")
       attr_accessor agent_id: ::String
       attr_accessor agent_name: ::String
       attr_accessor agent_resource_role_arn: ::String
@@ -133,6 +134,38 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class AgentCollaborator
+      attr_accessor agent_descriptor: Types::AgentDescriptor
+      attr_accessor agent_id: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor client_token: ::String
+      attr_accessor collaboration_instruction: ::String
+      attr_accessor collaborator_id: ::String
+      attr_accessor collaborator_name: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor relay_conversation_history: ("TO_COLLABORATOR" | "DISABLED")
+      SENSITIVE: [:collaboration_instruction]
+    end
+
+    class AgentCollaboratorSummary
+      attr_accessor agent_descriptor: Types::AgentDescriptor
+      attr_accessor agent_id: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor collaboration_instruction: ::String
+      attr_accessor collaborator_id: ::String
+      attr_accessor collaborator_name: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor last_updated_at: ::Time
+      attr_accessor relay_conversation_history: ("TO_COLLABORATOR" | "DISABLED")
+      SENSITIVE: [:collaboration_instruction]
+    end
+
+    class AgentDescriptor
+      attr_accessor alias_arn: ::String
+      SENSITIVE: []
+    end
+
     class AgentFlowNodeConfiguration
       attr_accessor agent_alias_arn: ::String
       SENSITIVE: []
@@ -170,6 +203,7 @@ module Aws::BedrockAgent
 
     class AgentVersion
       attr_accessor agent_arn: ::String
+      attr_accessor agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED")
       attr_accessor agent_id: ::String
       attr_accessor agent_name: ::String
       attr_accessor agent_resource_role_arn: ::String
@@ -202,6 +236,22 @@ module Aws::BedrockAgent
     end
 
     class AnyToolChoice < Aws::EmptyStructure
+    end
+
+    class AssociateAgentCollaboratorRequest
+      attr_accessor agent_descriptor: Types::AgentDescriptor
+      attr_accessor agent_id: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor client_token: ::String
+      attr_accessor collaboration_instruction: ::String
+      attr_accessor collaborator_name: ::String
+      attr_accessor relay_conversation_history: ("TO_COLLABORATOR" | "DISABLED")
+      SENSITIVE: [:collaboration_instruction]
+    end
+
+    class AssociateAgentCollaboratorResponse
+      attr_accessor agent_collaborator: Types::AgentCollaborator
+      SENSITIVE: []
     end
 
     class AssociateAgentKnowledgeBaseRequest
@@ -339,6 +389,7 @@ module Aws::BedrockAgent
     end
 
     class CreateAgentRequest
+      attr_accessor agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED")
       attr_accessor agent_name: ::String
       attr_accessor agent_resource_role_arn: ::String
       attr_accessor client_token: ::String
@@ -716,6 +767,16 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class DisassociateAgentCollaboratorRequest
+      attr_accessor agent_id: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor collaborator_id: ::String
+      SENSITIVE: []
+    end
+
+    class DisassociateAgentCollaboratorResponse < Aws::EmptyStructure
+    end
+
     class DisassociateAgentKnowledgeBaseRequest
       attr_accessor agent_id: ::String
       attr_accessor agent_version: ::String
@@ -1050,6 +1111,18 @@ module Aws::BedrockAgent
 
     class GetAgentAliasResponse
       attr_accessor agent_alias: Types::AgentAlias
+      SENSITIVE: []
+    end
+
+    class GetAgentCollaboratorRequest
+      attr_accessor agent_id: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor collaborator_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetAgentCollaboratorResponse
+      attr_accessor agent_collaborator: Types::AgentCollaborator
       SENSITIVE: []
     end
 
@@ -1413,6 +1486,20 @@ module Aws::BedrockAgent
 
     class ListAgentAliasesResponse
       attr_accessor agent_alias_summaries: ::Array[Types::AgentAliasSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAgentCollaboratorsRequest
+      attr_accessor agent_id: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListAgentCollaboratorsResponse
+      attr_accessor agent_collaborator_summaries: ::Array[Types::AgentCollaboratorSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -1787,6 +1874,7 @@ module Aws::BedrockAgent
 
     class PromptConfiguration
       attr_accessor base_prompt_template: ::String
+      attr_accessor foundation_model: ::String
       attr_accessor inference_configuration: Types::InferenceConfiguration
       attr_accessor parser_mode: ("DEFAULT" | "OVERRIDDEN")
       attr_accessor prompt_creation_mode: ("DEFAULT" | "OVERRIDDEN")
@@ -2306,6 +2394,22 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class UpdateAgentCollaboratorRequest
+      attr_accessor agent_descriptor: Types::AgentDescriptor
+      attr_accessor agent_id: ::String
+      attr_accessor agent_version: ::String
+      attr_accessor collaboration_instruction: ::String
+      attr_accessor collaborator_id: ::String
+      attr_accessor collaborator_name: ::String
+      attr_accessor relay_conversation_history: ("TO_COLLABORATOR" | "DISABLED")
+      SENSITIVE: [:collaboration_instruction]
+    end
+
+    class UpdateAgentCollaboratorResponse
+      attr_accessor agent_collaborator: Types::AgentCollaborator
+      SENSITIVE: []
+    end
+
     class UpdateAgentKnowledgeBaseRequest
       attr_accessor agent_id: ::String
       attr_accessor agent_version: ::String
@@ -2321,6 +2425,7 @@ module Aws::BedrockAgent
     end
 
     class UpdateAgentRequest
+      attr_accessor agent_collaboration: ("SUPERVISOR" | "SUPERVISOR_ROUTER" | "DISABLED")
       attr_accessor agent_id: ::String
       attr_accessor agent_name: ::String
       attr_accessor agent_resource_role_arn: ::String

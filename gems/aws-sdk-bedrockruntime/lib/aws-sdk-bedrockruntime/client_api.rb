@@ -15,11 +15,22 @@ module Aws::BedrockRuntime
     include Seahorse::Model
 
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
+    AccountId = Shapes::StringShape.new(name: 'AccountId')
     AnyToolChoice = Shapes::StructureShape.new(name: 'AnyToolChoice')
     ApplyGuardrailRequest = Shapes::StructureShape.new(name: 'ApplyGuardrailRequest')
     ApplyGuardrailResponse = Shapes::StructureShape.new(name: 'ApplyGuardrailResponse')
+    AsyncInvokeArn = Shapes::StringShape.new(name: 'AsyncInvokeArn')
+    AsyncInvokeIdempotencyToken = Shapes::StringShape.new(name: 'AsyncInvokeIdempotencyToken')
+    AsyncInvokeIdentifier = Shapes::StringShape.new(name: 'AsyncInvokeIdentifier')
+    AsyncInvokeMessage = Shapes::StringShape.new(name: 'AsyncInvokeMessage')
+    AsyncInvokeOutputDataConfig = Shapes::UnionShape.new(name: 'AsyncInvokeOutputDataConfig')
+    AsyncInvokeS3OutputDataConfig = Shapes::StructureShape.new(name: 'AsyncInvokeS3OutputDataConfig')
+    AsyncInvokeStatus = Shapes::StringShape.new(name: 'AsyncInvokeStatus')
+    AsyncInvokeSummaries = Shapes::ListShape.new(name: 'AsyncInvokeSummaries')
+    AsyncInvokeSummary = Shapes::StructureShape.new(name: 'AsyncInvokeSummary')
     AutoToolChoice = Shapes::StructureShape.new(name: 'AutoToolChoice')
     Body = Shapes::BlobShape.new(name: 'Body')
+    ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     ContentBlock = Shapes::UnionShape.new(name: 'ContentBlock')
     ContentBlockDelta = Shapes::UnionShape.new(name: 'ContentBlockDelta')
     ContentBlockDeltaEvent = Shapes::StructureShape.new(name: 'ContentBlockDeltaEvent')
@@ -50,6 +61,8 @@ module Aws::BedrockRuntime
     DocumentFormat = Shapes::StringShape.new(name: 'DocumentFormat')
     DocumentSource = Shapes::UnionShape.new(name: 'DocumentSource')
     DocumentSourceBytesBlob = Shapes::BlobShape.new(name: 'DocumentSourceBytesBlob')
+    GetAsyncInvokeRequest = Shapes::StructureShape.new(name: 'GetAsyncInvokeRequest')
+    GetAsyncInvokeResponse = Shapes::StructureShape.new(name: 'GetAsyncInvokeResponse')
     GuardrailAction = Shapes::StringShape.new(name: 'GuardrailAction')
     GuardrailAssessment = Shapes::StructureShape.new(name: 'GuardrailAssessment')
     GuardrailAssessmentList = Shapes::ListShape.new(name: 'GuardrailAssessmentList')
@@ -129,18 +142,24 @@ module Aws::BedrockRuntime
     InferenceConfigurationTemperatureFloat = Shapes::FloatShape.new(name: 'InferenceConfigurationTemperatureFloat')
     InferenceConfigurationTopPFloat = Shapes::FloatShape.new(name: 'InferenceConfigurationTopPFloat')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
+    InvocationArn = Shapes::StringShape.new(name: 'InvocationArn')
     InvokeModelIdentifier = Shapes::StringShape.new(name: 'InvokeModelIdentifier')
     InvokeModelRequest = Shapes::StructureShape.new(name: 'InvokeModelRequest')
     InvokeModelResponse = Shapes::StructureShape.new(name: 'InvokeModelResponse')
     InvokeModelWithResponseStreamRequest = Shapes::StructureShape.new(name: 'InvokeModelWithResponseStreamRequest')
     InvokeModelWithResponseStreamResponse = Shapes::StructureShape.new(name: 'InvokeModelWithResponseStreamResponse')
+    KmsKeyId = Shapes::StringShape.new(name: 'KmsKeyId')
+    ListAsyncInvokesRequest = Shapes::StructureShape.new(name: 'ListAsyncInvokesRequest')
+    ListAsyncInvokesResponse = Shapes::StructureShape.new(name: 'ListAsyncInvokesResponse')
     Long = Shapes::IntegerShape.new(name: 'Long')
+    MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     Message = Shapes::StructureShape.new(name: 'Message')
     MessageStartEvent = Shapes::StructureShape.new(name: 'MessageStartEvent')
     MessageStopEvent = Shapes::StructureShape.new(name: 'MessageStopEvent')
     Messages = Shapes::ListShape.new(name: 'Messages')
     MimeType = Shapes::StringShape.new(name: 'MimeType')
     ModelErrorException = Shapes::StructureShape.new(name: 'ModelErrorException')
+    ModelInputPayload = Shapes::DocumentShape.new(name: 'ModelInputPayload', document: true)
     ModelNotReadyException = Shapes::StructureShape.new(name: 'ModelNotReadyException')
     ModelOutputs = Shapes::ListShape.new(name: 'ModelOutputs')
     ModelStreamErrorException = Shapes::StructureShape.new(name: 'ModelStreamErrorException')
@@ -148,25 +167,40 @@ module Aws::BedrockRuntime
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
     NonEmptyString = Shapes::StringShape.new(name: 'NonEmptyString')
     NonNegativeInteger = Shapes::IntegerShape.new(name: 'NonNegativeInteger')
+    PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
     PartBody = Shapes::BlobShape.new(name: 'PartBody')
     PayloadPart = Shapes::StructureShape.new(name: 'PayloadPart')
     PerformanceConfigLatency = Shapes::StringShape.new(name: 'PerformanceConfigLatency')
     PerformanceConfiguration = Shapes::StructureShape.new(name: 'PerformanceConfiguration')
     PromptVariableMap = Shapes::MapShape.new(name: 'PromptVariableMap')
     PromptVariableValues = Shapes::UnionShape.new(name: 'PromptVariableValues')
+    RequestMetadata = Shapes::MapShape.new(name: 'RequestMetadata')
+    RequestMetadataKeyString = Shapes::StringShape.new(name: 'RequestMetadataKeyString')
+    RequestMetadataValueString = Shapes::StringShape.new(name: 'RequestMetadataValueString')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResponseStream = Shapes::StructureShape.new(name: 'ResponseStream')
+    S3Location = Shapes::StructureShape.new(name: 'S3Location')
+    S3Uri = Shapes::StringShape.new(name: 'S3Uri')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
     ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
+    SortAsyncInvocationBy = Shapes::StringShape.new(name: 'SortAsyncInvocationBy')
+    SortOrder = Shapes::StringShape.new(name: 'SortOrder')
     SpecificToolChoice = Shapes::StructureShape.new(name: 'SpecificToolChoice')
+    StartAsyncInvokeRequest = Shapes::StructureShape.new(name: 'StartAsyncInvokeRequest')
+    StartAsyncInvokeResponse = Shapes::StructureShape.new(name: 'StartAsyncInvokeResponse')
     StatusCode = Shapes::IntegerShape.new(name: 'StatusCode')
     StopReason = Shapes::StringShape.new(name: 'StopReason')
     String = Shapes::StringShape.new(name: 'String')
     SystemContentBlock = Shapes::UnionShape.new(name: 'SystemContentBlock')
     SystemContentBlocks = Shapes::ListShape.new(name: 'SystemContentBlocks')
+    Tag = Shapes::StructureShape.new(name: 'Tag')
+    TagKey = Shapes::StringShape.new(name: 'TagKey')
+    TagList = Shapes::ListShape.new(name: 'TagList')
+    TagValue = Shapes::StringShape.new(name: 'TagValue')
     TextCharactersGuarded = Shapes::IntegerShape.new(name: 'TextCharactersGuarded')
     TextCharactersTotal = Shapes::IntegerShape.new(name: 'TextCharactersTotal')
     ThrottlingException = Shapes::StructureShape.new(name: 'ThrottlingException')
+    Timestamp = Shapes::TimestampShape.new(name: 'Timestamp', timestampFormat: "iso8601")
     TokenUsage = Shapes::StructureShape.new(name: 'TokenUsage')
     TokenUsageInputTokensInteger = Shapes::IntegerShape.new(name: 'TokenUsageInputTokensInteger')
     TokenUsageOutputTokensInteger = Shapes::IntegerShape.new(name: 'TokenUsageOutputTokensInteger')
@@ -188,6 +222,10 @@ module Aws::BedrockRuntime
     ToolUseId = Shapes::StringShape.new(name: 'ToolUseId')
     Trace = Shapes::StringShape.new(name: 'Trace')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
+    VideoBlock = Shapes::StructureShape.new(name: 'VideoBlock')
+    VideoFormat = Shapes::StringShape.new(name: 'VideoFormat')
+    VideoSource = Shapes::UnionShape.new(name: 'VideoSource')
+    VideoSourceBytesBlob = Shapes::BlobShape.new(name: 'VideoSourceBytesBlob')
 
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
@@ -207,11 +245,39 @@ module Aws::BedrockRuntime
     ApplyGuardrailResponse.add_member(:guardrail_coverage, Shapes::ShapeRef.new(shape: GuardrailCoverage, location_name: "guardrailCoverage"))
     ApplyGuardrailResponse.struct_class = Types::ApplyGuardrailResponse
 
+    AsyncInvokeOutputDataConfig.add_member(:s3_output_data_config, Shapes::ShapeRef.new(shape: AsyncInvokeS3OutputDataConfig, location_name: "s3OutputDataConfig"))
+    AsyncInvokeOutputDataConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    AsyncInvokeOutputDataConfig.add_member_subclass(:s3_output_data_config, Types::AsyncInvokeOutputDataConfig::S3OutputDataConfig)
+    AsyncInvokeOutputDataConfig.add_member_subclass(:unknown, Types::AsyncInvokeOutputDataConfig::Unknown)
+    AsyncInvokeOutputDataConfig.struct_class = Types::AsyncInvokeOutputDataConfig
+
+    AsyncInvokeS3OutputDataConfig.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "s3Uri"))
+    AsyncInvokeS3OutputDataConfig.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsKeyId"))
+    AsyncInvokeS3OutputDataConfig.add_member(:bucket_owner, Shapes::ShapeRef.new(shape: AccountId, location_name: "bucketOwner"))
+    AsyncInvokeS3OutputDataConfig.struct_class = Types::AsyncInvokeS3OutputDataConfig
+
+    AsyncInvokeSummaries.member = Shapes::ShapeRef.new(shape: AsyncInvokeSummary)
+
+    AsyncInvokeSummary.add_member(:invocation_arn, Shapes::ShapeRef.new(shape: InvocationArn, required: true, location_name: "invocationArn"))
+    AsyncInvokeSummary.add_member(:model_arn, Shapes::ShapeRef.new(shape: AsyncInvokeArn, required: true, location_name: "modelArn"))
+    AsyncInvokeSummary.add_member(:client_request_token, Shapes::ShapeRef.new(shape: AsyncInvokeIdempotencyToken, location_name: "clientRequestToken"))
+    AsyncInvokeSummary.add_member(:status, Shapes::ShapeRef.new(shape: AsyncInvokeStatus, location_name: "status"))
+    AsyncInvokeSummary.add_member(:failure_message, Shapes::ShapeRef.new(shape: AsyncInvokeMessage, location_name: "failureMessage"))
+    AsyncInvokeSummary.add_member(:submit_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "submitTime"))
+    AsyncInvokeSummary.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
+    AsyncInvokeSummary.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    AsyncInvokeSummary.add_member(:output_data_config, Shapes::ShapeRef.new(shape: AsyncInvokeOutputDataConfig, required: true, location_name: "outputDataConfig"))
+    AsyncInvokeSummary.struct_class = Types::AsyncInvokeSummary
+
     AutoToolChoice.struct_class = Types::AutoToolChoice
+
+    ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
+    ConflictException.struct_class = Types::ConflictException
 
     ContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))
     ContentBlock.add_member(:image, Shapes::ShapeRef.new(shape: ImageBlock, location_name: "image"))
     ContentBlock.add_member(:document, Shapes::ShapeRef.new(shape: DocumentBlock, location_name: "document"))
+    ContentBlock.add_member(:video, Shapes::ShapeRef.new(shape: VideoBlock, location_name: "video"))
     ContentBlock.add_member(:tool_use, Shapes::ShapeRef.new(shape: ToolUseBlock, location_name: "toolUse"))
     ContentBlock.add_member(:tool_result, Shapes::ShapeRef.new(shape: ToolResultBlock, location_name: "toolResult"))
     ContentBlock.add_member(:guard_content, Shapes::ShapeRef.new(shape: GuardrailConverseContentBlock, location_name: "guardContent"))
@@ -219,6 +285,7 @@ module Aws::BedrockRuntime
     ContentBlock.add_member_subclass(:text, Types::ContentBlock::Text)
     ContentBlock.add_member_subclass(:image, Types::ContentBlock::Image)
     ContentBlock.add_member_subclass(:document, Types::ContentBlock::Document)
+    ContentBlock.add_member_subclass(:video, Types::ContentBlock::Video)
     ContentBlock.add_member_subclass(:tool_use, Types::ContentBlock::ToolUse)
     ContentBlock.add_member_subclass(:tool_result, Types::ContentBlock::ToolResult)
     ContentBlock.add_member_subclass(:guard_content, Types::ContentBlock::GuardContent)
@@ -270,6 +337,7 @@ module Aws::BedrockRuntime
     ConverseRequest.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: Document, location_name: "additionalModelRequestFields"))
     ConverseRequest.add_member(:prompt_variables, Shapes::ShapeRef.new(shape: PromptVariableMap, location_name: "promptVariables"))
     ConverseRequest.add_member(:additional_model_response_field_paths, Shapes::ShapeRef.new(shape: ConverseRequestAdditionalModelResponseFieldPathsList, location_name: "additionalModelResponseFieldPaths"))
+    ConverseRequest.add_member(:request_metadata, Shapes::ShapeRef.new(shape: RequestMetadata, location_name: "requestMetadata"))
     ConverseRequest.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     ConverseRequest.struct_class = Types::ConverseRequest
 
@@ -315,6 +383,7 @@ module Aws::BedrockRuntime
     ConverseStreamRequest.add_member(:additional_model_request_fields, Shapes::ShapeRef.new(shape: Document, location_name: "additionalModelRequestFields"))
     ConverseStreamRequest.add_member(:prompt_variables, Shapes::ShapeRef.new(shape: PromptVariableMap, location_name: "promptVariables"))
     ConverseStreamRequest.add_member(:additional_model_response_field_paths, Shapes::ShapeRef.new(shape: ConverseStreamRequestAdditionalModelResponseFieldPathsList, location_name: "additionalModelResponseFieldPaths"))
+    ConverseStreamRequest.add_member(:request_metadata, Shapes::ShapeRef.new(shape: RequestMetadata, location_name: "requestMetadata"))
     ConverseStreamRequest.add_member(:performance_config, Shapes::ShapeRef.new(shape: PerformanceConfiguration, location_name: "performanceConfig"))
     ConverseStreamRequest.struct_class = Types::ConverseStreamRequest
 
@@ -341,6 +410,20 @@ module Aws::BedrockRuntime
     DocumentSource.add_member_subclass(:bytes, Types::DocumentSource::Bytes)
     DocumentSource.add_member_subclass(:unknown, Types::DocumentSource::Unknown)
     DocumentSource.struct_class = Types::DocumentSource
+
+    GetAsyncInvokeRequest.add_member(:invocation_arn, Shapes::ShapeRef.new(shape: InvocationArn, required: true, location: "uri", location_name: "invocationArn"))
+    GetAsyncInvokeRequest.struct_class = Types::GetAsyncInvokeRequest
+
+    GetAsyncInvokeResponse.add_member(:invocation_arn, Shapes::ShapeRef.new(shape: InvocationArn, required: true, location_name: "invocationArn"))
+    GetAsyncInvokeResponse.add_member(:model_arn, Shapes::ShapeRef.new(shape: AsyncInvokeArn, required: true, location_name: "modelArn"))
+    GetAsyncInvokeResponse.add_member(:client_request_token, Shapes::ShapeRef.new(shape: AsyncInvokeIdempotencyToken, location_name: "clientRequestToken"))
+    GetAsyncInvokeResponse.add_member(:status, Shapes::ShapeRef.new(shape: AsyncInvokeStatus, required: true, location_name: "status"))
+    GetAsyncInvokeResponse.add_member(:failure_message, Shapes::ShapeRef.new(shape: AsyncInvokeMessage, location_name: "failureMessage"))
+    GetAsyncInvokeResponse.add_member(:submit_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "submitTime"))
+    GetAsyncInvokeResponse.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
+    GetAsyncInvokeResponse.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
+    GetAsyncInvokeResponse.add_member(:output_data_config, Shapes::ShapeRef.new(shape: AsyncInvokeOutputDataConfig, required: true, location_name: "outputDataConfig"))
+    GetAsyncInvokeResponse.struct_class = Types::GetAsyncInvokeResponse
 
     GuardrailAssessment.add_member(:topic_policy, Shapes::ShapeRef.new(shape: GuardrailTopicPolicyAssessment, location_name: "topicPolicy"))
     GuardrailAssessment.add_member(:content_policy, Shapes::ShapeRef.new(shape: GuardrailContentPolicyAssessment, location_name: "contentPolicy"))
@@ -552,6 +635,19 @@ module Aws::BedrockRuntime
     InvokeModelWithResponseStreamResponse[:payload] = :body
     InvokeModelWithResponseStreamResponse[:payload_member] = InvokeModelWithResponseStreamResponse.member(:body)
 
+    ListAsyncInvokesRequest.add_member(:submit_time_after, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "submitTimeAfter"))
+    ListAsyncInvokesRequest.add_member(:submit_time_before, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "submitTimeBefore"))
+    ListAsyncInvokesRequest.add_member(:status_equals, Shapes::ShapeRef.new(shape: AsyncInvokeStatus, location: "querystring", location_name: "statusEquals"))
+    ListAsyncInvokesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListAsyncInvokesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
+    ListAsyncInvokesRequest.add_member(:sort_by, Shapes::ShapeRef.new(shape: SortAsyncInvocationBy, location: "querystring", location_name: "sortBy"))
+    ListAsyncInvokesRequest.add_member(:sort_order, Shapes::ShapeRef.new(shape: SortOrder, location: "querystring", location_name: "sortOrder"))
+    ListAsyncInvokesRequest.struct_class = Types::ListAsyncInvokesRequest
+
+    ListAsyncInvokesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListAsyncInvokesResponse.add_member(:async_invoke_summaries, Shapes::ShapeRef.new(shape: AsyncInvokeSummaries, location_name: "asyncInvokeSummaries"))
+    ListAsyncInvokesResponse.struct_class = Types::ListAsyncInvokesResponse
+
     Message.add_member(:role, Shapes::ShapeRef.new(shape: ConversationRole, required: true, location_name: "role"))
     Message.add_member(:content, Shapes::ShapeRef.new(shape: ContentBlocks, required: true, location_name: "content"))
     Message.struct_class = Types::Message
@@ -598,6 +694,9 @@ module Aws::BedrockRuntime
     PromptVariableValues.add_member_subclass(:unknown, Types::PromptVariableValues::Unknown)
     PromptVariableValues.struct_class = Types::PromptVariableValues
 
+    RequestMetadata.key = Shapes::ShapeRef.new(shape: RequestMetadataKeyString)
+    RequestMetadata.value = Shapes::ShapeRef.new(shape: RequestMetadataValueString)
+
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
@@ -610,6 +709,10 @@ module Aws::BedrockRuntime
     ResponseStream.add_member(:service_unavailable_exception, Shapes::ShapeRef.new(shape: ServiceUnavailableException, location_name: "serviceUnavailableException"))
     ResponseStream.struct_class = Types::ResponseStream
 
+    S3Location.add_member(:uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "uri"))
+    S3Location.add_member(:bucket_owner, Shapes::ShapeRef.new(shape: AccountId, location_name: "bucketOwner"))
+    S3Location.struct_class = Types::S3Location
+
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
 
@@ -618,6 +721,16 @@ module Aws::BedrockRuntime
 
     SpecificToolChoice.add_member(:name, Shapes::ShapeRef.new(shape: ToolName, required: true, location_name: "name"))
     SpecificToolChoice.struct_class = Types::SpecificToolChoice
+
+    StartAsyncInvokeRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: AsyncInvokeIdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    StartAsyncInvokeRequest.add_member(:model_id, Shapes::ShapeRef.new(shape: AsyncInvokeIdentifier, required: true, location_name: "modelId"))
+    StartAsyncInvokeRequest.add_member(:model_input, Shapes::ShapeRef.new(shape: ModelInputPayload, required: true, location_name: "modelInput"))
+    StartAsyncInvokeRequest.add_member(:output_data_config, Shapes::ShapeRef.new(shape: AsyncInvokeOutputDataConfig, required: true, location_name: "outputDataConfig"))
+    StartAsyncInvokeRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
+    StartAsyncInvokeRequest.struct_class = Types::StartAsyncInvokeRequest
+
+    StartAsyncInvokeResponse.add_member(:invocation_arn, Shapes::ShapeRef.new(shape: InvocationArn, required: true, location_name: "invocationArn"))
+    StartAsyncInvokeResponse.struct_class = Types::StartAsyncInvokeResponse
 
     SystemContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "text"))
     SystemContentBlock.add_member(:guard_content, Shapes::ShapeRef.new(shape: GuardrailConverseContentBlock, location_name: "guardContent"))
@@ -628,6 +741,12 @@ module Aws::BedrockRuntime
     SystemContentBlock.struct_class = Types::SystemContentBlock
 
     SystemContentBlocks.member = Shapes::ShapeRef.new(shape: SystemContentBlock)
+
+    Tag.add_member(:key, Shapes::ShapeRef.new(shape: TagKey, required: true, location_name: "key"))
+    Tag.add_member(:value, Shapes::ShapeRef.new(shape: TagValue, required: true, location_name: "value"))
+    Tag.struct_class = Types::Tag
+
+    TagList.member = Shapes::ShapeRef.new(shape: Tag)
 
     ThrottlingException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ThrottlingException.struct_class = Types::ThrottlingException
@@ -674,11 +793,13 @@ module Aws::BedrockRuntime
     ToolResultContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: String, location_name: "text"))
     ToolResultContentBlock.add_member(:image, Shapes::ShapeRef.new(shape: ImageBlock, location_name: "image"))
     ToolResultContentBlock.add_member(:document, Shapes::ShapeRef.new(shape: DocumentBlock, location_name: "document"))
+    ToolResultContentBlock.add_member(:video, Shapes::ShapeRef.new(shape: VideoBlock, location_name: "video"))
     ToolResultContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     ToolResultContentBlock.add_member_subclass(:json, Types::ToolResultContentBlock::Json)
     ToolResultContentBlock.add_member_subclass(:text, Types::ToolResultContentBlock::Text)
     ToolResultContentBlock.add_member_subclass(:image, Types::ToolResultContentBlock::Image)
     ToolResultContentBlock.add_member_subclass(:document, Types::ToolResultContentBlock::Document)
+    ToolResultContentBlock.add_member_subclass(:video, Types::ToolResultContentBlock::Video)
     ToolResultContentBlock.add_member_subclass(:unknown, Types::ToolResultContentBlock::Unknown)
     ToolResultContentBlock.struct_class = Types::ToolResultContentBlock
 
@@ -703,6 +824,18 @@ module Aws::BedrockRuntime
 
     ValidationException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ValidationException.struct_class = Types::ValidationException
+
+    VideoBlock.add_member(:format, Shapes::ShapeRef.new(shape: VideoFormat, required: true, location_name: "format"))
+    VideoBlock.add_member(:source, Shapes::ShapeRef.new(shape: VideoSource, required: true, location_name: "source"))
+    VideoBlock.struct_class = Types::VideoBlock
+
+    VideoSource.add_member(:bytes, Shapes::ShapeRef.new(shape: VideoSourceBytesBlob, location_name: "bytes"))
+    VideoSource.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3Location, location_name: "s3Location"))
+    VideoSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    VideoSource.add_member_subclass(:bytes, Types::VideoSource::Bytes)
+    VideoSource.add_member_subclass(:s3_location, Types::VideoSource::S3Location)
+    VideoSource.add_member_subclass(:unknown, Types::VideoSource::Unknown)
+    VideoSource.struct_class = Types::VideoSource
 
 
     # @api private
@@ -771,6 +904,18 @@ module Aws::BedrockRuntime
         o.errors << Shapes::ShapeRef.new(shape: ModelErrorException)
       end)
 
+      api.add_operation(:get_async_invoke, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetAsyncInvoke"
+        o.http_method = "GET"
+        o.http_request_uri = "/async-invoke/{invocationArn}"
+        o.input = Shapes::ShapeRef.new(shape: GetAsyncInvokeRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetAsyncInvokeResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+      end)
+
       api.add_operation(:invoke_model, Seahorse::Model::Operation.new.tap do |o|
         o.name = "InvokeModel"
         o.http_method = "POST"
@@ -806,6 +951,40 @@ module Aws::BedrockRuntime
         o.errors << Shapes::ShapeRef.new(shape: ModelNotReadyException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ModelErrorException)
+      end)
+
+      api.add_operation(:list_async_invokes, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListAsyncInvokes"
+        o.http_method = "GET"
+        o.http_request_uri = "/async-invoke"
+        o.input = Shapes::ShapeRef.new(shape: ListAsyncInvokesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListAsyncInvokesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:start_async_invoke, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "StartAsyncInvoke"
+        o.http_method = "POST"
+        o.http_request_uri = "/async-invoke"
+        o.input = Shapes::ShapeRef.new(shape: StartAsyncInvokeRequest)
+        o.output = Shapes::ShapeRef.new(shape: StartAsyncInvokeResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
       end)
     end
 

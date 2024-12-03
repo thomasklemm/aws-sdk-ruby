@@ -489,6 +489,11 @@ module Aws::CloudWatch
     #     `
     #
     #   * `arn:aws:ssm-incidents::account-id:responseplan/response-plan-name `
+    #
+    #   **Start a Amazon Q Developer operational investigation**
+    #
+    #   `arn:aws:aiops:region:account-id:investigation-group:ingestigation-group-id
+    #   `
     # @option options [Array<String>] :insufficient_data_actions
     #   The actions to execute when this alarm transitions to the
     #   `INSUFFICIENT_DATA` state from any other state. Each action is

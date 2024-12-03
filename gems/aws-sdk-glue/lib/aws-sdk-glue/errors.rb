@@ -48,19 +48,27 @@ module Aws::Glue
   # * {IllegalBlueprintStateException}
   # * {IllegalSessionStateException}
   # * {IllegalWorkflowStateException}
+  # * {IntegrationConflictOperationFault}
+  # * {IntegrationNotFoundFault}
+  # * {IntegrationQuotaExceededFault}
+  # * {InternalServerException}
   # * {InternalServiceException}
   # * {InvalidInputException}
+  # * {InvalidIntegrationStateFault}
   # * {InvalidStateException}
+  # * {KMSKeyNotAccessibleFault}
   # * {MLTransformNotReadyException}
   # * {NoScheduleException}
   # * {OperationNotSupportedException}
   # * {OperationTimeoutException}
   # * {PermissionTypeMismatchException}
+  # * {ResourceNotFoundException}
   # * {ResourceNotReadyException}
   # * {ResourceNumberLimitExceededException}
   # * {SchedulerNotRunningException}
   # * {SchedulerRunningException}
   # * {SchedulerTransitioningException}
+  # * {TargetResourceNotFound}
   # * {ThrottlingException}
   # * {ValidationException}
   # * {VersionMismatchException}
@@ -401,6 +409,66 @@ module Aws::Glue
       end
     end
 
+    class IntegrationConflictOperationFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::IntegrationConflictOperationFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class IntegrationNotFoundFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::IntegrationNotFoundFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class IntegrationQuotaExceededFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::IntegrationQuotaExceededFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class InternalServerException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::InternalServerException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
     class InternalServiceException < ServiceError
 
       # @param [Seahorse::Client::RequestContext] context
@@ -436,11 +504,41 @@ module Aws::Glue
       end
     end
 
+    class InvalidIntegrationStateFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::InvalidIntegrationStateFault] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
     class InvalidStateException < ServiceError
 
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::Glue::Types::InvalidStateException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class KMSKeyNotAccessibleFault < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::KMSKeyNotAccessibleFault] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end
@@ -526,6 +624,21 @@ module Aws::Glue
       end
     end
 
+    class ResourceNotFoundException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::ResourceNotFoundException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
     class ResourceNotReadyException < ServiceError
 
       # @param [Seahorse::Client::RequestContext] context
@@ -591,6 +704,21 @@ module Aws::Glue
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::Glue::Types::SchedulerTransitioningException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class TargetResourceNotFound < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Glue::Types::TargetResourceNotFound] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

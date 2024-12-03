@@ -458,6 +458,51 @@ module Aws::QBusiness
 
     # @!group API Operations
 
+    # Adds or updates a permission policy for a Q Business application,
+    # allowing cross-account access for an ISV. This operation creates a new
+    # policy statement for the specified Q Business application. The policy
+    # statement defines the IAM actions that the ISV is allowed to perform
+    # on the Q Business application's resources.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @option params [required, String] :statement_id
+    #   A unique identifier for the policy statement.
+    #
+    # @option params [required, Array<String>] :actions
+    #   The list of Q Business actions that the ISV is allowed to perform.
+    #
+    # @option params [required, String] :principal
+    #   The Amazon Resource Name (ARN) of the IAM role for the ISV that is
+    #   being granted permission.
+    #
+    # @return [Types::AssociatePermissionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::AssociatePermissionResponse#statement #statement} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.associate_permission({
+    #     application_id: "ApplicationId", # required
+    #     statement_id: "StatementId", # required
+    #     actions: ["QIamAction"], # required
+    #     principal: "PrincipalRoleArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.statement #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/AssociatePermission AWS API Documentation
+    #
+    # @overload associate_permission(params = {})
+    # @param [Hash] params ({})
+    def associate_permission(params = {}, options = {})
+      req = build_request(:associate_permission, params)
+      req.send_request(options)
+    end
+
     # Asynchronously deletes one or more documents added using the
     # `BatchPutDocument` API from an Amazon Q Business index.
     #
@@ -905,7 +950,7 @@ module Aws::QBusiness
     #   resp.system_message_id #=> String
     #   resp.user_message_id #=> String
     #   resp.action_review.plugin_id #=> String
-    #   resp.action_review.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
+    #   resp.action_review.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "QUICKSIGHT", "SERVICENOW_NOW_PLATFORM", "JIRA_CLOUD", "SALESFORCE_CRM", "ZENDESK_SUITE", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "MICROSOFT_TEAMS", "MICROSOFT_EXCHANGE", "PAGERDUTY_ADVANCE", "SMARTSHEET", "ASANA"
     #   resp.action_review.payload #=> Hash
     #   resp.action_review.payload["ActionPayloadFieldKey"].display_name #=> String
     #   resp.action_review.payload["ActionPayloadFieldKey"].display_order #=> Integer
@@ -1036,6 +1081,17 @@ module Aws::QBusiness
     #
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/personalizing-chat-responses.html
     #
+    # @option params [Types::QuickSightConfiguration] :quick_sight_configuration
+    #   The Amazon QuickSight configuration for an Amazon Q Business
+    #   application that uses QuickSight for authentication. This
+    #   configuration is required if your application uses QuickSight as the
+    #   identity provider. For more information, see [Creating an Amazon
+    #   QuickSight integrated application][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/create-quicksight-integrated-application.html
+    #
     # @return [Types::CreateApplicationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateApplicationResponse#application_id #application_id} => String
@@ -1046,7 +1102,7 @@ module Aws::QBusiness
     #   resp = client.create_application({
     #     display_name: "ApplicationName", # required
     #     role_arn: "RoleArn",
-    #     identity_type: "AWS_IAM_IDP_SAML", # accepts AWS_IAM_IDP_SAML, AWS_IAM_IDP_OIDC, AWS_IAM_IDC
+    #     identity_type: "AWS_IAM_IDP_SAML", # accepts AWS_IAM_IDP_SAML, AWS_IAM_IDP_OIDC, AWS_IAM_IDC, AWS_QUICKSIGHT_IDP
     #     iam_identity_provider_arn: "IAMIdentityProviderArn",
     #     identity_center_instance_arn: "InstanceArn",
     #     client_ids_for_oidc: ["ClientIdForOIDC"],
@@ -1070,6 +1126,9 @@ module Aws::QBusiness
     #     personalization_configuration: {
     #       personalization_control_mode: "ENABLED", # required, accepts ENABLED, DISABLED
     #     },
+    #     quick_sight_configuration: {
+    #       client_namespace: "ClientNamespace", # required
+    #     },
     #   })
     #
     # @example Response structure
@@ -1083,6 +1142,161 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def create_application(params = {}, options = {})
       req = build_request(:create_application, params)
+      req.send_request(options)
+    end
+
+    # Creates a new data accessor for an ISV to access data from a Q
+    # Business application. The data accessor is an entity that represents
+    # the ISV's access to the Q Business application's data. It includes
+    # the IAM role ARN for the ISV, a friendly name, and a set of action
+    # configurations that define the specific actions the ISV is allowed to
+    # perform and any associated data filters. When the data accessor is
+    # created, an AWS IAM Identity Center application is also created to
+    # manage the ISV's identity and authentication for accessing the Q
+    # Business application.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @option params [required, String] :principal
+    #   The Amazon Resource Name (ARN) of the IAM role for the ISV that will
+    #   be accessing the data.
+    #
+    # @option params [required, Array<Types::ActionConfiguration>] :action_configurations
+    #   A list of action configurations specifying the allowed actions and any
+    #   associated filters.
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier you provide to ensure idempotency
+    #   of the request.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :display_name
+    #   A friendly name for the data accessor.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   The tags to associate with the data accessor.
+    #
+    # @return [Types::CreateDataAccessorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateDataAccessorResponse#data_accessor_id #data_accessor_id} => String
+    #   * {Types::CreateDataAccessorResponse#idc_application_arn #idc_application_arn} => String
+    #   * {Types::CreateDataAccessorResponse#data_accessor_arn #data_accessor_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_data_accessor({
+    #     application_id: "ApplicationId", # required
+    #     principal: "PrincipalRoleArn", # required
+    #     action_configurations: [ # required
+    #       {
+    #         action: "QIamAction", # required
+    #         filter_configuration: {
+    #           document_attribute_filter: { # required
+    #             and_all_filters: [
+    #               {
+    #                 # recursive AttributeFilter
+    #               },
+    #             ],
+    #             or_all_filters: [
+    #               {
+    #                 # recursive AttributeFilter
+    #               },
+    #             ],
+    #             not_filter: {
+    #               # recursive AttributeFilter
+    #             },
+    #             equals_to: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             contains_all: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             contains_any: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             greater_than: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             greater_than_or_equals: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             less_than: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             less_than_or_equals: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #           },
+    #         },
+    #       },
+    #     ],
+    #     client_token: "ClientToken",
+    #     display_name: "DataAccessorName", # required
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_accessor_id #=> String
+    #   resp.idc_application_arn #=> String
+    #   resp.data_accessor_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateDataAccessor AWS API Documentation
+    #
+    # @overload create_data_accessor(params = {})
+    # @param [Hash] params ({})
+    def create_data_accessor(params = {}, options = {})
+      req = build_request(:create_data_accessor, params)
       req.send_request(options)
     end
 
@@ -1431,7 +1645,7 @@ module Aws::QBusiness
     #   resp = client.create_plugin({
     #     application_id: "ApplicationId", # required
     #     display_name: "PluginName", # required
-    #     type: "SERVICE_NOW", # required, accepts SERVICE_NOW, SALESFORCE, JIRA, ZENDESK, CUSTOM
+    #     type: "SERVICE_NOW", # required, accepts SERVICE_NOW, SALESFORCE, JIRA, ZENDESK, CUSTOM, QUICKSIGHT, SERVICENOW_NOW_PLATFORM, JIRA_CLOUD, SALESFORCE_CRM, ZENDESK_SUITE, ATLASSIAN_CONFLUENCE, GOOGLE_CALENDAR, MICROSOFT_TEAMS, MICROSOFT_EXCHANGE, PAGERDUTY_ADVANCE, SMARTSHEET, ASANA
     #     auth_configuration: { # required
     #       basic_auth_configuration: {
     #         secret_arn: "SecretArn", # required
@@ -1440,8 +1654,14 @@ module Aws::QBusiness
     #       o_auth_2_client_credential_configuration: {
     #         secret_arn: "SecretArn", # required
     #         role_arn: "RoleArn", # required
+    #         authorization_url: "Url",
+    #         token_url: "Url",
     #       },
     #       no_auth_configuration: {
+    #       },
+    #       idc_auth_configuration: {
+    #         idc_application_arn: "IdcApplicationArn", # required
+    #         role_arn: "RoleArn", # required
     #       },
     #     },
     #     server_url: "Url",
@@ -1695,6 +1915,10 @@ module Aws::QBusiness
     #
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
     #
+    # @option params [Types::CustomizationConfiguration] :customization_configuration
+    #   Sets the custom logo, favicon, font, and color used in the Amazon Q
+    #   web experience.
+    #
     # @return [Types::CreateWebExperienceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateWebExperienceResponse#web_experience_id #web_experience_id} => String
@@ -1728,6 +1952,12 @@ module Aws::QBusiness
     #     },
     #     browser_extension_configuration: {
     #       enabled_browser_extensions: ["FIREFOX"], # required, accepts FIREFOX, CHROME
+    #     },
+    #     customization_configuration: {
+    #       custom_css_url: "CustomCSSUrl",
+    #       logo_url: "LogoUrl",
+    #       font_url: "FontUrl",
+    #       favicon_url: "FaviconUrl",
     #     },
     #   })
     #
@@ -1820,6 +2050,35 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def delete_conversation(params = {}, options = {})
       req = build_request(:delete_conversation, params)
+      req.send_request(options)
+    end
+
+    # Deletes a specified data accessor. This operation permanently removes
+    # the data accessor and its associated AWS IAM Identity Center
+    # application. Any access granted to the ISV through this data accessor
+    # will be revoked
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @option params [required, String] :data_accessor_id
+    #   The unique identifier of the data accessor to delete.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_data_accessor({
+    #     application_id: "ApplicationId", # required
+    #     data_accessor_id: "DataAccessorId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DeleteDataAccessor AWS API Documentation
+    #
+    # @overload delete_data_accessor(params = {})
+    # @param [Hash] params ({})
+    def delete_data_accessor(params = {}, options = {})
+      req = build_request(:delete_data_accessor, params)
       req.send_request(options)
     end
 
@@ -2045,6 +2304,35 @@ module Aws::QBusiness
       req.send_request(options)
     end
 
+    # Removes a permission policy from a Q Business application, revoking
+    # the cross-account access that was previously granted to an ISV. This
+    # operation deletes the specified policy statement from the
+    # application's permission policy.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @option params [required, String] :statement_id
+    #   The statement ID of the permission to remove.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.disassociate_permission({
+    #     application_id: "ApplicationId", # required
+    #     statement_id: "String", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/DisassociatePermission AWS API Documentation
+    #
+    # @overload disassociate_permission(params = {})
+    # @param [Hash] params ({})
+    def disassociate_permission(params = {}, options = {})
+      req = build_request(:disassociate_permission, params)
+      req.send_request(options)
+    end
+
     # Gets information about an existing Amazon Q Business application.
     #
     # @option params [required, String] :application_id
@@ -2070,6 +2358,7 @@ module Aws::QBusiness
     #   * {Types::GetApplicationResponse#personalization_configuration #personalization_configuration} => Types::PersonalizationConfiguration
     #   * {Types::GetApplicationResponse#auto_subscription_configuration #auto_subscription_configuration} => Types::AutoSubscriptionConfiguration
     #   * {Types::GetApplicationResponse#client_ids_for_oidc #client_ids_for_oidc} => Array&lt;String&gt;
+    #   * {Types::GetApplicationResponse#quick_sight_configuration #quick_sight_configuration} => Types::QuickSightConfiguration
     #
     # @example Request syntax with placeholder values
     #
@@ -2082,7 +2371,7 @@ module Aws::QBusiness
     #   resp.display_name #=> String
     #   resp.application_id #=> String
     #   resp.application_arn #=> String
-    #   resp.identity_type #=> String, one of "AWS_IAM_IDP_SAML", "AWS_IAM_IDP_OIDC", "AWS_IAM_IDC"
+    #   resp.identity_type #=> String, one of "AWS_IAM_IDP_SAML", "AWS_IAM_IDP_OIDC", "AWS_IAM_IDC", "AWS_QUICKSIGHT_IDP"
     #   resp.iam_identity_provider_arn #=> String
     #   resp.identity_center_application_arn #=> String
     #   resp.role_arn #=> String
@@ -2100,6 +2389,7 @@ module Aws::QBusiness
     #   resp.auto_subscription_configuration.default_subscription_type #=> String, one of "Q_LITE", "Q_BUSINESS"
     #   resp.client_ids_for_oidc #=> Array
     #   resp.client_ids_for_oidc[0] #=> String
+    #   resp.quick_sight_configuration.client_namespace #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetApplication AWS API Documentation
     #
@@ -2178,6 +2468,107 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def get_chat_controls_configuration(params = {}, options = {})
       req = build_request(:get_chat_controls_configuration, params)
+      req.send_request(options)
+    end
+
+    # Retrieves information about a specified data accessor. This operation
+    # returns details about the data accessor, including its display name,
+    # unique identifier, Amazon Resource Name (ARN), the associated Q
+    # Business application and AWS IAM Identity Center application, the IAM
+    # role for the ISV, the action configurations, and the timestamps for
+    # when the data accessor was created and last updated.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @option params [required, String] :data_accessor_id
+    #   The unique identifier of the data accessor to retrieve.
+    #
+    # @return [Types::GetDataAccessorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetDataAccessorResponse#display_name #display_name} => String
+    #   * {Types::GetDataAccessorResponse#data_accessor_id #data_accessor_id} => String
+    #   * {Types::GetDataAccessorResponse#data_accessor_arn #data_accessor_arn} => String
+    #   * {Types::GetDataAccessorResponse#application_id #application_id} => String
+    #   * {Types::GetDataAccessorResponse#idc_application_arn #idc_application_arn} => String
+    #   * {Types::GetDataAccessorResponse#principal #principal} => String
+    #   * {Types::GetDataAccessorResponse#action_configurations #action_configurations} => Array&lt;Types::ActionConfiguration&gt;
+    #   * {Types::GetDataAccessorResponse#created_at #created_at} => Time
+    #   * {Types::GetDataAccessorResponse#updated_at #updated_at} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_data_accessor({
+    #     application_id: "ApplicationId", # required
+    #     data_accessor_id: "DataAccessorId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.display_name #=> String
+    #   resp.data_accessor_id #=> String
+    #   resp.data_accessor_arn #=> String
+    #   resp.application_id #=> String
+    #   resp.idc_application_arn #=> String
+    #   resp.principal #=> String
+    #   resp.action_configurations #=> Array
+    #   resp.action_configurations[0].action #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.and_all_filters #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.and_all_filters[0] #=> Types::AttributeFilter
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.or_all_filters #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.or_all_filters[0] #=> Types::AttributeFilter
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.not_filter #=> Types::AttributeFilter
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.equals_to.name #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.equals_to.value.string_value #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.equals_to.value.string_list_value #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.equals_to.value.string_list_value[0] #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.equals_to.value.long_value #=> Integer
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.equals_to.value.date_value #=> Time
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_all.name #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_all.value.string_value #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_all.value.string_list_value #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_all.value.string_list_value[0] #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_all.value.long_value #=> Integer
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_all.value.date_value #=> Time
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_any.name #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_any.value.string_value #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_any.value.string_list_value #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_any.value.string_list_value[0] #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_any.value.long_value #=> Integer
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.contains_any.value.date_value #=> Time
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than.name #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than.value.string_value #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than.value.string_list_value #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than.value.string_list_value[0] #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than.value.long_value #=> Integer
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than.value.date_value #=> Time
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than_or_equals.name #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than_or_equals.value.string_value #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than_or_equals.value.string_list_value #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than_or_equals.value.string_list_value[0] #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than_or_equals.value.long_value #=> Integer
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.greater_than_or_equals.value.date_value #=> Time
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than.name #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than.value.string_value #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than.value.string_list_value #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than.value.string_list_value[0] #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than.value.long_value #=> Integer
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than.value.date_value #=> Time
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than_or_equals.name #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than_or_equals.value.string_value #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than_or_equals.value.string_list_value #=> Array
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than_or_equals.value.string_list_value[0] #=> String
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than_or_equals.value.long_value #=> Integer
+    #   resp.action_configurations[0].filter_configuration.document_attribute_filter.less_than_or_equals.value.date_value #=> Time
+    #   resp.created_at #=> Time
+    #   resp.updated_at #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetDataAccessor AWS API Documentation
+    #
+    # @overload get_data_accessor(params = {})
+    # @param [Hash] params ({})
+    def get_data_accessor(params = {}, options = {})
+      req = build_request(:get_data_accessor, params)
       req.send_request(options)
     end
 
@@ -2490,12 +2881,16 @@ module Aws::QBusiness
     #   resp.application_id #=> String
     #   resp.plugin_id #=> String
     #   resp.display_name #=> String
-    #   resp.type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
+    #   resp.type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "QUICKSIGHT", "SERVICENOW_NOW_PLATFORM", "JIRA_CLOUD", "SALESFORCE_CRM", "ZENDESK_SUITE", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "MICROSOFT_TEAMS", "MICROSOFT_EXCHANGE", "PAGERDUTY_ADVANCE", "SMARTSHEET", "ASANA"
     #   resp.server_url #=> String
     #   resp.auth_configuration.basic_auth_configuration.secret_arn #=> String
     #   resp.auth_configuration.basic_auth_configuration.role_arn #=> String
     #   resp.auth_configuration.o_auth_2_client_credential_configuration.secret_arn #=> String
     #   resp.auth_configuration.o_auth_2_client_credential_configuration.role_arn #=> String
+    #   resp.auth_configuration.o_auth_2_client_credential_configuration.authorization_url #=> String
+    #   resp.auth_configuration.o_auth_2_client_credential_configuration.token_url #=> String
+    #   resp.auth_configuration.idc_auth_configuration.idc_application_arn #=> String
+    #   resp.auth_configuration.idc_auth_configuration.role_arn #=> String
     #   resp.custom_plugin_configuration.description #=> String
     #   resp.custom_plugin_configuration.api_schema_type #=> String, one of "OPEN_API_V3"
     #   resp.custom_plugin_configuration.api_schema.payload #=> String
@@ -2513,6 +2908,36 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def get_plugin(params = {}, options = {})
       req = build_request(:get_plugin, params)
+      req.send_request(options)
+    end
+
+    # Retrieves the current permission policy for a Q Business application.
+    # The policy is returned as a JSON-formatted string and defines the IAM
+    # actions that are allowed or denied for the application's resources.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @return [Types::GetPolicyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetPolicyResponse#policy #policy} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_policy({
+    #     application_id: "ApplicationId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.policy #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetPolicy AWS API Documentation
+    #
+    # @overload get_policy(params = {})
+    # @param [Hash] params ({})
+    def get_policy(params = {}, options = {})
+      req = build_request(:get_policy, params)
       req.send_request(options)
     end
 
@@ -2642,6 +3067,7 @@ module Aws::QBusiness
     #   * {Types::GetWebExperienceResponse#authentication_configuration #authentication_configuration} => Types::WebExperienceAuthConfiguration
     #   * {Types::GetWebExperienceResponse#error #error} => Types::ErrorDetail
     #   * {Types::GetWebExperienceResponse#browser_extension_configuration #browser_extension_configuration} => Types::BrowserExtensionConfiguration
+    #   * {Types::GetWebExperienceResponse#customization_configuration #customization_configuration} => Types::CustomizationConfiguration
     #
     # @example Request syntax with placeholder values
     #
@@ -2677,6 +3103,10 @@ module Aws::QBusiness
     #   resp.error.error_code #=> String, one of "InternalError", "InvalidRequest", "ResourceInactive", "ResourceNotFound"
     #   resp.browser_extension_configuration.enabled_browser_extensions #=> Array
     #   resp.browser_extension_configuration.enabled_browser_extensions[0] #=> String, one of "FIREFOX", "CHROME"
+    #   resp.customization_configuration.custom_css_url #=> String
+    #   resp.customization_configuration.logo_url #=> String
+    #   resp.customization_configuration.font_url #=> String
+    #   resp.customization_configuration.favicon_url #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/GetWebExperience AWS API Documentation
     #
@@ -2732,7 +3162,8 @@ module Aws::QBusiness
     #   resp.applications[0].created_at #=> Time
     #   resp.applications[0].updated_at #=> Time
     #   resp.applications[0].status #=> String, one of "CREATING", "ACTIVE", "DELETING", "FAILED", "UPDATING"
-    #   resp.applications[0].identity_type #=> String, one of "AWS_IAM_IDP_SAML", "AWS_IAM_IDP_OIDC", "AWS_IAM_IDC"
+    #   resp.applications[0].identity_type #=> String, one of "AWS_IAM_IDP_SAML", "AWS_IAM_IDP_OIDC", "AWS_IAM_IDC", "AWS_QUICKSIGHT_IDP"
+    #   resp.applications[0].quick_sight_configuration.client_namespace #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListApplications AWS API Documentation
     #
@@ -2857,6 +3288,57 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def list_conversations(params = {}, options = {})
       req = build_request(:list_conversations, params)
+      req.send_request(options)
+    end
+
+    # Lists the data accessors for a Q Business application. This operation
+    # returns a paginated list of data accessor summaries, including the
+    # friendly name, unique identifier, ARN, associated IAM role, and
+    # creation/update timestamps for each data accessor.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. (You received this token from a
+    #   previous call.)
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in a single call.
+    #
+    # @return [Types::ListDataAccessorsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListDataAccessorsResponse#data_accessors #data_accessors} => Array&lt;Types::DataAccessor&gt;
+    #   * {Types::ListDataAccessorsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_data_accessors({
+    #     application_id: "ApplicationId", # required
+    #     next_token: "NextToken1500",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.data_accessors #=> Array
+    #   resp.data_accessors[0].display_name #=> String
+    #   resp.data_accessors[0].data_accessor_id #=> String
+    #   resp.data_accessors[0].data_accessor_arn #=> String
+    #   resp.data_accessors[0].idc_application_arn #=> String
+    #   resp.data_accessors[0].principal #=> String
+    #   resp.data_accessors[0].created_at #=> Time
+    #   resp.data_accessors[0].updated_at #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListDataAccessors AWS API Documentation
+    #
+    # @overload list_data_accessors(params = {})
+    # @param [Hash] params ({})
+    def list_data_accessors(params = {}, options = {})
+      req = build_request(:list_data_accessors, params)
       req.send_request(options)
     end
 
@@ -3226,7 +3708,7 @@ module Aws::QBusiness
     #   resp.messages[0].source_attribution[0].text_message_segments[0].media_id #=> String
     #   resp.messages[0].source_attribution[0].text_message_segments[0].media_mime_type #=> String
     #   resp.messages[0].action_review.plugin_id #=> String
-    #   resp.messages[0].action_review.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
+    #   resp.messages[0].action_review.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "QUICKSIGHT", "SERVICENOW_NOW_PLATFORM", "JIRA_CLOUD", "SALESFORCE_CRM", "ZENDESK_SUITE", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "MICROSOFT_TEAMS", "MICROSOFT_EXCHANGE", "PAGERDUTY_ADVANCE", "SMARTSHEET", "ASANA"
     #   resp.messages[0].action_review.payload #=> Hash
     #   resp.messages[0].action_review.payload["ActionPayloadFieldKey"].display_name #=> String
     #   resp.messages[0].action_review.payload["ActionPayloadFieldKey"].display_order #=> Integer
@@ -3247,6 +3729,146 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def list_messages(params = {}, options = {})
       req = build_request(:list_messages, params)
+      req.send_request(options)
+    end
+
+    # Lists configured Amazon Q Business actions for a specific plugin in an
+    # Amazon Q Business application.
+    #
+    # @option params [required, String] :application_id
+    #   The identifier of the Amazon Q Business application the plugin is
+    #   attached to.
+    #
+    # @option params [required, String] :plugin_id
+    #   The identifier of the Amazon Q Business plugin.
+    #
+    # @option params [String] :next_token
+    #   If the number of plugin actions returned exceeds `maxResults`, Amazon
+    #   Q Business returns a next token as a pagination token to retrieve the
+    #   next set of plugin actions.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of plugin actions to return.
+    #
+    # @return [Types::ListPluginActionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListPluginActionsResponse#next_token #next_token} => String
+    #   * {Types::ListPluginActionsResponse#items #items} => Array&lt;Types::ActionSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_plugin_actions({
+    #     application_id: "ApplicationId", # required
+    #     plugin_id: "PluginId", # required
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.items #=> Array
+    #   resp.items[0].action_identifier #=> String
+    #   resp.items[0].display_name #=> String
+    #   resp.items[0].instruction_example #=> String
+    #   resp.items[0].description #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginActions AWS API Documentation
+    #
+    # @overload list_plugin_actions(params = {})
+    # @param [Hash] params ({})
+    def list_plugin_actions(params = {}, options = {})
+      req = build_request(:list_plugin_actions, params)
+      req.send_request(options)
+    end
+
+    # Lists configured Amazon Q Business actions for any plugin type—both
+    # built-in and custom.
+    #
+    # @option params [required, String] :plugin_type
+    #   The type of the plugin.
+    #
+    # @option params [String] :next_token
+    #   If the number of plugins returned exceeds `maxResults`, Amazon Q
+    #   Business returns a next token as a pagination token to retrieve the
+    #   next set of plugins.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of plugins to return.
+    #
+    # @return [Types::ListPluginTypeActionsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListPluginTypeActionsResponse#next_token #next_token} => String
+    #   * {Types::ListPluginTypeActionsResponse#items #items} => Array&lt;Types::ActionSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_plugin_type_actions({
+    #     plugin_type: "SERVICE_NOW", # required, accepts SERVICE_NOW, SALESFORCE, JIRA, ZENDESK, CUSTOM, QUICKSIGHT, SERVICENOW_NOW_PLATFORM, JIRA_CLOUD, SALESFORCE_CRM, ZENDESK_SUITE, ATLASSIAN_CONFLUENCE, GOOGLE_CALENDAR, MICROSOFT_TEAMS, MICROSOFT_EXCHANGE, PAGERDUTY_ADVANCE, SMARTSHEET, ASANA
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.items #=> Array
+    #   resp.items[0].action_identifier #=> String
+    #   resp.items[0].display_name #=> String
+    #   resp.items[0].instruction_example #=> String
+    #   resp.items[0].description #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginTypeActions AWS API Documentation
+    #
+    # @overload list_plugin_type_actions(params = {})
+    # @param [Hash] params ({})
+    def list_plugin_type_actions(params = {}, options = {})
+      req = build_request(:list_plugin_type_actions, params)
+      req.send_request(options)
+    end
+
+    # Lists metadata for all Amazon Q Business plugin types.
+    #
+    # @option params [String] :next_token
+    #   If the metadata returned exceeds `maxResults`, Amazon Q Business
+    #   returns a next token as a pagination token to retrieve the next set of
+    #   metadata.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of plugin metadata items to return.
+    #
+    # @return [Types::ListPluginTypeMetadataResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListPluginTypeMetadataResponse#next_token #next_token} => String
+    #   * {Types::ListPluginTypeMetadataResponse#items #items} => Array&lt;Types::PluginTypeMetadataSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_plugin_type_metadata({
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.items #=> Array
+    #   resp.items[0].type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "QUICKSIGHT", "SERVICENOW_NOW_PLATFORM", "JIRA_CLOUD", "SALESFORCE_CRM", "ZENDESK_SUITE", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "MICROSOFT_TEAMS", "MICROSOFT_EXCHANGE", "PAGERDUTY_ADVANCE", "SMARTSHEET", "ASANA"
+    #   resp.items[0].category #=> String, one of "Customer relationship management (CRM)", "Project management", "Communication", "Productivity", "Ticketing and incident management"
+    #   resp.items[0].description #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/ListPluginTypeMetadata AWS API Documentation
+    #
+    # @overload list_plugin_type_metadata(params = {})
+    # @param [Hash] params ({})
+    def list_plugin_type_metadata(params = {}, options = {})
+      req = build_request(:list_plugin_type_metadata, params)
       req.send_request(options)
     end
 
@@ -3285,7 +3907,7 @@ module Aws::QBusiness
     #   resp.plugins #=> Array
     #   resp.plugins[0].plugin_id #=> String
     #   resp.plugins[0].display_name #=> String
-    #   resp.plugins[0].type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
+    #   resp.plugins[0].type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "QUICKSIGHT", "SERVICENOW_NOW_PLATFORM", "JIRA_CLOUD", "SALESFORCE_CRM", "ZENDESK_SUITE", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "MICROSOFT_TEAMS", "MICROSOFT_EXCHANGE", "PAGERDUTY_ADVANCE", "SMARTSHEET", "ASANA"
     #   resp.plugins[0].server_url #=> String
     #   resp.plugins[0].state #=> String, one of "ENABLED", "DISABLED"
     #   resp.plugins[0].build_status #=> String, one of "READY", "CREATE_IN_PROGRESS", "CREATE_FAILED", "UPDATE_IN_PROGRESS", "UPDATE_FAILED", "DELETE_IN_PROGRESS", "DELETE_FAILED"
@@ -3565,6 +4187,168 @@ module Aws::QBusiness
     # @param [Hash] params ({})
     def put_group(params = {}, options = {})
       req = build_request(:put_group, params)
+      req.send_request(options)
+    end
+
+    # Searches for relevant content in a Q Business application based on a
+    # query. This operation takes a search query text, the Q Business
+    # application identifier, and optional filters (such as user ID, user
+    # groups, content source, and maximum results) as input. It returns a
+    # list of relevant content items, where each item includes the content
+    # text, the unique document identifier, the document title, the document
+    # URI, any relevant document attributes, and score attributes indicating
+    # the confidence level of the relevance.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application to search.
+    #
+    # @option params [String] :user_id
+    #   The ID of the user performing the search. Used for access control.
+    #
+    # @option params [Array<String>] :user_groups
+    #   The groups the user belongs to. Used for access control.
+    #
+    # @option params [required, String] :query_text
+    #   The text to search for.
+    #
+    # @option params [required, Types::ContentSource] :content_source
+    #   The source of content to search in.
+    #
+    # @option params [Types::AttributeFilter] :attribute_filter
+    #   Enables filtering of responses based on document attributes or
+    #   metadata fields.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. (You received this token from a
+    #   previous call.)
+    #
+    # @return [Types::SearchRelevantContentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::SearchRelevantContentResponse#relevant_content #relevant_content} => Array&lt;Types::RelevantContent&gt;
+    #   * {Types::SearchRelevantContentResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.search_relevant_content({
+    #     application_id: "ApplicationId", # required
+    #     user_id: "UserId",
+    #     user_groups: ["String"],
+    #     query_text: "QueryText", # required
+    #     content_source: { # required
+    #       retriever: {
+    #         retriever_id: "RetrieverId", # required
+    #       },
+    #     },
+    #     attribute_filter: {
+    #       and_all_filters: [
+    #         {
+    #           # recursive AttributeFilter
+    #         },
+    #       ],
+    #       or_all_filters: [
+    #         {
+    #           # recursive AttributeFilter
+    #         },
+    #       ],
+    #       not_filter: {
+    #         # recursive AttributeFilter
+    #       },
+    #       equals_to: {
+    #         name: "DocumentAttributeKey", # required
+    #         value: { # required
+    #           string_value: "DocumentAttributeValueStringValueString",
+    #           string_list_value: ["String"],
+    #           long_value: 1,
+    #           date_value: Time.now,
+    #         },
+    #       },
+    #       contains_all: {
+    #         name: "DocumentAttributeKey", # required
+    #         value: { # required
+    #           string_value: "DocumentAttributeValueStringValueString",
+    #           string_list_value: ["String"],
+    #           long_value: 1,
+    #           date_value: Time.now,
+    #         },
+    #       },
+    #       contains_any: {
+    #         name: "DocumentAttributeKey", # required
+    #         value: { # required
+    #           string_value: "DocumentAttributeValueStringValueString",
+    #           string_list_value: ["String"],
+    #           long_value: 1,
+    #           date_value: Time.now,
+    #         },
+    #       },
+    #       greater_than: {
+    #         name: "DocumentAttributeKey", # required
+    #         value: { # required
+    #           string_value: "DocumentAttributeValueStringValueString",
+    #           string_list_value: ["String"],
+    #           long_value: 1,
+    #           date_value: Time.now,
+    #         },
+    #       },
+    #       greater_than_or_equals: {
+    #         name: "DocumentAttributeKey", # required
+    #         value: { # required
+    #           string_value: "DocumentAttributeValueStringValueString",
+    #           string_list_value: ["String"],
+    #           long_value: 1,
+    #           date_value: Time.now,
+    #         },
+    #       },
+    #       less_than: {
+    #         name: "DocumentAttributeKey", # required
+    #         value: { # required
+    #           string_value: "DocumentAttributeValueStringValueString",
+    #           string_list_value: ["String"],
+    #           long_value: 1,
+    #           date_value: Time.now,
+    #         },
+    #       },
+    #       less_than_or_equals: {
+    #         name: "DocumentAttributeKey", # required
+    #         value: { # required
+    #           string_value: "DocumentAttributeValueStringValueString",
+    #           string_list_value: ["String"],
+    #           long_value: 1,
+    #           date_value: Time.now,
+    #         },
+    #       },
+    #     },
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.relevant_content #=> Array
+    #   resp.relevant_content[0].content #=> String
+    #   resp.relevant_content[0].document_id #=> String
+    #   resp.relevant_content[0].document_title #=> String
+    #   resp.relevant_content[0].document_uri #=> String
+    #   resp.relevant_content[0].document_attributes #=> Array
+    #   resp.relevant_content[0].document_attributes[0].name #=> String
+    #   resp.relevant_content[0].document_attributes[0].value.string_value #=> String
+    #   resp.relevant_content[0].document_attributes[0].value.string_list_value #=> Array
+    #   resp.relevant_content[0].document_attributes[0].value.string_list_value[0] #=> String
+    #   resp.relevant_content[0].document_attributes[0].value.long_value #=> Integer
+    #   resp.relevant_content[0].document_attributes[0].value.date_value #=> Time
+    #   resp.relevant_content[0].score_attributes.score_confidence #=> String, one of "VERY_HIGH", "HIGH", "MEDIUM", "LOW", "NOT_AVAILABLE"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/SearchRelevantContent AWS API Documentation
+    #
+    # @overload search_relevant_content(params = {})
+    # @param [Hash] params ({})
+    def search_relevant_content(params = {}, options = {})
+      req = build_request(:search_relevant_content, params)
       req.send_request(options)
     end
 
@@ -3925,6 +4709,129 @@ module Aws::QBusiness
       req.send_request(options)
     end
 
+    # Updates an existing data accessor. This operation allows modifying the
+    # action configurations (the allowed actions and associated filters) and
+    # the display name of the data accessor. It does not allow changing the
+    # IAM role associated with the data accessor or other core properties of
+    # the data accessor.
+    #
+    # @option params [required, String] :application_id
+    #   The unique identifier of the Q Business application.
+    #
+    # @option params [required, String] :data_accessor_id
+    #   The unique identifier of the data accessor to update.
+    #
+    # @option params [required, Array<Types::ActionConfiguration>] :action_configurations
+    #   The updated list of action configurations specifying the allowed
+    #   actions and any associated filters.
+    #
+    # @option params [String] :display_name
+    #   The updated friendly name for the data accessor.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_data_accessor({
+    #     application_id: "ApplicationId", # required
+    #     data_accessor_id: "DataAccessorId", # required
+    #     action_configurations: [ # required
+    #       {
+    #         action: "QIamAction", # required
+    #         filter_configuration: {
+    #           document_attribute_filter: { # required
+    #             and_all_filters: [
+    #               {
+    #                 # recursive AttributeFilter
+    #               },
+    #             ],
+    #             or_all_filters: [
+    #               {
+    #                 # recursive AttributeFilter
+    #               },
+    #             ],
+    #             not_filter: {
+    #               # recursive AttributeFilter
+    #             },
+    #             equals_to: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             contains_all: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             contains_any: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             greater_than: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             greater_than_or_equals: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             less_than: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #             less_than_or_equals: {
+    #               name: "DocumentAttributeKey", # required
+    #               value: { # required
+    #                 string_value: "DocumentAttributeValueStringValueString",
+    #                 string_list_value: ["String"],
+    #                 long_value: 1,
+    #                 date_value: Time.now,
+    #               },
+    #             },
+    #           },
+    #         },
+    #       },
+    #     ],
+    #     display_name: "DataAccessorName",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateDataAccessor AWS API Documentation
+    #
+    # @overload update_data_accessor(params = {})
+    # @param [Hash] params ({})
+    def update_data_accessor(params = {}, options = {})
+      req = build_request(:update_data_accessor, params)
+      req.send_request(options)
+    end
+
     # Updates an existing Amazon Q Business data source connector.
     #
     # @option params [required, String] :application_id
@@ -4180,8 +5087,14 @@ module Aws::QBusiness
     #       o_auth_2_client_credential_configuration: {
     #         secret_arn: "SecretArn", # required
     #         role_arn: "RoleArn", # required
+    #         authorization_url: "Url",
+    #         token_url: "Url",
     #       },
     #       no_auth_configuration: {
+    #       },
+    #       idc_auth_configuration: {
+    #         idc_application_arn: "IdcApplicationArn", # required
+    #         role_arn: "RoleArn", # required
     #       },
     #     },
     #   })
@@ -4390,6 +5303,10 @@ module Aws::QBusiness
     #
     #   [1]: https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/browser-extensions.html
     #
+    # @option params [Types::CustomizationConfiguration] :customization_configuration
+    #   Updates the custom logo, favicon, font, and color used in the Amazon Q
+    #   web experience.
+    #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
     #
     # @example Request syntax with placeholder values
@@ -4423,6 +5340,12 @@ module Aws::QBusiness
     #     browser_extension_configuration: {
     #       enabled_browser_extensions: ["FIREFOX"], # required, accepts FIREFOX, CHROME
     #     },
+    #     customization_configuration: {
+    #       custom_css_url: "CustomCSSUrl",
+    #       logo_url: "LogoUrl",
+    #       font_url: "FontUrl",
+    #       favicon_url: "FaviconUrl",
+    #     },
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateWebExperience AWS API Documentation
@@ -4452,7 +5375,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.23.0'
+      context[:gem_version] = '1.24.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

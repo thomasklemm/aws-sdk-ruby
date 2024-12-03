@@ -460,6 +460,14 @@ module Aws::BedrockRuntime
 
     # The action to apply a guardrail.
     #
+    # For troubleshooting some of the common errors you might encounter when
+    # using the `ApplyGuardrail` API, see [Troubleshooting Amazon Bedrock
+    # API Error Codes][1] in the Amazon Bedrock User Guide
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html
+    #
     # @option params [required, String] :guardrail_identifier
     #   The guardrail identifier used in the request to apply the guardrail.
     #
@@ -669,10 +677,12 @@ module Aws::BedrockRuntime
     #   Configuration information for the tools that the model can use when
     #   generating a response.
     #
-    #   <note markdown="1"> This field is only supported by Anthropic Claude 3, Cohere Command R,
-    #   Cohere Command R+, and Mistral Large models.
+    #   For information about models that support tool use, see [Supported
+    #   models and model features][1].
     #
-    #    </note>
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features
     #
     # @option params [Types::GuardrailConfiguration] :guardrail_config
     #   Configuration information for a guardrail that you want to use in the
@@ -723,6 +733,9 @@ module Aws::BedrockRuntime
     #
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
     #
+    # @option params [Hash<String,String>] :request_metadata
+    #   Key-value pairs that you can use to filter invocation logs.
+    #
     # @option params [Types::PerformanceConfiguration] :performance_config
     #   Model performance settings for the request.
     #
@@ -759,6 +772,16 @@ module Aws::BedrockRuntime
     #                 bytes: "data",
     #               },
     #             },
+    #             video: {
+    #               format: "mkv", # required, accepts mkv, mov, mp4, webm, flv, mpeg, mpg, wmv, three_gp
+    #               source: { # required
+    #                 bytes: "data",
+    #                 s3_location: {
+    #                   uri: "S3Uri", # required
+    #                   bucket_owner: "AccountId",
+    #                 },
+    #               },
+    #             },
     #             tool_use: {
     #               tool_use_id: "ToolUseId", # required
     #               name: "ToolName", # required
@@ -783,6 +806,16 @@ module Aws::BedrockRuntime
     #                     name: "DocumentBlockNameString", # required
     #                     source: { # required
     #                       bytes: "data",
+    #                     },
+    #                   },
+    #                   video: {
+    #                     format: "mkv", # required, accepts mkv, mov, mp4, webm, flv, mpeg, mpg, wmv, three_gp
+    #                     source: { # required
+    #                       bytes: "data",
+    #                       s3_location: {
+    #                         uri: "S3Uri", # required
+    #                         bucket_owner: "AccountId",
+    #                       },
     #                     },
     #                   },
     #                 },
@@ -852,6 +885,9 @@ module Aws::BedrockRuntime
     #       },
     #     },
     #     additional_model_response_field_paths: ["ConverseRequestAdditionalModelResponseFieldPathsListMemberString"],
+    #     request_metadata: {
+    #       "RequestMetadataKeyString" => "RequestMetadataValueString",
+    #     },
     #     performance_config: {
     #       latency: "standard", # accepts standard, optimized
     #     },
@@ -867,6 +903,10 @@ module Aws::BedrockRuntime
     #   resp.output.message.content[0].document.format #=> String, one of "pdf", "csv", "doc", "docx", "xls", "xlsx", "html", "txt", "md"
     #   resp.output.message.content[0].document.name #=> String
     #   resp.output.message.content[0].document.source.bytes #=> String
+    #   resp.output.message.content[0].video.format #=> String, one of "mkv", "mov", "mp4", "webm", "flv", "mpeg", "mpg", "wmv", "three_gp"
+    #   resp.output.message.content[0].video.source.bytes #=> String
+    #   resp.output.message.content[0].video.source.s3_location.uri #=> String
+    #   resp.output.message.content[0].video.source.s3_location.bucket_owner #=> String
     #   resp.output.message.content[0].tool_use.tool_use_id #=> String
     #   resp.output.message.content[0].tool_use.name #=> String
     #   resp.output.message.content[0].tool_result.tool_use_id #=> String
@@ -877,6 +917,10 @@ module Aws::BedrockRuntime
     #   resp.output.message.content[0].tool_result.content[0].document.format #=> String, one of "pdf", "csv", "doc", "docx", "xls", "xlsx", "html", "txt", "md"
     #   resp.output.message.content[0].tool_result.content[0].document.name #=> String
     #   resp.output.message.content[0].tool_result.content[0].document.source.bytes #=> String
+    #   resp.output.message.content[0].tool_result.content[0].video.format #=> String, one of "mkv", "mov", "mp4", "webm", "flv", "mpeg", "mpg", "wmv", "three_gp"
+    #   resp.output.message.content[0].tool_result.content[0].video.source.bytes #=> String
+    #   resp.output.message.content[0].tool_result.content[0].video.source.s3_location.uri #=> String
+    #   resp.output.message.content[0].tool_result.content[0].video.source.s3_location.bucket_owner #=> String
     #   resp.output.message.content[0].tool_result.status #=> String, one of "success", "error"
     #   resp.output.message.content[0].guard_content.text.text #=> String
     #   resp.output.message.content[0].guard_content.text.qualifiers #=> Array
@@ -1101,9 +1145,12 @@ module Aws::BedrockRuntime
     #   Configuration information for the tools that the model can use when
     #   generating a response.
     #
-    #   <note markdown="1"> This field is only supported by Anthropic Claude 3 models.
+    #   For information about models that support streaming tool use, see
+    #   [Supported models and model features][1].
     #
-    #    </note>
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features
     #
     # @option params [Types::GuardrailStreamConfiguration] :guardrail_config
     #   Configuration information for a guardrail that you want to use in the
@@ -1153,6 +1200,9 @@ module Aws::BedrockRuntime
     #
     #
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
+    #
+    # @option params [Hash<String,String>] :request_metadata
+    #   Key-value pairs that you can use to filter invocation logs.
     #
     # @option params [Types::PerformanceConfiguration] :performance_config
     #   Model performance settings for the request.
@@ -1357,6 +1407,16 @@ module Aws::BedrockRuntime
     #                 bytes: "data",
     #               },
     #             },
+    #             video: {
+    #               format: "mkv", # required, accepts mkv, mov, mp4, webm, flv, mpeg, mpg, wmv, three_gp
+    #               source: { # required
+    #                 bytes: "data",
+    #                 s3_location: {
+    #                   uri: "S3Uri", # required
+    #                   bucket_owner: "AccountId",
+    #                 },
+    #               },
+    #             },
     #             tool_use: {
     #               tool_use_id: "ToolUseId", # required
     #               name: "ToolName", # required
@@ -1381,6 +1441,16 @@ module Aws::BedrockRuntime
     #                     name: "DocumentBlockNameString", # required
     #                     source: { # required
     #                       bytes: "data",
+    #                     },
+    #                   },
+    #                   video: {
+    #                     format: "mkv", # required, accepts mkv, mov, mp4, webm, flv, mpeg, mpg, wmv, three_gp
+    #                     source: { # required
+    #                       bytes: "data",
+    #                       s3_location: {
+    #                         uri: "S3Uri", # required
+    #                         bucket_owner: "AccountId",
+    #                       },
     #                     },
     #                   },
     #                 },
@@ -1451,6 +1521,9 @@ module Aws::BedrockRuntime
     #       },
     #     },
     #     additional_model_response_field_paths: ["ConverseStreamRequestAdditionalModelResponseFieldPathsListMemberString"],
+    #     request_metadata: {
+    #       "RequestMetadataKeyString" => "RequestMetadataValueString",
+    #     },
     #     performance_config: {
     #       latency: "standard", # accepts standard, optimized
     #     },
@@ -1613,6 +1686,52 @@ module Aws::BedrockRuntime
       req.handlers.add(Aws::Binary::DecodeHandler, priority: 95)
 
       req.send_request(options, &block)
+    end
+
+    # Retrieve information about an asynchronous invocation.
+    #
+    # @option params [required, String] :invocation_arn
+    #   The invocation's ARN.
+    #
+    # @return [Types::GetAsyncInvokeResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAsyncInvokeResponse#invocation_arn #invocation_arn} => String
+    #   * {Types::GetAsyncInvokeResponse#model_arn #model_arn} => String
+    #   * {Types::GetAsyncInvokeResponse#client_request_token #client_request_token} => String
+    #   * {Types::GetAsyncInvokeResponse#status #status} => String
+    #   * {Types::GetAsyncInvokeResponse#failure_message #failure_message} => String
+    #   * {Types::GetAsyncInvokeResponse#submit_time #submit_time} => Time
+    #   * {Types::GetAsyncInvokeResponse#last_modified_time #last_modified_time} => Time
+    #   * {Types::GetAsyncInvokeResponse#end_time #end_time} => Time
+    #   * {Types::GetAsyncInvokeResponse#output_data_config #output_data_config} => Types::AsyncInvokeOutputDataConfig
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_async_invoke({
+    #     invocation_arn: "InvocationArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.invocation_arn #=> String
+    #   resp.model_arn #=> String
+    #   resp.client_request_token #=> String
+    #   resp.status #=> String, one of "InProgress", "Completed", "Failed"
+    #   resp.failure_message #=> String
+    #   resp.submit_time #=> Time
+    #   resp.last_modified_time #=> Time
+    #   resp.end_time #=> Time
+    #   resp.output_data_config.s3_output_data_config.s3_uri #=> String
+    #   resp.output_data_config.s3_output_data_config.kms_key_id #=> String
+    #   resp.output_data_config.s3_output_data_config.bucket_owner #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GetAsyncInvoke AWS API Documentation
+    #
+    # @overload get_async_invoke(params = {})
+    # @param [Hash] params ({})
+    def get_async_invoke(params = {}, options = {})
+      req = build_request(:get_async_invoke, params)
+      req.send_request(options)
     end
 
     # Invokes the specified Amazon Bedrock model to run inference using the
@@ -2095,6 +2214,154 @@ module Aws::BedrockRuntime
       req.send_request(options, &block)
     end
 
+    # Lists asynchronous invocations.
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :submit_time_after
+    #   Include invocations submitted after this time.
+    #
+    # @option params [Time,DateTime,Date,Integer,String] :submit_time_before
+    #   Include invocations submitted before this time.
+    #
+    # @option params [String] :status_equals
+    #   Filter invocations by status.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of invocations to return in one page of results.
+    #
+    # @option params [String] :next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #
+    # @option params [String] :sort_by
+    #   How to sort the response.
+    #
+    # @option params [String] :sort_order
+    #   The sorting order for the response.
+    #
+    # @return [Types::ListAsyncInvokesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAsyncInvokesResponse#next_token #next_token} => String
+    #   * {Types::ListAsyncInvokesResponse#async_invoke_summaries #async_invoke_summaries} => Array&lt;Types::AsyncInvokeSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_async_invokes({
+    #     submit_time_after: Time.now,
+    #     submit_time_before: Time.now,
+    #     status_equals: "InProgress", # accepts InProgress, Completed, Failed
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #     sort_by: "SubmissionTime", # accepts SubmissionTime
+    #     sort_order: "Ascending", # accepts Ascending, Descending
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.async_invoke_summaries #=> Array
+    #   resp.async_invoke_summaries[0].invocation_arn #=> String
+    #   resp.async_invoke_summaries[0].model_arn #=> String
+    #   resp.async_invoke_summaries[0].client_request_token #=> String
+    #   resp.async_invoke_summaries[0].status #=> String, one of "InProgress", "Completed", "Failed"
+    #   resp.async_invoke_summaries[0].failure_message #=> String
+    #   resp.async_invoke_summaries[0].submit_time #=> Time
+    #   resp.async_invoke_summaries[0].last_modified_time #=> Time
+    #   resp.async_invoke_summaries[0].end_time #=> Time
+    #   resp.async_invoke_summaries[0].output_data_config.s3_output_data_config.s3_uri #=> String
+    #   resp.async_invoke_summaries[0].output_data_config.s3_output_data_config.kms_key_id #=> String
+    #   resp.async_invoke_summaries[0].output_data_config.s3_output_data_config.bucket_owner #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ListAsyncInvokes AWS API Documentation
+    #
+    # @overload list_async_invokes(params = {})
+    # @param [Hash] params ({})
+    def list_async_invokes(params = {}, options = {})
+      req = build_request(:list_async_invokes, params)
+      req.send_request(options)
+    end
+
+    # Starts an asynchronous invocation.
+    #
+    # This operation requires permission for the `bedrock:InvokeModel`
+    # action.
+    #
+    # To deny all inference access to resources that you specify in the
+    # modelId field, you need to deny access to the `bedrock:InvokeModel`
+    # and `bedrock:InvokeModelWithResponseStream` actions. Doing this also
+    # denies access to the resource through the Converse API actions
+    # ([Converse][1] and [ConverseStream][2]). For more information see
+    # [Deny access for inference on specific models][3].
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html
+    # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html
+    # [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference
+    #
+    # @option params [String] :client_request_token
+    #   Specify idempotency token to ensure that requests are not duplicated.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :model_id
+    #   The model to invoke.
+    #
+    # @option params [required, Hash,Array,String,Numeric,Boolean] :model_input
+    #   Input to send to the model.
+    #
+    #   Document type used to carry open content
+    #   (Hash,Array,String,Numeric,Boolean). A document type value is
+    #   serialized using the same format as its surroundings and requires no
+    #   additional encoding or escaping.
+    #
+    # @option params [required, Types::AsyncInvokeOutputDataConfig] :output_data_config
+    #   Where to store the output.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   Tags to apply to the invocation.
+    #
+    # @return [Types::StartAsyncInvokeResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::StartAsyncInvokeResponse#invocation_arn #invocation_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_async_invoke({
+    #     client_request_token: "AsyncInvokeIdempotencyToken",
+    #     model_id: "AsyncInvokeIdentifier", # required
+    #     model_input: { # required
+    #     },
+    #     output_data_config: { # required
+    #       s3_output_data_config: {
+    #         s3_uri: "S3Uri", # required
+    #         kms_key_id: "KmsKeyId",
+    #         bucket_owner: "AccountId",
+    #       },
+    #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.invocation_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/StartAsyncInvoke AWS API Documentation
+    #
+    # @overload start_async_invoke(params = {})
+    # @param [Hash] params ({})
+    def start_async_invoke(params = {}, options = {})
+      req = build_request(:start_async_invoke, params)
+      req.send_request(options)
+    end
+
     # @!endgroup
 
     # @param params ({})
@@ -2113,7 +2380,7 @@ module Aws::BedrockRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockruntime'
-      context[:gem_version] = '1.32.0'
+      context[:gem_version] = '1.33.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

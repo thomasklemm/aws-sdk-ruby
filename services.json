@@ -335,6 +335,9 @@
   "DLM": {
     "models": "dlm/2018-01-12"
   },
+  "DSQL": {
+    "models": "dsql/2018-05-10"
+  },
   "DataExchange": {
     "models": "dataexchange/2017-07-25"
   },
@@ -1076,6 +1079,9 @@
   },
   "S3Outposts": {
     "models": "s3outposts/2017-07-25"
+  },
+  "S3Tables": {
+    "models": "s3tables/2018-05-10"
   },
   "SES": {
     "models": "email/2010-12-01"

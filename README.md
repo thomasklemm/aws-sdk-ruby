@@ -491,6 +491,7 @@ RubyGems.org page under "LINKS" section.
 | Amazon Appflow                                        | Aws::Appflow                             | aws-sdk-appflow                             | 2020-08-23  |
 | Amazon Athena                                         | Aws::Athena                              | aws-sdk-athena                              | 2017-05-18  |
 | Amazon Augmented AI Runtime                           | Aws::AugmentedAIRuntime                  | aws-sdk-augmentedairuntime                  | 2019-11-07  |
+| Amazon Aurora DSQL                                    | Aws::DSQL                                | aws-sdk-dsql                                | 2018-05-10  |
 | Amazon Bedrock                                        | Aws::Bedrock                             | aws-sdk-bedrock                             | 2023-04-20  |
 | Amazon Bedrock Runtime                                | Aws::BedrockRuntime                      | aws-sdk-bedrockruntime                      | 2023-09-30  |
 | Amazon Chime                                          | Aws::Chime                               | aws-sdk-chime                               | 2018-05-01  |
@@ -622,6 +623,7 @@ RubyGems.org page under "LINKS" section.
 | Amazon Route 53                                       | Aws::Route53                             | aws-sdk-route53                             | 2013-04-01  |
 | Amazon Route 53 Domains                               | Aws::Route53Domains                      | aws-sdk-route53domains                      | 2014-05-15  |
 | Amazon Route 53 Resolver                              | Aws::Route53Resolver                     | aws-sdk-route53resolver                     | 2018-04-01  |
+| Amazon S3 Tables                                      | Aws::S3Tables                            | aws-sdk-s3tables                            | 2018-05-10  |
 | Amazon S3 on Outposts                                 | Aws::S3Outposts                          | aws-sdk-s3outposts                          | 2017-07-25  |
 | Amazon SageMaker Feature Store Runtime                | Aws::SageMakerFeatureStoreRuntime        | aws-sdk-sagemakerfeaturestoreruntime        | 2020-07-01  |
 | Amazon SageMaker Metrics Service                      | Aws::SageMakerMetrics                    | aws-sdk-sagemakermetrics                    | 2022-09-30  |

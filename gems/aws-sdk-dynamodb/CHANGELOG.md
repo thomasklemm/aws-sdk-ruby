@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.131.0 (2024-12-03)
+------------------
+
+* Feature - This change adds support for global tables with multi-Region strong consistency (in preview). The UpdateTable API now supports a new attribute MultiRegionConsistency to set consistency when creating global tables. The DescribeTable output now optionally includes the MultiRegionConsistency attribute.
+
 1.130.0 (2024-11-18)
 ------------------
 

@@ -1069,6 +1069,26 @@ module Aws::RedshiftServerless
 
     # Creates an workgroup in Amazon Redshift Serverless.
     #
+    # VPC Block Public Access (BPA) enables you to block resources in VPCs
+    # and subnets that you own in a Region from reaching or being reached
+    # from the internet through internet gateways and egress-only internet
+    # gateways. If a workgroup is in an account with VPC BPA turned on, the
+    # following capabilities are blocked:
+    #
+    # * Creating a public access workgroup
+    #
+    # * Modifying a private workgroup to public
+    #
+    # * Adding a subnet with VPC BPA turned on to the workgroup when the
+    #   workgroup is public
+    #
+    # For more information about VPC BPA, see [Block public access to VPCs
+    # and subnets][1] in the *Amazon VPC User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
+    #
     # @option params [Integer] :base_capacity
     #   The base data warehouse capacity of the workgroup in Redshift
     #   Processing Units (RPUs).
@@ -1596,7 +1616,12 @@ module Aws::RedshiftServerless
     # optionally specify a duration between 900 seconds (15 minutes) and
     # 3600 seconds (60 minutes).
     #
-    #      <p>The Identity and Access Management (IAM) user or role that runs GetCredentials must have an IAM policy attached that allows access to all necessary actions and resources.</p> <p>If the <code>DbName</code> parameter is specified, the IAM policy must allow access to the resource dbname for the specified database name.</p>
+    # The Identity and Access Management (IAM) user or role that runs
+    # GetCredentials must have an IAM policy attached that allows access to
+    # all necessary actions and resources.
+    #
+    # If the `DbName` parameter is specified, the IAM policy must allow
+    # access to the resource dbname for the specified database name.
     #
     # @option params [String] :custom_domain_name
     #   The custom domain name associated with the workgroup. The custom
@@ -2221,6 +2246,57 @@ module Aws::RedshiftServerless
     # @param [Hash] params ({})
     def list_endpoint_access(params = {}, options = {})
       req = build_request(:list_endpoint_access, params)
+      req.send_request(options)
+    end
+
+    # Returns information about a list of specified managed workgroups in
+    # your account.
+    #
+    # @option params [Integer] :max_results
+    #   An optional parameter that specifies the maximum number of results to
+    #   return. You can use nextToken to display the next page of results.
+    #
+    # @option params [String] :next_token
+    #   If your initial ListManagedWorkgroups operation returns a nextToken,
+    #   you can include the returned nextToken in following
+    #   ListManagedWorkgroups operations, which returns results in the next
+    #   page.
+    #
+    # @option params [String] :source_arn
+    #   The Amazon Resource Name (ARN) for the managed workgroup in the AWS
+    #   Glue Data Catalog.
+    #
+    # @return [Types::ListManagedWorkgroupsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListManagedWorkgroupsResponse#managed_workgroups #managed_workgroups} => Array&lt;Types::ManagedWorkgroupListItem&gt;
+    #   * {Types::ListManagedWorkgroupsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_managed_workgroups({
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #     source_arn: "SourceArn",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.managed_workgroups #=> Array
+    #   resp.managed_workgroups[0].creation_date #=> Time
+    #   resp.managed_workgroups[0].managed_workgroup_id #=> String
+    #   resp.managed_workgroups[0].managed_workgroup_name #=> String
+    #   resp.managed_workgroups[0].source_arn #=> String
+    #   resp.managed_workgroups[0].status #=> String, one of "CREATING", "DELETING", "MODIFYING", "AVAILABLE", "NOT_AVAILABLE"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListManagedWorkgroups AWS API Documentation
+    #
+    # @overload list_managed_workgroups(params = {})
+    # @param [Hash] params ({})
+    def list_managed_workgroups(params = {}, options = {})
+      req = build_request(:list_managed_workgroups, params)
       req.send_request(options)
     end
 
@@ -3614,6 +3690,26 @@ module Aws::RedshiftServerless
     # update `baseCapacity` or `port` in a single request, but you can't
     # update both in the same request.
     #
+    # VPC Block Public Access (BPA) enables you to block resources in VPCs
+    # and subnets that you own in a Region from reaching or being reached
+    # from the internet through internet gateways and egress-only internet
+    # gateways. If a workgroup is in an account with VPC BPA turned on, the
+    # following capabilities are blocked:
+    #
+    # * Creating a public access workgroup
+    #
+    # * Modifying a private workgroup to public
+    #
+    # * Adding a subnet with VPC BPA turned on to the workgroup when the
+    #   workgroup is public
+    #
+    # For more information about VPC BPA, see [Block public access to VPCs
+    # and subnets][1] in the *Amazon VPC User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/vpc/latest/userguide/security-vpc-bpa.html
+    #
     # @option params [Integer] :base_capacity
     #   The new base data warehouse capacity in Redshift Processing Units
     #   (RPUs).
@@ -3763,7 +3859,7 @@ module Aws::RedshiftServerless
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-redshiftserverless'
-      context[:gem_version] = '1.42.0'
+      context[:gem_version] = '1.43.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

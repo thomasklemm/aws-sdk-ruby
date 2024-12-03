@@ -150,6 +150,10 @@ module Aws::BedrockAgent
     #   The Amazon Resource Name (ARN) of the agent.
     #   @return [String]
     #
+    # @!attribute [rw] agent_collaboration
+    #   The agent's collaboration settings.
+    #   @return [String]
+    #
     # @!attribute [rw] agent_id
     #   The unique identifier of the agent.
     #   @return [String]
@@ -275,6 +279,7 @@ module Aws::BedrockAgent
     #
     class Agent < Struct.new(
       :agent_arn,
+      :agent_collaboration,
       :agent_id,
       :agent_name,
       :agent_resource_role_arn,
@@ -593,6 +598,133 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # An agent collaborator.
+    #
+    # @!attribute [rw] agent_descriptor
+    #   The collaborator's agent descriptor.
+    #   @return [Types::AgentDescriptor]
+    #
+    # @!attribute [rw] agent_id
+    #   The collaborator's agent ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   The collaborator's agent version.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   The collaborator's client token.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaboration_instruction
+    #   The collaborator's instructions.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_id
+    #   The collaborator's collaborator ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_name
+    #   The collaborator's collaborator name.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   When the collaborator was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   When the collaborator was updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] relay_conversation_history
+    #   The collaborator's relay conversation history.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AgentCollaborator AWS API Documentation
+    #
+    class AgentCollaborator < Struct.new(
+      :agent_descriptor,
+      :agent_id,
+      :agent_version,
+      :client_token,
+      :collaboration_instruction,
+      :collaborator_id,
+      :collaborator_name,
+      :created_at,
+      :last_updated_at,
+      :relay_conversation_history)
+      SENSITIVE = [:collaboration_instruction]
+      include Aws::Structure
+    end
+
+    # An agent collaborator summary.
+    #
+    # @!attribute [rw] agent_descriptor
+    #   The collaborator's agent descriptor.
+    #   @return [Types::AgentDescriptor]
+    #
+    # @!attribute [rw] agent_id
+    #   The collaborator's agent ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   The collaborator's agent version.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaboration_instruction
+    #   The collaborator's collaboration instruction.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_id
+    #   The collaborator's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_name
+    #   The collaborator's name.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   When the collaborator was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_at
+    #   When the collaborator was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] relay_conversation_history
+    #   The collaborator's relay conversation history.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AgentCollaboratorSummary AWS API Documentation
+    #
+    class AgentCollaboratorSummary < Struct.new(
+      :agent_descriptor,
+      :agent_id,
+      :agent_version,
+      :collaboration_instruction,
+      :collaborator_id,
+      :collaborator_name,
+      :created_at,
+      :last_updated_at,
+      :relay_conversation_history)
+      SENSITIVE = [:collaboration_instruction]
+      include Aws::Structure
+    end
+
+    # An agent descriptor.
+    #
+    # @!attribute [rw] alias_arn
+    #   The agent's alias ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AgentDescriptor AWS API Documentation
+    #
+    class AgentDescriptor < Struct.new(
+      :alias_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Defines an agent node in your flow. You specify the agent to invoke at
     # this point in the flow. For more information, see [Node types in
     # Amazon Bedrock works][1] in the Amazon Bedrock User Guide.
@@ -756,6 +888,10 @@ module Aws::BedrockAgent
     #   to.
     #   @return [String]
     #
+    # @!attribute [rw] agent_collaboration
+    #   The agent's collaboration settings.
+    #   @return [String]
+    #
     # @!attribute [rw] agent_id
     #   The unique identifier of the agent that the version belongs to.
     #   @return [String]
@@ -843,6 +979,7 @@ module Aws::BedrockAgent
     #
     class AgentVersion < Struct.new(
       :agent_arn,
+      :agent_collaboration,
       :agent_id,
       :agent_name,
       :agent_resource_role_arn,
@@ -922,6 +1059,63 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AnyToolChoice AWS API Documentation
     #
     class AnyToolChoice < Aws::EmptyStructure; end
+
+    # @!attribute [rw] agent_descriptor
+    #   The alias of the collaborator agent.
+    #   @return [Types::AgentDescriptor]
+    #
+    # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   An agent version.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A client token.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaboration_instruction
+    #   Instruction for the collaborator.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_name
+    #   A name for the collaborator.
+    #   @return [String]
+    #
+    # @!attribute [rw] relay_conversation_history
+    #   A relay conversation history for the collaborator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AssociateAgentCollaboratorRequest AWS API Documentation
+    #
+    class AssociateAgentCollaboratorRequest < Struct.new(
+      :agent_descriptor,
+      :agent_id,
+      :agent_version,
+      :client_token,
+      :collaboration_instruction,
+      :collaborator_name,
+      :relay_conversation_history)
+      SENSITIVE = [:collaboration_instruction]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] agent_collaborator
+    #   Details about the collaborator.
+    #   @return [Types::AgentCollaborator]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AssociateAgentCollaboratorResponse AWS API Documentation
+    #
+    class AssociateAgentCollaboratorResponse < Struct.new(
+      :agent_collaborator)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] agent_id
     #   The unique identifier of the agent with which you want to associate
@@ -1559,6 +1753,10 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # @!attribute [rw] agent_collaboration
+    #   The agent's collaboration role.
+    #   @return [String]
+    #
     # @!attribute [rw] agent_name
     #   A name for the agent that you create.
     #   @return [String]
@@ -1680,6 +1878,7 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateAgentRequest AWS API Documentation
     #
     class CreateAgentRequest < Struct.new(
+      :agent_collaboration,
       :agent_name,
       :agent_resource_role_arn,
       :client_token,
@@ -3158,6 +3357,32 @@ module Aws::BedrockAgent
     end
 
     # @!attribute [rw] agent_id
+    #   An agent ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   The agent's version.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_id
+    #   The collaborator's ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DisassociateAgentCollaboratorRequest AWS API Documentation
+    #
+    class DisassociateAgentCollaboratorRequest < Struct.new(
+      :agent_id,
+      :agent_version,
+      :collaborator_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DisassociateAgentCollaboratorResponse AWS API Documentation
+    #
+    class DisassociateAgentCollaboratorResponse < Aws::EmptyStructure; end
+
+    # @!attribute [rw] agent_id
     #   The unique identifier of the agent from which to disassociate the
     #   knowledge base.
     #   @return [String]
@@ -4254,6 +4479,40 @@ module Aws::BedrockAgent
     #
     class GetAgentAliasResponse < Struct.new(
       :agent_alias)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   The agent's version.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_id
+    #   The collaborator's ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetAgentCollaboratorRequest AWS API Documentation
+    #
+    class GetAgentCollaboratorRequest < Struct.new(
+      :agent_id,
+      :agent_version,
+      :collaborator_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] agent_collaborator
+    #   Details about the collaborator.
+    #   @return [Types::AgentCollaborator]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetAgentCollaboratorResponse AWS API Documentation
+    #
+    class GetAgentCollaboratorResponse < Struct.new(
+      :agent_collaborator)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5712,6 +5971,53 @@ module Aws::BedrockAgent
     end
 
     # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   The agent's version.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of agent collaborators to return in one page of
+    #   results.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListAgentCollaboratorsRequest AWS API Documentation
+    #
+    class ListAgentCollaboratorsRequest < Struct.new(
+      :agent_id,
+      :agent_version,
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] agent_collaborator_summaries
+    #   A list of collaborator summaries.
+    #   @return [Array<Types::AgentCollaboratorSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListAgentCollaboratorsResponse AWS API Documentation
+    #
+    class ListAgentCollaboratorsResponse < Struct.new(
+      :agent_collaborator_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] agent_id
     #   The unique identifier of the agent for which to return information
     #   about knowledge bases associated with it.
     #   @return [String]
@@ -7107,6 +7413,10 @@ module Aws::BedrockAgent
     #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts-configure.html
     #   @return [String]
     #
+    # @!attribute [rw] foundation_model
+    #   The agent's foundation model.
+    #   @return [String]
+    #
     # @!attribute [rw] inference_configuration
     #   Contains inference parameters to use when the agent invokes a
     #   foundation model in the part of the agent sequence defined by the
@@ -7162,6 +7472,7 @@ module Aws::BedrockAgent
     #
     class PromptConfiguration < Struct.new(
       :base_prompt_template,
+      :foundation_model,
       :inference_configuration,
       :parser_mode,
       :prompt_creation_mode,
@@ -8955,6 +9266,60 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # @!attribute [rw] agent_descriptor
+    #   An agent descriptor for the agent collaborator.
+    #   @return [Types::AgentDescriptor]
+    #
+    # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_version
+    #   The agent's version.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaboration_instruction
+    #   Instruction for the collaborator.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_id
+    #   The collaborator's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_name
+    #   The collaborator's name.
+    #   @return [String]
+    #
+    # @!attribute [rw] relay_conversation_history
+    #   A relay conversation history for the collaborator.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateAgentCollaboratorRequest AWS API Documentation
+    #
+    class UpdateAgentCollaboratorRequest < Struct.new(
+      :agent_descriptor,
+      :agent_id,
+      :agent_version,
+      :collaboration_instruction,
+      :collaborator_id,
+      :collaborator_name,
+      :relay_conversation_history)
+      SENSITIVE = [:collaboration_instruction]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] agent_collaborator
+    #   Details about the collaborator.
+    #   @return [Types::AgentCollaborator]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateAgentCollaboratorResponse AWS API Documentation
+    #
+    class UpdateAgentCollaboratorResponse < Struct.new(
+      :agent_collaborator)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] agent_id
     #   The unique identifier of the agent associated with the knowledge
     #   base that you want to update.
@@ -9009,6 +9374,10 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # @!attribute [rw] agent_collaboration
+    #   The agent's collaboration role.
+    #   @return [String]
+    #
     # @!attribute [rw] agent_id
     #   The unique identifier of the agent.
     #   @return [String]
@@ -9116,6 +9485,7 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateAgentRequest AWS API Documentation
     #
     class UpdateAgentRequest < Struct.new(
+      :agent_collaboration,
       :agent_id,
       :agent_name,
       :agent_resource_role_arn,

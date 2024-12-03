@@ -2530,6 +2530,41 @@ module Aws::S3
       include Aws::Structure
     end
 
+    # @!attribute [rw] bucket
+    #   The general purpose bucket that you want to create the metadata
+    #   table configuration in.
+    #   @return [String]
+    #
+    # @!attribute [rw] content_md5
+    #   The `Content-MD5` header for the metadata table configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] checksum_algorithm
+    #   The checksum algorithm to use with your metadata table
+    #   configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] metadata_table_configuration
+    #   The contents of your metadata table configuration.
+    #   @return [Types::MetadataTableConfiguration]
+    #
+    # @!attribute [rw] expected_bucket_owner
+    #   The expected owner of the general purpose bucket that contains your
+    #   metadata table configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/CreateBucketMetadataTableConfigurationRequest AWS API Documentation
+    #
+    class CreateBucketMetadataTableConfigurationRequest < Struct.new(
+      :bucket,
+      :content_md5,
+      :checksum_algorithm,
+      :metadata_table_configuration,
+      :expected_bucket_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] location
     #   A forward slash followed by the name of the bucket.
     #   @return [String]
@@ -3850,6 +3885,25 @@ module Aws::S3
     # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/DeleteBucketLifecycleRequest AWS API Documentation
     #
     class DeleteBucketLifecycleRequest < Struct.new(
+      :bucket,
+      :expected_bucket_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] bucket
+    #   The general purpose bucket that you want to remove the metadata
+    #   table configuration from.
+    #   @return [String]
+    #
+    # @!attribute [rw] expected_bucket_owner
+    #   The expected bucket owner of the general purpose bucket that you
+    #   want to remove the metadata table configuration from.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/DeleteBucketMetadataTableConfigurationRequest AWS API Documentation
+    #
+    class DeleteBucketMetadataTableConfigurationRequest < Struct.new(
       :bucket,
       :expected_bucket_owner)
       SENSITIVE = []
@@ -5571,6 +5625,103 @@ module Aws::S3
       include Aws::Structure
     end
 
+    # If the `CreateBucketMetadataTableConfiguration` request succeeds, but
+    # S3 Metadata was unable to create the table, this structure contains
+    # the error code and error message.
+    #
+    # @!attribute [rw] error_code
+    #   If the `CreateBucketMetadataTableConfiguration` request succeeds,
+    #   but S3 Metadata was unable to create the table, this structure
+    #   contains the error code. The possible error codes and error messages
+    #   are as follows:
+    #
+    #   * `AccessDeniedCreatingResources` - You don't have sufficient
+    #     permissions to create the required resources. Make sure that you
+    #     have `s3tables:CreateNamespace`, `s3tables:CreateTable`,
+    #     `s3tables:GetTable` and `s3tables:PutTablePolicy` permissions, and
+    #     then try again. To create a new metadata table, you must delete
+    #     the metadata configuration for this bucket, and then create a new
+    #     metadata configuration.
+    #
+    #   * `AccessDeniedWritingToTable` - Unable to write to the metadata
+    #     table because of missing resource permissions. To fix the resource
+    #     policy, Amazon S3 needs to create a new metadata table. To create
+    #     a new metadata table, you must delete the metadata configuration
+    #     for this bucket, and then create a new metadata configuration.
+    #
+    #   * `DestinationTableNotFound` - The destination table doesn't exist.
+    #     To create a new metadata table, you must delete the metadata
+    #     configuration for this bucket, and then create a new metadata
+    #     configuration.
+    #
+    #   * `ServerInternalError` - An internal error has occurred. To create
+    #     a new metadata table, you must delete the metadata configuration
+    #     for this bucket, and then create a new metadata configuration.
+    #
+    #   * `TableAlreadyExists` - The table that you specified already exists
+    #     in the table bucket's namespace. Specify a different table name.
+    #     To create a new metadata table, you must delete the metadata
+    #     configuration for this bucket, and then create a new metadata
+    #     configuration.
+    #
+    #   * `TableBucketNotFound` - The table bucket that you specified
+    #     doesn't exist in this Amazon Web Services Region and account.
+    #     Create or choose a different table bucket. To create a new
+    #     metadata table, you must delete the metadata configuration for
+    #     this bucket, and then create a new metadata configuration.
+    #   @return [String]
+    #
+    # @!attribute [rw] error_message
+    #   If the `CreateBucketMetadataTableConfiguration` request succeeds,
+    #   but S3 Metadata was unable to create the table, this structure
+    #   contains the error message. The possible error codes and error
+    #   messages are as follows:
+    #
+    #   * `AccessDeniedCreatingResources` - You don't have sufficient
+    #     permissions to create the required resources. Make sure that you
+    #     have `s3tables:CreateNamespace`, `s3tables:CreateTable`,
+    #     `s3tables:GetTable` and `s3tables:PutTablePolicy` permissions, and
+    #     then try again. To create a new metadata table, you must delete
+    #     the metadata configuration for this bucket, and then create a new
+    #     metadata configuration.
+    #
+    #   * `AccessDeniedWritingToTable` - Unable to write to the metadata
+    #     table because of missing resource permissions. To fix the resource
+    #     policy, Amazon S3 needs to create a new metadata table. To create
+    #     a new metadata table, you must delete the metadata configuration
+    #     for this bucket, and then create a new metadata configuration.
+    #
+    #   * `DestinationTableNotFound` - The destination table doesn't exist.
+    #     To create a new metadata table, you must delete the metadata
+    #     configuration for this bucket, and then create a new metadata
+    #     configuration.
+    #
+    #   * `ServerInternalError` - An internal error has occurred. To create
+    #     a new metadata table, you must delete the metadata configuration
+    #     for this bucket, and then create a new metadata configuration.
+    #
+    #   * `TableAlreadyExists` - The table that you specified already exists
+    #     in the table bucket's namespace. Specify a different table name.
+    #     To create a new metadata table, you must delete the metadata
+    #     configuration for this bucket, and then create a new metadata
+    #     configuration.
+    #
+    #   * `TableBucketNotFound` - The table bucket that you specified
+    #     doesn't exist in this Amazon Web Services Region and account.
+    #     Create or choose a different table bucket. To create a new
+    #     metadata table, you must delete the metadata configuration for
+    #     this bucket, and then create a new metadata configuration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/ErrorDetails AWS API Documentation
+    #
+    class ErrorDetails < Struct.new(
+      :error_code,
+      :error_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The error information.
     #
     # @!attribute [rw] key
@@ -6162,6 +6313,73 @@ module Aws::S3
     class GetBucketLoggingRequest < Struct.new(
       :bucket,
       :expected_bucket_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] get_bucket_metadata_table_configuration_result
+    #   The metadata table configuration for the general purpose bucket.
+    #   @return [Types::GetBucketMetadataTableConfigurationResult]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/GetBucketMetadataTableConfigurationOutput AWS API Documentation
+    #
+    class GetBucketMetadataTableConfigurationOutput < Struct.new(
+      :get_bucket_metadata_table_configuration_result)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] bucket
+    #   The general purpose bucket that contains the metadata table
+    #   configuration that you want to retrieve.
+    #   @return [String]
+    #
+    # @!attribute [rw] expected_bucket_owner
+    #   The expected owner of the general purpose bucket that you want to
+    #   retrieve the metadata table configuration from.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/GetBucketMetadataTableConfigurationRequest AWS API Documentation
+    #
+    class GetBucketMetadataTableConfigurationRequest < Struct.new(
+      :bucket,
+      :expected_bucket_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The metadata table configuration for a general purpose bucket.
+    #
+    # @!attribute [rw] metadata_table_configuration_result
+    #   The metadata table configuration for a general purpose bucket.
+    #   @return [Types::MetadataTableConfigurationResult]
+    #
+    # @!attribute [rw] status
+    #   The status of the metadata table. The status values are:
+    #
+    #   * `CREATING` - The metadata table is in the process of being created
+    #     in the specified table bucket.
+    #
+    #   * `ACTIVE` - The metadata table has been created successfully and
+    #     records are being delivered to the table.
+    #
+    #   * `FAILED` - Amazon S3 is unable to create the metadata table, or
+    #     Amazon S3 is unable to deliver records. See `ErrorDetails` for
+    #     details.
+    #   @return [String]
+    #
+    # @!attribute [rw] error
+    #   If the `CreateBucketMetadataTableConfiguration` request succeeds,
+    #   but S3 Metadata was unable to create the table, this structure
+    #   contains the error code and error message.
+    #   @return [Types::ErrorDetails]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/GetBucketMetadataTableConfigurationResult AWS API Documentation
+    #
+    class GetBucketMetadataTableConfigurationResult < Struct.new(
+      :metadata_table_configuration_result,
+      :status,
+      :error)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11554,6 +11772,46 @@ module Aws::S3
       include Aws::Structure
     end
 
+    # The metadata table configuration for a general purpose bucket.
+    #
+    # @!attribute [rw] s3_tables_destination
+    #   The destination information for the metadata table configuration.
+    #   The destination table bucket must be in the same Region and Amazon
+    #   Web Services account as the general purpose bucket. The specified
+    #   metadata table name must be unique within the `aws_s3_metadata`
+    #   namespace in the destination table bucket.
+    #   @return [Types::S3TablesDestination]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/MetadataTableConfiguration AWS API Documentation
+    #
+    class MetadataTableConfiguration < Struct.new(
+      :s3_tables_destination)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The metadata table configuration for a general purpose bucket. The
+    # destination table bucket must be in the same Region and Amazon Web
+    # Services account as the general purpose bucket. The specified metadata
+    # table name must be unique within the `aws_s3_metadata` namespace in
+    # the destination table bucket.
+    #
+    # @!attribute [rw] s3_tables_destination_result
+    #   The destination information for the metadata table configuration.
+    #   The destination table bucket must be in the same Region and Amazon
+    #   Web Services account as the general purpose bucket. The specified
+    #   metadata table name must be unique within the `aws_s3_metadata`
+    #   namespace in the destination table bucket.
+    #   @return [Types::S3TablesDestinationResult]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/MetadataTableConfigurationResult AWS API Documentation
+    #
+    class MetadataTableConfigurationResult < Struct.new(
+      :s3_tables_destination_result)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A container specifying replication metrics-related settings enabling
     # replication metrics and events.
     #
@@ -16421,6 +16679,78 @@ module Aws::S3
       :tagging,
       :user_metadata,
       :storage_class)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The destination information for the metadata table configuration. The
+    # destination table bucket must be in the same Region and Amazon Web
+    # Services account as the general purpose bucket. The specified metadata
+    # table name must be unique within the `aws_s3_metadata` namespace in
+    # the destination table bucket.
+    #
+    # @!attribute [rw] table_bucket_arn
+    #   The Amazon Resource Name (ARN) for the table bucket that's
+    #   specified as the destination in the metadata table configuration.
+    #   The destination table bucket must be in the same Region and Amazon
+    #   Web Services account as the general purpose bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name for the metadata table in your metadata table
+    #   configuration. The specified metadata table name must be unique
+    #   within the `aws_s3_metadata` namespace in the destination table
+    #   bucket.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/S3TablesDestination AWS API Documentation
+    #
+    class S3TablesDestination < Struct.new(
+      :table_bucket_arn,
+      :table_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The destination information for the metadata table configuration. The
+    # destination table bucket must be in the same Region and Amazon Web
+    # Services account as the general purpose bucket. The specified metadata
+    # table name must be unique within the `aws_s3_metadata` namespace in
+    # the destination table bucket.
+    #
+    # @!attribute [rw] table_bucket_arn
+    #   The Amazon Resource Name (ARN) for the table bucket that's
+    #   specified as the destination in the metadata table configuration.
+    #   The destination table bucket must be in the same Region and Amazon
+    #   Web Services account as the general purpose bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_name
+    #   The name for the metadata table in your metadata table
+    #   configuration. The specified metadata table name must be unique
+    #   within the `aws_s3_metadata` namespace in the destination table
+    #   bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_arn
+    #   The Amazon Resource Name (ARN) for the metadata table in the
+    #   metadata table configuration. The specified metadata table name must
+    #   be unique within the `aws_s3_metadata` namespace in the destination
+    #   table bucket.
+    #   @return [String]
+    #
+    # @!attribute [rw] table_namespace
+    #   The table bucket namespace for the metadata table in your metadata
+    #   table configuration. This value is always `aws_s3_metadata`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/s3-2006-03-01/S3TablesDestinationResult AWS API Documentation
+    #
+    class S3TablesDestinationResult < Struct.new(
+      :table_bucket_arn,
+      :table_name,
+      :table_arn,
+      :table_namespace)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -242,6 +242,21 @@ module Aws
                          ) -> _CreateBucketResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateBucketResponseSuccess
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#create_bucket_metadata_table_configuration-instance_method
+      def create_bucket_metadata_table_configuration: (
+                                                        bucket: ::String,
+                                                        ?content_md5: ::String,
+                                                        ?checksum_algorithm: ("CRC32" | "CRC32C" | "SHA1" | "SHA256"),
+                                                        metadata_table_configuration: {
+                                                          s3_tables_destination: {
+                                                            table_bucket_arn: ::String,
+                                                            table_name: ::String
+                                                          }
+                                                        },
+                                                        ?expected_bucket_owner: ::String
+                                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       interface _CreateMultipartUploadResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateMultipartUploadOutput]
         def abort_date: () -> ::Time
@@ -362,6 +377,13 @@ module Aws
                                      ?expected_bucket_owner: ::String
                                    ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#delete_bucket_metadata_table_configuration-instance_method
+      def delete_bucket_metadata_table_configuration: (
+                                                        bucket: ::String,
+                                                        ?expected_bucket_owner: ::String
+                                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#delete_bucket_metrics_configuration-instance_method
       def delete_bucket_metrics_configuration: (
@@ -602,6 +624,17 @@ module Aws
                                 ?expected_bucket_owner: ::String
                               ) -> _GetBucketLoggingResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBucketLoggingResponseSuccess
+
+      interface _GetBucketMetadataTableConfigurationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetBucketMetadataTableConfigurationOutput]
+        def get_bucket_metadata_table_configuration_result: () -> Types::GetBucketMetadataTableConfigurationResult
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Client.html#get_bucket_metadata_table_configuration-instance_method
+      def get_bucket_metadata_table_configuration: (
+                                                     bucket: ::String,
+                                                     ?expected_bucket_owner: ::String
+                                                   ) -> _GetBucketMetadataTableConfigurationResponseSuccess
+                                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetBucketMetadataTableConfigurationResponseSuccess
 
       interface _GetBucketMetricsConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetBucketMetricsConfigurationOutput]

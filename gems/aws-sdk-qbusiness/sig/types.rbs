@@ -39,6 +39,12 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class ActionConfiguration
+      attr_accessor action: ::String
+      attr_accessor filter_configuration: Types::ActionFilterConfiguration
+      SENSITIVE: []
+    end
+
     class ActionExecution
       attr_accessor plugin_id: ::String
       attr_accessor payload: ::Hash[::String, Types::ActionExecutionPayloadField]
@@ -59,9 +65,14 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class ActionFilterConfiguration
+      attr_accessor document_attribute_filter: Types::AttributeFilter
+      SENSITIVE: []
+    end
+
     class ActionReview
       attr_accessor plugin_id: ::String
-      attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
+      attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
       attr_accessor payload: ::Hash[::String, Types::ActionReviewPayloadField]
       attr_accessor payload_field_name_separator: ::String
       SENSITIVE: []
@@ -72,7 +83,7 @@ module Aws::QBusiness
       attr_accessor user_message_id: ::String
       attr_accessor system_message_id: ::String
       attr_accessor plugin_id: ::String
-      attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
+      attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
       attr_accessor payload: ::Hash[::String, Types::ActionReviewPayloadField]
       attr_accessor payload_field_name_separator: ::String
       attr_accessor event_type: untyped
@@ -98,13 +109,22 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class ActionSummary
+      attr_accessor action_identifier: ::String
+      attr_accessor display_name: ::String
+      attr_accessor instruction_example: ::String
+      attr_accessor description: ::String
+      SENSITIVE: []
+    end
+
     class Application
       attr_accessor display_name: ::String
       attr_accessor application_id: ::String
       attr_accessor created_at: ::Time
       attr_accessor updated_at: ::Time
       attr_accessor status: ("CREATING" | "ACTIVE" | "DELETING" | "FAILED" | "UPDATING")
-      attr_accessor identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC")
+      attr_accessor identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC" | "AWS_QUICKSIGHT_IDP")
+      attr_accessor quick_sight_configuration: Types::QuickSightConfiguration
       SENSITIVE: []
     end
 
@@ -115,6 +135,19 @@ module Aws::QBusiness
 
     class AppliedCreatorModeConfiguration
       attr_accessor creator_mode_control: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class AssociatePermissionRequest
+      attr_accessor application_id: ::String
+      attr_accessor statement_id: ::String
+      attr_accessor actions: ::Array[::String]
+      attr_accessor principal: ::String
+      SENSITIVE: []
+    end
+
+    class AssociatePermissionResponse
+      attr_accessor statement: ::String
       SENSITIVE: []
     end
 
@@ -333,6 +366,17 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class ContentSource
+      attr_accessor retriever: Types::RetrieverContentSource
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class Retriever < ContentSource
+      end
+      class Unknown < ContentSource
+      end
+    end
+
     class Conversation
       attr_accessor conversation_id: ::String
       attr_accessor title: ::String
@@ -360,7 +404,7 @@ module Aws::QBusiness
     class CreateApplicationRequest
       attr_accessor display_name: ::String
       attr_accessor role_arn: ::String
-      attr_accessor identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC")
+      attr_accessor identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC" | "AWS_QUICKSIGHT_IDP")
       attr_accessor iam_identity_provider_arn: ::String
       attr_accessor identity_center_instance_arn: ::String
       attr_accessor client_ids_for_oidc: ::Array[::String]
@@ -371,12 +415,30 @@ module Aws::QBusiness
       attr_accessor attachments_configuration: Types::AttachmentsConfiguration
       attr_accessor q_apps_configuration: Types::QAppsConfiguration
       attr_accessor personalization_configuration: Types::PersonalizationConfiguration
+      attr_accessor quick_sight_configuration: Types::QuickSightConfiguration
       SENSITIVE: []
     end
 
     class CreateApplicationResponse
       attr_accessor application_id: ::String
       attr_accessor application_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CreateDataAccessorRequest
+      attr_accessor application_id: ::String
+      attr_accessor principal: ::String
+      attr_accessor action_configurations: ::Array[Types::ActionConfiguration]
+      attr_accessor client_token: ::String
+      attr_accessor display_name: ::String
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: [:display_name]
+    end
+
+    class CreateDataAccessorResponse
+      attr_accessor data_accessor_id: ::String
+      attr_accessor idc_application_arn: ::String
+      attr_accessor data_accessor_arn: ::String
       SENSITIVE: []
     end
 
@@ -422,7 +484,7 @@ module Aws::QBusiness
     class CreatePluginRequest
       attr_accessor application_id: ::String
       attr_accessor display_name: ::String
-      attr_accessor type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
+      attr_accessor type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
       attr_accessor auth_configuration: Types::PluginAuthConfiguration
       attr_accessor server_url: ::String
       attr_accessor custom_plugin_configuration: Types::CustomPluginConfiguration
@@ -478,6 +540,7 @@ module Aws::QBusiness
       attr_accessor client_token: ::String
       attr_accessor identity_provider_configuration: Types::IdentityProviderConfiguration
       attr_accessor browser_extension_configuration: Types::BrowserExtensionConfiguration
+      attr_accessor customization_configuration: Types::CustomizationConfiguration
       SENSITIVE: []
     end
 
@@ -497,6 +560,25 @@ module Aws::QBusiness
       attr_accessor api_schema_type: ("OPEN_API_V3")
       attr_accessor api_schema: Types::APISchema
       SENSITIVE: []
+    end
+
+    class CustomizationConfiguration
+      attr_accessor custom_css_url: ::String
+      attr_accessor logo_url: ::String
+      attr_accessor font_url: ::String
+      attr_accessor favicon_url: ::String
+      SENSITIVE: []
+    end
+
+    class DataAccessor
+      attr_accessor display_name: ::String
+      attr_accessor data_accessor_id: ::String
+      attr_accessor data_accessor_arn: ::String
+      attr_accessor idc_application_arn: ::String
+      attr_accessor principal: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
+      SENSITIVE: [:display_name]
     end
 
     class DataSource
@@ -565,6 +647,15 @@ module Aws::QBusiness
     end
 
     class DeleteConversationResponse < Aws::EmptyStructure
+    end
+
+    class DeleteDataAccessorRequest
+      attr_accessor application_id: ::String
+      attr_accessor data_accessor_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDataAccessorResponse < Aws::EmptyStructure
     end
 
     class DeleteDataSourceRequest
@@ -636,6 +727,15 @@ module Aws::QBusiness
     end
 
     class DeleteWebExperienceResponse < Aws::EmptyStructure
+    end
+
+    class DisassociatePermissionRequest
+      attr_accessor application_id: ::String
+      attr_accessor statement_id: ::String
+      SENSITIVE: []
+    end
+
+    class DisassociatePermissionResponse < Aws::EmptyStructure
     end
 
     class Document
@@ -799,7 +899,7 @@ module Aws::QBusiness
       attr_accessor display_name: ::String
       attr_accessor application_id: ::String
       attr_accessor application_arn: ::String
-      attr_accessor identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC")
+      attr_accessor identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC" | "AWS_QUICKSIGHT_IDP")
       attr_accessor iam_identity_provider_arn: ::String
       attr_accessor identity_center_application_arn: ::String
       attr_accessor role_arn: ::String
@@ -814,6 +914,7 @@ module Aws::QBusiness
       attr_accessor personalization_configuration: Types::PersonalizationConfiguration
       attr_accessor auto_subscription_configuration: Types::AutoSubscriptionConfiguration
       attr_accessor client_ids_for_oidc: ::Array[::String]
+      attr_accessor quick_sight_configuration: Types::QuickSightConfiguration
       SENSITIVE: []
     end
 
@@ -831,6 +932,25 @@ module Aws::QBusiness
       attr_accessor creator_mode_configuration: Types::AppliedCreatorModeConfiguration
       attr_accessor next_token: ::String
       SENSITIVE: []
+    end
+
+    class GetDataAccessorRequest
+      attr_accessor application_id: ::String
+      attr_accessor data_accessor_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetDataAccessorResponse
+      attr_accessor display_name: ::String
+      attr_accessor data_accessor_id: ::String
+      attr_accessor data_accessor_arn: ::String
+      attr_accessor application_id: ::String
+      attr_accessor idc_application_arn: ::String
+      attr_accessor principal: ::String
+      attr_accessor action_configurations: ::Array[Types::ActionConfiguration]
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
+      SENSITIVE: [:display_name]
     end
 
     class GetDataSourceRequest
@@ -922,7 +1042,7 @@ module Aws::QBusiness
       attr_accessor application_id: ::String
       attr_accessor plugin_id: ::String
       attr_accessor display_name: ::String
-      attr_accessor type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
+      attr_accessor type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
       attr_accessor server_url: ::String
       attr_accessor auth_configuration: Types::PluginAuthConfiguration
       attr_accessor custom_plugin_configuration: Types::CustomPluginConfiguration
@@ -931,6 +1051,16 @@ module Aws::QBusiness
       attr_accessor state: ("ENABLED" | "DISABLED")
       attr_accessor created_at: ::Time
       attr_accessor updated_at: ::Time
+      SENSITIVE: []
+    end
+
+    class GetPolicyRequest
+      attr_accessor application_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetPolicyResponse
+      attr_accessor policy: ::String
       SENSITIVE: []
     end
 
@@ -989,6 +1119,7 @@ module Aws::QBusiness
       attr_accessor authentication_configuration: Types::WebExperienceAuthConfiguration
       attr_accessor error: Types::ErrorDetail
       attr_accessor browser_extension_configuration: Types::BrowserExtensionConfiguration
+      attr_accessor customization_configuration: Types::CustomizationConfiguration
       SENSITIVE: []
     end
 
@@ -1015,6 +1146,12 @@ module Aws::QBusiness
       attr_accessor invocation_condition: Types::DocumentAttributeCondition
       attr_accessor lambda_arn: ::String
       attr_accessor s3_bucket_name: ::String
+      attr_accessor role_arn: ::String
+      SENSITIVE: []
+    end
+
+    class IdcAuthConfiguration
+      attr_accessor idc_application_arn: ::String
       attr_accessor role_arn: ::String
       SENSITIVE: []
     end
@@ -1120,6 +1257,19 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class ListDataAccessorsRequest
+      attr_accessor application_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListDataAccessorsResponse
+      attr_accessor data_accessors: ::Array[Types::DataAccessor]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListDataSourceSyncJobsRequest
       attr_accessor data_source_id: ::String
       attr_accessor application_id: ::String
@@ -1208,6 +1358,45 @@ module Aws::QBusiness
     class ListMessagesResponse
       attr_accessor messages: ::Array[Types::Message]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListPluginActionsRequest
+      attr_accessor application_id: ::String
+      attr_accessor plugin_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListPluginActionsResponse
+      attr_accessor next_token: ::String
+      attr_accessor items: ::Array[Types::ActionSummary]
+      SENSITIVE: []
+    end
+
+    class ListPluginTypeActionsRequest
+      attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListPluginTypeActionsResponse
+      attr_accessor next_token: ::String
+      attr_accessor items: ::Array[Types::ActionSummary]
+      SENSITIVE: []
+    end
+
+    class ListPluginTypeMetadataRequest
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListPluginTypeMetadataResponse
+      attr_accessor next_token: ::String
+      attr_accessor items: ::Array[Types::PluginTypeMetadataSummary]
       SENSITIVE: []
     end
 
@@ -1330,6 +1519,8 @@ module Aws::QBusiness
     class OAuth2ClientCredentialConfiguration
       attr_accessor secret_arn: ::String
       attr_accessor role_arn: ::String
+      attr_accessor authorization_url: ::String
+      attr_accessor token_url: ::String
       SENSITIVE: []
     end
 
@@ -1347,7 +1538,7 @@ module Aws::QBusiness
     class Plugin
       attr_accessor plugin_id: ::String
       attr_accessor display_name: ::String
-      attr_accessor type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
+      attr_accessor type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
       attr_accessor server_url: ::String
       attr_accessor state: ("ENABLED" | "DISABLED")
       attr_accessor build_status: ("READY" | "CREATE_IN_PROGRESS" | "CREATE_FAILED" | "UPDATE_IN_PROGRESS" | "UPDATE_FAILED" | "DELETE_IN_PROGRESS" | "DELETE_FAILED")
@@ -1360,6 +1551,7 @@ module Aws::QBusiness
       attr_accessor basic_auth_configuration: Types::BasicAuthConfiguration
       attr_accessor o_auth_2_client_credential_configuration: Types::OAuth2ClientCredentialConfiguration
       attr_accessor no_auth_configuration: Types::NoAuthConfiguration
+      attr_accessor idc_auth_configuration: Types::IdcAuthConfiguration
       attr_accessor unknown: untyped
       SENSITIVE: []
 
@@ -1369,12 +1561,21 @@ module Aws::QBusiness
       end
       class NoAuthConfiguration < PluginAuthConfiguration
       end
+      class IdcAuthConfiguration < PluginAuthConfiguration
+      end
       class Unknown < PluginAuthConfiguration
       end
     end
 
     class PluginConfiguration
       attr_accessor plugin_id: ::String
+      SENSITIVE: []
+    end
+
+    class PluginTypeMetadataSummary
+      attr_accessor type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
+      attr_accessor category: ("Customer relationship management (CRM)" | "Project management" | "Communication" | "Productivity" | "Ticketing and incident management")
+      attr_accessor description: ::String
       SENSITIVE: []
     end
 
@@ -1435,6 +1636,21 @@ module Aws::QBusiness
       SENSITIVE: []
     end
 
+    class QuickSightConfiguration
+      attr_accessor client_namespace: ::String
+      SENSITIVE: []
+    end
+
+    class RelevantContent
+      attr_accessor content: ::String
+      attr_accessor document_id: ::String
+      attr_accessor document_title: ::String
+      attr_accessor document_uri: ::String
+      attr_accessor document_attributes: ::Array[Types::DocumentAttribute]
+      attr_accessor score_attributes: Types::ScoreAttributes
+      SENSITIVE: []
+    end
+
     class ResourceNotFoundException
       attr_accessor message: ::String
       attr_accessor resource_id: ::String
@@ -1463,6 +1679,11 @@ module Aws::QBusiness
       end
       class Unknown < RetrieverConfiguration
       end
+    end
+
+    class RetrieverContentSource
+      attr_accessor retriever_id: ::String
+      SENSITIVE: []
     end
 
     class Rule
@@ -1503,6 +1724,29 @@ module Aws::QBusiness
 
     class SamlProviderConfiguration
       attr_accessor authentication_url: ::String
+      SENSITIVE: []
+    end
+
+    class ScoreAttributes
+      attr_accessor score_confidence: ("VERY_HIGH" | "HIGH" | "MEDIUM" | "LOW" | "NOT_AVAILABLE")
+      SENSITIVE: []
+    end
+
+    class SearchRelevantContentRequest
+      attr_accessor application_id: ::String
+      attr_accessor user_id: ::String
+      attr_accessor user_groups: ::Array[::String]
+      attr_accessor query_text: ::String
+      attr_accessor content_source: Types::ContentSource
+      attr_accessor attribute_filter: Types::AttributeFilter
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class SearchRelevantContentResponse
+      attr_accessor relevant_content: ::Array[Types::RelevantContent]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 
@@ -1658,6 +1902,17 @@ module Aws::QBusiness
     class UpdateChatControlsConfigurationResponse < Aws::EmptyStructure
     end
 
+    class UpdateDataAccessorRequest
+      attr_accessor application_id: ::String
+      attr_accessor data_accessor_id: ::String
+      attr_accessor action_configurations: ::Array[Types::ActionConfiguration]
+      attr_accessor display_name: ::String
+      SENSITIVE: [:display_name]
+    end
+
+    class UpdateDataAccessorResponse < Aws::EmptyStructure
+    end
+
     class UpdateDataSourceRequest
       attr_accessor application_id: ::String
       attr_accessor index_id: ::String
@@ -1742,6 +1997,7 @@ module Aws::QBusiness
       attr_accessor identity_provider_configuration: Types::IdentityProviderConfiguration
       attr_accessor origins: ::Array[::String]
       attr_accessor browser_extension_configuration: Types::BrowserExtensionConfiguration
+      attr_accessor customization_configuration: Types::CustomizationConfiguration
       SENSITIVE: []
     end
 

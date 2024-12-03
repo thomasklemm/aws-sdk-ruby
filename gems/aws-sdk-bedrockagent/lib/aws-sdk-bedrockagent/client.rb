@@ -447,6 +447,72 @@ module Aws::BedrockAgent
 
     # @!group API Operations
 
+    # Makes an agent a collaborator for another agent.
+    #
+    # @option params [required, Types::AgentDescriptor] :agent_descriptor
+    #   The alias of the collaborator agent.
+    #
+    # @option params [required, String] :agent_id
+    #   The agent's ID.
+    #
+    # @option params [required, String] :agent_version
+    #   An agent version.
+    #
+    # @option params [String] :client_token
+    #   A client token.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :collaboration_instruction
+    #   Instruction for the collaborator.
+    #
+    # @option params [required, String] :collaborator_name
+    #   A name for the collaborator.
+    #
+    # @option params [String] :relay_conversation_history
+    #   A relay conversation history for the collaborator.
+    #
+    # @return [Types::AssociateAgentCollaboratorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::AssociateAgentCollaboratorResponse#agent_collaborator #agent_collaborator} => Types::AgentCollaborator
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.associate_agent_collaborator({
+    #     agent_descriptor: { # required
+    #       alias_arn: "AgentAliasArn",
+    #     },
+    #     agent_id: "Id", # required
+    #     agent_version: "DraftVersion", # required
+    #     client_token: "ClientToken",
+    #     collaboration_instruction: "CollaborationInstruction", # required
+    #     collaborator_name: "Name", # required
+    #     relay_conversation_history: "TO_COLLABORATOR", # accepts TO_COLLABORATOR, DISABLED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.agent_collaborator.agent_descriptor.alias_arn #=> String
+    #   resp.agent_collaborator.agent_id #=> String
+    #   resp.agent_collaborator.agent_version #=> String
+    #   resp.agent_collaborator.client_token #=> String
+    #   resp.agent_collaborator.collaboration_instruction #=> String
+    #   resp.agent_collaborator.collaborator_id #=> String
+    #   resp.agent_collaborator.collaborator_name #=> String
+    #   resp.agent_collaborator.created_at #=> Time
+    #   resp.agent_collaborator.last_updated_at #=> Time
+    #   resp.agent_collaborator.relay_conversation_history #=> String, one of "TO_COLLABORATOR", "DISABLED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/AssociateAgentCollaborator AWS API Documentation
+    #
+    # @overload associate_agent_collaborator(params = {})
+    # @param [Hash] params ({})
+    def associate_agent_collaborator(params = {}, options = {})
+      req = build_request(:associate_agent_collaborator, params)
+      req.send_request(options)
+    end
+
     # Associates a knowledge base with an agent. If a knowledge base is
     # associated and its `indexState` is set to `Enabled`, the agent queries
     # the knowledge base for information to augment its response to the
@@ -544,6 +610,9 @@ module Aws::BedrockAgent
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-configure-memory.html
     # [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/advanced-prompts.html
+    #
+    # @option params [String] :agent_collaboration
+    #   The agent's collaboration role.
     #
     # @option params [required, String] :agent_name
     #   A name for the agent that you create.
@@ -655,6 +724,7 @@ module Aws::BedrockAgent
     # @example Request syntax with placeholder values
     #
     #   resp = client.create_agent({
+    #     agent_collaboration: "SUPERVISOR", # accepts SUPERVISOR, SUPERVISOR_ROUTER, DISABLED
     #     agent_name: "Name", # required
     #     agent_resource_role_arn: "AgentRoleArn",
     #     client_token: "ClientToken",
@@ -682,6 +752,7 @@ module Aws::BedrockAgent
     #       prompt_configurations: [ # required
     #         {
     #           base_prompt_template: "BasePromptTemplate",
+    #           foundation_model: "ModelIdentifier",
     #           inference_configuration: {
     #             maximum_length: 1,
     #             stop_sequences: ["String"],
@@ -704,6 +775,7 @@ module Aws::BedrockAgent
     # @example Response structure
     #
     #   resp.agent.agent_arn #=> String
+    #   resp.agent.agent_collaboration #=> String, one of "SUPERVISOR", "SUPERVISOR_ROUTER", "DISABLED"
     #   resp.agent.agent_id #=> String
     #   resp.agent.agent_name #=> String
     #   resp.agent.agent_resource_role_arn #=> String
@@ -729,6 +801,7 @@ module Aws::BedrockAgent
     #   resp.agent.prompt_override_configuration.override_lambda #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations #=> Array
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].base_prompt_template #=> String
+    #   resp.agent.prompt_override_configuration.prompt_configurations[0].foundation_model #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.maximum_length #=> Integer
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences #=> Array
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences[0] #=> String
@@ -2853,6 +2926,36 @@ module Aws::BedrockAgent
       req.send_request(options)
     end
 
+    # Disassociates an agent collaborator.
+    #
+    # @option params [required, String] :agent_id
+    #   An agent ID.
+    #
+    # @option params [required, String] :agent_version
+    #   The agent's version.
+    #
+    # @option params [required, String] :collaborator_id
+    #   The collaborator's ID.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.disassociate_agent_collaborator({
+    #     agent_id: "Id", # required
+    #     agent_version: "DraftVersion", # required
+    #     collaborator_id: "Id", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/DisassociateAgentCollaborator AWS API Documentation
+    #
+    # @overload disassociate_agent_collaborator(params = {})
+    # @param [Hash] params ({})
+    def disassociate_agent_collaborator(params = {}, options = {})
+      req = build_request(:disassociate_agent_collaborator, params)
+      req.send_request(options)
+    end
+
     # Disassociates a knowledge base from an agent.
     #
     # @option params [required, String] :agent_id
@@ -2903,6 +3006,7 @@ module Aws::BedrockAgent
     # @example Response structure
     #
     #   resp.agent.agent_arn #=> String
+    #   resp.agent.agent_collaboration #=> String, one of "SUPERVISOR", "SUPERVISOR_ROUTER", "DISABLED"
     #   resp.agent.agent_id #=> String
     #   resp.agent.agent_name #=> String
     #   resp.agent.agent_resource_role_arn #=> String
@@ -2928,6 +3032,7 @@ module Aws::BedrockAgent
     #   resp.agent.prompt_override_configuration.override_lambda #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations #=> Array
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].base_prompt_template #=> String
+    #   resp.agent.prompt_override_configuration.prompt_configurations[0].foundation_model #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.maximum_length #=> Integer
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences #=> Array
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences[0] #=> String
@@ -3062,6 +3167,51 @@ module Aws::BedrockAgent
       req.send_request(options)
     end
 
+    # Retrieves information about an agent's collaborator.
+    #
+    # @option params [required, String] :agent_id
+    #   The agent's ID.
+    #
+    # @option params [required, String] :agent_version
+    #   The agent's version.
+    #
+    # @option params [required, String] :collaborator_id
+    #   The collaborator's ID.
+    #
+    # @return [Types::GetAgentCollaboratorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetAgentCollaboratorResponse#agent_collaborator #agent_collaborator} => Types::AgentCollaborator
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_agent_collaborator({
+    #     agent_id: "Id", # required
+    #     agent_version: "Version", # required
+    #     collaborator_id: "Id", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.agent_collaborator.agent_descriptor.alias_arn #=> String
+    #   resp.agent_collaborator.agent_id #=> String
+    #   resp.agent_collaborator.agent_version #=> String
+    #   resp.agent_collaborator.client_token #=> String
+    #   resp.agent_collaborator.collaboration_instruction #=> String
+    #   resp.agent_collaborator.collaborator_id #=> String
+    #   resp.agent_collaborator.collaborator_name #=> String
+    #   resp.agent_collaborator.created_at #=> Time
+    #   resp.agent_collaborator.last_updated_at #=> Time
+    #   resp.agent_collaborator.relay_conversation_history #=> String, one of "TO_COLLABORATOR", "DISABLED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetAgentCollaborator AWS API Documentation
+    #
+    # @overload get_agent_collaborator(params = {})
+    # @param [Hash] params ({})
+    def get_agent_collaborator(params = {}, options = {})
+      req = build_request(:get_agent_collaborator, params)
+      req.send_request(options)
+    end
+
     # Gets information about a knowledge base associated with an agent.
     #
     # @option params [required, String] :agent_id
@@ -3127,6 +3277,7 @@ module Aws::BedrockAgent
     # @example Response structure
     #
     #   resp.agent_version.agent_arn #=> String
+    #   resp.agent_version.agent_collaboration #=> String, one of "SUPERVISOR", "SUPERVISOR_ROUTER", "DISABLED"
     #   resp.agent_version.agent_id #=> String
     #   resp.agent_version.agent_name #=> String
     #   resp.agent_version.agent_resource_role_arn #=> String
@@ -3147,6 +3298,7 @@ module Aws::BedrockAgent
     #   resp.agent_version.prompt_override_configuration.override_lambda #=> String
     #   resp.agent_version.prompt_override_configuration.prompt_configurations #=> Array
     #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].base_prompt_template #=> String
+    #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].foundation_model #=> String
     #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].inference_configuration.maximum_length #=> Integer
     #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences #=> Array
     #   resp.agent_version.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences[0] #=> String
@@ -4101,6 +4253,61 @@ module Aws::BedrockAgent
       req.send_request(options)
     end
 
+    # Retrieve a list of an agent's collaborators.
+    #
+    # @option params [required, String] :agent_id
+    #   The agent's ID.
+    #
+    # @option params [required, String] :agent_version
+    #   The agent's version.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of agent collaborators to return in one page of
+    #   results.
+    #
+    # @option params [String] :next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #
+    # @return [Types::ListAgentCollaboratorsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListAgentCollaboratorsResponse#agent_collaborator_summaries #agent_collaborator_summaries} => Array&lt;Types::AgentCollaboratorSummary&gt;
+    #   * {Types::ListAgentCollaboratorsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_agent_collaborators({
+    #     agent_id: "Id", # required
+    #     agent_version: "Version", # required
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.agent_collaborator_summaries #=> Array
+    #   resp.agent_collaborator_summaries[0].agent_descriptor.alias_arn #=> String
+    #   resp.agent_collaborator_summaries[0].agent_id #=> String
+    #   resp.agent_collaborator_summaries[0].agent_version #=> String
+    #   resp.agent_collaborator_summaries[0].collaboration_instruction #=> String
+    #   resp.agent_collaborator_summaries[0].collaborator_id #=> String
+    #   resp.agent_collaborator_summaries[0].collaborator_name #=> String
+    #   resp.agent_collaborator_summaries[0].created_at #=> Time
+    #   resp.agent_collaborator_summaries[0].last_updated_at #=> Time
+    #   resp.agent_collaborator_summaries[0].relay_conversation_history #=> String, one of "TO_COLLABORATOR", "DISABLED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ListAgentCollaborators AWS API Documentation
+    #
+    # @overload list_agent_collaborators(params = {})
+    # @param [Hash] params ({})
+    def list_agent_collaborators(params = {}, options = {})
+      req = build_request(:list_agent_collaborators, params)
+      req.send_request(options)
+    end
+
     # Lists knowledge bases associated with an agent and information about
     # each one.
     #
@@ -5034,6 +5241,9 @@ module Aws::BedrockAgent
 
     # Updates the configuration of an agent.
     #
+    # @option params [String] :agent_collaboration
+    #   The agent's collaboration role.
+    #
     # @option params [required, String] :agent_id
     #   The unique identifier of the agent.
     #
@@ -5131,6 +5341,7 @@ module Aws::BedrockAgent
     # @example Request syntax with placeholder values
     #
     #   resp = client.update_agent({
+    #     agent_collaboration: "SUPERVISOR", # accepts SUPERVISOR, SUPERVISOR_ROUTER, DISABLED
     #     agent_id: "Id", # required
     #     agent_name: "Name", # required
     #     agent_resource_role_arn: "AgentRoleArn", # required
@@ -5158,6 +5369,7 @@ module Aws::BedrockAgent
     #       prompt_configurations: [ # required
     #         {
     #           base_prompt_template: "BasePromptTemplate",
+    #           foundation_model: "ModelIdentifier",
     #           inference_configuration: {
     #             maximum_length: 1,
     #             stop_sequences: ["String"],
@@ -5177,6 +5389,7 @@ module Aws::BedrockAgent
     # @example Response structure
     #
     #   resp.agent.agent_arn #=> String
+    #   resp.agent.agent_collaboration #=> String, one of "SUPERVISOR", "SUPERVISOR_ROUTER", "DISABLED"
     #   resp.agent.agent_id #=> String
     #   resp.agent.agent_name #=> String
     #   resp.agent.agent_resource_role_arn #=> String
@@ -5202,6 +5415,7 @@ module Aws::BedrockAgent
     #   resp.agent.prompt_override_configuration.override_lambda #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations #=> Array
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].base_prompt_template #=> String
+    #   resp.agent.prompt_override_configuration.prompt_configurations[0].foundation_model #=> String
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.maximum_length #=> Integer
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences #=> Array
     #   resp.agent.prompt_override_configuration.prompt_configurations[0].inference_configuration.stop_sequences[0] #=> String
@@ -5428,6 +5642,69 @@ module Aws::BedrockAgent
     # @param [Hash] params ({})
     def update_agent_alias(params = {}, options = {})
       req = build_request(:update_agent_alias, params)
+      req.send_request(options)
+    end
+
+    # Updates an agent's collaborator.
+    #
+    # @option params [required, Types::AgentDescriptor] :agent_descriptor
+    #   An agent descriptor for the agent collaborator.
+    #
+    # @option params [required, String] :agent_id
+    #   The agent's ID.
+    #
+    # @option params [required, String] :agent_version
+    #   The agent's version.
+    #
+    # @option params [required, String] :collaboration_instruction
+    #   Instruction for the collaborator.
+    #
+    # @option params [required, String] :collaborator_id
+    #   The collaborator's ID.
+    #
+    # @option params [required, String] :collaborator_name
+    #   The collaborator's name.
+    #
+    # @option params [String] :relay_conversation_history
+    #   A relay conversation history for the collaborator.
+    #
+    # @return [Types::UpdateAgentCollaboratorResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateAgentCollaboratorResponse#agent_collaborator #agent_collaborator} => Types::AgentCollaborator
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_agent_collaborator({
+    #     agent_descriptor: { # required
+    #       alias_arn: "AgentAliasArn",
+    #     },
+    #     agent_id: "Id", # required
+    #     agent_version: "DraftVersion", # required
+    #     collaboration_instruction: "CollaborationInstruction", # required
+    #     collaborator_id: "Id", # required
+    #     collaborator_name: "Name", # required
+    #     relay_conversation_history: "TO_COLLABORATOR", # accepts TO_COLLABORATOR, DISABLED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.agent_collaborator.agent_descriptor.alias_arn #=> String
+    #   resp.agent_collaborator.agent_id #=> String
+    #   resp.agent_collaborator.agent_version #=> String
+    #   resp.agent_collaborator.client_token #=> String
+    #   resp.agent_collaborator.collaboration_instruction #=> String
+    #   resp.agent_collaborator.collaborator_id #=> String
+    #   resp.agent_collaborator.collaborator_name #=> String
+    #   resp.agent_collaborator.created_at #=> Time
+    #   resp.agent_collaborator.last_updated_at #=> Time
+    #   resp.agent_collaborator.relay_conversation_history #=> String, one of "TO_COLLABORATOR", "DISABLED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateAgentCollaborator AWS API Documentation
+    #
+    # @overload update_agent_collaborator(params = {})
+    # @param [Hash] params ({})
+    def update_agent_collaborator(params = {}, options = {})
+      req = build_request(:update_agent_collaborator, params)
       req.send_request(options)
     end
 
@@ -6767,7 +7044,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.38.0'
+      context[:gem_version] = '1.39.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

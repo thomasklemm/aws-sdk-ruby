@@ -275,7 +275,8 @@ module Aws
                                   id: ::String,
                                   type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   prompt: ::String,
-                                  plugin_id: ::String
+                                  plugin_id: ::String,
+                                  action_identifier: ::String?
                                 }?,
                                 file_upload: {
                                   title: ::String,
@@ -735,7 +736,8 @@ module Aws
                                   id: ::String,
                                   type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input"),
                                   prompt: ::String,
-                                  plugin_id: ::String
+                                  plugin_id: ::String,
+                                  action_identifier: ::String?
                                 }?,
                                 file_upload: {
                                   title: ::String,

@@ -15,6 +15,7 @@ module Aws::QApps
     include Seahorse::Model
 
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
+    ActionIdentifier = Shapes::StringShape.new(name: 'ActionIdentifier')
     AmazonResourceName = Shapes::StringShape.new(name: 'AmazonResourceName')
     AppArn = Shapes::StringShape.new(name: 'AppArn')
     AppDefinition = Shapes::StructureShape.new(name: 'AppDefinition')
@@ -680,6 +681,7 @@ module Aws::QApps
     QPluginCard.add_member(:prompt, Shapes::ShapeRef.new(shape: Prompt, required: true, location_name: "prompt"))
     QPluginCard.add_member(:plugin_type, Shapes::ShapeRef.new(shape: PluginType, required: true, location_name: "pluginType"))
     QPluginCard.add_member(:plugin_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "pluginId"))
+    QPluginCard.add_member(:action_identifier, Shapes::ShapeRef.new(shape: ActionIdentifier, location_name: "actionIdentifier"))
     QPluginCard.struct_class = Types::QPluginCard
 
     QPluginCardInput.add_member(:title, Shapes::ShapeRef.new(shape: Title, required: true, location_name: "title"))
@@ -687,6 +689,7 @@ module Aws::QApps
     QPluginCardInput.add_member(:type, Shapes::ShapeRef.new(shape: CardType, required: true, location_name: "type"))
     QPluginCardInput.add_member(:prompt, Shapes::ShapeRef.new(shape: Prompt, required: true, location_name: "prompt"))
     QPluginCardInput.add_member(:plugin_id, Shapes::ShapeRef.new(shape: PluginId, required: true, location_name: "pluginId"))
+    QPluginCardInput.add_member(:action_identifier, Shapes::ShapeRef.new(shape: ActionIdentifier, location_name: "actionIdentifier"))
     QPluginCardInput.struct_class = Types::QPluginCardInput
 
     QQueryCard.add_member(:id, Shapes::ShapeRef.new(shape: UUID, required: true, location_name: "id"))

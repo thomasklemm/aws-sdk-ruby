@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:bedrockagent)
 # structure.
 #
 #     bedrock_agent = Aws::BedrockAgent::Client.new
-#     resp = bedrock_agent.associate_agent_knowledge_base(params)
+#     resp = bedrock_agent.associate_agent_collaborator(params)
 #
 # See {Client} for more information.
 #
@@ -54,7 +54,7 @@ module Aws::BedrockAgent
   autoload :EndpointProvider, 'aws-sdk-bedrockagent/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-bedrockagent/endpoints'
 
-  GEM_VERSION = '1.38.0'
+  GEM_VERSION = '1.39.0'
 
 end
 

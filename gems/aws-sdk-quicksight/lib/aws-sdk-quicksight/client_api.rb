@@ -483,6 +483,7 @@ module Aws::QuickSight
     DashboardVersionSummaryList = Shapes::ListShape.new(name: 'DashboardVersionSummaryList')
     DashboardVisualId = Shapes::StructureShape.new(name: 'DashboardVisualId')
     DashboardVisualPublishOptions = Shapes::StructureShape.new(name: 'DashboardVisualPublishOptions')
+    DashboardVisualResult = Shapes::StructureShape.new(name: 'DashboardVisualResult')
     DashboardsQAStatus = Shapes::StringShape.new(name: 'DashboardsQAStatus')
     DataAggregation = Shapes::StructureShape.new(name: 'DataAggregation')
     DataBarsOptions = Shapes::StructureShape.new(name: 'DataBarsOptions')
@@ -623,6 +624,8 @@ module Aws::QuickSight
     DeleteDataSetResponse = Shapes::StructureShape.new(name: 'DeleteDataSetResponse')
     DeleteDataSourceRequest = Shapes::StructureShape.new(name: 'DeleteDataSourceRequest')
     DeleteDataSourceResponse = Shapes::StructureShape.new(name: 'DeleteDataSourceResponse')
+    DeleteDefaultQBusinessApplicationRequest = Shapes::StructureShape.new(name: 'DeleteDefaultQBusinessApplicationRequest')
+    DeleteDefaultQBusinessApplicationResponse = Shapes::StructureShape.new(name: 'DeleteDefaultQBusinessApplicationResponse')
     DeleteFolderMembershipRequest = Shapes::StructureShape.new(name: 'DeleteFolderMembershipRequest')
     DeleteFolderMembershipResponse = Shapes::StructureShape.new(name: 'DeleteFolderMembershipResponse')
     DeleteFolderRequest = Shapes::StructureShape.new(name: 'DeleteFolderRequest')
@@ -710,6 +713,8 @@ module Aws::QuickSight
     DescribeDataSourcePermissionsResponse = Shapes::StructureShape.new(name: 'DescribeDataSourcePermissionsResponse')
     DescribeDataSourceRequest = Shapes::StructureShape.new(name: 'DescribeDataSourceRequest')
     DescribeDataSourceResponse = Shapes::StructureShape.new(name: 'DescribeDataSourceResponse')
+    DescribeDefaultQBusinessApplicationRequest = Shapes::StructureShape.new(name: 'DescribeDefaultQBusinessApplicationRequest')
+    DescribeDefaultQBusinessApplicationResponse = Shapes::StructureShape.new(name: 'DescribeDefaultQBusinessApplicationResponse')
     DescribeFolderPermissionsRequest = Shapes::StructureShape.new(name: 'DescribeFolderPermissionsRequest')
     DescribeFolderPermissionsResponse = Shapes::StructureShape.new(name: 'DescribeFolderPermissionsResponse')
     DescribeFolderRequest = Shapes::StructureShape.new(name: 'DescribeFolderRequest')
@@ -732,6 +737,8 @@ module Aws::QuickSight
     DescribeNamespaceResponse = Shapes::StructureShape.new(name: 'DescribeNamespaceResponse')
     DescribeQPersonalizationConfigurationRequest = Shapes::StructureShape.new(name: 'DescribeQPersonalizationConfigurationRequest')
     DescribeQPersonalizationConfigurationResponse = Shapes::StructureShape.new(name: 'DescribeQPersonalizationConfigurationResponse')
+    DescribeQuickSightQSearchConfigurationRequest = Shapes::StructureShape.new(name: 'DescribeQuickSightQSearchConfigurationRequest')
+    DescribeQuickSightQSearchConfigurationResponse = Shapes::StructureShape.new(name: 'DescribeQuickSightQSearchConfigurationResponse')
     DescribeRefreshScheduleRequest = Shapes::StructureShape.new(name: 'DescribeRefreshScheduleRequest')
     DescribeRefreshScheduleResponse = Shapes::StructureShape.new(name: 'DescribeRefreshScheduleResponse')
     DescribeRoleCustomPermissionRequest = Shapes::StructureShape.new(name: 'DescribeRoleCustomPermissionRequest')
@@ -912,6 +919,10 @@ module Aws::QuickSight
     GenerateEmbedUrlForAnonymousUserResponse = Shapes::StructureShape.new(name: 'GenerateEmbedUrlForAnonymousUserResponse')
     GenerateEmbedUrlForRegisteredUserRequest = Shapes::StructureShape.new(name: 'GenerateEmbedUrlForRegisteredUserRequest')
     GenerateEmbedUrlForRegisteredUserResponse = Shapes::StructureShape.new(name: 'GenerateEmbedUrlForRegisteredUserResponse')
+    GenerateEmbedUrlForRegisteredUserWithIdentityRequest = Shapes::StructureShape.new(name: 'GenerateEmbedUrlForRegisteredUserWithIdentityRequest')
+    GenerateEmbedUrlForRegisteredUserWithIdentityResponse = Shapes::StructureShape.new(name: 'GenerateEmbedUrlForRegisteredUserWithIdentityResponse')
+    GeneratedAnswerResult = Shapes::StructureShape.new(name: 'GeneratedAnswerResult')
+    GeneratedAnswerStatus = Shapes::StringShape.new(name: 'GeneratedAnswerStatus')
     GeoSpatialColumnGroup = Shapes::StructureShape.new(name: 'GeoSpatialColumnGroup')
     GeoSpatialCountryCode = Shapes::StringShape.new(name: 'GeoSpatialCountryCode')
     GeoSpatialDataRole = Shapes::StringShape.new(name: 'GeoSpatialDataRole')
@@ -1049,6 +1060,8 @@ module Aws::QuickSight
     ImageSource = Shapes::UnionShape.new(name: 'ImageSource')
     ImageStaticFile = Shapes::StructureShape.new(name: 'ImageStaticFile')
     IncludeFolderMembers = Shapes::StringShape.new(name: 'IncludeFolderMembers')
+    IncludeGeneratedAnswer = Shapes::StringShape.new(name: 'IncludeGeneratedAnswer')
+    IncludeQuickSightQIndex = Shapes::StringShape.new(name: 'IncludeQuickSightQIndex')
     IncrementalRefresh = Shapes::StructureShape.new(name: 'IncrementalRefresh')
     Ingestion = Shapes::StructureShape.new(name: 'Ingestion')
     IngestionErrorType = Shapes::StringShape.new(name: 'IngestionErrorType')
@@ -1241,6 +1254,7 @@ module Aws::QuickSight
     MarginStyle = Shapes::StructureShape.new(name: 'MarginStyle')
     MariaDbParameters = Shapes::StructureShape.new(name: 'MariaDbParameters')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
+    MaxTopicsToConsider = Shapes::IntegerShape.new(name: 'MaxTopicsToConsider')
     MaximumLabelType = Shapes::StructureShape.new(name: 'MaximumLabelType')
     MaximumMinimumComputation = Shapes::StructureShape.new(name: 'MaximumMinimumComputation')
     MaximumMinimumComputationType = Shapes::StringShape.new(name: 'MaximumMinimumComputationType')
@@ -1412,6 +1426,8 @@ module Aws::QuickSight
     PreconditionNotMetException = Shapes::StructureShape.new(name: 'PreconditionNotMetException')
     PredefinedHierarchy = Shapes::StructureShape.new(name: 'PredefinedHierarchy')
     PredefinedHierarchyColumnList = Shapes::ListShape.new(name: 'PredefinedHierarchyColumnList')
+    PredictQAResultsRequest = Shapes::StructureShape.new(name: 'PredictQAResultsRequest')
+    PredictQAResultsResponse = Shapes::StructureShape.new(name: 'PredictQAResultsResponse')
     PredictionInterval = Shapes::IntegerShape.new(name: 'PredictionInterval')
     Prefix = Shapes::StringShape.new(name: 'Prefix')
     PrestoParameters = Shapes::StructureShape.new(name: 'PrestoParameters')
@@ -1427,9 +1443,16 @@ module Aws::QuickSight
     PurchaseMode = Shapes::StringShape.new(name: 'PurchaseMode')
     PutDataSetRefreshPropertiesRequest = Shapes::StructureShape.new(name: 'PutDataSetRefreshPropertiesRequest')
     PutDataSetRefreshPropertiesResponse = Shapes::StructureShape.new(name: 'PutDataSetRefreshPropertiesResponse')
+    QAQueryText = Shapes::StringShape.new(name: 'QAQueryText')
+    QAResult = Shapes::StructureShape.new(name: 'QAResult')
+    QAResultType = Shapes::StringShape.new(name: 'QAResultType')
+    QAResults = Shapes::ListShape.new(name: 'QAResults')
+    QAUrl = Shapes::StringShape.new(name: 'QAUrl')
+    QSearchStatus = Shapes::StringShape.new(name: 'QSearchStatus')
     Query = Shapes::StringShape.new(name: 'Query')
     QueryExecutionMode = Shapes::StringShape.new(name: 'QueryExecutionMode')
     QueryExecutionOptions = Shapes::StructureShape.new(name: 'QueryExecutionOptions')
+    QuestionId = Shapes::StringShape.new(name: 'QuestionId')
     QueueInfo = Shapes::StructureShape.new(name: 'QueueInfo')
     QuickSightUserNotFoundException = Shapes::StructureShape.new(name: 'QuickSightUserNotFoundException')
     RadarChartAggregatedFieldWells = Shapes::StructureShape.new(name: 'RadarChartAggregatedFieldWells')
@@ -1947,6 +1970,8 @@ module Aws::QuickSight
     UpdateAnalysisPermissionsResponse = Shapes::StructureShape.new(name: 'UpdateAnalysisPermissionsResponse')
     UpdateAnalysisRequest = Shapes::StructureShape.new(name: 'UpdateAnalysisRequest')
     UpdateAnalysisResponse = Shapes::StructureShape.new(name: 'UpdateAnalysisResponse')
+    UpdateApplicationWithTokenExchangeGrantRequest = Shapes::StructureShape.new(name: 'UpdateApplicationWithTokenExchangeGrantRequest')
+    UpdateApplicationWithTokenExchangeGrantResponse = Shapes::StructureShape.new(name: 'UpdateApplicationWithTokenExchangeGrantResponse')
     UpdateBrandAssignmentRequest = Shapes::StructureShape.new(name: 'UpdateBrandAssignmentRequest')
     UpdateBrandAssignmentResponse = Shapes::StructureShape.new(name: 'UpdateBrandAssignmentResponse')
     UpdateBrandPublishedVersionRequest = Shapes::StructureShape.new(name: 'UpdateBrandPublishedVersionRequest')
@@ -1973,6 +1998,8 @@ module Aws::QuickSight
     UpdateDataSourcePermissionsResponse = Shapes::StructureShape.new(name: 'UpdateDataSourcePermissionsResponse')
     UpdateDataSourceRequest = Shapes::StructureShape.new(name: 'UpdateDataSourceRequest')
     UpdateDataSourceResponse = Shapes::StructureShape.new(name: 'UpdateDataSourceResponse')
+    UpdateDefaultQBusinessApplicationRequest = Shapes::StructureShape.new(name: 'UpdateDefaultQBusinessApplicationRequest')
+    UpdateDefaultQBusinessApplicationResponse = Shapes::StructureShape.new(name: 'UpdateDefaultQBusinessApplicationResponse')
     UpdateFolderPermissionsRequest = Shapes::StructureShape.new(name: 'UpdateFolderPermissionsRequest')
     UpdateFolderPermissionsResponse = Shapes::StructureShape.new(name: 'UpdateFolderPermissionsResponse')
     UpdateFolderRequest = Shapes::StructureShape.new(name: 'UpdateFolderRequest')
@@ -1992,6 +2019,8 @@ module Aws::QuickSight
     UpdatePublicSharingSettingsResponse = Shapes::StructureShape.new(name: 'UpdatePublicSharingSettingsResponse')
     UpdateQPersonalizationConfigurationRequest = Shapes::StructureShape.new(name: 'UpdateQPersonalizationConfigurationRequest')
     UpdateQPersonalizationConfigurationResponse = Shapes::StructureShape.new(name: 'UpdateQPersonalizationConfigurationResponse')
+    UpdateQuickSightQSearchConfigurationRequest = Shapes::StructureShape.new(name: 'UpdateQuickSightQSearchConfigurationRequest')
+    UpdateQuickSightQSearchConfigurationResponse = Shapes::StructureShape.new(name: 'UpdateQuickSightQSearchConfigurationResponse')
     UpdateRefreshScheduleRequest = Shapes::StructureShape.new(name: 'UpdateRefreshScheduleRequest')
     UpdateRefreshScheduleResponse = Shapes::StructureShape.new(name: 'UpdateRefreshScheduleResponse')
     UpdateResourcePermissionList = Shapes::ListShape.new(name: 'UpdateResourcePermissionList')
@@ -2059,7 +2088,9 @@ module Aws::QuickSight
     VisualOptions = Shapes::StructureShape.new(name: 'VisualOptions')
     VisualPalette = Shapes::StructureShape.new(name: 'VisualPalette')
     VisualRole = Shapes::StringShape.new(name: 'VisualRole')
+    VisualSubtitle = Shapes::StringShape.new(name: 'VisualSubtitle')
     VisualSubtitleLabelOptions = Shapes::StructureShape.new(name: 'VisualSubtitleLabelOptions')
+    VisualTitle = Shapes::StringShape.new(name: 'VisualTitle')
     VisualTitleLabelOptions = Shapes::StructureShape.new(name: 'VisualTitleLabelOptions')
     VpcConnectionProperties = Shapes::StructureShape.new(name: 'VpcConnectionProperties')
     VpcEndpointId = Shapes::StringShape.new(name: 'VpcEndpointId')
@@ -3844,6 +3875,16 @@ module Aws::QuickSight
     DashboardVisualPublishOptions.add_member(:export_hidden_fields_option, Shapes::ShapeRef.new(shape: ExportHiddenFieldsOption, location_name: "ExportHiddenFieldsOption"))
     DashboardVisualPublishOptions.struct_class = Types::DashboardVisualPublishOptions
 
+    DashboardVisualResult.add_member(:dashboard_id, Shapes::ShapeRef.new(shape: ShortRestrictiveResourceId, location_name: "DashboardId"))
+    DashboardVisualResult.add_member(:dashboard_name, Shapes::ShapeRef.new(shape: DashboardName, location_name: "DashboardName"))
+    DashboardVisualResult.add_member(:sheet_id, Shapes::ShapeRef.new(shape: ShortRestrictiveResourceId, location_name: "SheetId"))
+    DashboardVisualResult.add_member(:sheet_name, Shapes::ShapeRef.new(shape: SheetName, location_name: "SheetName"))
+    DashboardVisualResult.add_member(:visual_id, Shapes::ShapeRef.new(shape: ShortRestrictiveResourceId, location_name: "VisualId"))
+    DashboardVisualResult.add_member(:visual_title, Shapes::ShapeRef.new(shape: VisualTitle, location_name: "VisualTitle"))
+    DashboardVisualResult.add_member(:visual_subtitle, Shapes::ShapeRef.new(shape: VisualSubtitle, location_name: "VisualSubtitle"))
+    DashboardVisualResult.add_member(:dashboard_url, Shapes::ShapeRef.new(shape: QAUrl, location_name: "DashboardUrl"))
+    DashboardVisualResult.struct_class = Types::DashboardVisualResult
+
     DataAggregation.add_member(:dataset_row_date_granularity, Shapes::ShapeRef.new(shape: TopicTimeGranularity, location_name: "DatasetRowDateGranularity"))
     DataAggregation.add_member(:default_date_column_name, Shapes::ShapeRef.new(shape: LimitedString, location_name: "DefaultDateColumnName"))
     DataAggregation.struct_class = Types::DataAggregation
@@ -4360,6 +4401,14 @@ module Aws::QuickSight
     DeleteDataSourceResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
     DeleteDataSourceResponse.struct_class = Types::DeleteDataSourceResponse
 
+    DeleteDefaultQBusinessApplicationRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    DeleteDefaultQBusinessApplicationRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: Namespace, location: "querystring", location_name: "namespace"))
+    DeleteDefaultQBusinessApplicationRequest.struct_class = Types::DeleteDefaultQBusinessApplicationRequest
+
+    DeleteDefaultQBusinessApplicationResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
+    DeleteDefaultQBusinessApplicationResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
+    DeleteDefaultQBusinessApplicationResponse.struct_class = Types::DeleteDefaultQBusinessApplicationResponse
+
     DeleteFolderMembershipRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
     DeleteFolderMembershipRequest.add_member(:folder_id, Shapes::ShapeRef.new(shape: RestrictiveResourceId, required: true, location: "uri", location_name: "FolderId"))
     DeleteFolderMembershipRequest.add_member(:member_id, Shapes::ShapeRef.new(shape: RestrictiveResourceId, required: true, location: "uri", location_name: "MemberId"))
@@ -4837,6 +4886,15 @@ module Aws::QuickSight
     DescribeDataSourceResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
     DescribeDataSourceResponse.struct_class = Types::DescribeDataSourceResponse
 
+    DescribeDefaultQBusinessApplicationRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    DescribeDefaultQBusinessApplicationRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: Namespace, location: "querystring", location_name: "namespace"))
+    DescribeDefaultQBusinessApplicationRequest.struct_class = Types::DescribeDefaultQBusinessApplicationRequest
+
+    DescribeDefaultQBusinessApplicationResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
+    DescribeDefaultQBusinessApplicationResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
+    DescribeDefaultQBusinessApplicationResponse.add_member(:application_id, Shapes::ShapeRef.new(shape: String, location_name: "ApplicationId"))
+    DescribeDefaultQBusinessApplicationResponse.struct_class = Types::DescribeDefaultQBusinessApplicationResponse
+
     DescribeFolderPermissionsRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
     DescribeFolderPermissionsRequest.add_member(:folder_id, Shapes::ShapeRef.new(shape: RestrictiveResourceId, required: true, location: "uri", location_name: "FolderId"))
     DescribeFolderPermissionsRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: Namespace, location: "querystring", location_name: "namespace"))
@@ -4955,6 +5013,14 @@ module Aws::QuickSight
     DescribeQPersonalizationConfigurationResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
     DescribeQPersonalizationConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
     DescribeQPersonalizationConfigurationResponse.struct_class = Types::DescribeQPersonalizationConfigurationResponse
+
+    DescribeQuickSightQSearchConfigurationRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    DescribeQuickSightQSearchConfigurationRequest.struct_class = Types::DescribeQuickSightQSearchConfigurationRequest
+
+    DescribeQuickSightQSearchConfigurationResponse.add_member(:q_search_status, Shapes::ShapeRef.new(shape: QSearchStatus, location_name: "QSearchStatus"))
+    DescribeQuickSightQSearchConfigurationResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
+    DescribeQuickSightQSearchConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
+    DescribeQuickSightQSearchConfigurationResponse.struct_class = Types::DescribeQuickSightQSearchConfigurationResponse
 
     DescribeRefreshScheduleRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
     DescribeRefreshScheduleRequest.add_member(:data_set_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location: "uri", location_name: "DataSetId"))
@@ -5683,6 +5749,27 @@ module Aws::QuickSight
     GenerateEmbedUrlForRegisteredUserResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, required: true, location: "statusCode", location_name: "Status"))
     GenerateEmbedUrlForRegisteredUserResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "RequestId"))
     GenerateEmbedUrlForRegisteredUserResponse.struct_class = Types::GenerateEmbedUrlForRegisteredUserResponse
+
+    GenerateEmbedUrlForRegisteredUserWithIdentityRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    GenerateEmbedUrlForRegisteredUserWithIdentityRequest.add_member(:session_lifetime_in_minutes, Shapes::ShapeRef.new(shape: SessionLifetimeInMinutes, location_name: "SessionLifetimeInMinutes"))
+    GenerateEmbedUrlForRegisteredUserWithIdentityRequest.add_member(:experience_configuration, Shapes::ShapeRef.new(shape: RegisteredUserEmbeddingExperienceConfiguration, required: true, location_name: "ExperienceConfiguration"))
+    GenerateEmbedUrlForRegisteredUserWithIdentityRequest.add_member(:allowed_domains, Shapes::ShapeRef.new(shape: StringList, location_name: "AllowedDomains"))
+    GenerateEmbedUrlForRegisteredUserWithIdentityRequest.struct_class = Types::GenerateEmbedUrlForRegisteredUserWithIdentityRequest
+
+    GenerateEmbedUrlForRegisteredUserWithIdentityResponse.add_member(:embed_url, Shapes::ShapeRef.new(shape: EmbeddingUrl, required: true, location_name: "EmbedUrl"))
+    GenerateEmbedUrlForRegisteredUserWithIdentityResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, required: true, location: "statusCode", location_name: "Status"))
+    GenerateEmbedUrlForRegisteredUserWithIdentityResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "RequestId"))
+    GenerateEmbedUrlForRegisteredUserWithIdentityResponse.struct_class = Types::GenerateEmbedUrlForRegisteredUserWithIdentityResponse
+
+    GeneratedAnswerResult.add_member(:question_text, Shapes::ShapeRef.new(shape: QAQueryText, location_name: "QuestionText"))
+    GeneratedAnswerResult.add_member(:answer_status, Shapes::ShapeRef.new(shape: GeneratedAnswerStatus, location_name: "AnswerStatus"))
+    GeneratedAnswerResult.add_member(:topic_id, Shapes::ShapeRef.new(shape: TopicId, location_name: "TopicId"))
+    GeneratedAnswerResult.add_member(:topic_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "TopicName"))
+    GeneratedAnswerResult.add_member(:restatement, Shapes::ShapeRef.new(shape: QAQueryText, location_name: "Restatement"))
+    GeneratedAnswerResult.add_member(:question_id, Shapes::ShapeRef.new(shape: QuestionId, location_name: "QuestionId"))
+    GeneratedAnswerResult.add_member(:answer_id, Shapes::ShapeRef.new(shape: AnswerId, location_name: "AnswerId"))
+    GeneratedAnswerResult.add_member(:question_url, Shapes::ShapeRef.new(shape: QAUrl, location_name: "QuestionUrl"))
+    GeneratedAnswerResult.struct_class = Types::GeneratedAnswerResult
 
     GeoSpatialColumnGroup.add_member(:name, Shapes::ShapeRef.new(shape: ColumnGroupName, required: true, location_name: "Name"))
     GeoSpatialColumnGroup.add_member(:country_code, Shapes::ShapeRef.new(shape: GeoSpatialCountryCode, location_name: "CountryCode"))
@@ -7496,6 +7583,19 @@ module Aws::QuickSight
 
     PredefinedHierarchyColumnList.member = Shapes::ShapeRef.new(shape: ColumnIdentifier)
 
+    PredictQAResultsRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    PredictQAResultsRequest.add_member(:query_text, Shapes::ShapeRef.new(shape: QAQueryText, required: true, location_name: "QueryText"))
+    PredictQAResultsRequest.add_member(:include_quick_sight_q_index, Shapes::ShapeRef.new(shape: IncludeQuickSightQIndex, location_name: "IncludeQuickSightQIndex"))
+    PredictQAResultsRequest.add_member(:include_generated_answer, Shapes::ShapeRef.new(shape: IncludeGeneratedAnswer, location_name: "IncludeGeneratedAnswer"))
+    PredictQAResultsRequest.add_member(:max_topics_to_consider, Shapes::ShapeRef.new(shape: MaxTopicsToConsider, location_name: "MaxTopicsToConsider"))
+    PredictQAResultsRequest.struct_class = Types::PredictQAResultsRequest
+
+    PredictQAResultsResponse.add_member(:primary_result, Shapes::ShapeRef.new(shape: QAResult, location_name: "PrimaryResult"))
+    PredictQAResultsResponse.add_member(:additional_results, Shapes::ShapeRef.new(shape: QAResults, location_name: "AdditionalResults"))
+    PredictQAResultsResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
+    PredictQAResultsResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
+    PredictQAResultsResponse.struct_class = Types::PredictQAResultsResponse
+
     PrestoParameters.add_member(:host, Shapes::ShapeRef.new(shape: Host, required: true, location_name: "Host"))
     PrestoParameters.add_member(:port, Shapes::ShapeRef.new(shape: Port, required: true, location_name: "Port"))
     PrestoParameters.add_member(:catalog, Shapes::ShapeRef.new(shape: Catalog, required: true, location_name: "Catalog"))
@@ -7519,6 +7619,13 @@ module Aws::QuickSight
     PutDataSetRefreshPropertiesResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
     PutDataSetRefreshPropertiesResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
     PutDataSetRefreshPropertiesResponse.struct_class = Types::PutDataSetRefreshPropertiesResponse
+
+    QAResult.add_member(:result_type, Shapes::ShapeRef.new(shape: QAResultType, location_name: "ResultType"))
+    QAResult.add_member(:dashboard_visual, Shapes::ShapeRef.new(shape: DashboardVisualResult, location_name: "DashboardVisual"))
+    QAResult.add_member(:generated_answer, Shapes::ShapeRef.new(shape: GeneratedAnswerResult, location_name: "GeneratedAnswer"))
+    QAResult.struct_class = Types::QAResult
+
+    QAResults.member = Shapes::ShapeRef.new(shape: QAResult)
 
     QueryExecutionOptions.add_member(:query_execution_mode, Shapes::ShapeRef.new(shape: QueryExecutionMode, location_name: "QueryExecutionMode"))
     QueryExecutionOptions.struct_class = Types::QueryExecutionOptions
@@ -9342,6 +9449,14 @@ module Aws::QuickSight
     UpdateAnalysisResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
     UpdateAnalysisResponse.struct_class = Types::UpdateAnalysisResponse
 
+    UpdateApplicationWithTokenExchangeGrantRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    UpdateApplicationWithTokenExchangeGrantRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: Namespace, required: true, location: "querystring", location_name: "namespace"))
+    UpdateApplicationWithTokenExchangeGrantRequest.struct_class = Types::UpdateApplicationWithTokenExchangeGrantRequest
+
+    UpdateApplicationWithTokenExchangeGrantResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
+    UpdateApplicationWithTokenExchangeGrantResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
+    UpdateApplicationWithTokenExchangeGrantResponse.struct_class = Types::UpdateApplicationWithTokenExchangeGrantResponse
+
     UpdateBrandAssignmentRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
     UpdateBrandAssignmentRequest.add_member(:brand_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "BrandArn"))
     UpdateBrandAssignmentRequest.struct_class = Types::UpdateBrandAssignmentRequest
@@ -9509,6 +9624,15 @@ module Aws::QuickSight
     UpdateDataSourceResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
     UpdateDataSourceResponse.struct_class = Types::UpdateDataSourceResponse
 
+    UpdateDefaultQBusinessApplicationRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    UpdateDefaultQBusinessApplicationRequest.add_member(:namespace, Shapes::ShapeRef.new(shape: Namespace, location: "querystring", location_name: "namespace"))
+    UpdateDefaultQBusinessApplicationRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: LimitedString, required: true, location_name: "ApplicationId"))
+    UpdateDefaultQBusinessApplicationRequest.struct_class = Types::UpdateDefaultQBusinessApplicationRequest
+
+    UpdateDefaultQBusinessApplicationResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
+    UpdateDefaultQBusinessApplicationResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
+    UpdateDefaultQBusinessApplicationResponse.struct_class = Types::UpdateDefaultQBusinessApplicationResponse
+
     UpdateFolderPermissionsRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
     UpdateFolderPermissionsRequest.add_member(:folder_id, Shapes::ShapeRef.new(shape: RestrictiveResourceId, required: true, location: "uri", location_name: "FolderId"))
     UpdateFolderPermissionsRequest.add_member(:grant_permissions, Shapes::ShapeRef.new(shape: ResourcePermissionList, location_name: "GrantPermissions"))
@@ -9609,6 +9733,15 @@ module Aws::QuickSight
     UpdateQPersonalizationConfigurationResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
     UpdateQPersonalizationConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
     UpdateQPersonalizationConfigurationResponse.struct_class = Types::UpdateQPersonalizationConfigurationResponse
+
+    UpdateQuickSightQSearchConfigurationRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
+    UpdateQuickSightQSearchConfigurationRequest.add_member(:q_search_status, Shapes::ShapeRef.new(shape: QSearchStatus, required: true, location_name: "QSearchStatus"))
+    UpdateQuickSightQSearchConfigurationRequest.struct_class = Types::UpdateQuickSightQSearchConfigurationRequest
+
+    UpdateQuickSightQSearchConfigurationResponse.add_member(:q_search_status, Shapes::ShapeRef.new(shape: QSearchStatus, location_name: "QSearchStatus"))
+    UpdateQuickSightQSearchConfigurationResponse.add_member(:request_id, Shapes::ShapeRef.new(shape: String, location_name: "RequestId"))
+    UpdateQuickSightQSearchConfigurationResponse.add_member(:status, Shapes::ShapeRef.new(shape: StatusCode, location: "statusCode", location_name: "Status"))
+    UpdateQuickSightQSearchConfigurationResponse.struct_class = Types::UpdateQuickSightQSearchConfigurationResponse
 
     UpdateRefreshScheduleRequest.add_member(:data_set_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location: "uri", location_name: "DataSetId"))
     UpdateRefreshScheduleRequest.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: AwsAccountId, required: true, location: "uri", location_name: "AwsAccountId"))
@@ -10633,6 +10766,19 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
+      api.add_operation(:delete_default_q_business_application, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteDefaultQBusinessApplication"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/accounts/{AwsAccountId}/default-qbusiness-application"
+        o.input = Shapes::ShapeRef.new(shape: DeleteDefaultQBusinessApplicationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteDefaultQBusinessApplicationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+      end)
+
       api.add_operation(:delete_folder, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteFolder"
         o.http_method = "DELETE"
@@ -11244,6 +11390,19 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
+      api.add_operation(:describe_default_q_business_application, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeDefaultQBusinessApplication"
+        o.http_method = "GET"
+        o.http_request_uri = "/accounts/{AwsAccountId}/default-qbusiness-application"
+        o.input = Shapes::ShapeRef.new(shape: DescribeDefaultQBusinessApplicationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeDefaultQBusinessApplicationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+      end)
+
       api.add_operation(:describe_folder, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DescribeFolder"
         o.http_method = "GET"
@@ -11403,6 +11562,20 @@ module Aws::QuickSight
         o.http_request_uri = "/accounts/{AwsAccountId}/q-personalization-configuration"
         o.input = Shapes::ShapeRef.new(shape: DescribeQPersonalizationConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: DescribeQPersonalizationConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+      end)
+
+      api.add_operation(:describe_quick_sight_q_search_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeQuickSightQSearchConfiguration"
+        o.http_method = "GET"
+        o.http_request_uri = "/accounts/{AwsAccountId}/quicksight-q-search-configuration"
+        o.input = Shapes::ShapeRef.new(shape: DescribeQuickSightQSearchConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeQuickSightQSearchConfigurationResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
@@ -11647,6 +11820,23 @@ module Aws::QuickSight
         o.http_request_uri = "/accounts/{AwsAccountId}/embed-url/registered-user"
         o.input = Shapes::ShapeRef.new(shape: GenerateEmbedUrlForRegisteredUserRequest)
         o.output = Shapes::ShapeRef.new(shape: GenerateEmbedUrlForRegisteredUserResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: QuickSightUserNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: SessionLifetimeInMinutesInvalidException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: UnsupportedUserEditionException)
+        o.errors << Shapes::ShapeRef.new(shape: UnsupportedPricingPlanException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+      end)
+
+      api.add_operation(:generate_embed_url_for_registered_user_with_identity, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GenerateEmbedUrlForRegisteredUserWithIdentity"
+        o.http_method = "POST"
+        o.http_request_uri = "/accounts/{AwsAccountId}/embed-url/registered-user-with-identity"
+        o.input = Shapes::ShapeRef.new(shape: GenerateEmbedUrlForRegisteredUserWithIdentityRequest)
+        o.output = Shapes::ShapeRef.new(shape: GenerateEmbedUrlForRegisteredUserWithIdentityResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
         o.errors << Shapes::ShapeRef.new(shape: QuickSightUserNotFoundException)
@@ -12347,6 +12537,18 @@ module Aws::QuickSight
         )
       end)
 
+      api.add_operation(:predict_qa_results, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "PredictQAResults"
+        o.http_method = "POST"
+        o.http_request_uri = "/accounts/{AwsAccountId}/qa/predict"
+        o.input = Shapes::ShapeRef.new(shape: PredictQAResultsRequest)
+        o.output = Shapes::ShapeRef.new(shape: PredictQAResultsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+      end)
+
       api.add_operation(:put_data_set_refresh_properties, Seahorse::Model::Operation.new.tap do |o|
         o.name = "PutDataSetRefreshProperties"
         o.http_method = "PUT"
@@ -12688,6 +12890,21 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
+      api.add_operation(:update_application_with_token_exchange_grant, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateApplicationWithTokenExchangeGrant"
+        o.http_method = "PUT"
+        o.http_request_uri = "/accounts/{AwsAccountId}/application-with-token-exchange-grant"
+        o.input = Shapes::ShapeRef.new(shape: UpdateApplicationWithTokenExchangeGrantRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateApplicationWithTokenExchangeGrantResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+      end)
+
       api.add_operation(:update_brand, Seahorse::Model::Operation.new.tap do |o|
         o.name = "UpdateBrand"
         o.http_method = "PUT"
@@ -12878,6 +13095,20 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
+      api.add_operation(:update_default_q_business_application, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateDefaultQBusinessApplication"
+        o.http_method = "PUT"
+        o.http_request_uri = "/accounts/{AwsAccountId}/default-qbusiness-application"
+        o.input = Shapes::ShapeRef.new(shape: UpdateDefaultQBusinessApplicationRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateDefaultQBusinessApplicationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
+      end)
+
       api.add_operation(:update_folder, Seahorse::Model::Operation.new.tap do |o|
         o.name = "UpdateFolder"
         o.http_method = "PUT"
@@ -13005,6 +13236,20 @@ module Aws::QuickSight
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceUnavailableException)
+      end)
+
+      api.add_operation(:update_quick_sight_q_search_configuration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateQuickSightQSearchConfiguration"
+        o.http_method = "PUT"
+        o.http_request_uri = "/accounts/{AwsAccountId}/quicksight-q-search-configuration"
+        o.input = Shapes::ShapeRef.new(shape: UpdateQuickSightQSearchConfigurationRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateQuickSightQSearchConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterValueException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalFailureException)
       end)
 
       api.add_operation(:update_refresh_schedule, Seahorse::Model::Operation.new.tap do |o|

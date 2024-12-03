@@ -1549,6 +1549,54 @@ module Aws::RedshiftServerless
 
     # @!attribute [rw] max_results
     #   An optional parameter that specifies the maximum number of results
+    #   to return. You can use nextToken to display the next page of
+    #   results.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   If your initial ListManagedWorkgroups operation returns a nextToken,
+    #   you can include the returned nextToken in following
+    #   ListManagedWorkgroups operations, which returns results in the next
+    #   page.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_arn
+    #   The Amazon Resource Name (ARN) for the managed workgroup in the AWS
+    #   Glue Data Catalog.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListManagedWorkgroupsRequest AWS API Documentation
+    #
+    class ListManagedWorkgroupsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :source_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] managed_workgroups
+    #   The returned array of managed workgroups.
+    #   @return [Array<Types::ManagedWorkgroupListItem>]
+    #
+    # @!attribute [rw] next_token
+    #   If nextToken is returned, there are more results available. The
+    #   value of nextToken is a unique pagination token for each page. To
+    #   retrieve the next page, make the call again using the returned
+    #   token.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ListManagedWorkgroupsResponse AWS API Documentation
+    #
+    class ListManagedWorkgroupsResponse < Struct.new(
+      :managed_workgroups,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   An optional parameter that specifies the maximum number of results
     #   to return. You can use `nextToken` to display the next page of
     #   results.
     #   @return [Integer]
@@ -1986,6 +2034,41 @@ module Aws::RedshiftServerless
     class ListWorkgroupsResponse < Struct.new(
       :next_token,
       :workgroups)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A collection of Amazon Redshift compute resources managed by AWS Glue.
+    #
+    # @!attribute [rw] creation_date
+    #   The creation date of the managed workgroup.
+    #   @return [Time]
+    #
+    # @!attribute [rw] managed_workgroup_id
+    #   The unique identifier of the managed workgroup.
+    #   @return [String]
+    #
+    # @!attribute [rw] managed_workgroup_name
+    #   The name of the managed workgroup.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_arn
+    #   The Amazon Resource Name (ARN) for the managed workgroup in the AWS
+    #   Glue Data Catalog.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the managed workgroup.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-serverless-2021-04-21/ManagedWorkgroupListItem AWS API Documentation
+    #
+    class ManagedWorkgroupListItem < Struct.new(
+      :creation_date,
+      :managed_workgroup_id,
+      :managed_workgroup_name,
+      :source_arn,
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end

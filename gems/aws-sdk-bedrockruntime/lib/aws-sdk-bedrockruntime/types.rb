@@ -97,6 +97,108 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
+    # Asynchronous invocation output data settings.
+    #
+    # @note AsyncInvokeOutputDataConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note AsyncInvokeOutputDataConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of AsyncInvokeOutputDataConfig corresponding to the set member.
+    #
+    # @!attribute [rw] s3_output_data_config
+    #   A storage location for the output data in an S3 bucket
+    #   @return [Types::AsyncInvokeS3OutputDataConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/AsyncInvokeOutputDataConfig AWS API Documentation
+    #
+    class AsyncInvokeOutputDataConfig < Struct.new(
+      :s3_output_data_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class S3OutputDataConfig < AsyncInvokeOutputDataConfig; end
+      class Unknown < AsyncInvokeOutputDataConfig; end
+    end
+
+    # Asynchronous invocation output data settings.
+    #
+    # @!attribute [rw] s3_uri
+    #   An object URI starting with `s3://`.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_key_id
+    #   A KMS encryption key ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] bucket_owner
+    #   If the bucket belongs to another AWS account, specify that
+    #   account's ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/AsyncInvokeS3OutputDataConfig AWS API Documentation
+    #
+    class AsyncInvokeS3OutputDataConfig < Struct.new(
+      :s3_uri,
+      :kms_key_id,
+      :bucket_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A summary of an asynchronous invocation.
+    #
+    # @!attribute [rw] invocation_arn
+    #   The invocation's ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_arn
+    #   The invoked model's ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_request_token
+    #   The invocation's idempotency token.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The invocation's status.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_message
+    #   An error message.
+    #   @return [String]
+    #
+    # @!attribute [rw] submit_time
+    #   When the invocation was submitted.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_time
+    #   When the invocation was last modified.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   When the invocation ended.
+    #   @return [Time]
+    #
+    # @!attribute [rw] output_data_config
+    #   The invocation's output data settings.
+    #   @return [Types::AsyncInvokeOutputDataConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/AsyncInvokeSummary AWS API Documentation
+    #
+    class AsyncInvokeSummary < Struct.new(
+      :invocation_arn,
+      :model_arn,
+      :client_request_token,
+      :status,
+      :failure_message,
+      :submit_time,
+      :last_modified_time,
+      :end_time,
+      :output_data_config)
+      SENSITIVE = [:failure_message]
+      include Aws::Structure
+    end
+
     # The Model automatically decides if a tool should be called or whether
     # to generate text instead. For example, `{"auto" : {}}`.
     #
@@ -105,6 +207,19 @@ module Aws::BedrockRuntime
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/AutoToolChoice AWS API Documentation
     #
     class AutoToolChoice < Aws::EmptyStructure; end
+
+    # Error occurred because of a conflict while performing an operation.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ConflictException AWS API Documentation
+    #
+    class ConflictException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # A block of content for a message that you pass to, or receive from, a
     # model with the [Converse][1] or [ConverseStream][2] API operations.
@@ -134,6 +249,10 @@ module Aws::BedrockRuntime
     #   A document to include in the message.
     #   @return [Types::DocumentBlock]
     #
+    # @!attribute [rw] video
+    #   Video to include in the message.
+    #   @return [Types::VideoBlock]
+    #
     # @!attribute [rw] tool_use
     #   Information about a tool use request from a model.
     #   @return [Types::ToolUseBlock]
@@ -157,6 +276,7 @@ module Aws::BedrockRuntime
       :text,
       :image,
       :document,
+      :video,
       :tool_use,
       :tool_result,
       :guard_content,
@@ -168,6 +288,7 @@ module Aws::BedrockRuntime
       class Text < ContentBlock; end
       class Image < ContentBlock; end
       class Document < ContentBlock; end
+      class Video < ContentBlock; end
       class ToolUse < ContentBlock; end
       class ToolResult < ContentBlock; end
       class GuardContent < ContentBlock; end
@@ -379,10 +500,12 @@ module Aws::BedrockRuntime
     #   Configuration information for the tools that the model can use when
     #   generating a response.
     #
-    #   <note markdown="1"> This field is only supported by Anthropic Claude 3, Cohere Command
-    #   R, Cohere Command R+, and Mistral Large models.
+    #   For information about models that support tool use, see [Supported
+    #   models and model features][1].
     #
-    #    </note>
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features
     #   @return [Types::ToolConfiguration]
     #
     # @!attribute [rw] guardrail_config
@@ -434,6 +557,10 @@ module Aws::BedrockRuntime
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
     #   @return [Array<String>]
     #
+    # @!attribute [rw] request_metadata
+    #   Key-value pairs that you can use to filter invocation logs.
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] performance_config
     #   Model performance settings for the request.
     #   @return [Types::PerformanceConfiguration]
@@ -450,8 +577,9 @@ module Aws::BedrockRuntime
       :additional_model_request_fields,
       :prompt_variables,
       :additional_model_response_field_paths,
+      :request_metadata,
       :performance_config)
-      SENSITIVE = [:prompt_variables]
+      SENSITIVE = [:prompt_variables, :request_metadata]
       include Aws::Structure
     end
 
@@ -609,9 +737,12 @@ module Aws::BedrockRuntime
     #   Configuration information for the tools that the model can use when
     #   generating a response.
     #
-    #   <note markdown="1"> This field is only supported by Anthropic Claude 3 models.
+    #   For information about models that support streaming tool use, see
+    #   [Supported models and model features][1].
     #
-    #    </note>
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features
     #   @return [Types::ToolConfiguration]
     #
     # @!attribute [rw] guardrail_config
@@ -663,6 +794,10 @@ module Aws::BedrockRuntime
     #   [1]: https://datatracker.ietf.org/doc/html/rfc6901
     #   @return [Array<String>]
     #
+    # @!attribute [rw] request_metadata
+    #   Key-value pairs that you can use to filter invocation logs.
+    #   @return [Hash<String,String>]
+    #
     # @!attribute [rw] performance_config
     #   Model performance settings for the request.
     #   @return [Types::PerformanceConfiguration]
@@ -679,8 +814,9 @@ module Aws::BedrockRuntime
       :additional_model_request_fields,
       :prompt_variables,
       :additional_model_response_field_paths,
+      :request_metadata,
       :performance_config)
-      SENSITIVE = [:prompt_variables]
+      SENSITIVE = [:prompt_variables, :request_metadata]
       include Aws::Structure
     end
 
@@ -797,6 +933,70 @@ module Aws::BedrockRuntime
 
       class Bytes < DocumentSource; end
       class Unknown < DocumentSource; end
+    end
+
+    # @!attribute [rw] invocation_arn
+    #   The invocation's ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GetAsyncInvokeRequest AWS API Documentation
+    #
+    class GetAsyncInvokeRequest < Struct.new(
+      :invocation_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] invocation_arn
+    #   The invocation's ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_arn
+    #   The invocation's model ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_request_token
+    #   The invocation's idempotency token.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The invocation's status.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_message
+    #   An error message.
+    #   @return [String]
+    #
+    # @!attribute [rw] submit_time
+    #   When the invocation request was submitted.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_time
+    #   The invocation's last modified time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   When the invocation ended.
+    #   @return [Time]
+    #
+    # @!attribute [rw] output_data_config
+    #   Output data settings.
+    #   @return [Types::AsyncInvokeOutputDataConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GetAsyncInvokeResponse AWS API Documentation
+    #
+    class GetAsyncInvokeResponse < Struct.new(
+      :invocation_arn,
+      :model_arn,
+      :client_request_token,
+      :status,
+      :failure_message,
+      :submit_time,
+      :last_modified_time,
+      :end_time,
+      :output_data_config)
+      SENSITIVE = [:failure_message]
+      include Aws::Structure
     end
 
     # A behavior assessment of the guardrail policies used in a call to the
@@ -1792,6 +1992,67 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
+    # @!attribute [rw] submit_time_after
+    #   Include invocations submitted after this time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] submit_time_before
+    #   Include invocations submitted before this time.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status_equals
+    #   Filter invocations by status.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of invocations to return in one page of results.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_by
+    #   How to sort the response.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_order
+    #   The sorting order for the response.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ListAsyncInvokesRequest AWS API Documentation
+    #
+    class ListAsyncInvokesRequest < Struct.new(
+      :submit_time_after,
+      :submit_time_before,
+      :status_equals,
+      :max_results,
+      :next_token,
+      :sort_by,
+      :sort_order)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] async_invoke_summaries
+    #   A list of invocation summaries.
+    #   @return [Array<Types::AsyncInvokeSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ListAsyncInvokesResponse AWS API Documentation
+    #
+    class ListAsyncInvokesResponse < Struct.new(
+      :next_token,
+      :async_invoke_summaries)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A message input, or returned from, a call to [Converse][1] or
     # [ConverseStream][2].
     #
@@ -2021,6 +2282,26 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
+    # A storage location in an S3 bucket.
+    #
+    # @!attribute [rw] uri
+    #   An object URI starting with `s3://`.
+    #   @return [String]
+    #
+    # @!attribute [rw] bucket_owner
+    #   If the bucket belongs to another AWS account, specify that
+    #   account's ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/S3Location AWS API Documentation
+    #
+    class S3Location < Struct.new(
+      :uri,
+      :bucket_owner)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Your request exceeds the service quota for your account. You can view
     # your quotas at [Viewing service quotas][1]. You can resubmit your
     # request later.
@@ -2078,6 +2359,54 @@ module Aws::BedrockRuntime
       include Aws::Structure
     end
 
+    # @!attribute [rw] client_request_token
+    #   Specify idempotency token to ensure that requests are not
+    #   duplicated.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_id
+    #   The model to invoke.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_input
+    #   Input to send to the model.
+    #   @return [Hash,Array,String,Numeric,Boolean]
+    #
+    # @!attribute [rw] output_data_config
+    #   Where to store the output.
+    #   @return [Types::AsyncInvokeOutputDataConfig]
+    #
+    # @!attribute [rw] tags
+    #   Tags to apply to the invocation.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/StartAsyncInvokeRequest AWS API Documentation
+    #
+    class StartAsyncInvokeRequest < Struct.new(
+      :client_request_token,
+      :model_id,
+      :model_input,
+      :output_data_config,
+      :tags)
+      SENSITIVE = [:model_input]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] invocation_arn
+    #   The ARN of the invocation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/StartAsyncInvokeResponse AWS API Documentation
+    #
+    class StartAsyncInvokeResponse < Struct.new(
+      :invocation_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A system content block.
     #
     # @note SystemContentBlock is a union - when making an API calls you must set exactly one of the members.
@@ -2112,6 +2441,25 @@ module Aws::BedrockRuntime
       class Text < SystemContentBlock; end
       class GuardContent < SystemContentBlock; end
       class Unknown < SystemContentBlock; end
+    end
+
+    # A tag.
+    #
+    # @!attribute [rw] key
+    #   The tag's key.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The tag's value.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/Tag AWS API Documentation
+    #
+    class Tag < Struct.new(
+      :key,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # Your request was denied due to exceeding the account quotas for
@@ -2226,11 +2574,6 @@ module Aws::BedrockRuntime
     # more information, see [Tool use (function calling)][1] in the Amazon
     # Bedrock User Guide.
     #
-    # <note markdown="1"> This field is only supported by Anthropic Claude 3, Cohere Command R,
-    # Cohere Command R+, and Mistral Large models.
-    #
-    #  </note>
-    #
     #
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html
@@ -2333,6 +2676,10 @@ module Aws::BedrockRuntime
     #   A tool result that is a document.
     #   @return [Types::DocumentBlock]
     #
+    # @!attribute [rw] video
+    #   A tool result that is video.
+    #   @return [Types::VideoBlock]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ToolResultContentBlock AWS API Documentation
     #
     class ToolResultContentBlock < Struct.new(
@@ -2340,6 +2687,7 @@ module Aws::BedrockRuntime
       :text,
       :image,
       :document,
+      :video,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
@@ -2349,6 +2697,7 @@ module Aws::BedrockRuntime
       class Text < ToolResultContentBlock; end
       class Image < ToolResultContentBlock; end
       class Document < ToolResultContentBlock; end
+      class Video < ToolResultContentBlock; end
       class Unknown < ToolResultContentBlock; end
     end
 
@@ -2453,6 +2802,56 @@ module Aws::BedrockRuntime
       :event_type)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # A video block.
+    #
+    # @!attribute [rw] format
+    #   The block's format.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   The block's source.
+    #   @return [Types::VideoSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/VideoBlock AWS API Documentation
+    #
+    class VideoBlock < Struct.new(
+      :format,
+      :source)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A video source. You can upload a smaller video as a base64-encoded
+    # string as long as the encoded file is less than 25MB. You can also
+    # transfer videos up to 1GB in size from an S3 bucket.
+    #
+    # @note VideoSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note VideoSource is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of VideoSource corresponding to the set member.
+    #
+    # @!attribute [rw] bytes
+    #   Video content encoded in base64.
+    #   @return [String]
+    #
+    # @!attribute [rw] s3_location
+    #   The location of a video object in an S3 bucket.
+    #   @return [Types::S3Location]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/VideoSource AWS API Documentation
+    #
+    class VideoSource < Struct.new(
+      :bytes,
+      :s3_location,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Bytes < VideoSource; end
+      class S3Location < VideoSource; end
+      class Unknown < VideoSource; end
     end
 
     # The messages output stream

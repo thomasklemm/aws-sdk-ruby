@@ -81,6 +81,9 @@ module Aws
       class ReplicaNotFoundException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class ReplicatedWriteConflictException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class RequestLimitExceeded < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end

@@ -106,6 +106,9 @@ module Aws::RedshiftServerless
     ListEndpointAccessRequest = Shapes::StructureShape.new(name: 'ListEndpointAccessRequest')
     ListEndpointAccessRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListEndpointAccessRequestMaxResultsInteger')
     ListEndpointAccessResponse = Shapes::StructureShape.new(name: 'ListEndpointAccessResponse')
+    ListManagedWorkgroupsRequest = Shapes::StructureShape.new(name: 'ListManagedWorkgroupsRequest')
+    ListManagedWorkgroupsRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListManagedWorkgroupsRequestMaxResultsInteger')
+    ListManagedWorkgroupsResponse = Shapes::StructureShape.new(name: 'ListManagedWorkgroupsResponse')
     ListNamespacesRequest = Shapes::StructureShape.new(name: 'ListNamespacesRequest')
     ListNamespacesRequestMaxResultsInteger = Shapes::IntegerShape.new(name: 'ListNamespacesRequestMaxResultsInteger')
     ListNamespacesResponse = Shapes::StructureShape.new(name: 'ListNamespacesResponse')
@@ -135,6 +138,10 @@ module Aws::RedshiftServerless
     LogExport = Shapes::StringShape.new(name: 'LogExport')
     LogExportList = Shapes::ListShape.new(name: 'LogExportList')
     Long = Shapes::IntegerShape.new(name: 'Long')
+    ManagedWorkgroupListItem = Shapes::StructureShape.new(name: 'ManagedWorkgroupListItem')
+    ManagedWorkgroupName = Shapes::StringShape.new(name: 'ManagedWorkgroupName')
+    ManagedWorkgroupStatus = Shapes::StringShape.new(name: 'ManagedWorkgroupStatus')
+    ManagedWorkgroups = Shapes::ListShape.new(name: 'ManagedWorkgroups')
     Namespace = Shapes::StructureShape.new(name: 'Namespace')
     NamespaceList = Shapes::ListShape.new(name: 'NamespaceList')
     NamespaceName = Shapes::StringShape.new(name: 'NamespaceName')
@@ -178,6 +185,7 @@ module Aws::RedshiftServerless
     SnapshotList = Shapes::ListShape.new(name: 'SnapshotList')
     SnapshotNamePrefix = Shapes::StringShape.new(name: 'SnapshotNamePrefix')
     SnapshotStatus = Shapes::StringShape.new(name: 'SnapshotStatus')
+    SourceArn = Shapes::StringShape.new(name: 'SourceArn')
     State = Shapes::StringShape.new(name: 'State')
     String = Shapes::StringShape.new(name: 'String')
     SubnetId = Shapes::StringShape.new(name: 'SubnetId')
@@ -536,7 +544,7 @@ module Aws::RedshiftServerless
 
     ListCustomDomainAssociationsRequest.add_member(:custom_domain_certificate_arn, Shapes::ShapeRef.new(shape: CustomDomainCertificateArnString, location_name: "customDomainCertificateArn"))
     ListCustomDomainAssociationsRequest.add_member(:custom_domain_name, Shapes::ShapeRef.new(shape: CustomDomainName, location_name: "customDomainName"))
-    ListCustomDomainAssociationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListCustomDomainAssociationsRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListCustomDomainAssociationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListCustomDomainAssociationsRequestMaxResultsInteger, location_name: "maxResults"))
     ListCustomDomainAssociationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListCustomDomainAssociationsRequest.struct_class = Types::ListCustomDomainAssociationsRequest
 
@@ -544,7 +552,7 @@ module Aws::RedshiftServerless
     ListCustomDomainAssociationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListCustomDomainAssociationsResponse.struct_class = Types::ListCustomDomainAssociationsResponse
 
-    ListEndpointAccessRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListEndpointAccessRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListEndpointAccessRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListEndpointAccessRequestMaxResultsInteger, location_name: "maxResults"))
     ListEndpointAccessRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     ListEndpointAccessRequest.add_member(:owner_account, Shapes::ShapeRef.new(shape: OwnerAccount, location_name: "ownerAccount"))
     ListEndpointAccessRequest.add_member(:vpc_id, Shapes::ShapeRef.new(shape: String, location_name: "vpcId"))
@@ -555,7 +563,16 @@ module Aws::RedshiftServerless
     ListEndpointAccessResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     ListEndpointAccessResponse.struct_class = Types::ListEndpointAccessResponse
 
-    ListNamespacesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListNamespacesRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListManagedWorkgroupsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListManagedWorkgroupsRequestMaxResultsInteger, location_name: "maxResults"))
+    ListManagedWorkgroupsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListManagedWorkgroupsRequest.add_member(:source_arn, Shapes::ShapeRef.new(shape: SourceArn, location_name: "sourceArn"))
+    ListManagedWorkgroupsRequest.struct_class = Types::ListManagedWorkgroupsRequest
+
+    ListManagedWorkgroupsResponse.add_member(:managed_workgroups, Shapes::ShapeRef.new(shape: ManagedWorkgroups, location_name: "managedWorkgroups"))
+    ListManagedWorkgroupsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListManagedWorkgroupsResponse.struct_class = Types::ListManagedWorkgroupsResponse
+
+    ListNamespacesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListNamespacesRequestMaxResultsInteger, location_name: "maxResults"))
     ListNamespacesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     ListNamespacesRequest.struct_class = Types::ListNamespacesRequest
 
@@ -564,7 +581,7 @@ module Aws::RedshiftServerless
     ListNamespacesResponse.struct_class = Types::ListNamespacesResponse
 
     ListRecoveryPointsRequest.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
-    ListRecoveryPointsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListRecoveryPointsRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListRecoveryPointsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListRecoveryPointsRequestMaxResultsInteger, location_name: "maxResults"))
     ListRecoveryPointsRequest.add_member(:namespace_arn, Shapes::ShapeRef.new(shape: String, location_name: "namespaceArn"))
     ListRecoveryPointsRequest.add_member(:namespace_name, Shapes::ShapeRef.new(shape: NamespaceName, location_name: "namespaceName"))
     ListRecoveryPointsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
@@ -575,7 +592,7 @@ module Aws::RedshiftServerless
     ListRecoveryPointsResponse.add_member(:recovery_points, Shapes::ShapeRef.new(shape: RecoveryPointList, location_name: "recoveryPoints"))
     ListRecoveryPointsResponse.struct_class = Types::ListRecoveryPointsResponse
 
-    ListScheduledActionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListScheduledActionsRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListScheduledActionsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListScheduledActionsRequestMaxResultsInteger, location_name: "maxResults"))
     ListScheduledActionsRequest.add_member(:namespace_name, Shapes::ShapeRef.new(shape: NamespaceName, location_name: "namespaceName"))
     ListScheduledActionsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListScheduledActionsRequest.struct_class = Types::ListScheduledActionsRequest
@@ -584,7 +601,7 @@ module Aws::RedshiftServerless
     ListScheduledActionsResponse.add_member(:scheduled_actions, Shapes::ShapeRef.new(shape: ScheduledActionsList, location_name: "scheduledActions"))
     ListScheduledActionsResponse.struct_class = Types::ListScheduledActionsResponse
 
-    ListSnapshotCopyConfigurationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListSnapshotCopyConfigurationsRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListSnapshotCopyConfigurationsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListSnapshotCopyConfigurationsRequestMaxResultsInteger, location_name: "maxResults"))
     ListSnapshotCopyConfigurationsRequest.add_member(:namespace_name, Shapes::ShapeRef.new(shape: NamespaceName, location_name: "namespaceName"))
     ListSnapshotCopyConfigurationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListSnapshotCopyConfigurationsRequest.struct_class = Types::ListSnapshotCopyConfigurationsRequest
@@ -594,7 +611,7 @@ module Aws::RedshiftServerless
     ListSnapshotCopyConfigurationsResponse.struct_class = Types::ListSnapshotCopyConfigurationsResponse
 
     ListSnapshotsRequest.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
-    ListSnapshotsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListSnapshotsRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListSnapshotsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListSnapshotsRequestMaxResultsInteger, location_name: "maxResults"))
     ListSnapshotsRequest.add_member(:namespace_arn, Shapes::ShapeRef.new(shape: String, location_name: "namespaceArn"))
     ListSnapshotsRequest.add_member(:namespace_name, Shapes::ShapeRef.new(shape: String, location_name: "namespaceName"))
     ListSnapshotsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
@@ -606,7 +623,7 @@ module Aws::RedshiftServerless
     ListSnapshotsResponse.add_member(:snapshots, Shapes::ShapeRef.new(shape: SnapshotList, location_name: "snapshots"))
     ListSnapshotsResponse.struct_class = Types::ListSnapshotsResponse
 
-    ListTableRestoreStatusRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListTableRestoreStatusRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListTableRestoreStatusRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListTableRestoreStatusRequestMaxResultsInteger, location_name: "maxResults"))
     ListTableRestoreStatusRequest.add_member(:namespace_name, Shapes::ShapeRef.new(shape: String, location_name: "namespaceName"))
     ListTableRestoreStatusRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListTableRestoreStatusRequest.add_member(:workgroup_name, Shapes::ShapeRef.new(shape: String, location_name: "workgroupName"))
@@ -622,7 +639,7 @@ module Aws::RedshiftServerless
     ListTagsForResourceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
     ListTagsForResourceResponse.struct_class = Types::ListTagsForResourceResponse
 
-    ListUsageLimitsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListUsageLimitsRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListUsageLimitsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListUsageLimitsRequestMaxResultsInteger, location_name: "maxResults"))
     ListUsageLimitsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListUsageLimitsRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String, location_name: "resourceArn"))
     ListUsageLimitsRequest.add_member(:usage_type, Shapes::ShapeRef.new(shape: UsageLimitUsageType, location_name: "usageType"))
@@ -632,7 +649,7 @@ module Aws::RedshiftServerless
     ListUsageLimitsResponse.add_member(:usage_limits, Shapes::ShapeRef.new(shape: UsageLimits, location_name: "usageLimits"))
     ListUsageLimitsResponse.struct_class = Types::ListUsageLimitsResponse
 
-    ListWorkgroupsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListWorkgroupsRequestMaxResultsInteger, location_name: "maxResults", metadata: {"box"=>true}))
+    ListWorkgroupsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: ListWorkgroupsRequestMaxResultsInteger, location_name: "maxResults"))
     ListWorkgroupsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: String, location_name: "nextToken"))
     ListWorkgroupsRequest.add_member(:owner_account, Shapes::ShapeRef.new(shape: OwnerAccount, location_name: "ownerAccount"))
     ListWorkgroupsRequest.struct_class = Types::ListWorkgroupsRequest
@@ -642,6 +659,15 @@ module Aws::RedshiftServerless
     ListWorkgroupsResponse.struct_class = Types::ListWorkgroupsResponse
 
     LogExportList.member = Shapes::ShapeRef.new(shape: LogExport)
+
+    ManagedWorkgroupListItem.add_member(:creation_date, Shapes::ShapeRef.new(shape: SyntheticTimestamp_date_time, location_name: "creationDate"))
+    ManagedWorkgroupListItem.add_member(:managed_workgroup_id, Shapes::ShapeRef.new(shape: String, location_name: "managedWorkgroupId"))
+    ManagedWorkgroupListItem.add_member(:managed_workgroup_name, Shapes::ShapeRef.new(shape: ManagedWorkgroupName, location_name: "managedWorkgroupName"))
+    ManagedWorkgroupListItem.add_member(:source_arn, Shapes::ShapeRef.new(shape: SourceArn, location_name: "sourceArn"))
+    ManagedWorkgroupListItem.add_member(:status, Shapes::ShapeRef.new(shape: ManagedWorkgroupStatus, location_name: "status"))
+    ManagedWorkgroupListItem.struct_class = Types::ManagedWorkgroupListItem
+
+    ManagedWorkgroups.member = Shapes::ShapeRef.new(shape: ManagedWorkgroupListItem)
 
     Namespace.add_member(:admin_password_secret_arn, Shapes::ShapeRef.new(shape: String, location_name: "adminPasswordSecretArn"))
     Namespace.add_member(:admin_password_secret_kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "adminPasswordSecretKmsKeyId"))
@@ -1026,9 +1052,11 @@ module Aws::RedshiftServerless
 
       api.metadata = {
         "apiVersion" => "2021-04-21",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "redshift-serverless",
         "jsonVersion" => "1.1",
         "protocol" => "json",
+        "protocols" => ["json"],
         "serviceFullName" => "Redshift Serverless",
         "serviceId" => "Redshift Serverless",
         "signatureVersion" => "v4",
@@ -1423,6 +1451,22 @@ module Aws::RedshiftServerless
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_managed_workgroups, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListManagedWorkgroups"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListManagedWorkgroupsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListManagedWorkgroupsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
           tokens: {

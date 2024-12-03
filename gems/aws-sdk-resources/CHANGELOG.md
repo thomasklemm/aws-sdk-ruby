@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+3.219.0 (2024-12-03)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-s3tables` gem.
+
+* Feature - Added a dependency on the new `aws-sdk-dsql` gem.
+
 3.218.0 (2024-12-02)
 ------------------
 

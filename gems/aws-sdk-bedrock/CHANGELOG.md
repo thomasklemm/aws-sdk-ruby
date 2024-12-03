@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.31.0 (2024-12-03)
+------------------
+
+* Feature - Tagging support for Async Invoke resources. Added support for Distillation in CreateModelCustomizationJob API. Support for videoDataDeliveryEnabled flag in invocation logging.
+
 1.30.0 (2024-12-02)
 ------------------
 

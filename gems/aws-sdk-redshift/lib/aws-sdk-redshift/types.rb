@@ -3320,6 +3320,10 @@ module Aws::Redshift
     #   The identifier of a datashare to show its managing entity.
     #   @return [String]
     #
+    # @!attribute [rw] data_share_type
+    #   The type of the datashare created by RegisterNamespace.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DataShare AWS API Documentation
     #
     class DataShare < Struct.new(
@@ -3327,7 +3331,8 @@ module Aws::Redshift
       :producer_arn,
       :allow_publicly_accessible_consumers,
       :data_share_associations,
-      :managed_by)
+      :managed_by,
+      :data_share_type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3875,6 +3880,37 @@ module Aws::Redshift
     # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DependentServiceUnavailableFault AWS API Documentation
     #
     class DependentServiceUnavailableFault < Aws::EmptyStructure; end
+
+    # @!attribute [rw] namespace_identifier
+    #   The unique identifier of the cluster or serverless namespace that
+    #   you want to deregister.
+    #   @return [Types::NamespaceIdentifierUnion]
+    #
+    # @!attribute [rw] consumer_identifiers
+    #   An array containing the ID of the consumer account that you want to
+    #   deregister the cluster or serverless namespace from.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeregisterNamespaceInputMessage AWS API Documentation
+    #
+    class DeregisterNamespaceInputMessage < Struct.new(
+      :namespace_identifier,
+      :consumer_identifiers)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] status
+    #   The registration status of the cluster or serverless namespace.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeregisterNamespaceOutputMessage AWS API Documentation
+    #
+    class DeregisterNamespaceOutputMessage < Struct.new(
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] attribute_names
     #   A list of attribute names.
@@ -9020,6 +9056,34 @@ module Aws::Redshift
       include Aws::Structure
     end
 
+    # Object to store union of values for a provisioned cluster or
+    # serverless namespace’s identifier.
+    #
+    # @note NamespaceIdentifierUnion is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] serverless_identifier
+    #   The identifier for a serverless namespace.
+    #   @return [Types::ServerlessIdentifier]
+    #
+    # @!attribute [rw] provisioned_identifier
+    #   The identifier for a provisioned cluster.
+    #   @return [Types::ProvisionedIdentifier]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/NamespaceIdentifierUnion AWS API Documentation
+    #
+    class NamespaceIdentifierUnion < Struct.new(
+      :serverless_identifier,
+      :provisioned_identifier,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class ServerlessIdentifier < NamespaceIdentifierUnion; end
+      class ProvisionedIdentifier < NamespaceIdentifierUnion; end
+      class Unknown < NamespaceIdentifierUnion; end
+    end
+
     # Describes a network interface.
     #
     # @!attribute [rw] network_interface_id
@@ -9479,6 +9543,20 @@ module Aws::Redshift
       include Aws::Structure
     end
 
+    # The identifier for a provisioned cluster.
+    #
+    # @!attribute [rw] cluster_identifier
+    #   The unique identifier for the provisioned cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ProvisionedIdentifier AWS API Documentation
+    #
+    class ProvisionedIdentifier < Struct.new(
+      :cluster_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] reserved_node_offering_id
     #   The unique identifier of the reserved node offering you want to
     #   purchase.
@@ -9810,6 +9888,37 @@ module Aws::Redshift
     class ReferenceLink < Struct.new(
       :text,
       :link)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] namespace_identifier
+    #   The unique identifier of the cluster or serverless namespace that
+    #   you want to register.
+    #   @return [Types::NamespaceIdentifierUnion]
+    #
+    # @!attribute [rw] consumer_identifiers
+    #   An array containing the ID of the consumer account that you want to
+    #   register the namespace to.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/RegisterNamespaceInputMessage AWS API Documentation
+    #
+    class RegisterNamespaceInputMessage < Struct.new(
+      :namespace_identifier,
+      :consumer_identifiers)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] status
+    #   The registration status of the cluster or serverless namespace.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/RegisterNamespaceOutputMessage AWS API Documentation
+    #
+    class RegisterNamespaceOutputMessage < Struct.new(
+      :status)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11358,6 +11467,26 @@ module Aws::Redshift
     class SecondaryClusterInfo < Struct.new(
       :availability_zone,
       :cluster_nodes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The identifier for a serverless namespace.
+    #
+    # @!attribute [rw] namespace_identifier
+    #   The unique identifier for the serverless namespace.
+    #   @return [String]
+    #
+    # @!attribute [rw] workgroup_identifier
+    #   The unique identifier for the workgroup associated with the
+    #   serverless namespace.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ServerlessIdentifier AWS API Documentation
+    #
+    class ServerlessIdentifier < Struct.new(
+      :namespace_identifier,
+      :workgroup_identifier)
       SENSITIVE = []
       include Aws::Structure
     end

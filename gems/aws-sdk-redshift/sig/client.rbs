@@ -107,6 +107,7 @@ module Aws
         def allow_publicly_accessible_consumers: () -> bool
         def data_share_associations: () -> ::Array[Types::DataShareAssociation]
         def managed_by: () -> ::String
+        def data_share_type: () -> ("INTERNAL")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Redshift/Client.html#associate_data_share_consumer-instance_method
       def associate_data_share_consumer: (
@@ -138,6 +139,7 @@ module Aws
         def allow_publicly_accessible_consumers: () -> bool
         def data_share_associations: () -> ::Array[Types::DataShareAssociation]
         def managed_by: () -> ::String
+        def data_share_type: () -> ("INTERNAL")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Redshift/Client.html#authorize_data_share-instance_method
       def authorize_data_share: (
@@ -680,6 +682,7 @@ module Aws
         def allow_publicly_accessible_consumers: () -> bool
         def data_share_associations: () -> ::Array[Types::DataShareAssociation]
         def managed_by: () -> ::String
+        def data_share_type: () -> ("INTERNAL")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Redshift/Client.html#deauthorize_data_share-instance_method
       def deauthorize_data_share: (
@@ -860,6 +863,25 @@ module Aws
                                 usage_limit_id: ::String
                               ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _DeregisterNamespaceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeregisterNamespaceOutputMessage]
+        def status: () -> ("Registering" | "Deregistering")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Redshift/Client.html#deregister_namespace-instance_method
+      def deregister_namespace: (
+                                  namespace_identifier: {
+                                    serverless_identifier: {
+                                      namespace_identifier: ::String,
+                                      workgroup_identifier: ::String
+                                    }?,
+                                    provisioned_identifier: {
+                                      cluster_identifier: ::String
+                                    }?
+                                  },
+                                  consumer_identifiers: Array[::String]
+                                ) -> _DeregisterNamespaceResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeregisterNamespaceResponseSuccess
 
       interface _DescribeAccountAttributesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::AccountAttributeList]
@@ -1516,6 +1538,7 @@ module Aws
         def allow_publicly_accessible_consumers: () -> bool
         def data_share_associations: () -> ::Array[Types::DataShareAssociation]
         def managed_by: () -> ::String
+        def data_share_type: () -> ("INTERNAL")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Redshift/Client.html#disassociate_data_share_consumer-instance_method
       def disassociate_data_share_consumer: (
@@ -2054,6 +2077,25 @@ module Aws
                           ) -> _RebootClusterResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RebootClusterResponseSuccess
 
+      interface _RegisterNamespaceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::RegisterNamespaceOutputMessage]
+        def status: () -> ("Registering" | "Deregistering")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Redshift/Client.html#register_namespace-instance_method
+      def register_namespace: (
+                                namespace_identifier: {
+                                  serverless_identifier: {
+                                    namespace_identifier: ::String,
+                                    workgroup_identifier: ::String
+                                  }?,
+                                  provisioned_identifier: {
+                                    cluster_identifier: ::String
+                                  }?
+                                },
+                                consumer_identifiers: Array[::String]
+                              ) -> _RegisterNamespaceResponseSuccess
+                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RegisterNamespaceResponseSuccess
+
       interface _RejectDataShareResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DataShare]
         def data_share_arn: () -> ::String
@@ -2061,6 +2103,7 @@ module Aws
         def allow_publicly_accessible_consumers: () -> bool
         def data_share_associations: () -> ::Array[Types::DataShareAssociation]
         def managed_by: () -> ::String
+        def data_share_type: () -> ("INTERNAL")
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Redshift/Client.html#reject_data_share-instance_method
       def reject_data_share: (

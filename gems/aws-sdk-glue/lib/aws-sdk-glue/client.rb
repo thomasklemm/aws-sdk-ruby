@@ -2863,6 +2863,80 @@ module Aws::Glue
       req.send_request(options)
     end
 
+    # Creates a new catalog in the Glue Data Catalog.
+    #
+    # @option params [required, String] :name
+    #   The name of the catalog to create.
+    #
+    # @option params [required, Types::CatalogInput] :catalog_input
+    #   A `CatalogInput` object that defines the metadata for the catalog.
+    #
+    # @option params [Hash<String,String>] :tags
+    #   A map array of key-value pairs, not more than 50 pairs. Each key is a
+    #   UTF-8 string, not less than 1 or more than 128 bytes long. Each value
+    #   is a UTF-8 string, not more than 256 bytes long. The tags you assign
+    #   to the catalog.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_catalog({
+    #     name: "CatalogNameString", # required
+    #     catalog_input: { # required
+    #       description: "DescriptionString",
+    #       federated_catalog: {
+    #         identifier: "FederationIdentifier",
+    #         connection_name: "NameString",
+    #       },
+    #       parameters: {
+    #         "KeyString" => "ParametersMapValue",
+    #       },
+    #       target_redshift_catalog: {
+    #         catalog_arn: "ResourceArnString", # required
+    #       },
+    #       catalog_properties: {
+    #         data_lake_access_properties: {
+    #           data_lake_access: false,
+    #           data_transfer_role: "IAMRoleArn",
+    #           kms_key: "ResourceArnString",
+    #           catalog_type: "NameString",
+    #         },
+    #         custom_properties: {
+    #           "KeyString" => "ParametersMapValue",
+    #         },
+    #       },
+    #       create_table_default_permissions: [
+    #         {
+    #           principal: {
+    #             data_lake_principal_identifier: "DataLakePrincipalString",
+    #           },
+    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS
+    #         },
+    #       ],
+    #       create_database_default_permissions: [
+    #         {
+    #           principal: {
+    #             data_lake_principal_identifier: "DataLakePrincipalString",
+    #           },
+    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS
+    #         },
+    #       ],
+    #     },
+    #     tags: {
+    #       "TagKey" => "TagValue",
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateCatalog AWS API Documentation
+    #
+    # @overload create_catalog(params = {})
+    # @param [Hash] params ({})
+    def create_catalog(params = {}, options = {})
+      req = build_request(:create_catalog, params)
+      req.send_request(options)
+    end
+
     # Creates a classifier in the user's account. This can be a
     # `GrokClassifier`, an `XMLClassifier`, a `JsonClassifier`, or a
     # `CsvClassifier`, depending on which field of the request is present.
@@ -3006,12 +3080,18 @@ module Aws::Glue
     #     connection_input: { # required
     #       name: "NameString", # required
     #       description: "DescriptionString",
-    #       connection_type: "JDBC", # required, accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA
+    #       connection_type: "JDBC", # required, accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA, GOOGLEADS, GOOGLESHEETS, GOOGLEANALYTICS4, SERVICENOW, MARKETO, SAPODATA, ZENDESK, JIRACLOUD, NETSUITEERP, HUBSPOT, FACEBOOKADS, INSTAGRAMADS, ZOHOCRM, SALESFORCEPARDOT, SALESFORCEMARKETINGCLOUD, SLACK, STRIPE, INTERCOM, SNAPCHATADS
     #       match_criteria: ["NameString"],
     #       connection_properties: { # required
     #         "HOST" => "ValueString",
     #       },
+    #       spark_properties: {
+    #         "PropertyKey" => "PropertyValue",
+    #       },
     #       athena_properties: {
+    #         "PropertyKey" => "PropertyValue",
+    #       },
+    #       python_properties: {
     #         "PropertyKey" => "PropertyValue",
     #       },
     #       physical_connection_requirements: {
@@ -3020,7 +3100,7 @@ module Aws::Glue
     #         availability_zone: "NameString",
     #       },
     #       authentication_configuration: {
-    #         authentication_type: "BASIC", # accepts BASIC, OAUTH2, CUSTOM
+    #         authentication_type: "BASIC", # accepts BASIC, OAUTH2, CUSTOM, IAM
     #         o_auth_2_properties: {
     #           o_auth_2_grant_type: "AUTHORIZATION_CODE", # accepts AUTHORIZATION_CODE, CLIENT_CREDENTIALS, JWT_BEARER
     #           o_auth_2_client_application: {
@@ -3035,10 +3115,25 @@ module Aws::Glue
     #             authorization_code: "AuthorizationCode",
     #             redirect_uri: "RedirectUri",
     #           },
+    #           o_auth_2_credentials: {
+    #             user_managed_client_application_client_secret: "UserManagedClientApplicationClientSecret",
+    #             access_token: "AccessToken",
+    #             refresh_token: "RefreshToken",
+    #             jwt_token: "JwtToken",
+    #           },
     #         },
     #         secret_arn: "SecretArn",
+    #         kms_key_arn: "KmsKeyArn",
+    #         basic_authentication_credentials: {
+    #           username: "Username",
+    #           password: "Password",
+    #         },
+    #         custom_authentication_credentials: {
+    #           "CredentialKey" => "CredentialValue",
+    #         },
     #       },
     #       validate_credentials: false,
+    #       validate_for_compute_environments: ["SPARK"], # accepts SPARK, ATHENA, PYTHON
     #     },
     #     tags: {
     #       "TagKey" => "TagValue",
@@ -3615,6 +3710,211 @@ module Aws::Glue
     # @param [Hash] params ({})
     def create_dev_endpoint(params = {}, options = {})
       req = build_request(:create_dev_endpoint, params)
+      req.send_request(options)
+    end
+
+    # Creates a Zero-ETL integration in the caller's account between two
+    # resources with Amazon Resource Names (ARNs): the `SourceArn` and
+    # `TargetArn`.
+    #
+    # @option params [required, String] :integration_name
+    #   A unique name for an integration in Glue.
+    #
+    # @option params [required, String] :source_arn
+    #   The ARN of the source resource for the integration.
+    #
+    # @option params [required, String] :target_arn
+    #   The ARN of the target resource for the integration.
+    #
+    # @option params [String] :description
+    #   A description of the integration.
+    #
+    # @option params [String] :data_filter
+    #   Selects source tables for the integration using Maxwell filter syntax.
+    #
+    # @option params [String] :kms_key_id
+    #   The ARN of a KMS key used for encrypting the channel.
+    #
+    # @option params [Hash<String,String>] :additional_encryption_context
+    #   An optional set of non-secret key–value pairs that contains additional
+    #   contextual information for encryption. This can only be provided if
+    #   `KMSKeyId` is provided.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   Metadata assigned to the resource consisting of a list of key-value
+    #   pairs.
+    #
+    # @return [Types::CreateIntegrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateIntegrationResponse#source_arn #source_arn} => String
+    #   * {Types::CreateIntegrationResponse#target_arn #target_arn} => String
+    #   * {Types::CreateIntegrationResponse#integration_name #integration_name} => String
+    #   * {Types::CreateIntegrationResponse#description #description} => String
+    #   * {Types::CreateIntegrationResponse#integration_arn #integration_arn} => String
+    #   * {Types::CreateIntegrationResponse#kms_key_id #kms_key_id} => String
+    #   * {Types::CreateIntegrationResponse#additional_encryption_context #additional_encryption_context} => Hash&lt;String,String&gt;
+    #   * {Types::CreateIntegrationResponse#tags #tags} => Array&lt;Types::Tag&gt;
+    #   * {Types::CreateIntegrationResponse#status #status} => String
+    #   * {Types::CreateIntegrationResponse#create_time #create_time} => Time
+    #   * {Types::CreateIntegrationResponse#errors #errors} => Array&lt;Types::IntegrationError&gt;
+    #   * {Types::CreateIntegrationResponse#data_filter #data_filter} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_integration({
+    #     integration_name: "String128", # required
+    #     source_arn: "String128", # required
+    #     target_arn: "String128", # required
+    #     description: "IntegrationDescription",
+    #     data_filter: "String2048",
+    #     kms_key_id: "String2048",
+    #     additional_encryption_context: {
+    #       "IntegrationString" => "IntegrationString",
+    #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey",
+    #         value: "TagValue",
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.source_arn #=> String
+    #   resp.target_arn #=> String
+    #   resp.integration_name #=> String
+    #   resp.description #=> String
+    #   resp.integration_arn #=> String
+    #   resp.kms_key_id #=> String
+    #   resp.additional_encryption_context #=> Hash
+    #   resp.additional_encryption_context["IntegrationString"] #=> String
+    #   resp.tags #=> Array
+    #   resp.tags[0].key #=> String
+    #   resp.tags[0].value #=> String
+    #   resp.status #=> String, one of "CREATING", "ACTIVE", "MODIFYING", "FAILED", "DELETING", "SYNCING", "NEEDS_ATTENTION"
+    #   resp.create_time #=> Time
+    #   resp.errors #=> Array
+    #   resp.errors[0].error_code #=> String
+    #   resp.errors[0].error_message #=> String
+    #   resp.data_filter #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegration AWS API Documentation
+    #
+    # @overload create_integration(params = {})
+    # @param [Hash] params ({})
+    def create_integration(params = {}, options = {})
+      req = build_request(:create_integration, params)
+      req.send_request(options)
+    end
+
+    # This API can be used for setting up the `ResourceProperty` of the Glue
+    # connection (for the source) or Glue database ARN (for the target).
+    # These properties can include the role to access the connection or
+    # database. To set both source and target properties the same API needs
+    # to be invoked with the Glue connection ARN as `ResourceArn` with
+    # `SourceProcessingProperties` and the Glue database ARN as
+    # `ResourceArn` with `TargetProcessingProperties` respectively.
+    #
+    # @option params [required, String] :resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #
+    # @option params [Types::SourceProcessingProperties] :source_processing_properties
+    #   The resource properties associated with the integration source.
+    #
+    # @option params [Types::TargetProcessingProperties] :target_processing_properties
+    #   The resource properties associated with the integration target.
+    #
+    # @return [Types::CreateIntegrationResourcePropertyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateIntegrationResourcePropertyResponse#resource_arn #resource_arn} => String
+    #   * {Types::CreateIntegrationResourcePropertyResponse#source_processing_properties #source_processing_properties} => Types::SourceProcessingProperties
+    #   * {Types::CreateIntegrationResourcePropertyResponse#target_processing_properties #target_processing_properties} => Types::TargetProcessingProperties
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_integration_resource_property({
+    #     resource_arn: "String128", # required
+    #     source_processing_properties: {
+    #       role_arn: "String128",
+    #     },
+    #     target_processing_properties: {
+    #       role_arn: "String128",
+    #       kms_arn: "String2048",
+    #       connection_name: "String128",
+    #       event_bus_arn: "String2048",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.source_processing_properties.role_arn #=> String
+    #   resp.target_processing_properties.role_arn #=> String
+    #   resp.target_processing_properties.kms_arn #=> String
+    #   resp.target_processing_properties.connection_name #=> String
+    #   resp.target_processing_properties.event_bus_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationResourceProperty AWS API Documentation
+    #
+    # @overload create_integration_resource_property(params = {})
+    # @param [Hash] params ({})
+    def create_integration_resource_property(params = {}, options = {})
+      req = build_request(:create_integration_resource_property, params)
+      req.send_request(options)
+    end
+
+    # This API is used to provide optional override properties for the the
+    # tables that need to be replicated. These properties can include
+    # properties for filtering and partitioning for the source and target
+    # tables. To set both source and target properties the same API need to
+    # be invoked with the Glue connection ARN as `ResourceArn` with
+    # `SourceTableConfig`, and the Glue database ARN as `ResourceArn` with
+    # `TargetTableConfig` respectively.
+    #
+    # @option params [required, String] :resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #
+    # @option params [required, String] :table_name
+    #   The name of the table to be replicated.
+    #
+    # @option params [Types::SourceTableConfig] :source_table_config
+    #   A structure for the source table configuration.
+    #
+    # @option params [Types::TargetTableConfig] :target_table_config
+    #   A structure for the target table configuration.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_integration_table_properties({
+    #     resource_arn: "String128", # required
+    #     table_name: "String128", # required
+    #     source_table_config: {
+    #       fields: ["String128"],
+    #       filter_predicate: "String128",
+    #       primary_key: ["String128"],
+    #       record_update_field: "String128",
+    #     },
+    #     target_table_config: {
+    #       unnest_spec: "TOPLEVEL", # accepts TOPLEVEL, FULL, NOUNNEST
+    #       partition_spec: [
+    #         {
+    #           field_name: "String128",
+    #           function_spec: "String128",
+    #         },
+    #       ],
+    #       target_table_name: "String128",
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateIntegrationTableProperties AWS API Documentation
+    #
+    # @overload create_integration_table_properties(params = {})
+    # @param [Hash] params ({})
+    def create_integration_table_properties(params = {}, options = {})
+      req = build_request(:create_integration_table_properties, params)
       req.send_request(options)
     end
 
@@ -5221,6 +5521,41 @@ module Aws::Glue
       req.send_request(options)
     end
 
+    # Removes the specified catalog from the Glue Data Catalog.
+    #
+    # After completing this operation, you no longer have access to the
+    # databases, tables (and all table versions and partitions that might
+    # belong to the tables) and the user-defined functions in the deleted
+    # catalog. Glue deletes these "orphaned" resources asynchronously in a
+    # timely manner, at the discretion of the service.
+    #
+    # To ensure the immediate deletion of all related resources before
+    # calling the `DeleteCatalog` operation, use `DeleteTableVersion` (or
+    # `BatchDeleteTableVersion`), `DeletePartition` (or
+    # `BatchDeletePartition`), `DeleteTable` (or `BatchDeleteTable`),
+    # `DeleteUserDefinedFunction` and `DeleteDatabase` to delete any
+    # resources that belong to the catalog.
+    #
+    # @option params [required, String] :catalog_id
+    #   The ID of the catalog.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_catalog({
+    #     catalog_id: "CatalogIdString", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteCatalog AWS API Documentation
+    #
+    # @overload delete_catalog(params = {})
+    # @param [Hash] params ({})
+    def delete_catalog(params = {}, options = {})
+      req = build_request(:delete_catalog, params)
+      req.send_request(options)
+    end
+
     # Removes a classifier from the Data Catalog.
     #
     # @option params [required, String] :name
@@ -5513,6 +5848,88 @@ module Aws::Glue
     # @param [Hash] params ({})
     def delete_dev_endpoint(params = {}, options = {})
       req = build_request(:delete_dev_endpoint, params)
+      req.send_request(options)
+    end
+
+    # Deletes the specified Zero-ETL integration.
+    #
+    # @option params [required, String] :integration_identifier
+    #   The Amazon Resource Name (ARN) for the integration.
+    #
+    # @return [Types::DeleteIntegrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteIntegrationResponse#source_arn #source_arn} => String
+    #   * {Types::DeleteIntegrationResponse#target_arn #target_arn} => String
+    #   * {Types::DeleteIntegrationResponse#integration_name #integration_name} => String
+    #   * {Types::DeleteIntegrationResponse#description #description} => String
+    #   * {Types::DeleteIntegrationResponse#integration_arn #integration_arn} => String
+    #   * {Types::DeleteIntegrationResponse#kms_key_id #kms_key_id} => String
+    #   * {Types::DeleteIntegrationResponse#additional_encryption_context #additional_encryption_context} => Hash&lt;String,String&gt;
+    #   * {Types::DeleteIntegrationResponse#tags #tags} => Array&lt;Types::Tag&gt;
+    #   * {Types::DeleteIntegrationResponse#status #status} => String
+    #   * {Types::DeleteIntegrationResponse#create_time #create_time} => Time
+    #   * {Types::DeleteIntegrationResponse#errors #errors} => Array&lt;Types::IntegrationError&gt;
+    #   * {Types::DeleteIntegrationResponse#data_filter #data_filter} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_integration({
+    #     integration_identifier: "String128", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.source_arn #=> String
+    #   resp.target_arn #=> String
+    #   resp.integration_name #=> String
+    #   resp.description #=> String
+    #   resp.integration_arn #=> String
+    #   resp.kms_key_id #=> String
+    #   resp.additional_encryption_context #=> Hash
+    #   resp.additional_encryption_context["IntegrationString"] #=> String
+    #   resp.tags #=> Array
+    #   resp.tags[0].key #=> String
+    #   resp.tags[0].value #=> String
+    #   resp.status #=> String, one of "CREATING", "ACTIVE", "MODIFYING", "FAILED", "DELETING", "SYNCING", "NEEDS_ATTENTION"
+    #   resp.create_time #=> Time
+    #   resp.errors #=> Array
+    #   resp.errors[0].error_code #=> String
+    #   resp.errors[0].error_message #=> String
+    #   resp.data_filter #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteIntegration AWS API Documentation
+    #
+    # @overload delete_integration(params = {})
+    # @param [Hash] params ({})
+    def delete_integration(params = {}, options = {})
+      req = build_request(:delete_integration, params)
+      req.send_request(options)
+    end
+
+    # Deletes the table properties that have been created for the tables
+    # that need to be replicated.
+    #
+    # @option params [required, String] :resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #
+    # @option params [required, String] :table_name
+    #   The name of the table to be replicated.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_integration_table_properties({
+    #     resource_arn: "String128", # required
+    #     table_name: "String128", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteIntegrationTableProperties AWS API Documentation
+    #
+    # @overload delete_integration_table_properties(params = {})
+    # @param [Hash] params ({})
+    def delete_integration_table_properties(params = {}, options = {})
+      req = build_request(:delete_integration_table_properties, params)
       req.send_request(options)
     end
 
@@ -6110,6 +6527,403 @@ module Aws::Glue
       req.send_request(options)
     end
 
+    # The `DescribeConnectionType` API provides full details of the
+    # supported options for a given connection type in Glue.
+    #
+    # @option params [required, String] :connection_type
+    #   The name of the connection type to be described.
+    #
+    # @return [Types::DescribeConnectionTypeResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeConnectionTypeResponse#connection_type #connection_type} => String
+    #   * {Types::DescribeConnectionTypeResponse#description #description} => String
+    #   * {Types::DescribeConnectionTypeResponse#capabilities #capabilities} => Types::Capabilities
+    #   * {Types::DescribeConnectionTypeResponse#connection_properties #connection_properties} => Hash&lt;String,Types::Property&gt;
+    #   * {Types::DescribeConnectionTypeResponse#connection_options #connection_options} => Hash&lt;String,Types::Property&gt;
+    #   * {Types::DescribeConnectionTypeResponse#authentication_configuration #authentication_configuration} => Types::AuthConfiguration
+    #   * {Types::DescribeConnectionTypeResponse#compute_environment_configurations #compute_environment_configurations} => Hash&lt;String,Types::ComputeEnvironmentConfiguration&gt;
+    #   * {Types::DescribeConnectionTypeResponse#physical_connection_requirements #physical_connection_requirements} => Hash&lt;String,Types::Property&gt;
+    #   * {Types::DescribeConnectionTypeResponse#athena_connection_properties #athena_connection_properties} => Hash&lt;String,Types::Property&gt;
+    #   * {Types::DescribeConnectionTypeResponse#python_connection_properties #python_connection_properties} => Hash&lt;String,Types::Property&gt;
+    #   * {Types::DescribeConnectionTypeResponse#spark_connection_properties #spark_connection_properties} => Hash&lt;String,Types::Property&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_connection_type({
+    #     connection_type: "NameString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.connection_type #=> String
+    #   resp.description #=> String
+    #   resp.capabilities.supported_authentication_types #=> Array
+    #   resp.capabilities.supported_authentication_types[0] #=> String, one of "BASIC", "OAUTH2", "CUSTOM", "IAM"
+    #   resp.capabilities.supported_data_operations #=> Array
+    #   resp.capabilities.supported_data_operations[0] #=> String, one of "READ", "WRITE"
+    #   resp.capabilities.supported_compute_environments #=> Array
+    #   resp.capabilities.supported_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.connection_properties #=> Hash
+    #   resp.connection_properties["PropertyName"].name #=> String
+    #   resp.connection_properties["PropertyName"].description #=> String
+    #   resp.connection_properties["PropertyName"].required #=> Boolean
+    #   resp.connection_properties["PropertyName"].default_value #=> String
+    #   resp.connection_properties["PropertyName"].property_types #=> Array
+    #   resp.connection_properties["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.connection_properties["PropertyName"].allowed_values #=> Array
+    #   resp.connection_properties["PropertyName"].allowed_values[0].description #=> String
+    #   resp.connection_properties["PropertyName"].allowed_values[0].value #=> String
+    #   resp.connection_properties["PropertyName"].data_operation_scopes #=> Array
+    #   resp.connection_properties["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.connection_options #=> Hash
+    #   resp.connection_options["PropertyName"].name #=> String
+    #   resp.connection_options["PropertyName"].description #=> String
+    #   resp.connection_options["PropertyName"].required #=> Boolean
+    #   resp.connection_options["PropertyName"].default_value #=> String
+    #   resp.connection_options["PropertyName"].property_types #=> Array
+    #   resp.connection_options["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.connection_options["PropertyName"].allowed_values #=> Array
+    #   resp.connection_options["PropertyName"].allowed_values[0].description #=> String
+    #   resp.connection_options["PropertyName"].allowed_values[0].value #=> String
+    #   resp.connection_options["PropertyName"].data_operation_scopes #=> Array
+    #   resp.connection_options["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.authentication_configuration.authentication_type.name #=> String
+    #   resp.authentication_configuration.authentication_type.description #=> String
+    #   resp.authentication_configuration.authentication_type.required #=> Boolean
+    #   resp.authentication_configuration.authentication_type.default_value #=> String
+    #   resp.authentication_configuration.authentication_type.property_types #=> Array
+    #   resp.authentication_configuration.authentication_type.property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.authentication_configuration.authentication_type.allowed_values #=> Array
+    #   resp.authentication_configuration.authentication_type.allowed_values[0].description #=> String
+    #   resp.authentication_configuration.authentication_type.allowed_values[0].value #=> String
+    #   resp.authentication_configuration.authentication_type.data_operation_scopes #=> Array
+    #   resp.authentication_configuration.authentication_type.data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.authentication_configuration.secret_arn.name #=> String
+    #   resp.authentication_configuration.secret_arn.description #=> String
+    #   resp.authentication_configuration.secret_arn.required #=> Boolean
+    #   resp.authentication_configuration.secret_arn.default_value #=> String
+    #   resp.authentication_configuration.secret_arn.property_types #=> Array
+    #   resp.authentication_configuration.secret_arn.property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.authentication_configuration.secret_arn.allowed_values #=> Array
+    #   resp.authentication_configuration.secret_arn.allowed_values[0].description #=> String
+    #   resp.authentication_configuration.secret_arn.allowed_values[0].value #=> String
+    #   resp.authentication_configuration.secret_arn.data_operation_scopes #=> Array
+    #   resp.authentication_configuration.secret_arn.data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.authentication_configuration.o_auth_2_properties #=> Hash
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].name #=> String
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].description #=> String
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].required #=> Boolean
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].default_value #=> String
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].property_types #=> Array
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].allowed_values #=> Array
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].allowed_values[0].description #=> String
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].allowed_values[0].value #=> String
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].data_operation_scopes #=> Array
+    #   resp.authentication_configuration.o_auth_2_properties["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.authentication_configuration.basic_authentication_properties #=> Hash
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].name #=> String
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].description #=> String
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].required #=> Boolean
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].default_value #=> String
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].property_types #=> Array
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].allowed_values #=> Array
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].allowed_values[0].description #=> String
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].allowed_values[0].value #=> String
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].data_operation_scopes #=> Array
+    #   resp.authentication_configuration.basic_authentication_properties["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.authentication_configuration.custom_authentication_properties #=> Hash
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].name #=> String
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].description #=> String
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].required #=> Boolean
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].default_value #=> String
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].property_types #=> Array
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].allowed_values #=> Array
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].allowed_values[0].description #=> String
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].allowed_values[0].value #=> String
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].data_operation_scopes #=> Array
+    #   resp.authentication_configuration.custom_authentication_properties["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.compute_environment_configurations #=> Hash
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].name #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].description #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].compute_environment #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].supported_authentication_types #=> Array
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].supported_authentication_types[0] #=> String, one of "BASIC", "OAUTH2", "CUSTOM", "IAM"
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options #=> Hash
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].name #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].description #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].required #=> Boolean
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].default_value #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].property_types #=> Array
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].allowed_values #=> Array
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].allowed_values[0].description #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].allowed_values[0].value #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].data_operation_scopes #=> Array
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_options["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_property_name_overrides #=> Hash
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_property_name_overrides["PropertyName"] #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_option_name_overrides #=> Hash
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_option_name_overrides["PropertyName"] #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_properties_required_overrides #=> Array
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].connection_properties_required_overrides[0] #=> String
+    #   resp.compute_environment_configurations["ComputeEnvironmentName"].physical_connection_properties_required #=> Boolean
+    #   resp.physical_connection_requirements #=> Hash
+    #   resp.physical_connection_requirements["PropertyName"].name #=> String
+    #   resp.physical_connection_requirements["PropertyName"].description #=> String
+    #   resp.physical_connection_requirements["PropertyName"].required #=> Boolean
+    #   resp.physical_connection_requirements["PropertyName"].default_value #=> String
+    #   resp.physical_connection_requirements["PropertyName"].property_types #=> Array
+    #   resp.physical_connection_requirements["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.physical_connection_requirements["PropertyName"].allowed_values #=> Array
+    #   resp.physical_connection_requirements["PropertyName"].allowed_values[0].description #=> String
+    #   resp.physical_connection_requirements["PropertyName"].allowed_values[0].value #=> String
+    #   resp.physical_connection_requirements["PropertyName"].data_operation_scopes #=> Array
+    #   resp.physical_connection_requirements["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.athena_connection_properties #=> Hash
+    #   resp.athena_connection_properties["PropertyName"].name #=> String
+    #   resp.athena_connection_properties["PropertyName"].description #=> String
+    #   resp.athena_connection_properties["PropertyName"].required #=> Boolean
+    #   resp.athena_connection_properties["PropertyName"].default_value #=> String
+    #   resp.athena_connection_properties["PropertyName"].property_types #=> Array
+    #   resp.athena_connection_properties["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.athena_connection_properties["PropertyName"].allowed_values #=> Array
+    #   resp.athena_connection_properties["PropertyName"].allowed_values[0].description #=> String
+    #   resp.athena_connection_properties["PropertyName"].allowed_values[0].value #=> String
+    #   resp.athena_connection_properties["PropertyName"].data_operation_scopes #=> Array
+    #   resp.athena_connection_properties["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.python_connection_properties #=> Hash
+    #   resp.python_connection_properties["PropertyName"].name #=> String
+    #   resp.python_connection_properties["PropertyName"].description #=> String
+    #   resp.python_connection_properties["PropertyName"].required #=> Boolean
+    #   resp.python_connection_properties["PropertyName"].default_value #=> String
+    #   resp.python_connection_properties["PropertyName"].property_types #=> Array
+    #   resp.python_connection_properties["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.python_connection_properties["PropertyName"].allowed_values #=> Array
+    #   resp.python_connection_properties["PropertyName"].allowed_values[0].description #=> String
+    #   resp.python_connection_properties["PropertyName"].allowed_values[0].value #=> String
+    #   resp.python_connection_properties["PropertyName"].data_operation_scopes #=> Array
+    #   resp.python_connection_properties["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #   resp.spark_connection_properties #=> Hash
+    #   resp.spark_connection_properties["PropertyName"].name #=> String
+    #   resp.spark_connection_properties["PropertyName"].description #=> String
+    #   resp.spark_connection_properties["PropertyName"].required #=> Boolean
+    #   resp.spark_connection_properties["PropertyName"].default_value #=> String
+    #   resp.spark_connection_properties["PropertyName"].property_types #=> Array
+    #   resp.spark_connection_properties["PropertyName"].property_types[0] #=> String, one of "USER_INPUT", "SECRET", "READ_ONLY", "UNUSED", "SECRET_OR_USER_INPUT"
+    #   resp.spark_connection_properties["PropertyName"].allowed_values #=> Array
+    #   resp.spark_connection_properties["PropertyName"].allowed_values[0].description #=> String
+    #   resp.spark_connection_properties["PropertyName"].allowed_values[0].value #=> String
+    #   resp.spark_connection_properties["PropertyName"].data_operation_scopes #=> Array
+    #   resp.spark_connection_properties["PropertyName"].data_operation_scopes[0] #=> String, one of "READ", "WRITE"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeConnectionType AWS API Documentation
+    #
+    # @overload describe_connection_type(params = {})
+    # @param [Hash] params ({})
+    def describe_connection_type(params = {}, options = {})
+      req = build_request(:describe_connection_type, params)
+      req.send_request(options)
+    end
+
+    # Provides details regarding the entity used with the connection type,
+    # with a description of the data model for each field in the selected
+    # entity.
+    #
+    # The response includes all the fields which make up the entity.
+    #
+    # @option params [required, String] :connection_name
+    #   The name of the connection that contains the connection type
+    #   credentials.
+    #
+    # @option params [String] :catalog_id
+    #   The catalog ID of the catalog that contains the connection. This can
+    #   be null, By default, the Amazon Web Services Account ID is the catalog
+    #   ID.
+    #
+    # @option params [required, String] :entity_name
+    #   The name of the entity that you want to describe from the connection
+    #   type.
+    #
+    # @option params [String] :next_token
+    #   A continuation token, included if this is a continuation call.
+    #
+    # @option params [String] :data_store_api_version
+    #   The version of the API used for the data store.
+    #
+    # @return [Types::DescribeEntityResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeEntityResponse#fields #fields} => Array&lt;Types::Field&gt;
+    #   * {Types::DescribeEntityResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_entity({
+    #     connection_name: "NameString", # required
+    #     catalog_id: "CatalogIdString",
+    #     entity_name: "EntityName", # required
+    #     next_token: "NextToken",
+    #     data_store_api_version: "ApiVersion",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.fields #=> Array
+    #   resp.fields[0].field_name #=> String
+    #   resp.fields[0].label #=> String
+    #   resp.fields[0].description #=> String
+    #   resp.fields[0].field_type #=> String, one of "INT", "SMALLINT", "BIGINT", "FLOAT", "LONG", "DATE", "BOOLEAN", "MAP", "ARRAY", "STRING", "TIMESTAMP", "DECIMAL", "BYTE", "SHORT", "DOUBLE", "STRUCT"
+    #   resp.fields[0].is_primary_key #=> Boolean
+    #   resp.fields[0].is_nullable #=> Boolean
+    #   resp.fields[0].is_retrievable #=> Boolean
+    #   resp.fields[0].is_filterable #=> Boolean
+    #   resp.fields[0].is_partitionable #=> Boolean
+    #   resp.fields[0].is_createable #=> Boolean
+    #   resp.fields[0].is_updateable #=> Boolean
+    #   resp.fields[0].is_upsertable #=> Boolean
+    #   resp.fields[0].is_default_on_create #=> Boolean
+    #   resp.fields[0].supported_values #=> Array
+    #   resp.fields[0].supported_values[0] #=> String
+    #   resp.fields[0].supported_filter_operators #=> Array
+    #   resp.fields[0].supported_filter_operators[0] #=> String, one of "LESS_THAN", "GREATER_THAN", "BETWEEN", "EQUAL_TO", "NOT_EQUAL_TO", "GREATER_THAN_OR_EQUAL_TO", "LESS_THAN_OR_EQUAL_TO", "CONTAINS", "ORDER_BY"
+    #   resp.fields[0].parent_field #=> String
+    #   resp.fields[0].native_data_type #=> String
+    #   resp.fields[0].custom_properties #=> Hash
+    #   resp.fields[0].custom_properties["String"] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeEntity AWS API Documentation
+    #
+    # @overload describe_entity(params = {})
+    # @param [Hash] params ({})
+    def describe_entity(params = {}, options = {})
+      req = build_request(:describe_entity, params)
+      req.send_request(options)
+    end
+
+    # Returns a list of inbound integrations for the specified integration.
+    #
+    # @option params [String] :integration_arn
+    #   The Amazon Resource Name (ARN) of the integration.
+    #
+    # @option params [String] :marker
+    #   A token to specify where to start paginating. This is the marker from
+    #   a previously truncated response.
+    #
+    # @option params [Integer] :max_records
+    #   The total number of items to return in the output.
+    #
+    # @option params [String] :target_arn
+    #   The Amazon Resource Name (ARN) of the target resource in the
+    #   integration.
+    #
+    # @return [Types::DescribeInboundIntegrationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeInboundIntegrationsResponse#inbound_integrations #inbound_integrations} => Array&lt;Types::InboundIntegration&gt;
+    #   * {Types::DescribeInboundIntegrationsResponse#marker #marker} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_inbound_integrations({
+    #     integration_arn: "String128",
+    #     marker: "String128",
+    #     max_records: 1,
+    #     target_arn: "String128",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.inbound_integrations #=> Array
+    #   resp.inbound_integrations[0].source_arn #=> String
+    #   resp.inbound_integrations[0].target_arn #=> String
+    #   resp.inbound_integrations[0].integration_arn #=> String
+    #   resp.inbound_integrations[0].status #=> String, one of "CREATING", "ACTIVE", "MODIFYING", "FAILED", "DELETING", "SYNCING", "NEEDS_ATTENTION"
+    #   resp.inbound_integrations[0].create_time #=> Time
+    #   resp.inbound_integrations[0].errors #=> Array
+    #   resp.inbound_integrations[0].errors[0].error_code #=> String
+    #   resp.inbound_integrations[0].errors[0].error_message #=> String
+    #   resp.marker #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeInboundIntegrations AWS API Documentation
+    #
+    # @overload describe_inbound_integrations(params = {})
+    # @param [Hash] params ({})
+    def describe_inbound_integrations(params = {}, options = {})
+      req = build_request(:describe_inbound_integrations, params)
+      req.send_request(options)
+    end
+
+    # The API is used to retrieve a list of integrations.
+    #
+    # @option params [String] :integration_identifier
+    #   The Amazon Resource Name (ARN) for the integration.
+    #
+    # @option params [String] :marker
+    #   A value that indicates the starting point for the next set of response
+    #   records in a subsequent request.
+    #
+    # @option params [Integer] :max_records
+    #   The total number of items to return in the output.
+    #
+    # @option params [Array<Types::IntegrationFilter>] :filters
+    #   A list of key and values, to filter down the results. Supported keys
+    #   are "Status", "IntegrationName", and "SourceArn".
+    #   IntegrationName is limited to only one value.
+    #
+    # @return [Types::DescribeIntegrationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeIntegrationsResponse#integrations #integrations} => Array&lt;Types::Integration&gt;
+    #   * {Types::DescribeIntegrationsResponse#marker #marker} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_integrations({
+    #     integration_identifier: "String128",
+    #     marker: "String128",
+    #     max_records: 1,
+    #     filters: [
+    #       {
+    #         name: "String128",
+    #         values: ["String128"],
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.integrations #=> Array
+    #   resp.integrations[0].source_arn #=> String
+    #   resp.integrations[0].target_arn #=> String
+    #   resp.integrations[0].description #=> String
+    #   resp.integrations[0].integration_name #=> String
+    #   resp.integrations[0].integration_arn #=> String
+    #   resp.integrations[0].kms_key_id #=> String
+    #   resp.integrations[0].additional_encryption_context #=> Hash
+    #   resp.integrations[0].additional_encryption_context["IntegrationString"] #=> String
+    #   resp.integrations[0].tags #=> Array
+    #   resp.integrations[0].tags[0].key #=> String
+    #   resp.integrations[0].tags[0].value #=> String
+    #   resp.integrations[0].status #=> String, one of "CREATING", "ACTIVE", "MODIFYING", "FAILED", "DELETING", "SYNCING", "NEEDS_ATTENTION"
+    #   resp.integrations[0].create_time #=> Time
+    #   resp.integrations[0].errors #=> Array
+    #   resp.integrations[0].errors[0].error_code #=> String
+    #   resp.integrations[0].errors[0].error_message #=> String
+    #   resp.integrations[0].data_filter #=> String
+    #   resp.marker #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DescribeIntegrations AWS API Documentation
+    #
+    # @overload describe_integrations(params = {})
+    # @param [Hash] params ({})
+    def describe_integrations(params = {}, options = {})
+      req = build_request(:describe_integrations, params)
+      req.send_request(options)
+    end
+
     # Retrieves the details of a blueprint.
     #
     # @option params [required, String] :name
@@ -6250,6 +7064,63 @@ module Aws::Glue
       req.send_request(options)
     end
 
+    # The name of the Catalog to retrieve. This should be all lowercase.
+    #
+    # @option params [required, String] :catalog_id
+    #   The ID of the parent catalog in which the catalog resides. If none is
+    #   provided, the Amazon Web Services Account Number is used by default.
+    #
+    # @return [Types::GetCatalogResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetCatalogResponse#catalog #catalog} => Types::Catalog
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_catalog({
+    #     catalog_id: "CatalogIdString", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.catalog.catalog_id #=> String
+    #   resp.catalog.name #=> String
+    #   resp.catalog.resource_arn #=> String
+    #   resp.catalog.description #=> String
+    #   resp.catalog.parameters #=> Hash
+    #   resp.catalog.parameters["KeyString"] #=> String
+    #   resp.catalog.create_time #=> Time
+    #   resp.catalog.update_time #=> Time
+    #   resp.catalog.target_redshift_catalog.catalog_arn #=> String
+    #   resp.catalog.federated_catalog.identifier #=> String
+    #   resp.catalog.federated_catalog.connection_name #=> String
+    #   resp.catalog.catalog_properties.data_lake_access_properties.data_lake_access #=> Boolean
+    #   resp.catalog.catalog_properties.data_lake_access_properties.data_transfer_role #=> String
+    #   resp.catalog.catalog_properties.data_lake_access_properties.kms_key #=> String
+    #   resp.catalog.catalog_properties.data_lake_access_properties.managed_workgroup_name #=> String
+    #   resp.catalog.catalog_properties.data_lake_access_properties.managed_workgroup_status #=> String
+    #   resp.catalog.catalog_properties.data_lake_access_properties.redshift_database_name #=> String
+    #   resp.catalog.catalog_properties.data_lake_access_properties.status_message #=> String
+    #   resp.catalog.catalog_properties.data_lake_access_properties.catalog_type #=> String
+    #   resp.catalog.catalog_properties.custom_properties #=> Hash
+    #   resp.catalog.catalog_properties.custom_properties["KeyString"] #=> String
+    #   resp.catalog.create_table_default_permissions #=> Array
+    #   resp.catalog.create_table_default_permissions[0].principal.data_lake_principal_identifier #=> String
+    #   resp.catalog.create_table_default_permissions[0].permissions #=> Array
+    #   resp.catalog.create_table_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS"
+    #   resp.catalog.create_database_default_permissions #=> Array
+    #   resp.catalog.create_database_default_permissions[0].principal.data_lake_principal_identifier #=> String
+    #   resp.catalog.create_database_default_permissions[0].permissions #=> Array
+    #   resp.catalog.create_database_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalog AWS API Documentation
+    #
+    # @overload get_catalog(params = {})
+    # @param [Hash] params ({})
+    def get_catalog(params = {}, options = {})
+      req = build_request(:get_catalog, params)
+      req.send_request(options)
+    end
+
     # Retrieves the status of a migration operation.
     #
     # @option params [String] :catalog_id
@@ -6278,6 +7149,82 @@ module Aws::Glue
     # @param [Hash] params ({})
     def get_catalog_import_status(params = {}, options = {})
       req = build_request(:get_catalog_import_status, params)
+      req.send_request(options)
+    end
+
+    # Retrieves all catalogs defined in a catalog in the Glue Data Catalog.
+    # For a Redshift-federated catalog use case, this operation returns the
+    # list of catalogs mapped to Redshift databases in the Redshift
+    # namespace catalog.
+    #
+    # @option params [String] :parent_catalog_id
+    #   The ID of the parent catalog in which the catalog resides. If none is
+    #   provided, the Amazon Web Services Account Number is used by default.
+    #
+    # @option params [String] :next_token
+    #   A continuation token, if this is a continuation call.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of catalogs to return in one response.
+    #
+    # @option params [Boolean] :recursive
+    #   When specified as true, iterates through the account and returns all
+    #   catalog resources (including top-level resources and child resources)
+    #
+    # @return [Types::GetCatalogsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetCatalogsResponse#catalog_list #catalog_list} => Array&lt;Types::Catalog&gt;
+    #   * {Types::GetCatalogsResponse#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_catalogs({
+    #     parent_catalog_id: "CatalogIdString",
+    #     next_token: "Token",
+    #     max_results: 1,
+    #     recursive: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.catalog_list #=> Array
+    #   resp.catalog_list[0].catalog_id #=> String
+    #   resp.catalog_list[0].name #=> String
+    #   resp.catalog_list[0].resource_arn #=> String
+    #   resp.catalog_list[0].description #=> String
+    #   resp.catalog_list[0].parameters #=> Hash
+    #   resp.catalog_list[0].parameters["KeyString"] #=> String
+    #   resp.catalog_list[0].create_time #=> Time
+    #   resp.catalog_list[0].update_time #=> Time
+    #   resp.catalog_list[0].target_redshift_catalog.catalog_arn #=> String
+    #   resp.catalog_list[0].federated_catalog.identifier #=> String
+    #   resp.catalog_list[0].federated_catalog.connection_name #=> String
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.data_lake_access #=> Boolean
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.data_transfer_role #=> String
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.kms_key #=> String
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.managed_workgroup_name #=> String
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.managed_workgroup_status #=> String
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.redshift_database_name #=> String
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.status_message #=> String
+    #   resp.catalog_list[0].catalog_properties.data_lake_access_properties.catalog_type #=> String
+    #   resp.catalog_list[0].catalog_properties.custom_properties #=> Hash
+    #   resp.catalog_list[0].catalog_properties.custom_properties["KeyString"] #=> String
+    #   resp.catalog_list[0].create_table_default_permissions #=> Array
+    #   resp.catalog_list[0].create_table_default_permissions[0].principal.data_lake_principal_identifier #=> String
+    #   resp.catalog_list[0].create_table_default_permissions[0].permissions #=> Array
+    #   resp.catalog_list[0].create_table_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS"
+    #   resp.catalog_list[0].create_database_default_permissions #=> Array
+    #   resp.catalog_list[0].create_database_default_permissions[0].principal.data_lake_principal_identifier #=> String
+    #   resp.catalog_list[0].create_database_default_permissions[0].permissions #=> Array
+    #   resp.catalog_list[0].create_database_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetCatalogs AWS API Documentation
+    #
+    # @overload get_catalogs(params = {})
+    # @param [Hash] params ({})
+    def get_catalogs(params = {}, options = {})
+      req = build_request(:get_catalogs, params)
       req.send_request(options)
     end
 
@@ -6722,6 +7669,12 @@ module Aws::Glue
     #   resp.column_statistics_task_settings.role #=> String
     #   resp.column_statistics_task_settings.sample_size #=> Float
     #   resp.column_statistics_task_settings.security_configuration #=> String
+    #   resp.column_statistics_task_settings.schedule_type #=> String, one of "CRON", "AUTO"
+    #   resp.column_statistics_task_settings.setting_source #=> String, one of "CATALOG", "TABLE"
+    #   resp.column_statistics_task_settings.last_execution_attempt.status #=> String, one of "FAILED", "STARTED"
+    #   resp.column_statistics_task_settings.last_execution_attempt.column_statistics_task_run_id #=> String
+    #   resp.column_statistics_task_settings.last_execution_attempt.execution_timestamp #=> Time
+    #   resp.column_statistics_task_settings.last_execution_attempt.error_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetColumnStatisticsTaskSettings AWS API Documentation
     #
@@ -6749,6 +7702,10 @@ module Aws::Glue
     #   decrypt the password, but it does have permission to access the rest
     #   of the connection properties.
     #
+    # @option params [String] :apply_override_for_compute_environment
+    #   For connections that may be used in multiple services, specifies
+    #   returning properties for the specified compute environment.
+    #
     # @return [Types::GetConnectionResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetConnectionResponse#connection #connection} => Types::Connection
@@ -6759,19 +7716,24 @@ module Aws::Glue
     #     catalog_id: "CatalogIdString",
     #     name: "NameString", # required
     #     hide_password: false,
+    #     apply_override_for_compute_environment: "SPARK", # accepts SPARK, ATHENA, PYTHON
     #   })
     #
     # @example Response structure
     #
     #   resp.connection.name #=> String
     #   resp.connection.description #=> String
-    #   resp.connection.connection_type #=> String, one of "JDBC", "SFTP", "MONGODB", "KAFKA", "NETWORK", "MARKETPLACE", "CUSTOM", "SALESFORCE", "VIEW_VALIDATION_REDSHIFT", "VIEW_VALIDATION_ATHENA"
+    #   resp.connection.connection_type #=> String, one of "JDBC", "SFTP", "MONGODB", "KAFKA", "NETWORK", "MARKETPLACE", "CUSTOM", "SALESFORCE", "VIEW_VALIDATION_REDSHIFT", "VIEW_VALIDATION_ATHENA", "GOOGLEADS", "GOOGLESHEETS", "GOOGLEANALYTICS4", "SERVICENOW", "MARKETO", "SAPODATA", "ZENDESK", "JIRACLOUD", "NETSUITEERP", "HUBSPOT", "FACEBOOKADS", "INSTAGRAMADS", "ZOHOCRM", "SALESFORCEPARDOT", "SALESFORCEMARKETINGCLOUD", "SLACK", "STRIPE", "INTERCOM", "SNAPCHATADS"
     #   resp.connection.match_criteria #=> Array
     #   resp.connection.match_criteria[0] #=> String
     #   resp.connection.connection_properties #=> Hash
     #   resp.connection.connection_properties["ConnectionPropertyKey"] #=> String
+    #   resp.connection.spark_properties #=> Hash
+    #   resp.connection.spark_properties["PropertyKey"] #=> String
     #   resp.connection.athena_properties #=> Hash
     #   resp.connection.athena_properties["PropertyKey"] #=> String
+    #   resp.connection.python_properties #=> Hash
+    #   resp.connection.python_properties["PropertyKey"] #=> String
     #   resp.connection.physical_connection_requirements.subnet_id #=> String
     #   resp.connection.physical_connection_requirements.security_group_id_list #=> Array
     #   resp.connection.physical_connection_requirements.security_group_id_list[0] #=> String
@@ -6782,7 +7744,7 @@ module Aws::Glue
     #   resp.connection.status #=> String, one of "READY", "IN_PROGRESS", "FAILED"
     #   resp.connection.status_reason #=> String
     #   resp.connection.last_connection_validation_time #=> Time
-    #   resp.connection.authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM"
+    #   resp.connection.authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM", "IAM"
     #   resp.connection.authentication_configuration.secret_arn #=> String
     #   resp.connection.authentication_configuration.o_auth_2_properties.o_auth_2_grant_type #=> String, one of "AUTHORIZATION_CODE", "CLIENT_CREDENTIALS", "JWT_BEARER"
     #   resp.connection.authentication_configuration.o_auth_2_properties.o_auth_2_client_application.user_managed_client_application_client_id #=> String
@@ -6790,6 +7752,9 @@ module Aws::Glue
     #   resp.connection.authentication_configuration.o_auth_2_properties.token_url #=> String
     #   resp.connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map #=> Hash
     #   resp.connection.authentication_configuration.o_auth_2_properties.token_url_parameters_map["TokenUrlParameterKey"] #=> String
+    #   resp.connection.connection_schema_version #=> Integer
+    #   resp.connection.compatible_compute_environments #=> Array
+    #   resp.connection.compatible_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetConnection AWS API Documentation
     #
@@ -6836,7 +7801,8 @@ module Aws::Glue
     #     catalog_id: "CatalogIdString",
     #     filter: {
     #       match_criteria: ["NameString"],
-    #       connection_type: "JDBC", # accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA
+    #       connection_type: "JDBC", # accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA, GOOGLEADS, GOOGLESHEETS, GOOGLEANALYTICS4, SERVICENOW, MARKETO, SAPODATA, ZENDESK, JIRACLOUD, NETSUITEERP, HUBSPOT, FACEBOOKADS, INSTAGRAMADS, ZOHOCRM, SALESFORCEPARDOT, SALESFORCEMARKETINGCLOUD, SLACK, STRIPE, INTERCOM, SNAPCHATADS
+    #       connection_schema_version: 1,
     #     },
     #     hide_password: false,
     #     next_token: "Token",
@@ -6848,13 +7814,17 @@ module Aws::Glue
     #   resp.connection_list #=> Array
     #   resp.connection_list[0].name #=> String
     #   resp.connection_list[0].description #=> String
-    #   resp.connection_list[0].connection_type #=> String, one of "JDBC", "SFTP", "MONGODB", "KAFKA", "NETWORK", "MARKETPLACE", "CUSTOM", "SALESFORCE", "VIEW_VALIDATION_REDSHIFT", "VIEW_VALIDATION_ATHENA"
+    #   resp.connection_list[0].connection_type #=> String, one of "JDBC", "SFTP", "MONGODB", "KAFKA", "NETWORK", "MARKETPLACE", "CUSTOM", "SALESFORCE", "VIEW_VALIDATION_REDSHIFT", "VIEW_VALIDATION_ATHENA", "GOOGLEADS", "GOOGLESHEETS", "GOOGLEANALYTICS4", "SERVICENOW", "MARKETO", "SAPODATA", "ZENDESK", "JIRACLOUD", "NETSUITEERP", "HUBSPOT", "FACEBOOKADS", "INSTAGRAMADS", "ZOHOCRM", "SALESFORCEPARDOT", "SALESFORCEMARKETINGCLOUD", "SLACK", "STRIPE", "INTERCOM", "SNAPCHATADS"
     #   resp.connection_list[0].match_criteria #=> Array
     #   resp.connection_list[0].match_criteria[0] #=> String
     #   resp.connection_list[0].connection_properties #=> Hash
     #   resp.connection_list[0].connection_properties["ConnectionPropertyKey"] #=> String
+    #   resp.connection_list[0].spark_properties #=> Hash
+    #   resp.connection_list[0].spark_properties["PropertyKey"] #=> String
     #   resp.connection_list[0].athena_properties #=> Hash
     #   resp.connection_list[0].athena_properties["PropertyKey"] #=> String
+    #   resp.connection_list[0].python_properties #=> Hash
+    #   resp.connection_list[0].python_properties["PropertyKey"] #=> String
     #   resp.connection_list[0].physical_connection_requirements.subnet_id #=> String
     #   resp.connection_list[0].physical_connection_requirements.security_group_id_list #=> Array
     #   resp.connection_list[0].physical_connection_requirements.security_group_id_list[0] #=> String
@@ -6865,7 +7835,7 @@ module Aws::Glue
     #   resp.connection_list[0].status #=> String, one of "READY", "IN_PROGRESS", "FAILED"
     #   resp.connection_list[0].status_reason #=> String
     #   resp.connection_list[0].last_connection_validation_time #=> Time
-    #   resp.connection_list[0].authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM"
+    #   resp.connection_list[0].authentication_configuration.authentication_type #=> String, one of "BASIC", "OAUTH2", "CUSTOM", "IAM"
     #   resp.connection_list[0].authentication_configuration.secret_arn #=> String
     #   resp.connection_list[0].authentication_configuration.o_auth_2_properties.o_auth_2_grant_type #=> String, one of "AUTHORIZATION_CODE", "CLIENT_CREDENTIALS", "JWT_BEARER"
     #   resp.connection_list[0].authentication_configuration.o_auth_2_properties.o_auth_2_client_application.user_managed_client_application_client_id #=> String
@@ -6873,6 +7843,9 @@ module Aws::Glue
     #   resp.connection_list[0].authentication_configuration.o_auth_2_properties.token_url #=> String
     #   resp.connection_list[0].authentication_configuration.o_auth_2_properties.token_url_parameters_map #=> Hash
     #   resp.connection_list[0].authentication_configuration.o_auth_2_properties.token_url_parameters_map["TokenUrlParameterKey"] #=> String
+    #   resp.connection_list[0].connection_schema_version #=> Integer
+    #   resp.connection_list[0].compatible_compute_environments #=> Array
+    #   resp.connection_list[0].compatible_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetConnections AWS API Documentation
@@ -7850,6 +8823,172 @@ module Aws::Glue
     # @param [Hash] params ({})
     def get_dev_endpoints(params = {}, options = {})
       req = build_request(:get_dev_endpoints, params)
+      req.send_request(options)
+    end
+
+    # This API is used to query preview data from a given connection type or
+    # from a native Amazon S3 based Glue Data Catalog.
+    #
+    # Returns records as an array of JSON blobs. Each record is formatted
+    # using Jackson JsonNode based on the field type defined by the
+    # `DescribeEntity` API.
+    #
+    # Spark connectors generate schemas according to the same data type
+    # mapping as in the `DescribeEntity` API. Spark connectors convert data
+    # to the appropriate data types matching the schema when returning rows.
+    #
+    # @option params [String] :connection_name
+    #   The name of the connection that contains the connection type
+    #   credentials.
+    #
+    # @option params [String] :catalog_id
+    #   The catalog ID of the catalog that contains the connection. This can
+    #   be null, By default, the Amazon Web Services Account ID is the catalog
+    #   ID.
+    #
+    # @option params [required, String] :entity_name
+    #   Name of the entity that we want to query the preview data from the
+    #   given connection type.
+    #
+    # @option params [String] :next_token
+    #   A continuation token, included if this is a continuation call.
+    #
+    # @option params [String] :data_store_api_version
+    #   The API version of the SaaS connector.
+    #
+    # @option params [Hash<String,String>] :connection_options
+    #   Connector options that are required to query the data.
+    #
+    # @option params [String] :filter_predicate
+    #   A filter predicate that you can apply in the query request.
+    #
+    # @option params [required, Integer] :limit
+    #   Limits the number of records fetched with the request.
+    #
+    # @option params [String] :order_by
+    #   A parameter that orders the response preview data.
+    #
+    # @option params [Array<String>] :selected_fields
+    #   List of fields that we want to fetch as part of preview data.
+    #
+    # @return [Types::GetEntityRecordsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetEntityRecordsResponse#records #records} => Array&lt;Hash,Array,String,Numeric,Boolean&gt;
+    #   * {Types::GetEntityRecordsResponse#next_token #next_token} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_entity_records({
+    #     connection_name: "NameString",
+    #     catalog_id: "CatalogIdString",
+    #     entity_name: "EntityName", # required
+    #     next_token: "NextToken",
+    #     data_store_api_version: "ApiVersion",
+    #     connection_options: {
+    #       "OptionKey" => "OptionValue",
+    #     },
+    #     filter_predicate: "FilterPredicate",
+    #     limit: 1, # required
+    #     order_by: "String",
+    #     selected_fields: ["EntityFieldName"],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.records #=> Array
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetEntityRecords AWS API Documentation
+    #
+    # @overload get_entity_records(params = {})
+    # @param [Hash] params ({})
+    def get_entity_records(params = {}, options = {})
+      req = build_request(:get_entity_records, params)
+      req.send_request(options)
+    end
+
+    # This API is used for fetching the `ResourceProperty` of the Glue
+    # connection (for the source) or Glue database ARN (for the target)
+    #
+    # @option params [required, String] :resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #
+    # @return [Types::GetIntegrationResourcePropertyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetIntegrationResourcePropertyResponse#resource_arn #resource_arn} => String
+    #   * {Types::GetIntegrationResourcePropertyResponse#source_processing_properties #source_processing_properties} => Types::SourceProcessingProperties
+    #   * {Types::GetIntegrationResourcePropertyResponse#target_processing_properties #target_processing_properties} => Types::TargetProcessingProperties
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_integration_resource_property({
+    #     resource_arn: "String128", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.source_processing_properties.role_arn #=> String
+    #   resp.target_processing_properties.role_arn #=> String
+    #   resp.target_processing_properties.kms_arn #=> String
+    #   resp.target_processing_properties.connection_name #=> String
+    #   resp.target_processing_properties.event_bus_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetIntegrationResourceProperty AWS API Documentation
+    #
+    # @overload get_integration_resource_property(params = {})
+    # @param [Hash] params ({})
+    def get_integration_resource_property(params = {}, options = {})
+      req = build_request(:get_integration_resource_property, params)
+      req.send_request(options)
+    end
+
+    # This API is used to retrieve optional override properties for the
+    # tables that need to be replicated. These properties can include
+    # properties for filtering and partition for source and target tables.
+    #
+    # @option params [required, String] :resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #
+    # @option params [required, String] :table_name
+    #   The name of the table to be replicated.
+    #
+    # @return [Types::GetIntegrationTablePropertiesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetIntegrationTablePropertiesResponse#resource_arn #resource_arn} => String
+    #   * {Types::GetIntegrationTablePropertiesResponse#table_name #table_name} => String
+    #   * {Types::GetIntegrationTablePropertiesResponse#source_table_config #source_table_config} => Types::SourceTableConfig
+    #   * {Types::GetIntegrationTablePropertiesResponse#target_table_config #target_table_config} => Types::TargetTableConfig
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_integration_table_properties({
+    #     resource_arn: "String128", # required
+    #     table_name: "String128", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.table_name #=> String
+    #   resp.source_table_config.fields #=> Array
+    #   resp.source_table_config.fields[0] #=> String
+    #   resp.source_table_config.filter_predicate #=> String
+    #   resp.source_table_config.primary_key #=> Array
+    #   resp.source_table_config.primary_key[0] #=> String
+    #   resp.source_table_config.record_update_field #=> String
+    #   resp.target_table_config.unnest_spec #=> String, one of "TOPLEVEL", "FULL", "NOUNNEST"
+    #   resp.target_table_config.partition_spec #=> Array
+    #   resp.target_table_config.partition_spec[0].field_name #=> String
+    #   resp.target_table_config.partition_spec[0].function_spec #=> String
+    #   resp.target_table_config.target_table_name #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetIntegrationTableProperties AWS API Documentation
+    #
+    # @overload get_integration_table_properties(params = {})
+    # @param [Hash] params ({})
+    def get_integration_table_properties(params = {}, options = {})
+      req = build_request(:get_integration_table_properties, params)
       req.send_request(options)
     end
 
@@ -13530,6 +14669,54 @@ module Aws::Glue
       req.send_request(options)
     end
 
+    # The `ListConnectionTypes` API provides a discovery mechanism to learn
+    # available connection types in Glue. The response contains a list of
+    # connection types with high-level details of what is supported for each
+    # connection type. The connection types listed are the set of supported
+    # options for the `ConnectionType` value in the `CreateConnection` API.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return.
+    #
+    # @option params [String] :next_token
+    #   A continuation token, if this is a continuation call.
+    #
+    # @return [Types::ListConnectionTypesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListConnectionTypesResponse#connection_types #connection_types} => Array&lt;Types::ConnectionTypeBrief&gt;
+    #   * {Types::ListConnectionTypesResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_connection_types({
+    #     max_results: 1,
+    #     next_token: "NextToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.connection_types #=> Array
+    #   resp.connection_types[0].connection_type #=> String, one of "JDBC", "SFTP", "MONGODB", "KAFKA", "NETWORK", "MARKETPLACE", "CUSTOM", "SALESFORCE", "VIEW_VALIDATION_REDSHIFT", "VIEW_VALIDATION_ATHENA", "GOOGLEADS", "GOOGLESHEETS", "GOOGLEANALYTICS4", "SERVICENOW", "MARKETO", "SAPODATA", "ZENDESK", "JIRACLOUD", "NETSUITEERP", "HUBSPOT", "FACEBOOKADS", "INSTAGRAMADS", "ZOHOCRM", "SALESFORCEPARDOT", "SALESFORCEMARKETINGCLOUD", "SLACK", "STRIPE", "INTERCOM", "SNAPCHATADS"
+    #   resp.connection_types[0].description #=> String
+    #   resp.connection_types[0].capabilities.supported_authentication_types #=> Array
+    #   resp.connection_types[0].capabilities.supported_authentication_types[0] #=> String, one of "BASIC", "OAUTH2", "CUSTOM", "IAM"
+    #   resp.connection_types[0].capabilities.supported_data_operations #=> Array
+    #   resp.connection_types[0].capabilities.supported_data_operations[0] #=> String, one of "READ", "WRITE"
+    #   resp.connection_types[0].capabilities.supported_compute_environments #=> Array
+    #   resp.connection_types[0].capabilities.supported_compute_environments[0] #=> String, one of "SPARK", "ATHENA", "PYTHON"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListConnectionTypes AWS API Documentation
+    #
+    # @overload list_connection_types(params = {})
+    # @param [Hash] params ({})
+    def list_connection_types(params = {}, options = {})
+      req = build_request(:list_connection_types, params)
+      req.send_request(options)
+    end
+
     # Retrieves the names of all crawler resources in this Amazon Web
     # Services account, or the resources with the specified tag. This
     # operation allows you to see which resources are available in your
@@ -14131,6 +15318,66 @@ module Aws::Glue
     # @param [Hash] params ({})
     def list_dev_endpoints(params = {}, options = {})
       req = build_request(:list_dev_endpoints, params)
+      req.send_request(options)
+    end
+
+    # Returns the available entities supported by the connection type.
+    #
+    # @option params [String] :connection_name
+    #   A name for the connection that has required credentials to query any
+    #   connection type.
+    #
+    # @option params [String] :catalog_id
+    #   The catalog ID of the catalog that contains the connection. This can
+    #   be null, By default, the Amazon Web Services Account ID is the catalog
+    #   ID.
+    #
+    # @option params [String] :parent_entity_name
+    #   Name of the parent entity for which you want to list the children.
+    #   This parameter takes a fully-qualified path of the entity in order to
+    #   list the child entities.
+    #
+    # @option params [String] :next_token
+    #   A continuation token, included if this is a continuation call.
+    #
+    # @option params [String] :data_store_api_version
+    #   The API version of the SaaS connector.
+    #
+    # @return [Types::ListEntitiesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListEntitiesResponse#entities #entities} => Array&lt;Types::Entity&gt;
+    #   * {Types::ListEntitiesResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_entities({
+    #     connection_name: "NameString",
+    #     catalog_id: "CatalogIdString",
+    #     parent_entity_name: "EntityName",
+    #     next_token: "NextToken",
+    #     data_store_api_version: "ApiVersion",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.entities #=> Array
+    #   resp.entities[0].entity_name #=> String
+    #   resp.entities[0].label #=> String
+    #   resp.entities[0].is_parent_entity #=> Boolean
+    #   resp.entities[0].description #=> String
+    #   resp.entities[0].category #=> String
+    #   resp.entities[0].custom_properties #=> Hash
+    #   resp.entities[0].custom_properties["String"] #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListEntities AWS API Documentation
+    #
+    # @overload list_entities(params = {})
+    # @param [Hash] params ({})
+    def list_entities(params = {}, options = {})
+      req = build_request(:list_entities, params)
       req.send_request(options)
     end
 
@@ -14758,6 +16005,73 @@ module Aws::Glue
     # @param [Hash] params ({})
     def list_workflows(params = {}, options = {})
       req = build_request(:list_workflows, params)
+      req.send_request(options)
+    end
+
+    # Modifies a Zero-ETL integration in the caller's account.
+    #
+    # @option params [required, String] :integration_identifier
+    #   The Amazon Resource Name (ARN) for the integration.
+    #
+    # @option params [String] :description
+    #   A description of the integration.
+    #
+    # @option params [String] :data_filter
+    #   Selects source tables for the integration using Maxwell filter syntax.
+    #
+    # @option params [String] :integration_name
+    #   A unique name for an integration in Glue.
+    #
+    # @return [Types::ModifyIntegrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ModifyIntegrationResponse#source_arn #source_arn} => String
+    #   * {Types::ModifyIntegrationResponse#target_arn #target_arn} => String
+    #   * {Types::ModifyIntegrationResponse#integration_name #integration_name} => String
+    #   * {Types::ModifyIntegrationResponse#description #description} => String
+    #   * {Types::ModifyIntegrationResponse#integration_arn #integration_arn} => String
+    #   * {Types::ModifyIntegrationResponse#kms_key_id #kms_key_id} => String
+    #   * {Types::ModifyIntegrationResponse#additional_encryption_context #additional_encryption_context} => Hash&lt;String,String&gt;
+    #   * {Types::ModifyIntegrationResponse#tags #tags} => Array&lt;Types::Tag&gt;
+    #   * {Types::ModifyIntegrationResponse#status #status} => String
+    #   * {Types::ModifyIntegrationResponse#create_time #create_time} => Time
+    #   * {Types::ModifyIntegrationResponse#errors #errors} => Array&lt;Types::IntegrationError&gt;
+    #   * {Types::ModifyIntegrationResponse#data_filter #data_filter} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.modify_integration({
+    #     integration_identifier: "String128", # required
+    #     description: "IntegrationDescription",
+    #     data_filter: "String2048",
+    #     integration_name: "String128",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.source_arn #=> String
+    #   resp.target_arn #=> String
+    #   resp.integration_name #=> String
+    #   resp.description #=> String
+    #   resp.integration_arn #=> String
+    #   resp.kms_key_id #=> String
+    #   resp.additional_encryption_context #=> Hash
+    #   resp.additional_encryption_context["IntegrationString"] #=> String
+    #   resp.tags #=> Array
+    #   resp.tags[0].key #=> String
+    #   resp.tags[0].value #=> String
+    #   resp.status #=> String, one of "CREATING", "ACTIVE", "MODIFYING", "FAILED", "DELETING", "SYNCING", "NEEDS_ATTENTION"
+    #   resp.create_time #=> Time
+    #   resp.errors #=> Array
+    #   resp.errors[0].error_code #=> String
+    #   resp.errors[0].error_message #=> String
+    #   resp.data_filter #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ModifyIntegration AWS API Documentation
+    #
+    # @overload modify_integration(params = {})
+    # @param [Hash] params ({})
+    def modify_integration(params = {}, options = {})
+      req = build_request(:modify_integration, params)
       req.send_request(options)
     end
 
@@ -16561,6 +17875,9 @@ module Aws::Glue
     #   provided, the operation will get the connection and use that for
     #   testing.
     #
+    # @option params [String] :catalog_id
+    #   The catalog ID where the connection resides.
+    #
     # @option params [Types::TestConnectionInput] :test_connection_input
     #   A structure that is used to specify testing a connection to a service.
     #
@@ -16570,13 +17887,14 @@ module Aws::Glue
     #
     #   resp = client.test_connection({
     #     connection_name: "NameString",
+    #     catalog_id: "CatalogIdString",
     #     test_connection_input: {
-    #       connection_type: "JDBC", # required, accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA
+    #       connection_type: "JDBC", # required, accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA, GOOGLEADS, GOOGLESHEETS, GOOGLEANALYTICS4, SERVICENOW, MARKETO, SAPODATA, ZENDESK, JIRACLOUD, NETSUITEERP, HUBSPOT, FACEBOOKADS, INSTAGRAMADS, ZOHOCRM, SALESFORCEPARDOT, SALESFORCEMARKETINGCLOUD, SLACK, STRIPE, INTERCOM, SNAPCHATADS
     #       connection_properties: { # required
     #         "HOST" => "ValueString",
     #       },
     #       authentication_configuration: {
-    #         authentication_type: "BASIC", # accepts BASIC, OAUTH2, CUSTOM
+    #         authentication_type: "BASIC", # accepts BASIC, OAUTH2, CUSTOM, IAM
     #         o_auth_2_properties: {
     #           o_auth_2_grant_type: "AUTHORIZATION_CODE", # accepts AUTHORIZATION_CODE, CLIENT_CREDENTIALS, JWT_BEARER
     #           o_auth_2_client_application: {
@@ -16591,8 +17909,22 @@ module Aws::Glue
     #             authorization_code: "AuthorizationCode",
     #             redirect_uri: "RedirectUri",
     #           },
+    #           o_auth_2_credentials: {
+    #             user_managed_client_application_client_secret: "UserManagedClientApplicationClientSecret",
+    #             access_token: "AccessToken",
+    #             refresh_token: "RefreshToken",
+    #             jwt_token: "JwtToken",
+    #           },
     #         },
     #         secret_arn: "SecretArn",
+    #         kms_key_arn: "KmsKeyArn",
+    #         basic_authentication_credentials: {
+    #           username: "Username",
+    #           password: "Password",
+    #         },
+    #         custom_authentication_credentials: {
+    #           "CredentialKey" => "CredentialValue",
+    #         },
     #       },
     #     },
     #   })
@@ -16666,6 +17998,72 @@ module Aws::Glue
     # @param [Hash] params ({})
     def update_blueprint(params = {}, options = {})
       req = build_request(:update_blueprint, params)
+      req.send_request(options)
+    end
+
+    # Updates an existing catalog's properties in the Glue Data Catalog.
+    #
+    # @option params [required, String] :catalog_id
+    #   The ID of the catalog.
+    #
+    # @option params [required, Types::CatalogInput] :catalog_input
+    #   A `CatalogInput` object specifying the new properties of an existing
+    #   catalog.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_catalog({
+    #     catalog_id: "CatalogIdString", # required
+    #     catalog_input: { # required
+    #       description: "DescriptionString",
+    #       federated_catalog: {
+    #         identifier: "FederationIdentifier",
+    #         connection_name: "NameString",
+    #       },
+    #       parameters: {
+    #         "KeyString" => "ParametersMapValue",
+    #       },
+    #       target_redshift_catalog: {
+    #         catalog_arn: "ResourceArnString", # required
+    #       },
+    #       catalog_properties: {
+    #         data_lake_access_properties: {
+    #           data_lake_access: false,
+    #           data_transfer_role: "IAMRoleArn",
+    #           kms_key: "ResourceArnString",
+    #           catalog_type: "NameString",
+    #         },
+    #         custom_properties: {
+    #           "KeyString" => "ParametersMapValue",
+    #         },
+    #       },
+    #       create_table_default_permissions: [
+    #         {
+    #           principal: {
+    #             data_lake_principal_identifier: "DataLakePrincipalString",
+    #           },
+    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS
+    #         },
+    #       ],
+    #       create_database_default_permissions: [
+    #         {
+    #           principal: {
+    #             data_lake_principal_identifier: "DataLakePrincipalString",
+    #           },
+    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS
+    #         },
+    #       ],
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateCatalog AWS API Documentation
+    #
+    # @overload update_catalog(params = {})
+    # @param [Hash] params ({})
+    def update_catalog(params = {}, options = {})
+      req = build_request(:update_catalog, params)
       req.send_request(options)
     end
 
@@ -17074,12 +18472,18 @@ module Aws::Glue
     #     connection_input: { # required
     #       name: "NameString", # required
     #       description: "DescriptionString",
-    #       connection_type: "JDBC", # required, accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA
+    #       connection_type: "JDBC", # required, accepts JDBC, SFTP, MONGODB, KAFKA, NETWORK, MARKETPLACE, CUSTOM, SALESFORCE, VIEW_VALIDATION_REDSHIFT, VIEW_VALIDATION_ATHENA, GOOGLEADS, GOOGLESHEETS, GOOGLEANALYTICS4, SERVICENOW, MARKETO, SAPODATA, ZENDESK, JIRACLOUD, NETSUITEERP, HUBSPOT, FACEBOOKADS, INSTAGRAMADS, ZOHOCRM, SALESFORCEPARDOT, SALESFORCEMARKETINGCLOUD, SLACK, STRIPE, INTERCOM, SNAPCHATADS
     #       match_criteria: ["NameString"],
     #       connection_properties: { # required
     #         "HOST" => "ValueString",
     #       },
+    #       spark_properties: {
+    #         "PropertyKey" => "PropertyValue",
+    #       },
     #       athena_properties: {
+    #         "PropertyKey" => "PropertyValue",
+    #       },
+    #       python_properties: {
     #         "PropertyKey" => "PropertyValue",
     #       },
     #       physical_connection_requirements: {
@@ -17088,7 +18492,7 @@ module Aws::Glue
     #         availability_zone: "NameString",
     #       },
     #       authentication_configuration: {
-    #         authentication_type: "BASIC", # accepts BASIC, OAUTH2, CUSTOM
+    #         authentication_type: "BASIC", # accepts BASIC, OAUTH2, CUSTOM, IAM
     #         o_auth_2_properties: {
     #           o_auth_2_grant_type: "AUTHORIZATION_CODE", # accepts AUTHORIZATION_CODE, CLIENT_CREDENTIALS, JWT_BEARER
     #           o_auth_2_client_application: {
@@ -17103,10 +18507,25 @@ module Aws::Glue
     #             authorization_code: "AuthorizationCode",
     #             redirect_uri: "RedirectUri",
     #           },
+    #           o_auth_2_credentials: {
+    #             user_managed_client_application_client_secret: "UserManagedClientApplicationClientSecret",
+    #             access_token: "AccessToken",
+    #             refresh_token: "RefreshToken",
+    #             jwt_token: "JwtToken",
+    #           },
     #         },
     #         secret_arn: "SecretArn",
+    #         kms_key_arn: "KmsKeyArn",
+    #         basic_authentication_credentials: {
+    #           username: "Username",
+    #           password: "Password",
+    #         },
+    #         custom_authentication_credentials: {
+    #           "CredentialKey" => "CredentialValue",
+    #         },
     #       },
     #       validate_credentials: false,
+    #       validate_for_compute_environments: ["SPARK"], # accepts SPARK, ATHENA, PYTHON
     #     },
     #   })
     #
@@ -17487,6 +18906,118 @@ module Aws::Glue
     # @param [Hash] params ({})
     def update_dev_endpoint(params = {}, options = {})
       req = build_request(:update_dev_endpoint, params)
+      req.send_request(options)
+    end
+
+    # This API can be used for updating the `ResourceProperty` of the Glue
+    # connection (for the source) or Glue database ARN (for the target).
+    # These properties can include the role to access the connection or
+    # database. Since the same resource can be used across multiple
+    # integrations, updating resource properties will impact all the
+    # integrations using it.
+    #
+    # @option params [required, String] :resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #
+    # @option params [Types::SourceProcessingProperties] :source_processing_properties
+    #   The resource properties associated with the integration source.
+    #
+    # @option params [Types::TargetProcessingProperties] :target_processing_properties
+    #   The resource properties associated with the integration target.
+    #
+    # @return [Types::UpdateIntegrationResourcePropertyResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateIntegrationResourcePropertyResponse#resource_arn #resource_arn} => String
+    #   * {Types::UpdateIntegrationResourcePropertyResponse#source_processing_properties #source_processing_properties} => Types::SourceProcessingProperties
+    #   * {Types::UpdateIntegrationResourcePropertyResponse#target_processing_properties #target_processing_properties} => Types::TargetProcessingProperties
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_integration_resource_property({
+    #     resource_arn: "String128", # required
+    #     source_processing_properties: {
+    #       role_arn: "String128",
+    #     },
+    #     target_processing_properties: {
+    #       role_arn: "String128",
+    #       kms_arn: "String2048",
+    #       connection_name: "String128",
+    #       event_bus_arn: "String2048",
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.resource_arn #=> String
+    #   resp.source_processing_properties.role_arn #=> String
+    #   resp.target_processing_properties.role_arn #=> String
+    #   resp.target_processing_properties.kms_arn #=> String
+    #   resp.target_processing_properties.connection_name #=> String
+    #   resp.target_processing_properties.event_bus_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateIntegrationResourceProperty AWS API Documentation
+    #
+    # @overload update_integration_resource_property(params = {})
+    # @param [Hash] params ({})
+    def update_integration_resource_property(params = {}, options = {})
+      req = build_request(:update_integration_resource_property, params)
+      req.send_request(options)
+    end
+
+    # This API is used to provide optional override properties for the
+    # tables that need to be replicated. These properties can include
+    # properties for filtering and partitioning for the source and target
+    # tables. To set both source and target properties the same API need to
+    # be invoked with the Glue connection ARN as `ResourceArn` with
+    # `SourceTableConfig`, and the Glue database ARN as `ResourceArn` with
+    # `TargetTableConfig` respectively.
+    #
+    # The override will be reflected across all the integrations using same
+    # `ResourceArn` and source table.
+    #
+    # @option params [required, String] :resource_arn
+    #   The connection ARN of the source, or the database ARN of the target.
+    #
+    # @option params [required, String] :table_name
+    #   The name of the table to be replicated.
+    #
+    # @option params [Types::SourceTableConfig] :source_table_config
+    #   A structure for the source table configuration.
+    #
+    # @option params [Types::TargetTableConfig] :target_table_config
+    #   A structure for the target table configuration.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_integration_table_properties({
+    #     resource_arn: "String128", # required
+    #     table_name: "String128", # required
+    #     source_table_config: {
+    #       fields: ["String128"],
+    #       filter_predicate: "String128",
+    #       primary_key: ["String128"],
+    #       record_update_field: "String128",
+    #     },
+    #     target_table_config: {
+    #       unnest_spec: "TOPLEVEL", # accepts TOPLEVEL, FULL, NOUNNEST
+    #       partition_spec: [
+    #         {
+    #           field_name: "String128",
+    #           function_spec: "String128",
+    #         },
+    #       ],
+    #       target_table_name: "String128",
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateIntegrationTableProperties AWS API Documentation
+    #
+    # @overload update_integration_table_properties(params = {})
+    # @param [Hash] params ({})
+    def update_integration_table_properties(params = {}, options = {})
+      req = build_request(:update_integration_table_properties, params)
       req.send_request(options)
     end
 
@@ -18460,7 +19991,7 @@ module Aws::Glue
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-glue'
-      context[:gem_version] = '1.203.0'
+      context[:gem_version] = '1.204.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

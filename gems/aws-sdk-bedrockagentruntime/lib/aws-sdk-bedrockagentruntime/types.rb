@@ -240,6 +240,104 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Input for an agent collaborator. The input can be text or an action
+    # invocation result.
+    #
+    # @!attribute [rw] return_control_results
+    #   An action invocation result.
+    #   @return [Types::ReturnControlResults]
+    #
+    # @!attribute [rw] text
+    #   Input text.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The input type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AgentCollaboratorInputPayload AWS API Documentation
+    #
+    class AgentCollaboratorInputPayload < Struct.new(
+      :return_control_results,
+      :text,
+      :type)
+      SENSITIVE = [:text]
+      include Aws::Structure
+    end
+
+    # An agent collaborator invocation input.
+    #
+    # @!attribute [rw] agent_collaborator_alias_arn
+    #   The collaborator's alias ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_collaborator_name
+    #   The collaborator's name.
+    #   @return [String]
+    #
+    # @!attribute [rw] input
+    #   Text or action invocation result input for the collaborator.
+    #   @return [Types::AgentCollaboratorInputPayload]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AgentCollaboratorInvocationInput AWS API Documentation
+    #
+    class AgentCollaboratorInvocationInput < Struct.new(
+      :agent_collaborator_alias_arn,
+      :agent_collaborator_name,
+      :input)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Output from an agent collaborator.
+    #
+    # @!attribute [rw] agent_collaborator_alias_arn
+    #   The output's agent collaborator alias ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] agent_collaborator_name
+    #   The output's agent collaborator name.
+    #   @return [String]
+    #
+    # @!attribute [rw] output
+    #   The output's output.
+    #   @return [Types::AgentCollaboratorOutputPayload]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AgentCollaboratorInvocationOutput AWS API Documentation
+    #
+    class AgentCollaboratorInvocationOutput < Struct.new(
+      :agent_collaborator_alias_arn,
+      :agent_collaborator_name,
+      :output)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Output from an agent collaborator. The output can be text or an action
+    # invocation result.
+    #
+    # @!attribute [rw] return_control_payload
+    #   An action invocation result.
+    #   @return [Types::ReturnControlPayload]
+    #
+    # @!attribute [rw] text
+    #   Text output.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of output.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/AgentCollaboratorOutputPayload AWS API Documentation
+    #
+    class AgentCollaboratorOutputPayload < Struct.new(
+      :return_control_payload,
+      :text,
+      :type)
+      SENSITIVE = [:return_control_payload, :text]
+      include Aws::Structure
+    end
+
     # An event in which the prompt was analyzed in preparation for
     # optimization.
     #
@@ -277,8 +375,16 @@ module Aws::BedrockAgentRuntime
     #   Contains information about the API operation to invoke.
     #   @return [String]
     #
+    # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
     # @!attribute [rw] api_path
     #   The path to the API operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_name
+    #   The agent collaborator's name.
     #   @return [String]
     #
     # @!attribute [rw] http_method
@@ -300,11 +406,13 @@ module Aws::BedrockAgentRuntime
     class ApiInvocationInput < Struct.new(
       :action_group,
       :action_invocation_type,
+      :agent_id,
       :api_path,
+      :collaborator_name,
       :http_method,
       :parameters,
       :request_body)
-      SENSITIVE = [:api_path]
+      SENSITIVE = [:api_path, :collaborator_name]
       include Aws::Structure
     end
 
@@ -386,6 +494,10 @@ module Aws::BedrockAgentRuntime
     #   The action group that the API operation belongs to.
     #   @return [String]
     #
+    # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
     # @!attribute [rw] api_path
     #   The path to the API operation.
     #   @return [String]
@@ -422,6 +534,7 @@ module Aws::BedrockAgentRuntime
     #
     class ApiResult < Struct.new(
       :action_group,
+      :agent_id,
       :api_path,
       :confirmation_state,
       :http_method,
@@ -553,6 +666,27 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Details about a caller.
+    #
+    # @note Caller is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of Caller corresponding to the set member.
+    #
+    # @!attribute [rw] agent_alias_arn
+    #   The caller's agent alias ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/Caller AWS API Documentation
+    #
+    class Caller < Struct.new(
+      :agent_alias_arn,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class AgentAliasArn < Caller; end
+      class Unknown < Caller; end
+    end
+
     # An object containing a segment of the generated response that is based
     # on a source in the knowledge base, alongside information about the
     # source.
@@ -665,6 +799,27 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # A content block.
+    #
+    # @note ContentBlock is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] text
+    #   The block's text.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ContentBlock AWS API Documentation
+    #
+    class ContentBlock < Struct.new(
+      :text,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Text < ContentBlock; end
+      class Unknown < ContentBlock; end
+    end
+
     # Contains the body of the API response.
     #
     # This data type is used in the following API operations:
@@ -686,6 +841,20 @@ module Aws::BedrockAgentRuntime
     #
     class ContentBody < Struct.new(
       :body)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A conversation history.
+    #
+    # @!attribute [rw] messages
+    #   The conversation's messages.
+    #   @return [Array<Types::Message>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ConversationHistory AWS API Documentation
+    #
+    class ConversationHistory < Struct.new(
+      :messages)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1422,6 +1591,14 @@ module Aws::BedrockAgentRuntime
     #   Contains information about the function to invoke,
     #   @return [String]
     #
+    # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] collaborator_name
+    #   The collaborator's name.
+    #   @return [String]
+    #
     # @!attribute [rw] function
     #   The name of the function.
     #   @return [String]
@@ -1435,9 +1612,11 @@ module Aws::BedrockAgentRuntime
     class FunctionInvocationInput < Struct.new(
       :action_group,
       :action_invocation_type,
+      :agent_id,
+      :collaborator_name,
       :function,
       :parameters)
-      SENSITIVE = []
+      SENSITIVE = [:collaborator_name]
       include Aws::Structure
     end
 
@@ -1493,6 +1672,10 @@ module Aws::BedrockAgentRuntime
     #   The action group that the function belongs to.
     #   @return [String]
     #
+    # @!attribute [rw] agent_id
+    #   The agent's ID.
+    #   @return [String]
+    #
     # @!attribute [rw] confirmation_state
     #   Contains the user confirmation information about the function that
     #   was called.
@@ -1521,6 +1704,7 @@ module Aws::BedrockAgentRuntime
     #
     class FunctionResult < Struct.new(
       :action_group,
+      :agent_id,
       :confirmation_state,
       :function,
       :response_body,
@@ -2345,6 +2529,10 @@ module Aws::BedrockAgentRuntime
     #   Contains information about the action group to be invoked.
     #   @return [Types::ActionGroupInvocationInput]
     #
+    # @!attribute [rw] agent_collaborator_invocation_input
+    #   The collaborator's invocation input.
+    #   @return [Types::AgentCollaboratorInvocationInput]
+    #
     # @!attribute [rw] code_interpreter_invocation_input
     #   Contains information about the code interpreter to be invoked.
     #   @return [Types::CodeInterpreterInvocationInput]
@@ -2367,6 +2555,7 @@ module Aws::BedrockAgentRuntime
     #
     class InvocationInput < Struct.new(
       :action_group_invocation_input,
+      :agent_collaborator_invocation_input,
       :code_interpreter_invocation_input,
       :invocation_type,
       :knowledge_base_lookup_input,
@@ -2432,6 +2621,8 @@ module Aws::BedrockAgentRuntime
     # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_RequestSyntax
     #
     # @note InvocationResultMember is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note InvocationResultMember is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of InvocationResultMember corresponding to the set member.
     #
     # @!attribute [rw] api_result
     #   The result from the API response from the action group invocation.
@@ -2509,6 +2700,10 @@ module Aws::BedrockAgentRuntime
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
     #   @return [Types::SessionState]
     #
+    # @!attribute [rw] source_arn
+    #   The ARN of the resource making the request.
+    #   @return [String]
+    #
     # @!attribute [rw] streaming_configurations
     #   Specifies the configurations for streaming.
     #   @return [Types::StreamingConfigurations]
@@ -2524,6 +2719,7 @@ module Aws::BedrockAgentRuntime
       :memory_id,
       :session_id,
       :session_state,
+      :source_arn,
       :streaming_configurations)
       SENSITIVE = [:input_text]
       include Aws::Structure
@@ -3122,6 +3318,25 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Details about a message.
+    #
+    # @!attribute [rw] content
+    #   The message's content.
+    #   @return [Array<Types::ContentBlock>]
+    #
+    # @!attribute [rw] role
+    #   The message's role.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/Message AWS API Documentation
+    #
+    class Message < Struct.new(
+      :content,
+      :role)
+      SENSITIVE = [:content]
+      include Aws::Structure
+    end
+
     # Provides details of the foundation model.
     #
     # @!attribute [rw] usage
@@ -3196,6 +3411,10 @@ module Aws::BedrockAgentRuntime
     #
     # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html
     #
+    # @!attribute [rw] foundation_model
+    #   The identifier of a foundation model.
+    #   @return [String]
+    #
     # @!attribute [rw] inference_configuration
     #   Specifications about the inference parameters that were provided
     #   alongside the prompt. These are specified in the
@@ -3246,6 +3465,7 @@ module Aws::BedrockAgentRuntime
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ModelInvocationInput AWS API Documentation
     #
     class ModelInvocationInput < Struct.new(
+      :foundation_model,
       :inference_configuration,
       :override_lambda,
       :parser_mode,
@@ -3264,6 +3484,10 @@ module Aws::BedrockAgentRuntime
     #   Contains the JSON-formatted string returned by the API invoked by
     #   the action group.
     #   @return [Types::ActionGroupInvocationOutput]
+    #
+    # @!attribute [rw] agent_collaborator_invocation_output
+    #   A collaborator's invocation output.
+    #   @return [Types::AgentCollaboratorInvocationOutput]
     #
     # @!attribute [rw] code_interpreter_invocation_output
     #   Contains the JSON-formatted string returned by the API invoked by
@@ -3309,6 +3533,7 @@ module Aws::BedrockAgentRuntime
     #
     class Observation < Struct.new(
       :action_group_invocation_output,
+      :agent_collaborator_invocation_output,
       :code_interpreter_invocation_output,
       :final_response,
       :knowledge_base_lookup_output,
@@ -5050,6 +5275,88 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # An action invocation result.
+    #
+    # @!attribute [rw] invocation_id
+    #   The action's invocation ID.
+    #   @return [String]
+    #
+    # @!attribute [rw] return_control_invocation_results
+    #   The action invocation result.
+    #   @return [Array<Types::InvocationResultMember>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/ReturnControlResults AWS API Documentation
+    #
+    class ReturnControlResults < Struct.new(
+      :invocation_id,
+      :return_control_invocation_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Invocation output from a routing classifier model.
+    #
+    # @!attribute [rw] metadata
+    #   The invocation's metadata.
+    #   @return [Types::Metadata]
+    #
+    # @!attribute [rw] raw_response
+    #   The invocation's raw response.
+    #   @return [Types::RawResponse]
+    #
+    # @!attribute [rw] trace_id
+    #   The invocation's trace ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RoutingClassifierModelInvocationOutput AWS API Documentation
+    #
+    class RoutingClassifierModelInvocationOutput < Struct.new(
+      :metadata,
+      :raw_response,
+      :trace_id)
+      SENSITIVE = [:metadata, :raw_response]
+      include Aws::Structure
+    end
+
+    # A trace for a routing classifier.
+    #
+    # @note RoutingClassifierTrace is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of RoutingClassifierTrace corresponding to the set member.
+    #
+    # @!attribute [rw] invocation_input
+    #   The classifier's invocation input.
+    #   @return [Types::InvocationInput]
+    #
+    # @!attribute [rw] model_invocation_input
+    #   The classifier's model invocation input.
+    #   @return [Types::ModelInvocationInput]
+    #
+    # @!attribute [rw] model_invocation_output
+    #   The classifier's model invocation output.
+    #   @return [Types::RoutingClassifierModelInvocationOutput]
+    #
+    # @!attribute [rw] observation
+    #   The classifier's observation.
+    #   @return [Types::Observation]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RoutingClassifierTrace AWS API Documentation
+    #
+    class RoutingClassifierTrace < Struct.new(
+      :invocation_input,
+      :model_invocation_input,
+      :model_invocation_output,
+      :observation,
+      :unknown)
+      SENSITIVE = [:invocation_input, :model_invocation_input, :model_invocation_output, :observation]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class InvocationInput < RoutingClassifierTrace; end
+      class ModelInvocationInput < RoutingClassifierTrace; end
+      class ModelInvocationOutput < RoutingClassifierTrace; end
+      class Observation < RoutingClassifierTrace; end
+      class Unknown < RoutingClassifierTrace; end
+    end
+
     # The identifier information for an Amazon S3 bucket.
     #
     # @!attribute [rw] s3_bucket_name
@@ -5126,6 +5433,10 @@ module Aws::BedrockAgentRuntime
     # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html
     # [3]: https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html
     #
+    # @!attribute [rw] conversation_history
+    #   The state's conversation history.
+    #   @return [Types::ConversationHistory]
+    #
     # @!attribute [rw] files
     #   Contains information about the files used by code interpreter.
     #   @return [Array<Types::InputFile>]
@@ -5184,6 +5495,7 @@ module Aws::BedrockAgentRuntime
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/SessionState AWS API Documentation
     #
     class SessionState < Struct.new(
+      :conversation_history,
       :files,
       :invocation_id,
       :knowledge_base_configurations,
@@ -5401,6 +5713,10 @@ module Aws::BedrockAgentRuntime
     #   contextualizes and categorizes user inputs.
     #   @return [Types::PreProcessingTrace]
     #
+    # @!attribute [rw] routing_classifier_trace
+    #   A routing classifier's trace.
+    #   @return [Types::RoutingClassifierTrace]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/Trace AWS API Documentation
     #
     class Trace < Struct.new(
@@ -5410,8 +5726,9 @@ module Aws::BedrockAgentRuntime
       :orchestration_trace,
       :post_processing_trace,
       :pre_processing_trace,
+      :routing_classifier_trace,
       :unknown)
-      SENSITIVE = [:custom_orchestration_trace, :failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace]
+      SENSITIVE = [:custom_orchestration_trace, :failure_trace, :guardrail_trace, :orchestration_trace, :post_processing_trace, :pre_processing_trace, :routing_classifier_trace]
       include Aws::Structure
       include Aws::Structure::Union
 
@@ -5421,6 +5738,7 @@ module Aws::BedrockAgentRuntime
       class OrchestrationTrace < Trace; end
       class PostProcessingTrace < Trace; end
       class PreProcessingTrace < Trace; end
+      class RoutingClassifierTrace < Trace; end
       class Unknown < Trace; end
     end
 
@@ -5446,6 +5764,14 @@ module Aws::BedrockAgentRuntime
     #   The version of the agent.
     #   @return [String]
     #
+    # @!attribute [rw] caller_chain
+    #   The part's caller chain.
+    #   @return [Array<Types::Caller>]
+    #
+    # @!attribute [rw] collaborator_name
+    #   The part's collaborator name.
+    #   @return [String]
+    #
     # @!attribute [rw] session_id
     #   The unique identifier of the session with the agent.
     #   @return [String]
@@ -5468,10 +5794,12 @@ module Aws::BedrockAgentRuntime
       :agent_alias_id,
       :agent_id,
       :agent_version,
+      :caller_chain,
+      :collaborator_name,
       :session_id,
       :trace,
       :event_type)
-      SENSITIVE = [:trace]
+      SENSITIVE = [:collaborator_name, :trace]
       include Aws::Structure
     end
 

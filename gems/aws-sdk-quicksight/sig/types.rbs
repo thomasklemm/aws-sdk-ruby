@@ -611,7 +611,7 @@ module Aws::QuickSight
     end
 
     class AuthorizedTargetsByService
-      attr_accessor service: ("REDSHIFT")
+      attr_accessor service: ("REDSHIFT" | "QBUSINESS")
       attr_accessor authorized_targets: ::Array[::String]
       SENSITIVE: []
     end
@@ -2088,6 +2088,18 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class DashboardVisualResult
+      attr_accessor dashboard_id: ::String
+      attr_accessor dashboard_name: ::String
+      attr_accessor sheet_id: ::String
+      attr_accessor sheet_name: ::String
+      attr_accessor visual_id: ::String
+      attr_accessor visual_title: ::String
+      attr_accessor visual_subtitle: ::String
+      attr_accessor dashboard_url: ::String
+      SENSITIVE: []
+    end
+
     class DataAggregation
       attr_accessor dataset_row_date_granularity: ("SECOND" | "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR")
       attr_accessor default_date_column_name: ::String
@@ -2736,6 +2748,18 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class DeleteDefaultQBusinessApplicationRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDefaultQBusinessApplicationResponse
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
     class DeleteFolderMembershipRequest
       attr_accessor aws_account_id: ::String
       attr_accessor folder_id: ::String
@@ -2807,7 +2831,7 @@ module Aws::QuickSight
 
     class DeleteIdentityPropagationConfigRequest
       attr_accessor aws_account_id: ::String
-      attr_accessor service: ("REDSHIFT")
+      attr_accessor service: ("REDSHIFT" | "QBUSINESS")
       SENSITIVE: []
     end
 
@@ -3385,6 +3409,19 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class DescribeDefaultQBusinessApplicationRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeDefaultQBusinessApplicationResponse
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
+      attr_accessor application_id: ::String
+      SENSITIVE: []
+    end
+
     class DescribeFolderPermissionsRequest
       attr_accessor aws_account_id: ::String
       attr_accessor folder_id: ::String
@@ -3543,6 +3580,18 @@ module Aws::QuickSight
 
     class DescribeQPersonalizationConfigurationResponse
       attr_accessor personalization_mode: ("ENABLED" | "DISABLED")
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
+    class DescribeQuickSightQSearchConfigurationRequest
+      attr_accessor aws_account_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeQuickSightQSearchConfigurationResponse
+      attr_accessor q_search_status: ("ENABLED" | "DISABLED")
       attr_accessor request_id: ::String
       attr_accessor status: ::Integer
       SENSITIVE: []
@@ -4453,6 +4502,33 @@ module Aws::QuickSight
       attr_accessor status: ::Integer
       attr_accessor request_id: ::String
       SENSITIVE: [:embed_url]
+    end
+
+    class GenerateEmbedUrlForRegisteredUserWithIdentityRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor session_lifetime_in_minutes: ::Integer
+      attr_accessor experience_configuration: Types::RegisteredUserEmbeddingExperienceConfiguration
+      attr_accessor allowed_domains: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class GenerateEmbedUrlForRegisteredUserWithIdentityResponse
+      attr_accessor embed_url: ::String
+      attr_accessor status: ::Integer
+      attr_accessor request_id: ::String
+      SENSITIVE: [:embed_url]
+    end
+
+    class GeneratedAnswerResult
+      attr_accessor question_text: ::String
+      attr_accessor answer_status: ("ANSWER_GENERATED" | "ANSWER_RETRIEVED" | "ANSWER_DOWNGRADE")
+      attr_accessor topic_id: ::String
+      attr_accessor topic_name: ::String
+      attr_accessor restatement: ::String
+      attr_accessor question_id: ::String
+      attr_accessor answer_id: ::String
+      attr_accessor question_url: ::String
+      SENSITIVE: [:question_text, :restatement]
     end
 
     class GeoSpatialColumnGroup
@@ -6777,6 +6853,23 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class PredictQAResultsRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor query_text: ::String
+      attr_accessor include_quick_sight_q_index: ("INCLUDE" | "EXCLUDE")
+      attr_accessor include_generated_answer: ("INCLUDE" | "EXCLUDE")
+      attr_accessor max_topics_to_consider: ::Integer
+      SENSITIVE: [:query_text]
+    end
+
+    class PredictQAResultsResponse
+      attr_accessor primary_result: Types::QAResult
+      attr_accessor additional_results: ::Array[Types::QAResult]
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
     class PrestoParameters
       attr_accessor host: ::String
       attr_accessor port: ::Integer
@@ -6804,6 +6897,13 @@ module Aws::QuickSight
     class PutDataSetRefreshPropertiesResponse
       attr_accessor request_id: ::String
       attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
+    class QAResult
+      attr_accessor result_type: ("DASHBOARD_VISUAL" | "GENERATED_ANSWER" | "NO_ANSWER")
+      attr_accessor dashboard_visual: Types::DashboardVisualResult
+      attr_accessor generated_answer: Types::GeneratedAnswerResult
       SENSITIVE: []
     end
 
@@ -9058,6 +9158,18 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class UpdateApplicationWithTokenExchangeGrantRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateApplicationWithTokenExchangeGrantResponse
+      attr_accessor status: ::Integer
+      attr_accessor request_id: ::String
+      SENSITIVE: []
+    end
+
     class UpdateBrandAssignmentRequest
       attr_accessor aws_account_id: ::String
       attr_accessor brand_arn: ::String
@@ -9277,6 +9389,19 @@ module Aws::QuickSight
       SENSITIVE: []
     end
 
+    class UpdateDefaultQBusinessApplicationRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor namespace: ::String
+      attr_accessor application_id: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateDefaultQBusinessApplicationResponse
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
     class UpdateFolderPermissionsRequest
       attr_accessor aws_account_id: ::String
       attr_accessor folder_id: ::String
@@ -9347,7 +9472,7 @@ module Aws::QuickSight
 
     class UpdateIdentityPropagationConfigRequest
       attr_accessor aws_account_id: ::String
-      attr_accessor service: ("REDSHIFT")
+      attr_accessor service: ("REDSHIFT" | "QBUSINESS")
       attr_accessor authorized_targets: ::Array[::String]
       SENSITIVE: []
     end
@@ -9407,6 +9532,19 @@ module Aws::QuickSight
 
     class UpdateQPersonalizationConfigurationResponse
       attr_accessor personalization_mode: ("ENABLED" | "DISABLED")
+      attr_accessor request_id: ::String
+      attr_accessor status: ::Integer
+      SENSITIVE: []
+    end
+
+    class UpdateQuickSightQSearchConfigurationRequest
+      attr_accessor aws_account_id: ::String
+      attr_accessor q_search_status: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class UpdateQuickSightQSearchConfigurationResponse
+      attr_accessor q_search_status: ("ENABLED" | "DISABLED")
       attr_accessor request_id: ::String
       attr_accessor status: ::Integer
       SENSITIVE: []

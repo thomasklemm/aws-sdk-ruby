@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.108.0 (2024-12-03)
+------------------
+
+* Feature - Support for configuring AiOps investigation as alarm action
+
 1.107.0 (2024-11-18)
 ------------------
 

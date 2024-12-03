@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.39.0 (2024-12-03)
+------------------
+
+* Feature - Releasing SDK for Multi-Agent Collaboration.
+
 1.38.0 (2024-12-02)
 ------------------
 

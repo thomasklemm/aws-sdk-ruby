@@ -471,6 +471,7 @@ module Aws::LakeFormation
     #     catalog_id: "CatalogIdString",
     #     resource: { # required
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -646,6 +647,7 @@ module Aws::LakeFormation
     #         },
     #         resource: {
     #           catalog: {
+    #             id: "CatalogIdString",
     #           },
     #           database: {
     #             catalog_id: "CatalogIdString",
@@ -698,8 +700,8 @@ module Aws::LakeFormation
     #             name: "NameString", # required
     #           },
     #         },
-    #         permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
-    #         permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #         permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #         permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #       },
     #     ],
     #   })
@@ -709,6 +711,7 @@ module Aws::LakeFormation
     #   resp.failures #=> Array
     #   resp.failures[0].request_entry.id #=> String
     #   resp.failures[0].request_entry.principal.data_lake_principal_identifier #=> String
+    #   resp.failures[0].request_entry.resource.catalog.id #=> String
     #   resp.failures[0].request_entry.resource.database.catalog_id #=> String
     #   resp.failures[0].request_entry.resource.database.name #=> String
     #   resp.failures[0].request_entry.resource.table.catalog_id #=> String
@@ -741,9 +744,9 @@ module Aws::LakeFormation
     #   resp.failures[0].request_entry.resource.lf_tag_expression.catalog_id #=> String
     #   resp.failures[0].request_entry.resource.lf_tag_expression.name #=> String
     #   resp.failures[0].request_entry.permissions #=> Array
-    #   resp.failures[0].request_entry.permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.failures[0].request_entry.permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.failures[0].request_entry.permissions_with_grant_option #=> Array
-    #   resp.failures[0].request_entry.permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.failures[0].request_entry.permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.failures[0].error.error_code #=> String
     #   resp.failures[0].error.error_message #=> String
     #
@@ -784,6 +787,7 @@ module Aws::LakeFormation
     #         },
     #         resource: {
     #           catalog: {
+    #             id: "CatalogIdString",
     #           },
     #           database: {
     #             catalog_id: "CatalogIdString",
@@ -836,8 +840,8 @@ module Aws::LakeFormation
     #             name: "NameString", # required
     #           },
     #         },
-    #         permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
-    #         permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #         permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #         permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #       },
     #     ],
     #   })
@@ -847,6 +851,7 @@ module Aws::LakeFormation
     #   resp.failures #=> Array
     #   resp.failures[0].request_entry.id #=> String
     #   resp.failures[0].request_entry.principal.data_lake_principal_identifier #=> String
+    #   resp.failures[0].request_entry.resource.catalog.id #=> String
     #   resp.failures[0].request_entry.resource.database.catalog_id #=> String
     #   resp.failures[0].request_entry.resource.database.name #=> String
     #   resp.failures[0].request_entry.resource.table.catalog_id #=> String
@@ -879,9 +884,9 @@ module Aws::LakeFormation
     #   resp.failures[0].request_entry.resource.lf_tag_expression.catalog_id #=> String
     #   resp.failures[0].request_entry.resource.lf_tag_expression.name #=> String
     #   resp.failures[0].request_entry.permissions #=> Array
-    #   resp.failures[0].request_entry.permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.failures[0].request_entry.permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.failures[0].request_entry.permissions_with_grant_option #=> Array
-    #   resp.failures[0].request_entry.permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.failures[0].request_entry.permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.failures[0].error.error_code #=> String
     #   resp.failures[0].error.error_message #=> String
     #
@@ -1155,6 +1160,7 @@ module Aws::LakeFormation
     #     },
     #     resource: { # required
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -1361,6 +1367,7 @@ module Aws::LakeFormation
     #     },
     #     resource: { # required
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -1738,11 +1745,11 @@ module Aws::LakeFormation
     #   resp.data_lake_settings.create_database_default_permissions #=> Array
     #   resp.data_lake_settings.create_database_default_permissions[0].principal.data_lake_principal_identifier #=> String
     #   resp.data_lake_settings.create_database_default_permissions[0].permissions #=> Array
-    #   resp.data_lake_settings.create_database_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.data_lake_settings.create_database_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.data_lake_settings.create_table_default_permissions #=> Array
     #   resp.data_lake_settings.create_table_default_permissions[0].principal.data_lake_principal_identifier #=> String
     #   resp.data_lake_settings.create_table_default_permissions[0].permissions #=> Array
-    #   resp.data_lake_settings.create_table_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.data_lake_settings.create_table_default_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.data_lake_settings.parameters #=> Hash
     #   resp.data_lake_settings.parameters["KeyString"] #=> String
     #   resp.data_lake_settings.trusted_resource_owners #=> Array
@@ -1805,6 +1812,7 @@ module Aws::LakeFormation
     #
     #   resp.permissions #=> Array
     #   resp.permissions[0].principal.data_lake_principal_identifier #=> String
+    #   resp.permissions[0].resource.catalog.id #=> String
     #   resp.permissions[0].resource.database.catalog_id #=> String
     #   resp.permissions[0].resource.database.name #=> String
     #   resp.permissions[0].resource.table.catalog_id #=> String
@@ -1836,10 +1844,11 @@ module Aws::LakeFormation
     #   resp.permissions[0].resource.lf_tag_policy.expression_name #=> String
     #   resp.permissions[0].resource.lf_tag_expression.catalog_id #=> String
     #   resp.permissions[0].resource.lf_tag_expression.name #=> String
+    #   resp.permissions[0].condition.expression #=> String
     #   resp.permissions[0].permissions #=> Array
-    #   resp.permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.permissions[0].permissions_with_grant_option #=> Array
-    #   resp.permissions[0].permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.permissions[0].permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.permissions[0].additional_details.resource_share #=> Array
     #   resp.permissions[0].additional_details.resource_share[0] #=> String
     #   resp.permissions[0].last_updated #=> Time
@@ -2036,6 +2045,7 @@ module Aws::LakeFormation
     #     catalog_id: "CatalogIdString",
     #     resource: { # required
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -2246,7 +2256,7 @@ module Aws::LakeFormation
     #     partition: { # required
     #       values: ["ValueString"], # required
     #     },
-    #     permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #     permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #     duration_seconds: 1,
     #     audit_context: {
     #       additional_audit_context: "AuditContextString",
@@ -2320,7 +2330,7 @@ module Aws::LakeFormation
     #
     #   resp = client.get_temporary_glue_table_credentials({
     #     table_arn: "ResourceArnString", # required
-    #     permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #     permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #     duration_seconds: 1,
     #     audit_context: {
     #       additional_audit_context: "AuditContextString",
@@ -2500,6 +2510,7 @@ module Aws::LakeFormation
     #     },
     #     resource: { # required
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -2552,8 +2563,8 @@ module Aws::LakeFormation
     #         name: "NameString", # required
     #       },
     #     },
-    #     permissions: ["ALL"], # required, accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
-    #     permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #     permissions: ["ALL"], # required, accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #     permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/GrantPermissions AWS API Documentation
@@ -2760,6 +2771,7 @@ module Aws::LakeFormation
     #     },
     #     resource: {
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -2819,6 +2831,7 @@ module Aws::LakeFormation
     # @example Response structure
     #
     #   resp.lake_formation_opt_ins_info_list #=> Array
+    #   resp.lake_formation_opt_ins_info_list[0].resource.catalog.id #=> String
     #   resp.lake_formation_opt_ins_info_list[0].resource.database.catalog_id #=> String
     #   resp.lake_formation_opt_ins_info_list[0].resource.database.name #=> String
     #   resp.lake_formation_opt_ins_info_list[0].resource.table.catalog_id #=> String
@@ -2851,6 +2864,7 @@ module Aws::LakeFormation
     #   resp.lake_formation_opt_ins_info_list[0].resource.lf_tag_expression.catalog_id #=> String
     #   resp.lake_formation_opt_ins_info_list[0].resource.lf_tag_expression.name #=> String
     #   resp.lake_formation_opt_ins_info_list[0].principal.data_lake_principal_identifier #=> String
+    #   resp.lake_formation_opt_ins_info_list[0].condition.expression #=> String
     #   resp.lake_formation_opt_ins_info_list[0].last_modified #=> Time
     #   resp.lake_formation_opt_ins_info_list[0].last_updated_by #=> String
     #   resp.next_token #=> String
@@ -2925,6 +2939,7 @@ module Aws::LakeFormation
     #     resource_type: "CATALOG", # accepts CATALOG, DATABASE, TABLE, DATA_LOCATION, LF_TAG, LF_TAG_POLICY, LF_TAG_POLICY_DATABASE, LF_TAG_POLICY_TABLE, LF_NAMED_TAG_EXPRESSION
     #     resource: {
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -2986,6 +3001,7 @@ module Aws::LakeFormation
     #
     #   resp.principal_resource_permissions #=> Array
     #   resp.principal_resource_permissions[0].principal.data_lake_principal_identifier #=> String
+    #   resp.principal_resource_permissions[0].resource.catalog.id #=> String
     #   resp.principal_resource_permissions[0].resource.database.catalog_id #=> String
     #   resp.principal_resource_permissions[0].resource.database.name #=> String
     #   resp.principal_resource_permissions[0].resource.table.catalog_id #=> String
@@ -3017,10 +3033,11 @@ module Aws::LakeFormation
     #   resp.principal_resource_permissions[0].resource.lf_tag_policy.expression_name #=> String
     #   resp.principal_resource_permissions[0].resource.lf_tag_expression.catalog_id #=> String
     #   resp.principal_resource_permissions[0].resource.lf_tag_expression.name #=> String
+    #   resp.principal_resource_permissions[0].condition.expression #=> String
     #   resp.principal_resource_permissions[0].permissions #=> Array
-    #   resp.principal_resource_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.principal_resource_permissions[0].permissions[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.principal_resource_permissions[0].permissions_with_grant_option #=> Array
-    #   resp.principal_resource_permissions[0].permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION"
+    #   resp.principal_resource_permissions[0].permissions_with_grant_option[0] #=> String, one of "ALL", "SELECT", "ALTER", "DROP", "DELETE", "INSERT", "DESCRIBE", "CREATE_DATABASE", "CREATE_TABLE", "DATA_LOCATION_ACCESS", "CREATE_LF_TAG", "ASSOCIATE", "GRANT_WITH_LF_TAG_EXPRESSION", "CREATE_LF_TAG_EXPRESSION", "CREATE_CATALOG", "SUPER_USER"
     #   resp.principal_resource_permissions[0].additional_details.resource_share #=> Array
     #   resp.principal_resource_permissions[0].additional_details.resource_share[0] #=> String
     #   resp.principal_resource_permissions[0].last_updated #=> Time
@@ -3250,7 +3267,7 @@ module Aws::LakeFormation
     #           principal: {
     #             data_lake_principal_identifier: "DataLakePrincipalString",
     #           },
-    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #         },
     #       ],
     #       create_table_default_permissions: [
@@ -3258,7 +3275,7 @@ module Aws::LakeFormation
     #           principal: {
     #             data_lake_principal_identifier: "DataLakePrincipalString",
     #           },
-    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #           permissions: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #         },
     #       ],
     #       parameters: {
@@ -3383,6 +3400,7 @@ module Aws::LakeFormation
     #     catalog_id: "CatalogIdString",
     #     resource: { # required
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -3503,6 +3521,7 @@ module Aws::LakeFormation
     #     },
     #     resource: { # required
     #       catalog: {
+    #         id: "CatalogIdString",
     #       },
     #       database: {
     #         catalog_id: "CatalogIdString",
@@ -3555,8 +3574,8 @@ module Aws::LakeFormation
     #         name: "NameString", # required
     #       },
     #     },
-    #     permissions: ["ALL"], # required, accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
-    #     permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION
+    #     permissions: ["ALL"], # required, accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
+    #     permissions_with_grant_option: ["ALL"], # accepts ALL, SELECT, ALTER, DROP, DELETE, INSERT, DESCRIBE, CREATE_DATABASE, CREATE_TABLE, DATA_LOCATION_ACCESS, CREATE_LF_TAG, ASSOCIATE, GRANT_WITH_LF_TAG_EXPRESSION, CREATE_LF_TAG_EXPRESSION, CREATE_CATALOG, SUPER_USER
     #   })
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/RevokePermissions AWS API Documentation
@@ -4125,7 +4144,7 @@ module Aws::LakeFormation
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-lakeformation'
-      context[:gem_version] = '1.64.0'
+      context[:gem_version] = '1.65.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

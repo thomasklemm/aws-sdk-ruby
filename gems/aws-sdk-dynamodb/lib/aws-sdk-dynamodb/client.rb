@@ -1834,6 +1834,7 @@ module Aws::DynamoDB
     #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
+    #   resp.table_description.multi_region_consistency #=> String, one of "EVENTUAL", "STRONG"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/CreateTable AWS API Documentation
     #
@@ -2439,6 +2440,7 @@ module Aws::DynamoDB
     #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
+    #   resp.table_description.multi_region_consistency #=> String, one of "EVENTUAL", "STRONG"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/DeleteTable AWS API Documentation
     #
@@ -3267,6 +3269,7 @@ module Aws::DynamoDB
     #   resp.table.warm_throughput.read_units_per_second #=> Integer
     #   resp.table.warm_throughput.write_units_per_second #=> Integer
     #   resp.table.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
+    #   resp.table.multi_region_consistency #=> String, one of "EVENTUAL", "STRONG"
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -5866,6 +5869,7 @@ module Aws::DynamoDB
     #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
+    #   resp.table_description.multi_region_consistency #=> String, one of "EVENTUAL", "STRONG"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/RestoreTableFromBackup AWS API Documentation
     #
@@ -6129,6 +6133,7 @@ module Aws::DynamoDB
     #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
+    #   resp.table_description.multi_region_consistency #=> String, one of "EVENTUAL", "STRONG"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/RestoreTableToPointInTime AWS API Documentation
     #
@@ -7994,6 +7999,34 @@ module Aws::DynamoDB
     #   Indicates whether deletion protection is to be enabled (true) or
     #   disabled (false) on the table.
     #
+    # @option params [String] :multi_region_consistency
+    #   Specifies the consistency mode for a new global table. This parameter
+    #   is only valid when you create a global table by specifying one or more
+    #   [Create][1] actions in the [ReplicaUpdates][2] action list.
+    #
+    #   You can specify one of the following consistency modes:
+    #
+    #   * `EVENTUAL`: Configures a new global table for multi-Region eventual
+    #     consistency. This is the default consistency mode for global tables.
+    #
+    #   * `STRONG`: Configures a new global table for multi-Region strong
+    #     consistency (preview).
+    #
+    #     <note markdown="1"> Multi-Region strong consistency (MRSC) is a new DynamoDB global
+    #     tables capability currently available in preview mode. For more
+    #     information, see [Global tables multi-Region strong consistency][3].
+    #
+    #      </note>
+    #
+    #   If you don't specify this parameter, the global table consistency
+    #   mode defaults to `EVENTUAL`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ReplicationGroupUpdate.html#DDB-Type-ReplicationGroupUpdate-Create
+    #   [2]: https://docs.aws.amazon.com/https:/docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html#DDB-UpdateTable-request-ReplicaUpdates
+    #   [3]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PreviewFeatures.html#multi-region-strong-consistency-gt
+    #
     # @option params [Types::OnDemandThroughput] :on_demand_throughput
     #   Updates the maximum number of read and write units for the specified
     #   table in on-demand capacity mode. If you use this parameter, you must
@@ -8181,6 +8214,7 @@ module Aws::DynamoDB
     #     ],
     #     table_class: "STANDARD", # accepts STANDARD, STANDARD_INFREQUENT_ACCESS
     #     deletion_protection_enabled: false,
+    #     multi_region_consistency: "EVENTUAL", # accepts EVENTUAL, STRONG
     #     on_demand_throughput: {
     #       max_read_request_units: 1,
     #       max_write_request_units: 1,
@@ -8292,6 +8326,7 @@ module Aws::DynamoDB
     #   resp.table_description.warm_throughput.read_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.write_units_per_second #=> Integer
     #   resp.table_description.warm_throughput.status #=> String, one of "CREATING", "UPDATING", "DELETING", "ACTIVE", "INACCESSIBLE_ENCRYPTION_CREDENTIALS", "ARCHIVING", "ARCHIVED"
+    #   resp.table_description.multi_region_consistency #=> String, one of "EVENTUAL", "STRONG"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/UpdateTable AWS API Documentation
     #
@@ -8559,7 +8594,7 @@ module Aws::DynamoDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dynamodb'
-      context[:gem_version] = '1.130.0'
+      context[:gem_version] = '1.131.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

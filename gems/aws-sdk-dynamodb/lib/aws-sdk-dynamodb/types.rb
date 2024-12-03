@@ -7591,6 +7591,20 @@ module Aws::DynamoDB
       include Aws::Structure
     end
 
+    # The request was rejected because one or more items in the request are
+    # being modified by a request in another Region.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/ReplicatedWriteConflictException AWS API Documentation
+    #
+    class ReplicatedWriteConflictException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents one of the following:
     #
     # * A new replica to be added to an existing regional table or global
@@ -8977,6 +8991,30 @@ module Aws::DynamoDB
     #   Describes the warm throughput value of the base table.
     #   @return [Types::TableWarmThroughputDescription]
     #
+    # @!attribute [rw] multi_region_consistency
+    #   Indicates one of the following consistency modes for a global table:
+    #
+    #   * `EVENTUAL`: Indicates that the global table is configured for
+    #     multi-Region eventual consistency.
+    #
+    #   * `STRONG`: Indicates that the global table is configured for
+    #     multi-Region strong consistency (preview).
+    #
+    #     <note markdown="1"> Multi-Region strong consistency (MRSC) is a new DynamoDB global
+    #     tables capability currently available in preview mode. For more
+    #     information, see [Global tables multi-Region strong
+    #     consistency][1].
+    #
+    #      </note>
+    #
+    #   If you don't specify this field, the global table consistency mode
+    #   defaults to `EVENTUAL`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PreviewFeatures.html#multi-region-strong-consistency-gt
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dynamodb-2012-08-10/TableDescription AWS API Documentation
     #
     class TableDescription < Struct.new(
@@ -9004,7 +9042,8 @@ module Aws::DynamoDB
       :table_class_summary,
       :deletion_protection_enabled,
       :on_demand_throughput,
-      :warm_throughput)
+      :warm_throughput,
+      :multi_region_consistency)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -10489,6 +10528,38 @@ module Aws::DynamoDB
     #   disabled (false) on the table.
     #   @return [Boolean]
     #
+    # @!attribute [rw] multi_region_consistency
+    #   Specifies the consistency mode for a new global table. This
+    #   parameter is only valid when you create a global table by specifying
+    #   one or more [Create][1] actions in the [ReplicaUpdates][2] action
+    #   list.
+    #
+    #   You can specify one of the following consistency modes:
+    #
+    #   * `EVENTUAL`: Configures a new global table for multi-Region
+    #     eventual consistency. This is the default consistency mode for
+    #     global tables.
+    #
+    #   * `STRONG`: Configures a new global table for multi-Region strong
+    #     consistency (preview).
+    #
+    #     <note markdown="1"> Multi-Region strong consistency (MRSC) is a new DynamoDB global
+    #     tables capability currently available in preview mode. For more
+    #     information, see [Global tables multi-Region strong
+    #     consistency][3].
+    #
+    #      </note>
+    #
+    #   If you don't specify this parameter, the global table consistency
+    #   mode defaults to `EVENTUAL`.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_ReplicationGroupUpdate.html#DDB-Type-ReplicationGroupUpdate-Create
+    #   [2]: https://docs.aws.amazon.com/https:/docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html#DDB-UpdateTable-request-ReplicaUpdates
+    #   [3]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/PreviewFeatures.html#multi-region-strong-consistency-gt
+    #   @return [String]
+    #
     # @!attribute [rw] on_demand_throughput
     #   Updates the maximum number of read and write units for the specified
     #   table in on-demand capacity mode. If you use this parameter, you
@@ -10513,6 +10584,7 @@ module Aws::DynamoDB
       :replica_updates,
       :table_class,
       :deletion_protection_enabled,
+      :multi_region_consistency,
       :on_demand_throughput,
       :warm_throughput)
       SENSITIVE = []

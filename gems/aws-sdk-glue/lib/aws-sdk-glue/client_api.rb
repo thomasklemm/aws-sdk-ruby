@@ -16,6 +16,7 @@ module Aws::Glue
 
     AWSManagedClientApplicationReference = Shapes::StringShape.new(name: 'AWSManagedClientApplicationReference')
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
+    AccessToken = Shapes::StringShape.new(name: 'AccessToken')
     AccountId = Shapes::StringShape.new(name: 'AccountId')
     Action = Shapes::StructureShape.new(name: 'Action')
     ActionList = Shapes::ListShape.new(name: 'ActionList')
@@ -27,6 +28,10 @@ module Aws::Glue
     Aggregate = Shapes::StructureShape.new(name: 'Aggregate')
     AggregateOperation = Shapes::StructureShape.new(name: 'AggregateOperation')
     AggregateOperations = Shapes::ListShape.new(name: 'AggregateOperations')
+    AllowedValue = Shapes::StructureShape.new(name: 'AllowedValue')
+    AllowedValueDescriptionString = Shapes::StringShape.new(name: 'AllowedValueDescriptionString')
+    AllowedValueValueString = Shapes::StringShape.new(name: 'AllowedValueValueString')
+    AllowedValues = Shapes::ListShape.new(name: 'AllowedValues')
     AllowedValuesStringList = Shapes::ListShape.new(name: 'AllowedValuesStringList')
     AlreadyExistsException = Shapes::StructureShape.new(name: 'AlreadyExistsException')
     AmazonRedshiftAdvancedOption = Shapes::StructureShape.new(name: 'AmazonRedshiftAdvancedOption')
@@ -37,6 +42,7 @@ module Aws::Glue
     AnnotationError = Shapes::StructureShape.new(name: 'AnnotationError')
     AnnotationErrorList = Shapes::ListShape.new(name: 'AnnotationErrorList')
     AnnotationList = Shapes::ListShape.new(name: 'AnnotationList')
+    ApiVersion = Shapes::StringShape.new(name: 'ApiVersion')
     ApplyMapping = Shapes::StructureShape.new(name: 'ApplyMapping')
     ArnString = Shapes::StringShape.new(name: 'ArnString')
     AthenaConnectorSource = Shapes::StructureShape.new(name: 'AthenaConnectorSource')
@@ -44,16 +50,19 @@ module Aws::Glue
     AuditColumnNamesList = Shapes::ListShape.new(name: 'AuditColumnNamesList')
     AuditContext = Shapes::StructureShape.new(name: 'AuditContext')
     AuditContextString = Shapes::StringShape.new(name: 'AuditContextString')
+    AuthConfiguration = Shapes::StructureShape.new(name: 'AuthConfiguration')
     AuthTokenString = Shapes::StringShape.new(name: 'AuthTokenString')
     AuthenticationConfiguration = Shapes::StructureShape.new(name: 'AuthenticationConfiguration')
     AuthenticationConfigurationInput = Shapes::StructureShape.new(name: 'AuthenticationConfigurationInput')
     AuthenticationType = Shapes::StringShape.new(name: 'AuthenticationType')
+    AuthenticationTypes = Shapes::ListShape.new(name: 'AuthenticationTypes')
     AuthorizationCode = Shapes::StringShape.new(name: 'AuthorizationCode')
     AuthorizationCodeProperties = Shapes::StructureShape.new(name: 'AuthorizationCodeProperties')
     BackfillError = Shapes::StructureShape.new(name: 'BackfillError')
     BackfillErrorCode = Shapes::StringShape.new(name: 'BackfillErrorCode')
     BackfillErroredPartitionsList = Shapes::ListShape.new(name: 'BackfillErroredPartitionsList')
     BackfillErrors = Shapes::ListShape.new(name: 'BackfillErrors')
+    BasicAuthenticationCredentials = Shapes::StructureShape.new(name: 'BasicAuthenticationCredentials')
     BasicCatalogTarget = Shapes::StructureShape.new(name: 'BasicCatalogTarget')
     BatchCreatePartitionRequest = Shapes::StructureShape.new(name: 'BatchCreatePartitionRequest')
     BatchCreatePartitionResponse = Shapes::StructureShape.new(name: 'BatchCreatePartitionResponse')
@@ -125,6 +134,7 @@ module Aws::Glue
     BlueprintRuns = Shapes::ListShape.new(name: 'BlueprintRuns')
     BlueprintStatus = Shapes::StringShape.new(name: 'BlueprintStatus')
     Blueprints = Shapes::ListShape.new(name: 'Blueprints')
+    Bool = Shapes::BooleanShape.new(name: 'Bool')
     Boolean = Shapes::BooleanShape.new(name: 'Boolean')
     BooleanColumnStatisticsData = Shapes::StructureShape.new(name: 'BooleanColumnStatisticsData')
     BooleanNullable = Shapes::BooleanShape.new(name: 'BooleanNullable')
@@ -144,6 +154,8 @@ module Aws::Glue
     CancelMLTaskRunResponse = Shapes::StructureShape.new(name: 'CancelMLTaskRunResponse')
     CancelStatementRequest = Shapes::StructureShape.new(name: 'CancelStatementRequest')
     CancelStatementResponse = Shapes::StructureShape.new(name: 'CancelStatementResponse')
+    Capabilities = Shapes::StructureShape.new(name: 'Capabilities')
+    Catalog = Shapes::StructureShape.new(name: 'Catalog')
     CatalogDeltaSource = Shapes::StructureShape.new(name: 'CatalogDeltaSource')
     CatalogEncryptionMode = Shapes::StringShape.new(name: 'CatalogEncryptionMode')
     CatalogEntries = Shapes::ListShape.new(name: 'CatalogEntries')
@@ -152,13 +164,19 @@ module Aws::Glue
     CatalogHudiSource = Shapes::StructureShape.new(name: 'CatalogHudiSource')
     CatalogIdString = Shapes::StringShape.new(name: 'CatalogIdString')
     CatalogImportStatus = Shapes::StructureShape.new(name: 'CatalogImportStatus')
+    CatalogInput = Shapes::StructureShape.new(name: 'CatalogInput')
     CatalogKafkaSource = Shapes::StructureShape.new(name: 'CatalogKafkaSource')
     CatalogKinesisSource = Shapes::StructureShape.new(name: 'CatalogKinesisSource')
+    CatalogList = Shapes::ListShape.new(name: 'CatalogList')
+    CatalogNameString = Shapes::StringShape.new(name: 'CatalogNameString')
+    CatalogProperties = Shapes::StructureShape.new(name: 'CatalogProperties')
+    CatalogPropertiesOutput = Shapes::StructureShape.new(name: 'CatalogPropertiesOutput')
     CatalogSchemaChangePolicy = Shapes::StructureShape.new(name: 'CatalogSchemaChangePolicy')
     CatalogSource = Shapes::StructureShape.new(name: 'CatalogSource')
     CatalogTablesList = Shapes::ListShape.new(name: 'CatalogTablesList')
     CatalogTarget = Shapes::StructureShape.new(name: 'CatalogTarget')
     CatalogTargetList = Shapes::ListShape.new(name: 'CatalogTargetList')
+    Category = Shapes::StringShape.new(name: 'Category')
     CheckSchemaVersionValidityInput = Shapes::StructureShape.new(name: 'CheckSchemaVersionValidityInput')
     CheckSchemaVersionValidityResponse = Shapes::StructureShape.new(name: 'CheckSchemaVersionValidityResponse')
     Classification = Shapes::StringShape.new(name: 'Classification')
@@ -211,6 +229,13 @@ module Aws::Glue
     Compatibility = Shapes::StringShape.new(name: 'Compatibility')
     CompressionType = Shapes::StringShape.new(name: 'CompressionType')
     ComputationType = Shapes::StringShape.new(name: 'ComputationType')
+    ComputeEnvironment = Shapes::StringShape.new(name: 'ComputeEnvironment')
+    ComputeEnvironmentConfiguration = Shapes::StructureShape.new(name: 'ComputeEnvironmentConfiguration')
+    ComputeEnvironmentConfigurationDescriptionString = Shapes::StringShape.new(name: 'ComputeEnvironmentConfigurationDescriptionString')
+    ComputeEnvironmentConfigurationMap = Shapes::MapShape.new(name: 'ComputeEnvironmentConfigurationMap')
+    ComputeEnvironmentList = Shapes::ListShape.new(name: 'ComputeEnvironmentList')
+    ComputeEnvironmentName = Shapes::StringShape.new(name: 'ComputeEnvironmentName')
+    ComputeEnvironments = Shapes::ListShape.new(name: 'ComputeEnvironments')
     ConcurrentModificationException = Shapes::StructureShape.new(name: 'ConcurrentModificationException')
     ConcurrentRunsExceededException = Shapes::StructureShape.new(name: 'ConcurrentRunsExceededException')
     Condition = Shapes::StructureShape.new(name: 'Condition')
@@ -227,11 +252,15 @@ module Aws::Glue
     ConnectionInput = Shapes::StructureShape.new(name: 'ConnectionInput')
     ConnectionList = Shapes::ListShape.new(name: 'ConnectionList')
     ConnectionName = Shapes::StringShape.new(name: 'ConnectionName')
+    ConnectionOptions = Shapes::MapShape.new(name: 'ConnectionOptions')
     ConnectionPasswordEncryption = Shapes::StructureShape.new(name: 'ConnectionPasswordEncryption')
     ConnectionProperties = Shapes::MapShape.new(name: 'ConnectionProperties')
     ConnectionPropertyKey = Shapes::StringShape.new(name: 'ConnectionPropertyKey')
+    ConnectionSchemaVersion = Shapes::IntegerShape.new(name: 'ConnectionSchemaVersion')
     ConnectionStatus = Shapes::StringShape.new(name: 'ConnectionStatus')
     ConnectionType = Shapes::StringShape.new(name: 'ConnectionType')
+    ConnectionTypeBrief = Shapes::StructureShape.new(name: 'ConnectionTypeBrief')
+    ConnectionTypeList = Shapes::ListShape.new(name: 'ConnectionTypeList')
     ConnectionsList = Shapes::StructureShape.new(name: 'ConnectionsList')
     ConnectorDataSource = Shapes::StructureShape.new(name: 'ConnectorDataSource')
     ConnectorDataTarget = Shapes::StructureShape.new(name: 'ConnectorDataTarget')
@@ -264,6 +293,8 @@ module Aws::Glue
     CrawlsFilterList = Shapes::ListShape.new(name: 'CrawlsFilterList')
     CreateBlueprintRequest = Shapes::StructureShape.new(name: 'CreateBlueprintRequest')
     CreateBlueprintResponse = Shapes::StructureShape.new(name: 'CreateBlueprintResponse')
+    CreateCatalogRequest = Shapes::StructureShape.new(name: 'CreateCatalogRequest')
+    CreateCatalogResponse = Shapes::StructureShape.new(name: 'CreateCatalogResponse')
     CreateClassifierRequest = Shapes::StructureShape.new(name: 'CreateClassifierRequest')
     CreateClassifierResponse = Shapes::StructureShape.new(name: 'CreateClassifierResponse')
     CreateColumnStatisticsTaskSettingsRequest = Shapes::StructureShape.new(name: 'CreateColumnStatisticsTaskSettingsRequest')
@@ -282,6 +313,12 @@ module Aws::Glue
     CreateDevEndpointRequest = Shapes::StructureShape.new(name: 'CreateDevEndpointRequest')
     CreateDevEndpointResponse = Shapes::StructureShape.new(name: 'CreateDevEndpointResponse')
     CreateGrokClassifierRequest = Shapes::StructureShape.new(name: 'CreateGrokClassifierRequest')
+    CreateIntegrationRequest = Shapes::StructureShape.new(name: 'CreateIntegrationRequest')
+    CreateIntegrationResourcePropertyRequest = Shapes::StructureShape.new(name: 'CreateIntegrationResourcePropertyRequest')
+    CreateIntegrationResourcePropertyResponse = Shapes::StructureShape.new(name: 'CreateIntegrationResourcePropertyResponse')
+    CreateIntegrationResponse = Shapes::StructureShape.new(name: 'CreateIntegrationResponse')
+    CreateIntegrationTablePropertiesRequest = Shapes::StructureShape.new(name: 'CreateIntegrationTablePropertiesRequest')
+    CreateIntegrationTablePropertiesResponse = Shapes::StructureShape.new(name: 'CreateIntegrationTablePropertiesResponse')
     CreateJobRequest = Shapes::StructureShape.new(name: 'CreateJobRequest')
     CreateJobResponse = Shapes::StructureShape.new(name: 'CreateJobResponse')
     CreateJsonClassifierRequest = Shapes::StructureShape.new(name: 'CreateJsonClassifierRequest')
@@ -315,6 +352,9 @@ module Aws::Glue
     CreateWorkflowResponse = Shapes::StructureShape.new(name: 'CreateWorkflowResponse')
     CreateXMLClassifierRequest = Shapes::StructureShape.new(name: 'CreateXMLClassifierRequest')
     CreatedTimestamp = Shapes::StringShape.new(name: 'CreatedTimestamp')
+    CredentialKey = Shapes::StringShape.new(name: 'CredentialKey')
+    CredentialMap = Shapes::MapShape.new(name: 'CredentialMap')
+    CredentialValue = Shapes::StringShape.new(name: 'CredentialValue')
     CronExpression = Shapes::StringShape.new(name: 'CronExpression')
     CsvClassifier = Shapes::StructureShape.new(name: 'CsvClassifier')
     CsvColumnDelimiter = Shapes::StringShape.new(name: 'CsvColumnDelimiter')
@@ -328,6 +368,7 @@ module Aws::Glue
     CustomEntityTypeNames = Shapes::ListShape.new(name: 'CustomEntityTypeNames')
     CustomEntityTypes = Shapes::ListShape.new(name: 'CustomEntityTypes')
     CustomPatterns = Shapes::StringShape.new(name: 'CustomPatterns')
+    CustomProperties = Shapes::MapShape.new(name: 'CustomProperties')
     DQAdditionalOptions = Shapes::MapShape.new(name: 'DQAdditionalOptions')
     DQCompositeRuleEvaluationMethod = Shapes::StringShape.new(name: 'DQCompositeRuleEvaluationMethod')
     DQDLAliases = Shapes::MapShape.new(name: 'DQDLAliases')
@@ -340,8 +381,12 @@ module Aws::Glue
     DagNodes = Shapes::ListShape.new(name: 'DagNodes')
     DataCatalogEncryptionSettings = Shapes::StructureShape.new(name: 'DataCatalogEncryptionSettings')
     DataFormat = Shapes::StringShape.new(name: 'DataFormat')
+    DataLakeAccessProperties = Shapes::StructureShape.new(name: 'DataLakeAccessProperties')
+    DataLakeAccessPropertiesOutput = Shapes::StructureShape.new(name: 'DataLakeAccessPropertiesOutput')
     DataLakePrincipal = Shapes::StructureShape.new(name: 'DataLakePrincipal')
     DataLakePrincipalString = Shapes::StringShape.new(name: 'DataLakePrincipalString')
+    DataOperation = Shapes::StringShape.new(name: 'DataOperation')
+    DataOperations = Shapes::ListShape.new(name: 'DataOperations')
     DataQualityAnalyzerResult = Shapes::StructureShape.new(name: 'DataQualityAnalyzerResult')
     DataQualityAnalyzerResults = Shapes::ListShape.new(name: 'DataQualityAnalyzerResults')
     DataQualityEvaluationRunAdditionalRunOptions = Shapes::StructureShape.new(name: 'DataQualityEvaluationRunAdditionalRunOptions')
@@ -391,6 +436,8 @@ module Aws::Glue
     DeleteBehavior = Shapes::StringShape.new(name: 'DeleteBehavior')
     DeleteBlueprintRequest = Shapes::StructureShape.new(name: 'DeleteBlueprintRequest')
     DeleteBlueprintResponse = Shapes::StructureShape.new(name: 'DeleteBlueprintResponse')
+    DeleteCatalogRequest = Shapes::StructureShape.new(name: 'DeleteCatalogRequest')
+    DeleteCatalogResponse = Shapes::StructureShape.new(name: 'DeleteCatalogResponse')
     DeleteClassifierRequest = Shapes::StructureShape.new(name: 'DeleteClassifierRequest')
     DeleteClassifierResponse = Shapes::StructureShape.new(name: 'DeleteClassifierResponse')
     DeleteColumnStatisticsForPartitionRequest = Shapes::StructureShape.new(name: 'DeleteColumnStatisticsForPartitionRequest')
@@ -412,6 +459,10 @@ module Aws::Glue
     DeleteDatabaseResponse = Shapes::StructureShape.new(name: 'DeleteDatabaseResponse')
     DeleteDevEndpointRequest = Shapes::StructureShape.new(name: 'DeleteDevEndpointRequest')
     DeleteDevEndpointResponse = Shapes::StructureShape.new(name: 'DeleteDevEndpointResponse')
+    DeleteIntegrationRequest = Shapes::StructureShape.new(name: 'DeleteIntegrationRequest')
+    DeleteIntegrationResponse = Shapes::StructureShape.new(name: 'DeleteIntegrationResponse')
+    DeleteIntegrationTablePropertiesRequest = Shapes::StructureShape.new(name: 'DeleteIntegrationTablePropertiesRequest')
+    DeleteIntegrationTablePropertiesResponse = Shapes::StructureShape.new(name: 'DeleteIntegrationTablePropertiesResponse')
     DeleteJobRequest = Shapes::StructureShape.new(name: 'DeleteJobRequest')
     DeleteJobResponse = Shapes::StructureShape.new(name: 'DeleteJobResponse')
     DeleteMLTransformRequest = Shapes::StructureShape.new(name: 'DeleteMLTransformRequest')
@@ -449,6 +500,15 @@ module Aws::Glue
     DeltaTarget = Shapes::StructureShape.new(name: 'DeltaTarget')
     DeltaTargetCompressionType = Shapes::StringShape.new(name: 'DeltaTargetCompressionType')
     DeltaTargetList = Shapes::ListShape.new(name: 'DeltaTargetList')
+    DescribeConnectionTypeRequest = Shapes::StructureShape.new(name: 'DescribeConnectionTypeRequest')
+    DescribeConnectionTypeResponse = Shapes::StructureShape.new(name: 'DescribeConnectionTypeResponse')
+    DescribeEntityRequest = Shapes::StructureShape.new(name: 'DescribeEntityRequest')
+    DescribeEntityResponse = Shapes::StructureShape.new(name: 'DescribeEntityResponse')
+    DescribeInboundIntegrationsRequest = Shapes::StructureShape.new(name: 'DescribeInboundIntegrationsRequest')
+    DescribeInboundIntegrationsResponse = Shapes::StructureShape.new(name: 'DescribeInboundIntegrationsResponse')
+    DescribeIntegrationsRequest = Shapes::StructureShape.new(name: 'DescribeIntegrationsRequest')
+    DescribeIntegrationsResponse = Shapes::StructureShape.new(name: 'DescribeIntegrationsResponse')
+    Description = Shapes::StringShape.new(name: 'Description')
     DescriptionString = Shapes::StringShape.new(name: 'DescriptionString')
     DescriptionStringRemovable = Shapes::StringShape.new(name: 'DescriptionStringRemovable')
     DevEndpoint = Shapes::StructureShape.new(name: 'DevEndpoint')
@@ -480,6 +540,12 @@ module Aws::Glue
     EnclosedInStringPropertyWithQuote = Shapes::StringShape.new(name: 'EnclosedInStringPropertyWithQuote')
     EncryptionAtRest = Shapes::StructureShape.new(name: 'EncryptionAtRest')
     EncryptionConfiguration = Shapes::StructureShape.new(name: 'EncryptionConfiguration')
+    Entity = Shapes::StructureShape.new(name: 'Entity')
+    EntityDescription = Shapes::StringShape.new(name: 'EntityDescription')
+    EntityFieldName = Shapes::StringShape.new(name: 'EntityFieldName')
+    EntityLabel = Shapes::StringShape.new(name: 'EntityLabel')
+    EntityList = Shapes::ListShape.new(name: 'EntityList')
+    EntityName = Shapes::StringShape.new(name: 'EntityName')
     EntityNotFoundException = Shapes::StructureShape.new(name: 'EntityNotFoundException')
     ErrorByName = Shapes::MapShape.new(name: 'ErrorByName')
     ErrorCodeString = Shapes::StringShape.new(name: 'ErrorCodeString')
@@ -493,12 +559,15 @@ module Aws::Glue
     EvaluationMetrics = Shapes::StructureShape.new(name: 'EvaluationMetrics')
     EventBatchingCondition = Shapes::StructureShape.new(name: 'EventBatchingCondition')
     EventQueueArn = Shapes::StringShape.new(name: 'EventQueueArn')
+    ExecutionAttempt = Shapes::StructureShape.new(name: 'ExecutionAttempt')
     ExecutionClass = Shapes::StringShape.new(name: 'ExecutionClass')
     ExecutionProperty = Shapes::StructureShape.new(name: 'ExecutionProperty')
+    ExecutionStatus = Shapes::StringShape.new(name: 'ExecutionStatus')
     ExecutionTime = Shapes::IntegerShape.new(name: 'ExecutionTime')
     ExistCondition = Shapes::StringShape.new(name: 'ExistCondition')
     ExportLabelsTaskRunProperties = Shapes::StructureShape.new(name: 'ExportLabelsTaskRunProperties')
     ExtendedString = Shapes::StringShape.new(name: 'ExtendedString')
+    FederatedCatalog = Shapes::StructureShape.new(name: 'FederatedCatalog')
     FederatedDatabase = Shapes::StructureShape.new(name: 'FederatedDatabase')
     FederatedResourceAlreadyExistsException = Shapes::StructureShape.new(name: 'FederatedResourceAlreadyExistsException')
     FederatedTable = Shapes::StructureShape.new(name: 'FederatedTable')
@@ -506,8 +575,15 @@ module Aws::Glue
     FederationSourceErrorCode = Shapes::StringShape.new(name: 'FederationSourceErrorCode')
     FederationSourceException = Shapes::StructureShape.new(name: 'FederationSourceException')
     FederationSourceRetryableException = Shapes::StructureShape.new(name: 'FederationSourceRetryableException')
+    Field = Shapes::StructureShape.new(name: 'Field')
+    FieldDataType = Shapes::StringShape.new(name: 'FieldDataType')
+    FieldDescription = Shapes::StringShape.new(name: 'FieldDescription')
+    FieldFilterOperator = Shapes::StringShape.new(name: 'FieldFilterOperator')
+    FieldFilterOperatorsList = Shapes::ListShape.new(name: 'FieldFilterOperatorsList')
+    FieldLabel = Shapes::StringShape.new(name: 'FieldLabel')
     FieldName = Shapes::StringShape.new(name: 'FieldName')
     FieldType = Shapes::StringShape.new(name: 'FieldType')
+    FieldsList = Shapes::ListShape.new(name: 'FieldsList')
     FillMissingValues = Shapes::StructureShape.new(name: 'FillMissingValues')
     Filter = Shapes::StructureShape.new(name: 'Filter')
     FilterExpression = Shapes::StructureShape.new(name: 'FilterExpression')
@@ -515,6 +591,7 @@ module Aws::Glue
     FilterLogicalOperator = Shapes::StringShape.new(name: 'FilterLogicalOperator')
     FilterOperation = Shapes::StringShape.new(name: 'FilterOperation')
     FilterOperator = Shapes::StringShape.new(name: 'FilterOperator')
+    FilterPredicate = Shapes::StringShape.new(name: 'FilterPredicate')
     FilterString = Shapes::StringShape.new(name: 'FilterString')
     FilterValue = Shapes::StructureShape.new(name: 'FilterValue')
     FilterValueType = Shapes::StringShape.new(name: 'FilterValueType')
@@ -536,6 +613,10 @@ module Aws::Glue
     GetBlueprintRunsResponse = Shapes::StructureShape.new(name: 'GetBlueprintRunsResponse')
     GetCatalogImportStatusRequest = Shapes::StructureShape.new(name: 'GetCatalogImportStatusRequest')
     GetCatalogImportStatusResponse = Shapes::StructureShape.new(name: 'GetCatalogImportStatusResponse')
+    GetCatalogRequest = Shapes::StructureShape.new(name: 'GetCatalogRequest')
+    GetCatalogResponse = Shapes::StructureShape.new(name: 'GetCatalogResponse')
+    GetCatalogsRequest = Shapes::StructureShape.new(name: 'GetCatalogsRequest')
+    GetCatalogsResponse = Shapes::StructureShape.new(name: 'GetCatalogsResponse')
     GetClassifierRequest = Shapes::StructureShape.new(name: 'GetClassifierRequest')
     GetClassifierResponse = Shapes::StructureShape.new(name: 'GetClassifierResponse')
     GetClassifiersRequest = Shapes::StructureShape.new(name: 'GetClassifiersRequest')
@@ -588,6 +669,12 @@ module Aws::Glue
     GetDevEndpointResponse = Shapes::StructureShape.new(name: 'GetDevEndpointResponse')
     GetDevEndpointsRequest = Shapes::StructureShape.new(name: 'GetDevEndpointsRequest')
     GetDevEndpointsResponse = Shapes::StructureShape.new(name: 'GetDevEndpointsResponse')
+    GetEntityRecordsRequest = Shapes::StructureShape.new(name: 'GetEntityRecordsRequest')
+    GetEntityRecordsResponse = Shapes::StructureShape.new(name: 'GetEntityRecordsResponse')
+    GetIntegrationResourcePropertyRequest = Shapes::StructureShape.new(name: 'GetIntegrationResourcePropertyRequest')
+    GetIntegrationResourcePropertyResponse = Shapes::StructureShape.new(name: 'GetIntegrationResourcePropertyResponse')
+    GetIntegrationTablePropertiesRequest = Shapes::StructureShape.new(name: 'GetIntegrationTablePropertiesRequest')
+    GetIntegrationTablePropertiesResponse = Shapes::StructureShape.new(name: 'GetIntegrationTablePropertiesResponse')
     GetJobBookmarkRequest = Shapes::StructureShape.new(name: 'GetJobBookmarkRequest')
     GetJobBookmarkResponse = Shapes::StructureShape.new(name: 'GetJobBookmarkResponse')
     GetJobRequest = Shapes::StructureShape.new(name: 'GetJobRequest')
@@ -716,14 +803,39 @@ module Aws::Glue
     ImportCatalogToGlueRequest = Shapes::StructureShape.new(name: 'ImportCatalogToGlueRequest')
     ImportCatalogToGlueResponse = Shapes::StructureShape.new(name: 'ImportCatalogToGlueResponse')
     ImportLabelsTaskRunProperties = Shapes::StructureShape.new(name: 'ImportLabelsTaskRunProperties')
+    InboundIntegration = Shapes::StructureShape.new(name: 'InboundIntegration')
+    InboundIntegrationsList = Shapes::ListShape.new(name: 'InboundIntegrationsList')
     InclusionAnnotationList = Shapes::ListShape.new(name: 'InclusionAnnotationList')
     InclusionAnnotationValue = Shapes::StringShape.new(name: 'InclusionAnnotationValue')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     IntegerFlag = Shapes::IntegerShape.new(name: 'IntegerFlag')
     IntegerValue = Shapes::IntegerShape.new(name: 'IntegerValue')
+    Integration = Shapes::StructureShape.new(name: 'Integration')
+    IntegrationAdditionalEncryptionContextMap = Shapes::MapShape.new(name: 'IntegrationAdditionalEncryptionContextMap')
+    IntegrationConflictOperationFault = Shapes::StructureShape.new(name: 'IntegrationConflictOperationFault')
+    IntegrationDescription = Shapes::StringShape.new(name: 'IntegrationDescription')
+    IntegrationError = Shapes::StructureShape.new(name: 'IntegrationError')
+    IntegrationErrorList = Shapes::ListShape.new(name: 'IntegrationErrorList')
+    IntegrationErrorMessage = Shapes::StringShape.new(name: 'IntegrationErrorMessage')
+    IntegrationFilter = Shapes::StructureShape.new(name: 'IntegrationFilter')
+    IntegrationFilterList = Shapes::ListShape.new(name: 'IntegrationFilterList')
+    IntegrationFilterValues = Shapes::ListShape.new(name: 'IntegrationFilterValues')
+    IntegrationInteger = Shapes::IntegerShape.new(name: 'IntegrationInteger')
+    IntegrationNotFoundFault = Shapes::StructureShape.new(name: 'IntegrationNotFoundFault')
+    IntegrationPartition = Shapes::StructureShape.new(name: 'IntegrationPartition')
+    IntegrationPartitionSpecList = Shapes::ListShape.new(name: 'IntegrationPartitionSpecList')
+    IntegrationQuotaExceededFault = Shapes::StructureShape.new(name: 'IntegrationQuotaExceededFault')
+    IntegrationStatus = Shapes::StringShape.new(name: 'IntegrationStatus')
+    IntegrationString = Shapes::StringShape.new(name: 'IntegrationString')
+    IntegrationTagsList = Shapes::ListShape.new(name: 'IntegrationTagsList')
+    IntegrationTimestamp = Shapes::TimestampShape.new(name: 'IntegrationTimestamp')
+    IntegrationsList = Shapes::ListShape.new(name: 'IntegrationsList')
+    InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     InternalServiceException = Shapes::StructureShape.new(name: 'InternalServiceException')
     InvalidInputException = Shapes::StructureShape.new(name: 'InvalidInputException')
+    InvalidIntegrationStateFault = Shapes::StructureShape.new(name: 'InvalidIntegrationStateFault')
     InvalidStateException = Shapes::StructureShape.new(name: 'InvalidStateException')
+    IsParentEntity = Shapes::BooleanShape.new(name: 'IsParentEntity')
     IsVersionValid = Shapes::BooleanShape.new(name: 'IsVersionValid')
     Iso8601DateTime = Shapes::TimestampShape.new(name: 'Iso8601DateTime', timestampFormat: "iso8601")
     JDBCConnectionType = Shapes::StringShape.new(name: 'JDBCConnectionType')
@@ -756,6 +868,8 @@ module Aws::Glue
     JsonClassifier = Shapes::StructureShape.new(name: 'JsonClassifier')
     JsonPath = Shapes::StringShape.new(name: 'JsonPath')
     JsonValue = Shapes::StringShape.new(name: 'JsonValue')
+    JwtToken = Shapes::StringShape.new(name: 'JwtToken')
+    KMSKeyNotAccessibleFault = Shapes::StructureShape.new(name: 'KMSKeyNotAccessibleFault')
     KafkaStreamingSourceOptions = Shapes::StructureShape.new(name: 'KafkaStreamingSourceOptions')
     KeyList = Shapes::ListShape.new(name: 'KeyList')
     KeySchemaElement = Shapes::StructureShape.new(name: 'KeySchemaElement')
@@ -771,6 +885,7 @@ module Aws::Glue
     LastCrawlInfo = Shapes::StructureShape.new(name: 'LastCrawlInfo')
     LastCrawlStatus = Shapes::StringShape.new(name: 'LastCrawlStatus')
     LatestSchemaVersionBoolean = Shapes::BooleanShape.new(name: 'LatestSchemaVersionBoolean')
+    Limit = Shapes::IntegerShape.new(name: 'Limit')
     LimitedPathList = Shapes::ListShape.new(name: 'LimitedPathList')
     LimitedStringList = Shapes::ListShape.new(name: 'LimitedStringList')
     LineageConfiguration = Shapes::StructureShape.new(name: 'LineageConfiguration')
@@ -778,6 +893,8 @@ module Aws::Glue
     ListBlueprintsResponse = Shapes::StructureShape.new(name: 'ListBlueprintsResponse')
     ListColumnStatisticsTaskRunsRequest = Shapes::StructureShape.new(name: 'ListColumnStatisticsTaskRunsRequest')
     ListColumnStatisticsTaskRunsResponse = Shapes::StructureShape.new(name: 'ListColumnStatisticsTaskRunsResponse')
+    ListConnectionTypesRequest = Shapes::StructureShape.new(name: 'ListConnectionTypesRequest')
+    ListConnectionTypesResponse = Shapes::StructureShape.new(name: 'ListConnectionTypesResponse')
     ListCrawlersRequest = Shapes::StructureShape.new(name: 'ListCrawlersRequest')
     ListCrawlersResponse = Shapes::StructureShape.new(name: 'ListCrawlersResponse')
     ListCrawlsRequest = Shapes::StructureShape.new(name: 'ListCrawlsRequest')
@@ -798,10 +915,13 @@ module Aws::Glue
     ListDataQualityStatisticsResponse = Shapes::StructureShape.new(name: 'ListDataQualityStatisticsResponse')
     ListDevEndpointsRequest = Shapes::StructureShape.new(name: 'ListDevEndpointsRequest')
     ListDevEndpointsResponse = Shapes::StructureShape.new(name: 'ListDevEndpointsResponse')
+    ListEntitiesRequest = Shapes::StructureShape.new(name: 'ListEntitiesRequest')
+    ListEntitiesResponse = Shapes::StructureShape.new(name: 'ListEntitiesResponse')
     ListJobsRequest = Shapes::StructureShape.new(name: 'ListJobsRequest')
     ListJobsResponse = Shapes::StructureShape.new(name: 'ListJobsResponse')
     ListMLTransformsRequest = Shapes::StructureShape.new(name: 'ListMLTransformsRequest')
     ListMLTransformsResponse = Shapes::StructureShape.new(name: 'ListMLTransformsResponse')
+    ListOfString = Shapes::ListShape.new(name: 'ListOfString')
     ListRegistriesInput = Shapes::StructureShape.new(name: 'ListRegistriesInput')
     ListRegistriesResponse = Shapes::StructureShape.new(name: 'ListRegistriesResponse')
     ListSchemaVersionsInput = Shapes::StructureShape.new(name: 'ListSchemaVersionsInput')
@@ -848,6 +968,7 @@ module Aws::Glue
     MatchCriteria = Shapes::ListShape.new(name: 'MatchCriteria')
     MaxConcurrentRuns = Shapes::IntegerShape.new(name: 'MaxConcurrentRuns')
     MaxListTableOptimizerRunsTokenResults = Shapes::IntegerShape.new(name: 'MaxListTableOptimizerRunsTokenResults')
+    MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     MaxResultsNumber = Shapes::IntegerShape.new(name: 'MaxResultsNumber')
     MaxRetries = Shapes::IntegerShape.new(name: 'MaxRetries')
     Merge = Shapes::StructureShape.new(name: 'Merge')
@@ -864,6 +985,8 @@ module Aws::Glue
     MicrosoftSQLServerCatalogSource = Shapes::StructureShape.new(name: 'MicrosoftSQLServerCatalogSource')
     MicrosoftSQLServerCatalogTarget = Shapes::StructureShape.new(name: 'MicrosoftSQLServerCatalogTarget')
     MillisecondsCount = Shapes::IntegerShape.new(name: 'MillisecondsCount')
+    ModifyIntegrationRequest = Shapes::StructureShape.new(name: 'ModifyIntegrationRequest')
+    ModifyIntegrationResponse = Shapes::StructureShape.new(name: 'ModifyIntegrationResponse')
     MongoDBTarget = Shapes::StructureShape.new(name: 'MongoDBTarget')
     MongoDBTargetList = Shapes::ListShape.new(name: 'MongoDBTargetList')
     MySQLCatalogSource = Shapes::StructureShape.new(name: 'MySQLCatalogSource')
@@ -871,6 +994,7 @@ module Aws::Glue
     NameString = Shapes::StringShape.new(name: 'NameString')
     NameStringList = Shapes::ListShape.new(name: 'NameStringList')
     NewRules = Shapes::ListShape.new(name: 'NewRules')
+    NextToken = Shapes::StringShape.new(name: 'NextToken')
     NoScheduleException = Shapes::StructureShape.new(name: 'NoScheduleException')
     Node = Shapes::StructureShape.new(name: 'Node')
     NodeId = Shapes::StringShape.new(name: 'NodeId')
@@ -892,6 +1016,7 @@ module Aws::Glue
     NullableInteger = Shapes::IntegerShape.new(name: 'NullableInteger')
     NullableString = Shapes::StringShape.new(name: 'NullableString')
     OAuth2ClientApplication = Shapes::StructureShape.new(name: 'OAuth2ClientApplication')
+    OAuth2Credentials = Shapes::StructureShape.new(name: 'OAuth2Credentials')
     OAuth2GrantType = Shapes::StringShape.new(name: 'OAuth2GrantType')
     OAuth2Properties = Shapes::StructureShape.new(name: 'OAuth2Properties')
     OAuth2PropertiesInput = Shapes::StructureShape.new(name: 'OAuth2PropertiesInput')
@@ -901,7 +1026,9 @@ module Aws::Glue
     OperationNotSupportedException = Shapes::StructureShape.new(name: 'OperationNotSupportedException')
     OperationTimeoutException = Shapes::StructureShape.new(name: 'OperationTimeoutException')
     Option = Shapes::StructureShape.new(name: 'Option')
+    OptionKey = Shapes::StringShape.new(name: 'OptionKey')
     OptionList = Shapes::ListShape.new(name: 'OptionList')
+    OptionValue = Shapes::StringShape.new(name: 'OptionValue')
     OracleSQLCatalogSource = Shapes::StructureShape.new(name: 'OracleSQLCatalogSource')
     OracleSQLCatalogTarget = Shapes::StructureShape.new(name: 'OracleSQLCatalogTarget')
     OrchestrationArgumentsMap = Shapes::MapShape.new(name: 'OrchestrationArgumentsMap')
@@ -944,6 +1071,7 @@ module Aws::Glue
     PartitionInputList = Shapes::ListShape.new(name: 'PartitionInputList')
     PartitionList = Shapes::ListShape.new(name: 'PartitionList')
     PartitionValueList = Shapes::StructureShape.new(name: 'PartitionValueList')
+    Password = Shapes::StringShape.new(name: 'Password')
     Path = Shapes::StringShape.new(name: 'Path')
     PathList = Shapes::ListShape.new(name: 'PathList')
     Permission = Shapes::StringShape.new(name: 'Permission')
@@ -963,14 +1091,22 @@ module Aws::Glue
     PredecessorList = Shapes::ListShape.new(name: 'PredecessorList')
     Predicate = Shapes::StructureShape.new(name: 'Predicate')
     PredicateString = Shapes::StringShape.new(name: 'PredicateString')
+    PrimaryKeyList = Shapes::ListShape.new(name: 'PrimaryKeyList')
     PrincipalPermissions = Shapes::StructureShape.new(name: 'PrincipalPermissions')
     PrincipalPermissionsList = Shapes::ListShape.new(name: 'PrincipalPermissionsList')
     PrincipalType = Shapes::StringShape.new(name: 'PrincipalType')
     Prob = Shapes::FloatShape.new(name: 'Prob')
     ProfileConfiguration = Shapes::StructureShape.new(name: 'ProfileConfiguration')
+    PropertiesMap = Shapes::MapShape.new(name: 'PropertiesMap')
+    Property = Shapes::StructureShape.new(name: 'Property')
+    PropertyDescriptionString = Shapes::StringShape.new(name: 'PropertyDescriptionString')
     PropertyKey = Shapes::StringShape.new(name: 'PropertyKey')
     PropertyMap = Shapes::MapShape.new(name: 'PropertyMap')
+    PropertyName = Shapes::StringShape.new(name: 'PropertyName')
+    PropertyNameOverrides = Shapes::MapShape.new(name: 'PropertyNameOverrides')
     PropertyPredicate = Shapes::StructureShape.new(name: 'PropertyPredicate')
+    PropertyType = Shapes::StringShape.new(name: 'PropertyType')
+    PropertyTypes = Shapes::ListShape.new(name: 'PropertyTypes')
     PropertyValue = Shapes::StringShape.new(name: 'PropertyValue')
     PublicKeysList = Shapes::ListShape.new(name: 'PublicKeysList')
     PutDataCatalogEncryptionSettingsRequest = Shapes::StructureShape.new(name: 'PutDataCatalogEncryptionSettingsRequest')
@@ -996,6 +1132,8 @@ module Aws::Glue
     RecipeStep = Shapes::StructureShape.new(name: 'RecipeStep')
     RecipeSteps = Shapes::ListShape.new(name: 'RecipeSteps')
     RecipeVersion = Shapes::StringShape.new(name: 'RecipeVersion')
+    Record = Shapes::DocumentShape.new(name: 'Record', document: true)
+    Records = Shapes::ListShape.new(name: 'Records')
     RecordsCount = Shapes::IntegerShape.new(name: 'RecordsCount')
     RecrawlBehavior = Shapes::StringShape.new(name: 'RecrawlBehavior')
     RecrawlPolicy = Shapes::StructureShape.new(name: 'RecrawlPolicy')
@@ -1003,6 +1141,7 @@ module Aws::Glue
     RedshiftSource = Shapes::StructureShape.new(name: 'RedshiftSource')
     RedshiftTarget = Shapes::StructureShape.new(name: 'RedshiftTarget')
     ReferenceDatasetsList = Shapes::ListShape.new(name: 'ReferenceDatasetsList')
+    RefreshToken = Shapes::StringShape.new(name: 'RefreshToken')
     RegisterSchemaVersionInput = Shapes::StructureShape.new(name: 'RegisterSchemaVersionInput')
     RegisterSchemaVersionResponse = Shapes::StructureShape.new(name: 'RegisterSchemaVersionResponse')
     RegistryId = Shapes::StructureShape.new(name: 'RegistryId')
@@ -1017,6 +1156,8 @@ module Aws::Glue
     ResetJobBookmarkRequest = Shapes::StructureShape.new(name: 'ResetJobBookmarkRequest')
     ResetJobBookmarkResponse = Shapes::StructureShape.new(name: 'ResetJobBookmarkResponse')
     ResourceAction = Shapes::StringShape.new(name: 'ResourceAction')
+    ResourceArnString = Shapes::StringShape.new(name: 'ResourceArnString')
+    ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     ResourceNotReadyException = Shapes::StructureShape.new(name: 'ResourceNotReadyException')
     ResourceNumberLimitExceededException = Shapes::StructureShape.new(name: 'ResourceNumberLimitExceededException')
     ResourceShareType = Shapes::StringShape.new(name: 'ResourceShareType')
@@ -1065,6 +1206,7 @@ module Aws::Glue
     ScalaCode = Shapes::StringShape.new(name: 'ScalaCode')
     Schedule = Shapes::StructureShape.new(name: 'Schedule')
     ScheduleState = Shapes::StringShape.new(name: 'ScheduleState')
+    ScheduleType = Shapes::StringShape.new(name: 'ScheduleType')
     SchedulerNotRunningException = Shapes::StructureShape.new(name: 'SchedulerNotRunningException')
     SchedulerRunningException = Shapes::StructureShape.new(name: 'SchedulerRunningException')
     SchedulerTransitioningException = Shapes::StructureShape.new(name: 'SchedulerTransitioningException')
@@ -1101,6 +1243,7 @@ module Aws::Glue
     Segment = Shapes::StructureShape.new(name: 'Segment')
     SelectFields = Shapes::StructureShape.new(name: 'SelectFields')
     SelectFromCollection = Shapes::StructureShape.new(name: 'SelectFromCollection')
+    SelectedFields = Shapes::ListShape.new(name: 'SelectedFields')
     Separator = Shapes::StringShape.new(name: 'Separator')
     SerDeInfo = Shapes::StructureShape.new(name: 'SerDeInfo')
     Session = Shapes::StructureShape.new(name: 'Session')
@@ -1108,6 +1251,7 @@ module Aws::Glue
     SessionIdList = Shapes::ListShape.new(name: 'SessionIdList')
     SessionList = Shapes::ListShape.new(name: 'SessionList')
     SessionStatus = Shapes::StringShape.new(name: 'SessionStatus')
+    SettingSource = Shapes::StringShape.new(name: 'SettingSource')
     SkewedInfo = Shapes::StructureShape.new(name: 'SkewedInfo')
     SnowflakeNodeData = Shapes::StructureShape.new(name: 'SnowflakeNodeData')
     SnowflakeSource = Shapes::StructureShape.new(name: 'SnowflakeSource')
@@ -1119,6 +1263,9 @@ module Aws::Glue
     SourceControlAuthStrategy = Shapes::StringShape.new(name: 'SourceControlAuthStrategy')
     SourceControlDetails = Shapes::StructureShape.new(name: 'SourceControlDetails')
     SourceControlProvider = Shapes::StringShape.new(name: 'SourceControlProvider')
+    SourceProcessingProperties = Shapes::StructureShape.new(name: 'SourceProcessingProperties')
+    SourceTableConfig = Shapes::StructureShape.new(name: 'SourceTableConfig')
+    SourceTableFieldsList = Shapes::ListShape.new(name: 'SourceTableFieldsList')
     SparkConnectorSource = Shapes::StructureShape.new(name: 'SparkConnectorSource')
     SparkConnectorTarget = Shapes::StructureShape.new(name: 'SparkConnectorTarget')
     SparkSQL = Shapes::StructureShape.new(name: 'SparkSQL')
@@ -1187,6 +1334,9 @@ module Aws::Glue
     StopWorkflowRunResponse = Shapes::StructureShape.new(name: 'StopWorkflowRunResponse')
     StorageDescriptor = Shapes::StructureShape.new(name: 'StorageDescriptor')
     StreamingDataPreviewOptions = Shapes::StructureShape.new(name: 'StreamingDataPreviewOptions')
+    String = Shapes::StringShape.new(name: 'String')
+    String128 = Shapes::StringShape.new(name: 'String128')
+    String2048 = Shapes::StringShape.new(name: 'String2048')
     StringColumnStatisticsData = Shapes::StructureShape.new(name: 'StringColumnStatisticsData')
     StringList = Shapes::ListShape.new(name: 'StringList')
     SupportedDialect = Shapes::StructureShape.new(name: 'SupportedDialect')
@@ -1213,6 +1363,7 @@ module Aws::Glue
     TableVersion = Shapes::StructureShape.new(name: 'TableVersion')
     TableVersionError = Shapes::StructureShape.new(name: 'TableVersionError')
     TableVersionErrors = Shapes::ListShape.new(name: 'TableVersionErrors')
+    Tag = Shapes::StructureShape.new(name: 'Tag')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
     TagKeysList = Shapes::ListShape.new(name: 'TagKeysList')
     TagResourceRequest = Shapes::StructureShape.new(name: 'TagResourceRequest')
@@ -1221,6 +1372,10 @@ module Aws::Glue
     TagsMap = Shapes::MapShape.new(name: 'TagsMap')
     TargetColumn = Shapes::StringShape.new(name: 'TargetColumn')
     TargetFormat = Shapes::StringShape.new(name: 'TargetFormat')
+    TargetProcessingProperties = Shapes::StructureShape.new(name: 'TargetProcessingProperties')
+    TargetRedshiftCatalog = Shapes::StructureShape.new(name: 'TargetRedshiftCatalog')
+    TargetResourceNotFound = Shapes::StructureShape.new(name: 'TargetResourceNotFound')
+    TargetTableConfig = Shapes::StructureShape.new(name: 'TargetTableConfig')
     TaskRun = Shapes::StructureShape.new(name: 'TaskRun')
     TaskRunFilterCriteria = Shapes::StructureShape.new(name: 'TaskRunFilterCriteria')
     TaskRunList = Shapes::ListShape.new(name: 'TaskRunList')
@@ -1272,12 +1427,15 @@ module Aws::Glue
     UnfilteredPartitionList = Shapes::ListShape.new(name: 'UnfilteredPartitionList')
     Union = Shapes::StructureShape.new(name: 'Union')
     UnionType = Shapes::StringShape.new(name: 'UnionType')
+    UnnestSpec = Shapes::StringShape.new(name: 'UnnestSpec')
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
     UpdateBehavior = Shapes::StringShape.new(name: 'UpdateBehavior')
     UpdateBlueprintRequest = Shapes::StructureShape.new(name: 'UpdateBlueprintRequest')
     UpdateBlueprintResponse = Shapes::StructureShape.new(name: 'UpdateBlueprintResponse')
     UpdateCatalogBehavior = Shapes::StringShape.new(name: 'UpdateCatalogBehavior')
+    UpdateCatalogRequest = Shapes::StructureShape.new(name: 'UpdateCatalogRequest')
+    UpdateCatalogResponse = Shapes::StructureShape.new(name: 'UpdateCatalogResponse')
     UpdateClassifierRequest = Shapes::StructureShape.new(name: 'UpdateClassifierRequest')
     UpdateClassifierResponse = Shapes::StructureShape.new(name: 'UpdateClassifierResponse')
     UpdateColumnStatisticsForPartitionRequest = Shapes::StructureShape.new(name: 'UpdateColumnStatisticsForPartitionRequest')
@@ -1301,6 +1459,10 @@ module Aws::Glue
     UpdateDevEndpointRequest = Shapes::StructureShape.new(name: 'UpdateDevEndpointRequest')
     UpdateDevEndpointResponse = Shapes::StructureShape.new(name: 'UpdateDevEndpointResponse')
     UpdateGrokClassifierRequest = Shapes::StructureShape.new(name: 'UpdateGrokClassifierRequest')
+    UpdateIntegrationResourcePropertyRequest = Shapes::StructureShape.new(name: 'UpdateIntegrationResourcePropertyRequest')
+    UpdateIntegrationResourcePropertyResponse = Shapes::StructureShape.new(name: 'UpdateIntegrationResourcePropertyResponse')
+    UpdateIntegrationTablePropertiesRequest = Shapes::StructureShape.new(name: 'UpdateIntegrationTablePropertiesRequest')
+    UpdateIntegrationTablePropertiesResponse = Shapes::StructureShape.new(name: 'UpdateIntegrationTablePropertiesResponse')
     UpdateJobFromSourceControlRequest = Shapes::StructureShape.new(name: 'UpdateJobFromSourceControlRequest')
     UpdateJobFromSourceControlResponse = Shapes::StructureShape.new(name: 'UpdateJobFromSourceControlResponse')
     UpdateJobRequest = Shapes::StructureShape.new(name: 'UpdateJobRequest')
@@ -1338,6 +1500,8 @@ module Aws::Glue
     UserDefinedFunctionInput = Shapes::StructureShape.new(name: 'UserDefinedFunctionInput')
     UserDefinedFunctionList = Shapes::ListShape.new(name: 'UserDefinedFunctionList')
     UserManagedClientApplicationClientId = Shapes::StringShape.new(name: 'UserManagedClientApplicationClientId')
+    UserManagedClientApplicationClientSecret = Shapes::StringShape.new(name: 'UserManagedClientApplicationClientSecret')
+    Username = Shapes::StringShape.new(name: 'Username')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValueString = Shapes::StringShape.new(name: 'ValueString')
     ValueStringList = Shapes::ListShape.new(name: 'ValueStringList')
@@ -1411,6 +1575,12 @@ module Aws::Glue
     AggregateOperation.struct_class = Types::AggregateOperation
 
     AggregateOperations.member = Shapes::ShapeRef.new(shape: AggregateOperation)
+
+    AllowedValue.add_member(:description, Shapes::ShapeRef.new(shape: AllowedValueDescriptionString, location_name: "Description"))
+    AllowedValue.add_member(:value, Shapes::ShapeRef.new(shape: AllowedValueValueString, required: true, location_name: "Value"))
+    AllowedValue.struct_class = Types::AllowedValue
+
+    AllowedValues.member = Shapes::ShapeRef.new(shape: AllowedValue)
 
     AllowedValuesStringList.member = Shapes::ShapeRef.new(shape: ConfigValueString)
 
@@ -1490,6 +1660,13 @@ module Aws::Glue
     AuditContext.add_member(:all_columns_requested, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "AllColumnsRequested"))
     AuditContext.struct_class = Types::AuditContext
 
+    AuthConfiguration.add_member(:authentication_type, Shapes::ShapeRef.new(shape: Property, required: true, location_name: "AuthenticationType"))
+    AuthConfiguration.add_member(:secret_arn, Shapes::ShapeRef.new(shape: Property, location_name: "SecretArn"))
+    AuthConfiguration.add_member(:o_auth_2_properties, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "OAuth2Properties"))
+    AuthConfiguration.add_member(:basic_authentication_properties, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "BasicAuthenticationProperties"))
+    AuthConfiguration.add_member(:custom_authentication_properties, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "CustomAuthenticationProperties"))
+    AuthConfiguration.struct_class = Types::AuthConfiguration
+
     AuthenticationConfiguration.add_member(:authentication_type, Shapes::ShapeRef.new(shape: AuthenticationType, location_name: "AuthenticationType"))
     AuthenticationConfiguration.add_member(:secret_arn, Shapes::ShapeRef.new(shape: SecretArn, location_name: "SecretArn"))
     AuthenticationConfiguration.add_member(:o_auth_2_properties, Shapes::ShapeRef.new(shape: OAuth2Properties, location_name: "OAuth2Properties"))
@@ -1498,7 +1675,12 @@ module Aws::Glue
     AuthenticationConfigurationInput.add_member(:authentication_type, Shapes::ShapeRef.new(shape: AuthenticationType, location_name: "AuthenticationType"))
     AuthenticationConfigurationInput.add_member(:o_auth_2_properties, Shapes::ShapeRef.new(shape: OAuth2PropertiesInput, location_name: "OAuth2Properties"))
     AuthenticationConfigurationInput.add_member(:secret_arn, Shapes::ShapeRef.new(shape: SecretArn, location_name: "SecretArn"))
+    AuthenticationConfigurationInput.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "KmsKeyArn"))
+    AuthenticationConfigurationInput.add_member(:basic_authentication_credentials, Shapes::ShapeRef.new(shape: BasicAuthenticationCredentials, location_name: "BasicAuthenticationCredentials"))
+    AuthenticationConfigurationInput.add_member(:custom_authentication_credentials, Shapes::ShapeRef.new(shape: CredentialMap, location_name: "CustomAuthenticationCredentials"))
     AuthenticationConfigurationInput.struct_class = Types::AuthenticationConfigurationInput
+
+    AuthenticationTypes.member = Shapes::ShapeRef.new(shape: AuthenticationType)
 
     AuthorizationCodeProperties.add_member(:authorization_code, Shapes::ShapeRef.new(shape: AuthorizationCode, location_name: "AuthorizationCode"))
     AuthorizationCodeProperties.add_member(:redirect_uri, Shapes::ShapeRef.new(shape: RedirectUri, location_name: "RedirectUri"))
@@ -1511,6 +1693,10 @@ module Aws::Glue
     BackfillErroredPartitionsList.member = Shapes::ShapeRef.new(shape: PartitionValueList)
 
     BackfillErrors.member = Shapes::ShapeRef.new(shape: BackfillError)
+
+    BasicAuthenticationCredentials.add_member(:username, Shapes::ShapeRef.new(shape: Username, location_name: "Username"))
+    BasicAuthenticationCredentials.add_member(:password, Shapes::ShapeRef.new(shape: Password, location_name: "Password"))
+    BasicAuthenticationCredentials.struct_class = Types::BasicAuthenticationCredentials
 
     BasicCatalogTarget.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))
     BasicCatalogTarget.add_member(:inputs, Shapes::ShapeRef.new(shape: OneInput, required: true, location_name: "Inputs"))
@@ -1797,6 +1983,25 @@ module Aws::Glue
 
     CancelStatementResponse.struct_class = Types::CancelStatementResponse
 
+    Capabilities.add_member(:supported_authentication_types, Shapes::ShapeRef.new(shape: AuthenticationTypes, required: true, location_name: "SupportedAuthenticationTypes"))
+    Capabilities.add_member(:supported_data_operations, Shapes::ShapeRef.new(shape: DataOperations, required: true, location_name: "SupportedDataOperations"))
+    Capabilities.add_member(:supported_compute_environments, Shapes::ShapeRef.new(shape: ComputeEnvironments, required: true, location_name: "SupportedComputeEnvironments"))
+    Capabilities.struct_class = Types::Capabilities
+
+    Catalog.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "CatalogId"))
+    Catalog.add_member(:name, Shapes::ShapeRef.new(shape: CatalogNameString, required: true, location_name: "Name"))
+    Catalog.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArnString, location_name: "ResourceArn"))
+    Catalog.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionString, location_name: "Description"))
+    Catalog.add_member(:parameters, Shapes::ShapeRef.new(shape: ParametersMap, location_name: "Parameters"))
+    Catalog.add_member(:create_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreateTime"))
+    Catalog.add_member(:update_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "UpdateTime"))
+    Catalog.add_member(:target_redshift_catalog, Shapes::ShapeRef.new(shape: TargetRedshiftCatalog, location_name: "TargetRedshiftCatalog"))
+    Catalog.add_member(:federated_catalog, Shapes::ShapeRef.new(shape: FederatedCatalog, location_name: "FederatedCatalog"))
+    Catalog.add_member(:catalog_properties, Shapes::ShapeRef.new(shape: CatalogPropertiesOutput, location_name: "CatalogProperties"))
+    Catalog.add_member(:create_table_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateTableDefaultPermissions"))
+    Catalog.add_member(:create_database_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateDatabaseDefaultPermissions"))
+    Catalog.struct_class = Types::Catalog
+
     CatalogDeltaSource.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))
     CatalogDeltaSource.add_member(:database, Shapes::ShapeRef.new(shape: EnclosedInStringProperty, required: true, location_name: "Database"))
     CatalogDeltaSource.add_member(:table, Shapes::ShapeRef.new(shape: EnclosedInStringProperty, required: true, location_name: "Table"))
@@ -1822,6 +2027,15 @@ module Aws::Glue
     CatalogImportStatus.add_member(:imported_by, Shapes::ShapeRef.new(shape: NameString, location_name: "ImportedBy"))
     CatalogImportStatus.struct_class = Types::CatalogImportStatus
 
+    CatalogInput.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionString, location_name: "Description"))
+    CatalogInput.add_member(:federated_catalog, Shapes::ShapeRef.new(shape: FederatedCatalog, location_name: "FederatedCatalog"))
+    CatalogInput.add_member(:parameters, Shapes::ShapeRef.new(shape: ParametersMap, location_name: "Parameters"))
+    CatalogInput.add_member(:target_redshift_catalog, Shapes::ShapeRef.new(shape: TargetRedshiftCatalog, location_name: "TargetRedshiftCatalog"))
+    CatalogInput.add_member(:catalog_properties, Shapes::ShapeRef.new(shape: CatalogProperties, location_name: "CatalogProperties"))
+    CatalogInput.add_member(:create_table_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateTableDefaultPermissions"))
+    CatalogInput.add_member(:create_database_default_permissions, Shapes::ShapeRef.new(shape: PrincipalPermissionsList, location_name: "CreateDatabaseDefaultPermissions"))
+    CatalogInput.struct_class = Types::CatalogInput
+
     CatalogKafkaSource.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))
     CatalogKafkaSource.add_member(:window_size, Shapes::ShapeRef.new(shape: BoxedPositiveInt, location_name: "WindowSize", metadata: {"box"=>true}))
     CatalogKafkaSource.add_member(:detect_schema, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "DetectSchema", metadata: {"box"=>true}))
@@ -1839,6 +2053,16 @@ module Aws::Glue
     CatalogKinesisSource.add_member(:streaming_options, Shapes::ShapeRef.new(shape: KinesisStreamingSourceOptions, location_name: "StreamingOptions"))
     CatalogKinesisSource.add_member(:data_preview_options, Shapes::ShapeRef.new(shape: StreamingDataPreviewOptions, location_name: "DataPreviewOptions"))
     CatalogKinesisSource.struct_class = Types::CatalogKinesisSource
+
+    CatalogList.member = Shapes::ShapeRef.new(shape: Catalog)
+
+    CatalogProperties.add_member(:data_lake_access_properties, Shapes::ShapeRef.new(shape: DataLakeAccessProperties, location_name: "DataLakeAccessProperties"))
+    CatalogProperties.add_member(:custom_properties, Shapes::ShapeRef.new(shape: ParametersMap, location_name: "CustomProperties"))
+    CatalogProperties.struct_class = Types::CatalogProperties
+
+    CatalogPropertiesOutput.add_member(:data_lake_access_properties, Shapes::ShapeRef.new(shape: DataLakeAccessPropertiesOutput, location_name: "DataLakeAccessProperties"))
+    CatalogPropertiesOutput.add_member(:custom_properties, Shapes::ShapeRef.new(shape: ParametersMap, location_name: "CustomProperties"))
+    CatalogPropertiesOutput.struct_class = Types::CatalogPropertiesOutput
 
     CatalogSchemaChangePolicy.add_member(:enable_update_catalog, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "EnableUpdateCatalog"))
     CatalogSchemaChangePolicy.add_member(:update_behavior, Shapes::ShapeRef.new(shape: UpdateCatalogBehavior, location_name: "UpdateBehavior"))
@@ -2067,6 +2291,9 @@ module Aws::Glue
     ColumnStatisticsTaskSettings.add_member(:role, Shapes::ShapeRef.new(shape: Role, location_name: "Role"))
     ColumnStatisticsTaskSettings.add_member(:sample_size, Shapes::ShapeRef.new(shape: SampleSizePercentage, location_name: "SampleSize"))
     ColumnStatisticsTaskSettings.add_member(:security_configuration, Shapes::ShapeRef.new(shape: CrawlerSecurityConfiguration, location_name: "SecurityConfiguration"))
+    ColumnStatisticsTaskSettings.add_member(:schedule_type, Shapes::ShapeRef.new(shape: ScheduleType, location_name: "ScheduleType"))
+    ColumnStatisticsTaskSettings.add_member(:setting_source, Shapes::ShapeRef.new(shape: SettingSource, location_name: "SettingSource"))
+    ColumnStatisticsTaskSettings.add_member(:last_execution_attempt, Shapes::ShapeRef.new(shape: ExecutionAttempt, location_name: "LastExecutionAttempt"))
     ColumnStatisticsTaskSettings.struct_class = Types::ColumnStatisticsTaskSettings
 
     ColumnStatisticsTaskStoppingException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
@@ -2076,6 +2303,24 @@ module Aws::Glue
 
     CompactionMetrics.add_member(:iceberg_metrics, Shapes::ShapeRef.new(shape: IcebergCompactionMetrics, location_name: "IcebergMetrics"))
     CompactionMetrics.struct_class = Types::CompactionMetrics
+
+    ComputeEnvironmentConfiguration.add_member(:name, Shapes::ShapeRef.new(shape: ComputeEnvironmentName, required: true, location_name: "Name"))
+    ComputeEnvironmentConfiguration.add_member(:description, Shapes::ShapeRef.new(shape: ComputeEnvironmentConfigurationDescriptionString, required: true, location_name: "Description"))
+    ComputeEnvironmentConfiguration.add_member(:compute_environment, Shapes::ShapeRef.new(shape: ComputeEnvironment, required: true, location_name: "ComputeEnvironment"))
+    ComputeEnvironmentConfiguration.add_member(:supported_authentication_types, Shapes::ShapeRef.new(shape: AuthenticationTypes, required: true, location_name: "SupportedAuthenticationTypes"))
+    ComputeEnvironmentConfiguration.add_member(:connection_options, Shapes::ShapeRef.new(shape: PropertiesMap, required: true, location_name: "ConnectionOptions"))
+    ComputeEnvironmentConfiguration.add_member(:connection_property_name_overrides, Shapes::ShapeRef.new(shape: PropertyNameOverrides, required: true, location_name: "ConnectionPropertyNameOverrides"))
+    ComputeEnvironmentConfiguration.add_member(:connection_option_name_overrides, Shapes::ShapeRef.new(shape: PropertyNameOverrides, required: true, location_name: "ConnectionOptionNameOverrides"))
+    ComputeEnvironmentConfiguration.add_member(:connection_properties_required_overrides, Shapes::ShapeRef.new(shape: ListOfString, required: true, location_name: "ConnectionPropertiesRequiredOverrides"))
+    ComputeEnvironmentConfiguration.add_member(:physical_connection_properties_required, Shapes::ShapeRef.new(shape: Bool, location_name: "PhysicalConnectionPropertiesRequired"))
+    ComputeEnvironmentConfiguration.struct_class = Types::ComputeEnvironmentConfiguration
+
+    ComputeEnvironmentConfigurationMap.key = Shapes::ShapeRef.new(shape: ComputeEnvironmentName)
+    ComputeEnvironmentConfigurationMap.value = Shapes::ShapeRef.new(shape: ComputeEnvironmentConfiguration)
+
+    ComputeEnvironmentList.member = Shapes::ShapeRef.new(shape: ComputeEnvironment)
+
+    ComputeEnvironments.member = Shapes::ShapeRef.new(shape: ComputeEnvironment)
 
     ConcurrentModificationException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     ConcurrentModificationException.struct_class = Types::ConcurrentModificationException
@@ -2125,7 +2370,9 @@ module Aws::Glue
     Connection.add_member(:connection_type, Shapes::ShapeRef.new(shape: ConnectionType, location_name: "ConnectionType"))
     Connection.add_member(:match_criteria, Shapes::ShapeRef.new(shape: MatchCriteria, location_name: "MatchCriteria"))
     Connection.add_member(:connection_properties, Shapes::ShapeRef.new(shape: ConnectionProperties, location_name: "ConnectionProperties"))
+    Connection.add_member(:spark_properties, Shapes::ShapeRef.new(shape: PropertyMap, location_name: "SparkProperties"))
     Connection.add_member(:athena_properties, Shapes::ShapeRef.new(shape: PropertyMap, location_name: "AthenaProperties"))
+    Connection.add_member(:python_properties, Shapes::ShapeRef.new(shape: PropertyMap, location_name: "PythonProperties"))
     Connection.add_member(:physical_connection_requirements, Shapes::ShapeRef.new(shape: PhysicalConnectionRequirements, location_name: "PhysicalConnectionRequirements"))
     Connection.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreationTime"))
     Connection.add_member(:last_updated_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastUpdatedTime"))
@@ -2134,6 +2381,8 @@ module Aws::Glue
     Connection.add_member(:status_reason, Shapes::ShapeRef.new(shape: LongValueString, location_name: "StatusReason"))
     Connection.add_member(:last_connection_validation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastConnectionValidationTime"))
     Connection.add_member(:authentication_configuration, Shapes::ShapeRef.new(shape: AuthenticationConfiguration, location_name: "AuthenticationConfiguration"))
+    Connection.add_member(:connection_schema_version, Shapes::ShapeRef.new(shape: ConnectionSchemaVersion, location_name: "ConnectionSchemaVersion"))
+    Connection.add_member(:compatible_compute_environments, Shapes::ShapeRef.new(shape: ComputeEnvironmentList, location_name: "CompatibleComputeEnvironments"))
     Connection.struct_class = Types::Connection
 
     ConnectionInput.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
@@ -2141,13 +2390,19 @@ module Aws::Glue
     ConnectionInput.add_member(:connection_type, Shapes::ShapeRef.new(shape: ConnectionType, required: true, location_name: "ConnectionType"))
     ConnectionInput.add_member(:match_criteria, Shapes::ShapeRef.new(shape: MatchCriteria, location_name: "MatchCriteria"))
     ConnectionInput.add_member(:connection_properties, Shapes::ShapeRef.new(shape: ConnectionProperties, required: true, location_name: "ConnectionProperties"))
+    ConnectionInput.add_member(:spark_properties, Shapes::ShapeRef.new(shape: PropertyMap, location_name: "SparkProperties"))
     ConnectionInput.add_member(:athena_properties, Shapes::ShapeRef.new(shape: PropertyMap, location_name: "AthenaProperties"))
+    ConnectionInput.add_member(:python_properties, Shapes::ShapeRef.new(shape: PropertyMap, location_name: "PythonProperties"))
     ConnectionInput.add_member(:physical_connection_requirements, Shapes::ShapeRef.new(shape: PhysicalConnectionRequirements, location_name: "PhysicalConnectionRequirements"))
     ConnectionInput.add_member(:authentication_configuration, Shapes::ShapeRef.new(shape: AuthenticationConfigurationInput, location_name: "AuthenticationConfiguration"))
     ConnectionInput.add_member(:validate_credentials, Shapes::ShapeRef.new(shape: Boolean, location_name: "ValidateCredentials"))
+    ConnectionInput.add_member(:validate_for_compute_environments, Shapes::ShapeRef.new(shape: ComputeEnvironmentList, location_name: "ValidateForComputeEnvironments"))
     ConnectionInput.struct_class = Types::ConnectionInput
 
     ConnectionList.member = Shapes::ShapeRef.new(shape: Connection)
+
+    ConnectionOptions.key = Shapes::ShapeRef.new(shape: OptionKey)
+    ConnectionOptions.value = Shapes::ShapeRef.new(shape: OptionValue)
 
     ConnectionPasswordEncryption.add_member(:return_connection_password_encrypted, Shapes::ShapeRef.new(shape: Boolean, required: true, location_name: "ReturnConnectionPasswordEncrypted"))
     ConnectionPasswordEncryption.add_member(:aws_kms_key_id, Shapes::ShapeRef.new(shape: NameString, location_name: "AwsKmsKeyId"))
@@ -2155,6 +2410,13 @@ module Aws::Glue
 
     ConnectionProperties.key = Shapes::ShapeRef.new(shape: ConnectionPropertyKey)
     ConnectionProperties.value = Shapes::ShapeRef.new(shape: ValueString)
+
+    ConnectionTypeBrief.add_member(:connection_type, Shapes::ShapeRef.new(shape: ConnectionType, location_name: "ConnectionType"))
+    ConnectionTypeBrief.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
+    ConnectionTypeBrief.add_member(:capabilities, Shapes::ShapeRef.new(shape: Capabilities, location_name: "Capabilities"))
+    ConnectionTypeBrief.struct_class = Types::ConnectionTypeBrief
+
+    ConnectionTypeList.member = Shapes::ShapeRef.new(shape: ConnectionTypeBrief)
 
     ConnectionsList.add_member(:connections, Shapes::ShapeRef.new(shape: OrchestrationStringList, location_name: "Connections"))
     ConnectionsList.struct_class = Types::ConnectionsList
@@ -2275,6 +2537,13 @@ module Aws::Glue
 
     CreateBlueprintResponse.add_member(:name, Shapes::ShapeRef.new(shape: NameString, location_name: "Name"))
     CreateBlueprintResponse.struct_class = Types::CreateBlueprintResponse
+
+    CreateCatalogRequest.add_member(:name, Shapes::ShapeRef.new(shape: CatalogNameString, required: true, location_name: "Name"))
+    CreateCatalogRequest.add_member(:catalog_input, Shapes::ShapeRef.new(shape: CatalogInput, required: true, location_name: "CatalogInput"))
+    CreateCatalogRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "Tags"))
+    CreateCatalogRequest.struct_class = Types::CreateCatalogRequest
+
+    CreateCatalogResponse.struct_class = Types::CreateCatalogResponse
 
     CreateClassifierRequest.add_member(:grok_classifier, Shapes::ShapeRef.new(shape: CreateGrokClassifierRequest, location_name: "GrokClassifier"))
     CreateClassifierRequest.add_member(:xml_classifier, Shapes::ShapeRef.new(shape: CreateXMLClassifierRequest, location_name: "XMLClassifier"))
@@ -2407,6 +2676,48 @@ module Aws::Glue
     CreateGrokClassifierRequest.add_member(:grok_pattern, Shapes::ShapeRef.new(shape: GrokPattern, required: true, location_name: "GrokPattern"))
     CreateGrokClassifierRequest.add_member(:custom_patterns, Shapes::ShapeRef.new(shape: CustomPatterns, location_name: "CustomPatterns"))
     CreateGrokClassifierRequest.struct_class = Types::CreateGrokClassifierRequest
+
+    CreateIntegrationRequest.add_member(:integration_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationName"))
+    CreateIntegrationRequest.add_member(:source_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "SourceArn"))
+    CreateIntegrationRequest.add_member(:target_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TargetArn"))
+    CreateIntegrationRequest.add_member(:description, Shapes::ShapeRef.new(shape: IntegrationDescription, location_name: "Description"))
+    CreateIntegrationRequest.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
+    CreateIntegrationRequest.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String2048, location_name: "KmsKeyId"))
+    CreateIntegrationRequest.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: IntegrationAdditionalEncryptionContextMap, location_name: "AdditionalEncryptionContext"))
+    CreateIntegrationRequest.add_member(:tags, Shapes::ShapeRef.new(shape: IntegrationTagsList, location_name: "Tags"))
+    CreateIntegrationRequest.struct_class = Types::CreateIntegrationRequest
+
+    CreateIntegrationResourcePropertyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    CreateIntegrationResourcePropertyRequest.add_member(:source_processing_properties, Shapes::ShapeRef.new(shape: SourceProcessingProperties, location_name: "SourceProcessingProperties"))
+    CreateIntegrationResourcePropertyRequest.add_member(:target_processing_properties, Shapes::ShapeRef.new(shape: TargetProcessingProperties, location_name: "TargetProcessingProperties"))
+    CreateIntegrationResourcePropertyRequest.struct_class = Types::CreateIntegrationResourcePropertyRequest
+
+    CreateIntegrationResourcePropertyResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    CreateIntegrationResourcePropertyResponse.add_member(:source_processing_properties, Shapes::ShapeRef.new(shape: SourceProcessingProperties, location_name: "SourceProcessingProperties"))
+    CreateIntegrationResourcePropertyResponse.add_member(:target_processing_properties, Shapes::ShapeRef.new(shape: TargetProcessingProperties, location_name: "TargetProcessingProperties"))
+    CreateIntegrationResourcePropertyResponse.struct_class = Types::CreateIntegrationResourcePropertyResponse
+
+    CreateIntegrationResponse.add_member(:source_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "SourceArn"))
+    CreateIntegrationResponse.add_member(:target_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TargetArn"))
+    CreateIntegrationResponse.add_member(:integration_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationName"))
+    CreateIntegrationResponse.add_member(:description, Shapes::ShapeRef.new(shape: IntegrationDescription, location_name: "Description"))
+    CreateIntegrationResponse.add_member(:integration_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationArn"))
+    CreateIntegrationResponse.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String2048, location_name: "KmsKeyId"))
+    CreateIntegrationResponse.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: IntegrationAdditionalEncryptionContextMap, location_name: "AdditionalEncryptionContext"))
+    CreateIntegrationResponse.add_member(:tags, Shapes::ShapeRef.new(shape: IntegrationTagsList, location_name: "Tags"))
+    CreateIntegrationResponse.add_member(:status, Shapes::ShapeRef.new(shape: IntegrationStatus, required: true, location_name: "Status"))
+    CreateIntegrationResponse.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
+    CreateIntegrationResponse.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
+    CreateIntegrationResponse.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
+    CreateIntegrationResponse.struct_class = Types::CreateIntegrationResponse
+
+    CreateIntegrationTablePropertiesRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    CreateIntegrationTablePropertiesRequest.add_member(:table_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TableName"))
+    CreateIntegrationTablePropertiesRequest.add_member(:source_table_config, Shapes::ShapeRef.new(shape: SourceTableConfig, location_name: "SourceTableConfig"))
+    CreateIntegrationTablePropertiesRequest.add_member(:target_table_config, Shapes::ShapeRef.new(shape: TargetTableConfig, location_name: "TargetTableConfig"))
+    CreateIntegrationTablePropertiesRequest.struct_class = Types::CreateIntegrationTablePropertiesRequest
+
+    CreateIntegrationTablePropertiesResponse.struct_class = Types::CreateIntegrationTablePropertiesResponse
 
     CreateJobRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
     CreateJobRequest.add_member(:job_mode, Shapes::ShapeRef.new(shape: JobMode, location_name: "JobMode"))
@@ -2614,6 +2925,9 @@ module Aws::Glue
     CreateXMLClassifierRequest.add_member(:row_tag, Shapes::ShapeRef.new(shape: RowTag, location_name: "RowTag"))
     CreateXMLClassifierRequest.struct_class = Types::CreateXMLClassifierRequest
 
+    CredentialMap.key = Shapes::ShapeRef.new(shape: CredentialKey)
+    CredentialMap.value = Shapes::ShapeRef.new(shape: CredentialValue)
+
     CsvClassifier.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
     CsvClassifier.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreationTime"))
     CsvClassifier.add_member(:last_updated, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastUpdated"))
@@ -2649,6 +2963,9 @@ module Aws::Glue
 
     CustomEntityTypes.member = Shapes::ShapeRef.new(shape: CustomEntityType)
 
+    CustomProperties.key = Shapes::ShapeRef.new(shape: String)
+    CustomProperties.value = Shapes::ShapeRef.new(shape: String)
+
     DQAdditionalOptions.key = Shapes::ShapeRef.new(shape: AdditionalOptionKeys)
     DQAdditionalOptions.value = Shapes::ShapeRef.new(shape: GenericString)
 
@@ -2672,8 +2989,26 @@ module Aws::Glue
     DataCatalogEncryptionSettings.add_member(:connection_password_encryption, Shapes::ShapeRef.new(shape: ConnectionPasswordEncryption, location_name: "ConnectionPasswordEncryption"))
     DataCatalogEncryptionSettings.struct_class = Types::DataCatalogEncryptionSettings
 
+    DataLakeAccessProperties.add_member(:data_lake_access, Shapes::ShapeRef.new(shape: Boolean, location_name: "DataLakeAccess"))
+    DataLakeAccessProperties.add_member(:data_transfer_role, Shapes::ShapeRef.new(shape: IAMRoleArn, location_name: "DataTransferRole"))
+    DataLakeAccessProperties.add_member(:kms_key, Shapes::ShapeRef.new(shape: ResourceArnString, location_name: "KmsKey"))
+    DataLakeAccessProperties.add_member(:catalog_type, Shapes::ShapeRef.new(shape: NameString, location_name: "CatalogType"))
+    DataLakeAccessProperties.struct_class = Types::DataLakeAccessProperties
+
+    DataLakeAccessPropertiesOutput.add_member(:data_lake_access, Shapes::ShapeRef.new(shape: Boolean, location_name: "DataLakeAccess"))
+    DataLakeAccessPropertiesOutput.add_member(:data_transfer_role, Shapes::ShapeRef.new(shape: IAMRoleArn, location_name: "DataTransferRole"))
+    DataLakeAccessPropertiesOutput.add_member(:kms_key, Shapes::ShapeRef.new(shape: ResourceArnString, location_name: "KmsKey"))
+    DataLakeAccessPropertiesOutput.add_member(:managed_workgroup_name, Shapes::ShapeRef.new(shape: NameString, location_name: "ManagedWorkgroupName"))
+    DataLakeAccessPropertiesOutput.add_member(:managed_workgroup_status, Shapes::ShapeRef.new(shape: NameString, location_name: "ManagedWorkgroupStatus"))
+    DataLakeAccessPropertiesOutput.add_member(:redshift_database_name, Shapes::ShapeRef.new(shape: NameString, location_name: "RedshiftDatabaseName"))
+    DataLakeAccessPropertiesOutput.add_member(:status_message, Shapes::ShapeRef.new(shape: NameString, location_name: "StatusMessage"))
+    DataLakeAccessPropertiesOutput.add_member(:catalog_type, Shapes::ShapeRef.new(shape: NameString, location_name: "CatalogType"))
+    DataLakeAccessPropertiesOutput.struct_class = Types::DataLakeAccessPropertiesOutput
+
     DataLakePrincipal.add_member(:data_lake_principal_identifier, Shapes::ShapeRef.new(shape: DataLakePrincipalString, location_name: "DataLakePrincipalIdentifier"))
     DataLakePrincipal.struct_class = Types::DataLakePrincipal
+
+    DataOperations.member = Shapes::ShapeRef.new(shape: DataOperation)
 
     DataQualityAnalyzerResult.add_member(:name, Shapes::ShapeRef.new(shape: NameString, location_name: "Name"))
     DataQualityAnalyzerResult.add_member(:description, Shapes::ShapeRef.new(shape: DataQualityRuleResultDescription, location_name: "Description"))
@@ -2865,6 +3200,11 @@ module Aws::Glue
     DeleteBlueprintResponse.add_member(:name, Shapes::ShapeRef.new(shape: NameString, location_name: "Name"))
     DeleteBlueprintResponse.struct_class = Types::DeleteBlueprintResponse
 
+    DeleteCatalogRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, required: true, location_name: "CatalogId"))
+    DeleteCatalogRequest.struct_class = Types::DeleteCatalogRequest
+
+    DeleteCatalogResponse.struct_class = Types::DeleteCatalogResponse
+
     DeleteClassifierRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
     DeleteClassifierRequest.struct_class = Types::DeleteClassifierRequest
 
@@ -2927,6 +3267,29 @@ module Aws::Glue
     DeleteDevEndpointRequest.struct_class = Types::DeleteDevEndpointRequest
 
     DeleteDevEndpointResponse.struct_class = Types::DeleteDevEndpointResponse
+
+    DeleteIntegrationRequest.add_member(:integration_identifier, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationIdentifier"))
+    DeleteIntegrationRequest.struct_class = Types::DeleteIntegrationRequest
+
+    DeleteIntegrationResponse.add_member(:source_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "SourceArn"))
+    DeleteIntegrationResponse.add_member(:target_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TargetArn"))
+    DeleteIntegrationResponse.add_member(:integration_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationName"))
+    DeleteIntegrationResponse.add_member(:description, Shapes::ShapeRef.new(shape: IntegrationDescription, location_name: "Description"))
+    DeleteIntegrationResponse.add_member(:integration_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationArn"))
+    DeleteIntegrationResponse.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String2048, location_name: "KmsKeyId"))
+    DeleteIntegrationResponse.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: IntegrationAdditionalEncryptionContextMap, location_name: "AdditionalEncryptionContext"))
+    DeleteIntegrationResponse.add_member(:tags, Shapes::ShapeRef.new(shape: IntegrationTagsList, location_name: "Tags"))
+    DeleteIntegrationResponse.add_member(:status, Shapes::ShapeRef.new(shape: IntegrationStatus, required: true, location_name: "Status"))
+    DeleteIntegrationResponse.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
+    DeleteIntegrationResponse.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
+    DeleteIntegrationResponse.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
+    DeleteIntegrationResponse.struct_class = Types::DeleteIntegrationResponse
+
+    DeleteIntegrationTablePropertiesRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    DeleteIntegrationTablePropertiesRequest.add_member(:table_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TableName"))
+    DeleteIntegrationTablePropertiesRequest.struct_class = Types::DeleteIntegrationTablePropertiesRequest
+
+    DeleteIntegrationTablePropertiesResponse.struct_class = Types::DeleteIntegrationTablePropertiesResponse
 
     DeleteJobRequest.add_member(:job_name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "JobName"))
     DeleteJobRequest.struct_class = Types::DeleteJobRequest
@@ -3052,6 +3415,53 @@ module Aws::Glue
     DeltaTarget.struct_class = Types::DeltaTarget
 
     DeltaTargetList.member = Shapes::ShapeRef.new(shape: DeltaTarget)
+
+    DescribeConnectionTypeRequest.add_member(:connection_type, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "ConnectionType"))
+    DescribeConnectionTypeRequest.struct_class = Types::DescribeConnectionTypeRequest
+
+    DescribeConnectionTypeResponse.add_member(:connection_type, Shapes::ShapeRef.new(shape: NameString, location_name: "ConnectionType"))
+    DescribeConnectionTypeResponse.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "Description"))
+    DescribeConnectionTypeResponse.add_member(:capabilities, Shapes::ShapeRef.new(shape: Capabilities, location_name: "Capabilities"))
+    DescribeConnectionTypeResponse.add_member(:connection_properties, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "ConnectionProperties"))
+    DescribeConnectionTypeResponse.add_member(:connection_options, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "ConnectionOptions"))
+    DescribeConnectionTypeResponse.add_member(:authentication_configuration, Shapes::ShapeRef.new(shape: AuthConfiguration, location_name: "AuthenticationConfiguration"))
+    DescribeConnectionTypeResponse.add_member(:compute_environment_configurations, Shapes::ShapeRef.new(shape: ComputeEnvironmentConfigurationMap, location_name: "ComputeEnvironmentConfigurations"))
+    DescribeConnectionTypeResponse.add_member(:physical_connection_requirements, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "PhysicalConnectionRequirements"))
+    DescribeConnectionTypeResponse.add_member(:athena_connection_properties, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "AthenaConnectionProperties"))
+    DescribeConnectionTypeResponse.add_member(:python_connection_properties, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "PythonConnectionProperties"))
+    DescribeConnectionTypeResponse.add_member(:spark_connection_properties, Shapes::ShapeRef.new(shape: PropertiesMap, location_name: "SparkConnectionProperties"))
+    DescribeConnectionTypeResponse.struct_class = Types::DescribeConnectionTypeResponse
+
+    DescribeEntityRequest.add_member(:connection_name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "ConnectionName"))
+    DescribeEntityRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "CatalogId"))
+    DescribeEntityRequest.add_member(:entity_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "EntityName"))
+    DescribeEntityRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    DescribeEntityRequest.add_member(:data_store_api_version, Shapes::ShapeRef.new(shape: ApiVersion, location_name: "DataStoreApiVersion"))
+    DescribeEntityRequest.struct_class = Types::DescribeEntityRequest
+
+    DescribeEntityResponse.add_member(:fields, Shapes::ShapeRef.new(shape: FieldsList, location_name: "Fields"))
+    DescribeEntityResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    DescribeEntityResponse.struct_class = Types::DescribeEntityResponse
+
+    DescribeInboundIntegrationsRequest.add_member(:integration_arn, Shapes::ShapeRef.new(shape: String128, location_name: "IntegrationArn"))
+    DescribeInboundIntegrationsRequest.add_member(:marker, Shapes::ShapeRef.new(shape: String128, location_name: "Marker"))
+    DescribeInboundIntegrationsRequest.add_member(:max_records, Shapes::ShapeRef.new(shape: IntegrationInteger, location_name: "MaxRecords"))
+    DescribeInboundIntegrationsRequest.add_member(:target_arn, Shapes::ShapeRef.new(shape: String128, location_name: "TargetArn"))
+    DescribeInboundIntegrationsRequest.struct_class = Types::DescribeInboundIntegrationsRequest
+
+    DescribeInboundIntegrationsResponse.add_member(:inbound_integrations, Shapes::ShapeRef.new(shape: InboundIntegrationsList, location_name: "InboundIntegrations"))
+    DescribeInboundIntegrationsResponse.add_member(:marker, Shapes::ShapeRef.new(shape: String128, location_name: "Marker"))
+    DescribeInboundIntegrationsResponse.struct_class = Types::DescribeInboundIntegrationsResponse
+
+    DescribeIntegrationsRequest.add_member(:integration_identifier, Shapes::ShapeRef.new(shape: String128, location_name: "IntegrationIdentifier"))
+    DescribeIntegrationsRequest.add_member(:marker, Shapes::ShapeRef.new(shape: String128, location_name: "Marker"))
+    DescribeIntegrationsRequest.add_member(:max_records, Shapes::ShapeRef.new(shape: IntegrationInteger, location_name: "MaxRecords"))
+    DescribeIntegrationsRequest.add_member(:filters, Shapes::ShapeRef.new(shape: IntegrationFilterList, location_name: "Filters"))
+    DescribeIntegrationsRequest.struct_class = Types::DescribeIntegrationsRequest
+
+    DescribeIntegrationsResponse.add_member(:integrations, Shapes::ShapeRef.new(shape: IntegrationsList, location_name: "Integrations"))
+    DescribeIntegrationsResponse.add_member(:marker, Shapes::ShapeRef.new(shape: String128, location_name: "Marker"))
+    DescribeIntegrationsResponse.struct_class = Types::DescribeIntegrationsResponse
 
     DevEndpoint.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: GenericString, location_name: "EndpointName"))
     DevEndpoint.add_member(:role_arn, Shapes::ShapeRef.new(shape: RoleArn, location_name: "RoleArn"))
@@ -3184,6 +3594,16 @@ module Aws::Glue
     EncryptionConfiguration.add_member(:job_bookmarks_encryption, Shapes::ShapeRef.new(shape: JobBookmarksEncryption, location_name: "JobBookmarksEncryption"))
     EncryptionConfiguration.struct_class = Types::EncryptionConfiguration
 
+    Entity.add_member(:entity_name, Shapes::ShapeRef.new(shape: EntityName, location_name: "EntityName"))
+    Entity.add_member(:label, Shapes::ShapeRef.new(shape: EntityLabel, location_name: "Label"))
+    Entity.add_member(:is_parent_entity, Shapes::ShapeRef.new(shape: IsParentEntity, location_name: "IsParentEntity"))
+    Entity.add_member(:description, Shapes::ShapeRef.new(shape: EntityDescription, location_name: "Description"))
+    Entity.add_member(:category, Shapes::ShapeRef.new(shape: Category, location_name: "Category"))
+    Entity.add_member(:custom_properties, Shapes::ShapeRef.new(shape: CustomProperties, location_name: "CustomProperties"))
+    Entity.struct_class = Types::Entity
+
+    EntityList.member = Shapes::ShapeRef.new(shape: Entity)
+
     EntityNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     EntityNotFoundException.add_member(:from_federation_source, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "FromFederationSource"))
     EntityNotFoundException.struct_class = Types::EntityNotFoundException
@@ -3227,11 +3647,21 @@ module Aws::Glue
     EventBatchingCondition.add_member(:batch_window, Shapes::ShapeRef.new(shape: BatchWindow, location_name: "BatchWindow"))
     EventBatchingCondition.struct_class = Types::EventBatchingCondition
 
+    ExecutionAttempt.add_member(:status, Shapes::ShapeRef.new(shape: ExecutionStatus, location_name: "Status"))
+    ExecutionAttempt.add_member(:column_statistics_task_run_id, Shapes::ShapeRef.new(shape: HashString, location_name: "ColumnStatisticsTaskRunId"))
+    ExecutionAttempt.add_member(:execution_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "ExecutionTimestamp"))
+    ExecutionAttempt.add_member(:error_message, Shapes::ShapeRef.new(shape: DescriptionString, location_name: "ErrorMessage"))
+    ExecutionAttempt.struct_class = Types::ExecutionAttempt
+
     ExecutionProperty.add_member(:max_concurrent_runs, Shapes::ShapeRef.new(shape: MaxConcurrentRuns, location_name: "MaxConcurrentRuns"))
     ExecutionProperty.struct_class = Types::ExecutionProperty
 
     ExportLabelsTaskRunProperties.add_member(:output_s3_path, Shapes::ShapeRef.new(shape: UriString, location_name: "OutputS3Path"))
     ExportLabelsTaskRunProperties.struct_class = Types::ExportLabelsTaskRunProperties
+
+    FederatedCatalog.add_member(:identifier, Shapes::ShapeRef.new(shape: FederationIdentifier, location_name: "Identifier"))
+    FederatedCatalog.add_member(:connection_name, Shapes::ShapeRef.new(shape: NameString, location_name: "ConnectionName"))
+    FederatedCatalog.struct_class = Types::FederatedCatalog
 
     FederatedDatabase.add_member(:identifier, Shapes::ShapeRef.new(shape: FederationIdentifier, location_name: "Identifier"))
     FederatedDatabase.add_member(:connection_name, Shapes::ShapeRef.new(shape: NameString, location_name: "ConnectionName"))
@@ -3252,6 +3682,30 @@ module Aws::Glue
 
     FederationSourceRetryableException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     FederationSourceRetryableException.struct_class = Types::FederationSourceRetryableException
+
+    Field.add_member(:field_name, Shapes::ShapeRef.new(shape: EntityFieldName, location_name: "FieldName"))
+    Field.add_member(:label, Shapes::ShapeRef.new(shape: FieldLabel, location_name: "Label"))
+    Field.add_member(:description, Shapes::ShapeRef.new(shape: FieldDescription, location_name: "Description"))
+    Field.add_member(:field_type, Shapes::ShapeRef.new(shape: FieldDataType, location_name: "FieldType"))
+    Field.add_member(:is_primary_key, Shapes::ShapeRef.new(shape: Bool, location_name: "IsPrimaryKey"))
+    Field.add_member(:is_nullable, Shapes::ShapeRef.new(shape: Bool, location_name: "IsNullable"))
+    Field.add_member(:is_retrievable, Shapes::ShapeRef.new(shape: Bool, location_name: "IsRetrievable"))
+    Field.add_member(:is_filterable, Shapes::ShapeRef.new(shape: Bool, location_name: "IsFilterable"))
+    Field.add_member(:is_partitionable, Shapes::ShapeRef.new(shape: Bool, location_name: "IsPartitionable"))
+    Field.add_member(:is_createable, Shapes::ShapeRef.new(shape: Bool, location_name: "IsCreateable"))
+    Field.add_member(:is_updateable, Shapes::ShapeRef.new(shape: Bool, location_name: "IsUpdateable"))
+    Field.add_member(:is_upsertable, Shapes::ShapeRef.new(shape: Bool, location_name: "IsUpsertable"))
+    Field.add_member(:is_default_on_create, Shapes::ShapeRef.new(shape: Bool, location_name: "IsDefaultOnCreate"))
+    Field.add_member(:supported_values, Shapes::ShapeRef.new(shape: ListOfString, location_name: "SupportedValues"))
+    Field.add_member(:supported_filter_operators, Shapes::ShapeRef.new(shape: FieldFilterOperatorsList, location_name: "SupportedFilterOperators"))
+    Field.add_member(:parent_field, Shapes::ShapeRef.new(shape: String, location_name: "ParentField"))
+    Field.add_member(:native_data_type, Shapes::ShapeRef.new(shape: String, location_name: "NativeDataType"))
+    Field.add_member(:custom_properties, Shapes::ShapeRef.new(shape: CustomProperties, location_name: "CustomProperties"))
+    Field.struct_class = Types::Field
+
+    FieldFilterOperatorsList.member = Shapes::ShapeRef.new(shape: FieldFilterOperator)
+
+    FieldsList.member = Shapes::ShapeRef.new(shape: Field)
 
     FillMissingValues.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))
     FillMissingValues.add_member(:inputs, Shapes::ShapeRef.new(shape: OneInput, required: true, location_name: "Inputs"))
@@ -3330,6 +3784,22 @@ module Aws::Glue
     GetCatalogImportStatusResponse.add_member(:import_status, Shapes::ShapeRef.new(shape: CatalogImportStatus, location_name: "ImportStatus"))
     GetCatalogImportStatusResponse.struct_class = Types::GetCatalogImportStatusResponse
 
+    GetCatalogRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, required: true, location_name: "CatalogId"))
+    GetCatalogRequest.struct_class = Types::GetCatalogRequest
+
+    GetCatalogResponse.add_member(:catalog, Shapes::ShapeRef.new(shape: Catalog, location_name: "Catalog"))
+    GetCatalogResponse.struct_class = Types::GetCatalogResponse
+
+    GetCatalogsRequest.add_member(:parent_catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "ParentCatalogId"))
+    GetCatalogsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
+    GetCatalogsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: PageSize, location_name: "MaxResults"))
+    GetCatalogsRequest.add_member(:recursive, Shapes::ShapeRef.new(shape: Boolean, location_name: "Recursive"))
+    GetCatalogsRequest.struct_class = Types::GetCatalogsRequest
+
+    GetCatalogsResponse.add_member(:catalog_list, Shapes::ShapeRef.new(shape: CatalogList, required: true, location_name: "CatalogList"))
+    GetCatalogsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
+    GetCatalogsResponse.struct_class = Types::GetCatalogsResponse
+
     GetClassifierRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
     GetClassifierRequest.struct_class = Types::GetClassifierRequest
 
@@ -3393,6 +3863,7 @@ module Aws::Glue
     GetConnectionRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "CatalogId"))
     GetConnectionRequest.add_member(:name, Shapes::ShapeRef.new(shape: NameString, required: true, location_name: "Name"))
     GetConnectionRequest.add_member(:hide_password, Shapes::ShapeRef.new(shape: Boolean, location_name: "HidePassword"))
+    GetConnectionRequest.add_member(:apply_override_for_compute_environment, Shapes::ShapeRef.new(shape: ComputeEnvironment, location_name: "ApplyOverrideForComputeEnvironment"))
     GetConnectionRequest.struct_class = Types::GetConnectionRequest
 
     GetConnectionResponse.add_member(:connection, Shapes::ShapeRef.new(shape: Connection, location_name: "Connection"))
@@ -3400,6 +3871,7 @@ module Aws::Glue
 
     GetConnectionsFilter.add_member(:match_criteria, Shapes::ShapeRef.new(shape: MatchCriteria, location_name: "MatchCriteria"))
     GetConnectionsFilter.add_member(:connection_type, Shapes::ShapeRef.new(shape: ConnectionType, location_name: "ConnectionType"))
+    GetConnectionsFilter.add_member(:connection_schema_version, Shapes::ShapeRef.new(shape: ConnectionSchemaVersion, location_name: "ConnectionSchemaVersion"))
     GetConnectionsFilter.struct_class = Types::GetConnectionsFilter
 
     GetConnectionsRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "CatalogId"))
@@ -3577,6 +4049,40 @@ module Aws::Glue
     GetDevEndpointsResponse.add_member(:dev_endpoints, Shapes::ShapeRef.new(shape: DevEndpointList, location_name: "DevEndpoints"))
     GetDevEndpointsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: GenericString, location_name: "NextToken"))
     GetDevEndpointsResponse.struct_class = Types::GetDevEndpointsResponse
+
+    GetEntityRecordsRequest.add_member(:connection_name, Shapes::ShapeRef.new(shape: NameString, location_name: "ConnectionName"))
+    GetEntityRecordsRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "CatalogId"))
+    GetEntityRecordsRequest.add_member(:entity_name, Shapes::ShapeRef.new(shape: EntityName, required: true, location_name: "EntityName"))
+    GetEntityRecordsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    GetEntityRecordsRequest.add_member(:data_store_api_version, Shapes::ShapeRef.new(shape: ApiVersion, location_name: "DataStoreApiVersion"))
+    GetEntityRecordsRequest.add_member(:connection_options, Shapes::ShapeRef.new(shape: ConnectionOptions, location_name: "ConnectionOptions"))
+    GetEntityRecordsRequest.add_member(:filter_predicate, Shapes::ShapeRef.new(shape: FilterPredicate, location_name: "FilterPredicate"))
+    GetEntityRecordsRequest.add_member(:limit, Shapes::ShapeRef.new(shape: Limit, required: true, location_name: "Limit"))
+    GetEntityRecordsRequest.add_member(:order_by, Shapes::ShapeRef.new(shape: String, location_name: "OrderBy"))
+    GetEntityRecordsRequest.add_member(:selected_fields, Shapes::ShapeRef.new(shape: SelectedFields, location_name: "SelectedFields"))
+    GetEntityRecordsRequest.struct_class = Types::GetEntityRecordsRequest
+
+    GetEntityRecordsResponse.add_member(:records, Shapes::ShapeRef.new(shape: Records, location_name: "Records"))
+    GetEntityRecordsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    GetEntityRecordsResponse.struct_class = Types::GetEntityRecordsResponse
+
+    GetIntegrationResourcePropertyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    GetIntegrationResourcePropertyRequest.struct_class = Types::GetIntegrationResourcePropertyRequest
+
+    GetIntegrationResourcePropertyResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, location_name: "ResourceArn"))
+    GetIntegrationResourcePropertyResponse.add_member(:source_processing_properties, Shapes::ShapeRef.new(shape: SourceProcessingProperties, location_name: "SourceProcessingProperties"))
+    GetIntegrationResourcePropertyResponse.add_member(:target_processing_properties, Shapes::ShapeRef.new(shape: TargetProcessingProperties, location_name: "TargetProcessingProperties"))
+    GetIntegrationResourcePropertyResponse.struct_class = Types::GetIntegrationResourcePropertyResponse
+
+    GetIntegrationTablePropertiesRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    GetIntegrationTablePropertiesRequest.add_member(:table_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TableName"))
+    GetIntegrationTablePropertiesRequest.struct_class = Types::GetIntegrationTablePropertiesRequest
+
+    GetIntegrationTablePropertiesResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, location_name: "ResourceArn"))
+    GetIntegrationTablePropertiesResponse.add_member(:table_name, Shapes::ShapeRef.new(shape: String128, location_name: "TableName"))
+    GetIntegrationTablePropertiesResponse.add_member(:source_table_config, Shapes::ShapeRef.new(shape: SourceTableConfig, location_name: "SourceTableConfig"))
+    GetIntegrationTablePropertiesResponse.add_member(:target_table_config, Shapes::ShapeRef.new(shape: TargetTableConfig, location_name: "TargetTableConfig"))
+    GetIntegrationTablePropertiesResponse.struct_class = Types::GetIntegrationTablePropertiesResponse
 
     GetJobBookmarkRequest.add_member(:job_name, Shapes::ShapeRef.new(shape: JobName, required: true, location_name: "JobName"))
     GetJobBookmarkRequest.add_member(:run_id, Shapes::ShapeRef.new(shape: RunId, location_name: "RunId"))
@@ -4168,7 +4674,70 @@ module Aws::Glue
     ImportLabelsTaskRunProperties.add_member(:replace, Shapes::ShapeRef.new(shape: ReplaceBoolean, location_name: "Replace"))
     ImportLabelsTaskRunProperties.struct_class = Types::ImportLabelsTaskRunProperties
 
+    InboundIntegration.add_member(:source_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "SourceArn"))
+    InboundIntegration.add_member(:target_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TargetArn"))
+    InboundIntegration.add_member(:integration_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationArn"))
+    InboundIntegration.add_member(:status, Shapes::ShapeRef.new(shape: IntegrationStatus, required: true, location_name: "Status"))
+    InboundIntegration.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
+    InboundIntegration.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
+    InboundIntegration.struct_class = Types::InboundIntegration
+
+    InboundIntegrationsList.member = Shapes::ShapeRef.new(shape: InboundIntegration)
+
     InclusionAnnotationList.member = Shapes::ShapeRef.new(shape: DatapointInclusionAnnotation)
+
+    Integration.add_member(:source_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "SourceArn"))
+    Integration.add_member(:target_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TargetArn"))
+    Integration.add_member(:description, Shapes::ShapeRef.new(shape: IntegrationDescription, location_name: "Description"))
+    Integration.add_member(:integration_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationName"))
+    Integration.add_member(:integration_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationArn"))
+    Integration.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String2048, location_name: "KmsKeyId"))
+    Integration.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: IntegrationAdditionalEncryptionContextMap, location_name: "AdditionalEncryptionContext"))
+    Integration.add_member(:tags, Shapes::ShapeRef.new(shape: IntegrationTagsList, location_name: "Tags"))
+    Integration.add_member(:status, Shapes::ShapeRef.new(shape: IntegrationStatus, required: true, location_name: "Status"))
+    Integration.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
+    Integration.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
+    Integration.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
+    Integration.struct_class = Types::Integration
+
+    IntegrationAdditionalEncryptionContextMap.key = Shapes::ShapeRef.new(shape: IntegrationString)
+    IntegrationAdditionalEncryptionContextMap.value = Shapes::ShapeRef.new(shape: IntegrationString)
+
+    IntegrationConflictOperationFault.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    IntegrationConflictOperationFault.struct_class = Types::IntegrationConflictOperationFault
+
+    IntegrationError.add_member(:error_code, Shapes::ShapeRef.new(shape: String128, location_name: "ErrorCode"))
+    IntegrationError.add_member(:error_message, Shapes::ShapeRef.new(shape: String2048, location_name: "ErrorMessage"))
+    IntegrationError.struct_class = Types::IntegrationError
+
+    IntegrationErrorList.member = Shapes::ShapeRef.new(shape: IntegrationError)
+
+    IntegrationFilter.add_member(:name, Shapes::ShapeRef.new(shape: String128, location_name: "Name"))
+    IntegrationFilter.add_member(:values, Shapes::ShapeRef.new(shape: IntegrationFilterValues, location_name: "Values"))
+    IntegrationFilter.struct_class = Types::IntegrationFilter
+
+    IntegrationFilterList.member = Shapes::ShapeRef.new(shape: IntegrationFilter)
+
+    IntegrationFilterValues.member = Shapes::ShapeRef.new(shape: String128)
+
+    IntegrationNotFoundFault.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    IntegrationNotFoundFault.struct_class = Types::IntegrationNotFoundFault
+
+    IntegrationPartition.add_member(:field_name, Shapes::ShapeRef.new(shape: String128, location_name: "FieldName"))
+    IntegrationPartition.add_member(:function_spec, Shapes::ShapeRef.new(shape: String128, location_name: "FunctionSpec"))
+    IntegrationPartition.struct_class = Types::IntegrationPartition
+
+    IntegrationPartitionSpecList.member = Shapes::ShapeRef.new(shape: IntegrationPartition)
+
+    IntegrationQuotaExceededFault.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    IntegrationQuotaExceededFault.struct_class = Types::IntegrationQuotaExceededFault
+
+    IntegrationTagsList.member = Shapes::ShapeRef.new(shape: Tag)
+
+    IntegrationsList.member = Shapes::ShapeRef.new(shape: Integration)
+
+    InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    InternalServerException.struct_class = Types::InternalServerException
 
     InternalServiceException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     InternalServiceException.struct_class = Types::InternalServiceException
@@ -4176,6 +4745,9 @@ module Aws::Glue
     InvalidInputException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     InvalidInputException.add_member(:from_federation_source, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "FromFederationSource"))
     InvalidInputException.struct_class = Types::InvalidInputException
+
+    InvalidIntegrationStateFault.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    InvalidIntegrationStateFault.struct_class = Types::InvalidIntegrationStateFault
 
     InvalidStateException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     InvalidStateException.struct_class = Types::InvalidStateException
@@ -4353,6 +4925,9 @@ module Aws::Glue
     JsonClassifier.add_member(:json_path, Shapes::ShapeRef.new(shape: JsonPath, required: true, location_name: "JsonPath"))
     JsonClassifier.struct_class = Types::JsonClassifier
 
+    KMSKeyNotAccessibleFault.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    KMSKeyNotAccessibleFault.struct_class = Types::KMSKeyNotAccessibleFault
+
     KafkaStreamingSourceOptions.add_member(:bootstrap_servers, Shapes::ShapeRef.new(shape: EnclosedInStringProperty, location_name: "BootstrapServers"))
     KafkaStreamingSourceOptions.add_member(:security_protocol, Shapes::ShapeRef.new(shape: EnclosedInStringProperty, location_name: "SecurityProtocol"))
     KafkaStreamingSourceOptions.add_member(:connection_name, Shapes::ShapeRef.new(shape: EnclosedInStringProperty, location_name: "ConnectionName"))
@@ -4451,6 +5026,14 @@ module Aws::Glue
     ListColumnStatisticsTaskRunsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
     ListColumnStatisticsTaskRunsResponse.struct_class = Types::ListColumnStatisticsTaskRunsResponse
 
+    ListConnectionTypesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
+    ListConnectionTypesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListConnectionTypesRequest.struct_class = Types::ListConnectionTypesRequest
+
+    ListConnectionTypesResponse.add_member(:connection_types, Shapes::ShapeRef.new(shape: ConnectionTypeList, location_name: "ConnectionTypes"))
+    ListConnectionTypesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListConnectionTypesResponse.struct_class = Types::ListConnectionTypesResponse
+
     ListCrawlersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: PageSize, location_name: "MaxResults"))
     ListCrawlersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
     ListCrawlersRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "Tags"))
@@ -4547,6 +5130,17 @@ module Aws::Glue
     ListDevEndpointsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: GenericString, location_name: "NextToken"))
     ListDevEndpointsResponse.struct_class = Types::ListDevEndpointsResponse
 
+    ListEntitiesRequest.add_member(:connection_name, Shapes::ShapeRef.new(shape: NameString, location_name: "ConnectionName"))
+    ListEntitiesRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "CatalogId"))
+    ListEntitiesRequest.add_member(:parent_entity_name, Shapes::ShapeRef.new(shape: EntityName, location_name: "ParentEntityName"))
+    ListEntitiesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListEntitiesRequest.add_member(:data_store_api_version, Shapes::ShapeRef.new(shape: ApiVersion, location_name: "DataStoreApiVersion"))
+    ListEntitiesRequest.struct_class = Types::ListEntitiesRequest
+
+    ListEntitiesResponse.add_member(:entities, Shapes::ShapeRef.new(shape: EntityList, location_name: "Entities"))
+    ListEntitiesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListEntitiesResponse.struct_class = Types::ListEntitiesResponse
+
     ListJobsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: GenericString, location_name: "NextToken"))
     ListJobsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: PageSize, location_name: "MaxResults"))
     ListJobsRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "Tags"))
@@ -4566,6 +5160,8 @@ module Aws::Glue
     ListMLTransformsResponse.add_member(:transform_ids, Shapes::ShapeRef.new(shape: TransformIdList, required: true, location_name: "TransformIds"))
     ListMLTransformsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "NextToken"))
     ListMLTransformsResponse.struct_class = Types::ListMLTransformsResponse
+
+    ListOfString.member = Shapes::ShapeRef.new(shape: String)
 
     ListRegistriesInput.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsNumber, location_name: "MaxResults"))
     ListRegistriesInput.add_member(:next_token, Shapes::ShapeRef.new(shape: SchemaRegistryTokenString, location_name: "NextToken"))
@@ -4762,6 +5358,26 @@ module Aws::Glue
     MicrosoftSQLServerCatalogTarget.add_member(:table, Shapes::ShapeRef.new(shape: EnclosedInStringProperty, required: true, location_name: "Table"))
     MicrosoftSQLServerCatalogTarget.struct_class = Types::MicrosoftSQLServerCatalogTarget
 
+    ModifyIntegrationRequest.add_member(:integration_identifier, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationIdentifier"))
+    ModifyIntegrationRequest.add_member(:description, Shapes::ShapeRef.new(shape: IntegrationDescription, location_name: "Description"))
+    ModifyIntegrationRequest.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
+    ModifyIntegrationRequest.add_member(:integration_name, Shapes::ShapeRef.new(shape: String128, location_name: "IntegrationName"))
+    ModifyIntegrationRequest.struct_class = Types::ModifyIntegrationRequest
+
+    ModifyIntegrationResponse.add_member(:source_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "SourceArn"))
+    ModifyIntegrationResponse.add_member(:target_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TargetArn"))
+    ModifyIntegrationResponse.add_member(:integration_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationName"))
+    ModifyIntegrationResponse.add_member(:description, Shapes::ShapeRef.new(shape: IntegrationDescription, location_name: "Description"))
+    ModifyIntegrationResponse.add_member(:integration_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "IntegrationArn"))
+    ModifyIntegrationResponse.add_member(:kms_key_id, Shapes::ShapeRef.new(shape: String2048, location_name: "KmsKeyId"))
+    ModifyIntegrationResponse.add_member(:additional_encryption_context, Shapes::ShapeRef.new(shape: IntegrationAdditionalEncryptionContextMap, location_name: "AdditionalEncryptionContext"))
+    ModifyIntegrationResponse.add_member(:tags, Shapes::ShapeRef.new(shape: IntegrationTagsList, location_name: "Tags"))
+    ModifyIntegrationResponse.add_member(:status, Shapes::ShapeRef.new(shape: IntegrationStatus, required: true, location_name: "Status"))
+    ModifyIntegrationResponse.add_member(:create_time, Shapes::ShapeRef.new(shape: IntegrationTimestamp, required: true, location_name: "CreateTime"))
+    ModifyIntegrationResponse.add_member(:errors, Shapes::ShapeRef.new(shape: IntegrationErrorList, location_name: "Errors"))
+    ModifyIntegrationResponse.add_member(:data_filter, Shapes::ShapeRef.new(shape: String2048, location_name: "DataFilter"))
+    ModifyIntegrationResponse.struct_class = Types::ModifyIntegrationResponse
+
     MongoDBTarget.add_member(:connection_name, Shapes::ShapeRef.new(shape: ConnectionName, location_name: "ConnectionName"))
     MongoDBTarget.add_member(:path, Shapes::ShapeRef.new(shape: Path, location_name: "Path"))
     MongoDBTarget.add_member(:scan_all, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "ScanAll"))
@@ -4817,6 +5433,12 @@ module Aws::Glue
     OAuth2ClientApplication.add_member(:aws_managed_client_application_reference, Shapes::ShapeRef.new(shape: AWSManagedClientApplicationReference, location_name: "AWSManagedClientApplicationReference"))
     OAuth2ClientApplication.struct_class = Types::OAuth2ClientApplication
 
+    OAuth2Credentials.add_member(:user_managed_client_application_client_secret, Shapes::ShapeRef.new(shape: UserManagedClientApplicationClientSecret, location_name: "UserManagedClientApplicationClientSecret"))
+    OAuth2Credentials.add_member(:access_token, Shapes::ShapeRef.new(shape: AccessToken, location_name: "AccessToken"))
+    OAuth2Credentials.add_member(:refresh_token, Shapes::ShapeRef.new(shape: RefreshToken, location_name: "RefreshToken"))
+    OAuth2Credentials.add_member(:jwt_token, Shapes::ShapeRef.new(shape: JwtToken, location_name: "JwtToken"))
+    OAuth2Credentials.struct_class = Types::OAuth2Credentials
+
     OAuth2Properties.add_member(:o_auth_2_grant_type, Shapes::ShapeRef.new(shape: OAuth2GrantType, location_name: "OAuth2GrantType"))
     OAuth2Properties.add_member(:o_auth_2_client_application, Shapes::ShapeRef.new(shape: OAuth2ClientApplication, location_name: "OAuth2ClientApplication"))
     OAuth2Properties.add_member(:token_url, Shapes::ShapeRef.new(shape: TokenUrl, location_name: "TokenUrl"))
@@ -4828,6 +5450,7 @@ module Aws::Glue
     OAuth2PropertiesInput.add_member(:token_url, Shapes::ShapeRef.new(shape: TokenUrl, location_name: "TokenUrl"))
     OAuth2PropertiesInput.add_member(:token_url_parameters_map, Shapes::ShapeRef.new(shape: TokenUrlParametersMap, location_name: "TokenUrlParametersMap"))
     OAuth2PropertiesInput.add_member(:authorization_code_properties, Shapes::ShapeRef.new(shape: AuthorizationCodeProperties, location_name: "AuthorizationCodeProperties"))
+    OAuth2PropertiesInput.add_member(:o_auth_2_credentials, Shapes::ShapeRef.new(shape: OAuth2Credentials, location_name: "OAuth2Credentials"))
     OAuth2PropertiesInput.struct_class = Types::OAuth2PropertiesInput
 
     OneInput.member = Shapes::ShapeRef.new(shape: NodeId)
@@ -4978,6 +5601,8 @@ module Aws::Glue
     Predicate.add_member(:conditions, Shapes::ShapeRef.new(shape: ConditionList, location_name: "Conditions"))
     Predicate.struct_class = Types::Predicate
 
+    PrimaryKeyList.member = Shapes::ShapeRef.new(shape: String128)
+
     PrincipalPermissions.add_member(:principal, Shapes::ShapeRef.new(shape: DataLakePrincipal, location_name: "Principal"))
     PrincipalPermissions.add_member(:permissions, Shapes::ShapeRef.new(shape: PermissionList, location_name: "Permissions"))
     PrincipalPermissions.struct_class = Types::PrincipalPermissions
@@ -4988,13 +5613,30 @@ module Aws::Glue
     ProfileConfiguration.add_member(:job_configuration, Shapes::ShapeRef.new(shape: ConfigurationMap, location_name: "JobConfiguration"))
     ProfileConfiguration.struct_class = Types::ProfileConfiguration
 
+    PropertiesMap.key = Shapes::ShapeRef.new(shape: PropertyName)
+    PropertiesMap.value = Shapes::ShapeRef.new(shape: Property)
+
+    Property.add_member(:name, Shapes::ShapeRef.new(shape: PropertyName, required: true, location_name: "Name"))
+    Property.add_member(:description, Shapes::ShapeRef.new(shape: PropertyDescriptionString, required: true, location_name: "Description"))
+    Property.add_member(:required, Shapes::ShapeRef.new(shape: Bool, required: true, location_name: "Required"))
+    Property.add_member(:default_value, Shapes::ShapeRef.new(shape: String, location_name: "DefaultValue"))
+    Property.add_member(:property_types, Shapes::ShapeRef.new(shape: PropertyTypes, required: true, location_name: "PropertyTypes"))
+    Property.add_member(:allowed_values, Shapes::ShapeRef.new(shape: AllowedValues, location_name: "AllowedValues"))
+    Property.add_member(:data_operation_scopes, Shapes::ShapeRef.new(shape: DataOperations, location_name: "DataOperationScopes"))
+    Property.struct_class = Types::Property
+
     PropertyMap.key = Shapes::ShapeRef.new(shape: PropertyKey)
     PropertyMap.value = Shapes::ShapeRef.new(shape: PropertyValue)
+
+    PropertyNameOverrides.key = Shapes::ShapeRef.new(shape: PropertyName)
+    PropertyNameOverrides.value = Shapes::ShapeRef.new(shape: PropertyName)
 
     PropertyPredicate.add_member(:key, Shapes::ShapeRef.new(shape: ValueString, location_name: "Key"))
     PropertyPredicate.add_member(:value, Shapes::ShapeRef.new(shape: ValueString, location_name: "Value"))
     PropertyPredicate.add_member(:comparator, Shapes::ShapeRef.new(shape: Comparator, location_name: "Comparator"))
     PropertyPredicate.struct_class = Types::PropertyPredicate
+
+    PropertyTypes.member = Shapes::ShapeRef.new(shape: PropertyType)
 
     PublicKeysList.member = Shapes::ShapeRef.new(shape: GenericString)
 
@@ -5083,6 +5725,8 @@ module Aws::Glue
 
     RecipeSteps.member = Shapes::ShapeRef.new(shape: RecipeStep)
 
+    Records.member = Shapes::ShapeRef.new(shape: Record)
+
     RecrawlPolicy.add_member(:recrawl_behavior, Shapes::ShapeRef.new(shape: RecrawlBehavior, location_name: "RecrawlBehavior"))
     RecrawlPolicy.struct_class = Types::RecrawlPolicy
 
@@ -5160,6 +5804,9 @@ module Aws::Glue
 
     ResetJobBookmarkResponse.add_member(:job_bookmark_entry, Shapes::ShapeRef.new(shape: JobBookmarkEntry, location_name: "JobBookmarkEntry"))
     ResetJobBookmarkResponse.struct_class = Types::ResetJobBookmarkResponse
+
+    ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
     ResourceNotReadyException.add_member(:message, Shapes::ShapeRef.new(shape: MessageString, location_name: "Message"))
     ResourceNotReadyException.struct_class = Types::ResourceNotReadyException
@@ -5481,6 +6128,8 @@ module Aws::Glue
     SelectFromCollection.add_member(:index, Shapes::ShapeRef.new(shape: NonNegativeInt, required: true, location_name: "Index"))
     SelectFromCollection.struct_class = Types::SelectFromCollection
 
+    SelectedFields.member = Shapes::ShapeRef.new(shape: EntityFieldName)
+
     SerDeInfo.add_member(:name, Shapes::ShapeRef.new(shape: NameString, location_name: "Name"))
     SerDeInfo.add_member(:serialization_library, Shapes::ShapeRef.new(shape: NameString, location_name: "SerializationLibrary"))
     SerDeInfo.add_member(:parameters, Shapes::ShapeRef.new(shape: ParametersMap, location_name: "Parameters"))
@@ -5569,6 +6218,17 @@ module Aws::Glue
     SourceControlDetails.add_member(:auth_strategy, Shapes::ShapeRef.new(shape: SourceControlAuthStrategy, location_name: "AuthStrategy"))
     SourceControlDetails.add_member(:auth_token, Shapes::ShapeRef.new(shape: Generic512CharString, location_name: "AuthToken"))
     SourceControlDetails.struct_class = Types::SourceControlDetails
+
+    SourceProcessingProperties.add_member(:role_arn, Shapes::ShapeRef.new(shape: String128, location_name: "RoleArn"))
+    SourceProcessingProperties.struct_class = Types::SourceProcessingProperties
+
+    SourceTableConfig.add_member(:fields, Shapes::ShapeRef.new(shape: SourceTableFieldsList, location_name: "Fields"))
+    SourceTableConfig.add_member(:filter_predicate, Shapes::ShapeRef.new(shape: String128, location_name: "FilterPredicate"))
+    SourceTableConfig.add_member(:primary_key, Shapes::ShapeRef.new(shape: PrimaryKeyList, location_name: "PrimaryKey"))
+    SourceTableConfig.add_member(:record_update_field, Shapes::ShapeRef.new(shape: String128, location_name: "RecordUpdateField"))
+    SourceTableConfig.struct_class = Types::SourceTableConfig
+
+    SourceTableFieldsList.member = Shapes::ShapeRef.new(shape: String128)
 
     SparkConnectorSource.add_member(:name, Shapes::ShapeRef.new(shape: NodeName, required: true, location_name: "Name"))
     SparkConnectorSource.add_member(:connection_name, Shapes::ShapeRef.new(shape: EnclosedInStringProperty, required: true, location_name: "ConnectionName"))
@@ -5977,6 +6637,10 @@ module Aws::Glue
 
     TableVersionErrors.member = Shapes::ShapeRef.new(shape: TableVersionError)
 
+    Tag.add_member(:key, Shapes::ShapeRef.new(shape: TagKey, location_name: "key"))
+    Tag.add_member(:value, Shapes::ShapeRef.new(shape: TagValue, location_name: "value"))
+    Tag.struct_class = Types::Tag
+
     TagKeysList.member = Shapes::ShapeRef.new(shape: TagKey)
 
     TagResourceRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: GlueResourceArn, required: true, location_name: "ResourceArn"))
@@ -5987,6 +6651,23 @@ module Aws::Glue
 
     TagsMap.key = Shapes::ShapeRef.new(shape: TagKey)
     TagsMap.value = Shapes::ShapeRef.new(shape: TagValue)
+
+    TargetProcessingProperties.add_member(:role_arn, Shapes::ShapeRef.new(shape: String128, location_name: "RoleArn"))
+    TargetProcessingProperties.add_member(:kms_arn, Shapes::ShapeRef.new(shape: String2048, location_name: "KmsArn"))
+    TargetProcessingProperties.add_member(:connection_name, Shapes::ShapeRef.new(shape: String128, location_name: "ConnectionName"))
+    TargetProcessingProperties.add_member(:event_bus_arn, Shapes::ShapeRef.new(shape: String2048, location_name: "EventBusArn"))
+    TargetProcessingProperties.struct_class = Types::TargetProcessingProperties
+
+    TargetRedshiftCatalog.add_member(:catalog_arn, Shapes::ShapeRef.new(shape: ResourceArnString, required: true, location_name: "CatalogArn"))
+    TargetRedshiftCatalog.struct_class = Types::TargetRedshiftCatalog
+
+    TargetResourceNotFound.add_member(:message, Shapes::ShapeRef.new(shape: IntegrationErrorMessage, location_name: "Message"))
+    TargetResourceNotFound.struct_class = Types::TargetResourceNotFound
+
+    TargetTableConfig.add_member(:unnest_spec, Shapes::ShapeRef.new(shape: UnnestSpec, location_name: "UnnestSpec"))
+    TargetTableConfig.add_member(:partition_spec, Shapes::ShapeRef.new(shape: IntegrationPartitionSpecList, location_name: "PartitionSpec"))
+    TargetTableConfig.add_member(:target_table_name, Shapes::ShapeRef.new(shape: String128, location_name: "TargetTableName"))
+    TargetTableConfig.struct_class = Types::TargetTableConfig
 
     TaskRun.add_member(:transform_id, Shapes::ShapeRef.new(shape: HashString, location_name: "TransformId"))
     TaskRun.add_member(:task_run_id, Shapes::ShapeRef.new(shape: HashString, location_name: "TaskRunId"))
@@ -6025,6 +6706,7 @@ module Aws::Glue
     TestConnectionInput.struct_class = Types::TestConnectionInput
 
     TestConnectionRequest.add_member(:connection_name, Shapes::ShapeRef.new(shape: NameString, location_name: "ConnectionName"))
+    TestConnectionRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, location_name: "CatalogId"))
     TestConnectionRequest.add_member(:test_connection_input, Shapes::ShapeRef.new(shape: TestConnectionInput, location_name: "TestConnectionInput"))
     TestConnectionRequest.struct_class = Types::TestConnectionRequest
 
@@ -6138,6 +6820,12 @@ module Aws::Glue
 
     UpdateBlueprintResponse.add_member(:name, Shapes::ShapeRef.new(shape: NameString, location_name: "Name"))
     UpdateBlueprintResponse.struct_class = Types::UpdateBlueprintResponse
+
+    UpdateCatalogRequest.add_member(:catalog_id, Shapes::ShapeRef.new(shape: CatalogIdString, required: true, location_name: "CatalogId"))
+    UpdateCatalogRequest.add_member(:catalog_input, Shapes::ShapeRef.new(shape: CatalogInput, required: true, location_name: "CatalogInput"))
+    UpdateCatalogRequest.struct_class = Types::UpdateCatalogRequest
+
+    UpdateCatalogResponse.struct_class = Types::UpdateCatalogResponse
 
     UpdateClassifierRequest.add_member(:grok_classifier, Shapes::ShapeRef.new(shape: UpdateGrokClassifierRequest, location_name: "GrokClassifier"))
     UpdateClassifierRequest.add_member(:xml_classifier, Shapes::ShapeRef.new(shape: UpdateXMLClassifierRequest, location_name: "XMLClassifier"))
@@ -6257,6 +6945,24 @@ module Aws::Glue
     UpdateGrokClassifierRequest.add_member(:grok_pattern, Shapes::ShapeRef.new(shape: GrokPattern, location_name: "GrokPattern"))
     UpdateGrokClassifierRequest.add_member(:custom_patterns, Shapes::ShapeRef.new(shape: CustomPatterns, location_name: "CustomPatterns"))
     UpdateGrokClassifierRequest.struct_class = Types::UpdateGrokClassifierRequest
+
+    UpdateIntegrationResourcePropertyRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    UpdateIntegrationResourcePropertyRequest.add_member(:source_processing_properties, Shapes::ShapeRef.new(shape: SourceProcessingProperties, location_name: "SourceProcessingProperties"))
+    UpdateIntegrationResourcePropertyRequest.add_member(:target_processing_properties, Shapes::ShapeRef.new(shape: TargetProcessingProperties, location_name: "TargetProcessingProperties"))
+    UpdateIntegrationResourcePropertyRequest.struct_class = Types::UpdateIntegrationResourcePropertyRequest
+
+    UpdateIntegrationResourcePropertyResponse.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, location_name: "ResourceArn"))
+    UpdateIntegrationResourcePropertyResponse.add_member(:source_processing_properties, Shapes::ShapeRef.new(shape: SourceProcessingProperties, location_name: "SourceProcessingProperties"))
+    UpdateIntegrationResourcePropertyResponse.add_member(:target_processing_properties, Shapes::ShapeRef.new(shape: TargetProcessingProperties, location_name: "TargetProcessingProperties"))
+    UpdateIntegrationResourcePropertyResponse.struct_class = Types::UpdateIntegrationResourcePropertyResponse
+
+    UpdateIntegrationTablePropertiesRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "ResourceArn"))
+    UpdateIntegrationTablePropertiesRequest.add_member(:table_name, Shapes::ShapeRef.new(shape: String128, required: true, location_name: "TableName"))
+    UpdateIntegrationTablePropertiesRequest.add_member(:source_table_config, Shapes::ShapeRef.new(shape: SourceTableConfig, location_name: "SourceTableConfig"))
+    UpdateIntegrationTablePropertiesRequest.add_member(:target_table_config, Shapes::ShapeRef.new(shape: TargetTableConfig, location_name: "TargetTableConfig"))
+    UpdateIntegrationTablePropertiesRequest.struct_class = Types::UpdateIntegrationTablePropertiesRequest
+
+    UpdateIntegrationTablePropertiesResponse.struct_class = Types::UpdateIntegrationTablePropertiesResponse
 
     UpdateJobFromSourceControlRequest.add_member(:job_name, Shapes::ShapeRef.new(shape: NameString, location_name: "JobName"))
     UpdateJobFromSourceControlRequest.add_member(:provider, Shapes::ShapeRef.new(shape: SourceControlProvider, location_name: "Provider"))
@@ -6847,6 +7553,25 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: ResourceNumberLimitExceededException)
       end)
 
+      api.add_operation(:create_catalog, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateCatalog"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateCatalogRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateCatalogResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: AlreadyExistsException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNumberLimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: FederatedResourceAlreadyExistsException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+      end)
+
       api.add_operation(:create_classifier, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateClassifier"
         o.http_method = "POST"
@@ -6940,6 +7665,8 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
         o.errors << Shapes::ShapeRef.new(shape: FederatedResourceAlreadyExistsException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
       end)
 
       api.add_operation(:create_dev_endpoint, Seahorse::Model::Operation.new.tap do |o|
@@ -6956,6 +7683,57 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNumberLimitExceededException)
+      end)
+
+      api.add_operation(:create_integration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateIntegration"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateIntegrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateIntegrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationConflictOperationFault)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationQuotaExceededFault)
+        o.errors << Shapes::ShapeRef.new(shape: KMSKeyNotAccessibleFault)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNumberLimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:create_integration_resource_property, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateIntegrationResourceProperty"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateIntegrationResourcePropertyRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateIntegrationResourcePropertyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:create_integration_table_properties, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateIntegrationTableProperties"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: CreateIntegrationTablePropertiesRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateIntegrationTablePropertiesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
       end)
 
       api.add_operation(:create_job, Seahorse::Model::Operation.new.tap do |o|
@@ -7102,6 +7880,8 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotReadyException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
       end)
 
       api.add_operation(:create_table_optimizer, Seahorse::Model::Operation.new.tap do |o|
@@ -7187,6 +7967,22 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
+      api.add_operation(:delete_catalog, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteCatalog"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteCatalogRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteCatalogResponse)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
       end)
 
       api.add_operation(:delete_classifier, Seahorse::Model::Operation.new.tap do |o|
@@ -7294,6 +8090,8 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
       end)
 
       api.add_operation(:delete_dev_endpoint, Seahorse::Model::Operation.new.tap do |o|
@@ -7305,6 +8103,40 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:delete_integration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteIntegration"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteIntegrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteIntegrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationConflictOperationFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidIntegrationStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidStateException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:delete_integration_table_properties, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteIntegrationTableProperties"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DeleteIntegrationTablePropertiesRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteIntegrationTablePropertiesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
       end)
 
@@ -7444,6 +8276,8 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotReadyException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
       end)
 
       api.add_operation(:delete_table_optimizer, Seahorse::Model::Operation.new.tap do |o|
@@ -7519,6 +8353,70 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
       end)
 
+      api.add_operation(:describe_connection_type, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeConnectionType"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeConnectionTypeRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeConnectionTypeResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:describe_entity, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeEntity"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeEntityRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeEntityResponse)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:describe_inbound_integrations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeInboundIntegrations"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeInboundIntegrationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeInboundIntegrationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: TargetResourceNotFound)
+        o.errors << Shapes::ShapeRef.new(shape: OperationNotSupportedException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:describe_integrations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeIntegrations"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DescribeIntegrationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeIntegrationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
       api.add_operation(:get_blueprint, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetBlueprint"
         o.http_method = "POST"
@@ -7560,6 +8458,23 @@ module Aws::Glue
         )
       end)
 
+      api.add_operation(:get_catalog, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetCatalog"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetCatalogRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetCatalogResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
+      end)
+
       api.add_operation(:get_catalog_import_status, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetCatalogImportStatus"
         o.http_method = "POST"
@@ -7568,6 +8483,22 @@ module Aws::Glue
         o.output = Shapes::ShapeRef.new(shape: GetCatalogImportStatusResponse)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+      end)
+
+      api.add_operation(:get_catalogs, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetCatalogs"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetCatalogsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetCatalogsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
       end)
 
       api.add_operation(:get_classifier, Seahorse::Model::Operation.new.tap do |o|
@@ -7836,6 +8767,7 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
         o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
       end)
 
       api.add_operation(:get_databases, Seahorse::Model::Operation.new.tap do |o|
@@ -7848,6 +8780,9 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
           tokens: {
@@ -7895,6 +8830,51 @@ module Aws::Glue
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:get_entity_records, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetEntityRecords"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetEntityRecordsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetEntityRecordsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+      end)
+
+      api.add_operation(:get_integration_resource_property, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetIntegrationResourceProperty"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetIntegrationResourcePropertyRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetIntegrationResourcePropertyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:get_integration_table_properties, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetIntegrationTableProperties"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: GetIntegrationTablePropertiesRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetIntegrationTablePropertiesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
       end)
 
       api.add_operation(:get_job, Seahorse::Model::Operation.new.tap do |o|
@@ -8575,6 +9555,22 @@ module Aws::Glue
         )
       end)
 
+      api.add_operation(:list_connection_types, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListConnectionTypes"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListConnectionTypesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListConnectionTypesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_crawlers, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListCrawlers"
         o.http_method = "POST"
@@ -8720,6 +9716,26 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_entities, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListEntities"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListEntitiesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListEntitiesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o[:pager] = Aws::Pager.new(
           tokens: {
             "next_token" => "next_token"
           }
@@ -8918,6 +9934,25 @@ module Aws::Glue
             "next_token" => "next_token"
           }
         )
+      end)
+
+      api.add_operation(:modify_integration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyIntegration"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyIntegrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: ModifyIntegrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: IntegrationConflictOperationFault)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidIntegrationStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidStateException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
       end)
 
       api.add_operation(:put_data_catalog_encryption_settings, Seahorse::Model::Operation.new.tap do |o|
@@ -9403,6 +10438,22 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: IllegalBlueprintStateException)
       end)
 
+      api.add_operation(:update_catalog, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateCatalog"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateCatalogRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateCatalogResponse)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
+        o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
+        o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+      end)
+
       api.add_operation(:update_classifier, Seahorse::Model::Operation.new.tap do |o|
         o.name = "UpdateClassifier"
         o.http_method = "POST"
@@ -9520,6 +10571,9 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
         o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
+        o.errors << Shapes::ShapeRef.new(shape: AlreadyExistsException)
       end)
 
       api.add_operation(:update_dev_endpoint, Seahorse::Model::Operation.new.tap do |o|
@@ -9533,6 +10587,36 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: OperationTimeoutException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+      end)
+
+      api.add_operation(:update_integration_resource_property, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateIntegrationResourceProperty"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateIntegrationResourcePropertyRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateIntegrationResourcePropertyResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+      end)
+
+      api.add_operation(:update_integration_table_properties, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateIntegrationTableProperties"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: UpdateIntegrationTablePropertiesRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateIntegrationTablePropertiesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: EntityNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
       end)
 
       api.add_operation(:update_job, Seahorse::Model::Operation.new.tap do |o|
@@ -9644,6 +10728,9 @@ module Aws::Glue
         o.errors << Shapes::ShapeRef.new(shape: ResourceNumberLimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: GlueEncryptionException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotReadyException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceException)
+        o.errors << Shapes::ShapeRef.new(shape: FederationSourceRetryableException)
+        o.errors << Shapes::ShapeRef.new(shape: AlreadyExistsException)
       end)
 
       api.add_operation(:update_table_optimizer, Seahorse::Model::Operation.new.tap do |o|

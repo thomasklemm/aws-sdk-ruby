@@ -757,6 +757,7 @@ module Aws::Redshift
       attr_accessor allow_publicly_accessible_consumers: bool
       attr_accessor data_share_associations: ::Array[Types::DataShareAssociation]
       attr_accessor managed_by: ::String
+      attr_accessor data_share_type: ("INTERNAL")
       SENSITIVE: []
     end
 
@@ -924,6 +925,17 @@ module Aws::Redshift
     end
 
     class DependentServiceUnavailableFault < Aws::EmptyStructure
+    end
+
+    class DeregisterNamespaceInputMessage
+      attr_accessor namespace_identifier: Types::NamespaceIdentifierUnion
+      attr_accessor consumer_identifiers: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class DeregisterNamespaceOutputMessage
+      attr_accessor status: ("Registering" | "Deregistering")
+      SENSITIVE: []
     end
 
     class DescribeAccountAttributesMessage
@@ -2090,6 +2102,20 @@ module Aws::Redshift
       SENSITIVE: []
     end
 
+    class NamespaceIdentifierUnion
+      attr_accessor serverless_identifier: Types::ServerlessIdentifier
+      attr_accessor provisioned_identifier: Types::ProvisionedIdentifier
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class ServerlessIdentifier < NamespaceIdentifierUnion
+      end
+      class ProvisionedIdentifier < NamespaceIdentifierUnion
+      end
+      class Unknown < NamespaceIdentifierUnion
+      end
+    end
+
     class NetworkInterface
       attr_accessor network_interface_id: ::String
       attr_accessor subnet_id: ::String
@@ -2205,6 +2231,11 @@ module Aws::Redshift
       SENSITIVE: [:master_user_password]
     end
 
+    class ProvisionedIdentifier
+      attr_accessor cluster_identifier: ::String
+      SENSITIVE: []
+    end
+
     class PurchaseReservedNodeOfferingMessage
       attr_accessor reserved_node_offering_id: ::String
       attr_accessor node_count: ::Integer
@@ -2298,6 +2329,17 @@ module Aws::Redshift
     class ReferenceLink
       attr_accessor text: ::String
       attr_accessor link: ::String
+      SENSITIVE: []
+    end
+
+    class RegisterNamespaceInputMessage
+      attr_accessor namespace_identifier: Types::NamespaceIdentifierUnion
+      attr_accessor consumer_identifiers: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class RegisterNamespaceOutputMessage
+      attr_accessor status: ("Registering" | "Deregistering")
       SENSITIVE: []
     end
 
@@ -2652,6 +2694,12 @@ module Aws::Redshift
     class SecondaryClusterInfo
       attr_accessor availability_zone: ::String
       attr_accessor cluster_nodes: ::Array[Types::ClusterNode]
+      SENSITIVE: []
+    end
+
+    class ServerlessIdentifier
+      attr_accessor namespace_identifier: ::String
+      attr_accessor workgroup_identifier: ::String
       SENSITIVE: []
     end
 

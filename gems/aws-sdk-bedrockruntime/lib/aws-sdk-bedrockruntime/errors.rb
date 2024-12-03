@@ -28,6 +28,7 @@ module Aws::BedrockRuntime
   #
   # ## Error Classes
   # * {AccessDeniedException}
+  # * {ConflictException}
   # * {InternalServerException}
   # * {ModelErrorException}
   # * {ModelNotReadyException}
@@ -50,6 +51,21 @@ module Aws::BedrockRuntime
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::BedrockRuntime::Types::AccessDeniedException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class ConflictException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::BedrockRuntime::Types::ConflictException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

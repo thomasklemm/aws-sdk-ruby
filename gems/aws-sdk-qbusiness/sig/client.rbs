@@ -78,6 +78,19 @@ module Aws
                   | (?Hash[Symbol, untyped]) -> instance
 
 
+      interface _AssociatePermissionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::AssociatePermissionResponse]
+        def statement: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#associate_permission-instance_method
+      def associate_permission: (
+                                  application_id: ::String,
+                                  statement_id: ::String,
+                                  actions: Array[::String],
+                                  principal: ::String
+                                ) -> _AssociatePermissionResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociatePermissionResponseSuccess
+
       interface _BatchDeleteDocumentResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::BatchDeleteDocumentResponse]
         def failed_documents: () -> ::Array[Types::FailedDocument]
@@ -366,7 +379,7 @@ module Aws
       def create_application: (
                                 display_name: ::String,
                                 ?role_arn: ::String,
-                                ?identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC"),
+                                ?identity_type: ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC" | "AWS_QUICKSIGHT_IDP"),
                                 ?iam_identity_provider_arn: ::String,
                                 ?identity_center_instance_arn: ::String,
                                 ?client_ids_for_oidc: Array[::String],
@@ -389,9 +402,112 @@ module Aws
                                 },
                                 ?personalization_configuration: {
                                   personalization_control_mode: ("ENABLED" | "DISABLED")
+                                },
+                                ?quick_sight_configuration: {
+                                  client_namespace: ::String
                                 }
                               ) -> _CreateApplicationResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateApplicationResponseSuccess
+
+      interface _CreateDataAccessorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateDataAccessorResponse]
+        def data_accessor_id: () -> ::String
+        def idc_application_arn: () -> ::String
+        def data_accessor_arn: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#create_data_accessor-instance_method
+      def create_data_accessor: (
+                                  application_id: ::String,
+                                  principal: ::String,
+                                  action_configurations: Array[
+                                    {
+                                      action: ::String,
+                                      filter_configuration: {
+                                        document_attribute_filter: {
+                                          and_all_filters: Array[
+                                            untyped,
+                                          ]?,
+                                          or_all_filters: Array[
+                                            untyped,
+                                          ]?,
+                                          not_filter: untyped?,
+                                          equals_to: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          contains_all: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          contains_any: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          greater_than: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          greater_than_or_equals: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          less_than: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          less_than_or_equals: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?
+                                        }
+                                      }?
+                                    },
+                                  ],
+                                  ?client_token: ::String,
+                                  display_name: ::String,
+                                  ?tags: Array[
+                                    {
+                                      key: ::String,
+                                      value: ::String
+                                    },
+                                  ]
+                                ) -> _CreateDataAccessorResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateDataAccessorResponseSuccess
 
       interface _CreateDataSourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateDataSourceResponse]
@@ -518,7 +634,7 @@ module Aws
       def create_plugin: (
                            application_id: ::String,
                            display_name: ::String,
-                           type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM"),
+                           type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA"),
                            auth_configuration: {
                              basic_auth_configuration: {
                                secret_arn: ::String,
@@ -526,9 +642,15 @@ module Aws
                              }?,
                              o_auth_2_client_credential_configuration: {
                                secret_arn: ::String,
-                               role_arn: ::String
+                               role_arn: ::String,
+                               authorization_url: ::String?,
+                               token_url: ::String?
                              }?,
                              no_auth_configuration: {
+                             }?,
+                             idc_auth_configuration: {
+                               idc_application_arn: ::String,
+                               role_arn: ::String
                              }?
                            },
                            ?server_url: ::String,
@@ -649,6 +771,12 @@ module Aws
                                    },
                                    ?browser_extension_configuration: {
                                      enabled_browser_extensions: Array[("FIREFOX" | "CHROME")]
+                                   },
+                                   ?customization_configuration: {
+                                     custom_css_url: ::String?,
+                                     logo_url: ::String?,
+                                     font_url: ::String?,
+                                     favicon_url: ::String?
                                    }
                                  ) -> _CreateWebExperienceResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateWebExperienceResponseSuccess
@@ -681,6 +809,16 @@ module Aws
                                  ?user_id: ::String
                                ) -> _DeleteConversationResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteConversationResponseSuccess
+
+      interface _DeleteDataAccessorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDataAccessorResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#delete_data_accessor-instance_method
+      def delete_data_accessor: (
+                                  application_id: ::String,
+                                  data_accessor_id: ::String
+                                ) -> _DeleteDataAccessorResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteDataAccessorResponseSuccess
 
       interface _DeleteDataSourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteDataSourceResponse]
@@ -755,12 +893,22 @@ module Aws
                                  ) -> _DeleteWebExperienceResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteWebExperienceResponseSuccess
 
+      interface _DisassociatePermissionResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DisassociatePermissionResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#disassociate_permission-instance_method
+      def disassociate_permission: (
+                                     application_id: ::String,
+                                     statement_id: ::String
+                                   ) -> _DisassociatePermissionResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociatePermissionResponseSuccess
+
       interface _GetApplicationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetApplicationResponse]
         def display_name: () -> ::String
         def application_id: () -> ::String
         def application_arn: () -> ::String
-        def identity_type: () -> ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC")
+        def identity_type: () -> ("AWS_IAM_IDP_SAML" | "AWS_IAM_IDP_OIDC" | "AWS_IAM_IDC" | "AWS_QUICKSIGHT_IDP")
         def iam_identity_provider_arn: () -> ::String
         def identity_center_application_arn: () -> ::String
         def role_arn: () -> ::String
@@ -774,6 +922,7 @@ module Aws
         def personalization_configuration: () -> Types::PersonalizationConfiguration
         def auto_subscription_configuration: () -> Types::AutoSubscriptionConfiguration
         def client_ids_for_oidc: () -> ::Array[::String]
+        def quick_sight_configuration: () -> Types::QuickSightConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_application-instance_method
       def get_application: (
@@ -796,6 +945,25 @@ module Aws
                                              ?next_token: ::String
                                            ) -> _GetChatControlsConfigurationResponseSuccess
                                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetChatControlsConfigurationResponseSuccess
+
+      interface _GetDataAccessorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetDataAccessorResponse]
+        def display_name: () -> ::String
+        def data_accessor_id: () -> ::String
+        def data_accessor_arn: () -> ::String
+        def application_id: () -> ::String
+        def idc_application_arn: () -> ::String
+        def principal: () -> ::String
+        def action_configurations: () -> ::Array[Types::ActionConfiguration]
+        def created_at: () -> ::Time
+        def updated_at: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_data_accessor-instance_method
+      def get_data_accessor: (
+                               application_id: ::String,
+                               data_accessor_id: ::String
+                             ) -> _GetDataAccessorResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDataAccessorResponseSuccess
 
       interface _GetDataSourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetDataSourceResponse]
@@ -879,7 +1047,7 @@ module Aws
         def application_id: () -> ::String
         def plugin_id: () -> ::String
         def display_name: () -> ::String
-        def type: () -> ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
+        def type: () -> ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA")
         def server_url: () -> ::String
         def auth_configuration: () -> Types::PluginAuthConfiguration
         def custom_plugin_configuration: () -> Types::CustomPluginConfiguration
@@ -895,6 +1063,16 @@ module Aws
                         plugin_id: ::String
                       ) -> _GetPluginResponseSuccess
                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetPluginResponseSuccess
+
+      interface _GetPolicyResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetPolicyResponse]
+        def policy: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_policy-instance_method
+      def get_policy: (
+                        application_id: ::String
+                      ) -> _GetPolicyResponseSuccess
+                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetPolicyResponseSuccess
 
       interface _GetRetrieverResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetRetrieverResponse]
@@ -945,6 +1123,7 @@ module Aws
         def identity_provider_configuration: () -> Types::IdentityProviderConfiguration
         def authentication_configuration: () -> Types::WebExperienceAuthConfiguration
         def browser_extension_configuration: () -> Types::BrowserExtensionConfiguration
+        def customization_configuration: () -> Types::CustomizationConfiguration
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#get_web_experience-instance_method
       def get_web_experience: (
@@ -993,6 +1172,19 @@ module Aws
                                 ?max_results: ::Integer
                               ) -> _ListConversationsResponseSuccess
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListConversationsResponseSuccess
+
+      interface _ListDataAccessorsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListDataAccessorsResponse]
+        def data_accessors: () -> ::Array[Types::DataAccessor]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#list_data_accessors-instance_method
+      def list_data_accessors: (
+                                 application_id: ::String,
+                                 ?next_token: ::String,
+                                 ?max_results: ::Integer
+                               ) -> _ListDataAccessorsResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDataAccessorsResponseSuccess
 
       interface _ListDataSourceSyncJobsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListDataSourceSyncJobsResponse]
@@ -1084,6 +1276,45 @@ module Aws
                            ?max_results: ::Integer
                          ) -> _ListMessagesResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMessagesResponseSuccess
+
+      interface _ListPluginActionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListPluginActionsResponse]
+        def next_token: () -> ::String
+        def items: () -> ::Array[Types::ActionSummary]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#list_plugin_actions-instance_method
+      def list_plugin_actions: (
+                                 application_id: ::String,
+                                 plugin_id: ::String,
+                                 ?next_token: ::String,
+                                 ?max_results: ::Integer
+                               ) -> _ListPluginActionsResponseSuccess
+                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListPluginActionsResponseSuccess
+
+      interface _ListPluginTypeActionsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListPluginTypeActionsResponse]
+        def next_token: () -> ::String
+        def items: () -> ::Array[Types::ActionSummary]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#list_plugin_type_actions-instance_method
+      def list_plugin_type_actions: (
+                                      plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "QUICKSIGHT" | "SERVICENOW_NOW_PLATFORM" | "JIRA_CLOUD" | "SALESFORCE_CRM" | "ZENDESK_SUITE" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "MICROSOFT_TEAMS" | "MICROSOFT_EXCHANGE" | "PAGERDUTY_ADVANCE" | "SMARTSHEET" | "ASANA"),
+                                      ?next_token: ::String,
+                                      ?max_results: ::Integer
+                                    ) -> _ListPluginTypeActionsResponseSuccess
+                                  | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListPluginTypeActionsResponseSuccess
+
+      interface _ListPluginTypeMetadataResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListPluginTypeMetadataResponse]
+        def next_token: () -> ::String
+        def items: () -> ::Array[Types::PluginTypeMetadataSummary]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#list_plugin_type_metadata-instance_method
+      def list_plugin_type_metadata: (
+                                       ?next_token: ::String,
+                                       ?max_results: ::Integer
+                                     ) -> _ListPluginTypeMetadataResponseSuccess
+                                   | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListPluginTypeMetadataResponseSuccess
 
       interface _ListPluginsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListPluginsResponse]
@@ -1181,6 +1412,99 @@ module Aws
                        ?role_arn: ::String
                      ) -> _PutGroupResponseSuccess
                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutGroupResponseSuccess
+
+      interface _SearchRelevantContentResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::SearchRelevantContentResponse]
+        def relevant_content: () -> ::Array[Types::RelevantContent]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#search_relevant_content-instance_method
+      def search_relevant_content: (
+                                     application_id: ::String,
+                                     ?user_id: ::String,
+                                     ?user_groups: Array[::String],
+                                     query_text: ::String,
+                                     content_source: {
+                                       retriever: {
+                                         retriever_id: ::String
+                                       }?
+                                     },
+                                     ?attribute_filter: {
+                                       and_all_filters: Array[
+                                         untyped,
+                                       ]?,
+                                       or_all_filters: Array[
+                                         untyped,
+                                       ]?,
+                                       not_filter: untyped?,
+                                       equals_to: {
+                                         name: ::String,
+                                         value: {
+                                           string_value: ::String?,
+                                           string_list_value: Array[::String]?,
+                                           long_value: ::Integer?,
+                                           date_value: ::Time?
+                                         }
+                                       }?,
+                                       contains_all: {
+                                         name: ::String,
+                                         value: {
+                                           string_value: ::String?,
+                                           string_list_value: Array[::String]?,
+                                           long_value: ::Integer?,
+                                           date_value: ::Time?
+                                         }
+                                       }?,
+                                       contains_any: {
+                                         name: ::String,
+                                         value: {
+                                           string_value: ::String?,
+                                           string_list_value: Array[::String]?,
+                                           long_value: ::Integer?,
+                                           date_value: ::Time?
+                                         }
+                                       }?,
+                                       greater_than: {
+                                         name: ::String,
+                                         value: {
+                                           string_value: ::String?,
+                                           string_list_value: Array[::String]?,
+                                           long_value: ::Integer?,
+                                           date_value: ::Time?
+                                         }
+                                       }?,
+                                       greater_than_or_equals: {
+                                         name: ::String,
+                                         value: {
+                                           string_value: ::String?,
+                                           string_list_value: Array[::String]?,
+                                           long_value: ::Integer?,
+                                           date_value: ::Time?
+                                         }
+                                       }?,
+                                       less_than: {
+                                         name: ::String,
+                                         value: {
+                                           string_value: ::String?,
+                                           string_list_value: Array[::String]?,
+                                           long_value: ::Integer?,
+                                           date_value: ::Time?
+                                         }
+                                       }?,
+                                       less_than_or_equals: {
+                                         name: ::String,
+                                         value: {
+                                           string_value: ::String?,
+                                           string_list_value: Array[::String]?,
+                                           long_value: ::Integer?,
+                                           date_value: ::Time?
+                                         }
+                                       }?
+                                     },
+                                     ?max_results: ::Integer,
+                                     ?next_token: ::String
+                                   ) -> _SearchRelevantContentResponseSuccess
+                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SearchRelevantContentResponseSuccess
 
       interface _StartDataSourceSyncJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StartDataSourceSyncJobResponse]
@@ -1341,6 +1665,96 @@ module Aws
                                               ) -> _UpdateChatControlsConfigurationResponseSuccess
                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateChatControlsConfigurationResponseSuccess
 
+      interface _UpdateDataAccessorResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDataAccessorResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#update_data_accessor-instance_method
+      def update_data_accessor: (
+                                  application_id: ::String,
+                                  data_accessor_id: ::String,
+                                  action_configurations: Array[
+                                    {
+                                      action: ::String,
+                                      filter_configuration: {
+                                        document_attribute_filter: {
+                                          and_all_filters: Array[
+                                            untyped,
+                                          ]?,
+                                          or_all_filters: Array[
+                                            untyped,
+                                          ]?,
+                                          not_filter: untyped?,
+                                          equals_to: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          contains_all: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          contains_any: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          greater_than: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          greater_than_or_equals: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          less_than: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?,
+                                          less_than_or_equals: {
+                                            name: ::String,
+                                            value: {
+                                              string_value: ::String?,
+                                              string_list_value: Array[::String]?,
+                                              long_value: ::Integer?,
+                                              date_value: ::Time?
+                                            }
+                                          }?
+                                        }
+                                      }?
+                                    },
+                                  ],
+                                  ?display_name: ::String
+                                ) -> _UpdateDataAccessorResponseSuccess
+                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateDataAccessorResponseSuccess
+
       interface _UpdateDataSourceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateDataSourceResponse]
       end
@@ -1474,9 +1888,15 @@ module Aws
                              }?,
                              o_auth_2_client_credential_configuration: {
                                secret_arn: ::String,
-                               role_arn: ::String
+                               role_arn: ::String,
+                               authorization_url: ::String?,
+                               token_url: ::String?
                              }?,
                              no_auth_configuration: {
+                             }?,
+                             idc_auth_configuration: {
+                               idc_application_arn: ::String,
+                               role_arn: ::String
                              }?
                            }
                          ) -> _UpdatePluginResponseSuccess
@@ -1578,6 +1998,12 @@ module Aws
                                    ?origins: Array[::String],
                                    ?browser_extension_configuration: {
                                      enabled_browser_extensions: Array[("FIREFOX" | "CHROME")]
+                                   },
+                                   ?customization_configuration: {
+                                     custom_css_url: ::String?,
+                                     logo_url: ::String?,
+                                     font_url: ::String?,
+                                     favicon_url: ::String?
                                    }
                                  ) -> _UpdateWebExperienceResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateWebExperienceResponseSuccess

@@ -158,7 +158,7 @@ module Aws::Bedrock
       attr_accessor role_arn: ::String
       attr_accessor client_request_token: ::String
       attr_accessor base_model_identifier: ::String
-      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING")
+      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")
       attr_accessor custom_model_kms_key_id: ::String
       attr_accessor job_tags: ::Array[Types::Tag]
       attr_accessor custom_model_tags: ::Array[Types::Tag]
@@ -167,6 +167,7 @@ module Aws::Bedrock
       attr_accessor output_data_config: Types::OutputDataConfig
       attr_accessor hyper_parameters: ::Hash[::String, ::String]
       attr_accessor vpc_config: Types::VpcConfig
+      attr_accessor customization_config: Types::CustomizationConfig
       SENSITIVE: []
     end
 
@@ -232,9 +233,20 @@ module Aws::Bedrock
       attr_accessor creation_time: ::Time
       attr_accessor base_model_arn: ::String
       attr_accessor base_model_name: ::String
-      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING")
+      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")
       attr_accessor owner_account_id: ::String
       SENSITIVE: []
+    end
+
+    class CustomizationConfig
+      attr_accessor distillation_config: Types::DistillationConfig
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class DistillationConfig < CustomizationConfig
+      end
+      class Unknown < CustomizationConfig
+      end
     end
 
     class DeleteCustomModelRequest
@@ -282,6 +294,11 @@ module Aws::Bedrock
     end
 
     class DeleteProvisionedModelThroughputResponse < Aws::EmptyStructure
+    end
+
+    class DistillationConfig
+      attr_accessor teacher_model_config: Types::TeacherModelConfig
+      SENSITIVE: []
     end
 
     class EvaluationBedrockModel
@@ -419,7 +436,7 @@ module Aws::Bedrock
       attr_accessor input_modalities: ::Array[("TEXT" | "IMAGE" | "EMBEDDING")]
       attr_accessor output_modalities: ::Array[("TEXT" | "IMAGE" | "EMBEDDING")]
       attr_accessor response_streaming_supported: bool
-      attr_accessor customizations_supported: ::Array[("FINE_TUNING" | "CONTINUED_PRE_TRAINING")]
+      attr_accessor customizations_supported: ::Array[("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")]
       attr_accessor inference_types_supported: ::Array[("ON_DEMAND" | "PROVISIONED")]
       attr_accessor model_lifecycle: Types::FoundationModelLifecycle
       SENSITIVE: []
@@ -438,7 +455,7 @@ module Aws::Bedrock
       attr_accessor input_modalities: ::Array[("TEXT" | "IMAGE" | "EMBEDDING")]
       attr_accessor output_modalities: ::Array[("TEXT" | "IMAGE" | "EMBEDDING")]
       attr_accessor response_streaming_supported: bool
-      attr_accessor customizations_supported: ::Array[("FINE_TUNING" | "CONTINUED_PRE_TRAINING")]
+      attr_accessor customizations_supported: ::Array[("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")]
       attr_accessor inference_types_supported: ::Array[("ON_DEMAND" | "PROVISIONED")]
       attr_accessor model_lifecycle: Types::FoundationModelLifecycle
       SENSITIVE: []
@@ -463,7 +480,7 @@ module Aws::Bedrock
       attr_accessor job_name: ::String
       attr_accessor job_arn: ::String
       attr_accessor base_model_arn: ::String
-      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING")
+      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")
       attr_accessor model_kms_key_arn: ::String
       attr_accessor hyper_parameters: ::Hash[::String, ::String]
       attr_accessor training_data_config: Types::TrainingDataConfig
@@ -472,6 +489,7 @@ module Aws::Bedrock
       attr_accessor training_metrics: Types::TrainingMetrics
       attr_accessor validation_metrics: ::Array[Types::ValidatorMetric]
       attr_accessor creation_time: ::Time
+      attr_accessor customization_config: Types::CustomizationConfig
       SENSITIVE: []
     end
 
@@ -614,11 +632,12 @@ module Aws::Bedrock
       attr_accessor training_data_config: Types::TrainingDataConfig
       attr_accessor validation_data_config: Types::ValidationDataConfig
       attr_accessor output_data_config: Types::OutputDataConfig
-      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING")
+      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")
       attr_accessor output_model_kms_key_arn: ::String
       attr_accessor training_metrics: Types::TrainingMetrics
       attr_accessor validation_metrics: ::Array[Types::ValidatorMetric]
       attr_accessor vpc_config: Types::VpcConfig
+      attr_accessor customization_config: Types::CustomizationConfig
       SENSITIVE: []
     end
 
@@ -923,6 +942,24 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class InvocationLogSource
+      attr_accessor s3_uri: ::String
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class S3Uri < InvocationLogSource
+      end
+      class Unknown < InvocationLogSource
+      end
+    end
+
+    class InvocationLogsConfig
+      attr_accessor use_prompt_response: bool
+      attr_accessor invocation_log_source: Types::InvocationLogSource
+      attr_accessor request_metadata_filters: Types::RequestMetadataFilters
+      SENSITIVE: []
+    end
+
     class KbInferenceConfig
       attr_accessor text_inference_config: Types::TextInferenceConfig
       SENSITIVE: []
@@ -1004,7 +1041,7 @@ module Aws::Bedrock
 
     class ListFoundationModelsRequest
       attr_accessor by_provider: ::String
-      attr_accessor by_customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING")
+      attr_accessor by_customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")
       attr_accessor by_output_modality: ("TEXT" | "IMAGE" | "EMBEDDING")
       attr_accessor by_inference_type: ("ON_DEMAND" | "PROVISIONED")
       SENSITIVE: []
@@ -1167,6 +1204,7 @@ module Aws::Bedrock
       attr_accessor text_data_delivery_enabled: bool
       attr_accessor image_data_delivery_enabled: bool
       attr_accessor embedding_data_delivery_enabled: bool
+      attr_accessor video_data_delivery_enabled: bool
       SENSITIVE: []
     end
 
@@ -1195,7 +1233,7 @@ module Aws::Bedrock
       attr_accessor end_time: ::Time
       attr_accessor custom_model_arn: ::String
       attr_accessor custom_model_name: ::String
-      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING")
+      attr_accessor customization_type: ("FINE_TUNING" | "CONTINUED_PRE_TRAINING" | "DISTILLATION")
       SENSITIVE: []
     end
 
@@ -1332,6 +1370,32 @@ module Aws::Bedrock
       end
     end
 
+    class RequestMetadataBaseFilters
+      attr_accessor equals: ::Hash[::String, ::String]
+      attr_accessor not_equals: ::Hash[::String, ::String]
+      SENSITIVE: [:equals, :not_equals]
+    end
+
+    class RequestMetadataFilters
+      attr_accessor equals: ::Hash[::String, ::String]
+      attr_accessor not_equals: ::Hash[::String, ::String]
+      attr_accessor and_all: ::Array[Types::RequestMetadataBaseFilters]
+      attr_accessor or_all: ::Array[Types::RequestMetadataBaseFilters]
+      attr_accessor unknown: untyped
+      SENSITIVE: [:equals, :not_equals]
+
+      class Equals < RequestMetadataFilters
+      end
+      class NotEquals < RequestMetadataFilters
+      end
+      class AndAll < RequestMetadataFilters
+      end
+      class OrAll < RequestMetadataFilters
+      end
+      class Unknown < RequestMetadataFilters
+      end
+    end
+
     class ResourceNotFoundException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -1457,6 +1521,12 @@ module Aws::Bedrock
     class TagResourceResponse < Aws::EmptyStructure
     end
 
+    class TeacherModelConfig
+      attr_accessor teacher_model_identifier: ::String
+      attr_accessor max_response_length_for_inference: ::Integer
+      SENSITIVE: []
+    end
+
     class TextInferenceConfig
       attr_accessor temperature: ::Float
       attr_accessor top_p: ::Float
@@ -1478,6 +1548,7 @@ module Aws::Bedrock
 
     class TrainingDataConfig
       attr_accessor s3_uri: ::String
+      attr_accessor invocation_logs_config: Types::InvocationLogsConfig
       SENSITIVE: []
     end
 

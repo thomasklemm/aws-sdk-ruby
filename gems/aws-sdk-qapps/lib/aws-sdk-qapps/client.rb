@@ -806,7 +806,7 @@ module Aws::QApps
     #   resp = client.create_presigned_url({
     #     app_id: "4263767c-d889-4cb2-a8f6-8b649bc66af0", 
     #     card_id: "82f69028-22a9-4bea-8727-0eabf58e9fed", 
-    #     file_contents_sha_256: "myMXwslBoXkTDQ0olhq1QsiHRWWL4yj1V0IuoK+PYOg=", 
+    #     file_contents_sha_256: "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=", 
     #     file_name: "myFile.txt", 
     #     instance_id: "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f", 
     #     scope: "SESSION", 
@@ -816,13 +816,13 @@ module Aws::QApps
     #   resp.to_h outputs the following:
     #   {
     #     file_id: "412aa1b4-341c-45af-936d-da52f8a1a3b4", 
-    #     presigned_url: "https://presign-test-omg-6f98533b-3f9f-4e8a-8183-63793b9ffef0.s3.us-west-2.amazonaws.com/", 
+    #     presigned_url: "https://qapps-uploaded-files-us-east-1-c819fab7cf78c9205158297913deb9e0.s3.us-east-1.amazonaws.com/", 
     #     presigned_url_expiration: Time.parse("2024-09-14T00:11:54.232Z"), 
     #     presigned_url_fields: {
-    #       "x-amz-checksum-sha256" => "fmHCdgdPjOGub9TVZ4NIOpAYP4UlIOaPRUwHw8nihR4=", 
+    #       "x-amz-checksum-sha256" => "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=", 
     #       "x-amz-server-side-encryption" => "aws:kms", 
     #       "x-amz-server-side-encryption-aws-kms-key-id" => "0a6a474b-f2ca-46ea-9e72-deea9077d92f", 
-    #       "x-amz-server-side-encryption-context" => "eyJzb21ldGhpbmciOiJ0aGVyZSJ9", 
+    #       "x-amz-server-side-encryption-context" => "eyJBUFBMSUNBVElPTl9JRCI6IjAxMjM0NTY3ODkwMSJ9", 
     #     }, 
     #   }
     #
@@ -831,7 +831,7 @@ module Aws::QApps
     #   resp = client.create_presigned_url({
     #     app_id: "4263767c-d889-4cb2-a8f6-8b649bc66af0", 
     #     card_id: "7a11f34b-42d4-4bc8-b668-ae4a788dae1e", 
-    #     file_contents_sha_256: "myMXwslBoXkTDQ0olhq1QsiHRWWL4yj1V0IuoK+PYOg=", 
+    #     file_contents_sha_256: "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=", 
     #     file_name: "anApplicationFile.txt", 
     #     instance_id: "0b95c9c4-89cc-4aa8-9aae-aa91cbec699f", 
     #     scope: "APPLICATION", 
@@ -840,13 +840,13 @@ module Aws::QApps
     #   resp.to_h outputs the following:
     #   {
     #     file_id: "412aa1b4-341c-45af-936d-da52f8a1a3b4", 
-    #     presigned_url: "https://presign-test-omg-6f98533b-3f9f-4e8a-8183-63793b9ffef0.s3.us-west-2.amazonaws.com/", 
+    #     presigned_url: "https://qapps-uploaded-files-us-east-1-c819fab7cf78c9205158297913deb9e0.s3.us-east-1.amazonaws.com/", 
     #     presigned_url_expiration: Time.parse("2024-09-14T00:11:54.232Z"), 
     #     presigned_url_fields: {
-    #       "x-amz-checksum-sha256" => "fmHCdgdPjOGub9TVZ4NIOpAYP4UlIOaPRUwHw8nihR4=", 
+    #       "x-amz-checksum-sha256" => "wXY7GD8m4fmHhdtuQyBdXzNQpdCseVwBcOBIlzfm+kg=", 
     #       "x-amz-server-side-encryption" => "aws:kms", 
     #       "x-amz-server-side-encryption-aws-kms-key-id" => "0a6a474b-f2ca-46ea-9e72-deea9077d92f", 
-    #       "x-amz-server-side-encryption-context" => "eyJzb21ldGhpbmciOiJ0aGVyZSJ9", 
+    #       "x-amz-server-side-encryption-context" => "eyJBUFBMSUNBVElPTl9JRCI6IjAxMjM0NTY3ODkwMSJ9", 
     #     }, 
     #   }
     #
@@ -1067,6 +1067,7 @@ module Aws::QApps
     #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             prompt: "Prompt", # required
     #             plugin_id: "PluginId", # required
+    #             action_identifier: "ActionIdentifier",
     #           },
     #           file_upload: {
     #             title: "Title", # required
@@ -1649,8 +1650,9 @@ module Aws::QApps
     #   resp.app_definition.cards[0].q_plugin.dependencies[0] #=> String
     #   resp.app_definition.cards[0].q_plugin.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app_definition.cards[0].q_plugin.prompt #=> String
-    #   resp.app_definition.cards[0].q_plugin.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM"
+    #   resp.app_definition.cards[0].q_plugin.plugin_type #=> String, one of "SERVICE_NOW", "SALESFORCE", "JIRA", "ZENDESK", "CUSTOM", "ASANA", "ATLASSIAN_CONFLUENCE", "GOOGLE_CALENDAR", "JIRA_CLOUD", "MICROSOFT_EXCHANGE", "MICROSOFT_TEAMS", "PAGERDUTY_ADVANCE", "SALESFORCE_CRM", "SERVICENOW_NOW_PLATFORM", "SMARTSHEET", "ZENDESK_SUITE"
     #   resp.app_definition.cards[0].q_plugin.plugin_id #=> String
+    #   resp.app_definition.cards[0].q_plugin.action_identifier #=> String
     #   resp.app_definition.cards[0].file_upload.id #=> String
     #   resp.app_definition.cards[0].file_upload.title #=> String
     #   resp.app_definition.cards[0].file_upload.dependencies #=> Array
@@ -2415,6 +2417,7 @@ module Aws::QApps
     #   resp.app.app_definition.cards[0].q_plugin.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
     #   resp.app.app_definition.cards[0].q_plugin.prompt #=> String
     #   resp.app.app_definition.cards[0].q_plugin.plugin_id #=> String
+    #   resp.app.app_definition.cards[0].q_plugin.action_identifier #=> String
     #   resp.app.app_definition.cards[0].file_upload.title #=> String
     #   resp.app.app_definition.cards[0].file_upload.id #=> String
     #   resp.app.app_definition.cards[0].file_upload.type #=> String, one of "text-input", "q-query", "file-upload", "q-plugin", "form-input"
@@ -2979,6 +2982,7 @@ module Aws::QApps
     #             type: "text-input", # required, accepts text-input, q-query, file-upload, q-plugin, form-input
     #             prompt: "Prompt", # required
     #             plugin_id: "PluginId", # required
+    #             action_identifier: "ActionIdentifier",
     #           },
     #           file_upload: {
     #             title: "Title", # required
@@ -3306,7 +3310,7 @@ module Aws::QApps
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qapps'
-      context[:gem_version] = '1.10.0'
+      context[:gem_version] = '1.11.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

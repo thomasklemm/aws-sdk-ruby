@@ -63,6 +63,7 @@ module Aws::Bedrock
     CustomModelName = Shapes::StringShape.new(name: 'CustomModelName')
     CustomModelSummary = Shapes::StructureShape.new(name: 'CustomModelSummary')
     CustomModelSummaryList = Shapes::ListShape.new(name: 'CustomModelSummaryList')
+    CustomizationConfig = Shapes::UnionShape.new(name: 'CustomizationConfig')
     CustomizationType = Shapes::StringShape.new(name: 'CustomizationType')
     DeleteCustomModelRequest = Shapes::StructureShape.new(name: 'DeleteCustomModelRequest')
     DeleteCustomModelResponse = Shapes::StructureShape.new(name: 'DeleteCustomModelResponse')
@@ -76,6 +77,7 @@ module Aws::Bedrock
     DeleteModelInvocationLoggingConfigurationResponse = Shapes::StructureShape.new(name: 'DeleteModelInvocationLoggingConfigurationResponse')
     DeleteProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'DeleteProvisionedModelThroughputRequest')
     DeleteProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'DeleteProvisionedModelThroughputResponse')
+    DistillationConfig = Shapes::StructureShape.new(name: 'DistillationConfig')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     ErrorMessages = Shapes::ListShape.new(name: 'ErrorMessages')
     EvaluationBedrockModel = Shapes::StructureShape.new(name: 'EvaluationBedrockModel')
@@ -256,7 +258,10 @@ module Aws::Bedrock
     InferenceType = Shapes::StringShape.new(name: 'InferenceType')
     InferenceTypeList = Shapes::ListShape.new(name: 'InferenceTypeList')
     InstructSupported = Shapes::BooleanShape.new(name: 'InstructSupported')
+    Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
+    InvocationLogSource = Shapes::UnionShape.new(name: 'InvocationLogSource')
+    InvocationLogsConfig = Shapes::StructureShape.new(name: 'InvocationLogsConfig')
     JobName = Shapes::StringShape.new(name: 'JobName')
     KbInferenceConfig = Shapes::StructureShape.new(name: 'KbInferenceConfig')
     KeyPrefix = Shapes::StringShape.new(name: 'KeyPrefix')
@@ -357,6 +362,12 @@ module Aws::Bedrock
     RAGStopSequences = Shapes::ListShape.new(name: 'RAGStopSequences')
     RAGStopSequencesMemberString = Shapes::StringShape.new(name: 'RAGStopSequencesMemberString')
     RagConfigs = Shapes::ListShape.new(name: 'RagConfigs')
+    RequestMetadataBaseFilters = Shapes::StructureShape.new(name: 'RequestMetadataBaseFilters')
+    RequestMetadataFilters = Shapes::UnionShape.new(name: 'RequestMetadataFilters')
+    RequestMetadataFiltersList = Shapes::ListShape.new(name: 'RequestMetadataFiltersList')
+    RequestMetadataMap = Shapes::MapShape.new(name: 'RequestMetadataMap')
+    RequestMetadataMapKeyString = Shapes::StringShape.new(name: 'RequestMetadataMapKeyString')
+    RequestMetadataMapValueString = Shapes::StringShape.new(name: 'RequestMetadataMapValueString')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     RetrievalFilter = Shapes::UnionShape.new(name: 'RetrievalFilter')
     RetrievalFilterList = Shapes::ListShape.new(name: 'RetrievalFilterList')
@@ -395,6 +406,8 @@ module Aws::Bedrock
     TagResourceResponse = Shapes::StructureShape.new(name: 'TagResourceResponse')
     TagValue = Shapes::StringShape.new(name: 'TagValue')
     TaggableResourcesArn = Shapes::StringShape.new(name: 'TaggableResourcesArn')
+    TeacherModelConfig = Shapes::StructureShape.new(name: 'TeacherModelConfig')
+    TeacherModelIdentifier = Shapes::StringShape.new(name: 'TeacherModelIdentifier')
     Temperature = Shapes::FloatShape.new(name: 'Temperature')
     TextInferenceConfig = Shapes::StructureShape.new(name: 'TextInferenceConfig')
     TextPromptTemplate = Shapes::StringShape.new(name: 'TextPromptTemplate')
@@ -410,6 +423,7 @@ module Aws::Bedrock
     UpdateGuardrailResponse = Shapes::StructureShape.new(name: 'UpdateGuardrailResponse')
     UpdateProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'UpdateProvisionedModelThroughputRequest')
     UpdateProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'UpdateProvisionedModelThroughputResponse')
+    UsePromptResponse = Shapes::BooleanShape.new(name: 'UsePromptResponse')
     ValidationDataConfig = Shapes::StructureShape.new(name: 'ValidationDataConfig')
     ValidationException = Shapes::StructureShape.new(name: 'ValidationException')
     ValidationMetrics = Shapes::ListShape.new(name: 'ValidationMetrics')
@@ -544,8 +558,9 @@ module Aws::Bedrock
     CreateModelCustomizationJobRequest.add_member(:training_data_config, Shapes::ShapeRef.new(shape: TrainingDataConfig, required: true, location_name: "trainingDataConfig"))
     CreateModelCustomizationJobRequest.add_member(:validation_data_config, Shapes::ShapeRef.new(shape: ValidationDataConfig, location_name: "validationDataConfig"))
     CreateModelCustomizationJobRequest.add_member(:output_data_config, Shapes::ShapeRef.new(shape: OutputDataConfig, required: true, location_name: "outputDataConfig"))
-    CreateModelCustomizationJobRequest.add_member(:hyper_parameters, Shapes::ShapeRef.new(shape: ModelCustomizationHyperParameters, required: true, location_name: "hyperParameters"))
+    CreateModelCustomizationJobRequest.add_member(:hyper_parameters, Shapes::ShapeRef.new(shape: ModelCustomizationHyperParameters, location_name: "hyperParameters"))
     CreateModelCustomizationJobRequest.add_member(:vpc_config, Shapes::ShapeRef.new(shape: VpcConfig, location_name: "vpcConfig"))
+    CreateModelCustomizationJobRequest.add_member(:customization_config, Shapes::ShapeRef.new(shape: CustomizationConfig, location_name: "customizationConfig"))
     CreateModelCustomizationJobRequest.struct_class = Types::CreateModelCustomizationJobRequest
 
     CreateModelCustomizationJobResponse.add_member(:job_arn, Shapes::ShapeRef.new(shape: ModelCustomizationJobArn, required: true, location_name: "jobArn"))
@@ -601,6 +616,12 @@ module Aws::Bedrock
 
     CustomModelSummaryList.member = Shapes::ShapeRef.new(shape: CustomModelSummary)
 
+    CustomizationConfig.add_member(:distillation_config, Shapes::ShapeRef.new(shape: DistillationConfig, location_name: "distillationConfig"))
+    CustomizationConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    CustomizationConfig.add_member_subclass(:distillation_config, Types::CustomizationConfig::DistillationConfig)
+    CustomizationConfig.add_member_subclass(:unknown, Types::CustomizationConfig::Unknown)
+    CustomizationConfig.struct_class = Types::CustomizationConfig
+
     DeleteCustomModelRequest.add_member(:model_identifier, Shapes::ShapeRef.new(shape: ModelIdentifier, required: true, location: "uri", location_name: "modelIdentifier"))
     DeleteCustomModelRequest.struct_class = Types::DeleteCustomModelRequest
 
@@ -630,6 +651,9 @@ module Aws::Bedrock
     DeleteProvisionedModelThroughputRequest.struct_class = Types::DeleteProvisionedModelThroughputRequest
 
     DeleteProvisionedModelThroughputResponse.struct_class = Types::DeleteProvisionedModelThroughputResponse
+
+    DistillationConfig.add_member(:teacher_model_config, Shapes::ShapeRef.new(shape: TeacherModelConfig, required: true, location_name: "teacherModelConfig"))
+    DistillationConfig.struct_class = Types::DistillationConfig
 
     ErrorMessages.member = Shapes::ShapeRef.new(shape: ErrorMessage)
 
@@ -785,6 +809,7 @@ module Aws::Bedrock
     GetCustomModelResponse.add_member(:training_metrics, Shapes::ShapeRef.new(shape: TrainingMetrics, location_name: "trainingMetrics"))
     GetCustomModelResponse.add_member(:validation_metrics, Shapes::ShapeRef.new(shape: ValidationMetrics, location_name: "validationMetrics"))
     GetCustomModelResponse.add_member(:creation_time, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "creationTime"))
+    GetCustomModelResponse.add_member(:customization_config, Shapes::ShapeRef.new(shape: CustomizationConfig, location_name: "customizationConfig"))
     GetCustomModelResponse.struct_class = Types::GetCustomModelResponse
 
     GetEvaluationJobRequest.add_member(:job_identifier, Shapes::ShapeRef.new(shape: EvaluationJobIdentifier, required: true, location: "uri", location_name: "jobIdentifier"))
@@ -895,7 +920,7 @@ module Aws::Bedrock
     GetModelCustomizationJobResponse.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastModifiedTime"))
     GetModelCustomizationJobResponse.add_member(:end_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "endTime"))
     GetModelCustomizationJobResponse.add_member(:base_model_arn, Shapes::ShapeRef.new(shape: FoundationModelArn, required: true, location_name: "baseModelArn"))
-    GetModelCustomizationJobResponse.add_member(:hyper_parameters, Shapes::ShapeRef.new(shape: ModelCustomizationHyperParameters, required: true, location_name: "hyperParameters"))
+    GetModelCustomizationJobResponse.add_member(:hyper_parameters, Shapes::ShapeRef.new(shape: ModelCustomizationHyperParameters, location_name: "hyperParameters"))
     GetModelCustomizationJobResponse.add_member(:training_data_config, Shapes::ShapeRef.new(shape: TrainingDataConfig, required: true, location_name: "trainingDataConfig"))
     GetModelCustomizationJobResponse.add_member(:validation_data_config, Shapes::ShapeRef.new(shape: ValidationDataConfig, required: true, location_name: "validationDataConfig"))
     GetModelCustomizationJobResponse.add_member(:output_data_config, Shapes::ShapeRef.new(shape: OutputDataConfig, required: true, location_name: "outputDataConfig"))
@@ -904,6 +929,7 @@ module Aws::Bedrock
     GetModelCustomizationJobResponse.add_member(:training_metrics, Shapes::ShapeRef.new(shape: TrainingMetrics, location_name: "trainingMetrics"))
     GetModelCustomizationJobResponse.add_member(:validation_metrics, Shapes::ShapeRef.new(shape: ValidationMetrics, location_name: "validationMetrics"))
     GetModelCustomizationJobResponse.add_member(:vpc_config, Shapes::ShapeRef.new(shape: VpcConfig, location_name: "vpcConfig"))
+    GetModelCustomizationJobResponse.add_member(:customization_config, Shapes::ShapeRef.new(shape: CustomizationConfig, location_name: "customizationConfig"))
     GetModelCustomizationJobResponse.struct_class = Types::GetModelCustomizationJobResponse
 
     GetModelImportJobRequest.add_member(:job_identifier, Shapes::ShapeRef.new(shape: ModelImportJobIdentifier, required: true, location: "uri", location_name: "jobIdentifier"))
@@ -1167,6 +1193,17 @@ module Aws::Bedrock
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     InternalServerException.struct_class = Types::InternalServerException
 
+    InvocationLogSource.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, location_name: "s3Uri"))
+    InvocationLogSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    InvocationLogSource.add_member_subclass(:s3_uri, Types::InvocationLogSource::S3Uri)
+    InvocationLogSource.add_member_subclass(:unknown, Types::InvocationLogSource::Unknown)
+    InvocationLogSource.struct_class = Types::InvocationLogSource
+
+    InvocationLogsConfig.add_member(:use_prompt_response, Shapes::ShapeRef.new(shape: UsePromptResponse, location_name: "usePromptResponse"))
+    InvocationLogsConfig.add_member(:invocation_log_source, Shapes::ShapeRef.new(shape: InvocationLogSource, required: true, location_name: "invocationLogSource"))
+    InvocationLogsConfig.add_member(:request_metadata_filters, Shapes::ShapeRef.new(shape: RequestMetadataFilters, location_name: "requestMetadataFilters"))
+    InvocationLogsConfig.struct_class = Types::InvocationLogsConfig
+
     KbInferenceConfig.add_member(:text_inference_config, Shapes::ShapeRef.new(shape: TextInferenceConfig, location_name: "textInferenceConfig"))
     KbInferenceConfig.struct_class = Types::KbInferenceConfig
 
@@ -1348,6 +1385,7 @@ module Aws::Bedrock
     LoggingConfig.add_member(:text_data_delivery_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "textDataDeliveryEnabled"))
     LoggingConfig.add_member(:image_data_delivery_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "imageDataDeliveryEnabled"))
     LoggingConfig.add_member(:embedding_data_delivery_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "embeddingDataDeliveryEnabled"))
+    LoggingConfig.add_member(:video_data_delivery_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "videoDataDeliveryEnabled"))
     LoggingConfig.struct_class = Types::LoggingConfig
 
     ModelCopyJobSummaries.member = Shapes::ShapeRef.new(shape: ModelCopyJobSummary)
@@ -1490,6 +1528,27 @@ module Aws::Bedrock
 
     RagConfigs.member = Shapes::ShapeRef.new(shape: RAGConfig)
 
+    RequestMetadataBaseFilters.add_member(:equals, Shapes::ShapeRef.new(shape: RequestMetadataMap, location_name: "equals"))
+    RequestMetadataBaseFilters.add_member(:not_equals, Shapes::ShapeRef.new(shape: RequestMetadataMap, location_name: "notEquals"))
+    RequestMetadataBaseFilters.struct_class = Types::RequestMetadataBaseFilters
+
+    RequestMetadataFilters.add_member(:equals, Shapes::ShapeRef.new(shape: RequestMetadataMap, location_name: "equals"))
+    RequestMetadataFilters.add_member(:not_equals, Shapes::ShapeRef.new(shape: RequestMetadataMap, location_name: "notEquals"))
+    RequestMetadataFilters.add_member(:and_all, Shapes::ShapeRef.new(shape: RequestMetadataFiltersList, location_name: "andAll"))
+    RequestMetadataFilters.add_member(:or_all, Shapes::ShapeRef.new(shape: RequestMetadataFiltersList, location_name: "orAll"))
+    RequestMetadataFilters.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    RequestMetadataFilters.add_member_subclass(:equals, Types::RequestMetadataFilters::Equals)
+    RequestMetadataFilters.add_member_subclass(:not_equals, Types::RequestMetadataFilters::NotEquals)
+    RequestMetadataFilters.add_member_subclass(:and_all, Types::RequestMetadataFilters::AndAll)
+    RequestMetadataFilters.add_member_subclass(:or_all, Types::RequestMetadataFilters::OrAll)
+    RequestMetadataFilters.add_member_subclass(:unknown, Types::RequestMetadataFilters::Unknown)
+    RequestMetadataFilters.struct_class = Types::RequestMetadataFilters
+
+    RequestMetadataFiltersList.member = Shapes::ShapeRef.new(shape: RequestMetadataBaseFilters)
+
+    RequestMetadataMap.key = Shapes::ShapeRef.new(shape: RequestMetadataMapKeyString)
+    RequestMetadataMap.value = Shapes::ShapeRef.new(shape: RequestMetadataMapValueString)
+
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
 
@@ -1580,6 +1639,10 @@ module Aws::Bedrock
 
     TagResourceResponse.struct_class = Types::TagResourceResponse
 
+    TeacherModelConfig.add_member(:teacher_model_identifier, Shapes::ShapeRef.new(shape: TeacherModelIdentifier, required: true, location_name: "teacherModelIdentifier"))
+    TeacherModelConfig.add_member(:max_response_length_for_inference, Shapes::ShapeRef.new(shape: Integer, location_name: "maxResponseLengthForInference"))
+    TeacherModelConfig.struct_class = Types::TeacherModelConfig
+
     TextInferenceConfig.add_member(:temperature, Shapes::ShapeRef.new(shape: Temperature, location_name: "temperature"))
     TextInferenceConfig.add_member(:top_p, Shapes::ShapeRef.new(shape: TopP, location_name: "topP"))
     TextInferenceConfig.add_member(:max_tokens, Shapes::ShapeRef.new(shape: MaxTokens, location_name: "maxTokens"))
@@ -1593,7 +1656,8 @@ module Aws::Bedrock
     TooManyTagsException.add_member(:resource_name, Shapes::ShapeRef.new(shape: TaggableResourcesArn, location_name: "resourceName"))
     TooManyTagsException.struct_class = Types::TooManyTagsException
 
-    TrainingDataConfig.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "s3Uri"))
+    TrainingDataConfig.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, location_name: "s3Uri"))
+    TrainingDataConfig.add_member(:invocation_logs_config, Shapes::ShapeRef.new(shape: InvocationLogsConfig, location_name: "invocationLogsConfig"))
     TrainingDataConfig.struct_class = Types::TrainingDataConfig
 
     TrainingMetrics.add_member(:training_loss, Shapes::ShapeRef.new(shape: MetricFloat, location_name: "trainingLoss"))

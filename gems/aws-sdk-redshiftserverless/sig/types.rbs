@@ -465,6 +465,19 @@ module Aws::RedshiftServerless
       SENSITIVE: []
     end
 
+    class ListManagedWorkgroupsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor source_arn: ::String
+      SENSITIVE: []
+    end
+
+    class ListManagedWorkgroupsResponse
+      attr_accessor managed_workgroups: ::Array[Types::ManagedWorkgroupListItem]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListNamespacesRequest
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
@@ -584,6 +597,15 @@ module Aws::RedshiftServerless
     class ListWorkgroupsResponse
       attr_accessor next_token: ::String
       attr_accessor workgroups: ::Array[Types::Workgroup]
+      SENSITIVE: []
+    end
+
+    class ManagedWorkgroupListItem
+      attr_accessor creation_date: ::Time
+      attr_accessor managed_workgroup_id: ::String
+      attr_accessor managed_workgroup_name: ::String
+      attr_accessor source_arn: ::String
+      attr_accessor status: ("CREATING" | "DELETING" | "MODIFYING" | "AVAILABLE" | "NOT_AVAILABLE")
       SENSITIVE: []
     end
 

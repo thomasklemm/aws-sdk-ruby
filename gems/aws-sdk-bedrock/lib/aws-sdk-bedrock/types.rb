@@ -671,6 +671,10 @@ module Aws::Bedrock
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/vpc-model-customization.html
     #   @return [Types::VpcConfig]
     #
+    # @!attribute [rw] customization_config
+    #   The customization configuration for the model customization job.
+    #   @return [Types::CustomizationConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreateModelCustomizationJobRequest AWS API Documentation
     #
     class CreateModelCustomizationJobRequest < Struct.new(
@@ -687,7 +691,8 @@ module Aws::Bedrock
       :validation_data_config,
       :output_data_config,
       :hyper_parameters,
-      :vpc_config)
+      :vpc_config,
+      :customization_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -825,7 +830,7 @@ module Aws::Bedrock
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc
     #   @return [Types::VpcConfig]
     #
     # @!attribute [rw] timeout_duration_in_hours
@@ -1018,6 +1023,29 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # A model customization configuration
+    #
+    # @note CustomizationConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note CustomizationConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of CustomizationConfig corresponding to the set member.
+    #
+    # @!attribute [rw] distillation_config
+    #   The distillation configuration for the custom model.
+    #   @return [Types::DistillationConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CustomizationConfig AWS API Documentation
+    #
+    class CustomizationConfig < Struct.new(
+      :distillation_config,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class DistillationConfig < CustomizationConfig; end
+      class Unknown < CustomizationConfig; end
+    end
+
     # @!attribute [rw] model_identifier
     #   Name of the model to delete.
     #   @return [String]
@@ -1115,6 +1143,21 @@ module Aws::Bedrock
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeleteProvisionedModelThroughputResponse AWS API Documentation
     #
     class DeleteProvisionedModelThroughputResponse < Aws::EmptyStructure; end
+
+    # Settings for distilling a foundation model into a smaller and more
+    # efficient model.
+    #
+    # @!attribute [rw] teacher_model_config
+    #   The teacher model configuration.
+    #   @return [Types::TeacherModelConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DistillationConfig AWS API Documentation
+    #
+    class DistillationConfig < Struct.new(
+      :teacher_model_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # Contains the ARN of the Amazon Bedrock model or [inference profile][1]
     # specified in your evaluation job. Each Amazon Bedrock model supports
@@ -1811,6 +1854,10 @@ module Aws::Bedrock
     #   Creation time of the model.
     #   @return [Time]
     #
+    # @!attribute [rw] customization_config
+    #   The customization configuration for the custom model.
+    #   @return [Types::CustomizationConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetCustomModelResponse AWS API Documentation
     #
     class GetCustomModelResponse < Struct.new(
@@ -1827,7 +1874,8 @@ module Aws::Bedrock
       :output_data_config,
       :training_metrics,
       :validation_metrics,
-      :creation_time)
+      :creation_time,
+      :customization_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2394,6 +2442,10 @@ module Aws::Bedrock
     #   VPC configuration for the custom model job.
     #   @return [Types::VpcConfig]
     #
+    # @!attribute [rw] customization_config
+    #   The customization configuration for the model customization job.
+    #   @return [Types::CustomizationConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetModelCustomizationJobResponse AWS API Documentation
     #
     class GetModelCustomizationJobResponse < Struct.new(
@@ -2417,7 +2469,8 @@ module Aws::Bedrock
       :output_model_kms_key_arn,
       :training_metrics,
       :validation_metrics,
-      :vpc_config)
+      :vpc_config,
+      :customization_config)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2560,6 +2613,55 @@ module Aws::Bedrock
     #
     # @!attribute [rw] status
     #   The status of the batch inference job.
+    #
+    #   The following statuses are possible:
+    #
+    #   * Submitted – This job has been submitted to a queue for validation.
+    #
+    #   * Validating – This job is being validated for the requirements
+    #     described in [Format and upload your batch inference data][1]. The
+    #     criteria include the following:
+    #
+    #     * Your IAM service role has access to the Amazon S3 buckets
+    #       containing your files.
+    #
+    #     * Your files are .jsonl files and each individual record is a JSON
+    #       object in the correct format. Note that validation doesn't
+    #       check if the `modelInput` value matches the request body for the
+    #       model.
+    #
+    #     * Your files fulfill the requirements for file size and number of
+    #       records. For more information, see [Quotas for Amazon
+    #       Bedrock][2].
+    #   * Scheduled – This job has been validated and is now in a queue. The
+    #     job will automatically start when it reaches its turn.
+    #
+    #   * Expired – This job timed out because it was scheduled but didn't
+    #     begin before the set timeout duration. Submit a new job request.
+    #
+    #   * InProgress – This job has begun. You can start viewing the results
+    #     in the output S3 location.
+    #
+    #   * Completed – This job has successfully completed. View the output
+    #     files in the output S3 location.
+    #
+    #   * PartiallyCompleted – This job has partially completed. Not all of
+    #     your records could be processed in time. View the output files in
+    #     the output S3 location.
+    #
+    #   * Failed – This job has failed. Check the failure message for any
+    #     further details. For further assistance, reach out to the [Amazon
+    #     Web Services Support Center][3].
+    #
+    #   * Stopped – This job was stopped by a user.
+    #
+    #   * Stopping – This job is being stopped by a user.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html
+    #   [3]: https://console.aws.amazon.com/support/home/
     #   @return [String]
     #
     # @!attribute [rw] message
@@ -2594,7 +2696,7 @@ module Aws::Bedrock
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc
     #   @return [Types::VpcConfig]
     #
     # @!attribute [rw] timeout_duration_in_hours
@@ -3880,6 +3982,54 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # A storage location for invocation logs.
+    #
+    # @note InvocationLogSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note InvocationLogSource is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of InvocationLogSource corresponding to the set member.
+    #
+    # @!attribute [rw] s3_uri
+    #   The URI of an invocation log in a bucket.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/InvocationLogSource AWS API Documentation
+    #
+    class InvocationLogSource < Struct.new(
+      :s3_uri,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class S3Uri < InvocationLogSource; end
+      class Unknown < InvocationLogSource; end
+    end
+
+    # Settings for using invocation logs to customize a model.
+    #
+    # @!attribute [rw] use_prompt_response
+    #   Whether to use the model's response for training, or just the
+    #   prompt. The default value is `False`.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] invocation_log_source
+    #   The source of the invocation logs.
+    #   @return [Types::InvocationLogSource]
+    #
+    # @!attribute [rw] request_metadata_filters
+    #   Rules for filtering invocation logs based on request metadata.
+    #   @return [Types::RequestMetadataFilters]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/InvocationLogsConfig AWS API Documentation
+    #
+    class InvocationLogsConfig < Struct.new(
+      :use_prompt_response,
+      :invocation_log_source,
+      :request_metadata_filters)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains configuration details of the inference for knowledge base
     # retrieval and response generation.
     #
@@ -4655,6 +4805,55 @@ module Aws::Bedrock
     # @!attribute [rw] status_equals
     #   Specify a status to filter for batch inference jobs whose statuses
     #   match the string you specify.
+    #
+    #   The following statuses are possible:
+    #
+    #   * Submitted – This job has been submitted to a queue for validation.
+    #
+    #   * Validating – This job is being validated for the requirements
+    #     described in [Format and upload your batch inference data][1]. The
+    #     criteria include the following:
+    #
+    #     * Your IAM service role has access to the Amazon S3 buckets
+    #       containing your files.
+    #
+    #     * Your files are .jsonl files and each individual record is a JSON
+    #       object in the correct format. Note that validation doesn't
+    #       check if the `modelInput` value matches the request body for the
+    #       model.
+    #
+    #     * Your files fulfill the requirements for file size and number of
+    #       records. For more information, see [Quotas for Amazon
+    #       Bedrock][2].
+    #   * Scheduled – This job has been validated and is now in a queue. The
+    #     job will automatically start when it reaches its turn.
+    #
+    #   * Expired – This job timed out because it was scheduled but didn't
+    #     begin before the set timeout duration. Submit a new job request.
+    #
+    #   * InProgress – This job has begun. You can start viewing the results
+    #     in the output S3 location.
+    #
+    #   * Completed – This job has successfully completed. View the output
+    #     files in the output S3 location.
+    #
+    #   * PartiallyCompleted – This job has partially completed. Not all of
+    #     your records could be processed in time. View the output files in
+    #     the output S3 location.
+    #
+    #   * Failed – This job has failed. Check the failure message for any
+    #     further details. For further assistance, reach out to the [Amazon
+    #     Web Services Support Center][3].
+    #
+    #   * Stopped – This job was stopped by a user.
+    #
+    #   * Stopping – This job is being stopped by a user.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html
+    #   [3]: https://console.aws.amazon.com/support/home/
     #   @return [String]
     #
     # @!attribute [rw] name_contains
@@ -4852,6 +5051,10 @@ module Aws::Bedrock
     #   Set to include embeddings data in the log delivery.
     #   @return [Boolean]
     #
+    # @!attribute [rw] video_data_delivery_enabled
+    #   Set to include video data in the log delivery.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/LoggingConfig AWS API Documentation
     #
     class LoggingConfig < Struct.new(
@@ -4859,7 +5062,8 @@ module Aws::Bedrock
       :s3_config,
       :text_data_delivery_enabled,
       :image_data_delivery_enabled,
-      :embedding_data_delivery_enabled)
+      :embedding_data_delivery_enabled,
+      :video_data_delivery_enabled)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5214,6 +5418,55 @@ module Aws::Bedrock
     #
     # @!attribute [rw] status
     #   The status of the batch inference job.
+    #
+    #   The following statuses are possible:
+    #
+    #   * Submitted – This job has been submitted to a queue for validation.
+    #
+    #   * Validating – This job is being validated for the requirements
+    #     described in [Format and upload your batch inference data][1]. The
+    #     criteria include the following:
+    #
+    #     * Your IAM service role has access to the Amazon S3 buckets
+    #       containing your files.
+    #
+    #     * Your files are .jsonl files and each individual record is a JSON
+    #       object in the correct format. Note that validation doesn't
+    #       check if the `modelInput` value matches the request body for the
+    #       model.
+    #
+    #     * Your files fulfill the requirements for file size and number of
+    #       records. For more information, see [Quotas for Amazon
+    #       Bedrock][2].
+    #   * Scheduled – This job has been validated and is now in a queue. The
+    #     job will automatically start when it reaches its turn.
+    #
+    #   * Expired – This job timed out because it was scheduled but didn't
+    #     begin before the set timeout duration. Submit a new job request.
+    #
+    #   * InProgress – This job has begun. You can start viewing the results
+    #     in the output S3 location.
+    #
+    #   * Completed – This job has successfully completed. View the output
+    #     files in the output S3 location.
+    #
+    #   * PartiallyCompleted – This job has partially completed. Not all of
+    #     your records could be processed in time. View the output files in
+    #     the output S3 location.
+    #
+    #   * Failed – This job has failed. Check the failure message for any
+    #     further details. For further assistance, reach out to the [Amazon
+    #     Web Services Support Center][3].
+    #
+    #   * Stopped – This job was stopped by a user.
+    #
+    #   * Stopping – This job is being stopped by a user.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-data.html
+    #   [2]: https://docs.aws.amazon.com/bedrock/latest/userguide/quotas.html
+    #   [3]: https://console.aws.amazon.com/support/home/
     #   @return [String]
     #
     # @!attribute [rw] message
@@ -5248,7 +5501,7 @@ module Aws::Bedrock
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-inference-vpc
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/batch-vpc
     #   @return [Types::VpcConfig]
     #
     # @!attribute [rw] timeout_duration_in_hours
@@ -5478,6 +5731,70 @@ module Aws::Bedrock
 
       class KnowledgeBaseConfig < RAGConfig; end
       class Unknown < RAGConfig; end
+    end
+
+    # A mapping of a metadata key to a value that it should or should not
+    # equal.
+    #
+    # @!attribute [rw] equals
+    #   Include results where the key equals the value.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] not_equals
+    #   Include results where the key does not equal the value.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RequestMetadataBaseFilters AWS API Documentation
+    #
+    class RequestMetadataBaseFilters < Struct.new(
+      :equals,
+      :not_equals)
+      SENSITIVE = [:equals, :not_equals]
+      include Aws::Structure
+    end
+
+    # Rules for filtering invocation logs. A filter can be a mapping of a
+    # metadata key to a value that it should or should not equal (a base
+    # filter), or a list of base filters that are all applied with `AND` or
+    # `OR` logical operators
+    #
+    # @note RequestMetadataFilters is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note RequestMetadataFilters is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of RequestMetadataFilters corresponding to the set member.
+    #
+    # @!attribute [rw] equals
+    #   Include results where the key equals the value.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] not_equals
+    #   Include results where the key does not equal the value.
+    #   @return [Hash<String,String>]
+    #
+    # @!attribute [rw] and_all
+    #   Include results where all of the based filters match.
+    #   @return [Array<Types::RequestMetadataBaseFilters>]
+    #
+    # @!attribute [rw] or_all
+    #   Include results where any of the base filters match.
+    #   @return [Array<Types::RequestMetadataBaseFilters>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RequestMetadataFilters AWS API Documentation
+    #
+    class RequestMetadataFilters < Struct.new(
+      :equals,
+      :not_equals,
+      :and_all,
+      :or_all,
+      :unknown)
+      SENSITIVE = [:equals, :not_equals]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Equals < RequestMetadataFilters; end
+      class NotEquals < RequestMetadataFilters; end
+      class AndAll < RequestMetadataFilters; end
+      class OrAll < RequestMetadataFilters; end
+      class Unknown < RequestMetadataFilters; end
     end
 
     # The specified resource Amazon Resource Name (ARN) was not found. Check
@@ -5869,6 +6186,26 @@ module Aws::Bedrock
     #
     class TagResourceResponse < Aws::EmptyStructure; end
 
+    # Details about a teacher model used for model customization.
+    #
+    # @!attribute [rw] teacher_model_identifier
+    #   The identifier of the teacher model.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_response_length_for_inference
+    #   The maximum number of tokens requested when the customization job
+    #   invokes the teacher model.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/TeacherModelConfig AWS API Documentation
+    #
+    class TeacherModelConfig < Struct.new(
+      :teacher_model_identifier,
+      :max_response_length_for_inference)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The configuration details for text generation using a language model
     # via the `RetrieveAndGenerate` function.
     #
@@ -5953,10 +6290,15 @@ module Aws::Bedrock
     #   The S3 URI where the training data is stored.
     #   @return [String]
     #
+    # @!attribute [rw] invocation_logs_config
+    #   Settings for using invocation logs to customize a model.
+    #   @return [Types::InvocationLogsConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/TrainingDataConfig AWS API Documentation
     #
     class TrainingDataConfig < Struct.new(
-      :s3_uri)
+      :s3_uri,
+      :invocation_logs_config)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -1405,6 +1405,7 @@ module Aws
                           ],
                           ?table_class: ("STANDARD" | "STANDARD_INFREQUENT_ACCESS"),
                           ?deletion_protection_enabled: bool,
+                          ?multi_region_consistency: ("EVENTUAL" | "STRONG"),
                           ?on_demand_throughput: {
                             max_read_request_units: ::Integer?,
                             max_write_request_units: ::Integer?

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.133.0 (2024-12-03)
+------------------
+
+* Feature - Adds support for Amazon Redshift RegisterNamespace and DeregisterNamespace APIs to share data to AWS Glue Data Catalog.
+
 1.132.0 (2024-11-18)
 ------------------
 

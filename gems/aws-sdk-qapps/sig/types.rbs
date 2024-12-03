@@ -605,8 +605,9 @@ module Aws::QApps
       attr_accessor dependencies: ::Array[::String]
       attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor prompt: ::String
-      attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM")
+      attr_accessor plugin_type: ("SERVICE_NOW" | "SALESFORCE" | "JIRA" | "ZENDESK" | "CUSTOM" | "ASANA" | "ATLASSIAN_CONFLUENCE" | "GOOGLE_CALENDAR" | "JIRA_CLOUD" | "MICROSOFT_EXCHANGE" | "MICROSOFT_TEAMS" | "PAGERDUTY_ADVANCE" | "SALESFORCE_CRM" | "SERVICENOW_NOW_PLATFORM" | "SMARTSHEET" | "ZENDESK_SUITE")
       attr_accessor plugin_id: ::String
+      attr_accessor action_identifier: ::String
       SENSITIVE: []
     end
 
@@ -616,6 +617,7 @@ module Aws::QApps
       attr_accessor type: ("text-input" | "q-query" | "file-upload" | "q-plugin" | "form-input")
       attr_accessor prompt: ::String
       attr_accessor plugin_id: ::String
+      attr_accessor action_identifier: ::String
       SENSITIVE: []
     end
 

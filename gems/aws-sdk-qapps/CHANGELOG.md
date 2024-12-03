@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.11.0 (2024-12-03)
+------------------
+
+* Feature - Add support for 11 new plugins as action cards to help automate repetitive tasks and improve productivity.
+
 1.10.0 (2024-11-26)
 ------------------
 

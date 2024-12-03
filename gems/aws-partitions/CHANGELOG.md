@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+1.1017.0 (2024-12-03)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::S3Tables`.
+
+* Feature - Added support for enumerating regions for  `Aws::DSQL`.
+
 1.1016.0 (2024-12-03)
 ------------------
 

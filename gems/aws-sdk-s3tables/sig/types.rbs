@@ -1,0 +1,425 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::S3Tables
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class BadRequestException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class CreateNamespaceRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class CreateNamespaceResponse
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class CreateTableBucketRequest
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class CreateTableBucketResponse
+      attr_accessor arn: ::String
+      SENSITIVE: []
+    end
+
+    class CreateTableRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      attr_accessor format: ("ICEBERG")
+      SENSITIVE: []
+    end
+
+    class CreateTableResponse
+      attr_accessor table_arn: ::String
+      attr_accessor version_token: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteNamespaceRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteTableBucketPolicyRequest
+      attr_accessor table_bucket_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteTableBucketRequest
+      attr_accessor table_bucket_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteTablePolicyRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteTableRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      attr_accessor version_token: ::String
+      SENSITIVE: []
+    end
+
+    class ForbiddenException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class GetNamespaceRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      SENSITIVE: []
+    end
+
+    class GetNamespaceResponse
+      attr_accessor namespace: ::Array[::String]
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor owner_account_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableBucketMaintenanceConfigurationRequest
+      attr_accessor table_bucket_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableBucketMaintenanceConfigurationResponse
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor configuration: ::Hash[("icebergUnreferencedFileRemoval"), Types::TableBucketMaintenanceConfigurationValue]
+      SENSITIVE: []
+    end
+
+    class GetTableBucketPolicyRequest
+      attr_accessor table_bucket_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableBucketPolicyResponse
+      attr_accessor resource_policy: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableBucketRequest
+      attr_accessor table_bucket_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableBucketResponse
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor owner_account_id: ::String
+      attr_accessor created_at: ::Time
+      SENSITIVE: []
+    end
+
+    class GetTableMaintenanceConfigurationRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableMaintenanceConfigurationResponse
+      attr_accessor table_arn: ::String
+      attr_accessor configuration: ::Hash[("icebergCompaction" | "icebergSnapshotManagement"), Types::TableMaintenanceConfigurationValue]
+      SENSITIVE: []
+    end
+
+    class GetTableMaintenanceJobStatusRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableMaintenanceJobStatusResponse
+      attr_accessor table_arn: ::String
+      attr_accessor status: ::Hash[("icebergCompaction" | "icebergSnapshotManagement" | "icebergUnreferencedFileRemoval"), Types::TableMaintenanceJobStatusValue]
+      SENSITIVE: []
+    end
+
+    class GetTableMetadataLocationRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableMetadataLocationResponse
+      attr_accessor version_token: ::String
+      attr_accessor metadata_location: ::String
+      attr_accessor warehouse_location: ::String
+      SENSITIVE: []
+    end
+
+    class GetTablePolicyRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class GetTablePolicyResponse
+      attr_accessor resource_policy: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class GetTableResponse
+      attr_accessor name: ::String
+      attr_accessor type: ("customer" | "aws")
+      attr_accessor table_arn: ::String
+      attr_accessor namespace: ::Array[::String]
+      attr_accessor version_token: ::String
+      attr_accessor metadata_location: ::String
+      attr_accessor warehouse_location: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor managed_by_service: ::String
+      attr_accessor modified_at: ::Time
+      attr_accessor modified_by: ::String
+      attr_accessor owner_account_id: ::String
+      attr_accessor format: ("ICEBERG")
+      SENSITIVE: []
+    end
+
+    class IcebergCompactionSettings
+      attr_accessor target_file_size_mb: ::Integer
+      SENSITIVE: []
+    end
+
+    class IcebergSnapshotManagementSettings
+      attr_accessor min_snapshots_to_keep: ::Integer
+      attr_accessor max_snapshot_age_hours: ::Integer
+      SENSITIVE: []
+    end
+
+    class IcebergUnreferencedFileRemovalSettings
+      attr_accessor unreferenced_days: ::Integer
+      attr_accessor non_current_days: ::Integer
+      SENSITIVE: []
+    end
+
+    class InternalServerErrorException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListNamespacesRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor prefix: ::String
+      attr_accessor continuation_token: ::String
+      attr_accessor max_namespaces: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListNamespacesResponse
+      attr_accessor namespaces: ::Array[Types::NamespaceSummary]
+      attr_accessor continuation_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTableBucketsRequest
+      attr_accessor prefix: ::String
+      attr_accessor continuation_token: ::String
+      attr_accessor max_buckets: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListTableBucketsResponse
+      attr_accessor table_buckets: ::Array[Types::TableBucketSummary]
+      attr_accessor continuation_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListTablesRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor prefix: ::String
+      attr_accessor continuation_token: ::String
+      attr_accessor max_tables: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListTablesResponse
+      attr_accessor tables: ::Array[Types::TableSummary]
+      attr_accessor continuation_token: ::String
+      SENSITIVE: []
+    end
+
+    class NamespaceSummary
+      attr_accessor namespace: ::Array[::String]
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor owner_account_id: ::String
+      SENSITIVE: []
+    end
+
+    class NotFoundException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class PutTableBucketMaintenanceConfigurationRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor type: ("icebergUnreferencedFileRemoval")
+      attr_accessor value: Types::TableBucketMaintenanceConfigurationValue
+      SENSITIVE: []
+    end
+
+    class PutTableBucketPolicyRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor resource_policy: ::String
+      SENSITIVE: []
+    end
+
+    class PutTableMaintenanceConfigurationRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      attr_accessor type: ("icebergCompaction" | "icebergSnapshotManagement")
+      attr_accessor value: Types::TableMaintenanceConfigurationValue
+      SENSITIVE: []
+    end
+
+    class PutTablePolicyRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      attr_accessor resource_policy: ::String
+      SENSITIVE: []
+    end
+
+    class RenameTableRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      attr_accessor new_namespace_name: ::String
+      attr_accessor new_name: ::String
+      attr_accessor version_token: ::String
+      SENSITIVE: []
+    end
+
+    class TableBucketMaintenanceConfigurationValue
+      attr_accessor status: ("enabled" | "disabled")
+      attr_accessor settings: Types::TableBucketMaintenanceSettings
+      SENSITIVE: []
+    end
+
+    class TableBucketMaintenanceSettings
+      attr_accessor iceberg_unreferenced_file_removal: Types::IcebergUnreferencedFileRemovalSettings
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class IcebergUnreferencedFileRemoval < TableBucketMaintenanceSettings
+      end
+      class Unknown < TableBucketMaintenanceSettings
+      end
+    end
+
+    class TableBucketSummary
+      attr_accessor arn: ::String
+      attr_accessor name: ::String
+      attr_accessor owner_account_id: ::String
+      attr_accessor created_at: ::Time
+      SENSITIVE: []
+    end
+
+    class TableMaintenanceConfigurationValue
+      attr_accessor status: ("enabled" | "disabled")
+      attr_accessor settings: Types::TableMaintenanceSettings
+      SENSITIVE: []
+    end
+
+    class TableMaintenanceJobStatusValue
+      attr_accessor status: ("Not_Yet_Run" | "Successful" | "Failed" | "Disabled")
+      attr_accessor last_run_timestamp: ::Time
+      attr_accessor failure_message: ::String
+      SENSITIVE: []
+    end
+
+    class TableMaintenanceSettings
+      attr_accessor iceberg_compaction: Types::IcebergCompactionSettings
+      attr_accessor iceberg_snapshot_management: Types::IcebergSnapshotManagementSettings
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class IcebergCompaction < TableMaintenanceSettings
+      end
+      class IcebergSnapshotManagement < TableMaintenanceSettings
+      end
+      class Unknown < TableMaintenanceSettings
+      end
+    end
+
+    class TableSummary
+      attr_accessor namespace: ::Array[::String]
+      attr_accessor name: ::String
+      attr_accessor type: ("customer" | "aws")
+      attr_accessor table_arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor modified_at: ::Time
+      SENSITIVE: []
+    end
+
+    class TooManyRequestsException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateTableMetadataLocationRequest
+      attr_accessor table_bucket_arn: ::String
+      attr_accessor namespace: ::String
+      attr_accessor name: ::String
+      attr_accessor version_token: ::String
+      attr_accessor metadata_location: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateTableMetadataLocationResponse
+      attr_accessor name: ::String
+      attr_accessor table_arn: ::String
+      attr_accessor namespace: ::Array[::String]
+      attr_accessor version_token: ::String
+      attr_accessor metadata_location: ::String
+      SENSITIVE: []
+    end
+  end
+end

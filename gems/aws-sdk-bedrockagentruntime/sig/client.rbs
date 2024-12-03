@@ -122,6 +122,18 @@ module Aws
                           ?memory_id: ::String,
                           session_id: ::String,
                           ?session_state: {
+                            conversation_history: {
+                              messages: Array[
+                                {
+                                  content: Array[
+                                    {
+                                      text: ::String?
+                                    },
+                                  ],
+                                  role: ("user" | "assistant")
+                                },
+                              ]?
+                            }?,
                             files: Array[
                               {
                                 name: ::String,
@@ -254,6 +266,7 @@ module Aws
                               {
                                 api_result: {
                                   action_group: ::String,
+                                  agent_id: ::String?,
                                   api_path: ::String?,
                                   confirmation_state: ("CONFIRM" | "DENY")?,
                                   http_method: ::String?,
@@ -265,6 +278,7 @@ module Aws
                                 }?,
                                 function_result: {
                                   action_group: ::String,
+                                  agent_id: ::String?,
                                   confirmation_state: ("CONFIRM" | "DENY")?,
                                   function: ::String?,
                                   response_body: Hash[::String, {
@@ -276,6 +290,7 @@ module Aws
                             ]?,
                             session_attributes: Hash[::String, ::String]?
                           },
+                          ?source_arn: ::String,
                           ?streaming_configurations: {
                             apply_guardrail_interval: ::Integer?,
                             stream_final_response: bool?
@@ -377,6 +392,7 @@ module Aws
                                      {
                                        api_result: {
                                          action_group: ::String,
+                                         agent_id: ::String?,
                                          api_path: ::String?,
                                          confirmation_state: ("CONFIRM" | "DENY")?,
                                          http_method: ::String?,
@@ -388,6 +404,7 @@ module Aws
                                        }?,
                                        function_result: {
                                          action_group: ::String,
+                                         agent_id: ::String?,
                                          confirmation_state: ("CONFIRM" | "DENY")?,
                                          function: ::String?,
                                          response_body: Hash[::String, {

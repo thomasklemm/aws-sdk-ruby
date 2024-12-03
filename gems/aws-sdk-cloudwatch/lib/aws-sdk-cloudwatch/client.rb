@@ -2721,6 +2721,11 @@ module Aws::CloudWatch
     #
     #   `arn:aws:ssm:region:account-id:opsitem:severity `
     #
+    #   **Start a Amazon Q Developer operational investigation**
+    #
+    #   `arn:aws:aiops:region:account-id:investigation-group:ingestigation-group-id
+    #   `
+    #
     # @option params [String] :alarm_description
     #   The description for the composite alarm.
     #
@@ -3283,6 +3288,11 @@ module Aws::CloudWatch
     #     `
     #
     #   * `arn:aws:ssm-incidents::account-id:responseplan/response-plan-name `
+    #
+    #   **Start a Amazon Q Developer operational investigation**
+    #
+    #   `arn:aws:aiops:region:account-id:investigation-group:ingestigation-group-id
+    #   `
     #
     # @option params [Array<String>] :insufficient_data_actions
     #   The actions to execute when this alarm transitions to the
@@ -4281,7 +4291,7 @@ module Aws::CloudWatch
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudwatch'
-      context[:gem_version] = '1.107.0'
+      context[:gem_version] = '1.108.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

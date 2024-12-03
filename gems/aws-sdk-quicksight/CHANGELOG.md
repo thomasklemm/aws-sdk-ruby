@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.139.0 (2024-12-03)
+------------------
+
+* Feature - This release includes API needed to support for Unstructured Data in Q in QuickSight Q&A (IDC).
+
 1.138.0 (2024-11-22)
 ------------------
 
