@@ -10,7 +10,7 @@ module Aws
     #
     # @see https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.html
     class AuthTokenGenerator
-      # @option options [required, Credentials] :credentials An object that
+      # @option options [Credentials] :credentials An object that
       #   responds to `#credentials` returning another object that responds to
       #   `#access_key_id`, `#secret_access_key`, and `#session_token`.
       def initialize(options = {})
@@ -19,19 +19,20 @@ module Aws
 
       # Creates an auth login token.
       #
-      # @param [Hash] params The parameters for auth token creation.
-      # @option params [required, String] :region Region where the database
-      #   is located.
-      # @option params [required, String] :endpoint Hostname of the database
-      #   with a port number.
-      #   For example: my-instance.us-west-2.rds.amazonaws.com:3306
-      # @option params [required, String] :user_name Username to login as.
-      #
+      # @param [Hash] options The options for auth token creation.
+      # @option options [String] :region The region where the database
+      #  is located.
+      # @option options [String] :endpoint The hostname of the database
+      #  with a port number.
+      #  For example: my-instance.us-west-2.rds.amazonaws.com:3306
+      # @option options [String] :user_name The username to login as.
+      # @option options [Integer] :expires_in (900) The number of seconds the
+      #  token is valid for.
       # @return [String]
-      def auth_token(params)
-        region = params.fetch(:region)
-        endpoint = params.fetch(:endpoint)
-        user_name = params.fetch(:user_name)
+      def generate_auth_token(options)
+        region = options.fetch(:region)
+        endpoint = options.fetch(:endpoint)
+        user_name = options.fetch(:user_name)
 
         param_list = Aws::Query::ParamList.new
         param_list.set('Action', 'connect')
@@ -47,11 +48,12 @@ module Aws
           http_method: 'GET',
           url: "https://#{endpoint}/?#{param_list}",
           body: '',
-          expires_in: 900
+          expires_in: options[:expires_in]
         ).to_s
         # Remove extra scheme for token
         presigned_url[8..-1]
       end
+      alias_method :auth_token, :generate_auth_token
     end
   end
 end

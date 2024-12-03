@@ -1,6 +1,8 @@
 Unreleased Changes
 ------------------
 
+* Feature - Support `expires_in` option for the `AuthTokenGenerator`.
+
 1.261.0 (2024-12-02)
 ------------------
 
