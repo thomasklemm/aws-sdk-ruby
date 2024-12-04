@@ -4227,6 +4227,38 @@ module Aws::SageMaker
     #   when the cluster instance group is created or updated.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] status
+    #   The current status of the cluster instance group.
+    #
+    #   * `InService`: The instance group is active and healthy.
+    #
+    #   * `Creating`: The instance group is being provisioned.
+    #
+    #   * `Updating`: The instance group is being updated.
+    #
+    #   * `Failed`: The instance group has failed to provision or is no
+    #     longer healthy.
+    #
+    #   * `Degraded`: The instance group is degraded, meaning that some
+    #     instances have failed to provision or are no longer healthy.
+    #
+    #   * `Deleting`: The instance group is being deleted.
+    #   @return [String]
+    #
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the training plan associated with
+    #   this cluster instance group.
+    #
+    #   For more information about how to reserve GPU capacity for your
+    #   SageMaker HyperPod clusters using Amazon SageMaker Training Plan,
+    #   see ` CreateTrainingPlan `.
+    #   @return [String]
+    #
+    # @!attribute [rw] training_plan_status
+    #   The current status of the training plan associated with this cluster
+    #   instance group.
+    #   @return [String]
+    #
     # @!attribute [rw] override_vpc_config
     #   Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker
     #   jobs, hosted models, and compute resources have access to. You can
@@ -4251,6 +4283,9 @@ module Aws::SageMaker
       :threads_per_core,
       :instance_storage_configs,
       :on_start_deep_health_checks,
+      :status,
+      :training_plan_arn,
+      :training_plan_status,
       :override_vpc_config)
       SENSITIVE = []
       include Aws::Structure
@@ -4303,6 +4338,15 @@ module Aws::SageMaker
     #   when the cluster instance group is created or updated.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the training plan to use for this
+    #   cluster instance group.
+    #
+    #   For more information about how to reserve GPU capacity for your
+    #   SageMaker HyperPod clusters using Amazon SageMaker Training Plan,
+    #   see ` CreateTrainingPlan `.
+    #   @return [String]
+    #
     # @!attribute [rw] override_vpc_config
     #   Specifies an Amazon Virtual Private Cloud (VPC) that your SageMaker
     #   jobs, hosted models, and compute resources have access to. You can
@@ -4326,6 +4370,7 @@ module Aws::SageMaker
       :threads_per_core,
       :instance_storage_configs,
       :on_start_deep_health_checks,
+      :training_plan_arn,
       :override_vpc_config)
       SENSITIVE = []
       include Aws::Structure
@@ -4583,6 +4628,55 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Summary of the cluster policy.
+    #
+    # @!attribute [rw] cluster_scheduler_config_arn
+    #   ARN of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_scheduler_config_id
+    #   ID of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_scheduler_config_version
+    #   Version of the cluster policy.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] name
+    #   Name of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   Creation time of the cluster policy.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_time
+    #   Last modified time of the cluster policy.
+    #   @return [Time]
+    #
+    # @!attribute [rw] status
+    #   Status of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   ARN of the cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterSchedulerConfigSummary AWS API Documentation
+    #
+    class ClusterSchedulerConfigSummary < Struct.new(
+      :cluster_scheduler_config_arn,
+      :cluster_scheduler_config_id,
+      :cluster_scheduler_config_version,
+      :name,
+      :creation_time,
+      :last_modified_time,
+      :status,
+      :cluster_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Lists a summary of the properties of a SageMaker HyperPod cluster.
     #
     # @!attribute [rw] cluster_arn
@@ -4601,13 +4695,23 @@ module Aws::SageMaker
     #   The status of the SageMaker HyperPod cluster.
     #   @return [String]
     #
+    # @!attribute [rw] training_plan_arns
+    #   A list of Amazon Resource Names (ARNs) of the training plans
+    #   associated with this cluster.
+    #
+    #   For more information about how to reserve GPU capacity for your
+    #   SageMaker HyperPod clusters using Amazon SageMaker Training Plan,
+    #   see ` CreateTrainingPlan `.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ClusterSummary AWS API Documentation
     #
     class ClusterSummary < Struct.new(
       :cluster_arn,
       :cluster_name,
       :creation_time,
-      :cluster_status)
+      :cluster_status,
+      :training_plan_arns)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4907,6 +5011,151 @@ module Aws::SageMaker
       :compilation_target_platform_accelerator,
       :last_modified_time,
       :compilation_job_status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration of the compute allocation definition for an entity. This
+    # includes the resource sharing option and the setting to preempt low
+    # priority tasks.
+    #
+    # @!attribute [rw] compute_quota_resources
+    #   Allocate compute resources by instance types.
+    #   @return [Array<Types::ComputeQuotaResourceConfig>]
+    #
+    # @!attribute [rw] resource_sharing_config
+    #   Resource sharing configuration. This defines how an entity can lend
+    #   and borrow idle compute with other entities within the cluster.
+    #   @return [Types::ResourceSharingConfig]
+    #
+    # @!attribute [rw] preempt_team_tasks
+    #   Allows workloads from within an entity to preempt same-team
+    #   workloads. When set to `LowerPriority`, the entity's lower priority
+    #   tasks are preempted by their own higher priority tasks.
+    #
+    #   Default is `LowerPriority`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ComputeQuotaConfig AWS API Documentation
+    #
+    class ComputeQuotaConfig < Struct.new(
+      :compute_quota_resources,
+      :resource_sharing_config,
+      :preempt_team_tasks)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configuration of the resources used for the compute allocation
+    # definition.
+    #
+    # @!attribute [rw] instance_type
+    #   The instance type of the instance group for the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] count
+    #   The number of instances to add to the instance group of a SageMaker
+    #   HyperPod cluster.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ComputeQuotaResourceConfig AWS API Documentation
+    #
+    class ComputeQuotaResourceConfig < Struct.new(
+      :instance_type,
+      :count)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Summary of the compute allocation definition.
+    #
+    # @!attribute [rw] compute_quota_arn
+    #   ARN of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_id
+    #   ID of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Name of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_version
+    #   Version of the compute allocation definition.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   Status of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   ARN of the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_config
+    #   Configuration of the compute allocation definition. This includes
+    #   the resource sharing option, and the setting to preempt low priority
+    #   tasks.
+    #   @return [Types::ComputeQuotaConfig]
+    #
+    # @!attribute [rw] compute_quota_target
+    #   The target entity to allocate compute resources to.
+    #   @return [Types::ComputeQuotaTarget]
+    #
+    # @!attribute [rw] activation_state
+    #   The state of the compute allocation being described. Use to enable
+    #   or disable compute allocation.
+    #
+    #   Default is `Enabled`.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   Creation time of the compute allocation definition.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_time
+    #   Last modified time of the compute allocation definition.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ComputeQuotaSummary AWS API Documentation
+    #
+    class ComputeQuotaSummary < Struct.new(
+      :compute_quota_arn,
+      :compute_quota_id,
+      :name,
+      :compute_quota_version,
+      :status,
+      :cluster_arn,
+      :compute_quota_config,
+      :compute_quota_target,
+      :activation_state,
+      :creation_time,
+      :last_modified_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The target entity to allocate compute resources to.
+    #
+    # @!attribute [rw] team_name
+    #   Name of the team to allocate compute resources to.
+    #   @return [String]
+    #
+    # @!attribute [rw] fair_share_weight
+    #   Assigned entity fair-share weight. Idle compute will be shared
+    #   across entities based on these assigned weights. This weight is only
+    #   used when `FairShare` is enabled.
+    #
+    #   A weight of 0 is the lowest priority and 100 is the highest. Weight
+    #   0 is the default.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ComputeQuotaTarget AWS API Documentation
+    #
+    class ComputeQuotaTarget < Struct.new(
+      :team_name,
+      :fair_share_weight)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5931,6 +6180,55 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] name
+    #   Name for the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   ARN of the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] scheduler_config
+    #   Configuration about the monitoring schedule.
+    #   @return [Types::SchedulerConfig]
+    #
+    # @!attribute [rw] description
+    #   Description of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Tags of the cluster policy.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateClusterSchedulerConfigRequest AWS API Documentation
+    #
+    class CreateClusterSchedulerConfigRequest < Struct.new(
+      :name,
+      :cluster_arn,
+      :scheduler_config,
+      :description,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cluster_scheduler_config_arn
+    #   ARN of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_scheduler_config_id
+    #   ID of the cluster policy.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateClusterSchedulerConfigResponse AWS API Documentation
+    #
+    class CreateClusterSchedulerConfigResponse < Struct.new(
+      :cluster_scheduler_config_arn,
+      :cluster_scheduler_config_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] code_repository_name
     #   The name of the Git repository. The name must have 1 to 63
     #   characters. Valid characters are a-z, A-Z, 0-9, and - (hyphen).
@@ -6082,6 +6380,70 @@ module Aws::SageMaker
     #
     class CreateCompilationJobResponse < Struct.new(
       :compilation_job_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   Name to the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   ARN of the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_config
+    #   Configuration of the compute allocation definition. This includes
+    #   the resource sharing option, and the setting to preempt low priority
+    #   tasks.
+    #   @return [Types::ComputeQuotaConfig]
+    #
+    # @!attribute [rw] compute_quota_target
+    #   The target entity to allocate compute resources to.
+    #   @return [Types::ComputeQuotaTarget]
+    #
+    # @!attribute [rw] activation_state
+    #   The state of the compute allocation being described. Use to enable
+    #   or disable compute allocation.
+    #
+    #   Default is `Enabled`.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Tags of the compute allocation definition.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateComputeQuotaRequest AWS API Documentation
+    #
+    class CreateComputeQuotaRequest < Struct.new(
+      :name,
+      :description,
+      :cluster_arn,
+      :compute_quota_config,
+      :compute_quota_target,
+      :activation_state,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] compute_quota_arn
+    #   ARN of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_id
+    #   ID of the compute allocation definition.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateComputeQuotaResponse AWS API Documentation
+    #
+    class CreateComputeQuotaResponse < Struct.new(
+      :compute_quota_arn,
+      :compute_quota_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9095,6 +9457,123 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App to create the presigned URL
+    #   for.
+    #   @return [String]
+    #
+    # @!attribute [rw] expires_in_seconds
+    #   The time that will pass before the presigned URL expires.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] session_expiration_duration_in_seconds
+    #   Indicates how long the Amazon SageMaker Partner AI App session can
+    #   be accessed for after logging in.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreatePartnerAppPresignedUrlRequest AWS API Documentation
+    #
+    class CreatePartnerAppPresignedUrlRequest < Struct.new(
+      :arn,
+      :expires_in_seconds,
+      :session_expiration_duration_in_seconds)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] url
+    #   The presigned URL that you can use to access the SageMaker Partner
+    #   AI App.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreatePartnerAppPresignedUrlResponse AWS API Documentation
+    #
+    class CreatePartnerAppPresignedUrlResponse < Struct.new(
+      :url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] name
+    #   The name to give the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of SageMaker Partner AI App to create. Must be one of the
+    #   following: `lakera-guard`, `comet`, `deepchecks-llm-evaluation`, or
+    #   `fiddler`.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_role_arn
+    #   The ARN of the IAM role that the partner application uses.
+    #   @return [String]
+    #
+    # @!attribute [rw] maintenance_config
+    #   Maintenance configuration settings for the SageMaker Partner AI App.
+    #   @return [Types::PartnerAppMaintenanceConfig]
+    #
+    # @!attribute [rw] tier
+    #   Indicates the instance type and size of the cluster attached to the
+    #   SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_config
+    #   Configuration settings for the SageMaker Partner AI App.
+    #   @return [Types::PartnerAppConfig]
+    #
+    # @!attribute [rw] auth_type
+    #   The authorization type that users use to access the SageMaker
+    #   Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] enable_iam_session_based_identity
+    #   When set to `TRUE`, the SageMaker Partner AI App sets the Amazon Web
+    #   Services IAM session name or the authenticated IAM user as the
+    #   identity of the SageMaker Partner AI App user.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] client_token
+    #   A unique token that guarantees that the call to this API is
+    #   idempotent.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Each tag consists of a key and an optional value. Tag keys must be
+    #   unique per resource.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreatePartnerAppRequest AWS API Documentation
+    #
+    class CreatePartnerAppRequest < Struct.new(
+      :name,
+      :type,
+      :execution_role_arn,
+      :maintenance_config,
+      :tier,
+      :application_config,
+      :auth_type,
+      :enable_iam_session_based_identity,
+      :client_token,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreatePartnerAppResponse AWS API Documentation
+    #
+    class CreatePartnerAppResponse < Struct.new(
+      :arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] pipeline_name
     #   The name of the pipeline.
     #   @return [String]
@@ -9873,6 +10352,41 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] training_plan_name
+    #   The name of the training plan to create.
+    #   @return [String]
+    #
+    # @!attribute [rw] training_plan_offering_id
+    #   The unique identifier of the training plan offering to use for
+    #   creating this plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to this training plan.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateTrainingPlanRequest AWS API Documentation
+    #
+    class CreateTrainingPlanRequest < Struct.new(
+      :training_plan_name,
+      :training_plan_offering_id,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the created training plan.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CreateTrainingPlanResponse AWS API Documentation
+    #
+    class CreateTrainingPlanResponse < Struct.new(
+      :training_plan_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] transform_job_name
     #   The name of the transform job. The name must be unique within an
     #   Amazon Web Services Region in an Amazon Web Services account.
@@ -10415,16 +10929,22 @@ module Aws::SageMaker
     #   A custom file system in Amazon EFS.
     #   @return [Types::EFSFileSystem]
     #
+    # @!attribute [rw] f_sx_lustre_file_system
+    #   A custom file system in Amazon FSx for Lustre.
+    #   @return [Types::FSxLustreFileSystem]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CustomFileSystem AWS API Documentation
     #
     class CustomFileSystem < Struct.new(
       :efs_file_system,
+      :f_sx_lustre_file_system,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
       class EfsFileSystem < CustomFileSystem; end
+      class FSxLustreFileSystem < CustomFileSystem; end
       class Unknown < CustomFileSystem; end
     end
 
@@ -10440,16 +10960,22 @@ module Aws::SageMaker
     #   The settings for a custom Amazon EFS file system.
     #   @return [Types::EFSFileSystemConfig]
     #
+    # @!attribute [rw] f_sx_lustre_file_system_config
+    #   The settings for a custom Amazon FSx for Lustre file system.
+    #   @return [Types::FSxLustreFileSystemConfig]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/CustomFileSystemConfig AWS API Documentation
     #
     class CustomFileSystemConfig < Struct.new(
       :efs_file_system_config,
+      :f_sx_lustre_file_system_config,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
       class EfsFileSystemConfig < CustomFileSystemConfig; end
+      class FSxLustreFileSystemConfig < CustomFileSystemConfig; end
       class Unknown < CustomFileSystemConfig; end
     end
 
@@ -11282,6 +11808,18 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] cluster_scheduler_config_id
+    #   ID of the cluster policy.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DeleteClusterSchedulerConfigRequest AWS API Documentation
+    #
+    class DeleteClusterSchedulerConfigRequest < Struct.new(
+      :cluster_scheduler_config_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] code_repository_name
     #   The name of the Git repository to delete.
     #   @return [String]
@@ -11302,6 +11840,18 @@ module Aws::SageMaker
     #
     class DeleteCompilationJobRequest < Struct.new(
       :compilation_job_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] compute_quota_id
+    #   ID of the compute allocation definition.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DeleteComputeQuotaRequest AWS API Documentation
+    #
+    class DeleteComputeQuotaRequest < Struct.new(
+      :compute_quota_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11820,6 +12370,39 @@ module Aws::SageMaker
     #
     class DeleteOptimizationJobRequest < Struct.new(
       :optimization_job_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App to delete.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_token
+    #   A unique token that guarantees that the call to this API is
+    #   idempotent.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DeletePartnerAppRequest AWS API Documentation
+    #
+    class DeletePartnerAppRequest < Struct.new(
+      :arn,
+      :client_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App that was deleted.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DeletePartnerAppResponse AWS API Documentation
+    #
+    class DeletePartnerAppResponse < Struct.new(
+      :arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -13022,6 +13605,99 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] cluster_scheduler_config_id
+    #   ID of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_scheduler_config_version
+    #   Version of the cluster policy.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeClusterSchedulerConfigRequest AWS API Documentation
+    #
+    class DescribeClusterSchedulerConfigRequest < Struct.new(
+      :cluster_scheduler_config_id,
+      :cluster_scheduler_config_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cluster_scheduler_config_arn
+    #   ARN of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_scheduler_config_id
+    #   ID of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Name of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_scheduler_config_version
+    #   Version of the cluster policy.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   Status of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_reason
+    #   Failure reason of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   ARN of the cluster where the cluster policy is applied.
+    #   @return [String]
+    #
+    # @!attribute [rw] scheduler_config
+    #   Cluster policy configuration. This policy is used for task
+    #   prioritization and fair-share allocation. This helps prioritize
+    #   critical workloads and distributes idle compute across entities.
+    #   @return [Types::SchedulerConfig]
+    #
+    # @!attribute [rw] description
+    #   Description of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   Creation time of the cluster policy.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   Information about the user who created or modified an experiment,
+    #   trial, trial component, lineage group, project, or model card.
+    #   @return [Types::UserContext]
+    #
+    # @!attribute [rw] last_modified_time
+    #   Last modified time of the cluster policy.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_by
+    #   Information about the user who created or modified an experiment,
+    #   trial, trial component, lineage group, project, or model card.
+    #   @return [Types::UserContext]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeClusterSchedulerConfigResponse AWS API Documentation
+    #
+    class DescribeClusterSchedulerConfigResponse < Struct.new(
+      :cluster_scheduler_config_arn,
+      :cluster_scheduler_config_id,
+      :name,
+      :cluster_scheduler_config_version,
+      :status,
+      :failure_reason,
+      :cluster_arn,
+      :scheduler_config,
+      :description,
+      :creation_time,
+      :created_by,
+      :last_modified_time,
+      :last_modified_by)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] code_repository_name
     #   The name of the Git repository to describe.
     #   @return [String]
@@ -13205,6 +13881,112 @@ module Aws::SageMaker
       :output_config,
       :vpc_config,
       :derived_information)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] compute_quota_id
+    #   ID of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_version
+    #   Version of the compute allocation definition.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeComputeQuotaRequest AWS API Documentation
+    #
+    class DescribeComputeQuotaRequest < Struct.new(
+      :compute_quota_id,
+      :compute_quota_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] compute_quota_arn
+    #   ARN of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_id
+    #   ID of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   Name of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_version
+    #   Version of the compute allocation definition.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   Status of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] failure_reason
+    #   Failure reason of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   ARN of the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_config
+    #   Configuration of the compute allocation definition. This includes
+    #   the resource sharing option, and the setting to preempt low priority
+    #   tasks.
+    #   @return [Types::ComputeQuotaConfig]
+    #
+    # @!attribute [rw] compute_quota_target
+    #   The target entity to allocate compute resources to.
+    #   @return [Types::ComputeQuotaTarget]
+    #
+    # @!attribute [rw] activation_state
+    #   The state of the compute allocation being described. Use to enable
+    #   or disable compute allocation.
+    #
+    #   Default is `Enabled`.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   Creation time of the compute allocation configuration.
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_by
+    #   Information about the user who created or modified an experiment,
+    #   trial, trial component, lineage group, project, or model card.
+    #   @return [Types::UserContext]
+    #
+    # @!attribute [rw] last_modified_time
+    #   Last modified time of the compute allocation configuration.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_modified_by
+    #   Information about the user who created or modified an experiment,
+    #   trial, trial component, lineage group, project, or model card.
+    #   @return [Types::UserContext]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeComputeQuotaResponse AWS API Documentation
+    #
+    class DescribeComputeQuotaResponse < Struct.new(
+      :compute_quota_arn,
+      :compute_quota_id,
+      :name,
+      :description,
+      :compute_quota_version,
+      :status,
+      :failure_reason,
+      :cluster_arn,
+      :compute_quota_config,
+      :compute_quota_target,
+      :activation_state,
+      :creation_time,
+      :created_by,
+      :last_modified_time,
+      :last_modified_by)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16972,6 +17754,103 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App to describe.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribePartnerAppRequest AWS API Documentation
+    #
+    class DescribePartnerAppRequest < Struct.new(
+      :arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App that was described.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of SageMaker Partner AI App. Must be one of the following:
+    #   `lakera-guard`, `comet`, `deepchecks-llm-evaluation`, or `fiddler`.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   The time that the SageMaker Partner AI App was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] execution_role_arn
+    #   The ARN of the IAM role associated with the SageMaker Partner AI
+    #   App.
+    #   @return [String]
+    #
+    # @!attribute [rw] base_url
+    #   The URL of the SageMaker Partner AI App that the Application SDK
+    #   uses to support in-app calls for the user.
+    #   @return [String]
+    #
+    # @!attribute [rw] maintenance_config
+    #   Maintenance configuration settings for the SageMaker Partner AI App.
+    #   @return [Types::PartnerAppMaintenanceConfig]
+    #
+    # @!attribute [rw] tier
+    #   The instance type and size of the cluster attached to the SageMaker
+    #   Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] version
+    #   The version of the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_config
+    #   Configuration settings for the SageMaker Partner AI App.
+    #   @return [Types::PartnerAppConfig]
+    #
+    # @!attribute [rw] auth_type
+    #   The authorization type that users use to access the SageMaker
+    #   Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] enable_iam_session_based_identity
+    #   When set to `TRUE`, the SageMaker Partner AI App sets the Amazon Web
+    #   Services IAM session name or the authenticated IAM user as the
+    #   identity of the SageMaker Partner AI App user.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] error
+    #   This is an error field object that contains the error code and the
+    #   reason for an operation failure.
+    #   @return [Types::ErrorInfo]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribePartnerAppResponse AWS API Documentation
+    #
+    class DescribePartnerAppResponse < Struct.new(
+      :arn,
+      :name,
+      :type,
+      :status,
+      :creation_time,
+      :execution_role_arn,
+      :base_url,
+      :maintenance_config,
+      :tier,
+      :version,
+      :application_config,
+      :auth_type,
+      :enable_iam_session_based_identity,
+      :error)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] pipeline_execution_arn
     #   The Amazon Resource Name (ARN) of the pipeline execution.
     #   @return [String]
@@ -17972,6 +18851,117 @@ module Aws::SageMaker
       :retry_strategy,
       :remote_debug_config,
       :infra_check_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] training_plan_name
+    #   The name of the training plan to describe.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeTrainingPlanRequest AWS API Documentation
+    #
+    class DescribeTrainingPlanRequest < Struct.new(
+      :training_plan_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] training_plan_name
+    #   The name of the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the training plan (e.g., Pending, Active,
+    #   Expired). To see the complete list of status values available for a
+    #   training plan, refer to the `Status` attribute within the `
+    #   TrainingPlanSummary ` object.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   A message providing additional information about the current status
+    #   of the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] duration_hours
+    #   The number of whole hours in the total duration for this training
+    #   plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] duration_minutes
+    #   The additional minutes beyond whole hours in the total duration for
+    #   this training plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] start_time
+    #   The start time of the training plan.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The end time of the training plan.
+    #   @return [Time]
+    #
+    # @!attribute [rw] upfront_fee
+    #   The upfront fee for the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] currency_code
+    #   The currency code for the upfront fee (e.g., USD).
+    #   @return [String]
+    #
+    # @!attribute [rw] total_instance_count
+    #   The total number of instances reserved in this training plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] available_instance_count
+    #   The number of instances currently available for use in this training
+    #   plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] in_use_instance_count
+    #   The number of instances currently in use from this training plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] target_resources
+    #   The target resources (e.g., SageMaker Training Jobs, SageMaker
+    #   HyperPod) that can use this training plan.
+    #
+    #   Training plans are specific to their target resource.
+    #
+    #   * A training plan designed for SageMaker training jobs can only be
+    #     used to schedule and run training jobs.
+    #
+    #   * A training plan for HyperPod clusters can be used exclusively to
+    #     provide compute resources to a cluster's instance group.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] reserved_capacity_summaries
+    #   The list of Reserved Capacity providing the underlying compute
+    #   resources of the plan.
+    #   @return [Array<Types::ReservedCapacitySummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/DescribeTrainingPlanResponse AWS API Documentation
+    #
+    class DescribeTrainingPlanResponse < Struct.new(
+      :training_plan_arn,
+      :training_plan_name,
+      :status,
+      :status_message,
+      :duration_hours,
+      :duration_minutes,
+      :start_time,
+      :end_time,
+      :upfront_fee,
+      :currency_code,
+      :total_instance_count,
+      :available_instance_count,
+      :in_use_instance_count,
+      :target_resources,
+      :reserved_capacity_summaries)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -20174,6 +21164,26 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # This is an error field object that contains the error code and the
+    # reason for an operation failure.
+    #
+    # @!attribute [rw] code
+    #   The error code for an invalid or failed operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] reason
+    #   The failure reason for the operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ErrorInfo AWS API Documentation
+    #
+    class ErrorInfo < Struct.new(
+      :code,
+      :reason)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The properties of an experiment as returned by the [Search][1] API.
     #
     #
@@ -20380,6 +21390,43 @@ module Aws::SageMaker
     #
     class ExplainerConfig < Struct.new(
       :clarify_explainer_config)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A custom file system in Amazon FSx for Lustre.
+    #
+    # @!attribute [rw] file_system_id
+    #   Amazon FSx for Lustre file system ID.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/FSxLustreFileSystem AWS API Documentation
+    #
+    class FSxLustreFileSystem < Struct.new(
+      :file_system_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The settings for assigning a custom Amazon FSx for Lustre file system
+    # to a user profile or space for an Amazon SageMaker Domain.
+    #
+    # @!attribute [rw] file_system_id
+    #   The globally unique, 17-digit, ID of the file system, assigned by
+    #   Amazon FSx for Lustre.
+    #   @return [String]
+    #
+    # @!attribute [rw] file_system_path
+    #   The path to the file system directory that is accessible in Amazon
+    #   SageMaker Studio. Permitted users can access only this directory and
+    #   below.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/FSxLustreFileSystemConfig AWS API Documentation
+    #
+    class FSxLustreFileSystemConfig < Struct.new(
+      :file_system_id,
+      :file_system_path)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -26814,6 +27861,92 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] created_after
+    #   Filter for after this creation time. The input for this parameter is
+    #   a Unix timestamp. To convert a date and time into a Unix timestamp,
+    #   see [EpochConverter][1].
+    #
+    #
+    #
+    #   [1]: https://www.epochconverter.com/
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_before
+    #   Filter for before this creation time. The input for this parameter
+    #   is a Unix timestamp. To convert a date and time into a Unix
+    #   timestamp, see [EpochConverter][1].
+    #
+    #
+    #
+    #   [1]: https://www.epochconverter.com/
+    #   @return [Time]
+    #
+    # @!attribute [rw] name_contains
+    #   Filter for name containing this string.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   Filter for ARN of the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Filter for status.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_by
+    #   Filter for sorting the list by a given value. For example, sort by
+    #   name, creation time, or status.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_order
+    #   The order of the list. By default, listed in `Descending` order
+    #   according to by `SortBy`. To change the list order, you can specify
+    #   `SortOrder` to be `Ascending`.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If the previous response was truncated, you will receive this token.
+    #   Use it in your next request to receive the next set of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of cluster policies to list.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListClusterSchedulerConfigsRequest AWS API Documentation
+    #
+    class ListClusterSchedulerConfigsRequest < Struct.new(
+      :created_after,
+      :created_before,
+      :name_contains,
+      :cluster_arn,
+      :status,
+      :sort_by,
+      :sort_order,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cluster_scheduler_config_summaries
+    #   Summaries of the cluster policies.
+    #   @return [Array<Types::ClusterSchedulerConfigSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If the previous response was truncated, you will receive this token.
+    #   Use it in your next request to receive the next set of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListClusterSchedulerConfigsResponse AWS API Documentation
+    #
+    class ListClusterSchedulerConfigsResponse < Struct.new(
+      :cluster_scheduler_config_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] creation_time_after
     #   Set a start time for the time range during which you want to list
     #   SageMaker HyperPod clusters. Timestamps are formatted according to
@@ -26877,6 +28010,13 @@ module Aws::SageMaker
     #   The sort order for results. The default value is `Ascending`.
     #   @return [String]
     #
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the training plan to filter
+    #   clusters by. For more information about reserving GPU capacity for
+    #   your SageMaker HyperPod clusters using Amazon SageMaker Training
+    #   Plan, see ` CreateTrainingPlan `.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListClustersRequest AWS API Documentation
     #
     class ListClustersRequest < Struct.new(
@@ -26886,7 +28026,8 @@ module Aws::SageMaker
       :name_contains,
       :next_token,
       :sort_by,
-      :sort_order)
+      :sort_order,
+      :training_plan_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -27087,6 +28228,92 @@ module Aws::SageMaker
     #
     class ListCompilationJobsResponse < Struct.new(
       :compilation_job_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] created_after
+    #   Filter for after this creation time. The input for this parameter is
+    #   a Unix timestamp. To convert a date and time into a Unix timestamp,
+    #   see [EpochConverter][1].
+    #
+    #
+    #
+    #   [1]: https://www.epochconverter.com/
+    #   @return [Time]
+    #
+    # @!attribute [rw] created_before
+    #   Filter for before this creation time. The input for this parameter
+    #   is a Unix timestamp. To convert a date and time into a Unix
+    #   timestamp, see [EpochConverter][1].
+    #
+    #
+    #
+    #   [1]: https://www.epochconverter.com/
+    #   @return [Time]
+    #
+    # @!attribute [rw] name_contains
+    #   Filter for name containing this string.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   Filter for status.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_arn
+    #   Filter for ARN of the cluster.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_by
+    #   Filter for sorting the list by a given value. For example, sort by
+    #   name, creation time, or status.
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_order
+    #   The order of the list. By default, listed in `Descending` order
+    #   according to by `SortBy`. To change the list order, you can specify
+    #   `SortOrder` to be `Ascending`.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If the previous response was truncated, you will receive this token.
+    #   Use it in your next request to receive the next set of results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of compute allocation definitions to list.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListComputeQuotasRequest AWS API Documentation
+    #
+    class ListComputeQuotasRequest < Struct.new(
+      :created_after,
+      :created_before,
+      :name_contains,
+      :status,
+      :cluster_arn,
+      :sort_by,
+      :sort_order,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] compute_quota_summaries
+    #   Summaries of the compute allocation definitions.
+    #   @return [Array<Types::ComputeQuotaSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If the previous response was truncated, you will receive this token.
+    #   Use it in your next request to receive the next set of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListComputeQuotasResponse AWS API Documentation
+    #
+    class ListComputeQuotasResponse < Struct.new(
+      :compute_quota_summaries,
       :next_token)
       SENSITIVE = []
       include Aws::Structure
@@ -30429,6 +31656,49 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] max_results
+    #   This parameter defines the maximum number of results that can be
+    #   returned in a single response. The `MaxResults` parameter is an
+    #   upper bound, not a target. If there are more results available than
+    #   the value specified, a `NextToken` is provided in the response. The
+    #   `NextToken` indicates that the user should get the next set of
+    #   results by providing this token as a part of a subsequent call. The
+    #   default value for `MaxResults` is 10.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   If the previous response was truncated, you will receive this token.
+    #   Use it in your next request to receive the next set of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListPartnerAppsRequest AWS API Documentation
+    #
+    class ListPartnerAppsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] summaries
+    #   The information related to each of the SageMaker Partner AI Apps in
+    #   an account.
+    #   @return [Array<Types::PartnerAppSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   If the previous response was truncated, you will receive this token.
+    #   Use it in your next request to receive the next set of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListPartnerAppsResponse AWS API Documentation
+    #
+    class ListPartnerAppsResponse < Struct.new(
+      :summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] pipeline_execution_arn
     #   The Amazon Resource Name (ARN) of the pipeline execution.
     #   @return [String]
@@ -31291,6 +32561,13 @@ module Aws::SageMaker
     #   status.
     #   @return [String]
     #
+    # @!attribute [rw] training_plan_arn_equals
+    #   The Amazon Resource Name (ARN); of the training plan to filter
+    #   training jobs by. For more information about reserving GPU capacity
+    #   for your SageMaker training jobs using Amazon SageMaker Training
+    #   Plan, see ` CreateTrainingPlan `.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListTrainingJobsRequest AWS API Documentation
     #
     class ListTrainingJobsRequest < Struct.new(
@@ -31304,7 +32581,8 @@ module Aws::SageMaker
       :status_equals,
       :sort_by,
       :sort_order,
-      :warm_pool_status_equals)
+      :warm_pool_status_equals,
+      :training_plan_arn_equals)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -31325,6 +32603,68 @@ module Aws::SageMaker
     class ListTrainingJobsResponse < Struct.new(
       :training_job_summaries,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   A token to continue pagination if more results are available.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return in the response.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] start_time_after
+    #   Filter to list only training plans with an actual start time after
+    #   this date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] start_time_before
+    #   Filter to list only training plans with an actual start time before
+    #   this date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] sort_by
+    #   The training plan field to sort the results by (e.g., StartTime,
+    #   Status).
+    #   @return [String]
+    #
+    # @!attribute [rw] sort_order
+    #   The order to sort the results (Ascending or Descending).
+    #   @return [String]
+    #
+    # @!attribute [rw] filters
+    #   Additional filters to apply to the list of training plans.
+    #   @return [Array<Types::TrainingPlanFilter>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListTrainingPlansRequest AWS API Documentation
+    #
+    class ListTrainingPlansRequest < Struct.new(
+      :next_token,
+      :max_results,
+      :start_time_after,
+      :start_time_before,
+      :sort_by,
+      :sort_order,
+      :filters)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   A token to continue pagination if more results are available.
+    #   @return [String]
+    #
+    # @!attribute [rw] training_plan_summaries
+    #   A list of summary information for the training plans.
+    #   @return [Array<Types::TrainingPlanSummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ListTrainingPlansResponse AWS API Documentation
+    #
+    class ListTrainingPlansResponse < Struct.new(
+      :next_token,
+      :training_plan_summaries)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -36183,6 +37523,82 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Configuration settings for the SageMaker Partner AI App.
+    #
+    # @!attribute [rw] admin_users
+    #   The list of users that are given admin access to the SageMaker
+    #   Partner AI App.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] arguments
+    #   This is a map of required inputs for a SageMaker Partner AI App.
+    #   Based on the application type, the map is populated with a key and
+    #   value pair that is specific to the user and application.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/PartnerAppConfig AWS API Documentation
+    #
+    class PartnerAppConfig < Struct.new(
+      :admin_users,
+      :arguments)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Maintenance configuration settings for the SageMaker Partner AI App.
+    #
+    # @!attribute [rw] maintenance_window_start
+    #   The day and time of the week in Coordinated Universal Time (UTC)
+    #   24-hour standard time that weekly maintenance updates are scheduled.
+    #   This value must take the following format:
+    #   `3-letter-day:24-h-hour:minute`. For example: `TUE:03:30`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/PartnerAppMaintenanceConfig AWS API Documentation
+    #
+    class PartnerAppMaintenanceConfig < Struct.new(
+      :maintenance_window_start)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A subset of information related to a SageMaker Partner AI App. This
+    # information is used as part of the `ListPartnerApps` API response.
+    #
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of SageMaker Partner AI App to create. Must be one of the
+    #   following: `lakera-guard`, `comet`, `deepchecks-llm-evaluation`, or
+    #   `fiddler`.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] creation_time
+    #   The creation time of the SageMaker Partner AI App.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/PartnerAppSummary AWS API Documentation
+    #
+    class PartnerAppSummary < Struct.new(
+      :arn,
+      :name,
+      :type,
+      :status,
+      :creation_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The summary of an in-progress deployment when an endpoint is creating
     # or updating with a new endpoint configuration.
     #
@@ -36877,6 +38293,30 @@ module Aws::SageMaker
     #
     class PredefinedMetricSpecification < Struct.new(
       :predefined_metric_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Priority class configuration. When included in `PriorityClasses`,
+    # these class configurations define how tasks are queued.
+    #
+    # @!attribute [rw] name
+    #   Name of the priority class.
+    #   @return [String]
+    #
+    # @!attribute [rw] weight
+    #   Weight of the priority class. The value is within a range from 0 to
+    #   100, where 0 is the default.
+    #
+    #   A weight of 0 is the lowest priority and 100 is the highest. Weight
+    #   0 is the default.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/PriorityClass AWS API Documentation
+    #
+    class PriorityClass < Struct.new(
+      :name,
+      :weight)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -39542,6 +40982,117 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Details about a reserved capacity offering for a training plan
+    # offering.
+    #
+    # For more information about how to reserve GPU capacity for your
+    # SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see
+    # ` CreateTrainingPlan `.
+    #
+    # @!attribute [rw] instance_type
+    #   The instance type for the reserved capacity offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_count
+    #   The number of instances in the reserved capacity offering.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] availability_zone
+    #   The availability zone for the reserved capacity offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] duration_hours
+    #   The number of whole hours in the total duration for this reserved
+    #   capacity offering.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] duration_minutes
+    #   The additional minutes beyond whole hours in the total duration for
+    #   this reserved capacity offering.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] start_time
+    #   The start time of the reserved capacity offering.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The end time of the reserved capacity offering.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ReservedCapacityOffering AWS API Documentation
+    #
+    class ReservedCapacityOffering < Struct.new(
+      :instance_type,
+      :instance_count,
+      :availability_zone,
+      :duration_hours,
+      :duration_minutes,
+      :start_time,
+      :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details of a reserved capacity for the training plan.
+    #
+    # For more information about how to reserve GPU capacity for your
+    # SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see
+    # ` CreateTrainingPlan `.
+    #
+    # @!attribute [rw] reserved_capacity_arn
+    #   The Amazon Resource Name (ARN); of the reserved capacity.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_type
+    #   The instance type for the reserved capacity.
+    #   @return [String]
+    #
+    # @!attribute [rw] total_instance_count
+    #   The total number of instances in the reserved capacity.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] status
+    #   The current status of the reserved capacity.
+    #   @return [String]
+    #
+    # @!attribute [rw] availability_zone
+    #   The availability zone for the reserved capacity.
+    #   @return [String]
+    #
+    # @!attribute [rw] duration_hours
+    #   The number of whole hours in the total duration for this reserved
+    #   capacity.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] duration_minutes
+    #   The additional minutes beyond whole hours in the total duration for
+    #   this reserved capacity.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] start_time
+    #   The start time of the reserved capacity.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The end time of the reserved capacity.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ReservedCapacitySummary AWS API Documentation
+    #
+    class ReservedCapacitySummary < Struct.new(
+      :reserved_capacity_arn,
+      :instance_type,
+      :total_instance_count,
+      :status,
+      :availability_zone,
+      :duration_hours,
+      :duration_minutes,
+      :start_time,
+      :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The resolved attributes.
     #
     # @!attribute [rw] auto_ml_job_objective
@@ -39723,6 +41274,11 @@ module Aws::SageMaker
     #   The configuration of a heterogeneous cluster in JSON format.
     #   @return [Array<Types::InstanceGroup>]
     #
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the training plan to use for this
+    #   resource configuration.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ResourceConfig AWS API Documentation
     #
     class ResourceConfig < Struct.new(
@@ -39731,7 +41287,8 @@ module Aws::SageMaker
       :volume_size_in_gb,
       :volume_kms_key_id,
       :keep_alive_period_in_seconds,
-      :instance_groups)
+      :instance_groups,
+      :training_plan_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -39816,6 +41373,39 @@ module Aws::SageMaker
     #
     class ResourceNotFound < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Resource sharing configuration.
+    #
+    # @!attribute [rw] strategy
+    #   The strategy of how idle compute is shared within the cluster. The
+    #   following are the options of strategies.
+    #
+    #   * `DontLend`: entities do not lend idle compute.
+    #
+    #   * `Lend`: entities can lend idle compute to entities that can
+    #     borrow.
+    #
+    #   * `LendandBorrow`: entities can lend idle compute and borrow idle
+    #     compute from other entities.
+    #
+    #   Default is `LendandBorrow`.
+    #   @return [String]
+    #
+    # @!attribute [rw] borrow_limit
+    #   The limit on how much idle compute can be borrowed.The values can be
+    #   1 - 500 percent of idle compute that the team is allowed to borrow.
+    #
+    #   Default is `50`.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/ResourceSharingConfig AWS API Documentation
+    #
+    class ResourceSharingConfig < Struct.new(
+      :strategy,
+      :borrow_limit)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -40440,6 +42030,35 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # Cluster policy configuration. This policy is used for task
+    # prioritization and fair-share allocation. This helps prioritize
+    # critical workloads and distributes idle compute across entities.
+    #
+    # @!attribute [rw] priority_classes
+    #   List of the priority classes, `PriorityClass`, of the cluster
+    #   policy. When specified, these class configurations define how tasks
+    #   are queued.
+    #   @return [Array<Types::PriorityClass>]
+    #
+    # @!attribute [rw] fair_share
+    #   When enabled, entities borrow idle compute based on their assigned
+    #   `FairShareWeight`.
+    #
+    #   When disabled, entities borrow idle compute based on a first-come
+    #   first-serve basis.
+    #
+    #   Default is `Enabled`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/SchedulerConfig AWS API Documentation
+    #
+    class SchedulerConfig < Struct.new(
+      :priority_classes,
+      :fair_share)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A multi-expression that searches for the specified resource or
     # resources in a search. All resource objects that satisfy the
     # expression's condition are included in the search results. You must
@@ -40669,6 +42288,76 @@ module Aws::SageMaker
     class SearchResponse < Struct.new(
       :results,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_type
+    #   The type of instance you want to search for in the available
+    #   training plan offerings. This field allows you to filter the search
+    #   results based on the specific compute resources you require for your
+    #   SageMaker training jobs or SageMaker HyperPod clusters. When
+    #   searching for training plan offerings, specifying the instance type
+    #   helps you find Reserved Instances that match your computational
+    #   needs.
+    #   @return [String]
+    #
+    # @!attribute [rw] instance_count
+    #   The number of instances you want to reserve in the training plan
+    #   offerings. This allows you to specify the quantity of compute
+    #   resources needed for your SageMaker training jobs or SageMaker
+    #   HyperPod clusters, helping you find reserved capacity offerings that
+    #   match your requirements.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] start_time_after
+    #   A filter to search for training plan offerings with a start time
+    #   after a specified date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time_before
+    #   A filter to search for reserved capacity offerings with an end time
+    #   before a specified date.
+    #   @return [Time]
+    #
+    # @!attribute [rw] duration_hours
+    #   The desired duration in hours for the training plan offerings.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] target_resources
+    #   The target resources (e.g., SageMaker Training Jobs, SageMaker
+    #   HyperPod) to search for in the offerings.
+    #
+    #   Training plans are specific to their target resource.
+    #
+    #   * A training plan designed for SageMaker training jobs can only be
+    #     used to schedule and run training jobs.
+    #
+    #   * A training plan for HyperPod clusters can be used exclusively to
+    #     provide compute resources to a cluster's instance group.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/SearchTrainingPlanOfferingsRequest AWS API Documentation
+    #
+    class SearchTrainingPlanOfferingsRequest < Struct.new(
+      :instance_type,
+      :instance_count,
+      :start_time_after,
+      :end_time_before,
+      :duration_hours,
+      :target_resources)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] training_plan_offerings
+    #   A list of training plan offerings that match the search criteria.
+    #   @return [Array<Types::TrainingPlanOffering>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/SearchTrainingPlanOfferingsResponse AWS API Documentation
+    #
+    class SearchTrainingPlanOfferingsResponse < Struct.new(
+      :training_plan_offerings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -43651,6 +45340,15 @@ module Aws::SageMaker
     #   The status of the warm pool associated with the training job.
     #   @return [Types::WarmPoolStatus]
     #
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the training plan associated with
+    #   this training job.
+    #
+    #   For more information about how to reserve GPU capacity for your
+    #   SageMaker HyperPod clusters using Amazon SageMaker Training Plan,
+    #   see ` CreateTrainingPlan `.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TrainingJobSummary AWS API Documentation
     #
     class TrainingJobSummary < Struct.new(
@@ -43661,7 +45359,209 @@ module Aws::SageMaker
       :last_modified_time,
       :training_job_status,
       :secondary_status,
-      :warm_pool_status)
+      :warm_pool_status,
+      :training_plan_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A filter to apply when listing or searching for training plans.
+    #
+    # For more information about how to reserve GPU capacity for your
+    # SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see
+    # ` CreateTrainingPlan `.
+    #
+    # @!attribute [rw] name
+    #   The name of the filter field (e.g., Status, InstanceType).
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   The value to filter by for the specified field.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TrainingPlanFilter AWS API Documentation
+    #
+    class TrainingPlanFilter < Struct.new(
+      :name,
+      :value)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details about a training plan offering.
+    #
+    # For more information about how to reserve GPU capacity for your
+    # SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see
+    # ` CreateTrainingPlan `.
+    #
+    # @!attribute [rw] training_plan_offering_id
+    #   The unique identifier for this training plan offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_resources
+    #   The target resources (e.g., SageMaker Training Jobs, SageMaker
+    #   HyperPod) for this training plan offering.
+    #
+    #   Training plans are specific to their target resource.
+    #
+    #   * A training plan designed for SageMaker training jobs can only be
+    #     used to schedule and run training jobs.
+    #
+    #   * A training plan for HyperPod clusters can be used exclusively to
+    #     provide compute resources to a cluster's instance group.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] requested_start_time_after
+    #   The requested start time that the user specified when searching for
+    #   the training plan offering.
+    #   @return [Time]
+    #
+    # @!attribute [rw] requested_end_time_before
+    #   The requested end time that the user specified when searching for
+    #   the training plan offering.
+    #   @return [Time]
+    #
+    # @!attribute [rw] duration_hours
+    #   The number of whole hours in the total duration for this training
+    #   plan offering.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] duration_minutes
+    #   The additional minutes beyond whole hours in the total duration for
+    #   this training plan offering.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] upfront_fee
+    #   The upfront fee for this training plan offering.
+    #   @return [String]
+    #
+    # @!attribute [rw] currency_code
+    #   The currency code for the upfront fee (e.g., USD).
+    #   @return [String]
+    #
+    # @!attribute [rw] reserved_capacity_offerings
+    #   A list of reserved capacity offerings associated with this training
+    #   plan offering.
+    #   @return [Array<Types::ReservedCapacityOffering>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TrainingPlanOffering AWS API Documentation
+    #
+    class TrainingPlanOffering < Struct.new(
+      :training_plan_offering_id,
+      :target_resources,
+      :requested_start_time_after,
+      :requested_end_time_before,
+      :duration_hours,
+      :duration_minutes,
+      :upfront_fee,
+      :currency_code,
+      :reserved_capacity_offerings)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Details of the training plan.
+    #
+    # For more information about how to reserve GPU capacity for your
+    # SageMaker HyperPod clusters using Amazon SageMaker Training Plan, see
+    # ` CreateTrainingPlan `.
+    #
+    # @!attribute [rw] training_plan_arn
+    #   The Amazon Resource Name (ARN); of the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] training_plan_name
+    #   The name of the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The current status of the training plan (e.g., Pending, Active,
+    #   Expired). To see the complete list of status values available for a
+    #   training plan, refer to the `Status` attribute within the `
+    #   TrainingPlanSummary ` object.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   A message providing additional information about the current status
+    #   of the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] duration_hours
+    #   The number of whole hours in the total duration for this training
+    #   plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] duration_minutes
+    #   The additional minutes beyond whole hours in the total duration for
+    #   this training plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] start_time
+    #   The start time of the training plan.
+    #   @return [Time]
+    #
+    # @!attribute [rw] end_time
+    #   The end time of the training plan.
+    #   @return [Time]
+    #
+    # @!attribute [rw] upfront_fee
+    #   The upfront fee for the training plan.
+    #   @return [String]
+    #
+    # @!attribute [rw] currency_code
+    #   The currency code for the upfront fee (e.g., USD).
+    #   @return [String]
+    #
+    # @!attribute [rw] total_instance_count
+    #   The total number of instances reserved in this training plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] available_instance_count
+    #   The number of instances currently available for use in this training
+    #   plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] in_use_instance_count
+    #   The number of instances currently in use from this training plan.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] target_resources
+    #   The target resources (e.g., training jobs, HyperPod clusters) that
+    #   can use this training plan.
+    #
+    #   Training plans are specific to their target resource.
+    #
+    #   * A training plan designed for SageMaker training jobs can only be
+    #     used to schedule and run training jobs.
+    #
+    #   * A training plan for HyperPod clusters can be used exclusively to
+    #     provide compute resources to a cluster's instance group.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] reserved_capacity_summaries
+    #   A list of reserved capacities associated with this training plan,
+    #   including details such as instance types, counts, and availability
+    #   zones.
+    #   @return [Array<Types::ReservedCapacitySummary>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/TrainingPlanSummary AWS API Documentation
+    #
+    class TrainingPlanSummary < Struct.new(
+      :training_plan_arn,
+      :training_plan_name,
+      :status,
+      :status_message,
+      :duration_hours,
+      :duration_minutes,
+      :start_time,
+      :end_time,
+      :upfront_fee,
+      :currency_code,
+      :total_instance_count,
+      :available_instance_count,
+      :in_use_instance_count,
+      :target_resources,
+      :reserved_capacity_summaries)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -45316,6 +47216,50 @@ module Aws::SageMaker
       include Aws::Structure
     end
 
+    # @!attribute [rw] cluster_scheduler_config_id
+    #   ID of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_version
+    #   Target version.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] scheduler_config
+    #   Cluster policy configuration.
+    #   @return [Types::SchedulerConfig]
+    #
+    # @!attribute [rw] description
+    #   Description of the cluster policy.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateClusterSchedulerConfigRequest AWS API Documentation
+    #
+    class UpdateClusterSchedulerConfigRequest < Struct.new(
+      :cluster_scheduler_config_id,
+      :target_version,
+      :scheduler_config,
+      :description)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] cluster_scheduler_config_arn
+    #   ARN of the cluster policy.
+    #   @return [String]
+    #
+    # @!attribute [rw] cluster_scheduler_config_version
+    #   Version of the cluster policy.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateClusterSchedulerConfigResponse AWS API Documentation
+    #
+    class UpdateClusterSchedulerConfigResponse < Struct.new(
+      :cluster_scheduler_config_arn,
+      :cluster_scheduler_config_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] cluster_name
     #   Specify the name or the Amazon Resource Name (ARN) of the SageMaker
     #   HyperPod cluster you want to update for security patching.
@@ -45373,6 +47317,65 @@ module Aws::SageMaker
     #
     class UpdateCodeRepositoryOutput < Struct.new(
       :code_repository_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] compute_quota_id
+    #   ID of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] target_version
+    #   Target version.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] compute_quota_config
+    #   Configuration of the compute allocation definition. This includes
+    #   the resource sharing option, and the setting to preempt low priority
+    #   tasks.
+    #   @return [Types::ComputeQuotaConfig]
+    #
+    # @!attribute [rw] compute_quota_target
+    #   The target entity to allocate compute resources to.
+    #   @return [Types::ComputeQuotaTarget]
+    #
+    # @!attribute [rw] activation_state
+    #   The state of the compute allocation being described. Use to enable
+    #   or disable compute allocation.
+    #
+    #   Default is `Enabled`.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description of the compute allocation definition.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateComputeQuotaRequest AWS API Documentation
+    #
+    class UpdateComputeQuotaRequest < Struct.new(
+      :compute_quota_id,
+      :target_version,
+      :compute_quota_config,
+      :compute_quota_target,
+      :activation_state,
+      :description)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] compute_quota_arn
+    #   ARN of the compute allocation definition.
+    #   @return [String]
+    #
+    # @!attribute [rw] compute_quota_version
+    #   Version of the compute allocation definition.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateComputeQuotaResponse AWS API Documentation
+    #
+    class UpdateComputeQuotaResponse < Struct.new(
+      :compute_quota_arn,
+      :compute_quota_version)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -46554,6 +48557,68 @@ module Aws::SageMaker
     # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdateNotebookInstanceOutput AWS API Documentation
     #
     class UpdateNotebookInstanceOutput < Aws::EmptyStructure; end
+
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] maintenance_config
+    #   Maintenance configuration settings for the SageMaker Partner AI App.
+    #   @return [Types::PartnerAppMaintenanceConfig]
+    #
+    # @!attribute [rw] tier
+    #   Indicates the instance type and size of the cluster attached to the
+    #   SageMaker Partner AI App.
+    #   @return [String]
+    #
+    # @!attribute [rw] application_config
+    #   Configuration settings for the SageMaker Partner AI App.
+    #   @return [Types::PartnerAppConfig]
+    #
+    # @!attribute [rw] enable_iam_session_based_identity
+    #   When set to `TRUE`, the SageMaker Partner AI App sets the Amazon Web
+    #   Services IAM session name or the authenticated IAM user as the
+    #   identity of the SageMaker Partner AI App user.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] client_token
+    #   A unique token that guarantees that the call to this API is
+    #   idempotent.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   Each tag consists of a key and an optional value. Tag keys must be
+    #   unique per resource.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdatePartnerAppRequest AWS API Documentation
+    #
+    class UpdatePartnerAppRequest < Struct.new(
+      :arn,
+      :maintenance_config,
+      :tier,
+      :application_config,
+      :enable_iam_session_based_identity,
+      :client_token,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] arn
+    #   The ARN of the SageMaker Partner AI App that was updated.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sagemaker-2017-07-24/UpdatePartnerAppResponse AWS API Documentation
+    #
+    class UpdatePartnerAppResponse < Struct.new(
+      :arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
 
     # @!attribute [rw] pipeline_execution_arn
     #   The Amazon Resource Name (ARN) of the pipeline execution.

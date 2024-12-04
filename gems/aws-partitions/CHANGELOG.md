@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+1.1018.0 (2024-12-04)
+------------------
+
+* Feature - Added support for enumerating regions for  `Aws::BedrockDataAutomationRuntime`.
+
+* Feature - Added support for enumerating regions for  `Aws::BedrockDataAutomation`.
+
 1.1017.0 (2024-12-03)
 ------------------
 

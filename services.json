@@ -129,6 +129,12 @@
   "BedrockAgentRuntime": {
     "models": "bedrock-agent-runtime/2023-07-26"
   },
+  "BedrockDataAutomation": {
+    "models": "bedrock-data-automation/2023-07-26"
+  },
+  "BedrockDataAutomationRuntime": {
+    "models": "bedrock-data-automation-runtime/2024-06-13"
+  },
   "BedrockRuntime": {
     "models": "bedrock-runtime/2023-09-30"
   },

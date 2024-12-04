@@ -287,6 +287,8 @@ module Aws
             'Bedrock' => 'bedrock',
             'BedrockAgent' => 'bedrock-agent',
             'BedrockAgentRuntime' => 'bedrock-agent-runtime',
+            'BedrockDataAutomation' => 'bedrock-data-automation',
+            'BedrockDataAutomationRuntime' => 'bedrock-data-automation-runtime',
             'BedrockRuntime' => 'bedrock-runtime',
             'Billing' => 'billing',
             'BillingConductor' => 'billingconductor',

@@ -1,6 +1,13 @@
 Unreleased Changes
 ------------------
 
+3.220.0 (2024-12-04)
+------------------
+
+* Feature - Added a dependency on the new `aws-sdk-bedrockdataautomationruntime` gem.
+
+* Feature - Added a dependency on the new `aws-sdk-bedrockdataautomation` gem.
+
 3.219.0 (2024-12-03)
 ------------------
 

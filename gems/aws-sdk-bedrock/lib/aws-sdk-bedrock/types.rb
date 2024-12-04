@@ -529,6 +529,68 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # @!attribute [rw] model_source_identifier
+    #   The ARN of the model from Amazon Bedrock Marketplace that you want
+    #   to deploy to the endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_config
+    #   The configuration for the endpoint, including the number and type of
+    #   instances to use.
+    #   @return [Types::EndpointConfig]
+    #
+    # @!attribute [rw] accept_eula
+    #   Indicates whether you accept the end-user license agreement (EULA)
+    #   for the model. Set to `true` to accept the EULA.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] endpoint_name
+    #   The name of the endpoint. This name must be unique within your
+    #   Amazon Web Services account and region.
+    #   @return [String]
+    #
+    # @!attribute [rw] client_request_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. This token is listed as not required
+    #   because Amazon Web Services SDKs automatically generate it for you
+    #   and set this parameter. If you're not using the Amazon Web Services
+    #   SDK or the CLI, you must provide this token or the action will fail.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @!attribute [rw] tags
+    #   An array of key-value pairs to apply to the underlying Amazon
+    #   SageMaker endpoint. You can use these tags to organize and identify
+    #   your Amazon Web Services resources.
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreateMarketplaceModelEndpointRequest AWS API Documentation
+    #
+    class CreateMarketplaceModelEndpointRequest < Struct.new(
+      :model_source_identifier,
+      :endpoint_config,
+      :accept_eula,
+      :endpoint_name,
+      :client_request_token,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marketplace_model_endpoint
+    #   Details about the created endpoint.
+    #   @return [Types::MarketplaceModelEndpoint]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreateMarketplaceModelEndpointResponse AWS API Documentation
+    #
+    class CreateMarketplaceModelEndpointResponse < Struct.new(
+      :marketplace_model_endpoint)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] source_model_arn
     #   The Amazon Resource Name (ARN) of the model to be copied.
     #   @return [String]
@@ -1117,6 +1179,22 @@ module Aws::Bedrock
     #
     class DeleteInferenceProfileResponse < Aws::EmptyStructure; end
 
+    # @!attribute [rw] endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to delete.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeleteMarketplaceModelEndpointRequest AWS API Documentation
+    #
+    class DeleteMarketplaceModelEndpointRequest < Struct.new(
+      :endpoint_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeleteMarketplaceModelEndpointResponse AWS API Documentation
+    #
+    class DeleteMarketplaceModelEndpointResponse < Aws::EmptyStructure; end
+
     # @api private
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeleteModelInvocationLoggingConfigurationRequest AWS API Documentation
@@ -1144,6 +1222,23 @@ module Aws::Bedrock
     #
     class DeleteProvisionedModelThroughputResponse < Aws::EmptyStructure; end
 
+    # @!attribute [rw] endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to
+    #   deregister.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeregisterMarketplaceModelEndpointRequest AWS API Documentation
+    #
+    class DeregisterMarketplaceModelEndpointRequest < Struct.new(
+      :endpoint_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeregisterMarketplaceModelEndpointResponse AWS API Documentation
+    #
+    class DeregisterMarketplaceModelEndpointResponse < Aws::EmptyStructure; end
+
     # Settings for distilling a foundation model into a smaller and more
     # efficient model.
     #
@@ -1157,6 +1252,29 @@ module Aws::Bedrock
       :teacher_model_config)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Specifies the configuration for the endpoint.
+    #
+    # @note EndpointConfig is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note EndpointConfig is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of EndpointConfig corresponding to the set member.
+    #
+    # @!attribute [rw] sage_maker
+    #   The configuration specific to Amazon SageMaker for the endpoint.
+    #   @return [Types::SageMakerEndpoint]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/EndpointConfig AWS API Documentation
+    #
+    class EndpointConfig < Struct.new(
+      :sage_maker,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class SageMaker < EndpointConfig; end
+      class Unknown < EndpointConfig; end
     end
 
     # Contains the ARN of the Amazon Bedrock model or [inference profile][1]
@@ -2260,6 +2378,31 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # @!attribute [rw] endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to get
+    #   information about.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetMarketplaceModelEndpointRequest AWS API Documentation
+    #
+    class GetMarketplaceModelEndpointRequest < Struct.new(
+      :endpoint_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marketplace_model_endpoint
+    #   Details about the requested endpoint.
+    #   @return [Types::MarketplaceModelEndpoint]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetMarketplaceModelEndpointResponse AWS API Documentation
+    #
+    class GetMarketplaceModelEndpointResponse < Struct.new(
+      :marketplace_model_endpoint)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] job_arn
     #   The Amazon Resource Name (ARN) of the model copy job.
     #   @return [String]
@@ -2748,6 +2891,75 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # @!attribute [rw] prompt_router_arn
+    #   The prompt router's ARN
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetPromptRouterRequest AWS API Documentation
+    #
+    class GetPromptRouterRequest < Struct.new(
+      :prompt_router_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] prompt_router_name
+    #   The router's name.
+    #   @return [String]
+    #
+    # @!attribute [rw] routing_criteria
+    #   The router's routing criteria.
+    #   @return [Types::RoutingCriteria]
+    #
+    # @!attribute [rw] description
+    #   The router's description.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   When the router was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   When the router was updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] prompt_router_arn
+    #   The prompt router's ARN
+    #   @return [String]
+    #
+    # @!attribute [rw] models
+    #   The router's models.
+    #   @return [Array<Types::PromptRouterTargetModel>]
+    #
+    # @!attribute [rw] fallback_model
+    #   The router's fallback model.
+    #   @return [Types::PromptRouterTargetModel]
+    #
+    # @!attribute [rw] status
+    #   The router's status.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The router's type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetPromptRouterResponse AWS API Documentation
+    #
+    class GetPromptRouterResponse < Struct.new(
+      :prompt_router_name,
+      :routing_criteria,
+      :description,
+      :created_at,
+      :updated_at,
+      :prompt_router_arn,
+      :models,
+      :fallback_model,
+      :status,
+      :type)
+      SENSITIVE = [:description]
+      include Aws::Structure
+    end
+
     # @!attribute [rw] provisioned_model_id
     #   The Amazon Resource Name (ARN) or name of the Provisioned
     #   Throughput.
@@ -2926,13 +3138,23 @@ module Aws::Bedrock
     #   content in your application reduces.
     #   @return [String]
     #
+    # @!attribute [rw] input_modalities
+    #   The input modalities selected for the guardrail content filter.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] output_modalities
+    #   The output modalities selected for the guardrail content filter.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentFilter AWS API Documentation
     #
     class GuardrailContentFilter < Struct.new(
       :type,
       :input_strength,
-      :output_strength)
-      SENSITIVE = []
+      :output_strength,
+      :input_modalities,
+      :output_modalities)
+      SENSITIVE = [:input_modalities, :output_modalities]
       include Aws::Structure
     end
 
@@ -2993,13 +3215,25 @@ module Aws::Bedrock
     #   content in your application reduces.
     #   @return [String]
     #
+    # @!attribute [rw] input_modalities
+    #   The input modalities selected for the guardrail content filter
+    #   configuration.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] output_modalities
+    #   The output modalities selected for the guardrail content filter
+    #   configuration.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GuardrailContentFilterConfig AWS API Documentation
     #
     class GuardrailContentFilterConfig < Struct.new(
       :type,
       :input_strength,
-      :output_strength)
-      SENSITIVE = []
+      :output_strength,
+      :input_modalities,
+      :output_modalities)
+      SENSITIVE = [:input_modalities, :output_modalities]
       include Aws::Structure
     end
 
@@ -3148,7 +3382,7 @@ module Aws::Bedrock
     # The PII entity configured for the guardrail.
     #
     # @!attribute [rw] type
-    #   The type of PII entity. For exampvle, Social Security Number.
+    #   The type of PII entity. For example, Social Security Number.
     #   @return [String]
     #
     # @!attribute [rw] action
@@ -3183,7 +3417,7 @@ module Aws::Bedrock
     #     * **AGE**
     #
     #       An individual's age, including the quantity and unit of time.
-    #       For example, in the phrase "I am 40 years old," Guarrails
+    #       For example, in the phrase "I am 40 years old," Guardrails
     #       recognizes "40 years" as an age.
     #
     #     * **NAME**
@@ -3237,7 +3471,7 @@ module Aws::Bedrock
     #       VINs.
     #   * **Finance**
     #
-    #     * **REDIT\_DEBIT\_CARD\_CVV**
+    #     * **CREDIT\_DEBIT\_CARD\_CVV**
     #
     #       A three-digit card verification code (CVV) that is present on
     #       VISA, MasterCard, and Discover credit and debit cards. For
@@ -4556,6 +4790,49 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return in a single call. If more
+    #   results are available, the operation returns a `NextToken` value.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. You receive this token from a
+    #   previous `ListMarketplaceModelEndpoints` call.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_source_equals
+    #   If specified, only endpoints for the given model source identifier
+    #   are returned.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListMarketplaceModelEndpointsRequest AWS API Documentation
+    #
+    class ListMarketplaceModelEndpointsRequest < Struct.new(
+      :max_results,
+      :next_token,
+      :model_source_equals)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marketplace_model_endpoints
+    #   An array of endpoint summaries.
+    #   @return [Array<Types::MarketplaceModelEndpointSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use this token to get the
+    #   next set of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListMarketplaceModelEndpointsResponse AWS API Documentation
+    #
+    class ListMarketplaceModelEndpointsResponse < Struct.new(
+      :marketplace_model_endpoints,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] creation_time_after
     #   Filters for model copy jobs created after the specified time.
     #   @return [Time]
@@ -4920,6 +5197,43 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # @!attribute [rw] max_results
+    #   The maximum number of prompt routers to return in one page of
+    #   results.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListPromptRoutersRequest AWS API Documentation
+    #
+    class ListPromptRoutersRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] prompt_router_summaries
+    #   A list of prompt router summaries.
+    #   @return [Array<Types::PromptRouterSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListPromptRoutersResponse AWS API Documentation
+    #
+    class ListPromptRoutersResponse < Struct.new(
+      :prompt_router_summaries,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] creation_time_after
     #   A filter that returns Provisioned Throughputs created after the
     #   specified time.
@@ -5064,6 +5378,106 @@ module Aws::Bedrock
       :image_data_delivery_enabled,
       :embedding_data_delivery_enabled,
       :video_data_delivery_enabled)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains details about an endpoint for a model from Amazon Bedrock
+    # Marketplace.
+    #
+    # @!attribute [rw] endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_source_identifier
+    #   The ARN of the model from Amazon Bedrock Marketplace that is
+    #   deployed on this endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The overall status of the endpoint in Amazon Bedrock Marketplace
+    #   (e.g., ACTIVE, INACTIVE).
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   Additional information about the overall status, if available.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp when the endpoint was registered.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp when the endpoint was last updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] endpoint_config
+    #   The configuration of the endpoint, including the number and type of
+    #   instances used.
+    #   @return [Types::EndpointConfig]
+    #
+    # @!attribute [rw] endpoint_status
+    #   The current status of the endpoint (e.g., Creating, InService,
+    #   Updating, Failed).
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_status_message
+    #   Additional information about the endpoint status, if available.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/MarketplaceModelEndpoint AWS API Documentation
+    #
+    class MarketplaceModelEndpoint < Struct.new(
+      :endpoint_arn,
+      :model_source_identifier,
+      :status,
+      :status_message,
+      :created_at,
+      :updated_at,
+      :endpoint_config,
+      :endpoint_status,
+      :endpoint_status_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Provides a summary of an endpoint for a model from Amazon Bedrock
+    # Marketplace.
+    #
+    # @!attribute [rw] endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_source_identifier
+    #   The ARN of the model from Amazon Bedrock Marketplace that is
+    #   deployed on this endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The overall status of the endpoint in Amazon Bedrock Marketplace.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_message
+    #   Additional information about the overall status, if available.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   The timestamp when the endpoint was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   The timestamp when the endpoint was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/MarketplaceModelEndpointSummary AWS API Documentation
+    #
+    class MarketplaceModelEndpointSummary < Struct.new(
+      :endpoint_arn,
+      :model_source_identifier,
+      :status,
+      :status_message,
+      :created_at,
+      :updated_at)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5564,6 +5978,79 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # Details about a prompt router.
+    #
+    # @!attribute [rw] prompt_router_name
+    #   The router's name.
+    #   @return [String]
+    #
+    # @!attribute [rw] routing_criteria
+    #   The router's routing criteria.
+    #   @return [Types::RoutingCriteria]
+    #
+    # @!attribute [rw] description
+    #   The router's description.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_at
+    #   When the router was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] updated_at
+    #   When the router was updated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] prompt_router_arn
+    #   The router's ARN.
+    #   @return [String]
+    #
+    # @!attribute [rw] models
+    #   The router's models.
+    #   @return [Array<Types::PromptRouterTargetModel>]
+    #
+    # @!attribute [rw] fallback_model
+    #   The router's fallback model.
+    #   @return [Types::PromptRouterTargetModel]
+    #
+    # @!attribute [rw] status
+    #   The router's status.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The summary's type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/PromptRouterSummary AWS API Documentation
+    #
+    class PromptRouterSummary < Struct.new(
+      :prompt_router_name,
+      :routing_criteria,
+      :description,
+      :created_at,
+      :updated_at,
+      :prompt_router_arn,
+      :models,
+      :fallback_model,
+      :status,
+      :type)
+      SENSITIVE = [:description]
+      include Aws::Structure
+    end
+
+    # The target model for a prompt router.
+    #
+    # @!attribute [rw] model_arn
+    #   The target model's ARN.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/PromptRouterTargetModel AWS API Documentation
+    #
+    class PromptRouterTargetModel < Struct.new(
+      :model_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The template for the prompt that's sent to the model for response
     # generation.
     #
@@ -5731,6 +6218,37 @@ module Aws::Bedrock
 
       class KnowledgeBaseConfig < RAGConfig; end
       class Unknown < RAGConfig; end
+    end
+
+    # @!attribute [rw] endpoint_identifier
+    #   The ARN of the Amazon SageMaker endpoint you want to register with
+    #   Amazon Bedrock Marketplace.
+    #   @return [String]
+    #
+    # @!attribute [rw] model_source_identifier
+    #   The ARN of the model from Amazon Bedrock Marketplace that is
+    #   deployed on the endpoint.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RegisterMarketplaceModelEndpointRequest AWS API Documentation
+    #
+    class RegisterMarketplaceModelEndpointRequest < Struct.new(
+      :endpoint_identifier,
+      :model_source_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marketplace_model_endpoint
+    #   Details about the registered endpoint.
+    #   @return [Types::MarketplaceModelEndpoint]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RegisterMarketplaceModelEndpointResponse AWS API Documentation
+    #
+    class RegisterMarketplaceModelEndpointResponse < Struct.new(
+      :marketplace_model_endpoint)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # A mapping of a metadata key to a value that it should or should not
@@ -6036,6 +6554,20 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # Routing criteria for a prompt router.
+    #
+    # @!attribute [rw] response_quality_difference
+    #   The criteria's response quality difference.
+    #   @return [Float]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RoutingCriteria AWS API Documentation
+    #
+    class RoutingCriteria < Struct.new(
+      :response_quality_difference)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # S3 configuration for storing log data.
     #
     # @!attribute [rw] bucket_name
@@ -6083,6 +6615,46 @@ module Aws::Bedrock
       include Aws::Structure
     end
 
+    # Specifies the configuration for a Amazon SageMaker endpoint.
+    #
+    # @!attribute [rw] initial_instance_count
+    #   The number of Amazon EC2 compute instances to deploy for initial
+    #   endpoint creation.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] instance_type
+    #   The Amazon EC2 compute instance type to deploy for hosting the
+    #   model.
+    #   @return [String]
+    #
+    # @!attribute [rw] execution_role
+    #   The ARN of the IAM role that Amazon SageMaker can assume to access
+    #   model artifacts and docker image for deployment on Amazon EC2
+    #   compute instances or for batch transform jobs.
+    #   @return [String]
+    #
+    # @!attribute [rw] kms_encryption_key
+    #   The Amazon Web Services KMS key that Amazon SageMaker uses to
+    #   encrypt data on the storage volume attached to the Amazon EC2
+    #   compute instance that hosts the endpoint.
+    #   @return [String]
+    #
+    # @!attribute [rw] vpc
+    #   The VPC configuration for the endpoint.
+    #   @return [Types::VpcConfig]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/SageMakerEndpoint AWS API Documentation
+    #
+    class SageMakerEndpoint < Struct.new(
+      :initial_instance_count,
+      :instance_type,
+      :execution_role,
+      :kms_encryption_key,
+      :vpc)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The number of requests exceeds the service quota. Resubmit your
     # request later.
     #
@@ -6092,6 +6664,19 @@ module Aws::Bedrock
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ServiceQuotaExceededException AWS API Documentation
     #
     class ServiceQuotaExceededException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Returned if the service cannot complete the request.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ServiceUnavailableException AWS API Documentation
+    #
+    class ServiceUnavailableException < Struct.new(
       :message)
       SENSITIVE = []
       include Aws::Structure
@@ -6425,6 +7010,48 @@ module Aws::Bedrock
       :guardrail_arn,
       :version,
       :updated_at)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_config
+    #   The new configuration for the endpoint, including the number and
+    #   type of instances to use.
+    #   @return [Types::EndpointConfig]
+    #
+    # @!attribute [rw] client_request_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. This token is listed as not required
+    #   because Amazon Web Services SDKs automatically generate it for you
+    #   and set this parameter. If you're not using the Amazon Web Services
+    #   SDK or the CLI, you must provide this token or the action will fail.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/UpdateMarketplaceModelEndpointRequest AWS API Documentation
+    #
+    class UpdateMarketplaceModelEndpointRequest < Struct.new(
+      :endpoint_arn,
+      :endpoint_config,
+      :client_request_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] marketplace_model_endpoint
+    #   Details about the updated endpoint.
+    #   @return [Types::MarketplaceModelEndpoint]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/UpdateMarketplaceModelEndpointResponse AWS API Documentation
+    #
+    class UpdateMarketplaceModelEndpointResponse < Struct.new(
+      :marketplace_model_endpoint)
       SENSITIVE = []
       include Aws::Structure
     end

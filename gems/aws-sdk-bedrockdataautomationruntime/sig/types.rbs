@@ -1,0 +1,109 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::BedrockDataAutomationRuntime
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class Blueprint
+      attr_accessor blueprint_arn: ::String
+      attr_accessor version: ::String
+      attr_accessor stage: ("DEVELOPMENT" | "LIVE")
+      SENSITIVE: []
+    end
+
+    class DataAutomationConfiguration
+      attr_accessor data_automation_arn: ::String
+      attr_accessor stage: ("LIVE" | "DEVELOPMENT")
+      SENSITIVE: []
+    end
+
+    class EncryptionConfiguration
+      attr_accessor kms_key_id: ::String
+      attr_accessor kms_encryption_context: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class EventBridgeConfiguration
+      attr_accessor event_bridge_enabled: bool
+      SENSITIVE: []
+    end
+
+    class GetDataAutomationStatusRequest
+      attr_accessor invocation_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetDataAutomationStatusResponse
+      attr_accessor status: ("Created" | "InProgress" | "Success" | "ServiceError" | "ClientError")
+      attr_accessor error_type: ::String
+      attr_accessor error_message: ::String
+      attr_accessor output_configuration: Types::OutputConfiguration
+      SENSITIVE: []
+    end
+
+    class InputConfiguration
+      attr_accessor s3_uri: ::String
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class InvokeDataAutomationAsyncRequest
+      attr_accessor client_token: ::String
+      attr_accessor input_configuration: Types::InputConfiguration
+      attr_accessor output_configuration: Types::OutputConfiguration
+      attr_accessor data_automation_configuration: Types::DataAutomationConfiguration
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
+      attr_accessor notification_configuration: Types::NotificationConfiguration
+      attr_accessor blueprints: ::Array[Types::Blueprint]
+      SENSITIVE: []
+    end
+
+    class InvokeDataAutomationAsyncResponse
+      attr_accessor invocation_arn: ::String
+      SENSITIVE: []
+    end
+
+    class NotificationConfiguration
+      attr_accessor event_bridge_configuration: Types::EventBridgeConfiguration
+      SENSITIVE: []
+    end
+
+    class OutputConfiguration
+      attr_accessor s3_uri: ::String
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+  end
+end

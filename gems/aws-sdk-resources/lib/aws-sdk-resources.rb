@@ -47,6 +47,8 @@ module Aws
   autoload :Bedrock, 'aws-sdk-bedrock'
   autoload :BedrockAgent, 'aws-sdk-bedrockagent'
   autoload :BedrockAgentRuntime, 'aws-sdk-bedrockagentruntime'
+  autoload :BedrockDataAutomation, 'aws-sdk-bedrockdataautomation'
+  autoload :BedrockDataAutomationRuntime, 'aws-sdk-bedrockdataautomationruntime'
   autoload :BedrockRuntime, 'aws-sdk-bedrockruntime'
   autoload :Billing, 'aws-sdk-billing'
   autoload :BillingConductor, 'aws-sdk-billingconductor'

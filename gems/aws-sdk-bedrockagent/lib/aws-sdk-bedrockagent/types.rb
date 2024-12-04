@@ -1184,6 +1184,22 @@ module Aws::BedrockAgent
     #
     class AutoToolChoice < Aws::EmptyStructure; end
 
+    # Contains configurations for using Amazon Bedrock Data Automation as
+    # the parser for ingesting your data sources.
+    #
+    # @!attribute [rw] parsing_modality
+    #   Specifies whether to enable parsing of multimodal data, including
+    #   both text and/or images.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/BedrockDataAutomationConfiguration AWS API Documentation
+    #
+    class BedrockDataAutomationConfiguration < Struct.new(
+      :parsing_modality)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The vector configuration details for the Bedrock embeddings model.
     #
     # @!attribute [rw] dimensions
@@ -1221,11 +1237,17 @@ module Aws::BedrockAgent
     # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
     #
     # @!attribute [rw] model_arn
-    #   The ARN of the foundation model or [inference profile][1].
+    #   The ARN of the foundation model or [inference profile][1] to use for
+    #   parsing.
     #
     #
     #
     #   [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
+    #   @return [String]
+    #
+    # @!attribute [rw] parsing_modality
+    #   Specifies whether to enable parsing of multimodal data, including
+    #   both text and/or images.
     #   @return [String]
     #
     # @!attribute [rw] parsing_prompt
@@ -1236,6 +1258,7 @@ module Aws::BedrockAgent
     #
     class BedrockFoundationModelConfiguration < Struct.new(
       :model_arn,
+      :parsing_modality,
       :parsing_prompt)
       SENSITIVE = []
       include Aws::Structure
@@ -2622,6 +2645,27 @@ module Aws::BedrockAgent
       :variants,
       :version)
       SENSITIVE = [:variants]
+      include Aws::Structure
+    end
+
+    # Contains configurations for a query, each of which defines information
+    # about example queries to help the query engine generate appropriate
+    # SQL queries.
+    #
+    # @!attribute [rw] natural_language
+    #   An example natural language query.
+    #   @return [String]
+    #
+    # @!attribute [rw] sql
+    #   The SQL equivalent of the natural language query.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CuratedQuery AWS API Documentation
+    #
+    class CuratedQuery < Struct.new(
+      :natural_language,
+      :sql)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -5555,6 +5599,20 @@ module Aws::BedrockAgent
     #
     class IteratorFlowNodeConfiguration < Aws::EmptyStructure; end
 
+    # Settings for an Amazon Kendra knowledge base.
+    #
+    # @!attribute [rw] kendra_index_arn
+    #   The ARN of the Amazon Kendra index.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/KendraKnowledgeBaseConfiguration AWS API Documentation
+    #
+    class KendraKnowledgeBaseConfiguration < Struct.new(
+      :kendra_index_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about a knowledge base.
     #
     # @!attribute [rw] created_at
@@ -5637,6 +5695,15 @@ module Aws::BedrockAgent
     # Contains details about the vector embeddings configuration of the
     # knowledge base.
     #
+    # @!attribute [rw] kendra_knowledge_base_configuration
+    #   Settings for an Amazon Kendra knowledge base.
+    #   @return [Types::KendraKnowledgeBaseConfiguration]
+    #
+    # @!attribute [rw] sql_knowledge_base_configuration
+    #   Specifies configurations for a knowledge base connected to an SQL
+    #   database.
+    #   @return [Types::SqlKnowledgeBaseConfiguration]
+    #
     # @!attribute [rw] type
     #   The type of data that the data source is converted into for the
     #   knowledge base.
@@ -5650,6 +5717,8 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/KnowledgeBaseConfiguration AWS API Documentation
     #
     class KnowledgeBaseConfiguration < Struct.new(
+      :kendra_knowledge_base_configuration,
+      :sql_knowledge_base_configuration,
       :type,
       :vector_knowledge_base_configuration)
       SENSITIVE = []
@@ -7131,35 +7200,33 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
-    # Settings for parsing document contents. By default, the service
-    # converts the contents of each document into text before splitting it
-    # into chunks. To improve processing of PDF files with tables and
-    # images, you can configure the data source to convert the pages of text
-    # into images and use a model to describe the contents of each page.
+    # Settings for parsing document contents. If you exclude this field, the
+    # default parser converts the contents of each document into text before
+    # splitting it into chunks. Specify the parsing strategy to use in the
+    # `parsingStrategy` field and include the relevant configuration, or
+    # omit it to use the Amazon Bedrock default parser. For more
+    # information, see [Parsing options for your data source][1].
     #
-    # To use a model to parse PDF documents, set the parsing strategy to
-    # `BEDROCK_FOUNDATION_MODEL` and specify the model or [inference
-    # profile][1] to use by ARN. You can also override the default parsing
-    # prompt with instructions for how to interpret images and tables in
-    # your documents. The following models are supported.
+    # <note markdown="1"> If you specify `BEDROCK_DATA_AUTOMATION` or `BEDROCK_FOUNDATION_MODEL`
+    # and it fails to parse a file, the Amazon Bedrock default parser will
+    # be used instead.
     #
-    # * Anthropic Claude 3 Sonnet -
-    #   `anthropic.claude-3-sonnet-20240229-v1:0`
-    #
-    # * Anthropic Claude 3 Haiku - `anthropic.claude-3-haiku-20240307-v1:0`
-    #
-    # You can get the ARN of a model with the [ListFoundationModels][2]
-    # action. Standard model usage charges apply for the foundation model
-    # parsing strategy.
+    #  </note>
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html
-    # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_ListFoundationModels.html
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/kb-advanced-parsing.html
+    #
+    # @!attribute [rw] bedrock_data_automation_configuration
+    #   If you specify `BEDROCK_DATA_AUTOMATION` as the parsing strategy for
+    #   ingesting your data source, use this object to modify configurations
+    #   for using the Amazon Bedrock Data Automation parser.
+    #   @return [Types::BedrockDataAutomationConfiguration]
     #
     # @!attribute [rw] bedrock_foundation_model_configuration
-    #   Settings for a foundation model used to parse documents for a data
-    #   source.
+    #   If you specify `BEDROCK_FOUNDATION_MODEL` as the parsing strategy
+    #   for ingesting your data source, use this object to modify
+    #   configurations for using a foundation model to parse documents.
     #   @return [Types::BedrockFoundationModelConfiguration]
     #
     # @!attribute [rw] parsing_strategy
@@ -7169,6 +7236,7 @@ module Aws::BedrockAgent
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/ParsingConfiguration AWS API Documentation
     #
     class ParsingConfiguration < Struct.new(
+      :bedrock_data_automation_configuration,
       :bedrock_foundation_model_configuration,
       :parsing_strategy)
       SENSITIVE = []
@@ -7918,6 +7986,117 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Contains information about a column in the current table for the query
+    # engine to consider.
+    #
+    # @!attribute [rw] description
+    #   A description of the column that helps the query engine understand
+    #   the contents of the column.
+    #   @return [String]
+    #
+    # @!attribute [rw] inclusion
+    #   Specifies whether to include or exclude the column during query
+    #   generation. If you specify `EXCLUDE`, the column will be ignored. If
+    #   you specify `INCLUDE`, all other columns in the table will be
+    #   ignored.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the column for which the other fields in this object
+    #   apply.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/QueryGenerationColumn AWS API Documentation
+    #
+    class QueryGenerationColumn < Struct.new(
+      :description,
+      :inclusion,
+      :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for query generation. For more information,
+    # see [Build a knowledge base by connecting to a structured data
+    # source][1] in the Amazon Bedrock User Guide..
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html
+    #
+    # @!attribute [rw] execution_timeout_seconds
+    #   The time after which query generation will time out.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] generation_context
+    #   Specifies configurations for context to use during query generation.
+    #   @return [Types::QueryGenerationContext]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/QueryGenerationConfiguration AWS API Documentation
+    #
+    class QueryGenerationConfiguration < Struct.new(
+      :execution_timeout_seconds,
+      :generation_context)
+      SENSITIVE = [:generation_context]
+      include Aws::Structure
+    end
+
+    # &gt;Contains configurations for context to use during query
+    # generation.
+    #
+    # @!attribute [rw] curated_queries
+    #   An array of objects, each of which defines information about example
+    #   queries to help the query engine generate appropriate SQL queries.
+    #   @return [Array<Types::CuratedQuery>]
+    #
+    # @!attribute [rw] tables
+    #   An array of objects, each of which defines information about a table
+    #   in the database.
+    #   @return [Array<Types::QueryGenerationTable>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/QueryGenerationContext AWS API Documentation
+    #
+    class QueryGenerationContext < Struct.new(
+      :curated_queries,
+      :tables)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about a table for the query engine to consider.
+    #
+    # @!attribute [rw] columns
+    #   An array of objects, each of which defines information about a
+    #   column in the table.
+    #   @return [Array<Types::QueryGenerationColumn>]
+    #
+    # @!attribute [rw] description
+    #   A description of the table that helps the query engine understand
+    #   the contents of the table.
+    #   @return [String]
+    #
+    # @!attribute [rw] inclusion
+    #   Specifies whether to include or exclude the table during query
+    #   generation. If you specify `EXCLUDE`, the table will be ignored. If
+    #   you specify `INCLUDE`, all other tables will be ignored.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the table for which the other fields in this object
+    #   apply.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/QueryGenerationTable AWS API Documentation
+    #
+    class QueryGenerationTable < Struct.new(
+      :columns,
+      :description,
+      :inclusion,
+      :name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains details about the storage configuration of the knowledge base
     # in Amazon RDS. For more information, see [Create a vector index in
     # Amazon RDS][1].
@@ -8058,6 +8237,220 @@ module Aws::BedrockAgent
       :metadata_field,
       :text_field,
       :vector_field)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for an Amazon Redshift database. For more
+    # information, see [Build a knowledge base by connecting to a structured
+    # data source][1] in the Amazon Bedrock User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html
+    #
+    # @!attribute [rw] query_engine_configuration
+    #   Specifies configurations for an Amazon Redshift query engine.
+    #   @return [Types::RedshiftQueryEngineConfiguration]
+    #
+    # @!attribute [rw] query_generation_configuration
+    #   Specifies configurations for generating queries.
+    #   @return [Types::QueryGenerationConfiguration]
+    #
+    # @!attribute [rw] storage_configurations
+    #   Specifies configurations for Amazon Redshift database storage.
+    #   @return [Array<Types::RedshiftQueryEngineStorageConfiguration>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftConfiguration AWS API Documentation
+    #
+    class RedshiftConfiguration < Struct.new(
+      :query_engine_configuration,
+      :query_generation_configuration,
+      :storage_configurations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for authentication to an Amazon Redshift
+    # provisioned data warehouse. Specify the type of authentication to use
+    # in the `type` field and include the corresponding field. If you
+    # specify IAM authentication, you don't need to include another field.
+    #
+    # @!attribute [rw] database_user
+    #   The database username for authentication to an Amazon Redshift
+    #   provisioned data warehouse.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of authentication to use.
+    #   @return [String]
+    #
+    # @!attribute [rw] username_password_secret_arn
+    #   The ARN of an Secrets Manager secret for authentication.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftProvisionedAuthConfiguration AWS API Documentation
+    #
+    class RedshiftProvisionedAuthConfiguration < Struct.new(
+      :database_user,
+      :type,
+      :username_password_secret_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for a provisioned Amazon Redshift query
+    # engine.
+    #
+    # @!attribute [rw] auth_configuration
+    #   Specifies configurations for authentication to Amazon Redshift.
+    #   @return [Types::RedshiftProvisionedAuthConfiguration]
+    #
+    # @!attribute [rw] cluster_identifier
+    #   The ID of the Amazon Redshift cluster.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftProvisionedConfiguration AWS API Documentation
+    #
+    class RedshiftProvisionedConfiguration < Struct.new(
+      :auth_configuration,
+      :cluster_identifier)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for storage in Glue Data Catalog.
+    #
+    # @!attribute [rw] table_names
+    #   A list of names of the tables to use.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftQueryEngineAwsDataCatalogStorageConfiguration AWS API Documentation
+    #
+    class RedshiftQueryEngineAwsDataCatalogStorageConfiguration < Struct.new(
+      :table_names)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for an Amazon Redshift query engine. Specify
+    # the type of query engine in `type` and include the corresponding
+    # field. For more information, see [Build a knowledge base by connecting
+    # to a structured data source][1] in the Amazon Bedrock User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html
+    #
+    # @!attribute [rw] provisioned_configuration
+    #   Specifies configurations for a provisioned Amazon Redshift query
+    #   engine.
+    #   @return [Types::RedshiftProvisionedConfiguration]
+    #
+    # @!attribute [rw] serverless_configuration
+    #   Specifies configurations for a serverless Amazon Redshift query
+    #   engine.
+    #   @return [Types::RedshiftServerlessConfiguration]
+    #
+    # @!attribute [rw] type
+    #   The type of query engine.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftQueryEngineConfiguration AWS API Documentation
+    #
+    class RedshiftQueryEngineConfiguration < Struct.new(
+      :provisioned_configuration,
+      :serverless_configuration,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for storage in Amazon Redshift.
+    #
+    # @!attribute [rw] database_name
+    #   The name of the Amazon Redshift database.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftQueryEngineRedshiftStorageConfiguration AWS API Documentation
+    #
+    class RedshiftQueryEngineRedshiftStorageConfiguration < Struct.new(
+      :database_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for Amazon Redshift data storage. Specify the
+    # data storage service to use in the `type` field and include the
+    # corresponding field. For more information, see [Build a knowledge base
+    # by connecting to a structured data source][1] in the Amazon Bedrock
+    # User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html
+    #
+    # @!attribute [rw] aws_data_catalog_configuration
+    #   Specifies configurations for storage in Glue Data Catalog.
+    #   @return [Types::RedshiftQueryEngineAwsDataCatalogStorageConfiguration]
+    #
+    # @!attribute [rw] redshift_configuration
+    #   Specifies configurations for storage in Amazon Redshift.
+    #   @return [Types::RedshiftQueryEngineRedshiftStorageConfiguration]
+    #
+    # @!attribute [rw] type
+    #   The data storage service to use.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftQueryEngineStorageConfiguration AWS API Documentation
+    #
+    class RedshiftQueryEngineStorageConfiguration < Struct.new(
+      :aws_data_catalog_configuration,
+      :redshift_configuration,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Specifies configurations for authentication to a Redshift Serverless.
+    # Specify the type of authentication to use in the `type` field and
+    # include the corresponding field. If you specify IAM authentication,
+    # you don't need to include another field.
+    #
+    # @!attribute [rw] type
+    #   The type of authentication to use.
+    #   @return [String]
+    #
+    # @!attribute [rw] username_password_secret_arn
+    #   The ARN of an Secrets Manager secret for authentication.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftServerlessAuthConfiguration AWS API Documentation
+    #
+    class RedshiftServerlessAuthConfiguration < Struct.new(
+      :type,
+      :username_password_secret_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for authentication to Amazon Redshift
+    # Serverless.
+    #
+    # @!attribute [rw] auth_configuration
+    #   Specifies configurations for authentication to an Amazon Redshift
+    #   provisioned data warehouse.
+    #   @return [Types::RedshiftServerlessAuthConfiguration]
+    #
+    # @!attribute [rw] workgroup_arn
+    #   The ARN of the Amazon Redshift workgroup.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/RedshiftServerlessConfiguration AWS API Documentation
+    #
+    class RedshiftServerlessConfiguration < Struct.new(
+      :auth_configuration,
+      :workgroup_arn)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -8477,6 +8870,34 @@ module Aws::BedrockAgent
       include Aws::Structure
     end
 
+    # Contains configurations for a knowledge base connected to an SQL
+    # database. Specify the SQL database type in the `type` field and
+    # include the corresponding field. For more information, see [Build a
+    # knowledge base by connecting to a structured data source][1] in the
+    # Amazon Bedrock User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-build-structured.html
+    #
+    # @!attribute [rw] redshift_configuration
+    #   Specifies configurations for a knowledge base connected to an Amazon
+    #   Redshift database.
+    #   @return [Types::RedshiftConfiguration]
+    #
+    # @!attribute [rw] type
+    #   The type of SQL database to connect to the knowledge base.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/SqlKnowledgeBaseConfiguration AWS API Documentation
+    #
+    class SqlKnowledgeBaseConfiguration < Struct.new(
+      :redshift_configuration,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] client_token
     #   A unique, case-sensitive identifier to ensure that the API request
     #   completes no more than one time. If this token matches a previous
@@ -8668,6 +9089,44 @@ module Aws::BedrockAgent
 
       class S3 < StorageFlowNodeServiceConfiguration; end
       class Unknown < StorageFlowNodeServiceConfiguration; end
+    end
+
+    # Specifies configurations for the storage location of the images
+    # extracted from multimodal documents in your data source. These images
+    # can be retrieved and returned to the end user.
+    #
+    # @!attribute [rw] storage_locations
+    #   A list of objects specifying storage locations for images extracted
+    #   from multimodal documents in your data source.
+    #   @return [Array<Types::SupplementalDataStorageLocation>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/SupplementalDataStorageConfiguration AWS API Documentation
+    #
+    class SupplementalDataStorageConfiguration < Struct.new(
+      :storage_locations)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about a storage location for images extracted
+    # from multimodal documents in your data source.
+    #
+    # @!attribute [rw] s3_location
+    #   Contains information about the Amazon S3 location for the extracted
+    #   images.
+    #   @return [Types::S3Location]
+    #
+    # @!attribute [rw] type
+    #   Specifies the storage service used for this location.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/SupplementalDataStorageLocation AWS API Documentation
+    #
+    class SupplementalDataStorageLocation < Struct.new(
+      :s3_location,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
     end
 
     # Contains a system prompt to provide context to the model or to
@@ -10028,7 +10487,9 @@ module Aws::BedrockAgent
     #   @return [Types::CustomTransformationConfiguration]
     #
     # @!attribute [rw] parsing_configuration
-    #   A custom parser for data source documents.
+    #   Configurations for a parser to use for parsing documents in your
+    #   data source. If you exclude this field, the default parser will be
+    #   used.
     #   @return [Types::ParsingConfiguration]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/VectorIngestionConfiguration AWS API Documentation
@@ -10054,11 +10515,24 @@ module Aws::BedrockAgent
     #   in Knowledge Base.
     #   @return [Types::EmbeddingModelConfiguration]
     #
+    # @!attribute [rw] supplemental_data_storage_configuration
+    #   If you include multimodal data from your data source, use this
+    #   object to specify configurations for the storage location of the
+    #   images extracted from your documents. These images can be retrieved
+    #   and returned to the end user. They can also be used in generation
+    #   when using [RetrieveAndGenerate][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html
+    #   @return [Types::SupplementalDataStorageConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/VectorKnowledgeBaseConfiguration AWS API Documentation
     #
     class VectorKnowledgeBaseConfiguration < Struct.new(
       :embedding_model_arn,
-      :embedding_model_configuration)
+      :embedding_model_configuration,
+      :supplemental_data_storage_configuration)
       SENSITIVE = []
       include Aws::Structure
     end

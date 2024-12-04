@@ -93,11 +93,20 @@ module Aws::BedrockRuntime
     GuardrailConverseContentBlock = Shapes::UnionShape.new(name: 'GuardrailConverseContentBlock')
     GuardrailConverseContentQualifier = Shapes::StringShape.new(name: 'GuardrailConverseContentQualifier')
     GuardrailConverseContentQualifierList = Shapes::ListShape.new(name: 'GuardrailConverseContentQualifierList')
+    GuardrailConverseImageBlock = Shapes::StructureShape.new(name: 'GuardrailConverseImageBlock')
+    GuardrailConverseImageFormat = Shapes::StringShape.new(name: 'GuardrailConverseImageFormat')
+    GuardrailConverseImageSource = Shapes::UnionShape.new(name: 'GuardrailConverseImageSource')
+    GuardrailConverseImageSourceBytesBlob = Shapes::BlobShape.new(name: 'GuardrailConverseImageSourceBytesBlob')
     GuardrailConverseTextBlock = Shapes::StructureShape.new(name: 'GuardrailConverseTextBlock')
     GuardrailCoverage = Shapes::StructureShape.new(name: 'GuardrailCoverage')
     GuardrailCustomWord = Shapes::StructureShape.new(name: 'GuardrailCustomWord')
     GuardrailCustomWordList = Shapes::ListShape.new(name: 'GuardrailCustomWordList')
     GuardrailIdentifier = Shapes::StringShape.new(name: 'GuardrailIdentifier')
+    GuardrailImageBlock = Shapes::StructureShape.new(name: 'GuardrailImageBlock')
+    GuardrailImageCoverage = Shapes::StructureShape.new(name: 'GuardrailImageCoverage')
+    GuardrailImageFormat = Shapes::StringShape.new(name: 'GuardrailImageFormat')
+    GuardrailImageSource = Shapes::UnionShape.new(name: 'GuardrailImageSource')
+    GuardrailImageSourceBytesBlob = Shapes::BlobShape.new(name: 'GuardrailImageSourceBytesBlob')
     GuardrailInvocationMetrics = Shapes::StructureShape.new(name: 'GuardrailInvocationMetrics')
     GuardrailManagedWord = Shapes::StructureShape.new(name: 'GuardrailManagedWord')
     GuardrailManagedWordList = Shapes::ListShape.new(name: 'GuardrailManagedWordList')
@@ -136,6 +145,8 @@ module Aws::BedrockRuntime
     ImageFormat = Shapes::StringShape.new(name: 'ImageFormat')
     ImageSource = Shapes::UnionShape.new(name: 'ImageSource')
     ImageSourceBytesBlob = Shapes::BlobShape.new(name: 'ImageSourceBytesBlob')
+    ImagesGuarded = Shapes::IntegerShape.new(name: 'ImagesGuarded')
+    ImagesTotal = Shapes::IntegerShape.new(name: 'ImagesTotal')
     InferenceConfiguration = Shapes::StructureShape.new(name: 'InferenceConfiguration')
     InferenceConfigurationMaxTokensInteger = Shapes::IntegerShape.new(name: 'InferenceConfigurationMaxTokensInteger')
     InferenceConfigurationStopSequencesList = Shapes::ListShape.new(name: 'InferenceConfigurationStopSequencesList')
@@ -148,6 +159,7 @@ module Aws::BedrockRuntime
     InvokeModelResponse = Shapes::StructureShape.new(name: 'InvokeModelResponse')
     InvokeModelWithResponseStreamRequest = Shapes::StructureShape.new(name: 'InvokeModelWithResponseStreamRequest')
     InvokeModelWithResponseStreamResponse = Shapes::StructureShape.new(name: 'InvokeModelWithResponseStreamResponse')
+    InvokedModelId = Shapes::StringShape.new(name: 'InvokedModelId')
     KmsKeyId = Shapes::StringShape.new(name: 'KmsKeyId')
     ListAsyncInvokesRequest = Shapes::StructureShape.new(name: 'ListAsyncInvokesRequest')
     ListAsyncInvokesResponse = Shapes::StructureShape.new(name: 'ListAsyncInvokesResponse')
@@ -172,6 +184,7 @@ module Aws::BedrockRuntime
     PayloadPart = Shapes::StructureShape.new(name: 'PayloadPart')
     PerformanceConfigLatency = Shapes::StringShape.new(name: 'PerformanceConfigLatency')
     PerformanceConfiguration = Shapes::StructureShape.new(name: 'PerformanceConfiguration')
+    PromptRouterTrace = Shapes::StructureShape.new(name: 'PromptRouterTrace')
     PromptVariableMap = Shapes::MapShape.new(name: 'PromptVariableMap')
     PromptVariableValues = Shapes::UnionShape.new(name: 'PromptVariableValues')
     RequestMetadata = Shapes::MapShape.new(name: 'RequestMetadata')
@@ -395,9 +408,11 @@ module Aws::BedrockRuntime
     ConverseStreamResponse[:payload_member] = ConverseStreamResponse.member(:stream)
 
     ConverseStreamTrace.add_member(:guardrail, Shapes::ShapeRef.new(shape: GuardrailTraceAssessment, location_name: "guardrail"))
+    ConverseStreamTrace.add_member(:prompt_router, Shapes::ShapeRef.new(shape: PromptRouterTrace, location_name: "promptRouter"))
     ConverseStreamTrace.struct_class = Types::ConverseStreamTrace
 
     ConverseTrace.add_member(:guardrail, Shapes::ShapeRef.new(shape: GuardrailTraceAssessment, location_name: "guardrail"))
+    ConverseTrace.add_member(:prompt_router, Shapes::ShapeRef.new(shape: PromptRouterTrace, location_name: "promptRouter"))
     ConverseTrace.struct_class = Types::ConverseTrace
 
     DocumentBlock.add_member(:format, Shapes::ShapeRef.new(shape: DocumentFormat, required: true, location_name: "format"))
@@ -447,8 +462,10 @@ module Aws::BedrockRuntime
     GuardrailConfiguration.struct_class = Types::GuardrailConfiguration
 
     GuardrailContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: GuardrailTextBlock, location_name: "text"))
+    GuardrailContentBlock.add_member(:image, Shapes::ShapeRef.new(shape: GuardrailImageBlock, location_name: "image"))
     GuardrailContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     GuardrailContentBlock.add_member_subclass(:text, Types::GuardrailContentBlock::Text)
+    GuardrailContentBlock.add_member_subclass(:image, Types::GuardrailContentBlock::Image)
     GuardrailContentBlock.add_member_subclass(:unknown, Types::GuardrailContentBlock::Unknown)
     GuardrailContentBlock.struct_class = Types::GuardrailContentBlock
 
@@ -479,18 +496,31 @@ module Aws::BedrockRuntime
     GuardrailContextualGroundingPolicyAssessment.struct_class = Types::GuardrailContextualGroundingPolicyAssessment
 
     GuardrailConverseContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: GuardrailConverseTextBlock, location_name: "text"))
+    GuardrailConverseContentBlock.add_member(:image, Shapes::ShapeRef.new(shape: GuardrailConverseImageBlock, location_name: "image"))
     GuardrailConverseContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
     GuardrailConverseContentBlock.add_member_subclass(:text, Types::GuardrailConverseContentBlock::Text)
+    GuardrailConverseContentBlock.add_member_subclass(:image, Types::GuardrailConverseContentBlock::Image)
     GuardrailConverseContentBlock.add_member_subclass(:unknown, Types::GuardrailConverseContentBlock::Unknown)
     GuardrailConverseContentBlock.struct_class = Types::GuardrailConverseContentBlock
 
     GuardrailConverseContentQualifierList.member = Shapes::ShapeRef.new(shape: GuardrailConverseContentQualifier)
+
+    GuardrailConverseImageBlock.add_member(:format, Shapes::ShapeRef.new(shape: GuardrailConverseImageFormat, required: true, location_name: "format"))
+    GuardrailConverseImageBlock.add_member(:source, Shapes::ShapeRef.new(shape: GuardrailConverseImageSource, required: true, location_name: "source"))
+    GuardrailConverseImageBlock.struct_class = Types::GuardrailConverseImageBlock
+
+    GuardrailConverseImageSource.add_member(:bytes, Shapes::ShapeRef.new(shape: GuardrailConverseImageSourceBytesBlob, location_name: "bytes"))
+    GuardrailConverseImageSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    GuardrailConverseImageSource.add_member_subclass(:bytes, Types::GuardrailConverseImageSource::Bytes)
+    GuardrailConverseImageSource.add_member_subclass(:unknown, Types::GuardrailConverseImageSource::Unknown)
+    GuardrailConverseImageSource.struct_class = Types::GuardrailConverseImageSource
 
     GuardrailConverseTextBlock.add_member(:text, Shapes::ShapeRef.new(shape: String, required: true, location_name: "text"))
     GuardrailConverseTextBlock.add_member(:qualifiers, Shapes::ShapeRef.new(shape: GuardrailConverseContentQualifierList, location_name: "qualifiers"))
     GuardrailConverseTextBlock.struct_class = Types::GuardrailConverseTextBlock
 
     GuardrailCoverage.add_member(:text_characters, Shapes::ShapeRef.new(shape: GuardrailTextCharactersCoverage, location_name: "textCharacters"))
+    GuardrailCoverage.add_member(:images, Shapes::ShapeRef.new(shape: GuardrailImageCoverage, location_name: "images"))
     GuardrailCoverage.struct_class = Types::GuardrailCoverage
 
     GuardrailCustomWord.add_member(:match, Shapes::ShapeRef.new(shape: String, required: true, location_name: "match"))
@@ -498,6 +528,20 @@ module Aws::BedrockRuntime
     GuardrailCustomWord.struct_class = Types::GuardrailCustomWord
 
     GuardrailCustomWordList.member = Shapes::ShapeRef.new(shape: GuardrailCustomWord)
+
+    GuardrailImageBlock.add_member(:format, Shapes::ShapeRef.new(shape: GuardrailImageFormat, required: true, location_name: "format"))
+    GuardrailImageBlock.add_member(:source, Shapes::ShapeRef.new(shape: GuardrailImageSource, required: true, location_name: "source"))
+    GuardrailImageBlock.struct_class = Types::GuardrailImageBlock
+
+    GuardrailImageCoverage.add_member(:guarded, Shapes::ShapeRef.new(shape: ImagesGuarded, location_name: "guarded"))
+    GuardrailImageCoverage.add_member(:total, Shapes::ShapeRef.new(shape: ImagesTotal, location_name: "total"))
+    GuardrailImageCoverage.struct_class = Types::GuardrailImageCoverage
+
+    GuardrailImageSource.add_member(:bytes, Shapes::ShapeRef.new(shape: GuardrailImageSourceBytesBlob, location_name: "bytes"))
+    GuardrailImageSource.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    GuardrailImageSource.add_member_subclass(:bytes, Types::GuardrailImageSource::Bytes)
+    GuardrailImageSource.add_member_subclass(:unknown, Types::GuardrailImageSource::Unknown)
+    GuardrailImageSource.struct_class = Types::GuardrailImageSource
 
     GuardrailInvocationMetrics.add_member(:guardrail_processing_latency, Shapes::ShapeRef.new(shape: GuardrailProcessingLatency, location_name: "guardrailProcessingLatency"))
     GuardrailInvocationMetrics.add_member(:usage, Shapes::ShapeRef.new(shape: GuardrailUsage, location_name: "usage"))
@@ -684,6 +728,9 @@ module Aws::BedrockRuntime
 
     PerformanceConfiguration.add_member(:latency, Shapes::ShapeRef.new(shape: PerformanceConfigLatency, location_name: "latency"))
     PerformanceConfiguration.struct_class = Types::PerformanceConfiguration
+
+    PromptRouterTrace.add_member(:invoked_model_id, Shapes::ShapeRef.new(shape: InvokedModelId, location_name: "invokedModelId"))
+    PromptRouterTrace.struct_class = Types::PromptRouterTrace
 
     PromptVariableMap.key = Shapes::ShapeRef.new(shape: String)
     PromptVariableMap.value = Shapes::ShapeRef.new(shape: PromptVariableValues)

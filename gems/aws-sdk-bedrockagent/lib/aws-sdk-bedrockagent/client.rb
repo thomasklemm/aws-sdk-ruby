@@ -1221,7 +1221,7 @@ module Aws::BedrockAgent
     #           tenant_id: "Microsoft365TenantId",
     #         },
     #       },
-    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT, CUSTOM
+    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT, CUSTOM, REDSHIFT_METADATA
     #       web_configuration: {
     #         crawler_configuration: {
     #           crawler_limits: {
@@ -1287,13 +1287,17 @@ module Aws::BedrockAgent
     #         ],
     #       },
     #       parsing_configuration: {
+    #         bedrock_data_automation_configuration: {
+    #           parsing_modality: "MULTIMODAL", # accepts MULTIMODAL
+    #         },
     #         bedrock_foundation_model_configuration: {
     #           model_arn: "BedrockModelArn", # required
+    #           parsing_modality: "MULTIMODAL", # accepts MULTIMODAL
     #           parsing_prompt: {
     #             parsing_prompt_text: "ParsingPromptText", # required
     #           },
     #         },
-    #         parsing_strategy: "BEDROCK_FOUNDATION_MODEL", # required, accepts BEDROCK_FOUNDATION_MODEL
+    #         parsing_strategy: "BEDROCK_FOUNDATION_MODEL", # required, accepts BEDROCK_FOUNDATION_MODEL, BEDROCK_DATA_AUTOMATION
     #       },
     #     },
     #   })
@@ -1341,7 +1345,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls #=> Array
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
-    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "REDSHIFT_METADATA"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
@@ -1372,9 +1376,11 @@ module Aws::BedrockAgent
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations #=> Array
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].step_to_apply #=> String, one of "POST_CHUNKING"
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].transformation_function.transformation_lambda_configuration.lambda_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_data_automation_configuration.parsing_modality #=> String, one of "MULTIMODAL"
     #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.model_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.parsing_modality #=> String, one of "MULTIMODAL"
     #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.parsing_prompt.parsing_prompt_text #=> String
-    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.parsing_strategy #=> String, one of "BEDROCK_FOUNDATION_MODEL"
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.parsing_strategy #=> String, one of "BEDROCK_FOUNDATION_MODEL", "BEDROCK_DATA_AUTOMATION"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/CreateDataSource AWS API Documentation
     #
@@ -2001,7 +2007,7 @@ module Aws::BedrockAgent
     #   The Amazon Resource Name (ARN) of the IAM role with permissions to
     #   invoke API operations on the knowledge base.
     #
-    # @option params [required, Types::StorageConfiguration] :storage_configuration
+    # @option params [Types::StorageConfiguration] :storage_configuration
     #   Contains details about the configuration of the vector database used
     #   for the knowledge base.
     #
@@ -2019,7 +2025,69 @@ module Aws::BedrockAgent
     #     client_token: "ClientToken",
     #     description: "Description",
     #     knowledge_base_configuration: { # required
-    #       type: "VECTOR", # required, accepts VECTOR
+    #       kendra_knowledge_base_configuration: {
+    #         kendra_index_arn: "KendraIndexArn", # required
+    #       },
+    #       sql_knowledge_base_configuration: {
+    #         redshift_configuration: {
+    #           query_engine_configuration: { # required
+    #             provisioned_configuration: {
+    #               auth_configuration: { # required
+    #                 database_user: "String",
+    #                 type: "IAM", # required, accepts IAM, USERNAME_PASSWORD, USERNAME
+    #                 username_password_secret_arn: "SecretArn",
+    #               },
+    #               cluster_identifier: "RedshiftClusterIdentifier", # required
+    #             },
+    #             serverless_configuration: {
+    #               auth_configuration: { # required
+    #                 type: "IAM", # required, accepts IAM, USERNAME_PASSWORD
+    #                 username_password_secret_arn: "SecretArn",
+    #               },
+    #               workgroup_arn: "WorkgroupArn", # required
+    #             },
+    #             type: "SERVERLESS", # required, accepts SERVERLESS, PROVISIONED
+    #           },
+    #           query_generation_configuration: {
+    #             execution_timeout_seconds: 1,
+    #             generation_context: {
+    #               curated_queries: [
+    #                 {
+    #                   natural_language: "NaturalLanguageString", # required
+    #                   sql: "SqlString", # required
+    #                 },
+    #               ],
+    #               tables: [
+    #                 {
+    #                   columns: [
+    #                     {
+    #                       description: "DescriptionString",
+    #                       inclusion: "INCLUDE", # accepts INCLUDE, EXCLUDE
+    #                       name: "QueryGenerationColumnName",
+    #                     },
+    #                   ],
+    #                   description: "DescriptionString",
+    #                   inclusion: "INCLUDE", # accepts INCLUDE, EXCLUDE
+    #                   name: "QueryGenerationTableName", # required
+    #                 },
+    #               ],
+    #             },
+    #           },
+    #           storage_configurations: [ # required
+    #             {
+    #               aws_data_catalog_configuration: {
+    #                 table_names: ["AwsDataCatalogTableName"], # required
+    #               },
+    #               redshift_configuration: {
+    #                 database_name: "RedshiftDatabase", # required
+    #               },
+    #               type: "REDSHIFT", # required, accepts REDSHIFT, AWS_DATA_CATALOG
+    #             },
+    #           ],
+    #         },
+    #         type: "REDSHIFT", # required, accepts REDSHIFT
+    #       },
+    #       type: "VECTOR", # required, accepts VECTOR, KENDRA, SQL
     #       vector_knowledge_base_configuration: {
     #         embedding_model_arn: "BedrockEmbeddingModelArn", # required
     #         embedding_model_configuration: {
@@ -2028,11 +2096,21 @@ module Aws::BedrockAgent
     #             embedding_data_type: "FLOAT32", # accepts FLOAT32, BINARY
     #           },
     #         },
+    #         supplemental_data_storage_configuration: {
+    #           storage_locations: [ # required
+    #             {
+    #               s3_location: {
+    #                 uri: "S3BucketUri", # required
+    #               },
+    #               type: "S3", # required, accepts S3
+    #             },
+    #           ],
+    #         },
     #       },
     #     },
     #     name: "Name", # required
     #     role_arn: "KnowledgeBaseRoleArn", # required
-    #     storage_configuration: { # required
+    #     storage_configuration: {
     #       mongo_db_atlas_configuration: {
     #         collection_name: "MongoDbAtlasCollectionName", # required
     #         credentials_secret_arn: "SecretArn", # required
@@ -2100,10 +2178,40 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.failure_reasons #=> Array
     #   resp.knowledge_base.failure_reasons[0] #=> String
     #   resp.knowledge_base.knowledge_base_arn #=> String
-    #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR"
+    #   resp.knowledge_base.knowledge_base_configuration.kendra_knowledge_base_configuration.kendra_index_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.database_user #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.type #=> String, one of "IAM", "USERNAME_PASSWORD", "USERNAME"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.username_password_secret_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.cluster_identifier #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.auth_configuration.type #=> String, one of "IAM", "USERNAME_PASSWORD"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.auth_configuration.username_password_secret_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.workgroup_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.type #=> String, one of "SERVERLESS", "PROVISIONED"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.execution_timeout_seconds #=> Integer
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries[0].natural_language #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries[0].sql #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].description #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].inclusion #=> String, one of "INCLUDE", "EXCLUDE"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].description #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].inclusion #=> String, one of "INCLUDE", "EXCLUDE"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].aws_data_catalog_configuration.table_names #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].aws_data_catalog_configuration.table_names[0] #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].redshift_configuration.database_name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].type #=> String, one of "REDSHIFT", "AWS_DATA_CATALOG"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.type #=> String, one of "REDSHIFT"
+    #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR", "KENDRA", "SQL"
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_arn #=> String
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.dimensions #=> Integer
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.embedding_data_type #=> String, one of "FLOAT32", "BINARY"
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations[0].s3_location.uri #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations[0].type #=> String, one of "S3"
     #   resp.knowledge_base.knowledge_base_id #=> String
     #   resp.knowledge_base.name #=> String
     #   resp.knowledge_base.role_arn #=> String
@@ -3385,7 +3493,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls #=> Array
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
-    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "REDSHIFT_METADATA"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
@@ -3416,9 +3524,11 @@ module Aws::BedrockAgent
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations #=> Array
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].step_to_apply #=> String, one of "POST_CHUNKING"
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].transformation_function.transformation_lambda_configuration.lambda_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_data_automation_configuration.parsing_modality #=> String, one of "MULTIMODAL"
     #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.model_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.parsing_modality #=> String, one of "MULTIMODAL"
     #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.parsing_prompt.parsing_prompt_text #=> String
-    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.parsing_strategy #=> String, one of "BEDROCK_FOUNDATION_MODEL"
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.parsing_strategy #=> String, one of "BEDROCK_FOUNDATION_MODEL", "BEDROCK_DATA_AUTOMATION"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/GetDataSource AWS API Documentation
     #
@@ -3820,10 +3930,40 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.failure_reasons #=> Array
     #   resp.knowledge_base.failure_reasons[0] #=> String
     #   resp.knowledge_base.knowledge_base_arn #=> String
-    #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR"
+    #   resp.knowledge_base.knowledge_base_configuration.kendra_knowledge_base_configuration.kendra_index_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.database_user #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.type #=> String, one of "IAM", "USERNAME_PASSWORD", "USERNAME"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.username_password_secret_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.cluster_identifier #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.auth_configuration.type #=> String, one of "IAM", "USERNAME_PASSWORD"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.auth_configuration.username_password_secret_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.workgroup_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.type #=> String, one of "SERVERLESS", "PROVISIONED"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.execution_timeout_seconds #=> Integer
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries[0].natural_language #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries[0].sql #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].description #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].inclusion #=> String, one of "INCLUDE", "EXCLUDE"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].description #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].inclusion #=> String, one of "INCLUDE", "EXCLUDE"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].aws_data_catalog_configuration.table_names #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].aws_data_catalog_configuration.table_names[0] #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].redshift_configuration.database_name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].type #=> String, one of "REDSHIFT", "AWS_DATA_CATALOG"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.type #=> String, one of "REDSHIFT"
+    #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR", "KENDRA", "SQL"
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_arn #=> String
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.dimensions #=> Integer
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.embedding_data_type #=> String, one of "FLOAT32", "BINARY"
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations[0].s3_location.uri #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations[0].type #=> String, one of "S3"
     #   resp.knowledge_base.knowledge_base_id #=> String
     #   resp.knowledge_base.name #=> String
     #   resp.knowledge_base.role_arn #=> String
@@ -5879,7 +6019,7 @@ module Aws::BedrockAgent
     #           tenant_id: "Microsoft365TenantId",
     #         },
     #       },
-    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT, CUSTOM
+    #       type: "S3", # required, accepts S3, WEB, CONFLUENCE, SALESFORCE, SHAREPOINT, CUSTOM, REDSHIFT_METADATA
     #       web_configuration: {
     #         crawler_configuration: {
     #           crawler_limits: {
@@ -5946,13 +6086,17 @@ module Aws::BedrockAgent
     #         ],
     #       },
     #       parsing_configuration: {
+    #         bedrock_data_automation_configuration: {
+    #           parsing_modality: "MULTIMODAL", # accepts MULTIMODAL
+    #         },
     #         bedrock_foundation_model_configuration: {
     #           model_arn: "BedrockModelArn", # required
+    #           parsing_modality: "MULTIMODAL", # accepts MULTIMODAL
     #           parsing_prompt: {
     #             parsing_prompt_text: "ParsingPromptText", # required
     #           },
     #         },
-    #         parsing_strategy: "BEDROCK_FOUNDATION_MODEL", # required, accepts BEDROCK_FOUNDATION_MODEL
+    #         parsing_strategy: "BEDROCK_FOUNDATION_MODEL", # required, accepts BEDROCK_FOUNDATION_MODEL, BEDROCK_DATA_AUTOMATION
     #       },
     #     },
     #   })
@@ -6000,7 +6144,7 @@ module Aws::BedrockAgent
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls #=> Array
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.site_urls[0] #=> String
     #   resp.data_source.data_source_configuration.share_point_configuration.source_configuration.tenant_id #=> String
-    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   resp.data_source.data_source_configuration.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "REDSHIFT_METADATA"
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.crawler_limits.rate_limit #=> Integer
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters #=> Array
     #   resp.data_source.data_source_configuration.web_configuration.crawler_configuration.exclusion_filters[0] #=> String
@@ -6031,9 +6175,11 @@ module Aws::BedrockAgent
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations #=> Array
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].step_to_apply #=> String, one of "POST_CHUNKING"
     #   resp.data_source.vector_ingestion_configuration.custom_transformation_configuration.transformations[0].transformation_function.transformation_lambda_configuration.lambda_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_data_automation_configuration.parsing_modality #=> String, one of "MULTIMODAL"
     #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.model_arn #=> String
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.parsing_modality #=> String, one of "MULTIMODAL"
     #   resp.data_source.vector_ingestion_configuration.parsing_configuration.bedrock_foundation_model_configuration.parsing_prompt.parsing_prompt_text #=> String
-    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.parsing_strategy #=> String, one of "BEDROCK_FOUNDATION_MODEL"
+    #   resp.data_source.vector_ingestion_configuration.parsing_configuration.parsing_strategy #=> String, one of "BEDROCK_FOUNDATION_MODEL", "BEDROCK_DATA_AUTOMATION"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-2023-06-05/UpdateDataSource AWS API Documentation
     #
@@ -6457,7 +6603,7 @@ module Aws::BedrockAgent
     #   Specifies a different Amazon Resource Name (ARN) of the IAM role with
     #   permissions to invoke API operations on the knowledge base.
     #
-    # @option params [required, Types::StorageConfiguration] :storage_configuration
+    # @option params [Types::StorageConfiguration] :storage_configuration
     #   Specifies the configuration for the vector store used for the
     #   knowledge base. You must use the same configuration as when the
     #   knowledge base was created.
@@ -6471,7 +6617,69 @@ module Aws::BedrockAgent
     #   resp = client.update_knowledge_base({
     #     description: "Description",
     #     knowledge_base_configuration: { # required
-    #       type: "VECTOR", # required, accepts VECTOR
+    #       kendra_knowledge_base_configuration: {
+    #         kendra_index_arn: "KendraIndexArn", # required
+    #       },
+    #       sql_knowledge_base_configuration: {
+    #         redshift_configuration: {
+    #           query_engine_configuration: { # required
+    #             provisioned_configuration: {
+    #               auth_configuration: { # required
+    #                 database_user: "String",
+    #                 type: "IAM", # required, accepts IAM, USERNAME_PASSWORD, USERNAME
+    #                 username_password_secret_arn: "SecretArn",
+    #               },
+    #               cluster_identifier: "RedshiftClusterIdentifier", # required
+    #             },
+    #             serverless_configuration: {
+    #               auth_configuration: { # required
+    #                 type: "IAM", # required, accepts IAM, USERNAME_PASSWORD
+    #                 username_password_secret_arn: "SecretArn",
+    #               },
+    #               workgroup_arn: "WorkgroupArn", # required
+    #             },
+    #             type: "SERVERLESS", # required, accepts SERVERLESS, PROVISIONED
+    #           },
+    #           query_generation_configuration: {
+    #             execution_timeout_seconds: 1,
+    #             generation_context: {
+    #               curated_queries: [
+    #                 {
+    #                   natural_language: "NaturalLanguageString", # required
+    #                   sql: "SqlString", # required
+    #                 },
+    #               ],
+    #               tables: [
+    #                 {
+    #                   columns: [
+    #                     {
+    #                       description: "DescriptionString",
+    #                       inclusion: "INCLUDE", # accepts INCLUDE, EXCLUDE
+    #                       name: "QueryGenerationColumnName",
+    #                     },
+    #                   ],
+    #                   description: "DescriptionString",
+    #                   inclusion: "INCLUDE", # accepts INCLUDE, EXCLUDE
+    #                   name: "QueryGenerationTableName", # required
+    #                 },
+    #               ],
+    #             },
+    #           },
+    #           storage_configurations: [ # required
+    #             {
+    #               aws_data_catalog_configuration: {
+    #                 table_names: ["AwsDataCatalogTableName"], # required
+    #               },
+    #               redshift_configuration: {
+    #                 database_name: "RedshiftDatabase", # required
+    #               },
+    #               type: "REDSHIFT", # required, accepts REDSHIFT, AWS_DATA_CATALOG
+    #             },
+    #           ],
+    #         },
+    #         type: "REDSHIFT", # required, accepts REDSHIFT
+    #       },
+    #       type: "VECTOR", # required, accepts VECTOR, KENDRA, SQL
     #       vector_knowledge_base_configuration: {
     #         embedding_model_arn: "BedrockEmbeddingModelArn", # required
     #         embedding_model_configuration: {
@@ -6480,12 +6688,22 @@ module Aws::BedrockAgent
     #             embedding_data_type: "FLOAT32", # accepts FLOAT32, BINARY
     #           },
     #         },
+    #         supplemental_data_storage_configuration: {
+    #           storage_locations: [ # required
+    #             {
+    #               s3_location: {
+    #                 uri: "S3BucketUri", # required
+    #               },
+    #               type: "S3", # required, accepts S3
+    #             },
+    #           ],
+    #         },
     #       },
     #     },
     #     knowledge_base_id: "Id", # required
     #     name: "Name", # required
     #     role_arn: "KnowledgeBaseRoleArn", # required
-    #     storage_configuration: { # required
+    #     storage_configuration: {
     #       mongo_db_atlas_configuration: {
     #         collection_name: "MongoDbAtlasCollectionName", # required
     #         credentials_secret_arn: "SecretArn", # required
@@ -6550,10 +6768,40 @@ module Aws::BedrockAgent
     #   resp.knowledge_base.failure_reasons #=> Array
     #   resp.knowledge_base.failure_reasons[0] #=> String
     #   resp.knowledge_base.knowledge_base_arn #=> String
-    #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR"
+    #   resp.knowledge_base.knowledge_base_configuration.kendra_knowledge_base_configuration.kendra_index_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.database_user #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.type #=> String, one of "IAM", "USERNAME_PASSWORD", "USERNAME"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.auth_configuration.username_password_secret_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.provisioned_configuration.cluster_identifier #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.auth_configuration.type #=> String, one of "IAM", "USERNAME_PASSWORD"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.auth_configuration.username_password_secret_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.serverless_configuration.workgroup_arn #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_engine_configuration.type #=> String, one of "SERVERLESS", "PROVISIONED"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.execution_timeout_seconds #=> Integer
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries[0].natural_language #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.curated_queries[0].sql #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].description #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].inclusion #=> String, one of "INCLUDE", "EXCLUDE"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].columns[0].name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].description #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].inclusion #=> String, one of "INCLUDE", "EXCLUDE"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.query_generation_configuration.generation_context.tables[0].name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].aws_data_catalog_configuration.table_names #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].aws_data_catalog_configuration.table_names[0] #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].redshift_configuration.database_name #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.redshift_configuration.storage_configurations[0].type #=> String, one of "REDSHIFT", "AWS_DATA_CATALOG"
+    #   resp.knowledge_base.knowledge_base_configuration.sql_knowledge_base_configuration.type #=> String, one of "REDSHIFT"
+    #   resp.knowledge_base.knowledge_base_configuration.type #=> String, one of "VECTOR", "KENDRA", "SQL"
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_arn #=> String
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.dimensions #=> Integer
     #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.embedding_model_configuration.bedrock_embedding_model_configuration.embedding_data_type #=> String, one of "FLOAT32", "BINARY"
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations #=> Array
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations[0].s3_location.uri #=> String
+    #   resp.knowledge_base.knowledge_base_configuration.vector_knowledge_base_configuration.supplemental_data_storage_configuration.storage_locations[0].type #=> String, one of "S3"
     #   resp.knowledge_base.knowledge_base_id #=> String
     #   resp.knowledge_base.name #=> String
     #   resp.knowledge_base.role_arn #=> String
@@ -7044,7 +7292,7 @@ module Aws::BedrockAgent
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagent'
-      context[:gem_version] = '1.39.0'
+      context[:gem_version] = '1.40.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

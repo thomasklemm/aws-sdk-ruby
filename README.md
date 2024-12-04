@@ -672,6 +672,7 @@ RubyGems.org page under "LINKS" section.
 | CloudWatch RUM                                        | Aws::CloudWatchRUM                       | aws-sdk-cloudwatchrum                       | 2018-05-10  |
 | CodeArtifact                                          | Aws::CodeArtifact                        | aws-sdk-codeartifact                        | 2018-09-22  |
 | Cost Optimization Hub                                 | Aws::CostOptimizationHub                 | aws-sdk-costoptimizationhub                 | 2022-07-26  |
+| Data Automation for Amazon Bedrock                    | Aws::BedrockDataAutomation               | aws-sdk-bedrockdataautomation               | 2023-07-26  |
 | EC2 Image Builder                                     | Aws::Imagebuilder                        | aws-sdk-imagebuilder                        | 2019-12-02  |
 | EMR Serverless                                        | Aws::EMRServerless                       | aws-sdk-emrserverless                       | 2021-07-13  |
 | Elastic Disaster Recovery Service                     | Aws::Drs                                 | aws-sdk-drs                                 | 2020-02-26  |
@@ -700,6 +701,7 @@ RubyGems.org page under "LINKS" section.
 | Redshift Serverless                                   | Aws::RedshiftServerless                  | aws-sdk-redshiftserverless                  | 2021-04-21  |
 | Route 53 Profiles                                     | Aws::Route53Profiles                     | aws-sdk-route53profiles                     | 2018-05-10  |
 | Route53 Recovery Cluster                              | Aws::Route53RecoveryCluster              | aws-sdk-route53recoverycluster              | 2019-12-02  |
+| Runtime for Amazon Bedrock Data Automation            | Aws::BedrockDataAutomationRuntime        | aws-sdk-bedrockdataautomationruntime        | 2024-06-13  |
 | Schemas                                               | Aws::Schemas                             | aws-sdk-schemas                             | 2019-12-02  |
 | Security Incident Response                            | Aws::SecurityIR                          | aws-sdk-securityir                          | 2018-05-10  |
 | Service Quotas                                        | Aws::ServiceQuotas                       | aws-sdk-servicequotas                       | 2019-06-24  |

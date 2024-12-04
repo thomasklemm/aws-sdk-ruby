@@ -350,21 +350,21 @@ module Aws::Kendra
     # `EqualsTo` operation to filter results or documents with
     # "Department" equals to "HR".
     #
-    # You can use `AndAllFilters` and `AndOrFilters` in combination with
+    # You can use `AndAllFilters` and `OrAllFilters` in combination with
     # each other or with other operations such as `EqualsTo`. For example:
     #
     # `AndAllFilters`
     #
     # * `EqualsTo`: "Department", "HR"
     #
-    # * `AndOrFilters`
+    # * `OrAllFilters`
     #
     #   * `ContainsAny`: "Project Name", \["new hires", "new hiring"\]
     #
     #   ^
     #
     # This example filters results or documents that belong to the HR
-    # department *and* belong to projects that contain "new hires" *or*
+    # department `AND` belong to projects that contain "new hires" `OR`
     # "new hiring" in the project name (must use `ContainAny` with
     # `StringListValue`). This example is filtering with a depth of 2.
     #
@@ -633,7 +633,8 @@ module Aws::Kendra
     #   @return [Integer]
     #
     # @!attribute [rw] credentials
-    #   Your secret ARN, which you can create in [Secrets Manager][1]
+    #   The Amazon Resource Name (ARN) of an Secrets Manager secret. You
+    #   create a secret to store your credentials in [Secrets Manager][1]
     #
     #   You use a secret if basic authentication credentials are required to
     #   connect to a website. The secret stores your credentials of user
@@ -698,6 +699,11 @@ module Aws::Kendra
     #   index.
     #   @return [String]
     #
+    # @!attribute [rw] data_source_id
+    #   The identifier of the data source connector that the document
+    #   belongs to.
+    #   @return [String]
+    #
     # @!attribute [rw] error_code
     #   The error code for why the document couldn't be removed from the
     #   index.
@@ -712,6 +718,7 @@ module Aws::Kendra
     #
     class BatchDeleteDocumentResponseFailedDocument < Struct.new(
       :id,
+      :data_source_id,
       :error_code,
       :error_message)
       SENSITIVE = []
@@ -834,6 +841,11 @@ module Aws::Kendra
     #   The identifier of the document whose status could not be retrieved.
     #   @return [String]
     #
+    # @!attribute [rw] data_source_id
+    #   The identifier of the data source connector that the failed document
+    #   belongs to.
+    #   @return [String]
+    #
     # @!attribute [rw] error_code
     #   Indicates the source of the error.
     #   @return [String]
@@ -848,6 +860,7 @@ module Aws::Kendra
     #
     class BatchGetDocumentStatusResponseError < Struct.new(
       :document_id,
+      :data_source_id,
       :error_code,
       :error_message)
       SENSITIVE = []
@@ -941,6 +954,11 @@ module Aws::Kendra
     #   The identifier of the document.
     #   @return [String]
     #
+    # @!attribute [rw] data_source_id
+    #   The identifier of the data source connector that the failed document
+    #   belongs to.
+    #   @return [String]
+    #
     # @!attribute [rw] error_code
     #   The type of error that caused the document to fail to be indexed.
     #   @return [String]
@@ -953,6 +971,7 @@ module Aws::Kendra
     #
     class BatchPutDocumentResponseFailedDocument < Struct.new(
       :id,
+      :data_source_id,
       :error_code,
       :error_message)
       SENSITIVE = []
@@ -1782,11 +1801,11 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] secret_arn
-    #   The Amazon Resource Name (ARN) of credentials stored in Secrets
-    #   Manager. The credentials should be a user/password pair. For more
-    #   information, see [Using a Database Data Source][1]. For more
-    #   information about Secrets Manager, see [ What Is Secrets Manager][2]
-    #   in the <i> Secrets Manager </i> user guide.
+    #   The Amazon Resource Name (ARN) of an Secrets Manager secret that
+    #   stores the credentials. The credentials should be a user-password
+    #   pair. For more information, see [Using a Database Data Source][1].
+    #   For more information about Secrets Manager, see [ What Is Secrets
+    #   Manager][2] in the *Secrets Manager* user guide.
     #
     #
     #
@@ -2162,8 +2181,8 @@ module Aws::Kendra
     #
     # @!attribute [rw] role_arn
     #   The Amazon Resource Name (ARN) of an IAM role with permission to
-    #   access the S3 bucket that contains the FAQs. For more information,
-    #   see [IAM access roles for Amazon Kendra][1].
+    #   access the S3 bucket that contains the FAQ file. For more
+    #   information, see [IAM access roles for Amazon Kendra][1].
     #
     #
     #
@@ -2339,14 +2358,15 @@ module Aws::Kendra
     # @!attribute [rw] edition
     #   The Amazon Kendra edition to use for the index. Choose
     #   `DEVELOPER_EDITION` for indexes intended for development, testing,
-    #   or proof of concept. Use `ENTERPRISE_EDITION` for production. Once
-    #   you set the edition for an index, it can't be changed.
+    #   or proof of concept. Use `ENTERPRISE_EDITION` for production. Use
+    #   `GEN_AI_ENTERPRISE_EDITION` for creating generative AI applications.
+    #   Once you set the edition for an index, it can't be changed.
     #
     #   The `Edition` parameter is optional. If you don't supply a value,
     #   the default is `ENTERPRISE_EDITION`.
     #
-    #   For more information on quota limits for Enterprise and Developer
-    #   editions, see [Quotas][1].
+    #   For more information on quota limits for Gen AI Enterprise Edition,
+    #   Enterprise Edition, and Developer Edition indices, see [Quotas][1].
     #
     #
     #
@@ -2391,10 +2411,20 @@ module Aws::Kendra
     #
     # @!attribute [rw] user_token_configurations
     #   The user token configuration.
+    #
+    #   If you're using an Amazon Kendra Gen AI Enterprise Edition index
+    #   and you try to use `UserTokenConfigurations` to configure user
+    #   context policy, Amazon Kendra returns a `ValidationException` error.
     #   @return [Array<Types::UserTokenConfiguration>]
     #
     # @!attribute [rw] user_context_policy
     #   The user context policy.
+    #
+    #   If you're using an Amazon Kendra Gen AI Enterprise Edition index,
+    #   you can only use `ATTRIBUTE_FILTER` to filter search results by user
+    #   context. If you're using an Amazon Kendra Gen AI Enterprise Edition
+    #   index and you try to use `USER_TOKEN` to configure user context
+    #   policy, Amazon Kendra returns a `ValidationException` error.
     #
     #   ATTRIBUTE\_FILTER
     #
@@ -2416,6 +2446,9 @@ module Aws::Kendra
     #   configure this, see [UserGroupResolutionConfiguration][1]. This is
     #   useful for user context filtering, where search results are filtered
     #   based on the user or their group access to documents.
+    #
+    #   If you're using an Amazon Kendra Gen AI Enterprise Edition index,
+    #   `UserGroupResolutionConfiguration` isn't supported.
     #
     #
     #
@@ -2644,11 +2677,11 @@ module Aws::Kendra
     #   @return [Types::HookConfiguration]
     #
     # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of a role with permission to run
+    #   The Amazon Resource Name (ARN) of an IAM role with permission to run
     #   `PreExtractionHookConfiguration` and
     #   `PostExtractionHookConfiguration` for altering document metadata and
     #   content during the document ingestion process. For more information,
-    #   see [IAM roles for Amazon Kendra][1].
+    #   see [an IAM roles for Amazon Kendra][1].
     #
     #
     #
@@ -3495,8 +3528,8 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of the role with permission to access
-    #   the data source and required resources.
+    #   The Amazon Resource Name (ARN) of the IAM role with permission to
+    #   access the data source and required resources.
     #   @return [String]
     #
     # @!attribute [rw] error_message
@@ -3617,9 +3650,10 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   Shows the Amazon Resource Name (ARN) of a role with permission to
-    #   access `Query` API, `QuerySuggestions` API, `SubmitFeedback` API,
-    #   and IAM Identity Center that stores your user and group information.
+    #   The Amazon Resource Name (ARN) of the IAM role with permission to
+    #   access the `Query` API, `QuerySuggestions` API, `SubmitFeedback`
+    #   API, and IAM Identity Center that stores your users and groups
+    #   information.
     #   @return [String]
     #
     # @!attribute [rw] error_message
@@ -3695,8 +3729,8 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of the role that provides access to
-    #   the S3 bucket containing the input files for the FAQ.
+    #   The Amazon Resource Name (ARN) of the IAM role that provides access
+    #   to the S3 bucket containing the FAQ file.
     #   @return [String]
     #
     # @!attribute [rw] error_message
@@ -3705,7 +3739,7 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] file_format
-    #   The file format used by the input files for the FAQ.
+    #   The file format used for the FAQ file.
     #   @return [String]
     #
     # @!attribute [rw] language_code
@@ -5212,11 +5246,10 @@ module Aws::Kendra
     end
 
     # Provides statistical information about the FAQ questions and answers
-    # contained in an index.
+    # for an index.
     #
     # @!attribute [rw] indexed_question_answers_count
-    #   The total number of FAQ questions and answers contained in the
-    #   index.
+    #   The total number of FAQ questions and answers for an index.
     #   @return [Integer]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/FaqStatistics AWS API Documentation
@@ -6265,14 +6298,14 @@ module Aws::Kendra
       include Aws::Structure
     end
 
-    # A list of users or sub groups that belong to a group. This is useful
-    # for user context filtering, where search results are filtered based on
-    # the user or their group access to documents.
+    # A list of users that belong to a group. This is useful for user
+    # context filtering, where search results are filtered based on the user
+    # or their group access to documents.
     #
     # @!attribute [rw] member_groups
-    #   A list of sub groups that belong to a group. For example, the sub
-    #   groups "Research", "Engineering", and "Sales and Marketing"
-    #   all belong to the group "Company".
+    #   A list of users that belong to a group. This can also include sub
+    #   groups. For example, the sub groups "Research", "Engineering",
+    #   and "Sales and Marketing" all belong to the group "Company A".
     #   @return [Array<Types::MemberGroup>]
     #
     # @!attribute [rw] member_users
@@ -6452,9 +6485,9 @@ module Aws::Kendra
     #   @return [Types::DocumentAttributeCondition]
     #
     # @!attribute [rw] lambda_arn
-    #   The Amazon Resource Name (ARN) of a role with permission to run a
-    #   Lambda function during ingestion. For more information, see [IAM
-    #   roles for Amazon Kendra][1].
+    #   The Amazon Resource Name (ARN) of an IAM role with permission to run
+    #   a Lambda function during ingestion. For more information, see [an
+    #   IAM roles for Amazon Kendra][1].
     #
     #
     #
@@ -7137,7 +7170,7 @@ module Aws::Kendra
     end
 
     # @!attribute [rw] index_id
-    #   The index that contains the FAQ lists.
+    #   The index for the FAQs.
     #   @return [String]
     #
     # @!attribute [rw] next_token
@@ -7170,7 +7203,7 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] faq_summary_items
-    #   information about the FAQs associated with the specified index.
+    #   Summary information about the FAQs for a specified index.
     #   @return [Array<Types::FaqSummary>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/ListFaqsResponse AWS API Documentation
@@ -7390,8 +7423,16 @@ module Aws::Kendra
     end
 
     # @!attribute [rw] resource_arn
-    #   The Amazon Resource Name (ARN) of the index, FAQ, or data source to
-    #   get a list of tags for.
+    #   The Amazon Resource Name (ARN) of the index, FAQ, data source, or
+    #   other resource to get a list of tags for. For example, the ARN of an
+    #   index is constructed as follows:
+    #   *arn:aws:kendra:your-region:your-account-id:index/index-id* For
+    #   information on how to construct an ARN for all types of Amazon
+    #   Kendra resources, see [Resource types][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/ListTagsForResourceRequest AWS API Documentation
@@ -7403,7 +7444,8 @@ module Aws::Kendra
     end
 
     # @!attribute [rw] tags
-    #   A list of tags associated with the index, FAQ, or data source.
+    #   A list of tags associated with the index, FAQ, data source, or other
+    #   resource.
     #   @return [Array<Types::Tag>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/ListTagsForResourceResponse AWS API Documentation
@@ -7608,7 +7650,7 @@ module Aws::Kendra
     # @!attribute [rw] one_drive_user_list
     #   A list of users whose documents should be indexed. Specify the user
     #   names in email format, for example, `username@tenantdomain`. If you
-    #   need to index the documents of more than 100 users, use the
+    #   need to index the documents of more than 10 users, use the
     #   `OneDriveUserS3Path` field to specify the location of a file
     #   containing a list of users.
     #   @return [Array<String>]
@@ -7729,7 +7771,8 @@ module Aws::Kendra
     #   @return [Integer]
     #
     # @!attribute [rw] credentials
-    #   Your secret ARN, which you can create in [Secrets Manager][1]
+    #   The Amazon Resource Name (ARN) of an Secrets Manager secret. You
+    #   create a secret to store your credentials in [Secrets Manager][1]
     #
     #   The credentials are optional. You use a secret if web proxy
     #   credentials are required to connect to a website host. Amazon Kendra
@@ -7773,11 +7816,11 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] group_members
-    #   The list that contains your users or sub groups that belong the same
-    #   group.
+    #   The list that contains your users that belong the same group. This
+    #   can include sub groups that belong to a group.
     #
-    #   For example, the group "Company" includes the user "CEO" and the
-    #   sub groups "Research", "Engineering", and "Sales and
+    #   For example, the group "Company A" includes the user "CEO" and
+    #   the sub groups "Research", "Engineering", and "Sales and
     #   Marketing".
     #
     #   If you have more than 1000 users and/or sub groups for a single
@@ -7788,8 +7831,8 @@ module Aws::Kendra
     #   @return [Types::GroupMembers]
     #
     # @!attribute [rw] ordering_id
-    #   The timestamp identifier you specify to ensure Amazon Kendra does
-    #   not override the latest `PUT` action with previous actions. The
+    #   The timestamp identifier you specify to ensure Amazon Kendra
+    #   doesn't override the latest `PUT` action with previous actions. The
     #   highest number ID, which is the ordering ID, is the latest action
     #   you want to process and apply on top of other actions with lower
     #   number IDs. This prevents previous actions with lower number IDs
@@ -7807,9 +7850,8 @@ module Aws::Kendra
     #   @return [Integer]
     #
     # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of a role that has access to the S3
-    #   file that contains your list of users or sub groups that belong to a
-    #   group.
+    #   The Amazon Resource Name (ARN) of an IAM role that has access to the
+    #   S3 file that contains your list of users that belong to a group.
     #
     #   For more information, see [IAM roles for Amazon Kendra][1].
     #
@@ -7858,6 +7900,12 @@ module Aws::Kendra
     #   The `AttributeFilter` parameter means you can create a set of
     #   filtering rules that a document must satisfy to be included in the
     #   query results.
+    #
+    #   <note markdown="1"> For Amazon Kendra Gen AI Enterprise Edition indices use
+    #   `AttributeFilter` to enable document filtering for end users using
+    #   `_email_id` or include public documents (`_email_id=null`).
+    #
+    #    </note>
     #   @return [Types::AttributeFilter]
     #
     # @!attribute [rw] facets
@@ -8497,6 +8545,12 @@ module Aws::Kendra
     #   The `AttributeFilter` parameter means you can create a set of
     #   filtering rules that a document must satisfy to be included in the
     #   query results.
+    #
+    #   <note markdown="1"> For Amazon Kendra Gen AI Enterprise Edition indices use
+    #   `AttributeFilter` to enable document filtering for end users using
+    #   `_email_id` or include public documents (`_email_id=null`).
+    #
+    #    </note>
     #   @return [Types::AttributeFilter]
     #
     # @!attribute [rw] requested_document_attributes
@@ -10235,13 +10289,14 @@ module Aws::Kendra
       include Aws::Structure
     end
 
-    # A list of key/value pairs that identify an index, FAQ, or data source.
-    # Tag keys and values can consist of Unicode letters, digits, white
-    # space, and any of the following symbols: \_ . : / = + - @.
+    # A key-value pair that identifies or categorizes an index, FAQ, data
+    # source, or other resource. TA tag key and value can consist of Unicode
+    # letters, digits, white space, and any of the following symbols: \_ . :
+    # / = + - @.
     #
     # @!attribute [rw] key
     #   The key for the tag. Keys are not case sensitive and must be unique
-    #   for the index, FAQ, or data source.
+    #   for the index, FAQ, data source, or other resource.
     #   @return [String]
     #
     # @!attribute [rw] value
@@ -10259,14 +10314,22 @@ module Aws::Kendra
     end
 
     # @!attribute [rw] resource_arn
-    #   The Amazon Resource Name (ARN) of the index, FAQ, or data source to
-    #   tag.
+    #   The Amazon Resource Name (ARN) of the index, FAQ, data source, or
+    #   other resource to add a tag. For example, the ARN of an index is
+    #   constructed as follows:
+    #   *arn:aws:kendra:your-region:your-account-id:index/index-id* For
+    #   information on how to construct an ARN for all types of Amazon
+    #   Kendra resources, see [Resource types][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies
     #   @return [String]
     #
     # @!attribute [rw] tags
-    #   A list of tag keys to add to the index, FAQ, or data source. If a
-    #   tag already exists, the existing value is replaced with the new
-    #   value.
+    #   A list of tag keys to add to the index, FAQ, data source, or other
+    #   resource. If a tag already exists, the existing value is replaced
+    #   with the new value.
     #   @return [Array<Types::Tag>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/TagResourceRequest AWS API Documentation
@@ -10410,13 +10473,22 @@ module Aws::Kendra
     end
 
     # @!attribute [rw] resource_arn
-    #   The Amazon Resource Name (ARN) of the index, FAQ, or data source to
-    #   remove the tag from.
+    #   The Amazon Resource Name (ARN) of the index, FAQ, data source, or
+    #   other resource to remove a tag. For example, the ARN of an index is
+    #   constructed as follows:
+    #   *arn:aws:kendra:your-region:your-account-id:index/index-id* For
+    #   information on how to construct an ARN for all types of Amazon
+    #   Kendra resources, see [Resource types][1].
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/service-authorization/latest/reference/list_amazonkendra.html#amazonkendra-resources-for-iam-policies
     #   @return [String]
     #
     # @!attribute [rw] tag_keys
-    #   A list of tag keys to remove from the index, FAQ, or data source. If
-    #   a tag key does not exist on the resource, it is ignored.
+    #   A list of tag keys to remove from the index, FAQ, data source, or
+    #   other resource. If a tag key doesn't exist for the resource, it is
+    #   ignored.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/kendra-2019-02-03/UntagResourceRequest AWS API Documentation
@@ -10518,9 +10590,9 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of a role with permission to access
-    #   the data source and required resources. For more information, see
-    #   [IAM roles for Amazon Kendra][1].
+    #   The Amazon Resource Name (ARN) of an IAM role with permission to
+    #   access the data source and required resources. For more information,
+    #   see [IAM roles for Amazon Kendra][1].
     #
     #
     #
@@ -10583,10 +10655,11 @@ module Aws::Kendra
     #   @return [String]
     #
     # @!attribute [rw] role_arn
-    #   The Amazon Resource Name (ARN) of a role with permission to access
-    #   `Query` API, `QuerySuggestions` API, `SubmitFeedback` API, and IAM
-    #   Identity Center that stores your user and group information. For
-    #   more information, see [IAM roles for Amazon Kendra][1].
+    #   The Amazon Resource Name (ARN) of an IAM role with permission to
+    #   access the `Query` API, `QuerySuggestions` API, `SubmitFeedback`
+    #   API, and IAM Identity Center that stores your users and groups
+    #   information. For more information, see [IAM roles for Amazon
+    #   Kendra][1].
     #
     #
     #
@@ -10725,10 +10798,20 @@ module Aws::Kendra
     #
     # @!attribute [rw] user_token_configurations
     #   The user token configuration.
+    #
+    #   If you're using an Amazon Kendra Gen AI Enterprise Edition index
+    #   and you try to use `UserTokenConfigurations` to configure user
+    #   context policy, Amazon Kendra returns a `ValidationException` error.
     #   @return [Array<Types::UserTokenConfiguration>]
     #
     # @!attribute [rw] user_context_policy
     #   The user context policy.
+    #
+    #   If you're using an Amazon Kendra Gen AI Enterprise Edition index,
+    #   you can only use `ATTRIBUTE_FILTER` to filter search results by user
+    #   context. If you're using an Amazon Kendra Gen AI Enterprise Edition
+    #   index and you try to use `USER_TOKEN` to configure user context
+    #   policy, Amazon Kendra returns a `ValidationException` error.
     #   @return [String]
     #
     # @!attribute [rw] user_group_resolution_configuration
@@ -10736,6 +10819,9 @@ module Aws::Kendra
     #   configure this, see [UserGroupResolutionConfiguration][1]. This is
     #   useful for user context filtering, where search results are filtered
     #   based on the user or their group access to documents.
+    #
+    #   If you're using an Amazon Kendra Gen AI Enterprise Edition index,
+    #   `UserGroupResolutionConfiguration` isn't supported.
     #
     #
     #
@@ -10990,6 +11076,16 @@ module Aws::Kendra
     #
     # If you provide both, an exception is thrown.
     #
+    # If you're using an Amazon Kendra Gen AI Enterprise Edition index, you
+    # can use `UserId`, `Groups`, and `DataSourceGroups` to filter content.
+    # If you set the `UserId` to a particular user ID, it also includes all
+    # public documents.
+    #
+    #  Amazon Kendra Gen AI Enterprise Edition indices don't support token
+    # based document filtering. If you're using an Amazon Kendra Gen AI
+    # Enterprise Edition index, Amazon Kendra returns a
+    # `ValidationException` error if the `Token` field has a non-null value.
+    #
     # @!attribute [rw] token
     #   The user context token for filtering search results for a user. It
     #   must be a JWT or a JSON token.
@@ -11040,6 +11136,9 @@ module Aws::Kendra
     # source. You must create your index in the management account for the
     # organization in order to use `UserGroupResolutionConfiguration`.
     #
+    # If you're using an Amazon Kendra Gen AI Enterprise Edition index,
+    # `UserGroupResolutionConfiguration` isn't supported.
+    #
     #
     #
     # [1]: https://docs.aws.amazon.com/kendra/latest/dg/API_PutPrincipalMapping.html
@@ -11088,6 +11187,10 @@ module Aws::Kendra
     end
 
     # Provides the configuration information for a token.
+    #
+    # If you're using an Amazon Kendra Gen AI Enterprise Edition index and
+    # you try to use `UserTokenConfigurations` to configure user context
+    # policy, Amazon Kendra returns a `ValidationException` error.
     #
     # @!attribute [rw] jwt_token_type_configuration
     #   Information about the JWT token type configuration.

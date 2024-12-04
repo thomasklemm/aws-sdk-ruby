@@ -14,12 +14,14 @@ module Aws::Bedrock
 
     include Seahorse::Model
 
+    AcceptEula = Shapes::BooleanShape.new(name: 'AcceptEula')
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     AccountId = Shapes::StringShape.new(name: 'AccountId')
     AdditionalModelRequestFields = Shapes::MapShape.new(name: 'AdditionalModelRequestFields')
     AdditionalModelRequestFieldsKey = Shapes::StringShape.new(name: 'AdditionalModelRequestFieldsKey')
     AdditionalModelRequestFieldsValue = Shapes::DocumentShape.new(name: 'AdditionalModelRequestFieldsValue', document: true)
     ApplicationType = Shapes::StringShape.new(name: 'ApplicationType')
+    Arn = Shapes::StringShape.new(name: 'Arn')
     AutomatedEvaluationConfig = Shapes::StructureShape.new(name: 'AutomatedEvaluationConfig')
     BaseModelIdentifier = Shapes::StringShape.new(name: 'BaseModelIdentifier')
     BatchDeleteEvaluationJobError = Shapes::StructureShape.new(name: 'BatchDeleteEvaluationJobError')
@@ -49,6 +51,8 @@ module Aws::Bedrock
     CreateGuardrailVersionResponse = Shapes::StructureShape.new(name: 'CreateGuardrailVersionResponse')
     CreateInferenceProfileRequest = Shapes::StructureShape.new(name: 'CreateInferenceProfileRequest')
     CreateInferenceProfileResponse = Shapes::StructureShape.new(name: 'CreateInferenceProfileResponse')
+    CreateMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'CreateMarketplaceModelEndpointRequest')
+    CreateMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'CreateMarketplaceModelEndpointResponse')
     CreateModelCopyJobRequest = Shapes::StructureShape.new(name: 'CreateModelCopyJobRequest')
     CreateModelCopyJobResponse = Shapes::StructureShape.new(name: 'CreateModelCopyJobResponse')
     CreateModelCustomizationJobRequest = Shapes::StructureShape.new(name: 'CreateModelCustomizationJobRequest')
@@ -73,11 +77,17 @@ module Aws::Bedrock
     DeleteImportedModelResponse = Shapes::StructureShape.new(name: 'DeleteImportedModelResponse')
     DeleteInferenceProfileRequest = Shapes::StructureShape.new(name: 'DeleteInferenceProfileRequest')
     DeleteInferenceProfileResponse = Shapes::StructureShape.new(name: 'DeleteInferenceProfileResponse')
+    DeleteMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'DeleteMarketplaceModelEndpointRequest')
+    DeleteMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'DeleteMarketplaceModelEndpointResponse')
     DeleteModelInvocationLoggingConfigurationRequest = Shapes::StructureShape.new(name: 'DeleteModelInvocationLoggingConfigurationRequest')
     DeleteModelInvocationLoggingConfigurationResponse = Shapes::StructureShape.new(name: 'DeleteModelInvocationLoggingConfigurationResponse')
     DeleteProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'DeleteProvisionedModelThroughputRequest')
     DeleteProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'DeleteProvisionedModelThroughputResponse')
+    DeregisterMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'DeregisterMarketplaceModelEndpointRequest')
+    DeregisterMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'DeregisterMarketplaceModelEndpointResponse')
     DistillationConfig = Shapes::StructureShape.new(name: 'DistillationConfig')
+    EndpointConfig = Shapes::UnionShape.new(name: 'EndpointConfig')
+    EndpointName = Shapes::StringShape.new(name: 'EndpointName')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     ErrorMessages = Shapes::ListShape.new(name: 'ErrorMessages')
     EvaluationBedrockModel = Shapes::StructureShape.new(name: 'EvaluationBedrockModel')
@@ -140,6 +150,8 @@ module Aws::Bedrock
     GetImportedModelResponse = Shapes::StructureShape.new(name: 'GetImportedModelResponse')
     GetInferenceProfileRequest = Shapes::StructureShape.new(name: 'GetInferenceProfileRequest')
     GetInferenceProfileResponse = Shapes::StructureShape.new(name: 'GetInferenceProfileResponse')
+    GetMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'GetMarketplaceModelEndpointRequest')
+    GetMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'GetMarketplaceModelEndpointResponse')
     GetModelCopyJobRequest = Shapes::StructureShape.new(name: 'GetModelCopyJobRequest')
     GetModelCopyJobResponse = Shapes::StructureShape.new(name: 'GetModelCopyJobResponse')
     GetModelCustomizationJobRequest = Shapes::StructureShape.new(name: 'GetModelCustomizationJobRequest')
@@ -150,6 +162,8 @@ module Aws::Bedrock
     GetModelInvocationJobResponse = Shapes::StructureShape.new(name: 'GetModelInvocationJobResponse')
     GetModelInvocationLoggingConfigurationRequest = Shapes::StructureShape.new(name: 'GetModelInvocationLoggingConfigurationRequest')
     GetModelInvocationLoggingConfigurationResponse = Shapes::StructureShape.new(name: 'GetModelInvocationLoggingConfigurationResponse')
+    GetPromptRouterRequest = Shapes::StructureShape.new(name: 'GetPromptRouterRequest')
+    GetPromptRouterResponse = Shapes::StructureShape.new(name: 'GetPromptRouterResponse')
     GetProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'GetProvisionedModelThroughputRequest')
     GetProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'GetProvisionedModelThroughputResponse')
     GuardrailArn = Shapes::StringShape.new(name: 'GuardrailArn')
@@ -185,6 +199,8 @@ module Aws::Bedrock
     GuardrailManagedWords = Shapes::StructureShape.new(name: 'GuardrailManagedWords')
     GuardrailManagedWordsConfig = Shapes::StructureShape.new(name: 'GuardrailManagedWordsConfig')
     GuardrailManagedWordsType = Shapes::StringShape.new(name: 'GuardrailManagedWordsType')
+    GuardrailModalities = Shapes::ListShape.new(name: 'GuardrailModalities')
+    GuardrailModality = Shapes::StringShape.new(name: 'GuardrailModality')
     GuardrailName = Shapes::StringShape.new(name: 'GuardrailName')
     GuardrailNumericalVersion = Shapes::StringShape.new(name: 'GuardrailNumericalVersion')
     GuardrailPiiEntities = Shapes::ListShape.new(name: 'GuardrailPiiEntities')
@@ -257,6 +273,8 @@ module Aws::Bedrock
     InferenceProfileType = Shapes::StringShape.new(name: 'InferenceProfileType')
     InferenceType = Shapes::StringShape.new(name: 'InferenceType')
     InferenceTypeList = Shapes::ListShape.new(name: 'InferenceTypeList')
+    InstanceCount = Shapes::IntegerShape.new(name: 'InstanceCount')
+    InstanceType = Shapes::StringShape.new(name: 'InstanceType')
     InstructSupported = Shapes::BooleanShape.new(name: 'InstructSupported')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
@@ -285,6 +303,8 @@ module Aws::Bedrock
     ListImportedModelsResponse = Shapes::StructureShape.new(name: 'ListImportedModelsResponse')
     ListInferenceProfilesRequest = Shapes::StructureShape.new(name: 'ListInferenceProfilesRequest')
     ListInferenceProfilesResponse = Shapes::StructureShape.new(name: 'ListInferenceProfilesResponse')
+    ListMarketplaceModelEndpointsRequest = Shapes::StructureShape.new(name: 'ListMarketplaceModelEndpointsRequest')
+    ListMarketplaceModelEndpointsResponse = Shapes::StructureShape.new(name: 'ListMarketplaceModelEndpointsResponse')
     ListModelCopyJobsRequest = Shapes::StructureShape.new(name: 'ListModelCopyJobsRequest')
     ListModelCopyJobsResponse = Shapes::StructureShape.new(name: 'ListModelCopyJobsResponse')
     ListModelCustomizationJobsRequest = Shapes::StructureShape.new(name: 'ListModelCustomizationJobsRequest')
@@ -293,12 +313,17 @@ module Aws::Bedrock
     ListModelImportJobsResponse = Shapes::StructureShape.new(name: 'ListModelImportJobsResponse')
     ListModelInvocationJobsRequest = Shapes::StructureShape.new(name: 'ListModelInvocationJobsRequest')
     ListModelInvocationJobsResponse = Shapes::StructureShape.new(name: 'ListModelInvocationJobsResponse')
+    ListPromptRoutersRequest = Shapes::StructureShape.new(name: 'ListPromptRoutersRequest')
+    ListPromptRoutersResponse = Shapes::StructureShape.new(name: 'ListPromptRoutersResponse')
     ListProvisionedModelThroughputsRequest = Shapes::StructureShape.new(name: 'ListProvisionedModelThroughputsRequest')
     ListProvisionedModelThroughputsResponse = Shapes::StructureShape.new(name: 'ListProvisionedModelThroughputsResponse')
     ListTagsForResourceRequest = Shapes::StructureShape.new(name: 'ListTagsForResourceRequest')
     ListTagsForResourceResponse = Shapes::StructureShape.new(name: 'ListTagsForResourceResponse')
     LogGroupName = Shapes::StringShape.new(name: 'LogGroupName')
     LoggingConfig = Shapes::StructureShape.new(name: 'LoggingConfig')
+    MarketplaceModelEndpoint = Shapes::StructureShape.new(name: 'MarketplaceModelEndpoint')
+    MarketplaceModelEndpointSummaries = Shapes::ListShape.new(name: 'MarketplaceModelEndpointSummaries')
+    MarketplaceModelEndpointSummary = Shapes::StructureShape.new(name: 'MarketplaceModelEndpointSummary')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     MaxTokens = Shapes::IntegerShape.new(name: 'MaxTokens')
     Message = Shapes::StringShape.new(name: 'Message')
@@ -340,11 +365,22 @@ module Aws::Bedrock
     ModelModality = Shapes::StringShape.new(name: 'ModelModality')
     ModelModalityList = Shapes::ListShape.new(name: 'ModelModalityList')
     ModelName = Shapes::StringShape.new(name: 'ModelName')
+    ModelSourceIdentifier = Shapes::StringShape.new(name: 'ModelSourceIdentifier')
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
     OrchestrationConfiguration = Shapes::StructureShape.new(name: 'OrchestrationConfiguration')
     OutputDataConfig = Shapes::StructureShape.new(name: 'OutputDataConfig')
     PaginationToken = Shapes::StringShape.new(name: 'PaginationToken')
     PositiveInteger = Shapes::IntegerShape.new(name: 'PositiveInteger')
+    PromptRouterArn = Shapes::StringShape.new(name: 'PromptRouterArn')
+    PromptRouterDescription = Shapes::StringShape.new(name: 'PromptRouterDescription')
+    PromptRouterName = Shapes::StringShape.new(name: 'PromptRouterName')
+    PromptRouterStatus = Shapes::StringShape.new(name: 'PromptRouterStatus')
+    PromptRouterSummaries = Shapes::ListShape.new(name: 'PromptRouterSummaries')
+    PromptRouterSummary = Shapes::StructureShape.new(name: 'PromptRouterSummary')
+    PromptRouterTargetModel = Shapes::StructureShape.new(name: 'PromptRouterTargetModel')
+    PromptRouterTargetModelArn = Shapes::StringShape.new(name: 'PromptRouterTargetModelArn')
+    PromptRouterTargetModels = Shapes::ListShape.new(name: 'PromptRouterTargetModels')
+    PromptRouterType = Shapes::StringShape.new(name: 'PromptRouterType')
     PromptTemplate = Shapes::StructureShape.new(name: 'PromptTemplate')
     Provider = Shapes::StringShape.new(name: 'Provider')
     ProvisionedModelArn = Shapes::StringShape.new(name: 'ProvisionedModelArn')
@@ -362,6 +398,8 @@ module Aws::Bedrock
     RAGStopSequences = Shapes::ListShape.new(name: 'RAGStopSequences')
     RAGStopSequencesMemberString = Shapes::StringShape.new(name: 'RAGStopSequencesMemberString')
     RagConfigs = Shapes::ListShape.new(name: 'RagConfigs')
+    RegisterMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'RegisterMarketplaceModelEndpointRequest')
+    RegisterMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'RegisterMarketplaceModelEndpointResponse')
     RequestMetadataBaseFilters = Shapes::StructureShape.new(name: 'RequestMetadataBaseFilters')
     RequestMetadataFilters = Shapes::UnionShape.new(name: 'RequestMetadataFilters')
     RequestMetadataFiltersList = Shapes::ListShape.new(name: 'RequestMetadataFiltersList')
@@ -375,20 +413,25 @@ module Aws::Bedrock
     RetrieveAndGenerateType = Shapes::StringShape.new(name: 'RetrieveAndGenerateType')
     RetrieveConfig = Shapes::StructureShape.new(name: 'RetrieveConfig')
     RoleArn = Shapes::StringShape.new(name: 'RoleArn')
+    RoutingCriteria = Shapes::StructureShape.new(name: 'RoutingCriteria')
+    RoutingCriteriaResponseQualityDifferenceDouble = Shapes::FloatShape.new(name: 'RoutingCriteriaResponseQualityDifferenceDouble')
     S3Config = Shapes::StructureShape.new(name: 'S3Config')
     S3DataSource = Shapes::StructureShape.new(name: 'S3DataSource')
     S3InputFormat = Shapes::StringShape.new(name: 'S3InputFormat')
     S3ObjectDoc = Shapes::StructureShape.new(name: 'S3ObjectDoc')
     S3Uri = Shapes::StringShape.new(name: 'S3Uri')
+    SageMakerEndpoint = Shapes::StructureShape.new(name: 'SageMakerEndpoint')
     SageMakerFlowDefinitionArn = Shapes::StringShape.new(name: 'SageMakerFlowDefinitionArn')
     SearchType = Shapes::StringShape.new(name: 'SearchType')
     SecurityGroupId = Shapes::StringShape.new(name: 'SecurityGroupId')
     SecurityGroupIds = Shapes::ListShape.new(name: 'SecurityGroupIds')
     ServiceQuotaExceededException = Shapes::StructureShape.new(name: 'ServiceQuotaExceededException')
+    ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
     SortByProvisionedModels = Shapes::StringShape.new(name: 'SortByProvisionedModels')
     SortJobsBy = Shapes::StringShape.new(name: 'SortJobsBy')
     SortModelsBy = Shapes::StringShape.new(name: 'SortModelsBy')
     SortOrder = Shapes::StringShape.new(name: 'SortOrder')
+    Status = Shapes::StringShape.new(name: 'Status')
     StopEvaluationJobRequest = Shapes::StructureShape.new(name: 'StopEvaluationJobRequest')
     StopEvaluationJobResponse = Shapes::StructureShape.new(name: 'StopEvaluationJobResponse')
     StopModelCustomizationJobRequest = Shapes::StructureShape.new(name: 'StopModelCustomizationJobRequest')
@@ -421,6 +464,8 @@ module Aws::Bedrock
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
     UpdateGuardrailRequest = Shapes::StructureShape.new(name: 'UpdateGuardrailRequest')
     UpdateGuardrailResponse = Shapes::StructureShape.new(name: 'UpdateGuardrailResponse')
+    UpdateMarketplaceModelEndpointRequest = Shapes::StructureShape.new(name: 'UpdateMarketplaceModelEndpointRequest')
+    UpdateMarketplaceModelEndpointResponse = Shapes::StructureShape.new(name: 'UpdateMarketplaceModelEndpointResponse')
     UpdateProvisionedModelThroughputRequest = Shapes::StructureShape.new(name: 'UpdateProvisionedModelThroughputRequest')
     UpdateProvisionedModelThroughputResponse = Shapes::StructureShape.new(name: 'UpdateProvisionedModelThroughputResponse')
     UsePromptResponse = Shapes::BooleanShape.new(name: 'UsePromptResponse')
@@ -536,6 +581,17 @@ module Aws::Bedrock
     CreateInferenceProfileResponse.add_member(:status, Shapes::ShapeRef.new(shape: InferenceProfileStatus, location_name: "status"))
     CreateInferenceProfileResponse.struct_class = Types::CreateInferenceProfileResponse
 
+    CreateMarketplaceModelEndpointRequest.add_member(:model_source_identifier, Shapes::ShapeRef.new(shape: ModelSourceIdentifier, required: true, location_name: "modelSourceIdentifier"))
+    CreateMarketplaceModelEndpointRequest.add_member(:endpoint_config, Shapes::ShapeRef.new(shape: EndpointConfig, required: true, location_name: "endpointConfig"))
+    CreateMarketplaceModelEndpointRequest.add_member(:accept_eula, Shapes::ShapeRef.new(shape: AcceptEula, location_name: "acceptEula"))
+    CreateMarketplaceModelEndpointRequest.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: EndpointName, required: true, location_name: "endpointName"))
+    CreateMarketplaceModelEndpointRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    CreateMarketplaceModelEndpointRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "tags"))
+    CreateMarketplaceModelEndpointRequest.struct_class = Types::CreateMarketplaceModelEndpointRequest
+
+    CreateMarketplaceModelEndpointResponse.add_member(:marketplace_model_endpoint, Shapes::ShapeRef.new(shape: MarketplaceModelEndpoint, required: true, location_name: "marketplaceModelEndpoint"))
+    CreateMarketplaceModelEndpointResponse.struct_class = Types::CreateMarketplaceModelEndpointResponse
+
     CreateModelCopyJobRequest.add_member(:source_model_arn, Shapes::ShapeRef.new(shape: ModelArn, required: true, location_name: "sourceModelArn"))
     CreateModelCopyJobRequest.add_member(:target_model_name, Shapes::ShapeRef.new(shape: CustomModelName, required: true, location_name: "targetModelName"))
     CreateModelCopyJobRequest.add_member(:model_kms_key_id, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "modelKmsKeyId"))
@@ -643,6 +699,11 @@ module Aws::Bedrock
 
     DeleteInferenceProfileResponse.struct_class = Types::DeleteInferenceProfileResponse
 
+    DeleteMarketplaceModelEndpointRequest.add_member(:endpoint_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location: "uri", location_name: "endpointArn"))
+    DeleteMarketplaceModelEndpointRequest.struct_class = Types::DeleteMarketplaceModelEndpointRequest
+
+    DeleteMarketplaceModelEndpointResponse.struct_class = Types::DeleteMarketplaceModelEndpointResponse
+
     DeleteModelInvocationLoggingConfigurationRequest.struct_class = Types::DeleteModelInvocationLoggingConfigurationRequest
 
     DeleteModelInvocationLoggingConfigurationResponse.struct_class = Types::DeleteModelInvocationLoggingConfigurationResponse
@@ -652,8 +713,19 @@ module Aws::Bedrock
 
     DeleteProvisionedModelThroughputResponse.struct_class = Types::DeleteProvisionedModelThroughputResponse
 
+    DeregisterMarketplaceModelEndpointRequest.add_member(:endpoint_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location: "uri", location_name: "endpointArn"))
+    DeregisterMarketplaceModelEndpointRequest.struct_class = Types::DeregisterMarketplaceModelEndpointRequest
+
+    DeregisterMarketplaceModelEndpointResponse.struct_class = Types::DeregisterMarketplaceModelEndpointResponse
+
     DistillationConfig.add_member(:teacher_model_config, Shapes::ShapeRef.new(shape: TeacherModelConfig, required: true, location_name: "teacherModelConfig"))
     DistillationConfig.struct_class = Types::DistillationConfig
+
+    EndpointConfig.add_member(:sage_maker, Shapes::ShapeRef.new(shape: SageMakerEndpoint, location_name: "sageMaker"))
+    EndpointConfig.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
+    EndpointConfig.add_member_subclass(:sage_maker, Types::EndpointConfig::SageMaker)
+    EndpointConfig.add_member_subclass(:unknown, Types::EndpointConfig::Unknown)
+    EndpointConfig.struct_class = Types::EndpointConfig
 
     ErrorMessages.member = Shapes::ShapeRef.new(shape: ErrorMessage)
 
@@ -889,6 +961,12 @@ module Aws::Bedrock
     GetInferenceProfileResponse.add_member(:type, Shapes::ShapeRef.new(shape: InferenceProfileType, required: true, location_name: "type"))
     GetInferenceProfileResponse.struct_class = Types::GetInferenceProfileResponse
 
+    GetMarketplaceModelEndpointRequest.add_member(:endpoint_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location: "uri", location_name: "endpointArn"))
+    GetMarketplaceModelEndpointRequest.struct_class = Types::GetMarketplaceModelEndpointRequest
+
+    GetMarketplaceModelEndpointResponse.add_member(:marketplace_model_endpoint, Shapes::ShapeRef.new(shape: MarketplaceModelEndpoint, location_name: "marketplaceModelEndpoint"))
+    GetMarketplaceModelEndpointResponse.struct_class = Types::GetMarketplaceModelEndpointResponse
+
     GetModelCopyJobRequest.add_member(:job_arn, Shapes::ShapeRef.new(shape: ModelCopyJobArn, required: true, location: "uri", location_name: "jobArn"))
     GetModelCopyJobRequest.struct_class = Types::GetModelCopyJobRequest
 
@@ -975,6 +1053,21 @@ module Aws::Bedrock
     GetModelInvocationLoggingConfigurationResponse.add_member(:logging_config, Shapes::ShapeRef.new(shape: LoggingConfig, location_name: "loggingConfig"))
     GetModelInvocationLoggingConfigurationResponse.struct_class = Types::GetModelInvocationLoggingConfigurationResponse
 
+    GetPromptRouterRequest.add_member(:prompt_router_arn, Shapes::ShapeRef.new(shape: PromptRouterArn, required: true, location: "uri", location_name: "promptRouterArn"))
+    GetPromptRouterRequest.struct_class = Types::GetPromptRouterRequest
+
+    GetPromptRouterResponse.add_member(:prompt_router_name, Shapes::ShapeRef.new(shape: PromptRouterName, required: true, location_name: "promptRouterName"))
+    GetPromptRouterResponse.add_member(:routing_criteria, Shapes::ShapeRef.new(shape: RoutingCriteria, required: true, location_name: "routingCriteria"))
+    GetPromptRouterResponse.add_member(:description, Shapes::ShapeRef.new(shape: PromptRouterDescription, location_name: "description"))
+    GetPromptRouterResponse.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    GetPromptRouterResponse.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "updatedAt"))
+    GetPromptRouterResponse.add_member(:prompt_router_arn, Shapes::ShapeRef.new(shape: PromptRouterArn, required: true, location_name: "promptRouterArn"))
+    GetPromptRouterResponse.add_member(:models, Shapes::ShapeRef.new(shape: PromptRouterTargetModels, required: true, location_name: "models"))
+    GetPromptRouterResponse.add_member(:fallback_model, Shapes::ShapeRef.new(shape: PromptRouterTargetModel, required: true, location_name: "fallbackModel"))
+    GetPromptRouterResponse.add_member(:status, Shapes::ShapeRef.new(shape: PromptRouterStatus, required: true, location_name: "status"))
+    GetPromptRouterResponse.add_member(:type, Shapes::ShapeRef.new(shape: PromptRouterType, required: true, location_name: "type"))
+    GetPromptRouterResponse.struct_class = Types::GetPromptRouterResponse
+
     GetProvisionedModelThroughputRequest.add_member(:provisioned_model_id, Shapes::ShapeRef.new(shape: ProvisionedModelId, required: true, location: "uri", location_name: "provisionedModelId"))
     GetProvisionedModelThroughputRequest.struct_class = Types::GetProvisionedModelThroughputRequest
 
@@ -1000,11 +1093,15 @@ module Aws::Bedrock
     GuardrailContentFilter.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailContentFilterType, required: true, location_name: "type"))
     GuardrailContentFilter.add_member(:input_strength, Shapes::ShapeRef.new(shape: GuardrailFilterStrength, required: true, location_name: "inputStrength"))
     GuardrailContentFilter.add_member(:output_strength, Shapes::ShapeRef.new(shape: GuardrailFilterStrength, required: true, location_name: "outputStrength"))
+    GuardrailContentFilter.add_member(:input_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "inputModalities"))
+    GuardrailContentFilter.add_member(:output_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "outputModalities"))
     GuardrailContentFilter.struct_class = Types::GuardrailContentFilter
 
     GuardrailContentFilterConfig.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailContentFilterType, required: true, location_name: "type"))
     GuardrailContentFilterConfig.add_member(:input_strength, Shapes::ShapeRef.new(shape: GuardrailFilterStrength, required: true, location_name: "inputStrength"))
     GuardrailContentFilterConfig.add_member(:output_strength, Shapes::ShapeRef.new(shape: GuardrailFilterStrength, required: true, location_name: "outputStrength"))
+    GuardrailContentFilterConfig.add_member(:input_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "inputModalities"))
+    GuardrailContentFilterConfig.add_member(:output_modalities, Shapes::ShapeRef.new(shape: GuardrailModalities, location_name: "outputModalities"))
     GuardrailContentFilterConfig.struct_class = Types::GuardrailContentFilterConfig
 
     GuardrailContentFilters.member = Shapes::ShapeRef.new(shape: GuardrailContentFilter)
@@ -1046,6 +1143,8 @@ module Aws::Bedrock
 
     GuardrailManagedWordsConfig.add_member(:type, Shapes::ShapeRef.new(shape: GuardrailManagedWordsType, required: true, location_name: "type"))
     GuardrailManagedWordsConfig.struct_class = Types::GuardrailManagedWordsConfig
+
+    GuardrailModalities.member = Shapes::ShapeRef.new(shape: GuardrailModality)
 
     GuardrailPiiEntities.member = Shapes::ShapeRef.new(shape: GuardrailPiiEntity)
 
@@ -1301,6 +1400,15 @@ module Aws::Bedrock
     ListInferenceProfilesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
     ListInferenceProfilesResponse.struct_class = Types::ListInferenceProfilesResponse
 
+    ListMarketplaceModelEndpointsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListMarketplaceModelEndpointsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
+    ListMarketplaceModelEndpointsRequest.add_member(:model_source_equals, Shapes::ShapeRef.new(shape: ModelSourceIdentifier, location: "querystring", location_name: "modelSourceIdentifier"))
+    ListMarketplaceModelEndpointsRequest.struct_class = Types::ListMarketplaceModelEndpointsRequest
+
+    ListMarketplaceModelEndpointsResponse.add_member(:marketplace_model_endpoints, Shapes::ShapeRef.new(shape: MarketplaceModelEndpointSummaries, location_name: "marketplaceModelEndpoints"))
+    ListMarketplaceModelEndpointsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListMarketplaceModelEndpointsResponse.struct_class = Types::ListMarketplaceModelEndpointsResponse
+
     ListModelCopyJobsRequest.add_member(:creation_time_after, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeAfter"))
     ListModelCopyJobsRequest.add_member(:creation_time_before, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeBefore"))
     ListModelCopyJobsRequest.add_member(:status_equals, Shapes::ShapeRef.new(shape: ModelCopyJobStatus, location: "querystring", location_name: "statusEquals"))
@@ -1359,6 +1467,14 @@ module Aws::Bedrock
     ListModelInvocationJobsResponse.add_member(:invocation_job_summaries, Shapes::ShapeRef.new(shape: ModelInvocationJobSummaries, location_name: "invocationJobSummaries"))
     ListModelInvocationJobsResponse.struct_class = Types::ListModelInvocationJobsResponse
 
+    ListPromptRoutersRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location: "querystring", location_name: "maxResults"))
+    ListPromptRoutersRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location: "querystring", location_name: "nextToken"))
+    ListPromptRoutersRequest.struct_class = Types::ListPromptRoutersRequest
+
+    ListPromptRoutersResponse.add_member(:prompt_router_summaries, Shapes::ShapeRef.new(shape: PromptRouterSummaries, location_name: "promptRouterSummaries"))
+    ListPromptRoutersResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: PaginationToken, location_name: "nextToken"))
+    ListPromptRoutersResponse.struct_class = Types::ListPromptRoutersResponse
+
     ListProvisionedModelThroughputsRequest.add_member(:creation_time_after, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeAfter"))
     ListProvisionedModelThroughputsRequest.add_member(:creation_time_before, Shapes::ShapeRef.new(shape: Timestamp, location: "querystring", location_name: "creationTimeBefore"))
     ListProvisionedModelThroughputsRequest.add_member(:status_equals, Shapes::ShapeRef.new(shape: ProvisionedModelStatus, location: "querystring", location_name: "statusEquals"))
@@ -1387,6 +1503,27 @@ module Aws::Bedrock
     LoggingConfig.add_member(:embedding_data_delivery_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "embeddingDataDeliveryEnabled"))
     LoggingConfig.add_member(:video_data_delivery_enabled, Shapes::ShapeRef.new(shape: Boolean, location_name: "videoDataDeliveryEnabled"))
     LoggingConfig.struct_class = Types::LoggingConfig
+
+    MarketplaceModelEndpoint.add_member(:endpoint_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "endpointArn"))
+    MarketplaceModelEndpoint.add_member(:model_source_identifier, Shapes::ShapeRef.new(shape: ModelSourceIdentifier, required: true, location_name: "modelSourceIdentifier"))
+    MarketplaceModelEndpoint.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "status"))
+    MarketplaceModelEndpoint.add_member(:status_message, Shapes::ShapeRef.new(shape: String, location_name: "statusMessage"))
+    MarketplaceModelEndpoint.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    MarketplaceModelEndpoint.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    MarketplaceModelEndpoint.add_member(:endpoint_config, Shapes::ShapeRef.new(shape: EndpointConfig, required: true, location_name: "endpointConfig"))
+    MarketplaceModelEndpoint.add_member(:endpoint_status, Shapes::ShapeRef.new(shape: String, required: true, location_name: "endpointStatus"))
+    MarketplaceModelEndpoint.add_member(:endpoint_status_message, Shapes::ShapeRef.new(shape: String, location_name: "endpointStatusMessage"))
+    MarketplaceModelEndpoint.struct_class = Types::MarketplaceModelEndpoint
+
+    MarketplaceModelEndpointSummaries.member = Shapes::ShapeRef.new(shape: MarketplaceModelEndpointSummary)
+
+    MarketplaceModelEndpointSummary.add_member(:endpoint_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location_name: "endpointArn"))
+    MarketplaceModelEndpointSummary.add_member(:model_source_identifier, Shapes::ShapeRef.new(shape: ModelSourceIdentifier, required: true, location_name: "modelSourceIdentifier"))
+    MarketplaceModelEndpointSummary.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "status"))
+    MarketplaceModelEndpointSummary.add_member(:status_message, Shapes::ShapeRef.new(shape: String, location_name: "statusMessage"))
+    MarketplaceModelEndpointSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "createdAt"))
+    MarketplaceModelEndpointSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
+    MarketplaceModelEndpointSummary.struct_class = Types::MarketplaceModelEndpointSummary
 
     ModelCopyJobSummaries.member = Shapes::ShapeRef.new(shape: ModelCopyJobSummary)
 
@@ -1489,6 +1626,25 @@ module Aws::Bedrock
     OutputDataConfig.add_member(:s3_uri, Shapes::ShapeRef.new(shape: S3Uri, required: true, location_name: "s3Uri"))
     OutputDataConfig.struct_class = Types::OutputDataConfig
 
+    PromptRouterSummaries.member = Shapes::ShapeRef.new(shape: PromptRouterSummary)
+
+    PromptRouterSummary.add_member(:prompt_router_name, Shapes::ShapeRef.new(shape: PromptRouterName, required: true, location_name: "promptRouterName"))
+    PromptRouterSummary.add_member(:routing_criteria, Shapes::ShapeRef.new(shape: RoutingCriteria, required: true, location_name: "routingCriteria"))
+    PromptRouterSummary.add_member(:description, Shapes::ShapeRef.new(shape: PromptRouterDescription, location_name: "description"))
+    PromptRouterSummary.add_member(:created_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "createdAt"))
+    PromptRouterSummary.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, location_name: "updatedAt"))
+    PromptRouterSummary.add_member(:prompt_router_arn, Shapes::ShapeRef.new(shape: PromptRouterArn, required: true, location_name: "promptRouterArn"))
+    PromptRouterSummary.add_member(:models, Shapes::ShapeRef.new(shape: PromptRouterTargetModels, required: true, location_name: "models"))
+    PromptRouterSummary.add_member(:fallback_model, Shapes::ShapeRef.new(shape: PromptRouterTargetModel, required: true, location_name: "fallbackModel"))
+    PromptRouterSummary.add_member(:status, Shapes::ShapeRef.new(shape: PromptRouterStatus, required: true, location_name: "status"))
+    PromptRouterSummary.add_member(:type, Shapes::ShapeRef.new(shape: PromptRouterType, required: true, location_name: "type"))
+    PromptRouterSummary.struct_class = Types::PromptRouterSummary
+
+    PromptRouterTargetModel.add_member(:model_arn, Shapes::ShapeRef.new(shape: PromptRouterTargetModelArn, location_name: "modelArn"))
+    PromptRouterTargetModel.struct_class = Types::PromptRouterTargetModel
+
+    PromptRouterTargetModels.member = Shapes::ShapeRef.new(shape: PromptRouterTargetModel)
+
     PromptTemplate.add_member(:text_prompt_template, Shapes::ShapeRef.new(shape: TextPromptTemplate, location_name: "textPromptTemplate"))
     PromptTemplate.struct_class = Types::PromptTemplate
 
@@ -1527,6 +1683,13 @@ module Aws::Bedrock
     RAGStopSequences.member = Shapes::ShapeRef.new(shape: RAGStopSequencesMemberString)
 
     RagConfigs.member = Shapes::ShapeRef.new(shape: RAGConfig)
+
+    RegisterMarketplaceModelEndpointRequest.add_member(:endpoint_identifier, Shapes::ShapeRef.new(shape: Arn, required: true, location: "uri", location_name: "endpointIdentifier"))
+    RegisterMarketplaceModelEndpointRequest.add_member(:model_source_identifier, Shapes::ShapeRef.new(shape: ModelSourceIdentifier, required: true, location_name: "modelSourceIdentifier"))
+    RegisterMarketplaceModelEndpointRequest.struct_class = Types::RegisterMarketplaceModelEndpointRequest
+
+    RegisterMarketplaceModelEndpointResponse.add_member(:marketplace_model_endpoint, Shapes::ShapeRef.new(shape: MarketplaceModelEndpoint, required: true, location_name: "marketplaceModelEndpoint"))
+    RegisterMarketplaceModelEndpointResponse.struct_class = Types::RegisterMarketplaceModelEndpointResponse
 
     RequestMetadataBaseFilters.add_member(:equals, Shapes::ShapeRef.new(shape: RequestMetadataMap, location_name: "equals"))
     RequestMetadataBaseFilters.add_member(:not_equals, Shapes::ShapeRef.new(shape: RequestMetadataMap, location_name: "notEquals"))
@@ -1593,6 +1756,9 @@ module Aws::Bedrock
     RetrieveConfig.add_member(:knowledge_base_retrieval_configuration, Shapes::ShapeRef.new(shape: KnowledgeBaseRetrievalConfiguration, required: true, location_name: "knowledgeBaseRetrievalConfiguration"))
     RetrieveConfig.struct_class = Types::RetrieveConfig
 
+    RoutingCriteria.add_member(:response_quality_difference, Shapes::ShapeRef.new(shape: RoutingCriteriaResponseQualityDifferenceDouble, required: true, location_name: "responseQualityDifference"))
+    RoutingCriteria.struct_class = Types::RoutingCriteria
+
     S3Config.add_member(:bucket_name, Shapes::ShapeRef.new(shape: BucketName, required: true, location_name: "bucketName"))
     S3Config.add_member(:key_prefix, Shapes::ShapeRef.new(shape: KeyPrefix, location_name: "keyPrefix"))
     S3Config.struct_class = Types::S3Config
@@ -1603,10 +1769,20 @@ module Aws::Bedrock
     S3ObjectDoc.add_member(:uri, Shapes::ShapeRef.new(shape: kBS3Uri, required: true, location_name: "uri"))
     S3ObjectDoc.struct_class = Types::S3ObjectDoc
 
+    SageMakerEndpoint.add_member(:initial_instance_count, Shapes::ShapeRef.new(shape: InstanceCount, required: true, location_name: "initialInstanceCount"))
+    SageMakerEndpoint.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, required: true, location_name: "instanceType"))
+    SageMakerEndpoint.add_member(:execution_role, Shapes::ShapeRef.new(shape: RoleArn, required: true, location_name: "executionRole"))
+    SageMakerEndpoint.add_member(:kms_encryption_key, Shapes::ShapeRef.new(shape: KmsKeyId, location_name: "kmsEncryptionKey"))
+    SageMakerEndpoint.add_member(:vpc, Shapes::ShapeRef.new(shape: VpcConfig, location_name: "vpc"))
+    SageMakerEndpoint.struct_class = Types::SageMakerEndpoint
+
     SecurityGroupIds.member = Shapes::ShapeRef.new(shape: SecurityGroupId)
 
     ServiceQuotaExceededException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ServiceQuotaExceededException.struct_class = Types::ServiceQuotaExceededException
+
+    ServiceUnavailableException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
+    ServiceUnavailableException.struct_class = Types::ServiceUnavailableException
 
     StopEvaluationJobRequest.add_member(:job_identifier, Shapes::ShapeRef.new(shape: EvaluationJobIdentifier, required: true, location: "uri", location_name: "jobIdentifier"))
     StopEvaluationJobRequest.struct_class = Types::StopEvaluationJobRequest
@@ -1687,6 +1863,14 @@ module Aws::Bedrock
     UpdateGuardrailResponse.add_member(:version, Shapes::ShapeRef.new(shape: GuardrailDraftVersion, required: true, location_name: "version"))
     UpdateGuardrailResponse.add_member(:updated_at, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "updatedAt"))
     UpdateGuardrailResponse.struct_class = Types::UpdateGuardrailResponse
+
+    UpdateMarketplaceModelEndpointRequest.add_member(:endpoint_arn, Shapes::ShapeRef.new(shape: Arn, required: true, location: "uri", location_name: "endpointArn"))
+    UpdateMarketplaceModelEndpointRequest.add_member(:endpoint_config, Shapes::ShapeRef.new(shape: EndpointConfig, required: true, location_name: "endpointConfig"))
+    UpdateMarketplaceModelEndpointRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: IdempotencyToken, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
+    UpdateMarketplaceModelEndpointRequest.struct_class = Types::UpdateMarketplaceModelEndpointRequest
+
+    UpdateMarketplaceModelEndpointResponse.add_member(:marketplace_model_endpoint, Shapes::ShapeRef.new(shape: MarketplaceModelEndpoint, required: true, location_name: "marketplaceModelEndpoint"))
+    UpdateMarketplaceModelEndpointResponse.struct_class = Types::UpdateMarketplaceModelEndpointResponse
 
     UpdateProvisionedModelThroughputRequest.add_member(:provisioned_model_id, Shapes::ShapeRef.new(shape: ProvisionedModelId, required: true, location: "uri", location_name: "provisionedModelId"))
     UpdateProvisionedModelThroughputRequest.add_member(:desired_provisioned_model_name, Shapes::ShapeRef.new(shape: ProvisionedModelName, location_name: "desiredProvisionedModelName"))
@@ -1806,6 +1990,21 @@ module Aws::Bedrock
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyTagsException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:create_marketplace_model_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateMarketplaceModelEndpoint"
+        o.http_method = "POST"
+        o.http_request_uri = "/marketplace-model/endpoints"
+        o.input = Shapes::ShapeRef.new(shape: CreateMarketplaceModelEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateMarketplaceModelEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
@@ -1940,6 +2139,19 @@ module Aws::Bedrock
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
+      api.add_operation(:delete_marketplace_model_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteMarketplaceModelEndpoint"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/marketplace-model/endpoints/{endpointArn}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteMarketplaceModelEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteMarketplaceModelEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
       api.add_operation(:delete_model_invocation_logging_configuration, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteModelInvocationLoggingConfiguration"
         o.http_method = "DELETE"
@@ -1961,6 +2173,20 @@ module Aws::Bedrock
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:deregister_marketplace_model_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeregisterMarketplaceModelEndpoint"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/marketplace-model/endpoints/{endpointArn}/registration"
+        o.input = Shapes::ShapeRef.new(shape: DeregisterMarketplaceModelEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeregisterMarketplaceModelEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
@@ -2043,6 +2269,19 @@ module Aws::Bedrock
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
 
+      api.add_operation(:get_marketplace_model_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetMarketplaceModelEndpoint"
+        o.http_method = "GET"
+        o.http_request_uri = "/marketplace-model/endpoints/{endpointArn}"
+        o.input = Shapes::ShapeRef.new(shape: GetMarketplaceModelEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetMarketplaceModelEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
       api.add_operation(:get_model_copy_job, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetModelCopyJob"
         o.http_method = "GET"
@@ -2102,6 +2341,19 @@ module Aws::Bedrock
         o.input = Shapes::ShapeRef.new(shape: GetModelInvocationLoggingConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: GetModelInvocationLoggingConfigurationResponse)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:get_prompt_router, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetPromptRouter"
+        o.http_method = "GET"
+        o.http_request_uri = "/prompt-routers/{promptRouterArn}"
+        o.input = Shapes::ShapeRef.new(shape: GetPromptRouterRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetPromptRouterResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
       end)
@@ -2222,6 +2474,25 @@ module Aws::Bedrock
         )
       end)
 
+      api.add_operation(:list_marketplace_model_endpoints, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListMarketplaceModelEndpoints"
+        o.http_method = "GET"
+        o.http_request_uri = "/marketplace-model/endpoints"
+        o.input = Shapes::ShapeRef.new(shape: ListMarketplaceModelEndpointsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListMarketplaceModelEndpointsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_model_copy_jobs, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListModelCopyJobs"
         o.http_method = "GET"
@@ -2295,6 +2566,24 @@ module Aws::Bedrock
         )
       end)
 
+      api.add_operation(:list_prompt_routers, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListPromptRouters"
+        o.http_method = "GET"
+        o.http_request_uri = "/prompt-routers"
+        o.input = Shapes::ShapeRef.new(shape: ListPromptRoutersRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListPromptRoutersResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_provisioned_model_throughputs, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListProvisionedModelThroughputs"
         o.http_method = "GET"
@@ -2332,6 +2621,20 @@ module Aws::Bedrock
         o.http_request_uri = "/logging/modelinvocations"
         o.input = Shapes::ShapeRef.new(shape: PutModelInvocationLoggingConfigurationRequest)
         o.output = Shapes::ShapeRef.new(shape: PutModelInvocationLoggingConfigurationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:register_marketplace_model_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "RegisterMarketplaceModelEndpoint"
+        o.http_method = "POST"
+        o.http_request_uri = "/marketplace-model/endpoints/{endpointIdentifier}/registration"
+        o.input = Shapes::ShapeRef.new(shape: RegisterMarketplaceModelEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: RegisterMarketplaceModelEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
@@ -2413,6 +2716,21 @@ module Aws::Bedrock
         o.http_request_uri = "/guardrails/{guardrailIdentifier}"
         o.input = Shapes::ShapeRef.new(shape: UpdateGuardrailRequest)
         o.output = Shapes::ShapeRef.new(shape: UpdateGuardrailResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o.errors << Shapes::ShapeRef.new(shape: ConflictException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+      end)
+
+      api.add_operation(:update_marketplace_model_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateMarketplaceModelEndpoint"
+        o.http_method = "PATCH"
+        o.http_request_uri = "/marketplace-model/endpoints/{endpointArn}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateMarketplaceModelEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: UpdateMarketplaceModelEndpointResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)

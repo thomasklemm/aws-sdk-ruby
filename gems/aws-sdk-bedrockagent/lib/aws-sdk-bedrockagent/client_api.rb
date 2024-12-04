@@ -56,7 +56,10 @@ module Aws::BedrockAgent
     AssociateAgentKnowledgeBaseRequest = Shapes::StructureShape.new(name: 'AssociateAgentKnowledgeBaseRequest')
     AssociateAgentKnowledgeBaseResponse = Shapes::StructureShape.new(name: 'AssociateAgentKnowledgeBaseResponse')
     AutoToolChoice = Shapes::StructureShape.new(name: 'AutoToolChoice')
+    AwsDataCatalogTableName = Shapes::StringShape.new(name: 'AwsDataCatalogTableName')
+    AwsDataCatalogTableNames = Shapes::ListShape.new(name: 'AwsDataCatalogTableNames')
     BasePromptTemplate = Shapes::StringShape.new(name: 'BasePromptTemplate')
+    BedrockDataAutomationConfiguration = Shapes::StructureShape.new(name: 'BedrockDataAutomationConfiguration')
     BedrockEmbeddingModelArn = Shapes::StringShape.new(name: 'BedrockEmbeddingModelArn')
     BedrockEmbeddingModelConfiguration = Shapes::StructureShape.new(name: 'BedrockEmbeddingModelConfiguration')
     BedrockFoundationModelConfiguration = Shapes::StructureShape.new(name: 'BedrockFoundationModelConfiguration')
@@ -107,6 +110,8 @@ module Aws::BedrockAgent
     CreatePromptVersionRequest = Shapes::StructureShape.new(name: 'CreatePromptVersionRequest')
     CreatePromptVersionResponse = Shapes::StructureShape.new(name: 'CreatePromptVersionResponse')
     CreationMode = Shapes::StringShape.new(name: 'CreationMode')
+    CuratedQueries = Shapes::ListShape.new(name: 'CuratedQueries')
+    CuratedQuery = Shapes::StructureShape.new(name: 'CuratedQuery')
     CustomContent = Shapes::StructureShape.new(name: 'CustomContent')
     CustomControlMethod = Shapes::StringShape.new(name: 'CustomControlMethod')
     CustomDocumentIdentifier = Shapes::StructureShape.new(name: 'CustomDocumentIdentifier')
@@ -148,6 +153,7 @@ module Aws::BedrockAgent
     DeletePromptRequest = Shapes::StructureShape.new(name: 'DeletePromptRequest')
     DeletePromptResponse = Shapes::StructureShape.new(name: 'DeletePromptResponse')
     Description = Shapes::StringShape.new(name: 'Description')
+    DescriptionString = Shapes::StringShape.new(name: 'DescriptionString')
     Dimensions = Shapes::IntegerShape.new(name: 'Dimensions')
     DisassociateAgentCollaboratorRequest = Shapes::StructureShape.new(name: 'DisassociateAgentCollaboratorRequest')
     DisassociateAgentCollaboratorResponse = Shapes::StructureShape.new(name: 'DisassociateAgentCollaboratorResponse')
@@ -266,6 +272,7 @@ module Aws::BedrockAgent
     HierarchicalChunkingLevelConfigurations = Shapes::ListShape.new(name: 'HierarchicalChunkingLevelConfigurations')
     HttpsUrl = Shapes::StringShape.new(name: 'HttpsUrl')
     Id = Shapes::StringShape.new(name: 'Id')
+    IncludeExclude = Shapes::StringShape.new(name: 'IncludeExclude')
     IncompatibleConnectionDataTypeFlowValidationDetails = Shapes::StructureShape.new(name: 'IncompatibleConnectionDataTypeFlowValidationDetails')
     InferenceConfiguration = Shapes::StructureShape.new(name: 'InferenceConfiguration')
     IngestKnowledgeBaseDocumentsRequest = Shapes::StructureShape.new(name: 'IngestKnowledgeBaseDocumentsRequest')
@@ -290,6 +297,8 @@ module Aws::BedrockAgent
     IntermediateStorage = Shapes::StructureShape.new(name: 'IntermediateStorage')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
     IteratorFlowNodeConfiguration = Shapes::StructureShape.new(name: 'IteratorFlowNodeConfiguration')
+    KendraIndexArn = Shapes::StringShape.new(name: 'KendraIndexArn')
+    KendraKnowledgeBaseConfiguration = Shapes::StructureShape.new(name: 'KendraKnowledgeBaseConfiguration')
     Key = Shapes::StringShape.new(name: 'Key')
     KmsKeyArn = Shapes::StringShape.new(name: 'KmsKeyArn')
     KnowledgeBase = Shapes::StructureShape.new(name: 'KnowledgeBase')
@@ -377,6 +386,7 @@ module Aws::BedrockAgent
     MongoDbAtlasIndexName = Shapes::StringShape.new(name: 'MongoDbAtlasIndexName')
     MultipleNodeInputConnectionsFlowValidationDetails = Shapes::StructureShape.new(name: 'MultipleNodeInputConnectionsFlowValidationDetails')
     Name = Shapes::StringShape.new(name: 'Name')
+    NaturalLanguageString = Shapes::StringShape.new(name: 'NaturalLanguageString')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     NonBlankString = Shapes::StringShape.new(name: 'NonBlankString')
     NonEmptyString = Shapes::StringShape.new(name: 'NonEmptyString')
@@ -393,6 +403,7 @@ module Aws::BedrockAgent
     ParameterDetail = Shapes::StructureShape.new(name: 'ParameterDetail')
     ParameterMap = Shapes::MapShape.new(name: 'ParameterMap')
     ParsingConfiguration = Shapes::StructureShape.new(name: 'ParsingConfiguration')
+    ParsingModality = Shapes::StringShape.new(name: 'ParsingModality')
     ParsingPrompt = Shapes::StructureShape.new(name: 'ParsingPrompt')
     ParsingPromptText = Shapes::StringShape.new(name: 'ParsingPromptText')
     ParsingStrategy = Shapes::StringShape.new(name: 'ParsingStrategy')
@@ -443,6 +454,16 @@ module Aws::BedrockAgent
     PromptVariantList = Shapes::ListShape.new(name: 'PromptVariantList')
     PromptVariantName = Shapes::StringShape.new(name: 'PromptVariantName')
     ProvisionedModelIdentifier = Shapes::StringShape.new(name: 'ProvisionedModelIdentifier')
+    QueryEngineType = Shapes::StringShape.new(name: 'QueryEngineType')
+    QueryExecutionTimeoutSeconds = Shapes::IntegerShape.new(name: 'QueryExecutionTimeoutSeconds')
+    QueryGenerationColumn = Shapes::StructureShape.new(name: 'QueryGenerationColumn')
+    QueryGenerationColumnName = Shapes::StringShape.new(name: 'QueryGenerationColumnName')
+    QueryGenerationColumns = Shapes::ListShape.new(name: 'QueryGenerationColumns')
+    QueryGenerationConfiguration = Shapes::StructureShape.new(name: 'QueryGenerationConfiguration')
+    QueryGenerationContext = Shapes::StructureShape.new(name: 'QueryGenerationContext')
+    QueryGenerationTable = Shapes::StructureShape.new(name: 'QueryGenerationTable')
+    QueryGenerationTableName = Shapes::StringShape.new(name: 'QueryGenerationTableName')
+    QueryGenerationTables = Shapes::ListShape.new(name: 'QueryGenerationTables')
     RdsArn = Shapes::StringShape.new(name: 'RdsArn')
     RdsConfiguration = Shapes::StructureShape.new(name: 'RdsConfiguration')
     RdsDatabaseName = Shapes::StringShape.new(name: 'RdsDatabaseName')
@@ -454,6 +475,22 @@ module Aws::BedrockAgent
     RedisEnterpriseCloudEndpoint = Shapes::StringShape.new(name: 'RedisEnterpriseCloudEndpoint')
     RedisEnterpriseCloudFieldMapping = Shapes::StructureShape.new(name: 'RedisEnterpriseCloudFieldMapping')
     RedisEnterpriseCloudIndexName = Shapes::StringShape.new(name: 'RedisEnterpriseCloudIndexName')
+    RedshiftClusterIdentifier = Shapes::StringShape.new(name: 'RedshiftClusterIdentifier')
+    RedshiftConfiguration = Shapes::StructureShape.new(name: 'RedshiftConfiguration')
+    RedshiftDatabase = Shapes::StringShape.new(name: 'RedshiftDatabase')
+    RedshiftProvisionedAuthConfiguration = Shapes::StructureShape.new(name: 'RedshiftProvisionedAuthConfiguration')
+    RedshiftProvisionedAuthType = Shapes::StringShape.new(name: 'RedshiftProvisionedAuthType')
+    RedshiftProvisionedConfiguration = Shapes::StructureShape.new(name: 'RedshiftProvisionedConfiguration')
+    RedshiftQueryEngineAwsDataCatalogStorageConfiguration = Shapes::StructureShape.new(name: 'RedshiftQueryEngineAwsDataCatalogStorageConfiguration')
+    RedshiftQueryEngineConfiguration = Shapes::StructureShape.new(name: 'RedshiftQueryEngineConfiguration')
+    RedshiftQueryEngineRedshiftStorageConfiguration = Shapes::StructureShape.new(name: 'RedshiftQueryEngineRedshiftStorageConfiguration')
+    RedshiftQueryEngineStorageConfiguration = Shapes::StructureShape.new(name: 'RedshiftQueryEngineStorageConfiguration')
+    RedshiftQueryEngineStorageConfigurations = Shapes::ListShape.new(name: 'RedshiftQueryEngineStorageConfigurations')
+    RedshiftQueryEngineStorageType = Shapes::StringShape.new(name: 'RedshiftQueryEngineStorageType')
+    RedshiftQueryEngineType = Shapes::StringShape.new(name: 'RedshiftQueryEngineType')
+    RedshiftServerlessAuthConfiguration = Shapes::StructureShape.new(name: 'RedshiftServerlessAuthConfiguration')
+    RedshiftServerlessAuthType = Shapes::StringShape.new(name: 'RedshiftServerlessAuthType')
+    RedshiftServerlessConfiguration = Shapes::StructureShape.new(name: 'RedshiftServerlessConfiguration')
     RelayConversationHistory = Shapes::StringShape.new(name: 'RelayConversationHistory')
     RequireConfirmation = Shapes::StringShape.new(name: 'RequireConfirmation')
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
@@ -494,6 +531,8 @@ module Aws::BedrockAgent
     SharePointSourceConfiguration = Shapes::StructureShape.new(name: 'SharePointSourceConfiguration')
     SortOrder = Shapes::StringShape.new(name: 'SortOrder')
     SpecificToolChoice = Shapes::StructureShape.new(name: 'SpecificToolChoice')
+    SqlKnowledgeBaseConfiguration = Shapes::StructureShape.new(name: 'SqlKnowledgeBaseConfiguration')
+    SqlString = Shapes::StringShape.new(name: 'SqlString')
     StartIngestionJobRequest = Shapes::StructureShape.new(name: 'StartIngestionJobRequest')
     StartIngestionJobResponse = Shapes::StructureShape.new(name: 'StartIngestionJobResponse')
     StepType = Shapes::StringShape.new(name: 'StepType')
@@ -507,6 +546,10 @@ module Aws::BedrockAgent
     StorageFlowNodeServiceConfiguration = Shapes::UnionShape.new(name: 'StorageFlowNodeServiceConfiguration')
     String = Shapes::StringShape.new(name: 'String')
     StringValue = Shapes::StringShape.new(name: 'StringValue')
+    SupplementalDataStorageConfiguration = Shapes::StructureShape.new(name: 'SupplementalDataStorageConfiguration')
+    SupplementalDataStorageLocation = Shapes::StructureShape.new(name: 'SupplementalDataStorageLocation')
+    SupplementalDataStorageLocationType = Shapes::StringShape.new(name: 'SupplementalDataStorageLocationType')
+    SupplementalDataStorageLocations = Shapes::ListShape.new(name: 'SupplementalDataStorageLocations')
     SystemContentBlock = Shapes::UnionShape.new(name: 'SystemContentBlock')
     SystemContentBlocks = Shapes::ListShape.new(name: 'SystemContentBlocks')
     TagKey = Shapes::StringShape.new(name: 'TagKey')
@@ -582,6 +625,7 @@ module Aws::BedrockAgent
     WebDataSourceConfiguration = Shapes::StructureShape.new(name: 'WebDataSourceConfiguration')
     WebScopeType = Shapes::StringShape.new(name: 'WebScopeType')
     WebSourceConfiguration = Shapes::StructureShape.new(name: 'WebSourceConfiguration')
+    WorkgroupArn = Shapes::StringShape.new(name: 'WorkgroupArn')
 
     APISchema.add_member(:payload, Shapes::ShapeRef.new(shape: Payload, location_name: "payload"))
     APISchema.add_member(:s3, Shapes::ShapeRef.new(shape: S3Identifier, location_name: "s3"))
@@ -806,11 +850,17 @@ module Aws::BedrockAgent
 
     AutoToolChoice.struct_class = Types::AutoToolChoice
 
+    AwsDataCatalogTableNames.member = Shapes::ShapeRef.new(shape: AwsDataCatalogTableName)
+
+    BedrockDataAutomationConfiguration.add_member(:parsing_modality, Shapes::ShapeRef.new(shape: ParsingModality, location_name: "parsingModality"))
+    BedrockDataAutomationConfiguration.struct_class = Types::BedrockDataAutomationConfiguration
+
     BedrockEmbeddingModelConfiguration.add_member(:dimensions, Shapes::ShapeRef.new(shape: Dimensions, location_name: "dimensions"))
     BedrockEmbeddingModelConfiguration.add_member(:embedding_data_type, Shapes::ShapeRef.new(shape: EmbeddingDataType, location_name: "embeddingDataType"))
     BedrockEmbeddingModelConfiguration.struct_class = Types::BedrockEmbeddingModelConfiguration
 
     BedrockFoundationModelConfiguration.add_member(:model_arn, Shapes::ShapeRef.new(shape: BedrockModelArn, required: true, location_name: "modelArn"))
+    BedrockFoundationModelConfiguration.add_member(:parsing_modality, Shapes::ShapeRef.new(shape: ParsingModality, location_name: "parsingModality"))
     BedrockFoundationModelConfiguration.add_member(:parsing_prompt, Shapes::ShapeRef.new(shape: ParsingPrompt, location_name: "parsingPrompt"))
     BedrockFoundationModelConfiguration.struct_class = Types::BedrockFoundationModelConfiguration
 
@@ -984,7 +1034,7 @@ module Aws::BedrockAgent
     CreateKnowledgeBaseRequest.add_member(:knowledge_base_configuration, Shapes::ShapeRef.new(shape: KnowledgeBaseConfiguration, required: true, location_name: "knowledgeBaseConfiguration"))
     CreateKnowledgeBaseRequest.add_member(:name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "name"))
     CreateKnowledgeBaseRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: KnowledgeBaseRoleArn, required: true, location_name: "roleArn"))
-    CreateKnowledgeBaseRequest.add_member(:storage_configuration, Shapes::ShapeRef.new(shape: StorageConfiguration, required: true, location_name: "storageConfiguration"))
+    CreateKnowledgeBaseRequest.add_member(:storage_configuration, Shapes::ShapeRef.new(shape: StorageConfiguration, location_name: "storageConfiguration"))
     CreateKnowledgeBaseRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagsMap, location_name: "tags"))
     CreateKnowledgeBaseRequest.struct_class = Types::CreateKnowledgeBaseRequest
 
@@ -1029,6 +1079,12 @@ module Aws::BedrockAgent
     CreatePromptVersionResponse.add_member(:variants, Shapes::ShapeRef.new(shape: PromptVariantList, location_name: "variants"))
     CreatePromptVersionResponse.add_member(:version, Shapes::ShapeRef.new(shape: Version, required: true, location_name: "version"))
     CreatePromptVersionResponse.struct_class = Types::CreatePromptVersionResponse
+
+    CuratedQueries.member = Shapes::ShapeRef.new(shape: CuratedQuery)
+
+    CuratedQuery.add_member(:natural_language, Shapes::ShapeRef.new(shape: NaturalLanguageString, required: true, location_name: "naturalLanguage"))
+    CuratedQuery.add_member(:sql, Shapes::ShapeRef.new(shape: SqlString, required: true, location_name: "sql"))
+    CuratedQuery.struct_class = Types::CuratedQuery
 
     CustomContent.add_member(:custom_document_identifier, Shapes::ShapeRef.new(shape: CustomDocumentIdentifier, required: true, location_name: "customDocumentIdentifier"))
     CustomContent.add_member(:inline_content, Shapes::ShapeRef.new(shape: InlineContent, location_name: "inlineContent"))
@@ -1657,6 +1713,9 @@ module Aws::BedrockAgent
 
     IteratorFlowNodeConfiguration.struct_class = Types::IteratorFlowNodeConfiguration
 
+    KendraKnowledgeBaseConfiguration.add_member(:kendra_index_arn, Shapes::ShapeRef.new(shape: KendraIndexArn, required: true, location_name: "kendraIndexArn"))
+    KendraKnowledgeBaseConfiguration.struct_class = Types::KendraKnowledgeBaseConfiguration
+
     KnowledgeBase.add_member(:created_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "createdAt"))
     KnowledgeBase.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
     KnowledgeBase.add_member(:failure_reasons, Shapes::ShapeRef.new(shape: FailureReasons, location_name: "failureReasons"))
@@ -1666,10 +1725,12 @@ module Aws::BedrockAgent
     KnowledgeBase.add_member(:name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "name"))
     KnowledgeBase.add_member(:role_arn, Shapes::ShapeRef.new(shape: KnowledgeBaseRoleArn, required: true, location_name: "roleArn"))
     KnowledgeBase.add_member(:status, Shapes::ShapeRef.new(shape: KnowledgeBaseStatus, required: true, location_name: "status"))
-    KnowledgeBase.add_member(:storage_configuration, Shapes::ShapeRef.new(shape: StorageConfiguration, required: true, location_name: "storageConfiguration"))
+    KnowledgeBase.add_member(:storage_configuration, Shapes::ShapeRef.new(shape: StorageConfiguration, location_name: "storageConfiguration"))
     KnowledgeBase.add_member(:updated_at, Shapes::ShapeRef.new(shape: DateTimestamp, required: true, location_name: "updatedAt"))
     KnowledgeBase.struct_class = Types::KnowledgeBase
 
+    KnowledgeBaseConfiguration.add_member(:kendra_knowledge_base_configuration, Shapes::ShapeRef.new(shape: KendraKnowledgeBaseConfiguration, location_name: "kendraKnowledgeBaseConfiguration"))
+    KnowledgeBaseConfiguration.add_member(:sql_knowledge_base_configuration, Shapes::ShapeRef.new(shape: SqlKnowledgeBaseConfiguration, location_name: "sqlKnowledgeBaseConfiguration"))
     KnowledgeBaseConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: KnowledgeBaseType, required: true, location_name: "type"))
     KnowledgeBaseConfiguration.add_member(:vector_knowledge_base_configuration, Shapes::ShapeRef.new(shape: VectorKnowledgeBaseConfiguration, location_name: "vectorKnowledgeBaseConfiguration"))
     KnowledgeBaseConfiguration.struct_class = Types::KnowledgeBaseConfiguration
@@ -1955,6 +2016,7 @@ module Aws::BedrockAgent
     ParameterMap.key = Shapes::ShapeRef.new(shape: Name)
     ParameterMap.value = Shapes::ShapeRef.new(shape: ParameterDetail)
 
+    ParsingConfiguration.add_member(:bedrock_data_automation_configuration, Shapes::ShapeRef.new(shape: BedrockDataAutomationConfiguration, location_name: "bedrockDataAutomationConfiguration"))
     ParsingConfiguration.add_member(:bedrock_foundation_model_configuration, Shapes::ShapeRef.new(shape: BedrockFoundationModelConfiguration, location_name: "bedrockFoundationModelConfiguration"))
     ParsingConfiguration.add_member(:parsing_strategy, Shapes::ShapeRef.new(shape: ParsingStrategy, required: true, location_name: "parsingStrategy"))
     ParsingConfiguration.struct_class = Types::ParsingConfiguration
@@ -2098,6 +2160,29 @@ module Aws::BedrockAgent
 
     PromptVariantList.member = Shapes::ShapeRef.new(shape: PromptVariant)
 
+    QueryGenerationColumn.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionString, location_name: "description"))
+    QueryGenerationColumn.add_member(:inclusion, Shapes::ShapeRef.new(shape: IncludeExclude, location_name: "inclusion"))
+    QueryGenerationColumn.add_member(:name, Shapes::ShapeRef.new(shape: QueryGenerationColumnName, location_name: "name"))
+    QueryGenerationColumn.struct_class = Types::QueryGenerationColumn
+
+    QueryGenerationColumns.member = Shapes::ShapeRef.new(shape: QueryGenerationColumn)
+
+    QueryGenerationConfiguration.add_member(:execution_timeout_seconds, Shapes::ShapeRef.new(shape: QueryExecutionTimeoutSeconds, location_name: "executionTimeoutSeconds"))
+    QueryGenerationConfiguration.add_member(:generation_context, Shapes::ShapeRef.new(shape: QueryGenerationContext, location_name: "generationContext"))
+    QueryGenerationConfiguration.struct_class = Types::QueryGenerationConfiguration
+
+    QueryGenerationContext.add_member(:curated_queries, Shapes::ShapeRef.new(shape: CuratedQueries, location_name: "curatedQueries"))
+    QueryGenerationContext.add_member(:tables, Shapes::ShapeRef.new(shape: QueryGenerationTables, location_name: "tables"))
+    QueryGenerationContext.struct_class = Types::QueryGenerationContext
+
+    QueryGenerationTable.add_member(:columns, Shapes::ShapeRef.new(shape: QueryGenerationColumns, location_name: "columns"))
+    QueryGenerationTable.add_member(:description, Shapes::ShapeRef.new(shape: DescriptionString, location_name: "description"))
+    QueryGenerationTable.add_member(:inclusion, Shapes::ShapeRef.new(shape: IncludeExclude, location_name: "inclusion"))
+    QueryGenerationTable.add_member(:name, Shapes::ShapeRef.new(shape: QueryGenerationTableName, required: true, location_name: "name"))
+    QueryGenerationTable.struct_class = Types::QueryGenerationTable
+
+    QueryGenerationTables.member = Shapes::ShapeRef.new(shape: QueryGenerationTable)
+
     RdsConfiguration.add_member(:credentials_secret_arn, Shapes::ShapeRef.new(shape: SecretArn, required: true, location_name: "credentialsSecretArn"))
     RdsConfiguration.add_member(:database_name, Shapes::ShapeRef.new(shape: RdsDatabaseName, required: true, location_name: "databaseName"))
     RdsConfiguration.add_member(:field_mapping, Shapes::ShapeRef.new(shape: RdsFieldMapping, required: true, location_name: "fieldMapping"))
@@ -2123,6 +2208,46 @@ module Aws::BedrockAgent
     RedisEnterpriseCloudFieldMapping.add_member(:text_field, Shapes::ShapeRef.new(shape: FieldName, required: true, location_name: "textField"))
     RedisEnterpriseCloudFieldMapping.add_member(:vector_field, Shapes::ShapeRef.new(shape: FieldName, required: true, location_name: "vectorField"))
     RedisEnterpriseCloudFieldMapping.struct_class = Types::RedisEnterpriseCloudFieldMapping
+
+    RedshiftConfiguration.add_member(:query_engine_configuration, Shapes::ShapeRef.new(shape: RedshiftQueryEngineConfiguration, required: true, location_name: "queryEngineConfiguration"))
+    RedshiftConfiguration.add_member(:query_generation_configuration, Shapes::ShapeRef.new(shape: QueryGenerationConfiguration, location_name: "queryGenerationConfiguration"))
+    RedshiftConfiguration.add_member(:storage_configurations, Shapes::ShapeRef.new(shape: RedshiftQueryEngineStorageConfigurations, required: true, location_name: "storageConfigurations"))
+    RedshiftConfiguration.struct_class = Types::RedshiftConfiguration
+
+    RedshiftProvisionedAuthConfiguration.add_member(:database_user, Shapes::ShapeRef.new(shape: String, location_name: "databaseUser"))
+    RedshiftProvisionedAuthConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: RedshiftProvisionedAuthType, required: true, location_name: "type"))
+    RedshiftProvisionedAuthConfiguration.add_member(:username_password_secret_arn, Shapes::ShapeRef.new(shape: SecretArn, location_name: "usernamePasswordSecretArn"))
+    RedshiftProvisionedAuthConfiguration.struct_class = Types::RedshiftProvisionedAuthConfiguration
+
+    RedshiftProvisionedConfiguration.add_member(:auth_configuration, Shapes::ShapeRef.new(shape: RedshiftProvisionedAuthConfiguration, required: true, location_name: "authConfiguration"))
+    RedshiftProvisionedConfiguration.add_member(:cluster_identifier, Shapes::ShapeRef.new(shape: RedshiftClusterIdentifier, required: true, location_name: "clusterIdentifier"))
+    RedshiftProvisionedConfiguration.struct_class = Types::RedshiftProvisionedConfiguration
+
+    RedshiftQueryEngineAwsDataCatalogStorageConfiguration.add_member(:table_names, Shapes::ShapeRef.new(shape: AwsDataCatalogTableNames, required: true, location_name: "tableNames"))
+    RedshiftQueryEngineAwsDataCatalogStorageConfiguration.struct_class = Types::RedshiftQueryEngineAwsDataCatalogStorageConfiguration
+
+    RedshiftQueryEngineConfiguration.add_member(:provisioned_configuration, Shapes::ShapeRef.new(shape: RedshiftProvisionedConfiguration, location_name: "provisionedConfiguration"))
+    RedshiftQueryEngineConfiguration.add_member(:serverless_configuration, Shapes::ShapeRef.new(shape: RedshiftServerlessConfiguration, location_name: "serverlessConfiguration"))
+    RedshiftQueryEngineConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: RedshiftQueryEngineType, required: true, location_name: "type"))
+    RedshiftQueryEngineConfiguration.struct_class = Types::RedshiftQueryEngineConfiguration
+
+    RedshiftQueryEngineRedshiftStorageConfiguration.add_member(:database_name, Shapes::ShapeRef.new(shape: RedshiftDatabase, required: true, location_name: "databaseName"))
+    RedshiftQueryEngineRedshiftStorageConfiguration.struct_class = Types::RedshiftQueryEngineRedshiftStorageConfiguration
+
+    RedshiftQueryEngineStorageConfiguration.add_member(:aws_data_catalog_configuration, Shapes::ShapeRef.new(shape: RedshiftQueryEngineAwsDataCatalogStorageConfiguration, location_name: "awsDataCatalogConfiguration"))
+    RedshiftQueryEngineStorageConfiguration.add_member(:redshift_configuration, Shapes::ShapeRef.new(shape: RedshiftQueryEngineRedshiftStorageConfiguration, location_name: "redshiftConfiguration"))
+    RedshiftQueryEngineStorageConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: RedshiftQueryEngineStorageType, required: true, location_name: "type"))
+    RedshiftQueryEngineStorageConfiguration.struct_class = Types::RedshiftQueryEngineStorageConfiguration
+
+    RedshiftQueryEngineStorageConfigurations.member = Shapes::ShapeRef.new(shape: RedshiftQueryEngineStorageConfiguration)
+
+    RedshiftServerlessAuthConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: RedshiftServerlessAuthType, required: true, location_name: "type"))
+    RedshiftServerlessAuthConfiguration.add_member(:username_password_secret_arn, Shapes::ShapeRef.new(shape: SecretArn, location_name: "usernamePasswordSecretArn"))
+    RedshiftServerlessAuthConfiguration.struct_class = Types::RedshiftServerlessAuthConfiguration
+
+    RedshiftServerlessConfiguration.add_member(:auth_configuration, Shapes::ShapeRef.new(shape: RedshiftServerlessAuthConfiguration, required: true, location_name: "authConfiguration"))
+    RedshiftServerlessConfiguration.add_member(:workgroup_arn, Shapes::ShapeRef.new(shape: WorkgroupArn, required: true, location_name: "workgroupArn"))
+    RedshiftServerlessConfiguration.struct_class = Types::RedshiftServerlessConfiguration
 
     ResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: NonBlankString, location_name: "message"))
     ResourceNotFoundException.struct_class = Types::ResourceNotFoundException
@@ -2204,6 +2329,10 @@ module Aws::BedrockAgent
     SpecificToolChoice.add_member(:name, Shapes::ShapeRef.new(shape: ToolName, required: true, location_name: "name"))
     SpecificToolChoice.struct_class = Types::SpecificToolChoice
 
+    SqlKnowledgeBaseConfiguration.add_member(:redshift_configuration, Shapes::ShapeRef.new(shape: RedshiftConfiguration, location_name: "redshiftConfiguration"))
+    SqlKnowledgeBaseConfiguration.add_member(:type, Shapes::ShapeRef.new(shape: QueryEngineType, required: true, location_name: "type"))
+    SqlKnowledgeBaseConfiguration.struct_class = Types::SqlKnowledgeBaseConfiguration
+
     StartIngestionJobRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "clientToken", metadata: {"idempotencyToken"=>true}))
     StartIngestionJobRequest.add_member(:data_source_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "dataSourceId"))
     StartIngestionJobRequest.add_member(:description, Shapes::ShapeRef.new(shape: Description, location_name: "description"))
@@ -2242,6 +2371,15 @@ module Aws::BedrockAgent
     StorageFlowNodeServiceConfiguration.add_member_subclass(:s3, Types::StorageFlowNodeServiceConfiguration::S3)
     StorageFlowNodeServiceConfiguration.add_member_subclass(:unknown, Types::StorageFlowNodeServiceConfiguration::Unknown)
     StorageFlowNodeServiceConfiguration.struct_class = Types::StorageFlowNodeServiceConfiguration
+
+    SupplementalDataStorageConfiguration.add_member(:storage_locations, Shapes::ShapeRef.new(shape: SupplementalDataStorageLocations, required: true, location_name: "storageLocations"))
+    SupplementalDataStorageConfiguration.struct_class = Types::SupplementalDataStorageConfiguration
+
+    SupplementalDataStorageLocation.add_member(:s3_location, Shapes::ShapeRef.new(shape: S3Location, location_name: "s3Location"))
+    SupplementalDataStorageLocation.add_member(:type, Shapes::ShapeRef.new(shape: SupplementalDataStorageLocationType, required: true, location_name: "type"))
+    SupplementalDataStorageLocation.struct_class = Types::SupplementalDataStorageLocation
+
+    SupplementalDataStorageLocations.member = Shapes::ShapeRef.new(shape: SupplementalDataStorageLocation)
 
     SystemContentBlock.add_member(:text, Shapes::ShapeRef.new(shape: NonEmptyString, location_name: "text"))
     SystemContentBlock.add_member(:unknown, Shapes::ShapeRef.new(shape: nil, location_name: 'unknown'))
@@ -2472,7 +2610,7 @@ module Aws::BedrockAgent
     UpdateKnowledgeBaseRequest.add_member(:knowledge_base_id, Shapes::ShapeRef.new(shape: Id, required: true, location: "uri", location_name: "knowledgeBaseId"))
     UpdateKnowledgeBaseRequest.add_member(:name, Shapes::ShapeRef.new(shape: Name, required: true, location_name: "name"))
     UpdateKnowledgeBaseRequest.add_member(:role_arn, Shapes::ShapeRef.new(shape: KnowledgeBaseRoleArn, required: true, location_name: "roleArn"))
-    UpdateKnowledgeBaseRequest.add_member(:storage_configuration, Shapes::ShapeRef.new(shape: StorageConfiguration, required: true, location_name: "storageConfiguration"))
+    UpdateKnowledgeBaseRequest.add_member(:storage_configuration, Shapes::ShapeRef.new(shape: StorageConfiguration, location_name: "storageConfiguration"))
     UpdateKnowledgeBaseRequest.struct_class = Types::UpdateKnowledgeBaseRequest
 
     UpdateKnowledgeBaseResponse.add_member(:knowledge_base, Shapes::ShapeRef.new(shape: KnowledgeBase, required: true, location_name: "knowledgeBase"))
@@ -2524,6 +2662,7 @@ module Aws::BedrockAgent
 
     VectorKnowledgeBaseConfiguration.add_member(:embedding_model_arn, Shapes::ShapeRef.new(shape: BedrockEmbeddingModelArn, required: true, location_name: "embeddingModelArn"))
     VectorKnowledgeBaseConfiguration.add_member(:embedding_model_configuration, Shapes::ShapeRef.new(shape: EmbeddingModelConfiguration, location_name: "embeddingModelConfiguration"))
+    VectorKnowledgeBaseConfiguration.add_member(:supplemental_data_storage_configuration, Shapes::ShapeRef.new(shape: SupplementalDataStorageConfiguration, location_name: "supplementalDataStorageConfiguration"))
     VectorKnowledgeBaseConfiguration.struct_class = Types::VectorKnowledgeBaseConfiguration
 
     WebCrawlerConfiguration.add_member(:crawler_limits, Shapes::ShapeRef.new(shape: WebCrawlerLimits, location_name: "crawlerLimits"))

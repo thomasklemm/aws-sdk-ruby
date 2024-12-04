@@ -141,6 +141,7 @@ module Aws::Kendra
 
     class BatchDeleteDocumentResponseFailedDocument
       attr_accessor id: ::String
+      attr_accessor data_source_id: ::String
       attr_accessor error_code: ("InternalError" | "InvalidRequest")
       attr_accessor error_message: ::String
       SENSITIVE: []
@@ -178,6 +179,7 @@ module Aws::Kendra
 
     class BatchGetDocumentStatusResponseError
       attr_accessor document_id: ::String
+      attr_accessor data_source_id: ::String
       attr_accessor error_code: ("InternalError" | "InvalidRequest")
       attr_accessor error_message: ::String
       SENSITIVE: []
@@ -198,6 +200,7 @@ module Aws::Kendra
 
     class BatchPutDocumentResponseFailedDocument
       attr_accessor id: ::String
+      attr_accessor data_source_id: ::String
       attr_accessor error_code: ("InternalError" | "InvalidRequest")
       attr_accessor error_message: ::String
       SENSITIVE: []
@@ -454,7 +457,7 @@ module Aws::Kendra
 
     class CreateIndexRequest
       attr_accessor name: ::String
-      attr_accessor edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION")
+      attr_accessor edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION" | "GEN_AI_ENTERPRISE_EDITION")
       attr_accessor role_arn: ::String
       attr_accessor server_side_encryption_configuration: Types::ServerSideEncryptionConfiguration
       attr_accessor description: ::String
@@ -765,7 +768,7 @@ module Aws::Kendra
     class DescribeIndexResponse
       attr_accessor name: ::String
       attr_accessor id: ::String
-      attr_accessor edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION")
+      attr_accessor edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION" | "GEN_AI_ENTERPRISE_EDITION")
       attr_accessor role_arn: ::String
       attr_accessor server_side_encryption_configuration: Types::ServerSideEncryptionConfiguration
       attr_accessor status: ("CREATING" | "ACTIVE" | "DELETING" | "FAILED" | "UPDATING" | "SYSTEM_UPDATING")
@@ -1252,7 +1255,7 @@ module Aws::Kendra
     class IndexConfigurationSummary
       attr_accessor name: ::String
       attr_accessor id: ::String
-      attr_accessor edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION")
+      attr_accessor edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION" | "GEN_AI_ENTERPRISE_EDITION")
       attr_accessor created_at: ::Time
       attr_accessor updated_at: ::Time
       attr_accessor status: ("CREATING" | "ACTIVE" | "DELETING" | "FAILED" | "UPDATING" | "SYSTEM_UPDATING")

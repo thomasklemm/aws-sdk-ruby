@@ -1109,7 +1109,7 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Kendra/Client.html#create_index-instance_method
       def create_index: (
                           name: ::String,
-                          ?edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION"),
+                          ?edition: ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION" | "GEN_AI_ENTERPRISE_EDITION"),
                           role_arn: ::String,
                           ?server_side_encryption_configuration: {
                             kms_key_id: ::String?
@@ -1363,7 +1363,7 @@ module Aws
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeIndexResponse]
         def name: () -> ::String
         def id: () -> ::String
-        def edition: () -> ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION")
+        def edition: () -> ("DEVELOPER_EDITION" | "ENTERPRISE_EDITION" | "GEN_AI_ENTERPRISE_EDITION")
         def role_arn: () -> ::String
         def server_side_encryption_configuration: () -> Types::ServerSideEncryptionConfiguration
         def status: () -> ("CREATING" | "ACTIVE" | "DELETING" | "FAILED" | "UPDATING" | "SYSTEM_UPDATING")

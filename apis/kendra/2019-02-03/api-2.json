@@ -1364,6 +1364,7 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"DocumentId"},
+        "DataSourceId":{"shape":"DataSourceId"},
         "ErrorCode":{"shape":"ErrorCode"},
         "ErrorMessage":{"shape":"ErrorMessage"}
       }
@@ -1429,6 +1430,7 @@
       "type":"structure",
       "members":{
         "DocumentId":{"shape":"DocumentId"},
+        "DataSourceId":{"shape":"DataSourceId"},
         "ErrorCode":{"shape":"ErrorCode"},
         "ErrorMessage":{"shape":"ErrorMessage"}
       }
@@ -1460,6 +1462,7 @@
       "type":"structure",
       "members":{
         "Id":{"shape":"DocumentId"},
+        "DataSourceId":{"shape":"DataSourceId"},
         "ErrorCode":{"shape":"ErrorCode"},
         "ErrorMessage":{"shape":"ErrorMessage"}
       }
@@ -3659,7 +3662,8 @@
       "type":"string",
       "enum":[
         "DEVELOPER_EDITION",
-        "ENTERPRISE_EDITION"
+        "ENTERPRISE_EDITION",
+        "GEN_AI_ENTERPRISE_EDITION"
       ]
     },
     "IndexFieldName":{

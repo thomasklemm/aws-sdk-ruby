@@ -500,6 +500,12 @@ module Aws::BedrockRuntime
     #           text: "String", # required
     #           qualifiers: ["grounding_source"], # accepts grounding_source, query, guard_content
     #         },
+    #         image: {
+    #           format: "png", # required, accepts png, jpeg
+    #           source: { # required
+    #             bytes: "data",
+    #           },
+    #         },
     #       },
     #     ],
     #   })
@@ -555,8 +561,12 @@ module Aws::BedrockRuntime
     #   resp.assessments[0].invocation_metrics.usage.contextual_grounding_policy_units #=> Integer
     #   resp.assessments[0].invocation_metrics.guardrail_coverage.text_characters.guarded #=> Integer
     #   resp.assessments[0].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
+    #   resp.assessments[0].invocation_metrics.guardrail_coverage.images.guarded #=> Integer
+    #   resp.assessments[0].invocation_metrics.guardrail_coverage.images.total #=> Integer
     #   resp.guardrail_coverage.text_characters.guarded #=> Integer
     #   resp.guardrail_coverage.text_characters.total #=> Integer
+    #   resp.guardrail_coverage.images.guarded #=> Integer
+    #   resp.guardrail_coverage.images.total #=> Integer
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ApplyGuardrail AWS API Documentation
     #
@@ -827,6 +837,12 @@ module Aws::BedrockRuntime
     #                 text: "String", # required
     #                 qualifiers: ["grounding_source"], # accepts grounding_source, query, guard_content
     #               },
+    #               image: {
+    #                 format: "png", # required, accepts png, jpeg
+    #                 source: { # required
+    #                   bytes: "data",
+    #                 },
+    #               },
     #             },
     #           },
     #         ],
@@ -839,6 +855,12 @@ module Aws::BedrockRuntime
     #           text: {
     #             text: "String", # required
     #             qualifiers: ["grounding_source"], # accepts grounding_source, query, guard_content
+    #           },
+    #           image: {
+    #             format: "png", # required, accepts png, jpeg
+    #             source: { # required
+    #               bytes: "data",
+    #             },
     #           },
     #         },
     #       },
@@ -925,6 +947,8 @@ module Aws::BedrockRuntime
     #   resp.output.message.content[0].guard_content.text.text #=> String
     #   resp.output.message.content[0].guard_content.text.qualifiers #=> Array
     #   resp.output.message.content[0].guard_content.text.qualifiers[0] #=> String, one of "grounding_source", "query", "guard_content"
+    #   resp.output.message.content[0].guard_content.image.format #=> String, one of "png", "jpeg"
+    #   resp.output.message.content[0].guard_content.image.source.bytes #=> String
     #   resp.stop_reason #=> String, one of "end_turn", "tool_use", "max_tokens", "stop_sequence", "guardrail_intervened", "content_filtered"
     #   resp.usage.input_tokens #=> Integer
     #   resp.usage.output_tokens #=> Integer
@@ -972,6 +996,8 @@ module Aws::BedrockRuntime
     #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.usage.contextual_grounding_policy_units #=> Integer
     #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.text_characters.guarded #=> Integer
     #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
+    #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.images.guarded #=> Integer
+    #   resp.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.images.total #=> Integer
     #   resp.trace.guardrail.output_assessments #=> Hash
     #   resp.trace.guardrail.output_assessments["String"] #=> Array
     #   resp.trace.guardrail.output_assessments["String"][0].topic_policy.topics #=> Array
@@ -1013,6 +1039,9 @@ module Aws::BedrockRuntime
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.contextual_grounding_policy_units #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.guarded #=> Integer
     #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
+    #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.guarded #=> Integer
+    #   resp.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.total #=> Integer
+    #   resp.trace.prompt_router.invoked_model_id #=> String
     #   resp.performance_config.latency #=> String, one of "standard", "optimized"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/Converse AWS API Documentation
@@ -1462,6 +1491,12 @@ module Aws::BedrockRuntime
     #                 text: "String", # required
     #                 qualifiers: ["grounding_source"], # accepts grounding_source, query, guard_content
     #               },
+    #               image: {
+    #                 format: "png", # required, accepts png, jpeg
+    #                 source: { # required
+    #                   bytes: "data",
+    #                 },
+    #               },
     #             },
     #           },
     #         ],
@@ -1474,6 +1509,12 @@ module Aws::BedrockRuntime
     #           text: {
     #             text: "String", # required
     #             qualifiers: ["grounding_source"], # accepts grounding_source, query, guard_content
+    #           },
+    #           image: {
+    #             format: "png", # required, accepts png, jpeg
+    #             source: { # required
+    #               bytes: "data",
+    #             },
     #           },
     #         },
     #       },
@@ -1601,6 +1642,8 @@ module Aws::BedrockRuntime
     #   event.trace.guardrail.input_assessment["String"].invocation_metrics.usage.contextual_grounding_policy_units #=> Integer
     #   event.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.text_characters.guarded #=> Integer
     #   event.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
+    #   event.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.images.guarded #=> Integer
+    #   event.trace.guardrail.input_assessment["String"].invocation_metrics.guardrail_coverage.images.total #=> Integer
     #   event.trace.guardrail.output_assessments #=> Hash
     #   event.trace.guardrail.output_assessments["String"] #=> Array
     #   event.trace.guardrail.output_assessments["String"][0].topic_policy.topics #=> Array
@@ -1642,6 +1685,9 @@ module Aws::BedrockRuntime
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.usage.contextual_grounding_policy_units #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.guarded #=> Integer
     #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.text_characters.total #=> Integer
+    #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.guarded #=> Integer
+    #   event.trace.guardrail.output_assessments["String"][0].invocation_metrics.guardrail_coverage.images.total #=> Integer
+    #   event.trace.prompt_router.invoked_model_id #=> String
     #   event.performance_config.latency #=> String, one of "standard", "optimized"
     #
     #   For :internal_server_exception event available at #on_internal_server_exception_event callback and response eventstream enumerator:
@@ -2380,7 +2426,7 @@ module Aws::BedrockRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockruntime'
-      context[:gem_version] = '1.33.0'
+      context[:gem_version] = '1.34.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

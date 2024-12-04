@@ -712,6 +712,7 @@ module Aws::Kendra
     BatchDeleteDocumentResponse.struct_class = Types::BatchDeleteDocumentResponse
 
     BatchDeleteDocumentResponseFailedDocument.add_member(:id, Shapes::ShapeRef.new(shape: DocumentId, location_name: "Id"))
+    BatchDeleteDocumentResponseFailedDocument.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, location_name: "DataSourceId"))
     BatchDeleteDocumentResponseFailedDocument.add_member(:error_code, Shapes::ShapeRef.new(shape: ErrorCode, location_name: "ErrorCode"))
     BatchDeleteDocumentResponseFailedDocument.add_member(:error_message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "ErrorMessage"))
     BatchDeleteDocumentResponseFailedDocument.struct_class = Types::BatchDeleteDocumentResponseFailedDocument
@@ -741,6 +742,7 @@ module Aws::Kendra
     BatchGetDocumentStatusResponse.struct_class = Types::BatchGetDocumentStatusResponse
 
     BatchGetDocumentStatusResponseError.add_member(:document_id, Shapes::ShapeRef.new(shape: DocumentId, location_name: "DocumentId"))
+    BatchGetDocumentStatusResponseError.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, location_name: "DataSourceId"))
     BatchGetDocumentStatusResponseError.add_member(:error_code, Shapes::ShapeRef.new(shape: ErrorCode, location_name: "ErrorCode"))
     BatchGetDocumentStatusResponseError.add_member(:error_message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "ErrorMessage"))
     BatchGetDocumentStatusResponseError.struct_class = Types::BatchGetDocumentStatusResponseError
@@ -757,6 +759,7 @@ module Aws::Kendra
     BatchPutDocumentResponse.struct_class = Types::BatchPutDocumentResponse
 
     BatchPutDocumentResponseFailedDocument.add_member(:id, Shapes::ShapeRef.new(shape: DocumentId, location_name: "Id"))
+    BatchPutDocumentResponseFailedDocument.add_member(:data_source_id, Shapes::ShapeRef.new(shape: DataSourceId, location_name: "DataSourceId"))
     BatchPutDocumentResponseFailedDocument.add_member(:error_code, Shapes::ShapeRef.new(shape: ErrorCode, location_name: "ErrorCode"))
     BatchPutDocumentResponseFailedDocument.add_member(:error_message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "ErrorMessage"))
     BatchPutDocumentResponseFailedDocument.struct_class = Types::BatchPutDocumentResponseFailedDocument

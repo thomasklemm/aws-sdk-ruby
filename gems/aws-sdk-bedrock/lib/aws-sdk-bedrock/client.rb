@@ -978,6 +978,8 @@ module Aws::Bedrock
     #           type: "SEXUAL", # required, accepts SEXUAL, VIOLENCE, HATE, INSULTS, MISCONDUCT, PROMPT_ATTACK
     #           input_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
     #           output_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
+    #           input_modalities: ["TEXT"], # accepts TEXT, IMAGE
+    #           output_modalities: ["TEXT"], # accepts TEXT, IMAGE
     #         },
     #       ],
     #     },
@@ -1175,6 +1177,99 @@ module Aws::Bedrock
     # @param [Hash] params ({})
     def create_inference_profile(params = {}, options = {})
       req = build_request(:create_inference_profile, params)
+      req.send_request(options)
+    end
+
+    # Creates an endpoint for a model from Amazon Bedrock Marketplace. The
+    # endpoint is hosted by Amazon SageMaker.
+    #
+    # @option params [required, String] :model_source_identifier
+    #   The ARN of the model from Amazon Bedrock Marketplace that you want to
+    #   deploy to the endpoint.
+    #
+    # @option params [required, Types::EndpointConfig] :endpoint_config
+    #   The configuration for the endpoint, including the number and type of
+    #   instances to use.
+    #
+    # @option params [Boolean] :accept_eula
+    #   Indicates whether you accept the end-user license agreement (EULA) for
+    #   the model. Set to `true` to accept the EULA.
+    #
+    # @option params [required, String] :endpoint_name
+    #   The name of the endpoint. This name must be unique within your Amazon
+    #   Web Services account and region.
+    #
+    # @option params [String] :client_request_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. This token is listed as not required
+    #   because Amazon Web Services SDKs automatically generate it for you and
+    #   set this parameter. If you're not using the Amazon Web Services SDK
+    #   or the CLI, you must provide this token or the action will fail.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   An array of key-value pairs to apply to the underlying Amazon
+    #   SageMaker endpoint. You can use these tags to organize and identify
+    #   your Amazon Web Services resources.
+    #
+    # @return [Types::CreateMarketplaceModelEndpointResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateMarketplaceModelEndpointResponse#marketplace_model_endpoint #marketplace_model_endpoint} => Types::MarketplaceModelEndpoint
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_marketplace_model_endpoint({
+    #     model_source_identifier: "ModelSourceIdentifier", # required
+    #     endpoint_config: { # required
+    #       sage_maker: {
+    #         initial_instance_count: 1, # required
+    #         instance_type: "InstanceType", # required
+    #         execution_role: "RoleArn", # required
+    #         kms_encryption_key: "KmsKeyId",
+    #         vpc: {
+    #           subnet_ids: ["SubnetId"], # required
+    #           security_group_ids: ["SecurityGroupId"], # required
+    #         },
+    #       },
+    #     },
+    #     accept_eula: false,
+    #     endpoint_name: "EndpointName", # required
+    #     client_request_token: "IdempotencyToken",
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.marketplace_model_endpoint.endpoint_arn #=> String
+    #   resp.marketplace_model_endpoint.model_source_identifier #=> String
+    #   resp.marketplace_model_endpoint.status #=> String, one of "REGISTERED", "INCOMPATIBLE_ENDPOINT"
+    #   resp.marketplace_model_endpoint.status_message #=> String
+    #   resp.marketplace_model_endpoint.created_at #=> Time
+    #   resp.marketplace_model_endpoint.updated_at #=> Time
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.initial_instance_count #=> Integer
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.instance_type #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.execution_role #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.kms_encryption_key #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status_message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/CreateMarketplaceModelEndpoint AWS API Documentation
+    #
+    # @overload create_marketplace_model_endpoint(params = {})
+    # @param [Hash] params ({})
+    def create_marketplace_model_endpoint(params = {}, options = {})
+      req = build_request(:create_marketplace_model_endpoint, params)
       req.send_request(options)
     end
 
@@ -1892,6 +1987,28 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
+    # Deletes an endpoint for a model from Amazon Bedrock Marketplace.
+    #
+    # @option params [required, String] :endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to delete.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_marketplace_model_endpoint({
+    #     endpoint_arn: "Arn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeleteMarketplaceModelEndpoint AWS API Documentation
+    #
+    # @overload delete_marketplace_model_endpoint(params = {})
+    # @param [Hash] params ({})
+    def delete_marketplace_model_endpoint(params = {}, options = {})
+      req = build_request(:delete_marketplace_model_endpoint, params)
+      req.send_request(options)
+    end
+
     # Delete the invocation logging.
     #
     # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
@@ -1931,6 +2048,30 @@ module Aws::Bedrock
     # @param [Hash] params ({})
     def delete_provisioned_model_throughput(params = {}, options = {})
       req = build_request(:delete_provisioned_model_throughput, params)
+      req.send_request(options)
+    end
+
+    # Deregisters an endpoint for a model from Amazon Bedrock Marketplace.
+    # This operation removes the endpoint's association with Amazon Bedrock
+    # but does not delete the underlying Amazon SageMaker endpoint.
+    #
+    # @option params [required, String] :endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to deregister.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.deregister_marketplace_model_endpoint({
+    #     endpoint_arn: "Arn", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/DeregisterMarketplaceModelEndpoint AWS API Documentation
+    #
+    # @overload deregister_marketplace_model_endpoint(params = {})
+    # @param [Hash] params ({})
+    def deregister_marketplace_model_endpoint(params = {}, options = {})
+      req = build_request(:deregister_marketplace_model_endpoint, params)
       req.send_request(options)
     end
 
@@ -2259,6 +2400,10 @@ module Aws::Bedrock
     #   resp.content_policy.filters[0].type #=> String, one of "SEXUAL", "VIOLENCE", "HATE", "INSULTS", "MISCONDUCT", "PROMPT_ATTACK"
     #   resp.content_policy.filters[0].input_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
     #   resp.content_policy.filters[0].output_strength #=> String, one of "NONE", "LOW", "MEDIUM", "HIGH"
+    #   resp.content_policy.filters[0].input_modalities #=> Array
+    #   resp.content_policy.filters[0].input_modalities[0] #=> String, one of "TEXT", "IMAGE"
+    #   resp.content_policy.filters[0].output_modalities #=> Array
+    #   resp.content_policy.filters[0].output_modalities[0] #=> String, one of "TEXT", "IMAGE"
     #   resp.word_policy.words #=> Array
     #   resp.word_policy.words[0].text #=> String
     #   resp.word_policy.managed_word_lists #=> Array
@@ -2385,6 +2530,51 @@ module Aws::Bedrock
     # @param [Hash] params ({})
     def get_inference_profile(params = {}, options = {})
       req = build_request(:get_inference_profile, params)
+      req.send_request(options)
+    end
+
+    # Retrieves details about a specific endpoint for a model from Amazon
+    # Bedrock Marketplace.
+    #
+    # @option params [required, String] :endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to get
+    #   information about.
+    #
+    # @return [Types::GetMarketplaceModelEndpointResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetMarketplaceModelEndpointResponse#marketplace_model_endpoint #marketplace_model_endpoint} => Types::MarketplaceModelEndpoint
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_marketplace_model_endpoint({
+    #     endpoint_arn: "Arn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.marketplace_model_endpoint.endpoint_arn #=> String
+    #   resp.marketplace_model_endpoint.model_source_identifier #=> String
+    #   resp.marketplace_model_endpoint.status #=> String, one of "REGISTERED", "INCOMPATIBLE_ENDPOINT"
+    #   resp.marketplace_model_endpoint.status_message #=> String
+    #   resp.marketplace_model_endpoint.created_at #=> Time
+    #   resp.marketplace_model_endpoint.updated_at #=> Time
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.initial_instance_count #=> Integer
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.instance_type #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.execution_role #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.kms_encryption_key #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status_message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetMarketplaceModelEndpoint AWS API Documentation
+    #
+    # @overload get_marketplace_model_endpoint(params = {})
+    # @param [Hash] params ({})
+    def get_marketplace_model_endpoint(params = {}, options = {})
+      req = build_request(:get_marketplace_model_endpoint, params)
       req.send_request(options)
     end
 
@@ -2700,6 +2890,53 @@ module Aws::Bedrock
     # @param [Hash] params ({})
     def get_model_invocation_logging_configuration(params = {}, options = {})
       req = build_request(:get_model_invocation_logging_configuration, params)
+      req.send_request(options)
+    end
+
+    # Retrieves details about a prompt router.
+    #
+    # @option params [required, String] :prompt_router_arn
+    #   The prompt router's ARN
+    #
+    # @return [Types::GetPromptRouterResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetPromptRouterResponse#prompt_router_name #prompt_router_name} => String
+    #   * {Types::GetPromptRouterResponse#routing_criteria #routing_criteria} => Types::RoutingCriteria
+    #   * {Types::GetPromptRouterResponse#description #description} => String
+    #   * {Types::GetPromptRouterResponse#created_at #created_at} => Time
+    #   * {Types::GetPromptRouterResponse#updated_at #updated_at} => Time
+    #   * {Types::GetPromptRouterResponse#prompt_router_arn #prompt_router_arn} => String
+    #   * {Types::GetPromptRouterResponse#models #models} => Array&lt;Types::PromptRouterTargetModel&gt;
+    #   * {Types::GetPromptRouterResponse#fallback_model #fallback_model} => Types::PromptRouterTargetModel
+    #   * {Types::GetPromptRouterResponse#status #status} => String
+    #   * {Types::GetPromptRouterResponse#type #type} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_prompt_router({
+    #     prompt_router_arn: "PromptRouterArn", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.prompt_router_name #=> String
+    #   resp.routing_criteria.response_quality_difference #=> Float
+    #   resp.description #=> String
+    #   resp.created_at #=> Time
+    #   resp.updated_at #=> Time
+    #   resp.prompt_router_arn #=> String
+    #   resp.models #=> Array
+    #   resp.models[0].model_arn #=> String
+    #   resp.fallback_model.model_arn #=> String
+    #   resp.status #=> String, one of "AVAILABLE"
+    #   resp.type #=> String, one of "custom", "default"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/GetPromptRouter AWS API Documentation
+    #
+    # @overload get_prompt_router(params = {})
+    # @param [Hash] params ({})
+    def get_prompt_router(params = {}, options = {})
+      req = build_request(:get_prompt_router, params)
       req.send_request(options)
     end
 
@@ -3217,6 +3454,56 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
+    # Lists the endpoints for models from Amazon Bedrock Marketplace in your
+    # Amazon Web Services account.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in a single call. If more
+    #   results are available, the operation returns a `NextToken` value.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. You receive this token from a
+    #   previous `ListMarketplaceModelEndpoints` call.
+    #
+    # @option params [String] :model_source_equals
+    #   If specified, only endpoints for the given model source identifier are
+    #   returned.
+    #
+    # @return [Types::ListMarketplaceModelEndpointsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListMarketplaceModelEndpointsResponse#marketplace_model_endpoints #marketplace_model_endpoints} => Array&lt;Types::MarketplaceModelEndpointSummary&gt;
+    #   * {Types::ListMarketplaceModelEndpointsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_marketplace_model_endpoints({
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #     model_source_equals: "ModelSourceIdentifier",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.marketplace_model_endpoints #=> Array
+    #   resp.marketplace_model_endpoints[0].endpoint_arn #=> String
+    #   resp.marketplace_model_endpoints[0].model_source_identifier #=> String
+    #   resp.marketplace_model_endpoints[0].status #=> String, one of "REGISTERED", "INCOMPATIBLE_ENDPOINT"
+    #   resp.marketplace_model_endpoints[0].status_message #=> String
+    #   resp.marketplace_model_endpoints[0].created_at #=> Time
+    #   resp.marketplace_model_endpoints[0].updated_at #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListMarketplaceModelEndpoints AWS API Documentation
+    #
+    # @overload list_marketplace_model_endpoints(params = {})
+    # @param [Hash] params ({})
+    def list_marketplace_model_endpoints(params = {}, options = {})
+      req = build_request(:list_marketplace_model_endpoints, params)
+      req.send_request(options)
+    end
+
     # Returns a list of model copy jobs that you have submitted. You can
     # filter the jobs to return based on one or more criteria. For more
     # information, see [Copy models to be used in other regions][1] in the
@@ -3630,6 +3917,54 @@ module Aws::Bedrock
       req.send_request(options)
     end
 
+    # Retrieves a list of prompt routers.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of prompt routers to return in one page of results.
+    #
+    # @option params [String] :next_token
+    #   Specify the pagination token from a previous request to retrieve the
+    #   next page of results.
+    #
+    # @return [Types::ListPromptRoutersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListPromptRoutersResponse#prompt_router_summaries #prompt_router_summaries} => Array&lt;Types::PromptRouterSummary&gt;
+    #   * {Types::ListPromptRoutersResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_prompt_routers({
+    #     max_results: 1,
+    #     next_token: "PaginationToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.prompt_router_summaries #=> Array
+    #   resp.prompt_router_summaries[0].prompt_router_name #=> String
+    #   resp.prompt_router_summaries[0].routing_criteria.response_quality_difference #=> Float
+    #   resp.prompt_router_summaries[0].description #=> String
+    #   resp.prompt_router_summaries[0].created_at #=> Time
+    #   resp.prompt_router_summaries[0].updated_at #=> Time
+    #   resp.prompt_router_summaries[0].prompt_router_arn #=> String
+    #   resp.prompt_router_summaries[0].models #=> Array
+    #   resp.prompt_router_summaries[0].models[0].model_arn #=> String
+    #   resp.prompt_router_summaries[0].fallback_model.model_arn #=> String
+    #   resp.prompt_router_summaries[0].status #=> String, one of "AVAILABLE"
+    #   resp.prompt_router_summaries[0].type #=> String, one of "custom", "default"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/ListPromptRouters AWS API Documentation
+    #
+    # @overload list_prompt_routers(params = {})
+    # @param [Hash] params ({})
+    def list_prompt_routers(params = {}, options = {})
+      req = build_request(:list_prompt_routers, params)
+      req.send_request(options)
+    end
+
     # Lists the Provisioned Throughputs in the account. For more
     # information, see [Provisioned Throughput][1] in the [Amazon Bedrock
     # User Guide][2].
@@ -3798,6 +4133,56 @@ module Aws::Bedrock
     # @param [Hash] params ({})
     def put_model_invocation_logging_configuration(params = {}, options = {})
       req = build_request(:put_model_invocation_logging_configuration, params)
+      req.send_request(options)
+    end
+
+    # Registers an existing Amazon SageMaker endpoint with Amazon Bedrock
+    # Marketplace, allowing it to be used with Amazon Bedrock APIs.
+    #
+    # @option params [required, String] :endpoint_identifier
+    #   The ARN of the Amazon SageMaker endpoint you want to register with
+    #   Amazon Bedrock Marketplace.
+    #
+    # @option params [required, String] :model_source_identifier
+    #   The ARN of the model from Amazon Bedrock Marketplace that is deployed
+    #   on the endpoint.
+    #
+    # @return [Types::RegisterMarketplaceModelEndpointResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::RegisterMarketplaceModelEndpointResponse#marketplace_model_endpoint #marketplace_model_endpoint} => Types::MarketplaceModelEndpoint
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.register_marketplace_model_endpoint({
+    #     endpoint_identifier: "Arn", # required
+    #     model_source_identifier: "ModelSourceIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.marketplace_model_endpoint.endpoint_arn #=> String
+    #   resp.marketplace_model_endpoint.model_source_identifier #=> String
+    #   resp.marketplace_model_endpoint.status #=> String, one of "REGISTERED", "INCOMPATIBLE_ENDPOINT"
+    #   resp.marketplace_model_endpoint.status_message #=> String
+    #   resp.marketplace_model_endpoint.created_at #=> Time
+    #   resp.marketplace_model_endpoint.updated_at #=> Time
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.initial_instance_count #=> Integer
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.instance_type #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.execution_role #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.kms_encryption_key #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status_message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/RegisterMarketplaceModelEndpoint AWS API Documentation
+    #
+    # @overload register_marketplace_model_endpoint(params = {})
+    # @param [Hash] params ({})
+    def register_marketplace_model_endpoint(params = {}, options = {})
+      req = build_request(:register_marketplace_model_endpoint, params)
       req.send_request(options)
     end
 
@@ -4049,6 +4434,8 @@ module Aws::Bedrock
     #           type: "SEXUAL", # required, accepts SEXUAL, VIOLENCE, HATE, INSULTS, MISCONDUCT, PROMPT_ATTACK
     #           input_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
     #           output_strength: "NONE", # required, accepts NONE, LOW, MEDIUM, HIGH
+    #           input_modalities: ["TEXT"], # accepts TEXT, IMAGE
+    #           output_modalities: ["TEXT"], # accepts TEXT, IMAGE
     #         },
     #       ],
     #     },
@@ -4106,6 +4493,77 @@ module Aws::Bedrock
     # @param [Hash] params ({})
     def update_guardrail(params = {}, options = {})
       req = build_request(:update_guardrail, params)
+      req.send_request(options)
+    end
+
+    # Updates the configuration of an existing endpoint for a model from
+    # Amazon Bedrock Marketplace.
+    #
+    # @option params [required, String] :endpoint_arn
+    #   The Amazon Resource Name (ARN) of the endpoint you want to update.
+    #
+    # @option params [required, Types::EndpointConfig] :endpoint_config
+    #   The new configuration for the endpoint, including the number and type
+    #   of instances to use.
+    #
+    # @option params [String] :client_request_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. This token is listed as not required
+    #   because Amazon Web Services SDKs automatically generate it for you and
+    #   set this parameter. If you're not using the Amazon Web Services SDK
+    #   or the CLI, you must provide this token or the action will fail.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @return [Types::UpdateMarketplaceModelEndpointResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::UpdateMarketplaceModelEndpointResponse#marketplace_model_endpoint #marketplace_model_endpoint} => Types::MarketplaceModelEndpoint
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_marketplace_model_endpoint({
+    #     endpoint_arn: "Arn", # required
+    #     endpoint_config: { # required
+    #       sage_maker: {
+    #         initial_instance_count: 1, # required
+    #         instance_type: "InstanceType", # required
+    #         execution_role: "RoleArn", # required
+    #         kms_encryption_key: "KmsKeyId",
+    #         vpc: {
+    #           subnet_ids: ["SubnetId"], # required
+    #           security_group_ids: ["SecurityGroupId"], # required
+    #         },
+    #       },
+    #     },
+    #     client_request_token: "IdempotencyToken",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.marketplace_model_endpoint.endpoint_arn #=> String
+    #   resp.marketplace_model_endpoint.model_source_identifier #=> String
+    #   resp.marketplace_model_endpoint.status #=> String, one of "REGISTERED", "INCOMPATIBLE_ENDPOINT"
+    #   resp.marketplace_model_endpoint.status_message #=> String
+    #   resp.marketplace_model_endpoint.created_at #=> Time
+    #   resp.marketplace_model_endpoint.updated_at #=> Time
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.initial_instance_count #=> Integer
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.instance_type #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.execution_role #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.kms_encryption_key #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.subnet_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids #=> Array
+    #   resp.marketplace_model_endpoint.endpoint_config.sage_maker.vpc.security_group_ids[0] #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status #=> String
+    #   resp.marketplace_model_endpoint.endpoint_status_message #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-2023-04-20/UpdateMarketplaceModelEndpoint AWS API Documentation
+    #
+    # @overload update_marketplace_model_endpoint(params = {})
+    # @param [Hash] params ({})
+    def update_marketplace_model_endpoint(params = {}, options = {})
+      req = build_request(:update_marketplace_model_endpoint, params)
       req.send_request(options)
     end
 
@@ -4175,7 +4633,7 @@ module Aws::Bedrock
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrock'
-      context[:gem_version] = '1.31.0'
+      context[:gem_version] = '1.32.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

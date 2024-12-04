@@ -1735,6 +1735,58 @@ module Aws::BedrockAgentRuntime
       class Unknown < FunctionSchema; end
     end
 
+    # @!attribute [rw] query_generation_input
+    #   Specifies information about a natural language query to transform
+    #   into SQL.
+    #   @return [Types::QueryGenerationInput]
+    #
+    # @!attribute [rw] transformation_configuration
+    #   Specifies configurations for transforming the natural language query
+    #   into SQL.
+    #   @return [Types::TransformationConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GenerateQueryRequest AWS API Documentation
+    #
+    class GenerateQueryRequest < Struct.new(
+      :query_generation_input,
+      :transformation_configuration)
+      SENSITIVE = [:query_generation_input]
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] queries
+    #   A list of objects, each of which defines a generated query that can
+    #   correspond to the natural language queries.
+    #   @return [Array<Types::GeneratedQuery>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GenerateQueryResponse AWS API Documentation
+    #
+    class GenerateQueryResponse < Struct.new(
+      :queries)
+      SENSITIVE = [:queries]
+      include Aws::Structure
+    end
+
+    # Contains information about a query generated for a natural language
+    # query.
+    #
+    # @!attribute [rw] sql
+    #   An SQL query that corresponds to the natural language query.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of transformed query.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GeneratedQuery AWS API Documentation
+    #
+    class GeneratedQuery < Struct.new(
+      :sql,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains metadata about a part of the generated response that is
     # accompanied by a citation.
     #
@@ -3106,7 +3158,7 @@ module Aws::BedrockAgentRuntime
     # [1]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax
     #
     # @!attribute [rw] content
-    #   Contains a chunk of text from a data source in the knowledge base.
+    #   Contains information about the content of the chunk.
     #   @return [Types::RetrievalResultContent]
     #
     # @!attribute [rw] location
@@ -4196,6 +4248,26 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains information about a natural language query to transform into
+    # SQL.
+    #
+    # @!attribute [rw] text
+    #   The text of the query.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of the query.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/QueryGenerationInput AWS API Documentation
+    #
+    class QueryGenerationInput < Struct.new(
+      :text,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # To split up the prompt and retrieve multiple sources, set the
     # transformation type to `QUERY_DECOMPOSITION`.
     #
@@ -4713,7 +4785,9 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
-    # Contains the cited text from the data source.
+    # Contains information about a chunk of text from a data source in the
+    # knowledge base. If the result is from a structured data source, the
+    # cell in the database and the type of the value is also identified.
     #
     # This data type is used in the following API operations:
     #
@@ -4729,14 +4803,57 @@ module Aws::BedrockAgentRuntime
     # [2]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax
     # [3]: https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax
     #
+    # @!attribute [rw] byte_content
+    #   A data URI with base64-encoded content from the data source. The URI
+    #   is in the following format: returned in the following format:
+    #   `data:image/jpeg;base64,${base64-encoded string}`.
+    #   @return [String]
+    #
+    # @!attribute [rw] row
+    #   Specifies information about the rows with the cells to return in
+    #   retrieval.
+    #   @return [Array<Types::RetrievalResultContentColumn>]
+    #
     # @!attribute [rw] text
     #   The cited text from the data source.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The type of content in the retrieval result.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrievalResultContent AWS API Documentation
     #
     class RetrievalResultContent < Struct.new(
-      :text)
+      :byte_content,
+      :row,
+      :text,
+      :type)
+      SENSITIVE = [:row]
+      include Aws::Structure
+    end
+
+    # Contains information about a column with a cell to return in
+    # retrieval.
+    #
+    # @!attribute [rw] column_name
+    #   The name of the column.
+    #   @return [String]
+    #
+    # @!attribute [rw] column_value
+    #   The value in the column.
+    #   @return [String]
+    #
+    # @!attribute [rw] type
+    #   The data type of the value.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrievalResultContentColumn AWS API Documentation
+    #
+    class RetrievalResultContentColumn < Struct.new(
+      :column_name,
+      :column_value,
+      :type)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -4756,6 +4873,20 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # The location of a result in Amazon Kendra.
+    #
+    # @!attribute [rw] uri
+    #   The document's uri.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrievalResultKendraDocumentLocation AWS API Documentation
+    #
+    class RetrievalResultKendraDocumentLocation < Struct.new(
+      :uri)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about the data source location.
     #
     # This data type is used in the following API operations:
@@ -4764,7 +4895,7 @@ module Aws::BedrockAgentRuntime
     #
     # * [RetrieveAndGenerate response][2] – in the `location` field
     #
-    # * [InvokeAgent response][3] – in the `locatino` field
+    # * [InvokeAgent response][3] – in the `location` field
     #
     #
     #
@@ -4780,6 +4911,10 @@ module Aws::BedrockAgentRuntime
     #   Specifies the location of a document in a custom data source.
     #   @return [Types::RetrievalResultCustomDocumentLocation]
     #
+    # @!attribute [rw] kendra_document_location
+    #   The location of a document in Amazon Kendra.
+    #   @return [Types::RetrievalResultKendraDocumentLocation]
+    #
     # @!attribute [rw] s3_location
     #   The S3 data source location.
     #   @return [Types::RetrievalResultS3Location]
@@ -4791,6 +4926,11 @@ module Aws::BedrockAgentRuntime
     # @!attribute [rw] share_point_location
     #   The SharePoint data source location.
     #   @return [Types::RetrievalResultSharePointLocation]
+    #
+    # @!attribute [rw] sql_location
+    #   Specifies information about the SQL query used to retrieve the
+    #   result.
+    #   @return [Types::RetrievalResultSqlLocation]
     #
     # @!attribute [rw] type
     #   The type of data source location.
@@ -4805,9 +4945,11 @@ module Aws::BedrockAgentRuntime
     class RetrievalResultLocation < Struct.new(
       :confluence_location,
       :custom_document_location,
+      :kendra_document_location,
       :s3_location,
       :salesforce_location,
       :share_point_location,
+      :sql_location,
       :type,
       :web_location)
       SENSITIVE = []
@@ -4866,6 +5008,20 @@ module Aws::BedrockAgentRuntime
     #
     class RetrievalResultSharePointLocation < Struct.new(
       :url)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains information about the SQL query used to retrieve the result.
+    #
+    # @!attribute [rw] query
+    #   The SQL query used to retrieve the result.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrievalResultSqlLocation AWS API Documentation
+    #
+    class RetrievalResultSqlLocation < Struct.new(
+      :query)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5659,6 +5815,40 @@ module Aws::BedrockAgentRuntime
       include Aws::Structure
     end
 
+    # Contains configurations for transforming text to SQL.
+    #
+    # @!attribute [rw] knowledge_base_configuration
+    #   Specifies configurations for a knowledge base to use in
+    #   transformation.
+    #   @return [Types::TextToSqlKnowledgeBaseConfiguration]
+    #
+    # @!attribute [rw] type
+    #   The type of resource to use in transformation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/TextToSqlConfiguration AWS API Documentation
+    #
+    class TextToSqlConfiguration < Struct.new(
+      :knowledge_base_configuration,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Contains configurations for a knowledge base to use in transformation.
+    #
+    # @!attribute [rw] knowledge_base_arn
+    #   The ARN of the knowledge base
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/TextToSqlKnowledgeBaseConfiguration AWS API Documentation
+    #
+    class TextToSqlKnowledgeBaseConfiguration < Struct.new(
+      :knowledge_base_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The number of requests exceeds the limit. Resubmit your request later.
     #
     # @!attribute [rw] message
@@ -5800,6 +5990,26 @@ module Aws::BedrockAgentRuntime
       :trace,
       :event_type)
       SENSITIVE = [:collaborator_name, :trace]
+      include Aws::Structure
+    end
+
+    # Contains configurations for transforming the natural language query
+    # into SQL.
+    #
+    # @!attribute [rw] mode
+    #   The mode of the transformation.
+    #   @return [String]
+    #
+    # @!attribute [rw] text_to_sql_configuration
+    #   Specifies configurations for transforming text to SQL.
+    #   @return [Types::TextToSqlConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/TransformationConfiguration AWS API Documentation
+    #
+    class TransformationConfiguration < Struct.new(
+      :mode,
+      :text_to_sql_configuration)
+      SENSITIVE = []
       include Aws::Structure
     end
 

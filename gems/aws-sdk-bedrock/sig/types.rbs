@@ -138,6 +138,21 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class CreateMarketplaceModelEndpointRequest
+      attr_accessor model_source_identifier: ::String
+      attr_accessor endpoint_config: Types::EndpointConfig
+      attr_accessor accept_eula: bool
+      attr_accessor endpoint_name: ::String
+      attr_accessor client_request_token: ::String
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class CreateMarketplaceModelEndpointResponse
+      attr_accessor marketplace_model_endpoint: Types::MarketplaceModelEndpoint
+      SENSITIVE: []
+    end
+
     class CreateModelCopyJobRequest
       attr_accessor source_model_arn: ::String
       attr_accessor target_model_name: ::String
@@ -282,6 +297,14 @@ module Aws::Bedrock
     class DeleteInferenceProfileResponse < Aws::EmptyStructure
     end
 
+    class DeleteMarketplaceModelEndpointRequest
+      attr_accessor endpoint_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteMarketplaceModelEndpointResponse < Aws::EmptyStructure
+    end
+
     class DeleteModelInvocationLoggingConfigurationRequest < Aws::EmptyStructure
     end
 
@@ -296,9 +319,28 @@ module Aws::Bedrock
     class DeleteProvisionedModelThroughputResponse < Aws::EmptyStructure
     end
 
+    class DeregisterMarketplaceModelEndpointRequest
+      attr_accessor endpoint_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeregisterMarketplaceModelEndpointResponse < Aws::EmptyStructure
+    end
+
     class DistillationConfig
       attr_accessor teacher_model_config: Types::TeacherModelConfig
       SENSITIVE: []
+    end
+
+    class EndpointConfig
+      attr_accessor sage_maker: Types::SageMakerEndpoint
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class SageMaker < EndpointConfig
+      end
+      class Unknown < EndpointConfig
+      end
     end
 
     class EvaluationBedrockModel
@@ -590,6 +632,16 @@ module Aws::Bedrock
       SENSITIVE: [:description]
     end
 
+    class GetMarketplaceModelEndpointRequest
+      attr_accessor endpoint_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetMarketplaceModelEndpointResponse
+      attr_accessor marketplace_model_endpoint: Types::MarketplaceModelEndpoint
+      SENSITIVE: []
+    end
+
     class GetModelCopyJobRequest
       attr_accessor job_arn: ::String
       SENSITIVE: []
@@ -695,6 +747,25 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class GetPromptRouterRequest
+      attr_accessor prompt_router_arn: ::String
+      SENSITIVE: []
+    end
+
+    class GetPromptRouterResponse
+      attr_accessor prompt_router_name: ::String
+      attr_accessor routing_criteria: Types::RoutingCriteria
+      attr_accessor description: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
+      attr_accessor prompt_router_arn: ::String
+      attr_accessor models: ::Array[Types::PromptRouterTargetModel]
+      attr_accessor fallback_model: Types::PromptRouterTargetModel
+      attr_accessor status: ("AVAILABLE")
+      attr_accessor type: ("custom" | "default")
+      SENSITIVE: [:description]
+    end
+
     class GetProvisionedModelThroughputRequest
       attr_accessor provisioned_model_id: ::String
       SENSITIVE: []
@@ -727,6 +798,8 @@ module Aws::Bedrock
       attr_accessor type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK")
       attr_accessor input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
       attr_accessor output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
+      attr_accessor input_modalities: ::Array[("TEXT" | "IMAGE")]
+      attr_accessor output_modalities: ::Array[("TEXT" | "IMAGE")]
       SENSITIVE: []
     end
 
@@ -734,6 +807,8 @@ module Aws::Bedrock
       attr_accessor type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK")
       attr_accessor input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
       attr_accessor output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
+      attr_accessor input_modalities: ::Array[("TEXT" | "IMAGE")]
+      attr_accessor output_modalities: ::Array[("TEXT" | "IMAGE")]
       SENSITIVE: []
     end
 
@@ -1095,6 +1170,19 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class ListMarketplaceModelEndpointsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor model_source_equals: ::String
+      SENSITIVE: []
+    end
+
+    class ListMarketplaceModelEndpointsResponse
+      attr_accessor marketplace_model_endpoints: ::Array[Types::MarketplaceModelEndpointSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListModelCopyJobsRequest
       attr_accessor creation_time_after: ::Time
       attr_accessor creation_time_before: ::Time
@@ -1169,6 +1257,18 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class ListPromptRoutersRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListPromptRoutersResponse
+      attr_accessor prompt_router_summaries: ::Array[Types::PromptRouterSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListProvisionedModelThroughputsRequest
       attr_accessor creation_time_after: ::Time
       attr_accessor creation_time_before: ::Time
@@ -1205,6 +1305,29 @@ module Aws::Bedrock
       attr_accessor image_data_delivery_enabled: bool
       attr_accessor embedding_data_delivery_enabled: bool
       attr_accessor video_data_delivery_enabled: bool
+      SENSITIVE: []
+    end
+
+    class MarketplaceModelEndpoint
+      attr_accessor endpoint_arn: ::String
+      attr_accessor model_source_identifier: ::String
+      attr_accessor status: ("REGISTERED" | "INCOMPATIBLE_ENDPOINT")
+      attr_accessor status_message: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
+      attr_accessor endpoint_config: Types::EndpointConfig
+      attr_accessor endpoint_status: ::String
+      attr_accessor endpoint_status_message: ::String
+      SENSITIVE: []
+    end
+
+    class MarketplaceModelEndpointSummary
+      attr_accessor endpoint_arn: ::String
+      attr_accessor model_source_identifier: ::String
+      attr_accessor status: ("REGISTERED" | "INCOMPATIBLE_ENDPOINT")
+      attr_accessor status_message: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
       SENSITIVE: []
     end
 
@@ -1325,6 +1448,25 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class PromptRouterSummary
+      attr_accessor prompt_router_name: ::String
+      attr_accessor routing_criteria: Types::RoutingCriteria
+      attr_accessor description: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor updated_at: ::Time
+      attr_accessor prompt_router_arn: ::String
+      attr_accessor models: ::Array[Types::PromptRouterTargetModel]
+      attr_accessor fallback_model: Types::PromptRouterTargetModel
+      attr_accessor status: ("AVAILABLE")
+      attr_accessor type: ("custom" | "default")
+      SENSITIVE: [:description]
+    end
+
+    class PromptRouterTargetModel
+      attr_accessor model_arn: ::String
+      SENSITIVE: []
+    end
+
     class PromptTemplate
       attr_accessor text_prompt_template: ::String
       SENSITIVE: [:text_prompt_template]
@@ -1368,6 +1510,17 @@ module Aws::Bedrock
       end
       class Unknown < RAGConfig
       end
+    end
+
+    class RegisterMarketplaceModelEndpointRequest
+      attr_accessor endpoint_identifier: ::String
+      attr_accessor model_source_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class RegisterMarketplaceModelEndpointResponse
+      attr_accessor marketplace_model_endpoint: Types::MarketplaceModelEndpoint
+      SENSITIVE: []
     end
 
     class RequestMetadataBaseFilters
@@ -1461,6 +1614,11 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class RoutingCriteria
+      attr_accessor response_quality_difference: ::Float
+      SENSITIVE: []
+    end
+
     class S3Config
       attr_accessor bucket_name: ::String
       attr_accessor key_prefix: ::String
@@ -1477,7 +1635,21 @@ module Aws::Bedrock
       SENSITIVE: []
     end
 
+    class SageMakerEndpoint
+      attr_accessor initial_instance_count: ::Integer
+      attr_accessor instance_type: ::String
+      attr_accessor execution_role: ::String
+      attr_accessor kms_encryption_key: ::String
+      attr_accessor vpc: Types::VpcConfig
+      SENSITIVE: []
+    end
+
     class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceUnavailableException
       attr_accessor message: ::String
       SENSITIVE: []
     end
@@ -1586,6 +1758,18 @@ module Aws::Bedrock
       attr_accessor guardrail_arn: ::String
       attr_accessor version: ::String
       attr_accessor updated_at: ::Time
+      SENSITIVE: []
+    end
+
+    class UpdateMarketplaceModelEndpointRequest
+      attr_accessor endpoint_arn: ::String
+      attr_accessor endpoint_config: Types::EndpointConfig
+      attr_accessor client_request_token: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateMarketplaceModelEndpointResponse
+      attr_accessor marketplace_model_endpoint: Types::MarketplaceModelEndpoint
       SENSITIVE: []
     end
 

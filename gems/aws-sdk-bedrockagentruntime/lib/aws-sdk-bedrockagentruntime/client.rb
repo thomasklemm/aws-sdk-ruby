@@ -488,6 +488,59 @@ module Aws::BedrockAgentRuntime
       req.send_request(options)
     end
 
+    # Generates an SQL query from a natural language query. For more
+    # information, see [Generate a query for structured data][1] in the
+    # Amazon Bedrock User Guide.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-generate-query.html
+    #
+    # @option params [required, Types::QueryGenerationInput] :query_generation_input
+    #   Specifies information about a natural language query to transform into
+    #   SQL.
+    #
+    # @option params [required, Types::TransformationConfiguration] :transformation_configuration
+    #   Specifies configurations for transforming the natural language query
+    #   into SQL.
+    #
+    # @return [Types::GenerateQueryResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GenerateQueryResponse#queries #queries} => Array&lt;Types::GeneratedQuery&gt;
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.generate_query({
+    #     query_generation_input: { # required
+    #       text: "QueryGenerationInputTextString", # required
+    #       type: "TEXT", # required, accepts TEXT
+    #     },
+    #     transformation_configuration: { # required
+    #       mode: "TEXT_TO_SQL", # required, accepts TEXT_TO_SQL
+    #       text_to_sql_configuration: {
+    #         knowledge_base_configuration: {
+    #           knowledge_base_arn: "KnowledgeBaseArn", # required
+    #         },
+    #         type: "KNOWLEDGE_BASE", # required, accepts KNOWLEDGE_BASE
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.queries #=> Array
+    #   resp.queries[0].sql #=> String
+    #   resp.queries[0].type #=> String, one of "REDSHIFT_SQL"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/GenerateQuery AWS API Documentation
+    #
+    # @overload generate_query(params = {})
+    # @param [Hash] params ({})
+    def generate_query(params = {}, options = {})
+      req = build_request(:generate_query, params)
+      req.send_request(options)
+    end
+
     # Gets the sessions stored in the memory of the agent.
     #
     # @option params [required, String] :agent_alias_id
@@ -1060,13 +1113,21 @@ module Aws::BedrockAgentRuntime
     #   event.attribution.citations[0].generated_response_part.text_response_part.span.start #=> Integer
     #   event.attribution.citations[0].generated_response_part.text_response_part.text #=> String
     #   event.attribution.citations[0].retrieved_references #=> Array
+    #   event.attribution.citations[0].retrieved_references[0].content.byte_content #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.row #=> Array
+    #   event.attribution.citations[0].retrieved_references[0].content.row[0].column_name #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.row[0].column_value #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   event.attribution.citations[0].retrieved_references[0].content.text #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   event.attribution.citations[0].retrieved_references[0].location.confluence_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.kendra_document_location.uri #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.s3_location.uri #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.salesforce_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.share_point_location.url #=> String
-    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.attribution.citations[0].retrieved_references[0].location.sql_location.query #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.attribution.citations[0].retrieved_references[0].location.web_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].metadata #=> Hash
     #   event.bytes #=> String
@@ -1287,13 +1348,21 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.files[0] #=> String
     #   event.trace.orchestration_trace.observation.final_response.text #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.byte_content #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row #=> Array
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_name #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_value #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.kendra_document_location.uri #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
-    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.sql_location.query #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
     #   event.trace.orchestration_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
@@ -1438,13 +1507,21 @@ module Aws::BedrockAgentRuntime
     #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.files[0] #=> String
     #   event.trace.routing_classifier_trace.observation.final_response.text #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.byte_content #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row #=> Array
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_name #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_value #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.kendra_document_location.uri #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
-    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.sql_location.query #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
     #   event.trace.routing_classifier_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
@@ -2377,13 +2454,21 @@ module Aws::BedrockAgentRuntime
     #   event.attribution.citations[0].generated_response_part.text_response_part.span.start #=> Integer
     #   event.attribution.citations[0].generated_response_part.text_response_part.text #=> String
     #   event.attribution.citations[0].retrieved_references #=> Array
+    #   event.attribution.citations[0].retrieved_references[0].content.byte_content #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.row #=> Array
+    #   event.attribution.citations[0].retrieved_references[0].content.row[0].column_name #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.row[0].column_value #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   event.attribution.citations[0].retrieved_references[0].content.text #=> String
+    #   event.attribution.citations[0].retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   event.attribution.citations[0].retrieved_references[0].location.confluence_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.kendra_document_location.uri #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.s3_location.uri #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.salesforce_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].location.share_point_location.url #=> String
-    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.attribution.citations[0].retrieved_references[0].location.sql_location.query #=> String
+    #   event.attribution.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.attribution.citations[0].retrieved_references[0].location.web_location.url #=> String
     #   event.attribution.citations[0].retrieved_references[0].metadata #=> Hash
     #   event.bytes #=> String
@@ -2598,13 +2683,21 @@ module Aws::BedrockAgentRuntime
     #   event.trace.orchestration_trace.observation.code_interpreter_invocation_output.files[0] #=> String
     #   event.trace.orchestration_trace.observation.final_response.text #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.byte_content #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row #=> Array
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_name #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_value #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.kendra_document_location.uri #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
-    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.sql_location.query #=> String
+    #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
     #   event.trace.orchestration_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
     #   event.trace.orchestration_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
@@ -2749,13 +2842,21 @@ module Aws::BedrockAgentRuntime
     #   event.trace.routing_classifier_trace.observation.code_interpreter_invocation_output.files[0] #=> String
     #   event.trace.routing_classifier_trace.observation.final_response.text #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references #=> Array
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.byte_content #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row #=> Array
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_name #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].column_value #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.text #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.confluence_location.url #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.kendra_document_location.uri #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.s3_location.uri #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.salesforce_location.url #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.share_point_location.url #=> String
-    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.sql_location.query #=> String
+    #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].location.web_location.url #=> String
     #   event.trace.routing_classifier_trace.observation.knowledge_base_lookup_output.retrieved_references[0].metadata #=> Hash
     #   event.trace.routing_classifier_trace.observation.reprompt_response.source #=> String, one of "ACTION_GROUP", "KNOWLEDGE_BASE", "PARSER"
@@ -3283,13 +3384,21 @@ module Aws::BedrockAgentRuntime
     #   resp.guardrail_action #=> String, one of "INTERVENED", "NONE"
     #   resp.next_token #=> String
     #   resp.retrieval_results #=> Array
+    #   resp.retrieval_results[0].content.byte_content #=> String
+    #   resp.retrieval_results[0].content.row #=> Array
+    #   resp.retrieval_results[0].content.row[0].column_name #=> String
+    #   resp.retrieval_results[0].content.row[0].column_value #=> String
+    #   resp.retrieval_results[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   resp.retrieval_results[0].content.text #=> String
+    #   resp.retrieval_results[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   resp.retrieval_results[0].location.confluence_location.url #=> String
     #   resp.retrieval_results[0].location.custom_document_location.id #=> String
+    #   resp.retrieval_results[0].location.kendra_document_location.uri #=> String
     #   resp.retrieval_results[0].location.s3_location.uri #=> String
     #   resp.retrieval_results[0].location.salesforce_location.url #=> String
     #   resp.retrieval_results[0].location.share_point_location.url #=> String
-    #   resp.retrieval_results[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   resp.retrieval_results[0].location.sql_location.query #=> String
+    #   resp.retrieval_results[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   resp.retrieval_results[0].location.web_location.url #=> String
     #   resp.retrieval_results[0].metadata #=> Hash
     #   resp.retrieval_results[0].score #=> Float
@@ -3556,13 +3665,21 @@ module Aws::BedrockAgentRuntime
     #   resp.citations[0].generated_response_part.text_response_part.span.start #=> Integer
     #   resp.citations[0].generated_response_part.text_response_part.text #=> String
     #   resp.citations[0].retrieved_references #=> Array
+    #   resp.citations[0].retrieved_references[0].content.byte_content #=> String
+    #   resp.citations[0].retrieved_references[0].content.row #=> Array
+    #   resp.citations[0].retrieved_references[0].content.row[0].column_name #=> String
+    #   resp.citations[0].retrieved_references[0].content.row[0].column_value #=> String
+    #   resp.citations[0].retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   resp.citations[0].retrieved_references[0].content.text #=> String
+    #   resp.citations[0].retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   resp.citations[0].retrieved_references[0].location.confluence_location.url #=> String
     #   resp.citations[0].retrieved_references[0].location.custom_document_location.id #=> String
+    #   resp.citations[0].retrieved_references[0].location.kendra_document_location.uri #=> String
     #   resp.citations[0].retrieved_references[0].location.s3_location.uri #=> String
     #   resp.citations[0].retrieved_references[0].location.salesforce_location.url #=> String
     #   resp.citations[0].retrieved_references[0].location.share_point_location.url #=> String
-    #   resp.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   resp.citations[0].retrieved_references[0].location.sql_location.query #=> String
+    #   resp.citations[0].retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   resp.citations[0].retrieved_references[0].location.web_location.url #=> String
     #   resp.citations[0].retrieved_references[0].metadata #=> Hash
     #   resp.guardrail_action #=> String, one of "INTERVENED", "NONE"
@@ -4022,13 +4139,21 @@ module Aws::BedrockAgentRuntime
     #   event.citation.generated_response_part.text_response_part.span.start #=> Integer
     #   event.citation.generated_response_part.text_response_part.text #=> String
     #   event.citation.retrieved_references #=> Array
+    #   event.citation.retrieved_references[0].content.byte_content #=> String
+    #   event.citation.retrieved_references[0].content.row #=> Array
+    #   event.citation.retrieved_references[0].content.row[0].column_name #=> String
+    #   event.citation.retrieved_references[0].content.row[0].column_value #=> String
+    #   event.citation.retrieved_references[0].content.row[0].type #=> String, one of "BLOB", "BOOLEAN", "DOUBLE", "NULL", "LONG", "STRING"
     #   event.citation.retrieved_references[0].content.text #=> String
+    #   event.citation.retrieved_references[0].content.type #=> String, one of "TEXT", "IMAGE", "ROW"
     #   event.citation.retrieved_references[0].location.confluence_location.url #=> String
     #   event.citation.retrieved_references[0].location.custom_document_location.id #=> String
+    #   event.citation.retrieved_references[0].location.kendra_document_location.uri #=> String
     #   event.citation.retrieved_references[0].location.s3_location.uri #=> String
     #   event.citation.retrieved_references[0].location.salesforce_location.url #=> String
     #   event.citation.retrieved_references[0].location.share_point_location.url #=> String
-    #   event.citation.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM"
+    #   event.citation.retrieved_references[0].location.sql_location.query #=> String
+    #   event.citation.retrieved_references[0].location.type #=> String, one of "S3", "WEB", "CONFLUENCE", "SALESFORCE", "SHAREPOINT", "CUSTOM", "KENDRA", "SQL"
     #   event.citation.retrieved_references[0].location.web_location.url #=> String
     #   event.citation.retrieved_references[0].metadata #=> Hash
     #
@@ -4105,7 +4230,7 @@ module Aws::BedrockAgentRuntime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-bedrockagentruntime'
-      context[:gem_version] = '1.36.0'
+      context[:gem_version] = '1.37.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

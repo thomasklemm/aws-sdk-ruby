@@ -843,10 +843,15 @@ module Aws::BedrockRuntime
     #   The guardrail trace object.
     #   @return [Types::GuardrailTraceAssessment]
     #
+    # @!attribute [rw] prompt_router
+    #   The request's prompt router.
+    #   @return [Types::PromptRouterTrace]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ConverseStreamTrace AWS API Documentation
     #
     class ConverseStreamTrace < Struct.new(
-      :guardrail)
+      :guardrail,
+      :prompt_router)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -862,10 +867,15 @@ module Aws::BedrockRuntime
     #   The guardrail trace object.
     #   @return [Types::GuardrailTraceAssessment]
     #
+    # @!attribute [rw] prompt_router
+    #   The request's prompt router.
+    #   @return [Types::PromptRouterTrace]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/ConverseTrace AWS API Documentation
     #
     class ConverseTrace < Struct.new(
-      :guardrail)
+      :guardrail,
+      :prompt_router)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1076,16 +1086,23 @@ module Aws::BedrockRuntime
     #   Text within content block to be evaluated by the guardrail.
     #   @return [Types::GuardrailTextBlock]
     #
+    # @!attribute [rw] image
+    #   Image within guardrail content block to be evaluated by the
+    #   guardrail.
+    #   @return [Types::GuardrailImageBlock]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailContentBlock AWS API Documentation
     #
     class GuardrailContentBlock < Struct.new(
       :text,
+      :image,
       :unknown)
-      SENSITIVE = []
+      SENSITIVE = [:image]
       include Aws::Structure
       include Aws::Structure::Union
 
       class Text < GuardrailContentBlock; end
+      class Image < GuardrailContentBlock; end
       class Unknown < GuardrailContentBlock; end
     end
 
@@ -1193,17 +1210,69 @@ module Aws::BedrockRuntime
     #   The text to guard.
     #   @return [Types::GuardrailConverseTextBlock]
     #
+    # @!attribute [rw] image
+    #   Image within converse content block to be evaluated by the
+    #   guardrail.
+    #   @return [Types::GuardrailConverseImageBlock]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailConverseContentBlock AWS API Documentation
     #
     class GuardrailConverseContentBlock < Struct.new(
       :text,
+      :image,
+      :unknown)
+      SENSITIVE = [:image]
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Text < GuardrailConverseContentBlock; end
+      class Image < GuardrailConverseContentBlock; end
+      class Unknown < GuardrailConverseContentBlock; end
+    end
+
+    # An image block that contains images that you want to assess with a
+    # guardrail.
+    #
+    # @!attribute [rw] format
+    #   The format details for the image type of the guardrail converse
+    #   image block.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   The image source (image bytes) of the guardrail converse image
+    #   block.
+    #   @return [Types::GuardrailConverseImageSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailConverseImageBlock AWS API Documentation
+    #
+    class GuardrailConverseImageBlock < Struct.new(
+      :format,
+      :source)
+      SENSITIVE = [:source]
+      include Aws::Structure
+    end
+
+    # The image source (image bytes) of the guardrail converse image source.
+    #
+    # @note GuardrailConverseImageSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @note GuardrailConverseImageSource is a union - when returned from an API call exactly one value will be set and the returned type will be a subclass of GuardrailConverseImageSource corresponding to the set member.
+    #
+    # @!attribute [rw] bytes
+    #   The raw image bytes for the image.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailConverseImageSource AWS API Documentation
+    #
+    class GuardrailConverseImageSource < Struct.new(
+      :bytes,
       :unknown)
       SENSITIVE = []
       include Aws::Structure
       include Aws::Structure::Union
 
-      class Text < GuardrailConverseContentBlock; end
-      class Unknown < GuardrailConverseContentBlock; end
+      class Bytes < GuardrailConverseImageSource; end
+      class Unknown < GuardrailConverseImageSource; end
     end
 
     # A text block that contains text that you want to assess with a
@@ -1233,10 +1302,16 @@ module Aws::BedrockRuntime
     #   The text characters of the guardrail coverage details.
     #   @return [Types::GuardrailTextCharactersCoverage]
     #
+    # @!attribute [rw] images
+    #   The guardrail coverage for images (the number of images that
+    #   guardrails guarded).
+    #   @return [Types::GuardrailImageCoverage]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailCoverage AWS API Documentation
     #
     class GuardrailCoverage < Struct.new(
-      :text_characters)
+      :text_characters,
+      :images)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1258,6 +1333,71 @@ module Aws::BedrockRuntime
       :action)
       SENSITIVE = []
       include Aws::Structure
+    end
+
+    # Contain an image which user wants guarded. This block is accepted by
+    # the guardrails independent API.
+    #
+    # @!attribute [rw] format
+    #   The format details for the file type of the image blocked by the
+    #   guardrail.
+    #   @return [String]
+    #
+    # @!attribute [rw] source
+    #   The image source (image bytes) details of the image blocked by the
+    #   guardrail.
+    #   @return [Types::GuardrailImageSource]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailImageBlock AWS API Documentation
+    #
+    class GuardrailImageBlock < Struct.new(
+      :format,
+      :source)
+      SENSITIVE = [:source]
+      include Aws::Structure
+    end
+
+    # The details of the guardrail image coverage.
+    #
+    # @!attribute [rw] guarded
+    #   The count (integer) of images guardrails guarded.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] total
+    #   Represents the total number of images (integer) that were in the
+    #   request (guarded and unguarded).
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailImageCoverage AWS API Documentation
+    #
+    class GuardrailImageCoverage < Struct.new(
+      :guarded,
+      :total)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The image source (image bytes) of the guardrail image source. Object
+    # used in independent api.
+    #
+    # @note GuardrailImageSource is a union - when making an API calls you must set exactly one of the members.
+    #
+    # @!attribute [rw] bytes
+    #   The bytes details of the guardrail image source. Object used in
+    #   independent api.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/GuardrailImageSource AWS API Documentation
+    #
+    class GuardrailImageSource < Struct.new(
+      :bytes,
+      :unknown)
+      SENSITIVE = []
+      include Aws::Structure
+      include Aws::Structure::Union
+
+      class Bytes < GuardrailImageSource; end
+      class Unknown < GuardrailImageSource; end
     end
 
     # The invocation metrics for the guardrail.
@@ -2232,6 +2372,20 @@ module Aws::BedrockRuntime
     #
     class PerformanceConfiguration < Struct.new(
       :latency)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A prompt router trace.
+    #
+    # @!attribute [rw] invoked_model_id
+    #   The ID of the invoked model.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/PromptRouterTrace AWS API Documentation
+    #
+    class PromptRouterTrace < Struct.new(
+      :invoked_model_id)
       SENSITIVE = []
       include Aws::Structure
     end

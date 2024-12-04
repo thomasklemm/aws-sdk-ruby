@@ -407,7 +407,9 @@ module Aws
                                   {
                                     type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK"),
                                     input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
-                                    output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
+                                    output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                    input_modalities: Array[("TEXT" | "IMAGE")]?,
+                                    output_modalities: Array[("TEXT" | "IMAGE")]?
                                   },
                                 ]
                               },
@@ -494,6 +496,37 @@ module Aws
                                       ]
                                     ) -> _CreateInferenceProfileResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateInferenceProfileResponseSuccess
+
+      interface _CreateMarketplaceModelEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateMarketplaceModelEndpointResponse]
+        def marketplace_model_endpoint: () -> Types::MarketplaceModelEndpoint
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#create_marketplace_model_endpoint-instance_method
+      def create_marketplace_model_endpoint: (
+                                               model_source_identifier: ::String,
+                                               endpoint_config: {
+                                                 sage_maker: {
+                                                   initial_instance_count: ::Integer,
+                                                   instance_type: ::String,
+                                                   execution_role: ::String,
+                                                   kms_encryption_key: ::String?,
+                                                   vpc: {
+                                                     subnet_ids: Array[::String],
+                                                     security_group_ids: Array[::String]
+                                                   }?
+                                                 }?
+                                               },
+                                               ?accept_eula: bool,
+                                               endpoint_name: ::String,
+                                               ?client_request_token: ::String,
+                                               ?tags: Array[
+                                                 {
+                                                   key: ::String,
+                                                   value: ::String
+                                                 },
+                                               ]
+                                             ) -> _CreateMarketplaceModelEndpointResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMarketplaceModelEndpointResponseSuccess
 
       interface _CreateModelCopyJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateModelCopyJobResponse]
@@ -720,6 +753,15 @@ module Aws
                                     ) -> _DeleteInferenceProfileResponseSuccess
                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteInferenceProfileResponseSuccess
 
+      interface _DeleteMarketplaceModelEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteMarketplaceModelEndpointResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#delete_marketplace_model_endpoint-instance_method
+      def delete_marketplace_model_endpoint: (
+                                               endpoint_arn: ::String
+                                             ) -> _DeleteMarketplaceModelEndpointResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteMarketplaceModelEndpointResponseSuccess
+
       interface _DeleteModelInvocationLoggingConfigurationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteModelInvocationLoggingConfigurationResponse]
       end
@@ -736,6 +778,15 @@ module Aws
                                                  provisioned_model_id: ::String
                                                ) -> _DeleteProvisionedModelThroughputResponseSuccess
                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteProvisionedModelThroughputResponseSuccess
+
+      interface _DeregisterMarketplaceModelEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeregisterMarketplaceModelEndpointResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#deregister_marketplace_model_endpoint-instance_method
+      def deregister_marketplace_model_endpoint: (
+                                                   endpoint_arn: ::String
+                                                 ) -> _DeregisterMarketplaceModelEndpointResponseSuccess
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeregisterMarketplaceModelEndpointResponseSuccess
 
       interface _GetCustomModelResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetCustomModelResponse]
@@ -858,6 +909,16 @@ module Aws
                                  ) -> _GetInferenceProfileResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetInferenceProfileResponseSuccess
 
+      interface _GetMarketplaceModelEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetMarketplaceModelEndpointResponse]
+        def marketplace_model_endpoint: () -> Types::MarketplaceModelEndpoint
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#get_marketplace_model_endpoint-instance_method
+      def get_marketplace_model_endpoint: (
+                                            endpoint_arn: ::String
+                                          ) -> _GetMarketplaceModelEndpointResponseSuccess
+                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMarketplaceModelEndpointResponseSuccess
+
       interface _GetModelCopyJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetModelCopyJobResponse]
         def job_arn: () -> ::String
@@ -963,6 +1024,25 @@ module Aws
       def get_model_invocation_logging_configuration: (
                                                       ) -> _GetModelInvocationLoggingConfigurationResponseSuccess
                                                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetModelInvocationLoggingConfigurationResponseSuccess
+
+      interface _GetPromptRouterResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetPromptRouterResponse]
+        def prompt_router_name: () -> ::String
+        def routing_criteria: () -> Types::RoutingCriteria
+        def description: () -> ::String
+        def created_at: () -> ::Time
+        def updated_at: () -> ::Time
+        def prompt_router_arn: () -> ::String
+        def models: () -> ::Array[Types::PromptRouterTargetModel]
+        def fallback_model: () -> Types::PromptRouterTargetModel
+        def status: () -> ("AVAILABLE")
+        def type: () -> ("custom" | "default")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#get_prompt_router-instance_method
+      def get_prompt_router: (
+                               prompt_router_arn: ::String
+                             ) -> _GetPromptRouterResponseSuccess
+                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetPromptRouterResponseSuccess
 
       interface _GetProvisionedModelThroughputResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetProvisionedModelThroughputResponse]
@@ -1081,6 +1161,19 @@ module Aws
                                    ) -> _ListInferenceProfilesResponseSuccess
                                  | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListInferenceProfilesResponseSuccess
 
+      interface _ListMarketplaceModelEndpointsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListMarketplaceModelEndpointsResponse]
+        def marketplace_model_endpoints: () -> ::Array[Types::MarketplaceModelEndpointSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#list_marketplace_model_endpoints-instance_method
+      def list_marketplace_model_endpoints: (
+                                              ?max_results: ::Integer,
+                                              ?next_token: ::String,
+                                              ?model_source_equals: ::String
+                                            ) -> _ListMarketplaceModelEndpointsResponseSuccess
+                                          | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMarketplaceModelEndpointsResponseSuccess
+
       interface _ListModelCopyJobsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListModelCopyJobsResponse]
         def next_token: () -> ::String
@@ -1155,6 +1248,18 @@ module Aws
                                       ) -> _ListModelInvocationJobsResponseSuccess
                                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListModelInvocationJobsResponseSuccess
 
+      interface _ListPromptRoutersResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListPromptRoutersResponse]
+        def prompt_router_summaries: () -> ::Array[Types::PromptRouterSummary]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#list_prompt_routers-instance_method
+      def list_prompt_routers: (
+                                 ?max_results: ::Integer,
+                                 ?next_token: ::String
+                               ) -> _ListPromptRoutersResponseSuccess
+                             | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListPromptRoutersResponseSuccess
+
       interface _ListProvisionedModelThroughputsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListProvisionedModelThroughputsResponse]
         def next_token: () -> ::String
@@ -1209,6 +1314,17 @@ module Aws
                                                         }
                                                       ) -> _PutModelInvocationLoggingConfigurationResponseSuccess
                                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _PutModelInvocationLoggingConfigurationResponseSuccess
+
+      interface _RegisterMarketplaceModelEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::RegisterMarketplaceModelEndpointResponse]
+        def marketplace_model_endpoint: () -> Types::MarketplaceModelEndpoint
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#register_marketplace_model_endpoint-instance_method
+      def register_marketplace_model_endpoint: (
+                                                 endpoint_identifier: ::String,
+                                                 model_source_identifier: ::String
+                                               ) -> _RegisterMarketplaceModelEndpointResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _RegisterMarketplaceModelEndpointResponseSuccess
 
       interface _StopEvaluationJobResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::StopEvaluationJobResponse]
@@ -1289,7 +1405,9 @@ module Aws
                                   {
                                     type: ("SEXUAL" | "VIOLENCE" | "HATE" | "INSULTS" | "MISCONDUCT" | "PROMPT_ATTACK"),
                                     input_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
-                                    output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH")
+                                    output_strength: ("NONE" | "LOW" | "MEDIUM" | "HIGH"),
+                                    input_modalities: Array[("TEXT" | "IMAGE")]?,
+                                    output_modalities: Array[("TEXT" | "IMAGE")]?
                                   },
                                 ]
                               },
@@ -1334,6 +1452,29 @@ module Aws
                               ?kms_key_id: ::String
                             ) -> _UpdateGuardrailResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateGuardrailResponseSuccess
+
+      interface _UpdateMarketplaceModelEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateMarketplaceModelEndpointResponse]
+        def marketplace_model_endpoint: () -> Types::MarketplaceModelEndpoint
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Bedrock/Client.html#update_marketplace_model_endpoint-instance_method
+      def update_marketplace_model_endpoint: (
+                                               endpoint_arn: ::String,
+                                               endpoint_config: {
+                                                 sage_maker: {
+                                                   initial_instance_count: ::Integer,
+                                                   instance_type: ::String,
+                                                   execution_role: ::String,
+                                                   kms_encryption_key: ::String?,
+                                                   vpc: {
+                                                     subnet_ids: Array[::String],
+                                                     security_group_ids: Array[::String]
+                                                   }?
+                                                 }?
+                                               },
+                                               ?client_request_token: ::String
+                                             ) -> _UpdateMarketplaceModelEndpointResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateMarketplaceModelEndpointResponseSuccess
 
       interface _UpdateProvisionedModelThroughputResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::UpdateProvisionedModelThroughputResponse]

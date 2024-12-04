@@ -89,6 +89,28 @@ module Aws
                                ) -> _DeleteAgentMemoryResponseSuccess
                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteAgentMemoryResponseSuccess
 
+      interface _GenerateQueryResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GenerateQueryResponse]
+        def queries: () -> ::Array[Types::GeneratedQuery]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/BedrockAgentRuntime/Client.html#generate_query-instance_method
+      def generate_query: (
+                            query_generation_input: {
+                              text: ::String,
+                              type: ("TEXT")
+                            },
+                            transformation_configuration: {
+                              mode: ("TEXT_TO_SQL"),
+                              text_to_sql_configuration: {
+                                knowledge_base_configuration: {
+                                  knowledge_base_arn: ::String
+                                }?,
+                                type: ("KNOWLEDGE_BASE")
+                              }?
+                            }
+                          ) -> _GenerateQueryResponseSuccess
+                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GenerateQueryResponseSuccess
+
       interface _GetAgentMemoryResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetAgentMemoryResponse]
         def memory_contents: () -> ::Array[Types::Memory]

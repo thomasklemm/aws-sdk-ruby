@@ -96,6 +96,12 @@ module Aws
                                  text: {
                                    text: ::String,
                                    qualifiers: Array[("grounding_source" | "query" | "guard_content")]?
+                                 }?,
+                                 image: {
+                                   format: ("png" | "jpeg"),
+                                   source: {
+                                     bytes: ::String?
+                                   }
                                  }?
                                },
                              ]
@@ -188,6 +194,12 @@ module Aws
                                 text: {
                                   text: ::String,
                                   qualifiers: Array[("grounding_source" | "query" | "guard_content")]?
+                                }?,
+                                image: {
+                                  format: ("png" | "jpeg"),
+                                  source: {
+                                    bytes: ::String?
+                                  }
                                 }?
                               }?
                             },
@@ -201,6 +213,12 @@ module Aws
                             text: {
                               text: ::String,
                               qualifiers: Array[("grounding_source" | "query" | "guard_content")]?
+                            }?,
+                            image: {
+                              format: ("png" | "jpeg"),
+                              source: {
+                                bytes: ::String?
+                              }
                             }?
                           }?
                         },
@@ -332,6 +350,12 @@ module Aws
                                        text: {
                                          text: ::String,
                                          qualifiers: Array[("grounding_source" | "query" | "guard_content")]?
+                                       }?,
+                                       image: {
+                                         format: ("png" | "jpeg"),
+                                         source: {
+                                           bytes: ::String?
+                                         }
                                        }?
                                      }?
                                    },
@@ -345,6 +369,12 @@ module Aws
                                    text: {
                                      text: ::String,
                                      qualifiers: Array[("grounding_source" | "query" | "guard_content")]?
+                                   }?,
+                                   image: {
+                                     format: ("png" | "jpeg"),
+                                     source: {
+                                       bytes: ::String?
+                                     }
                                    }?
                                  }?
                                },

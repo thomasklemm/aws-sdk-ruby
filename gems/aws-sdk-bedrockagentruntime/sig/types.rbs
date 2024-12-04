@@ -497,6 +497,23 @@ module Aws::BedrockAgentRuntime
       end
     end
 
+    class GenerateQueryRequest
+      attr_accessor query_generation_input: Types::QueryGenerationInput
+      attr_accessor transformation_configuration: Types::TransformationConfiguration
+      SENSITIVE: [:query_generation_input]
+    end
+
+    class GenerateQueryResponse
+      attr_accessor queries: ::Array[Types::GeneratedQuery]
+      SENSITIVE: []
+    end
+
+    class GeneratedQuery
+      attr_accessor sql: ::String
+      attr_accessor type: ("REDSHIFT_SQL")
+      SENSITIVE: []
+    end
+
     class GeneratedResponsePart
       attr_accessor text_response_part: Types::TextResponsePart
       SENSITIVE: [:text_response_part]
@@ -1104,6 +1121,12 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class QueryGenerationInput
+      attr_accessor text: ::String
+      attr_accessor type: ("TEXT")
+      SENSITIVE: []
+    end
+
     class QueryTransformationConfiguration
       attr_accessor type: ("QUERY_DECOMPOSITION")
       SENSITIVE: []
@@ -1255,7 +1278,17 @@ module Aws::BedrockAgentRuntime
     end
 
     class RetrievalResultContent
+      attr_accessor byte_content: ::String
+      attr_accessor row: ::Array[Types::RetrievalResultContentColumn]
       attr_accessor text: ::String
+      attr_accessor type: ("TEXT" | "IMAGE" | "ROW")
+      SENSITIVE: [:row]
+    end
+
+    class RetrievalResultContentColumn
+      attr_accessor column_name: ::String
+      attr_accessor column_value: ::String
+      attr_accessor type: ("BLOB" | "BOOLEAN" | "DOUBLE" | "NULL" | "LONG" | "STRING")
       SENSITIVE: []
     end
 
@@ -1264,13 +1297,20 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class RetrievalResultKendraDocumentLocation
+      attr_accessor uri: ::String
+      SENSITIVE: []
+    end
+
     class RetrievalResultLocation
       attr_accessor confluence_location: Types::RetrievalResultConfluenceLocation
       attr_accessor custom_document_location: Types::RetrievalResultCustomDocumentLocation
+      attr_accessor kendra_document_location: Types::RetrievalResultKendraDocumentLocation
       attr_accessor s3_location: Types::RetrievalResultS3Location
       attr_accessor salesforce_location: Types::RetrievalResultSalesforceLocation
       attr_accessor share_point_location: Types::RetrievalResultSharePointLocation
-      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM")
+      attr_accessor sql_location: Types::RetrievalResultSqlLocation
+      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM" | "KENDRA" | "SQL")
       attr_accessor web_location: Types::RetrievalResultWebLocation
       SENSITIVE: []
     end
@@ -1287,6 +1327,11 @@ module Aws::BedrockAgentRuntime
 
     class RetrievalResultSharePointLocation
       attr_accessor url: ::String
+      SENSITIVE: []
+    end
+
+    class RetrievalResultSqlLocation
+      attr_accessor query: ::String
       SENSITIVE: []
     end
 
@@ -1480,6 +1525,17 @@ module Aws::BedrockAgentRuntime
       SENSITIVE: []
     end
 
+    class TextToSqlConfiguration
+      attr_accessor knowledge_base_configuration: Types::TextToSqlKnowledgeBaseConfiguration
+      attr_accessor type: ("KNOWLEDGE_BASE")
+      SENSITIVE: []
+    end
+
+    class TextToSqlKnowledgeBaseConfiguration
+      attr_accessor knowledge_base_arn: ::String
+      SENSITIVE: []
+    end
+
     class ThrottlingException
       attr_accessor message: ::String
       attr_accessor event_type: untyped
@@ -1525,6 +1581,12 @@ module Aws::BedrockAgentRuntime
       attr_accessor trace: Types::Trace
       attr_accessor event_type: untyped
       SENSITIVE: [:collaborator_name, :trace]
+    end
+
+    class TransformationConfiguration
+      attr_accessor mode: ("TEXT_TO_SQL")
+      attr_accessor text_to_sql_configuration: Types::TextToSqlConfiguration
+      SENSITIVE: []
     end
 
     class Usage

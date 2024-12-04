@@ -1,0 +1,428 @@
+# WARNING ABOUT GENERATED CODE
+#
+# This file is generated. See the contributing guide for more information:
+# https://github.com/aws/aws-sdk-ruby/blob/version-3/CONTRIBUTING.md
+#
+# WARNING ABOUT GENERATED CODE
+
+module Aws::BedrockDataAutomation
+  module Types
+
+    class AccessDeniedException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class AudioExtractionCategory
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor types: ::Array[("AUDIO_CONTENT_MODERATION" | "CHAPTER_CONTENT_MODERATION" | "TRANSCRIPT")]
+      SENSITIVE: []
+    end
+
+    class AudioStandardExtraction
+      attr_accessor category: Types::AudioExtractionCategory
+      SENSITIVE: []
+    end
+
+    class AudioStandardGenerativeField
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor types: ::Array[("AUDIO_SUMMARY" | "CHAPTER_SUMMARY" | "IAB")]
+      SENSITIVE: []
+    end
+
+    class AudioStandardOutputConfiguration
+      attr_accessor extraction: Types::AudioStandardExtraction
+      attr_accessor generative_field: Types::AudioStandardGenerativeField
+      SENSITIVE: []
+    end
+
+    class Blueprint
+      attr_accessor blueprint_arn: ::String
+      attr_accessor schema: ::String
+      attr_accessor type: ("DOCUMENT" | "IMAGE")
+      attr_accessor creation_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      attr_accessor blueprint_name: ::String
+      attr_accessor blueprint_version: ::String
+      attr_accessor blueprint_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor kms_key_id: ::String
+      attr_accessor kms_encryption_context: ::Hash[::String, ::String]
+      SENSITIVE: [:schema, :blueprint_name]
+    end
+
+    class BlueprintFilter
+      attr_accessor blueprint_arn: ::String
+      attr_accessor blueprint_version: ::String
+      attr_accessor blueprint_stage: ("DEVELOPMENT" | "LIVE")
+      SENSITIVE: []
+    end
+
+    class BlueprintItem
+      attr_accessor blueprint_arn: ::String
+      attr_accessor blueprint_version: ::String
+      attr_accessor blueprint_stage: ("DEVELOPMENT" | "LIVE")
+      SENSITIVE: []
+    end
+
+    class BlueprintSummary
+      attr_accessor blueprint_arn: ::String
+      attr_accessor blueprint_version: ::String
+      attr_accessor blueprint_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor blueprint_name: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      SENSITIVE: [:blueprint_name]
+    end
+
+    class ConflictException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class CreateBlueprintRequest
+      attr_accessor blueprint_name: ::String
+      attr_accessor type: ("DOCUMENT" | "IMAGE")
+      attr_accessor blueprint_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor schema: ::String
+      attr_accessor client_token: ::String
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
+      SENSITIVE: [:blueprint_name, :schema]
+    end
+
+    class CreateBlueprintResponse
+      attr_accessor blueprint: Types::Blueprint
+      SENSITIVE: []
+    end
+
+    class CreateBlueprintVersionRequest
+      attr_accessor blueprint_arn: ::String
+      attr_accessor client_token: ::String
+      SENSITIVE: []
+    end
+
+    class CreateBlueprintVersionResponse
+      attr_accessor blueprint: Types::Blueprint
+      SENSITIVE: []
+    end
+
+    class CreateDataAutomationProjectRequest
+      attr_accessor project_name: ::String
+      attr_accessor project_description: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor standard_output_configuration: Types::StandardOutputConfiguration
+      attr_accessor custom_output_configuration: Types::CustomOutputConfiguration
+      attr_accessor override_configuration: Types::OverrideConfiguration
+      attr_accessor client_token: ::String
+      attr_accessor encryption_configuration: Types::EncryptionConfiguration
+      SENSITIVE: [:project_name, :project_description]
+    end
+
+    class CreateDataAutomationProjectResponse
+      attr_accessor project_arn: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor status: ("COMPLETED" | "IN_PROGRESS" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class CustomOutputConfiguration
+      attr_accessor blueprints: ::Array[Types::BlueprintItem]
+      SENSITIVE: []
+    end
+
+    class DataAutomationProject
+      attr_accessor project_arn: ::String
+      attr_accessor creation_time: ::Time
+      attr_accessor last_modified_time: ::Time
+      attr_accessor project_name: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor project_description: ::String
+      attr_accessor standard_output_configuration: Types::StandardOutputConfiguration
+      attr_accessor custom_output_configuration: Types::CustomOutputConfiguration
+      attr_accessor override_configuration: Types::OverrideConfiguration
+      attr_accessor status: ("COMPLETED" | "IN_PROGRESS" | "FAILED")
+      attr_accessor kms_key_id: ::String
+      attr_accessor kms_encryption_context: ::Hash[::String, ::String]
+      SENSITIVE: [:project_name, :project_description]
+    end
+
+    class DataAutomationProjectFilter
+      attr_accessor project_arn: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      SENSITIVE: []
+    end
+
+    class DataAutomationProjectSummary
+      attr_accessor project_arn: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor project_name: ::String
+      attr_accessor creation_time: ::Time
+      SENSITIVE: [:project_name]
+    end
+
+    class DeleteBlueprintRequest
+      attr_accessor blueprint_arn: ::String
+      attr_accessor blueprint_version: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteBlueprintResponse < Aws::EmptyStructure
+    end
+
+    class DeleteDataAutomationProjectRequest
+      attr_accessor project_arn: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteDataAutomationProjectResponse
+      attr_accessor project_arn: ::String
+      attr_accessor status: ("COMPLETED" | "IN_PROGRESS" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class DocumentBoundingBox
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class DocumentExtractionGranularity
+      attr_accessor types: ::Array[("DOCUMENT" | "PAGE" | "ELEMENT" | "WORD" | "LINE")]
+      SENSITIVE: []
+    end
+
+    class DocumentOutputAdditionalFileFormat
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class DocumentOutputFormat
+      attr_accessor text_format: Types::DocumentOutputTextFormat
+      attr_accessor additional_file_format: Types::DocumentOutputAdditionalFileFormat
+      SENSITIVE: []
+    end
+
+    class DocumentOutputTextFormat
+      attr_accessor types: ::Array[("PLAIN_TEXT" | "MARKDOWN" | "HTML" | "CSV")]
+      SENSITIVE: []
+    end
+
+    class DocumentOverrideConfiguration
+      attr_accessor splitter: Types::SplitterConfiguration
+      SENSITIVE: []
+    end
+
+    class DocumentStandardExtraction
+      attr_accessor granularity: Types::DocumentExtractionGranularity
+      attr_accessor bounding_box: Types::DocumentBoundingBox
+      SENSITIVE: []
+    end
+
+    class DocumentStandardGenerativeField
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class DocumentStandardOutputConfiguration
+      attr_accessor extraction: Types::DocumentStandardExtraction
+      attr_accessor generative_field: Types::DocumentStandardGenerativeField
+      attr_accessor output_format: Types::DocumentOutputFormat
+      SENSITIVE: []
+    end
+
+    class EncryptionConfiguration
+      attr_accessor kms_key_id: ::String
+      attr_accessor kms_encryption_context: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class GetBlueprintRequest
+      attr_accessor blueprint_arn: ::String
+      attr_accessor blueprint_version: ::String
+      attr_accessor blueprint_stage: ("DEVELOPMENT" | "LIVE")
+      SENSITIVE: []
+    end
+
+    class GetBlueprintResponse
+      attr_accessor blueprint: Types::Blueprint
+      SENSITIVE: []
+    end
+
+    class GetDataAutomationProjectRequest
+      attr_accessor project_arn: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      SENSITIVE: []
+    end
+
+    class GetDataAutomationProjectResponse
+      attr_accessor project: Types::DataAutomationProject
+      SENSITIVE: []
+    end
+
+    class ImageBoundingBox
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class ImageExtractionCategory
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor types: ::Array[("CONTENT_MODERATION" | "TEXT_DETECTION")]
+      SENSITIVE: []
+    end
+
+    class ImageStandardExtraction
+      attr_accessor category: Types::ImageExtractionCategory
+      attr_accessor bounding_box: Types::ImageBoundingBox
+      SENSITIVE: []
+    end
+
+    class ImageStandardGenerativeField
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor types: ::Array[("IMAGE_SUMMARY" | "IAB")]
+      SENSITIVE: []
+    end
+
+    class ImageStandardOutputConfiguration
+      attr_accessor extraction: Types::ImageStandardExtraction
+      attr_accessor generative_field: Types::ImageStandardGenerativeField
+      SENSITIVE: []
+    end
+
+    class InternalServerException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ListBlueprintsRequest
+      attr_accessor blueprint_arn: ::String
+      attr_accessor resource_owner: ("SERVICE" | "ACCOUNT")
+      attr_accessor blueprint_stage_filter: ("DEVELOPMENT" | "LIVE" | "ALL")
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor project_filter: Types::DataAutomationProjectFilter
+      SENSITIVE: []
+    end
+
+    class ListBlueprintsResponse
+      attr_accessor blueprints: ::Array[Types::BlueprintSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListDataAutomationProjectsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor project_stage_filter: ("DEVELOPMENT" | "LIVE" | "ALL")
+      attr_accessor blueprint_filter: Types::BlueprintFilter
+      attr_accessor resource_owner: ("SERVICE" | "ACCOUNT")
+      SENSITIVE: []
+    end
+
+    class ListDataAutomationProjectsResponse
+      attr_accessor projects: ::Array[Types::DataAutomationProjectSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class OverrideConfiguration
+      attr_accessor document: Types::DocumentOverrideConfiguration
+      SENSITIVE: []
+    end
+
+    class ResourceNotFoundException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class ServiceQuotaExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class SplitterConfiguration
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class StandardOutputConfiguration
+      attr_accessor document: Types::DocumentStandardOutputConfiguration
+      attr_accessor image: Types::ImageStandardOutputConfiguration
+      attr_accessor video: Types::VideoStandardOutputConfiguration
+      attr_accessor audio: Types::AudioStandardOutputConfiguration
+      SENSITIVE: []
+    end
+
+    class ThrottlingException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class UpdateBlueprintRequest
+      attr_accessor blueprint_arn: ::String
+      attr_accessor schema: ::String
+      attr_accessor blueprint_stage: ("DEVELOPMENT" | "LIVE")
+      SENSITIVE: [:schema]
+    end
+
+    class UpdateBlueprintResponse
+      attr_accessor blueprint: Types::Blueprint
+      SENSITIVE: []
+    end
+
+    class UpdateDataAutomationProjectRequest
+      attr_accessor project_arn: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor project_description: ::String
+      attr_accessor standard_output_configuration: Types::StandardOutputConfiguration
+      attr_accessor custom_output_configuration: Types::CustomOutputConfiguration
+      attr_accessor override_configuration: Types::OverrideConfiguration
+      SENSITIVE: [:project_description]
+    end
+
+    class UpdateDataAutomationProjectResponse
+      attr_accessor project_arn: ::String
+      attr_accessor project_stage: ("DEVELOPMENT" | "LIVE")
+      attr_accessor status: ("COMPLETED" | "IN_PROGRESS" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class ValidationException
+      attr_accessor message: ::String
+      attr_accessor field_list: ::Array[Types::ValidationExceptionField]
+      SENSITIVE: []
+    end
+
+    class ValidationExceptionField
+      attr_accessor name: ::String
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class VideoBoundingBox
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      SENSITIVE: []
+    end
+
+    class VideoExtractionCategory
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor types: ::Array[("CONTENT_MODERATION" | "TEXT_DETECTION" | "TRANSCRIPT")]
+      SENSITIVE: []
+    end
+
+    class VideoStandardExtraction
+      attr_accessor category: Types::VideoExtractionCategory
+      attr_accessor bounding_box: Types::VideoBoundingBox
+      SENSITIVE: []
+    end
+
+    class VideoStandardGenerativeField
+      attr_accessor state: ("ENABLED" | "DISABLED")
+      attr_accessor types: ::Array[("VIDEO_SUMMARY" | "SCENE_SUMMARY" | "IAB")]
+      SENSITIVE: []
+    end
+
+    class VideoStandardOutputConfiguration
+      attr_accessor extraction: Types::VideoStandardExtraction
+      attr_accessor generative_field: Types::VideoStandardGenerativeField
+      SENSITIVE: []
+    end
+  end
+end

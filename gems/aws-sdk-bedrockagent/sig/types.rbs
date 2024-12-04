@@ -271,6 +271,11 @@ module Aws::BedrockAgent
     class AutoToolChoice < Aws::EmptyStructure
     end
 
+    class BedrockDataAutomationConfiguration
+      attr_accessor parsing_modality: ("MULTIMODAL")
+      SENSITIVE: []
+    end
+
     class BedrockEmbeddingModelConfiguration
       attr_accessor dimensions: ::Integer
       attr_accessor embedding_data_type: ("FLOAT32" | "BINARY")
@@ -279,6 +284,7 @@ module Aws::BedrockAgent
 
     class BedrockFoundationModelConfiguration
       attr_accessor model_arn: ::String
+      attr_accessor parsing_modality: ("MULTIMODAL")
       attr_accessor parsing_prompt: Types::ParsingPrompt
       SENSITIVE: []
     end
@@ -561,6 +567,12 @@ module Aws::BedrockAgent
       SENSITIVE: [:variants]
     end
 
+    class CuratedQuery
+      attr_accessor natural_language: ::String
+      attr_accessor sql: ::String
+      SENSITIVE: []
+    end
+
     class CustomContent
       attr_accessor custom_document_identifier: Types::CustomDocumentIdentifier
       attr_accessor inline_content: Types::InlineContent
@@ -617,7 +629,7 @@ module Aws::BedrockAgent
       attr_accessor s3_configuration: Types::S3DataSourceConfiguration
       attr_accessor salesforce_configuration: Types::SalesforceDataSourceConfiguration
       attr_accessor share_point_configuration: Types::SharePointDataSourceConfiguration
-      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM")
+      attr_accessor type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM" | "REDSHIFT_METADATA")
       attr_accessor web_configuration: Types::WebDataSourceConfiguration
       SENSITIVE: []
     end
@@ -1399,6 +1411,11 @@ module Aws::BedrockAgent
     class IteratorFlowNodeConfiguration < Aws::EmptyStructure
     end
 
+    class KendraKnowledgeBaseConfiguration
+      attr_accessor kendra_index_arn: ::String
+      SENSITIVE: []
+    end
+
     class KnowledgeBase
       attr_accessor created_at: ::Time
       attr_accessor description: ::String
@@ -1415,7 +1432,9 @@ module Aws::BedrockAgent
     end
 
     class KnowledgeBaseConfiguration
-      attr_accessor type: ("VECTOR")
+      attr_accessor kendra_knowledge_base_configuration: Types::KendraKnowledgeBaseConfiguration
+      attr_accessor sql_knowledge_base_configuration: Types::SqlKnowledgeBaseConfiguration
+      attr_accessor type: ("VECTOR" | "KENDRA" | "SQL")
       attr_accessor vector_knowledge_base_configuration: Types::VectorKnowledgeBaseConfiguration
       SENSITIVE: []
     end
@@ -1807,8 +1826,9 @@ module Aws::BedrockAgent
     end
 
     class ParsingConfiguration
+      attr_accessor bedrock_data_automation_configuration: Types::BedrockDataAutomationConfiguration
       attr_accessor bedrock_foundation_model_configuration: Types::BedrockFoundationModelConfiguration
-      attr_accessor parsing_strategy: ("BEDROCK_FOUNDATION_MODEL")
+      attr_accessor parsing_strategy: ("BEDROCK_FOUNDATION_MODEL" | "BEDROCK_DATA_AUTOMATION")
       SENSITIVE: []
     end
 
@@ -2001,6 +2021,33 @@ module Aws::BedrockAgent
       SENSITIVE: [:gen_ai_resource, :metadata]
     end
 
+    class QueryGenerationColumn
+      attr_accessor description: ::String
+      attr_accessor inclusion: ("INCLUDE" | "EXCLUDE")
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
+    class QueryGenerationConfiguration
+      attr_accessor execution_timeout_seconds: ::Integer
+      attr_accessor generation_context: Types::QueryGenerationContext
+      SENSITIVE: [:generation_context]
+    end
+
+    class QueryGenerationContext
+      attr_accessor curated_queries: ::Array[Types::CuratedQuery]
+      attr_accessor tables: ::Array[Types::QueryGenerationTable]
+      SENSITIVE: []
+    end
+
+    class QueryGenerationTable
+      attr_accessor columns: ::Array[Types::QueryGenerationColumn]
+      attr_accessor description: ::String
+      attr_accessor inclusion: ("INCLUDE" | "EXCLUDE")
+      attr_accessor name: ::String
+      SENSITIVE: []
+    end
+
     class RdsConfiguration
       attr_accessor credentials_secret_arn: ::String
       attr_accessor database_name: ::String
@@ -2030,6 +2077,62 @@ module Aws::BedrockAgent
       attr_accessor metadata_field: ::String
       attr_accessor text_field: ::String
       attr_accessor vector_field: ::String
+      SENSITIVE: []
+    end
+
+    class RedshiftConfiguration
+      attr_accessor query_engine_configuration: Types::RedshiftQueryEngineConfiguration
+      attr_accessor query_generation_configuration: Types::QueryGenerationConfiguration
+      attr_accessor storage_configurations: ::Array[Types::RedshiftQueryEngineStorageConfiguration]
+      SENSITIVE: []
+    end
+
+    class RedshiftProvisionedAuthConfiguration
+      attr_accessor database_user: ::String
+      attr_accessor type: ("IAM" | "USERNAME_PASSWORD" | "USERNAME")
+      attr_accessor username_password_secret_arn: ::String
+      SENSITIVE: []
+    end
+
+    class RedshiftProvisionedConfiguration
+      attr_accessor auth_configuration: Types::RedshiftProvisionedAuthConfiguration
+      attr_accessor cluster_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class RedshiftQueryEngineAwsDataCatalogStorageConfiguration
+      attr_accessor table_names: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class RedshiftQueryEngineConfiguration
+      attr_accessor provisioned_configuration: Types::RedshiftProvisionedConfiguration
+      attr_accessor serverless_configuration: Types::RedshiftServerlessConfiguration
+      attr_accessor type: ("SERVERLESS" | "PROVISIONED")
+      SENSITIVE: []
+    end
+
+    class RedshiftQueryEngineRedshiftStorageConfiguration
+      attr_accessor database_name: ::String
+      SENSITIVE: []
+    end
+
+    class RedshiftQueryEngineStorageConfiguration
+      attr_accessor aws_data_catalog_configuration: Types::RedshiftQueryEngineAwsDataCatalogStorageConfiguration
+      attr_accessor redshift_configuration: Types::RedshiftQueryEngineRedshiftStorageConfiguration
+      attr_accessor type: ("REDSHIFT" | "AWS_DATA_CATALOG")
+      SENSITIVE: []
+    end
+
+    class RedshiftServerlessAuthConfiguration
+      attr_accessor type: ("IAM" | "USERNAME_PASSWORD")
+      attr_accessor username_password_secret_arn: ::String
+      SENSITIVE: []
+    end
+
+    class RedshiftServerlessConfiguration
+      attr_accessor auth_configuration: Types::RedshiftServerlessAuthConfiguration
+      attr_accessor workgroup_arn: ::String
       SENSITIVE: []
     end
 
@@ -2148,6 +2251,12 @@ module Aws::BedrockAgent
       SENSITIVE: []
     end
 
+    class SqlKnowledgeBaseConfiguration
+      attr_accessor redshift_configuration: Types::RedshiftConfiguration
+      attr_accessor type: ("REDSHIFT")
+      SENSITIVE: []
+    end
+
     class StartIngestionJobRequest
       attr_accessor client_token: ::String
       attr_accessor data_source_id: ::String
@@ -2202,6 +2311,17 @@ module Aws::BedrockAgent
       end
       class Unknown < StorageFlowNodeServiceConfiguration
       end
+    end
+
+    class SupplementalDataStorageConfiguration
+      attr_accessor storage_locations: ::Array[Types::SupplementalDataStorageLocation]
+      SENSITIVE: []
+    end
+
+    class SupplementalDataStorageLocation
+      attr_accessor s3_location: Types::S3Location
+      attr_accessor type: ("S3")
+      SENSITIVE: []
     end
 
     class SystemContentBlock
@@ -2586,6 +2706,7 @@ module Aws::BedrockAgent
     class VectorKnowledgeBaseConfiguration
       attr_accessor embedding_model_arn: ::String
       attr_accessor embedding_model_configuration: Types::EmbeddingModelConfiguration
+      attr_accessor supplemental_data_storage_configuration: Types::SupplementalDataStorageConfiguration
       SENSITIVE: []
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.40.0 (2024-12-04)
+------------------
+
+* Feature - This release introduces the ability to generate SQL using natural language, through a new GenerateQuery API (with native integration into Knowledge Bases); ability to ingest and retrieve images through Bedrock Data Automation; and ability to create a Knowledge Base backed by Kendra GenAI Index.
+
 1.39.0 (2024-12-03)
 ------------------
 

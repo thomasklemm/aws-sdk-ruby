@@ -302,7 +302,7 @@ module Aws
                                       tenant_id: ::String?
                                     }
                                   }?,
-                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM"),
+                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM" | "REDSHIFT_METADATA"),
                                   web_configuration: {
                                     crawler_configuration: {
                                       crawler_limits: {
@@ -368,13 +368,17 @@ module Aws
                                     ]
                                   }?,
                                   parsing_configuration: {
+                                    bedrock_data_automation_configuration: {
+                                      parsing_modality: ("MULTIMODAL")?
+                                    }?,
                                     bedrock_foundation_model_configuration: {
                                       model_arn: ::String,
+                                      parsing_modality: ("MULTIMODAL")?,
                                       parsing_prompt: {
                                         parsing_prompt_text: ::String
                                       }?
                                     }?,
-                                    parsing_strategy: ("BEDROCK_FOUNDATION_MODEL")
+                                    parsing_strategy: ("BEDROCK_FOUNDATION_MODEL" | "BEDROCK_DATA_AUTOMATION")
                                   }?
                                 }
                               ) -> _CreateDataSourceResponseSuccess
@@ -629,7 +633,69 @@ module Aws
                                    ?client_token: ::String,
                                    ?description: ::String,
                                    knowledge_base_configuration: {
-                                     type: ("VECTOR"),
+                                     kendra_knowledge_base_configuration: {
+                                       kendra_index_arn: ::String
+                                     }?,
+                                     sql_knowledge_base_configuration: {
+                                       redshift_configuration: {
+                                         query_engine_configuration: {
+                                           provisioned_configuration: {
+                                             auth_configuration: {
+                                               database_user: ::String?,
+                                               type: ("IAM" | "USERNAME_PASSWORD" | "USERNAME"),
+                                               username_password_secret_arn: ::String?
+                                             },
+                                             cluster_identifier: ::String
+                                           }?,
+                                           serverless_configuration: {
+                                             auth_configuration: {
+                                               type: ("IAM" | "USERNAME_PASSWORD"),
+                                               username_password_secret_arn: ::String?
+                                             },
+                                             workgroup_arn: ::String
+                                           }?,
+                                           type: ("SERVERLESS" | "PROVISIONED")
+                                         },
+                                         query_generation_configuration: {
+                                           execution_timeout_seconds: ::Integer?,
+                                           generation_context: {
+                                             curated_queries: Array[
+                                               {
+                                                 natural_language: ::String,
+                                                 sql: ::String
+                                               },
+                                             ]?,
+                                             tables: Array[
+                                               {
+                                                 columns: Array[
+                                                   {
+                                                     description: ::String?,
+                                                     inclusion: ("INCLUDE" | "EXCLUDE")?,
+                                                     name: ::String?
+                                                   },
+                                                 ]?,
+                                                 description: ::String?,
+                                                 inclusion: ("INCLUDE" | "EXCLUDE")?,
+                                                 name: ::String
+                                               },
+                                             ]?
+                                           }?
+                                         }?,
+                                         storage_configurations: Array[
+                                           {
+                                             aws_data_catalog_configuration: {
+                                               table_names: Array[::String]
+                                             }?,
+                                             redshift_configuration: {
+                                               database_name: ::String
+                                             }?,
+                                             type: ("REDSHIFT" | "AWS_DATA_CATALOG")
+                                           },
+                                         ]
+                                       }?,
+                                       type: ("REDSHIFT")
+                                     }?,
+                                     type: ("VECTOR" | "KENDRA" | "SQL"),
                                      vector_knowledge_base_configuration: {
                                        embedding_model_arn: ::String,
                                        embedding_model_configuration: {
@@ -637,12 +703,22 @@ module Aws
                                            dimensions: ::Integer?,
                                            embedding_data_type: ("FLOAT32" | "BINARY")?
                                          }?
+                                       }?,
+                                       supplemental_data_storage_configuration: {
+                                         storage_locations: Array[
+                                           {
+                                             s3_location: {
+                                               uri: ::String
+                                             }?,
+                                             type: ("S3")
+                                           },
+                                         ]
                                        }?
                                      }?
                                    },
                                    name: ::String,
                                    role_arn: ::String,
-                                   storage_configuration: {
+                                   ?storage_configuration: {
                                      mongo_db_atlas_configuration: {
                                        collection_name: ::String,
                                        credentials_secret_arn: ::String,
@@ -1762,7 +1838,7 @@ module Aws
                                       tenant_id: ::String?
                                     }
                                   }?,
-                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM"),
+                                  type: ("S3" | "WEB" | "CONFLUENCE" | "SALESFORCE" | "SHAREPOINT" | "CUSTOM" | "REDSHIFT_METADATA"),
                                   web_configuration: {
                                     crawler_configuration: {
                                       crawler_limits: {
@@ -1829,13 +1905,17 @@ module Aws
                                     ]
                                   }?,
                                   parsing_configuration: {
+                                    bedrock_data_automation_configuration: {
+                                      parsing_modality: ("MULTIMODAL")?
+                                    }?,
                                     bedrock_foundation_model_configuration: {
                                       model_arn: ::String,
+                                      parsing_modality: ("MULTIMODAL")?,
                                       parsing_prompt: {
                                         parsing_prompt_text: ::String
                                       }?
                                     }?,
-                                    parsing_strategy: ("BEDROCK_FOUNDATION_MODEL")
+                                    parsing_strategy: ("BEDROCK_FOUNDATION_MODEL" | "BEDROCK_DATA_AUTOMATION")
                                   }?
                                 }
                               ) -> _UpdateDataSourceResponseSuccess
@@ -2066,7 +2146,69 @@ module Aws
       def update_knowledge_base: (
                                    ?description: ::String,
                                    knowledge_base_configuration: {
-                                     type: ("VECTOR"),
+                                     kendra_knowledge_base_configuration: {
+                                       kendra_index_arn: ::String
+                                     }?,
+                                     sql_knowledge_base_configuration: {
+                                       redshift_configuration: {
+                                         query_engine_configuration: {
+                                           provisioned_configuration: {
+                                             auth_configuration: {
+                                               database_user: ::String?,
+                                               type: ("IAM" | "USERNAME_PASSWORD" | "USERNAME"),
+                                               username_password_secret_arn: ::String?
+                                             },
+                                             cluster_identifier: ::String
+                                           }?,
+                                           serverless_configuration: {
+                                             auth_configuration: {
+                                               type: ("IAM" | "USERNAME_PASSWORD"),
+                                               username_password_secret_arn: ::String?
+                                             },
+                                             workgroup_arn: ::String
+                                           }?,
+                                           type: ("SERVERLESS" | "PROVISIONED")
+                                         },
+                                         query_generation_configuration: {
+                                           execution_timeout_seconds: ::Integer?,
+                                           generation_context: {
+                                             curated_queries: Array[
+                                               {
+                                                 natural_language: ::String,
+                                                 sql: ::String
+                                               },
+                                             ]?,
+                                             tables: Array[
+                                               {
+                                                 columns: Array[
+                                                   {
+                                                     description: ::String?,
+                                                     inclusion: ("INCLUDE" | "EXCLUDE")?,
+                                                     name: ::String?
+                                                   },
+                                                 ]?,
+                                                 description: ::String?,
+                                                 inclusion: ("INCLUDE" | "EXCLUDE")?,
+                                                 name: ::String
+                                               },
+                                             ]?
+                                           }?
+                                         }?,
+                                         storage_configurations: Array[
+                                           {
+                                             aws_data_catalog_configuration: {
+                                               table_names: Array[::String]
+                                             }?,
+                                             redshift_configuration: {
+                                               database_name: ::String
+                                             }?,
+                                             type: ("REDSHIFT" | "AWS_DATA_CATALOG")
+                                           },
+                                         ]
+                                       }?,
+                                       type: ("REDSHIFT")
+                                     }?,
+                                     type: ("VECTOR" | "KENDRA" | "SQL"),
                                      vector_knowledge_base_configuration: {
                                        embedding_model_arn: ::String,
                                        embedding_model_configuration: {
@@ -2074,13 +2216,23 @@ module Aws
                                            dimensions: ::Integer?,
                                            embedding_data_type: ("FLOAT32" | "BINARY")?
                                          }?
+                                       }?,
+                                       supplemental_data_storage_configuration: {
+                                         storage_locations: Array[
+                                           {
+                                             s3_location: {
+                                               uri: ::String
+                                             }?,
+                                             type: ("S3")
+                                           },
+                                         ]
                                        }?
                                      }?
                                    },
                                    knowledge_base_id: ::String,
                                    name: ::String,
                                    role_arn: ::String,
-                                   storage_configuration: {
+                                   ?storage_configuration: {
                                      mongo_db_atlas_configuration: {
                                        collection_name: ::String,
                                        credentials_secret_arn: ::String,

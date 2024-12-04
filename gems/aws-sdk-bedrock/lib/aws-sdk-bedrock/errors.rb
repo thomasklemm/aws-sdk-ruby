@@ -32,6 +32,7 @@ module Aws::Bedrock
   # * {InternalServerException}
   # * {ResourceNotFoundException}
   # * {ServiceQuotaExceededException}
+  # * {ServiceUnavailableException}
   # * {ThrottlingException}
   # * {TooManyTagsException}
   # * {ValidationException}
@@ -107,6 +108,21 @@ module Aws::Bedrock
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::Bedrock::Types::ServiceQuotaExceededException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class ServiceUnavailableException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::Bedrock::Types::ServiceUnavailableException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end
