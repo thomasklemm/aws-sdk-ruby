@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.25.0 (2024-12-05)
+------------------
+
+* Feature - This release removes the deprecated UserId and UserGroups fields from SearchRelevantContent api's request parameters.
+
 1.24.0 (2024-12-03)
 ------------------
 

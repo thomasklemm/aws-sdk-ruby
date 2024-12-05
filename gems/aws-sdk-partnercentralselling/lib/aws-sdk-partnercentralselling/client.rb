@@ -454,6 +454,41 @@ module Aws::PartnerCentralSelling
 
     # @!group API Operations
 
+    # Use the `AcceptEngagementInvitation` action to accept an engagement
+    # invitation shared by AWS. Accepting the invitation indicates your
+    # willingness to participate in the engagement, granting you access to
+    # all engagement-related data.
+    #
+    # @option params [required, String] :catalog
+    #   The `CatalogType` parameter specifies the catalog associated with the
+    #   engagement invitation. Accepted values are `AWS` and `Sandbox`, which
+    #   determine the environment in which the engagement invitation is
+    #   managed.
+    #
+    # @option params [required, String] :identifier
+    #   The `Identifier` parameter in the `AcceptEngagementInvitationRequest`
+    #   specifies the unique identifier of the `EngagementInvitation` to be
+    #   accepted. Providing the correct identifier ensures that the intended
+    #   invitation is accepted.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.accept_engagement_invitation({
+    #     catalog: "CatalogIdentifier", # required
+    #     identifier: "EngagementInvitationArnOrIdentifier", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/AcceptEngagementInvitation AWS API Documentation
+    #
+    # @overload accept_engagement_invitation(params = {})
+    # @param [Hash] params ({})
+    def accept_engagement_invitation(params = {}, options = {})
+      req = build_request(:accept_engagement_invitation, params)
+      req.send_request(options)
+    end
+
     # Enables you to reassign an existing `Opportunity` to another user
     # within your Partner Central account. The specified user receives the
     # opportunity, and it appears on their Partner Central dashboard,
@@ -595,6 +630,196 @@ module Aws::PartnerCentralSelling
     # @param [Hash] params ({})
     def associate_opportunity(params = {}, options = {})
       req = build_request(:associate_opportunity, params)
+      req.send_request(options)
+    end
+
+    # The `CreateEngagement` action allows you to create an `Engagement`,
+    # which serves as a collaborative space between different parties such
+    # as AWS Partners and AWS Sellers. This action automatically adds the
+    # caller's AWS account as an active member of the newly created
+    # `Engagement`.
+    #
+    # @option params [required, String] :catalog
+    #   The `CreateEngagementRequest$Catalog` parameter specifies the catalog
+    #   related to the engagement. Accepted values are `AWS` and `Sandbox`,
+    #   which determine the environment in which the engagement is managed.
+    #
+    # @option params [required, String] :client_token
+    #   The `CreateEngagementRequest$ClientToken` parameter specifies a
+    #   unique, case-sensitive identifier to ensure that the request is
+    #   handled exactly once. The value must not exceed sixty-four
+    #   alphanumeric characters.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [Array<Types::EngagementContextDetails>] :contexts
+    #   The `Contexts` field is a required array of objects, with a maximum of
+    #   5 contexts allowed, specifying detailed information about customer
+    #   projects associated with the Engagement. Each context object contains
+    #   a `Type` field indicating the context type, which must be
+    #   `CustomerProject` in this version, and a `Payload` field containing
+    #   the `CustomerProject` details. The `CustomerProject` object is
+    #   composed of two main components: `Customer` and `Project`. The
+    #   `Customer` object includes information such as `CompanyName`,
+    #   `WebsiteUrl`, `Industry`, and `CountryCode`, providing essential
+    #   details about the customer. The `Project` object contains `Title`,
+    #   `BusinessProblem`, and `TargetCompletionDate`, offering insights into
+    #   the specific project associated with the customer. This structure
+    #   allows comprehensive context to be included within the Engagement,
+    #   facilitating effective collaboration between parties by providing
+    #   relevant customer and project information.
+    #
+    # @option params [required, String] :description
+    #   Provides a description of the `Engagement`.
+    #
+    # @option params [required, String] :title
+    #   Specifies the title of the `Engagement`.
+    #
+    # @return [Types::CreateEngagementResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateEngagementResponse#arn #arn} => String
+    #   * {Types::CreateEngagementResponse#id #id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_engagement({
+    #     catalog: "CatalogIdentifier", # required
+    #     client_token: "CreateEngagementRequestClientTokenString", # required
+    #     contexts: [
+    #       {
+    #         payload: {
+    #           customer_project: {
+    #             customer: {
+    #               company_name: "CompanyName", # required
+    #               country_code: "US", # required, accepts US, AF, AX, AL, DZ, AS, AD, AO, AI, AQ, AG, AR, AM, AW, AU, AT, AZ, BS, BH, BD, BB, BY, BE, BZ, BJ, BM, BT, BO, BQ, BA, BW, BV, BR, IO, BN, BG, BF, BI, KH, CM, CA, CV, KY, CF, TD, CL, CN, CX, CC, CO, KM, CG, CK, CR, CI, HR, CU, CW, CY, CZ, CD, DK, DJ, DM, DO, EC, EG, SV, GQ, ER, EE, ET, FK, FO, FJ, FI, FR, GF, PF, TF, GA, GM, GE, DE, GH, GI, GR, GL, GD, GP, GU, GT, GG, GN, GW, GY, HT, HM, VA, HN, HK, HU, IS, IN, ID, IR, IQ, IE, IM, IL, IT, JM, JP, JE, JO, KZ, KE, KI, KR, KW, KG, LA, LV, LB, LS, LR, LY, LI, LT, LU, MO, MK, MG, MW, MY, MV, ML, MT, MH, MQ, MR, MU, YT, MX, FM, MD, MC, MN, ME, MS, MA, MZ, MM, NA, NR, NP, NL, AN, NC, NZ, NI, NE, NG, NU, NF, MP, NO, OM, PK, PW, PS, PA, PG, PY, PE, PH, PN, PL, PT, PR, QA, RE, RO, RU, RW, BL, SH, KN, LC, MF, PM, VC, WS, SM, ST, SA, SN, RS, SC, SL, SG, SX, SK, SI, SB, SO, ZA, GS, SS, ES, LK, SD, SR, SJ, SZ, SE, CH, SY, TW, TJ, TZ, TH, TL, TG, TK, TO, TT, TN, TR, TM, TC, TV, UG, UA, AE, GB, UM, UY, UZ, VU, VE, VN, VG, VI, WF, EH, YE, ZM, ZW
+    #               industry: "Aerospace", # required, accepts Aerospace, Agriculture, Automotive, Computers and Electronics, Consumer Goods, Education, Energy - Oil and Gas, Energy - Power and Utilities, Financial Services, Gaming, Government, Healthcare, Hospitality, Life Sciences, Manufacturing, Marketing and Advertising, Media and Entertainment, Mining, Non-Profit Organization, Professional Services, Real Estate and Construction, Retail, Software and Internet, Telecommunications, Transportation and Logistics, Travel, Wholesale and Distribution, Other
+    #               website_url: "CompanyWebsiteUrl", # required
+    #             },
+    #             project: {
+    #               business_problem: "EngagementCustomerBusinessProblem", # required
+    #               target_completion_date: "EngagementCustomerProjectDetailsTargetCompletionDateString", # required
+    #               title: "EngagementCustomerProjectTitle", # required
+    #             },
+    #           },
+    #         },
+    #         type: "CustomerProject", # required, accepts CustomerProject
+    #       },
+    #     ],
+    #     description: "EngagementDescription", # required
+    #     title: "EngagementTitle", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/CreateEngagement AWS API Documentation
+    #
+    # @overload create_engagement(params = {})
+    # @param [Hash] params ({})
+    def create_engagement(params = {}, options = {})
+      req = build_request(:create_engagement, params)
+      req.send_request(options)
+    end
+
+    # This action creates an invitation from a sender to a single receiver
+    # to join an engagement.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the engagement. Accepted values are
+    #   `AWS` and `Sandbox`, which determine the environment in which the
+    #   engagement is managed.
+    #
+    # @option params [required, String] :client_token
+    #   Specifies a unique, client-generated UUID to ensure that the request
+    #   is handled exactly once. This token helps prevent duplicate invitation
+    #   creations.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :engagement_identifier
+    #   The unique identifier of the `Engagement` associated with the
+    #   invitation. This parameter ensures the invitation is created within
+    #   the correct `Engagement` context.
+    #
+    # @option params [required, Types::Invitation] :invitation
+    #   The `Invitation` object all information necessary to initiate an
+    #   engagement invitation to a partner. It contains a personalized message
+    #   from the sender, the invitation's receiver, and a payload. The
+    #   `Payload` can be the `OpportunityInvitation`, which includes detailed
+    #   structures for sender contacts, partner responsibilities, customer
+    #   information, and project details.
+    #
+    # @return [Types::CreateEngagementInvitationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateEngagementInvitationResponse#arn #arn} => String
+    #   * {Types::CreateEngagementInvitationResponse#id #id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_engagement_invitation({
+    #     catalog: "CatalogIdentifier", # required
+    #     client_token: "ClientToken", # required
+    #     engagement_identifier: "EngagementIdentifier", # required
+    #     invitation: { # required
+    #       message: "InvitationMessage", # required
+    #       payload: { # required
+    #         opportunity_invitation: {
+    #           customer: { # required
+    #             company_name: "CompanyName", # required
+    #             country_code: "US", # required, accepts US, AF, AX, AL, DZ, AS, AD, AO, AI, AQ, AG, AR, AM, AW, AU, AT, AZ, BS, BH, BD, BB, BY, BE, BZ, BJ, BM, BT, BO, BQ, BA, BW, BV, BR, IO, BN, BG, BF, BI, KH, CM, CA, CV, KY, CF, TD, CL, CN, CX, CC, CO, KM, CG, CK, CR, CI, HR, CU, CW, CY, CZ, CD, DK, DJ, DM, DO, EC, EG, SV, GQ, ER, EE, ET, FK, FO, FJ, FI, FR, GF, PF, TF, GA, GM, GE, DE, GH, GI, GR, GL, GD, GP, GU, GT, GG, GN, GW, GY, HT, HM, VA, HN, HK, HU, IS, IN, ID, IR, IQ, IE, IM, IL, IT, JM, JP, JE, JO, KZ, KE, KI, KR, KW, KG, LA, LV, LB, LS, LR, LY, LI, LT, LU, MO, MK, MG, MW, MY, MV, ML, MT, MH, MQ, MR, MU, YT, MX, FM, MD, MC, MN, ME, MS, MA, MZ, MM, NA, NR, NP, NL, AN, NC, NZ, NI, NE, NG, NU, NF, MP, NO, OM, PK, PW, PS, PA, PG, PY, PE, PH, PN, PL, PT, PR, QA, RE, RO, RU, RW, BL, SH, KN, LC, MF, PM, VC, WS, SM, ST, SA, SN, RS, SC, SL, SG, SX, SK, SI, SB, SO, ZA, GS, SS, ES, LK, SD, SR, SJ, SZ, SE, CH, SY, TW, TJ, TZ, TH, TL, TG, TK, TO, TT, TN, TR, TM, TC, TV, UG, UA, AE, GB, UM, UY, UZ, VU, VE, VN, VG, VI, WF, EH, YE, ZM, ZW
+    #             industry: "Aerospace", # required, accepts Aerospace, Agriculture, Automotive, Computers and Electronics, Consumer Goods, Education, Energy - Oil and Gas, Energy - Power and Utilities, Financial Services, Gaming, Government, Healthcare, Hospitality, Life Sciences, Manufacturing, Marketing and Advertising, Media and Entertainment, Mining, Non-Profit Organization, Professional Services, Real Estate and Construction, Retail, Software and Internet, Telecommunications, Transportation and Logistics, Travel, Wholesale and Distribution, Other
+    #             website_url: "CompanyWebsiteUrl", # required
+    #           },
+    #           project: { # required
+    #             business_problem: "EngagementCustomerBusinessProblem", # required
+    #             expected_customer_spend: [ # required
+    #               {
+    #                 amount: "String", # required
+    #                 currency_code: "USD", # required, accepts USD, EUR, GBP, AUD, CAD, CNY, NZD, INR, JPY, CHF, SEK, AED, AFN, ALL, AMD, ANG, AOA, ARS, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYN, BZD, CDF, CHE, CHW, CLF, CLP, COP, COU, CRC, CUC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, FJD, FKP, GEL, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IQD, IRR, ISK, JMD, JOD, KES, KGS, KHR, KMF, KPW, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRU, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NIO, NOK, NPR, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SGD, SHP, SLL, SOS, SRD, SSP, STN, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USN, UYI, UYU, UZS, VEF, VND, VUV, WST, XAF, XCD, XDR, XOF, XPF, XSU, XUA, YER, ZAR, ZMW, ZWL
+    #                 estimation_url: "WebsiteUrl",
+    #                 frequency: "Monthly", # required, accepts Monthly
+    #                 target_company: "ExpectedCustomerSpendTargetCompanyString", # required
+    #               },
+    #             ],
+    #             target_completion_date: "Date", # required
+    #             title: "ProjectDetailsTitleString", # required
+    #           },
+    #           receiver_responsibilities: ["Distributor"], # required, accepts Distributor, Reseller, Hardware Partner, Managed Service Provider, Software Partner, Services Partner, Training Partner, Co-Sell Facilitator, Facilitator
+    #           sender_contacts: [
+    #             {
+    #               business_title: "JobTitle",
+    #               email: "SenderContactEmail", # required
+    #               first_name: "Name",
+    #               last_name: "Name",
+    #               phone: "PhoneNumber",
+    #             },
+    #           ],
+    #         },
+    #       },
+    #       receiver: { # required
+    #         account: {
+    #           alias: "Alias",
+    #           aws_account_id: "AwsAccount", # required
+    #         },
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/CreateEngagementInvitation AWS API Documentation
+    #
+    # @overload create_engagement_invitation(params = {})
+    # @param [Hash] params ({})
+    def create_engagement_invitation(params = {}, options = {})
+      req = build_request(:create_engagement_invitation, params)
       req.send_request(options)
     end
 
@@ -837,6 +1062,7 @@ module Aws::PartnerCentralSelling
     #         {
     #           amount: "String", # required
     #           currency_code: "USD", # required, accepts USD, EUR, GBP, AUD, CAD, CNY, NZD, INR, JPY, CHF, SEK, AED, AFN, ALL, AMD, ANG, AOA, ARS, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYN, BZD, CDF, CHE, CHW, CLF, CLP, COP, COU, CRC, CUC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, FJD, FKP, GEL, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IQD, IRR, ISK, JMD, JOD, KES, KGS, KHR, KMF, KPW, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRU, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NIO, NOK, NPR, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SGD, SHP, SLL, SOS, SRD, SSP, STN, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USN, UYI, UYU, UZS, VEF, VND, VUV, WST, XAF, XCD, XDR, XOF, XPF, XSU, XUA, YER, ZAR, ZMW, ZWL
+    #           estimation_url: "WebsiteUrl",
     #           frequency: "Monthly", # required, accepts Monthly
     #           target_company: "ExpectedCustomerSpendTargetCompanyString", # required
     #         },
@@ -870,6 +1096,167 @@ module Aws::PartnerCentralSelling
     # @param [Hash] params ({})
     def create_opportunity(params = {}, options = {})
       req = build_request(:create_opportunity, params)
+      req.send_request(options)
+    end
+
+    # This action allows you to create an immutable snapshot of a specific
+    # resource, such as an opportunity, within the context of an engagement.
+    # The snapshot captures a subset of the resource's data based on the
+    # schema defined by the provided template.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog where the snapshot is created. Valid values are
+    #   `AWS` and `Sandbox`.
+    #
+    # @option params [required, String] :client_token
+    #   Specifies a unique, client-generated UUID to ensure that the request
+    #   is handled exactly once. This token helps prevent duplicate snapshot
+    #   creations.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :engagement_identifier
+    #   The unique identifier of the engagement associated with this snapshot.
+    #   This field links the snapshot to a specific engagement context.
+    #
+    # @option params [required, String] :resource_identifier
+    #   The unique identifier of the specific resource to be snapshotted. The
+    #   format and constraints of this identifier depend on the `ResourceType`
+    #   specified. For example: For `Opportunity` type, it will be an
+    #   opportunity ID.
+    #
+    # @option params [required, String] :resource_snapshot_template_identifier
+    #   The name of the template that defines the schema for the snapshot.
+    #   This template determines which subset of the resource data will be
+    #   included in the snapshot. Must correspond to an existing and valid
+    #   template for the specified `ResourceType`.
+    #
+    # @option params [required, String] :resource_type
+    #   Specifies the type of resource for which the snapshot is being
+    #   created. This field determines the structure and content of the
+    #   snapshot. Must be one of the supported resource types, such as:
+    #   `Opportunity`.
+    #
+    # @return [Types::CreateResourceSnapshotResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateResourceSnapshotResponse#arn #arn} => String
+    #   * {Types::CreateResourceSnapshotResponse#revision #revision} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_resource_snapshot({
+    #     catalog: "CatalogIdentifier", # required
+    #     client_token: "CreateResourceSnapshotRequestClientTokenString", # required
+    #     engagement_identifier: "EngagementIdentifier", # required
+    #     resource_identifier: "ResourceIdentifier", # required
+    #     resource_snapshot_template_identifier: "ResourceTemplateName", # required
+    #     resource_type: "Opportunity", # required, accepts Opportunity
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.revision #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/CreateResourceSnapshot AWS API Documentation
+    #
+    # @overload create_resource_snapshot(params = {})
+    # @param [Hash] params ({})
+    def create_resource_snapshot(params = {}, options = {})
+      req = build_request(:create_resource_snapshot, params)
+      req.send_request(options)
+    end
+
+    # Use this action to create a job to generate a snapshot of the
+    # specified resource within an engagement. It initiates an asynchronous
+    # process to create a resource snapshot. The job creates a new snapshot
+    # only if the resource state has changed, adhering to the same access
+    # control and immutability rules as direct snapshot creation.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog in which to create the snapshot job. Valid
+    #   values are `AWS` and ` Sandbox`.
+    #
+    # @option params [required, String] :client_token
+    #   Specifies a unique, client-generated UUID to ensure that the request
+    #   is handled exactly once. This token helps prevent duplicate snapshot
+    #   job creations.
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    # @option params [required, String] :engagement_identifier
+    #   Specifies the identifier of the engagement associated with the
+    #   resource to be snapshotted.
+    #
+    # @option params [required, String] :resource_identifier
+    #   Specifies the identifier of the specific resource to be snapshotted.
+    #   The format depends on the `ResourceType`.
+    #
+    # @option params [required, String] :resource_snapshot_template_identifier
+    #   Specifies the name of the template that defines the schema for the
+    #   snapshot.
+    #
+    # @option params [required, String] :resource_type
+    #   The type of resource for which the snapshot job is being created. Must
+    #   be one of the supported resource types `Opportunity`.
+    #
+    # @return [Types::CreateResourceSnapshotJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateResourceSnapshotJobResponse#arn #arn} => String
+    #   * {Types::CreateResourceSnapshotJobResponse#id #id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_resource_snapshot_job({
+    #     catalog: "CatalogIdentifier", # required
+    #     client_token: "CreateResourceSnapshotJobRequestClientTokenString", # required
+    #     engagement_identifier: "EngagementIdentifier", # required
+    #     resource_identifier: "ResourceIdentifier", # required
+    #     resource_snapshot_template_identifier: "ResourceTemplateName", # required
+    #     resource_type: "Opportunity", # required, accepts Opportunity
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/CreateResourceSnapshotJob AWS API Documentation
+    #
+    # @overload create_resource_snapshot_job(params = {})
+    # @param [Hash] params ({})
+    def create_resource_snapshot_job(params = {}, options = {})
+      req = build_request(:create_resource_snapshot_job, params)
+      req.send_request(options)
+    end
+
+    # Use this action to deletes a previously created resource snapshot job.
+    # The job must be in a stopped state before it can be deleted.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog from which to delete the snapshot job. Valid
+    #   values are `AWS` and `Sandbox`.
+    #
+    # @option params [required, String] :resource_snapshot_job_identifier
+    #   The unique identifier of the resource snapshot job to be deleted.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_resource_snapshot_job({
+    #     catalog: "CatalogIdentifier", # required
+    #     resource_snapshot_job_identifier: "ResourceSnapshotJobIdentifier", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/DeleteResourceSnapshotJob AWS API Documentation
+    #
+    # @overload delete_resource_snapshot_job(params = {})
+    # @param [Hash] params ({})
+    def delete_resource_snapshot_job(params = {}, options = {})
+      req = build_request(:delete_resource_snapshot_job, params)
       req.send_request(options)
     end
 
@@ -1024,6 +1411,7 @@ module Aws::PartnerCentralSelling
     #   resp.project.expected_customer_spend #=> Array
     #   resp.project.expected_customer_spend[0].amount #=> String
     #   resp.project.expected_customer_spend[0].currency_code #=> String, one of "USD", "EUR", "GBP", "AUD", "CAD", "CNY", "NZD", "INR", "JPY", "CHF", "SEK", "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CDF", "CHE", "CHW", "CLF", "CLP", "COP", "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "FJD", "FKP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IQD", "IRR", "ISK", "JMD", "JOD", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USN", "UYI", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "XSU", "XUA", "YER", "ZAR", "ZMW", "ZWL"
+    #   resp.project.expected_customer_spend[0].estimation_url #=> String
     #   resp.project.expected_customer_spend[0].frequency #=> String, one of "Monthly"
     #   resp.project.expected_customer_spend[0].target_company #=> String
     #   resp.related_entity_ids.aws_products #=> Array
@@ -1039,6 +1427,62 @@ module Aws::PartnerCentralSelling
     # @param [Hash] params ({})
     def get_aws_opportunity_summary(params = {}, options = {})
       req = build_request(:get_aws_opportunity_summary, params)
+      req.send_request(options)
+    end
+
+    # Use this action to retrieve the engagement record for a given
+    # `EngagementIdentifier`.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the engagement request. Valid values
+    #   are `AWS` and `Sandbox`.
+    #
+    # @option params [required, String] :identifier
+    #   Specifies the identifier of the Engagement record to retrieve.
+    #
+    # @return [Types::GetEngagementResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetEngagementResponse#arn #arn} => String
+    #   * {Types::GetEngagementResponse#contexts #contexts} => Array&lt;Types::EngagementContextDetails&gt;
+    #   * {Types::GetEngagementResponse#created_at #created_at} => Time
+    #   * {Types::GetEngagementResponse#created_by #created_by} => String
+    #   * {Types::GetEngagementResponse#description #description} => String
+    #   * {Types::GetEngagementResponse#id #id} => String
+    #   * {Types::GetEngagementResponse#member_count #member_count} => Integer
+    #   * {Types::GetEngagementResponse#title #title} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_engagement({
+    #     catalog: "CatalogIdentifier", # required
+    #     identifier: "EngagementArnOrIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.contexts #=> Array
+    #   resp.contexts[0].payload.customer_project.customer.company_name #=> String
+    #   resp.contexts[0].payload.customer_project.customer.country_code #=> String, one of "US", "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV", "BR", "IO", "BN", "BG", "BF", "BI", "KH", "CM", "CA", "CV", "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CG", "CK", "CR", "CI", "HR", "CU", "CW", "CY", "CZ", "CD", "DK", "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "ET", "FK", "FO", "FJ", "FI", "FR", "GF", "PF", "TF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD", "GP", "GU", "GT", "GG", "GN", "GW", "GY", "HT", "HM", "VA", "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT", "JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KR", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MK", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ", "MR", "MU", "YT", "MX", "FM", "MD", "MC", "MN", "ME", "MS", "MA", "MZ", "MM", "NA", "NR", "NP", "NL", "AN", "NC", "NZ", "NI", "NE", "NG", "NU", "NF", "MP", "NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PN", "PL", "PT", "PR", "QA", "RE", "RO", "RU", "RW", "BL", "SH", "KN", "LC", "MF", "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "GS", "SS", "ES", "LK", "SD", "SR", "SJ", "SZ", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC", "TV", "UG", "UA", "AE", "GB", "UM", "UY", "UZ", "VU", "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW"
+    #   resp.contexts[0].payload.customer_project.customer.industry #=> String, one of "Aerospace", "Agriculture", "Automotive", "Computers and Electronics", "Consumer Goods", "Education", "Energy - Oil and Gas", "Energy - Power and Utilities", "Financial Services", "Gaming", "Government", "Healthcare", "Hospitality", "Life Sciences", "Manufacturing", "Marketing and Advertising", "Media and Entertainment", "Mining", "Non-Profit Organization", "Professional Services", "Real Estate and Construction", "Retail", "Software and Internet", "Telecommunications", "Transportation and Logistics", "Travel", "Wholesale and Distribution", "Other"
+    #   resp.contexts[0].payload.customer_project.customer.website_url #=> String
+    #   resp.contexts[0].payload.customer_project.project.business_problem #=> String
+    #   resp.contexts[0].payload.customer_project.project.target_completion_date #=> String
+    #   resp.contexts[0].payload.customer_project.project.title #=> String
+    #   resp.contexts[0].type #=> String, one of "CustomerProject"
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.description #=> String
+    #   resp.id #=> String
+    #   resp.member_count #=> Integer
+    #   resp.title #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/GetEngagement AWS API Documentation
+    #
+    # @overload get_engagement(params = {})
+    # @param [Hash] params ({})
+    def get_engagement(params = {}, options = {})
+      req = build_request(:get_engagement, params)
       req.send_request(options)
     end
 
@@ -1061,10 +1505,14 @@ module Aws::PartnerCentralSelling
     #
     #   * {Types::GetEngagementInvitationResponse#arn #arn} => String
     #   * {Types::GetEngagementInvitationResponse#catalog #catalog} => String
+    #   * {Types::GetEngagementInvitationResponse#engagement_description #engagement_description} => String
+    #   * {Types::GetEngagementInvitationResponse#engagement_id #engagement_id} => String
     #   * {Types::GetEngagementInvitationResponse#engagement_title #engagement_title} => String
+    #   * {Types::GetEngagementInvitationResponse#existing_members #existing_members} => Array&lt;Types::EngagementMemberSummary&gt;
     #   * {Types::GetEngagementInvitationResponse#expiration_date #expiration_date} => Time
     #   * {Types::GetEngagementInvitationResponse#id #id} => String
     #   * {Types::GetEngagementInvitationResponse#invitation_date #invitation_date} => Time
+    #   * {Types::GetEngagementInvitationResponse#invitation_message #invitation_message} => String
     #   * {Types::GetEngagementInvitationResponse#payload #payload} => Types::Payload
     #   * {Types::GetEngagementInvitationResponse#payload_type #payload_type} => String
     #   * {Types::GetEngagementInvitationResponse#receiver #receiver} => Types::Receiver
@@ -1084,10 +1532,16 @@ module Aws::PartnerCentralSelling
     #
     #   resp.arn #=> String
     #   resp.catalog #=> String
+    #   resp.engagement_description #=> String
+    #   resp.engagement_id #=> String
     #   resp.engagement_title #=> String
+    #   resp.existing_members #=> Array
+    #   resp.existing_members[0].company_name #=> String
+    #   resp.existing_members[0].website_url #=> String
     #   resp.expiration_date #=> Time
     #   resp.id #=> String
     #   resp.invitation_date #=> Time
+    #   resp.invitation_message #=> String
     #   resp.payload.opportunity_invitation.customer.company_name #=> String
     #   resp.payload.opportunity_invitation.customer.country_code #=> String, one of "US", "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV", "BR", "IO", "BN", "BG", "BF", "BI", "KH", "CM", "CA", "CV", "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CG", "CK", "CR", "CI", "HR", "CU", "CW", "CY", "CZ", "CD", "DK", "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "ET", "FK", "FO", "FJ", "FI", "FR", "GF", "PF", "TF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD", "GP", "GU", "GT", "GG", "GN", "GW", "GY", "HT", "HM", "VA", "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT", "JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KR", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MK", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ", "MR", "MU", "YT", "MX", "FM", "MD", "MC", "MN", "ME", "MS", "MA", "MZ", "MM", "NA", "NR", "NP", "NL", "AN", "NC", "NZ", "NI", "NE", "NG", "NU", "NF", "MP", "NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PN", "PL", "PT", "PR", "QA", "RE", "RO", "RU", "RW", "BL", "SH", "KN", "LC", "MF", "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "GS", "SS", "ES", "LK", "SD", "SR", "SJ", "SZ", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC", "TV", "UG", "UA", "AE", "GB", "UM", "UY", "UZ", "VU", "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW"
     #   resp.payload.opportunity_invitation.customer.industry #=> String, one of "Aerospace", "Agriculture", "Automotive", "Computers and Electronics", "Consumer Goods", "Education", "Energy - Oil and Gas", "Energy - Power and Utilities", "Financial Services", "Gaming", "Government", "Healthcare", "Hospitality", "Life Sciences", "Manufacturing", "Marketing and Advertising", "Media and Entertainment", "Mining", "Non-Profit Organization", "Professional Services", "Real Estate and Construction", "Retail", "Software and Internet", "Telecommunications", "Transportation and Logistics", "Travel", "Wholesale and Distribution", "Other"
@@ -1096,6 +1550,7 @@ module Aws::PartnerCentralSelling
     #   resp.payload.opportunity_invitation.project.expected_customer_spend #=> Array
     #   resp.payload.opportunity_invitation.project.expected_customer_spend[0].amount #=> String
     #   resp.payload.opportunity_invitation.project.expected_customer_spend[0].currency_code #=> String, one of "USD", "EUR", "GBP", "AUD", "CAD", "CNY", "NZD", "INR", "JPY", "CHF", "SEK", "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CDF", "CHE", "CHW", "CLF", "CLP", "COP", "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "FJD", "FKP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IQD", "IRR", "ISK", "JMD", "JOD", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USN", "UYI", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "XSU", "XUA", "YER", "ZAR", "ZMW", "ZWL"
+    #   resp.payload.opportunity_invitation.project.expected_customer_spend[0].estimation_url #=> String
     #   resp.payload.opportunity_invitation.project.expected_customer_spend[0].frequency #=> String, one of "Monthly"
     #   resp.payload.opportunity_invitation.project.expected_customer_spend[0].target_company #=> String
     #   resp.payload.opportunity_invitation.project.target_completion_date #=> String
@@ -1144,6 +1599,7 @@ module Aws::PartnerCentralSelling
     #
     # @return [Types::GetOpportunityResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
+    #   * {Types::GetOpportunityResponse#arn #arn} => String
     #   * {Types::GetOpportunityResponse#catalog #catalog} => String
     #   * {Types::GetOpportunityResponse#created_date #created_date} => Time
     #   * {Types::GetOpportunityResponse#customer #customer} => Types::Customer
@@ -1169,6 +1625,7 @@ module Aws::PartnerCentralSelling
     #
     # @example Response structure
     #
+    #   resp.arn #=> String
     #   resp.catalog #=> String
     #   resp.created_date #=> Time
     #   resp.customer.account.address.city #=> String
@@ -1229,6 +1686,7 @@ module Aws::PartnerCentralSelling
     #   resp.project.expected_customer_spend #=> Array
     #   resp.project.expected_customer_spend[0].amount #=> String
     #   resp.project.expected_customer_spend[0].currency_code #=> String, one of "USD", "EUR", "GBP", "AUD", "CAD", "CNY", "NZD", "INR", "JPY", "CHF", "SEK", "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CDF", "CHE", "CHW", "CLF", "CLP", "COP", "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "FJD", "FKP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IQD", "IRR", "ISK", "JMD", "JOD", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USN", "UYI", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "XSU", "XUA", "YER", "ZAR", "ZMW", "ZWL"
+    #   resp.project.expected_customer_spend[0].estimation_url #=> String
     #   resp.project.expected_customer_spend[0].frequency #=> String, one of "Monthly"
     #   resp.project.expected_customer_spend[0].target_company #=> String
     #   resp.project.other_competitor_names #=> String
@@ -1258,6 +1716,407 @@ module Aws::PartnerCentralSelling
       req.send_request(options)
     end
 
+    # Use this action to retrieve a specific snapshot record.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request. Valid values are:
+    #
+    #   * AWS: Retrieves the snapshot from the production AWS environment.
+    #
+    #   * Sandbox: Retrieves the snapshot from a sandbox environment used for
+    #     testing or development purposes.
+    #
+    # @option params [required, String] :engagement_identifier
+    #   The unique identifier of the engagement associated with the snapshot.
+    #   This field links the snapshot to a specific engagement context.
+    #
+    # @option params [required, String] :resource_identifier
+    #   The unique identifier of the specific resource that was snapshotted.
+    #   The format and constraints of this identifier depend on the
+    #   ResourceType specified. For `Opportunity` type, it will be an
+    #   `opportunity ID`
+    #
+    # @option params [required, String] :resource_snapshot_template_identifier
+    #   he name of the template that defines the schema for the snapshot. This
+    #   template determines which subset of the resource data is included in
+    #   the snapshot and must correspond to an existing and valid template for
+    #   the specified `ResourceType`.
+    #
+    # @option params [required, String] :resource_type
+    #   Specifies the type of resource that was snapshotted. This field
+    #   determines the structure and content of the snapshot payload. Valid
+    #   value includes:`Opportunity`: For opportunity-related data.
+    #
+    # @option params [Integer] :revision
+    #   Specifies which revision of the snapshot to retrieve. If omitted
+    #   returns the latest revision.
+    #
+    # @return [Types::GetResourceSnapshotResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetResourceSnapshotResponse#arn #arn} => String
+    #   * {Types::GetResourceSnapshotResponse#catalog #catalog} => String
+    #   * {Types::GetResourceSnapshotResponse#created_at #created_at} => Time
+    #   * {Types::GetResourceSnapshotResponse#created_by #created_by} => String
+    #   * {Types::GetResourceSnapshotResponse#engagement_id #engagement_id} => String
+    #   * {Types::GetResourceSnapshotResponse#payload #payload} => Types::ResourceSnapshotPayload
+    #   * {Types::GetResourceSnapshotResponse#resource_id #resource_id} => String
+    #   * {Types::GetResourceSnapshotResponse#resource_snapshot_template_name #resource_snapshot_template_name} => String
+    #   * {Types::GetResourceSnapshotResponse#resource_type #resource_type} => String
+    #   * {Types::GetResourceSnapshotResponse#revision #revision} => Integer
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_resource_snapshot({
+    #     catalog: "CatalogIdentifier", # required
+    #     engagement_identifier: "EngagementIdentifier", # required
+    #     resource_identifier: "ResourceIdentifier", # required
+    #     resource_snapshot_template_identifier: "ResourceTemplateName", # required
+    #     resource_type: "Opportunity", # required, accepts Opportunity
+    #     revision: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.catalog #=> String
+    #   resp.created_at #=> Time
+    #   resp.created_by #=> String
+    #   resp.engagement_id #=> String
+    #   resp.payload.opportunity_summary.customer.account.address.city #=> String
+    #   resp.payload.opportunity_summary.customer.account.address.country_code #=> String, one of "US", "AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR", "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV", "BR", "IO", "BN", "BG", "BF", "BI", "KH", "CM", "CA", "CV", "KY", "CF", "TD", "CL", "CN", "CX", "CC", "CO", "KM", "CG", "CK", "CR", "CI", "HR", "CU", "CW", "CY", "CZ", "CD", "DK", "DJ", "DM", "DO", "EC", "EG", "SV", "GQ", "ER", "EE", "ET", "FK", "FO", "FJ", "FI", "FR", "GF", "PF", "TF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD", "GP", "GU", "GT", "GG", "GN", "GW", "GY", "HT", "HM", "VA", "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT", "JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KR", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MK", "MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ", "MR", "MU", "YT", "MX", "FM", "MD", "MC", "MN", "ME", "MS", "MA", "MZ", "MM", "NA", "NR", "NP", "NL", "AN", "NC", "NZ", "NI", "NE", "NG", "NU", "NF", "MP", "NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PN", "PL", "PT", "PR", "QA", "RE", "RO", "RU", "RW", "BL", "SH", "KN", "LC", "MF", "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "GS", "SS", "ES", "LK", "SD", "SR", "SJ", "SZ", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC", "TV", "UG", "UA", "AE", "GB", "UM", "UY", "UZ", "VU", "VE", "VN", "VG", "VI", "WF", "EH", "YE", "ZM", "ZW"
+    #   resp.payload.opportunity_summary.customer.account.address.postal_code #=> String
+    #   resp.payload.opportunity_summary.customer.account.address.state_or_region #=> String
+    #   resp.payload.opportunity_summary.customer.account.address.street_address #=> String
+    #   resp.payload.opportunity_summary.customer.account.aws_account_id #=> String
+    #   resp.payload.opportunity_summary.customer.account.company_name #=> String
+    #   resp.payload.opportunity_summary.customer.account.duns #=> String
+    #   resp.payload.opportunity_summary.customer.account.industry #=> String, one of "Aerospace", "Agriculture", "Automotive", "Computers and Electronics", "Consumer Goods", "Education", "Energy - Oil and Gas", "Energy - Power and Utilities", "Financial Services", "Gaming", "Government", "Healthcare", "Hospitality", "Life Sciences", "Manufacturing", "Marketing and Advertising", "Media and Entertainment", "Mining", "Non-Profit Organization", "Professional Services", "Real Estate and Construction", "Retail", "Software and Internet", "Telecommunications", "Transportation and Logistics", "Travel", "Wholesale and Distribution", "Other"
+    #   resp.payload.opportunity_summary.customer.account.other_industry #=> String
+    #   resp.payload.opportunity_summary.customer.account.website_url #=> String
+    #   resp.payload.opportunity_summary.customer.contacts #=> Array
+    #   resp.payload.opportunity_summary.customer.contacts[0].business_title #=> String
+    #   resp.payload.opportunity_summary.customer.contacts[0].email #=> String
+    #   resp.payload.opportunity_summary.customer.contacts[0].first_name #=> String
+    #   resp.payload.opportunity_summary.customer.contacts[0].last_name #=> String
+    #   resp.payload.opportunity_summary.customer.contacts[0].phone #=> String
+    #   resp.payload.opportunity_summary.lifecycle.next_steps #=> String
+    #   resp.payload.opportunity_summary.lifecycle.review_status #=> String, one of "Pending Submission", "Submitted", "In review", "Approved", "Rejected", "Action Required"
+    #   resp.payload.opportunity_summary.lifecycle.stage #=> String, one of "Prospect", "Qualified", "Technical Validation", "Business Validation", "Committed", "Launched", "Closed Lost"
+    #   resp.payload.opportunity_summary.lifecycle.target_close_date #=> String
+    #   resp.payload.opportunity_summary.opportunity_team #=> Array
+    #   resp.payload.opportunity_summary.opportunity_team[0].business_title #=> String
+    #   resp.payload.opportunity_summary.opportunity_team[0].email #=> String
+    #   resp.payload.opportunity_summary.opportunity_team[0].first_name #=> String
+    #   resp.payload.opportunity_summary.opportunity_team[0].last_name #=> String
+    #   resp.payload.opportunity_summary.opportunity_team[0].phone #=> String
+    #   resp.payload.opportunity_summary.opportunity_type #=> String, one of "Net New Business", "Flat Renewal", "Expansion"
+    #   resp.payload.opportunity_summary.primary_needs_from_aws #=> Array
+    #   resp.payload.opportunity_summary.primary_needs_from_aws[0] #=> String, one of "Co-Sell - Architectural Validation", "Co-Sell - Business Presentation", "Co-Sell - Competitive Information", "Co-Sell - Pricing Assistance", "Co-Sell - Technical Consultation", "Co-Sell - Total Cost of Ownership Evaluation", "Co-Sell - Deal Support", "Co-Sell - Support for Public Tender / RFx"
+    #   resp.payload.opportunity_summary.project.customer_use_case #=> String
+    #   resp.payload.opportunity_summary.project.delivery_models #=> Array
+    #   resp.payload.opportunity_summary.project.delivery_models[0] #=> String, one of "SaaS or PaaS", "BYOL or AMI", "Managed Services", "Professional Services", "Resell", "Other"
+    #   resp.payload.opportunity_summary.project.expected_customer_spend #=> Array
+    #   resp.payload.opportunity_summary.project.expected_customer_spend[0].amount #=> String
+    #   resp.payload.opportunity_summary.project.expected_customer_spend[0].currency_code #=> String, one of "USD", "EUR", "GBP", "AUD", "CAD", "CNY", "NZD", "INR", "JPY", "CHF", "SEK", "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CDF", "CHE", "CHW", "CLF", "CLP", "COP", "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "FJD", "FKP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IQD", "IRR", "ISK", "JMD", "JOD", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USN", "UYI", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "XSU", "XUA", "YER", "ZAR", "ZMW", "ZWL"
+    #   resp.payload.opportunity_summary.project.expected_customer_spend[0].estimation_url #=> String
+    #   resp.payload.opportunity_summary.project.expected_customer_spend[0].frequency #=> String, one of "Monthly"
+    #   resp.payload.opportunity_summary.project.expected_customer_spend[0].target_company #=> String
+    #   resp.payload.opportunity_summary.project.other_solution_description #=> String
+    #   resp.payload.opportunity_summary.project.sales_activities #=> Array
+    #   resp.payload.opportunity_summary.project.sales_activities[0] #=> String, one of "Initialized discussions with customer", "Customer has shown interest in solution", "Conducted POC / Demo", "In evaluation / planning stage", "Agreed on solution to Business Problem", "Completed Action Plan", "Finalized Deployment Need", "SOW Signed"
+    #   resp.payload.opportunity_summary.related_entity_identifiers.aws_marketplace_offers #=> Array
+    #   resp.payload.opportunity_summary.related_entity_identifiers.aws_marketplace_offers[0] #=> String
+    #   resp.payload.opportunity_summary.related_entity_identifiers.aws_products #=> Array
+    #   resp.payload.opportunity_summary.related_entity_identifiers.aws_products[0] #=> String
+    #   resp.payload.opportunity_summary.related_entity_identifiers.solutions #=> Array
+    #   resp.payload.opportunity_summary.related_entity_identifiers.solutions[0] #=> String
+    #   resp.resource_id #=> String
+    #   resp.resource_snapshot_template_name #=> String
+    #   resp.resource_type #=> String, one of "Opportunity"
+    #   resp.revision #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/GetResourceSnapshot AWS API Documentation
+    #
+    # @overload get_resource_snapshot(params = {})
+    # @param [Hash] params ({})
+    def get_resource_snapshot(params = {}, options = {})
+      req = build_request(:get_resource_snapshot, params)
+      req.send_request(options)
+    end
+
+    # Use this action to retrieves information about a specific resource
+    # snapshot job.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request. Valid values are:
+    #
+    #   * AWS: Retrieves the snapshot job from the production AWS environment.
+    #
+    #   * Sandbox: Retrieves the snapshot job from a sandbox environment used
+    #     for testing or development purposes.
+    #
+    # @option params [required, String] :resource_snapshot_job_identifier
+    #   The unique identifier of the resource snapshot job to be retrieved.
+    #   This identifier is crucial for pinpointing the specific job you want
+    #   to query.
+    #
+    # @return [Types::GetResourceSnapshotJobResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetResourceSnapshotJobResponse#arn #arn} => String
+    #   * {Types::GetResourceSnapshotJobResponse#catalog #catalog} => String
+    #   * {Types::GetResourceSnapshotJobResponse#created_at #created_at} => Time
+    #   * {Types::GetResourceSnapshotJobResponse#engagement_id #engagement_id} => String
+    #   * {Types::GetResourceSnapshotJobResponse#id #id} => String
+    #   * {Types::GetResourceSnapshotJobResponse#last_failure #last_failure} => String
+    #   * {Types::GetResourceSnapshotJobResponse#last_successful_execution_date #last_successful_execution_date} => Time
+    #   * {Types::GetResourceSnapshotJobResponse#resource_arn #resource_arn} => String
+    #   * {Types::GetResourceSnapshotJobResponse#resource_id #resource_id} => String
+    #   * {Types::GetResourceSnapshotJobResponse#resource_snapshot_template_name #resource_snapshot_template_name} => String
+    #   * {Types::GetResourceSnapshotJobResponse#resource_type #resource_type} => String
+    #   * {Types::GetResourceSnapshotJobResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_resource_snapshot_job({
+    #     catalog: "CatalogIdentifier", # required
+    #     resource_snapshot_job_identifier: "ResourceSnapshotJobIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.arn #=> String
+    #   resp.catalog #=> String
+    #   resp.created_at #=> Time
+    #   resp.engagement_id #=> String
+    #   resp.id #=> String
+    #   resp.last_failure #=> String
+    #   resp.last_successful_execution_date #=> Time
+    #   resp.resource_arn #=> String
+    #   resp.resource_id #=> String
+    #   resp.resource_snapshot_template_name #=> String
+    #   resp.resource_type #=> String, one of "Opportunity"
+    #   resp.status #=> String, one of "Running", "Stopped"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/GetResourceSnapshotJob AWS API Documentation
+    #
+    # @overload get_resource_snapshot_job(params = {})
+    # @param [Hash] params ({})
+    def get_resource_snapshot_job(params = {}, options = {})
+      req = build_request(:get_resource_snapshot_job, params)
+      req.send_request(options)
+    end
+
+    # Retrieves the currently set system settings, which include the IAM
+    # Role used for resource snapshot jobs.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog in which the settings are defined. Acceptable
+    #   values include `AWS` for production and `Sandbox` for testing
+    #   environments.
+    #
+    # @return [Types::GetSellingSystemSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetSellingSystemSettingsResponse#catalog #catalog} => String
+    #   * {Types::GetSellingSystemSettingsResponse#resource_snapshot_job_role_arn #resource_snapshot_job_role_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_selling_system_settings({
+    #     catalog: "CatalogIdentifier", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.catalog #=> String
+    #   resp.resource_snapshot_job_role_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/GetSellingSystemSettings AWS API Documentation
+    #
+    # @overload get_selling_system_settings(params = {})
+    # @param [Hash] params ({})
+    def get_selling_system_settings(params = {}, options = {})
+      req = build_request(:get_selling_system_settings, params)
+      req.send_request(options)
+    end
+
+    # Lists all in-progress, completed, or failed
+    # StartEngagementByAcceptingInvitationTask tasks that were initiated by
+    # the caller's account.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request. Valid values are:
+    #
+    #   * AWS: Retrieves the request from the production AWS environment.
+    #
+    #   * Sandbox: Retrieves the request from a sandbox environment used for
+    #     testing or development purposes.
+    #
+    # @option params [Array<String>] :engagement_invitation_identifier
+    #   Filters tasks by the identifiers of the engagement invitations they
+    #   are processing.
+    #
+    # @option params [Integer] :max_results
+    #   Use this parameter to control the number of items returned in each
+    #   request, which can be useful for performance tuning and managing large
+    #   result sets.
+    #
+    # @option params [String] :next_token
+    #   Use this parameter for pagination when the result set spans multiple
+    #   pages. This value is obtained from the NextToken field in the response
+    #   of a previous call to this API.
+    #
+    # @option params [Array<String>] :opportunity_identifier
+    #   Filters tasks by the identifiers of the opportunities they created or
+    #   are associated with.
+    #
+    # @option params [Types::ListTasksSortBase] :sort
+    #   Specifies the sorting criteria for the returned results. This allows
+    #   you to order the tasks based on specific attributes.
+    #
+    # @option params [Array<String>] :task_identifier
+    #   Filters tasks by their unique identifiers. Use this when you want to
+    #   retrieve information about specific tasks.
+    #
+    # @option params [Array<String>] :task_status
+    #   Filters the tasks based on their current status. This allows you to
+    #   focus on tasks in specific states.
+    #
+    # @return [Types::ListEngagementByAcceptingInvitationTasksResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListEngagementByAcceptingInvitationTasksResponse#next_token #next_token} => String
+    #   * {Types::ListEngagementByAcceptingInvitationTasksResponse#task_summaries #task_summaries} => Array&lt;Types::ListEngagementByAcceptingInvitationTaskSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_engagement_by_accepting_invitation_tasks({
+    #     catalog: "CatalogIdentifier", # required
+    #     engagement_invitation_identifier: ["EngagementInvitationArnOrIdentifier"],
+    #     max_results: 1,
+    #     next_token: "ListEngagementByAcceptingInvitationTasksRequestNextTokenString",
+    #     opportunity_identifier: ["OpportunityIdentifier"],
+    #     sort: {
+    #       sort_by: "StartTime", # required, accepts StartTime
+    #       sort_order: "ASCENDING", # required, accepts ASCENDING, DESCENDING
+    #     },
+    #     task_identifier: ["TaskArnOrIdentifier"],
+    #     task_status: ["IN_PROGRESS"], # accepts IN_PROGRESS, COMPLETE, FAILED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.task_summaries #=> Array
+    #   resp.task_summaries[0].engagement_invitation_id #=> String
+    #   resp.task_summaries[0].message #=> String
+    #   resp.task_summaries[0].opportunity_id #=> String
+    #   resp.task_summaries[0].reason_code #=> String, one of "InvitationAccessDenied", "InvitationValidationFailed", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "ResourceSnapshotJobValidationFailed", "ResourceSnapshotJobConflict", "EngagementValidationFailed", "EngagementConflict", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied", "ResourceSnapshotValidationFailed", "ResourceSnapshotConflict", "InternalError", "ServiceQuotaExceeded", "RequestThrottled"
+    #   resp.task_summaries[0].resource_snapshot_job_id #=> String
+    #   resp.task_summaries[0].start_time #=> Time
+    #   resp.task_summaries[0].task_arn #=> String
+    #   resp.task_summaries[0].task_id #=> String
+    #   resp.task_summaries[0].task_status #=> String, one of "IN_PROGRESS", "COMPLETE", "FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListEngagementByAcceptingInvitationTasks AWS API Documentation
+    #
+    # @overload list_engagement_by_accepting_invitation_tasks(params = {})
+    # @param [Hash] params ({})
+    def list_engagement_by_accepting_invitation_tasks(params = {}, options = {})
+      req = build_request(:list_engagement_by_accepting_invitation_tasks, params)
+      req.send_request(options)
+    end
+
+    # Lists all in-progress, completed, or failed
+    # `EngagementFromOpportunity` tasks that were initiated by the caller's
+    # account.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request. Valid values are:
+    #
+    #   * AWS: Retrieves the request from the production AWS environment.
+    #
+    #   * Sandbox: Retrieves the request from a sandbox environment used for
+    #     testing or development purposes.
+    #
+    # @option params [Array<String>] :engagement_identifier
+    #   Filters tasks by the identifiers of the engagements they created or
+    #   are associated with.
+    #
+    # @option params [Integer] :max_results
+    #   Specifies the maximum number of results to return in a single page of
+    #   the response.Use this parameter to control the number of items
+    #   returned in each request, which can be useful for performance tuning
+    #   and managing large result sets.
+    #
+    # @option params [String] :next_token
+    #   The token for requesting the next page of results. This value is
+    #   obtained from the NextToken field in the response of a previous call
+    #   to this API. Use this parameter for pagination when the result set
+    #   spans multiple pages.
+    #
+    # @option params [Array<String>] :opportunity_identifier
+    #   The identifier of the original opportunity associated with this task.
+    #
+    # @option params [Types::ListTasksSortBase] :sort
+    #   Specifies the sorting criteria for the returned results. This allows
+    #   you to order the tasks based on specific attributes.
+    #
+    # @option params [Array<String>] :task_identifier
+    #   Filters tasks by their unique identifiers. Use this when you want to
+    #   retrieve information about specific tasks.
+    #
+    # @option params [Array<String>] :task_status
+    #   Filters the tasks based on their current status. This allows you to
+    #   focus on tasks in specific states.
+    #
+    # @return [Types::ListEngagementFromOpportunityTasksResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListEngagementFromOpportunityTasksResponse#next_token #next_token} => String
+    #   * {Types::ListEngagementFromOpportunityTasksResponse#task_summaries #task_summaries} => Array&lt;Types::ListEngagementFromOpportunityTaskSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_engagement_from_opportunity_tasks({
+    #     catalog: "CatalogIdentifier", # required
+    #     engagement_identifier: ["EngagementArnOrIdentifier"],
+    #     max_results: 1,
+    #     next_token: "ListEngagementFromOpportunityTasksRequestNextTokenString",
+    #     opportunity_identifier: ["OpportunityIdentifier"],
+    #     sort: {
+    #       sort_by: "StartTime", # required, accepts StartTime
+    #       sort_order: "ASCENDING", # required, accepts ASCENDING, DESCENDING
+    #     },
+    #     task_identifier: ["TaskArnOrIdentifier"],
+    #     task_status: ["IN_PROGRESS"], # accepts IN_PROGRESS, COMPLETE, FAILED
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.task_summaries #=> Array
+    #   resp.task_summaries[0].engagement_id #=> String
+    #   resp.task_summaries[0].engagement_invitation_id #=> String
+    #   resp.task_summaries[0].message #=> String
+    #   resp.task_summaries[0].opportunity_id #=> String
+    #   resp.task_summaries[0].reason_code #=> String, one of "InvitationAccessDenied", "InvitationValidationFailed", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "ResourceSnapshotJobValidationFailed", "ResourceSnapshotJobConflict", "EngagementValidationFailed", "EngagementConflict", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied", "ResourceSnapshotValidationFailed", "ResourceSnapshotConflict", "InternalError", "ServiceQuotaExceeded", "RequestThrottled"
+    #   resp.task_summaries[0].resource_snapshot_job_id #=> String
+    #   resp.task_summaries[0].start_time #=> Time
+    #   resp.task_summaries[0].task_arn #=> String
+    #   resp.task_summaries[0].task_id #=> String
+    #   resp.task_summaries[0].task_status #=> String, one of "IN_PROGRESS", "COMPLETE", "FAILED"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListEngagementFromOpportunityTasks AWS API Documentation
+    #
+    # @overload list_engagement_from_opportunity_tasks(params = {})
+    # @param [Hash] params ({})
+    def list_engagement_from_opportunity_tasks(params = {}, options = {})
+      req = build_request(:list_engagement_from_opportunity_tasks, params)
+      req.send_request(options)
+    end
+
     # Retrieves a list of engagement invitations sent to the partner. This
     # allows partners to view all pending or past engagement invitations,
     # helping them track opportunities shared by AWS.
@@ -1266,6 +2125,14 @@ module Aws::PartnerCentralSelling
     #   Specifies the catalog from which to list the engagement invitations.
     #   Use `AWS` for production invitations or `Sandbox` for testing
     #   environments.
+    #
+    # @option params [Array<String>] :engagement_identifier
+    #   Retrieves a list of engagement invitation summaries based on specified
+    #   filters. The ListEngagementInvitations operation allows you to view
+    #   all invitations that you have sent or received. You must specify the
+    #   ParticipantType to filter invitations where you are either the SENDER
+    #   or the RECEIVER. Invitations will automatically expire if not accepted
+    #   within 15 days.
     #
     # @option params [Integer] :max_results
     #   Specifies the maximum number of engagement invitations to return in
@@ -1286,10 +2153,16 @@ module Aws::PartnerCentralSelling
     #   to be listed. The attributes in this payload help decide on acceptance
     #   or rejection of the invitation.
     #
+    # @option params [Array<String>] :sender_aws_account_id
+    #   List of sender AWS account IDs to filter the invitations.
+    #
     # @option params [Types::OpportunityEngagementInvitationSort] :sort
     #   Specifies the sorting options for listing engagement invitations.
     #   Invitations can be sorted by fields such as `InvitationDate` or
     #   `Status` to help partners view results in their preferred order.
+    #
+    # @option params [Array<String>] :status
+    #   Status values to filter the invitations.
     #
     # @return [Types::ListEngagementInvitationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -1302,14 +2175,17 @@ module Aws::PartnerCentralSelling
     #
     #   resp = client.list_engagement_invitations({
     #     catalog: "CatalogIdentifier", # required
+    #     engagement_identifier: ["EngagementArnOrIdentifier"],
     #     max_results: 1,
     #     next_token: "String",
-    #     participant_type: "RECEIVER", # required, accepts RECEIVER
+    #     participant_type: "SENDER", # required, accepts SENDER, RECEIVER
     #     payload_type: ["OpportunityInvitation"], # accepts OpportunityInvitation
+    #     sender_aws_account_id: ["AwsAccount"],
     #     sort: {
     #       sort_by: "InvitationDate", # required, accepts InvitationDate
     #       sort_order: "ASCENDING", # required, accepts ASCENDING, DESCENDING
     #     },
+    #     status: ["ACCEPTED"], # accepts ACCEPTED, PENDING, REJECTED, EXPIRED
     #   })
     #
     # @example Response structure
@@ -1317,10 +2193,12 @@ module Aws::PartnerCentralSelling
     #   resp.engagement_invitation_summaries #=> Array
     #   resp.engagement_invitation_summaries[0].arn #=> String
     #   resp.engagement_invitation_summaries[0].catalog #=> String
+    #   resp.engagement_invitation_summaries[0].engagement_id #=> String
     #   resp.engagement_invitation_summaries[0].engagement_title #=> String
     #   resp.engagement_invitation_summaries[0].expiration_date #=> Time
     #   resp.engagement_invitation_summaries[0].id #=> String
     #   resp.engagement_invitation_summaries[0].invitation_date #=> Time
+    #   resp.engagement_invitation_summaries[0].participant_type #=> String, one of "SENDER", "RECEIVER"
     #   resp.engagement_invitation_summaries[0].payload_type #=> String, one of "OpportunityInvitation"
     #   resp.engagement_invitation_summaries[0].receiver.account.alias #=> String
     #   resp.engagement_invitation_summaries[0].receiver.account.aws_account_id #=> String
@@ -1335,6 +2213,201 @@ module Aws::PartnerCentralSelling
     # @param [Hash] params ({})
     def list_engagement_invitations(params = {}, options = {})
       req = build_request(:list_engagement_invitations, params)
+      req.send_request(options)
+    end
+
+    # Retrieves the details of member partners in an engagement. This
+    # operation can only be invoked by members of the engagement. The
+    # `ListEngagementMembers` operation allows you to fetch information
+    # about the members of a specific engagement. This action is restricted
+    # to members of the engagement being queried.
+    #
+    # @option params [required, String] :catalog
+    #   The catalog related to the request.
+    #
+    # @option params [required, String] :identifier
+    #   Identifier of the engagement record to retrieve members from.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in a single call.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results.
+    #
+    # @return [Types::ListEngagementMembersResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListEngagementMembersResponse#engagement_member_list #engagement_member_list} => Array&lt;Types::EngagementMember&gt;
+    #   * {Types::ListEngagementMembersResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_engagement_members({
+    #     catalog: "CatalogIdentifier", # required
+    #     identifier: "EngagementArnOrIdentifier", # required
+    #     max_results: 1,
+    #     next_token: "String",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.engagement_member_list #=> Array
+    #   resp.engagement_member_list[0].account_id #=> String
+    #   resp.engagement_member_list[0].company_name #=> String
+    #   resp.engagement_member_list[0].website_url #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListEngagementMembers AWS API Documentation
+    #
+    # @overload list_engagement_members(params = {})
+    # @param [Hash] params ({})
+    def list_engagement_members(params = {}, options = {})
+      req = build_request(:list_engagement_members, params)
+      req.send_request(options)
+    end
+
+    # Lists the associations between resources and engagements where the
+    # caller is a member and has at least one snapshot in the engagement.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog in which to search for engagement-resource
+    #   associations.
+    #
+    # @option params [String] :created_by
+    #   Filters the results to include only associations with resources owned
+    #   by the specified AWS account. Use this when you want to find
+    #   associations related to resources owned by a particular account.
+    #
+    # @option params [String] :engagement_identifier
+    #   Filters the results to include only associations related to the
+    #   specified engagement. Use this when you want to find all resources
+    #   associated with a specific engagement.
+    #
+    # @option params [Integer] :max_results
+    #   Limits the number of results returned in a single call. Use this to
+    #   control the number of results returned, especially useful for
+    #   pagination.
+    #
+    # @option params [String] :next_token
+    #   A token used for pagination of results. Include this token in
+    #   subsequent requests to retrieve the next set of results.
+    #
+    # @option params [String] :resource_identifier
+    #   Filters the results to include only associations with the specified
+    #   resource. Varies depending on the resource type. Use this when you
+    #   want to find all engagements associated with a specific resource.
+    #
+    # @option params [String] :resource_type
+    #   Filters the results to include only associations with resources of the
+    #   specified type.
+    #
+    # @return [Types::ListEngagementResourceAssociationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListEngagementResourceAssociationsResponse#engagement_resource_association_summaries #engagement_resource_association_summaries} => Array&lt;Types::EngagementResourceAssociationSummary&gt;
+    #   * {Types::ListEngagementResourceAssociationsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_engagement_resource_associations({
+    #     catalog: "CatalogIdentifier", # required
+    #     created_by: "AwsAccount",
+    #     engagement_identifier: "EngagementIdentifier",
+    #     max_results: 1,
+    #     next_token: "String",
+    #     resource_identifier: "ResourceIdentifier",
+    #     resource_type: "Opportunity", # accepts Opportunity
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.engagement_resource_association_summaries #=> Array
+    #   resp.engagement_resource_association_summaries[0].catalog #=> String
+    #   resp.engagement_resource_association_summaries[0].created_by #=> String
+    #   resp.engagement_resource_association_summaries[0].engagement_id #=> String
+    #   resp.engagement_resource_association_summaries[0].resource_id #=> String
+    #   resp.engagement_resource_association_summaries[0].resource_type #=> String, one of "Opportunity"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListEngagementResourceAssociations AWS API Documentation
+    #
+    # @overload list_engagement_resource_associations(params = {})
+    # @param [Hash] params ({})
+    def list_engagement_resource_associations(params = {}, options = {})
+      req = build_request(:list_engagement_resource_associations, params)
+      req.send_request(options)
+    end
+
+    # This action allows users to retrieve a list of engagement records from
+    # Partner Central. This action can be used to manage and track various
+    # engagements across different stages of the partner selling process.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request.
+    #
+    # @option params [Array<String>] :created_by
+    #   A list of AWS account IDs. When specified, the response includes
+    #   engagements created by these accounts. This filter is useful for
+    #   finding engagements created by specific team members.
+    #
+    # @option params [Array<String>] :engagement_identifier
+    #   An array of strings representing engagement identifiers to retrieve.
+    #
+    # @option params [Array<String>] :exclude_created_by
+    #   An array of strings representing AWS Account IDs. Use this to exclude
+    #   engagements created by specific users.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in a single call.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. This value is returned from a
+    #   previous call.
+    #
+    # @option params [Types::EngagementSort] :sort
+    #   An object that specifies the sort order of the results.
+    #
+    # @return [Types::ListEngagementsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListEngagementsResponse#engagement_summary_list #engagement_summary_list} => Array&lt;Types::EngagementSummary&gt;
+    #   * {Types::ListEngagementsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_engagements({
+    #     catalog: "CatalogIdentifier", # required
+    #     created_by: ["AwsAccount"],
+    #     engagement_identifier: ["EngagementArnOrIdentifier"],
+    #     exclude_created_by: ["AwsAccount"],
+    #     max_results: 1,
+    #     next_token: "String",
+    #     sort: {
+    #       sort_by: "CreatedDate", # required, accepts CreatedDate
+    #       sort_order: "ASCENDING", # required, accepts ASCENDING, DESCENDING
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.engagement_summary_list #=> Array
+    #   resp.engagement_summary_list[0].arn #=> String
+    #   resp.engagement_summary_list[0].created_at #=> Time
+    #   resp.engagement_summary_list[0].created_by #=> String
+    #   resp.engagement_summary_list[0].id #=> String
+    #   resp.engagement_summary_list[0].member_count #=> Integer
+    #   resp.engagement_summary_list[0].title #=> String
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListEngagements AWS API Documentation
+    #
+    # @overload list_engagements(params = {})
+    # @param [Hash] params ({})
+    def list_engagements(params = {}, options = {})
+      req = build_request(:list_engagements, params)
       req.send_request(options)
     end
 
@@ -1446,6 +2519,7 @@ module Aws::PartnerCentralSelling
     #
     #   resp.next_token #=> String
     #   resp.opportunity_summaries #=> Array
+    #   resp.opportunity_summaries[0].arn #=> String
     #   resp.opportunity_summaries[0].catalog #=> String
     #   resp.opportunity_summaries[0].created_date #=> Time
     #   resp.opportunity_summaries[0].customer.account.address.city #=> String
@@ -1472,6 +2546,7 @@ module Aws::PartnerCentralSelling
     #   resp.opportunity_summaries[0].project.expected_customer_spend #=> Array
     #   resp.opportunity_summaries[0].project.expected_customer_spend[0].amount #=> String
     #   resp.opportunity_summaries[0].project.expected_customer_spend[0].currency_code #=> String, one of "USD", "EUR", "GBP", "AUD", "CAD", "CNY", "NZD", "INR", "JPY", "CHF", "SEK", "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYN", "BZD", "CDF", "CHE", "CHW", "CLF", "CLP", "COP", "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "FJD", "FKP", "GEL", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR", "ILS", "IQD", "IRR", "ISK", "JMD", "JOD", "KES", "KGS", "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRU", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USN", "UYI", "UYU", "UZS", "VEF", "VND", "VUV", "WST", "XAF", "XCD", "XDR", "XOF", "XPF", "XSU", "XUA", "YER", "ZAR", "ZMW", "ZWL"
+    #   resp.opportunity_summaries[0].project.expected_customer_spend[0].estimation_url #=> String
     #   resp.opportunity_summaries[0].project.expected_customer_spend[0].frequency #=> String, one of "Monthly"
     #   resp.opportunity_summaries[0].project.expected_customer_spend[0].target_company #=> String
     #
@@ -1481,6 +2556,141 @@ module Aws::PartnerCentralSelling
     # @param [Hash] params ({})
     def list_opportunities(params = {}, options = {})
       req = build_request(:list_opportunities, params)
+      req.send_request(options)
+    end
+
+    # Lists resource snapshot jobs owned by the customer. This operation
+    # supports various filtering scenarios, including listing all jobs owned
+    # by the caller, jobs for a specific engagement, jobs with a specific
+    # status, or any combination of these filters.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request.
+    #
+    # @option params [String] :engagement_identifier
+    #   The identifier of the engagement to filter the response.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in a single call. If omitted,
+    #   defaults to 50.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results.
+    #
+    # @option params [Types::SortObject] :sort
+    #   Configures the sorting of the response. If omitted, results are sorted
+    #   by `CreatedDate` in descending order.
+    #
+    # @option params [String] :status
+    #   The status of the jobs to filter the response.
+    #
+    # @return [Types::ListResourceSnapshotJobsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListResourceSnapshotJobsResponse#next_token #next_token} => String
+    #   * {Types::ListResourceSnapshotJobsResponse#resource_snapshot_job_summaries #resource_snapshot_job_summaries} => Array&lt;Types::ResourceSnapshotJobSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_resource_snapshot_jobs({
+    #     catalog: "CatalogIdentifier", # required
+    #     engagement_identifier: "EngagementIdentifier",
+    #     max_results: 1,
+    #     next_token: "String",
+    #     sort: {
+    #       sort_by: "CreatedDate", # accepts CreatedDate
+    #       sort_order: "ASCENDING", # accepts ASCENDING, DESCENDING
+    #     },
+    #     status: "Running", # accepts Running, Stopped
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.resource_snapshot_job_summaries #=> Array
+    #   resp.resource_snapshot_job_summaries[0].arn #=> String
+    #   resp.resource_snapshot_job_summaries[0].engagement_id #=> String
+    #   resp.resource_snapshot_job_summaries[0].id #=> String
+    #   resp.resource_snapshot_job_summaries[0].status #=> String, one of "Running", "Stopped"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListResourceSnapshotJobs AWS API Documentation
+    #
+    # @overload list_resource_snapshot_jobs(params = {})
+    # @param [Hash] params ({})
+    def list_resource_snapshot_jobs(params = {}, options = {})
+      req = build_request(:list_resource_snapshot_jobs, params)
+      req.send_request(options)
+    end
+
+    # Retrieves a list of resource view snapshots based on specified
+    # criteria.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request.
+    #
+    # @option params [String] :created_by
+    #   Filters the response to include only snapshots of resources created by
+    #   the specified AWS account.
+    #
+    # @option params [required, String] :engagement_identifier
+    #   The unique identifier of the engagement associated with the snapshots.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return in a single call.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results.
+    #
+    # @option params [String] :resource_identifier
+    #   Filters the response to include only snapshots of the specified
+    #   resource.
+    #
+    # @option params [String] :resource_snapshot_template_identifier
+    #   Filters the response to include only snapshots created using the
+    #   specified template.
+    #
+    # @option params [String] :resource_type
+    #   Filters the response to include only snapshots of the specified
+    #   resource type.
+    #
+    # @return [Types::ListResourceSnapshotsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListResourceSnapshotsResponse#next_token #next_token} => String
+    #   * {Types::ListResourceSnapshotsResponse#resource_snapshot_summaries #resource_snapshot_summaries} => Array&lt;Types::ResourceSnapshotSummary&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_resource_snapshots({
+    #     catalog: "CatalogIdentifier", # required
+    #     created_by: "AwsAccount",
+    #     engagement_identifier: "EngagementIdentifier", # required
+    #     max_results: 1,
+    #     next_token: "String",
+    #     resource_identifier: "ResourceIdentifier",
+    #     resource_snapshot_template_identifier: "ResourceTemplateName",
+    #     resource_type: "Opportunity", # accepts Opportunity
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.resource_snapshot_summaries #=> Array
+    #   resp.resource_snapshot_summaries[0].arn #=> String
+    #   resp.resource_snapshot_summaries[0].created_by #=> String
+    #   resp.resource_snapshot_summaries[0].resource_id #=> String
+    #   resp.resource_snapshot_summaries[0].resource_snapshot_template_name #=> String
+    #   resp.resource_snapshot_summaries[0].resource_type #=> String, one of "Opportunity"
+    #   resp.resource_snapshot_summaries[0].revision #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/ListResourceSnapshots AWS API Documentation
+    #
+    # @overload list_resource_snapshots(params = {})
+    # @param [Hash] params ({})
+    def list_resource_snapshots(params = {}, options = {})
+      req = build_request(:list_resource_snapshots, params)
       req.send_request(options)
     end
 
@@ -1550,6 +2760,7 @@ module Aws::PartnerCentralSelling
     #
     #   resp.next_token #=> String
     #   resp.solution_summaries #=> Array
+    #   resp.solution_summaries[0].arn #=> String
     #   resp.solution_summaries[0].catalog #=> String
     #   resp.solution_summaries[0].category #=> String
     #   resp.solution_summaries[0].created_date #=> Time
@@ -1563,6 +2774,44 @@ module Aws::PartnerCentralSelling
     # @param [Hash] params ({})
     def list_solutions(params = {}, options = {})
       req = build_request(:list_solutions, params)
+      req.send_request(options)
+    end
+
+    # Updates the currently set system settings, which include the IAM Role
+    # used for resource snapshot jobs.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog in which the settings will be updated.
+    #   Acceptable values include `AWS` for production and `Sandbox` for
+    #   testing environments.
+    #
+    # @option params [String] :resource_snapshot_job_role_identifier
+    #   Specifies the ARN of the IAM Role used for resource snapshot job
+    #   executions.
+    #
+    # @return [Types::PutSellingSystemSettingsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::PutSellingSystemSettingsResponse#catalog #catalog} => String
+    #   * {Types::PutSellingSystemSettingsResponse#resource_snapshot_job_role_arn #resource_snapshot_job_role_arn} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.put_selling_system_settings({
+    #     catalog: "CatalogIdentifier", # required
+    #     resource_snapshot_job_role_identifier: "ResourceSnapshotJobRoleIdentifier",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.catalog #=> String
+    #   resp.resource_snapshot_job_role_arn #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/PutSellingSystemSettings AWS API Documentation
+    #
+    # @overload put_selling_system_settings(params = {})
+    # @param [Hash] params ({})
+    def put_selling_system_settings(params = {}, options = {})
+      req = build_request(:put_selling_system_settings, params)
       req.send_request(options)
     end
 
@@ -1650,6 +2899,7 @@ module Aws::PartnerCentralSelling
     #   * {Types::StartEngagementByAcceptingInvitationTaskResponse#message #message} => String
     #   * {Types::StartEngagementByAcceptingInvitationTaskResponse#opportunity_id #opportunity_id} => String
     #   * {Types::StartEngagementByAcceptingInvitationTaskResponse#reason_code #reason_code} => String
+    #   * {Types::StartEngagementByAcceptingInvitationTaskResponse#resource_snapshot_job_id #resource_snapshot_job_id} => String
     #   * {Types::StartEngagementByAcceptingInvitationTaskResponse#start_time #start_time} => Time
     #   * {Types::StartEngagementByAcceptingInvitationTaskResponse#task_arn #task_arn} => String
     #   * {Types::StartEngagementByAcceptingInvitationTaskResponse#task_id #task_id} => String
@@ -1668,7 +2918,8 @@ module Aws::PartnerCentralSelling
     #   resp.engagement_invitation_id #=> String
     #   resp.message #=> String
     #   resp.opportunity_id #=> String
-    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "EngagementValidationFailed", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "InternalError", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied"
+    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "InvitationValidationFailed", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "ResourceSnapshotJobValidationFailed", "ResourceSnapshotJobConflict", "EngagementValidationFailed", "EngagementConflict", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied", "ResourceSnapshotValidationFailed", "ResourceSnapshotConflict", "InternalError", "ServiceQuotaExceeded", "RequestThrottled"
+    #   resp.resource_snapshot_job_id #=> String
     #   resp.start_time #=> Time
     #   resp.task_arn #=> String
     #   resp.task_id #=> String
@@ -1714,9 +2965,12 @@ module Aws::PartnerCentralSelling
     #
     # @return [Types::StartEngagementFromOpportunityTaskResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
+    #   * {Types::StartEngagementFromOpportunityTaskResponse#engagement_id #engagement_id} => String
+    #   * {Types::StartEngagementFromOpportunityTaskResponse#engagement_invitation_id #engagement_invitation_id} => String
     #   * {Types::StartEngagementFromOpportunityTaskResponse#message #message} => String
     #   * {Types::StartEngagementFromOpportunityTaskResponse#opportunity_id #opportunity_id} => String
     #   * {Types::StartEngagementFromOpportunityTaskResponse#reason_code #reason_code} => String
+    #   * {Types::StartEngagementFromOpportunityTaskResponse#resource_snapshot_job_id #resource_snapshot_job_id} => String
     #   * {Types::StartEngagementFromOpportunityTaskResponse#start_time #start_time} => Time
     #   * {Types::StartEngagementFromOpportunityTaskResponse#task_arn #task_arn} => String
     #   * {Types::StartEngagementFromOpportunityTaskResponse#task_id #task_id} => String
@@ -1736,9 +2990,12 @@ module Aws::PartnerCentralSelling
     #
     # @example Response structure
     #
+    #   resp.engagement_id #=> String
+    #   resp.engagement_invitation_id #=> String
     #   resp.message #=> String
     #   resp.opportunity_id #=> String
-    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "EngagementValidationFailed", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "InternalError", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied"
+    #   resp.reason_code #=> String, one of "InvitationAccessDenied", "InvitationValidationFailed", "EngagementAccessDenied", "OpportunityAccessDenied", "ResourceSnapshotJobAccessDenied", "ResourceSnapshotJobValidationFailed", "ResourceSnapshotJobConflict", "EngagementValidationFailed", "EngagementConflict", "OpportunitySubmissionFailed", "EngagementInvitationConflict", "OpportunityValidationFailed", "OpportunityConflict", "ResourceSnapshotAccessDenied", "ResourceSnapshotValidationFailed", "ResourceSnapshotConflict", "InternalError", "ServiceQuotaExceeded", "RequestThrottled"
+    #   resp.resource_snapshot_job_id #=> String
     #   resp.start_time #=> Time
     #   resp.task_arn #=> String
     #   resp.task_id #=> String
@@ -1750,6 +3007,98 @@ module Aws::PartnerCentralSelling
     # @param [Hash] params ({})
     def start_engagement_from_opportunity_task(params = {}, options = {})
       req = build_request(:start_engagement_from_opportunity_task, params)
+      req.send_request(options)
+    end
+
+    # Starts a resource snapshot job that has been previously created.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request.
+    #
+    # @option params [required, String] :resource_snapshot_job_identifier
+    #   The identifier of the resource snapshot job to start.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.start_resource_snapshot_job({
+    #     catalog: "CatalogIdentifier", # required
+    #     resource_snapshot_job_identifier: "ResourceSnapshotJobIdentifier", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/StartResourceSnapshotJob AWS API Documentation
+    #
+    # @overload start_resource_snapshot_job(params = {})
+    # @param [Hash] params ({})
+    def start_resource_snapshot_job(params = {}, options = {})
+      req = build_request(:start_resource_snapshot_job, params)
+      req.send_request(options)
+    end
+
+    # Stops a resource snapshot job. The job must be started prior to being
+    # stopped.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request.
+    #
+    # @option params [required, String] :resource_snapshot_job_identifier
+    #   The identifier of the job to stop.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.stop_resource_snapshot_job({
+    #     catalog: "CatalogIdentifier", # required
+    #     resource_snapshot_job_identifier: "ResourceSnapshotJobIdentifier", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/StopResourceSnapshotJob AWS API Documentation
+    #
+    # @overload stop_resource_snapshot_job(params = {})
+    # @param [Hash] params ({})
+    def stop_resource_snapshot_job(params = {}, options = {})
+      req = build_request(:stop_resource_snapshot_job, params)
+      req.send_request(options)
+    end
+
+    # Use this action to submit an opportunity that was previously created
+    # by partner for AWS review. After you perform this action, the
+    # opportunity becomes non-editable until it is reviewed by AWS and has `
+    # LifeCycle.ReviewStatus ` as either `Approved` or `Action Required`.
+    #
+    # @option params [required, String] :catalog
+    #   Specifies the catalog related to the request.
+    #
+    # @option params [required, String] :identifier
+    #   The identifier of the opportunity previously created by partner and
+    #   needs to be submitted.
+    #
+    # @option params [required, String] :involvement_type
+    #   Specifies the level of AWS sellers' involvement on the opportunity.
+    #
+    # @option params [String] :visibility
+    #   Determines whether to restrict visibility of the opportunity from AWS
+    #   sales. Default value is Full.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.submit_opportunity({
+    #     catalog: "CatalogIdentifier", # required
+    #     identifier: "OpportunityIdentifier", # required
+    #     involvement_type: "For Visibility Only", # required, accepts For Visibility Only, Co-Sell
+    #     visibility: "Full", # accepts Full, Limited
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/partnercentral-selling-2022-07-26/SubmitOpportunity AWS API Documentation
+    #
+    # @overload submit_opportunity(params = {})
+    # @param [Hash] params ({})
+    def submit_opportunity(params = {}, options = {})
+      req = build_request(:submit_opportunity, params)
       req.send_request(options)
     end
 
@@ -1945,6 +3294,7 @@ module Aws::PartnerCentralSelling
     #         {
     #           amount: "String", # required
     #           currency_code: "USD", # required, accepts USD, EUR, GBP, AUD, CAD, CNY, NZD, INR, JPY, CHF, SEK, AED, AFN, ALL, AMD, ANG, AOA, ARS, AWG, AZN, BAM, BBD, BDT, BGN, BHD, BIF, BMD, BND, BOB, BOV, BRL, BSD, BTN, BWP, BYN, BZD, CDF, CHE, CHW, CLF, CLP, COP, COU, CRC, CUC, CUP, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, FJD, FKP, GEL, GHS, GIP, GMD, GNF, GTQ, GYD, HKD, HNL, HRK, HTG, HUF, IDR, ILS, IQD, IRR, ISK, JMD, JOD, KES, KGS, KHR, KMF, KPW, KRW, KWD, KYD, KZT, LAK, LBP, LKR, LRD, LSL, LYD, MAD, MDL, MGA, MKD, MMK, MNT, MOP, MRU, MUR, MVR, MWK, MXN, MXV, MYR, MZN, NAD, NGN, NIO, NOK, NPR, OMR, PAB, PEN, PGK, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SBD, SCR, SDG, SGD, SHP, SLL, SOS, SRD, SSP, STN, SVC, SYP, SZL, THB, TJS, TMT, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, USN, UYI, UYU, UZS, VEF, VND, VUV, WST, XAF, XCD, XDR, XOF, XPF, XSU, XUA, YER, ZAR, ZMW, ZWL
+    #           estimation_url: "WebsiteUrl",
     #           frequency: "Monthly", # required, accepts Monthly
     #           target_company: "ExpectedCustomerSpendTargetCompanyString", # required
     #         },
@@ -1998,7 +3348,7 @@ module Aws::PartnerCentralSelling
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-partnercentralselling'
-      context[:gem_version] = '1.2.0'
+      context[:gem_version] = '1.3.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

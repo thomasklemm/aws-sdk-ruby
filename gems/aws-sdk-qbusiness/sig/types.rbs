@@ -1734,8 +1734,6 @@ module Aws::QBusiness
 
     class SearchRelevantContentRequest
       attr_accessor application_id: ::String
-      attr_accessor user_id: ::String
-      attr_accessor user_groups: ::Array[::String]
       attr_accessor query_text: ::String
       attr_accessor content_source: Types::ContentSource
       attr_accessor attribute_filter: Types::AttributeFilter

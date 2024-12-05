@@ -1421,8 +1421,6 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/QBusiness/Client.html#search_relevant_content-instance_method
       def search_relevant_content: (
                                      application_id: ::String,
-                                     ?user_id: ::String,
-                                     ?user_groups: Array[::String],
                                      query_text: ::String,
                                      content_source: {
                                        retriever: {

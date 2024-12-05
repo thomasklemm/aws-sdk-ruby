@@ -6653,14 +6653,6 @@ module Aws::QBusiness
     #   The unique identifier of the Q Business application to search.
     #   @return [String]
     #
-    # @!attribute [rw] user_id
-    #   The ID of the user performing the search. Used for access control.
-    #   @return [String]
-    #
-    # @!attribute [rw] user_groups
-    #   The groups the user belongs to. Used for access control.
-    #   @return [Array<String>]
-    #
     # @!attribute [rw] query_text
     #   The text to search for.
     #   @return [String]
@@ -6687,8 +6679,6 @@ module Aws::QBusiness
     #
     class SearchRelevantContentRequest < Struct.new(
       :application_id,
-      :user_id,
-      :user_groups,
       :query_text,
       :content_source,
       :attribute_filter,

@@ -4192,21 +4192,15 @@ module Aws::QBusiness
 
     # Searches for relevant content in a Q Business application based on a
     # query. This operation takes a search query text, the Q Business
-    # application identifier, and optional filters (such as user ID, user
-    # groups, content source, and maximum results) as input. It returns a
-    # list of relevant content items, where each item includes the content
-    # text, the unique document identifier, the document title, the document
-    # URI, any relevant document attributes, and score attributes indicating
-    # the confidence level of the relevance.
+    # application identifier, and optional filters (such as content source
+    # and maximum results) as input. It returns a list of relevant content
+    # items, where each item includes the content text, the unique document
+    # identifier, the document title, the document URI, any relevant
+    # document attributes, and score attributes indicating the confidence
+    # level of the relevance.
     #
     # @option params [required, String] :application_id
     #   The unique identifier of the Q Business application to search.
-    #
-    # @option params [String] :user_id
-    #   The ID of the user performing the search. Used for access control.
-    #
-    # @option params [Array<String>] :user_groups
-    #   The groups the user belongs to. Used for access control.
     #
     # @option params [required, String] :query_text
     #   The text to search for.
@@ -4236,8 +4230,6 @@ module Aws::QBusiness
     #
     #   resp = client.search_relevant_content({
     #     application_id: "ApplicationId", # required
-    #     user_id: "UserId",
-    #     user_groups: ["String"],
     #     query_text: "QueryText", # required
     #     content_source: { # required
     #       retriever: {
@@ -5375,7 +5367,7 @@ module Aws::QBusiness
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-qbusiness'
-      context[:gem_version] = '1.24.0'
+      context[:gem_version] = '1.25.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

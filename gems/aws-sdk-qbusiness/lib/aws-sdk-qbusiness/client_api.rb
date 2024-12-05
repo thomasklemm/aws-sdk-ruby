@@ -1860,8 +1860,6 @@ module Aws::QBusiness
     ScoreAttributes.struct_class = Types::ScoreAttributes
 
     SearchRelevantContentRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
-    SearchRelevantContentRequest.add_member(:user_id, Shapes::ShapeRef.new(shape: UserId, location: "querystring", location_name: "userId"))
-    SearchRelevantContentRequest.add_member(:user_groups, Shapes::ShapeRef.new(shape: UserGroups, location: "querystring", location_name: "userGroups"))
     SearchRelevantContentRequest.add_member(:query_text, Shapes::ShapeRef.new(shape: QueryText, required: true, location_name: "queryText"))
     SearchRelevantContentRequest.add_member(:content_source, Shapes::ShapeRef.new(shape: ContentSource, required: true, location_name: "contentSource"))
     SearchRelevantContentRequest.add_member(:attribute_filter, Shapes::ShapeRef.new(shape: AttributeFilter, location_name: "attributeFilter"))

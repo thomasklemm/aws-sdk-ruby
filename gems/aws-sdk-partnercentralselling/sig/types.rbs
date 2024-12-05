@@ -8,6 +8,12 @@
 module Aws::PartnerCentralSelling
   module Types
 
+    class AcceptEngagementInvitationRequest
+      attr_accessor catalog: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
     class AccessDeniedException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -138,6 +144,35 @@ module Aws::PartnerCentralSelling
       SENSITIVE: [:business_title, :email, :first_name, :last_name, :phone]
     end
 
+    class CreateEngagementInvitationRequest
+      attr_accessor catalog: ::String
+      attr_accessor client_token: ::String
+      attr_accessor engagement_identifier: ::String
+      attr_accessor invitation: Types::Invitation
+      SENSITIVE: []
+    end
+
+    class CreateEngagementInvitationResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateEngagementRequest
+      attr_accessor catalog: ::String
+      attr_accessor client_token: ::String
+      attr_accessor contexts: ::Array[Types::EngagementContextDetails]
+      attr_accessor description: ::String
+      attr_accessor title: ::String
+      SENSITIVE: []
+    end
+
+    class CreateEngagementResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
     class CreateOpportunityRequest
       attr_accessor catalog: ::String
       attr_accessor client_token: ::String
@@ -162,14 +197,58 @@ module Aws::PartnerCentralSelling
       SENSITIVE: []
     end
 
+    class CreateResourceSnapshotJobRequest
+      attr_accessor catalog: ::String
+      attr_accessor client_token: ::String
+      attr_accessor engagement_identifier: ::String
+      attr_accessor resource_identifier: ::String
+      attr_accessor resource_snapshot_template_identifier: ::String
+      attr_accessor resource_type: ("Opportunity")
+      SENSITIVE: []
+    end
+
+    class CreateResourceSnapshotJobResponse
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      SENSITIVE: []
+    end
+
+    class CreateResourceSnapshotRequest
+      attr_accessor catalog: ::String
+      attr_accessor client_token: ::String
+      attr_accessor engagement_identifier: ::String
+      attr_accessor resource_identifier: ::String
+      attr_accessor resource_snapshot_template_identifier: ::String
+      attr_accessor resource_type: ("Opportunity")
+      SENSITIVE: []
+    end
+
+    class CreateResourceSnapshotResponse
+      attr_accessor arn: ::String
+      attr_accessor revision: ::Integer
+      SENSITIVE: []
+    end
+
     class Customer
       attr_accessor account: Types::Account
       attr_accessor contacts: ::Array[Types::Contact]
       SENSITIVE: []
     end
 
+    class CustomerProjectsContext
+      attr_accessor customer: Types::EngagementCustomer
+      attr_accessor project: Types::EngagementCustomerProjectDetails
+      SENSITIVE: []
+    end
+
     class CustomerSummary
       attr_accessor account: Types::AccountSummary
+      SENSITIVE: []
+    end
+
+    class DeleteResourceSnapshotJobRequest
+      attr_accessor catalog: ::String
+      attr_accessor resource_snapshot_job_identifier: ::String
       SENSITIVE: []
     end
 
@@ -181,6 +260,23 @@ module Aws::PartnerCentralSelling
       SENSITIVE: []
     end
 
+    class EngagementContextDetails
+      attr_accessor payload: Types::EngagementContextPayload
+      attr_accessor type: ("CustomerProject")
+      SENSITIVE: []
+    end
+
+    class EngagementContextPayload
+      attr_accessor customer_project: Types::CustomerProjectsContext
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class CustomerProject < EngagementContextPayload
+      end
+      class Unknown < EngagementContextPayload
+      end
+    end
+
     class EngagementCustomer
       attr_accessor company_name: ::String
       attr_accessor country_code: ("US" | "AF" | "AX" | "AL" | "DZ" | "AS" | "AD" | "AO" | "AI" | "AQ" | "AG" | "AR" | "AM" | "AW" | "AU" | "AT" | "AZ" | "BS" | "BH" | "BD" | "BB" | "BY" | "BE" | "BZ" | "BJ" | "BM" | "BT" | "BO" | "BQ" | "BA" | "BW" | "BV" | "BR" | "IO" | "BN" | "BG" | "BF" | "BI" | "KH" | "CM" | "CA" | "CV" | "KY" | "CF" | "TD" | "CL" | "CN" | "CX" | "CC" | "CO" | "KM" | "CG" | "CK" | "CR" | "CI" | "HR" | "CU" | "CW" | "CY" | "CZ" | "CD" | "DK" | "DJ" | "DM" | "DO" | "EC" | "EG" | "SV" | "GQ" | "ER" | "EE" | "ET" | "FK" | "FO" | "FJ" | "FI" | "FR" | "GF" | "PF" | "TF" | "GA" | "GM" | "GE" | "DE" | "GH" | "GI" | "GR" | "GL" | "GD" | "GP" | "GU" | "GT" | "GG" | "GN" | "GW" | "GY" | "HT" | "HM" | "VA" | "HN" | "HK" | "HU" | "IS" | "IN" | "ID" | "IR" | "IQ" | "IE" | "IM" | "IL" | "IT" | "JM" | "JP" | "JE" | "JO" | "KZ" | "KE" | "KI" | "KR" | "KW" | "KG" | "LA" | "LV" | "LB" | "LS" | "LR" | "LY" | "LI" | "LT" | "LU" | "MO" | "MK" | "MG" | "MW" | "MY" | "MV" | "ML" | "MT" | "MH" | "MQ" | "MR" | "MU" | "YT" | "MX" | "FM" | "MD" | "MC" | "MN" | "ME" | "MS" | "MA" | "MZ" | "MM" | "NA" | "NR" | "NP" | "NL" | "AN" | "NC" | "NZ" | "NI" | "NE" | "NG" | "NU" | "NF" | "MP" | "NO" | "OM" | "PK" | "PW" | "PS" | "PA" | "PG" | "PY" | "PE" | "PH" | "PN" | "PL" | "PT" | "PR" | "QA" | "RE" | "RO" | "RU" | "RW" | "BL" | "SH" | "KN" | "LC" | "MF" | "PM" | "VC" | "WS" | "SM" | "ST" | "SA" | "SN" | "RS" | "SC" | "SL" | "SG" | "SX" | "SK" | "SI" | "SB" | "SO" | "ZA" | "GS" | "SS" | "ES" | "LK" | "SD" | "SR" | "SJ" | "SZ" | "SE" | "CH" | "SY" | "TW" | "TJ" | "TZ" | "TH" | "TL" | "TG" | "TK" | "TO" | "TT" | "TN" | "TR" | "TM" | "TC" | "TV" | "UG" | "UA" | "AE" | "GB" | "UM" | "UY" | "UZ" | "VU" | "VE" | "VN" | "VG" | "VI" | "WF" | "EH" | "YE" | "ZM" | "ZW")
@@ -189,13 +285,22 @@ module Aws::PartnerCentralSelling
       SENSITIVE: [:country_code, :website_url]
     end
 
+    class EngagementCustomerProjectDetails
+      attr_accessor business_problem: ::String
+      attr_accessor target_completion_date: ::String
+      attr_accessor title: ::String
+      SENSITIVE: [:business_problem]
+    end
+
     class EngagementInvitationSummary
       attr_accessor arn: ::String
       attr_accessor catalog: ::String
+      attr_accessor engagement_id: ::String
       attr_accessor engagement_title: ::String
       attr_accessor expiration_date: ::Time
       attr_accessor id: ::String
       attr_accessor invitation_date: ::Time
+      attr_accessor participant_type: ("SENDER" | "RECEIVER")
       attr_accessor payload_type: ("OpportunityInvitation")
       attr_accessor receiver: Types::Receiver
       attr_accessor sender_aws_account_id: ::String
@@ -204,12 +309,51 @@ module Aws::PartnerCentralSelling
       SENSITIVE: [:sender_aws_account_id]
     end
 
+    class EngagementMember
+      attr_accessor account_id: ::String
+      attr_accessor company_name: ::String
+      attr_accessor website_url: ::String
+      SENSITIVE: [:account_id]
+    end
+
+    class EngagementMemberSummary
+      attr_accessor company_name: ::String
+      attr_accessor website_url: ::String
+      SENSITIVE: []
+    end
+
+    class EngagementResourceAssociationSummary
+      attr_accessor catalog: ::String
+      attr_accessor created_by: ::String
+      attr_accessor engagement_id: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_type: ("Opportunity")
+      SENSITIVE: [:created_by]
+    end
+
+    class EngagementSort
+      attr_accessor sort_by: ("CreatedDate")
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      SENSITIVE: []
+    end
+
+    class EngagementSummary
+      attr_accessor arn: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor id: ::String
+      attr_accessor member_count: ::Integer
+      attr_accessor title: ::String
+      SENSITIVE: [:created_by]
+    end
+
     class ExpectedCustomerSpend
       attr_accessor amount: ::String
       attr_accessor currency_code: ("USD" | "EUR" | "GBP" | "AUD" | "CAD" | "CNY" | "NZD" | "INR" | "JPY" | "CHF" | "SEK" | "AED" | "AFN" | "ALL" | "AMD" | "ANG" | "AOA" | "ARS" | "AWG" | "AZN" | "BAM" | "BBD" | "BDT" | "BGN" | "BHD" | "BIF" | "BMD" | "BND" | "BOB" | "BOV" | "BRL" | "BSD" | "BTN" | "BWP" | "BYN" | "BZD" | "CDF" | "CHE" | "CHW" | "CLF" | "CLP" | "COP" | "COU" | "CRC" | "CUC" | "CUP" | "CVE" | "CZK" | "DJF" | "DKK" | "DOP" | "DZD" | "EGP" | "ERN" | "ETB" | "FJD" | "FKP" | "GEL" | "GHS" | "GIP" | "GMD" | "GNF" | "GTQ" | "GYD" | "HKD" | "HNL" | "HRK" | "HTG" | "HUF" | "IDR" | "ILS" | "IQD" | "IRR" | "ISK" | "JMD" | "JOD" | "KES" | "KGS" | "KHR" | "KMF" | "KPW" | "KRW" | "KWD" | "KYD" | "KZT" | "LAK" | "LBP" | "LKR" | "LRD" | "LSL" | "LYD" | "MAD" | "MDL" | "MGA" | "MKD" | "MMK" | "MNT" | "MOP" | "MRU" | "MUR" | "MVR" | "MWK" | "MXN" | "MXV" | "MYR" | "MZN" | "NAD" | "NGN" | "NIO" | "NOK" | "NPR" | "OMR" | "PAB" | "PEN" | "PGK" | "PHP" | "PKR" | "PLN" | "PYG" | "QAR" | "RON" | "RSD" | "RUB" | "RWF" | "SAR" | "SBD" | "SCR" | "SDG" | "SGD" | "SHP" | "SLL" | "SOS" | "SRD" | "SSP" | "STN" | "SVC" | "SYP" | "SZL" | "THB" | "TJS" | "TMT" | "TND" | "TOP" | "TRY" | "TTD" | "TWD" | "TZS" | "UAH" | "UGX" | "USN" | "UYI" | "UYU" | "UZS" | "VEF" | "VND" | "VUV" | "WST" | "XAF" | "XCD" | "XDR" | "XOF" | "XPF" | "XSU" | "XUA" | "YER" | "ZAR" | "ZMW" | "ZWL")
+      attr_accessor estimation_url: ::String
       attr_accessor frequency: ("Monthly")
       attr_accessor target_company: ::String
-      SENSITIVE: [:currency_code]
+      SENSITIVE: [:currency_code, :estimation_url]
     end
 
     class GetAwsOpportunitySummaryRequest
@@ -243,10 +387,14 @@ module Aws::PartnerCentralSelling
     class GetEngagementInvitationResponse
       attr_accessor arn: ::String
       attr_accessor catalog: ::String
+      attr_accessor engagement_description: ::String
+      attr_accessor engagement_id: ::String
       attr_accessor engagement_title: ::String
+      attr_accessor existing_members: ::Array[Types::EngagementMemberSummary]
       attr_accessor expiration_date: ::Time
       attr_accessor id: ::String
       attr_accessor invitation_date: ::Time
+      attr_accessor invitation_message: ::String
       attr_accessor payload: Types::Payload
       attr_accessor payload_type: ("OpportunityInvitation")
       attr_accessor receiver: Types::Receiver
@@ -257,6 +405,24 @@ module Aws::PartnerCentralSelling
       SENSITIVE: [:sender_aws_account_id]
     end
 
+    class GetEngagementRequest
+      attr_accessor catalog: ::String
+      attr_accessor identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetEngagementResponse
+      attr_accessor arn: ::String
+      attr_accessor contexts: ::Array[Types::EngagementContextDetails]
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor description: ::String
+      attr_accessor id: ::String
+      attr_accessor member_count: ::Integer
+      attr_accessor title: ::String
+      SENSITIVE: [:created_by]
+    end
+
     class GetOpportunityRequest
       attr_accessor catalog: ::String
       attr_accessor identifier: ::String
@@ -264,6 +430,7 @@ module Aws::PartnerCentralSelling
     end
 
     class GetOpportunityResponse
+      attr_accessor arn: ::String
       attr_accessor catalog: ::String
       attr_accessor created_date: ::Time
       attr_accessor customer: Types::Customer
@@ -282,8 +449,72 @@ module Aws::PartnerCentralSelling
       SENSITIVE: []
     end
 
+    class GetResourceSnapshotJobRequest
+      attr_accessor catalog: ::String
+      attr_accessor resource_snapshot_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class GetResourceSnapshotJobResponse
+      attr_accessor arn: ::String
+      attr_accessor catalog: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor engagement_id: ::String
+      attr_accessor id: ::String
+      attr_accessor last_failure: ::String
+      attr_accessor last_successful_execution_date: ::Time
+      attr_accessor resource_arn: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_snapshot_template_name: ::String
+      attr_accessor resource_type: ("Opportunity")
+      attr_accessor status: ("Running" | "Stopped")
+      SENSITIVE: []
+    end
+
+    class GetResourceSnapshotRequest
+      attr_accessor catalog: ::String
+      attr_accessor engagement_identifier: ::String
+      attr_accessor resource_identifier: ::String
+      attr_accessor resource_snapshot_template_identifier: ::String
+      attr_accessor resource_type: ("Opportunity")
+      attr_accessor revision: ::Integer
+      SENSITIVE: []
+    end
+
+    class GetResourceSnapshotResponse
+      attr_accessor arn: ::String
+      attr_accessor catalog: ::String
+      attr_accessor created_at: ::Time
+      attr_accessor created_by: ::String
+      attr_accessor engagement_id: ::String
+      attr_accessor payload: Types::ResourceSnapshotPayload
+      attr_accessor resource_id: ::String
+      attr_accessor resource_snapshot_template_name: ::String
+      attr_accessor resource_type: ("Opportunity")
+      attr_accessor revision: ::Integer
+      SENSITIVE: [:created_by]
+    end
+
+    class GetSellingSystemSettingsRequest
+      attr_accessor catalog: ::String
+      SENSITIVE: []
+    end
+
+    class GetSellingSystemSettingsResponse
+      attr_accessor catalog: ::String
+      attr_accessor resource_snapshot_job_role_arn: ::String
+      SENSITIVE: []
+    end
+
     class InternalServerException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class Invitation
+      attr_accessor message: ::String
+      attr_accessor payload: Types::Payload
+      attr_accessor receiver: Types::Receiver
       SENSITIVE: []
     end
 
@@ -305,6 +536,14 @@ module Aws::PartnerCentralSelling
       SENSITIVE: [:next_steps]
     end
 
+    class LifeCycleForView
+      attr_accessor next_steps: ::String
+      attr_accessor review_status: ("Pending Submission" | "Submitted" | "In review" | "Approved" | "Rejected" | "Action Required")
+      attr_accessor stage: ("Prospect" | "Qualified" | "Technical Validation" | "Business Validation" | "Committed" | "Launched" | "Closed Lost")
+      attr_accessor target_close_date: ::String
+      SENSITIVE: [:next_steps]
+    end
+
     class LifeCycleSummary
       attr_accessor closed_lost_reason: ("Customer Deficiency" | "Delay / Cancellation of Project" | "Legal / Tax / Regulatory" | "Lost to Competitor - Google" | "Lost to Competitor - Microsoft" | "Lost to Competitor - SoftLayer" | "Lost to Competitor - VMWare" | "Lost to Competitor - Other" | "No Opportunity" | "On Premises Deployment" | "Partner Gap" | "Price" | "Security / Compliance" | "Technical Limitations" | "Customer Experience" | "Other" | "People/Relationship/Governance" | "Product/Technology" | "Financial/Commercial")
       attr_accessor next_steps: ::String
@@ -316,18 +555,132 @@ module Aws::PartnerCentralSelling
       SENSITIVE: [:next_steps]
     end
 
-    class ListEngagementInvitationsRequest
+    class ListEngagementByAcceptingInvitationTaskSummary
+      attr_accessor engagement_invitation_id: ::String
+      attr_accessor message: ::String
+      attr_accessor opportunity_id: ::String
+      attr_accessor reason_code: ("InvitationAccessDenied" | "InvitationValidationFailed" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "ResourceSnapshotJobValidationFailed" | "ResourceSnapshotJobConflict" | "EngagementValidationFailed" | "EngagementConflict" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied" | "ResourceSnapshotValidationFailed" | "ResourceSnapshotConflict" | "InternalError" | "ServiceQuotaExceeded" | "RequestThrottled")
+      attr_accessor resource_snapshot_job_id: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor task_arn: ::String
+      attr_accessor task_id: ::String
+      attr_accessor task_status: ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class ListEngagementByAcceptingInvitationTasksRequest
       attr_accessor catalog: ::String
+      attr_accessor engagement_invitation_identifier: ::Array[::String]
       attr_accessor max_results: ::Integer
       attr_accessor next_token: ::String
-      attr_accessor participant_type: ("RECEIVER")
+      attr_accessor opportunity_identifier: ::Array[::String]
+      attr_accessor sort: Types::ListTasksSortBase
+      attr_accessor task_identifier: ::Array[::String]
+      attr_accessor task_status: ::Array[("IN_PROGRESS" | "COMPLETE" | "FAILED")]
+      SENSITIVE: []
+    end
+
+    class ListEngagementByAcceptingInvitationTasksResponse
+      attr_accessor next_token: ::String
+      attr_accessor task_summaries: ::Array[Types::ListEngagementByAcceptingInvitationTaskSummary]
+      SENSITIVE: []
+    end
+
+    class ListEngagementFromOpportunityTaskSummary
+      attr_accessor engagement_id: ::String
+      attr_accessor engagement_invitation_id: ::String
+      attr_accessor message: ::String
+      attr_accessor opportunity_id: ::String
+      attr_accessor reason_code: ("InvitationAccessDenied" | "InvitationValidationFailed" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "ResourceSnapshotJobValidationFailed" | "ResourceSnapshotJobConflict" | "EngagementValidationFailed" | "EngagementConflict" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied" | "ResourceSnapshotValidationFailed" | "ResourceSnapshotConflict" | "InternalError" | "ServiceQuotaExceeded" | "RequestThrottled")
+      attr_accessor resource_snapshot_job_id: ::String
+      attr_accessor start_time: ::Time
+      attr_accessor task_arn: ::String
+      attr_accessor task_id: ::String
+      attr_accessor task_status: ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class ListEngagementFromOpportunityTasksRequest
+      attr_accessor catalog: ::String
+      attr_accessor engagement_identifier: ::Array[::String]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor opportunity_identifier: ::Array[::String]
+      attr_accessor sort: Types::ListTasksSortBase
+      attr_accessor task_identifier: ::Array[::String]
+      attr_accessor task_status: ::Array[("IN_PROGRESS" | "COMPLETE" | "FAILED")]
+      SENSITIVE: []
+    end
+
+    class ListEngagementFromOpportunityTasksResponse
+      attr_accessor next_token: ::String
+      attr_accessor task_summaries: ::Array[Types::ListEngagementFromOpportunityTaskSummary]
+      SENSITIVE: []
+    end
+
+    class ListEngagementInvitationsRequest
+      attr_accessor catalog: ::String
+      attr_accessor engagement_identifier: ::Array[::String]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor participant_type: ("SENDER" | "RECEIVER")
       attr_accessor payload_type: ::Array[("OpportunityInvitation")]
+      attr_accessor sender_aws_account_id: ::Array[::String]
       attr_accessor sort: Types::OpportunityEngagementInvitationSort
+      attr_accessor status: ::Array[("ACCEPTED" | "PENDING" | "REJECTED" | "EXPIRED")]
       SENSITIVE: []
     end
 
     class ListEngagementInvitationsResponse
       attr_accessor engagement_invitation_summaries: ::Array[Types::EngagementInvitationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListEngagementMembersRequest
+      attr_accessor catalog: ::String
+      attr_accessor identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListEngagementMembersResponse
+      attr_accessor engagement_member_list: ::Array[Types::EngagementMember]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListEngagementResourceAssociationsRequest
+      attr_accessor catalog: ::String
+      attr_accessor created_by: ::String
+      attr_accessor engagement_identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor resource_identifier: ::String
+      attr_accessor resource_type: ("Opportunity")
+      SENSITIVE: [:created_by]
+    end
+
+    class ListEngagementResourceAssociationsResponse
+      attr_accessor engagement_resource_association_summaries: ::Array[Types::EngagementResourceAssociationSummary]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListEngagementsRequest
+      attr_accessor catalog: ::String
+      attr_accessor created_by: ::Array[::String]
+      attr_accessor engagement_identifier: ::Array[::String]
+      attr_accessor exclude_created_by: ::Array[::String]
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor sort: Types::EngagementSort
+      SENSITIVE: []
+    end
+
+    class ListEngagementsResponse
+      attr_accessor engagement_summary_list: ::Array[Types::EngagementSummary]
       attr_accessor next_token: ::String
       SENSITIVE: []
     end
@@ -351,6 +704,40 @@ module Aws::PartnerCentralSelling
       SENSITIVE: []
     end
 
+    class ListResourceSnapshotJobsRequest
+      attr_accessor catalog: ::String
+      attr_accessor engagement_identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor sort: Types::SortObject
+      attr_accessor status: ("Running" | "Stopped")
+      SENSITIVE: []
+    end
+
+    class ListResourceSnapshotJobsResponse
+      attr_accessor next_token: ::String
+      attr_accessor resource_snapshot_job_summaries: ::Array[Types::ResourceSnapshotJobSummary]
+      SENSITIVE: []
+    end
+
+    class ListResourceSnapshotsRequest
+      attr_accessor catalog: ::String
+      attr_accessor created_by: ::String
+      attr_accessor engagement_identifier: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      attr_accessor resource_identifier: ::String
+      attr_accessor resource_snapshot_template_identifier: ::String
+      attr_accessor resource_type: ("Opportunity")
+      SENSITIVE: [:created_by]
+    end
+
+    class ListResourceSnapshotsResponse
+      attr_accessor next_token: ::String
+      attr_accessor resource_snapshot_summaries: ::Array[Types::ResourceSnapshotSummary]
+      SENSITIVE: []
+    end
+
     class ListSolutionsRequest
       attr_accessor catalog: ::String
       attr_accessor category: ::Array[::String]
@@ -365,6 +752,12 @@ module Aws::PartnerCentralSelling
     class ListSolutionsResponse
       attr_accessor next_token: ::String
       attr_accessor solution_summaries: ::Array[Types::SolutionBase]
+      SENSITIVE: []
+    end
+
+    class ListTasksSortBase
+      attr_accessor sort_by: ("StartTime")
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
       SENSITIVE: []
     end
 
@@ -410,6 +803,7 @@ module Aws::PartnerCentralSelling
     end
 
     class OpportunitySummary
+      attr_accessor arn: ::String
       attr_accessor catalog: ::String
       attr_accessor created_date: ::Time
       attr_accessor customer: Types::CustomerSummary
@@ -419,6 +813,17 @@ module Aws::PartnerCentralSelling
       attr_accessor opportunity_type: ("Net New Business" | "Flat Renewal" | "Expansion")
       attr_accessor partner_opportunity_identifier: ::String
       attr_accessor project: Types::ProjectSummary
+      SENSITIVE: []
+    end
+
+    class OpportunitySummaryView
+      attr_accessor customer: Types::Customer
+      attr_accessor lifecycle: Types::LifeCycleForView
+      attr_accessor opportunity_team: ::Array[Types::Contact]
+      attr_accessor opportunity_type: ("Net New Business" | "Flat Renewal" | "Expansion")
+      attr_accessor primary_needs_from_aws: ::Array[("Co-Sell - Architectural Validation" | "Co-Sell - Business Presentation" | "Co-Sell - Competitive Information" | "Co-Sell - Pricing Assistance" | "Co-Sell - Technical Consultation" | "Co-Sell - Total Cost of Ownership Evaluation" | "Co-Sell - Deal Support" | "Co-Sell - Support for Public Tender / RFx")]
+      attr_accessor project: Types::ProjectView
+      attr_accessor related_entity_identifiers: Types::RelatedEntityIdentifiers
       SENSITIVE: []
     end
 
@@ -469,6 +874,27 @@ module Aws::PartnerCentralSelling
       SENSITIVE: []
     end
 
+    class ProjectView
+      attr_accessor customer_use_case: ::String
+      attr_accessor delivery_models: ::Array[("SaaS or PaaS" | "BYOL or AMI" | "Managed Services" | "Professional Services" | "Resell" | "Other")]
+      attr_accessor expected_customer_spend: ::Array[Types::ExpectedCustomerSpend]
+      attr_accessor other_solution_description: ::String
+      attr_accessor sales_activities: ::Array[("Initialized discussions with customer" | "Customer has shown interest in solution" | "Conducted POC / Demo" | "In evaluation / planning stage" | "Agreed on solution to Business Problem" | "Completed Action Plan" | "Finalized Deployment Need" | "SOW Signed")]
+      SENSITIVE: [:other_solution_description]
+    end
+
+    class PutSellingSystemSettingsRequest
+      attr_accessor catalog: ::String
+      attr_accessor resource_snapshot_job_role_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class PutSellingSystemSettingsResponse
+      attr_accessor catalog: ::String
+      attr_accessor resource_snapshot_job_role_arn: ::String
+      SENSITIVE: []
+    end
+
     class Receiver
       attr_accessor account: Types::AccountReceiver
       attr_accessor unknown: untyped
@@ -499,6 +925,35 @@ module Aws::PartnerCentralSelling
       SENSITIVE: []
     end
 
+    class ResourceSnapshotJobSummary
+      attr_accessor arn: ::String
+      attr_accessor engagement_id: ::String
+      attr_accessor id: ::String
+      attr_accessor status: ("Running" | "Stopped")
+      SENSITIVE: []
+    end
+
+    class ResourceSnapshotPayload
+      attr_accessor opportunity_summary: Types::OpportunitySummaryView
+      attr_accessor unknown: untyped
+      SENSITIVE: []
+
+      class OpportunitySummary < ResourceSnapshotPayload
+      end
+      class Unknown < ResourceSnapshotPayload
+      end
+    end
+
+    class ResourceSnapshotSummary
+      attr_accessor arn: ::String
+      attr_accessor created_by: ::String
+      attr_accessor resource_id: ::String
+      attr_accessor resource_snapshot_template_name: ::String
+      attr_accessor resource_type: ("Opportunity")
+      attr_accessor revision: ::Integer
+      SENSITIVE: [:created_by]
+    end
+
     class SenderContact
       attr_accessor business_title: ::String
       attr_accessor email: ::String
@@ -522,6 +977,7 @@ module Aws::PartnerCentralSelling
     end
 
     class SolutionBase
+      attr_accessor arn: ::String
       attr_accessor catalog: ::String
       attr_accessor category: ::String
       attr_accessor created_date: ::Time
@@ -537,6 +993,12 @@ module Aws::PartnerCentralSelling
       SENSITIVE: []
     end
 
+    class SortObject
+      attr_accessor sort_by: ("CreatedDate")
+      attr_accessor sort_order: ("ASCENDING" | "DESCENDING")
+      SENSITIVE: []
+    end
+
     class StartEngagementByAcceptingInvitationTaskRequest
       attr_accessor catalog: ::String
       attr_accessor client_token: ::String
@@ -548,7 +1010,8 @@ module Aws::PartnerCentralSelling
       attr_accessor engagement_invitation_id: ::String
       attr_accessor message: ::String
       attr_accessor opportunity_id: ::String
-      attr_accessor reason_code: ("InvitationAccessDenied" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "EngagementValidationFailed" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "InternalError" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied")
+      attr_accessor reason_code: ("InvitationAccessDenied" | "InvitationValidationFailed" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "ResourceSnapshotJobValidationFailed" | "ResourceSnapshotJobConflict" | "EngagementValidationFailed" | "EngagementConflict" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied" | "ResourceSnapshotValidationFailed" | "ResourceSnapshotConflict" | "InternalError" | "ServiceQuotaExceeded" | "RequestThrottled")
+      attr_accessor resource_snapshot_job_id: ::String
       attr_accessor start_time: ::Time
       attr_accessor task_arn: ::String
       attr_accessor task_id: ::String
@@ -565,13 +1028,36 @@ module Aws::PartnerCentralSelling
     end
 
     class StartEngagementFromOpportunityTaskResponse
+      attr_accessor engagement_id: ::String
+      attr_accessor engagement_invitation_id: ::String
       attr_accessor message: ::String
       attr_accessor opportunity_id: ::String
-      attr_accessor reason_code: ("InvitationAccessDenied" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "EngagementValidationFailed" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "InternalError" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied")
+      attr_accessor reason_code: ("InvitationAccessDenied" | "InvitationValidationFailed" | "EngagementAccessDenied" | "OpportunityAccessDenied" | "ResourceSnapshotJobAccessDenied" | "ResourceSnapshotJobValidationFailed" | "ResourceSnapshotJobConflict" | "EngagementValidationFailed" | "EngagementConflict" | "OpportunitySubmissionFailed" | "EngagementInvitationConflict" | "OpportunityValidationFailed" | "OpportunityConflict" | "ResourceSnapshotAccessDenied" | "ResourceSnapshotValidationFailed" | "ResourceSnapshotConflict" | "InternalError" | "ServiceQuotaExceeded" | "RequestThrottled")
+      attr_accessor resource_snapshot_job_id: ::String
       attr_accessor start_time: ::Time
       attr_accessor task_arn: ::String
       attr_accessor task_id: ::String
       attr_accessor task_status: ("IN_PROGRESS" | "COMPLETE" | "FAILED")
+      SENSITIVE: []
+    end
+
+    class StartResourceSnapshotJobRequest
+      attr_accessor catalog: ::String
+      attr_accessor resource_snapshot_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class StopResourceSnapshotJobRequest
+      attr_accessor catalog: ::String
+      attr_accessor resource_snapshot_job_identifier: ::String
+      SENSITIVE: []
+    end
+
+    class SubmitOpportunityRequest
+      attr_accessor catalog: ::String
+      attr_accessor identifier: ::String
+      attr_accessor involvement_type: ("For Visibility Only" | "Co-Sell")
+      attr_accessor visibility: ("Full" | "Limited")
       SENSITIVE: []
     end
 

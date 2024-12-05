@@ -23,7 +23,7 @@ Aws::Plugins::GlobalConfiguration.add_identifier(:partnercentralselling)
 # structure.
 #
 #     partner_central_selling = Aws::PartnerCentralSelling::Client.new
-#     resp = partner_central_selling.assign_opportunity(params)
+#     resp = partner_central_selling.accept_engagement_invitation(params)
 #
 # See {Client} for more information.
 #
@@ -54,7 +54,7 @@ module Aws::PartnerCentralSelling
   autoload :EndpointProvider, 'aws-sdk-partnercentralselling/endpoint_provider'
   autoload :Endpoints, 'aws-sdk-partnercentralselling/endpoints'
 
-  GEM_VERSION = '1.2.0'
+  GEM_VERSION = '1.3.0'
 
 end
 
