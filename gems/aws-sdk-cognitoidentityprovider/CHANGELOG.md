@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.111.0 (2024-12-09)
+------------------
+
+* Feature - Change `CustomDomainConfig` from a required to an optional parameter for the `UpdateUserPoolDomain` operation.
+
 1.110.0 (2024-11-22)
 ------------------
 

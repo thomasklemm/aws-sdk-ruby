@@ -1271,7 +1271,8 @@ module Aws
                                       tile_padding: ("NONE" | "PADDED")?,
                                       tile_width: ::Integer?,
                                       treeblock_size: ("AUTO" | "TREE_SIZE_32X32")?,
-                                      min_qp: ::Integer?
+                                      min_qp: ::Integer?,
+                                      deblocking: ("DISABLED" | "ENABLED")?
                                     }?,
                                     mpeg_2_settings: {
                                       adaptive_quantization: ("AUTO" | "HIGH" | "LOW" | "MEDIUM" | "OFF")?,
@@ -3314,7 +3315,8 @@ module Aws
                                       tile_padding: ("NONE" | "PADDED")?,
                                       tile_width: ::Integer?,
                                       treeblock_size: ("AUTO" | "TREE_SIZE_32X32")?,
-                                      min_qp: ::Integer?
+                                      min_qp: ::Integer?,
+                                      deblocking: ("DISABLED" | "ENABLED")?
                                     }?,
                                     mpeg_2_settings: {
                                       adaptive_quantization: ("AUTO" | "HIGH" | "LOW" | "MEDIUM" | "OFF")?,

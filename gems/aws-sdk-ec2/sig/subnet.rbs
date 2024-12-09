@@ -225,6 +225,9 @@ module Aws
                               },
                               ?disable_api_stop: bool,
                               ?enable_primary_ipv_6: bool,
+                              ?network_performance_options: {
+                                bandwidth_weighting: ("default" | "vpc-1" | "ebs-1")?
+                              },
                               ?operator: {
                                 principal: ::String?
                               },

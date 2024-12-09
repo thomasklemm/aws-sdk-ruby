@@ -11726,7 +11726,7 @@ module Aws::CognitoIdentityProvider
     #
     #   [1]: https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-managed-login.html
     #
-    # @option params [required, Types::CustomDomainConfigType] :custom_domain_config
+    # @option params [Types::CustomDomainConfigType] :custom_domain_config
     #   The configuration for a custom domain that hosts the sign-up and
     #   sign-in pages for your application. Use this object to specify an SSL
     #   certificate that is managed by ACM.
@@ -11753,7 +11753,7 @@ module Aws::CognitoIdentityProvider
     #     domain: "DomainType", # required
     #     user_pool_id: "UserPoolIdType", # required
     #     managed_login_version: 1,
-    #     custom_domain_config: { # required
+    #     custom_domain_config: {
     #       certificate_arn: "ArnType", # required
     #     },
     #   })
@@ -11908,7 +11908,7 @@ module Aws::CognitoIdentityProvider
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cognitoidentityprovider'
-      context[:gem_version] = '1.110.0'
+      context[:gem_version] = '1.111.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

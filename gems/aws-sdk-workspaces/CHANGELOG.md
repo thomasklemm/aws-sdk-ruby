@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.127.0 (2024-12-09)
+------------------
+
+* Feature - Added text to clarify case-sensitivity
+
 1.126.0 (2024-11-22)
 ------------------
 

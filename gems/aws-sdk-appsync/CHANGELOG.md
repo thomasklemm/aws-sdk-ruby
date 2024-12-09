@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.95.0 (2024-12-09)
+------------------
+
+* Feature - Provides description of new Amazon Bedrock runtime datasource.
+
 1.94.0 (2024-11-21)
 ------------------
 

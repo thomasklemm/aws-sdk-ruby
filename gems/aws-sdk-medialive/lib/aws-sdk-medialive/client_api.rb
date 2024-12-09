@@ -416,6 +416,7 @@ module Aws::MediaLive
     H265AlternativeTransferFunction = Shapes::StringShape.new(name: 'H265AlternativeTransferFunction')
     H265ColorMetadata = Shapes::StringShape.new(name: 'H265ColorMetadata')
     H265ColorSpaceSettings = Shapes::StructureShape.new(name: 'H265ColorSpaceSettings')
+    H265Deblocking = Shapes::StringShape.new(name: 'H265Deblocking')
     H265FilterSettings = Shapes::StructureShape.new(name: 'H265FilterSettings')
     H265FlickerAq = Shapes::StringShape.new(name: 'H265FlickerAq')
     H265GopSizeUnits = Shapes::StringShape.new(name: 'H265GopSizeUnits')
@@ -3079,6 +3080,7 @@ module Aws::MediaLive
     H265Settings.add_member(:tile_width, Shapes::ShapeRef.new(shape: __integerMin256Max3840, location_name: "tileWidth"))
     H265Settings.add_member(:treeblock_size, Shapes::ShapeRef.new(shape: H265TreeblockSize, location_name: "treeblockSize"))
     H265Settings.add_member(:min_qp, Shapes::ShapeRef.new(shape: __integerMin1Max51, location_name: "minQp"))
+    H265Settings.add_member(:deblocking, Shapes::ShapeRef.new(shape: H265Deblocking, location_name: "deblocking"))
     H265Settings.struct_class = Types::H265Settings
 
     Hdr10Settings.add_member(:max_cll, Shapes::ShapeRef.new(shape: __integerMin0Max32768, location_name: "maxCll"))
@@ -5189,7 +5191,7 @@ module Aws::MediaLive
     UpdateInputResultModel.struct_class = Types::UpdateInputResultModel
 
     UpdateInputSecurityGroupRequest.add_member(:input_security_group_id, Shapes::ShapeRef.new(shape: __string, required: true, location: "uri", location_name: "inputSecurityGroupId"))
-    UpdateInputSecurityGroupRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, location_name: "tags"))
+    UpdateInputSecurityGroupRequest.add_member(:tags, Shapes::ShapeRef.new(shape: Tags, deprecated: true, location_name: "tags", metadata: {"deprecatedMessage"=>"This API is deprecated. You must use UpdateTagsForResource instead.", "deprecatedSince"=>"2024-11-20"}))
     UpdateInputSecurityGroupRequest.add_member(:whitelist_rules, Shapes::ShapeRef.new(shape: __listOfInputWhitelistRuleCidr, location_name: "whitelistRules"))
     UpdateInputSecurityGroupRequest.struct_class = Types::UpdateInputSecurityGroupRequest
 

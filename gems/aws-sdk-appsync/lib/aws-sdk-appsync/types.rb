@@ -1695,6 +1695,9 @@ module Aws::AppSync
     #   * **AMAZON\_EVENTBRIDGE**: The data source is an Amazon EventBridge
     #     configuration.
     #
+    #   * **AMAZON\_BEDROCK\_RUNTIME**: The data source is the Amazon
+    #     Bedrock runtime.
+    #
     #   * **NONE**: There is no data source. Use this type when you want to
     #     invoke a GraphQL operation without connecting to a data source,
     #     such as when you're performing data transformation with resolvers

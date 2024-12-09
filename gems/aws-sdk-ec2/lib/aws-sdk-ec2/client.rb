@@ -9086,6 +9086,9 @@ module Aws::EC2
     #       operator: {
     #         principal: "String",
     #       },
+    #       network_performance_options: {
+    #         bandwidth_weighting: "default", # accepts default, vpc-1, ebs-1
+    #       },
     #     },
     #     operator: {
     #       principal: "String",
@@ -9505,6 +9508,9 @@ module Aws::EC2
     #       operator: {
     #         principal: "String",
     #       },
+    #       network_performance_options: {
+    #         bandwidth_weighting: "default", # accepts default, vpc-1, ebs-1
+    #       },
     #     },
     #     resolve_alias: false,
     #   })
@@ -9671,6 +9677,7 @@ module Aws::EC2
     #   resp.launch_template_version.launch_template_data.disable_api_stop #=> Boolean
     #   resp.launch_template_version.launch_template_data.operator.managed #=> Boolean
     #   resp.launch_template_version.launch_template_data.operator.principal #=> String
+    #   resp.launch_template_version.launch_template_data.network_performance_options.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
     #   resp.launch_template_version.operator.managed #=> Boolean
     #   resp.launch_template_version.operator.principal #=> String
     #   resp.warning.errors #=> Array
@@ -26357,7 +26364,7 @@ module Aws::EC2
     #     `hpc7g.4xlarge` \| `hpc7g.8xlarge` \| `hpc7g.16xlarge`
     #
     #   * `p3dn.24xlarge` \| `p4d.24xlarge` \| `p4de.24xlarge` \|
-    #     `p5.48xlarge` \| `p5e.48xlarge`
+    #     `p5.48xlarge` \| `p5e.48xlarge` \| `p5en.48xlarge`
     #
     #   * `trn1.2xlarge` \| `trn1.32xlarge` \| `trn1n.32xlarge`
     #
@@ -26653,6 +26660,10 @@ module Aws::EC2
     #
     #   * `memory-info.size-in-mib` - The memory size.
     #
+    #   * `network-info.bandwidth-weightings` - For instances that support
+    #     bandwidth weighting to boost performance (`default`, `vpc-1`,
+    #     `ebs-1`).
+    #
     #   * `network-info.efa-info.maximum-efa-interfaces` - The maximum number
     #     of Elastic Fabric Adapters (EFAs) per instance.
     #
@@ -26828,6 +26839,8 @@ module Aws::EC2
     #   resp.instance_types[0].network_info.efa_info.maximum_efa_interfaces #=> Integer
     #   resp.instance_types[0].network_info.encryption_in_transit_supported #=> Boolean
     #   resp.instance_types[0].network_info.ena_srd_supported #=> Boolean
+    #   resp.instance_types[0].network_info.bandwidth_weightings #=> Array
+    #   resp.instance_types[0].network_info.bandwidth_weightings[0] #=> String, one of "default", "vpc-1", "ebs-1"
     #   resp.instance_types[0].gpu_info.gpus #=> Array
     #   resp.instance_types[0].gpu_info.gpus[0].name #=> String
     #   resp.instance_types[0].gpu_info.gpus[0].manufacturer #=> String
@@ -27237,6 +27250,10 @@ module Aws::EC2
     #   * `network-interface.vpc-id` - The ID of the VPC for the network
     #     interface.
     #
+    #   * `network-performance-options.bandwidth-weighting` - Where the
+    #     performance boost is applied, if applicable. Valid values:
+    #     `default`, `vpc-1`, `ebs-1`.
+    #
     #   * `operator.managed` - A Boolean that indicates whether this is a
     #     managed instance.
     #
@@ -27598,6 +27615,7 @@ module Aws::EC2
     #   resp.reservations[0].instances[0].tpm_support #=> String
     #   resp.reservations[0].instances[0].maintenance_options.auto_recovery #=> String, one of "disabled", "default"
     #   resp.reservations[0].instances[0].current_instance_boot_mode #=> String, one of "legacy-bios", "uefi"
+    #   resp.reservations[0].instances[0].network_performance_options.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
     #   resp.reservations[0].instances[0].operator.managed #=> Boolean
     #   resp.reservations[0].instances[0].operator.principal #=> String
     #   resp.reservations[0].instances[0].instance_id #=> String
@@ -28888,6 +28906,7 @@ module Aws::EC2
     #   resp.launch_template_versions[0].launch_template_data.disable_api_stop #=> Boolean
     #   resp.launch_template_versions[0].launch_template_data.operator.managed #=> Boolean
     #   resp.launch_template_versions[0].launch_template_data.operator.principal #=> String
+    #   resp.launch_template_versions[0].launch_template_data.network_performance_options.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
     #   resp.launch_template_versions[0].operator.managed #=> Boolean
     #   resp.launch_template_versions[0].operator.principal #=> String
     #   resp.next_token #=> String
@@ -31690,13 +31709,6 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
-    #
-    #   * `operator.managed` - A Boolean that indicates whether this is a
-    #     managed network interface.
-    #
-    #   * `operator.principal` - The principal that manages the network
-    #     interface. Only valid for managed network interfaces, where
-    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -45564,6 +45576,7 @@ module Aws::EC2
     #   resp.launch_template_data.disable_api_stop #=> Boolean
     #   resp.launch_template_data.operator.managed #=> Boolean
     #   resp.launch_template_data.operator.principal #=> String
+    #   resp.launch_template_data.network_performance_options.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/GetLaunchTemplateData AWS API Documentation
     #
@@ -50650,6 +50663,64 @@ module Aws::EC2
     # @param [Hash] params ({})
     def modify_instance_metadata_options(params = {}, options = {})
       req = build_request(:modify_instance_metadata_options, params)
+      req.send_request(options)
+    end
+
+    # Change the configuration of the network performance options for an
+    # existing instance.
+    #
+    # @option params [required, String] :instance_id
+    #   The ID of the instance to update.
+    #
+    # @option params [required, String] :bandwidth_weighting
+    #   Specify the bandwidth weighting option to boost the associated type of
+    #   baseline bandwidth, as follows:
+    #
+    #   default
+    #
+    #   : This option uses the standard bandwidth configuration for your
+    #     instance type.
+    #
+    #   vpc-1
+    #
+    #   : This option boosts your networking baseline bandwidth and reduces
+    #     your EBS baseline bandwidth.
+    #
+    #   ebs-1
+    #
+    #   : This option boosts your EBS baseline bandwidth and reduces your
+    #     networking baseline bandwidth.
+    #
+    # @option params [Boolean] :dry_run
+    #   Checks whether you have the required permissions for the operation,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #
+    # @return [Types::ModifyInstanceNetworkPerformanceResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ModifyInstanceNetworkPerformanceResult#instance_id #instance_id} => String
+    #   * {Types::ModifyInstanceNetworkPerformanceResult#bandwidth_weighting #bandwidth_weighting} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.modify_instance_network_performance_options({
+    #     instance_id: "InstanceId", # required
+    #     bandwidth_weighting: "default", # required, accepts default, vpc-1, ebs-1
+    #     dry_run: false,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.instance_id #=> String
+    #   resp.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceNetworkPerformanceOptions AWS API Documentation
+    #
+    # @overload modify_instance_network_performance_options(params = {})
+    # @param [Hash] params ({})
+    def modify_instance_network_performance_options(params = {}, options = {})
+      req = build_request(:modify_instance_network_performance_options, params)
       req.send_request(options)
     end
 
@@ -59898,6 +59969,10 @@ module Aws::EC2
     #   first IPv6 GUA address associated with the ENI becomes the primary
     #   IPv6 address.
     #
+    # @option params [Types::InstanceNetworkPerformanceOptionsRequest] :network_performance_options
+    #   Contains settings for the network performance options for the
+    #   instance.
+    #
     # @option params [Types::OperatorRequest] :operator
     #   Reserved for internal use.
     #
@@ -60159,6 +60234,9 @@ module Aws::EC2
     #     },
     #     disable_api_stop: false,
     #     enable_primary_ipv_6: false,
+    #     network_performance_options: {
+    #       bandwidth_weighting: "default", # accepts default, vpc-1, ebs-1
+    #     },
     #     operator: {
     #       principal: "String",
     #     },
@@ -60357,6 +60435,7 @@ module Aws::EC2
     #   resp.instances[0].tpm_support #=> String
     #   resp.instances[0].maintenance_options.auto_recovery #=> String, one of "disabled", "default"
     #   resp.instances[0].current_instance_boot_mode #=> String, one of "legacy-bios", "uefi"
+    #   resp.instances[0].network_performance_options.bandwidth_weighting #=> String, one of "default", "vpc-1", "ebs-1"
     #   resp.instances[0].operator.managed #=> Boolean
     #   resp.instances[0].operator.principal #=> String
     #   resp.instances[0].instance_id #=> String
@@ -62992,7 +63071,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.495.0'
+      context[:gem_version] = '1.496.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

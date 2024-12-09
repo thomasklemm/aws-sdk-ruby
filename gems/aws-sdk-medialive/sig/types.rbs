@@ -1454,6 +1454,7 @@ module Aws::MediaLive
       attr_accessor tile_width: ::Integer
       attr_accessor treeblock_size: ("AUTO" | "TREE_SIZE_32X32")
       attr_accessor min_qp: ::Integer
+      attr_accessor deblocking: ("DISABLED" | "ENABLED")
       SENSITIVE: []
     end
 

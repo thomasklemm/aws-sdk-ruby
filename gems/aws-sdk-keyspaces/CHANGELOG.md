@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.34.0 (2024-12-09)
+------------------
+
+* Feature - Amazon Keyspaces: adding the list of IAM actions required by the UpdateKeyspace API.
+
 1.33.0 (2024-11-19)
 ------------------
 

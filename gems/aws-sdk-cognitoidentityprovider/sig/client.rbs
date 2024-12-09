@@ -1934,7 +1934,7 @@ module Aws
                                      domain: ::String,
                                      user_pool_id: ::String,
                                      ?managed_login_version: ::Integer,
-                                     custom_domain_config: {
+                                     ?custom_domain_config: {
                                        certificate_arn: ::String
                                      }
                                    ) -> _UpdateUserPoolDomainResponseSuccess

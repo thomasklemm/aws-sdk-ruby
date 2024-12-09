@@ -2069,7 +2069,7 @@ module Aws::CognitoIdentityProvider
     UpdateUserPoolDomainRequest.add_member(:domain, Shapes::ShapeRef.new(shape: DomainType, required: true, location_name: "Domain"))
     UpdateUserPoolDomainRequest.add_member(:user_pool_id, Shapes::ShapeRef.new(shape: UserPoolIdType, required: true, location_name: "UserPoolId"))
     UpdateUserPoolDomainRequest.add_member(:managed_login_version, Shapes::ShapeRef.new(shape: WrappedIntegerType, location_name: "ManagedLoginVersion"))
-    UpdateUserPoolDomainRequest.add_member(:custom_domain_config, Shapes::ShapeRef.new(shape: CustomDomainConfigType, required: true, location_name: "CustomDomainConfig"))
+    UpdateUserPoolDomainRequest.add_member(:custom_domain_config, Shapes::ShapeRef.new(shape: CustomDomainConfigType, location_name: "CustomDomainConfig"))
     UpdateUserPoolDomainRequest.struct_class = Types::UpdateUserPoolDomainRequest
 
     UpdateUserPoolDomainResponse.add_member(:managed_login_version, Shapes::ShapeRef.new(shape: WrappedIntegerType, location_name: "ManagedLoginVersion"))

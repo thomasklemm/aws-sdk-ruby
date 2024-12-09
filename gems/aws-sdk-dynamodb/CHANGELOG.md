@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.132.0 (2024-12-09)
+------------------
+
+* Feature - Code Generated Changes, see `./build_tools` or `aws-sdk-core`'s CHANGELOG.md for details.
+
 * Issue - Improve `SimpleAttributes` documentation.
 
 1.131.0 (2024-12-03)

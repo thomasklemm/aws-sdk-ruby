@@ -5638,6 +5638,13 @@ module Aws::MediaLive
     #   appropriate value.
     #   @return [Integer]
     #
+    # @!attribute [rw] deblocking
+    #   Enable or disable the deblocking filter for this codec. The filter
+    #   reduces blocking artifacts at block boundaries, which improves
+    #   overall video quality. If the filter is disabled, visible block
+    #   edges might appear in the output, especially at lower bitrates.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/H265Settings AWS API Documentation
     #
     class H265Settings < Struct.new(
@@ -5677,7 +5684,8 @@ module Aws::MediaLive
       :tile_padding,
       :tile_width,
       :treeblock_size,
-      :min_qp)
+      :min_qp,
+      :deblocking)
       SENSITIVE = []
       include Aws::Structure
     end

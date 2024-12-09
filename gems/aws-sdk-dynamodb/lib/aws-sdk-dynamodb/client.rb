@@ -344,6 +344,8 @@ module Aws::DynamoDB
     #     their types specified, e.g. `{ s: 'abc' }` instead of simply
     #     `'abc'`.
     #
+    #     See {Aws::DynamoDB::Plugins::SimpleAttributes} for more information.
+    #
     #   @option options [Boolean] :simple_json (false)
     #     Disables request parameter conversion, validation, and formatting.
     #     Also disables response data type conversions. The request parameters
@@ -8594,7 +8596,7 @@ module Aws::DynamoDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dynamodb'
-      context[:gem_version] = '1.131.0'
+      context[:gem_version] = '1.132.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

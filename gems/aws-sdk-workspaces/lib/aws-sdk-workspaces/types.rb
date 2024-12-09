@@ -5900,6 +5900,10 @@ module Aws::WorkSpaces
     #   The user name of the user for the WorkSpace. This user name must
     #   exist in the Directory Service directory for the WorkSpace.
     #
+    #   The username is not case-sensitive, but we recommend matching the
+    #   case in the Directory Service directory to avoid potential
+    #   incompatibilities.
+    #
     #   The reserved keyword, `[UNDEFINED]`, is used when creating
     #   user-decoupled WorkSpaces.
     #   @return [String]

@@ -306,6 +306,13 @@ module Aws::EC2
       data[:current_instance_boot_mode]
     end
 
+    # Contains settings for the network performance options for your
+    # instance.
+    # @return [Types::InstanceNetworkPerformanceOptions]
+    def network_performance_options
+      data[:network_performance_options]
+    end
+
     # The service provider that manages the instance.
     # @return [Types::OperatorResponse]
     def operator

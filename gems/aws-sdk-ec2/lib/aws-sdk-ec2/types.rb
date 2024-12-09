@@ -22027,6 +22027,10 @@ module Aws::EC2
     #
     #   * `memory-info.size-in-mib` - The memory size.
     #
+    #   * `network-info.bandwidth-weightings` - For instances that support
+    #     bandwidth weighting to boost performance (`default`, `vpc-1`,
+    #     `ebs-1`).
+    #
     #   * `network-info.efa-info.maximum-efa-interfaces` - The maximum
     #     number of Elastic Fabric Adapters (EFAs) per instance.
     #
@@ -22481,6 +22485,10 @@ module Aws::EC2
     #
     #   * `network-interface.vpc-id` - The ID of the VPC for the network
     #     interface.
+    #
+    #   * `network-performance-options.bandwidth-weighting` - Where the
+    #     performance boost is applied, if applicable. Valid values:
+    #     `default`, `vpc-1`, `ebs-1`.
     #
     #   * `operator.managed` - A Boolean that indicates whether this is a
     #     managed instance.
@@ -24916,13 +24924,6 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
-    #
-    #   * `operator.managed` - A Boolean that indicates whether this is a
-    #     managed network interface.
-    #
-    #   * `operator.principal` - The principal that manages the network
-    #     interface. Only valid for managed network interfaces, where
-    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.
@@ -41939,6 +41940,11 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html
     #   @return [String]
     #
+    # @!attribute [rw] network_performance_options
+    #   Contains settings for the network performance options for your
+    #   instance.
+    #   @return [Types::InstanceNetworkPerformanceOptions]
+    #
     # @!attribute [rw] operator
     #   The service provider that manages the instance.
     #   @return [Types::OperatorResponse]
@@ -42085,6 +42091,7 @@ module Aws::EC2
       :tpm_support,
       :maintenance_options,
       :current_instance_boot_mode,
+      :network_performance_options,
       :operator,
       :instance_id,
       :image_id,
@@ -43486,6 +43493,58 @@ module Aws::EC2
       :primary_ipv_6,
       :ena_srd_specification,
       :connection_tracking_specification)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # With network performance options, you can adjust your bandwidth
+    # preferences to meet the needs of the workload that runs on your
+    # instance.
+    #
+    # @!attribute [rw] bandwidth_weighting
+    #   When you configure network bandwidth weighting, you can boost your
+    #   baseline bandwidth for either networking or EBS by up to 25%. The
+    #   total available baseline bandwidth for your instance remains the
+    #   same. The default option uses the standard bandwidth configuration
+    #   for your instance type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceNetworkPerformanceOptions AWS API Documentation
+    #
+    class InstanceNetworkPerformanceOptions < Struct.new(
+      :bandwidth_weighting)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Configure network performance options for your instance that are
+    # geared towards performance improvements based on the workload that it
+    # runs.
+    #
+    # @!attribute [rw] bandwidth_weighting
+    #   Specify the bandwidth weighting option to boost the associated type
+    #   of baseline bandwidth, as follows:
+    #
+    #   default
+    #
+    #   : This option uses the standard bandwidth configuration for your
+    #     instance type.
+    #
+    #   vpc-1
+    #
+    #   : This option boosts your networking baseline bandwidth and reduces
+    #     your EBS baseline bandwidth.
+    #
+    #   ebs-1
+    #
+    #   : This option boosts your EBS baseline bandwidth and reduces your
+    #     networking baseline bandwidth.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/InstanceNetworkPerformanceOptionsRequest AWS API Documentation
+    #
+    class InstanceNetworkPerformanceOptionsRequest < Struct.new(
+      :bandwidth_weighting)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -48507,6 +48566,58 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # With network performance options, you can adjust your bandwidth
+    # preferences to meet the needs of the workload that runs on your
+    # instance at launch.
+    #
+    # @!attribute [rw] bandwidth_weighting
+    #   When you configure network bandwidth weighting, you can boost
+    #   baseline bandwidth for either networking or EBS by up to 25%. The
+    #   total available baseline bandwidth for your instance remains the
+    #   same. The default option uses the standard bandwidth configuration
+    #   for your instance type.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateNetworkPerformanceOptions AWS API Documentation
+    #
+    class LaunchTemplateNetworkPerformanceOptions < Struct.new(
+      :bandwidth_weighting)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # When you configure network performance options in your launch
+    # template, your instance is geared for performance improvements based
+    # on the workload that it runs as soon as it's available.
+    #
+    # @!attribute [rw] bandwidth_weighting
+    #   Specify the bandwidth weighting option to boost the associated type
+    #   of baseline bandwidth, as follows:
+    #
+    #   default
+    #
+    #   : This option uses the standard bandwidth configuration for your
+    #     instance type.
+    #
+    #   vpc-1
+    #
+    #   : This option boosts your networking baseline bandwidth and reduces
+    #     your EBS baseline bandwidth.
+    #
+    #   ebs-1
+    #
+    #   : This option boosts your EBS baseline bandwidth and reduces your
+    #     networking baseline bandwidth.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/LaunchTemplateNetworkPerformanceOptionsRequest AWS API Documentation
+    #
+    class LaunchTemplateNetworkPerformanceOptionsRequest < Struct.new(
+      :bandwidth_weighting)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Describes overrides for a launch template.
     #
     # @!attribute [rw] instance_type
@@ -51660,6 +51771,65 @@ module Aws::EC2
     class ModifyInstanceMetadataOptionsResult < Struct.new(
       :instance_id,
       :instance_metadata_options)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The ID of the instance to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] bandwidth_weighting
+    #   Specify the bandwidth weighting option to boost the associated type
+    #   of baseline bandwidth, as follows:
+    #
+    #   default
+    #
+    #   : This option uses the standard bandwidth configuration for your
+    #     instance type.
+    #
+    #   vpc-1
+    #
+    #   : This option boosts your networking baseline bandwidth and reduces
+    #     your EBS baseline bandwidth.
+    #
+    #   ebs-1
+    #
+    #   : This option boosts your EBS baseline bandwidth and reduces your
+    #     networking baseline bandwidth.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   Checks whether you have the required permissions for the operation,
+    #   without actually making the request, and provides an error response.
+    #   If you have the required permissions, the error response is
+    #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceNetworkPerformanceRequest AWS API Documentation
+    #
+    class ModifyInstanceNetworkPerformanceRequest < Struct.new(
+      :instance_id,
+      :bandwidth_weighting,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The instance ID that was updated.
+    #   @return [String]
+    #
+    # @!attribute [rw] bandwidth_weighting
+    #   Contains the updated configuration for bandwidth weighting on the
+    #   specified instance.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ModifyInstanceNetworkPerformanceResult AWS API Documentation
+    #
+    class ModifyInstanceNetworkPerformanceResult < Struct.new(
+      :instance_id,
+      :bandwidth_weighting)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -55752,6 +55922,11 @@ module Aws::EC2
     #   minimize tail latency of network traffic between EC2 instances.
     #   @return [Boolean]
     #
+    # @!attribute [rw] bandwidth_weightings
+    #   A list of valid settings for configurable bandwidth weighting for
+    #   the instance type, if supported.
+    #   @return [Array<String>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/NetworkInfo AWS API Documentation
     #
     class NetworkInfo < Struct.new(
@@ -55767,7 +55942,8 @@ module Aws::EC2
       :efa_supported,
       :efa_info,
       :encryption_in_transit_supported,
-      :ena_srd_supported)
+      :ena_srd_supported,
+      :bandwidth_weightings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -60872,6 +61048,11 @@ module Aws::EC2
     #   The entity that manages the launch template.
     #   @return [Types::OperatorRequest]
     #
+    # @!attribute [rw] network_performance_options
+    #   Contains launch template settings to boost network performance for
+    #   the type of workload that runs on your instance.
+    #   @return [Types::LaunchTemplateNetworkPerformanceOptionsRequest]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/RequestLaunchTemplateData AWS API Documentation
     #
     class RequestLaunchTemplateData < Struct.new(
@@ -60906,7 +61087,8 @@ module Aws::EC2
       :private_dns_name_options,
       :maintenance_options,
       :disable_api_stop,
-      :operator)
+      :operator,
+      :network_performance_options)
       SENSITIVE = [:user_data]
       include Aws::Structure
     end
@@ -62272,6 +62454,11 @@ module Aws::EC2
     #   The entity that manages the launch template.
     #   @return [Types::OperatorResponse]
     #
+    # @!attribute [rw] network_performance_options
+    #   Contains the launch template settings for network performance
+    #   options for your instance.
+    #   @return [Types::LaunchTemplateNetworkPerformanceOptions]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/ResponseLaunchTemplateData AWS API Documentation
     #
     class ResponseLaunchTemplateData < Struct.new(
@@ -62306,7 +62493,8 @@ module Aws::EC2
       :private_dns_name_options,
       :maintenance_options,
       :disable_api_stop,
-      :operator)
+      :operator,
+      :network_performance_options)
       SENSITIVE = [:user_data]
       include Aws::Structure
     end
@@ -63510,6 +63698,11 @@ module Aws::EC2
     #   ENI becomes the primary IPv6 address.
     #   @return [Boolean]
     #
+    # @!attribute [rw] network_performance_options
+    #   Contains settings for the network performance options for the
+    #   instance.
+    #   @return [Types::InstanceNetworkPerformanceOptionsRequest]
+    #
     # @!attribute [rw] operator
     #   Reserved for internal use.
     #   @return [Types::OperatorRequest]
@@ -63635,6 +63828,7 @@ module Aws::EC2
       :maintenance_options,
       :disable_api_stop,
       :enable_primary_ipv_6,
+      :network_performance_options,
       :operator,
       :dry_run,
       :disable_api_termination,

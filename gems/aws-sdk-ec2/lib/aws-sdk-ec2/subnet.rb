@@ -453,6 +453,9 @@ module Aws::EC2
     #     },
     #     disable_api_stop: false,
     #     enable_primary_ipv_6: false,
+    #     network_performance_options: {
+    #       bandwidth_weighting: "default", # accepts default, vpc-1, ebs-1
+    #     },
     #     operator: {
     #       principal: "String",
     #     },
@@ -783,6 +786,9 @@ module Aws::EC2
     #   attached to your instance and you enable a primary IPv6 address, the
     #   first IPv6 GUA address associated with the ENI becomes the primary
     #   IPv6 address.
+    # @option options [Types::InstanceNetworkPerformanceOptionsRequest] :network_performance_options
+    #   Contains settings for the network performance options for the
+    #   instance.
     # @option options [Types::OperatorRequest] :operator
     #   Reserved for internal use.
     # @option options [Boolean] :dry_run
@@ -1490,6 +1496,10 @@ module Aws::EC2
     #   * `network-interface.vpc-id` - The ID of the VPC for the network
     #     interface.
     #
+    #   * `network-performance-options.bandwidth-weighting` - Where the
+    #     performance boost is applied, if applicable. Valid values:
+    #     `default`, `vpc-1`, `ebs-1`.
+    #
     #   * `operator.managed` - A Boolean that indicates whether this is a
     #     managed instance.
     #
@@ -1807,13 +1817,6 @@ module Aws::EC2
     #   * `mac-address` - The MAC address of the network interface.
     #
     #   * `network-interface-id` - The ID of the network interface.
-    #
-    #   * `operator.managed` - A Boolean that indicates whether this is a
-    #     managed network interface.
-    #
-    #   * `operator.principal` - The principal that manages the network
-    #     interface. Only valid for managed network interfaces, where
-    #     `managed` is `true`.
     #
     #   * `owner-id` - The Amazon Web Services account ID of the network
     #     interface owner.

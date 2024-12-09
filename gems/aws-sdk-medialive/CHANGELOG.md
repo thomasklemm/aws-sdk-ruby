@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.139.0 (2024-12-09)
+------------------
+
+* Feature - H265 outputs now support disabling the deblocking filter.
+
 1.138.0 (2024-11-06)
 ------------------
 

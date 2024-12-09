@@ -218,6 +218,8 @@ module Aws::EC2
     AvailabilityZoneStringList = Shapes::ListShape.new(name: 'AvailabilityZoneStringList')
     AvailableCapacity = Shapes::StructureShape.new(name: 'AvailableCapacity')
     AvailableInstanceCapacityList = Shapes::ListShape.new(name: 'AvailableInstanceCapacityList')
+    BandwidthWeightingType = Shapes::StringShape.new(name: 'BandwidthWeightingType')
+    BandwidthWeightingTypeList = Shapes::ListShape.new(name: 'BandwidthWeightingTypeList')
     BareMetal = Shapes::StringShape.new(name: 'BareMetal')
     BareMetalFlag = Shapes::BooleanShape.new(name: 'BareMetalFlag')
     BaselineBandwidthInGbps = Shapes::FloatShape.new(name: 'BaselineBandwidthInGbps')
@@ -1774,6 +1776,7 @@ module Aws::EC2
     InstanceAttribute = Shapes::StructureShape.new(name: 'InstanceAttribute')
     InstanceAttributeName = Shapes::StringShape.new(name: 'InstanceAttributeName')
     InstanceAutoRecoveryState = Shapes::StringShape.new(name: 'InstanceAutoRecoveryState')
+    InstanceBandwidthWeighting = Shapes::StringShape.new(name: 'InstanceBandwidthWeighting')
     InstanceBlockDeviceMapping = Shapes::StructureShape.new(name: 'InstanceBlockDeviceMapping')
     InstanceBlockDeviceMappingList = Shapes::ListShape.new(name: 'InstanceBlockDeviceMappingList')
     InstanceBlockDeviceMappingSpecification = Shapes::StructureShape.new(name: 'InstanceBlockDeviceMappingSpecification')
@@ -1849,6 +1852,8 @@ module Aws::EC2
     InstanceNetworkInterfaceList = Shapes::ListShape.new(name: 'InstanceNetworkInterfaceList')
     InstanceNetworkInterfaceSpecification = Shapes::StructureShape.new(name: 'InstanceNetworkInterfaceSpecification')
     InstanceNetworkInterfaceSpecificationList = Shapes::ListShape.new(name: 'InstanceNetworkInterfaceSpecificationList')
+    InstanceNetworkPerformanceOptions = Shapes::StructureShape.new(name: 'InstanceNetworkPerformanceOptions')
+    InstanceNetworkPerformanceOptionsRequest = Shapes::StructureShape.new(name: 'InstanceNetworkPerformanceOptionsRequest')
     InstancePrivateIpAddress = Shapes::StructureShape.new(name: 'InstancePrivateIpAddress')
     InstancePrivateIpAddressList = Shapes::ListShape.new(name: 'InstancePrivateIpAddressList')
     InstanceRequirements = Shapes::StructureShape.new(name: 'InstanceRequirements')
@@ -2092,6 +2097,8 @@ module Aws::EC2
     LaunchTemplateLicenseSpecificationListRequest = Shapes::ListShape.new(name: 'LaunchTemplateLicenseSpecificationListRequest')
     LaunchTemplateName = Shapes::StringShape.new(name: 'LaunchTemplateName')
     LaunchTemplateNameStringList = Shapes::ListShape.new(name: 'LaunchTemplateNameStringList')
+    LaunchTemplateNetworkPerformanceOptions = Shapes::StructureShape.new(name: 'LaunchTemplateNetworkPerformanceOptions')
+    LaunchTemplateNetworkPerformanceOptionsRequest = Shapes::StructureShape.new(name: 'LaunchTemplateNetworkPerformanceOptionsRequest')
     LaunchTemplateOverrides = Shapes::StructureShape.new(name: 'LaunchTemplateOverrides')
     LaunchTemplateOverridesList = Shapes::ListShape.new(name: 'LaunchTemplateOverridesList')
     LaunchTemplatePlacement = Shapes::StructureShape.new(name: 'LaunchTemplatePlacement')
@@ -2251,6 +2258,8 @@ module Aws::EC2
     ModifyInstanceMetadataDefaultsResult = Shapes::StructureShape.new(name: 'ModifyInstanceMetadataDefaultsResult')
     ModifyInstanceMetadataOptionsRequest = Shapes::StructureShape.new(name: 'ModifyInstanceMetadataOptionsRequest')
     ModifyInstanceMetadataOptionsResult = Shapes::StructureShape.new(name: 'ModifyInstanceMetadataOptionsResult')
+    ModifyInstanceNetworkPerformanceRequest = Shapes::StructureShape.new(name: 'ModifyInstanceNetworkPerformanceRequest')
+    ModifyInstanceNetworkPerformanceResult = Shapes::StructureShape.new(name: 'ModifyInstanceNetworkPerformanceResult')
     ModifyInstancePlacementRequest = Shapes::StructureShape.new(name: 'ModifyInstancePlacementRequest')
     ModifyInstancePlacementResult = Shapes::StructureShape.new(name: 'ModifyInstancePlacementResult')
     ModifyIpamPoolRequest = Shapes::StructureShape.new(name: 'ModifyIpamPoolRequest')
@@ -4157,6 +4166,8 @@ module Aws::EC2
     AvailableCapacity.struct_class = Types::AvailableCapacity
 
     AvailableInstanceCapacityList.member = Shapes::ShapeRef.new(shape: InstanceCapacity, location_name: "item")
+
+    BandwidthWeightingTypeList.member = Shapes::ShapeRef.new(shape: BandwidthWeightingType, location_name: "item")
 
     BaselineEbsBandwidthMbps.add_member(:min, Shapes::ShapeRef.new(shape: Integer, location_name: "min"))
     BaselineEbsBandwidthMbps.add_member(:max, Shapes::ShapeRef.new(shape: Integer, location_name: "max"))
@@ -10600,6 +10611,7 @@ module Aws::EC2
     Instance.add_member(:tpm_support, Shapes::ShapeRef.new(shape: String, location_name: "tpmSupport"))
     Instance.add_member(:maintenance_options, Shapes::ShapeRef.new(shape: InstanceMaintenanceOptions, location_name: "maintenanceOptions"))
     Instance.add_member(:current_instance_boot_mode, Shapes::ShapeRef.new(shape: InstanceBootModeValues, location_name: "currentInstanceBootMode"))
+    Instance.add_member(:network_performance_options, Shapes::ShapeRef.new(shape: InstanceNetworkPerformanceOptions, location_name: "networkPerformanceOptions"))
     Instance.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorResponse, location_name: "operator"))
     Instance.add_member(:instance_id, Shapes::ShapeRef.new(shape: String, location_name: "instanceId"))
     Instance.add_member(:image_id, Shapes::ShapeRef.new(shape: String, location_name: "imageId"))
@@ -10895,6 +10907,12 @@ module Aws::EC2
     InstanceNetworkInterfaceSpecification.struct_class = Types::InstanceNetworkInterfaceSpecification
 
     InstanceNetworkInterfaceSpecificationList.member = Shapes::ShapeRef.new(shape: InstanceNetworkInterfaceSpecification, location_name: "item")
+
+    InstanceNetworkPerformanceOptions.add_member(:bandwidth_weighting, Shapes::ShapeRef.new(shape: InstanceBandwidthWeighting, location_name: "bandwidthWeighting"))
+    InstanceNetworkPerformanceOptions.struct_class = Types::InstanceNetworkPerformanceOptions
+
+    InstanceNetworkPerformanceOptionsRequest.add_member(:bandwidth_weighting, Shapes::ShapeRef.new(shape: InstanceBandwidthWeighting, location_name: "BandwidthWeighting"))
+    InstanceNetworkPerformanceOptionsRequest.struct_class = Types::InstanceNetworkPerformanceOptionsRequest
 
     InstancePrivateIpAddress.add_member(:association, Shapes::ShapeRef.new(shape: InstanceNetworkInterfaceAssociation, location_name: "association"))
     InstancePrivateIpAddress.add_member(:primary, Shapes::ShapeRef.new(shape: Boolean, location_name: "primary"))
@@ -11734,6 +11752,12 @@ module Aws::EC2
 
     LaunchTemplateNameStringList.member = Shapes::ShapeRef.new(shape: LaunchTemplateName, location_name: "item")
 
+    LaunchTemplateNetworkPerformanceOptions.add_member(:bandwidth_weighting, Shapes::ShapeRef.new(shape: InstanceBandwidthWeighting, location_name: "bandwidthWeighting"))
+    LaunchTemplateNetworkPerformanceOptions.struct_class = Types::LaunchTemplateNetworkPerformanceOptions
+
+    LaunchTemplateNetworkPerformanceOptionsRequest.add_member(:bandwidth_weighting, Shapes::ShapeRef.new(shape: InstanceBandwidthWeighting, location_name: "BandwidthWeighting"))
+    LaunchTemplateNetworkPerformanceOptionsRequest.struct_class = Types::LaunchTemplateNetworkPerformanceOptionsRequest
+
     LaunchTemplateOverrides.add_member(:instance_type, Shapes::ShapeRef.new(shape: InstanceType, location_name: "instanceType"))
     LaunchTemplateOverrides.add_member(:spot_price, Shapes::ShapeRef.new(shape: String, location_name: "spotPrice"))
     LaunchTemplateOverrides.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, location_name: "subnetId"))
@@ -12308,6 +12332,15 @@ module Aws::EC2
     ModifyInstanceMetadataOptionsResult.add_member(:instance_id, Shapes::ShapeRef.new(shape: String, location_name: "instanceId"))
     ModifyInstanceMetadataOptionsResult.add_member(:instance_metadata_options, Shapes::ShapeRef.new(shape: InstanceMetadataOptionsResponse, location_name: "instanceMetadataOptions"))
     ModifyInstanceMetadataOptionsResult.struct_class = Types::ModifyInstanceMetadataOptionsResult
+
+    ModifyInstanceNetworkPerformanceRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
+    ModifyInstanceNetworkPerformanceRequest.add_member(:bandwidth_weighting, Shapes::ShapeRef.new(shape: InstanceBandwidthWeighting, required: true, location_name: "BandwidthWeighting"))
+    ModifyInstanceNetworkPerformanceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
+    ModifyInstanceNetworkPerformanceRequest.struct_class = Types::ModifyInstanceNetworkPerformanceRequest
+
+    ModifyInstanceNetworkPerformanceResult.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, location_name: "instanceId"))
+    ModifyInstanceNetworkPerformanceResult.add_member(:bandwidth_weighting, Shapes::ShapeRef.new(shape: InstanceBandwidthWeighting, location_name: "bandwidthWeighting"))
+    ModifyInstanceNetworkPerformanceResult.struct_class = Types::ModifyInstanceNetworkPerformanceResult
 
     ModifyInstancePlacementRequest.add_member(:group_name, Shapes::ShapeRef.new(shape: PlacementGroupName, location_name: "GroupName"))
     ModifyInstancePlacementRequest.add_member(:partition_number, Shapes::ShapeRef.new(shape: Integer, location_name: "PartitionNumber"))
@@ -13040,6 +13073,7 @@ module Aws::EC2
     NetworkInfo.add_member(:efa_info, Shapes::ShapeRef.new(shape: EfaInfo, location_name: "efaInfo"))
     NetworkInfo.add_member(:encryption_in_transit_supported, Shapes::ShapeRef.new(shape: EncryptionInTransitSupported, location_name: "encryptionInTransitSupported"))
     NetworkInfo.add_member(:ena_srd_supported, Shapes::ShapeRef.new(shape: EnaSrdSupported, location_name: "enaSrdSupported"))
+    NetworkInfo.add_member(:bandwidth_weightings, Shapes::ShapeRef.new(shape: BandwidthWeightingTypeList, location_name: "bandwidthWeightings"))
     NetworkInfo.struct_class = Types::NetworkInfo
 
     NetworkInsightsAccessScope.add_member(:network_insights_access_scope_id, Shapes::ShapeRef.new(shape: NetworkInsightsAccessScopeId, location_name: "networkInsightsAccessScopeId"))
@@ -14085,6 +14119,7 @@ module Aws::EC2
     RequestLaunchTemplateData.add_member(:maintenance_options, Shapes::ShapeRef.new(shape: LaunchTemplateInstanceMaintenanceOptionsRequest, location_name: "MaintenanceOptions"))
     RequestLaunchTemplateData.add_member(:disable_api_stop, Shapes::ShapeRef.new(shape: Boolean, location_name: "DisableApiStop"))
     RequestLaunchTemplateData.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorRequest, location_name: "Operator"))
+    RequestLaunchTemplateData.add_member(:network_performance_options, Shapes::ShapeRef.new(shape: LaunchTemplateNetworkPerformanceOptionsRequest, location_name: "NetworkPerformanceOptions"))
     RequestLaunchTemplateData.struct_class = Types::RequestLaunchTemplateData
 
     RequestSpotFleetRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
@@ -14359,6 +14394,7 @@ module Aws::EC2
     ResponseLaunchTemplateData.add_member(:maintenance_options, Shapes::ShapeRef.new(shape: LaunchTemplateInstanceMaintenanceOptions, location_name: "maintenanceOptions"))
     ResponseLaunchTemplateData.add_member(:disable_api_stop, Shapes::ShapeRef.new(shape: Boolean, location_name: "disableApiStop"))
     ResponseLaunchTemplateData.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorResponse, location_name: "operator"))
+    ResponseLaunchTemplateData.add_member(:network_performance_options, Shapes::ShapeRef.new(shape: LaunchTemplateNetworkPerformanceOptions, location_name: "networkPerformanceOptions"))
     ResponseLaunchTemplateData.struct_class = Types::ResponseLaunchTemplateData
 
     RestorableByStringList.member = Shapes::ShapeRef.new(shape: String)
@@ -14578,6 +14614,7 @@ module Aws::EC2
     RunInstancesRequest.add_member(:maintenance_options, Shapes::ShapeRef.new(shape: InstanceMaintenanceOptionsRequest, location_name: "MaintenanceOptions"))
     RunInstancesRequest.add_member(:disable_api_stop, Shapes::ShapeRef.new(shape: Boolean, location_name: "DisableApiStop"))
     RunInstancesRequest.add_member(:enable_primary_ipv_6, Shapes::ShapeRef.new(shape: Boolean, location_name: "EnablePrimaryIpv6"))
+    RunInstancesRequest.add_member(:network_performance_options, Shapes::ShapeRef.new(shape: InstanceNetworkPerformanceOptionsRequest, location_name: "NetworkPerformanceOptions"))
     RunInstancesRequest.add_member(:operator, Shapes::ShapeRef.new(shape: OperatorRequest, location_name: "Operator"))
     RunInstancesRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     RunInstancesRequest.add_member(:disable_api_termination, Shapes::ShapeRef.new(shape: Boolean, location_name: "disableApiTermination"))
@@ -21910,6 +21947,14 @@ module Aws::EC2
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: ModifyInstanceMetadataOptionsRequest)
         o.output = Shapes::ShapeRef.new(shape: ModifyInstanceMetadataOptionsResult)
+      end)
+
+      api.add_operation(:modify_instance_network_performance_options, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ModifyInstanceNetworkPerformanceOptions"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ModifyInstanceNetworkPerformanceRequest)
+        o.output = Shapes::ShapeRef.new(shape: ModifyInstanceNetworkPerformanceResult)
       end)
 
       api.add_operation(:modify_instance_placement, Seahorse::Model::Operation.new.tap do |o|
