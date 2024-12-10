@@ -841,6 +841,7 @@ module Aws::SESV2
     DkimSigningAttributes.add_member(:domain_signing_selector, Shapes::ShapeRef.new(shape: Selector, location_name: "DomainSigningSelector"))
     DkimSigningAttributes.add_member(:domain_signing_private_key, Shapes::ShapeRef.new(shape: PrivateKey, location_name: "DomainSigningPrivateKey"))
     DkimSigningAttributes.add_member(:next_signing_key_length, Shapes::ShapeRef.new(shape: DkimSigningKeyLength, location_name: "NextSigningKeyLength"))
+    DkimSigningAttributes.add_member(:domain_signing_attributes_origin, Shapes::ShapeRef.new(shape: DkimSigningAttributesOrigin, location_name: "DomainSigningAttributesOrigin"))
     DkimSigningAttributes.struct_class = Types::DkimSigningAttributes
 
     DnsTokenList.member = Shapes::ShapeRef.new(shape: DnsToken)

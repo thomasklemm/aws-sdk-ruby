@@ -713,7 +713,12 @@ module Aws::IVSRealTime
     #     },
     #     auto_participant_recording_configuration: {
     #       storage_configuration_arn: "AutoParticipantRecordingStorageConfigurationArn", # required
-    #       media_types: ["AUDIO_VIDEO"], # accepts AUDIO_VIDEO, AUDIO_ONLY
+    #       media_types: ["AUDIO_VIDEO"], # accepts AUDIO_VIDEO, AUDIO_ONLY, NONE
+    #       thumbnail_configuration: {
+    #         target_interval_seconds: 1,
+    #         storage: ["SEQUENTIAL"], # accepts SEQUENTIAL, LATEST
+    #         recording_mode: "INTERVAL", # accepts INTERVAL, DISABLED
+    #       },
     #     },
     #   })
     #
@@ -726,7 +731,11 @@ module Aws::IVSRealTime
     #   resp.stage.tags["TagKey"] #=> String
     #   resp.stage.auto_participant_recording_configuration.storage_configuration_arn #=> String
     #   resp.stage.auto_participant_recording_configuration.media_types #=> Array
-    #   resp.stage.auto_participant_recording_configuration.media_types[0] #=> String, one of "AUDIO_VIDEO", "AUDIO_ONLY"
+    #   resp.stage.auto_participant_recording_configuration.media_types[0] #=> String, one of "AUDIO_VIDEO", "AUDIO_ONLY", "NONE"
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.target_interval_seconds #=> Integer
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage #=> Array
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -1022,6 +1031,10 @@ module Aws::IVSRealTime
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns #=> Array
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns[0] #=> String
     #   resp.composition.destinations[0].configuration.s3.recording_configuration.format #=> String, one of "HLS"
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations #=> Array
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].target_interval_seconds #=> Integer
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].storage #=> Array
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.composition.destinations[0].detail.s3.recording_prefix #=> String
     #   resp.composition.tags #=> Hash
     #   resp.composition.tags["TagKey"] #=> String
@@ -1221,7 +1234,11 @@ module Aws::IVSRealTime
     #   resp.stage.tags["TagKey"] #=> String
     #   resp.stage.auto_participant_recording_configuration.storage_configuration_arn #=> String
     #   resp.stage.auto_participant_recording_configuration.media_types #=> Array
-    #   resp.stage.auto_participant_recording_configuration.media_types[0] #=> String, one of "AUDIO_VIDEO", "AUDIO_ONLY"
+    #   resp.stage.auto_participant_recording_configuration.media_types[0] #=> String, one of "AUDIO_VIDEO", "AUDIO_ONLY", "NONE"
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.target_interval_seconds #=> Integer
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage #=> Array
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -1939,6 +1956,12 @@ module Aws::IVSRealTime
     #           recording_configuration: {
     #             format: "HLS", # accepts HLS
     #           },
+    #           thumbnail_configurations: [
+    #             {
+    #               target_interval_seconds: 1,
+    #               storage: ["SEQUENTIAL"], # accepts SEQUENTIAL, LATEST
+    #             },
+    #           ],
     #         },
     #       },
     #     ],
@@ -1979,6 +2002,10 @@ module Aws::IVSRealTime
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns #=> Array
     #   resp.composition.destinations[0].configuration.s3.encoder_configuration_arns[0] #=> String
     #   resp.composition.destinations[0].configuration.s3.recording_configuration.format #=> String, one of "HLS"
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations #=> Array
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].target_interval_seconds #=> Integer
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].storage #=> Array
+    #   resp.composition.destinations[0].configuration.s3.thumbnail_configurations[0].storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
     #   resp.composition.destinations[0].detail.s3.recording_prefix #=> String
     #   resp.composition.tags #=> Hash
     #   resp.composition.tags["TagKey"] #=> String
@@ -2159,7 +2186,12 @@ module Aws::IVSRealTime
     #     name: "StageName",
     #     auto_participant_recording_configuration: {
     #       storage_configuration_arn: "AutoParticipantRecordingStorageConfigurationArn", # required
-    #       media_types: ["AUDIO_VIDEO"], # accepts AUDIO_VIDEO, AUDIO_ONLY
+    #       media_types: ["AUDIO_VIDEO"], # accepts AUDIO_VIDEO, AUDIO_ONLY, NONE
+    #       thumbnail_configuration: {
+    #         target_interval_seconds: 1,
+    #         storage: ["SEQUENTIAL"], # accepts SEQUENTIAL, LATEST
+    #         recording_mode: "INTERVAL", # accepts INTERVAL, DISABLED
+    #       },
     #     },
     #   })
     #
@@ -2172,7 +2204,11 @@ module Aws::IVSRealTime
     #   resp.stage.tags["TagKey"] #=> String
     #   resp.stage.auto_participant_recording_configuration.storage_configuration_arn #=> String
     #   resp.stage.auto_participant_recording_configuration.media_types #=> Array
-    #   resp.stage.auto_participant_recording_configuration.media_types[0] #=> String, one of "AUDIO_VIDEO", "AUDIO_ONLY"
+    #   resp.stage.auto_participant_recording_configuration.media_types[0] #=> String, one of "AUDIO_VIDEO", "AUDIO_ONLY", "NONE"
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.target_interval_seconds #=> Integer
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage #=> Array
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.storage[0] #=> String, one of "SEQUENTIAL", "LATEST"
+    #   resp.stage.auto_participant_recording_configuration.thumbnail_configuration.recording_mode #=> String, one of "INTERVAL", "DISABLED"
     #   resp.stage.endpoints.events #=> String
     #   resp.stage.endpoints.whip #=> String
     #   resp.stage.endpoints.rtmp #=> String
@@ -2205,7 +2241,7 @@ module Aws::IVSRealTime
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ivsrealtime'
-      context[:gem_version] = '1.34.0'
+      context[:gem_version] = '1.35.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

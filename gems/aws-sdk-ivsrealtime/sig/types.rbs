@@ -15,7 +15,8 @@ module Aws::IVSRealTime
 
     class AutoParticipantRecordingConfiguration
       attr_accessor storage_configuration_arn: ::String
-      attr_accessor media_types: ::Array[("AUDIO_VIDEO" | "AUDIO_ONLY")]
+      attr_accessor media_types: ::Array[("AUDIO_VIDEO" | "AUDIO_ONLY" | "NONE")]
+      attr_accessor thumbnail_configuration: Types::ParticipantThumbnailConfiguration
       SENSITIVE: []
     end
 
@@ -45,6 +46,12 @@ module Aws::IVSRealTime
       attr_accessor tags: ::Hash[::String, ::String]
       attr_accessor start_time: ::Time
       attr_accessor end_time: ::Time
+      SENSITIVE: []
+    end
+
+    class CompositionThumbnailConfiguration
+      attr_accessor target_interval_seconds: ::Integer
+      attr_accessor storage: ::Array[("SEQUENTIAL" | "LATEST")]
       SENSITIVE: []
     end
 
@@ -528,6 +535,13 @@ module Aws::IVSRealTime
       SENSITIVE: []
     end
 
+    class ParticipantThumbnailConfiguration
+      attr_accessor target_interval_seconds: ::Integer
+      attr_accessor storage: ::Array[("SEQUENTIAL" | "LATEST")]
+      attr_accessor recording_mode: ("INTERVAL" | "DISABLED")
+      SENSITIVE: []
+    end
+
     class ParticipantToken
       attr_accessor participant_id: ::String
       attr_accessor token: ::String
@@ -596,6 +610,7 @@ module Aws::IVSRealTime
       attr_accessor storage_configuration_arn: ::String
       attr_accessor encoder_configuration_arns: ::Array[::String]
       attr_accessor recording_configuration: Types::RecordingConfiguration
+      attr_accessor thumbnail_configurations: ::Array[Types::CompositionThumbnailConfiguration]
       SENSITIVE: []
     end
 

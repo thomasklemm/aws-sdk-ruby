@@ -141,7 +141,12 @@ module Aws
                           ?tags: Hash[::String, ::String],
                           ?auto_participant_recording_configuration: {
                             storage_configuration_arn: ::String,
-                            media_types: Array[("AUDIO_VIDEO" | "AUDIO_ONLY")]?
+                            media_types: Array[("AUDIO_VIDEO" | "AUDIO_ONLY" | "NONE")]?,
+                            thumbnail_configuration: {
+                              target_interval_seconds: ::Integer?,
+                              storage: Array[("SEQUENTIAL" | "LATEST")]?,
+                              recording_mode: ("INTERVAL" | "DISABLED")?
+                            }?
                           }
                         ) -> _CreateStageResponseSuccess
                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateStageResponseSuccess
@@ -485,7 +490,13 @@ module Aws
                                      encoder_configuration_arns: Array[::String],
                                      recording_configuration: {
                                        format: ("HLS")?
-                                     }?
+                                     }?,
+                                     thumbnail_configurations: Array[
+                                       {
+                                         target_interval_seconds: ::Integer?,
+                                         storage: Array[("SEQUENTIAL" | "LATEST")]?
+                                       },
+                                     ]?
                                    }?
                                  },
                                ],
@@ -543,7 +554,12 @@ module Aws
                           ?name: ::String,
                           ?auto_participant_recording_configuration: {
                             storage_configuration_arn: ::String,
-                            media_types: Array[("AUDIO_VIDEO" | "AUDIO_ONLY")]?
+                            media_types: Array[("AUDIO_VIDEO" | "AUDIO_ONLY" | "NONE")]?,
+                            thumbnail_configuration: {
+                              target_interval_seconds: ::Integer?,
+                              storage: Array[("SEQUENTIAL" | "LATEST")]?,
+                              recording_mode: ("INTERVAL" | "DISABLED")?
+                            }?
                           }
                         ) -> _UpdateStageResponseSuccess
                       | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateStageResponseSuccess

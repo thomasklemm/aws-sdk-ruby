@@ -563,8 +563,8 @@ module Aws::DSQL
     #   resp.to_h outputs the following:
     #   {
     #     linked_cluster_arns: [
-    #       "arn:aws:xanadu:us-east-1:111122223333:cluster/abcdefghijklmnopqrst12345", 
-    #       "arn:aws:xanadu:us-east-2:111122223333:cluster/klmnopqrstuvwxyzabcd54321", 
+    #       "arn:aws:dsql:us-east-1:111122223333:cluster/abcdefghijklmnopqrst12345", 
+    #       "arn:aws:dsql:us-east-2:111122223333:cluster/klmnopqrstuvwxyzabcd54321", 
     #     ], 
     #   }
     #
@@ -683,8 +683,8 @@ module Aws::DSQL
     #
     #   resp = client.delete_multi_region_clusters({
     #     linked_cluster_arns: [
-    #       "arn:aws:xanadu:us-east-1:111122223333:cluster/abcdefghijklmnopqrst12345", 
-    #       "arn:aws:xanadu:us-east-2:111122223333:cluster/klmnopqrstuvwxyzabcd54321", 
+    #       "arn:aws:dsql:us-east-1:111122223333:cluster/abcdefghijklmnopqrst12345", 
+    #       "arn:aws:dsql:us-east-2:111122223333:cluster/klmnopqrstuvwxyzabcd54321", 
     #     ], 
     #   })
     #
@@ -1003,7 +1003,7 @@ module Aws::DSQL
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dsql'
-      context[:gem_version] = '1.0.0'
+      context[:gem_version] = '1.1.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

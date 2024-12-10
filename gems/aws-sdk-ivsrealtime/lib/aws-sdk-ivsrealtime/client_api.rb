@@ -28,6 +28,8 @@ module Aws::IVSRealTime
     CompositionState = Shapes::StringShape.new(name: 'CompositionState')
     CompositionSummary = Shapes::StructureShape.new(name: 'CompositionSummary')
     CompositionSummaryList = Shapes::ListShape.new(name: 'CompositionSummaryList')
+    CompositionThumbnailConfiguration = Shapes::StructureShape.new(name: 'CompositionThumbnailConfiguration')
+    CompositionThumbnailConfigurationList = Shapes::ListShape.new(name: 'CompositionThumbnailConfigurationList')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
     CreateEncoderConfigurationRequest = Shapes::StructureShape.new(name: 'CreateEncoderConfigurationRequest')
     CreateEncoderConfigurationResponse = Shapes::StructureShape.new(name: 'CreateEncoderConfigurationResponse')
@@ -149,6 +151,7 @@ module Aws::IVSRealTime
     ParticipantRecordingState = Shapes::StringShape.new(name: 'ParticipantRecordingState')
     ParticipantState = Shapes::StringShape.new(name: 'ParticipantState')
     ParticipantSummary = Shapes::StructureShape.new(name: 'ParticipantSummary')
+    ParticipantThumbnailConfiguration = Shapes::StructureShape.new(name: 'ParticipantThumbnailConfiguration')
     ParticipantToken = Shapes::StructureShape.new(name: 'ParticipantToken')
     ParticipantTokenAttributes = Shapes::MapShape.new(name: 'ParticipantTokenAttributes')
     ParticipantTokenCapabilities = Shapes::ListShape.new(name: 'ParticipantTokenCapabilities')
@@ -213,6 +216,10 @@ module Aws::IVSRealTime
     TagResourceResponse = Shapes::StructureShape.new(name: 'TagResourceResponse')
     TagValue = Shapes::StringShape.new(name: 'TagValue')
     Tags = Shapes::MapShape.new(name: 'Tags')
+    ThumbnailIntervalSeconds = Shapes::IntegerShape.new(name: 'ThumbnailIntervalSeconds')
+    ThumbnailRecordingMode = Shapes::StringShape.new(name: 'ThumbnailRecordingMode')
+    ThumbnailStorageType = Shapes::StringShape.new(name: 'ThumbnailStorageType')
+    ThumbnailStorageTypeList = Shapes::ListShape.new(name: 'ThumbnailStorageTypeList')
     Time = Shapes::TimestampShape.new(name: 'Time', timestampFormat: "iso8601")
     UntagResourceRequest = Shapes::StructureShape.new(name: 'UntagResourceRequest')
     UntagResourceResponse = Shapes::StructureShape.new(name: 'UntagResourceResponse')
@@ -233,6 +240,7 @@ module Aws::IVSRealTime
 
     AutoParticipantRecordingConfiguration.add_member(:storage_configuration_arn, Shapes::ShapeRef.new(shape: AutoParticipantRecordingStorageConfigurationArn, required: true, location_name: "storageConfigurationArn"))
     AutoParticipantRecordingConfiguration.add_member(:media_types, Shapes::ShapeRef.new(shape: ParticipantRecordingMediaTypeList, location_name: "mediaTypes"))
+    AutoParticipantRecordingConfiguration.add_member(:thumbnail_configuration, Shapes::ShapeRef.new(shape: ParticipantThumbnailConfiguration, location_name: "thumbnailConfiguration"))
     AutoParticipantRecordingConfiguration.struct_class = Types::AutoParticipantRecordingConfiguration
 
     ChannelDestinationConfiguration.add_member(:channel_arn, Shapes::ShapeRef.new(shape: ChannelArn, required: true, location_name: "channelArn"))
@@ -259,6 +267,12 @@ module Aws::IVSRealTime
     CompositionSummary.struct_class = Types::CompositionSummary
 
     CompositionSummaryList.member = Shapes::ShapeRef.new(shape: CompositionSummary)
+
+    CompositionThumbnailConfiguration.add_member(:target_interval_seconds, Shapes::ShapeRef.new(shape: ThumbnailIntervalSeconds, location_name: "targetIntervalSeconds"))
+    CompositionThumbnailConfiguration.add_member(:storage, Shapes::ShapeRef.new(shape: ThumbnailStorageTypeList, location_name: "storage"))
+    CompositionThumbnailConfiguration.struct_class = Types::CompositionThumbnailConfiguration
+
+    CompositionThumbnailConfigurationList.member = Shapes::ShapeRef.new(shape: CompositionThumbnailConfiguration)
 
     ConflictException.add_member(:exception_message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "exceptionMessage"))
     ConflictException.struct_class = Types::ConflictException
@@ -617,6 +631,11 @@ module Aws::IVSRealTime
     ParticipantSummary.add_member(:recording_state, Shapes::ShapeRef.new(shape: ParticipantRecordingState, location_name: "recordingState"))
     ParticipantSummary.struct_class = Types::ParticipantSummary
 
+    ParticipantThumbnailConfiguration.add_member(:target_interval_seconds, Shapes::ShapeRef.new(shape: ThumbnailIntervalSeconds, location_name: "targetIntervalSeconds"))
+    ParticipantThumbnailConfiguration.add_member(:storage, Shapes::ShapeRef.new(shape: ThumbnailStorageTypeList, location_name: "storage"))
+    ParticipantThumbnailConfiguration.add_member(:recording_mode, Shapes::ShapeRef.new(shape: ThumbnailRecordingMode, location_name: "recordingMode"))
+    ParticipantThumbnailConfiguration.struct_class = Types::ParticipantThumbnailConfiguration
+
     ParticipantToken.add_member(:participant_id, Shapes::ShapeRef.new(shape: ParticipantTokenId, location_name: "participantId"))
     ParticipantToken.add_member(:token, Shapes::ShapeRef.new(shape: ParticipantTokenString, location_name: "token"))
     ParticipantToken.add_member(:user_id, Shapes::ShapeRef.new(shape: ParticipantTokenUserId, location_name: "userId"))
@@ -679,6 +698,7 @@ module Aws::IVSRealTime
     S3DestinationConfiguration.add_member(:storage_configuration_arn, Shapes::ShapeRef.new(shape: StorageConfigurationArn, required: true, location_name: "storageConfigurationArn"))
     S3DestinationConfiguration.add_member(:encoder_configuration_arns, Shapes::ShapeRef.new(shape: EncoderConfigurationArnList, required: true, location_name: "encoderConfigurationArns"))
     S3DestinationConfiguration.add_member(:recording_configuration, Shapes::ShapeRef.new(shape: RecordingConfiguration, location_name: "recordingConfiguration"))
+    S3DestinationConfiguration.add_member(:thumbnail_configurations, Shapes::ShapeRef.new(shape: CompositionThumbnailConfigurationList, location_name: "thumbnailConfigurations"))
     S3DestinationConfiguration.struct_class = Types::S3DestinationConfiguration
 
     S3Detail.add_member(:recording_prefix, Shapes::ShapeRef.new(shape: String, required: true, location_name: "recordingPrefix"))
@@ -764,6 +784,8 @@ module Aws::IVSRealTime
     Tags.key = Shapes::ShapeRef.new(shape: TagKey)
     Tags.value = Shapes::ShapeRef.new(shape: TagValue)
 
+    ThumbnailStorageTypeList.member = Shapes::ShapeRef.new(shape: ThumbnailStorageType)
+
     UntagResourceRequest.add_member(:resource_arn, Shapes::ShapeRef.new(shape: ResourceArn, required: true, location: "uri", location_name: "resourceArn"))
     UntagResourceRequest.add_member(:tag_keys, Shapes::ShapeRef.new(shape: TagKeyList, required: true, location: "querystring", location_name: "tagKeys"))
     UntagResourceRequest.struct_class = Types::UntagResourceRequest
@@ -802,9 +824,10 @@ module Aws::IVSRealTime
 
       api.metadata = {
         "apiVersion" => "2020-07-14",
+        "auth" => ["aws.auth#sigv4"],
         "endpointPrefix" => "ivsrealtime",
-        "jsonVersion" => "1.1",
         "protocol" => "rest-json",
+        "protocols" => ["rest-json"],
         "serviceAbbreviation" => "ivsrealtime",
         "serviceFullName" => "Amazon Interactive Video Service RealTime",
         "serviceId" => "IVS RealTime",

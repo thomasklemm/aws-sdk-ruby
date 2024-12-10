@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.35.0 (2024-12-10)
+------------------
+
+* Feature - IVS Real-Time now offers customers the ability to customize thumbnails recording mode and interval for both Individual Participant Recording (IPR) and Server-Side Compositions (SSC).
+
 1.34.0 (2024-10-18)
 ------------------
 

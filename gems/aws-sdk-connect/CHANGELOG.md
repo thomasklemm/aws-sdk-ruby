@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.189.0 (2024-12-10)
+------------------
+
+* Feature - Add support for Push Notifications for Amazon Connect chat. With Push Notifications enabled an alert could be sent to customers about new messages even when they aren't actively using the mobile application.
+
 1.188.0 (2024-12-02)
 ------------------
 

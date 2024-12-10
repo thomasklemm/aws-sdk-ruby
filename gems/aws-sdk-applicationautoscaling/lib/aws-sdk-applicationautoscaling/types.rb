@@ -2140,7 +2140,8 @@ module Aws::ApplicationAutoScaling
       include Aws::Structure
     end
 
-    # Represents a predictive scaling policy configuration.
+    # Represents a predictive scaling policy configuration. Predictive
+    # scaling is supported on Amazon ECS services.
     #
     # @!attribute [rw] metric_specifications
     #   This structure includes the metrics and target utilization to use

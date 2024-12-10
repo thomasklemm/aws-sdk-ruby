@@ -600,6 +600,13 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class ContactConfiguration
+      attr_accessor contact_id: ::String
+      attr_accessor participant_role: ("AGENT" | "CUSTOMER" | "SYSTEM" | "CUSTOM_BOT" | "SUPERVISOR")
+      attr_accessor include_raw_message: bool
+      SENSITIVE: []
+    end
+
     class ContactDataRequest
       attr_accessor system_endpoint: Types::Endpoint
       attr_accessor customer_endpoint: Types::Endpoint
@@ -986,6 +993,21 @@ module Aws::Connect
     class CreatePromptResponse
       attr_accessor prompt_arn: ::String
       attr_accessor prompt_id: ::String
+      SENSITIVE: []
+    end
+
+    class CreatePushNotificationRegistrationRequest
+      attr_accessor instance_id: ::String
+      attr_accessor client_token: ::String
+      attr_accessor pinpoint_app_arn: ::String
+      attr_accessor device_token: ::String
+      attr_accessor device_type: ("GCM" | "APNS" | "APNS_SANDBOX")
+      attr_accessor contact_configuration: Types::ContactConfiguration
+      SENSITIVE: []
+    end
+
+    class CreatePushNotificationRegistrationResponse
+      attr_accessor registration_id: ::String
       SENSITIVE: []
     end
 
@@ -1380,6 +1402,16 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor prompt_id: ::String
       SENSITIVE: []
+    end
+
+    class DeletePushNotificationRegistrationRequest
+      attr_accessor instance_id: ::String
+      attr_accessor registration_id: ::String
+      attr_accessor contact_id: ::String
+      SENSITIVE: []
+    end
+
+    class DeletePushNotificationRegistrationResponse < Aws::EmptyStructure
     end
 
     class DeleteQueueRequest

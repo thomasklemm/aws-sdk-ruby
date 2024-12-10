@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.67.0 (2024-12-10)
+------------------
+
+* Feature - Introduces support for creating DEED (Deterministic Easy-DKIM) identities.
+
 1.66.0 (2024-10-31)
 ------------------
 

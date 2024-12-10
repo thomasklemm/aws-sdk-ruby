@@ -178,6 +178,7 @@ module Aws::Connect
     ConnectionData = Shapes::StructureShape.new(name: 'ConnectionData')
     Contact = Shapes::StructureShape.new(name: 'Contact')
     ContactAnalysis = Shapes::StructureShape.new(name: 'ContactAnalysis')
+    ContactConfiguration = Shapes::StructureShape.new(name: 'ContactConfiguration')
     ContactDataRequest = Shapes::StructureShape.new(name: 'ContactDataRequest')
     ContactDataRequestList = Shapes::ListShape.new(name: 'ContactDataRequestList')
     ContactFilter = Shapes::StructureShape.new(name: 'ContactFilter')
@@ -262,6 +263,8 @@ module Aws::Connect
     CreatePredefinedAttributeRequest = Shapes::StructureShape.new(name: 'CreatePredefinedAttributeRequest')
     CreatePromptRequest = Shapes::StructureShape.new(name: 'CreatePromptRequest')
     CreatePromptResponse = Shapes::StructureShape.new(name: 'CreatePromptResponse')
+    CreatePushNotificationRegistrationRequest = Shapes::StructureShape.new(name: 'CreatePushNotificationRegistrationRequest')
+    CreatePushNotificationRegistrationResponse = Shapes::StructureShape.new(name: 'CreatePushNotificationRegistrationResponse')
     CreateQueueRequest = Shapes::StructureShape.new(name: 'CreateQueueRequest')
     CreateQueueResponse = Shapes::StructureShape.new(name: 'CreateQueueResponse')
     CreateQuickConnectRequest = Shapes::StructureShape.new(name: 'CreateQuickConnectRequest')
@@ -328,6 +331,8 @@ module Aws::Connect
     DeleteIntegrationAssociationRequest = Shapes::StructureShape.new(name: 'DeleteIntegrationAssociationRequest')
     DeletePredefinedAttributeRequest = Shapes::StructureShape.new(name: 'DeletePredefinedAttributeRequest')
     DeletePromptRequest = Shapes::StructureShape.new(name: 'DeletePromptRequest')
+    DeletePushNotificationRegistrationRequest = Shapes::StructureShape.new(name: 'DeletePushNotificationRegistrationRequest')
+    DeletePushNotificationRegistrationResponse = Shapes::StructureShape.new(name: 'DeletePushNotificationRegistrationResponse')
     DeleteQueueRequest = Shapes::StructureShape.new(name: 'DeleteQueueRequest')
     DeleteQuickConnectRequest = Shapes::StructureShape.new(name: 'DeleteQuickConnectRequest')
     DeleteRoutingProfileRequest = Shapes::StructureShape.new(name: 'DeleteRoutingProfileRequest')
@@ -403,6 +408,8 @@ module Aws::Connect
     DestinationId = Shapes::StringShape.new(name: 'DestinationId')
     DestinationNotAllowedException = Shapes::StructureShape.new(name: 'DestinationNotAllowedException')
     DeviceInfo = Shapes::StructureShape.new(name: 'DeviceInfo')
+    DeviceToken = Shapes::StringShape.new(name: 'DeviceToken')
+    DeviceType = Shapes::StringShape.new(name: 'DeviceType')
     Dimensions = Shapes::StructureShape.new(name: 'Dimensions')
     DimensionsV2Key = Shapes::StringShape.new(name: 'DimensionsV2Key')
     DimensionsV2Map = Shapes::MapShape.new(name: 'DimensionsV2Map')
@@ -639,6 +646,7 @@ module Aws::Connect
     InboundMessageSourceType = Shapes::StringShape.new(name: 'InboundMessageSourceType')
     InboundRawMessage = Shapes::StructureShape.new(name: 'InboundRawMessage')
     InboundSubject = Shapes::StringShape.new(name: 'InboundSubject')
+    IncludeRawMessage = Shapes::BooleanShape.new(name: 'IncludeRawMessage')
     Index = Shapes::IntegerShape.new(name: 'Index')
     InitiateAs = Shapes::StringShape.new(name: 'InitiateAs')
     InitiationMethodList = Shapes::ListShape.new(name: 'InitiationMethodList')
@@ -1027,6 +1035,7 @@ module Aws::Connect
     ReferenceValue = Shapes::StringShape.new(name: 'ReferenceValue')
     RefreshTokenDuration = Shapes::IntegerShape.new(name: 'RefreshTokenDuration')
     RegionName = Shapes::StringShape.new(name: 'RegionName')
+    RegistrationId = Shapes::StringShape.new(name: 'RegistrationId')
     RehydrationType = Shapes::StringShape.new(name: 'RehydrationType')
     ReleasePhoneNumberRequest = Shapes::StructureShape.new(name: 'ReleasePhoneNumberRequest')
     ReplicateInstanceRequest = Shapes::StructureShape.new(name: 'ReplicateInstanceRequest')
@@ -1963,6 +1972,11 @@ module Aws::Connect
     ContactAnalysis.add_member(:transcript, Shapes::ShapeRef.new(shape: Transcript, location_name: "Transcript"))
     ContactAnalysis.struct_class = Types::ContactAnalysis
 
+    ContactConfiguration.add_member(:contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location_name: "ContactId"))
+    ContactConfiguration.add_member(:participant_role, Shapes::ShapeRef.new(shape: ParticipantRole, location_name: "ParticipantRole"))
+    ContactConfiguration.add_member(:include_raw_message, Shapes::ShapeRef.new(shape: IncludeRawMessage, location_name: "IncludeRawMessage"))
+    ContactConfiguration.struct_class = Types::ContactConfiguration
+
     ContactDataRequest.add_member(:system_endpoint, Shapes::ShapeRef.new(shape: Endpoint, location_name: "SystemEndpoint"))
     ContactDataRequest.add_member(:customer_endpoint, Shapes::ShapeRef.new(shape: Endpoint, location_name: "CustomerEndpoint"))
     ContactDataRequest.add_member(:request_identifier, Shapes::ShapeRef.new(shape: RequestIdentifier, location_name: "RequestIdentifier"))
@@ -2289,6 +2303,17 @@ module Aws::Connect
     CreatePromptResponse.add_member(:prompt_id, Shapes::ShapeRef.new(shape: PromptId, location_name: "PromptId"))
     CreatePromptResponse.struct_class = Types::CreatePromptResponse
 
+    CreatePushNotificationRegistrationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    CreatePushNotificationRegistrationRequest.add_member(:client_token, Shapes::ShapeRef.new(shape: ClientToken, location_name: "ClientToken", metadata: {"idempotencyToken"=>true}))
+    CreatePushNotificationRegistrationRequest.add_member(:pinpoint_app_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "PinpointAppArn"))
+    CreatePushNotificationRegistrationRequest.add_member(:device_token, Shapes::ShapeRef.new(shape: DeviceToken, required: true, location_name: "DeviceToken"))
+    CreatePushNotificationRegistrationRequest.add_member(:device_type, Shapes::ShapeRef.new(shape: DeviceType, required: true, location_name: "DeviceType"))
+    CreatePushNotificationRegistrationRequest.add_member(:contact_configuration, Shapes::ShapeRef.new(shape: ContactConfiguration, required: true, location_name: "ContactConfiguration"))
+    CreatePushNotificationRegistrationRequest.struct_class = Types::CreatePushNotificationRegistrationRequest
+
+    CreatePushNotificationRegistrationResponse.add_member(:registration_id, Shapes::ShapeRef.new(shape: RegistrationId, required: true, location_name: "RegistrationId"))
+    CreatePushNotificationRegistrationResponse.struct_class = Types::CreatePushNotificationRegistrationResponse
+
     CreateQueueRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     CreateQueueRequest.add_member(:name, Shapes::ShapeRef.new(shape: CommonNameLength127, required: true, location_name: "Name"))
     CreateQueueRequest.add_member(:description, Shapes::ShapeRef.new(shape: QueueDescription, location_name: "Description"))
@@ -2583,6 +2608,13 @@ module Aws::Connect
     DeletePromptRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DeletePromptRequest.add_member(:prompt_id, Shapes::ShapeRef.new(shape: PromptId, required: true, location: "uri", location_name: "PromptId"))
     DeletePromptRequest.struct_class = Types::DeletePromptRequest
+
+    DeletePushNotificationRegistrationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    DeletePushNotificationRegistrationRequest.add_member(:registration_id, Shapes::ShapeRef.new(shape: RegistrationId, required: true, location: "uri", location_name: "RegistrationId"))
+    DeletePushNotificationRegistrationRequest.add_member(:contact_id, Shapes::ShapeRef.new(shape: ContactId, required: true, location: "querystring", location_name: "contactId"))
+    DeletePushNotificationRegistrationRequest.struct_class = Types::DeletePushNotificationRegistrationRequest
+
+    DeletePushNotificationRegistrationResponse.struct_class = Types::DeletePushNotificationRegistrationResponse
 
     DeleteQueueRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DeleteQueueRequest.add_member(:queue_id, Shapes::ShapeRef.new(shape: QueueId, required: true, location: "uri", location_name: "QueueId"))
@@ -6833,6 +6865,20 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
       end)
 
+      api.add_operation(:create_push_notification_registration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreatePushNotificationRegistration"
+        o.http_method = "PUT"
+        o.http_request_uri = "/push-notification/{InstanceId}/registrations"
+        o.input = Shapes::ShapeRef.new(shape: CreatePushNotificationRegistrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreatePushNotificationRegistrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
       api.add_operation(:create_queue, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateQueue"
         o.http_method = "PUT"
@@ -7185,6 +7231,19 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
+      api.add_operation(:delete_push_notification_registration, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeletePushNotificationRegistration"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/push-notification/{InstanceId}/registrations/{RegistrationId}"
+        o.input = Shapes::ShapeRef.new(shape: DeletePushNotificationRegistrationRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeletePushNotificationRegistrationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
       end)
 
       api.add_operation(:delete_queue, Seahorse::Model::Operation.new.tap do |o|

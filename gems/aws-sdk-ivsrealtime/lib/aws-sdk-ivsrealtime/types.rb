@@ -37,11 +37,18 @@ module Aws::IVSRealTime
     #   Types of media to be recorded. Default: `AUDIO_VIDEO`.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] thumbnail_configuration
+    #   A complex type that allows you to enable/disable the recording of
+    #   thumbnails for individual participant recording and modify the
+    #   interval at which thumbnails are generated for the live session.
+    #   @return [Types::ParticipantThumbnailConfiguration]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/AutoParticipantRecordingConfiguration AWS API Documentation
     #
     class AutoParticipantRecordingConfiguration < Struct.new(
       :storage_configuration_arn,
-      :media_types)
+      :media_types,
+      :thumbnail_configuration)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -180,6 +187,33 @@ module Aws::IVSRealTime
       :tags,
       :start_time,
       :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object representing a configuration of thumbnails for recorded
+    # video for a Composition.
+    #
+    # @!attribute [rw] target_interval_seconds
+    #   The targeted thumbnail-generation interval in seconds. Default: 60.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] storage
+    #   Indicates the format in which thumbnails are recorded. `SEQUENTIAL`
+    #   records all generated thumbnails in a serial manner, to the
+    #   media/thumbnails/(width)x(height) directory, where (width) and
+    #   (height) are the width and height of the thumbnail. `LATEST` saves
+    #   the latest thumbnail in
+    #   media/latest\_thumbnail/(width)x(height)/thumb.jpg and overwrites it
+    #   at the interval specified by `targetIntervalSeconds`. You can enable
+    #   both `SEQUENTIAL` and `LATEST`. Default: `SEQUENTIAL`.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/CompositionThumbnailConfiguration AWS API Documentation
+    #
+    class CompositionThumbnailConfiguration < Struct.new(
+      :target_interval_seconds,
+      :storage)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1913,6 +1947,37 @@ module Aws::IVSRealTime
       include Aws::Structure
     end
 
+    # An object representing a configuration of thumbnails for recorded
+    # video from an individual participant.
+    #
+    # @!attribute [rw] target_interval_seconds
+    #   The targeted thumbnail-generation interval in seconds. This is
+    #   configurable only if `recordingMode` is `INTERVAL`. Default: 60.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] storage
+    #   Indicates the format in which thumbnails are recorded. `SEQUENTIAL`
+    #   records all generated thumbnails in a serial manner, to the
+    #   media/thumbnails/high directory. `LATEST` saves the latest thumbnail
+    #   in media/latest\_thumbnail/high/thumb.jpg and overwrites it at the
+    #   interval specified by `targetIntervalSeconds`. You can enable both
+    #   `SEQUENTIAL` and `LATEST`. Default: `SEQUENTIAL`.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] recording_mode
+    #   Thumbnail recording mode. Default: `DISABLED`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/ParticipantThumbnailConfiguration AWS API Documentation
+    #
+    class ParticipantThumbnailConfiguration < Struct.new(
+      :target_interval_seconds,
+      :storage,
+      :recording_mode)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Object specifying a participant token in a stage.
     #
     # **Important**: Treat tokens as opaque; i.e., do not build
@@ -2227,12 +2292,19 @@ module Aws::IVSRealTime
     #   the recording format for storing a recording in Amazon S3.
     #   @return [Types::RecordingConfiguration]
     #
+    # @!attribute [rw] thumbnail_configurations
+    #   A complex type that allows you to enable/disable the recording of
+    #   thumbnails for a Composition and modify the interval at which
+    #   thumbnails are generated for the live session.
+    #   @return [Array<Types::CompositionThumbnailConfiguration>]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ivs-realtime-2020-07-14/S3DestinationConfiguration AWS API Documentation
     #
     class S3DestinationConfiguration < Struct.new(
       :storage_configuration_arn,
       :encoder_configuration_arns,
-      :recording_configuration)
+      :recording_configuration,
+      :thumbnail_configurations)
       SENSITIVE = []
       include Aws::Structure
     end

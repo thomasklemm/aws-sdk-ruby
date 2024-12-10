@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.1.0 (2024-12-10)
+------------------
+
+* Feature - Doc only update to examples for DeleteMultiRegionClusters & CreateMultiRegionClusters
+
 1.0.0 (2024-12-03)
 ------------------
 

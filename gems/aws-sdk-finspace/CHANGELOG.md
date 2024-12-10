@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.48.0 (2024-12-10)
+------------------
+
+* Feature - Update KxCommandLineArgument value parameter regex to allow for spaces and semicolons
+
 1.47.0 (2024-11-06)
 ------------------
 

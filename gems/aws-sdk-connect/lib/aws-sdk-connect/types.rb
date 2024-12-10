@@ -2524,6 +2524,31 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # The contact configuration for push notification registration.
+    #
+    # @!attribute [rw] contact_id
+    #   The identifier of the contact within the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] participant_role
+    #   The role of the participant in the chat conversation.
+    #   @return [String]
+    #
+    # @!attribute [rw] include_raw_message
+    #   Whether to include raw connect message in the push notification
+    #   payload. Default is `False`.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactConfiguration AWS API Documentation
+    #
+    class ContactConfiguration < Struct.new(
+      :contact_id,
+      :participant_role,
+      :include_raw_message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Request object with information to create a contact.
     #
     # @!attribute [rw] system_endpoint
@@ -4271,6 +4296,70 @@ module Aws::Connect
     #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
     #   @return [String]
     #
+    # @!attribute [rw] client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency,
+    #   see [Making retries safe with idempotent APIs][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #   @return [String]
+    #
+    # @!attribute [rw] pinpoint_app_arn
+    #   The Amazon Resource Name (ARN) of the Pinpoint application.
+    #   @return [String]
+    #
+    # @!attribute [rw] device_token
+    #   The push notification token issued by the Apple or Google gateways.
+    #   @return [String]
+    #
+    # @!attribute [rw] device_type
+    #   The device type to use when sending the message.
+    #   @return [String]
+    #
+    # @!attribute [rw] contact_configuration
+    #   The contact configuration for push notification registration.
+    #   @return [Types::ContactConfiguration]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreatePushNotificationRegistrationRequest AWS API Documentation
+    #
+    class CreatePushNotificationRegistrationRequest < Struct.new(
+      :instance_id,
+      :client_token,
+      :pinpoint_app_arn,
+      :device_token,
+      :device_type,
+      :contact_configuration)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] registration_id
+    #   The identifier for the registration.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreatePushNotificationRegistrationResponse AWS API Documentation
+    #
+    class CreatePushNotificationRegistrationResponse < Struct.new(
+      :registration_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
+    #   @return [String]
+    #
     # @!attribute [rw] name
     #   The name of the queue.
     #   @return [String]
@@ -5825,6 +5914,37 @@ module Aws::Connect
       SENSITIVE = []
       include Aws::Structure
     end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
+    #   @return [String]
+    #
+    # @!attribute [rw] registration_id
+    #   The identifier for the registration.
+    #   @return [String]
+    #
+    # @!attribute [rw] contact_id
+    #   The identifier of the contact within the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeletePushNotificationRegistrationRequest AWS API Documentation
+    #
+    class DeletePushNotificationRegistrationRequest < Struct.new(
+      :instance_id,
+      :registration_id,
+      :contact_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeletePushNotificationRegistrationResponse AWS API Documentation
+    #
+    class DeletePushNotificationRegistrationResponse < Aws::EmptyStructure; end
 
     # @!attribute [rw] instance_id
     #   The identifier of the Amazon Connect instance. You can [find the

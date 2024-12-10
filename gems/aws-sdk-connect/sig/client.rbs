@@ -692,6 +692,25 @@ module Aws
                          ) -> _CreatePromptResponseSuccess
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreatePromptResponseSuccess
 
+      interface _CreatePushNotificationRegistrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreatePushNotificationRegistrationResponse]
+        def registration_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#create_push_notification_registration-instance_method
+      def create_push_notification_registration: (
+                                                   instance_id: ::String,
+                                                   ?client_token: ::String,
+                                                   pinpoint_app_arn: ::String,
+                                                   device_token: ::String,
+                                                   device_type: ("GCM" | "APNS" | "APNS_SANDBOX"),
+                                                   contact_configuration: {
+                                                     contact_id: ::String,
+                                                     participant_role: ("AGENT" | "CUSTOMER" | "SYSTEM" | "CUSTOM_BOT" | "SUPERVISOR")?,
+                                                     include_raw_message: bool?
+                                                   }
+                                                 ) -> _CreatePushNotificationRegistrationResponseSuccess
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreatePushNotificationRegistrationResponseSuccess
+
       interface _CreateQueueResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateQueueResponse]
         def queue_arn: () -> ::String
@@ -1176,6 +1195,17 @@ module Aws
                            prompt_id: ::String
                          ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      interface _DeletePushNotificationRegistrationResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeletePushNotificationRegistrationResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#delete_push_notification_registration-instance_method
+      def delete_push_notification_registration: (
+                                                   instance_id: ::String,
+                                                   registration_id: ::String,
+                                                   contact_id: ::String
+                                                 ) -> _DeletePushNotificationRegistrationResponseSuccess
+                                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeletePushNotificationRegistrationResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#delete_queue-instance_method
       def delete_queue: (

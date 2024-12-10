@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.99.0 (2024-12-10)
+------------------
+
+* Feature - Doc only update for AAS Predictive Scaling policy configuration API.
+
 1.98.0 (2024-11-21)
 ------------------
 

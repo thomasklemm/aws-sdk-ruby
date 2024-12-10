@@ -2746,6 +2746,80 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Creates registration for a device token and a chat contact to receive
+    # real-time push notifications. For more information about push
+    # notifications, see [Set up push notifications in Amazon Connect for
+    # mobile chat][1] in the *Amazon Connect Administrator Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/connect/latest/adminguide/set-up-push-notifications-for-mobile-chat.html
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
+    #
+    # @option params [String] :client_token
+    #   A unique, case-sensitive identifier that you provide to ensure the
+    #   idempotency of the request. If not provided, the Amazon Web Services
+    #   SDK populates this field. For more information about idempotency, see
+    #   [Making retries safe with idempotent APIs][1].
+    #
+    #   **A suitable default value is auto-generated.** You should normally
+    #   not need to pass this option.**
+    #
+    #
+    #
+    #   [1]: https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/
+    #
+    # @option params [required, String] :pinpoint_app_arn
+    #   The Amazon Resource Name (ARN) of the Pinpoint application.
+    #
+    # @option params [required, String] :device_token
+    #   The push notification token issued by the Apple or Google gateways.
+    #
+    # @option params [required, String] :device_type
+    #   The device type to use when sending the message.
+    #
+    # @option params [required, Types::ContactConfiguration] :contact_configuration
+    #   The contact configuration for push notification registration.
+    #
+    # @return [Types::CreatePushNotificationRegistrationResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreatePushNotificationRegistrationResponse#registration_id #registration_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_push_notification_registration({
+    #     instance_id: "InstanceId", # required
+    #     client_token: "ClientToken",
+    #     pinpoint_app_arn: "ARN", # required
+    #     device_token: "DeviceToken", # required
+    #     device_type: "GCM", # required, accepts GCM, APNS, APNS_SANDBOX
+    #     contact_configuration: { # required
+    #       contact_id: "ContactId", # required
+    #       participant_role: "AGENT", # accepts AGENT, CUSTOMER, SYSTEM, CUSTOM_BOT, SUPERVISOR
+    #       include_raw_message: false,
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.registration_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreatePushNotificationRegistration AWS API Documentation
+    #
+    # @overload create_push_notification_registration(params = {})
+    # @param [Hash] params ({})
+    def create_push_notification_registration(params = {}, options = {})
+      req = build_request(:create_push_notification_registration, params)
+      req.send_request(options)
+    end
+
     # This API is in preview release for Amazon Connect and is subject to
     # change.
     #
@@ -4374,6 +4448,41 @@ module Aws::Connect
     # @param [Hash] params ({})
     def delete_prompt(params = {}, options = {})
       req = build_request(:delete_prompt, params)
+      req.send_request(options)
+    end
+
+    # Deletes registration for a device token and a chat contact.
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance. You can [find the
+    #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
+    #
+    #
+    #
+    #   [1]: https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html
+    #
+    # @option params [required, String] :registration_id
+    #   The identifier for the registration.
+    #
+    # @option params [required, String] :contact_id
+    #   The identifier of the contact within the Amazon Connect instance.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_push_notification_registration({
+    #     instance_id: "InstanceId", # required
+    #     registration_id: "RegistrationId", # required
+    #     contact_id: "ContactId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeletePushNotificationRegistration AWS API Documentation
+    #
+    # @overload delete_push_notification_registration(params = {})
+    # @param [Hash] params ({})
+    def delete_push_notification_registration(params = {}, options = {})
+      req = build_request(:delete_push_notification_registration, params)
       req.send_request(options)
     end
 
@@ -19960,7 +20069,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.188.0'
+      context[:gem_version] = '1.189.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 
