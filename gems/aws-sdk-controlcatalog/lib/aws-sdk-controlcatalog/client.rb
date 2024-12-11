@@ -741,7 +741,7 @@ module Aws::ControlCatalog
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-controlcatalog'
-      context[:gem_version] = '1.16.0'
+      context[:gem_version] = '1.17.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

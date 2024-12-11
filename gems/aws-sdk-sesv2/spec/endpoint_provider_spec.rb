@@ -665,5 +665,139 @@ module Aws::SESV2
       end
     end
 
+    context "Valid EndpointId with dualstack and FIPS disabled. i.e, IPv4 Only stack with no FIPS" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"ses", "name"=>"sigv4a", "signingRegionSet"=>["*"]}]}, "url"=>"https://abc123.456def.endpoints.email.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"abc123.456def", :use_dual_stack=>false, :use_fips=>false, :region=>"us-east-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Valid EndpointId with dualstack enabled" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"ses", "name"=>"sigv4a", "signingRegionSet"=>["*"]}]}, "url"=>"https://abc123.456def.endpoints.email.api.aws"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"abc123.456def", :use_dual_stack=>true, :use_fips=>false, :region=>"us-west-2"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Valid EndpointId with FIPS set, dualstack disabled" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS is not supported with multi-region endpoints"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"abc123.456def", :use_dual_stack=>false, :use_fips=>true, :region=>"ap-northeast-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Valid EndpointId with both dualstack and FIPS enabled" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS is not supported with multi-region endpoints"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"abc123.456def", :use_dual_stack=>true, :use_fips=>true, :region=>"ap-northeast-2"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Regular regional request, without EndpointId" do
+      let(:expected) do
+        {"endpoint"=>{"url"=>"https://email.eu-west-1.amazonaws.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:use_dual_stack=>false, :region=>"eu-west-1"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Invalid EndpointId (Invalid chars / format)" do
+      let(:expected) do
+        {"error"=>"EndpointId must be a valid host label"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"badactor.com?foo=bar", :use_dual_stack=>false, :region=>"eu-west-2"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Invalid EndpointId (Empty)" do
+      let(:expected) do
+        {"error"=>"EndpointId must be a valid host label"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"", :use_dual_stack=>false, :region=>"ap-south-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Valid EndpointId with custom sdk endpoint" do
+      let(:expected) do
+        {"endpoint"=>{"properties"=>{"authSchemes"=>[{"signingName"=>"ses", "name"=>"sigv4a", "signingRegionSet"=>["*"]}]}, "url"=>"https://example.com"}}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"abc123.456def", :use_dual_stack=>false, :region=>"us-east-1", :endpoint=>"https://example.com"})
+        endpoint = subject.resolve_endpoint(params)
+        expect(endpoint.url).to eq(expected['endpoint']['url'])
+        expect(endpoint.headers).to eq(expected['endpoint']['headers'] || {})
+        expect(endpoint.properties).to eq(expected['endpoint']['properties'] || {})
+      end
+    end
+
+    context "Valid EndpointId with custom sdk endpoint with FIPS enabled" do
+      let(:expected) do
+        {"error"=>"Invalid Configuration: FIPS is not supported with multi-region endpoints"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"abc123.456def", :use_dual_stack=>false, :use_fips=>true, :region=>"us-east-1", :endpoint=>"https://example.com"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
+    context "Valid EndpointId with DualStack enabled and partition does not support DualStack" do
+      let(:expected) do
+        {"error"=>"DualStack is enabled but this partition does not support DualStack"}
+      end
+
+      it 'produces the expected output from the EndpointProvider' do
+        params = EndpointParameters.new(**{:endpoint_id=>"abc123.456def", :use_dual_stack=>true, :region=>"us-isob-east-1"})
+        expect do
+          subject.resolve_endpoint(params)
+        end.to raise_error(ArgumentError, expected['error'])
+      end
+    end
+
   end
 end

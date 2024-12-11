@@ -199,7 +199,8 @@ module Aws
       def get_dashboard_for_job_run: (
                                        application_id: ::String,
                                        job_run_id: ::String,
-                                       ?attempt: ::Integer
+                                       ?attempt: ::Integer,
+                                       ?access_system_profile_logs: bool
                                      ) -> _GetDashboardForJobRunResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetDashboardForJobRunResponseSuccess
 

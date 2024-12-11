@@ -42,6 +42,17 @@ module Aws::MigrationHub
     class AssociateDiscoveredResourceResult < Aws::EmptyStructure
     end
 
+    class AssociateSourceResourceRequest
+      attr_accessor progress_update_stream: ::String
+      attr_accessor migration_task_name: ::String
+      attr_accessor source_resource: Types::SourceResource
+      attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class AssociateSourceResourceResult < Aws::EmptyStructure
+    end
+
     class CreateProgressUpdateStreamRequest
       attr_accessor progress_update_stream_name: ::String
       attr_accessor dry_run: bool
@@ -108,6 +119,17 @@ module Aws::MigrationHub
     end
 
     class DisassociateDiscoveredResourceResult < Aws::EmptyStructure
+    end
+
+    class DisassociateSourceResourceRequest
+      attr_accessor progress_update_stream: ::String
+      attr_accessor migration_task_name: ::String
+      attr_accessor source_resource_name: ::String
+      attr_accessor dry_run: bool
+      SENSITIVE: []
+    end
+
+    class DisassociateSourceResourceResult < Aws::EmptyStructure
     end
 
     class DiscoveredResource
@@ -187,6 +209,20 @@ module Aws::MigrationHub
       SENSITIVE: []
     end
 
+    class ListMigrationTaskUpdatesRequest
+      attr_accessor progress_update_stream: ::String
+      attr_accessor migration_task_name: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListMigrationTaskUpdatesResult
+      attr_accessor next_token: ::String
+      attr_accessor migration_task_update_list: ::Array[Types::MigrationTaskUpdate]
+      SENSITIVE: []
+    end
+
     class ListMigrationTasksRequest
       attr_accessor next_token: ::String
       attr_accessor max_results: ::Integer
@@ -212,6 +248,20 @@ module Aws::MigrationHub
       SENSITIVE: []
     end
 
+    class ListSourceResourcesRequest
+      attr_accessor progress_update_stream: ::String
+      attr_accessor migration_task_name: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListSourceResourcesResult
+      attr_accessor next_token: ::String
+      attr_accessor source_resource_list: ::Array[Types::SourceResource]
+      SENSITIVE: []
+    end
+
     class MigrationTask
       attr_accessor progress_update_stream: ::String
       attr_accessor migration_task_name: ::String
@@ -228,6 +278,13 @@ module Aws::MigrationHub
       attr_accessor progress_percent: ::Integer
       attr_accessor status_detail: ::String
       attr_accessor update_date_time: ::Time
+      SENSITIVE: []
+    end
+
+    class MigrationTaskUpdate
+      attr_accessor update_date_time: ::Time
+      attr_accessor update_type: ("MIGRATION_TASK_STATE_UPDATED")
+      attr_accessor migration_task_state: Types::Task
       SENSITIVE: []
     end
 
@@ -289,6 +346,13 @@ module Aws::MigrationHub
 
     class ServiceUnavailableException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class SourceResource
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor status_detail: ::String
       SENSITIVE: []
     end
 

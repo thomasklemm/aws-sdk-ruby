@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.38.0 (2024-12-11)
+------------------
+
+* Feature - This release adds support for accessing system profile logs in Lake Formation-enabled jobs.
+
 1.37.0 (2024-10-18)
 ------------------
 

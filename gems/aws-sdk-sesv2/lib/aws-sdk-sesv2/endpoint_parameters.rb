@@ -30,11 +30,17 @@ module Aws::SESV2
   #
   #   @return [String]
   #
+  # @!attribute endpoint_id
+  #   Operation parameter for EndpointId
+  #
+  #   @return [String]
+  #
   EndpointParameters = Struct.new(
     :region,
     :use_dual_stack,
     :use_fips,
     :endpoint,
+    :endpoint_id,
   ) do
     include Aws::Structure
 
@@ -45,6 +51,7 @@ module Aws::SESV2
         'UseDualStack' => :use_dual_stack,
         'UseFIPS' => :use_fips,
         'Endpoint' => :endpoint,
+        'EndpointId' => :endpoint_id,
       }.freeze
     end
 
@@ -55,6 +62,7 @@ module Aws::SESV2
       self[:use_fips] = options[:use_fips]
       self[:use_fips] = false if self[:use_fips].nil?
       self[:endpoint] = options[:endpoint]
+      self[:endpoint_id] = options[:endpoint_id]
     end
 
     def self.create(config, options={})

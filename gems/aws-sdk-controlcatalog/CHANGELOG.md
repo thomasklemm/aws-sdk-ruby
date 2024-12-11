@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.17.0 (2024-12-11)
+------------------
+
+* Feature - Minor documentation updates to the content of ImplementationDetails object part of the Control Catalog GetControl API
+
 1.16.0 (2024-11-08)
 ------------------
 

@@ -288,6 +288,19 @@ module Aws::SESV2
       SENSITIVE: []
     end
 
+    class CreateMultiRegionEndpointRequest
+      attr_accessor endpoint_name: ::String
+      attr_accessor details: Types::Details
+      attr_accessor tags: ::Array[Types::Tag]
+      SENSITIVE: []
+    end
+
+    class CreateMultiRegionEndpointResponse
+      attr_accessor status: ("CREATING" | "READY" | "FAILED" | "DELETING")
+      attr_accessor endpoint_id: ::String
+      SENSITIVE: []
+    end
+
     class CustomVerificationEmailTemplateMetadata
       attr_accessor template_name: ::String
       attr_accessor from_email_address: ::String
@@ -403,6 +416,16 @@ module Aws::SESV2
     class DeleteEmailTemplateResponse < Aws::EmptyStructure
     end
 
+    class DeleteMultiRegionEndpointRequest
+      attr_accessor endpoint_name: ::String
+      SENSITIVE: []
+    end
+
+    class DeleteMultiRegionEndpointResponse
+      attr_accessor status: ("CREATING" | "READY" | "FAILED" | "DELETING")
+      SENSITIVE: []
+    end
+
     class DeleteSuppressedDestinationRequest
       attr_accessor email_address: ::String
       SENSITIVE: []
@@ -432,6 +455,11 @@ module Aws::SESV2
       attr_accessor to_addresses: ::Array[::String]
       attr_accessor cc_addresses: ::Array[::String]
       attr_accessor bcc_addresses: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class Details
+      attr_accessor routes_details: ::Array[Types::RouteDetails]
       SENSITIVE: []
     end
 
@@ -860,6 +888,21 @@ module Aws::SESV2
       SENSITIVE: [:from_email_address, :subject]
     end
 
+    class GetMultiRegionEndpointRequest
+      attr_accessor endpoint_name: ::String
+      SENSITIVE: []
+    end
+
+    class GetMultiRegionEndpointResponse
+      attr_accessor endpoint_name: ::String
+      attr_accessor endpoint_id: ::String
+      attr_accessor routes: ::Array[Types::Route]
+      attr_accessor status: ("CREATING" | "READY" | "FAILED" | "DELETING")
+      attr_accessor created_timestamp: ::Time
+      attr_accessor last_updated_timestamp: ::Time
+      SENSITIVE: []
+    end
+
     class GetSuppressedDestinationRequest
       attr_accessor email_address: ::String
       SENSITIVE: []
@@ -1096,6 +1139,18 @@ module Aws::SESV2
       SENSITIVE: []
     end
 
+    class ListMultiRegionEndpointsRequest
+      attr_accessor next_token: ::String
+      attr_accessor page_size: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListMultiRegionEndpointsResponse
+      attr_accessor multi_region_endpoints: ::Array[Types::MultiRegionEndpoint]
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
     class ListRecommendationsRequest
       attr_accessor filter: ::Hash[("TYPE" | "IMPACT" | "STATUS" | "RESOURCE_ARN"), ::String]
       attr_accessor next_token: ::String
@@ -1205,6 +1260,16 @@ module Aws::SESV2
       attr_accessor metrics: ::Array[Types::ExportMetric]
       attr_accessor start_date: ::Time
       attr_accessor end_date: ::Time
+      SENSITIVE: []
+    end
+
+    class MultiRegionEndpoint
+      attr_accessor endpoint_name: ::String
+      attr_accessor status: ("CREATING" | "READY" | "FAILED" | "DELETING")
+      attr_accessor endpoint_id: ::String
+      attr_accessor regions: ::Array[::String]
+      attr_accessor created_timestamp: ::Time
+      attr_accessor last_updated_timestamp: ::Time
       SENSITIVE: []
     end
 
@@ -1467,6 +1532,16 @@ module Aws::SESV2
       SENSITIVE: []
     end
 
+    class Route
+      attr_accessor region: ::String
+      SENSITIVE: []
+    end
+
+    class RouteDetails
+      attr_accessor region: ::String
+      SENSITIVE: []
+    end
+
     class SOARecord
       attr_accessor primary_name_server: ::String
       attr_accessor admin_email: ::String
@@ -1484,6 +1559,7 @@ module Aws::SESV2
       attr_accessor default_content: Types::BulkEmailContent
       attr_accessor bulk_email_entries: ::Array[Types::BulkEmailEntry]
       attr_accessor configuration_set_name: ::String
+      attr_accessor endpoint_id: ::String
       SENSITIVE: []
     end
 
@@ -1514,6 +1590,7 @@ module Aws::SESV2
       attr_accessor content: Types::EmailContent
       attr_accessor email_tags: ::Array[Types::MessageTag]
       attr_accessor configuration_set_name: ::String
+      attr_accessor endpoint_id: ::String
       attr_accessor list_management_options: Types::ListManagementOptions
       SENSITIVE: []
     end

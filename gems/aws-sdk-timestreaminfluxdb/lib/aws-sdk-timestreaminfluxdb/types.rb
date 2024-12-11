@@ -71,7 +71,7 @@ module Aws::TimestreamInfluxDB
     #   password will allow you to access the InfluxDB UI to perform various
     #   administrative tasks and also use the InfluxDB CLI to create an
     #   operator token. These attributes will be stored in a Secret created
-    #   in AWS SecretManager in your account.
+    #   in Amazon Web Services SecretManager in your account.
     #   @return [String]
     #
     # @!attribute [rw] organization
@@ -156,6 +156,12 @@ module Aws::TimestreamInfluxDB
     #   51678-51680
     #   @return [Integer]
     #
+    # @!attribute [rw] network_type
+    #   Specifies whether the networkType of the Timestream for InfluxDB
+    #   instance is IPV4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/CreateDbInstanceInput AWS API Documentation
     #
     class CreateDbInstanceInput < Struct.new(
@@ -174,7 +180,8 @@ module Aws::TimestreamInfluxDB
       :deployment_type,
       :log_delivery_configuration,
       :tags,
-      :port)
+      :port,
+      :network_type)
       SENSITIVE = [:username, :password]
       include Aws::Structure
     end
@@ -206,6 +213,12 @@ module Aws::TimestreamInfluxDB
     #   The port number on which InfluxDB accepts connections. The default
     #   value is 8086.
     #   @return [Integer]
+    #
+    # @!attribute [rw] network_type
+    #   Specifies whether the networkType of the Timestream for InfluxDB
+    #   instance is IPV4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
     #
     # @!attribute [rw] db_instance_type
     #   The Timestream for InfluxDB instance type that InfluxDB runs on.
@@ -257,10 +270,11 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the AWS Secrets Manager secret
-    #   containing the initial InfluxDB authorization parameters. The secret
-    #   value is a JSON formatted key-value pair holding InfluxDB
-    #   authorization values: organization, bucket, username, and password.
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
+    #   Manager secret containing the initial InfluxDB authorization
+    #   parameters. The secret value is a JSON formatted key-value pair
+    #   holding InfluxDB authorization values: organization, bucket,
+    #   username, and password.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/CreateDbInstanceOutput AWS API Documentation
@@ -272,6 +286,7 @@ module Aws::TimestreamInfluxDB
       :status,
       :endpoint,
       :port,
+      :network_type,
       :db_instance_type,
       :db_storage_type,
       :allocated_storage,
@@ -358,8 +373,8 @@ module Aws::TimestreamInfluxDB
     #
     # @!attribute [rw] name
     #   This customer-supplied name uniquely identifies the DB instance when
-    #   interacting with the Amazon Timestream for InfluxDB API and AWS CLI
-    #   commands.
+    #   interacting with the Amazon Timestream for InfluxDB API and Amazon
+    #   Web Services CLI commands.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -378,6 +393,12 @@ module Aws::TimestreamInfluxDB
     # @!attribute [rw] port
     #   The port number on which InfluxDB accepts connections.
     #   @return [Integer]
+    #
+    # @!attribute [rw] network_type
+    #   Specifies whether the networkType of the Timestream for InfluxDB
+    #   instance is IPV4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
     #
     # @!attribute [rw] db_instance_type
     #   The Timestream for InfluxDB instance type to run InfluxDB on.
@@ -405,6 +426,7 @@ module Aws::TimestreamInfluxDB
       :status,
       :endpoint,
       :port,
+      :network_type,
       :db_instance_type,
       :db_storage_type,
       :allocated_storage,
@@ -481,6 +503,12 @@ module Aws::TimestreamInfluxDB
     #   The port number on which InfluxDB accepts connections.
     #   @return [Integer]
     #
+    # @!attribute [rw] network_type
+    #   Specifies whether the networkType of the Timestream for InfluxDB
+    #   instance is IPV4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
+    #
     # @!attribute [rw] db_instance_type
     #   The Timestream for InfluxDB instance type that InfluxDB runs on.
     #   @return [String]
@@ -531,10 +559,11 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the AWS Secrets Manager secret
-    #   containing the initial InfluxDB authorization parameters. The secret
-    #   value is a JSON formatted key-value pair holding InfluxDB
-    #   authorization values: organization, bucket, username, and password.
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
+    #   Manager secret containing the initial InfluxDB authorization
+    #   parameters. The secret value is a JSON formatted key-value pair
+    #   holding InfluxDB authorization values: organization, bucket,
+    #   username, and password.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/DeleteDbInstanceOutput AWS API Documentation
@@ -546,6 +575,7 @@ module Aws::TimestreamInfluxDB
       :status,
       :endpoint,
       :port,
+      :network_type,
       :db_instance_type,
       :db_storage_type,
       :allocated_storage,
@@ -620,6 +650,12 @@ module Aws::TimestreamInfluxDB
     #   The port number on which InfluxDB accepts connections.
     #   @return [Integer]
     #
+    # @!attribute [rw] network_type
+    #   Specifies whether the networkType of the Timestream for InfluxDB
+    #   instance is IPV4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
+    #
     # @!attribute [rw] db_instance_type
     #   The Timestream for InfluxDB instance type that InfluxDB runs on.
     #   @return [String]
@@ -670,10 +706,11 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the AWS Secrets Manager secret
-    #   containing the initial InfluxDB authorization parameters. The secret
-    #   value is a JSON formatted key-value pair holding InfluxDB
-    #   authorization values: organization, bucket, username, and password.
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
+    #   Manager secret containing the initial InfluxDB authorization
+    #   parameters. The secret value is a JSON formatted key-value pair
+    #   holding InfluxDB authorization values: organization, bucket,
+    #   username, and password.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/GetDbInstanceOutput AWS API Documentation
@@ -685,6 +722,7 @@ module Aws::TimestreamInfluxDB
       :status,
       :endpoint,
       :port,
+      :network_type,
       :db_instance_type,
       :db_storage_type,
       :allocated_storage,
@@ -1381,8 +1419,8 @@ module Aws::TimestreamInfluxDB
     #
     # @!attribute [rw] name
     #   This customer-supplied name uniquely identifies the DB instance when
-    #   interacting with the Amazon Timestream for InfluxDB API and AWS CLI
-    #   commands.
+    #   interacting with the Amazon Timestream for InfluxDB API and Amazon
+    #   Web Services CLI commands.
     #   @return [String]
     #
     # @!attribute [rw] arn
@@ -1401,6 +1439,12 @@ module Aws::TimestreamInfluxDB
     # @!attribute [rw] port
     #   The port number on which InfluxDB accepts connections.
     #   @return [Integer]
+    #
+    # @!attribute [rw] network_type
+    #   Specifies whether the networkType of the Timestream for InfluxDB
+    #   instance is IPV4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #   @return [String]
     #
     # @!attribute [rw] db_instance_type
     #   The Timestream for InfluxDB instance type that InfluxDB runs on.
@@ -1452,10 +1496,11 @@ module Aws::TimestreamInfluxDB
     #   @return [Types::LogDeliveryConfiguration]
     #
     # @!attribute [rw] influx_auth_parameters_secret_arn
-    #   The Amazon Resource Name (ARN) of the AWS Secrets Manager secret
-    #   containing the initial InfluxDB authorization parameters. The secret
-    #   value is a JSON formatted key-value pair holding InfluxDB
-    #   authorization values: organization, bucket, username, and password.
+    #   The Amazon Resource Name (ARN) of the Amazon Web Services Secrets
+    #   Manager secret containing the initial InfluxDB authorization
+    #   parameters. The secret value is a JSON formatted key-value pair
+    #   holding InfluxDB authorization values: organization, bucket,
+    #   username, and password.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/timestream-influxdb-2023-01-27/UpdateDbInstanceOutput AWS API Documentation
@@ -1467,6 +1512,7 @@ module Aws::TimestreamInfluxDB
       :status,
       :endpoint,
       :port,
+      :network_type,
       :db_instance_type,
       :db_storage_type,
       :allocated_storage,

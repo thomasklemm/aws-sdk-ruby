@@ -435,6 +435,30 @@ module Aws
                              ) -> _CreateImportJobResponseSuccess
                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateImportJobResponseSuccess
 
+      interface _CreateMultiRegionEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateMultiRegionEndpointResponse]
+        def status: () -> ("CREATING" | "READY" | "FAILED" | "DELETING")
+        def endpoint_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SESV2/Client.html#create_multi_region_endpoint-instance_method
+      def create_multi_region_endpoint: (
+                                          endpoint_name: ::String,
+                                          details: {
+                                            routes_details: Array[
+                                              {
+                                                region: ::String
+                                              },
+                                            ]
+                                          },
+                                          ?tags: Array[
+                                            {
+                                              key: ::String,
+                                              value: ::String
+                                            },
+                                          ]
+                                        ) -> _CreateMultiRegionEndpointResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateMultiRegionEndpointResponseSuccess
+
       interface _DeleteConfigurationSetResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteConfigurationSetResponse]
       end
@@ -518,6 +542,16 @@ module Aws
                                    template_name: ::String
                                  ) -> _DeleteEmailTemplateResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteEmailTemplateResponseSuccess
+
+      interface _DeleteMultiRegionEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteMultiRegionEndpointResponse]
+        def status: () -> ("CREATING" | "READY" | "FAILED" | "DELETING")
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SESV2/Client.html#delete_multi_region_endpoint-instance_method
+      def delete_multi_region_endpoint: (
+                                          endpoint_name: ::String
+                                        ) -> _DeleteMultiRegionEndpointResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteMultiRegionEndpointResponseSuccess
 
       interface _DeleteSuppressedDestinationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeleteSuppressedDestinationResponse]
@@ -802,6 +836,21 @@ module Aws
                                 ) -> _GetMessageInsightsResponseSuccess
                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMessageInsightsResponseSuccess
 
+      interface _GetMultiRegionEndpointResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetMultiRegionEndpointResponse]
+        def endpoint_name: () -> ::String
+        def endpoint_id: () -> ::String
+        def routes: () -> ::Array[Types::Route]
+        def status: () -> ("CREATING" | "READY" | "FAILED" | "DELETING")
+        def created_timestamp: () -> ::Time
+        def last_updated_timestamp: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SESV2/Client.html#get_multi_region_endpoint-instance_method
+      def get_multi_region_endpoint: (
+                                       endpoint_name: ::String
+                                     ) -> _GetMultiRegionEndpointResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetMultiRegionEndpointResponseSuccess
+
       interface _GetSuppressedDestinationResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetSuppressedDestinationResponse]
         def suppressed_destination: () -> Types::SuppressedDestination
@@ -957,6 +1006,18 @@ module Aws
                               ?page_size: ::Integer
                             ) -> _ListImportJobsResponseSuccess
                           | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListImportJobsResponseSuccess
+
+      interface _ListMultiRegionEndpointsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListMultiRegionEndpointsResponse]
+        def multi_region_endpoints: () -> ::Array[Types::MultiRegionEndpoint]
+        def next_token: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/SESV2/Client.html#list_multi_region_endpoints-instance_method
+      def list_multi_region_endpoints: (
+                                         ?next_token: ::String,
+                                         ?page_size: ::Integer
+                                       ) -> _ListMultiRegionEndpointsResponseSuccess
+                                     | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMultiRegionEndpointsResponseSuccess
 
       interface _ListRecommendationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListRecommendationsResponse]
@@ -1303,7 +1364,8 @@ module Aws
                                  ]?
                                },
                              ],
-                             ?configuration_set_name: ::String
+                             ?configuration_set_name: ::String,
+                             ?endpoint_id: ::String
                            ) -> _SendBulkEmailResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SendBulkEmailResponseSuccess
 
@@ -1385,6 +1447,7 @@ module Aws
                           },
                         ],
                         ?configuration_set_name: ::String,
+                        ?endpoint_id: ::String,
                         ?list_management_options: {
                           contact_list_name: ::String,
                           topic_name: ::String?

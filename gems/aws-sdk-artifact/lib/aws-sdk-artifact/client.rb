@@ -505,8 +505,8 @@ module Aws::Artifact
     #   # report's latest version
     #
     #   resp = client.get_report({
-    #     report_id: "report-1hVFddebtfDNJAUf", 
-    #     term_token: "term-token-gPFEGk7CF4wS901w7ppYclt7", 
+    #     report_id: "report-abcdef0123456789", 
+    #     term_token: "term-token-abcdefghijklm01234567890", 
     #   })
     #
     #   resp.to_h outputs the following:
@@ -562,18 +562,18 @@ module Aws::Artifact
     #     report_details: {
     #       version: 1, 
     #       name: "Name of report", 
-    #       arn: "arn:aws:artifact:us-east-1::report/report-bqhUJF3FrQZsMJpb:1", 
+    #       arn: "arn:aws:artifact:us-east-1::report/report-abcdef0123456789:1", 
     #       category: "Artifact Category", 
     #       company_name: "AWS", 
     #       created_at: Time.parse("2022-05-27T23:17:00.343940Z"), 
     #       description: "Description of report", 
-    #       id: "report-bqhUJF3FrQZsMJpb", 
+    #       id: "report-abcdef0123456789", 
     #       period_end: Time.parse("2022-04-01T20:32:04Z"), 
     #       period_start: Time.parse("2022-04-01T20:32:04Z"), 
     #       product_name: "Product of report", 
     #       series: "Artifact Series", 
     #       state: "PUBLISHED", 
-    #       term_arn: "arn:aws:artifact:us-east-1::term/term-gLJGG12NyPtYcmtu:1", 
+    #       term_arn: "arn:aws:artifact:us-east-1::term/term-abcdef0123456789:1", 
     #     }, 
     #   }
     #
@@ -636,13 +636,13 @@ module Aws::Artifact
     #   # If callers do not provide a version, it will default to the report's latest version.
     #
     #   resp = client.get_term_for_report({
-    #     report_id: "report-bqhUJF3FrQZsMJpb", 
+    #     report_id: "report-abcdef0123456789", 
     #   })
     #
     #   resp.to_h outputs the following:
     #   {
     #     document_presigned_url: "<Presigned S3 URL>", 
-    #     term_token: "term-token-gPFEGk7CF4wS901w7ppYclt7", 
+    #     term_token: "term-token-abcdefghijklm01234567890", 
     #   }
     #
     # @example Request syntax with placeholder values
@@ -663,6 +663,90 @@ module Aws::Artifact
     # @param [Hash] params ({})
     def get_term_for_report(params = {}, options = {})
       req = build_request(:get_term_for_report, params)
+      req.send_request(options)
+    end
+
+    # List active customer-agreements applicable to calling identity.
+    #
+    # @option params [Integer] :max_results
+    #   Maximum number of resources to return in the paginated response.
+    #
+    # @option params [String] :next_token
+    #   Pagination token to request the next page of resources.
+    #
+    # @return [Types::ListCustomerAgreementsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListCustomerAgreementsResponse#customer_agreements #customer_agreements} => Array&lt;Types::CustomerAgreementSummary&gt;
+    #   * {Types::ListCustomerAgreementsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    #
+    # @example Example: Invoke ListCustomerAgreements operation
+    #
+    #   # The ListCustomerAgreements operation returns a collection of customer-agreement resources in the ACTIVE state for the
+    #   # calling credential.
+    #
+    #   resp = client.list_customer_agreements({
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     customer_agreements: [
+    #       {
+    #         name: "Name of agreement", 
+    #         type: "DEFAULT", 
+    #         acceptance_terms: [
+    #           "terms acknowledged when agreement was accepted", 
+    #         ], 
+    #         agreement_arn: "arn:aws:artifact:::agreement/agreement-abcdef0123456789", 
+    #         arn: "arn:aws:artifact::111111111111:customer-agreement/customer-agreement-abcdef0123456789", 
+    #         aws_account_id: "111111111111", 
+    #         description: "Description of agreement", 
+    #         effective_start: Time.parse("2022-04-01T20:32:04Z"), 
+    #         id: "customer-agreement-abcdef0123456789", 
+    #         state: "ACTIVE", 
+    #         terminate_terms: [
+    #           "terms that must be acknowledged to terminate this agreement", 
+    #         ], 
+    #       }, 
+    #     ], 
+    #     next_token: "gPFEGk7CF4wS901w7ppYclt7gPFEGk7CF4wS901w7ppYclt7gPFEGk7CF4wS901w7ppYclt7", 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_customer_agreements({
+    #     max_results: 1,
+    #     next_token: "NextTokenAttribute",
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.customer_agreements #=> Array
+    #   resp.customer_agreements[0].name #=> String
+    #   resp.customer_agreements[0].arn #=> String
+    #   resp.customer_agreements[0].id #=> String
+    #   resp.customer_agreements[0].agreement_arn #=> String
+    #   resp.customer_agreements[0].aws_account_id #=> String
+    #   resp.customer_agreements[0].organization_arn #=> String
+    #   resp.customer_agreements[0].effective_start #=> Time
+    #   resp.customer_agreements[0].effective_end #=> Time
+    #   resp.customer_agreements[0].state #=> String, one of "ACTIVE", "CUSTOMER_TERMINATED", "AWS_TERMINATED"
+    #   resp.customer_agreements[0].description #=> String
+    #   resp.customer_agreements[0].acceptance_terms #=> Array
+    #   resp.customer_agreements[0].acceptance_terms[0] #=> String
+    #   resp.customer_agreements[0].terminate_terms #=> Array
+    #   resp.customer_agreements[0].terminate_terms[0] #=> String
+    #   resp.customer_agreements[0].type #=> String, one of "CUSTOM", "DEFAULT", "MODIFIED"
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/artifact-2018-05-10/ListCustomerAgreements AWS API Documentation
+    #
+    # @overload list_customer_agreements(params = {})
+    # @param [Hash] params ({})
+    def list_customer_agreements(params = {}, options = {})
+      req = build_request(:list_customer_agreements, params)
       req.send_request(options)
     end
 
@@ -696,11 +780,11 @@ module Aws::Artifact
     #       {
     #         version: 1, 
     #         name: "Name of report", 
-    #         arn: "arn:aws:artifact:us-east-1::report/report-bqhUJF3FrQZsMJpb", 
+    #         arn: "arn:aws:artifact:us-east-1::report/report-abcdef0123456789", 
     #         category: "Artifact Category", 
     #         company_name: "AWS", 
     #         description: "Description of report", 
-    #         id: "report-bqhUJF3FrQZsMJpb", 
+    #         id: "report-abcdef0123456789", 
     #         period_end: Time.parse("2022-04-01T20:32:04Z"), 
     #         period_start: Time.parse("2022-04-01T20:32:04Z"), 
     #         product_name: "Product of report", 
@@ -808,7 +892,7 @@ module Aws::Artifact
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-artifact'
-      context[:gem_version] = '1.14.0'
+      context[:gem_version] = '1.15.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

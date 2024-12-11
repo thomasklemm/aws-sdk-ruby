@@ -24,6 +24,8 @@ module Aws::MigrationHub
     AssociateCreatedArtifactResult = Shapes::StructureShape.new(name: 'AssociateCreatedArtifactResult')
     AssociateDiscoveredResourceRequest = Shapes::StructureShape.new(name: 'AssociateDiscoveredResourceRequest')
     AssociateDiscoveredResourceResult = Shapes::StructureShape.new(name: 'AssociateDiscoveredResourceResult')
+    AssociateSourceResourceRequest = Shapes::StructureShape.new(name: 'AssociateSourceResourceRequest')
+    AssociateSourceResourceResult = Shapes::StructureShape.new(name: 'AssociateSourceResourceResult')
     ConfigurationId = Shapes::StringShape.new(name: 'ConfigurationId')
     CreateProgressUpdateStreamRequest = Shapes::StructureShape.new(name: 'CreateProgressUpdateStreamRequest')
     CreateProgressUpdateStreamResult = Shapes::StructureShape.new(name: 'CreateProgressUpdateStreamResult')
@@ -41,6 +43,8 @@ module Aws::MigrationHub
     DisassociateCreatedArtifactResult = Shapes::StructureShape.new(name: 'DisassociateCreatedArtifactResult')
     DisassociateDiscoveredResourceRequest = Shapes::StructureShape.new(name: 'DisassociateDiscoveredResourceRequest')
     DisassociateDiscoveredResourceResult = Shapes::StructureShape.new(name: 'DisassociateDiscoveredResourceResult')
+    DisassociateSourceResourceRequest = Shapes::StructureShape.new(name: 'DisassociateSourceResourceRequest')
+    DisassociateSourceResourceResult = Shapes::StructureShape.new(name: 'DisassociateSourceResourceResult')
     DiscoveredResource = Shapes::StructureShape.new(name: 'DiscoveredResource')
     DiscoveredResourceDescription = Shapes::StringShape.new(name: 'DiscoveredResourceDescription')
     DiscoveredResourceList = Shapes::ListShape.new(name: 'DiscoveredResourceList')
@@ -59,17 +63,24 @@ module Aws::MigrationHub
     ListCreatedArtifactsResult = Shapes::StructureShape.new(name: 'ListCreatedArtifactsResult')
     ListDiscoveredResourcesRequest = Shapes::StructureShape.new(name: 'ListDiscoveredResourcesRequest')
     ListDiscoveredResourcesResult = Shapes::StructureShape.new(name: 'ListDiscoveredResourcesResult')
+    ListMigrationTaskUpdatesRequest = Shapes::StructureShape.new(name: 'ListMigrationTaskUpdatesRequest')
+    ListMigrationTaskUpdatesResult = Shapes::StructureShape.new(name: 'ListMigrationTaskUpdatesResult')
     ListMigrationTasksRequest = Shapes::StructureShape.new(name: 'ListMigrationTasksRequest')
     ListMigrationTasksResult = Shapes::StructureShape.new(name: 'ListMigrationTasksResult')
     ListProgressUpdateStreamsRequest = Shapes::StructureShape.new(name: 'ListProgressUpdateStreamsRequest')
     ListProgressUpdateStreamsResult = Shapes::StructureShape.new(name: 'ListProgressUpdateStreamsResult')
+    ListSourceResourcesRequest = Shapes::StructureShape.new(name: 'ListSourceResourcesRequest')
+    ListSourceResourcesResult = Shapes::StructureShape.new(name: 'ListSourceResourcesResult')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
     MaxResultsCreatedArtifacts = Shapes::IntegerShape.new(name: 'MaxResultsCreatedArtifacts')
     MaxResultsResources = Shapes::IntegerShape.new(name: 'MaxResultsResources')
+    MaxResultsSourceResources = Shapes::IntegerShape.new(name: 'MaxResultsSourceResources')
     MigrationTask = Shapes::StructureShape.new(name: 'MigrationTask')
     MigrationTaskName = Shapes::StringShape.new(name: 'MigrationTaskName')
     MigrationTaskSummary = Shapes::StructureShape.new(name: 'MigrationTaskSummary')
     MigrationTaskSummaryList = Shapes::ListShape.new(name: 'MigrationTaskSummaryList')
+    MigrationTaskUpdate = Shapes::StructureShape.new(name: 'MigrationTaskUpdate')
+    MigrationTaskUpdateList = Shapes::ListShape.new(name: 'MigrationTaskUpdateList')
     NextUpdateSeconds = Shapes::IntegerShape.new(name: 'NextUpdateSeconds')
     NotifyApplicationStateRequest = Shapes::StructureShape.new(name: 'NotifyApplicationStateRequest')
     NotifyApplicationStateResult = Shapes::StructureShape.new(name: 'NotifyApplicationStateResult')
@@ -90,6 +101,10 @@ module Aws::MigrationHub
     ResourceNotFoundException = Shapes::StructureShape.new(name: 'ResourceNotFoundException')
     RetryAfterSeconds = Shapes::IntegerShape.new(name: 'RetryAfterSeconds')
     ServiceUnavailableException = Shapes::StructureShape.new(name: 'ServiceUnavailableException')
+    SourceResource = Shapes::StructureShape.new(name: 'SourceResource')
+    SourceResourceDescription = Shapes::StringShape.new(name: 'SourceResourceDescription')
+    SourceResourceList = Shapes::ListShape.new(name: 'SourceResourceList')
+    SourceResourceName = Shapes::StringShape.new(name: 'SourceResourceName')
     Status = Shapes::StringShape.new(name: 'Status')
     StatusDetail = Shapes::StringShape.new(name: 'StatusDetail')
     Task = Shapes::StructureShape.new(name: 'Task')
@@ -97,6 +112,7 @@ module Aws::MigrationHub
     Token = Shapes::StringShape.new(name: 'Token')
     UnauthorizedOperation = Shapes::StructureShape.new(name: 'UnauthorizedOperation')
     UpdateDateTime = Shapes::TimestampShape.new(name: 'UpdateDateTime')
+    UpdateType = Shapes::StringShape.new(name: 'UpdateType')
 
     AccessDeniedException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     AccessDeniedException.struct_class = Types::AccessDeniedException
@@ -125,6 +141,14 @@ module Aws::MigrationHub
     AssociateDiscoveredResourceRequest.struct_class = Types::AssociateDiscoveredResourceRequest
 
     AssociateDiscoveredResourceResult.struct_class = Types::AssociateDiscoveredResourceResult
+
+    AssociateSourceResourceRequest.add_member(:progress_update_stream, Shapes::ShapeRef.new(shape: ProgressUpdateStream, required: true, location_name: "ProgressUpdateStream"))
+    AssociateSourceResourceRequest.add_member(:migration_task_name, Shapes::ShapeRef.new(shape: MigrationTaskName, required: true, location_name: "MigrationTaskName"))
+    AssociateSourceResourceRequest.add_member(:source_resource, Shapes::ShapeRef.new(shape: SourceResource, required: true, location_name: "SourceResource"))
+    AssociateSourceResourceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: DryRun, location_name: "DryRun"))
+    AssociateSourceResourceRequest.struct_class = Types::AssociateSourceResourceRequest
+
+    AssociateSourceResourceResult.struct_class = Types::AssociateSourceResourceResult
 
     CreateProgressUpdateStreamRequest.add_member(:progress_update_stream_name, Shapes::ShapeRef.new(shape: ProgressUpdateStream, required: true, location_name: "ProgressUpdateStreamName"))
     CreateProgressUpdateStreamRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: DryRun, location_name: "DryRun"))
@@ -173,6 +197,14 @@ module Aws::MigrationHub
     DisassociateDiscoveredResourceRequest.struct_class = Types::DisassociateDiscoveredResourceRequest
 
     DisassociateDiscoveredResourceResult.struct_class = Types::DisassociateDiscoveredResourceResult
+
+    DisassociateSourceResourceRequest.add_member(:progress_update_stream, Shapes::ShapeRef.new(shape: ProgressUpdateStream, required: true, location_name: "ProgressUpdateStream"))
+    DisassociateSourceResourceRequest.add_member(:migration_task_name, Shapes::ShapeRef.new(shape: MigrationTaskName, required: true, location_name: "MigrationTaskName"))
+    DisassociateSourceResourceRequest.add_member(:source_resource_name, Shapes::ShapeRef.new(shape: SourceResourceName, required: true, location_name: "SourceResourceName"))
+    DisassociateSourceResourceRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: DryRun, location_name: "DryRun"))
+    DisassociateSourceResourceRequest.struct_class = Types::DisassociateSourceResourceRequest
+
+    DisassociateSourceResourceResult.struct_class = Types::DisassociateSourceResourceResult
 
     DiscoveredResource.add_member(:configuration_id, Shapes::ShapeRef.new(shape: ConfigurationId, required: true, location_name: "ConfigurationId"))
     DiscoveredResource.add_member(:description, Shapes::ShapeRef.new(shape: DiscoveredResourceDescription, location_name: "Description"))
@@ -230,6 +262,16 @@ module Aws::MigrationHub
     ListDiscoveredResourcesResult.add_member(:discovered_resource_list, Shapes::ShapeRef.new(shape: DiscoveredResourceList, location_name: "DiscoveredResourceList"))
     ListDiscoveredResourcesResult.struct_class = Types::ListDiscoveredResourcesResult
 
+    ListMigrationTaskUpdatesRequest.add_member(:progress_update_stream, Shapes::ShapeRef.new(shape: ProgressUpdateStream, required: true, location_name: "ProgressUpdateStream"))
+    ListMigrationTaskUpdatesRequest.add_member(:migration_task_name, Shapes::ShapeRef.new(shape: MigrationTaskName, required: true, location_name: "MigrationTaskName"))
+    ListMigrationTaskUpdatesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
+    ListMigrationTaskUpdatesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
+    ListMigrationTaskUpdatesRequest.struct_class = Types::ListMigrationTaskUpdatesRequest
+
+    ListMigrationTaskUpdatesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
+    ListMigrationTaskUpdatesResult.add_member(:migration_task_update_list, Shapes::ShapeRef.new(shape: MigrationTaskUpdateList, location_name: "MigrationTaskUpdateList"))
+    ListMigrationTaskUpdatesResult.struct_class = Types::ListMigrationTaskUpdatesResult
+
     ListMigrationTasksRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
     ListMigrationTasksRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResults, location_name: "MaxResults"))
     ListMigrationTasksRequest.add_member(:resource_name, Shapes::ShapeRef.new(shape: ResourceName, location_name: "ResourceName"))
@@ -247,6 +289,16 @@ module Aws::MigrationHub
     ListProgressUpdateStreamsResult.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
     ListProgressUpdateStreamsResult.struct_class = Types::ListProgressUpdateStreamsResult
 
+    ListSourceResourcesRequest.add_member(:progress_update_stream, Shapes::ShapeRef.new(shape: ProgressUpdateStream, required: true, location_name: "ProgressUpdateStream"))
+    ListSourceResourcesRequest.add_member(:migration_task_name, Shapes::ShapeRef.new(shape: MigrationTaskName, required: true, location_name: "MigrationTaskName"))
+    ListSourceResourcesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
+    ListSourceResourcesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsSourceResources, location_name: "MaxResults"))
+    ListSourceResourcesRequest.struct_class = Types::ListSourceResourcesRequest
+
+    ListSourceResourcesResult.add_member(:next_token, Shapes::ShapeRef.new(shape: Token, location_name: "NextToken"))
+    ListSourceResourcesResult.add_member(:source_resource_list, Shapes::ShapeRef.new(shape: SourceResourceList, location_name: "SourceResourceList"))
+    ListSourceResourcesResult.struct_class = Types::ListSourceResourcesResult
+
     MigrationTask.add_member(:progress_update_stream, Shapes::ShapeRef.new(shape: ProgressUpdateStream, location_name: "ProgressUpdateStream"))
     MigrationTask.add_member(:migration_task_name, Shapes::ShapeRef.new(shape: MigrationTaskName, location_name: "MigrationTaskName"))
     MigrationTask.add_member(:task, Shapes::ShapeRef.new(shape: Task, location_name: "Task"))
@@ -263,6 +315,13 @@ module Aws::MigrationHub
     MigrationTaskSummary.struct_class = Types::MigrationTaskSummary
 
     MigrationTaskSummaryList.member = Shapes::ShapeRef.new(shape: MigrationTaskSummary)
+
+    MigrationTaskUpdate.add_member(:update_date_time, Shapes::ShapeRef.new(shape: UpdateDateTime, location_name: "UpdateDateTime"))
+    MigrationTaskUpdate.add_member(:update_type, Shapes::ShapeRef.new(shape: UpdateType, location_name: "UpdateType"))
+    MigrationTaskUpdate.add_member(:migration_task_state, Shapes::ShapeRef.new(shape: Task, location_name: "MigrationTaskState"))
+    MigrationTaskUpdate.struct_class = Types::MigrationTaskUpdate
+
+    MigrationTaskUpdateList.member = Shapes::ShapeRef.new(shape: MigrationTaskUpdate)
 
     NotifyApplicationStateRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location_name: "ApplicationId"))
     NotifyApplicationStateRequest.add_member(:status, Shapes::ShapeRef.new(shape: ApplicationStatus, required: true, location_name: "Status"))
@@ -309,6 +368,13 @@ module Aws::MigrationHub
 
     ServiceUnavailableException.add_member(:message, Shapes::ShapeRef.new(shape: ErrorMessage, location_name: "Message"))
     ServiceUnavailableException.struct_class = Types::ServiceUnavailableException
+
+    SourceResource.add_member(:name, Shapes::ShapeRef.new(shape: SourceResourceName, required: true, location_name: "Name"))
+    SourceResource.add_member(:description, Shapes::ShapeRef.new(shape: SourceResourceDescription, location_name: "Description"))
+    SourceResource.add_member(:status_detail, Shapes::ShapeRef.new(shape: StatusDetail, location_name: "StatusDetail"))
+    SourceResource.struct_class = Types::SourceResource
+
+    SourceResourceList.member = Shapes::ShapeRef.new(shape: SourceResource)
 
     Task.add_member(:status, Shapes::ShapeRef.new(shape: Status, required: true, location_name: "Status"))
     Task.add_member(:status_detail, Shapes::ShapeRef.new(shape: StatusDetail, location_name: "StatusDetail"))
@@ -375,6 +441,22 @@ module Aws::MigrationHub
         o.errors << Shapes::ShapeRef.new(shape: PolicyErrorException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: HomeRegionNotSetException)
+      end)
+
+      api.add_operation(:associate_source_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "AssociateSourceResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: AssociateSourceResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: AssociateSourceResourceResult)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: DryRunOperation)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedOperation)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
       api.add_operation(:create_progress_update_stream, Seahorse::Model::Operation.new.tap do |o|
@@ -475,6 +557,22 @@ module Aws::MigrationHub
         o.errors << Shapes::ShapeRef.new(shape: HomeRegionNotSetException)
       end)
 
+      api.add_operation(:disassociate_source_resource, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DisassociateSourceResource"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: DisassociateSourceResourceRequest)
+        o.output = Shapes::ShapeRef.new(shape: DisassociateSourceResourceResult)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: DryRunOperation)
+        o.errors << Shapes::ShapeRef.new(shape: UnauthorizedOperation)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+      end)
+
       api.add_operation(:import_migration_task, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ImportMigrationTask"
         o.http_method = "POST"
@@ -554,6 +652,26 @@ module Aws::MigrationHub
         )
       end)
 
+      api.add_operation(:list_migration_task_updates, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListMigrationTaskUpdates"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListMigrationTaskUpdatesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListMigrationTaskUpdatesResult)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:list_migration_tasks, Seahorse::Model::Operation.new.tap do |o|
         o.name = "ListMigrationTasks"
         o.http_method = "POST"
@@ -588,6 +706,26 @@ module Aws::MigrationHub
         o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
         o.errors << Shapes::ShapeRef.new(shape: HomeRegionNotSetException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_source_resources, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListSourceResources"
+        o.http_method = "POST"
+        o.http_request_uri = "/"
+        o.input = Shapes::ShapeRef.new(shape: ListSourceResourcesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListSourceResourcesResult)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerError)
+        o.errors << Shapes::ShapeRef.new(shape: ServiceUnavailableException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidInputException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
           tokens: {

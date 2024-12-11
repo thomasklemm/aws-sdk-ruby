@@ -273,6 +273,7 @@ module Aws::EMRServerless
     GetDashboardForJobRunRequest.add_member(:application_id, Shapes::ShapeRef.new(shape: ApplicationId, required: true, location: "uri", location_name: "applicationId"))
     GetDashboardForJobRunRequest.add_member(:job_run_id, Shapes::ShapeRef.new(shape: JobRunId, required: true, location: "uri", location_name: "jobRunId"))
     GetDashboardForJobRunRequest.add_member(:attempt, Shapes::ShapeRef.new(shape: AttemptNumber, location: "querystring", location_name: "attempt"))
+    GetDashboardForJobRunRequest.add_member(:access_system_profile_logs, Shapes::ShapeRef.new(shape: Boolean, location: "querystring", location_name: "accessSystemProfileLogs"))
     GetDashboardForJobRunRequest.struct_class = Types::GetDashboardForJobRunRequest
 
     GetDashboardForJobRunResponse.add_member(:url, Shapes::ShapeRef.new(shape: Url, location_name: "url"))

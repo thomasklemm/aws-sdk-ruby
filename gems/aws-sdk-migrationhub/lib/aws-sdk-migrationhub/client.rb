@@ -547,6 +547,55 @@ module Aws::MigrationHub
       req.send_request(options)
     end
 
+    # Associates a source resource with a migration task. For example, the
+    # source resource can be a source server, an application, or a migration
+    # wave.
+    #
+    # @option params [required, String] :progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream must
+    #   uniquely identify the migration tool as it is used for all updates
+    #   made by the tool; however, it does not need to be unique for each AWS
+    #   account because it is scoped to the AWS account.
+    #
+    # @option params [required, String] :migration_task_name
+    #   A unique identifier that references the migration task. *Do not
+    #   include sensitive data in this field.*
+    #
+    # @option params [required, Types::SourceResource] :source_resource
+    #   The source resource that you want to associate.
+    #
+    # @option params [Boolean] :dry_run
+    #   This is an optional parameter that you can use to test whether the
+    #   call will succeed. Set this parameter to `true` to verify that you
+    #   have the permissions that are required to make the call, and that you
+    #   have specified the other parameters in the call correctly.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.associate_source_resource({
+    #     progress_update_stream: "ProgressUpdateStream", # required
+    #     migration_task_name: "MigrationTaskName", # required
+    #     source_resource: { # required
+    #       name: "SourceResourceName", # required
+    #       description: "SourceResourceDescription",
+    #       status_detail: "StatusDetail",
+    #     },
+    #     dry_run: false,
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/AssociateSourceResource AWS API Documentation
+    #
+    # @overload associate_source_resource(params = {})
+    # @param [Hash] params ({})
+    def associate_source_resource(params = {}, options = {})
+      req = build_request(:associate_source_resource, params)
+      req.send_request(options)
+    end
+
     # Creates a progress update stream which is an AWS resource used for
     # access control as well as a namespace for migration task names that is
     # implicitly linked to your AWS account. It must uniquely identify the
@@ -794,6 +843,50 @@ module Aws::MigrationHub
       req.send_request(options)
     end
 
+    # Removes the association between a source resource and a migration
+    # task.
+    #
+    # @option params [required, String] :progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream must
+    #   uniquely identify the migration tool as it is used for all updates
+    #   made by the tool; however, it does not need to be unique for each AWS
+    #   account because it is scoped to the AWS account.
+    #
+    # @option params [required, String] :migration_task_name
+    #   A unique identifier that references the migration task. *Do not
+    #   include sensitive data in this field.*
+    #
+    # @option params [required, String] :source_resource_name
+    #   The name that was specified for the source resource.
+    #
+    # @option params [Boolean] :dry_run
+    #   This is an optional parameter that you can use to test whether the
+    #   call will succeed. Set this parameter to `true` to verify that you
+    #   have the permissions that are required to make the call, and that you
+    #   have specified the other parameters in the call correctly.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.disassociate_source_resource({
+    #     progress_update_stream: "ProgressUpdateStream", # required
+    #     migration_task_name: "MigrationTaskName", # required
+    #     source_resource_name: "SourceResourceName", # required
+    #     dry_run: false,
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/DisassociateSourceResource AWS API Documentation
+    #
+    # @overload disassociate_source_resource(params = {})
+    # @param [Hash] params ({})
+    def disassociate_source_resource(params = {}, options = {})
+      req = build_request(:disassociate_source_resource, params)
+      req.send_request(options)
+    end
+
     # Registers a new migration task which represents a server, database,
     # etc., being migrated to AWS by a migration tool.
     #
@@ -986,6 +1079,71 @@ module Aws::MigrationHub
       req.send_request(options)
     end
 
+    # This is a paginated API that returns all the migration-task states for
+    # the specified `MigrationTaskName` and `ProgressUpdateStream`.
+    #
+    # @option params [required, String] :progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream must
+    #   uniquely identify the migration tool as it is used for all updates
+    #   made by the tool; however, it does not need to be unique for each AWS
+    #   account because it is scoped to the AWS account.
+    #
+    # @option params [required, String] :migration_task_name
+    #   A unique identifier that references the migration task. *Do not
+    #   include sensitive data in this field.*
+    #
+    # @option params [String] :next_token
+    #   If `NextToken` was returned by a previous call, there are more results
+    #   available. The value of `NextToken` is a unique pagination token for
+    #   each page. To retrieve the next page of results, specify the
+    #   `NextToken` value that the previous call returned. Keep all other
+    #   arguments unchanged. Each pagination token expires after 24 hours.
+    #   Using an expired pagination token will return an HTTP 400 InvalidToken
+    #   error.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the value that you specify here for `MaxResults`,
+    #   the response will include a token that you can use to retrieve the
+    #   next set of results.
+    #
+    # @return [Types::ListMigrationTaskUpdatesResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListMigrationTaskUpdatesResult#next_token #next_token} => String
+    #   * {Types::ListMigrationTaskUpdatesResult#migration_task_update_list #migration_task_update_list} => Array&lt;Types::MigrationTaskUpdate&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_migration_task_updates({
+    #     progress_update_stream: "ProgressUpdateStream", # required
+    #     migration_task_name: "MigrationTaskName", # required
+    #     next_token: "Token",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.migration_task_update_list #=> Array
+    #   resp.migration_task_update_list[0].update_date_time #=> Time
+    #   resp.migration_task_update_list[0].update_type #=> String, one of "MIGRATION_TASK_STATE_UPDATED"
+    #   resp.migration_task_update_list[0].migration_task_state.status #=> String, one of "NOT_STARTED", "IN_PROGRESS", "FAILED", "COMPLETED"
+    #   resp.migration_task_update_list[0].migration_task_state.status_detail #=> String
+    #   resp.migration_task_update_list[0].migration_task_state.progress_percent #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/ListMigrationTaskUpdates AWS API Documentation
+    #
+    # @overload list_migration_task_updates(params = {})
+    # @param [Hash] params ({})
+    def list_migration_task_updates(params = {}, options = {})
+      req = build_request(:list_migration_task_updates, params)
+      req.send_request(options)
+    end
+
     # Lists all, or filtered by resource name, migration tasks associated
     # with the user account making this call. This API has the following
     # traits:
@@ -1080,6 +1238,69 @@ module Aws::MigrationHub
     # @param [Hash] params ({})
     def list_progress_update_streams(params = {}, options = {})
       req = build_request(:list_progress_update_streams, params)
+      req.send_request(options)
+    end
+
+    # Lists all the source resource that are associated with the specified
+    # `MigrationTaskName` and `ProgressUpdateStream`.
+    #
+    # @option params [required, String] :progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream must
+    #   uniquely identify the migration tool as it is used for all updates
+    #   made by the tool; however, it does not need to be unique for each AWS
+    #   account because it is scoped to the AWS account.
+    #
+    # @option params [required, String] :migration_task_name
+    #   A unique identifier that references the migration task. *Do not store
+    #   confidential data in this field.*
+    #
+    # @option params [String] :next_token
+    #   If `NextToken` was returned by a previous call, there are more results
+    #   available. The value of `NextToken` is a unique pagination token for
+    #   each page. To retrieve the next page of results, specify the
+    #   `NextToken` value that the previous call returned. Keep all other
+    #   arguments unchanged. Each pagination token expires after 24 hours.
+    #   Using an expired pagination token will return an HTTP 400 InvalidToken
+    #   error.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the value that you specify here for `MaxResults`,
+    #   the response will include a token that you can use to retrieve the
+    #   next set of results.
+    #
+    # @return [Types::ListSourceResourcesResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListSourceResourcesResult#next_token #next_token} => String
+    #   * {Types::ListSourceResourcesResult#source_resource_list #source_resource_list} => Array&lt;Types::SourceResource&gt;
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_source_resources({
+    #     progress_update_stream: "ProgressUpdateStream", # required
+    #     migration_task_name: "MigrationTaskName", # required
+    #     next_token: "Token",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.source_resource_list #=> Array
+    #   resp.source_resource_list[0].name #=> String
+    #   resp.source_resource_list[0].description #=> String
+    #   resp.source_resource_list[0].status_detail #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/ListSourceResources AWS API Documentation
+    #
+    # @overload list_source_resources(params = {})
+    # @param [Hash] params ({})
+    def list_source_resources(params = {}, options = {})
+      req = build_request(:list_source_resources, params)
       req.send_request(options)
     end
 
@@ -1292,7 +1513,7 @@ module Aws::MigrationHub
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-migrationhub'
-      context[:gem_version] = '1.67.0'
+      context[:gem_version] = '1.68.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.68.0 (2024-12-11)
+------------------
+
+* Feature - API and documentation updates for AWS MigrationHub related to adding support for listing migration task updates and associating, disassociating and listing source resources
+
 1.67.0 (2024-11-06)
 ------------------
 

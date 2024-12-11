@@ -25,6 +25,23 @@ module Aws::Artifact
       SENSITIVE: []
     end
 
+    class CustomerAgreementSummary
+      attr_accessor name: ::String
+      attr_accessor arn: ::String
+      attr_accessor id: ::String
+      attr_accessor agreement_arn: ::String
+      attr_accessor aws_account_id: ::String
+      attr_accessor organization_arn: ::String
+      attr_accessor effective_start: ::Time
+      attr_accessor effective_end: ::Time
+      attr_accessor state: ("ACTIVE" | "CUSTOMER_TERMINATED" | "AWS_TERMINATED")
+      attr_accessor description: ::String
+      attr_accessor acceptance_terms: ::Array[::String]
+      attr_accessor terminate_terms: ::Array[::String]
+      attr_accessor type: ("CUSTOM" | "DEFAULT" | "MODIFIED")
+      SENSITIVE: []
+    end
+
     class GetAccountSettingsRequest < Aws::EmptyStructure
     end
 
@@ -71,6 +88,18 @@ module Aws::Artifact
     class InternalServerException
       attr_accessor message: ::String
       attr_accessor retry_after_seconds: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListCustomerAgreementsRequest
+      attr_accessor max_results: ::Integer
+      attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListCustomerAgreementsResponse
+      attr_accessor customer_agreements: ::Array[Types::CustomerAgreementSummary]
+      attr_accessor next_token: ::String
       SENSITIVE: []
     end
 

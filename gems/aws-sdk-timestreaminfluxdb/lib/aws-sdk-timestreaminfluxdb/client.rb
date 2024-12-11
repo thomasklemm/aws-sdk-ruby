@@ -475,7 +475,7 @@ module Aws::TimestreamInfluxDB
     #   password will allow you to access the InfluxDB UI to perform various
     #   administrative tasks and also use the InfluxDB CLI to create an
     #   operator token. These attributes will be stored in a Secret created in
-    #   AWS SecretManager in your account.
+    #   Amazon Web Services SecretManager in your account.
     #
     # @option params [String] :organization
     #   The name of the initial organization for the initial admin user in
@@ -545,6 +545,11 @@ module Aws::TimestreamInfluxDB
     #   Constraints: The value can't be 2375-2376, 7788-7799, 8090, or
     #   51678-51680
     #
+    # @option params [String] :network_type
+    #   Specifies whether the networkType of the Timestream for InfluxDB
+    #   instance is IPV4, which can communicate over IPv4 protocol only, or
+    #   DUAL, which can communicate over both IPv4 and IPv6 protocols.
+    #
     # @return [Types::CreateDbInstanceOutput] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateDbInstanceOutput#id #id} => String
@@ -553,6 +558,7 @@ module Aws::TimestreamInfluxDB
     #   * {Types::CreateDbInstanceOutput#status #status} => String
     #   * {Types::CreateDbInstanceOutput#endpoint #endpoint} => String
     #   * {Types::CreateDbInstanceOutput#port #port} => Integer
+    #   * {Types::CreateDbInstanceOutput#network_type #network_type} => String
     #   * {Types::CreateDbInstanceOutput#db_instance_type #db_instance_type} => String
     #   * {Types::CreateDbInstanceOutput#db_storage_type #db_storage_type} => String
     #   * {Types::CreateDbInstanceOutput#allocated_storage #allocated_storage} => Integer
@@ -592,6 +598,7 @@ module Aws::TimestreamInfluxDB
     #       "TagKey" => "TagValue",
     #     },
     #     port: 1,
+    #     network_type: "IPV4", # accepts IPV4, DUAL
     #   })
     #
     # @example Response structure
@@ -602,6 +609,7 @@ module Aws::TimestreamInfluxDB
     #   resp.status #=> String, one of "CREATING", "AVAILABLE", "DELETING", "MODIFYING", "UPDATING", "DELETED", "FAILED", "UPDATING_DEPLOYMENT_TYPE", "UPDATING_INSTANCE_TYPE"
     #   resp.endpoint #=> String
     #   resp.port #=> Integer
+    #   resp.network_type #=> String, one of "IPV4", "DUAL"
     #   resp.db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
     #   resp.db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
     #   resp.allocated_storage #=> Integer
@@ -794,6 +802,7 @@ module Aws::TimestreamInfluxDB
     #   * {Types::DeleteDbInstanceOutput#status #status} => String
     #   * {Types::DeleteDbInstanceOutput#endpoint #endpoint} => String
     #   * {Types::DeleteDbInstanceOutput#port #port} => Integer
+    #   * {Types::DeleteDbInstanceOutput#network_type #network_type} => String
     #   * {Types::DeleteDbInstanceOutput#db_instance_type #db_instance_type} => String
     #   * {Types::DeleteDbInstanceOutput#db_storage_type #db_storage_type} => String
     #   * {Types::DeleteDbInstanceOutput#allocated_storage #allocated_storage} => Integer
@@ -821,6 +830,7 @@ module Aws::TimestreamInfluxDB
     #   resp.status #=> String, one of "CREATING", "AVAILABLE", "DELETING", "MODIFYING", "UPDATING", "DELETED", "FAILED", "UPDATING_DEPLOYMENT_TYPE", "UPDATING_INSTANCE_TYPE"
     #   resp.endpoint #=> String
     #   resp.port #=> Integer
+    #   resp.network_type #=> String, one of "IPV4", "DUAL"
     #   resp.db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
     #   resp.db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
     #   resp.allocated_storage #=> Integer
@@ -859,6 +869,7 @@ module Aws::TimestreamInfluxDB
     #   * {Types::GetDbInstanceOutput#status #status} => String
     #   * {Types::GetDbInstanceOutput#endpoint #endpoint} => String
     #   * {Types::GetDbInstanceOutput#port #port} => Integer
+    #   * {Types::GetDbInstanceOutput#network_type #network_type} => String
     #   * {Types::GetDbInstanceOutput#db_instance_type #db_instance_type} => String
     #   * {Types::GetDbInstanceOutput#db_storage_type #db_storage_type} => String
     #   * {Types::GetDbInstanceOutput#allocated_storage #allocated_storage} => Integer
@@ -886,6 +897,7 @@ module Aws::TimestreamInfluxDB
     #   resp.status #=> String, one of "CREATING", "AVAILABLE", "DELETING", "MODIFYING", "UPDATING", "DELETED", "FAILED", "UPDATING_DEPLOYMENT_TYPE", "UPDATING_INSTANCE_TYPE"
     #   resp.endpoint #=> String
     #   resp.port #=> Integer
+    #   resp.network_type #=> String, one of "IPV4", "DUAL"
     #   resp.db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
     #   resp.db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
     #   resp.allocated_storage #=> Integer
@@ -1023,6 +1035,7 @@ module Aws::TimestreamInfluxDB
     #   resp.items[0].status #=> String, one of "CREATING", "AVAILABLE", "DELETING", "MODIFYING", "UPDATING", "DELETED", "FAILED", "UPDATING_DEPLOYMENT_TYPE", "UPDATING_INSTANCE_TYPE"
     #   resp.items[0].endpoint #=> String
     #   resp.items[0].port #=> Integer
+    #   resp.items[0].network_type #=> String, one of "IPV4", "DUAL"
     #   resp.items[0].db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
     #   resp.items[0].db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
     #   resp.items[0].allocated_storage #=> Integer
@@ -1207,6 +1220,7 @@ module Aws::TimestreamInfluxDB
     #   * {Types::UpdateDbInstanceOutput#status #status} => String
     #   * {Types::UpdateDbInstanceOutput#endpoint #endpoint} => String
     #   * {Types::UpdateDbInstanceOutput#port #port} => Integer
+    #   * {Types::UpdateDbInstanceOutput#network_type #network_type} => String
     #   * {Types::UpdateDbInstanceOutput#db_instance_type #db_instance_type} => String
     #   * {Types::UpdateDbInstanceOutput#db_storage_type #db_storage_type} => String
     #   * {Types::UpdateDbInstanceOutput#allocated_storage #allocated_storage} => Integer
@@ -1244,6 +1258,7 @@ module Aws::TimestreamInfluxDB
     #   resp.status #=> String, one of "CREATING", "AVAILABLE", "DELETING", "MODIFYING", "UPDATING", "DELETED", "FAILED", "UPDATING_DEPLOYMENT_TYPE", "UPDATING_INSTANCE_TYPE"
     #   resp.endpoint #=> String
     #   resp.port #=> Integer
+    #   resp.network_type #=> String, one of "IPV4", "DUAL"
     #   resp.db_instance_type #=> String, one of "db.influx.medium", "db.influx.large", "db.influx.xlarge", "db.influx.2xlarge", "db.influx.4xlarge", "db.influx.8xlarge", "db.influx.12xlarge", "db.influx.16xlarge"
     #   resp.db_storage_type #=> String, one of "InfluxIOIncludedT1", "InfluxIOIncludedT2", "InfluxIOIncludedT3"
     #   resp.allocated_storage #=> Integer
@@ -1287,7 +1302,7 @@ module Aws::TimestreamInfluxDB
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-timestreaminfluxdb'
-      context[:gem_version] = '1.15.0'
+      context[:gem_version] = '1.16.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

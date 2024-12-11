@@ -91,6 +91,8 @@ module Aws::SESV2
     CreateExportJobResponse = Shapes::StructureShape.new(name: 'CreateExportJobResponse')
     CreateImportJobRequest = Shapes::StructureShape.new(name: 'CreateImportJobRequest')
     CreateImportJobResponse = Shapes::StructureShape.new(name: 'CreateImportJobResponse')
+    CreateMultiRegionEndpointRequest = Shapes::StructureShape.new(name: 'CreateMultiRegionEndpointRequest')
+    CreateMultiRegionEndpointResponse = Shapes::StructureShape.new(name: 'CreateMultiRegionEndpointResponse')
     CustomRedirectDomain = Shapes::StringShape.new(name: 'CustomRedirectDomain')
     CustomVerificationEmailTemplateMetadata = Shapes::StructureShape.new(name: 'CustomVerificationEmailTemplateMetadata')
     CustomVerificationEmailTemplatesList = Shapes::ListShape.new(name: 'CustomVerificationEmailTemplatesList')
@@ -121,6 +123,8 @@ module Aws::SESV2
     DeleteEmailIdentityResponse = Shapes::StructureShape.new(name: 'DeleteEmailIdentityResponse')
     DeleteEmailTemplateRequest = Shapes::StructureShape.new(name: 'DeleteEmailTemplateRequest')
     DeleteEmailTemplateResponse = Shapes::StructureShape.new(name: 'DeleteEmailTemplateResponse')
+    DeleteMultiRegionEndpointRequest = Shapes::StructureShape.new(name: 'DeleteMultiRegionEndpointRequest')
+    DeleteMultiRegionEndpointResponse = Shapes::StructureShape.new(name: 'DeleteMultiRegionEndpointResponse')
     DeleteSuppressedDestinationRequest = Shapes::StructureShape.new(name: 'DeleteSuppressedDestinationRequest')
     DeleteSuppressedDestinationResponse = Shapes::StructureShape.new(name: 'DeleteSuppressedDestinationResponse')
     DeliverabilityDashboardAccountStatus = Shapes::StringShape.new(name: 'DeliverabilityDashboardAccountStatus')
@@ -132,6 +136,7 @@ module Aws::SESV2
     DeliveryOptions = Shapes::StructureShape.new(name: 'DeliveryOptions')
     Description = Shapes::StringShape.new(name: 'Description')
     Destination = Shapes::StructureShape.new(name: 'Destination')
+    Details = Shapes::StructureShape.new(name: 'Details')
     DiagnosticCode = Shapes::StringShape.new(name: 'DiagnosticCode')
     DimensionName = Shapes::StringShape.new(name: 'DimensionName')
     DimensionValueSource = Shapes::StringShape.new(name: 'DimensionValueSource')
@@ -169,6 +174,8 @@ module Aws::SESV2
     EmailTemplateText = Shapes::StringShape.new(name: 'EmailTemplateText')
     Enabled = Shapes::BooleanShape.new(name: 'Enabled')
     EnabledWrapper = Shapes::BooleanShape.new(name: 'EnabledWrapper')
+    EndpointId = Shapes::StringShape.new(name: 'EndpointId')
+    EndpointName = Shapes::StringShape.new(name: 'EndpointName')
     EngagementEventType = Shapes::StringShape.new(name: 'EngagementEventType')
     ErrorMessage = Shapes::StringShape.new(name: 'ErrorMessage')
     Esp = Shapes::StringShape.new(name: 'Esp')
@@ -239,6 +246,8 @@ module Aws::SESV2
     GetImportJobResponse = Shapes::StructureShape.new(name: 'GetImportJobResponse')
     GetMessageInsightsRequest = Shapes::StructureShape.new(name: 'GetMessageInsightsRequest')
     GetMessageInsightsResponse = Shapes::StructureShape.new(name: 'GetMessageInsightsResponse')
+    GetMultiRegionEndpointRequest = Shapes::StructureShape.new(name: 'GetMultiRegionEndpointRequest')
+    GetMultiRegionEndpointResponse = Shapes::StructureShape.new(name: 'GetMultiRegionEndpointResponse')
     GetSuppressedDestinationRequest = Shapes::StructureShape.new(name: 'GetSuppressedDestinationRequest')
     GetSuppressedDestinationResponse = Shapes::StructureShape.new(name: 'GetSuppressedDestinationResponse')
     GuardianAttributes = Shapes::StructureShape.new(name: 'GuardianAttributes')
@@ -299,6 +308,8 @@ module Aws::SESV2
     ListImportJobsRequest = Shapes::StructureShape.new(name: 'ListImportJobsRequest')
     ListImportJobsResponse = Shapes::StructureShape.new(name: 'ListImportJobsResponse')
     ListManagementOptions = Shapes::StructureShape.new(name: 'ListManagementOptions')
+    ListMultiRegionEndpointsRequest = Shapes::StructureShape.new(name: 'ListMultiRegionEndpointsRequest')
+    ListMultiRegionEndpointsResponse = Shapes::StructureShape.new(name: 'ListMultiRegionEndpointsResponse')
     ListOfContactLists = Shapes::ListShape.new(name: 'ListOfContactLists')
     ListOfContacts = Shapes::ListShape.new(name: 'ListOfContacts')
     ListOfDedicatedIpPools = Shapes::ListShape.new(name: 'ListOfDedicatedIpPools')
@@ -346,10 +357,14 @@ module Aws::SESV2
     MetricNamespace = Shapes::StringShape.new(name: 'MetricNamespace')
     MetricValueList = Shapes::ListShape.new(name: 'MetricValueList')
     MetricsDataSource = Shapes::StructureShape.new(name: 'MetricsDataSource')
+    MultiRegionEndpoint = Shapes::StructureShape.new(name: 'MultiRegionEndpoint')
+    MultiRegionEndpoints = Shapes::ListShape.new(name: 'MultiRegionEndpoints')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
+    NextTokenV2 = Shapes::StringShape.new(name: 'NextTokenV2')
     NotFoundException = Shapes::StructureShape.new(name: 'NotFoundException')
     OutboundMessageId = Shapes::StringShape.new(name: 'OutboundMessageId')
     OverallVolume = Shapes::StructureShape.new(name: 'OverallVolume')
+    PageSizeV2 = Shapes::IntegerShape.new(name: 'PageSizeV2')
     Percentage = Shapes::FloatShape.new(name: 'Percentage')
     Percentage100Wrapper = Shapes::IntegerShape.new(name: 'Percentage100Wrapper')
     PinpointDestination = Shapes::StructureShape.new(name: 'PinpointDestination')
@@ -415,6 +430,8 @@ module Aws::SESV2
     RecommendationStatus = Shapes::StringShape.new(name: 'RecommendationStatus')
     RecommendationType = Shapes::StringShape.new(name: 'RecommendationType')
     RecommendationsList = Shapes::ListShape.new(name: 'RecommendationsList')
+    Region = Shapes::StringShape.new(name: 'Region')
+    Regions = Shapes::ListShape.new(name: 'Regions')
     RenderedEmailTemplate = Shapes::StringShape.new(name: 'RenderedEmailTemplate')
     ReplacementEmailContent = Shapes::StructureShape.new(name: 'ReplacementEmailContent')
     ReplacementTemplate = Shapes::StructureShape.new(name: 'ReplacementTemplate')
@@ -423,6 +440,10 @@ module Aws::SESV2
     ReputationOptions = Shapes::StructureShape.new(name: 'ReputationOptions')
     ReviewDetails = Shapes::StructureShape.new(name: 'ReviewDetails')
     ReviewStatus = Shapes::StringShape.new(name: 'ReviewStatus')
+    Route = Shapes::StructureShape.new(name: 'Route')
+    RouteDetails = Shapes::StructureShape.new(name: 'RouteDetails')
+    Routes = Shapes::ListShape.new(name: 'Routes')
+    RoutesDetails = Shapes::ListShape.new(name: 'RoutesDetails')
     S3Url = Shapes::StringShape.new(name: 'S3Url')
     SOARecord = Shapes::StructureShape.new(name: 'SOARecord')
     ScalingMode = Shapes::StringShape.new(name: 'ScalingMode')
@@ -440,6 +461,7 @@ module Aws::SESV2
     SentLast24Hours = Shapes::FloatShape.new(name: 'SentLast24Hours')
     SerialNumber = Shapes::IntegerShape.new(name: 'SerialNumber')
     SnsDestination = Shapes::StructureShape.new(name: 'SnsDestination')
+    Status = Shapes::StringShape.new(name: 'Status')
     Subject = Shapes::StringShape.new(name: 'Subject')
     SubscriptionStatus = Shapes::StringShape.new(name: 'SubscriptionStatus')
     SuccessRedirectionURL = Shapes::StringShape.new(name: 'SuccessRedirectionURL')
@@ -719,6 +741,15 @@ module Aws::SESV2
     CreateImportJobResponse.add_member(:job_id, Shapes::ShapeRef.new(shape: JobId, location_name: "JobId"))
     CreateImportJobResponse.struct_class = Types::CreateImportJobResponse
 
+    CreateMultiRegionEndpointRequest.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: EndpointName, required: true, location_name: "EndpointName"))
+    CreateMultiRegionEndpointRequest.add_member(:details, Shapes::ShapeRef.new(shape: Details, required: true, location_name: "Details"))
+    CreateMultiRegionEndpointRequest.add_member(:tags, Shapes::ShapeRef.new(shape: TagList, location_name: "Tags"))
+    CreateMultiRegionEndpointRequest.struct_class = Types::CreateMultiRegionEndpointRequest
+
+    CreateMultiRegionEndpointResponse.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "Status"))
+    CreateMultiRegionEndpointResponse.add_member(:endpoint_id, Shapes::ShapeRef.new(shape: EndpointId, location_name: "EndpointId"))
+    CreateMultiRegionEndpointResponse.struct_class = Types::CreateMultiRegionEndpointResponse
+
     CustomVerificationEmailTemplateMetadata.add_member(:template_name, Shapes::ShapeRef.new(shape: EmailTemplateName, location_name: "TemplateName"))
     CustomVerificationEmailTemplateMetadata.add_member(:from_email_address, Shapes::ShapeRef.new(shape: EmailAddress, location_name: "FromEmailAddress"))
     CustomVerificationEmailTemplateMetadata.add_member(:template_subject, Shapes::ShapeRef.new(shape: EmailTemplateSubject, location_name: "TemplateSubject"))
@@ -801,6 +832,12 @@ module Aws::SESV2
 
     DeleteEmailTemplateResponse.struct_class = Types::DeleteEmailTemplateResponse
 
+    DeleteMultiRegionEndpointRequest.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: EndpointName, required: true, location: "uri", location_name: "EndpointName"))
+    DeleteMultiRegionEndpointRequest.struct_class = Types::DeleteMultiRegionEndpointRequest
+
+    DeleteMultiRegionEndpointResponse.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "Status"))
+    DeleteMultiRegionEndpointResponse.struct_class = Types::DeleteMultiRegionEndpointResponse
+
     DeleteSuppressedDestinationRequest.add_member(:email_address, Shapes::ShapeRef.new(shape: EmailAddress, required: true, location: "uri", location_name: "EmailAddress"))
     DeleteSuppressedDestinationRequest.struct_class = Types::DeleteSuppressedDestinationRequest
 
@@ -825,6 +862,9 @@ module Aws::SESV2
     Destination.add_member(:cc_addresses, Shapes::ShapeRef.new(shape: EmailAddressList, location_name: "CcAddresses"))
     Destination.add_member(:bcc_addresses, Shapes::ShapeRef.new(shape: EmailAddressList, location_name: "BccAddresses"))
     Destination.struct_class = Types::Destination
+
+    Details.add_member(:routes_details, Shapes::ShapeRef.new(shape: RoutesDetails, required: true, location_name: "RoutesDetails"))
+    Details.struct_class = Types::Details
 
     Dimensions.key = Shapes::ShapeRef.new(shape: MetricDimensionName)
     Dimensions.value = Shapes::ShapeRef.new(shape: MetricDimensionValue)
@@ -1171,6 +1211,17 @@ module Aws::SESV2
     GetMessageInsightsResponse.add_member(:insights, Shapes::ShapeRef.new(shape: EmailInsightsList, location_name: "Insights"))
     GetMessageInsightsResponse.struct_class = Types::GetMessageInsightsResponse
 
+    GetMultiRegionEndpointRequest.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: EndpointName, required: true, location: "uri", location_name: "EndpointName"))
+    GetMultiRegionEndpointRequest.struct_class = Types::GetMultiRegionEndpointRequest
+
+    GetMultiRegionEndpointResponse.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: EndpointName, location_name: "EndpointName"))
+    GetMultiRegionEndpointResponse.add_member(:endpoint_id, Shapes::ShapeRef.new(shape: EndpointId, location_name: "EndpointId"))
+    GetMultiRegionEndpointResponse.add_member(:routes, Shapes::ShapeRef.new(shape: Routes, location_name: "Routes"))
+    GetMultiRegionEndpointResponse.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "Status"))
+    GetMultiRegionEndpointResponse.add_member(:created_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreatedTimestamp"))
+    GetMultiRegionEndpointResponse.add_member(:last_updated_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastUpdatedTimestamp"))
+    GetMultiRegionEndpointResponse.struct_class = Types::GetMultiRegionEndpointResponse
+
     GetSuppressedDestinationRequest.add_member(:email_address, Shapes::ShapeRef.new(shape: EmailAddress, required: true, location: "uri", location_name: "EmailAddress"))
     GetSuppressedDestinationRequest.struct_class = Types::GetSuppressedDestinationRequest
 
@@ -1350,6 +1401,14 @@ module Aws::SESV2
     ListManagementOptions.add_member(:topic_name, Shapes::ShapeRef.new(shape: TopicName, location_name: "TopicName"))
     ListManagementOptions.struct_class = Types::ListManagementOptions
 
+    ListMultiRegionEndpointsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextTokenV2, location: "querystring", location_name: "NextToken"))
+    ListMultiRegionEndpointsRequest.add_member(:page_size, Shapes::ShapeRef.new(shape: PageSizeV2, location: "querystring", location_name: "PageSize"))
+    ListMultiRegionEndpointsRequest.struct_class = Types::ListMultiRegionEndpointsRequest
+
+    ListMultiRegionEndpointsResponse.add_member(:multi_region_endpoints, Shapes::ShapeRef.new(shape: MultiRegionEndpoints, location_name: "MultiRegionEndpoints"))
+    ListMultiRegionEndpointsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextTokenV2, location_name: "NextToken"))
+    ListMultiRegionEndpointsResponse.struct_class = Types::ListMultiRegionEndpointsResponse
+
     ListOfContactLists.member = Shapes::ShapeRef.new(shape: ContactList)
 
     ListOfContacts.member = Shapes::ShapeRef.new(shape: Contact)
@@ -1448,6 +1507,16 @@ module Aws::SESV2
     MetricsDataSource.add_member(:start_date, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "StartDate"))
     MetricsDataSource.add_member(:end_date, Shapes::ShapeRef.new(shape: Timestamp, required: true, location_name: "EndDate"))
     MetricsDataSource.struct_class = Types::MetricsDataSource
+
+    MultiRegionEndpoint.add_member(:endpoint_name, Shapes::ShapeRef.new(shape: EndpointName, location_name: "EndpointName"))
+    MultiRegionEndpoint.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "Status"))
+    MultiRegionEndpoint.add_member(:endpoint_id, Shapes::ShapeRef.new(shape: EndpointId, location_name: "EndpointId"))
+    MultiRegionEndpoint.add_member(:regions, Shapes::ShapeRef.new(shape: Regions, location_name: "Regions"))
+    MultiRegionEndpoint.add_member(:created_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "CreatedTimestamp"))
+    MultiRegionEndpoint.add_member(:last_updated_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastUpdatedTimestamp"))
+    MultiRegionEndpoint.struct_class = Types::MultiRegionEndpoint
+
+    MultiRegionEndpoints.member = Shapes::ShapeRef.new(shape: MultiRegionEndpoint)
 
     NotFoundException.struct_class = Types::NotFoundException
 
@@ -1616,6 +1685,8 @@ module Aws::SESV2
 
     RecommendationsList.member = Shapes::ShapeRef.new(shape: Recommendation)
 
+    Regions.member = Shapes::ShapeRef.new(shape: Region)
+
     ReplacementEmailContent.add_member(:replacement_template, Shapes::ShapeRef.new(shape: ReplacementTemplate, location_name: "ReplacementTemplate"))
     ReplacementEmailContent.struct_class = Types::ReplacementEmailContent
 
@@ -1629,6 +1700,16 @@ module Aws::SESV2
     ReviewDetails.add_member(:status, Shapes::ShapeRef.new(shape: ReviewStatus, location_name: "Status"))
     ReviewDetails.add_member(:case_id, Shapes::ShapeRef.new(shape: CaseId, location_name: "CaseId"))
     ReviewDetails.struct_class = Types::ReviewDetails
+
+    Route.add_member(:region, Shapes::ShapeRef.new(shape: Region, required: true, location_name: "Region"))
+    Route.struct_class = Types::Route
+
+    RouteDetails.add_member(:region, Shapes::ShapeRef.new(shape: Region, required: true, location_name: "Region"))
+    RouteDetails.struct_class = Types::RouteDetails
+
+    Routes.member = Shapes::ShapeRef.new(shape: Route)
+
+    RoutesDetails.member = Shapes::ShapeRef.new(shape: RouteDetails)
 
     SOARecord.add_member(:primary_name_server, Shapes::ShapeRef.new(shape: PrimaryNameServer, location_name: "PrimaryNameServer"))
     SOARecord.add_member(:admin_email, Shapes::ShapeRef.new(shape: AdminEmail, location_name: "AdminEmail"))
@@ -1644,6 +1725,7 @@ module Aws::SESV2
     SendBulkEmailRequest.add_member(:default_content, Shapes::ShapeRef.new(shape: BulkEmailContent, required: true, location_name: "DefaultContent"))
     SendBulkEmailRequest.add_member(:bulk_email_entries, Shapes::ShapeRef.new(shape: BulkEmailEntryList, required: true, location_name: "BulkEmailEntries"))
     SendBulkEmailRequest.add_member(:configuration_set_name, Shapes::ShapeRef.new(shape: ConfigurationSetName, location_name: "ConfigurationSetName"))
+    SendBulkEmailRequest.add_member(:endpoint_id, Shapes::ShapeRef.new(shape: EndpointId, location_name: "EndpointId", metadata: {"contextParam"=>{"name"=>"EndpointId"}}))
     SendBulkEmailRequest.struct_class = Types::SendBulkEmailRequest
 
     SendBulkEmailResponse.add_member(:bulk_email_entry_results, Shapes::ShapeRef.new(shape: BulkEmailEntryResultList, required: true, location_name: "BulkEmailEntryResults"))
@@ -1666,6 +1748,7 @@ module Aws::SESV2
     SendEmailRequest.add_member(:content, Shapes::ShapeRef.new(shape: EmailContent, required: true, location_name: "Content"))
     SendEmailRequest.add_member(:email_tags, Shapes::ShapeRef.new(shape: MessageTagList, location_name: "EmailTags"))
     SendEmailRequest.add_member(:configuration_set_name, Shapes::ShapeRef.new(shape: ConfigurationSetName, location_name: "ConfigurationSetName"))
+    SendEmailRequest.add_member(:endpoint_id, Shapes::ShapeRef.new(shape: EndpointId, location_name: "EndpointId", metadata: {"contextParam"=>{"name"=>"EndpointId"}}))
     SendEmailRequest.add_member(:list_management_options, Shapes::ShapeRef.new(shape: ListManagementOptions, location_name: "ListManagementOptions"))
     SendEmailRequest.struct_class = Types::SendEmailRequest
 
@@ -2040,6 +2123,18 @@ module Aws::SESV2
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
       end)
 
+      api.add_operation(:create_multi_region_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateMultiRegionEndpoint"
+        o.http_method = "POST"
+        o.http_request_uri = "/v2/email/multi-region-endpoints"
+        o.input = Shapes::ShapeRef.new(shape: CreateMultiRegionEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateMultiRegionEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: AlreadyExistsException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+      end)
+
       api.add_operation(:delete_configuration_set, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteConfigurationSet"
         o.http_method = "DELETE"
@@ -2141,6 +2236,18 @@ module Aws::SESV2
         o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+      end)
+
+      api.add_operation(:delete_multi_region_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteMultiRegionEndpoint"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/v2/email/multi-region-endpoints/{EndpointName}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteMultiRegionEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: DeleteMultiRegionEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: ConcurrentModificationException)
       end)
 
       api.add_operation(:delete_suppressed_destination, Seahorse::Model::Operation.new.tap do |o|
@@ -2379,6 +2486,17 @@ module Aws::SESV2
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
       end)
 
+      api.add_operation(:get_multi_region_endpoint, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetMultiRegionEndpoint"
+        o.http_method = "GET"
+        o.http_request_uri = "/v2/email/multi-region-endpoints/{EndpointName}"
+        o.input = Shapes::ShapeRef.new(shape: GetMultiRegionEndpointRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetMultiRegionEndpointResponse)
+        o.errors << Shapes::ShapeRef.new(shape: NotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+      end)
+
       api.add_operation(:get_suppressed_destination, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetSuppressedDestination"
         o.http_method = "GET"
@@ -2559,6 +2677,22 @@ module Aws::SESV2
         o.http_request_uri = "/v2/email/import-jobs/list"
         o.input = Shapes::ShapeRef.new(shape: ListImportJobsRequest)
         o.output = Shapes::ShapeRef.new(shape: ListImportJobsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
+        o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "page_size",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_multi_region_endpoints, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListMultiRegionEndpoints"
+        o.http_method = "GET"
+        o.http_request_uri = "/v2/email/multi-region-endpoints"
+        o.input = Shapes::ShapeRef.new(shape: ListMultiRegionEndpointsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListMultiRegionEndpointsResponse)
         o.errors << Shapes::ShapeRef.new(shape: TooManyRequestsException)
         o.errors << Shapes::ShapeRef.new(shape: BadRequestException)
         o[:pager] = Aws::Pager.new(

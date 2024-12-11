@@ -148,6 +148,7 @@ module Aws::EMRServerless
       attr_accessor application_id: ::String
       attr_accessor job_run_id: ::String
       attr_accessor attempt: ::Integer
+      attr_accessor access_system_profile_logs: bool
       SENSITIVE: []
     end
 

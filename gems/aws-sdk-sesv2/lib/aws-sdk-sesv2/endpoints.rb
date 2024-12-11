@@ -12,9 +12,34 @@ module Aws::SESV2
   # @api private
   module Endpoints
 
+    class SendBulkEmail
+      def self.build(context)
+        Aws::SESV2::EndpointParameters.create(
+          context.config,
+          endpoint_id: context.params[:endpoint_id],
+        )
+      end
+    end
+
+    class SendEmail
+      def self.build(context)
+        Aws::SESV2::EndpointParameters.create(
+          context.config,
+          endpoint_id: context.params[:endpoint_id],
+        )
+      end
+    end
+
 
     def self.parameters_for_operation(context)
-      Aws::SESV2::EndpointParameters.create(context.config)
+      case context.operation_name
+      when :send_bulk_email
+        SendBulkEmail.build(context)
+      when :send_email
+        SendEmail.build(context)
+      else
+        Aws::SESV2::EndpointParameters.create(context.config)
+      end
     end
   end
 end

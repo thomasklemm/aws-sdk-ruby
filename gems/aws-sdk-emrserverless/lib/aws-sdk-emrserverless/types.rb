@@ -587,12 +587,18 @@ module Aws::EMRServerless
     #   latest job.
     #   @return [Integer]
     #
+    # @!attribute [rw] access_system_profile_logs
+    #   Allows access to system profile logs for Lake Formation-enabled
+    #   jobs. Default is false.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/emr-serverless-2021-07-13/GetDashboardForJobRunRequest AWS API Documentation
     #
     class GetDashboardForJobRunRequest < Struct.new(
       :application_id,
       :job_run_id,
-      :attempt)
+      :attempt,
+      :access_system_profile_logs)
       SENSITIVE = []
       include Aws::Structure
     end

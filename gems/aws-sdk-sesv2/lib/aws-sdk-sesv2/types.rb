@@ -1210,6 +1210,62 @@ module Aws::SESV2
       include Aws::Structure
     end
 
+    # Represents a request to create a multi-region endpoint
+    # (global-endpoint).
+    #
+    # @!attribute [rw] endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @!attribute [rw] details
+    #   Contains details of a multi-region endpoint (global-endpoint) being
+    #   created.
+    #   @return [Types::Details]
+    #
+    # @!attribute [rw] tags
+    #   An array of objects that define the tags (keys and values) to
+    #   associate with the multi-region endpoint (global-endpoint).
+    #   @return [Array<Types::Tag>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/CreateMultiRegionEndpointRequest AWS API Documentation
+    #
+    class CreateMultiRegionEndpointRequest < Struct.new(
+      :endpoint_name,
+      :details,
+      :tags)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An HTTP 200 response if the request succeeds, or an error message if
+    # the request fails.
+    #
+    # @!attribute [rw] status
+    #   A status of the multi-region endpoint (global-endpoint) right after
+    #   the create request.
+    #
+    #   * `CREATING` – The resource is being provisioned.
+    #
+    #   * `READY` – The resource is ready to use.
+    #
+    #   * `FAILED` – The resource failed to be provisioned.
+    #
+    #   * `DELETING` – The resource is being deleted as requested.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_id
+    #   The ID of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/CreateMultiRegionEndpointResponse AWS API Documentation
+    #
+    class CreateMultiRegionEndpointResponse < Struct.new(
+      :status,
+      :endpoint_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Contains information about a custom verification email template.
     #
     # @!attribute [rw] template_name
@@ -1607,6 +1663,46 @@ module Aws::SESV2
     #
     class DeleteEmailTemplateResponse < Aws::EmptyStructure; end
 
+    # Represents a request to delete a multi-region endpoint
+    # (global-endpoint).
+    #
+    # @!attribute [rw] endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint) to be
+    #   deleted.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/DeleteMultiRegionEndpointRequest AWS API Documentation
+    #
+    class DeleteMultiRegionEndpointRequest < Struct.new(
+      :endpoint_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An HTTP 200 response if the request succeeds, or an error message if
+    # the request fails.
+    #
+    # @!attribute [rw] status
+    #   A status of the multi-region endpoint (global-endpoint) right after
+    #   the delete request.
+    #
+    #   * `CREATING` – The resource is being provisioned.
+    #
+    #   * `READY` – The resource is ready to use.
+    #
+    #   * `FAILED` – The resource failed to be provisioned.
+    #
+    #   * `DELETING` – The resource is being deleted as requested.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/DeleteMultiRegionEndpointResponse AWS API Documentation
+    #
+    class DeleteMultiRegionEndpointResponse < Struct.new(
+      :status)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A request to remove an email address from the suppression list for
     # your account.
     #
@@ -1749,6 +1845,22 @@ module Aws::SESV2
       :to_addresses,
       :cc_addresses,
       :bcc_addresses)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object that contains configuration details of multi-region endpoint
+    # (global-endpoint).
+    #
+    # @!attribute [rw] routes_details
+    #   A list of route configuration details. Must contain exactly one
+    #   route configuration.
+    #   @return [Array<Types::RouteDetails>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/Details AWS API Documentation
+    #
+    class Details < Struct.new(
+      :routes_details)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3934,6 +4046,72 @@ module Aws::SESV2
       include Aws::Structure
     end
 
+    # Represents a request to display the multi-region endpoint
+    # (global-endpoint).
+    #
+    # @!attribute [rw] endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/GetMultiRegionEndpointRequest AWS API Documentation
+    #
+    class GetMultiRegionEndpointRequest < Struct.new(
+      :endpoint_name)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An HTTP 200 response if the request succeeds, or an error message if
+    # the request fails.
+    #
+    # @!attribute [rw] endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_id
+    #   The ID of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @!attribute [rw] routes
+    #   Contains routes information for the multi-region endpoint
+    #   (global-endpoint).
+    #   @return [Array<Types::Route>]
+    #
+    # @!attribute [rw] status
+    #   The status of the multi-region endpoint (global-endpoint).
+    #
+    #   * `CREATING` – The resource is being provisioned.
+    #
+    #   * `READY` – The resource is ready to use.
+    #
+    #   * `FAILED` – The resource failed to be provisioned.
+    #
+    #   * `DELETING` – The resource is being deleted as requested.
+    #   @return [String]
+    #
+    # @!attribute [rw] created_timestamp
+    #   The time stamp of when the multi-region endpoint (global-endpoint)
+    #   was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_timestamp
+    #   The time stamp of when the multi-region endpoint (global-endpoint)
+    #   was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/GetMultiRegionEndpointResponse AWS API Documentation
+    #
+    class GetMultiRegionEndpointResponse < Struct.new(
+      :endpoint_name,
+      :endpoint_id,
+      :routes,
+      :status,
+      :created_timestamp,
+      :last_updated_timestamp)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A request to retrieve information about an email address that's on
     # the suppression list for your account.
     #
@@ -4920,6 +5098,56 @@ module Aws::SESV2
       include Aws::Structure
     end
 
+    # Represents a request to list all the multi-region endpoints
+    # (global-endpoints) whose primary region is the AWS-Region where
+    # operation is executed.
+    #
+    # @!attribute [rw] next_token
+    #   A token returned from a previous call to `ListMultiRegionEndpoints`
+    #   to indicate the position in the list of multi-region endpoints
+    #   (global-endpoints).
+    #   @return [String]
+    #
+    # @!attribute [rw] page_size
+    #   The number of results to show in a single call to
+    #   `ListMultiRegionEndpoints`. If the number of results is larger than
+    #   the number you specified in this parameter, the response includes a
+    #   `NextToken` element that you can use to retrieve the next page of
+    #   results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/ListMultiRegionEndpointsRequest AWS API Documentation
+    #
+    class ListMultiRegionEndpointsRequest < Struct.new(
+      :next_token,
+      :page_size)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The following elements are returned by the service.
+    #
+    # @!attribute [rw] multi_region_endpoints
+    #   An array that contains key multi-region endpoint (global-endpoint)
+    #   properties.
+    #   @return [Array<Types::MultiRegionEndpoint>]
+    #
+    # @!attribute [rw] next_token
+    #   A token indicating that there are additional multi-region endpoints
+    #   (global-endpoints) available to be listed. Pass this token to a
+    #   subsequent `ListMultiRegionEndpoints` call to retrieve the next
+    #   page.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/ListMultiRegionEndpointsResponse AWS API Documentation
+    #
+    class ListMultiRegionEndpointsResponse < Struct.new(
+      :multi_region_endpoints,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents a request to list the existing recommendations for your
     # account.
     #
@@ -5414,6 +5642,57 @@ module Aws::SESV2
       :metrics,
       :start_date,
       :end_date)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object that contains multi-region endpoint (global-endpoint)
+    # properties.
+    #
+    # @!attribute [rw] endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @!attribute [rw] status
+    #   The status of the multi-region endpoint (global-endpoint).
+    #
+    #   * `CREATING` – The resource is being provisioned.
+    #
+    #   * `READY` – The resource is ready to use.
+    #
+    #   * `FAILED` – The resource failed to be provisioned.
+    #
+    #   * `DELETING` – The resource is being deleted as requested.
+    #   @return [String]
+    #
+    # @!attribute [rw] endpoint_id
+    #   The ID of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @!attribute [rw] regions
+    #   Primary and secondary regions between which multi-region endpoint
+    #   splits sending traffic.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] created_timestamp
+    #   The time stamp of when the multi-region endpoint (global-endpoint)
+    #   was created.
+    #   @return [Time]
+    #
+    # @!attribute [rw] last_updated_timestamp
+    #   The time stamp of when the multi-region endpoint (global-endpoint)
+    #   was last updated.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/MultiRegionEndpoint AWS API Documentation
+    #
+    class MultiRegionEndpoint < Struct.new(
+      :endpoint_name,
+      :status,
+      :endpoint_id,
+      :regions,
+      :created_timestamp,
+      :last_updated_timestamp)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6480,6 +6759,36 @@ module Aws::SESV2
       include Aws::Structure
     end
 
+    # An object which contains an AWS-Region and routing status.
+    #
+    # @!attribute [rw] region
+    #   The name of an AWS-Region.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/Route AWS API Documentation
+    #
+    class Route < Struct.new(
+      :region)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # An object that contains route configuration. Includes secondary region
+    # name.
+    #
+    # @!attribute [rw] region
+    #   The name of an AWS-Region to be a secondary region for the
+    #   multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/RouteDetails AWS API Documentation
+    #
+    class RouteDetails < Struct.new(
+      :region)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An object that contains information about the start of authority (SOA)
     # record associated with the identity.
     #
@@ -6590,6 +6899,10 @@ module Aws::SESV2
     #   The name of the configuration set to use when sending the email.
     #   @return [String]
     #
+    # @!attribute [rw] endpoint_id
+    #   The ID of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/SendBulkEmailRequest AWS API Documentation
     #
     class SendBulkEmailRequest < Struct.new(
@@ -6601,7 +6914,8 @@ module Aws::SESV2
       :default_email_tags,
       :default_content,
       :bulk_email_entries,
-      :configuration_set_name)
+      :configuration_set_name,
+      :endpoint_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6751,6 +7065,10 @@ module Aws::SESV2
     #   The name of the configuration set to use when sending the email.
     #   @return [String]
     #
+    # @!attribute [rw] endpoint_id
+    #   The ID of the multi-region endpoint (global-endpoint).
+    #   @return [String]
+    #
     # @!attribute [rw] list_management_options
     #   An object used to specify a list or topic to which an email belongs,
     #   which will be used when a contact chooses to unsubscribe.
@@ -6768,6 +7086,7 @@ module Aws::SESV2
       :content,
       :email_tags,
       :configuration_set_name,
+      :endpoint_id,
       :list_management_options)
       SENSITIVE = []
       include Aws::Structure

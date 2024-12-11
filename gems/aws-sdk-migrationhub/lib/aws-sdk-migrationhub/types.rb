@@ -117,6 +117,46 @@ module Aws::MigrationHub
     #
     class AssociateDiscoveredResourceResult < Aws::EmptyStructure; end
 
+    # @!attribute [rw] progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream
+    #   must uniquely identify the migration tool as it is used for all
+    #   updates made by the tool; however, it does not need to be unique for
+    #   each AWS account because it is scoped to the AWS account.
+    #   @return [String]
+    #
+    # @!attribute [rw] migration_task_name
+    #   A unique identifier that references the migration task. *Do not
+    #   include sensitive data in this field.*
+    #   @return [String]
+    #
+    # @!attribute [rw] source_resource
+    #   The source resource that you want to associate.
+    #   @return [Types::SourceResource]
+    #
+    # @!attribute [rw] dry_run
+    #   This is an optional parameter that you can use to test whether the
+    #   call will succeed. Set this parameter to `true` to verify that you
+    #   have the permissions that are required to make the call, and that
+    #   you have specified the other parameters in the call correctly.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/AssociateSourceResourceRequest AWS API Documentation
+    #
+    class AssociateSourceResourceRequest < Struct.new(
+      :progress_update_stream,
+      :migration_task_name,
+      :source_resource,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/AssociateSourceResourceResult AWS API Documentation
+    #
+    class AssociateSourceResourceResult < Aws::EmptyStructure; end
+
     # @!attribute [rw] progress_update_stream_name
     #   The name of the ProgressUpdateStream. *Do not store personal data in
     #   this field.*
@@ -312,6 +352,46 @@ module Aws::MigrationHub
     # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/DisassociateDiscoveredResourceResult AWS API Documentation
     #
     class DisassociateDiscoveredResourceResult < Aws::EmptyStructure; end
+
+    # @!attribute [rw] progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream
+    #   must uniquely identify the migration tool as it is used for all
+    #   updates made by the tool; however, it does not need to be unique for
+    #   each AWS account because it is scoped to the AWS account.
+    #   @return [String]
+    #
+    # @!attribute [rw] migration_task_name
+    #   A unique identifier that references the migration task. *Do not
+    #   include sensitive data in this field.*
+    #   @return [String]
+    #
+    # @!attribute [rw] source_resource_name
+    #   The name that was specified for the source resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] dry_run
+    #   This is an optional parameter that you can use to test whether the
+    #   call will succeed. Set this parameter to `true` to verify that you
+    #   have the permissions that are required to make the call, and that
+    #   you have specified the other parameters in the call correctly.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/DisassociateSourceResourceRequest AWS API Documentation
+    #
+    class DisassociateSourceResourceRequest < Struct.new(
+      :progress_update_stream,
+      :migration_task_name,
+      :source_resource_name,
+      :dry_run)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/DisassociateSourceResourceResult AWS API Documentation
+    #
+    class DisassociateSourceResourceResult < Aws::EmptyStructure; end
 
     # Object representing the on-premises resource being migrated.
     #
@@ -561,6 +641,71 @@ module Aws::MigrationHub
       include Aws::Structure
     end
 
+    # @!attribute [rw] progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream
+    #   must uniquely identify the migration tool as it is used for all
+    #   updates made by the tool; however, it does not need to be unique for
+    #   each AWS account because it is scoped to the AWS account.
+    #   @return [String]
+    #
+    # @!attribute [rw] migration_task_name
+    #   A unique identifier that references the migration task. *Do not
+    #   include sensitive data in this field.*
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If `NextToken` was returned by a previous call, there are more
+    #   results available. The value of `NextToken` is a unique pagination
+    #   token for each page. To retrieve the next page of results, specify
+    #   the `NextToken` value that the previous call returned. Keep all
+    #   other arguments unchanged. Each pagination token expires after 24
+    #   hours. Using an expired pagination token will return an HTTP 400
+    #   InvalidToken error.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the value that you specify here for `MaxResults`,
+    #   the response will include a token that you can use to retrieve the
+    #   next set of results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/ListMigrationTaskUpdatesRequest AWS API Documentation
+    #
+    class ListMigrationTaskUpdatesRequest < Struct.new(
+      :progress_update_stream,
+      :migration_task_name,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the response includes a `NextToken` value, that means that there
+    #   are more results available. The value of `NextToken` is a unique
+    #   pagination token for each page. To retrieve the next page of
+    #   results, call this API again and specify this `NextToken` value in
+    #   the request. Keep all other arguments unchanged. Each pagination
+    #   token expires after 24 hours. Using an expired pagination token will
+    #   return an HTTP 400 InvalidToken error.
+    #   @return [String]
+    #
+    # @!attribute [rw] migration_task_update_list
+    #   The list of migration-task updates.
+    #   @return [Array<Types::MigrationTaskUpdate>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/ListMigrationTaskUpdatesResult AWS API Documentation
+    #
+    class ListMigrationTaskUpdatesResult < Struct.new(
+      :next_token,
+      :migration_task_update_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] next_token
     #   If a `NextToken` was returned by a previous call, there are more
     #   results available. To retrieve the next page of results, make the
@@ -645,6 +790,71 @@ module Aws::MigrationHub
       include Aws::Structure
     end
 
+    # @!attribute [rw] progress_update_stream
+    #   The name of the progress-update stream, which is used for access
+    #   control as well as a namespace for migration-task names that is
+    #   implicitly linked to your AWS account. The progress-update stream
+    #   must uniquely identify the migration tool as it is used for all
+    #   updates made by the tool; however, it does not need to be unique for
+    #   each AWS account because it is scoped to the AWS account.
+    #   @return [String]
+    #
+    # @!attribute [rw] migration_task_name
+    #   A unique identifier that references the migration task. *Do not
+    #   store confidential data in this field.*
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   If `NextToken` was returned by a previous call, there are more
+    #   results available. The value of `NextToken` is a unique pagination
+    #   token for each page. To retrieve the next page of results, specify
+    #   the `NextToken` value that the previous call returned. Keep all
+    #   other arguments unchanged. Each pagination token expires after 24
+    #   hours. Using an expired pagination token will return an HTTP 400
+    #   InvalidToken error.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to include in the response. If more
+    #   results exist than the value that you specify here for `MaxResults`,
+    #   the response will include a token that you can use to retrieve the
+    #   next set of results.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/ListSourceResourcesRequest AWS API Documentation
+    #
+    class ListSourceResourcesRequest < Struct.new(
+      :progress_update_stream,
+      :migration_task_name,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   If the response includes a `NextToken` value, that means that there
+    #   are more results available. The value of `NextToken` is a unique
+    #   pagination token for each page. To retrieve the next page of
+    #   results, call this API again and specify this `NextToken` value in
+    #   the request. Keep all other arguments unchanged. Each pagination
+    #   token expires after 24 hours. Using an expired pagination token will
+    #   return an HTTP 400 InvalidToken error.
+    #   @return [String]
+    #
+    # @!attribute [rw] source_resource_list
+    #   The list of source resources.
+    #   @return [Array<Types::SourceResource>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/ListSourceResourcesResult AWS API Documentation
+    #
+    class ListSourceResourcesResult < Struct.new(
+      :next_token,
+      :source_resource_list)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Represents a migration task in a migration tool.
     #
     # @!attribute [rw] progress_update_stream
@@ -721,6 +931,30 @@ module Aws::MigrationHub
       :progress_percent,
       :status_detail,
       :update_date_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A migration-task progress update.
+    #
+    # @!attribute [rw] update_date_time
+    #   The timestamp for the update.
+    #   @return [Time]
+    #
+    # @!attribute [rw] update_type
+    #   The type of the update.
+    #   @return [String]
+    #
+    # @!attribute [rw] migration_task_state
+    #   Task object encapsulating task information.
+    #   @return [Types::Task]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/MigrationTaskUpdate AWS API Documentation
+    #
+    class MigrationTaskUpdate < Struct.new(
+      :update_date_time,
+      :update_type,
+      :migration_task_state)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -963,6 +1197,34 @@ module Aws::MigrationHub
     #
     class ServiceUnavailableException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # A source resource can be a source server, a migration wave, an
+    # application, or any other resource that you track.
+    #
+    # @!attribute [rw] name
+    #   This is the name that you want to use to identify the resource. If
+    #   the resource is an AWS resource, we recommend that you set this
+    #   parameter to the ARN of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   A description that can be free-form text to record additional detail
+    #   about the resource for clarity or later reference.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_detail
+    #   A free-form description of the status of the resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/AWSMigrationHub-2017-05-31/SourceResource AWS API Documentation
+    #
+    class SourceResource < Struct.new(
+      :name,
+      :description,
+      :status_detail)
       SENSITIVE = []
       include Aws::Structure
     end

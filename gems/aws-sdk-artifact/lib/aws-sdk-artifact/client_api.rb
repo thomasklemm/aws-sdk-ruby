@@ -17,7 +17,13 @@ module Aws::Artifact
     AcceptanceType = Shapes::StringShape.new(name: 'AcceptanceType')
     AccessDeniedException = Shapes::StructureShape.new(name: 'AccessDeniedException')
     AccountSettings = Shapes::StructureShape.new(name: 'AccountSettings')
+    AgreementTerms = Shapes::ListShape.new(name: 'AgreementTerms')
+    AgreementType = Shapes::StringShape.new(name: 'AgreementType')
     ConflictException = Shapes::StructureShape.new(name: 'ConflictException')
+    CustomerAgreementIdAttribute = Shapes::StringShape.new(name: 'CustomerAgreementIdAttribute')
+    CustomerAgreementList = Shapes::ListShape.new(name: 'CustomerAgreementList')
+    CustomerAgreementState = Shapes::StringShape.new(name: 'CustomerAgreementState')
+    CustomerAgreementSummary = Shapes::StructureShape.new(name: 'CustomerAgreementSummary')
     GetAccountSettingsRequest = Shapes::StructureShape.new(name: 'GetAccountSettingsRequest')
     GetAccountSettingsResponse = Shapes::StructureShape.new(name: 'GetAccountSettingsResponse')
     GetReportMetadataRequest = Shapes::StructureShape.new(name: 'GetReportMetadataRequest')
@@ -30,6 +36,8 @@ module Aws::Artifact
     GetTermForReportResponseDocumentPresignedUrlString = Shapes::StringShape.new(name: 'GetTermForReportResponseDocumentPresignedUrlString')
     Integer = Shapes::IntegerShape.new(name: 'Integer')
     InternalServerException = Shapes::StructureShape.new(name: 'InternalServerException')
+    ListCustomerAgreementsRequest = Shapes::StructureShape.new(name: 'ListCustomerAgreementsRequest')
+    ListCustomerAgreementsResponse = Shapes::StructureShape.new(name: 'ListCustomerAgreementsResponse')
     ListReportsRequest = Shapes::StructureShape.new(name: 'ListReportsRequest')
     ListReportsResponse = Shapes::StructureShape.new(name: 'ListReportsResponse')
     LongStringAttribute = Shapes::StringShape.new(name: 'LongStringAttribute')
@@ -64,10 +72,29 @@ module Aws::Artifact
     AccountSettings.add_member(:notification_subscription_status, Shapes::ShapeRef.new(shape: NotificationSubscriptionStatus, location_name: "notificationSubscriptionStatus"))
     AccountSettings.struct_class = Types::AccountSettings
 
+    AgreementTerms.member = Shapes::ShapeRef.new(shape: LongStringAttribute)
+
     ConflictException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     ConflictException.add_member(:resource_id, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceId"))
     ConflictException.add_member(:resource_type, Shapes::ShapeRef.new(shape: String, required: true, location_name: "resourceType"))
     ConflictException.struct_class = Types::ConflictException
+
+    CustomerAgreementList.member = Shapes::ShapeRef.new(shape: CustomerAgreementSummary)
+
+    CustomerAgreementSummary.add_member(:name, Shapes::ShapeRef.new(shape: LongStringAttribute, location_name: "name"))
+    CustomerAgreementSummary.add_member(:arn, Shapes::ShapeRef.new(shape: LongStringAttribute, location_name: "arn"))
+    CustomerAgreementSummary.add_member(:id, Shapes::ShapeRef.new(shape: CustomerAgreementIdAttribute, location_name: "id"))
+    CustomerAgreementSummary.add_member(:agreement_arn, Shapes::ShapeRef.new(shape: LongStringAttribute, location_name: "agreementArn"))
+    CustomerAgreementSummary.add_member(:aws_account_id, Shapes::ShapeRef.new(shape: ShortStringAttribute, location_name: "awsAccountId"))
+    CustomerAgreementSummary.add_member(:organization_arn, Shapes::ShapeRef.new(shape: LongStringAttribute, location_name: "organizationArn"))
+    CustomerAgreementSummary.add_member(:effective_start, Shapes::ShapeRef.new(shape: TimestampAttribute, location_name: "effectiveStart"))
+    CustomerAgreementSummary.add_member(:effective_end, Shapes::ShapeRef.new(shape: TimestampAttribute, location_name: "effectiveEnd"))
+    CustomerAgreementSummary.add_member(:state, Shapes::ShapeRef.new(shape: CustomerAgreementState, location_name: "state"))
+    CustomerAgreementSummary.add_member(:description, Shapes::ShapeRef.new(shape: LongStringAttribute, location_name: "description"))
+    CustomerAgreementSummary.add_member(:acceptance_terms, Shapes::ShapeRef.new(shape: AgreementTerms, location_name: "acceptanceTerms"))
+    CustomerAgreementSummary.add_member(:terminate_terms, Shapes::ShapeRef.new(shape: AgreementTerms, location_name: "terminateTerms"))
+    CustomerAgreementSummary.add_member(:type, Shapes::ShapeRef.new(shape: AgreementType, location_name: "type"))
+    CustomerAgreementSummary.struct_class = Types::CustomerAgreementSummary
 
     GetAccountSettingsRequest.struct_class = Types::GetAccountSettingsRequest
 
@@ -100,6 +127,14 @@ module Aws::Artifact
     InternalServerException.add_member(:message, Shapes::ShapeRef.new(shape: String, required: true, location_name: "message"))
     InternalServerException.add_member(:retry_after_seconds, Shapes::ShapeRef.new(shape: Integer, location: "header", location_name: "Retry-After"))
     InternalServerException.struct_class = Types::InternalServerException
+
+    ListCustomerAgreementsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsAttribute, location: "querystring", location_name: "maxResults"))
+    ListCustomerAgreementsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextTokenAttribute, location: "querystring", location_name: "nextToken"))
+    ListCustomerAgreementsRequest.struct_class = Types::ListCustomerAgreementsRequest
+
+    ListCustomerAgreementsResponse.add_member(:customer_agreements, Shapes::ShapeRef.new(shape: CustomerAgreementList, required: true, location_name: "customerAgreements"))
+    ListCustomerAgreementsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextTokenAttribute, location_name: "nextToken"))
+    ListCustomerAgreementsResponse.struct_class = Types::ListCustomerAgreementsResponse
 
     ListReportsRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResultsAttribute, location: "querystring", location_name: "maxResults"))
     ListReportsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextTokenAttribute, location: "querystring", location_name: "nextToken"))
@@ -261,6 +296,24 @@ module Aws::Artifact
         o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
         o.errors << Shapes::ShapeRef.new(shape: ValidationException)
         o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
+      end)
+
+      api.add_operation(:list_customer_agreements, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListCustomerAgreements"
+        o.http_method = "GET"
+        o.http_request_uri = "/v1/customer-agreement/list"
+        o.input = Shapes::ShapeRef.new(shape: ListCustomerAgreementsRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListCustomerAgreementsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServerException)
+        o.errors << Shapes::ShapeRef.new(shape: ValidationException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
       end)
 
       api.add_operation(:list_reports, Seahorse::Model::Operation.new.tap do |o|

@@ -1376,6 +1376,64 @@ module Aws::SESV2
       req.send_request(options)
     end
 
+    # Creates a multi-region endpoint (global-endpoint).
+    #
+    # The primary region is going to be the AWS-Region where the operation
+    # is executed. The secondary region has to be provided in request's
+    # parameters. From the data flow standpoint there is no difference
+    # between primary and secondary regions - sending traffic will be split
+    # equally between the two. The primary region is the region where the
+    # resource has been created and where it can be managed.
+    #
+    # @option params [required, String] :endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint).
+    #
+    # @option params [required, Types::Details] :details
+    #   Contains details of a multi-region endpoint (global-endpoint) being
+    #   created.
+    #
+    # @option params [Array<Types::Tag>] :tags
+    #   An array of objects that define the tags (keys and values) to
+    #   associate with the multi-region endpoint (global-endpoint).
+    #
+    # @return [Types::CreateMultiRegionEndpointResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateMultiRegionEndpointResponse#status #status} => String
+    #   * {Types::CreateMultiRegionEndpointResponse#endpoint_id #endpoint_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_multi_region_endpoint({
+    #     endpoint_name: "EndpointName", # required
+    #     details: { # required
+    #       routes_details: [ # required
+    #         {
+    #           region: "Region", # required
+    #         },
+    #       ],
+    #     },
+    #     tags: [
+    #       {
+    #         key: "TagKey", # required
+    #         value: "TagValue", # required
+    #       },
+    #     ],
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status #=> String, one of "CREATING", "READY", "FAILED", "DELETING"
+    #   resp.endpoint_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/CreateMultiRegionEndpoint AWS API Documentation
+    #
+    # @overload create_multi_region_endpoint(params = {})
+    # @param [Hash] params ({})
+    def create_multi_region_endpoint(params = {}, options = {})
+      req = build_request(:create_multi_region_endpoint, params)
+      req.send_request(options)
+    end
+
     # Delete an existing configuration set.
     #
     # *Configuration sets* are groups of rules that you can apply to the
@@ -1630,6 +1688,37 @@ module Aws::SESV2
     # @param [Hash] params ({})
     def delete_email_template(params = {}, options = {})
       req = build_request(:delete_email_template, params)
+      req.send_request(options)
+    end
+
+    # Deletes a multi-region endpoint (global-endpoint).
+    #
+    # Only multi-region endpoints (global-endpoints) whose primary region is
+    # the AWS-Region where operation is executed can be deleted.
+    #
+    # @option params [required, String] :endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint) to be deleted.
+    #
+    # @return [Types::DeleteMultiRegionEndpointResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteMultiRegionEndpointResponse#status #status} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_multi_region_endpoint({
+    #     endpoint_name: "EndpointName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.status #=> String, one of "CREATING", "READY", "FAILED", "DELETING"
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/DeleteMultiRegionEndpoint AWS API Documentation
+    #
+    # @overload delete_multi_region_endpoint(params = {})
+    # @param [Hash] params ({})
+    def delete_multi_region_endpoint(params = {}, options = {})
+      req = build_request(:delete_multi_region_endpoint, params)
       req.send_request(options)
     end
 
@@ -2753,6 +2842,48 @@ module Aws::SESV2
       req.send_request(options)
     end
 
+    # Displays the multi-region endpoint (global-endpoint) configuration.
+    #
+    # Only multi-region endpoints (global-endpoints) whose primary region is
+    # the AWS-Region where operation is executed can be displayed.
+    #
+    # @option params [required, String] :endpoint_name
+    #   The name of the multi-region endpoint (global-endpoint).
+    #
+    # @return [Types::GetMultiRegionEndpointResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetMultiRegionEndpointResponse#endpoint_name #endpoint_name} => String
+    #   * {Types::GetMultiRegionEndpointResponse#endpoint_id #endpoint_id} => String
+    #   * {Types::GetMultiRegionEndpointResponse#routes #routes} => Array&lt;Types::Route&gt;
+    #   * {Types::GetMultiRegionEndpointResponse#status #status} => String
+    #   * {Types::GetMultiRegionEndpointResponse#created_timestamp #created_timestamp} => Time
+    #   * {Types::GetMultiRegionEndpointResponse#last_updated_timestamp #last_updated_timestamp} => Time
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_multi_region_endpoint({
+    #     endpoint_name: "EndpointName", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.endpoint_name #=> String
+    #   resp.endpoint_id #=> String
+    #   resp.routes #=> Array
+    #   resp.routes[0].region #=> String
+    #   resp.status #=> String, one of "CREATING", "READY", "FAILED", "DELETING"
+    #   resp.created_timestamp #=> Time
+    #   resp.last_updated_timestamp #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/GetMultiRegionEndpoint AWS API Documentation
+    #
+    # @overload get_multi_region_endpoint(params = {})
+    # @param [Hash] params ({})
+    def get_multi_region_endpoint(params = {}, options = {})
+      req = build_request(:get_multi_region_endpoint, params)
+      req.send_request(options)
+    end
+
     # Retrieves information about a specific email address that's on the
     # suppression list for your account.
     #
@@ -3408,6 +3539,58 @@ module Aws::SESV2
     # @param [Hash] params ({})
     def list_import_jobs(params = {}, options = {})
       req = build_request(:list_import_jobs, params)
+      req.send_request(options)
+    end
+
+    # List the multi-region endpoints (global-endpoints).
+    #
+    # Only multi-region endpoints (global-endpoints) whose primary region is
+    # the AWS-Region where operation is executed will be listed.
+    #
+    # @option params [String] :next_token
+    #   A token returned from a previous call to `ListMultiRegionEndpoints` to
+    #   indicate the position in the list of multi-region endpoints
+    #   (global-endpoints).
+    #
+    # @option params [Integer] :page_size
+    #   The number of results to show in a single call to
+    #   `ListMultiRegionEndpoints`. If the number of results is larger than
+    #   the number you specified in this parameter, the response includes a
+    #   `NextToken` element that you can use to retrieve the next page of
+    #   results.
+    #
+    # @return [Types::ListMultiRegionEndpointsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListMultiRegionEndpointsResponse#multi_region_endpoints #multi_region_endpoints} => Array&lt;Types::MultiRegionEndpoint&gt;
+    #   * {Types::ListMultiRegionEndpointsResponse#next_token #next_token} => String
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_multi_region_endpoints({
+    #     next_token: "NextTokenV2",
+    #     page_size: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.multi_region_endpoints #=> Array
+    #   resp.multi_region_endpoints[0].endpoint_name #=> String
+    #   resp.multi_region_endpoints[0].status #=> String, one of "CREATING", "READY", "FAILED", "DELETING"
+    #   resp.multi_region_endpoints[0].endpoint_id #=> String
+    #   resp.multi_region_endpoints[0].regions #=> Array
+    #   resp.multi_region_endpoints[0].regions[0] #=> String
+    #   resp.multi_region_endpoints[0].created_timestamp #=> Time
+    #   resp.multi_region_endpoints[0].last_updated_timestamp #=> Time
+    #   resp.next_token #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/sesv2-2019-09-27/ListMultiRegionEndpoints AWS API Documentation
+    #
+    # @overload list_multi_region_endpoints(params = {})
+    # @param [Hash] params ({})
+    def list_multi_region_endpoints(params = {}, options = {})
+      req = build_request(:list_multi_region_endpoints, params)
       req.send_request(options)
     end
 
@@ -4445,6 +4628,9 @@ module Aws::SESV2
     # @option params [String] :configuration_set_name
     #   The name of the configuration set to use when sending the email.
     #
+    # @option params [String] :endpoint_id
+    #   The ID of the multi-region endpoint (global-endpoint).
+    #
     # @return [Types::SendBulkEmailResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::SendBulkEmailResponse#bulk_email_entry_results #bulk_email_entry_results} => Array&lt;Types::BulkEmailEntryResult&gt;
@@ -4508,6 +4694,7 @@ module Aws::SESV2
     #       },
     #     ],
     #     configuration_set_name: "ConfigurationSetName",
+    #     endpoint_id: "EndpointId",
     #   })
     #
     # @example Response structure
@@ -4667,6 +4854,9 @@ module Aws::SESV2
     # @option params [String] :configuration_set_name
     #   The name of the configuration set to use when sending the email.
     #
+    # @option params [String] :endpoint_id
+    #   The ID of the multi-region endpoint (global-endpoint).
+    #
     # @option params [Types::ListManagementOptions] :list_management_options
     #   An object used to specify a list or topic to which an email belongs,
     #   which will be used when a contact chooses to unsubscribe.
@@ -4738,6 +4928,7 @@ module Aws::SESV2
     #       },
     #     ],
     #     configuration_set_name: "ConfigurationSetName",
+    #     endpoint_id: "EndpointId",
     #     list_management_options: {
     #       contact_list_name: "ContactListName", # required
     #       topic_name: "TopicName",
@@ -5202,7 +5393,7 @@ module Aws::SESV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-sesv2'
-      context[:gem_version] = '1.67.0'
+      context[:gem_version] = '1.68.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

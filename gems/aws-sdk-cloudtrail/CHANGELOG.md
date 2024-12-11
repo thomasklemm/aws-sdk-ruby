@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.97.0 (2024-12-11)
+------------------
+
+* Feature - Doc-only updates for CloudTrail.
+
 1.96.0 (2024-11-21)
 ------------------
 

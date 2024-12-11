@@ -359,8 +359,7 @@ module Aws::ControlCatalog
     # segments.
     #
     # Although the format is similar, the values for the `Type` field do not
-    # match any Amazon Web Services CloudFormation values, and we do not use
-    # CloudFormation to implement these controls.
+    # match any Amazon Web Services CloudFormation values.
     #
     # @!attribute [rw] type
     #   A string that describes a control's implementation type.

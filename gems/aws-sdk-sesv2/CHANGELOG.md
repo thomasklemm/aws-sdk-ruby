@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.68.0 (2024-12-11)
+------------------
+
+* Feature - Introduces support for multi-region endpoint.
+
 1.67.0 (2024-12-10)
 ------------------
 

@@ -60,6 +60,81 @@ module Aws::Artifact
       include Aws::Structure
     end
 
+    # Summary for customer-agreement resource.
+    #
+    # @!attribute [rw] name
+    #   Name of the customer-agreement resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] arn
+    #   ARN of the customer-agreement resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] id
+    #   Identifier of the customer-agreement resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] agreement_arn
+    #   ARN of the agreement resource the customer-agreement resource
+    #   represents.
+    #   @return [String]
+    #
+    # @!attribute [rw] aws_account_id
+    #   AWS account Id that owns the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] organization_arn
+    #   ARN of the organization that owns the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] effective_start
+    #   Timestamp indicating when the agreement became effective.
+    #   @return [Time]
+    #
+    # @!attribute [rw] effective_end
+    #   Timestamp indicating when the agreement was terminated.
+    #   @return [Time]
+    #
+    # @!attribute [rw] state
+    #   State of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   Description of the resource.
+    #   @return [String]
+    #
+    # @!attribute [rw] acceptance_terms
+    #   Terms required to accept the agreement resource.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] terminate_terms
+    #   Terms required to terminate the customer-agreement resource.
+    #   @return [Array<String>]
+    #
+    # @!attribute [rw] type
+    #   Type of the customer-agreement resource.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/artifact-2018-05-10/CustomerAgreementSummary AWS API Documentation
+    #
+    class CustomerAgreementSummary < Struct.new(
+      :name,
+      :arn,
+      :id,
+      :agreement_arn,
+      :aws_account_id,
+      :organization_arn,
+      :effective_start,
+      :effective_end,
+      :state,
+      :description,
+      :acceptance_terms,
+      :terminate_terms,
+      :type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @api private
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/artifact-2018-05-10/GetAccountSettingsRequest AWS API Documentation
@@ -189,6 +264,40 @@ module Aws::Artifact
     class InternalServerException < Struct.new(
       :message,
       :retry_after_seconds)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] max_results
+    #   Maximum number of resources to return in the paginated response.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] next_token
+    #   Pagination token to request the next page of resources.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/artifact-2018-05-10/ListCustomerAgreementsRequest AWS API Documentation
+    #
+    class ListCustomerAgreementsRequest < Struct.new(
+      :max_results,
+      :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] customer_agreements
+    #   List of customer-agreement resources.
+    #   @return [Array<Types::CustomerAgreementSummary>]
+    #
+    # @!attribute [rw] next_token
+    #   Pagination token to request the next page of resources.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/artifact-2018-05-10/ListCustomerAgreementsResponse AWS API Documentation
+    #
+    class ListCustomerAgreementsResponse < Struct.new(
+      :customer_agreements,
+      :next_token)
       SENSITIVE = []
       include Aws::Structure
     end

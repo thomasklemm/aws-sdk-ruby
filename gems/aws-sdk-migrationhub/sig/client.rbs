@@ -106,6 +106,22 @@ module Aws
                                          ) -> _AssociateDiscoveredResourceResponseSuccess
                                        | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateDiscoveredResourceResponseSuccess
 
+      interface _AssociateSourceResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::AssociateSourceResourceResult]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MigrationHub/Client.html#associate_source_resource-instance_method
+      def associate_source_resource: (
+                                       progress_update_stream: ::String,
+                                       migration_task_name: ::String,
+                                       source_resource: {
+                                         name: ::String,
+                                         description: ::String?,
+                                         status_detail: ::String?
+                                       },
+                                       ?dry_run: bool
+                                     ) -> _AssociateSourceResourceResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _AssociateSourceResourceResponseSuccess
+
       interface _CreateProgressUpdateStreamResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateProgressUpdateStreamResult]
       end
@@ -172,6 +188,18 @@ module Aws
                                             ) -> _DisassociateDiscoveredResourceResponseSuccess
                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateDiscoveredResourceResponseSuccess
 
+      interface _DisassociateSourceResourceResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DisassociateSourceResourceResult]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MigrationHub/Client.html#disassociate_source_resource-instance_method
+      def disassociate_source_resource: (
+                                          progress_update_stream: ::String,
+                                          migration_task_name: ::String,
+                                          source_resource_name: ::String,
+                                          ?dry_run: bool
+                                        ) -> _DisassociateSourceResourceResponseSuccess
+                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DisassociateSourceResourceResponseSuccess
+
       interface _ImportMigrationTaskResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ImportMigrationTaskResult]
       end
@@ -224,6 +252,20 @@ module Aws
                                      ) -> _ListDiscoveredResourcesResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListDiscoveredResourcesResponseSuccess
 
+      interface _ListMigrationTaskUpdatesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListMigrationTaskUpdatesResult]
+        def next_token: () -> ::String
+        def migration_task_update_list: () -> ::Array[Types::MigrationTaskUpdate]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MigrationHub/Client.html#list_migration_task_updates-instance_method
+      def list_migration_task_updates: (
+                                         progress_update_stream: ::String,
+                                         migration_task_name: ::String,
+                                         ?next_token: ::String,
+                                         ?max_results: ::Integer
+                                       ) -> _ListMigrationTaskUpdatesResponseSuccess
+                                     | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListMigrationTaskUpdatesResponseSuccess
+
       interface _ListMigrationTasksResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListMigrationTasksResult]
         def next_token: () -> ::String
@@ -248,6 +290,20 @@ module Aws
                                           ?max_results: ::Integer
                                         ) -> _ListProgressUpdateStreamsResponseSuccess
                                       | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListProgressUpdateStreamsResponseSuccess
+
+      interface _ListSourceResourcesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListSourceResourcesResult]
+        def next_token: () -> ::String
+        def source_resource_list: () -> ::Array[Types::SourceResource]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/MigrationHub/Client.html#list_source_resources-instance_method
+      def list_source_resources: (
+                                   progress_update_stream: ::String,
+                                   migration_task_name: ::String,
+                                   ?next_token: ::String,
+                                   ?max_results: ::Integer
+                                 ) -> _ListSourceResourcesResponseSuccess
+                               | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListSourceResourcesResponseSuccess
 
       interface _NotifyApplicationStateResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::NotifyApplicationStateResult]

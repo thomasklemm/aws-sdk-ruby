@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.112.0 (2024-12-11)
+------------------
+
+* Feature - Updated descriptions for some API operations and parameters, corrected some errors in Cognito user pools
+
 1.111.0 (2024-12-09)
 ------------------
 

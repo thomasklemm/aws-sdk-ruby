@@ -801,6 +801,10 @@ module Aws::EMRServerless
     #   job. If not specified, this value defaults to the attempt of the
     #   latest job.
     #
+    # @option params [Boolean] :access_system_profile_logs
+    #   Allows access to system profile logs for Lake Formation-enabled jobs.
+    #   Default is false.
+    #
     # @return [Types::GetDashboardForJobRunResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::GetDashboardForJobRunResponse#url #url} => String
@@ -811,6 +815,7 @@ module Aws::EMRServerless
     #     application_id: "ApplicationId", # required
     #     job_run_id: "JobRunId", # required
     #     attempt: 1,
+    #     access_system_profile_logs: false,
     #   })
     #
     # @example Response structure
@@ -1621,7 +1626,7 @@ module Aws::EMRServerless
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-emrserverless'
-      context[:gem_version] = '1.37.0'
+      context[:gem_version] = '1.38.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

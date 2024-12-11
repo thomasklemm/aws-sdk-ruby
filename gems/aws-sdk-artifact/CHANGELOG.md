@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.15.0 (2024-12-11)
+------------------
+
+* Feature - Add support for listing active customer agreements for the calling AWS Account.
+
 1.14.0 (2024-10-18)
 ------------------
 

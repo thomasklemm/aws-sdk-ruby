@@ -76,6 +76,7 @@ module Aws::TimestreamInfluxDB
     LogDeliveryConfiguration = Shapes::StructureShape.new(name: 'LogDeliveryConfiguration')
     LogLevel = Shapes::StringShape.new(name: 'LogLevel')
     MaxResults = Shapes::IntegerShape.new(name: 'MaxResults')
+    NetworkType = Shapes::StringShape.new(name: 'NetworkType')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     Organization = Shapes::StringShape.new(name: 'Organization')
     Parameters = Shapes::UnionShape.new(name: 'Parameters')
@@ -130,6 +131,7 @@ module Aws::TimestreamInfluxDB
     CreateDbInstanceInput.add_member(:log_delivery_configuration, Shapes::ShapeRef.new(shape: LogDeliveryConfiguration, location_name: "logDeliveryConfiguration"))
     CreateDbInstanceInput.add_member(:tags, Shapes::ShapeRef.new(shape: RequestTagMap, location_name: "tags"))
     CreateDbInstanceInput.add_member(:port, Shapes::ShapeRef.new(shape: Port, location_name: "port"))
+    CreateDbInstanceInput.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     CreateDbInstanceInput.struct_class = Types::CreateDbInstanceInput
 
     CreateDbInstanceOutput.add_member(:id, Shapes::ShapeRef.new(shape: DbInstanceId, required: true, location_name: "id"))
@@ -138,6 +140,7 @@ module Aws::TimestreamInfluxDB
     CreateDbInstanceOutput.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "status"))
     CreateDbInstanceOutput.add_member(:endpoint, Shapes::ShapeRef.new(shape: String, location_name: "endpoint"))
     CreateDbInstanceOutput.add_member(:port, Shapes::ShapeRef.new(shape: Port, location_name: "port"))
+    CreateDbInstanceOutput.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     CreateDbInstanceOutput.add_member(:db_instance_type, Shapes::ShapeRef.new(shape: DbInstanceType, location_name: "dbInstanceType"))
     CreateDbInstanceOutput.add_member(:db_storage_type, Shapes::ShapeRef.new(shape: DbStorageType, location_name: "dbStorageType"))
     CreateDbInstanceOutput.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: AllocatedStorage, location_name: "allocatedStorage"))
@@ -171,6 +174,7 @@ module Aws::TimestreamInfluxDB
     DbInstanceSummary.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "status"))
     DbInstanceSummary.add_member(:endpoint, Shapes::ShapeRef.new(shape: String, location_name: "endpoint"))
     DbInstanceSummary.add_member(:port, Shapes::ShapeRef.new(shape: Port, location_name: "port"))
+    DbInstanceSummary.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     DbInstanceSummary.add_member(:db_instance_type, Shapes::ShapeRef.new(shape: DbInstanceType, location_name: "dbInstanceType"))
     DbInstanceSummary.add_member(:db_storage_type, Shapes::ShapeRef.new(shape: DbStorageType, location_name: "dbStorageType"))
     DbInstanceSummary.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: AllocatedStorage, location_name: "allocatedStorage"))
@@ -196,6 +200,7 @@ module Aws::TimestreamInfluxDB
     DeleteDbInstanceOutput.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "status"))
     DeleteDbInstanceOutput.add_member(:endpoint, Shapes::ShapeRef.new(shape: String, location_name: "endpoint"))
     DeleteDbInstanceOutput.add_member(:port, Shapes::ShapeRef.new(shape: Port, location_name: "port"))
+    DeleteDbInstanceOutput.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     DeleteDbInstanceOutput.add_member(:db_instance_type, Shapes::ShapeRef.new(shape: DbInstanceType, location_name: "dbInstanceType"))
     DeleteDbInstanceOutput.add_member(:db_storage_type, Shapes::ShapeRef.new(shape: DbStorageType, location_name: "dbStorageType"))
     DeleteDbInstanceOutput.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: AllocatedStorage, location_name: "allocatedStorage"))
@@ -223,6 +228,7 @@ module Aws::TimestreamInfluxDB
     GetDbInstanceOutput.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "status"))
     GetDbInstanceOutput.add_member(:endpoint, Shapes::ShapeRef.new(shape: String, location_name: "endpoint"))
     GetDbInstanceOutput.add_member(:port, Shapes::ShapeRef.new(shape: Port, location_name: "port"))
+    GetDbInstanceOutput.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     GetDbInstanceOutput.add_member(:db_instance_type, Shapes::ShapeRef.new(shape: DbInstanceType, location_name: "dbInstanceType"))
     GetDbInstanceOutput.add_member(:db_storage_type, Shapes::ShapeRef.new(shape: DbStorageType, location_name: "dbStorageType"))
     GetDbInstanceOutput.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: AllocatedStorage, location_name: "allocatedStorage"))
@@ -363,6 +369,7 @@ module Aws::TimestreamInfluxDB
     UpdateDbInstanceOutput.add_member(:status, Shapes::ShapeRef.new(shape: Status, location_name: "status"))
     UpdateDbInstanceOutput.add_member(:endpoint, Shapes::ShapeRef.new(shape: String, location_name: "endpoint"))
     UpdateDbInstanceOutput.add_member(:port, Shapes::ShapeRef.new(shape: Port, location_name: "port"))
+    UpdateDbInstanceOutput.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "networkType"))
     UpdateDbInstanceOutput.add_member(:db_instance_type, Shapes::ShapeRef.new(shape: DbInstanceType, location_name: "dbInstanceType"))
     UpdateDbInstanceOutput.add_member(:db_storage_type, Shapes::ShapeRef.new(shape: DbStorageType, location_name: "dbStorageType"))
     UpdateDbInstanceOutput.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: AllocatedStorage, location_name: "allocatedStorage"))
@@ -528,6 +535,7 @@ module Aws::TimestreamInfluxDB
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: TagResourceRequest)
         o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: ServiceQuotaExceededException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
       end)
 
