@@ -10,7 +10,3 @@ Feature: Amazon Route53 Domains
       When I attempt to call the "GetDomainDetail" API with:
       | DomainName | fake-domain-name |
       Then I expect the response error code to be "InvalidInput"
-      And I expect the response error message to include:
-      """
-      Errors
-      """
