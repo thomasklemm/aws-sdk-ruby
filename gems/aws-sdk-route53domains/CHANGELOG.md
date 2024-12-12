@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.72.0 (2024-12-12)
+------------------
+
+* Feature - This release includes the following API updates: added the enumeration type RESTORE_DOMAIN to the OperationType; constrained the Price attribute to non-negative values; updated the LangCode to allow 2 or 3 alphabetical characters.
+
 1.71.0 (2024-11-18)
 ------------------
 

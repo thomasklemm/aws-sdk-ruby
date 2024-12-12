@@ -1715,6 +1715,12 @@ module Aws::Glue
       SENSITIVE: [:description, :evaluation_message, :evaluated_metrics]
     end
 
+    class DataQualityEncryption
+      attr_accessor data_quality_encryption_mode: ("DISABLED" | "SSE-KMS")
+      attr_accessor kms_key_arn: ::String
+      SENSITIVE: []
+    end
+
     class DataQualityEvaluationRunAdditionalRunOptions
       attr_accessor cloud_watch_metrics_enabled: bool
       attr_accessor results_s3_prefix: ::String
@@ -2443,6 +2449,7 @@ module Aws::Glue
       attr_accessor s3_encryption: ::Array[Types::S3Encryption]
       attr_accessor cloud_watch_encryption: Types::CloudWatchEncryption
       attr_accessor job_bookmarks_encryption: Types::JobBookmarksEncryption
+      attr_accessor data_quality_encryption: Types::DataQualityEncryption
       SENSITIVE: []
     end
 

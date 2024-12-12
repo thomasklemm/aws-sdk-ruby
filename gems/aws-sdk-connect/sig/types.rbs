@@ -656,6 +656,8 @@ module Aws::Connect
       attr_accessor or_conditions: ::Array[Types::ContactFlowModuleSearchCriteria]
       attr_accessor and_conditions: ::Array[Types::ContactFlowModuleSearchCriteria]
       attr_accessor string_condition: Types::StringCondition
+      attr_accessor state_condition: ("ACTIVE" | "ARCHIVED")
+      attr_accessor status_condition: ("PUBLISHED" | "SAVED")
       SENSITIVE: []
     end
 
@@ -893,6 +895,22 @@ module Aws::Connect
     class CreateEvaluationFormResponse
       attr_accessor evaluation_form_id: ::String
       attr_accessor evaluation_form_arn: ::String
+      SENSITIVE: []
+    end
+
+    class CreateHoursOfOperationOverrideRequest
+      attr_accessor instance_id: ::String
+      attr_accessor hours_of_operation_id: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor config: ::Array[Types::HoursOfOperationOverrideConfig]
+      attr_accessor effective_from: ::String
+      attr_accessor effective_till: ::String
+      SENSITIVE: []
+    end
+
+    class CreateHoursOfOperationOverrideResponse
+      attr_accessor hours_of_operation_override_id: ::String
       SENSITIVE: []
     end
 
@@ -1297,6 +1315,13 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class DateCondition
+      attr_accessor field_name: ::String
+      attr_accessor value: ::String
+      attr_accessor comparison_type: ("GREATER_THAN" | "LESS_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO")
+      SENSITIVE: []
+    end
+
     class DateReference
       attr_accessor name: ::String
       attr_accessor value: ::String
@@ -1372,6 +1397,13 @@ module Aws::Connect
       attr_accessor instance_id: ::String
       attr_accessor evaluation_form_id: ::String
       attr_accessor evaluation_form_version: ::Integer
+      SENSITIVE: []
+    end
+
+    class DeleteHoursOfOperationOverrideRequest
+      attr_accessor instance_id: ::String
+      attr_accessor hours_of_operation_id: ::String
+      attr_accessor hours_of_operation_override_id: ::String
       SENSITIVE: []
     end
 
@@ -1606,6 +1638,18 @@ module Aws::Connect
 
     class DescribeEvaluationFormResponse
       attr_accessor evaluation_form: Types::EvaluationForm
+      SENSITIVE: []
+    end
+
+    class DescribeHoursOfOperationOverrideRequest
+      attr_accessor instance_id: ::String
+      attr_accessor hours_of_operation_id: ::String
+      attr_accessor hours_of_operation_override_id: ::String
+      SENSITIVE: []
+    end
+
+    class DescribeHoursOfOperationOverrideResponse
+      attr_accessor hours_of_operation_override: Types::HoursOfOperationOverride
       SENSITIVE: []
     end
 
@@ -1952,6 +1996,12 @@ module Aws::Connect
 
     class DuplicateResourceException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class EffectiveHoursOfOperations
+      attr_accessor date: ::String
+      attr_accessor operational_hours: ::Array[Types::OperationalHour]
       SENSITIVE: []
     end
 
@@ -2410,6 +2460,20 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class GetEffectiveHoursOfOperationsRequest
+      attr_accessor instance_id: ::String
+      attr_accessor hours_of_operation_id: ::String
+      attr_accessor from_date: ::String
+      attr_accessor to_date: ::String
+      SENSITIVE: []
+    end
+
+    class GetEffectiveHoursOfOperationsResponse
+      attr_accessor effective_hours_of_operation_list: ::Array[Types::EffectiveHoursOfOperations]
+      attr_accessor time_zone: ::String
+      SENSITIVE: []
+    end
+
     class GetFederationTokenRequest
       attr_accessor instance_id: ::String
       SENSITIVE: []
@@ -2655,6 +2719,33 @@ module Aws::Connect
       attr_accessor day: ("SUNDAY" | "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY")
       attr_accessor start_time: Types::HoursOfOperationTimeSlice
       attr_accessor end_time: Types::HoursOfOperationTimeSlice
+      SENSITIVE: []
+    end
+
+    class HoursOfOperationOverride
+      attr_accessor hours_of_operation_override_id: ::String
+      attr_accessor hours_of_operation_id: ::String
+      attr_accessor hours_of_operation_arn: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor config: ::Array[Types::HoursOfOperationOverrideConfig]
+      attr_accessor effective_from: ::String
+      attr_accessor effective_till: ::String
+      SENSITIVE: []
+    end
+
+    class HoursOfOperationOverrideConfig
+      attr_accessor day: ("SUNDAY" | "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY")
+      attr_accessor start_time: Types::OverrideTimeSlice
+      attr_accessor end_time: Types::OverrideTimeSlice
+      SENSITIVE: []
+    end
+
+    class HoursOfOperationOverrideSearchCriteria
+      attr_accessor or_conditions: ::Array[Types::HoursOfOperationOverrideSearchCriteria]
+      attr_accessor and_conditions: ::Array[Types::HoursOfOperationOverrideSearchCriteria]
+      attr_accessor string_condition: Types::StringCondition
+      attr_accessor date_condition: Types::DateCondition
       SENSITIVE: []
     end
 
@@ -3078,6 +3169,22 @@ module Aws::Connect
     class ListFlowAssociationsResponse
       attr_accessor flow_association_summary_list: ::Array[Types::FlowAssociationSummary]
       attr_accessor next_token: ::String
+      SENSITIVE: []
+    end
+
+    class ListHoursOfOperationOverridesRequest
+      attr_accessor instance_id: ::String
+      attr_accessor hours_of_operation_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      SENSITIVE: []
+    end
+
+    class ListHoursOfOperationOverridesResponse
+      attr_accessor next_token: ::String
+      attr_accessor hours_of_operation_override_list: ::Array[Types::HoursOfOperationOverride]
+      attr_accessor last_modified_region: ::String
+      attr_accessor last_modified_time: ::Time
       SENSITIVE: []
     end
 
@@ -3665,6 +3772,12 @@ module Aws::Connect
       SENSITIVE: []
     end
 
+    class OperationalHour
+      attr_accessor start: Types::OverrideTimeSlice
+      attr_accessor end: Types::OverrideTimeSlice
+      SENSITIVE: []
+    end
+
     class OutboundAdditionalRecipients
       attr_accessor cc_email_addresses: ::Array[Types::EmailAddressInfo]
       SENSITIVE: []
@@ -3703,6 +3816,12 @@ module Aws::Connect
 
     class OutputTypeNotFoundException
       attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
+    class OverrideTimeSlice
+      attr_accessor hours: ::Integer
+      attr_accessor minutes: ::Integer
       SENSITIVE: []
     end
 
@@ -4511,6 +4630,22 @@ module Aws::Connect
     class SearchEmailAddressesResponse
       attr_accessor next_token: ::String
       attr_accessor email_addresses: ::Array[Types::EmailAddressMetadata]
+      attr_accessor approximate_total_count: ::Integer
+      SENSITIVE: []
+    end
+
+    class SearchHoursOfOperationOverridesRequest
+      attr_accessor instance_id: ::String
+      attr_accessor next_token: ::String
+      attr_accessor max_results: ::Integer
+      attr_accessor search_filter: Types::HoursOfOperationSearchFilter
+      attr_accessor search_criteria: Types::HoursOfOperationOverrideSearchCriteria
+      SENSITIVE: []
+    end
+
+    class SearchHoursOfOperationOverridesResponse
+      attr_accessor hours_of_operation_overrides: ::Array[Types::HoursOfOperationOverride]
+      attr_accessor next_token: ::String
       attr_accessor approximate_total_count: ::Integer
       SENSITIVE: []
     end
@@ -5542,6 +5677,18 @@ module Aws::Connect
       attr_accessor evaluation_form_id: ::String
       attr_accessor evaluation_form_arn: ::String
       attr_accessor evaluation_form_version: ::Integer
+      SENSITIVE: []
+    end
+
+    class UpdateHoursOfOperationOverrideRequest
+      attr_accessor instance_id: ::String
+      attr_accessor hours_of_operation_id: ::String
+      attr_accessor hours_of_operation_override_id: ::String
+      attr_accessor name: ::String
+      attr_accessor description: ::String
+      attr_accessor config: ::Array[Types::HoursOfOperationOverrideConfig]
+      attr_accessor effective_from: ::String
+      attr_accessor effective_till: ::String
       SENSITIVE: []
     end
 

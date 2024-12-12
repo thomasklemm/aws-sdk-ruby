@@ -282,6 +282,7 @@ module Aws::DatabaseMigrationService
     KafkaSecurityProtocol = Shapes::StringShape.new(name: 'KafkaSecurityProtocol')
     KafkaSettings = Shapes::StructureShape.new(name: 'KafkaSettings')
     KafkaSslEndpointIdentificationAlgorithm = Shapes::StringShape.new(name: 'KafkaSslEndpointIdentificationAlgorithm')
+    KerberosAuthenticationSettings = Shapes::StructureShape.new(name: 'KerberosAuthenticationSettings')
     KeyList = Shapes::ListShape.new(name: 'KeyList')
     KinesisSettings = Shapes::StructureShape.new(name: 'KinesisSettings')
     Limitation = Shapes::StructureShape.new(name: 'Limitation')
@@ -329,6 +330,7 @@ module Aws::DatabaseMigrationService
     MySqlDataProviderSettings = Shapes::StructureShape.new(name: 'MySqlDataProviderSettings')
     NeptuneSettings = Shapes::StructureShape.new(name: 'NeptuneSettings')
     NestingLevelValue = Shapes::StringShape.new(name: 'NestingLevelValue')
+    OracleAuthenticationMethod = Shapes::StringShape.new(name: 'OracleAuthenticationMethod')
     OracleDataProviderSettings = Shapes::StructureShape.new(name: 'OracleDataProviderSettings')
     OracleSettings = Shapes::StructureShape.new(name: 'OracleSettings')
     OrderableReplicationInstance = Shapes::StructureShape.new(name: 'OrderableReplicationInstance')
@@ -373,6 +375,7 @@ module Aws::DatabaseMigrationService
     ReplicationConfigList = Shapes::ListShape.new(name: 'ReplicationConfigList')
     ReplicationEndpointTypeValue = Shapes::StringShape.new(name: 'ReplicationEndpointTypeValue')
     ReplicationInstance = Shapes::StructureShape.new(name: 'ReplicationInstance')
+    ReplicationInstanceClass = Shapes::StringShape.new(name: 'ReplicationInstanceClass')
     ReplicationInstanceIpv6AddressList = Shapes::ListShape.new(name: 'ReplicationInstanceIpv6AddressList')
     ReplicationInstanceList = Shapes::ListShape.new(name: 'ReplicationInstanceList')
     ReplicationInstancePrivateIpAddressList = Shapes::ListShape.new(name: 'ReplicationInstancePrivateIpAddressList')
@@ -421,6 +424,7 @@ module Aws::DatabaseMigrationService
     SourceDataSettings = Shapes::ListShape.new(name: 'SourceDataSettings')
     SourceIdsList = Shapes::ListShape.new(name: 'SourceIdsList')
     SourceType = Shapes::StringShape.new(name: 'SourceType')
+    SqlServerAuthenticationMethod = Shapes::StringShape.new(name: 'SqlServerAuthenticationMethod')
     SslSecurityProtocolValue = Shapes::StringShape.new(name: 'SslSecurityProtocolValue')
     StartDataMigrationMessage = Shapes::StructureShape.new(name: 'StartDataMigrationMessage')
     StartDataMigrationResponse = Shapes::StructureShape.new(name: 'StartDataMigrationResponse')
@@ -739,7 +743,7 @@ module Aws::DatabaseMigrationService
 
     CreateReplicationInstanceMessage.add_member(:replication_instance_identifier, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ReplicationInstanceIdentifier"))
     CreateReplicationInstanceMessage.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "AllocatedStorage"))
-    CreateReplicationInstanceMessage.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ReplicationInstanceClass"))
+    CreateReplicationInstanceMessage.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: ReplicationInstanceClass, required: true, location_name: "ReplicationInstanceClass"))
     CreateReplicationInstanceMessage.add_member(:vpc_security_group_ids, Shapes::ShapeRef.new(shape: VpcSecurityGroupIdList, location_name: "VpcSecurityGroupIds"))
     CreateReplicationInstanceMessage.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "AvailabilityZone"))
     CreateReplicationInstanceMessage.add_member(:replication_subnet_group_identifier, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationSubnetGroupIdentifier"))
@@ -753,6 +757,7 @@ module Aws::DatabaseMigrationService
     CreateReplicationInstanceMessage.add_member(:dns_name_servers, Shapes::ShapeRef.new(shape: String, location_name: "DnsNameServers"))
     CreateReplicationInstanceMessage.add_member(:resource_identifier, Shapes::ShapeRef.new(shape: String, location_name: "ResourceIdentifier"))
     CreateReplicationInstanceMessage.add_member(:network_type, Shapes::ShapeRef.new(shape: String, location_name: "NetworkType"))
+    CreateReplicationInstanceMessage.add_member(:kerberos_authentication_settings, Shapes::ShapeRef.new(shape: KerberosAuthenticationSettings, location_name: "KerberosAuthenticationSettings"))
     CreateReplicationInstanceMessage.struct_class = Types::CreateReplicationInstanceMessage
 
     CreateReplicationInstanceResponse.add_member(:replication_instance, Shapes::ShapeRef.new(shape: ReplicationInstance, location_name: "ReplicationInstance"))
@@ -1702,7 +1707,13 @@ module Aws::DatabaseMigrationService
     KafkaSettings.add_member(:no_hex_prefix, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "NoHexPrefix"))
     KafkaSettings.add_member(:sasl_mechanism, Shapes::ShapeRef.new(shape: KafkaSaslMechanism, location_name: "SaslMechanism"))
     KafkaSettings.add_member(:ssl_endpoint_identification_algorithm, Shapes::ShapeRef.new(shape: KafkaSslEndpointIdentificationAlgorithm, location_name: "SslEndpointIdentificationAlgorithm"))
+    KafkaSettings.add_member(:use_large_integer_value, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "UseLargeIntegerValue"))
     KafkaSettings.struct_class = Types::KafkaSettings
+
+    KerberosAuthenticationSettings.add_member(:key_cache_secret_id, Shapes::ShapeRef.new(shape: String, location_name: "KeyCacheSecretId"))
+    KerberosAuthenticationSettings.add_member(:key_cache_secret_iam_arn, Shapes::ShapeRef.new(shape: String, location_name: "KeyCacheSecretIamArn"))
+    KerberosAuthenticationSettings.add_member(:krb_5_file_contents, Shapes::ShapeRef.new(shape: String, location_name: "Krb5FileContents"))
+    KerberosAuthenticationSettings.struct_class = Types::KerberosAuthenticationSettings
 
     KeyList.member = Shapes::ShapeRef.new(shape: String)
 
@@ -1716,6 +1727,7 @@ module Aws::DatabaseMigrationService
     KinesisSettings.add_member(:include_control_details, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "IncludeControlDetails"))
     KinesisSettings.add_member(:include_null_and_empty, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "IncludeNullAndEmpty"))
     KinesisSettings.add_member(:no_hex_prefix, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "NoHexPrefix"))
+    KinesisSettings.add_member(:use_large_integer_value, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "UseLargeIntegerValue"))
     KinesisSettings.struct_class = Types::KinesisSettings
 
     Limitation.add_member(:database_id, Shapes::ShapeRef.new(shape: String, location_name: "DatabaseId"))
@@ -1758,6 +1770,7 @@ module Aws::DatabaseMigrationService
     MicrosoftSQLServerSettings.add_member(:trim_space_in_char, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "TrimSpaceInChar"))
     MicrosoftSQLServerSettings.add_member(:tlog_access_mode, Shapes::ShapeRef.new(shape: TlogAccessMode, location_name: "TlogAccessMode"))
     MicrosoftSQLServerSettings.add_member(:force_lob_lookup, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ForceLobLookup"))
+    MicrosoftSQLServerSettings.add_member(:authentication_method, Shapes::ShapeRef.new(shape: SqlServerAuthenticationMethod, location_name: "AuthenticationMethod"))
     MicrosoftSQLServerSettings.struct_class = Types::MicrosoftSQLServerSettings
 
     MicrosoftSqlServerDataProviderSettings.add_member(:server_name, Shapes::ShapeRef.new(shape: String, location_name: "ServerName"))
@@ -1905,7 +1918,7 @@ module Aws::DatabaseMigrationService
     ModifyReplicationInstanceMessage.add_member(:replication_instance_arn, Shapes::ShapeRef.new(shape: String, required: true, location_name: "ReplicationInstanceArn"))
     ModifyReplicationInstanceMessage.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "AllocatedStorage"))
     ModifyReplicationInstanceMessage.add_member(:apply_immediately, Shapes::ShapeRef.new(shape: Boolean, location_name: "ApplyImmediately"))
-    ModifyReplicationInstanceMessage.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceClass"))
+    ModifyReplicationInstanceMessage.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: ReplicationInstanceClass, location_name: "ReplicationInstanceClass"))
     ModifyReplicationInstanceMessage.add_member(:vpc_security_group_ids, Shapes::ShapeRef.new(shape: VpcSecurityGroupIdList, location_name: "VpcSecurityGroupIds"))
     ModifyReplicationInstanceMessage.add_member(:preferred_maintenance_window, Shapes::ShapeRef.new(shape: String, location_name: "PreferredMaintenanceWindow"))
     ModifyReplicationInstanceMessage.add_member(:multi_az, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "MultiAZ"))
@@ -1914,6 +1927,7 @@ module Aws::DatabaseMigrationService
     ModifyReplicationInstanceMessage.add_member(:auto_minor_version_upgrade, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "AutoMinorVersionUpgrade"))
     ModifyReplicationInstanceMessage.add_member(:replication_instance_identifier, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceIdentifier"))
     ModifyReplicationInstanceMessage.add_member(:network_type, Shapes::ShapeRef.new(shape: String, location_name: "NetworkType"))
+    ModifyReplicationInstanceMessage.add_member(:kerberos_authentication_settings, Shapes::ShapeRef.new(shape: KerberosAuthenticationSettings, location_name: "KerberosAuthenticationSettings"))
     ModifyReplicationInstanceMessage.struct_class = Types::ModifyReplicationInstanceMessage
 
     ModifyReplicationInstanceResponse.add_member(:replication_instance, Shapes::ShapeRef.new(shape: ReplicationInstance, location_name: "ReplicationInstance"))
@@ -2063,10 +2077,11 @@ module Aws::DatabaseMigrationService
     OracleSettings.add_member(:trim_space_in_char, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "TrimSpaceInChar"))
     OracleSettings.add_member(:convert_timestamp_with_zone_to_utc, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "ConvertTimestampWithZoneToUTC"))
     OracleSettings.add_member(:open_transaction_window, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "OpenTransactionWindow"))
+    OracleSettings.add_member(:authentication_method, Shapes::ShapeRef.new(shape: OracleAuthenticationMethod, location_name: "AuthenticationMethod"))
     OracleSettings.struct_class = Types::OracleSettings
 
     OrderableReplicationInstance.add_member(:engine_version, Shapes::ShapeRef.new(shape: String, location_name: "EngineVersion"))
-    OrderableReplicationInstance.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceClass"))
+    OrderableReplicationInstance.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: ReplicationInstanceClass, location_name: "ReplicationInstanceClass"))
     OrderableReplicationInstance.add_member(:storage_type, Shapes::ShapeRef.new(shape: String, location_name: "StorageType"))
     OrderableReplicationInstance.add_member(:min_allocated_storage, Shapes::ShapeRef.new(shape: Integer, location_name: "MinAllocatedStorage"))
     OrderableReplicationInstance.add_member(:max_allocated_storage, Shapes::ShapeRef.new(shape: Integer, location_name: "MaxAllocatedStorage"))
@@ -2114,6 +2129,7 @@ module Aws::DatabaseMigrationService
     PostgreSQLSettings.add_member(:map_long_varchar_as, Shapes::ShapeRef.new(shape: LongVarcharMappingType, location_name: "MapLongVarcharAs"))
     PostgreSQLSettings.add_member(:database_mode, Shapes::ShapeRef.new(shape: DatabaseMode, location_name: "DatabaseMode"))
     PostgreSQLSettings.add_member(:babelfish_database_name, Shapes::ShapeRef.new(shape: String, location_name: "BabelfishDatabaseName"))
+    PostgreSQLSettings.add_member(:disable_unicode_source_filter, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "DisableUnicodeSourceFilter"))
     PostgreSQLSettings.struct_class = Types::PostgreSQLSettings
 
     PostgreSqlDataProviderSettings.add_member(:server_name, Shapes::ShapeRef.new(shape: String, location_name: "ServerName"))
@@ -2303,7 +2319,7 @@ module Aws::DatabaseMigrationService
     ReplicationConfigList.member = Shapes::ShapeRef.new(shape: ReplicationConfig)
 
     ReplicationInstance.add_member(:replication_instance_identifier, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceIdentifier"))
-    ReplicationInstance.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceClass"))
+    ReplicationInstance.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: ReplicationInstanceClass, location_name: "ReplicationInstanceClass"))
     ReplicationInstance.add_member(:replication_instance_status, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceStatus"))
     ReplicationInstance.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: Integer, location_name: "AllocatedStorage"))
     ReplicationInstance.add_member(:instance_create_time, Shapes::ShapeRef.new(shape: TStamp, location_name: "InstanceCreateTime"))
@@ -2327,6 +2343,7 @@ module Aws::DatabaseMigrationService
     ReplicationInstance.add_member(:free_until, Shapes::ShapeRef.new(shape: TStamp, location_name: "FreeUntil"))
     ReplicationInstance.add_member(:dns_name_servers, Shapes::ShapeRef.new(shape: String, location_name: "DnsNameServers"))
     ReplicationInstance.add_member(:network_type, Shapes::ShapeRef.new(shape: String, location_name: "NetworkType"))
+    ReplicationInstance.add_member(:kerberos_authentication_settings, Shapes::ShapeRef.new(shape: KerberosAuthenticationSettings, location_name: "KerberosAuthenticationSettings"))
     ReplicationInstance.struct_class = Types::ReplicationInstance
 
     ReplicationInstanceIpv6AddressList.member = Shapes::ShapeRef.new(shape: String)
@@ -2346,7 +2363,7 @@ module Aws::DatabaseMigrationService
 
     ReplicationList.member = Shapes::ShapeRef.new(shape: Replication)
 
-    ReplicationPendingModifiedValues.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: String, location_name: "ReplicationInstanceClass"))
+    ReplicationPendingModifiedValues.add_member(:replication_instance_class, Shapes::ShapeRef.new(shape: ReplicationInstanceClass, location_name: "ReplicationInstanceClass"))
     ReplicationPendingModifiedValues.add_member(:allocated_storage, Shapes::ShapeRef.new(shape: IntegerOptional, location_name: "AllocatedStorage"))
     ReplicationPendingModifiedValues.add_member(:multi_az, Shapes::ShapeRef.new(shape: BooleanOptional, location_name: "MultiAZ"))
     ReplicationPendingModifiedValues.add_member(:engine_version, Shapes::ShapeRef.new(shape: String, location_name: "EngineVersion"))
@@ -2408,7 +2425,7 @@ module Aws::DatabaseMigrationService
     ReplicationTaskAssessmentResult.add_member(:assessment_status, Shapes::ShapeRef.new(shape: String, location_name: "AssessmentStatus"))
     ReplicationTaskAssessmentResult.add_member(:assessment_results_file, Shapes::ShapeRef.new(shape: String, location_name: "AssessmentResultsFile"))
     ReplicationTaskAssessmentResult.add_member(:assessment_results, Shapes::ShapeRef.new(shape: String, location_name: "AssessmentResults"))
-    ReplicationTaskAssessmentResult.add_member(:s3_object_url, Shapes::ShapeRef.new(shape: String, location_name: "S3ObjectUrl"))
+    ReplicationTaskAssessmentResult.add_member(:s3_object_url, Shapes::ShapeRef.new(shape: SecretString, location_name: "S3ObjectUrl"))
     ReplicationTaskAssessmentResult.struct_class = Types::ReplicationTaskAssessmentResult
 
     ReplicationTaskAssessmentResultList.member = Shapes::ShapeRef.new(shape: ReplicationTaskAssessmentResult)
@@ -3103,6 +3120,7 @@ module Aws::DatabaseMigrationService
         o.output = Shapes::ShapeRef.new(shape: DeleteEventSubscriptionResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedFault)
       end)
 
       api.add_operation(:delete_fleet_advisor_collector, Seahorse::Model::Operation.new.tap do |o|
@@ -3181,6 +3199,7 @@ module Aws::DatabaseMigrationService
         o.output = Shapes::ShapeRef.new(shape: DeleteReplicationSubnetGroupResponse)
         o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateFault)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundFault)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedFault)
       end)
 
       api.add_operation(:delete_replication_task, Seahorse::Model::Operation.new.tap do |o|
@@ -3841,6 +3860,7 @@ module Aws::DatabaseMigrationService
         o.output = Shapes::ShapeRef.new(shape: DescribeTableStatisticsResponse)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: InvalidResourceStateFault)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedFault)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_records",
           tokens: {
@@ -3940,6 +3960,7 @@ module Aws::DatabaseMigrationService
         o.errors << Shapes::ShapeRef.new(shape: KMSInvalidStateFault)
         o.errors << Shapes::ShapeRef.new(shape: KMSNotFoundFault)
         o.errors << Shapes::ShapeRef.new(shape: KMSThrottlingFault)
+        o.errors << Shapes::ShapeRef.new(shape: AccessDeniedFault)
       end)
 
       api.add_operation(:modify_instance_profile, Seahorse::Model::Operation.new.tap do |o|

@@ -1627,6 +1627,12 @@ module Aws::DatabaseMigrationService
     #   addressing. IPv6 only is not yet supported.
     #   @return [String]
     #
+    # @!attribute [rw] kerberos_authentication_settings
+    #   Specifies the ID of the secret that stores the key cache file
+    #   required for kerberos authentication, when creating a replication
+    #   instance.
+    #   @return [Types::KerberosAuthenticationSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateReplicationInstanceMessage AWS API Documentation
     #
     class CreateReplicationInstanceMessage < Struct.new(
@@ -1645,7 +1651,8 @@ module Aws::DatabaseMigrationService
       :publicly_accessible,
       :dns_name_servers,
       :resource_identifier,
-      :network_type)
+      :network_type,
+      :kerberos_authentication_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3024,7 +3031,8 @@ module Aws::DatabaseMigrationService
     #   Filters applied to the data providers described in the form of
     #   key-value pairs.
     #
-    #   Valid filter names: data-provider-identifier
+    #   Valid filter names and values: data-provider-identifier, data
+    #   provider arn or name
     #   @return [Array<Types::Filter>]
     #
     # @!attribute [rw] max_records
@@ -3796,6 +3804,9 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] filters
     #   Filters applied to the instance profiles described in the form of
     #   key-value pairs.
+    #
+    #   Valid filter names and values: instance-profile-identifier, instance
+    #   profile arn or name
     #   @return [Array<Types::Filter>]
     #
     # @!attribute [rw] max_records
@@ -4173,6 +4184,14 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] filters
     #   Filters applied to the migration projects described in the form of
     #   key-value pairs.
+    #
+    #   Valid filter names and values:
+    #
+    #   * instance-profile-identifier, instance profile arn or name
+    #
+    #   * data-provider-identifier, data provider arn or name
+    #
+    #   * migration-project-identifier, migration project arn or name
     #   @return [Array<Types::Filter>]
     #
     # @!attribute [rw] max_records
@@ -6750,6 +6769,10 @@ module Aws::DatabaseMigrationService
     #   supported in DMS version 3.5.1 and later.
     #   @return [String]
     #
+    # @!attribute [rw] use_large_integer_value
+    #   Specifies using the large integer value with Kafka.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/KafkaSettings AWS API Documentation
     #
     class KafkaSettings < Struct.new(
@@ -6772,8 +6795,37 @@ module Aws::DatabaseMigrationService
       :sasl_password,
       :no_hex_prefix,
       :sasl_mechanism,
-      :ssl_endpoint_identification_algorithm)
+      :ssl_endpoint_identification_algorithm,
+      :use_large_integer_value)
       SENSITIVE = [:ssl_client_key_password, :sasl_password]
+      include Aws::Structure
+    end
+
+    # Specifies using Kerberos authentication settings for use with DMS.
+    #
+    # @!attribute [rw] key_cache_secret_id
+    #   Specifies the secret ID of the key cache for the replication
+    #   instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] key_cache_secret_iam_arn
+    #   Specifies the Amazon Resource Name (ARN) of the IAM role that grants
+    #   Amazon Web Services DMS access to the secret containing key cache
+    #   file for the replication instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] krb_5_file_contents
+    #   Specifies the ID of the secret that stores the key cache file
+    #   required for kerberos authentication of the replication instance.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/KerberosAuthenticationSettings AWS API Documentation
+    #
+    class KerberosAuthenticationSettings < Struct.new(
+      :key_cache_secret_id,
+      :key_cache_secret_iam_arn,
+      :krb_5_file_contents)
+      SENSITIVE = []
       include Aws::Structure
     end
 
@@ -6849,6 +6901,10 @@ module Aws::DatabaseMigrationService
     #   type columns without adding the '0x' prefix.
     #   @return [Boolean]
     #
+    # @!attribute [rw] use_large_integer_value
+    #   Specifies using the large integer value with Kinesis.
+    #   @return [Boolean]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/KinesisSettings AWS API Documentation
     #
     class KinesisSettings < Struct.new(
@@ -6861,7 +6917,8 @@ module Aws::DatabaseMigrationService
       :include_table_alter_operations,
       :include_control_details,
       :include_null_and_empty,
-      :no_hex_prefix)
+      :no_hex_prefix,
+      :use_large_integer_value)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7123,6 +7180,10 @@ module Aws::DatabaseMigrationService
     #   Forces LOB lookup on inline LOB.
     #   @return [Boolean]
     #
+    # @!attribute [rw] authentication_method
+    #   Specifies using Kerberos authentication with Microsoft SQL Server.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/MicrosoftSQLServerSettings AWS API Documentation
     #
     class MicrosoftSQLServerSettings < Struct.new(
@@ -7142,7 +7203,8 @@ module Aws::DatabaseMigrationService
       :secrets_manager_secret_id,
       :trim_space_in_char,
       :tlog_access_mode,
-      :force_lob_lookup)
+      :force_lob_lookup,
+      :authentication_method)
       SENSITIVE = [:password]
       include Aws::Structure
     end
@@ -8130,6 +8192,12 @@ module Aws::DatabaseMigrationService
     #   addressing. IPv6 only is not yet supported.
     #   @return [String]
     #
+    # @!attribute [rw] kerberos_authentication_settings
+    #   Specifies the ID of the secret that stores the key cache file
+    #   required for kerberos authentication, when modifying a replication
+    #   instance.
+    #   @return [Types::KerberosAuthenticationSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyReplicationInstanceMessage AWS API Documentation
     #
     class ModifyReplicationInstanceMessage < Struct.new(
@@ -8144,7 +8212,8 @@ module Aws::DatabaseMigrationService
       :allow_major_version_upgrade,
       :auto_minor_version_upgrade,
       :replication_instance_identifier,
-      :network_type)
+      :network_type,
+      :kerberos_authentication_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9028,8 +9097,8 @@ module Aws::DatabaseMigrationService
     #   @return [Boolean]
     #
     # @!attribute [rw] archived_logs_only
-    #   When this field is set to `Y`, DMS only accesses the archived redo
-    #   logs. If the archived redo logs are stored on Automatic Storage
+    #   When this field is set to `True`, DMS only accesses the archived
+    #   redo logs. If the archived redo logs are stored on Automatic Storage
     #   Management (ASM) only, the DMS user account needs to be granted ASM
     #   privileges.
     #   @return [Boolean]
@@ -9198,12 +9267,12 @@ module Aws::DatabaseMigrationService
     #   @return [String]
     #
     # @!attribute [rw] use_b_file
-    #   Set this attribute to Y to capture change data using the Binary
-    #   Reader utility. Set `UseLogminerReader` to N to set this attribute
-    #   to Y. To use Binary Reader with Amazon RDS for Oracle as the source,
-    #   you set additional attributes. For more information about using this
-    #   setting with Oracle Automatic Storage Management (ASM), see [ Using
-    #   Oracle LogMiner or DMS Binary Reader for CDC][1].
+    #   Set this attribute to True to capture change data using the Binary
+    #   Reader utility. Set `UseLogminerReader` to False to set this
+    #   attribute to True. To use Binary Reader with Amazon RDS for Oracle
+    #   as the source, you set additional attributes. For more information
+    #   about using this setting with Oracle Automatic Storage Management
+    #   (ASM), see [ Using Oracle LogMiner or DMS Binary Reader for CDC][1].
     #
     #
     #
@@ -9211,17 +9280,17 @@ module Aws::DatabaseMigrationService
     #   @return [Boolean]
     #
     # @!attribute [rw] use_direct_path_full_load
-    #   Set this attribute to Y to have DMS use a direct path full load.
+    #   Set this attribute to True to have DMS use a direct path full load.
     #   Specify this value to use the direct path protocol in the Oracle
     #   Call Interface (OCI). By using this OCI protocol, you can bulk-load
     #   Oracle target tables during a full load.
     #   @return [Boolean]
     #
     # @!attribute [rw] use_logminer_reader
-    #   Set this attribute to Y to capture change data using the Oracle
-    #   LogMiner utility (the default). Set this attribute to N if you want
-    #   to access the redo logs as a binary file. When you set
-    #   `UseLogminerReader` to N, also set `UseBfile` to Y. For more
+    #   Set this attribute to True to capture change data using the Oracle
+    #   LogMiner utility (the default). Set this attribute to False if you
+    #   want to access the redo logs as a binary file. When you set
+    #   `UseLogminerReader` to False, also set `UseBfile` to True. For more
     #   information on this setting and using Oracle ASM, see [ Using Oracle
     #   LogMiner or DMS Binary Reader for CDC][1] in the *DMS User Guide*.
     #
@@ -9312,12 +9381,14 @@ module Aws::DatabaseMigrationService
     #   You can specify an integer value between 0 (the default) and 240
     #   (the maximum).
     #
-    #   <note markdown="1"> This parameter is only valid in DMS version 3.5.0 and later. DMS
-    #   supports a window of up to 9.5 hours including the value for
-    #   `OpenTransactionWindow`.
+    #   <note markdown="1"> This parameter is only valid in DMS version 3.5.0 and later.
     #
     #    </note>
     #   @return [Integer]
+    #
+    # @!attribute [rw] authentication_method
+    #   Specifies using Kerberos authentication with Oracle.
+    #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/OracleSettings AWS API Documentation
     #
@@ -9364,7 +9435,8 @@ module Aws::DatabaseMigrationService
       :secrets_manager_oracle_asm_secret_id,
       :trim_space_in_char,
       :convert_timestamp_with_zone_to_utc,
-      :open_transaction_window)
+      :open_transaction_window,
+      :authentication_method)
       SENSITIVE = [:asm_password, :password, :security_db_encryption]
       include Aws::Structure
     end
@@ -9517,6 +9589,8 @@ module Aws::DatabaseMigrationService
     #   PostgreSQL database when the task starts. You can later remove these
     #   artifacts.
     #
+    #   The default value is `true`.
+    #
     #   If this value is set to `N`, you don't have to create tables or
     #   triggers on the source database.
     #   @return [Boolean]
@@ -9524,6 +9598,8 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] max_file_size
     #   Specifies the maximum size (in KB) of any .csv file used to transfer
     #   data to PostgreSQL.
+    #
+    #   The default value is 32,768 KB (32 MB).
     #
     #   Example: `maxFileSize=512`
     #   @return [Integer]
@@ -9535,6 +9611,8 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] ddl_artifacts_schema
     #   The schema in which the operational DDL database artifacts are
     #   created.
+    #
+    #   The default value is `public`.
     #
     #   Example: `ddlArtifactsSchema=xyzddlschema;`
     #   @return [String]
@@ -9550,6 +9628,8 @@ module Aws::DatabaseMigrationService
     #   When set to `true`, this value causes a task to fail if the actual
     #   size of a LOB column is greater than the specified `LobMaxSize`.
     #
+    #   The default value is `false`.
+    #
     #   If task is set to Limited LOB mode and this option is set to true,
     #   the task fails instead of truncating the LOB data.
     #   @return [Boolean]
@@ -9560,14 +9640,20 @@ module Aws::DatabaseMigrationService
     #   slots from holding onto old WAL logs, which can result in storage
     #   full situations on the source. This heartbeat keeps `restart_lsn`
     #   moving and prevents storage full scenarios.
+    #
+    #   The default value is `false`.
     #   @return [Boolean]
     #
     # @!attribute [rw] heartbeat_schema
     #   Sets the schema in which the heartbeat artifacts are created.
+    #
+    #   The default value is `public`.
     #   @return [String]
     #
     # @!attribute [rw] heartbeat_frequency
     #   Sets the WAL heartbeat frequency (in minutes).
+    #
+    #   The default value is 5 minutes.
     #   @return [Integer]
     #
     # @!attribute [rw] password
@@ -9625,6 +9711,8 @@ module Aws::DatabaseMigrationService
     #
     # @!attribute [rw] plugin_name
     #   Specifies the plugin to use to create a replication slot.
+    #
+    #   The default value is `pglogical`.
     #   @return [String]
     #
     # @!attribute [rw] secrets_manager_access_role_arn
@@ -9669,14 +9757,20 @@ module Aws::DatabaseMigrationService
     #   default, PostgreSQL migrates booleans as `varchar(5)`. You must set
     #   this setting on both the source and target endpoints for it to take
     #   effect.
+    #
+    #   The default value is `false`.
     #   @return [Boolean]
     #
     # @!attribute [rw] map_jsonb_as_clob
     #   When true, DMS migrates JSONB values as CLOB.
+    #
+    #   The default value is `false`.
     #   @return [Boolean]
     #
     # @!attribute [rw] map_long_varchar_as
-    #   When true, DMS migrates LONG values as VARCHAR.
+    #   Sets what datatype to map LONG values as.
+    #
+    #   The default value is `wstring`.
     #   @return [String]
     #
     # @!attribute [rw] database_mode
@@ -9688,6 +9782,17 @@ module Aws::DatabaseMigrationService
     # @!attribute [rw] babelfish_database_name
     #   The Babelfish for Aurora PostgreSQL database name for the endpoint.
     #   @return [String]
+    #
+    # @!attribute [rw] disable_unicode_source_filter
+    #   Disables the Unicode source filter with PostgreSQL, for values
+    #   passed into the Selection rule filter on Source Endpoint column
+    #   values. By default DMS performs source filter comparisons using a
+    #   Unicode string which can cause look ups to ignore the indexes in the
+    #   text columns and slow down migrations.
+    #
+    #   Unicode support should only be disabled when using a selection rule
+    #   filter is on a text column in the Source database that is indexed.
+    #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/PostgreSQLSettings AWS API Documentation
     #
@@ -9715,7 +9820,8 @@ module Aws::DatabaseMigrationService
       :map_jsonb_as_clob,
       :map_long_varchar_as,
       :database_mode,
-      :babelfish_database_name)
+      :babelfish_database_name,
+      :disable_unicode_source_filter)
       SENSITIVE = [:password]
       include Aws::Structure
     end
@@ -10712,7 +10818,7 @@ module Aws::DatabaseMigrationService
     #   @return [Types::ReplicationStats]
     #
     # @!attribute [rw] start_replication_type
-    #   The replication type.
+    #   The type of replication to start.
     #   @return [String]
     #
     # @!attribute [rw] cdc_start_time
@@ -11033,6 +11139,11 @@ module Aws::DatabaseMigrationService
     #   addressing. IPv6 only is not yet supported.
     #   @return [String]
     #
+    # @!attribute [rw] kerberos_authentication_settings
+    #   Specifies the ID of the secret that stores the key cache file
+    #   required for kerberos authentication, when replicating an instance.
+    #   @return [Types::KerberosAuthenticationSettings]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ReplicationInstance AWS API Documentation
     #
     class ReplicationInstance < Struct.new(
@@ -11060,7 +11171,8 @@ module Aws::DatabaseMigrationService
       :secondary_availability_zone,
       :free_until,
       :dns_name_servers,
-      :network_type)
+      :network_type,
+      :kerberos_authentication_settings)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -11384,13 +11496,16 @@ module Aws::DatabaseMigrationService
     #   The reason the replication task was stopped. This response parameter
     #   can return one of the following values:
     #
-    #   * `"Stop Reason NORMAL"`
+    #   * `"Stop Reason NORMAL"` – The task completed successfully with no
+    #     additional information returned.
     #
     #   * `"Stop Reason RECOVERABLE_ERROR"`
     #
     #   * `"Stop Reason FATAL_ERROR"`
     #
-    #   * `"Stop Reason FULL_LOAD_ONLY_FINISHED"`
+    #   * `"Stop Reason FULL_LOAD_ONLY_FINISHED"` – The task completed the
+    #     full load phase. DMS applied cached changes if you set
+    #     `StopTaskCachedChangesApplied` to `true`.
     #
     #   * `"Stop Reason STOPPED_AFTER_FULL_LOAD"` – Full load completed,
     #     with cached changes not applied
@@ -11566,7 +11681,7 @@ module Aws::DatabaseMigrationService
       :assessment_results_file,
       :assessment_results,
       :s3_object_url)
-      SENSITIVE = []
+      SENSITIVE = [:s3_object_url]
       include Aws::Structure
     end
 
@@ -11618,6 +11733,9 @@ module Aws::DatabaseMigrationService
     #
     #   * `"starting"` – The assessment run is starting, but resources are
     #     not yet being provisioned for individual assessments.
+    #
+    #   * `"warning"` – At least one individual assessment completed with a
+    #     `warning` status.
     #   @return [String]
     #
     # @!attribute [rw] replication_task_assessment_run_creation_date
@@ -13135,6 +13253,23 @@ module Aws::DatabaseMigrationService
     #
     # @!attribute [rw] start_replication_type
     #   The replication type.
+    #
+    #   When the replication type is `full-load` or `full-load-and-cdc`, the
+    #   only valid value for the first run of the replication is
+    #   `start-replication`. This option will start the replication.
+    #
+    #   You can also use ReloadTables to reload specific tables that failed
+    #   during replication instead of restarting the replication.
+    #
+    #   The `resume-processing` option isn't applicable for a full-load
+    #   replication, because you can't resume partially loaded tables
+    #   during the full load phase.
+    #
+    #   For a `full-load-and-cdc` replication, DMS migrates table data, and
+    #   then applies data changes that occur on the source. To load all the
+    #   tables again, and start capturing source changes, use
+    #   `reload-target`. Otherwise use `resume-processing`, to replicate the
+    #   changes from the last stop position.
     #   @return [String]
     #
     # @!attribute [rw] cdc_start_time

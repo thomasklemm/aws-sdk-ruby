@@ -1367,9 +1367,11 @@ module Aws::GuardDuty
     #
     #     * **Medium**: `["4", "5", "6"]`
     #
-    #     * **High**: `["7", "8", "9"]`
-    #     For more information, see [Severity levels for GuardDuty
-    #     findings][2].
+    #     * **High**: `["7", "8"]`
+    #
+    #     * **Critical**: `["9", "10"]`
+    #     For more information, see [Findings severity levels][2] in the
+    #     *Amazon GuardDuty User Guide*.
     #
     #   * type
     #
@@ -1560,7 +1562,7 @@ module Aws::GuardDuty
     #
     #
     #   [1]: https://docs.aws.amazon.com/guardduty/latest/APIReference/API_FindingCriteria.html
-    #   [2]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings.html#guardduty_findings-severity
+    #   [2]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html
     #   @return [Types::FindingCriteria]
     #
     # @!attribute [rw] client_token
@@ -2441,7 +2443,8 @@ module Aws::GuardDuty
     end
 
     # @!attribute [rw] scans
-    #   Contains information about malware scans.
+    #   Contains information about malware scans associated with GuardDuty
+    #   Malware Protection for EC2.
     #   @return [Array<Types::Scan>]
     #
     # @!attribute [rw] next_token
@@ -6595,9 +6598,13 @@ module Aws::GuardDuty
     # A list of additional configurations which will be configured for the
     # organization.
     #
+    # Additional configuration applies to only GuardDuty Runtime Monitoring
+    # protection plan.
+    #
     # @!attribute [rw] name
     #   The name of the additional configuration that will be configured for
-    #   the organization.
+    #   the organization. These values are applicable to only Runtime
+    #   Monitoring protection plan.
     #   @return [String]
     #
     # @!attribute [rw] auto_enable
@@ -6636,7 +6643,8 @@ module Aws::GuardDuty
     #
     # @!attribute [rw] name
     #   The name of the additional configuration that is configured for the
-    #   member accounts within the organization.
+    #   member accounts within the organization. These values are applicable
+    #   to only Runtime Monitoring protection plan.
     #   @return [String]
     #
     # @!attribute [rw] auto_enable
@@ -8249,10 +8257,11 @@ module Aws::GuardDuty
       include Aws::Structure
     end
 
-    # Contains information about a malware scan.
+    # Contains information about malware scans associated with GuardDuty
+    # Malware Protection for EC2.
     #
     # @!attribute [rw] detector_id
-    #   The unique ID of the detector that the request is associated with.
+    #   The unique ID of the detector that is associated with the request.
     #
     #   To find the `detectorId` in the current Region, see the Settings
     #   page in the GuardDuty console, or run the [ListDetectors][1] API.
@@ -8284,7 +8293,7 @@ module Aws::GuardDuty
     #   @return [String]
     #
     # @!attribute [rw] failure_reason
-    #   Represents the reason for FAILED scan status.
+    #   Represents the reason for `FAILED` scan status.
     #   @return [String]
     #
     # @!attribute [rw] scan_start_time
@@ -9663,8 +9672,10 @@ module Aws::GuardDuty
     #   @return [String]
     #
     # @!attribute [rw] auto_enable
-    #   Represents whether or not to automatically enable member accounts in
-    #   the organization.
+    #   Represents whether to automatically enable member accounts in the
+    #   organization. This applies to only new member accounts, not the
+    #   existing member accounts. When a new account joins the organization,
+    #   the chosen features will be enabled for them by default.
     #
     #   Even though this is still supported, we recommend using
     #   `AutoEnableOrganizationMembers` to achieve the similar results. You

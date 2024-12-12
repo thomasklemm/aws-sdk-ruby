@@ -165,6 +165,8 @@ module Aws::Connect
     ClientToken = Shapes::StringShape.new(name: 'ClientToken')
     CommonAttributeAndCondition = Shapes::StructureShape.new(name: 'CommonAttributeAndCondition')
     CommonAttributeOrConditionList = Shapes::ListShape.new(name: 'CommonAttributeOrConditionList')
+    CommonHumanReadableDescription = Shapes::StringShape.new(name: 'CommonHumanReadableDescription')
+    CommonHumanReadableName = Shapes::StringShape.new(name: 'CommonHumanReadableName')
     CommonNameLength127 = Shapes::StringShape.new(name: 'CommonNameLength127')
     Comparison = Shapes::StringShape.new(name: 'Comparison')
     ComparisonOperator = Shapes::StringShape.new(name: 'ComparisonOperator')
@@ -250,6 +252,8 @@ module Aws::Connect
     CreateEmailAddressResponse = Shapes::StructureShape.new(name: 'CreateEmailAddressResponse')
     CreateEvaluationFormRequest = Shapes::StructureShape.new(name: 'CreateEvaluationFormRequest')
     CreateEvaluationFormResponse = Shapes::StructureShape.new(name: 'CreateEvaluationFormResponse')
+    CreateHoursOfOperationOverrideRequest = Shapes::StructureShape.new(name: 'CreateHoursOfOperationOverrideRequest')
+    CreateHoursOfOperationOverrideResponse = Shapes::StructureShape.new(name: 'CreateHoursOfOperationOverrideResponse')
     CreateHoursOfOperationRequest = Shapes::StructureShape.new(name: 'CreateHoursOfOperationRequest')
     CreateHoursOfOperationResponse = Shapes::StructureShape.new(name: 'CreateHoursOfOperationResponse')
     CreateInstanceRequest = Shapes::StructureShape.new(name: 'CreateInstanceRequest')
@@ -310,7 +314,10 @@ module Aws::Connect
     CustomerVoiceActivity = Shapes::StructureShape.new(name: 'CustomerVoiceActivity')
     DataSetId = Shapes::StringShape.new(name: 'DataSetId')
     DataSetIds = Shapes::ListShape.new(name: 'DataSetIds')
+    DateComparisonType = Shapes::StringShape.new(name: 'DateComparisonType')
+    DateCondition = Shapes::StructureShape.new(name: 'DateCondition')
     DateReference = Shapes::StructureShape.new(name: 'DateReference')
+    DateYearMonthDayFormat = Shapes::StringShape.new(name: 'DateYearMonthDayFormat')
     DeactivateEvaluationFormRequest = Shapes::StructureShape.new(name: 'DeactivateEvaluationFormRequest')
     DeactivateEvaluationFormResponse = Shapes::StructureShape.new(name: 'DeactivateEvaluationFormResponse')
     DefaultVocabulary = Shapes::StructureShape.new(name: 'DefaultVocabulary')
@@ -326,6 +333,7 @@ module Aws::Connect
     DeleteEmailAddressRequest = Shapes::StructureShape.new(name: 'DeleteEmailAddressRequest')
     DeleteEmailAddressResponse = Shapes::StructureShape.new(name: 'DeleteEmailAddressResponse')
     DeleteEvaluationFormRequest = Shapes::StructureShape.new(name: 'DeleteEvaluationFormRequest')
+    DeleteHoursOfOperationOverrideRequest = Shapes::StructureShape.new(name: 'DeleteHoursOfOperationOverrideRequest')
     DeleteHoursOfOperationRequest = Shapes::StructureShape.new(name: 'DeleteHoursOfOperationRequest')
     DeleteInstanceRequest = Shapes::StructureShape.new(name: 'DeleteInstanceRequest')
     DeleteIntegrationAssociationRequest = Shapes::StructureShape.new(name: 'DeleteIntegrationAssociationRequest')
@@ -367,6 +375,8 @@ module Aws::Connect
     DescribeEmailAddressResponse = Shapes::StructureShape.new(name: 'DescribeEmailAddressResponse')
     DescribeEvaluationFormRequest = Shapes::StructureShape.new(name: 'DescribeEvaluationFormRequest')
     DescribeEvaluationFormResponse = Shapes::StructureShape.new(name: 'DescribeEvaluationFormResponse')
+    DescribeHoursOfOperationOverrideRequest = Shapes::StructureShape.new(name: 'DescribeHoursOfOperationOverrideRequest')
+    DescribeHoursOfOperationOverrideResponse = Shapes::StructureShape.new(name: 'DescribeHoursOfOperationOverrideResponse')
     DescribeHoursOfOperationRequest = Shapes::StructureShape.new(name: 'DescribeHoursOfOperationRequest')
     DescribeHoursOfOperationResponse = Shapes::StructureShape.new(name: 'DescribeHoursOfOperationResponse')
     DescribeInstanceAttributeRequest = Shapes::StructureShape.new(name: 'DescribeInstanceAttributeRequest')
@@ -445,6 +455,8 @@ module Aws::Connect
     DownloadUrlMetadata = Shapes::StructureShape.new(name: 'DownloadUrlMetadata')
     DuplicateResourceException = Shapes::StructureShape.new(name: 'DuplicateResourceException')
     DurationInSeconds = Shapes::IntegerShape.new(name: 'DurationInSeconds')
+    EffectiveHoursOfOperationList = Shapes::ListShape.new(name: 'EffectiveHoursOfOperationList')
+    EffectiveHoursOfOperations = Shapes::StructureShape.new(name: 'EffectiveHoursOfOperations')
     Email = Shapes::StringShape.new(name: 'Email')
     EmailAddress = Shapes::StringShape.new(name: 'EmailAddress')
     EmailAddressArn = Shapes::StringShape.new(name: 'EmailAddressArn')
@@ -574,6 +586,8 @@ module Aws::Connect
     GetCurrentMetricDataResponse = Shapes::StructureShape.new(name: 'GetCurrentMetricDataResponse')
     GetCurrentUserDataRequest = Shapes::StructureShape.new(name: 'GetCurrentUserDataRequest')
     GetCurrentUserDataResponse = Shapes::StructureShape.new(name: 'GetCurrentUserDataResponse')
+    GetEffectiveHoursOfOperationsRequest = Shapes::StructureShape.new(name: 'GetEffectiveHoursOfOperationsRequest')
+    GetEffectiveHoursOfOperationsResponse = Shapes::StructureShape.new(name: 'GetEffectiveHoursOfOperationsResponse')
     GetFederationTokenRequest = Shapes::StructureShape.new(name: 'GetFederationTokenRequest')
     GetFederationTokenResponse = Shapes::StructureShape.new(name: 'GetFederationTokenResponse')
     GetFlowAssociationRequest = Shapes::StructureShape.new(name: 'GetFlowAssociationRequest')
@@ -630,6 +644,14 @@ module Aws::Connect
     HoursOfOperationId = Shapes::StringShape.new(name: 'HoursOfOperationId')
     HoursOfOperationList = Shapes::ListShape.new(name: 'HoursOfOperationList')
     HoursOfOperationName = Shapes::StringShape.new(name: 'HoursOfOperationName')
+    HoursOfOperationOverride = Shapes::StructureShape.new(name: 'HoursOfOperationOverride')
+    HoursOfOperationOverrideConfig = Shapes::StructureShape.new(name: 'HoursOfOperationOverrideConfig')
+    HoursOfOperationOverrideConfigList = Shapes::ListShape.new(name: 'HoursOfOperationOverrideConfigList')
+    HoursOfOperationOverrideId = Shapes::StringShape.new(name: 'HoursOfOperationOverrideId')
+    HoursOfOperationOverrideList = Shapes::ListShape.new(name: 'HoursOfOperationOverrideList')
+    HoursOfOperationOverrideSearchConditionList = Shapes::ListShape.new(name: 'HoursOfOperationOverrideSearchConditionList')
+    HoursOfOperationOverrideSearchCriteria = Shapes::StructureShape.new(name: 'HoursOfOperationOverrideSearchCriteria')
+    HoursOfOperationOverrideYearMonthDayDateFormat = Shapes::StringShape.new(name: 'HoursOfOperationOverrideYearMonthDayDateFormat')
     HoursOfOperationSearchConditionList = Shapes::ListShape.new(name: 'HoursOfOperationSearchConditionList')
     HoursOfOperationSearchCriteria = Shapes::StructureShape.new(name: 'HoursOfOperationSearchCriteria')
     HoursOfOperationSearchFilter = Shapes::StructureShape.new(name: 'HoursOfOperationSearchFilter')
@@ -730,6 +752,8 @@ module Aws::Connect
     ListFlowAssociationResourceType = Shapes::StringShape.new(name: 'ListFlowAssociationResourceType')
     ListFlowAssociationsRequest = Shapes::StructureShape.new(name: 'ListFlowAssociationsRequest')
     ListFlowAssociationsResponse = Shapes::StructureShape.new(name: 'ListFlowAssociationsResponse')
+    ListHoursOfOperationOverridesRequest = Shapes::StructureShape.new(name: 'ListHoursOfOperationOverridesRequest')
+    ListHoursOfOperationOverridesResponse = Shapes::StructureShape.new(name: 'ListHoursOfOperationOverridesResponse')
     ListHoursOfOperationsRequest = Shapes::StructureShape.new(name: 'ListHoursOfOperationsRequest')
     ListHoursOfOperationsResponse = Shapes::StructureShape.new(name: 'ListHoursOfOperationsResponse')
     ListInstanceAttributesRequest = Shapes::StructureShape.new(name: 'ListInstanceAttributesRequest')
@@ -853,6 +877,8 @@ module Aws::Connect
     NumericQuestionPropertyAutomationLabel = Shapes::StringShape.new(name: 'NumericQuestionPropertyAutomationLabel')
     NumericQuestionPropertyValueAutomation = Shapes::StructureShape.new(name: 'NumericQuestionPropertyValueAutomation')
     OperatingSystem = Shapes::StringShape.new(name: 'OperatingSystem')
+    OperationalHour = Shapes::StructureShape.new(name: 'OperationalHour')
+    OperationalHours = Shapes::ListShape.new(name: 'OperationalHours')
     Origin = Shapes::StringShape.new(name: 'Origin')
     OriginsList = Shapes::ListShape.new(name: 'OriginsList')
     OutboundAdditionalRecipients = Shapes::StructureShape.new(name: 'OutboundAdditionalRecipients')
@@ -867,6 +893,8 @@ module Aws::Connect
     OutboundRequestId = Shapes::StringShape.new(name: 'OutboundRequestId')
     OutboundSubject = Shapes::StringShape.new(name: 'OutboundSubject')
     OutputTypeNotFoundException = Shapes::StructureShape.new(name: 'OutputTypeNotFoundException')
+    OverrideDays = Shapes::StringShape.new(name: 'OverrideDays')
+    OverrideTimeSlice = Shapes::StructureShape.new(name: 'OverrideTimeSlice')
     PEM = Shapes::StringShape.new(name: 'PEM')
     ParticipantCapabilities = Shapes::StructureShape.new(name: 'ParticipantCapabilities')
     ParticipantDetails = Shapes::StructureShape.new(name: 'ParticipantDetails')
@@ -1116,6 +1144,8 @@ module Aws::Connect
     SearchCriteria = Shapes::StructureShape.new(name: 'SearchCriteria')
     SearchEmailAddressesRequest = Shapes::StructureShape.new(name: 'SearchEmailAddressesRequest')
     SearchEmailAddressesResponse = Shapes::StructureShape.new(name: 'SearchEmailAddressesResponse')
+    SearchHoursOfOperationOverridesRequest = Shapes::StructureShape.new(name: 'SearchHoursOfOperationOverridesRequest')
+    SearchHoursOfOperationOverridesResponse = Shapes::StructureShape.new(name: 'SearchHoursOfOperationOverridesResponse')
     SearchHoursOfOperationsRequest = Shapes::StructureShape.new(name: 'SearchHoursOfOperationsRequest')
     SearchHoursOfOperationsResponse = Shapes::StructureShape.new(name: 'SearchHoursOfOperationsResponse')
     SearchPredefinedAttributesRequest = Shapes::StructureShape.new(name: 'SearchPredefinedAttributesRequest')
@@ -1355,6 +1385,7 @@ module Aws::Connect
     UpdateEvaluationFormRequest = Shapes::StructureShape.new(name: 'UpdateEvaluationFormRequest')
     UpdateEvaluationFormResponse = Shapes::StructureShape.new(name: 'UpdateEvaluationFormResponse')
     UpdateHoursOfOperationDescription = Shapes::StringShape.new(name: 'UpdateHoursOfOperationDescription')
+    UpdateHoursOfOperationOverrideRequest = Shapes::StructureShape.new(name: 'UpdateHoursOfOperationOverrideRequest')
     UpdateHoursOfOperationRequest = Shapes::StructureShape.new(name: 'UpdateHoursOfOperationRequest')
     UpdateInstanceAttributeRequest = Shapes::StructureShape.new(name: 'UpdateInstanceAttributeRequest')
     UpdateInstanceStorageConfigRequest = Shapes::StructureShape.new(name: 'UpdateInstanceStorageConfigRequest')
@@ -2021,6 +2052,8 @@ module Aws::Connect
     ContactFlowModuleSearchCriteria.add_member(:or_conditions, Shapes::ShapeRef.new(shape: ContactFlowModuleSearchConditionList, location_name: "OrConditions"))
     ContactFlowModuleSearchCriteria.add_member(:and_conditions, Shapes::ShapeRef.new(shape: ContactFlowModuleSearchConditionList, location_name: "AndConditions"))
     ContactFlowModuleSearchCriteria.add_member(:string_condition, Shapes::ShapeRef.new(shape: StringCondition, location_name: "StringCondition"))
+    ContactFlowModuleSearchCriteria.add_member(:state_condition, Shapes::ShapeRef.new(shape: ContactFlowModuleState, location_name: "StateCondition"))
+    ContactFlowModuleSearchCriteria.add_member(:status_condition, Shapes::ShapeRef.new(shape: ContactFlowModuleStatus, location_name: "StatusCondition"))
     ContactFlowModuleSearchCriteria.struct_class = Types::ContactFlowModuleSearchCriteria
 
     ContactFlowModuleSearchFilter.add_member(:tag_filter, Shapes::ShapeRef.new(shape: ControlPlaneTagFilter, location_name: "TagFilter"))
@@ -2228,6 +2261,18 @@ module Aws::Connect
     CreateEvaluationFormResponse.add_member(:evaluation_form_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location_name: "EvaluationFormId"))
     CreateEvaluationFormResponse.add_member(:evaluation_form_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "EvaluationFormArn"))
     CreateEvaluationFormResponse.struct_class = Types::CreateEvaluationFormResponse
+
+    CreateHoursOfOperationOverrideRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    CreateHoursOfOperationOverrideRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
+    CreateHoursOfOperationOverrideRequest.add_member(:name, Shapes::ShapeRef.new(shape: CommonHumanReadableName, required: true, location_name: "Name"))
+    CreateHoursOfOperationOverrideRequest.add_member(:description, Shapes::ShapeRef.new(shape: CommonHumanReadableDescription, location_name: "Description"))
+    CreateHoursOfOperationOverrideRequest.add_member(:config, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideConfigList, required: true, location_name: "Config"))
+    CreateHoursOfOperationOverrideRequest.add_member(:effective_from, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, required: true, location_name: "EffectiveFrom"))
+    CreateHoursOfOperationOverrideRequest.add_member(:effective_till, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, required: true, location_name: "EffectiveTill"))
+    CreateHoursOfOperationOverrideRequest.struct_class = Types::CreateHoursOfOperationOverrideRequest
+
+    CreateHoursOfOperationOverrideResponse.add_member(:hours_of_operation_override_id, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideId, location_name: "HoursOfOperationOverrideId"))
+    CreateHoursOfOperationOverrideResponse.struct_class = Types::CreateHoursOfOperationOverrideResponse
 
     CreateHoursOfOperationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     CreateHoursOfOperationRequest.add_member(:name, Shapes::ShapeRef.new(shape: CommonNameLength127, required: true, location_name: "Name"))
@@ -2534,6 +2579,11 @@ module Aws::Connect
 
     DataSetIds.member = Shapes::ShapeRef.new(shape: DataSetId)
 
+    DateCondition.add_member(:field_name, Shapes::ShapeRef.new(shape: String, location_name: "FieldName"))
+    DateCondition.add_member(:value, Shapes::ShapeRef.new(shape: DateYearMonthDayFormat, location_name: "Value"))
+    DateCondition.add_member(:comparison_type, Shapes::ShapeRef.new(shape: DateComparisonType, location_name: "ComparisonType"))
+    DateCondition.struct_class = Types::DateCondition
+
     DateReference.add_member(:name, Shapes::ShapeRef.new(shape: ReferenceKey, location_name: "Name"))
     DateReference.add_member(:value, Shapes::ShapeRef.new(shape: ReferenceValue, location_name: "Value"))
     DateReference.struct_class = Types::DateReference
@@ -2589,6 +2639,11 @@ module Aws::Connect
     DeleteEvaluationFormRequest.add_member(:evaluation_form_id, Shapes::ShapeRef.new(shape: ResourceId, required: true, location: "uri", location_name: "EvaluationFormId"))
     DeleteEvaluationFormRequest.add_member(:evaluation_form_version, Shapes::ShapeRef.new(shape: VersionNumber, location: "querystring", location_name: "version", metadata: {"box"=>true}))
     DeleteEvaluationFormRequest.struct_class = Types::DeleteEvaluationFormRequest
+
+    DeleteHoursOfOperationOverrideRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    DeleteHoursOfOperationOverrideRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
+    DeleteHoursOfOperationOverrideRequest.add_member(:hours_of_operation_override_id, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideId, required: true, location: "uri", location_name: "HoursOfOperationOverrideId"))
+    DeleteHoursOfOperationOverrideRequest.struct_class = Types::DeleteHoursOfOperationOverrideRequest
 
     DeleteHoursOfOperationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DeleteHoursOfOperationRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
@@ -2746,6 +2801,14 @@ module Aws::Connect
 
     DescribeEvaluationFormResponse.add_member(:evaluation_form, Shapes::ShapeRef.new(shape: EvaluationForm, required: true, location_name: "EvaluationForm"))
     DescribeEvaluationFormResponse.struct_class = Types::DescribeEvaluationFormResponse
+
+    DescribeHoursOfOperationOverrideRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    DescribeHoursOfOperationOverrideRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
+    DescribeHoursOfOperationOverrideRequest.add_member(:hours_of_operation_override_id, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideId, required: true, location: "uri", location_name: "HoursOfOperationOverrideId"))
+    DescribeHoursOfOperationOverrideRequest.struct_class = Types::DescribeHoursOfOperationOverrideRequest
+
+    DescribeHoursOfOperationOverrideResponse.add_member(:hours_of_operation_override, Shapes::ShapeRef.new(shape: HoursOfOperationOverride, location_name: "HoursOfOperationOverride"))
+    DescribeHoursOfOperationOverrideResponse.struct_class = Types::DescribeHoursOfOperationOverrideResponse
 
     DescribeHoursOfOperationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     DescribeHoursOfOperationRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
@@ -2978,6 +3041,12 @@ module Aws::Connect
 
     DuplicateResourceException.add_member(:message, Shapes::ShapeRef.new(shape: Message, location_name: "Message"))
     DuplicateResourceException.struct_class = Types::DuplicateResourceException
+
+    EffectiveHoursOfOperationList.member = Shapes::ShapeRef.new(shape: EffectiveHoursOfOperations)
+
+    EffectiveHoursOfOperations.add_member(:date, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, location_name: "Date"))
+    EffectiveHoursOfOperations.add_member(:operational_hours, Shapes::ShapeRef.new(shape: OperationalHours, location_name: "OperationalHours"))
+    EffectiveHoursOfOperations.struct_class = Types::EffectiveHoursOfOperations
 
     EmailAddressInfo.add_member(:email_address, Shapes::ShapeRef.new(shape: EmailAddress, required: true, location_name: "EmailAddress"))
     EmailAddressInfo.add_member(:display_name, Shapes::ShapeRef.new(shape: EmailAddressDisplayName, location_name: "DisplayName"))
@@ -3364,6 +3433,16 @@ module Aws::Connect
     GetCurrentUserDataResponse.add_member(:approximate_total_count, Shapes::ShapeRef.new(shape: ApproximateTotalCount, location_name: "ApproximateTotalCount"))
     GetCurrentUserDataResponse.struct_class = Types::GetCurrentUserDataResponse
 
+    GetEffectiveHoursOfOperationsRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    GetEffectiveHoursOfOperationsRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
+    GetEffectiveHoursOfOperationsRequest.add_member(:from_date, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, required: true, location: "querystring", location_name: "fromDate"))
+    GetEffectiveHoursOfOperationsRequest.add_member(:to_date, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, required: true, location: "querystring", location_name: "toDate"))
+    GetEffectiveHoursOfOperationsRequest.struct_class = Types::GetEffectiveHoursOfOperationsRequest
+
+    GetEffectiveHoursOfOperationsResponse.add_member(:effective_hours_of_operation_list, Shapes::ShapeRef.new(shape: EffectiveHoursOfOperationList, location_name: "EffectiveHoursOfOperationList"))
+    GetEffectiveHoursOfOperationsResponse.add_member(:time_zone, Shapes::ShapeRef.new(shape: TimeZone, location_name: "TimeZone"))
+    GetEffectiveHoursOfOperationsResponse.struct_class = Types::GetEffectiveHoursOfOperationsResponse
+
     GetFederationTokenRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     GetFederationTokenRequest.struct_class = Types::GetFederationTokenRequest
 
@@ -3571,6 +3650,33 @@ module Aws::Connect
     HoursOfOperationConfigList.member = Shapes::ShapeRef.new(shape: HoursOfOperationConfig)
 
     HoursOfOperationList.member = Shapes::ShapeRef.new(shape: HoursOfOperation)
+
+    HoursOfOperationOverride.add_member(:hours_of_operation_override_id, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideId, location_name: "HoursOfOperationOverrideId"))
+    HoursOfOperationOverride.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, location_name: "HoursOfOperationId"))
+    HoursOfOperationOverride.add_member(:hours_of_operation_arn, Shapes::ShapeRef.new(shape: ARN, location_name: "HoursOfOperationArn"))
+    HoursOfOperationOverride.add_member(:name, Shapes::ShapeRef.new(shape: CommonHumanReadableName, location_name: "Name"))
+    HoursOfOperationOverride.add_member(:description, Shapes::ShapeRef.new(shape: CommonHumanReadableDescription, location_name: "Description"))
+    HoursOfOperationOverride.add_member(:config, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideConfigList, location_name: "Config"))
+    HoursOfOperationOverride.add_member(:effective_from, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, location_name: "EffectiveFrom"))
+    HoursOfOperationOverride.add_member(:effective_till, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, location_name: "EffectiveTill"))
+    HoursOfOperationOverride.struct_class = Types::HoursOfOperationOverride
+
+    HoursOfOperationOverrideConfig.add_member(:day, Shapes::ShapeRef.new(shape: OverrideDays, location_name: "Day"))
+    HoursOfOperationOverrideConfig.add_member(:start_time, Shapes::ShapeRef.new(shape: OverrideTimeSlice, location_name: "StartTime"))
+    HoursOfOperationOverrideConfig.add_member(:end_time, Shapes::ShapeRef.new(shape: OverrideTimeSlice, location_name: "EndTime"))
+    HoursOfOperationOverrideConfig.struct_class = Types::HoursOfOperationOverrideConfig
+
+    HoursOfOperationOverrideConfigList.member = Shapes::ShapeRef.new(shape: HoursOfOperationOverrideConfig)
+
+    HoursOfOperationOverrideList.member = Shapes::ShapeRef.new(shape: HoursOfOperationOverride)
+
+    HoursOfOperationOverrideSearchConditionList.member = Shapes::ShapeRef.new(shape: HoursOfOperationOverrideSearchCriteria)
+
+    HoursOfOperationOverrideSearchCriteria.add_member(:or_conditions, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideSearchConditionList, location_name: "OrConditions"))
+    HoursOfOperationOverrideSearchCriteria.add_member(:and_conditions, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideSearchConditionList, location_name: "AndConditions"))
+    HoursOfOperationOverrideSearchCriteria.add_member(:string_condition, Shapes::ShapeRef.new(shape: StringCondition, location_name: "StringCondition"))
+    HoursOfOperationOverrideSearchCriteria.add_member(:date_condition, Shapes::ShapeRef.new(shape: DateCondition, location_name: "DateCondition"))
+    HoursOfOperationOverrideSearchCriteria.struct_class = Types::HoursOfOperationOverrideSearchCriteria
 
     HoursOfOperationSearchConditionList.member = Shapes::ShapeRef.new(shape: HoursOfOperationSearchCriteria)
 
@@ -3889,6 +3995,18 @@ module Aws::Connect
     ListFlowAssociationsResponse.add_member(:flow_association_summary_list, Shapes::ShapeRef.new(shape: FlowAssociationSummaryList, location_name: "FlowAssociationSummaryList"))
     ListFlowAssociationsResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
     ListFlowAssociationsResponse.struct_class = Types::ListFlowAssociationsResponse
+
+    ListHoursOfOperationOverridesRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    ListHoursOfOperationOverridesRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
+    ListHoursOfOperationOverridesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
+    ListHoursOfOperationOverridesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResult100, location: "querystring", location_name: "maxResults", metadata: {"box"=>true}))
+    ListHoursOfOperationOverridesRequest.struct_class = Types::ListHoursOfOperationOverridesRequest
+
+    ListHoursOfOperationOverridesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location_name: "NextToken"))
+    ListHoursOfOperationOverridesResponse.add_member(:hours_of_operation_override_list, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideList, location_name: "HoursOfOperationOverrideList"))
+    ListHoursOfOperationOverridesResponse.add_member(:last_modified_region, Shapes::ShapeRef.new(shape: RegionName, location_name: "LastModifiedRegion"))
+    ListHoursOfOperationOverridesResponse.add_member(:last_modified_time, Shapes::ShapeRef.new(shape: Timestamp, location_name: "LastModifiedTime"))
+    ListHoursOfOperationOverridesResponse.struct_class = Types::ListHoursOfOperationOverridesResponse
 
     ListHoursOfOperationsRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     ListHoursOfOperationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken, location: "querystring", location_name: "nextToken"))
@@ -4322,6 +4440,12 @@ module Aws::Connect
     NumericQuestionPropertyValueAutomation.add_member(:label, Shapes::ShapeRef.new(shape: NumericQuestionPropertyAutomationLabel, required: true, location_name: "Label"))
     NumericQuestionPropertyValueAutomation.struct_class = Types::NumericQuestionPropertyValueAutomation
 
+    OperationalHour.add_member(:start, Shapes::ShapeRef.new(shape: OverrideTimeSlice, location_name: "Start"))
+    OperationalHour.add_member(:end, Shapes::ShapeRef.new(shape: OverrideTimeSlice, location_name: "End"))
+    OperationalHour.struct_class = Types::OperationalHour
+
+    OperationalHours.member = Shapes::ShapeRef.new(shape: OperationalHour)
+
     OriginsList.member = Shapes::ShapeRef.new(shape: Origin)
 
     OutboundAdditionalRecipients.add_member(:cc_email_addresses, Shapes::ShapeRef.new(shape: EmailAddressRecipientList, location_name: "CcEmailAddresses"))
@@ -4350,6 +4474,10 @@ module Aws::Connect
 
     OutputTypeNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: Message, location_name: "Message"))
     OutputTypeNotFoundException.struct_class = Types::OutputTypeNotFoundException
+
+    OverrideTimeSlice.add_member(:hours, Shapes::ShapeRef.new(shape: Hours24Format, required: true, location_name: "Hours", metadata: {"box"=>true}))
+    OverrideTimeSlice.add_member(:minutes, Shapes::ShapeRef.new(shape: MinutesLimit60, required: true, location_name: "Minutes", metadata: {"box"=>true}))
+    OverrideTimeSlice.struct_class = Types::OverrideTimeSlice
 
     ParticipantCapabilities.add_member(:video, Shapes::ShapeRef.new(shape: VideoCapability, location_name: "Video"))
     ParticipantCapabilities.add_member(:screen_share, Shapes::ShapeRef.new(shape: ScreenShareCapability, location_name: "ScreenShare"))
@@ -5033,6 +5161,18 @@ module Aws::Connect
     SearchEmailAddressesResponse.add_member(:email_addresses, Shapes::ShapeRef.new(shape: EmailAddressList, location_name: "EmailAddresses"))
     SearchEmailAddressesResponse.add_member(:approximate_total_count, Shapes::ShapeRef.new(shape: ApproximateTotalCount, location_name: "ApproximateTotalCount"))
     SearchEmailAddressesResponse.struct_class = Types::SearchEmailAddressesResponse
+
+    SearchHoursOfOperationOverridesRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
+    SearchHoursOfOperationOverridesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken2500, location_name: "NextToken"))
+    SearchHoursOfOperationOverridesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: MaxResult100, location_name: "MaxResults", metadata: {"box"=>true}))
+    SearchHoursOfOperationOverridesRequest.add_member(:search_filter, Shapes::ShapeRef.new(shape: HoursOfOperationSearchFilter, location_name: "SearchFilter"))
+    SearchHoursOfOperationOverridesRequest.add_member(:search_criteria, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideSearchCriteria, location_name: "SearchCriteria"))
+    SearchHoursOfOperationOverridesRequest.struct_class = Types::SearchHoursOfOperationOverridesRequest
+
+    SearchHoursOfOperationOverridesResponse.add_member(:hours_of_operation_overrides, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideList, location_name: "HoursOfOperationOverrides"))
+    SearchHoursOfOperationOverridesResponse.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken2500, location_name: "NextToken"))
+    SearchHoursOfOperationOverridesResponse.add_member(:approximate_total_count, Shapes::ShapeRef.new(shape: ApproximateTotalCount, location_name: "ApproximateTotalCount"))
+    SearchHoursOfOperationOverridesResponse.struct_class = Types::SearchHoursOfOperationOverridesResponse
 
     SearchHoursOfOperationsRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location_name: "InstanceId"))
     SearchHoursOfOperationsRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextToken2500, location_name: "NextToken"))
@@ -5859,6 +5999,16 @@ module Aws::Connect
     UpdateEvaluationFormResponse.add_member(:evaluation_form_arn, Shapes::ShapeRef.new(shape: ARN, required: true, location_name: "EvaluationFormArn"))
     UpdateEvaluationFormResponse.add_member(:evaluation_form_version, Shapes::ShapeRef.new(shape: VersionNumber, required: true, location_name: "EvaluationFormVersion"))
     UpdateEvaluationFormResponse.struct_class = Types::UpdateEvaluationFormResponse
+
+    UpdateHoursOfOperationOverrideRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
+    UpdateHoursOfOperationOverrideRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
+    UpdateHoursOfOperationOverrideRequest.add_member(:hours_of_operation_override_id, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideId, required: true, location: "uri", location_name: "HoursOfOperationOverrideId"))
+    UpdateHoursOfOperationOverrideRequest.add_member(:name, Shapes::ShapeRef.new(shape: CommonHumanReadableName, location_name: "Name"))
+    UpdateHoursOfOperationOverrideRequest.add_member(:description, Shapes::ShapeRef.new(shape: CommonHumanReadableDescription, location_name: "Description"))
+    UpdateHoursOfOperationOverrideRequest.add_member(:config, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideConfigList, location_name: "Config"))
+    UpdateHoursOfOperationOverrideRequest.add_member(:effective_from, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, location_name: "EffectiveFrom"))
+    UpdateHoursOfOperationOverrideRequest.add_member(:effective_till, Shapes::ShapeRef.new(shape: HoursOfOperationOverrideYearMonthDayDateFormat, location_name: "EffectiveTill"))
+    UpdateHoursOfOperationOverrideRequest.struct_class = Types::UpdateHoursOfOperationOverrideRequest
 
     UpdateHoursOfOperationRequest.add_member(:instance_id, Shapes::ShapeRef.new(shape: InstanceId, required: true, location: "uri", location_name: "InstanceId"))
     UpdateHoursOfOperationRequest.add_member(:hours_of_operation_id, Shapes::ShapeRef.new(shape: HoursOfOperationId, required: true, location: "uri", location_name: "HoursOfOperationId"))
@@ -6783,6 +6933,21 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
       end)
 
+      api.add_operation(:create_hours_of_operation_override, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "CreateHoursOfOperationOverride"
+        o.http_method = "PUT"
+        o.http_request_uri = "/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides"
+        o.input = Shapes::ShapeRef.new(shape: CreateHoursOfOperationOverrideRequest)
+        o.output = Shapes::ShapeRef.new(shape: CreateHoursOfOperationOverrideResponse)
+        o.errors << Shapes::ShapeRef.new(shape: DuplicateResourceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: LimitExceededException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
       api.add_operation(:create_instance, Seahorse::Model::Operation.new.tap do |o|
         o.name = "CreateInstance"
         o.http_method = "PUT"
@@ -7183,6 +7348,19 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
       end)
 
+      api.add_operation(:delete_hours_of_operation_override, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DeleteHoursOfOperationOverride"
+        o.http_method = "DELETE"
+        o.http_request_uri = "/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+        o.input = Shapes::ShapeRef.new(shape: DeleteHoursOfOperationOverrideRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
       api.add_operation(:delete_instance, Seahorse::Model::Operation.new.tap do |o|
         o.name = "DeleteInstance"
         o.http_method = "DELETE"
@@ -7535,6 +7713,19 @@ module Aws::Connect
         o.http_request_uri = "/hours-of-operations/{InstanceId}/{HoursOfOperationId}"
         o.input = Shapes::ShapeRef.new(shape: DescribeHoursOfOperationRequest)
         o.output = Shapes::ShapeRef.new(shape: DescribeHoursOfOperationResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
+      api.add_operation(:describe_hours_of_operation_override, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "DescribeHoursOfOperationOverride"
+        o.http_method = "GET"
+        o.http_request_uri = "/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+        o.input = Shapes::ShapeRef.new(shape: DescribeHoursOfOperationOverrideRequest)
+        o.output = Shapes::ShapeRef.new(shape: DescribeHoursOfOperationOverrideResponse)
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
@@ -8008,6 +8199,19 @@ module Aws::Connect
         )
       end)
 
+      api.add_operation(:get_effective_hours_of_operations, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "GetEffectiveHoursOfOperations"
+        o.http_method = "GET"
+        o.http_request_uri = "/effective-hours-of-operations/{InstanceId}/{HoursOfOperationId}"
+        o.input = Shapes::ShapeRef.new(shape: GetEffectiveHoursOfOperationsRequest)
+        o.output = Shapes::ShapeRef.new(shape: GetEffectiveHoursOfOperationsResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
       api.add_operation(:get_federation_token, Seahorse::Model::Operation.new.tap do |o|
         o.name = "GetFederationToken"
         o.http_method = "GET"
@@ -8388,6 +8592,25 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
         o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
+      api.add_operation(:list_hours_of_operation_overrides, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "ListHoursOfOperationOverrides"
+        o.http_method = "GET"
+        o.http_request_uri = "/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides"
+        o.input = Shapes::ShapeRef.new(shape: ListHoursOfOperationOverridesRequest)
+        o.output = Shapes::ShapeRef.new(shape: ListHoursOfOperationOverridesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
         o[:pager] = Aws::Pager.new(
           limit_key: "max_results",
           tokens: {
@@ -9205,6 +9428,25 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
       end)
 
+      api.add_operation(:search_hours_of_operation_overrides, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "SearchHoursOfOperationOverrides"
+        o.http_method = "POST"
+        o.http_request_uri = "/search-hours-of-operation-overrides"
+        o.input = Shapes::ShapeRef.new(shape: SearchHoursOfOperationOverridesRequest)
+        o.output = Shapes::ShapeRef.new(shape: SearchHoursOfOperationOverridesResponse)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o[:pager] = Aws::Pager.new(
+          limit_key: "max_results",
+          tokens: {
+            "next_token" => "next_token"
+          }
+        )
+      end)
+
       api.add_operation(:search_hours_of_operations, Seahorse::Model::Operation.new.tap do |o|
         o.name = "SearchHoursOfOperations"
         o.http_method = "POST"
@@ -9944,6 +10186,21 @@ module Aws::Connect
         o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
         o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+      end)
+
+      api.add_operation(:update_hours_of_operation_override, Seahorse::Model::Operation.new.tap do |o|
+        o.name = "UpdateHoursOfOperationOverride"
+        o.http_method = "POST"
+        o.http_request_uri = "/hours-of-operations/{InstanceId}/{HoursOfOperationId}/overrides/{HoursOfOperationOverrideId}"
+        o.input = Shapes::ShapeRef.new(shape: UpdateHoursOfOperationOverrideRequest)
+        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.errors << Shapes::ShapeRef.new(shape: DuplicateResourceException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: InvalidParameterException)
+        o.errors << Shapes::ShapeRef.new(shape: ResourceNotFoundException)
+        o.errors << Shapes::ShapeRef.new(shape: ThrottlingException)
+        o.errors << Shapes::ShapeRef.new(shape: InternalServiceException)
+        o.errors << Shapes::ShapeRef.new(shape: ConditionalOperationFailedException)
       end)
 
       api.add_operation(:update_instance_attribute, Seahorse::Model::Operation.new.tap do |o|

@@ -349,7 +349,8 @@ module Aws
                                include_table_alter_operations: bool?,
                                include_control_details: bool?,
                                include_null_and_empty: bool?,
-                               no_hex_prefix: bool?
+                               no_hex_prefix: bool?,
+                               use_large_integer_value: bool?
                              },
                              ?kafka_settings: {
                                broker: ::String?,
@@ -371,7 +372,8 @@ module Aws
                                sasl_password: ::String?,
                                no_hex_prefix: bool?,
                                sasl_mechanism: ("scram-sha-512" | "plain")?,
-                               ssl_endpoint_identification_algorithm: ("none" | "https")?
+                               ssl_endpoint_identification_algorithm: ("none" | "https")?,
+                               use_large_integer_value: bool?
                              },
                              ?elasticsearch_settings: {
                                service_access_role_arn: ::String,
@@ -446,7 +448,8 @@ module Aws
                                map_jsonb_as_clob: bool?,
                                map_long_varchar_as: ("wstring" | "clob" | "nclob")?,
                                database_mode: ("default" | "babelfish")?,
-                               babelfish_database_name: ::String?
+                               babelfish_database_name: ::String?,
+                               disable_unicode_source_filter: bool?
                              },
                              ?my_sql_settings: {
                                after_connect_script: ::String?,
@@ -508,7 +511,8 @@ module Aws
                                secrets_manager_oracle_asm_secret_id: ::String?,
                                trim_space_in_char: bool?,
                                convert_timestamp_with_zone_to_utc: bool?,
-                               open_transaction_window: ::Integer?
+                               open_transaction_window: ::Integer?,
+                               authentication_method: ("password" | "kerberos")?
                              },
                              ?sybase_settings: {
                                database_name: ::String?,
@@ -536,7 +540,8 @@ module Aws
                                secrets_manager_secret_id: ::String?,
                                trim_space_in_char: bool?,
                                tlog_access_mode: ("BackupOnly" | "PreferBackup" | "PreferTlog" | "TlogOnly")?,
-                               force_lob_lookup: bool?
+                               force_lob_lookup: bool?,
+                               authentication_method: ("password" | "kerberos")?
                              },
                              ?ibm_db_2_settings: {
                                database_name: ::String?,
@@ -768,7 +773,12 @@ module Aws
                                          ?publicly_accessible: bool,
                                          ?dns_name_servers: ::String,
                                          ?resource_identifier: ::String,
-                                         ?network_type: ::String
+                                         ?network_type: ::String,
+                                         ?kerberos_authentication_settings: {
+                                           key_cache_secret_id: ::String?,
+                                           key_cache_secret_iam_arn: ::String?,
+                                           krb_5_file_contents: ::String?
+                                         }
                                        ) -> _CreateReplicationInstanceResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateReplicationInstanceResponseSuccess
 
@@ -1969,7 +1979,8 @@ module Aws
                                include_table_alter_operations: bool?,
                                include_control_details: bool?,
                                include_null_and_empty: bool?,
-                               no_hex_prefix: bool?
+                               no_hex_prefix: bool?,
+                               use_large_integer_value: bool?
                              },
                              ?kafka_settings: {
                                broker: ::String?,
@@ -1991,7 +2002,8 @@ module Aws
                                sasl_password: ::String?,
                                no_hex_prefix: bool?,
                                sasl_mechanism: ("scram-sha-512" | "plain")?,
-                               ssl_endpoint_identification_algorithm: ("none" | "https")?
+                               ssl_endpoint_identification_algorithm: ("none" | "https")?,
+                               use_large_integer_value: bool?
                              },
                              ?elasticsearch_settings: {
                                service_access_role_arn: ::String,
@@ -2066,7 +2078,8 @@ module Aws
                                map_jsonb_as_clob: bool?,
                                map_long_varchar_as: ("wstring" | "clob" | "nclob")?,
                                database_mode: ("default" | "babelfish")?,
-                               babelfish_database_name: ::String?
+                               babelfish_database_name: ::String?,
+                               disable_unicode_source_filter: bool?
                              },
                              ?my_sql_settings: {
                                after_connect_script: ::String?,
@@ -2128,7 +2141,8 @@ module Aws
                                secrets_manager_oracle_asm_secret_id: ::String?,
                                trim_space_in_char: bool?,
                                convert_timestamp_with_zone_to_utc: bool?,
-                               open_transaction_window: ::Integer?
+                               open_transaction_window: ::Integer?,
+                               authentication_method: ("password" | "kerberos")?
                              },
                              ?sybase_settings: {
                                database_name: ::String?,
@@ -2156,7 +2170,8 @@ module Aws
                                secrets_manager_secret_id: ::String?,
                                trim_space_in_char: bool?,
                                tlog_access_mode: ("BackupOnly" | "PreferBackup" | "PreferTlog" | "TlogOnly")?,
-                               force_lob_lookup: bool?
+                               force_lob_lookup: bool?,
+                               authentication_method: ("password" | "kerberos")?
                              },
                              ?ibm_db_2_settings: {
                                database_name: ::String?,
@@ -2334,7 +2349,12 @@ module Aws
                                          ?allow_major_version_upgrade: bool,
                                          ?auto_minor_version_upgrade: bool,
                                          ?replication_instance_identifier: ::String,
-                                         ?network_type: ::String
+                                         ?network_type: ::String,
+                                         ?kerberos_authentication_settings: {
+                                           key_cache_secret_id: ::String?,
+                                           key_cache_secret_iam_arn: ::String?,
+                                           krb_5_file_contents: ::String?
+                                         }
                                        ) -> _ModifyReplicationInstanceResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ModifyReplicationInstanceResponseSuccess
 

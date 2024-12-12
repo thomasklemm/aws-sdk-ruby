@@ -1425,6 +1425,7 @@ module Aws::DatabaseMigrationService
     #       include_control_details: false,
     #       include_null_and_empty: false,
     #       no_hex_prefix: false,
+    #       use_large_integer_value: false,
     #     },
     #     kafka_settings: {
     #       broker: "String",
@@ -1447,6 +1448,7 @@ module Aws::DatabaseMigrationService
     #       no_hex_prefix: false,
     #       sasl_mechanism: "scram-sha-512", # accepts scram-sha-512, plain
     #       ssl_endpoint_identification_algorithm: "none", # accepts none, https
+    #       use_large_integer_value: false,
     #     },
     #     elasticsearch_settings: {
     #       service_access_role_arn: "String", # required
@@ -1522,6 +1524,7 @@ module Aws::DatabaseMigrationService
     #       map_long_varchar_as: "wstring", # accepts wstring, clob, nclob
     #       database_mode: "default", # accepts default, babelfish
     #       babelfish_database_name: "String",
+    #       disable_unicode_source_filter: false,
     #     },
     #     my_sql_settings: {
     #       after_connect_script: "String",
@@ -1584,6 +1587,7 @@ module Aws::DatabaseMigrationService
     #       trim_space_in_char: false,
     #       convert_timestamp_with_zone_to_utc: false,
     #       open_transaction_window: 1,
+    #       authentication_method: "password", # accepts password, kerberos
     #     },
     #     sybase_settings: {
     #       database_name: "String",
@@ -1612,6 +1616,7 @@ module Aws::DatabaseMigrationService
     #       trim_space_in_char: false,
     #       tlog_access_mode: "BackupOnly", # accepts BackupOnly, PreferBackup, PreferTlog, TlogOnly
     #       force_lob_lookup: false,
+    #       authentication_method: "password", # accepts password, kerberos
     #     },
     #     ibm_db_2_settings: {
     #       database_name: "String",
@@ -1768,6 +1773,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.kinesis_settings.include_control_details #=> Boolean
     #   resp.endpoint.kinesis_settings.include_null_and_empty #=> Boolean
     #   resp.endpoint.kinesis_settings.no_hex_prefix #=> Boolean
+    #   resp.endpoint.kinesis_settings.use_large_integer_value #=> Boolean
     #   resp.endpoint.kafka_settings.broker #=> String
     #   resp.endpoint.kafka_settings.topic #=> String
     #   resp.endpoint.kafka_settings.message_format #=> String, one of "json", "json-unformatted"
@@ -1788,6 +1794,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.kafka_settings.no_hex_prefix #=> Boolean
     #   resp.endpoint.kafka_settings.sasl_mechanism #=> String, one of "scram-sha-512", "plain"
     #   resp.endpoint.kafka_settings.ssl_endpoint_identification_algorithm #=> String, one of "none", "https"
+    #   resp.endpoint.kafka_settings.use_large_integer_value #=> Boolean
     #   resp.endpoint.elasticsearch_settings.service_access_role_arn #=> String
     #   resp.endpoint.elasticsearch_settings.endpoint_uri #=> String
     #   resp.endpoint.elasticsearch_settings.full_load_error_percentage #=> Integer
@@ -1855,6 +1862,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.postgre_sql_settings.map_long_varchar_as #=> String, one of "wstring", "clob", "nclob"
     #   resp.endpoint.postgre_sql_settings.database_mode #=> String, one of "default", "babelfish"
     #   resp.endpoint.postgre_sql_settings.babelfish_database_name #=> String
+    #   resp.endpoint.postgre_sql_settings.disable_unicode_source_filter #=> Boolean
     #   resp.endpoint.my_sql_settings.after_connect_script #=> String
     #   resp.endpoint.my_sql_settings.clean_source_metadata_on_mismatch #=> Boolean
     #   resp.endpoint.my_sql_settings.database_name #=> String
@@ -1914,6 +1922,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.oracle_settings.trim_space_in_char #=> Boolean
     #   resp.endpoint.oracle_settings.convert_timestamp_with_zone_to_utc #=> Boolean
     #   resp.endpoint.oracle_settings.open_transaction_window #=> Integer
+    #   resp.endpoint.oracle_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoint.sybase_settings.database_name #=> String
     #   resp.endpoint.sybase_settings.password #=> String
     #   resp.endpoint.sybase_settings.port #=> Integer
@@ -1938,6 +1947,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.microsoft_sql_server_settings.trim_space_in_char #=> Boolean
     #   resp.endpoint.microsoft_sql_server_settings.tlog_access_mode #=> String, one of "BackupOnly", "PreferBackup", "PreferTlog", "TlogOnly"
     #   resp.endpoint.microsoft_sql_server_settings.force_lob_lookup #=> Boolean
+    #   resp.endpoint.microsoft_sql_server_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoint.ibm_db_2_settings.database_name #=> String
     #   resp.endpoint.ibm_db_2_settings.password #=> String
     #   resp.endpoint.ibm_db_2_settings.port #=> Integer
@@ -2737,6 +2747,10 @@ module Aws::DatabaseMigrationService
     #   as IPv4 only or Dual-stack that supports both IPv4 and IPv6
     #   addressing. IPv6 only is not yet supported.
     #
+    # @option params [Types::KerberosAuthenticationSettings] :kerberos_authentication_settings
+    #   Specifies the ID of the secret that stores the key cache file required
+    #   for kerberos authentication, when creating a replication instance.
+    #
     # @return [Types::CreateReplicationInstanceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::CreateReplicationInstanceResponse#replication_instance #replication_instance} => Types::ReplicationInstance
@@ -2827,7 +2841,7 @@ module Aws::DatabaseMigrationService
     #   resp = client.create_replication_instance({
     #     replication_instance_identifier: "String", # required
     #     allocated_storage: 1,
-    #     replication_instance_class: "String", # required
+    #     replication_instance_class: "ReplicationInstanceClass", # required
     #     vpc_security_group_ids: ["String"],
     #     availability_zone: "String",
     #     replication_subnet_group_identifier: "String",
@@ -2847,6 +2861,11 @@ module Aws::DatabaseMigrationService
     #     dns_name_servers: "String",
     #     resource_identifier: "String",
     #     network_type: "String",
+    #     kerberos_authentication_settings: {
+    #       key_cache_secret_id: "String",
+    #       key_cache_secret_iam_arn: "String",
+    #       krb_5_file_contents: "String",
+    #     },
     #   })
     #
     # @example Response structure
@@ -2894,6 +2913,9 @@ module Aws::DatabaseMigrationService
     #   resp.replication_instance.free_until #=> Time
     #   resp.replication_instance.dns_name_servers #=> String
     #   resp.replication_instance.network_type #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_id #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_iam_arn #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.krb_5_file_contents #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateReplicationInstance AWS API Documentation
     #
@@ -3639,6 +3661,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.kinesis_settings.include_control_details #=> Boolean
     #   resp.endpoint.kinesis_settings.include_null_and_empty #=> Boolean
     #   resp.endpoint.kinesis_settings.no_hex_prefix #=> Boolean
+    #   resp.endpoint.kinesis_settings.use_large_integer_value #=> Boolean
     #   resp.endpoint.kafka_settings.broker #=> String
     #   resp.endpoint.kafka_settings.topic #=> String
     #   resp.endpoint.kafka_settings.message_format #=> String, one of "json", "json-unformatted"
@@ -3659,6 +3682,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.kafka_settings.no_hex_prefix #=> Boolean
     #   resp.endpoint.kafka_settings.sasl_mechanism #=> String, one of "scram-sha-512", "plain"
     #   resp.endpoint.kafka_settings.ssl_endpoint_identification_algorithm #=> String, one of "none", "https"
+    #   resp.endpoint.kafka_settings.use_large_integer_value #=> Boolean
     #   resp.endpoint.elasticsearch_settings.service_access_role_arn #=> String
     #   resp.endpoint.elasticsearch_settings.endpoint_uri #=> String
     #   resp.endpoint.elasticsearch_settings.full_load_error_percentage #=> Integer
@@ -3726,6 +3750,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.postgre_sql_settings.map_long_varchar_as #=> String, one of "wstring", "clob", "nclob"
     #   resp.endpoint.postgre_sql_settings.database_mode #=> String, one of "default", "babelfish"
     #   resp.endpoint.postgre_sql_settings.babelfish_database_name #=> String
+    #   resp.endpoint.postgre_sql_settings.disable_unicode_source_filter #=> Boolean
     #   resp.endpoint.my_sql_settings.after_connect_script #=> String
     #   resp.endpoint.my_sql_settings.clean_source_metadata_on_mismatch #=> Boolean
     #   resp.endpoint.my_sql_settings.database_name #=> String
@@ -3785,6 +3810,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.oracle_settings.trim_space_in_char #=> Boolean
     #   resp.endpoint.oracle_settings.convert_timestamp_with_zone_to_utc #=> Boolean
     #   resp.endpoint.oracle_settings.open_transaction_window #=> Integer
+    #   resp.endpoint.oracle_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoint.sybase_settings.database_name #=> String
     #   resp.endpoint.sybase_settings.password #=> String
     #   resp.endpoint.sybase_settings.port #=> Integer
@@ -3809,6 +3835,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.microsoft_sql_server_settings.trim_space_in_char #=> Boolean
     #   resp.endpoint.microsoft_sql_server_settings.tlog_access_mode #=> String, one of "BackupOnly", "PreferBackup", "PreferTlog", "TlogOnly"
     #   resp.endpoint.microsoft_sql_server_settings.force_lob_lookup #=> Boolean
+    #   resp.endpoint.microsoft_sql_server_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoint.ibm_db_2_settings.database_name #=> String
     #   resp.endpoint.ibm_db_2_settings.password #=> String
     #   resp.endpoint.ibm_db_2_settings.port #=> Integer
@@ -4276,6 +4303,9 @@ module Aws::DatabaseMigrationService
     #   resp.replication_instance.free_until #=> Time
     #   resp.replication_instance.dns_name_servers #=> String
     #   resp.replication_instance.network_type #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_id #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_iam_arn #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.krb_5_file_contents #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DeleteReplicationInstance AWS API Documentation
     #
@@ -4946,7 +4976,8 @@ module Aws::DatabaseMigrationService
     #   Filters applied to the data providers described in the form of
     #   key-value pairs.
     #
-    #   Valid filter names: data-provider-identifier
+    #   Valid filter names and values: data-provider-identifier, data provider
+    #   arn or name
     #
     # @option params [Integer] :max_records
     #   The maximum number of records to include in the response. If more
@@ -5389,6 +5420,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoints[0].kinesis_settings.include_control_details #=> Boolean
     #   resp.endpoints[0].kinesis_settings.include_null_and_empty #=> Boolean
     #   resp.endpoints[0].kinesis_settings.no_hex_prefix #=> Boolean
+    #   resp.endpoints[0].kinesis_settings.use_large_integer_value #=> Boolean
     #   resp.endpoints[0].kafka_settings.broker #=> String
     #   resp.endpoints[0].kafka_settings.topic #=> String
     #   resp.endpoints[0].kafka_settings.message_format #=> String, one of "json", "json-unformatted"
@@ -5409,6 +5441,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoints[0].kafka_settings.no_hex_prefix #=> Boolean
     #   resp.endpoints[0].kafka_settings.sasl_mechanism #=> String, one of "scram-sha-512", "plain"
     #   resp.endpoints[0].kafka_settings.ssl_endpoint_identification_algorithm #=> String, one of "none", "https"
+    #   resp.endpoints[0].kafka_settings.use_large_integer_value #=> Boolean
     #   resp.endpoints[0].elasticsearch_settings.service_access_role_arn #=> String
     #   resp.endpoints[0].elasticsearch_settings.endpoint_uri #=> String
     #   resp.endpoints[0].elasticsearch_settings.full_load_error_percentage #=> Integer
@@ -5476,6 +5509,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoints[0].postgre_sql_settings.map_long_varchar_as #=> String, one of "wstring", "clob", "nclob"
     #   resp.endpoints[0].postgre_sql_settings.database_mode #=> String, one of "default", "babelfish"
     #   resp.endpoints[0].postgre_sql_settings.babelfish_database_name #=> String
+    #   resp.endpoints[0].postgre_sql_settings.disable_unicode_source_filter #=> Boolean
     #   resp.endpoints[0].my_sql_settings.after_connect_script #=> String
     #   resp.endpoints[0].my_sql_settings.clean_source_metadata_on_mismatch #=> Boolean
     #   resp.endpoints[0].my_sql_settings.database_name #=> String
@@ -5535,6 +5569,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoints[0].oracle_settings.trim_space_in_char #=> Boolean
     #   resp.endpoints[0].oracle_settings.convert_timestamp_with_zone_to_utc #=> Boolean
     #   resp.endpoints[0].oracle_settings.open_transaction_window #=> Integer
+    #   resp.endpoints[0].oracle_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoints[0].sybase_settings.database_name #=> String
     #   resp.endpoints[0].sybase_settings.password #=> String
     #   resp.endpoints[0].sybase_settings.port #=> Integer
@@ -5559,6 +5594,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoints[0].microsoft_sql_server_settings.trim_space_in_char #=> Boolean
     #   resp.endpoints[0].microsoft_sql_server_settings.tlog_access_mode #=> String, one of "BackupOnly", "PreferBackup", "PreferTlog", "TlogOnly"
     #   resp.endpoints[0].microsoft_sql_server_settings.force_lob_lookup #=> Boolean
+    #   resp.endpoints[0].microsoft_sql_server_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoints[0].ibm_db_2_settings.database_name #=> String
     #   resp.endpoints[0].ibm_db_2_settings.password #=> String
     #   resp.endpoints[0].ibm_db_2_settings.port #=> Integer
@@ -6359,6 +6395,9 @@ module Aws::DatabaseMigrationService
     #   Filters applied to the instance profiles described in the form of
     #   key-value pairs.
     #
+    #   Valid filter names and values: instance-profile-identifier, instance
+    #   profile arn or name
+    #
     # @option params [Integer] :max_records
     #   The maximum number of records to include in the response. If more
     #   records exist than the specified `MaxRecords` value, DMS includes a
@@ -6916,6 +6955,14 @@ module Aws::DatabaseMigrationService
     # @option params [Array<Types::Filter>] :filters
     #   Filters applied to the migration projects described in the form of
     #   key-value pairs.
+    #
+    #   Valid filter names and values:
+    #
+    #   * instance-profile-identifier, instance profile arn or name
+    #
+    #   * data-provider-identifier, data provider arn or name
+    #
+    #   * migration-project-identifier, migration project arn or name
     #
     # @option params [Integer] :max_records
     #   The maximum number of records to include in the response. If more
@@ -7613,6 +7660,9 @@ module Aws::DatabaseMigrationService
     #   resp.replication_instances[0].free_until #=> Time
     #   resp.replication_instances[0].dns_name_servers #=> String
     #   resp.replication_instances[0].network_type #=> String
+    #   resp.replication_instances[0].kerberos_authentication_settings.key_cache_secret_id #=> String
+    #   resp.replication_instances[0].kerberos_authentication_settings.key_cache_secret_iam_arn #=> String
+    #   resp.replication_instances[0].kerberos_authentication_settings.krb_5_file_contents #=> String
     #
     #
     # The following waiters are defined for this operation (see {Client#wait_until} for detailed usage):
@@ -9384,6 +9434,7 @@ module Aws::DatabaseMigrationService
     #       include_control_details: false,
     #       include_null_and_empty: false,
     #       no_hex_prefix: false,
+    #       use_large_integer_value: false,
     #     },
     #     kafka_settings: {
     #       broker: "String",
@@ -9406,6 +9457,7 @@ module Aws::DatabaseMigrationService
     #       no_hex_prefix: false,
     #       sasl_mechanism: "scram-sha-512", # accepts scram-sha-512, plain
     #       ssl_endpoint_identification_algorithm: "none", # accepts none, https
+    #       use_large_integer_value: false,
     #     },
     #     elasticsearch_settings: {
     #       service_access_role_arn: "String", # required
@@ -9481,6 +9533,7 @@ module Aws::DatabaseMigrationService
     #       map_long_varchar_as: "wstring", # accepts wstring, clob, nclob
     #       database_mode: "default", # accepts default, babelfish
     #       babelfish_database_name: "String",
+    #       disable_unicode_source_filter: false,
     #     },
     #     my_sql_settings: {
     #       after_connect_script: "String",
@@ -9543,6 +9596,7 @@ module Aws::DatabaseMigrationService
     #       trim_space_in_char: false,
     #       convert_timestamp_with_zone_to_utc: false,
     #       open_transaction_window: 1,
+    #       authentication_method: "password", # accepts password, kerberos
     #     },
     #     sybase_settings: {
     #       database_name: "String",
@@ -9571,6 +9625,7 @@ module Aws::DatabaseMigrationService
     #       trim_space_in_char: false,
     #       tlog_access_mode: "BackupOnly", # accepts BackupOnly, PreferBackup, PreferTlog, TlogOnly
     #       force_lob_lookup: false,
+    #       authentication_method: "password", # accepts password, kerberos
     #     },
     #     ibm_db_2_settings: {
     #       database_name: "String",
@@ -9727,6 +9782,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.kinesis_settings.include_control_details #=> Boolean
     #   resp.endpoint.kinesis_settings.include_null_and_empty #=> Boolean
     #   resp.endpoint.kinesis_settings.no_hex_prefix #=> Boolean
+    #   resp.endpoint.kinesis_settings.use_large_integer_value #=> Boolean
     #   resp.endpoint.kafka_settings.broker #=> String
     #   resp.endpoint.kafka_settings.topic #=> String
     #   resp.endpoint.kafka_settings.message_format #=> String, one of "json", "json-unformatted"
@@ -9747,6 +9803,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.kafka_settings.no_hex_prefix #=> Boolean
     #   resp.endpoint.kafka_settings.sasl_mechanism #=> String, one of "scram-sha-512", "plain"
     #   resp.endpoint.kafka_settings.ssl_endpoint_identification_algorithm #=> String, one of "none", "https"
+    #   resp.endpoint.kafka_settings.use_large_integer_value #=> Boolean
     #   resp.endpoint.elasticsearch_settings.service_access_role_arn #=> String
     #   resp.endpoint.elasticsearch_settings.endpoint_uri #=> String
     #   resp.endpoint.elasticsearch_settings.full_load_error_percentage #=> Integer
@@ -9814,6 +9871,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.postgre_sql_settings.map_long_varchar_as #=> String, one of "wstring", "clob", "nclob"
     #   resp.endpoint.postgre_sql_settings.database_mode #=> String, one of "default", "babelfish"
     #   resp.endpoint.postgre_sql_settings.babelfish_database_name #=> String
+    #   resp.endpoint.postgre_sql_settings.disable_unicode_source_filter #=> Boolean
     #   resp.endpoint.my_sql_settings.after_connect_script #=> String
     #   resp.endpoint.my_sql_settings.clean_source_metadata_on_mismatch #=> Boolean
     #   resp.endpoint.my_sql_settings.database_name #=> String
@@ -9873,6 +9931,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.oracle_settings.trim_space_in_char #=> Boolean
     #   resp.endpoint.oracle_settings.convert_timestamp_with_zone_to_utc #=> Boolean
     #   resp.endpoint.oracle_settings.open_transaction_window #=> Integer
+    #   resp.endpoint.oracle_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoint.sybase_settings.database_name #=> String
     #   resp.endpoint.sybase_settings.password #=> String
     #   resp.endpoint.sybase_settings.port #=> Integer
@@ -9897,6 +9956,7 @@ module Aws::DatabaseMigrationService
     #   resp.endpoint.microsoft_sql_server_settings.trim_space_in_char #=> Boolean
     #   resp.endpoint.microsoft_sql_server_settings.tlog_access_mode #=> String, one of "BackupOnly", "PreferBackup", "PreferTlog", "TlogOnly"
     #   resp.endpoint.microsoft_sql_server_settings.force_lob_lookup #=> Boolean
+    #   resp.endpoint.microsoft_sql_server_settings.authentication_method #=> String, one of "password", "kerberos"
     #   resp.endpoint.ibm_db_2_settings.database_name #=> String
     #   resp.endpoint.ibm_db_2_settings.password #=> String
     #   resp.endpoint.ibm_db_2_settings.port #=> Integer
@@ -10479,6 +10539,10 @@ module Aws::DatabaseMigrationService
     #   as IPv4 only or Dual-stack that supports both IPv4 and IPv6
     #   addressing. IPv6 only is not yet supported.
     #
+    # @option params [Types::KerberosAuthenticationSettings] :kerberos_authentication_settings
+    #   Specifies the ID of the secret that stores the key cache file required
+    #   for kerberos authentication, when modifying a replication instance.
+    #
     # @return [Types::ModifyReplicationInstanceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ModifyReplicationInstanceResponse#replication_instance #replication_instance} => Types::ReplicationInstance
@@ -10564,7 +10628,7 @@ module Aws::DatabaseMigrationService
     #     replication_instance_arn: "String", # required
     #     allocated_storage: 1,
     #     apply_immediately: false,
-    #     replication_instance_class: "String",
+    #     replication_instance_class: "ReplicationInstanceClass",
     #     vpc_security_group_ids: ["String"],
     #     preferred_maintenance_window: "String",
     #     multi_az: false,
@@ -10573,6 +10637,11 @@ module Aws::DatabaseMigrationService
     #     auto_minor_version_upgrade: false,
     #     replication_instance_identifier: "String",
     #     network_type: "String",
+    #     kerberos_authentication_settings: {
+    #       key_cache_secret_id: "String",
+    #       key_cache_secret_iam_arn: "String",
+    #       krb_5_file_contents: "String",
+    #     },
     #   })
     #
     # @example Response structure
@@ -10620,6 +10689,9 @@ module Aws::DatabaseMigrationService
     #   resp.replication_instance.free_until #=> Time
     #   resp.replication_instance.dns_name_servers #=> String
     #   resp.replication_instance.network_type #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_id #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_iam_arn #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.krb_5_file_contents #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyReplicationInstance AWS API Documentation
     #
@@ -10987,6 +11059,9 @@ module Aws::DatabaseMigrationService
     #   resp.replication_instance.free_until #=> Time
     #   resp.replication_instance.dns_name_servers #=> String
     #   resp.replication_instance.network_type #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_id #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.key_cache_secret_iam_arn #=> String
+    #   resp.replication_instance.kerberos_authentication_settings.krb_5_file_contents #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/RebootReplicationInstance AWS API Documentation
     #
@@ -11668,6 +11743,23 @@ module Aws::DatabaseMigrationService
     #
     # @option params [required, String] :start_replication_type
     #   The replication type.
+    #
+    #   When the replication type is `full-load` or `full-load-and-cdc`, the
+    #   only valid value for the first run of the replication is
+    #   `start-replication`. This option will start the replication.
+    #
+    #   You can also use ReloadTables to reload specific tables that failed
+    #   during replication instead of restarting the replication.
+    #
+    #   The `resume-processing` option isn't applicable for a full-load
+    #   replication, because you can't resume partially loaded tables during
+    #   the full load phase.
+    #
+    #   For a `full-load-and-cdc` replication, DMS migrates table data, and
+    #   then applies data changes that occur on the source. To load all the
+    #   tables again, and start capturing source changes, use `reload-target`.
+    #   Otherwise use `resume-processing`, to replicate the changes from the
+    #   last stop position.
     #
     # @option params [Time,DateTime,Date,Integer,String] :cdc_start_time
     #   Indicates the start time for a change data capture (CDC) operation.
@@ -12445,7 +12537,7 @@ module Aws::DatabaseMigrationService
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-databasemigrationservice'
-      context[:gem_version] = '1.110.0'
+      context[:gem_version] = '1.111.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

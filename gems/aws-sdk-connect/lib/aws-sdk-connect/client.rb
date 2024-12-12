@@ -2294,6 +2294,73 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Creates an hours of operation override in an Amazon Connect hours of
+    # operation resource
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance.
+    #
+    # @option params [required, String] :hours_of_operation_id
+    #   The identifier for the hours of operation
+    #
+    # @option params [required, String] :name
+    #   The name of the hours of operation override.
+    #
+    # @option params [String] :description
+    #   The description of the hours of operation override.
+    #
+    # @option params [required, Array<Types::HoursOfOperationOverrideConfig>] :config
+    #   Configuration information for the hours of operation override: day,
+    #   start time, and end time.
+    #
+    # @option params [required, String] :effective_from
+    #   The date from when the hours of operation override would be effective.
+    #
+    # @option params [required, String] :effective_till
+    #   The date until when the hours of operation override would be
+    #   effective.
+    #
+    # @return [Types::CreateHoursOfOperationOverrideResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::CreateHoursOfOperationOverrideResponse#hours_of_operation_override_id #hours_of_operation_override_id} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.create_hours_of_operation_override({
+    #     instance_id: "InstanceId", # required
+    #     hours_of_operation_id: "HoursOfOperationId", # required
+    #     name: "CommonHumanReadableName", # required
+    #     description: "CommonHumanReadableDescription",
+    #     config: [ # required
+    #       {
+    #         day: "SUNDAY", # accepts SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+    #         start_time: {
+    #           hours: 1, # required
+    #           minutes: 1, # required
+    #         },
+    #         end_time: {
+    #           hours: 1, # required
+    #           minutes: 1, # required
+    #         },
+    #       },
+    #     ],
+    #     effective_from: "HoursOfOperationOverrideYearMonthDayDateFormat", # required
+    #     effective_till: "HoursOfOperationOverrideYearMonthDayDateFormat", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.hours_of_operation_override_id #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateHoursOfOperationOverride AWS API Documentation
+    #
+    # @overload create_hours_of_operation_override(params = {})
+    # @param [Hash] params ({})
+    def create_hours_of_operation_override(params = {}, options = {})
+      req = build_request(:create_hours_of_operation_override, params)
+      req.send_request(options)
+    end
+
     # This API is in preview release for Amazon Connect and is subject to
     # change.
     #
@@ -2820,9 +2887,6 @@ module Aws::Connect
       req.send_request(options)
     end
 
-    # This API is in preview release for Amazon Connect and is subject to
-    # change.
-    #
     # Creates a new queue for the specified Amazon Connect instance.
     #
     # * If the phone number is claimed to a traffic distribution group that
@@ -4316,6 +4380,37 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Deletes an hours of operation override in an Amazon Connect hours of
+    # operation resource
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance.
+    #
+    # @option params [required, String] :hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #
+    # @option params [required, String] :hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_hours_of_operation_override({
+    #     instance_id: "InstanceId", # required
+    #     hours_of_operation_id: "HoursOfOperationId", # required
+    #     hours_of_operation_override_id: "HoursOfOperationOverrideId", # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteHoursOfOperationOverride AWS API Documentation
+    #
+    # @overload delete_hours_of_operation_override(params = {})
+    # @param [Hash] params ({})
+    def delete_hours_of_operation_override(params = {}, options = {})
+      req = build_request(:delete_hours_of_operation_override, params)
+      req.send_request(options)
+    end
+
     # This API is in preview release for Amazon Connect and is subject to
     # change.
     #
@@ -5585,6 +5680,54 @@ module Aws::Connect
     # @param [Hash] params ({})
     def describe_hours_of_operation(params = {}, options = {})
       req = build_request(:describe_hours_of_operation, params)
+      req.send_request(options)
+    end
+
+    # Describes the hours of operation override.
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance.
+    #
+    # @option params [required, String] :hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #
+    # @option params [required, String] :hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #
+    # @return [Types::DescribeHoursOfOperationOverrideResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DescribeHoursOfOperationOverrideResponse#hours_of_operation_override #hours_of_operation_override} => Types::HoursOfOperationOverride
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.describe_hours_of_operation_override({
+    #     instance_id: "InstanceId", # required
+    #     hours_of_operation_id: "HoursOfOperationId", # required
+    #     hours_of_operation_override_id: "HoursOfOperationOverrideId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.hours_of_operation_override.hours_of_operation_override_id #=> String
+    #   resp.hours_of_operation_override.hours_of_operation_id #=> String
+    #   resp.hours_of_operation_override.hours_of_operation_arn #=> String
+    #   resp.hours_of_operation_override.name #=> String
+    #   resp.hours_of_operation_override.description #=> String
+    #   resp.hours_of_operation_override.config #=> Array
+    #   resp.hours_of_operation_override.config[0].day #=> String, one of "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
+    #   resp.hours_of_operation_override.config[0].start_time.hours #=> Integer
+    #   resp.hours_of_operation_override.config[0].start_time.minutes #=> Integer
+    #   resp.hours_of_operation_override.config[0].end_time.hours #=> Integer
+    #   resp.hours_of_operation_override.config[0].end_time.minutes #=> Integer
+    #   resp.hours_of_operation_override.effective_from #=> String
+    #   resp.hours_of_operation_override.effective_till #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeHoursOfOperationOverride AWS API Documentation
+    #
+    # @overload describe_hours_of_operation_override(params = {})
+    # @param [Hash] params ({})
+    def describe_hours_of_operation_override(params = {}, options = {})
+      req = build_request(:describe_hours_of_operation_override, params)
       req.send_request(options)
     end
 
@@ -7556,6 +7699,54 @@ module Aws::Connect
     # @param [Hash] params ({})
     def get_current_user_data(params = {}, options = {})
       req = build_request(:get_current_user_data, params)
+      req.send_request(options)
+    end
+
+    # Get the hours of operations with the effective override applied.
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance.
+    #
+    # @option params [required, String] :hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #
+    # @option params [required, String] :from_date
+    #   The Date from when the hours of operation are listed.
+    #
+    # @option params [required, String] :to_date
+    #   The Date until when the hours of operation are listed.
+    #
+    # @return [Types::GetEffectiveHoursOfOperationsResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetEffectiveHoursOfOperationsResponse#effective_hours_of_operation_list #effective_hours_of_operation_list} => Array&lt;Types::EffectiveHoursOfOperations&gt;
+    #   * {Types::GetEffectiveHoursOfOperationsResponse#time_zone #time_zone} => String
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_effective_hours_of_operations({
+    #     instance_id: "InstanceId", # required
+    #     hours_of_operation_id: "HoursOfOperationId", # required
+    #     from_date: "HoursOfOperationOverrideYearMonthDayDateFormat", # required
+    #     to_date: "HoursOfOperationOverrideYearMonthDayDateFormat", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.effective_hours_of_operation_list #=> Array
+    #   resp.effective_hours_of_operation_list[0].date #=> String
+    #   resp.effective_hours_of_operation_list[0].operational_hours #=> Array
+    #   resp.effective_hours_of_operation_list[0].operational_hours[0].start.hours #=> Integer
+    #   resp.effective_hours_of_operation_list[0].operational_hours[0].start.minutes #=> Integer
+    #   resp.effective_hours_of_operation_list[0].operational_hours[0].end.hours #=> Integer
+    #   resp.effective_hours_of_operation_list[0].operational_hours[0].end.minutes #=> Integer
+    #   resp.time_zone #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/GetEffectiveHoursOfOperations AWS API Documentation
+    #
+    # @overload get_effective_hours_of_operations(params = {})
+    # @param [Hash] params ({})
+    def get_effective_hours_of_operations(params = {}, options = {})
+      req = build_request(:get_effective_hours_of_operations, params)
       req.send_request(options)
     end
 
@@ -10703,6 +10894,71 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # List the hours of operation overrides.
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance.
+    #
+    # @option params [required, String] :hours_of_operation_id
+    #   The identifier for the hours of operation
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return per page. The default
+    #   MaxResult size is 100. Valid Range: Minimum value of 1. Maximum value
+    #   of 1000.
+    #
+    # @return [Types::ListHoursOfOperationOverridesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::ListHoursOfOperationOverridesResponse#next_token #next_token} => String
+    #   * {Types::ListHoursOfOperationOverridesResponse#hours_of_operation_override_list #hours_of_operation_override_list} => Array&lt;Types::HoursOfOperationOverride&gt;
+    #   * {Types::ListHoursOfOperationOverridesResponse#last_modified_region #last_modified_region} => String
+    #   * {Types::ListHoursOfOperationOverridesResponse#last_modified_time #last_modified_time} => Time
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.list_hours_of_operation_overrides({
+    #     instance_id: "InstanceId", # required
+    #     hours_of_operation_id: "HoursOfOperationId", # required
+    #     next_token: "NextToken",
+    #     max_results: 1,
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.next_token #=> String
+    #   resp.hours_of_operation_override_list #=> Array
+    #   resp.hours_of_operation_override_list[0].hours_of_operation_override_id #=> String
+    #   resp.hours_of_operation_override_list[0].hours_of_operation_id #=> String
+    #   resp.hours_of_operation_override_list[0].hours_of_operation_arn #=> String
+    #   resp.hours_of_operation_override_list[0].name #=> String
+    #   resp.hours_of_operation_override_list[0].description #=> String
+    #   resp.hours_of_operation_override_list[0].config #=> Array
+    #   resp.hours_of_operation_override_list[0].config[0].day #=> String, one of "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
+    #   resp.hours_of_operation_override_list[0].config[0].start_time.hours #=> Integer
+    #   resp.hours_of_operation_override_list[0].config[0].start_time.minutes #=> Integer
+    #   resp.hours_of_operation_override_list[0].config[0].end_time.hours #=> Integer
+    #   resp.hours_of_operation_override_list[0].config[0].end_time.minutes #=> Integer
+    #   resp.hours_of_operation_override_list[0].effective_from #=> String
+    #   resp.hours_of_operation_override_list[0].effective_till #=> String
+    #   resp.last_modified_region #=> String
+    #   resp.last_modified_time #=> Time
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListHoursOfOperationOverrides AWS API Documentation
+    #
+    # @overload list_hours_of_operation_overrides(params = {})
+    # @param [Hash] params ({})
+    def list_hours_of_operation_overrides(params = {}, options = {})
+      req = build_request(:list_hours_of_operation_overrides, params)
+      req.send_request(options)
+    end
+
     # Provides information about the hours of operation for the specified
     # Amazon Connect instance.
     #
@@ -13310,6 +13566,8 @@ module Aws::Connect
     #         value: "String",
     #         comparison_type: "STARTS_WITH", # accepts STARTS_WITH, CONTAINS, EXACT
     #       },
+    #       state_condition: "ACTIVE", # accepts ACTIVE, ARCHIVED
+    #       status_condition: "PUBLISHED", # accepts PUBLISHED, SAVED
     #     },
     #   })
     #
@@ -13668,6 +13926,116 @@ module Aws::Connect
     # @param [Hash] params ({})
     def search_email_addresses(params = {}, options = {})
       req = build_request(:search_email_addresses, params)
+      req.send_request(options)
+    end
+
+    # Searches the hours of operation overrides.
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance.
+    #
+    # @option params [String] :next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results. Length Constraints: Minimum length of 1. Maximum length of
+    #   2500.
+    #
+    # @option params [Integer] :max_results
+    #   The maximum number of results to return per page. Valid Range: Minimum
+    #   value of 1. Maximum value of 100.
+    #
+    # @option params [Types::HoursOfOperationSearchFilter] :search_filter
+    #   Filters to be applied to search results.
+    #
+    # @option params [Types::HoursOfOperationOverrideSearchCriteria] :search_criteria
+    #   The search criteria to be used to return hours of operations
+    #   overrides.
+    #
+    # @return [Types::SearchHoursOfOperationOverridesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::SearchHoursOfOperationOverridesResponse#hours_of_operation_overrides #hours_of_operation_overrides} => Array&lt;Types::HoursOfOperationOverride&gt;
+    #   * {Types::SearchHoursOfOperationOverridesResponse#next_token #next_token} => String
+    #   * {Types::SearchHoursOfOperationOverridesResponse#approximate_total_count #approximate_total_count} => Integer
+    #
+    # The returned {Seahorse::Client::Response response} is a pageable response and is Enumerable. For details on usage see {Aws::PageableResponse PageableResponse}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.search_hours_of_operation_overrides({
+    #     instance_id: "InstanceId", # required
+    #     next_token: "NextToken2500",
+    #     max_results: 1,
+    #     search_filter: {
+    #       tag_filter: {
+    #         or_conditions: [
+    #           [
+    #             {
+    #               tag_key: "String",
+    #               tag_value: "String",
+    #             },
+    #           ],
+    #         ],
+    #         and_conditions: [
+    #           {
+    #             tag_key: "String",
+    #             tag_value: "String",
+    #           },
+    #         ],
+    #         tag_condition: {
+    #           tag_key: "String",
+    #           tag_value: "String",
+    #         },
+    #       },
+    #     },
+    #     search_criteria: {
+    #       or_conditions: [
+    #         {
+    #           # recursive HoursOfOperationOverrideSearchCriteria
+    #         },
+    #       ],
+    #       and_conditions: [
+    #         {
+    #           # recursive HoursOfOperationOverrideSearchCriteria
+    #         },
+    #       ],
+    #       string_condition: {
+    #         field_name: "String",
+    #         value: "String",
+    #         comparison_type: "STARTS_WITH", # accepts STARTS_WITH, CONTAINS, EXACT
+    #       },
+    #       date_condition: {
+    #         field_name: "String",
+    #         value: "DateYearMonthDayFormat",
+    #         comparison_type: "GREATER_THAN", # accepts GREATER_THAN, LESS_THAN, GREATER_THAN_OR_EQUAL_TO, LESS_THAN_OR_EQUAL_TO, EQUAL_TO
+    #       },
+    #     },
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.hours_of_operation_overrides #=> Array
+    #   resp.hours_of_operation_overrides[0].hours_of_operation_override_id #=> String
+    #   resp.hours_of_operation_overrides[0].hours_of_operation_id #=> String
+    #   resp.hours_of_operation_overrides[0].hours_of_operation_arn #=> String
+    #   resp.hours_of_operation_overrides[0].name #=> String
+    #   resp.hours_of_operation_overrides[0].description #=> String
+    #   resp.hours_of_operation_overrides[0].config #=> Array
+    #   resp.hours_of_operation_overrides[0].config[0].day #=> String, one of "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"
+    #   resp.hours_of_operation_overrides[0].config[0].start_time.hours #=> Integer
+    #   resp.hours_of_operation_overrides[0].config[0].start_time.minutes #=> Integer
+    #   resp.hours_of_operation_overrides[0].config[0].end_time.hours #=> Integer
+    #   resp.hours_of_operation_overrides[0].config[0].end_time.minutes #=> Integer
+    #   resp.hours_of_operation_overrides[0].effective_from #=> String
+    #   resp.hours_of_operation_overrides[0].effective_till #=> String
+    #   resp.next_token #=> String
+    #   resp.approximate_total_count #=> Integer
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchHoursOfOperationOverrides AWS API Documentation
+    #
+    # @overload search_hours_of_operation_overrides(params = {})
+    # @param [Hash] params ({})
+    def search_hours_of_operation_overrides(params = {}, options = {})
+      req = build_request(:search_hours_of_operation_overrides, params)
       req.send_request(options)
     end
 
@@ -18217,6 +18585,69 @@ module Aws::Connect
       req.send_request(options)
     end
 
+    # Update the hours of operation override.
+    #
+    # @option params [required, String] :instance_id
+    #   The identifier of the Amazon Connect instance.
+    #
+    # @option params [required, String] :hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #
+    # @option params [required, String] :hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #
+    # @option params [String] :name
+    #   The name of the hours of operation override.
+    #
+    # @option params [String] :description
+    #   The description of the hours of operation override.
+    #
+    # @option params [Array<Types::HoursOfOperationOverrideConfig>] :config
+    #   Configuration information for the hours of operation override: day,
+    #   start time, and end time.
+    #
+    # @option params [String] :effective_from
+    #   The date from when the hours of operation override would be effective.
+    #
+    # @option params [String] :effective_till
+    #   The date till when the hours of operation override would be effective.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_hours_of_operation_override({
+    #     instance_id: "InstanceId", # required
+    #     hours_of_operation_id: "HoursOfOperationId", # required
+    #     hours_of_operation_override_id: "HoursOfOperationOverrideId", # required
+    #     name: "CommonHumanReadableName",
+    #     description: "CommonHumanReadableDescription",
+    #     config: [
+    #       {
+    #         day: "SUNDAY", # accepts SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+    #         start_time: {
+    #           hours: 1, # required
+    #           minutes: 1, # required
+    #         },
+    #         end_time: {
+    #           hours: 1, # required
+    #           minutes: 1, # required
+    #         },
+    #       },
+    #     ],
+    #     effective_from: "HoursOfOperationOverrideYearMonthDayDateFormat",
+    #     effective_till: "HoursOfOperationOverrideYearMonthDayDateFormat",
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateHoursOfOperationOverride AWS API Documentation
+    #
+    # @overload update_hours_of_operation_override(params = {})
+    # @param [Hash] params ({})
+    def update_hours_of_operation_override(params = {}, options = {})
+      req = build_request(:update_hours_of_operation_override, params)
+      req.send_request(options)
+    end
+
     # This API is in preview release for Amazon Connect and is subject to
     # change.
     #
@@ -20069,7 +20500,7 @@ module Aws::Connect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-connect'
-      context[:gem_version] = '1.189.0'
+      context[:gem_version] = '1.190.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

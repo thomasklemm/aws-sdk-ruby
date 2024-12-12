@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.111.0 (2024-12-12)
+------------------
+
+* Feature - Add parameters to support for kerberos authentication. Add parameter for disabling the Unicode source filter with PostgreSQL settings. Add parameter to use large integer value with Kinesis/Kafka settings.
+
 1.110.0 (2024-11-06)
 ------------------
 

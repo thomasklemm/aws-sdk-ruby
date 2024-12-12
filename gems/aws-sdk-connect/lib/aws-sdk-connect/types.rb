@@ -2232,7 +2232,7 @@ module Aws::Connect
       include Aws::Structure
     end
 
-    # A conditional check failed.
+    # Request processing failed because dependent condition failed.
     #
     # @!attribute [rw] message
     #   @return [String]
@@ -2532,6 +2532,11 @@ module Aws::Connect
     #
     # @!attribute [rw] participant_role
     #   The role of the participant in the chat conversation.
+    #
+    #   <note markdown="1"> Only `CUSTOMER` is currently supported. Any other values other than
+    #   `CUSTOMER` will result in an exception (4xx error).
+    #
+    #    </note>
     #   @return [String]
     #
     # @!attribute [rw] include_raw_message
@@ -2779,12 +2784,22 @@ module Aws::Connect
     #   condition.
     #   @return [Types::StringCondition]
     #
+    # @!attribute [rw] state_condition
+    #   The state of the flow.
+    #   @return [String]
+    #
+    # @!attribute [rw] status_condition
+    #   The status of the flow.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ContactFlowModuleSearchCriteria AWS API Documentation
     #
     class ContactFlowModuleSearchCriteria < Struct.new(
       :or_conditions,
       :and_conditions,
-      :string_condition)
+      :string_condition,
+      :state_condition,
+      :status_condition)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -3813,6 +3828,63 @@ module Aws::Connect
     class CreateEvaluationFormResponse < Struct.new(
       :evaluation_form_id,
       :evaluation_form_arn)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_id
+    #   The identifier for the hours of operation
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] config
+    #   Configuration information for the hours of operation override: day,
+    #   start time, and end time.
+    #   @return [Array<Types::HoursOfOperationOverrideConfig>]
+    #
+    # @!attribute [rw] effective_from
+    #   The date from when the hours of operation override would be
+    #   effective.
+    #   @return [String]
+    #
+    # @!attribute [rw] effective_till
+    #   The date until when the hours of operation override would be
+    #   effective.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateHoursOfOperationOverrideRequest AWS API Documentation
+    #
+    class CreateHoursOfOperationOverrideRequest < Struct.new(
+      :instance_id,
+      :hours_of_operation_id,
+      :name,
+      :description,
+      :config,
+      :effective_from,
+      :effective_till)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/CreateHoursOfOperationOverrideResponse AWS API Documentation
+    #
+    class CreateHoursOfOperationOverrideResponse < Struct.new(
+      :hours_of_operation_override_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -5538,6 +5610,31 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # An object to specify the hours of operation override date condition.
+    #
+    # @!attribute [rw] field_name
+    #   An object to specify the hours of operation override date field.
+    #   @return [String]
+    #
+    # @!attribute [rw] value
+    #   An object to specify the hours of operation override date value.
+    #   @return [String]
+    #
+    # @!attribute [rw] comparison_type
+    #   An object to specify the hours of operation override date condition
+    #   `comparisonType`.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DateCondition AWS API Documentation
+    #
+    class DateCondition < Struct.new(
+      :field_name,
+      :value,
+      :comparison_type)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Information about a reference when the `referenceType` is `DATE`.
     # Otherwise, null.
     #
@@ -5810,6 +5907,28 @@ module Aws::Connect
       :instance_id,
       :evaluation_form_id,
       :evaluation_form_version)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DeleteHoursOfOperationOverrideRequest AWS API Documentation
+    #
+    class DeleteHoursOfOperationOverrideRequest < Struct.new(
+      :instance_id,
+      :hours_of_operation_id,
+      :hours_of_operation_override_id)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -6575,6 +6694,40 @@ module Aws::Connect
     #
     class DescribeEvaluationFormResponse < Struct.new(
       :evaluation_form)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeHoursOfOperationOverrideRequest AWS API Documentation
+    #
+    class DescribeHoursOfOperationOverrideRequest < Struct.new(
+      :instance_id,
+      :hours_of_operation_id,
+      :hours_of_operation_override_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] hours_of_operation_override
+    #   Information about the hours of operations override.
+    #   @return [Types::HoursOfOperationOverride]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/DescribeHoursOfOperationOverrideResponse AWS API Documentation
+    #
+    class DescribeHoursOfOperationOverrideResponse < Struct.new(
+      :hours_of_operation_override)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -7706,6 +7859,27 @@ module Aws::Connect
     #
     class DuplicateResourceException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about the hours of operations with the effective override
+    # applied.
+    #
+    # @!attribute [rw] date
+    #   The date that the hours of operation or overrides applies to.
+    #   @return [String]
+    #
+    # @!attribute [rw] operational_hours
+    #   Information about the hours of operations with the effective
+    #   override applied.
+    #   @return [Array<Types::OperationalHour>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/EffectiveHoursOfOperations AWS API Documentation
+    #
+    class EffectiveHoursOfOperations < Struct.new(
+      :date,
+      :operational_hours)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -9560,6 +9734,50 @@ module Aws::Connect
       :next_token,
       :user_data_list,
       :approximate_total_count)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] from_date
+    #   The Date from when the hours of operation are listed.
+    #   @return [String]
+    #
+    # @!attribute [rw] to_date
+    #   The Date until when the hours of operation are listed.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/GetEffectiveHoursOfOperationsRequest AWS API Documentation
+    #
+    class GetEffectiveHoursOfOperationsRequest < Struct.new(
+      :instance_id,
+      :hours_of_operation_id,
+      :from_date,
+      :to_date)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] effective_hours_of_operation_list
+    #   Information about the effective hours of operations
+    #   @return [Array<Types::EffectiveHoursOfOperations>]
+    #
+    # @!attribute [rw] time_zone
+    #   The time zone for the hours of operation.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/GetEffectiveHoursOfOperationsResponse AWS API Documentation
+    #
+    class GetEffectiveHoursOfOperationsResponse < Struct.new(
+      :effective_hours_of_operation_list,
+      :time_zone)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -12179,6 +12397,118 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the hours of operations override.
+    #
+    # @!attribute [rw] hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_arn
+    #   The Amazon Resource Name (ARN) for the hours of operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] config
+    #   Configuration information for the hours of operation override: day,
+    #   start time, and end time.
+    #   @return [Array<Types::HoursOfOperationOverrideConfig>]
+    #
+    # @!attribute [rw] effective_from
+    #   The date from which the hours of operation override would be
+    #   effective.
+    #   @return [String]
+    #
+    # @!attribute [rw] effective_till
+    #   The date till which the hours of operation override would be
+    #   effective.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/HoursOfOperationOverride AWS API Documentation
+    #
+    class HoursOfOperationOverride < Struct.new(
+      :hours_of_operation_override_id,
+      :hours_of_operation_id,
+      :hours_of_operation_arn,
+      :name,
+      :description,
+      :config,
+      :effective_from,
+      :effective_till)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # Information about the hours of operation override config: day, start
+    # time, and end time.
+    #
+    # @!attribute [rw] day
+    #   The day that the hours of operation override applies to.
+    #   @return [String]
+    #
+    # @!attribute [rw] start_time
+    #   The start time when your contact center opens if overrides are
+    #   applied.
+    #   @return [Types::OverrideTimeSlice]
+    #
+    # @!attribute [rw] end_time
+    #   The end time that your contact center closes if overrides are
+    #   applied.
+    #   @return [Types::OverrideTimeSlice]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/HoursOfOperationOverrideConfig AWS API Documentation
+    #
+    class HoursOfOperationOverrideConfig < Struct.new(
+      :day,
+      :start_time,
+      :end_time)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The search criteria to be used to return hours of operations
+    # overrides.
+    #
+    # @!attribute [rw] or_conditions
+    #   A list of conditions which would be applied together with an OR
+    #   condition.
+    #   @return [Array<Types::HoursOfOperationOverrideSearchCriteria>]
+    #
+    # @!attribute [rw] and_conditions
+    #   A list of conditions which would be applied together with an AND
+    #   condition.
+    #   @return [Array<Types::HoursOfOperationOverrideSearchCriteria>]
+    #
+    # @!attribute [rw] string_condition
+    #   A leaf node condition which can be used to specify a string
+    #   condition.
+    #   @return [Types::StringCondition]
+    #
+    # @!attribute [rw] date_condition
+    #   A leaf node condition which can be used to specify a date condition.
+    #   @return [Types::DateCondition]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/HoursOfOperationOverrideSearchCriteria AWS API Documentation
+    #
+    class HoursOfOperationOverrideSearchCriteria < Struct.new(
+      :or_conditions,
+      :and_conditions,
+      :string_condition,
+      :date_condition)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The search criteria to be used to return hours of operations.
     #
     # @!attribute [rw] or_conditions
@@ -13762,6 +14092,66 @@ module Aws::Connect
     class ListFlowAssociationsResponse < Struct.new(
       :flow_association_summary_list,
       :next_token)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_id
+    #   The identifier for the hours of operation
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return per page. The default
+    #   MaxResult size is 100. Valid Range: Minimum value of 1. Maximum
+    #   value of 1000.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListHoursOfOperationOverridesRequest AWS API Documentation
+    #
+    class ListHoursOfOperationOverridesRequest < Struct.new(
+      :instance_id,
+      :hours_of_operation_id,
+      :next_token,
+      :max_results)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_override_list
+    #   Information about the hours of operation override.
+    #   @return [Array<Types::HoursOfOperationOverride>]
+    #
+    # @!attribute [rw] last_modified_region
+    #   The AWS Region where this resource was last modified.
+    #   @return [String]
+    #
+    # @!attribute [rw] last_modified_time
+    #   The timestamp when this resource was last modified.
+    #   @return [Time]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/ListHoursOfOperationOverridesResponse AWS API Documentation
+    #
+    class ListHoursOfOperationOverridesResponse < Struct.new(
+      :next_token,
+      :hours_of_operation_override_list,
+      :last_modified_region,
+      :last_modified_time)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -16077,6 +16467,26 @@ module Aws::Connect
       include Aws::Structure
     end
 
+    # Information about the hours of operations with the effective override
+    # applied.
+    #
+    # @!attribute [rw] start
+    #   The start time that your contact center opens.
+    #   @return [Types::OverrideTimeSlice]
+    #
+    # @!attribute [rw] end
+    #   The end time that your contact center closes.
+    #   @return [Types::OverrideTimeSlice]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OperationalHour AWS API Documentation
+    #
+    class OperationalHour < Struct.new(
+      :start,
+      :end)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The additional recipients information of outbound email.
     #
     # @!attribute [rw] cc_email_addresses
@@ -16203,6 +16613,25 @@ module Aws::Connect
     #
     class OutputTypeNotFoundException < Struct.new(
       :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The start time or end time for an hours of operation override.
+    #
+    # @!attribute [rw] hours
+    #   The hours.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] minutes
+    #   The minutes.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/OverrideTimeSlice AWS API Documentation
+    #
+    class OverrideTimeSlice < Struct.new(
+      :hours,
+      :minutes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -19348,6 +19777,69 @@ module Aws::Connect
     class SearchEmailAddressesResponse < Struct.new(
       :next_token,
       :email_addresses,
+      :approximate_total_count)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results. Length Constraints: Minimum length of 1. Maximum length of
+    #   2500.
+    #   @return [String]
+    #
+    # @!attribute [rw] max_results
+    #   The maximum number of results to return per page. Valid Range:
+    #   Minimum value of 1. Maximum value of 100.
+    #   @return [Integer]
+    #
+    # @!attribute [rw] search_filter
+    #   Filters to be applied to search results.
+    #   @return [Types::HoursOfOperationSearchFilter]
+    #
+    # @!attribute [rw] search_criteria
+    #   The search criteria to be used to return hours of operations
+    #   overrides.
+    #   @return [Types::HoursOfOperationOverrideSearchCriteria]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchHoursOfOperationOverridesRequest AWS API Documentation
+    #
+    class SearchHoursOfOperationOverridesRequest < Struct.new(
+      :instance_id,
+      :next_token,
+      :max_results,
+      :search_filter,
+      :search_criteria)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] hours_of_operation_overrides
+    #   Information about the hours of operations overrides.
+    #   @return [Array<Types::HoursOfOperationOverride>]
+    #
+    # @!attribute [rw] next_token
+    #   The token for the next set of results. Use the value returned in the
+    #   previous response in the next request to retrieve the next set of
+    #   results. Length Constraints: Minimum length of 1. Maximum length of
+    #   2500.
+    #   @return [String]
+    #
+    # @!attribute [rw] approximate_total_count
+    #   The total number of hours of operations which matched your search
+    #   query.
+    #   @return [Integer]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/SearchHoursOfOperationOverridesResponse AWS API Documentation
+    #
+    class SearchHoursOfOperationOverridesResponse < Struct.new(
+      :hours_of_operation_overrides,
+      :next_token,
       :approximate_total_count)
       SENSITIVE = []
       include Aws::Structure
@@ -23854,6 +24346,56 @@ module Aws::Connect
     end
 
     # @!attribute [rw] instance_id
+    #   The identifier of the Amazon Connect instance.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_id
+    #   The identifier for the hours of operation.
+    #   @return [String]
+    #
+    # @!attribute [rw] hours_of_operation_override_id
+    #   The identifier for the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] name
+    #   The name of the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] description
+    #   The description of the hours of operation override.
+    #   @return [String]
+    #
+    # @!attribute [rw] config
+    #   Configuration information for the hours of operation override: day,
+    #   start time, and end time.
+    #   @return [Array<Types::HoursOfOperationOverrideConfig>]
+    #
+    # @!attribute [rw] effective_from
+    #   The date from when the hours of operation override would be
+    #   effective.
+    #   @return [String]
+    #
+    # @!attribute [rw] effective_till
+    #   The date till when the hours of operation override would be
+    #   effective.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/connect-2017-08-08/UpdateHoursOfOperationOverrideRequest AWS API Documentation
+    #
+    class UpdateHoursOfOperationOverrideRequest < Struct.new(
+      :instance_id,
+      :hours_of_operation_id,
+      :hours_of_operation_override_id,
+      :name,
+      :description,
+      :config,
+      :effective_from,
+      :effective_till)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] instance_id
     #   The identifier of the Amazon Connect instance. You can [find the
     #   instance ID][1] in the Amazon Resource Name (ARN) of the instance.
     #
@@ -25468,12 +26010,18 @@ module Aws::Connect
     #
     # @!attribute [rw] first_name
     #   The first name. This is required if you are using Amazon Connect or
-    #   SAML for identity management.
+    #   SAML for identity management. Inputs must be in Unicode
+    #   Normalization Form C (NFC). Text containing characters in a non-NFC
+    #   form (for example, decomposed characters or combining marks) are not
+    #   accepted.
     #   @return [String]
     #
     # @!attribute [rw] last_name
     #   The last name. This is required if you are using Amazon Connect or
-    #   SAML for identity management.
+    #   SAML for identity management. Inputs must be in Unicode
+    #   Normalization Form C (NFC). Text containing characters in a non-NFC
+    #   form (for example, decomposed characters or combining marks) are not
+    #   accepted.
     #   @return [String]
     #
     # @!attribute [rw] email

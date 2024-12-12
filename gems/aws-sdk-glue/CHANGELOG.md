@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.205.0 (2024-12-12)
+------------------
+
+* Feature - To support customer-managed encryption in Data Quality to allow customers encrypt data with their own KMS key, we will add a DataQualityEncryption field to the SecurityConfiguration API where customers can provide their KMS keys.
+
 1.204.0 (2024-12-03)
 ------------------
 

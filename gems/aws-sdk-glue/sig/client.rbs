@@ -2401,6 +2401,10 @@ module Aws
                                              job_bookmarks_encryption: {
                                                job_bookmarks_encryption_mode: ("DISABLED" | "CSE-KMS")?,
                                                kms_key_arn: ::String?
+                                             }?,
+                                             data_quality_encryption: {
+                                               data_quality_encryption_mode: ("DISABLED" | "SSE-KMS")?,
+                                               kms_key_arn: ::String?
                                              }?
                                            }
                                          ) -> _CreateSecurityConfigurationResponseSuccess

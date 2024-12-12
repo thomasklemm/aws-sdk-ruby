@@ -326,6 +326,7 @@ module Aws::DatabaseMigrationService
       attr_accessor dns_name_servers: ::String
       attr_accessor resource_identifier: ::String
       attr_accessor network_type: ::String
+      attr_accessor kerberos_authentication_settings: Types::KerberosAuthenticationSettings
       SENSITIVE: []
     end
 
@@ -1582,7 +1583,15 @@ module Aws::DatabaseMigrationService
       attr_accessor no_hex_prefix: bool
       attr_accessor sasl_mechanism: ("scram-sha-512" | "plain")
       attr_accessor ssl_endpoint_identification_algorithm: ("none" | "https")
+      attr_accessor use_large_integer_value: bool
       SENSITIVE: [:ssl_client_key_password, :sasl_password]
+    end
+
+    class KerberosAuthenticationSettings
+      attr_accessor key_cache_secret_id: ::String
+      attr_accessor key_cache_secret_iam_arn: ::String
+      attr_accessor krb_5_file_contents: ::String
+      SENSITIVE: []
     end
 
     class KinesisSettings
@@ -1596,6 +1605,7 @@ module Aws::DatabaseMigrationService
       attr_accessor include_control_details: bool
       attr_accessor include_null_and_empty: bool
       attr_accessor no_hex_prefix: bool
+      attr_accessor use_large_integer_value: bool
       SENSITIVE: []
     end
 
@@ -1646,6 +1656,7 @@ module Aws::DatabaseMigrationService
       attr_accessor trim_space_in_char: bool
       attr_accessor tlog_access_mode: ("BackupOnly" | "PreferBackup" | "PreferTlog" | "TlogOnly")
       attr_accessor force_lob_lookup: bool
+      attr_accessor authentication_method: ("password" | "kerberos")
       SENSITIVE: [:password]
     end
 
@@ -1838,6 +1849,7 @@ module Aws::DatabaseMigrationService
       attr_accessor auto_minor_version_upgrade: bool
       attr_accessor replication_instance_identifier: ::String
       attr_accessor network_type: ::String
+      attr_accessor kerberos_authentication_settings: Types::KerberosAuthenticationSettings
       SENSITIVE: []
     end
 
@@ -2015,6 +2027,7 @@ module Aws::DatabaseMigrationService
       attr_accessor trim_space_in_char: bool
       attr_accessor convert_timestamp_with_zone_to_utc: bool
       attr_accessor open_transaction_window: ::Integer
+      attr_accessor authentication_method: ("password" | "kerberos")
       SENSITIVE: [:asm_password, :password, :security_db_encryption]
     end
 
@@ -2066,6 +2079,7 @@ module Aws::DatabaseMigrationService
       attr_accessor map_long_varchar_as: ("wstring" | "clob" | "nclob")
       attr_accessor database_mode: ("default" | "babelfish")
       attr_accessor babelfish_database_name: ::String
+      attr_accessor disable_unicode_source_filter: bool
       SENSITIVE: [:password]
     end
 
@@ -2322,6 +2336,7 @@ module Aws::DatabaseMigrationService
       attr_accessor free_until: ::Time
       attr_accessor dns_name_servers: ::String
       attr_accessor network_type: ::String
+      attr_accessor kerberos_authentication_settings: Types::KerberosAuthenticationSettings
       SENSITIVE: []
     end
 
@@ -2402,7 +2417,7 @@ module Aws::DatabaseMigrationService
       attr_accessor assessment_results_file: ::String
       attr_accessor assessment_results: ::String
       attr_accessor s3_object_url: ::String
-      SENSITIVE: []
+      SENSITIVE: [:s3_object_url]
     end
 
     class ReplicationTaskAssessmentRun

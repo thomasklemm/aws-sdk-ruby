@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.190.0 (2024-12-12)
+------------------
+
+* Feature - Configure holidays and other overrides to hours of operation in advance. During contact handling, Amazon Connect automatically checks for overrides and provides customers with an appropriate flow path. After an override period passes call center automatically reverts to standard hours of operation.
+
 1.189.0 (2024-12-10)
 ------------------
 

@@ -602,6 +602,34 @@ module Aws
                                      ) -> _CreateHoursOfOperationResponseSuccess
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateHoursOfOperationResponseSuccess
 
+      interface _CreateHoursOfOperationOverrideResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::CreateHoursOfOperationOverrideResponse]
+        def hours_of_operation_override_id: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#create_hours_of_operation_override-instance_method
+      def create_hours_of_operation_override: (
+                                                instance_id: ::String,
+                                                hours_of_operation_id: ::String,
+                                                name: ::String,
+                                                ?description: ::String,
+                                                config: Array[
+                                                  {
+                                                    day: ("SUNDAY" | "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY")?,
+                                                    start_time: {
+                                                      hours: ::Integer,
+                                                      minutes: ::Integer
+                                                    }?,
+                                                    end_time: {
+                                                      hours: ::Integer,
+                                                      minutes: ::Integer
+                                                    }?
+                                                  },
+                                                ],
+                                                effective_from: ::String,
+                                                effective_till: ::String
+                                              ) -> _CreateHoursOfOperationOverrideResponseSuccess
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateHoursOfOperationOverrideResponseSuccess
+
       interface _CreateInstanceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::CreateInstanceResponse]
         def id: () -> ::String
@@ -1169,6 +1197,14 @@ module Aws
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#delete_hours_of_operation_override-instance_method
+      def delete_hours_of_operation_override: (
+                                                instance_id: ::String,
+                                                hours_of_operation_id: ::String,
+                                                hours_of_operation_override_id: ::String
+                                              ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#delete_instance-instance_method
       def delete_instance: (
                              instance_id: ::String
@@ -1424,6 +1460,18 @@ module Aws
                                          hours_of_operation_id: ::String
                                        ) -> _DescribeHoursOfOperationResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeHoursOfOperationResponseSuccess
+
+      interface _DescribeHoursOfOperationOverrideResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DescribeHoursOfOperationOverrideResponse]
+        def hours_of_operation_override: () -> Types::HoursOfOperationOverride
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#describe_hours_of_operation_override-instance_method
+      def describe_hours_of_operation_override: (
+                                                  instance_id: ::String,
+                                                  hours_of_operation_id: ::String,
+                                                  hours_of_operation_override_id: ::String
+                                                ) -> _DescribeHoursOfOperationOverrideResponseSuccess
+                                              | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DescribeHoursOfOperationOverrideResponseSuccess
 
       interface _DescribeInstanceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DescribeInstanceResponse]
@@ -1833,6 +1881,20 @@ module Aws
                                  ) -> _GetCurrentUserDataResponseSuccess
                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetCurrentUserDataResponseSuccess
 
+      interface _GetEffectiveHoursOfOperationsResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetEffectiveHoursOfOperationsResponse]
+        def effective_hours_of_operation_list: () -> ::Array[Types::EffectiveHoursOfOperations]
+        def time_zone: () -> ::String
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#get_effective_hours_of_operations-instance_method
+      def get_effective_hours_of_operations: (
+                                               instance_id: ::String,
+                                               hours_of_operation_id: ::String,
+                                               from_date: ::String,
+                                               to_date: ::String
+                                             ) -> _GetEffectiveHoursOfOperationsResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetEffectiveHoursOfOperationsResponseSuccess
+
       interface _GetFederationTokenResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::GetFederationTokenResponse]
         def credentials: () -> Types::Credentials
@@ -2209,6 +2271,22 @@ module Aws
                                     ?max_results: ::Integer
                                   ) -> _ListFlowAssociationsResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListFlowAssociationsResponseSuccess
+
+      interface _ListHoursOfOperationOverridesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::ListHoursOfOperationOverridesResponse]
+        def next_token: () -> ::String
+        def hours_of_operation_override_list: () -> ::Array[Types::HoursOfOperationOverride]
+        def last_modified_region: () -> ::String
+        def last_modified_time: () -> ::Time
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#list_hours_of_operation_overrides-instance_method
+      def list_hours_of_operation_overrides: (
+                                               instance_id: ::String,
+                                               hours_of_operation_id: ::String,
+                                               ?next_token: ::String,
+                                               ?max_results: ::Integer
+                                             ) -> _ListHoursOfOperationOverridesResponseSuccess
+                                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListHoursOfOperationOverridesResponseSuccess
 
       interface _ListHoursOfOperationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListHoursOfOperationsResponse]
@@ -2855,7 +2933,9 @@ module Aws
                                              field_name: ::String?,
                                              value: ::String?,
                                              comparison_type: ("STARTS_WITH" | "CONTAINS" | "EXACT")?
-                                           }?
+                                           }?,
+                                           state_condition: ("ACTIVE" | "ARCHIVED")?,
+                                           status_condition: ("PUBLISHED" | "SAVED")?
                                          }
                                        ) -> _SearchContactFlowModulesResponseSuccess
                                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SearchContactFlowModulesResponseSuccess
@@ -3026,6 +3106,60 @@ module Aws
                                     }
                                   ) -> _SearchEmailAddressesResponseSuccess
                                 | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SearchEmailAddressesResponseSuccess
+
+      interface _SearchHoursOfOperationOverridesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::SearchHoursOfOperationOverridesResponse]
+        def hours_of_operation_overrides: () -> ::Array[Types::HoursOfOperationOverride]
+        def next_token: () -> ::String
+        def approximate_total_count: () -> ::Integer
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#search_hours_of_operation_overrides-instance_method
+      def search_hours_of_operation_overrides: (
+                                                 instance_id: ::String,
+                                                 ?next_token: ::String,
+                                                 ?max_results: ::Integer,
+                                                 ?search_filter: {
+                                                   tag_filter: {
+                                                     or_conditions: Array[
+                                                       Array[
+                                                         {
+                                                           tag_key: ::String?,
+                                                           tag_value: ::String?
+                                                         },
+                                                       ],
+                                                     ]?,
+                                                     and_conditions: Array[
+                                                       {
+                                                         tag_key: ::String?,
+                                                         tag_value: ::String?
+                                                       },
+                                                     ]?,
+                                                     tag_condition: {
+                                                       tag_key: ::String?,
+                                                       tag_value: ::String?
+                                                     }?
+                                                   }?
+                                                 },
+                                                 ?search_criteria: {
+                                                   or_conditions: Array[
+                                                     untyped,
+                                                   ]?,
+                                                   and_conditions: Array[
+                                                     untyped,
+                                                   ]?,
+                                                   string_condition: {
+                                                     field_name: ::String?,
+                                                     value: ::String?,
+                                                     comparison_type: ("STARTS_WITH" | "CONTAINS" | "EXACT")?
+                                                   }?,
+                                                   date_condition: {
+                                                     field_name: ::String?,
+                                                     value: ::String?,
+                                                     comparison_type: ("GREATER_THAN" | "LESS_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO")?
+                                                   }?
+                                                 }
+                                               ) -> _SearchHoursOfOperationOverridesResponseSuccess
+                                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _SearchHoursOfOperationOverridesResponseSuccess
 
       interface _SearchHoursOfOperationsResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::SearchHoursOfOperationsResponse]
@@ -4430,6 +4564,31 @@ module Aws
                                        ]
                                      ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                                    | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#update_hours_of_operation_override-instance_method
+      def update_hours_of_operation_override: (
+                                                instance_id: ::String,
+                                                hours_of_operation_id: ::String,
+                                                hours_of_operation_override_id: ::String,
+                                                ?name: ::String,
+                                                ?description: ::String,
+                                                ?config: Array[
+                                                  {
+                                                    day: ("SUNDAY" | "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY")?,
+                                                    start_time: {
+                                                      hours: ::Integer,
+                                                      minutes: ::Integer
+                                                    }?,
+                                                    end_time: {
+                                                      hours: ::Integer,
+                                                      minutes: ::Integer
+                                                    }?
+                                                  },
+                                                ],
+                                                ?effective_from: ::String,
+                                                ?effective_till: ::String
+                                              ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                            | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/Connect/Client.html#update_instance_attribute-instance_method
       def update_instance_attribute: (

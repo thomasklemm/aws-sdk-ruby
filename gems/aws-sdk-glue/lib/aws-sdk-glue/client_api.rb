@@ -389,6 +389,8 @@ module Aws::Glue
     DataOperations = Shapes::ListShape.new(name: 'DataOperations')
     DataQualityAnalyzerResult = Shapes::StructureShape.new(name: 'DataQualityAnalyzerResult')
     DataQualityAnalyzerResults = Shapes::ListShape.new(name: 'DataQualityAnalyzerResults')
+    DataQualityEncryption = Shapes::StructureShape.new(name: 'DataQualityEncryption')
+    DataQualityEncryptionMode = Shapes::StringShape.new(name: 'DataQualityEncryptionMode')
     DataQualityEvaluationRunAdditionalRunOptions = Shapes::StructureShape.new(name: 'DataQualityEvaluationRunAdditionalRunOptions')
     DataQualityMetricValues = Shapes::StructureShape.new(name: 'DataQualityMetricValues')
     DataQualityModelStatus = Shapes::StringShape.new(name: 'DataQualityModelStatus')
@@ -3018,6 +3020,10 @@ module Aws::Glue
 
     DataQualityAnalyzerResults.member = Shapes::ShapeRef.new(shape: DataQualityAnalyzerResult)
 
+    DataQualityEncryption.add_member(:data_quality_encryption_mode, Shapes::ShapeRef.new(shape: DataQualityEncryptionMode, location_name: "DataQualityEncryptionMode"))
+    DataQualityEncryption.add_member(:kms_key_arn, Shapes::ShapeRef.new(shape: KmsKeyArn, location_name: "KmsKeyArn"))
+    DataQualityEncryption.struct_class = Types::DataQualityEncryption
+
     DataQualityEvaluationRunAdditionalRunOptions.add_member(:cloud_watch_metrics_enabled, Shapes::ShapeRef.new(shape: NullableBoolean, location_name: "CloudWatchMetricsEnabled"))
     DataQualityEvaluationRunAdditionalRunOptions.add_member(:results_s3_prefix, Shapes::ShapeRef.new(shape: UriString, location_name: "ResultsS3Prefix"))
     DataQualityEvaluationRunAdditionalRunOptions.add_member(:composite_rule_evaluation_method, Shapes::ShapeRef.new(shape: DQCompositeRuleEvaluationMethod, location_name: "CompositeRuleEvaluationMethod"))
@@ -3592,6 +3598,7 @@ module Aws::Glue
     EncryptionConfiguration.add_member(:s3_encryption, Shapes::ShapeRef.new(shape: S3EncryptionList, location_name: "S3Encryption"))
     EncryptionConfiguration.add_member(:cloud_watch_encryption, Shapes::ShapeRef.new(shape: CloudWatchEncryption, location_name: "CloudWatchEncryption"))
     EncryptionConfiguration.add_member(:job_bookmarks_encryption, Shapes::ShapeRef.new(shape: JobBookmarksEncryption, location_name: "JobBookmarksEncryption"))
+    EncryptionConfiguration.add_member(:data_quality_encryption, Shapes::ShapeRef.new(shape: DataQualityEncryption, location_name: "DataQualityEncryption"))
     EncryptionConfiguration.struct_class = Types::EncryptionConfiguration
 
     Entity.add_member(:entity_name, Shapes::ShapeRef.new(shape: EntityName, location_name: "EntityName"))

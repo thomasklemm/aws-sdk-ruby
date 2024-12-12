@@ -740,9 +740,11 @@ module Aws::GuardDuty
     #
     #     * **Medium**: `["4", "5", "6"]`
     #
-    #     * **High**: `["7", "8", "9"]`
-    #     For more information, see [Severity levels for GuardDuty
-    #     findings][2].
+    #     * **High**: `["7", "8"]`
+    #
+    #     * **Critical**: `["9", "10"]`
+    #     For more information, see [Findings severity levels][2] in the
+    #     *Amazon GuardDuty User Guide*.
     #
     #   * type
     #
@@ -933,7 +935,7 @@ module Aws::GuardDuty
     #
     #
     #   [1]: https://docs.aws.amazon.com/guardduty/latest/APIReference/API_FindingCriteria.html
-    #   [2]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings.html#guardduty_findings-severity
+    #   [2]: https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings-severity.html
     #
     # @option params [String] :client_token
     #   The idempotency token for the create request.
@@ -5328,8 +5330,10 @@ module Aws::GuardDuty
     #   [1]: https://docs.aws.amazon.com/guardduty/latest/APIReference/API_ListDetectors.html
     #
     # @option params [Boolean] :auto_enable
-    #   Represents whether or not to automatically enable member accounts in
-    #   the organization.
+    #   Represents whether to automatically enable member accounts in the
+    #   organization. This applies to only new member accounts, not the
+    #   existing member accounts. When a new account joins the organization,
+    #   the chosen features will be enabled for them by default.
     #
     #   Even though this is still supported, we recommend using
     #   `AutoEnableOrganizationMembers` to achieve the similar results. You
@@ -5530,7 +5534,7 @@ module Aws::GuardDuty
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-guardduty'
-      context[:gem_version] = '1.108.0'
+      context[:gem_version] = '1.109.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

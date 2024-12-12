@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.109.0 (2024-12-12)
+------------------
+
+* Feature - Improved descriptions for certain APIs.
+
 1.108.0 (2024-12-02)
 ------------------
 
