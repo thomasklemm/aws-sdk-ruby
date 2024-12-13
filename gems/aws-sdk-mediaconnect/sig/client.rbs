@@ -117,6 +117,9 @@ module Aws
                                     }?,
                                     network_source: {
                                       multicast_ip: ::String,
+                                      multicast_source_settings: {
+                                        multicast_source_ip: ::String?
+                                      }?,
                                       name: ::String,
                                       network_name: ::String,
                                       port: ::Integer,
@@ -349,6 +352,9 @@ module Aws
                                }?,
                                network_source: {
                                  multicast_ip: ::String,
+                                 multicast_source_settings: {
+                                   multicast_source_ip: ::String?
+                                 }?,
                                  name: ::String,
                                  network_name: ::String,
                                  port: ::Integer,
@@ -1050,6 +1056,9 @@ module Aws
                                   },
                                   ?network_source: {
                                     multicast_ip: ::String?,
+                                    multicast_source_settings: {
+                                      multicast_source_ip: ::String?
+                                    }?,
                                     network_name: ::String?,
                                     port: ::Integer?,
                                     protocol: ("zixi-push" | "rtp-fec" | "rtp" | "zixi-pull" | "rist" | "st2110-jpegxs" | "cdi" | "srt-listener" | "srt-caller" | "fujitsu-qos" | "udp")?

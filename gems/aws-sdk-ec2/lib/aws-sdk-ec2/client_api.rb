@@ -740,6 +740,7 @@ module Aws::EC2
     DeleteRouteRequest = Shapes::StructureShape.new(name: 'DeleteRouteRequest')
     DeleteRouteTableRequest = Shapes::StructureShape.new(name: 'DeleteRouteTableRequest')
     DeleteSecurityGroupRequest = Shapes::StructureShape.new(name: 'DeleteSecurityGroupRequest')
+    DeleteSecurityGroupResult = Shapes::StructureShape.new(name: 'DeleteSecurityGroupResult')
     DeleteSnapshotRequest = Shapes::StructureShape.new(name: 'DeleteSnapshotRequest')
     DeleteSpotDatafeedSubscriptionRequest = Shapes::StructureShape.new(name: 'DeleteSpotDatafeedSubscriptionRequest')
     DeleteSubnetCidrReservationRequest = Shapes::StructureShape.new(name: 'DeleteSubnetCidrReservationRequest')
@@ -6365,6 +6366,10 @@ module Aws::EC2
     DeleteSecurityGroupRequest.add_member(:group_name, Shapes::ShapeRef.new(shape: SecurityGroupName, location_name: "GroupName"))
     DeleteSecurityGroupRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     DeleteSecurityGroupRequest.struct_class = Types::DeleteSecurityGroupRequest
+
+    DeleteSecurityGroupResult.add_member(:return, Shapes::ShapeRef.new(shape: Boolean, location_name: "return"))
+    DeleteSecurityGroupResult.add_member(:group_id, Shapes::ShapeRef.new(shape: SecurityGroupId, location_name: "groupId"))
+    DeleteSecurityGroupResult.struct_class = Types::DeleteSecurityGroupResult
 
     DeleteSnapshotRequest.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: SnapshotId, required: true, location_name: "SnapshotId"))
     DeleteSnapshotRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
@@ -18289,7 +18294,7 @@ module Aws::EC2
         o.http_method = "POST"
         o.http_request_uri = "/"
         o.input = Shapes::ShapeRef.new(shape: DeleteSecurityGroupRequest)
-        o.output = Shapes::ShapeRef.new(shape: Shapes::StructureShape.new(struct_class: Aws::EmptyStructure))
+        o.output = Shapes::ShapeRef.new(shape: DeleteSecurityGroupResult)
       end)
 
       api.add_operation(:delete_snapshot, Seahorse::Model::Operation.new.tap do |o|

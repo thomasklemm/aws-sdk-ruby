@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.497.0 (2024-12-13)
+------------------
+
+* Feature - This release adds GroupId to the response for DeleteSecurityGroup.
+
 1.496.0 (2024-12-09)
 ------------------
 

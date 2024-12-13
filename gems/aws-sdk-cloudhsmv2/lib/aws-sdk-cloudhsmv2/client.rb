@@ -533,6 +533,10 @@ module Aws::CloudHSMV2
     #
     #   * You can specify only one subnet per Availability Zone.
     #
+    # @option params [String] :network_type
+    #   The NetworkType to create a cluster with. The allowed values are
+    #   `IPV4` and `DUALSTACK`.
+    #
     # @option params [Array<Types::Tag>] :tag_list
     #   Tags to apply to the CloudHSM cluster during creation.
     #
@@ -554,6 +558,7 @@ module Aws::CloudHSMV2
     #     hsm_type: "HsmType", # required
     #     source_backup_id: "BackupArn",
     #     subnet_ids: ["SubnetId"], # required
+    #     network_type: "IPV4", # accepts IPV4, DUALSTACK
     #     tag_list: [
     #       {
     #         key: "TagKey", # required
@@ -576,6 +581,7 @@ module Aws::CloudHSMV2
     #   resp.cluster.hsms[0].subnet_id #=> String
     #   resp.cluster.hsms[0].eni_id #=> String
     #   resp.cluster.hsms[0].eni_ip #=> String
+    #   resp.cluster.hsms[0].eni_ip_v6 #=> String
     #   resp.cluster.hsms[0].hsm_id #=> String
     #   resp.cluster.hsms[0].state #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "DEGRADED", "DELETE_IN_PROGRESS", "DELETED"
     #   resp.cluster.hsms[0].state_message #=> String
@@ -583,11 +589,12 @@ module Aws::CloudHSMV2
     #   resp.cluster.pre_co_password #=> String
     #   resp.cluster.security_group #=> String
     #   resp.cluster.source_backup_id #=> String
-    #   resp.cluster.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
+    #   resp.cluster.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "MODIFY_IN_PROGRESS", "ROLLBACK_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
     #   resp.cluster.state_message #=> String
     #   resp.cluster.subnet_mapping #=> Hash
     #   resp.cluster.subnet_mapping["ExternalAz"] #=> String
     #   resp.cluster.vpc_id #=> String
+    #   resp.cluster.network_type #=> String, one of "IPV4", "DUALSTACK"
     #   resp.cluster.certificates.cluster_csr #=> String
     #   resp.cluster.certificates.hsm_certificate #=> String
     #   resp.cluster.certificates.aws_hardware_certificate #=> String
@@ -646,6 +653,7 @@ module Aws::CloudHSMV2
     #   resp.hsm.subnet_id #=> String
     #   resp.hsm.eni_id #=> String
     #   resp.hsm.eni_ip #=> String
+    #   resp.hsm.eni_ip_v6 #=> String
     #   resp.hsm.hsm_id #=> String
     #   resp.hsm.state #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "DEGRADED", "DELETE_IN_PROGRESS", "DELETED"
     #   resp.hsm.state_message #=> String
@@ -743,6 +751,7 @@ module Aws::CloudHSMV2
     #   resp.cluster.hsms[0].subnet_id #=> String
     #   resp.cluster.hsms[0].eni_id #=> String
     #   resp.cluster.hsms[0].eni_ip #=> String
+    #   resp.cluster.hsms[0].eni_ip_v6 #=> String
     #   resp.cluster.hsms[0].hsm_id #=> String
     #   resp.cluster.hsms[0].state #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "DEGRADED", "DELETE_IN_PROGRESS", "DELETED"
     #   resp.cluster.hsms[0].state_message #=> String
@@ -750,11 +759,12 @@ module Aws::CloudHSMV2
     #   resp.cluster.pre_co_password #=> String
     #   resp.cluster.security_group #=> String
     #   resp.cluster.source_backup_id #=> String
-    #   resp.cluster.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
+    #   resp.cluster.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "MODIFY_IN_PROGRESS", "ROLLBACK_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
     #   resp.cluster.state_message #=> String
     #   resp.cluster.subnet_mapping #=> Hash
     #   resp.cluster.subnet_mapping["ExternalAz"] #=> String
     #   resp.cluster.vpc_id #=> String
+    #   resp.cluster.network_type #=> String, one of "IPV4", "DUALSTACK"
     #   resp.cluster.certificates.cluster_csr #=> String
     #   resp.cluster.certificates.hsm_certificate #=> String
     #   resp.cluster.certificates.aws_hardware_certificate #=> String
@@ -1041,6 +1051,7 @@ module Aws::CloudHSMV2
     #   resp.clusters[0].hsms[0].subnet_id #=> String
     #   resp.clusters[0].hsms[0].eni_id #=> String
     #   resp.clusters[0].hsms[0].eni_ip #=> String
+    #   resp.clusters[0].hsms[0].eni_ip_v6 #=> String
     #   resp.clusters[0].hsms[0].hsm_id #=> String
     #   resp.clusters[0].hsms[0].state #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "DEGRADED", "DELETE_IN_PROGRESS", "DELETED"
     #   resp.clusters[0].hsms[0].state_message #=> String
@@ -1048,11 +1059,12 @@ module Aws::CloudHSMV2
     #   resp.clusters[0].pre_co_password #=> String
     #   resp.clusters[0].security_group #=> String
     #   resp.clusters[0].source_backup_id #=> String
-    #   resp.clusters[0].state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
+    #   resp.clusters[0].state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "MODIFY_IN_PROGRESS", "ROLLBACK_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
     #   resp.clusters[0].state_message #=> String
     #   resp.clusters[0].subnet_mapping #=> Hash
     #   resp.clusters[0].subnet_mapping["ExternalAz"] #=> String
     #   resp.clusters[0].vpc_id #=> String
+    #   resp.clusters[0].network_type #=> String, one of "IPV4", "DUALSTACK"
     #   resp.clusters[0].certificates.cluster_csr #=> String
     #   resp.clusters[0].certificates.hsm_certificate #=> String
     #   resp.clusters[0].certificates.aws_hardware_certificate #=> String
@@ -1145,7 +1157,7 @@ module Aws::CloudHSMV2
     #
     # @example Response structure
     #
-    #   resp.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
+    #   resp.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "MODIFY_IN_PROGRESS", "ROLLBACK_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
     #   resp.state_message #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/cloudhsmv2-2017-04-28/InitializeCluster AWS API Documentation
@@ -1306,6 +1318,7 @@ module Aws::CloudHSMV2
     #   resp.cluster.hsms[0].subnet_id #=> String
     #   resp.cluster.hsms[0].eni_id #=> String
     #   resp.cluster.hsms[0].eni_ip #=> String
+    #   resp.cluster.hsms[0].eni_ip_v6 #=> String
     #   resp.cluster.hsms[0].hsm_id #=> String
     #   resp.cluster.hsms[0].state #=> String, one of "CREATE_IN_PROGRESS", "ACTIVE", "DEGRADED", "DELETE_IN_PROGRESS", "DELETED"
     #   resp.cluster.hsms[0].state_message #=> String
@@ -1313,11 +1326,12 @@ module Aws::CloudHSMV2
     #   resp.cluster.pre_co_password #=> String
     #   resp.cluster.security_group #=> String
     #   resp.cluster.source_backup_id #=> String
-    #   resp.cluster.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
+    #   resp.cluster.state #=> String, one of "CREATE_IN_PROGRESS", "UNINITIALIZED", "INITIALIZE_IN_PROGRESS", "INITIALIZED", "ACTIVE", "UPDATE_IN_PROGRESS", "MODIFY_IN_PROGRESS", "ROLLBACK_IN_PROGRESS", "DELETE_IN_PROGRESS", "DELETED", "DEGRADED"
     #   resp.cluster.state_message #=> String
     #   resp.cluster.subnet_mapping #=> Hash
     #   resp.cluster.subnet_mapping["ExternalAz"] #=> String
     #   resp.cluster.vpc_id #=> String
+    #   resp.cluster.network_type #=> String, one of "IPV4", "DUALSTACK"
     #   resp.cluster.certificates.cluster_csr #=> String
     #   resp.cluster.certificates.hsm_certificate #=> String
     #   resp.cluster.certificates.aws_hardware_certificate #=> String
@@ -1542,7 +1556,7 @@ module Aws::CloudHSMV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloudhsmv2'
-      context[:gem_version] = '1.69.0'
+      context[:gem_version] = '1.70.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.57.0 (2024-12-13)
+------------------
+
+* Feature - There was a sentence fragment in UpdateDirectConnectGatewayAttachment that was causing customer confusion as to whether it's an incomplete sentence or if it was a typo. Removed the fragment.
+
 1.56.0 (2024-11-25)
 ------------------
 

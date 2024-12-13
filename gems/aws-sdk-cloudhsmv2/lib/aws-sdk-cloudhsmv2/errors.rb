@@ -30,6 +30,7 @@ module Aws::CloudHSMV2
   # * {CloudHsmAccessDeniedException}
   # * {CloudHsmInternalFailureException}
   # * {CloudHsmInvalidRequestException}
+  # * {CloudHsmResourceLimitExceededException}
   # * {CloudHsmResourceNotFoundException}
   # * {CloudHsmServiceException}
   # * {CloudHsmTagException}
@@ -75,6 +76,21 @@ module Aws::CloudHSMV2
       # @param [Seahorse::Client::RequestContext] context
       # @param [String] message
       # @param [Aws::CloudHSMV2::Types::CloudHsmInvalidRequestException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
+      end
+    end
+
+    class CloudHsmResourceLimitExceededException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::CloudHSMV2::Types::CloudHsmResourceLimitExceededException] data
       def initialize(context, message, data = Aws::EmptyStructure.new)
         super(context, message, data)
       end

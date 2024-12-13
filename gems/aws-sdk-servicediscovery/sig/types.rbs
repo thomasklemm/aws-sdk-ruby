@@ -83,6 +83,15 @@ module Aws::ServiceDiscovery
       SENSITIVE: []
     end
 
+    class DeleteServiceAttributesRequest
+      attr_accessor service_id: ::String
+      attr_accessor attributes: ::Array[::String]
+      SENSITIVE: []
+    end
+
+    class DeleteServiceAttributesResponse < Aws::EmptyStructure
+    end
+
     class DeleteServiceRequest
       attr_accessor id: ::String
       SENSITIVE: []
@@ -201,6 +210,16 @@ module Aws::ServiceDiscovery
 
     class GetOperationResponse
       attr_accessor operation: Types::Operation
+      SENSITIVE: []
+    end
+
+    class GetServiceAttributesRequest
+      attr_accessor service_id: ::String
+      SENSITIVE: []
+    end
+
+    class GetServiceAttributesResponse
+      attr_accessor service_attributes: Types::ServiceAttributes
       SENSITIVE: []
     end
 
@@ -528,6 +547,17 @@ module Aws::ServiceDiscovery
       SENSITIVE: []
     end
 
+    class ServiceAttributes
+      attr_accessor service_arn: ::String
+      attr_accessor attributes: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class ServiceAttributesLimitExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
     class ServiceChange
       attr_accessor description: ::String
       attr_accessor dns_config: Types::DnsConfigChange
@@ -632,6 +662,15 @@ module Aws::ServiceDiscovery
     class UpdatePublicDnsNamespaceResponse
       attr_accessor operation_id: ::String
       SENSITIVE: []
+    end
+
+    class UpdateServiceAttributesRequest
+      attr_accessor service_id: ::String
+      attr_accessor attributes: ::Hash[::String, ::String]
+      SENSITIVE: []
+    end
+
+    class UpdateServiceAttributesResponse < Aws::EmptyStructure
     end
 
     class UpdateServiceRequest

@@ -339,6 +339,9 @@ module Aws
                                 max_unavailable: ::Integer?,
                                 max_unavailable_percentage: ::Integer?
                               },
+                              ?node_repair_config: {
+                                enabled: bool?
+                              },
                               ?capacity_type: ("ON_DEMAND" | "SPOT" | "CAPACITY_BLOCK"),
                               ?version: ::String,
                               ?release_version: ::String
@@ -977,6 +980,9 @@ module Aws
                                      ?update_config: {
                                        max_unavailable: ::Integer?,
                                        max_unavailable_percentage: ::Integer?
+                                     },
+                                     ?node_repair_config: {
+                                       enabled: bool?
                                      },
                                      ?client_request_token: ::String
                                    ) -> _UpdateNodegroupConfigResponseSuccess

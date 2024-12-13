@@ -200,6 +200,19 @@ module Aws::CloudHSMV2
       include Aws::Structure
     end
 
+    # The request was rejected because it exceeds an CloudHSM limit.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/cloudhsmv2-2017-04-28/CloudHsmResourceLimitExceededException AWS API Documentation
+    #
+    class CloudHsmResourceLimitExceededException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # The request was rejected because it refers to a resource that cannot
     # be found.
     #
@@ -299,6 +312,22 @@ module Aws::CloudHSMV2
     #   the cluster.
     #   @return [String]
     #
+    # @!attribute [rw] network_type
+    #   The cluster's NetworkType can be set to either IPV4 (which is the
+    #   default) or DUALSTACK. When set to IPV4, communication between your
+    #   application and the Hardware Security Modules (HSMs) is restricted
+    #   to the IPv4 protocol only. In contrast, the DUALSTACK network type
+    #   enables communication over both the IPv4 and IPv6 protocols. To use
+    #   the DUALSTACK option, you'll need to configure your Virtual Private
+    #   Cloud (VPC) and subnets to support both IPv4 and IPv6. This involves
+    #   adding IPv6 Classless Inter-Domain Routing (CIDR) blocks to the
+    #   existing IPv4 CIDR blocks in your subnets. The choice between IPV4
+    #   and DUALSTACK network types determines the flexibility of the
+    #   network addressing setup for your cluster. The DUALSTACK option
+    #   provides more flexibility by allowing both IPv4 and IPv6
+    #   communication.
+    #   @return [String]
+    #
     # @!attribute [rw] certificates
     #   Contains one or more certificates or a certificate signing request
     #   (CSR).
@@ -328,6 +357,7 @@ module Aws::CloudHSMV2
       :state_message,
       :subnet_mapping,
       :vpc_id,
+      :network_type,
       :certificates,
       :tag_list,
       :mode)
@@ -407,6 +437,11 @@ module Aws::CloudHSMV2
     #   * You can specify only one subnet per Availability Zone.
     #   @return [Array<String>]
     #
+    # @!attribute [rw] network_type
+    #   The NetworkType to create a cluster with. The allowed values are
+    #   `IPV4` and `DUALSTACK`.
+    #   @return [String]
+    #
     # @!attribute [rw] tag_list
     #   Tags to apply to the CloudHSM cluster during creation.
     #   @return [Array<Types::Tag>]
@@ -423,6 +458,7 @@ module Aws::CloudHSMV2
       :hsm_type,
       :source_backup_id,
       :subnet_ids,
+      :network_type,
       :tag_list,
       :mode)
       SENSITIVE = []
@@ -828,6 +864,11 @@ module Aws::CloudHSMV2
     #   The IP address of the HSM's elastic network interface (ENI).
     #   @return [String]
     #
+    # @!attribute [rw] eni_ip_v6
+    #   The IPv6 address (if any) of the HSM's elastic network interface
+    #   (ENI).
+    #   @return [String]
+    #
     # @!attribute [rw] hsm_id
     #   The HSM's identifier (ID).
     #   @return [String]
@@ -848,6 +889,7 @@ module Aws::CloudHSMV2
       :subnet_id,
       :eni_id,
       :eni_ip,
+      :eni_ip_v6,
       :hsm_id,
       :state,
       :state_message)

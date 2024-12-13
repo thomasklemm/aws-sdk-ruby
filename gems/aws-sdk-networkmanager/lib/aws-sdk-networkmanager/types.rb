@@ -5909,7 +5909,7 @@ module Aws::NetworkManager
     #   One or more edge locations to update for the Direct Connect gateway
     #   attachment. The updated array of edge locations overwrites the
     #   previous array of locations. `EdgeLocations` is only used for Direct
-    #   Connect gateway attachments. Do
+    #   Connect gateway attachments.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/networkmanager-2019-07-05/UpdateDirectConnectGatewayAttachmentRequest AWS API Documentation

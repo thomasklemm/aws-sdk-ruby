@@ -18398,7 +18398,10 @@ module Aws::EC2
     #   If you have the required permissions, the error response is
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #
-    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    # @return [Types::DeleteSecurityGroupResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::DeleteSecurityGroupResult#return #return} => Boolean
+    #   * {Types::DeleteSecurityGroupResult#group_id #group_id} => String
     #
     #
     # @example Example: To delete a security group
@@ -18420,6 +18423,11 @@ module Aws::EC2
     #     group_name: "SecurityGroupName",
     #     dry_run: false,
     #   })
+    #
+    # @example Response structure
+    #
+    #   resp.return #=> Boolean
+    #   resp.group_id #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteSecurityGroup AWS API Documentation
     #
@@ -60958,8 +60966,9 @@ module Aws::EC2
     #   management account or delegated administrators for the organization.
     #
     # * An S3 bucket must be available before generating the report (you can
-    #   create a new one or use an existing one), and it must have an
-    #   appropriate bucket policy. For a sample S3 policy, see *Sample
+    #   create a new one or use an existing one), it must be in the same
+    #   Region where the report generation request is made, and it must have
+    #   an appropriate bucket policy. For a sample S3 policy, see *Sample
     #   Amazon S3 policy* under .
     #
     # * Trusted access must be enabled for the service for which the
@@ -60992,7 +61001,9 @@ module Aws::EC2
     #   `DryRunOperation`. Otherwise, it is `UnauthorizedOperation`.
     #
     # @option params [required, String] :s3_bucket
-    #   The name of the S3 bucket where the report will be saved.
+    #   The name of the S3 bucket where the report will be saved. The bucket
+    #   must be in the same Region where the report generation request is
+    #   made.
     #
     # @option params [String] :s3_prefix
     #   The prefix for your S3 object.
@@ -63071,7 +63082,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.496.0'
+      context[:gem_version] = '1.497.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

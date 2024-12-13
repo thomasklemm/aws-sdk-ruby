@@ -82,6 +82,10 @@ module Aws::MediaConnect
     #   The network source multicast IP.
     #   @return [String]
     #
+    # @!attribute [rw] multicast_source_settings
+    #   The IP address of the source for source-specific multicast (SSM).
+    #   @return [Types::MulticastSourceSettings]
+    #
     # @!attribute [rw] name
     #   The name of the network source. This name is used to reference the
     #   source and must be unique among sources in this bridge.
@@ -103,6 +107,7 @@ module Aws::MediaConnect
     #
     class AddBridgeNetworkSourceRequest < Struct.new(
       :multicast_ip,
+      :multicast_source_settings,
       :name,
       :network_name,
       :port,
@@ -767,6 +772,10 @@ module Aws::MediaConnect
     #   The network source multicast IP.
     #   @return [String]
     #
+    # @!attribute [rw] multicast_source_settings
+    #   The IP address of the source for source-specific multicast (SSM).
+    #   @return [Types::MulticastSourceSettings]
+    #
     # @!attribute [rw] name
     #   The name of the network source.
     #   @return [String]
@@ -787,6 +796,7 @@ module Aws::MediaConnect
     #
     class BridgeNetworkSource < Struct.new(
       :multicast_ip,
+      :multicast_source_settings,
       :name,
       :network_name,
       :port,
@@ -3095,6 +3105,19 @@ module Aws::MediaConnect
       include Aws::Structure
     end
 
+    # The settings related to the multicast source.
+    #
+    # @!attribute [rw] multicast_source_ip
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/mediaconnect-2018-11-14/MulticastSourceSettings AWS API Documentation
+    #
+    class MulticastSourceSettings < Struct.new(
+      :multicast_source_ip)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # Exception raised by AWS Elemental MediaConnect. See the error message
     # and documentation for the operation for more information on the cause
     # of this exception.
@@ -4369,6 +4392,10 @@ module Aws::MediaConnect
     #   The network source multicast IP.
     #   @return [String]
     #
+    # @!attribute [rw] multicast_source_settings
+    #   The IP address of the source for source-specific multicast (SSM).
+    #   @return [Types::MulticastSourceSettings]
+    #
     # @!attribute [rw] network_name
     #   The network source's gateway network name.
     #   @return [String]
@@ -4385,6 +4412,7 @@ module Aws::MediaConnect
     #
     class UpdateBridgeNetworkSourceRequest < Struct.new(
       :multicast_ip,
+      :multicast_source_settings,
       :network_name,
       :port,
       :protocol)

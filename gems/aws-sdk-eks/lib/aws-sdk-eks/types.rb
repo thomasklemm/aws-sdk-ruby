@@ -1989,6 +1989,10 @@ module Aws::EKS
     #   The node group update configuration.
     #   @return [Types::NodegroupUpdateConfig]
     #
+    # @!attribute [rw] node_repair_config
+    #   The node auto repair configuration for the node group.
+    #   @return [Types::NodeRepairConfig]
+    #
     # @!attribute [rw] capacity_type
     #   The capacity type for your node group.
     #   @return [String]
@@ -2048,6 +2052,7 @@ module Aws::EKS
       :client_request_token,
       :launch_template,
       :update_config,
+      :node_repair_config,
       :capacity_type,
       :version,
       :release_version)
@@ -4800,6 +4805,21 @@ module Aws::EKS
       include Aws::Structure
     end
 
+    # The node auto repair configuration for the node group.
+    #
+    # @!attribute [rw] enabled
+    #   Specifies whether to enable node auto repair for the node group.
+    #   Node auto repair is disabled by default.
+    #   @return [Boolean]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/NodeRepairConfig AWS API Documentation
+    #
+    class NodeRepairConfig < Struct.new(
+      :enabled)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # An object representing an Amazon EKS managed node group.
     #
     # @!attribute [rw] nodegroup_name
@@ -4923,6 +4943,10 @@ module Aws::EKS
     #   The node group update configuration.
     #   @return [Types::NodegroupUpdateConfig]
     #
+    # @!attribute [rw] node_repair_config
+    #   The node auto repair configuration for the node group.
+    #   @return [Types::NodeRepairConfig]
+    #
     # @!attribute [rw] launch_template
     #   If a launch template was used to create the node group, then this is
     #   the launch template that was used.
@@ -4959,6 +4983,7 @@ module Aws::EKS
       :disk_size,
       :health,
       :update_config,
+      :node_repair_config,
       :launch_template,
       :tags)
       SENSITIVE = []
@@ -5644,11 +5669,61 @@ module Aws::EKS
     #
     # @!attribute [rw] remote_node_networks
     #   The list of network CIDRs that can contain hybrid nodes.
+    #
+    #   These CIDR blocks define the expected IP address range of the hybrid
+    #   nodes that join the cluster. These blocks are typically determined
+    #   by your network administrator.
+    #
+    #   Enter one or more IPv4 CIDR blocks in decimal dotted-quad notation
+    #   (for example, ` 10.2.0.0/16`).
+    #
+    #   It must satisfy the following requirements:
+    #
+    #   * Each block must be within an `IPv4` RFC-1918 network range.
+    #     Minimum allowed size is /24, maximum allowed size is /8.
+    #     Publicly-routable addresses aren't supported.
+    #
+    #   * Each block cannot overlap with the range of the VPC CIDR blocks
+    #     for your EKS resources, or the block of the Kubernetes service IP
+    #     range.
+    #
+    #   * Each block must have a route to the VPC that uses the VPC CIDR
+    #     blocks, not public IPs or Elastic IPs. There are many options
+    #     including Transit Gateway, Site-to-Site VPN, or Direct Connect.
+    #
+    #   * Each host must allow outbound connection to the EKS cluster
+    #     control plane on TCP ports `443` and `10250`.
+    #
+    #   * Each host must allow inbound connection from the EKS cluster
+    #     control plane on TCP port 10250 for logs, exec and port-forward
+    #     operations.
+    #
+    #   * Each host must allow TCP and UDP network connectivity to and from
+    #     other hosts that are running `CoreDNS` on UDP port `53` for
+    #     service and pod DNS names.
     #   @return [Array<Types::RemoteNodeNetwork>]
     #
     # @!attribute [rw] remote_pod_networks
     #   The list of network CIDRs that can contain pods that run Kubernetes
     #   webhooks on hybrid nodes.
+    #
+    #   These CIDR blocks are determined by configuring your Container
+    #   Network Interface (CNI) plugin. We recommend the Calico CNI or
+    #   Cilium CNI. Note that the Amazon VPC CNI plugin for Kubernetes
+    #   isn't available for on-premises and edge locations.
+    #
+    #   Enter one or more IPv4 CIDR blocks in decimal dotted-quad notation
+    #   (for example, ` 10.2.0.0/16`).
+    #
+    #   It must satisfy the following requirements:
+    #
+    #   * Each block must be within an `IPv4` RFC-1918 network range.
+    #     Minimum allowed size is /24, maximum allowed size is /8.
+    #     Publicly-routable addresses aren't supported.
+    #
+    #   * Each block cannot overlap with the range of the VPC CIDR blocks
+    #     for your EKS resources, or the block of the Kubernetes service IP
+    #     range.
     #   @return [Array<Types::RemotePodNetwork>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/RemoteNetworkConfigRequest AWS API Documentation
@@ -5683,8 +5758,70 @@ module Aws::EKS
 
     # A network CIDR that can contain hybrid nodes.
     #
+    # These CIDR blocks define the expected IP address range of the hybrid
+    # nodes that join the cluster. These blocks are typically determined by
+    # your network administrator.
+    #
+    # Enter one or more IPv4 CIDR blocks in decimal dotted-quad notation
+    # (for example, ` 10.2.0.0/16`).
+    #
+    # It must satisfy the following requirements:
+    #
+    # * Each block must be within an `IPv4` RFC-1918 network range. Minimum
+    #   allowed size is /24, maximum allowed size is /8. Publicly-routable
+    #   addresses aren't supported.
+    #
+    # * Each block cannot overlap with the range of the VPC CIDR blocks for
+    #   your EKS resources, or the block of the Kubernetes service IP range.
+    #
+    # * Each block must have a route to the VPC that uses the VPC CIDR
+    #   blocks, not public IPs or Elastic IPs. There are many options
+    #   including Transit Gateway, Site-to-Site VPN, or Direct Connect.
+    #
+    # * Each host must allow outbound connection to the EKS cluster control
+    #   plane on TCP ports `443` and `10250`.
+    #
+    # * Each host must allow inbound connection from the EKS cluster control
+    #   plane on TCP port 10250 for logs, exec and port-forward operations.
+    #
+    # * Each host must allow TCP and UDP network connectivity to and from
+    #   other hosts that are running `CoreDNS` on UDP port `53` for service
+    #   and pod DNS names.
+    #
     # @!attribute [rw] cidrs
     #   A network CIDR that can contain hybrid nodes.
+    #
+    #   These CIDR blocks define the expected IP address range of the hybrid
+    #   nodes that join the cluster. These blocks are typically determined
+    #   by your network administrator.
+    #
+    #   Enter one or more IPv4 CIDR blocks in decimal dotted-quad notation
+    #   (for example, ` 10.2.0.0/16`).
+    #
+    #   It must satisfy the following requirements:
+    #
+    #   * Each block must be within an `IPv4` RFC-1918 network range.
+    #     Minimum allowed size is /24, maximum allowed size is /8.
+    #     Publicly-routable addresses aren't supported.
+    #
+    #   * Each block cannot overlap with the range of the VPC CIDR blocks
+    #     for your EKS resources, or the block of the Kubernetes service IP
+    #     range.
+    #
+    #   * Each block must have a route to the VPC that uses the VPC CIDR
+    #     blocks, not public IPs or Elastic IPs. There are many options
+    #     including Transit Gateway, Site-to-Site VPN, or Direct Connect.
+    #
+    #   * Each host must allow outbound connection to the EKS cluster
+    #     control plane on TCP ports `443` and `10250`.
+    #
+    #   * Each host must allow inbound connection from the EKS cluster
+    #     control plane on TCP port 10250 for logs, exec and port-forward
+    #     operations.
+    #
+    #   * Each host must allow TCP and UDP network connectivity to and from
+    #     other hosts that are running `CoreDNS` on UDP port `53` for
+    #     service and pod DNS names.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/RemoteNodeNetwork AWS API Documentation
@@ -5698,9 +5835,44 @@ module Aws::EKS
     # A network CIDR that can contain pods that run Kubernetes webhooks on
     # hybrid nodes.
     #
+    # These CIDR blocks are determined by configuring your Container Network
+    # Interface (CNI) plugin. We recommend the Calico CNI or Cilium CNI.
+    # Note that the Amazon VPC CNI plugin for Kubernetes isn't available
+    # for on-premises and edge locations.
+    #
+    # Enter one or more IPv4 CIDR blocks in decimal dotted-quad notation
+    # (for example, ` 10.2.0.0/16`).
+    #
+    # It must satisfy the following requirements:
+    #
+    # * Each block must be within an `IPv4` RFC-1918 network range. Minimum
+    #   allowed size is /24, maximum allowed size is /8. Publicly-routable
+    #   addresses aren't supported.
+    #
+    # * Each block cannot overlap with the range of the VPC CIDR blocks for
+    #   your EKS resources, or the block of the Kubernetes service IP range.
+    #
     # @!attribute [rw] cidrs
     #   A network CIDR that can contain pods that run Kubernetes webhooks on
     #   hybrid nodes.
+    #
+    #   These CIDR blocks are determined by configuring your Container
+    #   Network Interface (CNI) plugin. We recommend the Calico CNI or
+    #   Cilium CNI. Note that the Amazon VPC CNI plugin for Kubernetes
+    #   isn't available for on-premises and edge locations.
+    #
+    #   Enter one or more IPv4 CIDR blocks in decimal dotted-quad notation
+    #   (for example, ` 10.2.0.0/16`).
+    #
+    #   It must satisfy the following requirements:
+    #
+    #   * Each block must be within an `IPv4` RFC-1918 network range.
+    #     Minimum allowed size is /24, maximum allowed size is /8.
+    #     Publicly-routable addresses aren't supported.
+    #
+    #   * Each block cannot overlap with the range of the VPC CIDR blocks
+    #     for your EKS resources, or the block of the Kubernetes service IP
+    #     range.
     #   @return [Array<String>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/eks-2017-11-01/RemotePodNetwork AWS API Documentation
@@ -6516,6 +6688,10 @@ module Aws::EKS
     #   The node group update configuration.
     #   @return [Types::NodegroupUpdateConfig]
     #
+    # @!attribute [rw] node_repair_config
+    #   The node auto repair configuration for the node group.
+    #   @return [Types::NodeRepairConfig]
+    #
     # @!attribute [rw] client_request_token
     #   A unique, case-sensitive identifier that you provide to ensure the
     #   idempotency of the request.
@@ -6533,6 +6709,7 @@ module Aws::EKS
       :taints,
       :scaling_config,
       :update_config,
+      :node_repair_config,
       :client_request_token)
       SENSITIVE = []
       include Aws::Structure

@@ -202,6 +202,16 @@ module Aws
                           ) -> _DeleteServiceResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteServiceResponseSuccess
 
+      interface _DeleteServiceAttributesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteServiceAttributesResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ServiceDiscovery/Client.html#delete_service_attributes-instance_method
+      def delete_service_attributes: (
+                                       service_id: ::String,
+                                       attributes: Array[::String]
+                                     ) -> _DeleteServiceAttributesResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteServiceAttributesResponseSuccess
+
       interface _DeregisterInstanceResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::DeregisterInstanceResponse]
         def operation_id: () -> ::String
@@ -294,6 +304,16 @@ module Aws
                          id: ::String
                        ) -> _GetServiceResponseSuccess
                      | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetServiceResponseSuccess
+
+      interface _GetServiceAttributesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::GetServiceAttributesResponse]
+        def service_attributes: () -> Types::ServiceAttributes
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ServiceDiscovery/Client.html#get_service_attributes-instance_method
+      def get_service_attributes: (
+                                    service_id: ::String
+                                  ) -> _GetServiceAttributesResponseSuccess
+                                | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _GetServiceAttributesResponseSuccess
 
       interface _ListInstancesResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::ListInstancesResponse]
@@ -502,6 +522,16 @@ module Aws
                             }
                           ) -> _UpdateServiceResponseSuccess
                         | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateServiceResponseSuccess
+
+      interface _UpdateServiceAttributesResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::UpdateServiceAttributesResponse]
+      end
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/ServiceDiscovery/Client.html#update_service_attributes-instance_method
+      def update_service_attributes: (
+                                       service_id: ::String,
+                                       attributes: Hash[::String, ::String]
+                                     ) -> _UpdateServiceAttributesResponseSuccess
+                                   | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _UpdateServiceAttributesResponseSuccess
     end
   end
 end

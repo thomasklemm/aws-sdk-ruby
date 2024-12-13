@@ -56,6 +56,11 @@ module Aws::CloudHSMV2
       SENSITIVE: []
     end
 
+    class CloudHsmResourceLimitExceededException
+      attr_accessor message: ::String
+      SENSITIVE: []
+    end
+
     class CloudHsmResourceNotFoundException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -81,10 +86,11 @@ module Aws::CloudHSMV2
       attr_accessor pre_co_password: ::String
       attr_accessor security_group: ::String
       attr_accessor source_backup_id: ::String
-      attr_accessor state: ("CREATE_IN_PROGRESS" | "UNINITIALIZED" | "INITIALIZE_IN_PROGRESS" | "INITIALIZED" | "ACTIVE" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "DELETED" | "DEGRADED")
+      attr_accessor state: ("CREATE_IN_PROGRESS" | "UNINITIALIZED" | "INITIALIZE_IN_PROGRESS" | "INITIALIZED" | "ACTIVE" | "UPDATE_IN_PROGRESS" | "MODIFY_IN_PROGRESS" | "ROLLBACK_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "DELETED" | "DEGRADED")
       attr_accessor state_message: ::String
       attr_accessor subnet_mapping: ::Hash[::String, ::String]
       attr_accessor vpc_id: ::String
+      attr_accessor network_type: ("IPV4" | "DUALSTACK")
       attr_accessor certificates: Types::Certificates
       attr_accessor tag_list: ::Array[Types::Tag]
       attr_accessor mode: ("FIPS" | "NON_FIPS")
@@ -108,6 +114,7 @@ module Aws::CloudHSMV2
       attr_accessor hsm_type: ::String
       attr_accessor source_backup_id: ::String
       attr_accessor subnet_ids: ::Array[::String]
+      attr_accessor network_type: ("IPV4" | "DUALSTACK")
       attr_accessor tag_list: ::Array[Types::Tag]
       attr_accessor mode: ("FIPS" | "NON_FIPS")
       SENSITIVE: []
@@ -226,6 +233,7 @@ module Aws::CloudHSMV2
       attr_accessor subnet_id: ::String
       attr_accessor eni_id: ::String
       attr_accessor eni_ip: ::String
+      attr_accessor eni_ip_v6: ::String
       attr_accessor hsm_id: ::String
       attr_accessor state: ("CREATE_IN_PROGRESS" | "ACTIVE" | "DEGRADED" | "DELETE_IN_PROGRESS" | "DELETED")
       attr_accessor state_message: ::String
@@ -240,7 +248,7 @@ module Aws::CloudHSMV2
     end
 
     class InitializeClusterResponse
-      attr_accessor state: ("CREATE_IN_PROGRESS" | "UNINITIALIZED" | "INITIALIZE_IN_PROGRESS" | "INITIALIZED" | "ACTIVE" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "DELETED" | "DEGRADED")
+      attr_accessor state: ("CREATE_IN_PROGRESS" | "UNINITIALIZED" | "INITIALIZE_IN_PROGRESS" | "INITIALIZED" | "ACTIVE" | "UPDATE_IN_PROGRESS" | "MODIFY_IN_PROGRESS" | "ROLLBACK_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "DELETED" | "DEGRADED")
       attr_accessor state_message: ::String
       SENSITIVE: []
     end

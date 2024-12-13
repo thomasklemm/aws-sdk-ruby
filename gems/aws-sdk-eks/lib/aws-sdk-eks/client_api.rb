@@ -230,6 +230,7 @@ module Aws::EKS
     LogTypes = Shapes::ListShape.new(name: 'LogTypes')
     Logging = Shapes::StructureShape.new(name: 'Logging')
     MarketplaceInformation = Shapes::StructureShape.new(name: 'MarketplaceInformation')
+    NodeRepairConfig = Shapes::StructureShape.new(name: 'NodeRepairConfig')
     Nodegroup = Shapes::StructureShape.new(name: 'Nodegroup')
     NodegroupHealth = Shapes::StructureShape.new(name: 'NodegroupHealth')
     NodegroupIssueCode = Shapes::StringShape.new(name: 'NodegroupIssueCode')
@@ -647,6 +648,7 @@ module Aws::EKS
     CreateNodegroupRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: String, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
     CreateNodegroupRequest.add_member(:launch_template, Shapes::ShapeRef.new(shape: LaunchTemplateSpecification, location_name: "launchTemplate"))
     CreateNodegroupRequest.add_member(:update_config, Shapes::ShapeRef.new(shape: NodegroupUpdateConfig, location_name: "updateConfig"))
+    CreateNodegroupRequest.add_member(:node_repair_config, Shapes::ShapeRef.new(shape: NodeRepairConfig, location_name: "nodeRepairConfig"))
     CreateNodegroupRequest.add_member(:capacity_type, Shapes::ShapeRef.new(shape: CapacityTypes, location_name: "capacityType"))
     CreateNodegroupRequest.add_member(:version, Shapes::ShapeRef.new(shape: String, location_name: "version"))
     CreateNodegroupRequest.add_member(:release_version, Shapes::ShapeRef.new(shape: String, location_name: "releaseVersion"))
@@ -1141,6 +1143,9 @@ module Aws::EKS
     MarketplaceInformation.add_member(:product_url, Shapes::ShapeRef.new(shape: String, location_name: "productUrl"))
     MarketplaceInformation.struct_class = Types::MarketplaceInformation
 
+    NodeRepairConfig.add_member(:enabled, Shapes::ShapeRef.new(shape: BoxedBoolean, location_name: "enabled"))
+    NodeRepairConfig.struct_class = Types::NodeRepairConfig
+
     Nodegroup.add_member(:nodegroup_name, Shapes::ShapeRef.new(shape: String, location_name: "nodegroupName"))
     Nodegroup.add_member(:nodegroup_arn, Shapes::ShapeRef.new(shape: String, location_name: "nodegroupArn"))
     Nodegroup.add_member(:cluster_name, Shapes::ShapeRef.new(shape: String, location_name: "clusterName"))
@@ -1162,6 +1167,7 @@ module Aws::EKS
     Nodegroup.add_member(:disk_size, Shapes::ShapeRef.new(shape: BoxedInteger, location_name: "diskSize"))
     Nodegroup.add_member(:health, Shapes::ShapeRef.new(shape: NodegroupHealth, location_name: "health"))
     Nodegroup.add_member(:update_config, Shapes::ShapeRef.new(shape: NodegroupUpdateConfig, location_name: "updateConfig"))
+    Nodegroup.add_member(:node_repair_config, Shapes::ShapeRef.new(shape: NodeRepairConfig, location_name: "nodeRepairConfig"))
     Nodegroup.add_member(:launch_template, Shapes::ShapeRef.new(shape: LaunchTemplateSpecification, location_name: "launchTemplate"))
     Nodegroup.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
     Nodegroup.struct_class = Types::Nodegroup
@@ -1422,6 +1428,7 @@ module Aws::EKS
     UpdateNodegroupConfigRequest.add_member(:taints, Shapes::ShapeRef.new(shape: UpdateTaintsPayload, location_name: "taints"))
     UpdateNodegroupConfigRequest.add_member(:scaling_config, Shapes::ShapeRef.new(shape: NodegroupScalingConfig, location_name: "scalingConfig"))
     UpdateNodegroupConfigRequest.add_member(:update_config, Shapes::ShapeRef.new(shape: NodegroupUpdateConfig, location_name: "updateConfig"))
+    UpdateNodegroupConfigRequest.add_member(:node_repair_config, Shapes::ShapeRef.new(shape: NodeRepairConfig, location_name: "nodeRepairConfig"))
     UpdateNodegroupConfigRequest.add_member(:client_request_token, Shapes::ShapeRef.new(shape: String, location_name: "clientRequestToken", metadata: {"idempotencyToken"=>true}))
     UpdateNodegroupConfigRequest.struct_class = Types::UpdateNodegroupConfigRequest
 

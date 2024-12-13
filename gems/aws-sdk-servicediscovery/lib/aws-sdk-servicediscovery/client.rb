@@ -1008,8 +1008,9 @@ module Aws::ServiceDiscovery
       req.send_request(options)
     end
 
-    # Deletes a specified service. If the service still contains one or more
-    # registered instances, the request fails.
+    # Deletes a specified service and all associated service attributes. If
+    # the service still contains one or more registered instances, the
+    # request fails.
     #
     # @option params [required, String] :id
     #   The ID of the service that you want to delete.
@@ -1041,6 +1042,49 @@ module Aws::ServiceDiscovery
     # @param [Hash] params ({})
     def delete_service(params = {}, options = {})
       req = build_request(:delete_service, params)
+      req.send_request(options)
+    end
+
+    # Deletes specific attributes associated with a service.
+    #
+    # @option params [required, String] :service_id
+    #   The ID of the service from which the attributes will be deleted.
+    #
+    # @option params [required, Array<String>] :attributes
+    #   A list of keys corresponding to each attribute that you want to
+    #   delete.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: DeleteServiceAttributes example
+    #
+    #   # Example: Delete service attribute by providing attribute key and service ID
+    #
+    #   resp = client.delete_service_attributes({
+    #     attributes: [
+    #       "port", 
+    #     ], 
+    #     service_id: "srv-e4anhexample0004", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.delete_service_attributes({
+    #     service_id: "ResourceId", # required
+    #     attributes: ["ServiceAttributeKey"], # required
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/DeleteServiceAttributes AWS API Documentation
+    #
+    # @overload delete_service_attributes(params = {})
+    # @param [Hash] params ({})
+    def delete_service_attributes(params = {}, options = {})
+      req = build_request(:delete_service_attributes, params)
       req.send_request(options)
     end
 
@@ -1626,6 +1670,55 @@ module Aws::ServiceDiscovery
     # @param [Hash] params ({})
     def get_service(params = {}, options = {})
       req = build_request(:get_service, params)
+      req.send_request(options)
+    end
+
+    # Returns the attributes associated with a specified service.
+    #
+    # @option params [required, String] :service_id
+    #   The ID of the service that you want to get attributes for.
+    #
+    # @return [Types::GetServiceAttributesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
+    #
+    #   * {Types::GetServiceAttributesResponse#service_attributes #service_attributes} => Types::ServiceAttributes
+    #
+    #
+    # @example Example: GetServiceAttributes Example
+    #
+    #   # This example gets the attributes for a specified service.
+    #
+    #   resp = client.get_service_attributes({
+    #     service_id: "srv-e4anhexample0004", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     service_attributes: {
+    #       attributes: {
+    #         "port" => "80", 
+    #       }, 
+    #       service_arn: "arn:aws:servicediscovery:us-west-2:123456789012:service/srv-e4anhexample0004", 
+    #     }, 
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.get_service_attributes({
+    #     service_id: "ResourceId", # required
+    #   })
+    #
+    # @example Response structure
+    #
+    #   resp.service_attributes.service_arn #=> String
+    #   resp.service_attributes.attributes #=> Hash
+    #   resp.service_attributes.attributes["ServiceAttributeKey"] #=> String
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/GetServiceAttributes AWS API Documentation
+    #
+    # @overload get_service_attributes(params = {})
+    # @param [Hash] params ({})
+    def get_service_attributes(params = {}, options = {})
+      req = build_request(:get_service_attributes, params)
       req.send_request(options)
     end
 
@@ -2598,23 +2691,6 @@ module Aws::ServiceDiscovery
     #   * {Types::UpdatePrivateDnsNamespaceResponse#operation_id #operation_id} => String
     #
     #
-    # @example Example: To update a private DNS namespace
-    #
-    #   # The following example updates the description of a private DNS namespace.
-    #
-    #   resp = client.update_private_dns_namespace({
-    #     id: "ns-bk3aEXAMPLE", 
-    #     namespace: {
-    #       description: "The updated namespace description.", 
-    #     }, 
-    #     updater_request_id: "", 
-    #   })
-    #
-    #   resp.to_h outputs the following:
-    #   {
-    #     operation_id: "ft52xe2koxhoeormaceymagglsdjyvEXAMPLE", 
-    #   }
-    #
     # @example Example: To update a public DNS namespace
     #
     #   # The following example updates the description of a public DNS namespace.
@@ -2630,6 +2706,23 @@ module Aws::ServiceDiscovery
     #   resp.to_h outputs the following:
     #   {
     #     operation_id: "ft52xe2koxhoeormaceymagglsdjEXAMPLE", 
+    #   }
+    #
+    # @example Example: To update a private DNS namespace
+    #
+    #   # The following example updates the description of a private DNS namespace.
+    #
+    #   resp = client.update_private_dns_namespace({
+    #     id: "ns-bk3aEXAMPLE", 
+    #     namespace: {
+    #       description: "The updated namespace description.", 
+    #     }, 
+    #     updater_request_id: "", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #     operation_id: "ft52xe2koxhoeormaceymagglsdjyvEXAMPLE", 
     #   }
     #
     # @example Request syntax with placeholder values
@@ -2742,7 +2835,8 @@ module Aws::ServiceDiscovery
     #   The ID of the service that you want to update.
     #
     # @option params [required, Types::ServiceChange] :service
-    #   A complex type that contains the new settings for the service.
+    #   A complex type that contains the new settings for the service. You can
+    #   specify a maximum of 30 attributes (key-value pairs).
     #
     # @return [Types::UpdateServiceResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -2812,6 +2906,51 @@ module Aws::ServiceDiscovery
       req.send_request(options)
     end
 
+    # Submits a request to update a specified service to add service-level
+    # attributes.
+    #
+    # @option params [required, String] :service_id
+    #   The ID of the service that you want to update.
+    #
+    # @option params [required, Hash<String,String>] :attributes
+    #   A string map that contains attribute key-value pairs.
+    #
+    # @return [Struct] Returns an empty {Seahorse::Client::Response response}.
+    #
+    #
+    # @example Example: UpdateServiceAttributes Example
+    #
+    #   # This example submits a request to update the specified service to add a port attribute with the value 80.
+    #
+    #   resp = client.update_service_attributes({
+    #     attributes: {
+    #       "port" => "80", 
+    #     }, 
+    #     service_id: "srv-e4anhexample0004", 
+    #   })
+    #
+    #   resp.to_h outputs the following:
+    #   {
+    #   }
+    #
+    # @example Request syntax with placeholder values
+    #
+    #   resp = client.update_service_attributes({
+    #     service_id: "ResourceId", # required
+    #     attributes: { # required
+    #       "ServiceAttributeKey" => "ServiceAttributeValue",
+    #     },
+    #   })
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/UpdateServiceAttributes AWS API Documentation
+    #
+    # @overload update_service_attributes(params = {})
+    # @param [Hash] params ({})
+    def update_service_attributes(params = {}, options = {})
+      req = build_request(:update_service_attributes, params)
+      req.send_request(options)
+    end
+
     # @!endgroup
 
     # @param params ({})
@@ -2830,7 +2969,7 @@ module Aws::ServiceDiscovery
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-servicediscovery'
-      context[:gem_version] = '1.78.0'
+      context[:gem_version] = '1.79.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

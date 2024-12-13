@@ -372,6 +372,28 @@ module Aws::ServiceDiscovery
       include Aws::Structure
     end
 
+    # @!attribute [rw] service_id
+    #   The ID of the service from which the attributes will be deleted.
+    #   @return [String]
+    #
+    # @!attribute [rw] attributes
+    #   A list of keys corresponding to each attribute that you want to
+    #   delete.
+    #   @return [Array<String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/DeleteServiceAttributesRequest AWS API Documentation
+    #
+    class DeleteServiceAttributesRequest < Struct.new(
+      :service_id,
+      :attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/DeleteServiceAttributesResponse AWS API Documentation
+    #
+    class DeleteServiceAttributesResponse < Aws::EmptyStructure; end
+
     # @!attribute [rw] id
     #   The ID of the service that you want to delete.
     #   @return [String]
@@ -558,9 +580,6 @@ module Aws::ServiceDiscovery
     # records that you want Cloud Map to create when you register an
     # instance.
     #
-    # The record types of a service can only be changed by deleting the
-    # service and recreating it with a new `Dnsconfig`.
-    #
     # @!attribute [rw] namespace_id
     #   *Use NamespaceId in [Service][1] instead.*
     #
@@ -634,6 +653,10 @@ module Aws::ServiceDiscovery
     #   An array that contains one `DnsRecord` object for each Route 53 DNS
     #   record that you want Cloud Map to create when you register an
     #   instance.
+    #
+    #   The record type of a service specified in a `DnsRecord` object
+    #   can't be updated. To change a record type, you need to delete the
+    #   service and recreate it with a new `DnsConfig`.
     #   @return [Array<Types::DnsRecord>]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/DnsConfig AWS API Documentation
@@ -977,6 +1000,31 @@ module Aws::ServiceDiscovery
     #
     class GetOperationResponse < Struct.new(
       :operation)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] service_id
+    #   The ID of the service that you want to get attributes for.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/GetServiceAttributesRequest AWS API Documentation
+    #
+    class GetServiceAttributesRequest < Struct.new(
+      :service_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @!attribute [rw] service_attributes
+    #   A complex type that contains the service ARN and a list of attribute
+    #   key-value pairs associated with the service.
+    #   @return [Types::ServiceAttributes]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/GetServiceAttributesResponse AWS API Documentation
+    #
+    class GetServiceAttributesResponse < Struct.new(
+      :service_attributes)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -2875,6 +2923,47 @@ module Aws::ServiceDiscovery
       include Aws::Structure
     end
 
+    # A complex type that contains information about attributes associated
+    # with a specific service.
+    #
+    # @!attribute [rw] service_arn
+    #   The ARN of the service that the attributes are associated with.
+    #   @return [String]
+    #
+    # @!attribute [rw] attributes
+    #   A string map that contains the following information for the service
+    #   that you specify in `ServiceArn`:
+    #
+    #   * The attributes that apply to the service.
+    #
+    #   * For each attribute, the applicable value.
+    #
+    #   You can specify a total of 30 attributes.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/ServiceAttributes AWS API Documentation
+    #
+    class ServiceAttributes < Struct.new(
+      :service_arn,
+      :attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # The attribute can't be added to the service because you've exceeded
+    # the quota for the number of attributes you can add to a service.
+    #
+    # @!attribute [rw] message
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/ServiceAttributesLimitExceededException AWS API Documentation
+    #
+    class ServiceAttributesLimitExceededException < Struct.new(
+      :message)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # A complex type that contains changes to an existing service.
     #
     # @!attribute [rw] description
@@ -3294,12 +3383,34 @@ module Aws::ServiceDiscovery
       include Aws::Structure
     end
 
+    # @!attribute [rw] service_id
+    #   The ID of the service that you want to update.
+    #   @return [String]
+    #
+    # @!attribute [rw] attributes
+    #   A string map that contains attribute key-value pairs.
+    #   @return [Hash<String,String>]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/UpdateServiceAttributesRequest AWS API Documentation
+    #
+    class UpdateServiceAttributesRequest < Struct.new(
+      :service_id,
+      :attributes)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
+    # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/UpdateServiceAttributesResponse AWS API Documentation
+    #
+    class UpdateServiceAttributesResponse < Aws::EmptyStructure; end
+
     # @!attribute [rw] id
     #   The ID of the service that you want to update.
     #   @return [String]
     #
     # @!attribute [rw] service
-    #   A complex type that contains the new settings for the service.
+    #   A complex type that contains the new settings for the service. You
+    #   can specify a maximum of 30 attributes (key-value pairs).
     #   @return [Types::ServiceChange]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/servicediscovery-2017-03-14/UpdateServiceRequest AWS API Documentation

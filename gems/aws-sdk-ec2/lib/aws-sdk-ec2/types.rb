@@ -16288,6 +16288,23 @@ module Aws::EC2
       include Aws::Structure
     end
 
+    # @!attribute [rw] return
+    #   Returns `true` if the request succeeds; otherwise, returns an error.
+    #   @return [Boolean]
+    #
+    # @!attribute [rw] group_id
+    #   The ID of the deleted security group.
+    #   @return [String]
+    #
+    # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/DeleteSecurityGroupResult AWS API Documentation
+    #
+    class DeleteSecurityGroupResult < Struct.new(
+      :return,
+      :group_id)
+      SENSITIVE = []
+      include Aws::Structure
+    end
+
     # @!attribute [rw] snapshot_id
     #   The ID of the EBS snapshot.
     #   @return [String]
@@ -35198,6 +35215,13 @@ module Aws::EC2
     # If you specify multiple filters, the filters are joined with an `AND`,
     # and the request returns only results that match all of the specified
     # filters.
+    #
+    # For more information, see [List and filter using the CLI and API][1]
+    # in the *Amazon EC2 User Guide*.
+    #
+    #
+    #
+    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Filtering.html#Filtering_Resources_CLI
     #
     # @!attribute [rw] name
     #   The name of the filter. Filter names are case-sensitive.
@@ -67490,7 +67514,9 @@ module Aws::EC2
     #   @return [Boolean]
     #
     # @!attribute [rw] s3_bucket
-    #   The name of the S3 bucket where the report will be saved.
+    #   The name of the S3 bucket where the report will be saved. The bucket
+    #   must be in the same Region where the report generation request is
+    #   made.
     #   @return [String]
     #
     # @!attribute [rw] s3_prefix

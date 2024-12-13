@@ -27,6 +27,7 @@ module Aws::MediaConnect
 
     class AddBridgeNetworkSourceRequest
       attr_accessor multicast_ip: ::String
+      attr_accessor multicast_source_settings: Types::MulticastSourceSettings
       attr_accessor name: ::String
       attr_accessor network_name: ::String
       attr_accessor port: ::Integer
@@ -216,6 +217,7 @@ module Aws::MediaConnect
 
     class BridgeNetworkSource
       attr_accessor multicast_ip: ::String
+      attr_accessor multicast_source_settings: Types::MulticastSourceSettings
       attr_accessor name: ::String
       attr_accessor network_name: ::String
       attr_accessor port: ::Integer
@@ -860,6 +862,11 @@ module Aws::MediaConnect
       SENSITIVE: []
     end
 
+    class MulticastSourceSettings
+      attr_accessor multicast_source_ip: ::String
+      SENSITIVE: []
+    end
+
     class NotFoundException
       attr_accessor message: ::String
       SENSITIVE: []
@@ -1188,6 +1195,7 @@ module Aws::MediaConnect
 
     class UpdateBridgeNetworkSourceRequest
       attr_accessor multicast_ip: ::String
+      attr_accessor multicast_source_settings: Types::MulticastSourceSettings
       attr_accessor network_name: ::String
       attr_accessor port: ::Integer
       attr_accessor protocol: ("zixi-push" | "rtp-fec" | "rtp" | "zixi-pull" | "rist" | "st2110-jpegxs" | "cdi" | "srt-listener" | "srt-caller" | "fujitsu-qos" | "udp")

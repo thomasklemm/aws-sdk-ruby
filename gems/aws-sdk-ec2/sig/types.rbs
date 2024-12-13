@@ -3759,6 +3759,12 @@ module Aws::EC2
       SENSITIVE: []
     end
 
+    class DeleteSecurityGroupResult
+      attr_accessor return: bool
+      attr_accessor group_id: ::String
+      SENSITIVE: []
+    end
+
     class DeleteSnapshotRequest
       attr_accessor snapshot_id: ::String
       attr_accessor dry_run: bool

@@ -394,6 +394,7 @@ module Aws::EKS
       attr_accessor client_request_token: ::String
       attr_accessor launch_template: Types::LaunchTemplateSpecification
       attr_accessor update_config: Types::NodegroupUpdateConfig
+      attr_accessor node_repair_config: Types::NodeRepairConfig
       attr_accessor capacity_type: ("ON_DEMAND" | "SPOT" | "CAPACITY_BLOCK")
       attr_accessor version: ::String
       attr_accessor release_version: ::String
@@ -1056,6 +1057,11 @@ module Aws::EKS
       SENSITIVE: []
     end
 
+    class NodeRepairConfig
+      attr_accessor enabled: bool
+      SENSITIVE: []
+    end
+
     class Nodegroup
       attr_accessor nodegroup_name: ::String
       attr_accessor nodegroup_arn: ::String
@@ -1078,6 +1084,7 @@ module Aws::EKS
       attr_accessor disk_size: ::Integer
       attr_accessor health: Types::NodegroupHealth
       attr_accessor update_config: Types::NodegroupUpdateConfig
+      attr_accessor node_repair_config: Types::NodeRepairConfig
       attr_accessor launch_template: Types::LaunchTemplateSpecification
       attr_accessor tags: ::Hash[::String, ::String]
       SENSITIVE: []
@@ -1419,6 +1426,7 @@ module Aws::EKS
       attr_accessor taints: Types::UpdateTaintsPayload
       attr_accessor scaling_config: Types::NodegroupScalingConfig
       attr_accessor update_config: Types::NodegroupUpdateConfig
+      attr_accessor node_repair_config: Types::NodeRepairConfig
       attr_accessor client_request_token: ::String
       SENSITIVE: []
     end
@@ -1445,7 +1453,7 @@ module Aws::EKS
     end
 
     class UpdateParam
-      attr_accessor type: ("Version" | "PlatformVersion" | "EndpointPrivateAccess" | "EndpointPublicAccess" | "ClusterLogging" | "DesiredSize" | "LabelsToAdd" | "LabelsToRemove" | "TaintsToAdd" | "TaintsToRemove" | "MaxSize" | "MinSize" | "ReleaseVersion" | "PublicAccessCidrs" | "LaunchTemplateName" | "LaunchTemplateVersion" | "IdentityProviderConfig" | "EncryptionConfig" | "AddonVersion" | "ServiceAccountRoleArn" | "ResolveConflicts" | "MaxUnavailable" | "MaxUnavailablePercentage" | "ConfigurationValues" | "SecurityGroups" | "Subnets" | "AuthenticationMode" | "PodIdentityAssociations" | "UpgradePolicy" | "ZonalShiftConfig" | "ComputeConfig" | "StorageConfig" | "KubernetesNetworkConfig")
+      attr_accessor type: ("Version" | "PlatformVersion" | "EndpointPrivateAccess" | "EndpointPublicAccess" | "ClusterLogging" | "DesiredSize" | "LabelsToAdd" | "LabelsToRemove" | "TaintsToAdd" | "TaintsToRemove" | "MaxSize" | "MinSize" | "ReleaseVersion" | "PublicAccessCidrs" | "LaunchTemplateName" | "LaunchTemplateVersion" | "IdentityProviderConfig" | "EncryptionConfig" | "AddonVersion" | "ServiceAccountRoleArn" | "ResolveConflicts" | "MaxUnavailable" | "MaxUnavailablePercentage" | "NodeRepairEnabled" | "ConfigurationValues" | "SecurityGroups" | "Subnets" | "AuthenticationMode" | "PodIdentityAssociations" | "UpgradePolicy" | "ZonalShiftConfig" | "ComputeConfig" | "StorageConfig" | "KubernetesNetworkConfig")
       attr_accessor value: ::String
       SENSITIVE: []
     end

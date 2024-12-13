@@ -31,6 +31,7 @@ module Aws::CloudHSMV2
     CloudHsmArn = Shapes::StringShape.new(name: 'CloudHsmArn')
     CloudHsmInternalFailureException = Shapes::StructureShape.new(name: 'CloudHsmInternalFailureException')
     CloudHsmInvalidRequestException = Shapes::StructureShape.new(name: 'CloudHsmInvalidRequestException')
+    CloudHsmResourceLimitExceededException = Shapes::StructureShape.new(name: 'CloudHsmResourceLimitExceededException')
     CloudHsmResourceNotFoundException = Shapes::StructureShape.new(name: 'CloudHsmResourceNotFoundException')
     CloudHsmServiceException = Shapes::StructureShape.new(name: 'CloudHsmServiceException')
     CloudHsmTagException = Shapes::StructureShape.new(name: 'CloudHsmTagException')
@@ -74,6 +75,7 @@ module Aws::CloudHSMV2
     InitializeClusterRequest = Shapes::StructureShape.new(name: 'InitializeClusterRequest')
     InitializeClusterResponse = Shapes::StructureShape.new(name: 'InitializeClusterResponse')
     IpAddress = Shapes::StringShape.new(name: 'IpAddress')
+    IpV6Address = Shapes::StringShape.new(name: 'IpV6Address')
     ListTagsRequest = Shapes::StructureShape.new(name: 'ListTagsRequest')
     ListTagsResponse = Shapes::StructureShape.new(name: 'ListTagsResponse')
     MaxSize = Shapes::IntegerShape.new(name: 'MaxSize')
@@ -81,6 +83,7 @@ module Aws::CloudHSMV2
     ModifyBackupAttributesResponse = Shapes::StructureShape.new(name: 'ModifyBackupAttributesResponse')
     ModifyClusterRequest = Shapes::StructureShape.new(name: 'ModifyClusterRequest')
     ModifyClusterResponse = Shapes::StructureShape.new(name: 'ModifyClusterResponse')
+    NetworkType = Shapes::StringShape.new(name: 'NetworkType')
     NextToken = Shapes::StringShape.new(name: 'NextToken')
     PreCoPassword = Shapes::StringShape.new(name: 'PreCoPassword')
     PutResourcePolicyRequest = Shapes::StructureShape.new(name: 'PutResourcePolicyRequest')
@@ -147,6 +150,9 @@ module Aws::CloudHSMV2
     CloudHsmInvalidRequestException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "Message"))
     CloudHsmInvalidRequestException.struct_class = Types::CloudHsmInvalidRequestException
 
+    CloudHsmResourceLimitExceededException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "Message"))
+    CloudHsmResourceLimitExceededException.struct_class = Types::CloudHsmResourceLimitExceededException
+
     CloudHsmResourceNotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: errorMessage, location_name: "Message"))
     CloudHsmResourceNotFoundException.struct_class = Types::CloudHsmResourceNotFoundException
 
@@ -169,6 +175,7 @@ module Aws::CloudHSMV2
     Cluster.add_member(:state_message, Shapes::ShapeRef.new(shape: StateMessage, location_name: "StateMessage"))
     Cluster.add_member(:subnet_mapping, Shapes::ShapeRef.new(shape: ExternalSubnetMapping, location_name: "SubnetMapping"))
     Cluster.add_member(:vpc_id, Shapes::ShapeRef.new(shape: VpcId, location_name: "VpcId"))
+    Cluster.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "NetworkType"))
     Cluster.add_member(:certificates, Shapes::ShapeRef.new(shape: Certificates, location_name: "Certificates"))
     Cluster.add_member(:tag_list, Shapes::ShapeRef.new(shape: TagList, location_name: "TagList"))
     Cluster.add_member(:mode, Shapes::ShapeRef.new(shape: ClusterMode, location_name: "Mode"))
@@ -188,6 +195,7 @@ module Aws::CloudHSMV2
     CreateClusterRequest.add_member(:hsm_type, Shapes::ShapeRef.new(shape: HsmType, required: true, location_name: "HsmType"))
     CreateClusterRequest.add_member(:source_backup_id, Shapes::ShapeRef.new(shape: BackupArn, location_name: "SourceBackupId"))
     CreateClusterRequest.add_member(:subnet_ids, Shapes::ShapeRef.new(shape: SubnetIds, required: true, location_name: "SubnetIds"))
+    CreateClusterRequest.add_member(:network_type, Shapes::ShapeRef.new(shape: NetworkType, location_name: "NetworkType"))
     CreateClusterRequest.add_member(:tag_list, Shapes::ShapeRef.new(shape: TagList, location_name: "TagList"))
     CreateClusterRequest.add_member(:mode, Shapes::ShapeRef.new(shape: ClusterMode, location_name: "Mode"))
     CreateClusterRequest.struct_class = Types::CreateClusterRequest
@@ -274,6 +282,7 @@ module Aws::CloudHSMV2
     Hsm.add_member(:subnet_id, Shapes::ShapeRef.new(shape: SubnetId, location_name: "SubnetId"))
     Hsm.add_member(:eni_id, Shapes::ShapeRef.new(shape: EniId, location_name: "EniId"))
     Hsm.add_member(:eni_ip, Shapes::ShapeRef.new(shape: IpAddress, location_name: "EniIp"))
+    Hsm.add_member(:eni_ip_v6, Shapes::ShapeRef.new(shape: IpV6Address, location_name: "EniIpV6"))
     Hsm.add_member(:hsm_id, Shapes::ShapeRef.new(shape: HsmId, required: true, location_name: "HsmId"))
     Hsm.add_member(:state, Shapes::ShapeRef.new(shape: HsmState, location_name: "State"))
     Hsm.add_member(:state_message, Shapes::ShapeRef.new(shape: String, location_name: "StateMessage"))
@@ -613,6 +622,7 @@ module Aws::CloudHSMV2
         o.errors << Shapes::ShapeRef.new(shape: CloudHsmAccessDeniedException)
         o.errors << Shapes::ShapeRef.new(shape: CloudHsmInternalFailureException)
         o.errors << Shapes::ShapeRef.new(shape: CloudHsmInvalidRequestException)
+        o.errors << Shapes::ShapeRef.new(shape: CloudHsmResourceLimitExceededException)
         o.errors << Shapes::ShapeRef.new(shape: CloudHsmResourceNotFoundException)
         o.errors << Shapes::ShapeRef.new(shape: CloudHsmServiceException)
         o.errors << Shapes::ShapeRef.new(shape: CloudHsmTagException)

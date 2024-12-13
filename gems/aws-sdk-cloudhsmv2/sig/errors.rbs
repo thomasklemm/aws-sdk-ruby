@@ -20,6 +20,9 @@ module Aws
       class CloudHsmInvalidRequestException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end
+      class CloudHsmResourceLimitExceededException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class CloudHsmResourceNotFoundException < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end

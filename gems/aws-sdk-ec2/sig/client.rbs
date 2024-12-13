@@ -4646,13 +4646,18 @@ module Aws
                               ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
                             | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
 
+      interface _DeleteSecurityGroupResponseSuccess
+        include ::Seahorse::Client::_ResponseSuccess[Types::DeleteSecurityGroupResult]
+        def return: () -> bool
+        def group_id: () -> ::String
+      end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#delete_security_group-instance_method
       def delete_security_group: (
                                    ?group_id: ::String,
                                    ?group_name: ::String,
                                    ?dry_run: bool
-                                 ) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
-                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> ::Seahorse::Client::_ResponseSuccess[::Aws::EmptyStructure]
+                                 ) -> _DeleteSecurityGroupResponseSuccess
+                               | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _DeleteSecurityGroupResponseSuccess
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Client.html#delete_snapshot-instance_method
       def delete_snapshot: (

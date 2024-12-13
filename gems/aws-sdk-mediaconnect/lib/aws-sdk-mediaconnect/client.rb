@@ -527,6 +527,9 @@ module Aws::MediaConnect
     #         },
     #         network_source: {
     #           multicast_ip: "__string", # required
+    #           multicast_source_settings: {
+    #             multicast_source_ip: "__string",
+    #           },
     #           name: "__string", # required
     #           network_name: "__string", # required
     #           port: 1, # required
@@ -545,6 +548,7 @@ module Aws::MediaConnect
     #   resp.sources[0].flow_source.name #=> String
     #   resp.sources[0].flow_source.output_arn #=> String
     #   resp.sources[0].network_source.multicast_ip #=> String
+    #   resp.sources[0].network_source.multicast_source_settings.multicast_source_ip #=> String
     #   resp.sources[0].network_source.name #=> String
     #   resp.sources[0].network_source.network_name #=> String
     #   resp.sources[0].network_source.port #=> Integer
@@ -1010,6 +1014,9 @@ module Aws::MediaConnect
     #         },
     #         network_source: {
     #           multicast_ip: "__string", # required
+    #           multicast_source_settings: {
+    #             multicast_source_ip: "__string",
+    #           },
     #           name: "__string", # required
     #           network_name: "__string", # required
     #           port: 1, # required
@@ -1054,6 +1061,7 @@ module Aws::MediaConnect
     #   resp.bridge.sources[0].flow_source.name #=> String
     #   resp.bridge.sources[0].flow_source.output_arn #=> String
     #   resp.bridge.sources[0].network_source.multicast_ip #=> String
+    #   resp.bridge.sources[0].network_source.multicast_source_settings.multicast_source_ip #=> String
     #   resp.bridge.sources[0].network_source.name #=> String
     #   resp.bridge.sources[0].network_source.network_name #=> String
     #   resp.bridge.sources[0].network_source.port #=> Integer
@@ -1763,6 +1771,7 @@ module Aws::MediaConnect
     #   resp.bridge.sources[0].flow_source.name #=> String
     #   resp.bridge.sources[0].flow_source.output_arn #=> String
     #   resp.bridge.sources[0].network_source.multicast_ip #=> String
+    #   resp.bridge.sources[0].network_source.multicast_source_settings.multicast_source_ip #=> String
     #   resp.bridge.sources[0].network_source.name #=> String
     #   resp.bridge.sources[0].network_source.network_name #=> String
     #   resp.bridge.sources[0].network_source.port #=> Integer
@@ -3127,6 +3136,7 @@ module Aws::MediaConnect
     #   resp.bridge.sources[0].flow_source.name #=> String
     #   resp.bridge.sources[0].flow_source.output_arn #=> String
     #   resp.bridge.sources[0].network_source.multicast_ip #=> String
+    #   resp.bridge.sources[0].network_source.multicast_source_settings.multicast_source_ip #=> String
     #   resp.bridge.sources[0].network_source.name #=> String
     #   resp.bridge.sources[0].network_source.network_name #=> String
     #   resp.bridge.sources[0].network_source.port #=> Integer
@@ -3220,6 +3230,9 @@ module Aws::MediaConnect
     #     },
     #     network_source: {
     #       multicast_ip: "__string",
+    #       multicast_source_settings: {
+    #         multicast_source_ip: "__string",
+    #       },
     #       network_name: "__string",
     #       port: 1,
     #       protocol: "zixi-push", # accepts zixi-push, rtp-fec, rtp, zixi-pull, rist, st2110-jpegxs, cdi, srt-listener, srt-caller, fujitsu-qos, udp
@@ -3235,6 +3248,7 @@ module Aws::MediaConnect
     #   resp.source.flow_source.name #=> String
     #   resp.source.flow_source.output_arn #=> String
     #   resp.source.network_source.multicast_ip #=> String
+    #   resp.source.network_source.multicast_source_settings.multicast_source_ip #=> String
     #   resp.source.network_source.name #=> String
     #   resp.source.network_source.network_name #=> String
     #   resp.source.network_source.port #=> Integer
@@ -4122,7 +4136,7 @@ module Aws::MediaConnect
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-mediaconnect'
-      context[:gem_version] = '1.72.0'
+      context[:gem_version] = '1.73.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

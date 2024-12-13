@@ -155,6 +155,7 @@ module Aws::MediaConnect
     MessageDetail = Shapes::StructureShape.new(name: 'MessageDetail')
     Messages = Shapes::StructureShape.new(name: 'Messages')
     MonitoringConfig = Shapes::StructureShape.new(name: 'MonitoringConfig')
+    MulticastSourceSettings = Shapes::StructureShape.new(name: 'MulticastSourceSettings')
     NetworkInterfaceType = Shapes::StringShape.new(name: 'NetworkInterfaceType')
     NotFoundException = Shapes::StructureShape.new(name: 'NotFoundException')
     Offering = Shapes::StructureShape.new(name: 'Offering')
@@ -297,6 +298,7 @@ module Aws::MediaConnect
     AddBridgeNetworkOutputRequest.struct_class = Types::AddBridgeNetworkOutputRequest
 
     AddBridgeNetworkSourceRequest.add_member(:multicast_ip, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "multicastIp"))
+    AddBridgeNetworkSourceRequest.add_member(:multicast_source_settings, Shapes::ShapeRef.new(shape: MulticastSourceSettings, location_name: "multicastSourceSettings"))
     AddBridgeNetworkSourceRequest.add_member(:name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "name"))
     AddBridgeNetworkSourceRequest.add_member(:network_name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "networkName"))
     AddBridgeNetworkSourceRequest.add_member(:port, Shapes::ShapeRef.new(shape: __integer, required: true, location_name: "port"))
@@ -434,6 +436,7 @@ module Aws::MediaConnect
     BridgeNetworkOutput.struct_class = Types::BridgeNetworkOutput
 
     BridgeNetworkSource.add_member(:multicast_ip, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "multicastIp"))
+    BridgeNetworkSource.add_member(:multicast_source_settings, Shapes::ShapeRef.new(shape: MulticastSourceSettings, location_name: "multicastSourceSettings"))
     BridgeNetworkSource.add_member(:name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "name"))
     BridgeNetworkSource.add_member(:network_name, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "networkName"))
     BridgeNetworkSource.add_member(:port, Shapes::ShapeRef.new(shape: __integer, required: true, location_name: "port"))
@@ -887,6 +890,9 @@ module Aws::MediaConnect
     MonitoringConfig.add_member(:thumbnail_state, Shapes::ShapeRef.new(shape: ThumbnailState, location_name: "thumbnailState"))
     MonitoringConfig.struct_class = Types::MonitoringConfig
 
+    MulticastSourceSettings.add_member(:multicast_source_ip, Shapes::ShapeRef.new(shape: __string, location_name: "multicastSourceIp"))
+    MulticastSourceSettings.struct_class = Types::MulticastSourceSettings
+
     NotFoundException.add_member(:message, Shapes::ShapeRef.new(shape: __string, required: true, location_name: "message"))
     NotFoundException.struct_class = Types::NotFoundException
 
@@ -1132,6 +1138,7 @@ module Aws::MediaConnect
     UpdateBridgeNetworkOutputRequest.struct_class = Types::UpdateBridgeNetworkOutputRequest
 
     UpdateBridgeNetworkSourceRequest.add_member(:multicast_ip, Shapes::ShapeRef.new(shape: __string, location_name: "multicastIp"))
+    UpdateBridgeNetworkSourceRequest.add_member(:multicast_source_settings, Shapes::ShapeRef.new(shape: MulticastSourceSettings, location_name: "multicastSourceSettings"))
     UpdateBridgeNetworkSourceRequest.add_member(:network_name, Shapes::ShapeRef.new(shape: __string, location_name: "networkName"))
     UpdateBridgeNetworkSourceRequest.add_member(:port, Shapes::ShapeRef.new(shape: __integer, location_name: "port"))
     UpdateBridgeNetworkSourceRequest.add_member(:protocol, Shapes::ShapeRef.new(shape: Protocol, location_name: "protocol"))

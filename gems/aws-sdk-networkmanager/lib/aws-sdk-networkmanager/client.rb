@@ -5349,7 +5349,7 @@ module Aws::NetworkManager
     #   One or more edge locations to update for the Direct Connect gateway
     #   attachment. The updated array of edge locations overwrites the
     #   previous array of locations. `EdgeLocations` is only used for Direct
-    #   Connect gateway attachments. Do
+    #   Connect gateway attachments.
     #
     # @return [Types::UpdateDirectConnectGatewayAttachmentResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -5723,7 +5723,7 @@ module Aws::NetworkManager
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-networkmanager'
-      context[:gem_version] = '1.56.0'
+      context[:gem_version] = '1.57.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

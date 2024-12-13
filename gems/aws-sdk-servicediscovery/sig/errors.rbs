@@ -52,6 +52,9 @@ module Aws
         def creator_request_id: () -> ::String
         def service_id: () -> ::String
       end
+      class ServiceAttributesLimitExceededException < ::Aws::Errors::ServiceError
+        def message: () -> ::String
+      end
       class ServiceNotFound < ::Aws::Errors::ServiceError
         def message: () -> ::String
       end

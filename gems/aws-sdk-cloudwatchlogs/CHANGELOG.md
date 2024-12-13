@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.105.0 (2024-12-13)
+------------------
+
+* Feature - Limit PutIntegration IntegrationName and ListIntegrations IntegrationNamePrefix parameters to 50 characters
+
 1.104.0 (2024-12-02)
 ------------------
 

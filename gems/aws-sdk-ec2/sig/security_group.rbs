@@ -202,8 +202,8 @@ module Aws
       def delete: (
                     ?group_name: ::String,
                     ?dry_run: bool
-                  ) -> ::Aws::EmptyStructure
-                | (?Hash[Symbol, untyped]) -> ::Aws::EmptyStructure
+                  ) -> Types::DeleteSecurityGroupResult
+                | (?Hash[Symbol, untyped]) -> Types::DeleteSecurityGroupResult
 
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/SecurityGroup.html#revoke_egress-instance_method
       def revoke_egress: (

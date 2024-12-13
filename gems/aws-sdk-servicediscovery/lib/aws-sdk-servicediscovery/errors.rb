@@ -39,6 +39,7 @@ module Aws::ServiceDiscovery
   # * {ResourceLimitExceeded}
   # * {ResourceNotFoundException}
   # * {ServiceAlreadyExists}
+  # * {ServiceAttributesLimitExceededException}
   # * {ServiceNotFound}
   # * {TooManyTagsException}
   #
@@ -250,6 +251,21 @@ module Aws::ServiceDiscovery
       # @return [String]
       def service_id
         @data[:service_id]
+      end
+    end
+
+    class ServiceAttributesLimitExceededException < ServiceError
+
+      # @param [Seahorse::Client::RequestContext] context
+      # @param [String] message
+      # @param [Aws::ServiceDiscovery::Types::ServiceAttributesLimitExceededException] data
+      def initialize(context, message, data = Aws::EmptyStructure.new)
+        super(context, message, data)
+      end
+
+      # @return [String]
+      def message
+        @message || @data[:message]
       end
     end
 

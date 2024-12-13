@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.70.0 (2024-12-13)
+------------------
+
+* Feature - Add support for Dual-Stack hsm2m.medium clusters. The customers will now be able to create hsm2m.medium clusters having both IPv4 and IPv6 connection capabilities by specifying a new param called NetworkType=DUALSTACK during cluster creation.
+
 1.69.0 (2024-10-18)
 ------------------
 

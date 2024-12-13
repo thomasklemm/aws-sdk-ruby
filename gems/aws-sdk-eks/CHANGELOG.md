@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.123.0 (2024-12-13)
+------------------
+
+* Feature - Add NodeRepairConfig in CreateNodegroupRequest and UpdateNodegroupConfigRequest
+
 1.122.0 (2024-12-02)
 ------------------
 

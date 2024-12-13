@@ -106,6 +106,7 @@ module Aws
                             hsm_type: ::String,
                             ?source_backup_id: ::String,
                             subnet_ids: Array[::String],
+                            ?network_type: ("IPV4" | "DUALSTACK"),
                             ?tag_list: Array[
                               {
                                 key: ::String,
@@ -212,7 +213,7 @@ module Aws
 
       interface _InitializeClusterResponseSuccess
         include ::Seahorse::Client::_ResponseSuccess[Types::InitializeClusterResponse]
-        def state: () -> ("CREATE_IN_PROGRESS" | "UNINITIALIZED" | "INITIALIZE_IN_PROGRESS" | "INITIALIZED" | "ACTIVE" | "UPDATE_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "DELETED" | "DEGRADED")
+        def state: () -> ("CREATE_IN_PROGRESS" | "UNINITIALIZED" | "INITIALIZE_IN_PROGRESS" | "INITIALIZED" | "ACTIVE" | "UPDATE_IN_PROGRESS" | "MODIFY_IN_PROGRESS" | "ROLLBACK_IN_PROGRESS" | "DELETE_IN_PROGRESS" | "DELETED" | "DEGRADED")
         def state_message: () -> ::String
       end
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CloudHSMV2/Client.html#initialize_cluster-instance_method
