@@ -1330,6 +1330,7 @@ module Aws::GreengrassV2
     #   * {Types::GetCoreDeviceResponse#core_version #core_version} => String
     #   * {Types::GetCoreDeviceResponse#platform #platform} => String
     #   * {Types::GetCoreDeviceResponse#architecture #architecture} => String
+    #   * {Types::GetCoreDeviceResponse#runtime #runtime} => String
     #   * {Types::GetCoreDeviceResponse#status #status} => String
     #   * {Types::GetCoreDeviceResponse#last_status_update_timestamp #last_status_update_timestamp} => Time
     #   * {Types::GetCoreDeviceResponse#tags #tags} => Hash&lt;String,String&gt;
@@ -1346,6 +1347,7 @@ module Aws::GreengrassV2
     #   resp.core_version #=> String
     #   resp.platform #=> String
     #   resp.architecture #=> String
+    #   resp.runtime #=> String
     #   resp.status #=> String, one of "HEALTHY", "UNHEALTHY"
     #   resp.last_status_update_timestamp #=> Time
     #   resp.tags #=> Hash
@@ -1628,7 +1630,13 @@ module Aws::GreengrassV2
     # * When the core device receives a deployment from the Amazon Web
     #   Services Cloud
     #
-    # * When the status of any component on the core device becomes `BROKEN`
+    # * For Greengrass nucleus 2.12.2 and earlier, the core device sends
+    #   status updates when the status of any component on the core device
+    #   becomes `ERRORED` or `BROKEN`.
+    #
+    # * For Greengrass nucleus 2.12.3 and later, the core device sends
+    #   status updates when the status of any component on the core device
+    #   becomes `ERRORED`, `BROKEN`, `RUNNING`, or `FINISHED`.
     #
     # * At a [regular interval that you can configure][1], which defaults to
     #   24 hours
@@ -1670,6 +1678,13 @@ module Aws::GreengrassV2
     # @option params [String] :next_token
     #   The token to be used for the next set of paginated results.
     #
+    # @option params [String] :runtime
+    #   The runtime to be used by the core device. The runtime can be:
+    #
+    #   * `aws_nucleus_classic`
+    #
+    #   * `aws_nucleus_lite`
+    #
     # @return [Types::ListCoreDevicesResponse] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
     #   * {Types::ListCoreDevicesResponse#core_devices #core_devices} => Array&lt;Types::CoreDevice&gt;
@@ -1684,6 +1699,7 @@ module Aws::GreengrassV2
     #     status: "HEALTHY", # accepts HEALTHY, UNHEALTHY
     #     max_results: 1,
     #     next_token: "NextTokenString",
+    #     runtime: "CoreDeviceRuntimeString",
     #   })
     #
     # @example Response structure
@@ -1692,6 +1708,9 @@ module Aws::GreengrassV2
     #   resp.core_devices[0].core_device_thing_name #=> String
     #   resp.core_devices[0].status #=> String, one of "HEALTHY", "UNHEALTHY"
     #   resp.core_devices[0].last_status_update_timestamp #=> Time
+    #   resp.core_devices[0].platform #=> String
+    #   resp.core_devices[0].architecture #=> String
+    #   resp.core_devices[0].runtime #=> String
     #   resp.next_token #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListCoreDevices AWS API Documentation
@@ -2177,7 +2196,7 @@ module Aws::GreengrassV2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-greengrassv2'
-      context[:gem_version] = '1.50.0'
+      context[:gem_version] = '1.51.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

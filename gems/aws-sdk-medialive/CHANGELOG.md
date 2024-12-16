@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.140.0 (2024-12-16)
+------------------
+
+* Feature - AWS Elemental MediaLive adds three new features: MediaPackage v2 endpoint support for live stream delivery, KLV metadata passthrough in CMAF Ingest output groups, and Metadata Name Modifier in CMAF Ingest output groups for customizing metadata track names in output streams.
+
 1.139.0 (2024-12-09)
 ------------------
 

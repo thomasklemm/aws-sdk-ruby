@@ -2914,6 +2914,7 @@ module Aws::EC2
     SnapshotIdStringList = Shapes::ListShape.new(name: 'SnapshotIdStringList')
     SnapshotInfo = Shapes::StructureShape.new(name: 'SnapshotInfo')
     SnapshotList = Shapes::ListShape.new(name: 'SnapshotList')
+    SnapshotLocationEnum = Shapes::StringShape.new(name: 'SnapshotLocationEnum')
     SnapshotRecycleBinInfo = Shapes::StructureShape.new(name: 'SnapshotRecycleBinInfo')
     SnapshotRecycleBinInfoList = Shapes::ListShape.new(name: 'SnapshotRecycleBinInfoList')
     SnapshotSet = Shapes::ListShape.new(name: 'SnapshotSet')
@@ -5476,6 +5477,7 @@ module Aws::EC2
     CreateSnapshotRequest.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "OutpostArn"))
     CreateSnapshotRequest.add_member(:volume_id, Shapes::ShapeRef.new(shape: VolumeId, required: true, location_name: "VolumeId"))
     CreateSnapshotRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
+    CreateSnapshotRequest.add_member(:location, Shapes::ShapeRef.new(shape: SnapshotLocationEnum, location_name: "Location"))
     CreateSnapshotRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "dryRun"))
     CreateSnapshotRequest.struct_class = Types::CreateSnapshotRequest
 
@@ -5485,6 +5487,7 @@ module Aws::EC2
     CreateSnapshotsRequest.add_member(:tag_specifications, Shapes::ShapeRef.new(shape: TagSpecificationList, location_name: "TagSpecification"))
     CreateSnapshotsRequest.add_member(:dry_run, Shapes::ShapeRef.new(shape: Boolean, location_name: "DryRun"))
     CreateSnapshotsRequest.add_member(:copy_tags_from_source, Shapes::ShapeRef.new(shape: CopyTagsFromSource, location_name: "CopyTagsFromSource"))
+    CreateSnapshotsRequest.add_member(:location, Shapes::ShapeRef.new(shape: SnapshotLocationEnum, location_name: "Location"))
     CreateSnapshotsRequest.struct_class = Types::CreateSnapshotsRequest
 
     CreateSnapshotsResult.add_member(:snapshots, Shapes::ShapeRef.new(shape: SnapshotSet, location_name: "snapshotSet"))
@@ -14969,6 +14972,7 @@ module Aws::EC2
     Snapshot.add_member(:storage_tier, Shapes::ShapeRef.new(shape: StorageTier, location_name: "storageTier"))
     Snapshot.add_member(:restore_expiry_time, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "restoreExpiryTime"))
     Snapshot.add_member(:sse_type, Shapes::ShapeRef.new(shape: SSEType, location_name: "sseType"))
+    Snapshot.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
     Snapshot.add_member(:transfer_type, Shapes::ShapeRef.new(shape: TransferType, location_name: "transferType"))
     Snapshot.add_member(:completion_duration_minutes, Shapes::ShapeRef.new(shape: SnapshotCompletionDurationMinutesResponse, location_name: "completionDurationMinutes"))
     Snapshot.add_member(:completion_time, Shapes::ShapeRef.new(shape: MillisecondDateTime, location_name: "completionTime"))
@@ -15020,6 +15024,7 @@ module Aws::EC2
     SnapshotInfo.add_member(:snapshot_id, Shapes::ShapeRef.new(shape: String, location_name: "snapshotId"))
     SnapshotInfo.add_member(:outpost_arn, Shapes::ShapeRef.new(shape: String, location_name: "outpostArn"))
     SnapshotInfo.add_member(:sse_type, Shapes::ShapeRef.new(shape: SSEType, location_name: "sseType"))
+    SnapshotInfo.add_member(:availability_zone, Shapes::ShapeRef.new(shape: String, location_name: "availabilityZone"))
     SnapshotInfo.struct_class = Types::SnapshotInfo
 
     SnapshotList.member = Shapes::ShapeRef.new(shape: Snapshot, location_name: "item")

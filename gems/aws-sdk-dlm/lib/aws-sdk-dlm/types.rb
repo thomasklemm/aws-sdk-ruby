@@ -223,16 +223,30 @@ module Aws::DLM
     #
     # @!attribute [rw] location
     #   **\[Custom snapshot policies only\]** Specifies the destination for
-    #   snapshots created by the policy. To create snapshots in the same
-    #   Region as the source resource, specify `CLOUD`. To create snapshots
-    #   on the same Outpost as the source resource, specify `OUTPOST_LOCAL`.
-    #   If you omit this parameter, `CLOUD` is used by default.
+    #   snapshots created by the policy. The allowed destinations depend on
+    #   the location of the targeted resources.
     #
-    #   If the policy targets resources in an Amazon Web Services Region,
-    #   then you must create snapshots in the same Region as the source
-    #   resource. If the policy targets resources on an Outpost, then you
-    #   can create snapshots on the same Outpost as the source resource, or
-    #   in the Region of that Outpost.
+    #   * If the policy targets resources in a Region, then you must create
+    #     snapshots in the same Region as the source resource.
+    #
+    #   * If the policy targets resources in a Local Zone, you can create
+    #     snapshots in the same Local Zone or in its parent Region.
+    #
+    #   * If the policy targets resources on an Outpost, then you can create
+    #     snapshots on the same Outpost or in its parent Region.
+    #
+    #   Specify one of the following values:
+    #
+    #   * To create snapshots in the same Region as the source resource,
+    #     specify `CLOUD`.
+    #
+    #   * To create snapshots in the same Local Zone as the source resource,
+    #     specify `LOCAL_ZONE`.
+    #
+    #   * To create snapshots on the same Outpost as the source resource,
+    #     specify `OUTPOST_LOCAL`.
+    #
+    #   Default: `CLOUD`
     #   @return [String]
     #
     # @!attribute [rw] interval
@@ -255,12 +269,12 @@ module Aws::DLM
     #
     # @!attribute [rw] cron_expression
     #   The schedule, as a Cron expression. The schedule interval must be
-    #   between 1 hour and 1 year. For more information, see [Cron
-    #   expressions][1] in the *Amazon CloudWatch User Guide*.
+    #   between 1 hour and 1 year. For more information, see the [Cron
+    #   expressions reference][1] in the *Amazon EventBridge User Guide*.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
+    #   [1]: https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-cron-expressions.html
     #   @return [String]
     #
     # @!attribute [rw] scripts
@@ -809,8 +823,7 @@ module Aws::DLM
       include Aws::Structure
     end
 
-    # **\[Custom policies only\]** Detailed information about a snapshot,
-    # AMI, or event-based lifecycle policy.
+    # Information about a lifecycle policy.
     #
     # @!attribute [rw] policy_id
     #   The identifier of the lifecycle policy.
@@ -854,12 +867,12 @@ module Aws::DLM
     #   @return [String]
     #
     # @!attribute [rw] default_policy
-    #   **\[Default policies only\]** The type of default policy. Values
-    #   include:
+    #   Indicates whether the policy is a default lifecycle policy or a
+    #   custom lifecycle policy.
     #
-    #   * `VOLUME` - Default policy for EBS snapshots
+    #   * `true` - the policy is a default policy.
     #
-    #   * `INSTANCE` - Default policy for EBS-backed AMIs
+    #   * `false` - the policy is a custom policy.
     #   @return [Boolean]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/dlm-2018-01-12/LifecyclePolicy AWS API Documentation
@@ -1030,14 +1043,12 @@ module Aws::DLM
     # Specifies the configuration of a lifecycle policy.
     #
     # @!attribute [rw] policy_type
-    #   **\[Custom policies only\]** The valid target resource types and
-    #   actions a policy can manage. Specify `EBS_SNAPSHOT_MANAGEMENT` to
-    #   create a lifecycle policy that manages the lifecycle of Amazon EBS
-    #   snapshots. Specify `IMAGE_MANAGEMENT` to create a lifecycle policy
-    #   that manages the lifecycle of EBS-backed AMIs. Specify
-    #   `EVENT_BASED_POLICY ` to create an event-based policy that performs
-    #   specific actions when a defined event occurs in your Amazon Web
-    #   Services account.
+    #   The type of policy. Specify `EBS_SNAPSHOT_MANAGEMENT` to create a
+    #   lifecycle policy that manages the lifecycle of Amazon EBS snapshots.
+    #   Specify `IMAGE_MANAGEMENT` to create a lifecycle policy that manages
+    #   the lifecycle of EBS-backed AMIs. Specify `EVENT_BASED_POLICY ` to
+    #   create an event-based policy that performs specific actions when a
+    #   defined event occurs in your Amazon Web Services account.
     #
     #   The default is `EBS_SNAPSHOT_MANAGEMENT`.
     #   @return [String]
@@ -1051,13 +1062,22 @@ module Aws::DLM
     #
     # @!attribute [rw] resource_locations
     #   **\[Custom snapshot and AMI policies only\]** The location of the
-    #   resources to backup. If the source resources are located in an
-    #   Amazon Web Services Region, specify `CLOUD`. If the source resources
-    #   are located on an Outpost in your account, specify `OUTPOST`.
+    #   resources to backup.
     #
-    #   If you specify `OUTPOST`, Amazon Data Lifecycle Manager backs up all
-    #   resources of the specified type with matching target tags across all
-    #   of the Outposts in your account.
+    #   * If the source resources are located in a Region, specify `CLOUD`.
+    #     In this case, the policy targets all resources of the specified
+    #     type with matching target tags across all Availability Zones in
+    #     the Region.
+    #
+    #   * **\[Custom snapshot policies only\]** If the source resources are
+    #     located in a Local Zone, specify `LOCAL_ZONE`. In this case, the
+    #     policy targets all resources of the specified type with matching
+    #     target tags across all Local Zones in the Region.
+    #
+    #   * If the source resources are located on an Outpost in your account,
+    #     specify `OUTPOST`. In this case, the policy targets all resources
+    #     of the specified type with matching target tags across all of the
+    #     Outposts in your account.
     #   @return [Array<String>]
     #
     # @!attribute [rw] target_tags
@@ -1406,12 +1426,12 @@ module Aws::DLM
     #   @return [Types::FastRestoreRule]
     #
     # @!attribute [rw] cross_region_copy_rules
-    #   Specifies a rule for copying snapshots or AMIs across regions.
+    #   Specifies a rule for copying snapshots or AMIs across Regions.
     #
     #   <note markdown="1"> You can't specify cross-Region copy rules for policies that create
-    #   snapshots on an Outpost. If the policy creates snapshots in a
-    #   Region, then snapshots can be copied to up to three Regions or
-    #   Outposts.
+    #   snapshots on an Outpost or in a Local Zone. If the policy creates
+    #   snapshots in a Region, then snapshots can be copied to up to three
+    #   Regions or Outposts.
     #
     #    </note>
     #   @return [Array<Types::CrossRegionCopyRule>]

@@ -4314,7 +4314,7 @@ module Aws::RDS
       attr_accessor auth_scheme: ("SECRETS")
       attr_accessor secret_arn: ::String
       attr_accessor iam_auth: ("DISABLED" | "REQUIRED" | "ENABLED")
-      attr_accessor client_password_auth_type: ("MYSQL_NATIVE_PASSWORD" | "POSTGRES_SCRAM_SHA_256" | "POSTGRES_MD5" | "SQL_SERVER_AUTHENTICATION")
+      attr_accessor client_password_auth_type: ("MYSQL_NATIVE_PASSWORD" | "MYSQL_CACHING_SHA2_PASSWORD" | "POSTGRES_SCRAM_SHA_256" | "POSTGRES_MD5" | "SQL_SERVER_AUTHENTICATION")
       SENSITIVE: []
     end
 
@@ -4324,7 +4324,7 @@ module Aws::RDS
       attr_accessor auth_scheme: ("SECRETS")
       attr_accessor secret_arn: ::String
       attr_accessor iam_auth: ("DISABLED" | "REQUIRED" | "ENABLED")
-      attr_accessor client_password_auth_type: ("MYSQL_NATIVE_PASSWORD" | "POSTGRES_SCRAM_SHA_256" | "POSTGRES_MD5" | "SQL_SERVER_AUTHENTICATION")
+      attr_accessor client_password_auth_type: ("MYSQL_NATIVE_PASSWORD" | "MYSQL_CACHING_SHA2_PASSWORD" | "POSTGRES_SCRAM_SHA_256" | "POSTGRES_MD5" | "SQL_SERVER_AUTHENTICATION")
       SENSITIVE: []
     end
 

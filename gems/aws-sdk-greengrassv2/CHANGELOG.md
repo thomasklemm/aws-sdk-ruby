@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.51.0 (2024-12-16)
+------------------
+
+* Feature - Add support for runtime in GetCoreDevice and ListCoreDevices APIs.
+
 1.50.0 (2024-10-18)
 ------------------
 

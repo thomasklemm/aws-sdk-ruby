@@ -350,6 +350,7 @@ module Aws
         def core_version: () -> ::String
         def platform: () -> ::String
         def architecture: () -> ::String
+        def runtime: () -> ::String
         def status: () -> ("HEALTHY" | "UNHEALTHY")
         def last_status_update_timestamp: () -> ::Time
         def tags: () -> ::Hash[::String, ::String]
@@ -442,7 +443,8 @@ module Aws
                                ?thing_group_arn: ::String,
                                ?status: ("HEALTHY" | "UNHEALTHY"),
                                ?max_results: ::Integer,
-                               ?next_token: ::String
+                               ?next_token: ::String,
+                               ?runtime: ::String
                              ) -> _ListCoreDevicesResponseSuccess
                            | (?Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _ListCoreDevicesResponseSuccess
 

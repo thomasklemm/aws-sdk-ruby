@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.498.0 (2024-12-16)
+------------------
+
+* Feature - This release adds support for EBS local snapshots in AWS Dedicated Local Zones, which allows you to store snapshots of EBS volumes locally in Dedicated Local Zones.
+
 1.497.0 (2024-12-13)
 ------------------
 

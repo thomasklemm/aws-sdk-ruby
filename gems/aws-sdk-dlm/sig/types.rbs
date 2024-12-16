@@ -46,7 +46,7 @@ module Aws::DLM
     end
 
     class CreateRule
-      attr_accessor location: ("CLOUD" | "OUTPOST_LOCAL")
+      attr_accessor location: ("CLOUD" | "OUTPOST_LOCAL" | "LOCAL_ZONE")
       attr_accessor interval: ::Integer
       attr_accessor interval_unit: ("HOURS")
       attr_accessor times: ::Array[::String]
@@ -230,7 +230,7 @@ module Aws::DLM
     class PolicyDetails
       attr_accessor policy_type: ("EBS_SNAPSHOT_MANAGEMENT" | "IMAGE_MANAGEMENT" | "EVENT_BASED_POLICY")
       attr_accessor resource_types: ::Array[("VOLUME" | "INSTANCE")]
-      attr_accessor resource_locations: ::Array[("CLOUD" | "OUTPOST")]
+      attr_accessor resource_locations: ::Array[("CLOUD" | "OUTPOST" | "LOCAL_ZONE")]
       attr_accessor target_tags: ::Array[Types::Tag]
       attr_accessor schedules: ::Array[Types::Schedule]
       attr_accessor parameters: Types::Parameters

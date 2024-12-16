@@ -11504,20 +11504,17 @@ module Aws::EC2
     #   @return [String]
     #
     # @!attribute [rw] outpost_arn
-    #   The Amazon Resource Name (ARN) of the Outpost on which to create a
-    #   local snapshot.
+    #   <note markdown="1"> Only supported for volumes on Outposts. If the source volume is not
+    #   on an Outpost, omit this parameter.
     #
-    #   * To create a snapshot of a volume in a Region, omit this parameter.
-    #     The snapshot is created in the same Region as the volume.
+    #    </note>
     #
-    #   * To create a snapshot of a volume on an Outpost and store the
-    #     snapshot in the Region, omit this parameter. The snapshot is
-    #     created in the Region for the Outpost.
+    #   * To create the snapshot on the same Outpost as the source volume,
+    #     specify the ARN of that Outpost. The snapshot must be created on
+    #     the same Outpost as the volume.
     #
-    #   * To create a snapshot of a volume on an Outpost and store the
-    #     snapshot on an Outpost, specify the ARN of the destination
-    #     Outpost. The snapshot must be created on the same Outpost as the
-    #     volume.
+    #   * To create the snapshot in the parent Region of the Outpost, omit
+    #     this parameter.
     #
     #   For more information, see [Create local snapshots from volumes on an
     #   Outpost][1] in the *Amazon EBS User Guide*.
@@ -11535,6 +11532,21 @@ module Aws::EC2
     #   The tags to apply to the snapshot during creation.
     #   @return [Array<Types::TagSpecification>]
     #
+    # @!attribute [rw] location
+    #   <note markdown="1"> Only supported for volumes in Local Zones. If the source volume is
+    #   not in a Local Zone, omit this parameter.
+    #
+    #    </note>
+    #
+    #   * To create a local snapshot in the same Local Zone as the source
+    #     volume, specify `local`.
+    #
+    #   * To create a regional snapshot in the parent Region of the Local
+    #     Zone, specify `regional` or omit this parameter.
+    #
+    #   Default value: `regional`
+    #   @return [String]
+    #
     # @!attribute [rw] dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.
@@ -11549,6 +11561,7 @@ module Aws::EC2
       :outpost_arn,
       :volume_id,
       :tag_specifications,
+      :location,
       :dry_run)
       SENSITIVE = []
       include Aws::Structure
@@ -11565,28 +11578,24 @@ module Aws::EC2
     #   @return [Types::InstanceSpecification]
     #
     # @!attribute [rw] outpost_arn
-    #   The Amazon Resource Name (ARN) of the Outpost on which to create the
-    #   local snapshots.
+    #   <note markdown="1"> Only supported for instances on Outposts. If the source instance is
+    #   not on an Outpost, omit this parameter.
     #
-    #   * To create snapshots from an instance in a Region, omit this
-    #     parameter. The snapshots are created in the same Region as the
-    #     instance.
+    #    </note>
     #
-    #   * To create snapshots from an instance on an Outpost and store the
-    #     snapshots in the Region, omit this parameter. The snapshots are
-    #     created in the Region for the Outpost.
+    #   * To create the snapshots on the same Outpost as the source
+    #     instance, specify the ARN of that Outpost. The snapshots must be
+    #     created on the same Outpost as the instance.
     #
-    #   * To create snapshots from an instance on an Outpost and store the
-    #     snapshots on an Outpost, specify the ARN of the destination
-    #     Outpost. The snapshots must be created on the same Outpost as the
-    #     instance.
+    #   * To create the snapshots in the parent Region of the Outpost, omit
+    #     this parameter.
     #
-    #   For more information, see [ Create multi-volume local snapshots from
-    #   instances on an Outpost][1] in the *Amazon EBS User Guide*.
+    #   For more information, see [ Create local snapshots from volumes on
+    #   an Outpost][1] in the *Amazon EBS User Guide*.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#create-multivol-snapshot
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#create-snapshot
     #   @return [String]
     #
     # @!attribute [rw] tag_specifications
@@ -11604,6 +11613,21 @@ module Aws::EC2
     #   Copies the tags from the specified volume to corresponding snapshot.
     #   @return [String]
     #
+    # @!attribute [rw] location
+    #   <note markdown="1"> Only supported for instances in Local Zones. If the source instance
+    #   is not in a Local Zone, omit this parameter.
+    #
+    #    </note>
+    #
+    #   * To create local snapshots in the same Local Zone as the source
+    #     instance, specify `local`.
+    #
+    #   * To create a regional snapshots in the parent Region of the Local
+    #     Zone, specify `regional` or omit this parameter.
+    #
+    #   Default value: `regional`
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateSnapshotsRequest AWS API Documentation
     #
     class CreateSnapshotsRequest < Struct.new(
@@ -11612,7 +11636,8 @@ module Aws::EC2
       :outpost_arn,
       :tag_specifications,
       :dry_run,
-      :copy_tags_from_source)
+      :copy_tags_from_source,
+      :location)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -65552,6 +65577,11 @@ module Aws::EC2
     #   Reserved for future use.
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone
+    #   The Availability Zone or Local Zone of the snapshot. For example,
+    #   `us-west-1a` (Availability Zone) or `us-west-2-lax-1a` (Local Zone).
+    #   @return [String]
+    #
     # @!attribute [rw] transfer_type
     #   <note markdown="1"> Only for snapshot copies.
     #
@@ -65657,6 +65687,7 @@ module Aws::EC2
       :storage_tier,
       :restore_expiry_time,
       :sse_type,
+      :availability_zone,
       :transfer_type,
       :completion_duration_minutes,
       :completion_time,
@@ -65825,6 +65856,11 @@ module Aws::EC2
     #   Reserved for future use.
     #   @return [String]
     #
+    # @!attribute [rw] availability_zone
+    #   The Availability Zone or Local Zone of the snapshots. For example,
+    #   `us-west-1a` (Availability Zone) or `us-west-2-lax-1a` (Local Zone).
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/SnapshotInfo AWS API Documentation
     #
     class SnapshotInfo < Struct.new(
@@ -65839,7 +65875,8 @@ module Aws::EC2
       :owner_id,
       :snapshot_id,
       :outpost_arn,
-      :sse_type)
+      :sse_type,
+      :availability_zone)
       SENSITIVE = []
       include Aws::Structure
     end

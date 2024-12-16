@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.263.0 (2024-12-16)
+------------------
+
+* Feature - This release adds support for the "MYSQL_CACHING_SHA2_PASSWORD" enum value for RDS Proxy ClientPasswordAuthType.
+
 1.262.0 (2024-12-03)
 ------------------
 

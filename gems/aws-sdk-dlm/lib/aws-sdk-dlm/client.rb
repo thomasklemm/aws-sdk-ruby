@@ -576,7 +576,7 @@ module Aws::DLM
     #     policy_details: {
     #       policy_type: "EBS_SNAPSHOT_MANAGEMENT", # accepts EBS_SNAPSHOT_MANAGEMENT, IMAGE_MANAGEMENT, EVENT_BASED_POLICY
     #       resource_types: ["VOLUME"], # accepts VOLUME, INSTANCE
-    #       resource_locations: ["CLOUD"], # accepts CLOUD, OUTPOST
+    #       resource_locations: ["CLOUD"], # accepts CLOUD, OUTPOST, LOCAL_ZONE
     #       target_tags: [
     #         {
     #           key: "String", # required
@@ -600,7 +600,7 @@ module Aws::DLM
     #             },
     #           ],
     #           create_rule: {
-    #             location: "CLOUD", # accepts CLOUD, OUTPOST_LOCAL
+    #             location: "CLOUD", # accepts CLOUD, OUTPOST_LOCAL, LOCAL_ZONE
     #             interval: 1,
     #             interval_unit: "HOURS", # accepts HOURS
     #             times: ["Time"],
@@ -898,7 +898,7 @@ module Aws::DLM
     #   resp.policy.policy_details.resource_types #=> Array
     #   resp.policy.policy_details.resource_types[0] #=> String, one of "VOLUME", "INSTANCE"
     #   resp.policy.policy_details.resource_locations #=> Array
-    #   resp.policy.policy_details.resource_locations[0] #=> String, one of "CLOUD", "OUTPOST"
+    #   resp.policy.policy_details.resource_locations[0] #=> String, one of "CLOUD", "OUTPOST", "LOCAL_ZONE"
     #   resp.policy.policy_details.target_tags #=> Array
     #   resp.policy.policy_details.target_tags[0].key #=> String
     #   resp.policy.policy_details.target_tags[0].value #=> String
@@ -911,7 +911,7 @@ module Aws::DLM
     #   resp.policy.policy_details.schedules[0].variable_tags #=> Array
     #   resp.policy.policy_details.schedules[0].variable_tags[0].key #=> String
     #   resp.policy.policy_details.schedules[0].variable_tags[0].value #=> String
-    #   resp.policy.policy_details.schedules[0].create_rule.location #=> String, one of "CLOUD", "OUTPOST_LOCAL"
+    #   resp.policy.policy_details.schedules[0].create_rule.location #=> String, one of "CLOUD", "OUTPOST_LOCAL", "LOCAL_ZONE"
     #   resp.policy.policy_details.schedules[0].create_rule.interval #=> Integer
     #   resp.policy.policy_details.schedules[0].create_rule.interval_unit #=> String, one of "HOURS"
     #   resp.policy.policy_details.schedules[0].create_rule.times #=> Array
@@ -1172,7 +1172,7 @@ module Aws::DLM
     #     policy_details: {
     #       policy_type: "EBS_SNAPSHOT_MANAGEMENT", # accepts EBS_SNAPSHOT_MANAGEMENT, IMAGE_MANAGEMENT, EVENT_BASED_POLICY
     #       resource_types: ["VOLUME"], # accepts VOLUME, INSTANCE
-    #       resource_locations: ["CLOUD"], # accepts CLOUD, OUTPOST
+    #       resource_locations: ["CLOUD"], # accepts CLOUD, OUTPOST, LOCAL_ZONE
     #       target_tags: [
     #         {
     #           key: "String", # required
@@ -1196,7 +1196,7 @@ module Aws::DLM
     #             },
     #           ],
     #           create_rule: {
-    #             location: "CLOUD", # accepts CLOUD, OUTPOST_LOCAL
+    #             location: "CLOUD", # accepts CLOUD, OUTPOST_LOCAL, LOCAL_ZONE
     #             interval: 1,
     #             interval_unit: "HOURS", # accepts HOURS
     #             times: ["Time"],
@@ -1369,7 +1369,7 @@ module Aws::DLM
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-dlm'
-      context[:gem_version] = '1.82.0'
+      context[:gem_version] = '1.83.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

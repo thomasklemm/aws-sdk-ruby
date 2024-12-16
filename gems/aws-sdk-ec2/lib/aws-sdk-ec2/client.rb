@@ -12169,12 +12169,17 @@ module Aws::EC2
     # can use snapshots for backups, to make copies of EBS volumes, and to
     # save data before shutting down an instance.
     #
-    # You can create snapshots of volumes in a Region and volumes on an
-    # Outpost. If you create a snapshot of a volume in a Region, the
-    # snapshot must be stored in the same Region as the volume. If you
-    # create a snapshot of a volume on an Outpost, the snapshot can be
-    # stored on the same Outpost as the volume, or in the Region for that
-    # Outpost.
+    # The location of the source EBS volume determines where you can create
+    # the snapshot.
+    #
+    # * If the source volume is in a Region, you must create the snapshot in
+    #   the same Region as the volume.
+    #
+    # * If the source volume is in a Local Zone, you can create the snapshot
+    #   in the same Local Zone or in parent Amazon Web Services Region.
+    #
+    # * If the source volume is on an Outpost, you can create the snapshot
+    #   on the same Outpost or in its parent Amazon Web Services Region.
     #
     # When a snapshot is created, any Amazon Web Services Marketplace
     # product codes that are associated with the source volume are
@@ -12199,37 +12204,28 @@ module Aws::EC2
     # Snapshots that are taken from encrypted volumes are automatically
     # encrypted. Volumes that are created from encrypted snapshots are also
     # automatically encrypted. Your encrypted volumes and any associated
-    # snapshots always remain protected.
-    #
-    # You can tag your snapshots during creation. For more information, see
-    # [Tag your Amazon EC2 resources][1] in the *Amazon EC2 User Guide*.
-    #
-    # For more information, see [Amazon EBS][2] and [Amazon EBS
-    # encryption][3] in the *Amazon EBS User Guide*.
+    # snapshots always remain protected. For more information, [Amazon EBS
+    # encryption][1] in the *Amazon EBS User Guide*.
     #
     #
     #
-    # [1]: https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html
-    # [2]: https://docs.aws.amazon.com/ebs/latest/userguide/what-is-ebs.html
-    # [3]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html
+    # [1]: https://docs.aws.amazon.com/ebs/latest/userguide/ebs-encryption.html
     #
     # @option params [String] :description
     #   A description for the snapshot.
     #
     # @option params [String] :outpost_arn
-    #   The Amazon Resource Name (ARN) of the Outpost on which to create a
-    #   local snapshot.
+    #   <note markdown="1"> Only supported for volumes on Outposts. If the source volume is not on
+    #   an Outpost, omit this parameter.
     #
-    #   * To create a snapshot of a volume in a Region, omit this parameter.
-    #     The snapshot is created in the same Region as the volume.
+    #    </note>
     #
-    #   * To create a snapshot of a volume on an Outpost and store the
-    #     snapshot in the Region, omit this parameter. The snapshot is created
-    #     in the Region for the Outpost.
+    #   * To create the snapshot on the same Outpost as the source volume,
+    #     specify the ARN of that Outpost. The snapshot must be created on the
+    #     same Outpost as the volume.
     #
-    #   * To create a snapshot of a volume on an Outpost and store the
-    #     snapshot on an Outpost, specify the ARN of the destination Outpost.
-    #     The snapshot must be created on the same Outpost as the volume.
+    #   * To create the snapshot in the parent Region of the Outpost, omit
+    #     this parameter.
     #
     #   For more information, see [Create local snapshots from volumes on an
     #   Outpost][1] in the *Amazon EBS User Guide*.
@@ -12243,6 +12239,20 @@ module Aws::EC2
     #
     # @option params [Array<Types::TagSpecification>] :tag_specifications
     #   The tags to apply to the snapshot during creation.
+    #
+    # @option params [String] :location
+    #   <note markdown="1"> Only supported for volumes in Local Zones. If the source volume is not
+    #   in a Local Zone, omit this parameter.
+    #
+    #    </note>
+    #
+    #   * To create a local snapshot in the same Local Zone as the source
+    #     volume, specify `local`.
+    #
+    #   * To create a regional snapshot in the parent Region of the Local
+    #     Zone, specify `regional` or omit this parameter.
+    #
+    #   Default value: `regional`
     #
     # @option params [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
@@ -12258,6 +12268,7 @@ module Aws::EC2
     #   * {Types::Snapshot#storage_tier #storage_tier} => String
     #   * {Types::Snapshot#restore_expiry_time #restore_expiry_time} => Time
     #   * {Types::Snapshot#sse_type #sse_type} => String
+    #   * {Types::Snapshot#availability_zone #availability_zone} => String
     #   * {Types::Snapshot#transfer_type #transfer_type} => String
     #   * {Types::Snapshot#completion_duration_minutes #completion_duration_minutes} => Integer
     #   * {Types::Snapshot#completion_time #completion_time} => Time
@@ -12315,6 +12326,7 @@ module Aws::EC2
     #         ],
     #       },
     #     ],
+    #     location: "regional", # accepts regional, local
     #     dry_run: false,
     #   })
     #
@@ -12328,6 +12340,7 @@ module Aws::EC2
     #   resp.storage_tier #=> String, one of "archive", "standard"
     #   resp.restore_expiry_time #=> Time
     #   resp.sse_type #=> String, one of "sse-ebs", "sse-kms", "none"
+    #   resp.availability_zone #=> String
     #   resp.transfer_type #=> String, one of "time-based", "standard"
     #   resp.completion_duration_minutes #=> Integer
     #   resp.completion_time #=> Time
@@ -12353,21 +12366,27 @@ module Aws::EC2
       req.send_request(options)
     end
 
-    # Creates crash-consistent snapshots of multiple EBS volumes and stores
-    # the data in S3. Volumes are chosen by specifying an instance. Any
-    # attached volumes will produce one snapshot each that is
-    # crash-consistent across the instance.
+    # Creates crash-consistent snapshots of multiple EBS volumes attached to
+    # an Amazon EC2 instance. Volumes are chosen by specifying an instance.
+    # Each volume attached to the specified instance will produce one
+    # snapshot that is crash-consistent across the instance. You can include
+    # all of the volumes currently attached to the instance, or you can
+    # exclude the root volume or specific data (non-root) volumes from the
+    # multi-volume snapshot set.
     #
-    # You can include all of the volumes currently attached to the instance,
-    # or you can exclude the root volume or specific data (non-root) volumes
-    # from the multi-volume snapshot set.
+    # The location of the source instance determines where you can create
+    # the snapshots.
     #
-    # You can create multi-volume snapshots of instances in a Region and
-    # instances on an Outpost. If you create snapshots from an instance in a
-    # Region, the snapshots must be stored in the same Region as the
-    # instance. If you create snapshots from an instance on an Outpost, the
-    # snapshots can be stored on the same Outpost as the instance, or in the
-    # Region for that Outpost.
+    # * If the source instance is in a Region, you must create the snapshots
+    #   in the same Region as the instance.
+    #
+    # * If the source instance is in a Local Zone, you can create the
+    #   snapshots in the same Local Zone or in parent Amazon Web Services
+    #   Region.
+    #
+    # * If the source instance is on an Outpost, you can create the
+    #   snapshots on the same Outpost or in its parent Amazon Web Services
+    #   Region.
     #
     # @option params [String] :description
     #   A description propagated to every snapshot specified by the instance.
@@ -12377,27 +12396,24 @@ module Aws::EC2
     #   snapshots.
     #
     # @option params [String] :outpost_arn
-    #   The Amazon Resource Name (ARN) of the Outpost on which to create the
-    #   local snapshots.
+    #   <note markdown="1"> Only supported for instances on Outposts. If the source instance is
+    #   not on an Outpost, omit this parameter.
     #
-    #   * To create snapshots from an instance in a Region, omit this
-    #     parameter. The snapshots are created in the same Region as the
-    #     instance.
+    #    </note>
     #
-    #   * To create snapshots from an instance on an Outpost and store the
-    #     snapshots in the Region, omit this parameter. The snapshots are
-    #     created in the Region for the Outpost.
+    #   * To create the snapshots on the same Outpost as the source instance,
+    #     specify the ARN of that Outpost. The snapshots must be created on
+    #     the same Outpost as the instance.
     #
-    #   * To create snapshots from an instance on an Outpost and store the
-    #     snapshots on an Outpost, specify the ARN of the destination Outpost.
-    #     The snapshots must be created on the same Outpost as the instance.
+    #   * To create the snapshots in the parent Region of the Outpost, omit
+    #     this parameter.
     #
-    #   For more information, see [ Create multi-volume local snapshots from
-    #   instances on an Outpost][1] in the *Amazon EBS User Guide*.
+    #   For more information, see [ Create local snapshots from volumes on an
+    #   Outpost][1] in the *Amazon EBS User Guide*.
     #
     #
     #
-    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#create-multivol-snapshot
+    #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#create-snapshot
     #
     # @option params [Array<Types::TagSpecification>] :tag_specifications
     #   Tags to apply to every snapshot specified by the instance.
@@ -12410,6 +12426,20 @@ module Aws::EC2
     #
     # @option params [String] :copy_tags_from_source
     #   Copies the tags from the specified volume to corresponding snapshot.
+    #
+    # @option params [String] :location
+    #   <note markdown="1"> Only supported for instances in Local Zones. If the source instance is
+    #   not in a Local Zone, omit this parameter.
+    #
+    #    </note>
+    #
+    #   * To create local snapshots in the same Local Zone as the source
+    #     instance, specify `local`.
+    #
+    #   * To create a regional snapshots in the parent Region of the Local
+    #     Zone, specify `regional` or omit this parameter.
+    #
+    #   Default value: `regional`
     #
     # @return [Types::CreateSnapshotsResult] Returns a {Seahorse::Client::Response response} object which responds to the following methods:
     #
@@ -12438,6 +12468,7 @@ module Aws::EC2
     #     ],
     #     dry_run: false,
     #     copy_tags_from_source: "volume", # accepts volume
+    #     location: "regional", # accepts regional, local
     #   })
     #
     # @example Response structure
@@ -12457,6 +12488,7 @@ module Aws::EC2
     #   resp.snapshots[0].snapshot_id #=> String
     #   resp.snapshots[0].outpost_arn #=> String
     #   resp.snapshots[0].sse_type #=> String, one of "sse-ebs", "sse-kms", "none"
+    #   resp.snapshots[0].availability_zone #=> String
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/ec2-2016-11-15/CreateSnapshots AWS API Documentation
     #
@@ -34357,6 +34389,7 @@ module Aws::EC2
     #   resp.snapshots[0].storage_tier #=> String, one of "archive", "standard"
     #   resp.snapshots[0].restore_expiry_time #=> Time
     #   resp.snapshots[0].sse_type #=> String, one of "sse-ebs", "sse-kms", "none"
+    #   resp.snapshots[0].availability_zone #=> String
     #   resp.snapshots[0].transfer_type #=> String, one of "time-based", "standard"
     #   resp.snapshots[0].completion_duration_minutes #=> Integer
     #   resp.snapshots[0].completion_time #=> Time
@@ -63082,7 +63115,7 @@ module Aws::EC2
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-ec2'
-      context[:gem_version] = '1.497.0'
+      context[:gem_version] = '1.498.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

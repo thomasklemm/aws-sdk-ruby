@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.82.0 (2024-12-16)
+------------------
+
+* Feature - Added information about Ubuntu 18.04 will be removed from the available imageIds for Cloud9 because Ubuntu 18.04 has ended standard support on May 31, 2023.
+
 1.81.0 (2024-10-18)
 ------------------
 

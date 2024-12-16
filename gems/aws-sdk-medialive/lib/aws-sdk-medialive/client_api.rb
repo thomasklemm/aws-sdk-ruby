@@ -153,6 +153,7 @@ module Aws::MediaLive
     CmafIngestGroupSettings = Shapes::StructureShape.new(name: 'CmafIngestGroupSettings')
     CmafIngestOutputSettings = Shapes::StructureShape.new(name: 'CmafIngestOutputSettings')
     CmafIngestSegmentLengthUnits = Shapes::StringShape.new(name: 'CmafIngestSegmentLengthUnits')
+    CmafKLVBehavior = Shapes::StringShape.new(name: 'CmafKLVBehavior')
     CmafNielsenId3Behavior = Shapes::StringShape.new(name: 'CmafNielsenId3Behavior')
     ColorCorrection = Shapes::StructureShape.new(name: 'ColorCorrection')
     ColorCorrectionSettings = Shapes::StructureShape.new(name: 'ColorCorrectionSettings')
@@ -1157,6 +1158,7 @@ module Aws::MediaLive
     __longMin0Max8589934591 = Shapes::IntegerShape.new(name: '__longMin0Max8589934591')
     __longMin0Max86400000 = Shapes::IntegerShape.new(name: '__longMin0Max86400000')
     __string = Shapes::StringShape.new(name: '__string')
+    __stringMax100 = Shapes::StringShape.new(name: '__stringMax100')
     __stringMax1000 = Shapes::StringShape.new(name: '__stringMax1000')
     __stringMax2048 = Shapes::StringShape.new(name: '__stringMax2048')
     __stringMax255 = Shapes::StringShape.new(name: '__stringMax255')
@@ -1657,6 +1659,10 @@ module Aws::MediaLive
     CmafIngestGroupSettings.add_member(:segment_length, Shapes::ShapeRef.new(shape: __integerMin1, location_name: "segmentLength"))
     CmafIngestGroupSettings.add_member(:segment_length_units, Shapes::ShapeRef.new(shape: CmafIngestSegmentLengthUnits, location_name: "segmentLengthUnits"))
     CmafIngestGroupSettings.add_member(:send_delay_ms, Shapes::ShapeRef.new(shape: __integerMin0Max2000, location_name: "sendDelayMs"))
+    CmafIngestGroupSettings.add_member(:klv_behavior, Shapes::ShapeRef.new(shape: CmafKLVBehavior, location_name: "klvBehavior"))
+    CmafIngestGroupSettings.add_member(:klv_name_modifier, Shapes::ShapeRef.new(shape: __stringMax100, location_name: "klvNameModifier"))
+    CmafIngestGroupSettings.add_member(:nielsen_id_3_name_modifier, Shapes::ShapeRef.new(shape: __stringMax100, location_name: "nielsenId3NameModifier"))
+    CmafIngestGroupSettings.add_member(:scte_35_name_modifier, Shapes::ShapeRef.new(shape: __stringMax100, location_name: "scte35NameModifier"))
     CmafIngestGroupSettings.struct_class = Types::CmafIngestGroupSettings
 
     CmafIngestOutputSettings.add_member(:name_modifier, Shapes::ShapeRef.new(shape: __string, location_name: "nameModifier"))
@@ -3834,6 +3840,8 @@ module Aws::MediaLive
     MediaPackageGroupSettings.struct_class = Types::MediaPackageGroupSettings
 
     MediaPackageOutputDestinationSettings.add_member(:channel_id, Shapes::ShapeRef.new(shape: __stringMin1, location_name: "channelId"))
+    MediaPackageOutputDestinationSettings.add_member(:channel_group, Shapes::ShapeRef.new(shape: __stringMin1, location_name: "channelGroup"))
+    MediaPackageOutputDestinationSettings.add_member(:channel_name, Shapes::ShapeRef.new(shape: __stringMin1, location_name: "channelName"))
     MediaPackageOutputDestinationSettings.struct_class = Types::MediaPackageOutputDestinationSettings
 
     MediaPackageOutputSettings.struct_class = Types::MediaPackageOutputSettings

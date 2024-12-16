@@ -1037,6 +1037,8 @@ module Aws::MediaLive
     #   resp.channel.destinations[0].id #=> String
     #   resp.channel.destinations[0].media_package_settings #=> Array
     #   resp.channel.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.channel.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.channel.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.channel.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.channel.destinations[0].multiplex_settings.program_name #=> String
     #   resp.channel.destinations[0].settings #=> Array
@@ -1342,6 +1344,10 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.channel.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.channel.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -2350,6 +2356,8 @@ module Aws::MediaLive
     #   resp.destinations[0].id #=> String
     #   resp.destinations[0].media_package_settings #=> Array
     #   resp.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.destinations[0].multiplex_settings.program_name #=> String
     #   resp.destinations[0].settings #=> Array
@@ -2655,6 +2663,10 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -3480,6 +3492,8 @@ module Aws::MediaLive
     #   resp.destinations[0].id #=> String
     #   resp.destinations[0].media_package_settings #=> Array
     #   resp.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.destinations[0].multiplex_settings.program_name #=> String
     #   resp.destinations[0].settings #=> Array
@@ -3785,6 +3799,10 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -4981,6 +4999,8 @@ module Aws::MediaLive
     #   resp.channels[0].destinations[0].id #=> String
     #   resp.channels[0].destinations[0].media_package_settings #=> Array
     #   resp.channels[0].destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.channels[0].destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.channels[0].destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.channels[0].destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.channels[0].destinations[0].multiplex_settings.program_name #=> String
     #   resp.channels[0].destinations[0].settings #=> Array
@@ -5789,6 +5809,8 @@ module Aws::MediaLive
     #   resp.destinations[0].id #=> String
     #   resp.destinations[0].media_package_settings #=> Array
     #   resp.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.destinations[0].multiplex_settings.program_name #=> String
     #   resp.destinations[0].settings #=> Array
@@ -6094,6 +6116,10 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -6726,6 +6752,8 @@ module Aws::MediaLive
     #   resp.destinations[0].id #=> String
     #   resp.destinations[0].media_package_settings #=> Array
     #   resp.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.destinations[0].multiplex_settings.program_name #=> String
     #   resp.destinations[0].settings #=> Array
@@ -7031,6 +7059,10 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -7690,6 +7722,8 @@ module Aws::MediaLive
     #   resp.channel.destinations[0].id #=> String
     #   resp.channel.destinations[0].media_package_settings #=> Array
     #   resp.channel.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.channel.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.channel.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.channel.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.channel.destinations[0].multiplex_settings.program_name #=> String
     #   resp.channel.destinations[0].settings #=> Array
@@ -7995,6 +8029,10 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.channel.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.channel.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -8507,6 +8545,8 @@ module Aws::MediaLive
     #         media_package_settings: [
     #           {
     #             channel_id: "__stringMin1",
+    #             channel_group: "__stringMin1",
+    #             channel_name: "__stringMin1",
     #           },
     #         ],
     #         multiplex_settings: {
@@ -8541,6 +8581,8 @@ module Aws::MediaLive
     #   resp.channel.destinations[0].id #=> String
     #   resp.channel.destinations[0].media_package_settings #=> Array
     #   resp.channel.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.channel.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.channel.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.channel.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.channel.destinations[0].multiplex_settings.program_name #=> String
     #   resp.channel.destinations[0].settings #=> Array
@@ -8846,6 +8888,10 @@ module Aws::MediaLive
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.channel.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.channel.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.channel.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.channel.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -9936,6 +9982,8 @@ module Aws::MediaLive
     #   resp.destinations[0].id #=> String
     #   resp.destinations[0].media_package_settings #=> Array
     #   resp.destinations[0].media_package_settings[0].channel_id #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_group #=> String
+    #   resp.destinations[0].media_package_settings[0].channel_name #=> String
     #   resp.destinations[0].multiplex_settings.multiplex_id #=> String
     #   resp.destinations[0].multiplex_settings.program_name #=> String
     #   resp.destinations[0].settings #=> Array
@@ -10241,6 +10289,10 @@ module Aws::MediaLive
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length #=> Integer
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.segment_length_units #=> String, one of "MILLISECONDS", "SECONDS"
     #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.send_delay_ms #=> Integer
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_behavior #=> String, one of "NO_PASSTHROUGH", "PASSTHROUGH"
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.klv_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.nielsen_id_3_name_modifier #=> String
+    #   resp.encoder_settings.output_groups[0].output_group_settings.cmaf_ingest_group_settings.scte_35_name_modifier #=> String
     #   resp.encoder_settings.output_groups[0].output_group_settings.srt_group_settings.input_loss_action #=> String, one of "DROP_PROGRAM", "DROP_TS", "EMIT_PROGRAM"
     #   resp.encoder_settings.output_groups[0].outputs #=> Array
     #   resp.encoder_settings.output_groups[0].outputs[0].audio_description_names #=> Array
@@ -13587,7 +13639,7 @@ module Aws::MediaLive
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-medialive'
-      context[:gem_version] = '1.139.0'
+      context[:gem_version] = '1.140.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

@@ -2226,6 +2226,8 @@ module Aws::MediaLive
 
     class MediaPackageOutputDestinationSettings
       attr_accessor channel_id: ::String
+      attr_accessor channel_group: ::String
+      attr_accessor channel_name: ::String
       SENSITIVE: []
     end
 
@@ -3560,6 +3562,10 @@ module Aws::MediaLive
       attr_accessor segment_length: ::Integer
       attr_accessor segment_length_units: ("MILLISECONDS" | "SECONDS")
       attr_accessor send_delay_ms: ::Integer
+      attr_accessor klv_behavior: ("NO_PASSTHROUGH" | "PASSTHROUGH")
+      attr_accessor klv_name_modifier: ::String
+      attr_accessor nielsen_id_3_name_modifier: ::String
+      attr_accessor scte_35_name_modifier: ::String
       SENSITIVE: []
     end
 

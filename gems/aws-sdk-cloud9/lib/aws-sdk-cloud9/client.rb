@@ -458,6 +458,13 @@ module Aws::Cloud9
     # Compute Cloud (Amazon EC2) instance, and then connects from the
     # instance to the environment.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
+    #
     # @option params [required, String] :name
     #   The name of the environment to create.
     #
@@ -492,15 +499,15 @@ module Aws::Cloud9
     #   specify a valid AMI alias or a valid Amazon EC2 Systems Manager (SSM)
     #   path.
     #
-    #   From December 04, 2023, you will be required to include the `imageId`
-    #   parameter for the `CreateEnvironmentEC2` action. This change will be
-    #   reflected across all direct methods of communicating with the API,
-    #   such as Amazon Web Services SDK, Amazon Web Services CLI and Amazon
-    #   Web Services CloudFormation. This change will only affect direct API
-    #   consumers, and not Cloud9 console users.
+    #
     #
     #   We recommend using Amazon Linux 2023 as the AMI to create your
     #   environment as it is fully supported.
+    #
+    #   From December 16, 2024, Ubuntu 18.04 will be removed from the list of
+    #   available `imageIds` for Cloud9. This change is necessary as Ubuntu
+    #   18.04 has ended standard support on May 31, 2023. This change will
+    #   only affect direct API consumers, and not Cloud9 console users.
     #
     #   Since Ubuntu 18.04 has ended standard support as of May 31, 2023, we
     #   recommend you choose Ubuntu 22.04.
@@ -618,6 +625,13 @@ module Aws::Cloud9
 
     # Adds an environment member to an Cloud9 development environment.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
+    #
     # @option params [required, String] :environment_id
     #   The ID of the environment that contains the environment member you
     #   want to add.
@@ -685,6 +699,13 @@ module Aws::Cloud9
     # Deletes an Cloud9 development environment. If an Amazon EC2 instance
     # is connected to the environment, also terminates the instance.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
+    #
     # @option params [required, String] :environment_id
     #   The ID of the environment to delete.
     #
@@ -717,6 +738,13 @@ module Aws::Cloud9
     end
 
     # Deletes an environment member from a development environment.
+    #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
     #
     # @option params [required, String] :environment_id
     #   The ID of the environment to delete the environment member from.
@@ -757,6 +785,13 @@ module Aws::Cloud9
 
     # Gets information about environment members for an Cloud9 development
     # environment.
+    #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
     #
     # @option params [String] :user_arn
     #   The Amazon Resource Name (ARN) of an individual environment member to
@@ -907,6 +942,13 @@ module Aws::Cloud9
 
     # Gets status information for an Cloud9 development environment.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
+    #
     # @option params [required, String] :environment_id
     #   The ID of the environment to get status information about.
     #
@@ -949,6 +991,13 @@ module Aws::Cloud9
     end
 
     # Gets information about Cloud9 development environments.
+    #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
     #
     # @option params [required, Array<String>] :environment_ids
     #   The IDs of individual environments to get information about.
@@ -1027,6 +1076,16 @@ module Aws::Cloud9
 
     # Gets a list of Cloud9 development environment identifiers.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
+    #
     # @option params [String] :next_token
     #   During a previous call, if there are more than 25 items in the list,
     #   only the first 25 items are returned, along with a unique string
@@ -1085,6 +1144,13 @@ module Aws::Cloud9
     # Gets a list of the tags associated with an Cloud9 development
     # environment.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
+    #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the Cloud9 development environment
     #   to get the tags for.
@@ -1116,8 +1182,15 @@ module Aws::Cloud9
 
     # Adds tags to an Cloud9 development environment.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
     # Tags that you add to an Cloud9 environment by using this method will
     # NOT be automatically propagated to underlying resources.
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
     #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the Cloud9 development environment
@@ -1151,6 +1224,13 @@ module Aws::Cloud9
 
     # Removes tags from an Cloud9 development environment.
     #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
+    #
     # @option params [required, String] :resource_arn
     #   The Amazon Resource Name (ARN) of the Cloud9 development environment
     #   to remove tags from.
@@ -1178,6 +1258,13 @@ module Aws::Cloud9
     end
 
     # Changes the settings of an existing Cloud9 development environment.
+    #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
     #
     # @option params [required, String] :environment_id
     #   The ID of the environment to change settings.
@@ -1239,6 +1326,13 @@ module Aws::Cloud9
 
     # Changes the settings of an existing environment member for an Cloud9
     # development environment.
+    #
+    # Cloud9 is no longer available to new customers. Existing customers of
+    # Cloud9 can continue to use the service as normal. [Learn more"][1]
+    #
+    #
+    #
+    # [1]: http://aws.amazon.com/blogs/devops/how-to-migrate-from-aws-cloud9-to-aws-ide-toolkits-or-aws-cloudshell/
     #
     # @option params [required, String] :environment_id
     #   The ID of the environment for the environment member whose settings
@@ -1322,7 +1416,7 @@ module Aws::Cloud9
         tracer: tracer
       )
       context[:gem_name] = 'aws-sdk-cloud9'
-      context[:gem_version] = '1.81.0'
+      context[:gem_version] = '1.82.0'
       Seahorse::Client::Request.new(handlers, context)
     end
 

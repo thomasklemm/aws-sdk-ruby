@@ -87,7 +87,7 @@ module Aws
                                      ?policy_details: {
                                        policy_type: ("EBS_SNAPSHOT_MANAGEMENT" | "IMAGE_MANAGEMENT" | "EVENT_BASED_POLICY")?,
                                        resource_types: Array[("VOLUME" | "INSTANCE")]?,
-                                       resource_locations: Array[("CLOUD" | "OUTPOST")]?,
+                                       resource_locations: Array[("CLOUD" | "OUTPOST" | "LOCAL_ZONE")]?,
                                        target_tags: Array[
                                          {
                                            key: ::String,
@@ -111,7 +111,7 @@ module Aws
                                              },
                                            ]?,
                                            create_rule: {
-                                             location: ("CLOUD" | "OUTPOST_LOCAL")?,
+                                             location: ("CLOUD" | "OUTPOST_LOCAL" | "LOCAL_ZONE")?,
                                              interval: ::Integer?,
                                              interval_unit: ("HOURS")?,
                                              times: Array[::String]?,
@@ -336,7 +336,7 @@ module Aws
                                      ?policy_details: {
                                        policy_type: ("EBS_SNAPSHOT_MANAGEMENT" | "IMAGE_MANAGEMENT" | "EVENT_BASED_POLICY")?,
                                        resource_types: Array[("VOLUME" | "INSTANCE")]?,
-                                       resource_locations: Array[("CLOUD" | "OUTPOST")]?,
+                                       resource_locations: Array[("CLOUD" | "OUTPOST" | "LOCAL_ZONE")]?,
                                        target_tags: Array[
                                          {
                                            key: ::String,
@@ -360,7 +360,7 @@ module Aws
                                              },
                                            ]?,
                                            create_rule: {
-                                             location: ("CLOUD" | "OUTPOST_LOCAL")?,
+                                             location: ("CLOUD" | "OUTPOST_LOCAL" | "LOCAL_ZONE")?,
                                              interval: ::Integer?,
                                              interval_unit: ("HOURS")?,
                                              times: Array[::String]?,

@@ -36,6 +36,9 @@ module Aws
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Snapshot.html#sse_type-instance_method
       def sse_type: () -> ("sse-ebs" | "sse-kms" | "none")
 
+      # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Snapshot.html#availability_zone-instance_method
+      def availability_zone: () -> ::String
+
       # https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/EC2/Snapshot.html#transfer_type-instance_method
       def transfer_type: () -> ("time-based" | "standard")
 

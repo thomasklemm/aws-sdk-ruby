@@ -4727,8 +4727,10 @@ module Aws::MediaLive
     #   @return [String]
     #
     # @!attribute [rw] timed_metadata_behavior
-    #   When set to passthrough, timed metadata is passed through from input
-    #   to output.
+    #   Set to PASSTHROUGH to enable ID3 metadata insertion. To include
+    #   metadata, you configure other parameters in the output group or
+    #   individual outputs, or you add an ID3 action to the channel
+    #   schedule.
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/Fmp4HlsSettings AWS API Documentation
@@ -6175,18 +6177,20 @@ module Aws::MediaLive
       include Aws::Structure
     end
 
-    # Settings for the action to insert a user-defined ID3 tag in each HLS
-    # segment
+    # Settings for the action to insert ID3 metadata in every segment, in
+    # HLS output groups.
     #
     # @!attribute [rw] tag
-    #   ID3 tag to insert into each segment. Supports special keyword
-    #   identifiers to substitute in segment-related values.\\nSupported
-    #   keyword identifiers:
-    #   https://docs.aws.amazon.com/medialive/latest/ug/variable-data-identifiers.html
+    #   Complete this parameter if you want to specify only the metadata,
+    #   not the entire frame. MediaLive will insert the metadata in a TXXX
+    #   frame. Enter the value as plain text. You can include standard
+    #   MediaLive variable data such as the current segment number.
     #   @return [String]
     #
     # @!attribute [rw] id_3
-    #   Base64 string formatted according to the ID3 specification:
+    #   Complete this parameter if you want to specify the entire ID3
+    #   metadata. Enter a base64 string that contains one or more fully
+    #   formed ID3 tags, according to the ID3 specification:
     #   http://id3.org/id3v2.4.0-structure
     #   @return [String]
     #
@@ -6361,11 +6365,12 @@ module Aws::MediaLive
       include Aws::Structure
     end
 
-    # Settings for the action to emit HLS metadata
+    # Settings for the action to insert ID3 metadata (as a one-time action)
+    # in HLS output groups.
     #
     # @!attribute [rw] id_3
-    #   Base64 string formatted according to the ID3 specification:
-    #   http://id3.org/id3v2.4.0-structure
+    #   Enter a base64 string that contains one or more fully formed ID3
+    #   tags.See the ID3 specification: http://id3.org/id3v2.4.0-structure
     #   @return [String]
     #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/HlsTimedMetadataScheduleActionSettings AWS API Documentation
@@ -8692,8 +8697,10 @@ module Aws::MediaLive
     #   @return [String]
     #
     # @!attribute [rw] timed_metadata_behavior
-    #   When set to passthrough, timed metadata is passed through from input
-    #   to output.
+    #   Set to PASSTHROUGH to enable ID3 metadata insertion. To include
+    #   metadata, you configure other parameters in the output group or
+    #   individual outputs, or you add an ID3 action to the channel
+    #   schedule.
     #   @return [String]
     #
     # @!attribute [rw] timed_metadata_pid
@@ -8875,10 +8882,24 @@ module Aws::MediaLive
     #   channel and MediaLive channel must be in the same region.
     #   @return [String]
     #
+    # @!attribute [rw] channel_group
+    #   Name of the channel group in MediaPackageV2. Only use if you are
+    #   sending CMAF Ingest output to a CMAF ingest endpoint on a
+    #   MediaPackage channel that uses MediaPackage v2.
+    #   @return [String]
+    #
+    # @!attribute [rw] channel_name
+    #   Name of the channel in MediaPackageV2. Only use if you are sending
+    #   CMAF Ingest output to a CMAF ingest endpoint on a MediaPackage
+    #   channel that uses MediaPackage v2.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/MediaPackageOutputDestinationSettings AWS API Documentation
     #
     class MediaPackageOutputDestinationSettings < Struct.new(
-      :channel_id)
+      :channel_id,
+      :channel_group,
+      :channel_name)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -10930,11 +10951,11 @@ module Aws::MediaLive
     # Holds the settings for a single schedule action.
     #
     # @!attribute [rw] hls_id_3_segment_tagging_settings
-    #   Action to insert HLS ID3 segment tagging
+    #   Action to insert ID3 metadata in every segment, in HLS output groups
     #   @return [Types::HlsId3SegmentTaggingScheduleActionSettings]
     #
     # @!attribute [rw] hls_timed_metadata_settings
-    #   Action to insert HLS metadata
+    #   Action to insert ID3 metadata once, in HLS output groups
     #   @return [Types::HlsTimedMetadataScheduleActionSettings]
     #
     # @!attribute [rw] input_prepare_settings
@@ -13775,6 +13796,39 @@ module Aws::MediaLive
     #   Number of milliseconds to delay the output from the second pipeline.
     #   @return [Integer]
     #
+    # @!attribute [rw] klv_behavior
+    #   If set to passthrough, passes any KLV data from the input source to
+    #   this output.
+    #   @return [String]
+    #
+    # @!attribute [rw] klv_name_modifier
+    #   Change the modifier that MediaLive automatically adds to the
+    #   Streams() name that identifies a KLV track. The default is "klv",
+    #   which means the default name will be Streams(klv.cmfm). Any string
+    #   you enter here will replace the "klv" string.\\nThe modifier can
+    #   only contain: numbers, letters, plus (+), minus (-), underscore (\_)
+    #   and period (.) and has a maximum length of 100 characters.
+    #   @return [String]
+    #
+    # @!attribute [rw] nielsen_id_3_name_modifier
+    #   Change the modifier that MediaLive automatically adds to the
+    #   Streams() name that identifies a Nielsen ID3 track. The default is
+    #   "nid3", which means the default name will be Streams(nid3.cmfm).
+    #   Any string you enter here will replace the "nid3" string.\\nThe
+    #   modifier can only contain: numbers, letters, plus (+), minus (-),
+    #   underscore (\_) and period (.) and has a maximum length of 100
+    #   characters.
+    #   @return [String]
+    #
+    # @!attribute [rw] scte_35_name_modifier
+    #   Change the modifier that MediaLive automatically adds to the
+    #   Streams() name for a SCTE 35 track. The default is "scte", which
+    #   means the default name will be Streams(scte.cmfm). Any string you
+    #   enter here will replace the "scte" string.\\nThe modifier can only
+    #   contain: numbers, letters, plus (+), minus (-), underscore (\_) and
+    #   period (.) and has a maximum length of 100 characters.
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/CmafIngestGroupSettings AWS API Documentation
     #
     class CmafIngestGroupSettings < Struct.new(
@@ -13783,7 +13837,11 @@ module Aws::MediaLive
       :scte_35_type,
       :segment_length,
       :segment_length_units,
-      :send_delay_ms)
+      :send_delay_ms,
+      :klv_behavior,
+      :klv_name_modifier,
+      :nielsen_id_3_name_modifier,
+      :scte_35_name_modifier)
       SENSITIVE = []
       include Aws::Structure
     end

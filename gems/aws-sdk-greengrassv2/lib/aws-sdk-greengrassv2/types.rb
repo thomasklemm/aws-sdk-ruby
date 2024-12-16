@@ -709,12 +709,31 @@ module Aws::GreengrassV2
     #   in ISO 8601 format.
     #   @return [Time]
     #
+    # @!attribute [rw] platform
+    #   The operating system platform that the core device runs.
+    #   @return [String]
+    #
+    # @!attribute [rw] architecture
+    #   The computer architecture of the core device.
+    #   @return [String]
+    #
+    # @!attribute [rw] runtime
+    #   The runtime for the core device. The runtime can be:
+    #
+    #   * `aws_nucleus_classic`
+    #
+    #   * `aws_nucleus_lite`
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/CoreDevice AWS API Documentation
     #
     class CoreDevice < Struct.new(
       :core_device_thing_name,
       :status,
-      :last_status_update_timestamp)
+      :last_status_update_timestamp,
+      :platform,
+      :architecture,
+      :runtime)
       SENSITIVE = []
       include Aws::Structure
     end
@@ -1612,6 +1631,14 @@ module Aws::GreengrassV2
     #   The computer architecture of the core device.
     #   @return [String]
     #
+    # @!attribute [rw] runtime
+    #   The runtime for the core device. The runtime can be:
+    #
+    #   * `aws_nucleus_classic`
+    #
+    #   * `aws_nucleus_lite`
+    #   @return [String]
+    #
     # @!attribute [rw] status
     #   The status of the core device. The core device status can be:
     #
@@ -1644,6 +1671,7 @@ module Aws::GreengrassV2
       :core_version,
       :platform,
       :architecture,
+      :runtime,
       :status,
       :last_status_update_timestamp,
       :tags)
@@ -2504,13 +2532,22 @@ module Aws::GreengrassV2
     #   The token to be used for the next set of paginated results.
     #   @return [String]
     #
+    # @!attribute [rw] runtime
+    #   The runtime to be used by the core device. The runtime can be:
+    #
+    #   * `aws_nucleus_classic`
+    #
+    #   * `aws_nucleus_lite`
+    #   @return [String]
+    #
     # @see http://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListCoreDevicesRequest AWS API Documentation
     #
     class ListCoreDevicesRequest < Struct.new(
       :thing_group_arn,
       :status,
       :max_results,
-      :next_token)
+      :next_token,
+      :runtime)
       SENSITIVE = []
       include Aws::Structure
     end

@@ -3122,6 +3122,7 @@ module Aws
         def storage_tier: () -> ("archive" | "standard")
         def restore_expiry_time: () -> ::Time
         def sse_type: () -> ("sse-ebs" | "sse-kms" | "none")
+        def availability_zone: () -> ::String
         def transfer_type: () -> ("time-based" | "standard")
         def completion_duration_minutes: () -> ::Integer
         def completion_time: () -> ::Time
@@ -3154,6 +3155,7 @@ module Aws
                                  ]?
                                },
                              ],
+                             ?location: ("regional" | "local"),
                              ?dry_run: bool
                            ) -> _CreateSnapshotResponseSuccess
                          | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateSnapshotResponseSuccess
@@ -3183,7 +3185,8 @@ module Aws
                                 },
                               ],
                               ?dry_run: bool,
-                              ?copy_tags_from_source: ("volume")
+                              ?copy_tags_from_source: ("volume"),
+                              ?location: ("regional" | "local")
                             ) -> _CreateSnapshotsResponseSuccess
                           | (Hash[Symbol, untyped] params, ?Hash[Symbol, untyped] options) -> _CreateSnapshotsResponseSuccess
 

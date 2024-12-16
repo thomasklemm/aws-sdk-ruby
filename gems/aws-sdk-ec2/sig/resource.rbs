@@ -520,6 +520,7 @@ module Aws
                                  ]?
                                },
                              ],
+                             ?location: ("regional" | "local"),
                              ?dry_run: bool
                            ) -> Snapshot
                          | (?Hash[Symbol, untyped]) -> Snapshot

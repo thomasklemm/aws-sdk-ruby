@@ -318,7 +318,9 @@ module Aws
                                 id: ::String?,
                                 media_package_settings: Array[
                                   {
-                                    channel_id: ::String?
+                                    channel_id: ::String?,
+                                    channel_group: ::String?,
+                                    channel_name: ::String?
                                   },
                                 ]?,
                                 multiplex_settings: {
@@ -804,7 +806,11 @@ module Aws
                                       scte_35_type: ("NONE" | "SCTE_35_WITHOUT_SEGMENTATION")?,
                                       segment_length: ::Integer?,
                                       segment_length_units: ("MILLISECONDS" | "SECONDS")?,
-                                      send_delay_ms: ::Integer?
+                                      send_delay_ms: ::Integer?,
+                                      klv_behavior: ("NO_PASSTHROUGH" | "PASSTHROUGH")?,
+                                      klv_name_modifier: ::String?,
+                                      nielsen_id_3_name_modifier: ::String?,
+                                      scte_35_name_modifier: ::String?
                                     }?,
                                     srt_group_settings: {
                                       input_loss_action: ("DROP_PROGRAM" | "DROP_TS" | "EMIT_PROGRAM")?
@@ -2362,7 +2368,9 @@ module Aws
                                 id: ::String?,
                                 media_package_settings: Array[
                                   {
-                                    channel_id: ::String?
+                                    channel_id: ::String?,
+                                    channel_group: ::String?,
+                                    channel_name: ::String?
                                   },
                                 ]?,
                                 multiplex_settings: {
@@ -2848,7 +2856,11 @@ module Aws
                                       scte_35_type: ("NONE" | "SCTE_35_WITHOUT_SEGMENTATION")?,
                                       segment_length: ::Integer?,
                                       segment_length_units: ("MILLISECONDS" | "SECONDS")?,
-                                      send_delay_ms: ::Integer?
+                                      send_delay_ms: ::Integer?,
+                                      klv_behavior: ("NO_PASSTHROUGH" | "PASSTHROUGH")?,
+                                      klv_name_modifier: ::String?,
+                                      nielsen_id_3_name_modifier: ::String?,
+                                      scte_35_name_modifier: ::String?
                                     }?,
                                     srt_group_settings: {
                                       input_loss_action: ("DROP_PROGRAM" | "DROP_TS" | "EMIT_PROGRAM")?
@@ -3568,7 +3580,9 @@ module Aws
                                       id: ::String?,
                                       media_package_settings: Array[
                                         {
-                                          channel_id: ::String?
+                                          channel_id: ::String?,
+                                          channel_group: ::String?,
+                                          channel_name: ::String?
                                         },
                                       ]?,
                                       multiplex_settings: {

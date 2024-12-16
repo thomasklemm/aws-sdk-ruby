@@ -1,6 +1,11 @@
 Unreleased Changes
 ------------------
 
+1.83.0 (2024-12-16)
+------------------
+
+* Feature - This release adds support for Local Zones in Amazon Data Lifecycle Manager EBS snapshot lifecycle policies.
+
 1.82.0 (2024-10-18)
 ------------------
 

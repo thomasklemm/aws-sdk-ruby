@@ -334,25 +334,24 @@ module Aws::EC2
     #         ],
     #       },
     #     ],
+    #     location: "regional", # accepts regional, local
     #     dry_run: false,
     #   })
     # @param [Hash] options ({})
     # @option options [String] :description
     #   A description for the snapshot.
     # @option options [String] :outpost_arn
-    #   The Amazon Resource Name (ARN) of the Outpost on which to create a
-    #   local snapshot.
+    #   <note markdown="1"> Only supported for volumes on Outposts. If the source volume is not on
+    #   an Outpost, omit this parameter.
     #
-    #   * To create a snapshot of a volume in a Region, omit this parameter.
-    #     The snapshot is created in the same Region as the volume.
+    #    </note>
     #
-    #   * To create a snapshot of a volume on an Outpost and store the
-    #     snapshot in the Region, omit this parameter. The snapshot is created
-    #     in the Region for the Outpost.
+    #   * To create the snapshot on the same Outpost as the source volume,
+    #     specify the ARN of that Outpost. The snapshot must be created on the
+    #     same Outpost as the volume.
     #
-    #   * To create a snapshot of a volume on an Outpost and store the
-    #     snapshot on an Outpost, specify the ARN of the destination Outpost.
-    #     The snapshot must be created on the same Outpost as the volume.
+    #   * To create the snapshot in the parent Region of the Outpost, omit
+    #     this parameter.
     #
     #   For more information, see [Create local snapshots from volumes on an
     #   Outpost][1] in the *Amazon EBS User Guide*.
@@ -362,6 +361,19 @@ module Aws::EC2
     #   [1]: https://docs.aws.amazon.com/ebs/latest/userguide/snapshots-outposts.html#create-snapshot
     # @option options [Array<Types::TagSpecification>] :tag_specifications
     #   The tags to apply to the snapshot during creation.
+    # @option options [String] :location
+    #   <note markdown="1"> Only supported for volumes in Local Zones. If the source volume is not
+    #   in a Local Zone, omit this parameter.
+    #
+    #    </note>
+    #
+    #   * To create a local snapshot in the same Local Zone as the source
+    #     volume, specify `local`.
+    #
+    #   * To create a regional snapshot in the parent Region of the Local
+    #     Zone, specify `regional` or omit this parameter.
+    #
+    #   Default value: `regional`
     # @option options [Boolean] :dry_run
     #   Checks whether you have the required permissions for the action,
     #   without actually making the request, and provides an error response.

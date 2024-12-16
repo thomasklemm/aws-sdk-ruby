@@ -63,6 +63,7 @@ module Aws::GreengrassV2
     CoreDevice = Shapes::StructureShape.new(name: 'CoreDevice')
     CoreDeviceArchitectureString = Shapes::StringShape.new(name: 'CoreDeviceArchitectureString')
     CoreDevicePlatformString = Shapes::StringShape.new(name: 'CoreDevicePlatformString')
+    CoreDeviceRuntimeString = Shapes::StringShape.new(name: 'CoreDeviceRuntimeString')
     CoreDeviceStatus = Shapes::StringShape.new(name: 'CoreDeviceStatus')
     CoreDeviceThingName = Shapes::StringShape.new(name: 'CoreDeviceThingName')
     CoreDevicesList = Shapes::ListShape.new(name: 'CoreDevicesList')
@@ -361,6 +362,9 @@ module Aws::GreengrassV2
     CoreDevice.add_member(:core_device_thing_name, Shapes::ShapeRef.new(shape: CoreDeviceThingName, location_name: "coreDeviceThingName"))
     CoreDevice.add_member(:status, Shapes::ShapeRef.new(shape: CoreDeviceStatus, location_name: "status"))
     CoreDevice.add_member(:last_status_update_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastStatusUpdateTimestamp"))
+    CoreDevice.add_member(:platform, Shapes::ShapeRef.new(shape: CoreDevicePlatformString, location_name: "platform"))
+    CoreDevice.add_member(:architecture, Shapes::ShapeRef.new(shape: CoreDeviceArchitectureString, location_name: "architecture"))
+    CoreDevice.add_member(:runtime, Shapes::ShapeRef.new(shape: CoreDeviceRuntimeString, location_name: "runtime"))
     CoreDevice.struct_class = Types::CoreDevice
 
     CoreDevicesList.member = Shapes::ShapeRef.new(shape: CoreDevice)
@@ -517,6 +521,7 @@ module Aws::GreengrassV2
     GetCoreDeviceResponse.add_member(:core_version, Shapes::ShapeRef.new(shape: GGCVersion, location_name: "coreVersion"))
     GetCoreDeviceResponse.add_member(:platform, Shapes::ShapeRef.new(shape: CoreDevicePlatformString, location_name: "platform"))
     GetCoreDeviceResponse.add_member(:architecture, Shapes::ShapeRef.new(shape: CoreDeviceArchitectureString, location_name: "architecture"))
+    GetCoreDeviceResponse.add_member(:runtime, Shapes::ShapeRef.new(shape: CoreDeviceRuntimeString, location_name: "runtime"))
     GetCoreDeviceResponse.add_member(:status, Shapes::ShapeRef.new(shape: CoreDeviceStatus, location_name: "status"))
     GetCoreDeviceResponse.add_member(:last_status_update_timestamp, Shapes::ShapeRef.new(shape: Timestamp, location_name: "lastStatusUpdateTimestamp"))
     GetCoreDeviceResponse.add_member(:tags, Shapes::ShapeRef.new(shape: TagMap, location_name: "tags"))
@@ -681,6 +686,7 @@ module Aws::GreengrassV2
     ListCoreDevicesRequest.add_member(:status, Shapes::ShapeRef.new(shape: CoreDeviceStatus, location: "querystring", location_name: "status"))
     ListCoreDevicesRequest.add_member(:max_results, Shapes::ShapeRef.new(shape: DefaultMaxResults, location: "querystring", location_name: "maxResults", metadata: {"box"=>true}))
     ListCoreDevicesRequest.add_member(:next_token, Shapes::ShapeRef.new(shape: NextTokenString, location: "querystring", location_name: "nextToken", metadata: {"box"=>true}))
+    ListCoreDevicesRequest.add_member(:runtime, Shapes::ShapeRef.new(shape: CoreDeviceRuntimeString, location: "querystring", location_name: "runtime"))
     ListCoreDevicesRequest.struct_class = Types::ListCoreDevicesRequest
 
     ListCoreDevicesResponse.add_member(:core_devices, Shapes::ShapeRef.new(shape: CoreDevicesList, location_name: "coreDevices"))
